@@ -3723,6 +3723,18 @@ Do you want to start it now?</source>
     </message>
     <message>
         <location filename="../settings.qml" line="2822"/>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
         <location filename="../settings.qml" line="4498"/>
         <location filename="../settings.qml" line="10362"/>
         <location filename="../settings.qml" line="12208"/>
@@ -3733,6 +3745,14 @@ Do you want to start it now?</source>
         <location filename="../settings.qml" line="14321"/>
         <location filename="../settings.qml" line="14389"/>
         <location filename="../settings.qml" line="14436"/>
+        <location filename="../settings.qml" line="15346"/>
+        <location filename="../settings.qml" line="15358"/>
+        <location filename="../settings.qml" line="15370"/>
+        <location filename="../settings.qml" line="15382"/>
+        <location filename="../settings.qml" line="15394"/>
+        <location filename="../settings.qml" line="15406"/>
+        <location filename="../settings.qml" line="15418"/>
+        <location filename="../settings.qml" line="15430"/>
         <source>Disabled</source>
         <translation>Отключено</translation>
     </message>
@@ -3974,6 +3994,278 @@ Do you want to start it now?</source>
         <translation>Левая вверх:</translation>
     </message>
     <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <location filename="../settings.qml" line="15346"/>
+        <location filename="../settings.qml" line="15358"/>
+        <location filename="../settings.qml" line="15370"/>
+        <location filename="../settings.qml" line="15382"/>
+        <location filename="../settings.qml" line="15394"/>
+        <location filename="../settings.qml" line="15406"/>
+        <location filename="../settings.qml" line="15418"/>
+        <location filename="../settings.qml" line="15430"/>
+        <source>Gear Up</source>
+        <translation>Передача вверх</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <location filename="../settings.qml" line="15346"/>
+        <location filename="../settings.qml" line="15358"/>
+        <location filename="../settings.qml" line="15370"/>
+        <location filename="../settings.qml" line="15382"/>
+        <location filename="../settings.qml" line="15394"/>
+        <location filename="../settings.qml" line="15406"/>
+        <location filename="../settings.qml" line="15418"/>
+        <location filename="../settings.qml" line="15430"/>
+        <source>Gear Down</source>
+        <translation>Передача вниз</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <source>Steer Left</source>
+        <translation>Руль влево</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <source>Steer Right</source>
+        <translation>Руль вправо</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <source>U-Turn</source>
+        <translation>Разворот</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <source>Camera Angle</source>
+        <translation>Ракурс камеры</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <source>Emote</source>
+        <translation>Эмоция</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <source>Tuck</source>
+        <translation>Аэропосадка</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <source>Nav Up</source>
+        <translation>Навигация вверх</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <source>Nav Down</source>
+        <translation>Навигация вниз</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <source>Nav Left</source>
+        <translation>Навигация влево</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <source>Nav Right</source>
+        <translation>Навигация вправо</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <source>Select/Confirm</source>
+        <translation>Выбор/подтверждение</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <source>Back/Cancel</source>
+        <translation>Назад/отмена</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <source>Menu</source>
+        <translation>Меню</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="3561"/>
+        <location filename="../settings.qml" line="3573"/>
+        <location filename="../settings.qml" line="3585"/>
+        <location filename="../settings.qml" line="3597"/>
+        <location filename="../settings.qml" line="3609"/>
+        <location filename="../settings.qml" line="3621"/>
+        <location filename="../settings.qml" line="3641"/>
+        <location filename="../settings.qml" line="3653"/>
+        <location filename="../settings.qml" line="3665"/>
+        <location filename="../settings.qml" line="3677"/>
+        <location filename="../settings.qml" line="3689"/>
+        <location filename="../settings.qml" line="3701"/>
+        <source>Home</source>
+        <translation>Главный экран</translation>
+    </message>
+    <message>
         <location filename="../settings.qml" line="3569"/>
         <source>Left Down:</source>
         <translation>Левая вниз:</translation>
@@ -4036,7 +4328,7 @@ Do you want to start it now?</source>
     <message>
         <location filename="../settings.qml" line="3708"/>
         <source>Note: Left and Right paddles are fixed to Steer Left/Right and cannot be configured</source>
-        <translation>Примечание: левый и правый лепестки всегда работают как Steer Left/Right, переназначить их нельзя</translation>
+        <translation>Примечание: левый и правый лепестки всегда работают как «Руль влево» / «Руль вправо», переназначить их нельзя</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="3724"/>
@@ -6884,7 +7176,7 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings.qml" line="15328"/>
         <source>Assign each physical button to Gear Up, Gear Down or Disabled. Applies before the Swap sides option above.</source>
-        <translation>Назначьте каждой физической кнопке Gear Up, Gear Down или Disabled. Применяется до параметра «Поменять стороны» выше.</translation>
+        <translation>Назначьте каждой физической кнопке «Передача вверх», «Передача вниз» или «Отключено». Применяется до параметра «Поменять стороны» выше.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="15342"/>
