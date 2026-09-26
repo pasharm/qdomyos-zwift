@@ -561,12 +561,30 @@ Would you like to do that now?</source>
     </message>
 </context>
 <context>
+    <name>TemplateTcpClient</name>
+    <message>
+        <location filename="../TemplateTcpClient.qml" line="17"/>
+        <source>%1 Host:</source>
+        <translation>Хост %1:</translation>
+    </message>
+    <message>
+        <location filename="../TemplateTcpClient.qml" line="50"/>
+        <source>%1 Port:</source>
+        <translation>Порт %1:</translation>
+    </message>
+</context>
+<context>
     <name>TemplateWebServer</name>
     <message>
         <location filename="../TemplateWebServer.qml" line="14"/>
         <location filename="../TemplateWebServer.qml" line="25"/>
         <source>Server addresses:</source>
         <translation>Адреса сервера:</translation>
+    </message>
+    <message>
+        <location filename="../TemplateWebServer.qml" line="37"/>
+        <source>%1 Port:</source>
+        <translation>Порт %1:</translation>
     </message>
 </context>
 <context>
@@ -2714,6 +2732,16 @@ Do you want to start it now?</source>
         <location filename="../main.qml" line="972"/>
         <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
         <translation>Не забудьте сохранить профиль «%1», если хотите оставить в нём эти изменения.</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1012"/>
+        <source>Auto Resistance enabled</source>
+        <translation>Авто-сопротивление включено</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1012"/>
+        <source>Auto Resistance disabled</source>
+        <translation>Авто-сопротивление выключено</translation>
     </message>
     <message>
         <location filename="../main.qml" line="1047"/>
@@ -6704,6 +6732,11 @@ IMPORTANT NOTES:
         <location filename="../settings.qml" line="13526"/>
         <source>AutoLap on Distance:</source>
         <translation>Авто-круг по дистанции:</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="13547"/>
+        <source>You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).</source>
+        <translation>Можно автоматически отмечать круги в FIT-файле по дистанции. Единица: %1. По умолчанию: 0 (выключено).</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="13562"/>
