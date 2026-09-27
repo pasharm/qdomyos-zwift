@@ -76,7 +76,7 @@
     <message>
         <location filename="../GPXList.qml" line="264"/>
         <source>Distance %1 km Elevation Gain: %2 meters</source>
-        <translation>Дистанция: %1 km, набор высоты: %2 m</translation>
+        <translation>Дистанция: %1 км, набор высоты: %2 м</translation>
     </message>
     <message>
         <location filename="../GPXList.qml" line="287"/>
@@ -257,32 +257,32 @@ Would you like to do that now?</source>
 Перезапустить сейчас?</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="377"/>
+        <location filename="../Home.qml" line="400"/>
         <source>Adjustable. Current value: </source>
         <translation>Регулируется. Текущее значение: </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="377"/>
+        <location filename="../Home.qml" line="400"/>
         <source>Current value: </source>
         <translation>Текущее значение: </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="521"/>
+        <location filename="../Home.qml" line="544"/>
         <source>Decrease </source>
         <translation>Уменьшить </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="522"/>
+        <location filename="../Home.qml" line="545"/>
         <source>Decrease the value of </source>
         <translation>Уменьшить значение параметра </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="540"/>
+        <location filename="../Home.qml" line="563"/>
         <source>Increase </source>
         <translation>Увеличить </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="541"/>
+        <location filename="../Home.qml" line="564"/>
         <source>Increase the value of </source>
         <translation>Увеличить значение параметра </translation>
     </message>
@@ -408,12 +408,12 @@ Would you like to do that now?</source>
     <message>
         <location filename="../mainwindow.ui" line="390"/>
         <source>Heart rate (bpm)</source>
-        <translation>Пульс (bpm)</translation>
+        <translation>Пульс (уд/мин)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="475"/>
         <source>Odometer (km):</source>
-        <translation>Пробег (km):</translation>
+        <translation>Пробег (км):</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="482"/>
@@ -430,7 +430,7 @@ Would you like to do that now?</source>
     <message>
         <location filename="../mainwindow.ui" line="550"/>
         <source>Calories (kcal):</source>
-        <translation>Калории (kcal):</translation>
+        <translation>Калории (ккал):</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="593"/>
@@ -450,7 +450,7 @@ Would you like to do that now?</source>
     <message>
         <location filename="../mainwindow.ui" line="746"/>
         <source>Pace (min/km):</source>
-        <translation>Темп (min/km):</translation>
+        <translation>Темп (мин/км):</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="869"/>
@@ -460,12 +460,12 @@ Would you like to do that now?</source>
     <message>
         <location filename="../mainwindow.ui" line="899"/>
         <source>Durantion (s)</source>
-        <translation>Длительность (s)</translation>
+        <translation>Длительность (с)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="904"/>
         <source>Speed (km/h)</source>
-        <translation>Скорость (km/h)</translation>
+        <translation>Скорость (км/ч)</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="909"/>
@@ -502,7 +502,7 @@ Would you like to do that now?</source>
     <message>
         <location filename="../mainwindow.ui" line="1001"/>
         <source>Total Distance (km):</source>
-        <translation>Общая дистанция (km):</translation>
+        <translation>Общая дистанция (км):</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1021"/>
@@ -517,7 +517,7 @@ Would you like to do that now?</source>
     <message>
         <location filename="../mainwindow.ui" line="1081"/>
         <source>Player Weight (kg):</source>
-        <translation>Вес (kg):</translation>
+        <translation>Вес (кг):</translation>
     </message>
     <message>
         <location filename="../mainwindow.ui" line="1088"/>
@@ -645,222 +645,222 @@ Would you like to do that now?</source>
         <translation>Не удалось отправить тренировку по почте</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="883"/>
+        <location filename="../homeform.cpp" line="888"/>
         <source>QZ is looking for %1. Please wake it up or change this device under the Manual Device setting in Advanced Settings.</source>
         <translation>QZ ищет %1. Выведите устройство из сна или смените его в «Устройство вручную» в разделе «Дополнительные настройки».</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="1082"/>
+        <location filename="../homeform.cpp" line="1087"/>
         <source>Bluetooth name too long, change it to a 4 letters one in the android settings and use only A-Z or 0-9 characters</source>
         <translation>Слишком длинное имя Bluetooth: смените его в настройках Android на имя из 4 символов, только A-Z или 0-9</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="1574"/>
+        <location filename="../homeform.cpp" line="1579"/>
         <source>Peloton Login Error!</source>
         <translation>Ошибка входа в Peloton!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="1583"/>
+        <location filename="../homeform.cpp" line="1588"/>
         <source>Zwift Login Error!</source>
         <translation>Ошибка входа в Zwift!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="1626"/>
+        <location filename="../homeform.cpp" line="1631"/>
         <source>Peloton workout auto started! It will start automatically after the intro! %1 - %2</source>
         <translation>Тренировка Peloton запущена автоматически! Начнётся сама после вступления! %1 – %2</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="1629"/>
+        <location filename="../homeform.cpp" line="1634"/>
         <source>Peloton workout auto started skipping the intro! %1 - %2</source>
         <translation>Тренировка Peloton запущена автоматически, вступление пропущено! %1 – %2</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6301"/>
-        <location filename="../homeform.cpp" line="6315"/>
-        <location filename="../homeform.cpp" line="6474"/>
-        <location filename="../homeform.cpp" line="6482"/>
-        <location filename="../homeform.cpp" line="6509"/>
-        <location filename="../homeform.cpp" line="6574"/>
-        <location filename="../homeform.cpp" line="6607"/>
-        <location filename="../homeform.cpp" line="6618"/>
-        <location filename="../homeform.cpp" line="6625"/>
-        <location filename="../homeform.cpp" line="6632"/>
-        <location filename="../homeform.cpp" line="6774"/>
-        <location filename="../homeform.cpp" line="6785"/>
-        <location filename="../homeform.cpp" line="6875"/>
-        <location filename="../homeform.cpp" line="6933"/>
+        <location filename="../homeform.cpp" line="6306"/>
+        <location filename="../homeform.cpp" line="6320"/>
+        <location filename="../homeform.cpp" line="6479"/>
+        <location filename="../homeform.cpp" line="6487"/>
+        <location filename="../homeform.cpp" line="6514"/>
+        <location filename="../homeform.cpp" line="6579"/>
+        <location filename="../homeform.cpp" line="6612"/>
+        <location filename="../homeform.cpp" line="6623"/>
+        <location filename="../homeform.cpp" line="6630"/>
+        <location filename="../homeform.cpp" line="6637"/>
+        <location filename="../homeform.cpp" line="6779"/>
+        <location filename="../homeform.cpp" line="6790"/>
+        <location filename="../homeform.cpp" line="6880"/>
         <location filename="../homeform.cpp" line="6938"/>
-        <location filename="../homeform.cpp" line="6989"/>
-        <location filename="../homeform.cpp" line="7085"/>
+        <location filename="../homeform.cpp" line="6943"/>
+        <location filename="../homeform.cpp" line="6994"/>
         <location filename="../homeform.cpp" line="7090"/>
-        <location filename="../homeform.cpp" line="7104"/>
-        <location filename="../homeform.cpp" line="7155"/>
-        <location filename="../homeform.cpp" line="7180"/>
-        <location filename="../homeform.cpp" line="7199"/>
-        <location filename="../homeform.cpp" line="7215"/>
-        <location filename="../homeform.cpp" line="7262"/>
+        <location filename="../homeform.cpp" line="7095"/>
+        <location filename="../homeform.cpp" line="7109"/>
+        <location filename="../homeform.cpp" line="7160"/>
+        <location filename="../homeform.cpp" line="7185"/>
+        <location filename="../homeform.cpp" line="7204"/>
+        <location filename="../homeform.cpp" line="7220"/>
+        <location filename="../homeform.cpp" line="7267"/>
         <source>AVG: </source>
         <translation>Ср.: </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6303"/>
-        <location filename="../homeform.cpp" line="6475"/>
-        <location filename="../homeform.cpp" line="6483"/>
-        <location filename="../homeform.cpp" line="6511"/>
-        <location filename="../homeform.cpp" line="6576"/>
-        <location filename="../homeform.cpp" line="6609"/>
-        <location filename="../homeform.cpp" line="6620"/>
-        <location filename="../homeform.cpp" line="6627"/>
-        <location filename="../homeform.cpp" line="6635"/>
-        <location filename="../homeform.cpp" line="6776"/>
-        <location filename="../homeform.cpp" line="6787"/>
-        <location filename="../homeform.cpp" line="6877"/>
-        <location filename="../homeform.cpp" line="6935"/>
+        <location filename="../homeform.cpp" line="6308"/>
+        <location filename="../homeform.cpp" line="6480"/>
+        <location filename="../homeform.cpp" line="6488"/>
+        <location filename="../homeform.cpp" line="6516"/>
+        <location filename="../homeform.cpp" line="6581"/>
+        <location filename="../homeform.cpp" line="6614"/>
+        <location filename="../homeform.cpp" line="6625"/>
+        <location filename="../homeform.cpp" line="6632"/>
+        <location filename="../homeform.cpp" line="6640"/>
+        <location filename="../homeform.cpp" line="6781"/>
+        <location filename="../homeform.cpp" line="6792"/>
+        <location filename="../homeform.cpp" line="6882"/>
         <location filename="../homeform.cpp" line="6940"/>
-        <location filename="../homeform.cpp" line="6991"/>
-        <location filename="../homeform.cpp" line="7087"/>
+        <location filename="../homeform.cpp" line="6945"/>
+        <location filename="../homeform.cpp" line="6996"/>
         <location filename="../homeform.cpp" line="7092"/>
-        <location filename="../homeform.cpp" line="7106"/>
-        <location filename="../homeform.cpp" line="7157"/>
-        <location filename="../homeform.cpp" line="7182"/>
-        <location filename="../homeform.cpp" line="7201"/>
-        <location filename="../homeform.cpp" line="7217"/>
-        <location filename="../homeform.cpp" line="7263"/>
-        <location filename="../homeform.cpp" line="7283"/>
-        <location filename="../homeform.cpp" line="7310"/>
-        <location filename="../homeform.cpp" line="7638"/>
+        <location filename="../homeform.cpp" line="7097"/>
+        <location filename="../homeform.cpp" line="7111"/>
+        <location filename="../homeform.cpp" line="7162"/>
+        <location filename="../homeform.cpp" line="7187"/>
+        <location filename="../homeform.cpp" line="7206"/>
+        <location filename="../homeform.cpp" line="7222"/>
+        <location filename="../homeform.cpp" line="7268"/>
+        <location filename="../homeform.cpp" line="7288"/>
+        <location filename="../homeform.cpp" line="7315"/>
         <location filename="../homeform.cpp" line="7643"/>
+        <location filename="../homeform.cpp" line="7648"/>
         <source> MAX: </source>
         <translation> Макс.: </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6581"/>
-        <location filename="../homeform.cpp" line="6781"/>
-        <location filename="../homeform.cpp" line="6996"/>
-        <location filename="../homeform.cpp" line="7162"/>
-        <location filename="../homeform.cpp" line="7187"/>
+        <location filename="../homeform.cpp" line="6586"/>
+        <location filename="../homeform.cpp" line="6786"/>
+        <location filename="../homeform.cpp" line="7001"/>
+        <location filename="../homeform.cpp" line="7167"/>
+        <location filename="../homeform.cpp" line="7192"/>
         <source>MAX: </source>
         <translation>Макс.: </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="7636"/>
         <location filename="../homeform.cpp" line="7641"/>
+        <location filename="../homeform.cpp" line="7646"/>
         <source> AVG: </source>
         <translation> Ср.: </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8347"/>
+        <location filename="../homeform.cpp" line="8352"/>
         <source>AutoLap %1</source>
         <translation>Авто-круг %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="9658"/>
+        <location filename="../homeform.cpp" line="9663"/>
         <source>Strava Auth Failed!</source>
         <translation>Strava: ошибка авторизации!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="9681"/>
+        <location filename="../homeform.cpp" line="9686"/>
         <source>Strava Login OK!</source>
         <translation>Strava: вход выполнен!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="9823"/>
+        <location filename="../homeform.cpp" line="9828"/>
         <source>Strava Upload Failed: %1</source>
         <translation>Не удалось загрузить в Strava: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="9825"/>
+        <location filename="../homeform.cpp" line="9830"/>
         <source>Strava Upload Failed</source>
         <translation>Не удалось загрузить в Strava</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="9840"/>
+        <location filename="../homeform.cpp" line="9845"/>
         <source>Strava Upload Completed!</source>
         <translation>Загрузка в Strava завершена!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10035"/>
+        <location filename="../homeform.cpp" line="10040"/>
         <source>Garmin credentials not configured. Please set email and password in settings.</source>
         <translation>Garmin не настроен: укажите email и пароль в настройках.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10045"/>
+        <location filename="../homeform.cpp" line="10050"/>
         <source>Garmin Connect: Authentication successful!</source>
         <translation>Garmin Connect: вход выполнен!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10050"/>
+        <location filename="../homeform.cpp" line="10055"/>
         <source>Garmin Connect Login Failed: %1</source>
         <translation>Не удалось войти в Garmin Connect: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10054"/>
+        <location filename="../homeform.cpp" line="10059"/>
         <source>Garmin Connect: Upload successful!</source>
         <translation>Garmin Connect: загрузка выполнена!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10058"/>
+        <location filename="../homeform.cpp" line="10063"/>
         <source>Garmin Connect Upload Failed: %1</source>
         <translation>Не удалось загрузить в Garmin Connect: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10068"/>
+        <location filename="../homeform.cpp" line="10073"/>
         <source>Garmin workout saved: %1</source>
         <translation>Тренировка Garmin сохранена: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10102"/>
-        <location filename="../homeform.cpp" line="10110"/>
+        <location filename="../homeform.cpp" line="10107"/>
+        <location filename="../homeform.cpp" line="10115"/>
         <source>Garmin Connect: Authenticated!</source>
         <translation>Garmin Connect: вход выполнен!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10122"/>
+        <location filename="../homeform.cpp" line="10127"/>
         <source>Garmin Connect: Login failed - %1</source>
         <translation>Garmin Connect: не удалось войти – %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10131"/>
+        <location filename="../homeform.cpp" line="10136"/>
         <source>Garmin Connect not initialized</source>
         <translation>Garmin Connect не инициализирован</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10136"/>
+        <location filename="../homeform.cpp" line="10141"/>
         <source>Please enter a valid MFA code</source>
         <translation>Введите правильный код MFA</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10145"/>
+        <location filename="../homeform.cpp" line="10150"/>
         <source>Submitting MFA code...</source>
         <translation>Отправка кода MFA...</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10188"/>
+        <location filename="../homeform.cpp" line="10193"/>
         <source>No Garmin workout file available</source>
         <translation>Нет файла тренировки Garmin</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10193"/>
+        <location filename="../homeform.cpp" line="10198"/>
         <source>Failed to load Garmin workout: %1</source>
         <translation>Не удалось загрузить тренировку Garmin: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10198"/>
+        <location filename="../homeform.cpp" line="10203"/>
         <source>Starting Garmin workout: %1</source>
         <translation>Запуск тренировки Garmin: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10234"/>
+        <location filename="../homeform.cpp" line="10239"/>
         <source>Cycling FTP: %1 -&gt; %2 W</source>
-        <translation>FTP (велосипед): %1 -&gt; %2 W</translation>
+        <translation>FTP (велосипед): %1 -&gt; %2 Вт</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10246"/>
+        <location filename="../homeform.cpp" line="10251"/>
         <source>Running FTP: %1 -&gt; %2 W</source>
-        <translation>FTP (бег): %1 -&gt; %2 W</translation>
+        <translation>FTP (бег): %1 -&gt; %2 Вт</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10254"/>
+        <location filename="../homeform.cpp" line="10259"/>
         <source>Garmin Connect has newer FTP values:
 
 %1
@@ -873,177 +873,177 @@ Do you want to update QZ settings?</source>
 Обновить настройки QZ?</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10278"/>
+        <location filename="../homeform.cpp" line="10283"/>
         <source>cycling FTP</source>
         <translation>FTP для велосипеда</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10282"/>
+        <location filename="../homeform.cpp" line="10287"/>
         <source>running FTP</source>
         <translation>FTP для бега</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10295"/>
+        <location filename="../homeform.cpp" line="10300"/>
         <source>Updated Garmin %1</source>
         <translation>Обновлено из Garmin: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10295"/>
+        <location filename="../homeform.cpp" line="10300"/>
         <source> and </source>
         <translation> и </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10314"/>
-        <location filename="../homeform.cpp" line="10339"/>
+        <location filename="../homeform.cpp" line="10319"/>
+        <location filename="../homeform.cpp" line="10344"/>
         <source>No active Echelon device found</source>
         <translation>Активное устройство Echelon не найдено</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10328"/>
+        <location filename="../homeform.cpp" line="10333"/>
         <source>The connected device is neither an Echelon Connect Sport nor a fakebike</source>
         <translation>Подключённое устройство – не Echelon Connect Sport и не fakebike</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10348"/>
+        <location filename="../homeform.cpp" line="10353"/>
         <source>The connected device is not an Echelon Connect Sport</source>
         <translation>Подключённое устройство – не Echelon Connect Sport</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10393"/>
+        <location filename="../homeform.cpp" line="10398"/>
         <source>Strava: unable to open FIT file</source>
         <translation>Strava: не удалось открыть файл FIT</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10402"/>
+        <location filename="../homeform.cpp" line="10407"/>
         <source>Garmin: FIT file not found</source>
         <translation>Garmin: файл FIT не найден</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10407"/>
+        <location filename="../homeform.cpp" line="10412"/>
         <source>Garmin is not configured</source>
         <translation>Garmin не настроен</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10416"/>
-        <location filename="../homeform.cpp" line="10539"/>
+        <location filename="../homeform.cpp" line="10421"/>
+        <location filename="../homeform.cpp" line="10544"/>
         <source>Garmin: Not authenticated. Please login first.</source>
         <translation>Garmin: вход не выполнен. Сначала войдите.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10420"/>
-        <location filename="../homeform.cpp" line="10545"/>
+        <location filename="../homeform.cpp" line="10425"/>
+        <location filename="../homeform.cpp" line="10550"/>
         <source>Uploading to Garmin Connect...</source>
         <translation>Загрузка в Garmin Connect...</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10422"/>
-        <location filename="../homeform.cpp" line="10553"/>
+        <location filename="../homeform.cpp" line="10427"/>
+        <location filename="../homeform.cpp" line="10558"/>
         <source>Garmin: Upload failed - %1</source>
         <translation>Garmin: не удалось загрузить – %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10429"/>
+        <location filename="../homeform.cpp" line="10434"/>
         <source>Intervals.icu: unable to open FIT file</source>
         <translation>Intervals.icu: не удалось открыть файл FIT</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10550"/>
+        <location filename="../homeform.cpp" line="10555"/>
         <source>Garmin: Upload successful!</source>
         <translation>Garmin: загрузка выполнена!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10563"/>
+        <location filename="../homeform.cpp" line="10568"/>
         <source>Downloading Garmin daily workout...</source>
         <translation>Получение тренировки дня из Garmin...</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11538"/>
-        <location filename="../homeform.cpp" line="11578"/>
+        <location filename="../homeform.cpp" line="11543"/>
+        <location filename="../homeform.cpp" line="11583"/>
         <source>Intervals.icu: Authentication failed</source>
         <translation>Intervals.icu: ошибка авторизации</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11582"/>
+        <location filename="../homeform.cpp" line="11587"/>
         <source>Intervals.icu: Error %1</source>
         <translation>Intervals.icu: ошибка %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11593"/>
+        <location filename="../homeform.cpp" line="11598"/>
         <source>Intervals.icu error: %1</source>
         <translation>Ошибка Intervals.icu: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11697"/>
+        <location filename="../homeform.cpp" line="11702"/>
         <source>Intervals.icu: Not authenticated</source>
         <translation>Intervals.icu: вход не выполнен</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11703"/>
+        <location filename="../homeform.cpp" line="11708"/>
         <source>Intervals.icu: No athlete ID configured</source>
         <translation>Intervals.icu: не указан ID спортсмена</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11804"/>
+        <location filename="../homeform.cpp" line="11809"/>
         <source>Intervals.icu upload successful!</source>
         <translation>Загрузка в Intervals.icu выполнена!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11806"/>
+        <location filename="../homeform.cpp" line="11811"/>
         <source>Intervals.icu upload failed (HTTP %1)</source>
         <translation>Не удалось загрузить в Intervals.icu (HTTP %1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11822"/>
+        <location filename="../homeform.cpp" line="11827"/>
         <source>Intervals.icu upload failed: %1</source>
         <translation>Не удалось загрузить в Intervals.icu: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11824"/>
+        <location filename="../homeform.cpp" line="11829"/>
         <source>Intervals.icu upload failed</source>
         <translation>Не удалось загрузить в Intervals.icu</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11839"/>
+        <location filename="../homeform.cpp" line="11844"/>
         <source>Intervals.icu: Configure athlete ID first</source>
         <translation>Intervals.icu: сначала укажите ID спортсмена</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11860"/>
+        <location filename="../homeform.cpp" line="11865"/>
         <source>Intervals.icu: Please authenticate first</source>
         <translation>Intervals.icu: сначала войдите</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11877"/>
+        <location filename="../homeform.cpp" line="11882"/>
         <source>Downloading workout from Intervals.icu...</source>
         <translation>Получение тренировки из Intervals.icu...</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11887"/>
+        <location filename="../homeform.cpp" line="11892"/>
         <source>Failed to get workouts (HTTP %1)</source>
         <translation>Не удалось получить тренировки (HTTP %1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11889"/>
+        <location filename="../homeform.cpp" line="11894"/>
         <source>Intervals.icu: %1</source>
         <translation>Intervals.icu: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11898"/>
+        <location filename="../homeform.cpp" line="11903"/>
         <source>Intervals.icu: Invalid response</source>
         <translation>Intervals.icu: неверный ответ</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11906"/>
+        <location filename="../homeform.cpp" line="11911"/>
         <source>No workouts planned for today on Intervals.icu</source>
         <translation>На сегодня в Intervals.icu тренировок нет</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11976"/>
+        <location filename="../homeform.cpp" line="11981"/>
         <source>Workout saved: %1</source>
         <translation>Тренировка сохранена: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11979"/>
+        <location filename="../homeform.cpp" line="11984"/>
         <source>Failed to save workout file</source>
         <translation>Не удалось сохранить файл тренировки</translation>
     </message>
@@ -1238,7 +1238,7 @@ Do you want to update QZ settings?</source>
     <message>
         <location filename="../devices/moxy5sensor/moxy5sensor.cpp" line="76"/>
         <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
-        <translation>SmO2 сейчас: %1%, предыдущее SmO2: %2%, THb: %3 g/dL</translation>
+        <translation>SmO2 сейчас: %1%, предыдущее SmO2: %2%, THb: %3 г/дл</translation>
     </message>
     <message>
         <location filename="../devices/nordictrackelliptical/nordictrackelliptical.cpp" line="685"/>
@@ -1319,12 +1319,12 @@ Do you want to update QZ settings?</source>
     <message>
         <location filename="../trainprogram.cpp" line="1408"/>
         <source>Ride until heart rate is above %1 bpm</source>
-        <translation>Продолжайте, пока пульс не станет выше %1 bpm</translation>
+        <translation>Продолжайте, пока пульс не станет выше %1 уд/мин</translation>
     </message>
     <message>
         <location filename="../trainprogram.cpp" line="1410"/>
         <source>Ride until heart rate is below %1 bpm</source>
-        <translation>Продолжайте, пока пульс не станет ниже %1 bpm</translation>
+        <translation>Продолжайте, пока пульс не станет ниже %1 уд/мин</translation>
     </message>
     <message>
         <location filename="../trainprogram.cpp" line="1459"/>
@@ -1916,7 +1916,7 @@ Do you want to update QZ settings?</source>
     <message>
         <location filename="../webtranslation.cpp" line="67"/>
         <source>HR Loop (s)</source>
-        <translation>Цикл по пульсу (s)</translation>
+        <translation>Цикл по пульсу (с)</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="68"/>
@@ -1982,12 +1982,12 @@ Do you want to update QZ settings?</source>
     <message>
         <location filename="../webtranslation.cpp" line="80"/>
         <source>Speed (mph)</source>
-        <translation>Скорость (mph)</translation>
+        <translation>Скорость (миль/ч)</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="81"/>
         <source>Speed (km/h)</source>
-        <translation>Скорость (km/h)</translation>
+        <translation>Скорость (км/ч)</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="82"/>
@@ -1997,12 +1997,12 @@ Do you want to update QZ settings?</source>
     <message>
         <location filename="../webtranslation.cpp" line="83"/>
         <source>Cadence (rpm)</source>
-        <translation>Каденс (rpm)</translation>
+        <translation>Каденс (об/мин)</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="84"/>
         <source>Power (W)</source>
-        <translation>Мощность (W)</translation>
+        <translation>Мощность (Вт)</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="85"/>
@@ -2302,7 +2302,7 @@ Do you want to update QZ settings?</source>
     <message>
         <location filename="../webtranslation.cpp" line="144"/>
         <source>Cadence (RPM)</source>
-        <translation>Каденс (RPM)</translation>
+        <translation>Каденс (об/мин)</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="145"/>
@@ -2383,12 +2383,12 @@ Do you want to update QZ settings?</source>
     <message>
         <location filename="../webtranslation.cpp" line="161"/>
         <source>Target Speed (km/h)</source>
-        <translation>Целевая скорость (km/h)</translation>
+        <translation>Целевая скорость (км/ч)</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="162"/>
         <source>Target Speed (mph)</source>
-        <translation>Целевая скорость (mph)</translation>
+        <translation>Целевая скорость (миль/ч)</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="163"/>
@@ -2463,12 +2463,12 @@ Do you want to update QZ settings?</source>
     <message>
         <location filename="../webtranslation.cpp" line="177"/>
         <source>HR &gt;{value} bpm</source>
-        <translation>Пульс &gt;{value} bpm</translation>
+        <translation>Пульс &gt;{value} уд/мин</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="178"/>
         <source>HR &lt;{value} bpm</source>
-        <translation>Пульс &lt;{value} bpm</translation>
+        <translation>Пульс &lt;{value} уд/мин</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="179"/>
@@ -2709,17 +2709,17 @@ Do you want to update QZ settings?</source>
 <context>
     <name>Wizard</name>
     <message>
-        <location filename="../Wizard.qml" line="123"/>
+        <location filename="../Wizard.qml" line="121"/>
         <source>Welcome to QZ</source>
         <translation>Добро пожаловать в QZ</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="134"/>
+        <location filename="../Wizard.qml" line="132"/>
         <source>Created by Roberto Viola</source>
         <translation>Автор – Roberto Viola</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="141"/>
+        <location filename="../Wizard.qml" line="139"/>
         <source>QZ is designed to maximize your workout experience on a range of fitness equipment, including indoor bikes, treadmills, ellipticals, and rower. By connecting seamlessly with your devices, QZ provides realtime data, personalized workout plans, and interactive elements to keep you motivated.
 
 The following questions will customize QZ for your equipment and goals.</source>
@@ -2728,242 +2728,242 @@ The following questions will customize QZ for your equipment and goals.</source>
 Следующие вопросы помогут настроить QZ под ваш тренажёр и цели.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="152"/>
+        <location filename="../Wizard.qml" line="150"/>
         <source>Start</source>
         <translation>Старт</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="188"/>
+        <location filename="../Wizard.qml" line="184"/>
         <source>How can I help you?</source>
         <translation>Чем я могу помочь?</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="196"/>
+        <location filename="../Wizard.qml" line="192"/>
         <source>First-time setup</source>
         <translation>Первоначальная настройка</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="205"/>
+        <location filename="../Wizard.qml" line="201"/>
         <source>Help with a specific feature</source>
         <translation>Помощь с конкретной функцией</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="214"/>
+        <location filename="../Wizard.qml" line="210"/>
         <source>I&apos;m fine, thanks.</source>
         <translation>Всё в порядке, спасибо.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="252"/>
+        <location filename="../Wizard.qml" line="246"/>
         <source>What&apos;s your fitness device?</source>
         <translation>Какой у вас тренажёр?</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="259"/>
+        <location filename="../Wizard.qml" line="253"/>
         <source>Bike</source>
         <translation>Велотренажёр</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="259"/>
+        <location filename="../Wizard.qml" line="253"/>
         <source>Treadmill</source>
         <translation>Беговая дорожка</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="259"/>
+        <location filename="../Wizard.qml" line="253"/>
         <source>Rower</source>
         <translation>Гребной тренажёр</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="259"/>
+        <location filename="../Wizard.qml" line="253"/>
         <source>Elliptical</source>
         <translation>Эллиптический тренажёр</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="282"/>
-        <location filename="../Wizard.qml" line="367"/>
-        <location filename="../Wizard.qml" line="444"/>
-        <location filename="../Wizard.qml" line="534"/>
-        <location filename="../Wizard.qml" line="611"/>
-        <location filename="../Wizard.qml" line="668"/>
-        <location filename="../Wizard.qml" line="748"/>
-        <location filename="../Wizard.qml" line="860"/>
-        <location filename="../Wizard.qml" line="960"/>
-        <location filename="../Wizard.qml" line="1026"/>
-        <location filename="../Wizard.qml" line="1091"/>
-        <location filename="../Wizard.qml" line="1238"/>
-        <location filename="../Wizard.qml" line="1312"/>
-        <location filename="../Wizard.qml" line="1443"/>
-        <location filename="../Wizard.qml" line="1605"/>
+        <location filename="../Wizard.qml" line="276"/>
+        <location filename="../Wizard.qml" line="359"/>
+        <location filename="../Wizard.qml" line="434"/>
+        <location filename="../Wizard.qml" line="522"/>
+        <location filename="../Wizard.qml" line="597"/>
+        <location filename="../Wizard.qml" line="652"/>
+        <location filename="../Wizard.qml" line="730"/>
+        <location filename="../Wizard.qml" line="840"/>
+        <location filename="../Wizard.qml" line="938"/>
+        <location filename="../Wizard.qml" line="1002"/>
+        <location filename="../Wizard.qml" line="1065"/>
+        <location filename="../Wizard.qml" line="1208"/>
+        <location filename="../Wizard.qml" line="1280"/>
+        <location filename="../Wizard.qml" line="1409"/>
+        <location filename="../Wizard.qml" line="1569"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="317"/>
+        <location filename="../Wizard.qml" line="309"/>
         <source>Choose your preferred app</source>
         <translation>Выберите приложение</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="325"/>
+        <location filename="../Wizard.qml" line="317"/>
         <source>QZ allows you to connect to both of them, even simultaneously if you want!</source>
         <translation>QZ может подключаться к обоим, даже одновременно, если хотите!</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="340"/>
+        <location filename="../Wizard.qml" line="332"/>
         <source>Other app</source>
         <translation>Другое</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="340"/>
+        <location filename="../Wizard.qml" line="332"/>
         <source>QZ Standalone</source>
         <translation>Только QZ</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="402"/>
+        <location filename="../Wizard.qml" line="392"/>
         <source>Connect to Peloton</source>
         <translation>Подключить Peloton</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="410"/>
+        <location filename="../Wizard.qml" line="400"/>
         <source>Click the button below to connect your Peloton account</source>
         <translation>Нажмите кнопку ниже, чтобы подключить учётную запись Peloton</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="479"/>
+        <location filename="../Wizard.qml" line="467"/>
         <source>Peloton Difficulty</source>
         <translation>Сложность Peloton</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="486"/>
+        <location filename="../Wizard.qml" line="474"/>
         <source>Typically, Peloton coaches call out a range for target incline, resistance and/or speed. Use this setting to choose the difficulty of the target QZ communicates. Difficulty level can be set to lower, upper or average</source>
         <translation>Обычно тренеры Peloton называют диапазон целевого наклона, сопротивления и/или скорости. Эта настройка определяет, какую цель из диапазона будет передавать QZ: «нижняя граница», «верхняя граница» или «среднее»</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="500"/>
+        <location filename="../Wizard.qml" line="488"/>
         <source>Difficulty</source>
         <translation>Сложность</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="509"/>
+        <location filename="../Wizard.qml" line="497"/>
         <source>lower</source>
         <translation>нижняя граница</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="509"/>
+        <location filename="../Wizard.qml" line="497"/>
         <source>upper</source>
         <translation>верхняя граница</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="509"/>
+        <location filename="../Wizard.qml" line="497"/>
         <source>average</source>
         <translation>среднее</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="521"/>
-        <location filename="../Wizard.qml" line="674"/>
-        <location filename="../Wizard.qml" line="966"/>
-        <location filename="../Wizard.qml" line="1032"/>
-        <location filename="../Wizard.qml" line="1097"/>
+        <location filename="../Wizard.qml" line="509"/>
+        <location filename="../Wizard.qml" line="658"/>
+        <location filename="../Wizard.qml" line="944"/>
+        <location filename="../Wizard.qml" line="1008"/>
+        <location filename="../Wizard.qml" line="1071"/>
         <source>Finish</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="569"/>
+        <location filename="../Wizard.qml" line="555"/>
         <source>Bike Resistance Level</source>
         <translation>Уровень сопротивления велотренажёра</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="577"/>
+        <location filename="../Wizard.qml" line="563"/>
         <source>What resistance level feels like a flat road on your bike?</source>
         <translation>Какой уровень сопротивления на вашем велотренажёре ощущается как ровная дорога?</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="601"/>
-        <location filename="../Wizard.qml" line="849"/>
-        <location filename="../Wizard.qml" line="1229"/>
-        <location filename="../Wizard.qml" line="1303"/>
-        <location filename="../Wizard.qml" line="1432"/>
-        <location filename="../Wizard.qml" line="1595"/>
+        <location filename="../Wizard.qml" line="587"/>
+        <location filename="../Wizard.qml" line="829"/>
+        <location filename="../Wizard.qml" line="1199"/>
+        <location filename="../Wizard.qml" line="1271"/>
+        <location filename="../Wizard.qml" line="1398"/>
+        <location filename="../Wizard.qml" line="1559"/>
         <source>Next</source>
         <translation>Далее</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="646"/>
-        <location filename="../Wizard.qml" line="1070"/>
+        <location filename="../Wizard.qml" line="630"/>
+        <location filename="../Wizard.qml" line="1044"/>
         <source>Custom Configurations</source>
         <translation>Индивидуальные настройки</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="654"/>
+        <location filename="../Wizard.qml" line="638"/>
         <source>Here you will see custom configurations based on your previous choices.</source>
         <translation>Здесь появятся настройки, подобранные по вашим ответам.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="709"/>
+        <location filename="../Wizard.qml" line="691"/>
         <source>Select a feature</source>
         <translation>Выберите функцию</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="718"/>
+        <location filename="../Wizard.qml" line="700"/>
         <source>Auto-incline with treadmill and Zwift</source>
         <translation>Авто-наклон с беговой дорожкой и Zwift</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="719"/>
+        <location filename="../Wizard.qml" line="701"/>
         <source>Auto-resistance with Peloton</source>
         <translation>Авто-сопротивление с Peloton</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="720"/>
+        <location filename="../Wizard.qml" line="702"/>
         <source>Zwift Click or Zwift Play</source>
         <translation>Zwift Click или Zwift Play</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="721"/>
-        <location filename="../Wizard.qml" line="1004"/>
+        <location filename="../Wizard.qml" line="703"/>
+        <location filename="../Wizard.qml" line="980"/>
         <source>Virtual Shifting</source>
         <translation>Виртуальное переключение передач</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="783"/>
+        <location filename="../Wizard.qml" line="763"/>
         <source>Zwift Credentials</source>
         <translation>Учётные данные Zwift</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="791"/>
+        <location filename="../Wizard.qml" line="771"/>
         <source>QZ will read the inclination in real time from the Zwift app and will adjust the inclination on your treadmill. It doesn&apos;t work on workout</source>
         <translation>QZ будет в реальном времени считывать наклон из приложения Zwift и менять наклон вашей беговой дорожки. В структурированных тренировках Zwift не работает</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="804"/>
+        <location filename="../Wizard.qml" line="784"/>
         <source>Username</source>
         <translation>Имя пользователя</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="825"/>
+        <location filename="../Wizard.qml" line="805"/>
         <source>Password</source>
         <translation>Пароль</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="895"/>
+        <location filename="../Wizard.qml" line="873"/>
         <source>Zwift Play and Click</source>
         <translation>Zwift Play и Click</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="904"/>
+        <location filename="../Wizard.qml" line="882"/>
         <source>Enable the one that you would like to use directly with QZ. Remember to update their firmware before using it.</source>
         <translation>Включите устройство, которое хотите использовать напрямую с QZ. Не забудьте перед этим обновить его прошивку.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="913"/>
+        <location filename="../Wizard.qml" line="891"/>
         <source>Zwift Click</source>
         <translation>Zwift Click</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="929"/>
+        <location filename="../Wizard.qml" line="907"/>
         <source>Zwift Play</source>
         <translation>Zwift Play</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="946"/>
+        <location filename="../Wizard.qml" line="924"/>
         <source>Correct startup phase:
 
 1. close any app that can connect to your Zwift devices
@@ -2980,131 +2980,141 @@ The following questions will customize QZ for your equipment and goals.</source>
 5. теперь при переключении передачи на устройстве Zwift вы увидите реакцию на плитке передач в qz, а значит, и на тренажёре.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1012"/>
+        <location filename="../Wizard.qml" line="988"/>
         <source>Virtual shifting enabled! You can change gears using the gears tile in QZ directly, or you can also add a bluetooth remote or a Zwift Play or a Zwift Click to control it!</source>
         <translation>Виртуальное переключение передач включено! Передачи можно переключать прямо на плитке передач в QZ, а для управления можно добавить Bluetooth-пульт, Zwift Play или Zwift Click!</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1078"/>
+        <location filename="../Wizard.qml" line="1052"/>
         <source>Here you will see custom configurations based on the selected feature.</source>
         <translation>Здесь появятся настройки для выбранной функции.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1132"/>
+        <location filename="../Wizard.qml" line="1104"/>
         <source>Thank you for setting up QZ!</source>
         <translation>Спасибо, что настроили QZ!</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1140"/>
+        <location filename="../Wizard.qml" line="1112"/>
         <source>If you have any questions or need further assistance, feel free to write to me at roberto.viola83@gmail.com. You can also restart this wizard from the left side bar menu. To apply some changes, you may need to restart the app.</source>
         <translation>Если у вас есть вопросы или нужна помощь, пишите мне на roberto.viola83@gmail.com. Этот мастер можно запустить снова из меню на левой боковой панели. Чтобы некоторые изменения вступили в силу, может потребоваться перезапуск приложения.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1157"/>
+        <location filename="../Wizard.qml" line="1129"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1194"/>
+        <location filename="../Wizard.qml" line="1164"/>
         <source>Select Your Fitness Device</source>
         <translation>Выберите ваш тренажёр</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1205"/>
-        <location filename="../Wizard.qml" line="1501"/>
+        <location filename="../Wizard.qml" line="1175"/>
+        <location filename="../Wizard.qml" line="1465"/>
         <source>Disabled</source>
         <translation>Отключено</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1218"/>
-        <location filename="../Wizard.qml" line="1515"/>
+        <location filename="../Wizard.qml" line="1188"/>
+        <location filename="../Wizard.qml" line="1479"/>
         <source>Refresh</source>
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1274"/>
+        <location filename="../Wizard.qml" line="1242"/>
         <source>Unit System</source>
         <translation>Система единиц</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1285"/>
+        <location filename="../Wizard.qml" line="1253"/>
         <source>Select your preferred unit system</source>
         <translation>Выберите систему единиц</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1293"/>
+        <location filename="../Wizard.qml" line="1261"/>
         <source>Metric</source>
         <translation>Метрическая</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1293"/>
+        <location filename="../Wizard.qml" line="1261"/>
         <source>Imperial</source>
         <translation>Имперская</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1348"/>
+        <location filename="../Wizard.qml" line="1314"/>
         <source>User Information</source>
         <translation>Данные пользователя</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1359"/>
+        <location filename="../Wizard.qml" line="1325"/>
         <source>Weight (%1)</source>
         <translation>Вес (%1)</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1393"/>
+        <location filename="../Wizard.qml" line="1325"/>
+        <source>lbs</source>
+        <translation>фунт</translation>
+    </message>
+    <message>
+        <location filename="../Wizard.qml" line="1325"/>
+        <source>kg</source>
+        <translation>кг</translation>
+    </message>
+    <message>
+        <location filename="../Wizard.qml" line="1359"/>
         <source>Age</source>
         <translation>Возраст</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1412"/>
+        <location filename="../Wizard.qml" line="1378"/>
         <source>Gender</source>
         <translation>Пол</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1421"/>
+        <location filename="../Wizard.qml" line="1387"/>
         <source>Male</source>
         <translation>Мужской</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1421"/>
+        <location filename="../Wizard.qml" line="1387"/>
         <source>Female</source>
         <translation>Женский</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1479"/>
+        <location filename="../Wizard.qml" line="1443"/>
         <source>Select Your Heart Rate Device</source>
         <translation>Выберите пульсометр</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1487"/>
+        <location filename="../Wizard.qml" line="1451"/>
         <source>Choose your heart rate belt or select a smartwatch option:</source>
         <translation>Выберите нагрудный пульсометр или вариант со смарт-часами:</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1524"/>
+        <location filename="../Wizard.qml" line="1488"/>
         <source>Or select a smartwatch option:</source>
         <translation>Или выберите вариант со смарт-часами:</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1532"/>
+        <location filename="../Wizard.qml" line="1496"/>
         <source>Apple Watch</source>
         <translation>Apple Watch</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1545"/>
-        <location filename="../Wizard.qml" line="1565"/>
-        <location filename="../Wizard.qml" line="1585"/>
+        <location filename="../Wizard.qml" line="1509"/>
+        <location filename="../Wizard.qml" line="1529"/>
+        <location filename="../Wizard.qml" line="1549"/>
         <source>Download the QZ Companion App there</source>
         <translation>Установите на них приложение QZ Companion</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1552"/>
+        <location filename="../Wizard.qml" line="1516"/>
         <source>Wear OS watch</source>
         <translation>Часы на Wear OS</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1572"/>
+        <location filename="../Wizard.qml" line="1536"/>
         <source>Garmin watch</source>
         <translation>Часы Garmin</translation>
     </message>
@@ -3561,613 +3571,680 @@ This may take a few moments on first startup.</source>
 <context>
     <name>homeform</name>
     <message>
-        <location filename="../homeform.cpp" line="524"/>
+        <location filename="../homeform.cpp" line="529"/>
         <source>Speed (%1/h)</source>
-        <translation>Скорость (%1/h)</translation>
+        <translation>Скорость (%1/ч)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="527"/>
+        <location filename="../homeform.cpp" line="532"/>
         <source>Inclination (%)</source>
         <translation>Наклон (%)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="529"/>
+        <location filename="../homeform.cpp" line="534"/>
         <source>Descent (%1)</source>
         <translation>Спуск (%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="531"/>
+        <location filename="../homeform.cpp" line="536"/>
         <source>Cadence (rpm)</source>
-        <translation>Каденс (rpm)</translation>
+        <translation>Каденс (об/мин)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="533"/>
+        <location filename="../homeform.cpp" line="538"/>
         <source>Elev. Gain (%1)</source>
         <translation>Набор выс. (%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="536"/>
+        <location filename="../homeform.cpp" line="541"/>
         <source>Calories (KCal)</source>
-        <translation>Калории (KCal)</translation>
+        <translation>Калории (ккал)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="538"/>
+        <location filename="../homeform.cpp" line="543"/>
         <source>Odometer (%1)</source>
         <translation>Пробег (%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="542"/>
+        <location filename="../homeform.cpp" line="547"/>
         <source>Pace (m/%1)</source>
-        <translation>Темп (m/%1)</translation>
+        <translation>Темп (мин/%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="546"/>
+        <location filename="../homeform.cpp" line="551"/>
         <source>Avg Pace (m/%1)</source>
-        <translation>Ср. темп (m/%1)</translation>
-    </message>
-    <message>
-        <location filename="../homeform.cpp" line="550"/>
-        <source>GAP (m/%1)</source>
-        <translation>GAP (m/%1)</translation>
+        <translation>Ср. темп (мин/%1)</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="555"/>
+        <source>GAP (m/%1)</source>
+        <translation>GAP (мин/%1)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="560"/>
         <source>T.Pace(m/%1)</source>
-        <translation>Ц.темп(m/%1)</translation>
+        <translation>Ц.темп(мин/%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="558"/>
+        <location filename="../homeform.cpp" line="563"/>
         <source>Pace 500m (m/%1)</source>
-        <translation>Темп 500m (m/%1)</translation>
+        <translation>Темп 500 м (мин/%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="562"/>
+        <location filename="../homeform.cpp" line="567"/>
         <source>Resistance</source>
         <translation>Сопротивление</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="565"/>
+        <location filename="../homeform.cpp" line="570"/>
         <source>Peloton R(%)</source>
         <translation>Сопр.Peloton(%)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="568"/>
+        <location filename="../homeform.cpp" line="573"/>
         <source>Target R.</source>
         <translation>Цель сопр.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="571"/>
+        <location filename="../homeform.cpp" line="576"/>
         <source>T.Peloton R(%)</source>
         <translation>Ц.сопр.Peloton(%)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="573"/>
+        <location filename="../homeform.cpp" line="578"/>
         <source>T.Cadence(rpm)</source>
-        <translation>Ц.каденс(rpm)</translation>
+        <translation>Ц.каденс(об/мин)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="575"/>
+        <location filename="../homeform.cpp" line="580"/>
         <source>T.Power(W)</source>
-        <translation>Ц.мощн.(W)</translation>
+        <translation>Ц.мощн.(Вт)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="577"/>
+        <location filename="../homeform.cpp" line="582"/>
         <source>T.Zone</source>
         <translation>Ц.зона</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="579"/>
+        <location filename="../homeform.cpp" line="584"/>
         <source>T.Speed (%1/h)</source>
-        <translation>Ц.скорость (%1/h)</translation>
+        <translation>Ц.скорость (%1/ч)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="583"/>
+        <location filename="../homeform.cpp" line="588"/>
         <source>T.Incline (%)</source>
         <translation>Ц.наклон (%)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="588"/>
+        <location filename="../homeform.cpp" line="593"/>
         <source>Weight Loss(%1)</source>
         <translation>Потеря веса(%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="593"/>
+        <location filename="../homeform.cpp" line="598"/>
         <source>AVG Watt Lap</source>
         <translation>Ср. мощн. круга</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="595"/>
+        <location filename="../homeform.cpp" line="600"/>
         <source>Watt/Kg</source>
-        <translation>W/kg</translation>
+        <translation>Вт/кг</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="597"/>
+        <location filename="../homeform.cpp" line="602"/>
         <source>FTP Zone</source>
         <translation>Зона FTP</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="599"/>
+        <location filename="../homeform.cpp" line="604"/>
         <source>Heart (bpm)</source>
-        <translation>Пульс (bpm)</translation>
+        <translation>Пульс (уд/мин)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="601"/>
+        <location filename="../homeform.cpp" line="606"/>
         <source>Fan Speed</source>
         <translation>Вентилятор</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="603"/>
+        <location filename="../homeform.cpp" line="608"/>
         <source>KJouls</source>
-        <translation>Работа (kJ)</translation>
+        <translation>Работа (кДж)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="606"/>
+        <location filename="../homeform.cpp" line="611"/>
         <source>Elapsed</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="609"/>
+        <location filename="../homeform.cpp" line="614"/>
         <source>Moving T.</source>
         <translation>В движении</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="611"/>
+        <location filename="../homeform.cpp" line="616"/>
         <source>Clock</source>
         <translation>Часы</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="614"/>
+        <location filename="../homeform.cpp" line="619"/>
         <source>Lap Elapsed</source>
         <translation>Время круга</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="618"/>
+        <location filename="../homeform.cpp" line="623"/>
         <source>Time to Next</source>
         <translation>До следующего</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="622"/>
+        <location filename="../homeform.cpp" line="627"/>
         <source>Next Rows</source>
         <translation>След. строки</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="625"/>
+        <location filename="../homeform.cpp" line="630"/>
         <source>METS</source>
         <translation>METS</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="627"/>
+        <location filename="../homeform.cpp" line="632"/>
         <source>Target METS</source>
         <translation>Цель METS</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="629"/>
+        <location filename="../homeform.cpp" line="634"/>
         <source>RSS</source>
         <translation>RSS</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="631"/>
+        <location filename="../homeform.cpp" line="636"/>
         <source>Steering</source>
         <translation>Руль</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="634"/>
+        <location filename="../homeform.cpp" line="639"/>
         <source>Peloton Offset</source>
         <translation>Смещение Peloton</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="637"/>
+        <location filename="../homeform.cpp" line="642"/>
         <source>Peloton Rem.</source>
         <translation>Ост. Peloton</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="639"/>
+        <location filename="../homeform.cpp" line="644"/>
         <source>Strokes Count</source>
         <translation>Число гребков</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="641"/>
+        <location filename="../homeform.cpp" line="646"/>
         <source>Strokes Length</source>
         <translation>Длина гребка</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="643"/>
+        <location filename="../homeform.cpp" line="648"/>
         <source>Gears</source>
         <translation>Передачи</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="645"/>
+        <location filename="../homeform.cpp" line="650"/>
         <source>GearsPlus</source>
         <translation>Передача+</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="647"/>
+        <location filename="../homeform.cpp" line="652"/>
         <source>GearsMinus</source>
         <translation>Передача-</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="649"/>
+        <location filename="../homeform.cpp" line="654"/>
         <source>Cruise</source>
         <translation>Круиз</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="651"/>
+        <location filename="../homeform.cpp" line="656"/>
         <source>Climb</source>
         <translation>Подъём</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="586"/>
+        <location filename="../homeform.cpp" line="591"/>
         <source>Watts</source>
         <translation>Мощность</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="591"/>
+        <location filename="../homeform.cpp" line="473"/>
+        <source>km</source>
+        <translation>км</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="474"/>
+        <source>m</source>
+        <comment>unit: meters</comment>
+        <translation>м</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="475"/>
+        <source>Kg</source>
+        <translation>кг</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="476"/>
+        <source>cm</source>
+        <translation>см</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="478"/>
+        <source>mi</source>
+        <translation>миль</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="479"/>
+        <source>ft</source>
+        <translation>фут</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="480"/>
+        <source>in</source>
+        <comment>unit: inches</comment>
+        <translation>дюйм</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="484"/>
+        <source>Oz</source>
+        <translation>унц.</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="596"/>
         <source>AVG Watts</source>
         <translation>Ср. мощность</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="655"/>
+        <location filename="../homeform.cpp" line="660"/>
         <source>Power Avg</source>
         <translation>Ср. мощность</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="659"/>
+        <location filename="../homeform.cpp" line="662"/>
+        <source>HRV (ms)</source>
+        <translation>ВСР (мс)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="664"/>
         <source>PID Heart</source>
         <translation>PID пульса</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="661"/>
+        <location filename="../homeform.cpp" line="666"/>
         <source>Ext.Inclin.(%)</source>
         <translation>Внеш.накл.(%)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="664"/>
+        <location filename="../homeform.cpp" line="669"/>
         <source>Stride L.(%1)</source>
         <translation>Дл.шага(%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="666"/>
+        <location filename="../homeform.cpp" line="671"/>
         <source>Ground C.(ms)</source>
-        <translation>Контакт(ms)</translation>
+        <translation>Контакт(мс)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="669"/>
+        <location filename="../homeform.cpp" line="674"/>
         <source>Vert.Osc.(mm)</source>
-        <translation>Верт.кол.(mm)</translation>
+        <translation>Верт.кол.(мм)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="673"/>
+        <location filename="../homeform.cpp" line="678"/>
         <source>Step Count</source>
         <translation>Шаги</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6036"/>
+        <location filename="../homeform.cpp" line="3488"/>
+        <source>Odometer (m)</source>
+        <translation>Пробег (м)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3609"/>
+        <source>Pace (m/500m)</source>
+        <translation>Темп (мин/500 м)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3616"/>
+        <source>Avg Pace (m/500m)</source>
+        <translation>Ср. темп (мин/500 м)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3680"/>
+        <source>T.Pace(m/500m)</source>
+        <translation>Ц.темп(мин/500 м)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6041"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6048"/>
+        <location filename="../homeform.cpp" line="6053"/>
         <source>Start</source>
         <translation>Старт</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6050"/>
+        <location filename="../homeform.cpp" line="6055"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6690"/>
-        <location filename="../homeform.cpp" line="6842"/>
-        <location filename="../homeform.cpp" line="7030"/>
+        <location filename="../homeform.cpp" line="6695"/>
+        <location filename="../homeform.cpp" line="6847"/>
+        <location filename="../homeform.cpp" line="7035"/>
         <source>Rec.</source>
         <translation>Восст.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6693"/>
-        <location filename="../homeform.cpp" line="6845"/>
-        <location filename="../homeform.cpp" line="7033"/>
+        <location filename="../homeform.cpp" line="6698"/>
+        <location filename="../homeform.cpp" line="6850"/>
+        <location filename="../homeform.cpp" line="7038"/>
         <source>Easy</source>
         <translation>Лёгкий</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6697"/>
+        <location filename="../homeform.cpp" line="6702"/>
         <source>Brisk</source>
         <translation>Бодрый</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6699"/>
-        <location filename="../homeform.cpp" line="6848"/>
-        <location filename="../homeform.cpp" line="7036"/>
+        <location filename="../homeform.cpp" line="6704"/>
+        <location filename="../homeform.cpp" line="6853"/>
+        <location filename="../homeform.cpp" line="7041"/>
         <source>Moder.</source>
         <translation>Умерен.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6704"/>
+        <location filename="../homeform.cpp" line="6709"/>
         <source>Power</source>
         <translation>Мощность</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6706"/>
-        <location filename="../homeform.cpp" line="6851"/>
-        <location filename="../homeform.cpp" line="7039"/>
+        <location filename="../homeform.cpp" line="6711"/>
+        <location filename="../homeform.cpp" line="6856"/>
+        <location filename="../homeform.cpp" line="7044"/>
         <source>Chall.</source>
         <translation>Напряж.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6711"/>
-        <location filename="../homeform.cpp" line="6720"/>
-        <location filename="../homeform.cpp" line="6860"/>
-        <location filename="../homeform.cpp" line="7042"/>
+        <location filename="../homeform.cpp" line="6716"/>
+        <location filename="../homeform.cpp" line="6725"/>
+        <location filename="../homeform.cpp" line="6865"/>
+        <location filename="../homeform.cpp" line="7047"/>
         <source>Max</source>
         <translation>Макс.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6713"/>
-        <location filename="../homeform.cpp" line="6854"/>
+        <location filename="../homeform.cpp" line="6718"/>
+        <location filename="../homeform.cpp" line="6859"/>
         <source>Hard</source>
         <translation>Тяжёлый</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6717"/>
-        <location filename="../homeform.cpp" line="6857"/>
+        <location filename="../homeform.cpp" line="6722"/>
+        <location filename="../homeform.cpp" line="6862"/>
         <source>V.Hard</source>
         <translation>Оч.тяж.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6723"/>
-        <location filename="../homeform.cpp" line="6863"/>
-        <location filename="../homeform.cpp" line="7045"/>
+        <location filename="../homeform.cpp" line="6728"/>
+        <location filename="../homeform.cpp" line="6868"/>
+        <location filename="../homeform.cpp" line="7050"/>
         <source>N/A</source>
         <translation>Н/Д</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8364"/>
+        <location filename="../homeform.cpp" line="8369"/>
         <source>, speed </source>
         <translation>, скорость </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8366"/>
-        <location filename="../homeform.cpp" line="8384"/>
-        <location filename="../homeform.cpp" line="8545"/>
-        <location filename="../homeform.cpp" line="8578"/>
+        <location filename="../homeform.cpp" line="8371"/>
+        <location filename="../homeform.cpp" line="8389"/>
+        <location filename="../homeform.cpp" line="8550"/>
+        <location filename="../homeform.cpp" line="8583"/>
         <source> kilometers per hour</source>
         <translation> километров в час</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8370"/>
-        <location filename="../homeform.cpp" line="8379"/>
-        <location filename="../homeform.cpp" line="8388"/>
-        <location filename="../homeform.cpp" line="8550"/>
-        <location filename="../homeform.cpp" line="8582"/>
+        <location filename="../homeform.cpp" line="8375"/>
+        <location filename="../homeform.cpp" line="8384"/>
+        <location filename="../homeform.cpp" line="8393"/>
+        <location filename="../homeform.cpp" line="8555"/>
+        <location filename="../homeform.cpp" line="8587"/>
         <source> miles per hour</source>
         <translation> миль в час</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8372"/>
+        <location filename="../homeform.cpp" line="8377"/>
         <source>, Average speed </source>
         <translation>, средняя скорость </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8375"/>
+        <location filename="../homeform.cpp" line="8380"/>
         <source>kilometers per hour</source>
         <translation> километров в час</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8381"/>
+        <location filename="../homeform.cpp" line="8386"/>
         <source>, Max speed </source>
         <translation>, максимальная скорость </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8391"/>
+        <location filename="../homeform.cpp" line="8396"/>
         <source>, inclination </source>
         <translation>, наклон </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8394"/>
+        <location filename="../homeform.cpp" line="8399"/>
         <source>, cadence </source>
         <translation>, каденс </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8397"/>
+        <location filename="../homeform.cpp" line="8402"/>
         <source>, Average cadence </source>
         <translation>, средний каденс </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8401"/>
+        <location filename="../homeform.cpp" line="8406"/>
         <source>, Max cadence </source>
         <translation>, максимальный каденс </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8406"/>
+        <location filename="../homeform.cpp" line="8411"/>
         <source>, elevation </source>
         <translation>, набор высоты </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8408"/>
+        <location filename="../homeform.cpp" line="8413"/>
         <source> meters</source>
         <translation> метров</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8412"/>
+        <location filename="../homeform.cpp" line="8417"/>
         <source> feet</source>
         <translation> футов</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8414"/>
+        <location filename="../homeform.cpp" line="8419"/>
         <source>, calories burned </source>
         <translation>, сожжено калорий </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8417"/>
+        <location filename="../homeform.cpp" line="8422"/>
         <source>, distance </source>
         <translation>, дистанция </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8419"/>
+        <location filename="../homeform.cpp" line="8424"/>
         <source>kilometers</source>
         <translation> километров</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8422"/>
+        <location filename="../homeform.cpp" line="8427"/>
         <source> miles</source>
         <translation> миль</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8426"/>
-        <location filename="../homeform.cpp" line="8430"/>
+        <location filename="../homeform.cpp" line="8431"/>
         <location filename="../homeform.cpp" line="8435"/>
-        <location filename="../homeform.cpp" line="8438"/>
-        <location filename="../homeform.cpp" line="8441"/>
+        <location filename="../homeform.cpp" line="8440"/>
+        <location filename="../homeform.cpp" line="8443"/>
+        <location filename="../homeform.cpp" line="8446"/>
         <source>, pace </source>
         <translation>, темп </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8445"/>
+        <location filename="../homeform.cpp" line="8450"/>
         <source>, resistance </source>
         <translation>, сопротивление </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8450"/>
+        <location filename="../homeform.cpp" line="8455"/>
         <source>, average resistance </source>
         <translation>, среднее сопротивление </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8454"/>
+        <location filename="../homeform.cpp" line="8459"/>
         <source>, max resistance </source>
         <translation>, максимальное сопротивление </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8457"/>
+        <location filename="../homeform.cpp" line="8462"/>
         <source>, watt </source>
         <translation>, мощность </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8460"/>
+        <location filename="../homeform.cpp" line="8465"/>
         <source>, average watt </source>
         <translation>, средняя мощность </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8463"/>
+        <location filename="../homeform.cpp" line="8468"/>
         <source>, max watt </source>
         <translation>, максимальная мощность </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8469"/>
+        <location filename="../homeform.cpp" line="8474"/>
         <source>, heart rate </source>
         <translation>, пульс </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8472"/>
+        <location filename="../homeform.cpp" line="8477"/>
         <source>, average heart rate </source>
         <translation>, средний пульс </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8475"/>
+        <location filename="../homeform.cpp" line="8480"/>
         <source>, max heart rate </source>
         <translation>, максимальный пульс </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8478"/>
+        <location filename="../homeform.cpp" line="8483"/>
         <source>, jouls </source>
         <translation>, джоули </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8481"/>
+        <location filename="../homeform.cpp" line="8486"/>
         <source>, elapsed </source>
         <translation>, прошло </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8483"/>
+        <location filename="../homeform.cpp" line="8488"/>
         <source> minutes </source>
         <translation> минут </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8485"/>
+        <location filename="../homeform.cpp" line="8490"/>
         <source> seconds</source>
         <translation> секунд</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8491"/>
+        <location filename="../homeform.cpp" line="8496"/>
         <source>, peloton resistance </source>
         <translation>, сопротивление Peloton </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8499"/>
+        <location filename="../homeform.cpp" line="8504"/>
         <source>, average peloton resistance </source>
         <translation>, среднее сопротивление Peloton </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8507"/>
+        <location filename="../homeform.cpp" line="8512"/>
         <source>, max peloton resistance </source>
         <translation>, максимальное сопротивление Peloton </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8515"/>
+        <location filename="../homeform.cpp" line="8520"/>
         <source>, target peloton resistance </source>
         <translation>, целевое сопротивление Peloton </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8523"/>
+        <location filename="../homeform.cpp" line="8528"/>
         <source>, target cadence </source>
         <translation>, целевой каденс </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8529"/>
+        <location filename="../homeform.cpp" line="8534"/>
         <source>, target power </source>
         <translation>, целевая мощность </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8535"/>
+        <location filename="../homeform.cpp" line="8540"/>
         <source>, target zone </source>
         <translation>, целевая зона </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8541"/>
+        <location filename="../homeform.cpp" line="8546"/>
         <source>, target speed </source>
         <translation>, целевая скорость </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8555"/>
+        <location filename="../homeform.cpp" line="8560"/>
         <source>, target incline </source>
         <translation>, целевой наклон </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8560"/>
+        <location filename="../homeform.cpp" line="8565"/>
         <source>, watt for kilograms </source>
         <translation>, ватт на килограмм </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8563"/>
+        <location filename="../homeform.cpp" line="8568"/>
         <source>, average watt for kilograms</source>
         <translation>, средняя мощность на килограмм </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8566"/>
+        <location filename="../homeform.cpp" line="8571"/>
         <source>, max watt for kilograms</source>
         <translation>, максимальная мощность на килограмм </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8576"/>
+        <location filename="../homeform.cpp" line="8581"/>
         <source>speed changed to</source>
         <translation>скорость изменена на </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="9671"/>
+        <location filename="../homeform.cpp" line="9676"/>
         <source>JSON parser error</source>
         <translation>Ошибка разбора JSON</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="9958"/>
+        <location filename="../homeform.cpp" line="9963"/>
         <source>Error retrieving access token, %1 (%2)</source>
         <translation>Ошибка получения токена доступа, %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11232"/>
+        <location filename="../homeform.cpp" line="11237"/>
         <source>License Approved!</source>
         <translation>Лицензия подтверждена!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11237"/>
+        <location filename="../homeform.cpp" line="11242"/>
         <source>License not found</source>
         <translation>Лицензия не найдена</translation>
     </message>
@@ -5340,14 +5417,36 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>Вес</translation>
     </message>
     <message>
+        <location filename="../settings.qml" line="2222"/>
+        <location filename="../settings.qml" line="3391"/>
+        <source>lbs</source>
+        <translation>фунт</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2222"/>
+        <location filename="../settings.qml" line="3391"/>
+        <source>kg</source>
+        <translation>кг</translation>
+    </message>
+    <message>
         <location filename="../settings.qml" line="2243"/>
         <source>Enter your weight in kilograms so QZ can more accurately calculate calories burned. NOTE: If you choose to use miles as the unit for distance traveled, you will be asked to enter your weight in pounds (lbs) unless you enable &apos;Use kg for weight&apos;.</source>
-        <translation>Введите свой вес в килограммах, чтобы QZ точнее рассчитывал сожжённые калории. ПРИМЕЧАНИЕ: если для дистанции выбраны мили, вес нужно будет вводить в фунтах (lbs), если не включена настройка «Вес в килограммах».</translation>
+        <translation>Введите свой вес в килограммах, чтобы QZ точнее рассчитывал сожжённые калории. ПРИМЕЧАНИЕ: если для дистанции выбраны мили, вес нужно будет вводить в фунтах, если не включена настройка «Вес в килограммах».</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="2259"/>
         <source>Player Height</source>
         <translation>Рост</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2259"/>
+        <source>ft/in</source>
+        <translation>фут/дюйм</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2259"/>
+        <source>cm</source>
+        <translation>см</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="2291"/>
@@ -5447,7 +5546,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="2586"/>
         <source>Turn on if you want to use kilograms (kg) for weight instead of pounds (lbs). Useful for UK users who use miles for distance but kg for weight.</source>
-        <translation>Включите, чтобы указывать вес в килограммах (kg), а не в фунтах (lbs). Удобно, например, в Великобритании, где дистанцию меряют в милях, а вес – в килограммах.</translation>
+        <translation>Включите, чтобы указывать вес в килограммах, а не в фунтах. Удобно, например, в Великобритании, где дистанцию меряют в милях, а вес – в килограммах.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="2601"/>
@@ -5649,7 +5748,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="3085"/>
         <source>Enter your resting heart rate (the lowest your heart rate reaches when fully rested). This is used for accurate training load calculations. Default is 60 bpm.</source>
-        <translation>Введите свой пульс в покое (самое низкое значение пульса при полном отдыхе). Он нужен для точного расчёта тренировочной нагрузки. По умолчанию – 60 bpm.</translation>
+        <translation>Введите свой пульс в покое (самое низкое значение пульса при полном отдыхе). Он нужен для точного расчёта тренировочной нагрузки. По умолчанию – 60 уд/мин.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="3101"/>
@@ -5679,7 +5778,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="3209"/>
         <source>Expand the bars to the right to display the options under this setting. These settings are used to calculate power (watts) for bikes that do not have power meters. Instead QZ estimates power from your cadence and heart rate. You can calibrate how QZ calculates your power from heart rate as follows: If you know that at a stable pace you produce 100W of power at a heart rate of 150 BPM and 150W at 170 BPM, you can add these values under Sessions 1 and 2 Watt and HR and QZ will calculate your power based on that trend line.</source>
-        <translation>Разверните раздел значком справа, чтобы увидеть его параметры. Эти параметры нужны для расчёта мощности (в ваттах) на велотренажёрах без измерителя мощности: QZ оценивает мощность по каденсу и пульсу. Расчёт мощности по пульсу можно откалибровать так: если вы знаете, что в ровном темпе выдаёте 100 W при пульсе 150 bpm и 150 W при 170 bpm, введите эти значения в поля «Замер 1» и «Замер 2» (мощность и пульс), и QZ будет рассчитывать мощность по этой линии тренда.</translation>
+        <translation>Разверните раздел значком справа, чтобы увидеть его параметры. Эти параметры нужны для расчёта мощности (в ваттах) на велотренажёрах без измерителя мощности: QZ оценивает мощность по каденсу и пульсу. Расчёт мощности по пульсу можно откалибровать так: если вы знаете, что в ровном темпе выдаёте 100 Вт при пульсе 150 уд/мин и 150 Вт при 170 уд/мин, введите эти значения в поля «Замер 1» и «Замер 2» (мощность и пульс), и QZ будет рассчитывать мощность по этой линии тренда.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="3227"/>
@@ -5694,7 +5793,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="3251"/>
         <source>QZ calculates speed based on your pedal cadence (RPMs). Enable this setting if you want your speed to be calculated based on your power output (watts), as Zwift and some other apps do. Default is off.</source>
-        <translation>QZ рассчитывает скорость по каденсу педалирования (RPM). Включите эту настройку, если хотите, чтобы скорость рассчитывалась по мощности (W), как это делают Zwift и некоторые другие приложения. По умолчанию выключено.</translation>
+        <translation>QZ рассчитывает скорость по каденсу педалирования. Включите эту настройку, если хотите, чтобы скорость рассчитывалась по мощности (Вт), как это делают Zwift и некоторые другие приложения. По умолчанию выключено.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="3265"/>
@@ -5743,7 +5842,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="3413"/>
         <source>Enables QZ to include the weight of your bike when calculating speed. For example, if you are competing against yourself on VZfit, adding bike weight will &apos;level the playing field&apos; against your virtual self. If you have set QZ to calculate distance in miles, enter the bike weight in pounds (lbs) unless you enable &apos;Use kg for weight&apos;. Default unit is kilograms (kgs).</source>
-        <translation>Позволяет QZ учитывать вес велосипеда при расчёте скорости. Например, если вы соревнуетесь сами с собой в VZfit, вес велосипеда «уравняет шансы» с вашим виртуальным соперником. Если в QZ дистанция считается в милях, вводите вес велосипеда в фунтах (lbs), если только не включена настройка «Вес в килограммах». Единица по умолчанию – килограммы (kg).</translation>
+        <translation>Позволяет QZ учитывать вес велосипеда при расчёте скорости. Например, если вы соревнуетесь сами с собой в VZfit, вес велосипеда «уравняет шансы» с вашим виртуальным соперником. Если в QZ дистанция считается в милях, вводите вес велосипеда в фунтах, если только не включена настройка «Вес в килограммах». Единица по умолчанию – килограммы.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="3429"/>
@@ -5763,7 +5862,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="3489"/>
         <source>Enable this setting ONLY when using Zwift in ERG (workout) Mode. QZ will communicate the target resistance (or automatically adjust your resistance if your bike has this capability) to match the target watts based on your cadence (RPM). In ERG Mode, the changes in road slope will not affect target resistance, as is the case in Simulation Mode. Default is off.</source>
-        <translation>Включайте эту настройку ТОЛЬКО при использовании Zwift в режиме ERG (тренировки). QZ будет передавать целевое сопротивление (или автоматически менять сопротивление, если ваш велотренажёр это умеет), чтобы достичь целевой мощности при вашем каденсе (RPM). В режиме ERG изменения уклона дороги не влияют на целевое сопротивление, в отличие от режима симуляции. По умолчанию выключено.</translation>
+        <translation>Включайте эту настройку ТОЛЬКО при использовании Zwift в режиме ERG (тренировки). QZ будет передавать целевое сопротивление (или автоматически менять сопротивление, если ваш велотренажёр это умеет), чтобы достичь целевой мощности при вашем каденсе. В режиме ERG изменения уклона дороги не влияют на целевое сопротивление, в отличие от режима симуляции. По умолчанию выключено.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="3503"/>
@@ -6155,7 +6254,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="3766"/>
         <source>Zwift Power Offset (W):</source>
-        <translation>Смещение мощности Zwift (W):</translation>
+        <translation>Смещение мощности Zwift (Вт):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="3788"/>
@@ -6180,7 +6279,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="3864"/>
         <source>In ERG Mode or during a Power Zone workout on Peloton, the app sends a “target output” request. If the output requested doesn’t match your current output (calculated using cadence and resistance level), your target resistance will change to help you get closer to the target output. If the filter is set to higher values, you will get less adjustment of the target resistance and you will have to increase your cadence to match the target output. The Up and Down Watt Filter settings are the upper and lower margin before the adjustment of resistance is communicated. Example: if the up and down filters are set to 10 and the target output is 100 watts, a change of your resistance will only be communicated if your bike produces less than 90 watts or more than 110 watts. Default is 10.</source>
-        <translation>В режиме ERG или во время тренировки Power Zone в Peloton приложение запрашивает «целевую мощность». Если запрошенная мощность не совпадает с текущей (рассчитанной по каденсу и уровню сопротивления), целевое сопротивление изменится, чтобы помочь вам приблизиться к целевой мощности. Чем выше значение фильтра, тем меньше корректируется целевое сопротивление и тем сильнее придётся повышать каденс, чтобы выйти на целевую мощность. Фильтры мощности «вверх» и «вниз» задают верхний и нижний допуск, после которого передаётся изменение сопротивления. Пример: если оба фильтра равны 10, а целевая мощность – 100 W, изменение сопротивления будет передано, только если велотренажёр выдаёт меньше 90 W или больше 110 W. По умолчанию – 10.</translation>
+        <translation>В режиме ERG или во время тренировки Power Zone в Peloton приложение запрашивает «целевую мощность». Если запрошенная мощность не совпадает с текущей (рассчитанной по каденсу и уровню сопротивления), целевое сопротивление изменится, чтобы помочь вам приблизиться к целевой мощности. Чем выше значение фильтра, тем меньше корректируется целевое сопротивление и тем сильнее придётся повышать каденс, чтобы выйти на целевую мощность. Фильтры мощности «вверх» и «вниз» задают верхний и нижний допуск, после которого передаётся изменение сопротивления. Пример: если оба фильтра равны 10, а целевая мощность – 100 Вт, изменение сопротивления будет передано, только если велотренажёр выдаёт меньше 90 Вт или больше 110 Вт. По умолчанию – 10.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="3880"/>
@@ -6295,22 +6394,22 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="4187"/>
         <source>Cruise - Gear Up Cadence (RPM):</source>
-        <translation>Круиз – каденс для повышения передачи (RPM):</translation>
+        <translation>Круиз – каденс для повышения передачи (об/мин):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4211"/>
         <source>Cruise - Gear Up Time (seconds):</source>
-        <translation>Круиз – время до повышения передачи (s):</translation>
+        <translation>Круиз – время до повышения передачи (с):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4235"/>
         <source>Cruise - Gear Down Cadence (RPM):</source>
-        <translation>Круиз – каденс для понижения передачи (RPM):</translation>
+        <translation>Круиз – каденс для понижения передачи (об/мин):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4259"/>
         <source>Cruise - Gear Down Time (seconds):</source>
-        <translation>Круиз – время до понижения передачи (s):</translation>
+        <translation>Круиз – время до понижения передачи (с):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4280"/>
@@ -6320,22 +6419,22 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="4293"/>
         <source>Climb - Gear Up Cadence (RPM):</source>
-        <translation>Подъём – каденс для повышения передачи (RPM):</translation>
+        <translation>Подъём – каденс для повышения передачи (об/мин):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4317"/>
         <source>Climb - Gear Up Time (seconds):</source>
-        <translation>Подъём – время до повышения передачи (s):</translation>
+        <translation>Подъём – время до повышения передачи (с):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4341"/>
         <source>Climb - Gear Down Cadence (RPM):</source>
-        <translation>Подъём – каденс для понижения передачи (RPM):</translation>
+        <translation>Подъём – каденс для понижения передачи (об/мин):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4365"/>
         <source>Climb - Gear Down Time (seconds):</source>
-        <translation>Подъём – время до понижения передачи (s):</translation>
+        <translation>Подъём – время до понижения передачи (с):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4386"/>
@@ -6345,22 +6444,22 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="4399"/>
         <source>Sprint - Gear Up Cadence (RPM):</source>
-        <translation>Спринт – каденс для повышения передачи (RPM):</translation>
+        <translation>Спринт – каденс для повышения передачи (об/мин):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4423"/>
         <source>Sprint - Gear Up Time (seconds):</source>
-        <translation>Спринт – время до повышения передачи (s):</translation>
+        <translation>Спринт – время до повышения передачи (с):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4447"/>
         <source>Sprint - Gear Down Cadence (RPM):</source>
-        <translation>Спринт – каденс для понижения передачи (RPM):</translation>
+        <translation>Спринт – каденс для понижения передачи (об/мин):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4471"/>
         <source>Sprint - Gear Down Time (seconds):</source>
-        <translation>Спринт – время до понижения передачи (s):</translation>
+        <translation>Спринт – время до понижения передачи (с):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4494"/>
@@ -6591,7 +6690,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="5204"/>
         <source>Fix Calories/Km to Console</source>
-        <translation>Калории и km как на консоли</translation>
+        <translation>Калории и км как на консоли</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="5217"/>
@@ -6777,7 +6876,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="5951"/>
         <source>Set 100mm as wheel circumference in settings of ant+ speed sensor</source>
-        <translation>Укажите окружность колеса 100mm в настройках датчика скорости ANT+</translation>
+        <translation>Укажите окружность колеса 100 мм в настройках датчика скорости ANT+</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="5964"/>
@@ -7061,6 +7160,22 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <location filename="../settings.qml" line="6900"/>
         <source>Walking Min Speed:</source>
         <translation>Мин. скорость ходьбы:</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="6900"/>
+        <location filename="../settings.qml" line="6934"/>
+        <location filename="../settings.qml" line="10202"/>
+        <location filename="../settings.qml" line="10238"/>
+        <source>mph</source>
+        <translation>миль/ч</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="6900"/>
+        <location filename="../settings.qml" line="6934"/>
+        <location filename="../settings.qml" line="10202"/>
+        <location filename="../settings.qml" line="10238"/>
+        <source>km/h</source>
+        <translation>км/ч</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="6919"/>
@@ -7635,22 +7750,22 @@ Please enter it below:</source>
     <message>
         <location filename="../settings.qml" line="9397"/>
         <source>5 km pace (total time):</source>
-        <translation>Темп на 5 km (общее время):</translation>
+        <translation>Темп на 5 км (общее время):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="9418"/>
         <source>See 1 Mile Pace above; same except 5 km instead of 1 mile.</source>
-        <translation>См. «Темп на 1 милю» выше; то же самое, но для 5 km вместо 1 мили.</translation>
+        <translation>См. «Темп на 1 милю» выше; то же самое, но для 5 км вместо 1 мили.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="9434"/>
         <source>10 km pace (total time):</source>
-        <translation>Темп на 10 km (общее время):</translation>
+        <translation>Темп на 10 км (общее время):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="9455"/>
         <source>See 1 Mile Pace above; same except 10 km instead of 1 mile.</source>
-        <translation>См. «Темп на 1 милю» выше; то же самое, но для 10 km вместо 1 мили.</translation>
+        <translation>См. «Темп на 1 милю» выше; то же самое, но для 10 км вместо 1 мили.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="9471"/>
@@ -7708,6 +7823,16 @@ Please enter it below:</source>
         <translation>Марафон</translation>
     </message>
     <message>
+        <location filename="../settings.qml" line="9620"/>
+        <source>5 km</source>
+        <translation>5 км</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="9620"/>
+        <source>10 km</source>
+        <translation>10 км</translation>
+    </message>
+    <message>
         <location filename="../settings.qml" line="9638"/>
         <source>Select the default Pace to be used when the ZWO file does not indicate a precise pace.</source>
         <translation>Темп, который используется, если в файле ZWO не указан точный темп.</translation>
@@ -7720,7 +7845,7 @@ Please enter it below:</source>
     <message>
         <location filename="../settings.qml" line="9675"/>
         <source>Set the wattage step increment for ERG mode heart rate zone training. Default: 5 watts.</source>
-        <translation>Шаг изменения мощности в режиме ERG при тренировке по пульсовым зонам. По умолчанию: 5 W.</translation>
+        <translation>Шаг изменения мощности в режиме ERG при тренировке по пульсовым зонам. По умолчанию: 5 Вт.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="9689"/>
@@ -7805,7 +7930,7 @@ Please enter it below:</source>
     <message>
         <location filename="../settings.qml" line="9992"/>
         <source>Turn this on to write treadmill FIT files as running activities even when the average speed is below 6.5 km/h. This can help Garmin calculate Training Effect for high-incline treadmill workouts. Default is off.</source>
-        <translation>Включите, чтобы FIT-файлы беговой дорожки записывались как бег, даже если средняя скорость ниже 6.5 km/h. Это помогает Garmin рассчитать Training Effect для тренировок с большим наклоном. По умолчанию выключено.</translation>
+        <translation>Включите, чтобы FIT-файлы беговой дорожки записывались как бег, даже если средняя скорость ниже 6.5 км/ч. Это помогает Garmin рассчитать Training Effect для тренировок с большим наклоном. По умолчанию выключено.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="10020"/>
@@ -7840,7 +7965,7 @@ Please enter it below:</source>
     <message>
         <location filename="../settings.qml" line="10114"/>
         <source>(Speed Tile) This controls the amount of the increase or decrease in the speed (in kph/mph) when you press the plus or minus button in the Speed Tile. Default is 0.5 kph.</source>
-        <translation>(Плитка скорости) Задаёт, на сколько увеличивается или уменьшается скорость (в km/h или mph) при нажатии кнопки «плюс» или «минус» на плитке скорости. По умолчанию 0.5 km/h.</translation>
+        <translation>(Плитка скорости) Задаёт, на сколько увеличивается или уменьшается скорость (в км/ч или миль/ч) при нажатии кнопки «плюс» или «минус» на плитке скорости. По умолчанию 0.5 км/ч.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="10130"/>
@@ -7870,7 +7995,7 @@ Please enter it below:</source>
     <message>
         <location filename="../settings.qml" line="10223"/>
         <source>This overrides the maximum speed value of your treadmill (in order to limit the max speed). Default is 100 km/h (62.1 mph)</source>
-        <translation>Переопределяет максимальную скорость беговой дорожки (чтобы её ограничить). По умолчанию 100 km/h (62.1 mph)</translation>
+        <translation>Переопределяет максимальную скорость беговой дорожки (чтобы её ограничить). По умолчанию 100 км/ч (62.1 миль/ч)</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="10238"/>
@@ -7880,7 +8005,7 @@ Please enter it below:</source>
     <message>
         <location filename="../settings.qml" line="10259"/>
         <source>This overrides the minimum speed value of your treadmill (in order to limit the min speed). Default is 0 km/h (0 mph)</source>
-        <translation>Переопределяет минимальную скорость беговой дорожки (чтобы её ограничить). По умолчанию 0 km/h (0 mph)</translation>
+        <translation>Переопределяет минимальную скорость беговой дорожки (чтобы её ограничить). По умолчанию 0 км/ч (0 миль/ч)</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="10275"/>
@@ -8025,28 +8150,28 @@ Please enter it below:</source>
     <message>
         <location filename="../settings.qml" line="11147"/>
         <source>Remap 5 km/h button:</source>
-        <translation>Переназначить кнопку 5 km/h:</translation>
+        <translation>Переназначить кнопку 5 км/ч:</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="11170"/>
         <source>Remap 10 km/h button:</source>
-        <translation>Переназначить кнопку 10 km/h:</translation>
+        <translation>Переназначить кнопку 10 км/ч:</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="11193"/>
         <source>Remap 16 km/h button:</source>
-        <translation>Переназначить кнопку 16 km/h:</translation>
+        <translation>Переназначить кнопку 16 км/ч:</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="11216"/>
         <source>Remap 22 km/h button:</source>
-        <translation>Переназначить кнопку 22 km/h:</translation>
+        <translation>Переназначить кнопку 22 км/ч:</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="11239"/>
         <location filename="../settings.qml" line="15443"/>
         <source>Pool time (ms):</source>
-        <translation>Интервал опроса (ms):</translation>
+        <translation>Интервал опроса (мс):</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="11259"/>
@@ -8177,7 +8302,7 @@ Please enter it below:</source>
     <message>
         <location filename="../settings.qml" line="11778"/>
         <source>T9 mi/h speed</source>
-        <translation>T9: скорость в mi/h</translation>
+        <translation>T9: скорость в миль/ч</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="11797"/>
@@ -8567,10 +8692,10 @@ IMPORTANT NOTES:
         <translation>Если мощность, которую тренажёр передаёт в QZ, сильно скачет, эта настройка сгладит графики зон мощности. Полезно и для педалей-измерителей мощности. Используется гармоническое усреднение, которое сглаживает всплески мощности лучше арифметического. Если любое показание равно 0, мощность сразу становится 0. По умолчанию – «Off».
 
 ВАЖНО:
-- Для обычных велостанков с частотой 1 Hz (без гоночного режима) не включайте усреднение/сглаживание в настройках станка
-- Отключите усреднение в сторонних приложениях (Rouvy/Zwift/MyWhoosh и т. п.) или выберите в них 1 s!
+- Для обычных велостанков с частотой 1 Гц (без гоночного режима) не включайте усреднение/сглаживание в настройках станка
+- Отключите усреднение в сторонних приложениях (Rouvy/Zwift/MyWhoosh и т. п.) или выберите в них 1 с!
 - QZ должен работать в режиме моста!
-- Для станков Elite и других с гоночным режимом (10 Hz): если кому-то этого мало, сглаживание Elite/станка вместе со сглаживанием QZ даст лучший результат.</translation>
+- Для станков Elite и других с гоночным режимом (10 Гц): если кому-то этого мало, сглаживание Elite/станка вместе со сглаживанием QZ даст лучший результат.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="13241"/>
@@ -8673,6 +8798,16 @@ IMPORTANT NOTES:
         <translation>Можно автоматически отмечать круги в FIT-файле по дистанции. Единица: %1. По умолчанию: 0 (выключено).</translation>
     </message>
     <message>
+        <location filename="../settings.qml" line="13551"/>
+        <source>Mi</source>
+        <translation>мили</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="13551"/>
+        <source>KM</source>
+        <translation>км</translation>
+    </message>
+    <message>
         <location filename="../settings.qml" line="13566"/>
         <source>Inclination Delay:</source>
         <translation>Задержка наклона:</translation>
@@ -8725,7 +8860,7 @@ IMPORTANT NOTES:
     <message>
         <location filename="../settings.qml" line="13759"/>
         <source>Wheel ratio is the multiplier used by QZ to calculate your speed based on your cadence. For example, if you enter 1 for your wheel ratio and you are riding at a cadence of 30, QZ will display your speed as 30 km/h. The default of 0.33 is correct for most bikes.</source>
-        <translation>Коэффициент колеса – множитель, по которому QZ вычисляет скорость из каденса. Например, если ввести 1 и крутить педали с каденсом 30, QZ покажет скорость 30 km/h. Значение по умолчанию 0.33 подходит для большинства велотренажёров.</translation>
+        <translation>Коэффициент колеса – множитель, по которому QZ вычисляет скорость из каденса. Например, если ввести 1 и крутить педали с каденсом 30, QZ покажет скорость 30 км/ч. Значение по умолчанию 0.33 подходит для большинства велотренажёров.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="13786"/>
@@ -8890,8 +9025,8 @@ Default: A = -0.96, B = 1.33</source>
 Для датчиков Stryd: A = -0.96, B = 1.33
 
 Примеры с этими значениями:
-• 8 km/h, наклон 10%: (-0.96 + 1.33×8) × 10 = +97W
-• 11 km/h, наклон 10%: (-0.96 + 1.33×11) × 10 = +137W
+• 8 км/ч, наклон 10%: (-0.96 + 1.33×8) × 10 = +97 Вт
+• 11 км/ч, наклон 10%: (-0.96 + 1.33×11) × 10 = +137 Вт
 
 Если A и B оба равны 0, QZ использует стандартную формулу: 9.8 × вес × (наклон/100).
 
@@ -9209,7 +9344,7 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings.qml" line="15463"/>
         <source>Default: 200ms. Lower it if you want to improve the gear reactivity. Warning: lowering this value will cause more power used on the QZ device</source>
-        <translation>По умолчанию: 200ms. Уменьшите, чтобы передачи откликались быстрее. Внимание: чем меньше значение, тем выше энергопотребление устройства, на котором работает QZ</translation>
+        <translation>По умолчанию: 200 мс. Уменьшите, чтобы передачи откликались быстрее. Внимание: чем меньше значение, тем выше энергопотребление устройства, на котором работает QZ</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="15481"/>
@@ -9474,7 +9609,7 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings.qml" line="16351"/>
         <source>By default QZ sends the info to Zwift or any other 3rd party apps with a 1000ms interval rate. Enabling the Race Mode setting will cause QZ to send them to 100ms (10hz). Of course the bottleneck will be always your bike/treadmill.</source>
-        <translation>По умолчанию QZ отправляет данные в Zwift и другие сторонние приложения раз в 1000ms. В режиме гонки – раз в 100ms (10hz). Разумеется, узким местом всё равно останется ваш велотренажёр или беговая дорожка.</translation>
+        <translation>По умолчанию QZ отправляет данные в Zwift и другие сторонние приложения раз в 1000 мс. В режиме гонки – раз в 100 мс (10 Гц). Разумеется, узким местом всё равно останется ваш велотренажёр или беговая дорожка.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="16365"/>
@@ -9529,7 +9664,7 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings.qml" line="16535"/>
         <source>Simulates QZ being connected to a bike. When this is turned on QZ will calculate KCal based on your heart rate. Examples of when to use this setting: ○ To capture Peloton class data for classes without connected equipment (e.g., a strength or yoga workout).. ○ To arrange tiles on the QZ dashboard without connecting to your equipment. ○ To use the QZ Apple Watch app without connecting to your equipment.</source>
-        <translation>Имитирует подключение QZ к велотренажёру. Когда включено, QZ считает kcal по пульсу. Когда это нужно: ○ Чтобы записать данные занятия Peloton, для которого не нужно оборудование (например, силовой тренировки или йоги). ○ Чтобы расставить плитки на панели QZ, не подключая тренажёр. ○ Чтобы пользоваться приложением QZ для Apple Watch, не подключая тренажёр.</translation>
+        <translation>Имитирует подключение QZ к велотренажёру. Когда включено, QZ считает ккал по пульсу. Когда это нужно: ○ Чтобы записать данные занятия Peloton, для которого не нужно оборудование (например, силовой тренировки или йоги). ○ Чтобы расставить плитки на панели QZ, не подключая тренажёр. ○ Чтобы пользоваться приложением QZ для Apple Watch, не подключая тренажёр.</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="16549"/>
@@ -10264,7 +10399,7 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings-tiles.qml" line="528"/>
         <source>Bike pedal cadence in rotations per minute (RPM) or Treadmill cadence if a shoe-mounted cadence sensor or Apple Watch QZ app is used.</source>
-        <translation>Каденс педалирования в оборотах в минуту (RPM) или каденс на беговой дорожке, если используется датчик каденса на обуви или приложение QZ для Apple Watch.</translation>
+        <translation>Каденс педалирования в оборотах в минуту или каденс на беговой дорожке, если используется датчик каденса на обуви или приложение QZ для Apple Watch.</translation>
     </message>
     <message>
         <location filename="../settings-tiles.qml" line="542"/>
@@ -10399,7 +10534,7 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings-tiles.qml" line="1142"/>
         <source>When enabled, displays heart rate as percentage of maximum heart rate (%FC Max) instead of BPM. AVG and MAX values will also show percentages.</source>
-        <translation>Если включено, пульс показывается в процентах от максимального (%FC Max), а не в bpm. Средние и максимальные значения тоже будут в процентах.</translation>
+        <translation>Если включено, пульс показывается в процентах от максимального (%FC Max), а не в уд/мин. Средние и максимальные значения тоже будут в процентах.</translation>
     </message>
     <message>
         <location filename="../settings-tiles.qml" line="1184"/>
@@ -10414,7 +10549,7 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings-tiles.qml" line="1229"/>
         <source>Jouls</source>
-        <translation>Работа (kJ)</translation>
+        <translation>Работа (кДж)</translation>
     </message>
     <message>
         <location filename="../settings-tiles.qml" line="1260"/>
@@ -10544,7 +10679,7 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings-tiles.qml" line="1902"/>
         <source>Watt/Kg</source>
-        <translation>W/kg</translation>
+        <translation>Вт/кг</translation>
     </message>
     <message>
         <location filename="../settings-tiles.qml" line="1933"/>
@@ -10709,7 +10844,7 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings-tiles.qml" line="2621"/>
         <source>Pace Last 500m</source>
-        <translation>Темп за последние 500m</translation>
+        <translation>Темп за последние 500 м</translation>
     </message>
     <message>
         <location filename="../settings-tiles.qml" line="2653"/>
@@ -10852,6 +10987,24 @@ Default: A = -0.96, B = 1.33</source>
         <location filename="../settings-tiles.qml" line="3291"/>
         <source>Preset Speed 1</source>
         <translation>Предустановка скорости 1</translation>
+    </message>
+    <message>
+        <location filename="../settings-tiles.qml" line="3323"/>
+        <location filename="../settings-tiles.qml" line="3436"/>
+        <location filename="../settings-tiles.qml" line="3549"/>
+        <location filename="../settings-tiles.qml" line="3662"/>
+        <location filename="../settings-tiles.qml" line="3775"/>
+        <source>mph</source>
+        <translation>миль/ч</translation>
+    </message>
+    <message>
+        <location filename="../settings-tiles.qml" line="3323"/>
+        <location filename="../settings-tiles.qml" line="3436"/>
+        <location filename="../settings-tiles.qml" line="3549"/>
+        <location filename="../settings-tiles.qml" line="3662"/>
+        <location filename="../settings-tiles.qml" line="3775"/>
+        <source>km/h</source>
+        <translation>км/ч</translation>
     </message>
     <message>
         <location filename="../settings-tiles.qml" line="3404"/>
@@ -11567,17 +11720,17 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings-tts.qml" line="652"/>
         <source>Actual Watt/KG</source>
-        <translation>Текущие W/kg</translation>
+        <translation>Текущие Вт/кг</translation>
     </message>
     <message>
         <location filename="../settings-tts.qml" line="666"/>
         <source>Average Watt/KG</source>
-        <translation>Средние W/kg</translation>
+        <translation>Средние Вт/кг</translation>
     </message>
     <message>
         <location filename="../settings-tts.qml" line="680"/>
         <source>Max Watt/KG</source>
-        <translation>Макс. W/kg</translation>
+        <translation>Макс. Вт/кг</translation>
     </message>
 </context>
 </TS>
