@@ -1086,8 +1086,8 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../devices/fitplusbike/fitplusbike.cpp" line="689"/>
-        <source>Virtufit Etappe bike layout detected, restart the app to apply the change!</source>
-        <translation>Виявлено схему велотренажера Virtufit Etappe, перезапустіть застосунок, щоб застосувати зміну!</translation>
+        <source>Virtufit Etappe data format detected: &quot;Virtufit Etappe 2.0 Bike&quot; has been enabled in the settings</source>
+        <translation>Виявлено формат даних Virtufit Etappe: у налаштуваннях увімкнено «Велотренажер Virtufit Etappe 2.0»</translation>
     </message>
     <message>
         <location filename="../devices/fitplusbike/fitplusbike.cpp" line="1021"/>
@@ -1100,11 +1100,6 @@ Do you want to update QZ settings?</source>
         <location filename="../devices/fitplusrower/fitplusrower.cpp" line="387"/>
         <source>FTMS rower found, restart the app to apply the change!</source>
         <translation>Знайдено гребний тренажер FTMS, перезапустіть застосунок, щоб застосувати зміну!</translation>
-    </message>
-    <message>
-        <location filename="../devices/fitshowtreadmill/fitshowtreadmill.cpp" line="878"/>
-        <source>FitShow bike found, restart the app to apply the change!</source>
-        <translation>Знайдено велотренажер FitShow, перезапустіть застосунок, щоб застосувати зміну!</translation>
     </message>
     <message>
         <location filename="../devices/ftmsbike/ftmsbike.cpp" line="1819"/>
@@ -1263,6 +1258,11 @@ Do you want to update QZ settings?</source>
         <location filename="../zwift_play/zwiftclickremote.cpp" line="47"/>
         <source>Zwift device: UPGRADE THE FIRMWARE!</source>
         <translation>Пристрій Zwift: ОНОВІТЬ ПРОШИВКУ!</translation>
+    </message>
+    <message>
+        <location filename="../devices/fitshowtreadmill/fitshowtreadmill.cpp" line="878"/>
+        <source>FitShow bike detected: &quot;Fit Plus Bike&quot; has been enabled in the settings</source>
+        <translation>Виявлено велотренажер FitShow: у налаштуваннях увімкнено «Велотренажер Fit Plus»</translation>
     </message>
 </context>
 <context>
@@ -2627,17 +2627,17 @@ Do you want to update QZ settings?</source>
 <context>
     <name>Wizard</name>
     <message>
-        <location filename="../Wizard.qml" line="118"/>
+        <location filename="../Wizard.qml" line="123"/>
         <source>Welcome to QZ</source>
         <translation>Вітаємо в QZ</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="129"/>
+        <location filename="../Wizard.qml" line="134"/>
         <source>Created by Roberto Viola</source>
         <translation>Автор – Roberto Viola</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="136"/>
+        <location filename="../Wizard.qml" line="141"/>
         <source>QZ is designed to maximize your workout experience on a range of fitness equipment, including indoor bikes, treadmills, ellipticals, and rower. By connecting seamlessly with your devices, QZ provides realtime data, personalized workout plans, and interactive elements to keep you motivated.
 
 The following questions will customize QZ for your equipment and goals.</source>
@@ -2646,242 +2646,242 @@ The following questions will customize QZ for your equipment and goals.</source>
 Наступні запитання допоможуть налаштувати QZ під ваш тренажер і цілі.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="147"/>
+        <location filename="../Wizard.qml" line="152"/>
         <source>Start</source>
         <translation>Старт</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="180"/>
+        <location filename="../Wizard.qml" line="188"/>
         <source>How can I help you?</source>
         <translation>Чим я можу допомогти?</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="188"/>
+        <location filename="../Wizard.qml" line="196"/>
         <source>First-time setup</source>
         <translation>Початкове налаштування</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="197"/>
+        <location filename="../Wizard.qml" line="205"/>
         <source>Help with a specific feature</source>
         <translation>Допомога з певною функцією</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="206"/>
+        <location filename="../Wizard.qml" line="214"/>
         <source>I&apos;m fine, thanks.</source>
         <translation>Усе гаразд, дякую.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="241"/>
+        <location filename="../Wizard.qml" line="252"/>
         <source>What&apos;s your fitness device?</source>
         <translation>Який у вас тренажер?</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="248"/>
+        <location filename="../Wizard.qml" line="259"/>
         <source>Bike</source>
         <translation>Велотренажер</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="248"/>
+        <location filename="../Wizard.qml" line="259"/>
         <source>Treadmill</source>
         <translation>Бігова доріжка</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="248"/>
+        <location filename="../Wizard.qml" line="259"/>
         <source>Rower</source>
         <translation>Гребний тренажер</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="248"/>
+        <location filename="../Wizard.qml" line="259"/>
         <source>Elliptical</source>
         <translation>Орбітрек</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="271"/>
-        <location filename="../Wizard.qml" line="353"/>
-        <location filename="../Wizard.qml" line="427"/>
-        <location filename="../Wizard.qml" line="514"/>
-        <location filename="../Wizard.qml" line="588"/>
-        <location filename="../Wizard.qml" line="642"/>
-        <location filename="../Wizard.qml" line="719"/>
-        <location filename="../Wizard.qml" line="828"/>
-        <location filename="../Wizard.qml" line="925"/>
-        <location filename="../Wizard.qml" line="988"/>
-        <location filename="../Wizard.qml" line="1050"/>
-        <location filename="../Wizard.qml" line="1191"/>
-        <location filename="../Wizard.qml" line="1262"/>
-        <location filename="../Wizard.qml" line="1390"/>
-        <location filename="../Wizard.qml" line="1549"/>
+        <location filename="../Wizard.qml" line="282"/>
+        <location filename="../Wizard.qml" line="367"/>
+        <location filename="../Wizard.qml" line="444"/>
+        <location filename="../Wizard.qml" line="534"/>
+        <location filename="../Wizard.qml" line="611"/>
+        <location filename="../Wizard.qml" line="668"/>
+        <location filename="../Wizard.qml" line="748"/>
+        <location filename="../Wizard.qml" line="860"/>
+        <location filename="../Wizard.qml" line="960"/>
+        <location filename="../Wizard.qml" line="1026"/>
+        <location filename="../Wizard.qml" line="1091"/>
+        <location filename="../Wizard.qml" line="1238"/>
+        <location filename="../Wizard.qml" line="1312"/>
+        <location filename="../Wizard.qml" line="1443"/>
+        <location filename="../Wizard.qml" line="1605"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="303"/>
+        <location filename="../Wizard.qml" line="317"/>
         <source>Choose your preferred app</source>
         <translation>Виберіть застосунок</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="311"/>
+        <location filename="../Wizard.qml" line="325"/>
         <source>QZ allows you to connect to both of them, even simultaneously if you want!</source>
         <translation>QZ може під’єднуватися до обох, навіть одночасно, якщо хочете!</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="326"/>
+        <location filename="../Wizard.qml" line="340"/>
         <source>Other app</source>
         <translation>Інший</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="326"/>
+        <location filename="../Wizard.qml" line="340"/>
         <source>QZ Standalone</source>
         <translation>Лише QZ</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="385"/>
+        <location filename="../Wizard.qml" line="402"/>
         <source>Connect to Peloton</source>
         <translation>Під’єднати Peloton</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="393"/>
+        <location filename="../Wizard.qml" line="410"/>
         <source>Click the button below to connect your Peloton account</source>
         <translation>Натисніть кнопку нижче, щоб під’єднати обліковий запис Peloton</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="459"/>
+        <location filename="../Wizard.qml" line="479"/>
         <source>Peloton Difficulty</source>
         <translation>Складність Peloton</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="466"/>
+        <location filename="../Wizard.qml" line="486"/>
         <source>Typically, Peloton coaches call out a range for target incline, resistance and/or speed. Use this setting to choose the difficulty of the target QZ communicates. Difficulty level can be set to lower, upper or average</source>
         <translation>Зазвичай тренери Peloton називають діапазон цільового нахилу, опору та/або швидкості. Це налаштування визначає, яку ціль із діапазону передаватиме QZ: «нижня межа», «верхня межа» або «середнє»</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="480"/>
+        <location filename="../Wizard.qml" line="500"/>
         <source>Difficulty</source>
         <translation>Складність</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="489"/>
+        <location filename="../Wizard.qml" line="509"/>
         <source>lower</source>
         <translation>нижня межа</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="489"/>
+        <location filename="../Wizard.qml" line="509"/>
         <source>upper</source>
         <translation>верхня межа</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="489"/>
+        <location filename="../Wizard.qml" line="509"/>
         <source>average</source>
         <translation>середнє</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="501"/>
-        <location filename="../Wizard.qml" line="648"/>
-        <location filename="../Wizard.qml" line="931"/>
-        <location filename="../Wizard.qml" line="994"/>
-        <location filename="../Wizard.qml" line="1056"/>
+        <location filename="../Wizard.qml" line="521"/>
+        <location filename="../Wizard.qml" line="674"/>
+        <location filename="../Wizard.qml" line="966"/>
+        <location filename="../Wizard.qml" line="1032"/>
+        <location filename="../Wizard.qml" line="1097"/>
         <source>Finish</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="546"/>
+        <location filename="../Wizard.qml" line="569"/>
         <source>Bike Resistance Level</source>
         <translation>Рівень опору велотренажера</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="554"/>
+        <location filename="../Wizard.qml" line="577"/>
         <source>What resistance level feels like a flat road on your bike?</source>
         <translation>Який рівень опору на вашому велотренажері відчувається як рівна дорога?</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="578"/>
-        <location filename="../Wizard.qml" line="817"/>
-        <location filename="../Wizard.qml" line="1182"/>
-        <location filename="../Wizard.qml" line="1253"/>
-        <location filename="../Wizard.qml" line="1379"/>
-        <location filename="../Wizard.qml" line="1539"/>
+        <location filename="../Wizard.qml" line="601"/>
+        <location filename="../Wizard.qml" line="849"/>
+        <location filename="../Wizard.qml" line="1229"/>
+        <location filename="../Wizard.qml" line="1303"/>
+        <location filename="../Wizard.qml" line="1432"/>
+        <location filename="../Wizard.qml" line="1595"/>
         <source>Next</source>
         <translation>Далі</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="620"/>
-        <location filename="../Wizard.qml" line="1029"/>
+        <location filename="../Wizard.qml" line="646"/>
+        <location filename="../Wizard.qml" line="1070"/>
         <source>Custom Configurations</source>
         <translation>Індивідуальні налаштування</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="628"/>
+        <location filename="../Wizard.qml" line="654"/>
         <source>Here you will see custom configurations based on your previous choices.</source>
         <translation>Тут з’являться налаштування, підібрані за вашими відповідями.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="680"/>
+        <location filename="../Wizard.qml" line="709"/>
         <source>Select a feature</source>
         <translation>Виберіть функцію</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="689"/>
+        <location filename="../Wizard.qml" line="718"/>
         <source>Auto-incline with treadmill and Zwift</source>
         <translation>Автонахил із біговою доріжкою та Zwift</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="690"/>
+        <location filename="../Wizard.qml" line="719"/>
         <source>Auto-resistance with Peloton</source>
         <translation>Автоопір із Peloton</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="691"/>
+        <location filename="../Wizard.qml" line="720"/>
         <source>Zwift Click or Zwift Play</source>
         <translation>Zwift Click або Zwift Play</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="692"/>
-        <location filename="../Wizard.qml" line="966"/>
+        <location filename="../Wizard.qml" line="721"/>
+        <location filename="../Wizard.qml" line="1004"/>
         <source>Virtual Shifting</source>
         <translation>Віртуальне перемикання передач</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="751"/>
+        <location filename="../Wizard.qml" line="783"/>
         <source>Zwift Credentials</source>
         <translation>Облікові дані Zwift</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="759"/>
+        <location filename="../Wizard.qml" line="791"/>
         <source>QZ will read the inclination in real time from the Zwift app and will adjust the inclination on your treadmill. It doesn&apos;t work on workout</source>
         <translation>QZ у реальному часі зчитуватиме нахил із застосунку Zwift і змінюватиме нахил вашої бігової доріжки. У структурованих тренуваннях Zwift не працює</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="772"/>
+        <location filename="../Wizard.qml" line="804"/>
         <source>Username</source>
         <translation>Ім’я користувача</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="793"/>
+        <location filename="../Wizard.qml" line="825"/>
         <source>Password</source>
         <translation>Пароль</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="860"/>
+        <location filename="../Wizard.qml" line="895"/>
         <source>Zwift Play and Click</source>
         <translation>Zwift Play і Click</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="869"/>
+        <location filename="../Wizard.qml" line="904"/>
         <source>Enable the one that you would like to use directly with QZ. Remember to update their firmware before using it.</source>
         <translation>Увімкніть пристрій, який хочете використовувати безпосередньо з QZ. Не забудьте перед цим оновити його прошивку.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="878"/>
+        <location filename="../Wizard.qml" line="913"/>
         <source>Zwift Click</source>
         <translation>Zwift Click</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="894"/>
+        <location filename="../Wizard.qml" line="929"/>
         <source>Zwift Play</source>
         <translation>Zwift Play</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="911"/>
+        <location filename="../Wizard.qml" line="946"/>
         <source>Correct startup phase:
 
 1. close any app that can connect to your Zwift devices
@@ -2898,131 +2898,131 @@ The following questions will customize QZ for your equipment and goals.</source>
 5. тепер, коли ви перемикатимете передачу на пристрої Zwift, побачите реакцію на плитці передач у qz, а отже, і на тренажері.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="974"/>
+        <location filename="../Wizard.qml" line="1012"/>
         <source>Virtual shifting enabled! You can change gears using the gears tile in QZ directly, or you can also add a bluetooth remote or a Zwift Play or a Zwift Click to control it!</source>
         <translation>Віртуальне перемикання передач увімкнено! Передачі можна перемикати просто на плитці передач у QZ, а для керування можна додати Bluetooth-пульт, Zwift Play або Zwift Click!</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1037"/>
+        <location filename="../Wizard.qml" line="1078"/>
         <source>Here you will see custom configurations based on the selected feature.</source>
         <translation>Тут з’являться налаштування для вибраної функції.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1088"/>
+        <location filename="../Wizard.qml" line="1132"/>
         <source>Thank you for setting up QZ!</source>
         <translation>Дякуємо, що налаштували QZ!</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1096"/>
+        <location filename="../Wizard.qml" line="1140"/>
         <source>If you have any questions or need further assistance, feel free to write to me at roberto.viola83@gmail.com. You can also restart this wizard from the left side bar menu. To apply some changes, you may need to restart the app.</source>
         <translation>Якщо маєте запитання чи потребуєте допомоги, пишіть мені на roberto.viola83@gmail.com. Цей майстер налаштування можна запустити знову з меню на лівій бічній панелі. Щоб деякі зміни набули чинності, може знадобитися перезапуск застосунку.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1113"/>
+        <location filename="../Wizard.qml" line="1157"/>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1147"/>
+        <location filename="../Wizard.qml" line="1194"/>
         <source>Select Your Fitness Device</source>
         <translation>Виберіть свій тренажер</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1158"/>
-        <location filename="../Wizard.qml" line="1445"/>
+        <location filename="../Wizard.qml" line="1205"/>
+        <location filename="../Wizard.qml" line="1501"/>
         <source>Disabled</source>
         <translation>Вимкнено</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1171"/>
-        <location filename="../Wizard.qml" line="1459"/>
+        <location filename="../Wizard.qml" line="1218"/>
+        <location filename="../Wizard.qml" line="1515"/>
         <source>Refresh</source>
         <translation>Оновити</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1224"/>
+        <location filename="../Wizard.qml" line="1274"/>
         <source>Unit System</source>
         <translation>Система одиниць</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1235"/>
+        <location filename="../Wizard.qml" line="1285"/>
         <source>Select your preferred unit system</source>
         <translation>Виберіть систему одиниць</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1243"/>
+        <location filename="../Wizard.qml" line="1293"/>
         <source>Metric</source>
         <translation>Метрична</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1243"/>
+        <location filename="../Wizard.qml" line="1293"/>
         <source>Imperial</source>
         <translation>Імперська</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1295"/>
+        <location filename="../Wizard.qml" line="1348"/>
         <source>User Information</source>
         <translation>Дані користувача</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1306"/>
+        <location filename="../Wizard.qml" line="1359"/>
         <source>Weight (%1)</source>
         <translation>Вага (%1)</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1340"/>
+        <location filename="../Wizard.qml" line="1393"/>
         <source>Age</source>
         <translation>Вік</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1359"/>
+        <location filename="../Wizard.qml" line="1412"/>
         <source>Gender</source>
         <translation>Стать</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1368"/>
+        <location filename="../Wizard.qml" line="1421"/>
         <source>Male</source>
         <translation>Чоловіча</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1368"/>
+        <location filename="../Wizard.qml" line="1421"/>
         <source>Female</source>
         <translation>Жіноча</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1423"/>
+        <location filename="../Wizard.qml" line="1479"/>
         <source>Select Your Heart Rate Device</source>
         <translation>Виберіть пульсометр</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1431"/>
+        <location filename="../Wizard.qml" line="1487"/>
         <source>Choose your heart rate belt or select a smartwatch option:</source>
         <translation>Виберіть нагрудний пульсометр або варіант зі смарт-годинником:</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1468"/>
+        <location filename="../Wizard.qml" line="1524"/>
         <source>Or select a smartwatch option:</source>
         <translation>Або виберіть варіант зі смарт-годинником:</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1476"/>
+        <location filename="../Wizard.qml" line="1532"/>
         <source>Apple Watch</source>
         <translation>Apple Watch</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1489"/>
-        <location filename="../Wizard.qml" line="1509"/>
-        <location filename="../Wizard.qml" line="1529"/>
+        <location filename="../Wizard.qml" line="1545"/>
+        <location filename="../Wizard.qml" line="1565"/>
+        <location filename="../Wizard.qml" line="1585"/>
         <source>Download the QZ Companion App there</source>
         <translation>Установіть на годинник застосунок QZ Companion</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1496"/>
+        <location filename="../Wizard.qml" line="1552"/>
         <source>Wear OS watch</source>
         <translation>Годинник на Wear OS</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1516"/>
+        <location filename="../Wizard.qml" line="1572"/>
         <source>Garmin watch</source>
         <translation>Годинник Garmin</translation>
     </message>
@@ -3325,27 +3325,27 @@ This may take a few moments on first startup.</source>
 <context>
     <name>customgears</name>
     <message>
-        <location filename="../customgears.qml" line="112"/>
+        <location filename="../customgears.qml" line="114"/>
         <source>Enable Custom Gear Table</source>
         <translation>Увімкнути власну таблицю передач</translation>
     </message>
     <message>
-        <location filename="../customgears.qml" line="126"/>
+        <location filename="../customgears.qml" line="128"/>
         <source>Each gear uses the offset below instead of the raw gear value. QZ applies it automatically to resistance, inclination, or slope depending on the trainer path. Default is linear.</source>
         <translation>Для кожної передачі замість її вихідного значення використовується зміщення нижче. QZ автоматично застосовує його до опору, нахилу або ухилу – залежно від того, як керується тренажер. Типово – лінійно.</translation>
     </message>
     <message>
-        <location filename="../customgears.qml" line="134"/>
+        <location filename="../customgears.qml" line="136"/>
         <source>Reset to Linear Defaults</source>
         <translation>Скинути до лінійних значень</translation>
     </message>
     <message>
-        <location filename="../customgears.qml" line="163"/>
+        <location filename="../customgears.qml" line="165"/>
         <source>Gear</source>
         <translation>Передача</translation>
     </message>
     <message>
-        <location filename="../customgears.qml" line="178"/>
+        <location filename="../customgears.qml" line="180"/>
         <source>Offset</source>
         <translation>Зміщення</translation>
     </message>
@@ -3353,32 +3353,32 @@ This may take a few moments on first startup.</source>
 <context>
     <name>custominclinationresistance</name>
     <message>
-        <location filename="../custominclinationresistance.qml" line="203"/>
+        <location filename="../custominclinationresistance.qml" line="205"/>
         <source>Enable Custom Inclination to Resistance Table</source>
         <translation>Увімкнути власну таблицю «нахил – опір»</translation>
     </message>
     <message>
-        <location filename="../custominclinationresistance.qml" line="217"/>
+        <location filename="../custominclinationresistance.qml" line="219"/>
         <source>Set the resistance QZ should target at each incline. QZ interpolates automatically between points and uses the nearest endpoint outside the configured range. Changes are saved automatically.</source>
         <translation>Задайте опір, який QZ має встановлювати за кожного значення нахилу. Між точками QZ обчислює значення автоматично, а поза заданим діапазоном бере найближчу крайню точку. Зміни зберігаються автоматично.</translation>
     </message>
     <message>
-        <location filename="../custominclinationresistance.qml" line="243"/>
+        <location filename="../custominclinationresistance.qml" line="245"/>
         <source>Inclination (%)</source>
         <translation>Нахил (%)</translation>
     </message>
     <message>
-        <location filename="../custominclinationresistance.qml" line="258"/>
+        <location filename="../custominclinationresistance.qml" line="260"/>
         <source>Resistance</source>
         <translation>Опір</translation>
     </message>
     <message>
-        <location filename="../custominclinationresistance.qml" line="423"/>
+        <location filename="../custominclinationresistance.qml" line="425"/>
         <source>Add Point</source>
         <translation>Додати точку</translation>
     </message>
     <message>
-        <location filename="../custominclinationresistance.qml" line="430"/>
+        <location filename="../custominclinationresistance.qml" line="432"/>
         <source>Reset Example</source>
         <translation>Скинути до прикладу</translation>
     </message>
@@ -4203,43 +4203,44 @@ restart the app.</source>
     </message>
     <message>
         <location filename="../main.qml" line="803"/>
+        <location filename="../main.qml" line="814"/>
         <source>In order to apply the changes you need to restart the app.
 Do you want to do it now?</source>
         <translation>Щоб застосувати зміни, потрібно перезапустити застосунок.
 Перезапустити зараз?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="811"/>
-        <location filename="../main.qml" line="952"/>
+        <location filename="../main.qml" line="831"/>
+        <location filename="../main.qml" line="972"/>
         <source>Strava</source>
         <translation>Strava</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="812"/>
+        <location filename="../main.qml" line="832"/>
         <source>Do you want to upload the workout to Strava?</source>
         <translation>Вивантажити тренування в Strava?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="820"/>
+        <location filename="../main.qml" line="840"/>
         <source>Garmin Workout Planned</source>
         <translation>Заплановано тренування Garmin</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="821"/>
+        <location filename="../main.qml" line="841"/>
         <source>Workout found:
 </source>
         <translation>Знайдено тренування:
 </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="822"/>
+        <location filename="../main.qml" line="842"/>
         <source>
 Date: </source>
         <translation>
 Дата: </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="823"/>
+        <location filename="../main.qml" line="843"/>
         <source>
 
 Do you want to start it now?</source>
@@ -4248,18 +4249,18 @@ Do you want to start it now?</source>
 Почати його зараз?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="831"/>
+        <location filename="../main.qml" line="851"/>
         <source>Garmin FTP Update</source>
         <translation>Оновлення FTP із Garmin</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="840"/>
-        <location filename="../main.qml" line="864"/>
+        <location filename="../main.qml" line="860"/>
+        <location filename="../main.qml" line="884"/>
         <source>Clipboard Workout</source>
         <translation>Тренування з буфера обміну</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="841"/>
+        <location filename="../main.qml" line="861"/>
         <source>Workout found in clipboard:
 %1
 
@@ -4270,7 +4271,7 @@ Do you want to open the workout preview?</source>
 Відкрити попередній перегляд?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="865"/>
+        <location filename="../main.qml" line="885"/>
         <source>The clipboard workout has ended.
 
 Do you want to delete the file?</source>
@@ -4279,12 +4280,12 @@ Do you want to delete the file?</source>
 Видалити файл?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="873"/>
+        <location filename="../main.qml" line="893"/>
         <source>Echelon Unlock</source>
         <translation>Розблокування Echelon</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="874"/>
+        <location filename="../main.qml" line="894"/>
         <source>The bike has been unlocked and cadence is flowing.
 
 Do you want to switch to the classic Bluetooth bridge for this session?</source>
@@ -4293,12 +4294,12 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
 Перейти до кінця сеансу на класичний віртуальний Bluetooth-пристрій?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="907"/>
+        <location filename="../main.qml" line="927"/>
         <source>Echelon Locked Bike</source>
         <translation>Велотренажер заблоковано Echelon</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="924"/>
+        <location filename="../main.qml" line="944"/>
         <source>Your bike is locked by Echelon, but QZ can unlock it.
 
 </source>
@@ -4307,7 +4308,7 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
 </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="925"/>
+        <location filename="../main.qml" line="945"/>
         <source>Enable Virtual Echelon in the experimental settings and restart qz, then open the official Echelon app on a separate device and connect to the bike once.
 
 </source>
@@ -4316,7 +4317,7 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
 </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="926"/>
+        <location filename="../main.qml" line="946"/>
         <source>After initialization, return to QZ and everything will work normally.
 
 </source>
@@ -4325,47 +4326,47 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
 </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="927"/>
+        <location filename="../main.qml" line="947"/>
         <source>You have to repeat this for each session, would you like to enable the Virtual Echelon setting now for this?</source>
         <translation>Це потрібно повторювати в кожному сеансі. Увімкнути налаштування «Віртуальний Echelon» зараз?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="938"/>
+        <location filename="../main.qml" line="958"/>
         <source>Yes</source>
         <translation>Так</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="943"/>
+        <location filename="../main.qml" line="963"/>
         <source>No</source>
         <translation>Ні</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="953"/>
+        <location filename="../main.qml" line="973"/>
         <source>You are already connected to Strava. Do you want to log out?</source>
         <translation>Ви вже під’єднані до Strava. Вийти з облікового запису?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="962"/>
+        <location filename="../main.qml" line="982"/>
         <source>Peloton</source>
         <translation>Peloton</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="963"/>
+        <location filename="../main.qml" line="983"/>
         <source>You are already connected to Peloton. Do you want to log out?</source>
         <translation>Ви вже під’єднані до Peloton. Вийти з облікового запису?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="972"/>
+        <location filename="../main.qml" line="992"/>
         <source>Intervals.icu</source>
         <translation>Intervals.icu</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="973"/>
+        <location filename="../main.qml" line="993"/>
         <source>You are already connected to Intervals.icu. Do you want to log out?</source>
         <translation>Ви вже під’єднані до Intervals.icu. Вийти з облікового запису?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1501"/>
+        <location filename="../main.qml" line="1521"/>
         <source>Please choose a file</source>
         <translation>Виберіть файл</translation>
     </message>
@@ -4375,102 +4376,102 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>Не забудьте зберегти профіль «%1», якщо хочете залишити в ньому ці зміни.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1035"/>
+        <location filename="../main.qml" line="1055"/>
         <source>Auto Resistance enabled</source>
         <translation>Автоопір увімкнено</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1035"/>
+        <location filename="../main.qml" line="1055"/>
         <source>Auto Resistance disabled</source>
         <translation>Автоопір вимкнено</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1070"/>
+        <location filename="../main.qml" line="1090"/>
         <source>You can move the tiles!</source>
         <translation>Плитки можна переміщувати!</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1070"/>
+        <location filename="../main.qml" line="1090"/>
         <source>The tiles are locked now</source>
         <translation>Плитки закріплено</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1111"/>
+        <location filename="../main.qml" line="1131"/>
         <source>Search settings</source>
         <translation>Пошук налаштувань</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1221"/>
+        <location filename="../main.qml" line="1241"/>
         <source>Profile: </source>
         <translation>Профіль: </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1233"/>
+        <location filename="../main.qml" line="1253"/>
         <source>Settings</source>
         <translation>Налаштування</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1244"/>
+        <location filename="../main.qml" line="1264"/>
         <source>Workouts History</source>
         <translation>Історія тренувань</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1253"/>
+        <location filename="../main.qml" line="1273"/>
         <source>Swag Bag</source>
         <translation>Swag Bag</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1262"/>
+        <location filename="../main.qml" line="1282"/>
         <source>Charts</source>
         <translation>Графіки</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1275"/>
+        <location filename="../main.qml" line="1295"/>
         <source>Open GPX</source>
         <translation>Відкрити GPX</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1291"/>
+        <location filename="../main.qml" line="1311"/>
         <source>Open Train Program</source>
         <translation>Відкрити програму тренування</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1309"/>
+        <location filename="../main.qml" line="1329"/>
         <source>Workout Editor</source>
         <translation>Редактор тренувань</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1337"/>
+        <location filename="../main.qml" line="1357"/>
         <source>Save GPX</source>
         <translation>Зберегти GPX</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1347"/>
+        <location filename="../main.qml" line="1367"/>
         <source>Save FIT</source>
         <translation>Зберегти FIT</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1357"/>
+        <location filename="../main.qml" line="1377"/>
         <source>Wizard</source>
         <translation>Майстер налаштування</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1366"/>
+        <location filename="../main.qml" line="1386"/>
         <source>Help</source>
         <translation>Довідка</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1375"/>
+        <location filename="../main.qml" line="1395"/>
         <source>Community</source>
         <translation>Спільнота</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1383"/>
+        <location filename="../main.qml" line="1403"/>
         <source>Credits</source>
         <translation>Подяки</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1391"/>
+        <location filename="../main.qml" line="1411"/>
         <source>Quit</source>
         <translation>Вийти</translation>
     </message>
@@ -9531,182 +9532,182 @@ Default: A = -0.96, B = 1.33</source>
 <context>
     <name>settings-shortcuts</name>
     <message>
-        <location filename="../settings-shortcuts.qml" line="104"/>
+        <location filename="../settings-shortcuts.qml" line="106"/>
         <source>Keyboard Shortcuts</source>
         <translation>Сполучення клавіш</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="112"/>
+        <location filename="../settings-shortcuts.qml" line="114"/>
         <source>Enable Keyboard Shortcuts</source>
         <translation>Увімкнути сполучення клавіш</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="119"/>
+        <location filename="../settings-shortcuts.qml" line="121"/>
         <source>Click on a field and press a key to assign a shortcut. Press Backspace to clear. Preset fields follow the same left-to-right order as the preset buttons.</source>
         <translation>Клацніть поле й натисніть клавішу, щоб призначити сполучення. Backspace – очистити. Поля пресетів ідуть у тому самому порядку зліва направо, що й кнопки пресетів.</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="129"/>
+        <location filename="../settings-shortcuts.qml" line="131"/>
         <source>None</source>
         <translation>Немає</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="178"/>
+        <location filename="../settings-shortcuts.qml" line="180"/>
         <source>General Controls</source>
         <translation>Загальне керування</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="183"/>
+        <location filename="../settings-shortcuts.qml" line="185"/>
         <source>Start / Pause</source>
         <translation>Старт / пауза</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="187"/>
+        <location filename="../settings-shortcuts.qml" line="189"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="191"/>
+        <location filename="../settings-shortcuts.qml" line="193"/>
         <source>Lap</source>
         <translation>Коло</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="198"/>
+        <location filename="../settings-shortcuts.qml" line="200"/>
         <source>Main Metrics</source>
         <translation>Основні показники</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="203"/>
+        <location filename="../settings-shortcuts.qml" line="205"/>
         <source>Speed + / -</source>
         <translation>Швидкість + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="208"/>
+        <location filename="../settings-shortcuts.qml" line="210"/>
         <source>Inclination + / -</source>
         <translation>Нахил + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="213"/>
+        <location filename="../settings-shortcuts.qml" line="215"/>
         <source>Resistance + / -</source>
         <translation>Опір + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="218"/>
+        <location filename="../settings-shortcuts.qml" line="220"/>
         <source>Gears + / -</source>
         <translation>Передачі + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="223"/>
+        <location filename="../settings-shortcuts.qml" line="225"/>
         <source>Gears Big Buttons + / -</source>
         <translation>Великі кнопки передач + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="231"/>
+        <location filename="../settings-shortcuts.qml" line="233"/>
         <source>Target Controls</source>
         <translation>Керування цілями</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="236"/>
+        <location filename="../settings-shortcuts.qml" line="238"/>
         <source>Target Resistance + / -</source>
         <translation>Цільовий опір + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="241"/>
+        <location filename="../settings-shortcuts.qml" line="243"/>
         <source>Target Power + / -</source>
         <translation>Цільова потужність + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="246"/>
+        <location filename="../settings-shortcuts.qml" line="248"/>
         <source>Target Zone + / -</source>
         <translation>Цільова зона + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="251"/>
+        <location filename="../settings-shortcuts.qml" line="253"/>
         <source>Target Speed + / -</source>
         <translation>Цільова швидкість + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="256"/>
+        <location filename="../settings-shortcuts.qml" line="258"/>
         <source>Target Incline + / -</source>
         <translation>Цільовий нахил + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="264"/>
+        <location filename="../settings-shortcuts.qml" line="266"/>
         <source>Peloton &amp; Others</source>
         <translation>Peloton та інші</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="269"/>
+        <location filename="../settings-shortcuts.qml" line="271"/>
         <source>Peloton Resistance + / -</source>
         <translation>Опір Peloton + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="274"/>
+        <location filename="../settings-shortcuts.qml" line="276"/>
         <source>Peloton Offset + / -</source>
         <translation>Зміщення Peloton + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="279"/>
+        <location filename="../settings-shortcuts.qml" line="281"/>
         <source>Peloton Remaining + / -</source>
         <translation>Залишок Peloton + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="284"/>
+        <location filename="../settings-shortcuts.qml" line="286"/>
         <source>Time to Next + / -</source>
         <translation>До наступного + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="289"/>
+        <location filename="../settings-shortcuts.qml" line="291"/>
         <source>Fan Speed + / -</source>
         <translation>Швидкість вентилятора + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="294"/>
+        <location filename="../settings-shortcuts.qml" line="296"/>
         <source>PID Heart Rate + / -</source>
         <translation>PID за пульсом + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="299"/>
+        <location filename="../settings-shortcuts.qml" line="301"/>
         <source>Ext. Inclination + / -</source>
         <translation>Зовн. нахил + / -</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="304"/>
+        <location filename="../settings-shortcuts.qml" line="306"/>
         <source>ERG Mode Toggle</source>
         <translation>Режим ERG увімк./вимк.</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="308"/>
+        <location filename="../settings-shortcuts.qml" line="310"/>
         <source>Power Avg Toggle</source>
         <translation>Усереднення потужності увімк./вимк.</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="312"/>
+        <location filename="../settings-shortcuts.qml" line="314"/>
         <source>Auto-Resistance Toggle</source>
         <translation>Автоопір увімк./вимк.</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="316"/>
+        <location filename="../settings-shortcuts.qml" line="318"/>
         <source>AVS Cruise / Climb / Sprint</source>
         <translation>AVS: круїз / підйом / спринт</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="325"/>
+        <location filename="../settings-shortcuts.qml" line="327"/>
         <source>Preset Resistance</source>
         <translation>Пресет опору</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="338"/>
+        <location filename="../settings-shortcuts.qml" line="340"/>
         <source>Preset Speed</source>
         <translation>Пресет швидкості</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="351"/>
+        <location filename="../settings-shortcuts.qml" line="353"/>
         <source>Preset Inclination</source>
         <translation>Пресет нахилу</translation>
     </message>
     <message>
-        <location filename="../settings-shortcuts.qml" line="364"/>
+        <location filename="../settings-shortcuts.qml" line="366"/>
         <source>Preset Power Zone</source>
         <translation>Пресет зони потужності</translation>
     </message>
@@ -9714,267 +9715,108 @@ Default: A = -0.96, B = 1.33</source>
 <context>
     <name>settings-tiles</name>
     <message>
-        <location filename="../settings-tiles.qml" line="379"/>
+        <location filename="../settings-tiles.qml" line="381"/>
         <source>Keyboard Shortcuts ⌨️</source>
         <translation>Сполучення клавіш</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="388"/>
+        <location filename="../settings-tiles.qml" line="390"/>
         <source>Speed</source>
         <translation>Швидкість</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="395"/>
-        <location filename="../settings-tiles.qml" line="440"/>
-        <location filename="../settings-tiles.qml" line="501"/>
-        <location filename="../settings-tiles.qml" line="547"/>
-        <location filename="../settings-tiles.qml" line="578"/>
-        <location filename="../settings-tiles.qml" line="622"/>
-        <location filename="../settings-tiles.qml" line="667"/>
-        <location filename="../settings-tiles.qml" line="728"/>
-        <location filename="../settings-tiles.qml" line="761"/>
-        <location filename="../settings-tiles.qml" line="793"/>
-        <location filename="../settings-tiles.qml" line="851"/>
-        <location filename="../settings-tiles.qml" line="912"/>
-        <location filename="../settings-tiles.qml" line="958"/>
-        <location filename="../settings-tiles.qml" line="1004"/>
-        <location filename="../settings-tiles.qml" line="1050"/>
-        <location filename="../settings-tiles.qml" line="1082"/>
-        <location filename="../settings-tiles.qml" line="1156"/>
-        <location filename="../settings-tiles.qml" line="1189"/>
-        <location filename="../settings-tiles.qml" line="1234"/>
-        <location filename="../settings-tiles.qml" line="1279"/>
-        <location filename="../settings-tiles.qml" line="1324"/>
-        <location filename="../settings-tiles.qml" line="1369"/>
-        <location filename="../settings-tiles.qml" line="1414"/>
-        <location filename="../settings-tiles.qml" line="1492"/>
-        <location filename="../settings-tiles.qml" line="1539"/>
-        <location filename="../settings-tiles.qml" line="1585"/>
-        <location filename="../settings-tiles.qml" line="1631"/>
-        <location filename="../settings-tiles.qml" line="1676"/>
-        <location filename="../settings-tiles.qml" line="1721"/>
-        <location filename="../settings-tiles.qml" line="1767"/>
-        <location filename="../settings-tiles.qml" line="1812"/>
-        <location filename="../settings-tiles.qml" line="1844"/>
-        <location filename="../settings-tiles.qml" line="1876"/>
-        <location filename="../settings-tiles.qml" line="1907"/>
-        <location filename="../settings-tiles.qml" line="1952"/>
-        <location filename="../settings-tiles.qml" line="1996"/>
-        <location filename="../settings-tiles.qml" line="2054"/>
-        <location filename="../settings-tiles.qml" line="2099"/>
-        <location filename="../settings-tiles.qml" line="2144"/>
-        <location filename="../settings-tiles.qml" line="2189"/>
-        <location filename="../settings-tiles.qml" line="2221"/>
-        <location filename="../settings-tiles.qml" line="2266"/>
-        <location filename="../settings-tiles.qml" line="2311"/>
-        <location filename="../settings-tiles.qml" line="2356"/>
-        <location filename="../settings-tiles.qml" line="2401"/>
-        <location filename="../settings-tiles.qml" line="2446"/>
-        <location filename="../settings-tiles.qml" line="2491"/>
-        <location filename="../settings-tiles.qml" line="2536"/>
-        <location filename="../settings-tiles.qml" line="2581"/>
-        <location filename="../settings-tiles.qml" line="2626"/>
-        <location filename="../settings-tiles.qml" line="2658"/>
-        <location filename="../settings-tiles.qml" line="2690"/>
-        <location filename="../settings-tiles.qml" line="2720"/>
-        <location filename="../settings-tiles.qml" line="2752"/>
-        <location filename="../settings-tiles.qml" line="2861"/>
-        <location filename="../settings-tiles.qml" line="2970"/>
-        <location filename="../settings-tiles.qml" line="3079"/>
-        <location filename="../settings-tiles.qml" line="3188"/>
-        <location filename="../settings-tiles.qml" line="3297"/>
-        <location filename="../settings-tiles.qml" line="3410"/>
-        <location filename="../settings-tiles.qml" line="3523"/>
-        <location filename="../settings-tiles.qml" line="3636"/>
-        <location filename="../settings-tiles.qml" line="3749"/>
-        <location filename="../settings-tiles.qml" line="3862"/>
-        <location filename="../settings-tiles.qml" line="3971"/>
-        <location filename="../settings-tiles.qml" line="4080"/>
-        <location filename="../settings-tiles.qml" line="4189"/>
-        <location filename="../settings-tiles.qml" line="4298"/>
-        <location filename="../settings-tiles.qml" line="4406"/>
-        <location filename="../settings-tiles.qml" line="4507"/>
-        <location filename="../settings-tiles.qml" line="4608"/>
-        <location filename="../settings-tiles.qml" line="4709"/>
-        <location filename="../settings-tiles.qml" line="4810"/>
-        <location filename="../settings-tiles.qml" line="4911"/>
-        <location filename="../settings-tiles.qml" line="5012"/>
-        <location filename="../settings-tiles.qml" line="5126"/>
-        <location filename="../settings-tiles.qml" line="5171"/>
-        <location filename="../settings-tiles.qml" line="5216"/>
-        <location filename="../settings-tiles.qml" line="5261"/>
-        <location filename="../settings-tiles.qml" line="5306"/>
-        <location filename="../settings-tiles.qml" line="5380"/>
-        <location filename="../settings-tiles.qml" line="5425"/>
-        <location filename="../settings-tiles.qml" line="5470"/>
-        <location filename="../settings-tiles.qml" line="5515"/>
-        <location filename="../settings-tiles.qml" line="5560"/>
-        <location filename="../settings-tiles.qml" line="5604"/>
-        <location filename="../settings-tiles.qml" line="5647"/>
-        <location filename="../settings-tiles.qml" line="5690"/>
-        <location filename="../settings-tiles.qml" line="5733"/>
-        <location filename="../settings-tiles.qml" line="5777"/>
+        <location filename="../settings-tiles.qml" line="397"/>
+        <location filename="../settings-tiles.qml" line="442"/>
+        <location filename="../settings-tiles.qml" line="503"/>
+        <location filename="../settings-tiles.qml" line="549"/>
+        <location filename="../settings-tiles.qml" line="580"/>
+        <location filename="../settings-tiles.qml" line="624"/>
+        <location filename="../settings-tiles.qml" line="669"/>
+        <location filename="../settings-tiles.qml" line="730"/>
+        <location filename="../settings-tiles.qml" line="763"/>
+        <location filename="../settings-tiles.qml" line="795"/>
+        <location filename="../settings-tiles.qml" line="853"/>
+        <location filename="../settings-tiles.qml" line="914"/>
+        <location filename="../settings-tiles.qml" line="960"/>
+        <location filename="../settings-tiles.qml" line="1006"/>
+        <location filename="../settings-tiles.qml" line="1052"/>
+        <location filename="../settings-tiles.qml" line="1084"/>
+        <location filename="../settings-tiles.qml" line="1158"/>
+        <location filename="../settings-tiles.qml" line="1191"/>
+        <location filename="../settings-tiles.qml" line="1236"/>
+        <location filename="../settings-tiles.qml" line="1281"/>
+        <location filename="../settings-tiles.qml" line="1326"/>
+        <location filename="../settings-tiles.qml" line="1371"/>
+        <location filename="../settings-tiles.qml" line="1416"/>
+        <location filename="../settings-tiles.qml" line="1494"/>
+        <location filename="../settings-tiles.qml" line="1541"/>
+        <location filename="../settings-tiles.qml" line="1587"/>
+        <location filename="../settings-tiles.qml" line="1633"/>
+        <location filename="../settings-tiles.qml" line="1678"/>
+        <location filename="../settings-tiles.qml" line="1723"/>
+        <location filename="../settings-tiles.qml" line="1769"/>
+        <location filename="../settings-tiles.qml" line="1814"/>
+        <location filename="../settings-tiles.qml" line="1846"/>
+        <location filename="../settings-tiles.qml" line="1878"/>
+        <location filename="../settings-tiles.qml" line="1909"/>
+        <location filename="../settings-tiles.qml" line="1954"/>
+        <location filename="../settings-tiles.qml" line="1998"/>
+        <location filename="../settings-tiles.qml" line="2056"/>
+        <location filename="../settings-tiles.qml" line="2101"/>
+        <location filename="../settings-tiles.qml" line="2146"/>
+        <location filename="../settings-tiles.qml" line="2191"/>
+        <location filename="../settings-tiles.qml" line="2223"/>
+        <location filename="../settings-tiles.qml" line="2268"/>
+        <location filename="../settings-tiles.qml" line="2313"/>
+        <location filename="../settings-tiles.qml" line="2358"/>
+        <location filename="../settings-tiles.qml" line="2403"/>
+        <location filename="../settings-tiles.qml" line="2448"/>
+        <location filename="../settings-tiles.qml" line="2493"/>
+        <location filename="../settings-tiles.qml" line="2538"/>
+        <location filename="../settings-tiles.qml" line="2583"/>
+        <location filename="../settings-tiles.qml" line="2628"/>
+        <location filename="../settings-tiles.qml" line="2660"/>
+        <location filename="../settings-tiles.qml" line="2692"/>
+        <location filename="../settings-tiles.qml" line="2722"/>
+        <location filename="../settings-tiles.qml" line="2754"/>
+        <location filename="../settings-tiles.qml" line="2863"/>
+        <location filename="../settings-tiles.qml" line="2972"/>
+        <location filename="../settings-tiles.qml" line="3081"/>
+        <location filename="../settings-tiles.qml" line="3190"/>
+        <location filename="../settings-tiles.qml" line="3299"/>
+        <location filename="../settings-tiles.qml" line="3412"/>
+        <location filename="../settings-tiles.qml" line="3525"/>
+        <location filename="../settings-tiles.qml" line="3638"/>
+        <location filename="../settings-tiles.qml" line="3751"/>
+        <location filename="../settings-tiles.qml" line="3864"/>
+        <location filename="../settings-tiles.qml" line="3973"/>
+        <location filename="../settings-tiles.qml" line="4082"/>
+        <location filename="../settings-tiles.qml" line="4191"/>
+        <location filename="../settings-tiles.qml" line="4300"/>
+        <location filename="../settings-tiles.qml" line="4408"/>
+        <location filename="../settings-tiles.qml" line="4509"/>
+        <location filename="../settings-tiles.qml" line="4610"/>
+        <location filename="../settings-tiles.qml" line="4711"/>
+        <location filename="../settings-tiles.qml" line="4812"/>
+        <location filename="../settings-tiles.qml" line="4913"/>
+        <location filename="../settings-tiles.qml" line="5014"/>
+        <location filename="../settings-tiles.qml" line="5128"/>
+        <location filename="../settings-tiles.qml" line="5173"/>
+        <location filename="../settings-tiles.qml" line="5218"/>
+        <location filename="../settings-tiles.qml" line="5263"/>
+        <location filename="../settings-tiles.qml" line="5308"/>
+        <location filename="../settings-tiles.qml" line="5382"/>
+        <location filename="../settings-tiles.qml" line="5427"/>
+        <location filename="../settings-tiles.qml" line="5472"/>
+        <location filename="../settings-tiles.qml" line="5517"/>
+        <location filename="../settings-tiles.qml" line="5562"/>
+        <location filename="../settings-tiles.qml" line="5606"/>
+        <location filename="../settings-tiles.qml" line="5649"/>
+        <location filename="../settings-tiles.qml" line="5692"/>
+        <location filename="../settings-tiles.qml" line="5735"/>
+        <location filename="../settings-tiles.qml" line="5779"/>
         <source>order index:</source>
         <translation>порядковий номер:</translation>
-    </message>
-    <message>
-        <location filename="../settings-tiles.qml" line="411"/>
-        <location filename="../settings-tiles.qml" line="456"/>
-        <location filename="../settings-tiles.qml" line="517"/>
-        <location filename="../settings-tiles.qml" line="563"/>
-        <location filename="../settings-tiles.qml" line="593"/>
-        <location filename="../settings-tiles.qml" line="638"/>
-        <location filename="../settings-tiles.qml" line="683"/>
-        <location filename="../settings-tiles.qml" line="744"/>
-        <location filename="../settings-tiles.qml" line="777"/>
-        <location filename="../settings-tiles.qml" line="867"/>
-        <location filename="../settings-tiles.qml" line="928"/>
-        <location filename="../settings-tiles.qml" line="974"/>
-        <location filename="../settings-tiles.qml" line="1020"/>
-        <location filename="../settings-tiles.qml" line="1066"/>
-        <location filename="../settings-tiles.qml" line="1098"/>
-        <location filename="../settings-tiles.qml" line="1172"/>
-        <location filename="../settings-tiles.qml" line="1205"/>
-        <location filename="../settings-tiles.qml" line="1250"/>
-        <location filename="../settings-tiles.qml" line="1295"/>
-        <location filename="../settings-tiles.qml" line="1340"/>
-        <location filename="../settings-tiles.qml" line="1385"/>
-        <location filename="../settings-tiles.qml" line="1430"/>
-        <location filename="../settings-tiles.qml" line="1508"/>
-        <location filename="../settings-tiles.qml" line="1555"/>
-        <location filename="../settings-tiles.qml" line="1601"/>
-        <location filename="../settings-tiles.qml" line="1647"/>
-        <location filename="../settings-tiles.qml" line="1692"/>
-        <location filename="../settings-tiles.qml" line="1737"/>
-        <location filename="../settings-tiles.qml" line="1783"/>
-        <location filename="../settings-tiles.qml" line="1828"/>
-        <location filename="../settings-tiles.qml" line="1860"/>
-        <location filename="../settings-tiles.qml" line="1892"/>
-        <location filename="../settings-tiles.qml" line="1923"/>
-        <location filename="../settings-tiles.qml" line="1968"/>
-        <location filename="../settings-tiles.qml" line="2011"/>
-        <location filename="../settings-tiles.qml" line="2070"/>
-        <location filename="../settings-tiles.qml" line="2115"/>
-        <location filename="../settings-tiles.qml" line="2160"/>
-        <location filename="../settings-tiles.qml" line="2205"/>
-        <location filename="../settings-tiles.qml" line="2237"/>
-        <location filename="../settings-tiles.qml" line="2282"/>
-        <location filename="../settings-tiles.qml" line="2327"/>
-        <location filename="../settings-tiles.qml" line="2372"/>
-        <location filename="../settings-tiles.qml" line="2417"/>
-        <location filename="../settings-tiles.qml" line="2462"/>
-        <location filename="../settings-tiles.qml" line="2507"/>
-        <location filename="../settings-tiles.qml" line="2552"/>
-        <location filename="../settings-tiles.qml" line="2597"/>
-        <location filename="../settings-tiles.qml" line="2642"/>
-        <location filename="../settings-tiles.qml" line="2674"/>
-        <location filename="../settings-tiles.qml" line="2706"/>
-        <location filename="../settings-tiles.qml" line="2735"/>
-        <location filename="../settings-tiles.qml" line="2768"/>
-        <location filename="../settings-tiles.qml" line="2789"/>
-        <location filename="../settings-tiles.qml" line="2810"/>
-        <location filename="../settings-tiles.qml" line="2844"/>
-        <location filename="../settings-tiles.qml" line="2877"/>
-        <location filename="../settings-tiles.qml" line="2898"/>
-        <location filename="../settings-tiles.qml" line="2919"/>
-        <location filename="../settings-tiles.qml" line="2953"/>
-        <location filename="../settings-tiles.qml" line="2986"/>
-        <location filename="../settings-tiles.qml" line="3007"/>
-        <location filename="../settings-tiles.qml" line="3028"/>
-        <location filename="../settings-tiles.qml" line="3062"/>
-        <location filename="../settings-tiles.qml" line="3095"/>
-        <location filename="../settings-tiles.qml" line="3116"/>
-        <location filename="../settings-tiles.qml" line="3137"/>
-        <location filename="../settings-tiles.qml" line="3171"/>
-        <location filename="../settings-tiles.qml" line="3204"/>
-        <location filename="../settings-tiles.qml" line="3225"/>
-        <location filename="../settings-tiles.qml" line="3246"/>
-        <location filename="../settings-tiles.qml" line="3280"/>
-        <location filename="../settings-tiles.qml" line="3313"/>
-        <location filename="../settings-tiles.qml" line="3334"/>
-        <location filename="../settings-tiles.qml" line="3359"/>
-        <location filename="../settings-tiles.qml" line="3393"/>
-        <location filename="../settings-tiles.qml" line="3426"/>
-        <location filename="../settings-tiles.qml" line="3447"/>
-        <location filename="../settings-tiles.qml" line="3472"/>
-        <location filename="../settings-tiles.qml" line="3506"/>
-        <location filename="../settings-tiles.qml" line="3539"/>
-        <location filename="../settings-tiles.qml" line="3560"/>
-        <location filename="../settings-tiles.qml" line="3585"/>
-        <location filename="../settings-tiles.qml" line="3619"/>
-        <location filename="../settings-tiles.qml" line="3652"/>
-        <location filename="../settings-tiles.qml" line="3673"/>
-        <location filename="../settings-tiles.qml" line="3698"/>
-        <location filename="../settings-tiles.qml" line="3732"/>
-        <location filename="../settings-tiles.qml" line="3765"/>
-        <location filename="../settings-tiles.qml" line="3786"/>
-        <location filename="../settings-tiles.qml" line="3811"/>
-        <location filename="../settings-tiles.qml" line="3845"/>
-        <location filename="../settings-tiles.qml" line="3878"/>
-        <location filename="../settings-tiles.qml" line="3899"/>
-        <location filename="../settings-tiles.qml" line="3920"/>
-        <location filename="../settings-tiles.qml" line="3954"/>
-        <location filename="../settings-tiles.qml" line="3987"/>
-        <location filename="../settings-tiles.qml" line="4008"/>
-        <location filename="../settings-tiles.qml" line="4029"/>
-        <location filename="../settings-tiles.qml" line="4064"/>
-        <location filename="../settings-tiles.qml" line="4096"/>
-        <location filename="../settings-tiles.qml" line="4117"/>
-        <location filename="../settings-tiles.qml" line="4138"/>
-        <location filename="../settings-tiles.qml" line="4172"/>
-        <location filename="../settings-tiles.qml" line="4205"/>
-        <location filename="../settings-tiles.qml" line="4226"/>
-        <location filename="../settings-tiles.qml" line="4247"/>
-        <location filename="../settings-tiles.qml" line="4281"/>
-        <location filename="../settings-tiles.qml" line="4314"/>
-        <location filename="../settings-tiles.qml" line="4335"/>
-        <location filename="../settings-tiles.qml" line="4356"/>
-        <location filename="../settings-tiles.qml" line="4390"/>
-        <location filename="../settings-tiles.qml" line="4421"/>
-        <location filename="../settings-tiles.qml" line="4440"/>
-        <location filename="../settings-tiles.qml" line="4458"/>
-        <location filename="../settings-tiles.qml" line="4490"/>
-        <location filename="../settings-tiles.qml" line="4522"/>
-        <location filename="../settings-tiles.qml" line="4541"/>
-        <location filename="../settings-tiles.qml" line="4559"/>
-        <location filename="../settings-tiles.qml" line="4591"/>
-        <location filename="../settings-tiles.qml" line="4623"/>
-        <location filename="../settings-tiles.qml" line="4642"/>
-        <location filename="../settings-tiles.qml" line="4660"/>
-        <location filename="../settings-tiles.qml" line="4692"/>
-        <location filename="../settings-tiles.qml" line="4724"/>
-        <location filename="../settings-tiles.qml" line="4743"/>
-        <location filename="../settings-tiles.qml" line="4761"/>
-        <location filename="../settings-tiles.qml" line="4793"/>
-        <location filename="../settings-tiles.qml" line="4825"/>
-        <location filename="../settings-tiles.qml" line="4844"/>
-        <location filename="../settings-tiles.qml" line="4862"/>
-        <location filename="../settings-tiles.qml" line="4894"/>
-        <location filename="../settings-tiles.qml" line="4926"/>
-        <location filename="../settings-tiles.qml" line="4945"/>
-        <location filename="../settings-tiles.qml" line="4963"/>
-        <location filename="../settings-tiles.qml" line="4995"/>
-        <location filename="../settings-tiles.qml" line="5027"/>
-        <location filename="../settings-tiles.qml" line="5046"/>
-        <location filename="../settings-tiles.qml" line="5064"/>
-        <location filename="../settings-tiles.qml" line="5096"/>
-        <location filename="../settings-tiles.qml" line="5142"/>
-        <location filename="../settings-tiles.qml" line="5187"/>
-        <location filename="../settings-tiles.qml" line="5232"/>
-        <location filename="../settings-tiles.qml" line="5277"/>
-        <location filename="../settings-tiles.qml" line="5322"/>
-        <location filename="../settings-tiles.qml" line="5396"/>
-        <location filename="../settings-tiles.qml" line="5441"/>
-        <location filename="../settings-tiles.qml" line="5486"/>
-        <location filename="../settings-tiles.qml" line="5531"/>
-        <location filename="../settings-tiles.qml" line="5576"/>
-        <location filename="../settings-tiles.qml" line="5619"/>
-        <location filename="../settings-tiles.qml" line="5662"/>
-        <location filename="../settings-tiles.qml" line="5705"/>
-        <location filename="../settings-tiles.qml" line="5748"/>
-        <location filename="../settings-tiles.qml" line="5793"/>
-        <source>OK</source>
-        <translation>OK</translation>
     </message>
     <message>
         <location filename="../settings-tiles.qml" line="413"/>
@@ -9986,7 +9828,6 @@ Default: A = -0.96, B = 1.33</source>
         <location filename="../settings-tiles.qml" line="685"/>
         <location filename="../settings-tiles.qml" line="746"/>
         <location filename="../settings-tiles.qml" line="779"/>
-        <location filename="../settings-tiles.qml" line="811"/>
         <location filename="../settings-tiles.qml" line="869"/>
         <location filename="../settings-tiles.qml" line="930"/>
         <location filename="../settings-tiles.qml" line="976"/>
@@ -10051,23 +9892,23 @@ Default: A = -0.96, B = 1.33</source>
         <location filename="../settings-tiles.qml" line="3248"/>
         <location filename="../settings-tiles.qml" line="3282"/>
         <location filename="../settings-tiles.qml" line="3315"/>
-        <location filename="../settings-tiles.qml" line="3339"/>
+        <location filename="../settings-tiles.qml" line="3336"/>
         <location filename="../settings-tiles.qml" line="3361"/>
         <location filename="../settings-tiles.qml" line="3395"/>
         <location filename="../settings-tiles.qml" line="3428"/>
-        <location filename="../settings-tiles.qml" line="3452"/>
+        <location filename="../settings-tiles.qml" line="3449"/>
         <location filename="../settings-tiles.qml" line="3474"/>
         <location filename="../settings-tiles.qml" line="3508"/>
         <location filename="../settings-tiles.qml" line="3541"/>
-        <location filename="../settings-tiles.qml" line="3565"/>
+        <location filename="../settings-tiles.qml" line="3562"/>
         <location filename="../settings-tiles.qml" line="3587"/>
         <location filename="../settings-tiles.qml" line="3621"/>
         <location filename="../settings-tiles.qml" line="3654"/>
-        <location filename="../settings-tiles.qml" line="3678"/>
+        <location filename="../settings-tiles.qml" line="3675"/>
         <location filename="../settings-tiles.qml" line="3700"/>
         <location filename="../settings-tiles.qml" line="3734"/>
         <location filename="../settings-tiles.qml" line="3767"/>
-        <location filename="../settings-tiles.qml" line="3791"/>
+        <location filename="../settings-tiles.qml" line="3788"/>
         <location filename="../settings-tiles.qml" line="3813"/>
         <location filename="../settings-tiles.qml" line="3847"/>
         <location filename="../settings-tiles.qml" line="3880"/>
@@ -10123,7 +9964,6 @@ Default: A = -0.96, B = 1.33</source>
         <location filename="../settings-tiles.qml" line="5234"/>
         <location filename="../settings-tiles.qml" line="5279"/>
         <location filename="../settings-tiles.qml" line="5324"/>
-        <location filename="../settings-tiles.qml" line="5353"/>
         <location filename="../settings-tiles.qml" line="5398"/>
         <location filename="../settings-tiles.qml" line="5443"/>
         <location filename="../settings-tiles.qml" line="5488"/>
@@ -10134,879 +9974,1040 @@ Default: A = -0.96, B = 1.33</source>
         <location filename="../settings-tiles.qml" line="5707"/>
         <location filename="../settings-tiles.qml" line="5750"/>
         <location filename="../settings-tiles.qml" line="5795"/>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../settings-tiles.qml" line="415"/>
+        <location filename="../settings-tiles.qml" line="460"/>
+        <location filename="../settings-tiles.qml" line="521"/>
+        <location filename="../settings-tiles.qml" line="567"/>
+        <location filename="../settings-tiles.qml" line="597"/>
+        <location filename="../settings-tiles.qml" line="642"/>
+        <location filename="../settings-tiles.qml" line="687"/>
+        <location filename="../settings-tiles.qml" line="748"/>
+        <location filename="../settings-tiles.qml" line="781"/>
+        <location filename="../settings-tiles.qml" line="813"/>
+        <location filename="../settings-tiles.qml" line="871"/>
+        <location filename="../settings-tiles.qml" line="932"/>
+        <location filename="../settings-tiles.qml" line="978"/>
+        <location filename="../settings-tiles.qml" line="1024"/>
+        <location filename="../settings-tiles.qml" line="1070"/>
+        <location filename="../settings-tiles.qml" line="1102"/>
+        <location filename="../settings-tiles.qml" line="1176"/>
+        <location filename="../settings-tiles.qml" line="1209"/>
+        <location filename="../settings-tiles.qml" line="1254"/>
+        <location filename="../settings-tiles.qml" line="1299"/>
+        <location filename="../settings-tiles.qml" line="1344"/>
+        <location filename="../settings-tiles.qml" line="1389"/>
+        <location filename="../settings-tiles.qml" line="1434"/>
+        <location filename="../settings-tiles.qml" line="1512"/>
+        <location filename="../settings-tiles.qml" line="1559"/>
+        <location filename="../settings-tiles.qml" line="1605"/>
+        <location filename="../settings-tiles.qml" line="1651"/>
+        <location filename="../settings-tiles.qml" line="1696"/>
+        <location filename="../settings-tiles.qml" line="1741"/>
+        <location filename="../settings-tiles.qml" line="1787"/>
+        <location filename="../settings-tiles.qml" line="1832"/>
+        <location filename="../settings-tiles.qml" line="1864"/>
+        <location filename="../settings-tiles.qml" line="1896"/>
+        <location filename="../settings-tiles.qml" line="1927"/>
+        <location filename="../settings-tiles.qml" line="1972"/>
+        <location filename="../settings-tiles.qml" line="2015"/>
+        <location filename="../settings-tiles.qml" line="2074"/>
+        <location filename="../settings-tiles.qml" line="2119"/>
+        <location filename="../settings-tiles.qml" line="2164"/>
+        <location filename="../settings-tiles.qml" line="2209"/>
+        <location filename="../settings-tiles.qml" line="2241"/>
+        <location filename="../settings-tiles.qml" line="2286"/>
+        <location filename="../settings-tiles.qml" line="2331"/>
+        <location filename="../settings-tiles.qml" line="2376"/>
+        <location filename="../settings-tiles.qml" line="2421"/>
+        <location filename="../settings-tiles.qml" line="2466"/>
+        <location filename="../settings-tiles.qml" line="2511"/>
+        <location filename="../settings-tiles.qml" line="2556"/>
+        <location filename="../settings-tiles.qml" line="2601"/>
+        <location filename="../settings-tiles.qml" line="2646"/>
+        <location filename="../settings-tiles.qml" line="2678"/>
+        <location filename="../settings-tiles.qml" line="2710"/>
+        <location filename="../settings-tiles.qml" line="2739"/>
+        <location filename="../settings-tiles.qml" line="2772"/>
+        <location filename="../settings-tiles.qml" line="2793"/>
+        <location filename="../settings-tiles.qml" line="2814"/>
+        <location filename="../settings-tiles.qml" line="2848"/>
+        <location filename="../settings-tiles.qml" line="2881"/>
+        <location filename="../settings-tiles.qml" line="2902"/>
+        <location filename="../settings-tiles.qml" line="2923"/>
+        <location filename="../settings-tiles.qml" line="2957"/>
+        <location filename="../settings-tiles.qml" line="2990"/>
+        <location filename="../settings-tiles.qml" line="3011"/>
+        <location filename="../settings-tiles.qml" line="3032"/>
+        <location filename="../settings-tiles.qml" line="3066"/>
+        <location filename="../settings-tiles.qml" line="3099"/>
+        <location filename="../settings-tiles.qml" line="3120"/>
+        <location filename="../settings-tiles.qml" line="3141"/>
+        <location filename="../settings-tiles.qml" line="3175"/>
+        <location filename="../settings-tiles.qml" line="3208"/>
+        <location filename="../settings-tiles.qml" line="3229"/>
+        <location filename="../settings-tiles.qml" line="3250"/>
+        <location filename="../settings-tiles.qml" line="3284"/>
+        <location filename="../settings-tiles.qml" line="3317"/>
+        <location filename="../settings-tiles.qml" line="3341"/>
+        <location filename="../settings-tiles.qml" line="3363"/>
+        <location filename="../settings-tiles.qml" line="3397"/>
+        <location filename="../settings-tiles.qml" line="3430"/>
+        <location filename="../settings-tiles.qml" line="3454"/>
+        <location filename="../settings-tiles.qml" line="3476"/>
+        <location filename="../settings-tiles.qml" line="3510"/>
+        <location filename="../settings-tiles.qml" line="3543"/>
+        <location filename="../settings-tiles.qml" line="3567"/>
+        <location filename="../settings-tiles.qml" line="3589"/>
+        <location filename="../settings-tiles.qml" line="3623"/>
+        <location filename="../settings-tiles.qml" line="3656"/>
+        <location filename="../settings-tiles.qml" line="3680"/>
+        <location filename="../settings-tiles.qml" line="3702"/>
+        <location filename="../settings-tiles.qml" line="3736"/>
+        <location filename="../settings-tiles.qml" line="3769"/>
+        <location filename="../settings-tiles.qml" line="3793"/>
+        <location filename="../settings-tiles.qml" line="3815"/>
+        <location filename="../settings-tiles.qml" line="3849"/>
+        <location filename="../settings-tiles.qml" line="3882"/>
+        <location filename="../settings-tiles.qml" line="3903"/>
+        <location filename="../settings-tiles.qml" line="3924"/>
+        <location filename="../settings-tiles.qml" line="3958"/>
+        <location filename="../settings-tiles.qml" line="3991"/>
+        <location filename="../settings-tiles.qml" line="4012"/>
+        <location filename="../settings-tiles.qml" line="4033"/>
+        <location filename="../settings-tiles.qml" line="4068"/>
+        <location filename="../settings-tiles.qml" line="4100"/>
+        <location filename="../settings-tiles.qml" line="4121"/>
+        <location filename="../settings-tiles.qml" line="4142"/>
+        <location filename="../settings-tiles.qml" line="4176"/>
+        <location filename="../settings-tiles.qml" line="4209"/>
+        <location filename="../settings-tiles.qml" line="4230"/>
+        <location filename="../settings-tiles.qml" line="4251"/>
+        <location filename="../settings-tiles.qml" line="4285"/>
+        <location filename="../settings-tiles.qml" line="4318"/>
+        <location filename="../settings-tiles.qml" line="4339"/>
+        <location filename="../settings-tiles.qml" line="4360"/>
+        <location filename="../settings-tiles.qml" line="4394"/>
+        <location filename="../settings-tiles.qml" line="4425"/>
+        <location filename="../settings-tiles.qml" line="4444"/>
+        <location filename="../settings-tiles.qml" line="4462"/>
+        <location filename="../settings-tiles.qml" line="4494"/>
+        <location filename="../settings-tiles.qml" line="4526"/>
+        <location filename="../settings-tiles.qml" line="4545"/>
+        <location filename="../settings-tiles.qml" line="4563"/>
+        <location filename="../settings-tiles.qml" line="4595"/>
+        <location filename="../settings-tiles.qml" line="4627"/>
+        <location filename="../settings-tiles.qml" line="4646"/>
+        <location filename="../settings-tiles.qml" line="4664"/>
+        <location filename="../settings-tiles.qml" line="4696"/>
+        <location filename="../settings-tiles.qml" line="4728"/>
+        <location filename="../settings-tiles.qml" line="4747"/>
+        <location filename="../settings-tiles.qml" line="4765"/>
+        <location filename="../settings-tiles.qml" line="4797"/>
+        <location filename="../settings-tiles.qml" line="4829"/>
+        <location filename="../settings-tiles.qml" line="4848"/>
+        <location filename="../settings-tiles.qml" line="4866"/>
+        <location filename="../settings-tiles.qml" line="4898"/>
+        <location filename="../settings-tiles.qml" line="4930"/>
+        <location filename="../settings-tiles.qml" line="4949"/>
+        <location filename="../settings-tiles.qml" line="4967"/>
+        <location filename="../settings-tiles.qml" line="4999"/>
+        <location filename="../settings-tiles.qml" line="5031"/>
+        <location filename="../settings-tiles.qml" line="5050"/>
+        <location filename="../settings-tiles.qml" line="5068"/>
+        <location filename="../settings-tiles.qml" line="5100"/>
+        <location filename="../settings-tiles.qml" line="5146"/>
+        <location filename="../settings-tiles.qml" line="5191"/>
+        <location filename="../settings-tiles.qml" line="5236"/>
+        <location filename="../settings-tiles.qml" line="5281"/>
+        <location filename="../settings-tiles.qml" line="5326"/>
+        <location filename="../settings-tiles.qml" line="5355"/>
+        <location filename="../settings-tiles.qml" line="5400"/>
+        <location filename="../settings-tiles.qml" line="5445"/>
+        <location filename="../settings-tiles.qml" line="5490"/>
+        <location filename="../settings-tiles.qml" line="5535"/>
+        <location filename="../settings-tiles.qml" line="5580"/>
+        <location filename="../settings-tiles.qml" line="5623"/>
+        <location filename="../settings-tiles.qml" line="5666"/>
+        <location filename="../settings-tiles.qml" line="5709"/>
+        <location filename="../settings-tiles.qml" line="5752"/>
+        <location filename="../settings-tiles.qml" line="5797"/>
         <source>Setting saved!</source>
         <translation>Налаштування збережено!</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="419"/>
+        <location filename="../settings-tiles.qml" line="421"/>
         <source>Speed in kilometers per hour. (To set your speed units to miles, go to Settings &gt; General Options &gt; Use Miles unit in UI).</source>
         <translation>Швидкість у кілометрах на годину. (Щоб перейти на милі, відкрийте «Налаштування &gt; Загальні параметри &gt; Милі в інтерфейсі»).</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="433"/>
+        <location filename="../settings-tiles.qml" line="435"/>
         <source>Inclination</source>
         <translation>Нахил</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="465"/>
+        <location filename="../settings-tiles.qml" line="467"/>
         <source>Cadence</source>
         <translation>Каденс</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="471"/>
+        <location filename="../settings-tiles.qml" line="473"/>
         <source>Enable Cadence color</source>
         <translation>Увімкнути колір каденсу</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="485"/>
+        <location filename="../settings-tiles.qml" line="487"/>
         <source>Bike pedal cadence changes color to indicate how your cadence compares to the cadence called out in Peloton classes. The tile displays the following colors: white if there is no target cadence in the program, red if your cadence is lower than the target, green if your cadence matches the target, and orange if your cadence is higher than the target.</source>
         <translation>Колір плитки каденсу педалювання показує, як ваш каденс співвідноситься з каденсом, який називає тренер на заняттях Peloton. Кольори плитки: білий – у програмі немає цільового каденсу, червоний – каденс нижчий за цільовий, зелений – збігається із цільовим, помаранчевий – вищий за цільовий.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="526"/>
+        <location filename="../settings-tiles.qml" line="528"/>
         <source>Bike pedal cadence in rotations per minute (RPM) or Treadmill cadence if a shoe-mounted cadence sensor or Apple Watch QZ app is used.</source>
         <translation>Каденс педалювання в обертах за хвилину (RPM) або каденс на біговій доріжці, якщо використовується датчик каденсу на взутті чи застосунок QZ для Apple Watch.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="540"/>
+        <location filename="../settings-tiles.qml" line="542"/>
         <source>Elevation Gain</source>
         <translation>Набір висоти</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="572"/>
+        <location filename="../settings-tiles.qml" line="574"/>
         <source>Negative Elevation Gain (Descent)</source>
         <translation>Втрата висоти (спуск)</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="601"/>
+        <location filename="../settings-tiles.qml" line="603"/>
         <source>Displays the total negative elevation gain (descent) in meters or feet accumulated during the workout.</source>
         <translation>Загальна втрата висоти (спуск) за тренування в метрах або футах.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="615"/>
+        <location filename="../settings-tiles.qml" line="617"/>
         <source>Calories</source>
         <translation>Калорії</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="646"/>
+        <location filename="../settings-tiles.qml" line="648"/>
         <source>Estimated calories burned during session, calculated on weight, age, and watts.</source>
         <translation>Приблизна кількість спалених калорій за тренування з урахуванням ваги, віку та потужності.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="660"/>
+        <location filename="../settings-tiles.qml" line="662"/>
         <source>Odometer</source>
         <translation>Пробіг</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="691"/>
+        <location filename="../settings-tiles.qml" line="693"/>
         <source>Estimated distance traveled during the session.</source>
         <translation>Приблизна дистанція за тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="705"/>
+        <location filename="../settings-tiles.qml" line="707"/>
         <source>Pace</source>
         <translation>Темп</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="711"/>
+        <location filename="../settings-tiles.qml" line="713"/>
         <source>Enable Pace color</source>
         <translation>Увімкнути колір темпу</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="754"/>
+        <location filename="../settings-tiles.qml" line="756"/>
         <source>Average Pace</source>
         <translation>Середній темп</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="786"/>
+        <location filename="../settings-tiles.qml" line="788"/>
         <source>Grade Adjusted Pace</source>
         <translation>Темп із поправкою на ухил</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="817"/>
+        <location filename="../settings-tiles.qml" line="819"/>
         <source>Current pace per mile or kilometer (Treadmill, Elliptical and Rower)</source>
         <translation>Поточний темп на милю або кілометр (бігова доріжка, орбітрек і гребний тренажер)</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="830"/>
+        <location filename="../settings-tiles.qml" line="832"/>
         <source>Flat-equivalent pace computed from treadmill incline using the Minetti cost model.</source>
         <translation>Темп у перерахунку на рівну поверхню з урахуванням нахилу бігової доріжки за моделлю енерговитрат Мінетті.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="844"/>
+        <location filename="../settings-tiles.qml" line="846"/>
         <source>Resistance</source>
         <translation>Опір</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="875"/>
+        <location filename="../settings-tiles.qml" line="877"/>
         <source>Displays your bike’s resistance. The +/- buttons can be used to change resistance, if your bike is compatible.</source>
         <translation>Опір велотренажера. Кнопками +/- можна змінювати опір, якщо велотренажер це підтримує.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="889"/>
+        <location filename="../settings-tiles.qml" line="891"/>
         <source>Watt</source>
         <translation>Потужність</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="895"/>
+        <location filename="../settings-tiles.qml" line="897"/>
         <source>Enable Watt color</source>
         <translation>Увімкнути колір потужності</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="937"/>
+        <location filename="../settings-tiles.qml" line="939"/>
         <source>Displays the watts generated by your current effort. Watt is also referred to as output (for example, in Peloton). If your equipment does not communicate watts, QZ will calculate watts using resistance and cadence.</source>
         <translation>Потужність, яку ви розвиваєте зараз, у ватах. У деяких сервісах (наприклад, у Peloton) її називають output. Якщо тренажер не передає потужність, QZ розраховує її за опором і каденсом.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="951"/>
+        <location filename="../settings-tiles.qml" line="953"/>
         <source>Weight loss</source>
         <translation>Втрата ваги</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="982"/>
+        <location filename="../settings-tiles.qml" line="984"/>
         <source>Estimation of weight loss during the session.</source>
         <translation>Приблизна втрата ваги за тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="997"/>
+        <location filename="../settings-tiles.qml" line="999"/>
         <source>AVG Watt</source>
         <translation>Сер. потужність</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1028"/>
+        <location filename="../settings-tiles.qml" line="1030"/>
         <source>Average watts produced for the session.</source>
         <translation>Середня потужність за тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1043"/>
+        <location filename="../settings-tiles.qml" line="1045"/>
         <source>AVG Watt Lap</source>
         <translation>Сер. потужн. кола</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1106"/>
+        <location filename="../settings-tiles.qml" line="1108"/>
         <source>Percentage of current FTP and current FTP zone.</source>
         <translation>Відсоток від поточного FTP і поточна зона FTP.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1120"/>
+        <location filename="../settings-tiles.qml" line="1122"/>
         <source>Heart</source>
         <translation>Пульс</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1126"/>
+        <location filename="../settings-tiles.qml" line="1128"/>
         <source>Show as %FC Max</source>
         <translation>Показувати як %FC Max</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1140"/>
+        <location filename="../settings-tiles.qml" line="1142"/>
         <source>When enabled, displays heart rate as percentage of maximum heart rate (%FC Max) instead of BPM. AVG and MAX values will also show percentages.</source>
         <translation>Якщо ввімкнено, пульс показується у відсотках від максимального (%FC Max), а не в bpm. Середні й максимальні значення теж будуть у відсотках.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1182"/>
+        <location filename="../settings-tiles.qml" line="1184"/>
         <source>Fan</source>
         <translation>Вентилятор</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1213"/>
+        <location filename="../settings-tiles.qml" line="1215"/>
         <source>Built-in treadmill fan speed (Treadmill only)</source>
         <translation>Швидкість вбудованого вентилятора бігової доріжки (лише для бігових доріжок)</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1227"/>
+        <location filename="../settings-tiles.qml" line="1229"/>
         <source>Jouls</source>
         <translation>Джоулі</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1258"/>
+        <location filename="../settings-tiles.qml" line="1260"/>
         <source>Cumulative power produced during the session in kilojoules.</source>
         <translation>Сумарна робота за тренування в кілоджоулях.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1272"/>
+        <location filename="../settings-tiles.qml" line="1274"/>
         <source>Elapsed</source>
         <translation>Час</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1303"/>
+        <location filename="../settings-tiles.qml" line="1305"/>
         <source>Total time from start of the session.</source>
         <translation>Загальний час від початку тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1317"/>
+        <location filename="../settings-tiles.qml" line="1319"/>
         <source>Moving Time</source>
         <translation>Час у русі</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1348"/>
+        <location filename="../settings-tiles.qml" line="1350"/>
         <source>Total time moving during the session.</source>
         <translation>Загальний час у русі за тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1362"/>
+        <location filename="../settings-tiles.qml" line="1364"/>
         <source>Peloton Offset</source>
         <translation>Зміщення Peloton</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1393"/>
+        <location filename="../settings-tiles.qml" line="1395"/>
         <source>Allows you to sync resistance and cadence target changes with the Peloton coach’s callouts. If the targets are changing in QZ after the coach’s callouts, use the ‘+’ button to add seconds (essentially speeding QZ up). Use the ‘-’ button to slow QZ down. Use this tile in conjunction with the Remaining Time/Row tile (see below).</source>
         <translation>Дає змогу синхронізувати зміну цільового опору й каденсу з командами тренера Peloton. Якщо цілі в QZ змінюються пізніше за команди тренера, натискайте «+», щоб додати секунди (по суті, пришвидшити QZ). Кнопка «-» сповільнює QZ. Використовуйте цю плитку разом із плиткою «Залишок інтервалу» (див. нижче).</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1407"/>
+        <location filename="../settings-tiles.qml" line="1409"/>
         <source>Peloton Remaining</source>
         <translation>Залишок Peloton</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1438"/>
+        <location filename="../settings-tiles.qml" line="1440"/>
         <source>Displays time remaining in Peloton class.</source>
         <translation>Час до кінця заняття Peloton.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1485"/>
+        <location filename="../settings-tiles.qml" line="1487"/>
         <source>Lap Elapsed</source>
         <translation>Час кола</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1517"/>
+        <location filename="../settings-tiles.qml" line="1519"/>
         <source>Peloton Resistance</source>
         <translation>Опір Peloton</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1523"/>
+        <location filename="../settings-tiles.qml" line="1525"/>
         <source>Enable Peloton Resistance color</source>
         <translation>Увімкнути колір опору Peloton</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1564"/>
+        <location filename="../settings-tiles.qml" line="1566"/>
         <source>Resistance of your bike converted to the Peloton bike scale of 1 to 100.</source>
         <translation>Опір велотренажера в перерахунку на шкалу Peloton від 1 до 100.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1578"/>
+        <location filename="../settings-tiles.qml" line="1580"/>
         <source>Target Resistance</source>
         <translation>Цільовий опір</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1624"/>
+        <location filename="../settings-tiles.qml" line="1626"/>
         <source>Target Peloton Resistance</source>
         <translation>Цільовий опір Peloton</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1655"/>
+        <location filename="../settings-tiles.qml" line="1657"/>
         <source>Displays target resistance converted to the Peloton bike scale of 1 to 100. For example, during a Peloton class, you want the resistance displayed in this tile to match the Peloton Resistance Tile.</source>
         <translation>Цільовий опір у перерахунку на шкалу Peloton від 1 до 100. Наприклад, на занятті Peloton потрібно, щоб опір на цій плитці збігався з плиткою «Опір Peloton».</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1669"/>
+        <location filename="../settings-tiles.qml" line="1671"/>
         <source>Target Cadence</source>
         <translation>Цільовий каденс</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1700"/>
+        <location filename="../settings-tiles.qml" line="1702"/>
         <source>Displays target cadence.</source>
         <translation>Цільовий каденс.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1714"/>
+        <location filename="../settings-tiles.qml" line="1716"/>
         <source>Target Power</source>
         <translation>Цільова потужність</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1745"/>
+        <location filename="../settings-tiles.qml" line="1747"/>
         <source>Displays target output (watts) when this information is provided by third-party apps.</source>
         <translation>Цільова потужність (у ватах), якщо її передає сторонній застосунок.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1760"/>
+        <location filename="../settings-tiles.qml" line="1762"/>
         <source>Target Power Zone</source>
         <translation>Цільова зона потужності</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1791"/>
+        <location filename="../settings-tiles.qml" line="1793"/>
         <source>Displays the target power zone when this information is provided by third-party apps.</source>
         <translation>Цільова зона потужності, якщо її передає сторонній застосунок.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1805"/>
+        <location filename="../settings-tiles.qml" line="1807"/>
         <source>Target Speed</source>
         <translation>Цільова швидкість</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1837"/>
+        <location filename="../settings-tiles.qml" line="1839"/>
         <source>Target Pace</source>
         <translation>Цільовий темп</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1869"/>
+        <location filename="../settings-tiles.qml" line="1871"/>
         <source>Target Incline</source>
         <translation>Цільовий нахил</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1900"/>
+        <location filename="../settings-tiles.qml" line="1902"/>
         <source>Watt/Kg</source>
         <translation>W/kg</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1931"/>
+        <location filename="../settings-tiles.qml" line="1933"/>
         <source>Calculates your output (watts) divided by your weight. This is the primary metric used by Zwift and similar apps to calculate your virtual speed. NOTE: This is a much better metric to use than Output/Watts when comparing your effort to other users. This is why Peloton’s leaderboard, which uses only Output, is flawed.</source>
         <translation>Ваша потужність (у ватах), поділена на вашу вагу. За цим показником Zwift і подібні застосунки розраховують вашу віртуальну швидкість. ПРИМІТКА: щоб порівнювати свої зусилля з іншими користувачами, цей показник набагато кращий, ніж просто потужність. Тому таблиця лідерів Peloton, де враховується лише потужність, недосконала.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1945"/>
+        <location filename="../settings-tiles.qml" line="1947"/>
         <source>Gears</source>
         <translation>Передачі</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1976"/>
+        <location filename="../settings-tiles.qml" line="1978"/>
         <source>Allows you to change resistance while in Auto-Follow Mode.This tile allows you override the target resistance sent by third-party apps. For example, you would use the Gears Tile to increase resistance and generate more watts for sprinting in Zwift.</source>
         <translation>Дає змогу змінювати опір у режимі автостеження (Auto-Follow). За допомогою цієї плитки можна перевизначити цільовий опір, який задають сторонні застосунки. Наприклад, плиткою «Передачі» можна збільшити опір і видати більше потужності на спринті у Zwift.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1989"/>
+        <location filename="../settings-tiles.qml" line="1991"/>
         <source>Gears Big Buttons</source>
         <translation>Великі кнопки передач</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2017"/>
+        <location filename="../settings-tiles.qml" line="2019"/>
         <source>Swap Buttons</source>
         <translation>Поміняти кнопки місцями</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2033"/>
+        <location filename="../settings-tiles.qml" line="2035"/>
         <source>It shows 2 big gear buttons on the UI</source>
         <translation>Показує в інтерфейсі 2 великі кнопки передач</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2047"/>
+        <location filename="../settings-tiles.qml" line="2049"/>
         <source>Remaining Time/Row</source>
         <translation>Залишок інтервалу</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2078"/>
+        <location filename="../settings-tiles.qml" line="2080"/>
         <source>Displays the time remaining until the next cadence and/or resistance interval.</source>
         <translation>Час до наступного інтервалу каденсу та/або опору.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2092"/>
+        <location filename="../settings-tiles.qml" line="2094"/>
         <source>Next Rows</source>
         <translation>Наст. рядки</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2123"/>
+        <location filename="../settings-tiles.qml" line="2125"/>
         <source>Displays the next Peloton interval with duration and FTP Zone (in Power Zone classes) or Peloton Resistance (non–Power Zone classes).</source>
         <translation>Наступний інтервал Peloton із тривалістю та зоною FTP (на заняттях Power Zone) або опором Peloton (на інших заняттях).</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2137"/>
+        <location filename="../settings-tiles.qml" line="2139"/>
         <source>METS</source>
         <translation>METS</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2168"/>
+        <location filename="../settings-tiles.qml" line="2170"/>
         <source>Displays metabolic equivalents (METs), a measurement of energy expenditure and amount of oxygen used by the body compared to the body at rest. (e.g., 4 METS requires the body to use 4 times as much oxygen than when at rest, which means it requires more energy and burns more calories).</source>
         <translation>Метаболічний еквівалент (METs) – міра витрат енергії та споживання кисню організмом порівняно зі станом спокою. (Наприклад, за 4 METS організм споживає в 4 рази більше кисню, ніж у спокої, тобто витрачає більше енергії та спалює більше калорій).</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2182"/>
+        <location filename="../settings-tiles.qml" line="2184"/>
         <source>Target METS</source>
         <translation>Ціль METS</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2214"/>
+        <location filename="../settings-tiles.qml" line="2216"/>
         <source>Time</source>
         <translation>Час</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2245"/>
+        <location filename="../settings-tiles.qml" line="2247"/>
         <source>Displays the current time.</source>
         <translation>Поточний час.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2259"/>
+        <location filename="../settings-tiles.qml" line="2261"/>
         <source>Strokes Count</source>
         <translation>Кількість гребків</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2290"/>
+        <location filename="../settings-tiles.qml" line="2292"/>
         <source>(Rower only) Displays the number of strokes rowed.</source>
         <translation>(Лише гребний тренажер) Кількість зроблених гребків.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="1609"/>
+        <location filename="../settings-tiles.qml" line="1611"/>
         <source>Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class&apos;s resistance target up or down for the rest of the ride.</source>
         <translation>Показує цільовий опір у шкалі опору вашого велотренажера. Наприклад, на занятті Peloton або у Zwift потрібно, щоб значення на цій плитці збігалося з плиткою «Опір». На занятті Peloton (лише велотренажер) кнопки +/- зсувають цільовий опір заняття вгору або вниз до кінця тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2304"/>
+        <location filename="../settings-tiles.qml" line="2306"/>
         <source>Stroke Length</source>
         <translation>Довжина гребка</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2335"/>
+        <location filename="../settings-tiles.qml" line="2337"/>
         <source>(Rower only) Displays the stroke length.</source>
         <translation>(Лише гребний тренажер) Довжина гребка.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2349"/>
+        <location filename="../settings-tiles.qml" line="2351"/>
         <source>Steering Angle</source>
         <translation>Кут повороту керма</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2380"/>
+        <location filename="../settings-tiles.qml" line="2382"/>
         <source>(Elite Rizer only) Displays steering angle.</source>
         <translation>(Лише Elite Rizer) Кут повороту керма.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2394"/>
+        <location filename="../settings-tiles.qml" line="2396"/>
         <source>PID HR Zone</source>
         <translation>Пульсова зона PID</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2425"/>
+        <location filename="../settings-tiles.qml" line="2427"/>
         <source>Use this tile to display the target heart rate zone in which you’ve chosen to work out in Settings &gt; Training Program Options.</source>
         <translation>Показує цільову пульсову зону, вибрану для тренування в «Налаштування &gt; Параметри програми тренування».</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2439"/>
+        <location filename="../settings-tiles.qml" line="2441"/>
         <source>External Incline</source>
         <translation>Зовнішній нахил</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2470"/>
+        <location filename="../settings-tiles.qml" line="2472"/>
         <source>(Elite Rizer only) Allows control of the incline of external inclination equipment.</source>
         <translation>(Лише Elite Rizer) Керування нахилом зовнішнього пристрою нахилу.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2484"/>
+        <location filename="../settings-tiles.qml" line="2486"/>
         <source>Stride Length</source>
         <translation>Довжина кроку</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2515"/>
+        <location filename="../settings-tiles.qml" line="2517"/>
         <source>(requires a compatible footpod with accelerometer; treadmill only) Displays stride while walking or running.</source>
         <translation>(потрібен сумісний датчик на взутті з акселерометром; лише бігова доріжка) Довжина кроку під час ходьби або бігу.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2529"/>
+        <location filename="../settings-tiles.qml" line="2531"/>
         <source>Ground Contact</source>
         <translation>Час контакту</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2560"/>
+        <location filename="../settings-tiles.qml" line="2562"/>
         <source>(requires a compatible footpod with accelerometer; treadmill only) Displays time foot is on contact with ground while walking or running.</source>
         <translation>(потрібен сумісний датчик на взутті з акселерометром; лише бігова доріжка) Час контакту стопи із землею під час ходьби або бігу.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2574"/>
+        <location filename="../settings-tiles.qml" line="2576"/>
         <source>Vertical Oscillation</source>
         <translation>Вертикальні коливання</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2605"/>
+        <location filename="../settings-tiles.qml" line="2607"/>
         <source>(requires a compatible footpod with accelerometer; treadmill only) Displays the up and down movement while walking or running.</source>
         <translation>(потрібен сумісний датчик на взутті з акселерометром; лише бігова доріжка) Коливання тіла вгору-вниз під час ходьби або бігу.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2619"/>
+        <location filename="../settings-tiles.qml" line="2621"/>
         <source>Pace Last 500m</source>
         <translation>Темп за останні 500m</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2651"/>
+        <location filename="../settings-tiles.qml" line="2653"/>
         <source>Step Count</source>
         <translation>Кроки</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2683"/>
+        <location filename="../settings-tiles.qml" line="2685"/>
         <source>Erg Mode</source>
         <translation>Режим ERG</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2714"/>
+        <location filename="../settings-tiles.qml" line="2716"/>
         <source>Running Stress Score</source>
         <translation>Індекс бігового навантаження</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2744"/>
+        <location filename="../settings-tiles.qml" line="2746"/>
         <source>Preset Resistance 1</source>
         <translation>Пресет опору 1</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2776"/>
-        <location filename="../settings-tiles.qml" line="2885"/>
-        <location filename="../settings-tiles.qml" line="2994"/>
-        <location filename="../settings-tiles.qml" line="3103"/>
-        <location filename="../settings-tiles.qml" line="3212"/>
-        <location filename="../settings-tiles.qml" line="3321"/>
-        <location filename="../settings-tiles.qml" line="3434"/>
-        <location filename="../settings-tiles.qml" line="3547"/>
-        <location filename="../settings-tiles.qml" line="3660"/>
-        <location filename="../settings-tiles.qml" line="3773"/>
-        <location filename="../settings-tiles.qml" line="3886"/>
-        <location filename="../settings-tiles.qml" line="3995"/>
-        <location filename="../settings-tiles.qml" line="4104"/>
-        <location filename="../settings-tiles.qml" line="4213"/>
-        <location filename="../settings-tiles.qml" line="4322"/>
+        <location filename="../settings-tiles.qml" line="2778"/>
+        <location filename="../settings-tiles.qml" line="2887"/>
+        <location filename="../settings-tiles.qml" line="2996"/>
+        <location filename="../settings-tiles.qml" line="3105"/>
+        <location filename="../settings-tiles.qml" line="3214"/>
+        <location filename="../settings-tiles.qml" line="3323"/>
+        <location filename="../settings-tiles.qml" line="3436"/>
+        <location filename="../settings-tiles.qml" line="3549"/>
+        <location filename="../settings-tiles.qml" line="3662"/>
+        <location filename="../settings-tiles.qml" line="3775"/>
+        <location filename="../settings-tiles.qml" line="3888"/>
+        <location filename="../settings-tiles.qml" line="3997"/>
+        <location filename="../settings-tiles.qml" line="4106"/>
+        <location filename="../settings-tiles.qml" line="4215"/>
+        <location filename="../settings-tiles.qml" line="4324"/>
         <source>value:</source>
         <translation>значення:</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2797"/>
-        <location filename="../settings-tiles.qml" line="2906"/>
-        <location filename="../settings-tiles.qml" line="3015"/>
-        <location filename="../settings-tiles.qml" line="3124"/>
-        <location filename="../settings-tiles.qml" line="3233"/>
-        <location filename="../settings-tiles.qml" line="3346"/>
-        <location filename="../settings-tiles.qml" line="3459"/>
-        <location filename="../settings-tiles.qml" line="3572"/>
-        <location filename="../settings-tiles.qml" line="3685"/>
-        <location filename="../settings-tiles.qml" line="3798"/>
-        <location filename="../settings-tiles.qml" line="3907"/>
-        <location filename="../settings-tiles.qml" line="4016"/>
-        <location filename="../settings-tiles.qml" line="4125"/>
-        <location filename="../settings-tiles.qml" line="4234"/>
-        <location filename="../settings-tiles.qml" line="4343"/>
-        <location filename="../settings-tiles.qml" line="4447"/>
-        <location filename="../settings-tiles.qml" line="4548"/>
-        <location filename="../settings-tiles.qml" line="4649"/>
-        <location filename="../settings-tiles.qml" line="4750"/>
-        <location filename="../settings-tiles.qml" line="4851"/>
-        <location filename="../settings-tiles.qml" line="4952"/>
-        <location filename="../settings-tiles.qml" line="5053"/>
+        <location filename="../settings-tiles.qml" line="2799"/>
+        <location filename="../settings-tiles.qml" line="2908"/>
+        <location filename="../settings-tiles.qml" line="3017"/>
+        <location filename="../settings-tiles.qml" line="3126"/>
+        <location filename="../settings-tiles.qml" line="3235"/>
+        <location filename="../settings-tiles.qml" line="3348"/>
+        <location filename="../settings-tiles.qml" line="3461"/>
+        <location filename="../settings-tiles.qml" line="3574"/>
+        <location filename="../settings-tiles.qml" line="3687"/>
+        <location filename="../settings-tiles.qml" line="3800"/>
+        <location filename="../settings-tiles.qml" line="3909"/>
+        <location filename="../settings-tiles.qml" line="4018"/>
+        <location filename="../settings-tiles.qml" line="4127"/>
+        <location filename="../settings-tiles.qml" line="4236"/>
+        <location filename="../settings-tiles.qml" line="4345"/>
+        <location filename="../settings-tiles.qml" line="4449"/>
+        <location filename="../settings-tiles.qml" line="4550"/>
+        <location filename="../settings-tiles.qml" line="4651"/>
+        <location filename="../settings-tiles.qml" line="4752"/>
+        <location filename="../settings-tiles.qml" line="4853"/>
+        <location filename="../settings-tiles.qml" line="4954"/>
+        <location filename="../settings-tiles.qml" line="5055"/>
         <source>label:</source>
         <translation>підпис:</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2818"/>
-        <location filename="../settings-tiles.qml" line="2927"/>
-        <location filename="../settings-tiles.qml" line="3036"/>
-        <location filename="../settings-tiles.qml" line="3145"/>
-        <location filename="../settings-tiles.qml" line="3254"/>
-        <location filename="../settings-tiles.qml" line="3367"/>
-        <location filename="../settings-tiles.qml" line="3480"/>
-        <location filename="../settings-tiles.qml" line="3593"/>
-        <location filename="../settings-tiles.qml" line="3706"/>
-        <location filename="../settings-tiles.qml" line="3819"/>
-        <location filename="../settings-tiles.qml" line="3928"/>
-        <location filename="../settings-tiles.qml" line="4038"/>
-        <location filename="../settings-tiles.qml" line="4146"/>
-        <location filename="../settings-tiles.qml" line="4255"/>
-        <location filename="../settings-tiles.qml" line="4364"/>
-        <location filename="../settings-tiles.qml" line="4466"/>
-        <location filename="../settings-tiles.qml" line="4567"/>
-        <location filename="../settings-tiles.qml" line="4668"/>
-        <location filename="../settings-tiles.qml" line="4769"/>
-        <location filename="../settings-tiles.qml" line="4870"/>
-        <location filename="../settings-tiles.qml" line="4971"/>
-        <location filename="../settings-tiles.qml" line="5072"/>
+        <location filename="../settings-tiles.qml" line="2820"/>
+        <location filename="../settings-tiles.qml" line="2929"/>
+        <location filename="../settings-tiles.qml" line="3038"/>
+        <location filename="../settings-tiles.qml" line="3147"/>
+        <location filename="../settings-tiles.qml" line="3256"/>
+        <location filename="../settings-tiles.qml" line="3369"/>
+        <location filename="../settings-tiles.qml" line="3482"/>
+        <location filename="../settings-tiles.qml" line="3595"/>
+        <location filename="../settings-tiles.qml" line="3708"/>
+        <location filename="../settings-tiles.qml" line="3821"/>
+        <location filename="../settings-tiles.qml" line="3930"/>
+        <location filename="../settings-tiles.qml" line="4040"/>
+        <location filename="../settings-tiles.qml" line="4148"/>
+        <location filename="../settings-tiles.qml" line="4257"/>
+        <location filename="../settings-tiles.qml" line="4366"/>
+        <location filename="../settings-tiles.qml" line="4468"/>
+        <location filename="../settings-tiles.qml" line="4569"/>
+        <location filename="../settings-tiles.qml" line="4670"/>
+        <location filename="../settings-tiles.qml" line="4771"/>
+        <location filename="../settings-tiles.qml" line="4872"/>
+        <location filename="../settings-tiles.qml" line="4973"/>
+        <location filename="../settings-tiles.qml" line="5074"/>
         <source>color:</source>
         <translation>колір:</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2824"/>
-        <location filename="../settings-tiles.qml" line="2933"/>
-        <location filename="../settings-tiles.qml" line="3042"/>
-        <location filename="../settings-tiles.qml" line="3151"/>
-        <location filename="../settings-tiles.qml" line="3260"/>
-        <location filename="../settings-tiles.qml" line="3373"/>
-        <location filename="../settings-tiles.qml" line="3486"/>
-        <location filename="../settings-tiles.qml" line="3599"/>
-        <location filename="../settings-tiles.qml" line="3712"/>
-        <location filename="../settings-tiles.qml" line="3825"/>
-        <location filename="../settings-tiles.qml" line="3934"/>
-        <location filename="../settings-tiles.qml" line="4044"/>
-        <location filename="../settings-tiles.qml" line="4152"/>
-        <location filename="../settings-tiles.qml" line="4261"/>
-        <location filename="../settings-tiles.qml" line="4370"/>
-        <location filename="../settings-tiles.qml" line="4472"/>
-        <location filename="../settings-tiles.qml" line="4573"/>
-        <location filename="../settings-tiles.qml" line="4674"/>
-        <location filename="../settings-tiles.qml" line="4775"/>
-        <location filename="../settings-tiles.qml" line="4876"/>
-        <location filename="../settings-tiles.qml" line="4977"/>
-        <location filename="../settings-tiles.qml" line="5078"/>
+        <location filename="../settings-tiles.qml" line="2826"/>
+        <location filename="../settings-tiles.qml" line="2935"/>
+        <location filename="../settings-tiles.qml" line="3044"/>
+        <location filename="../settings-tiles.qml" line="3153"/>
+        <location filename="../settings-tiles.qml" line="3262"/>
+        <location filename="../settings-tiles.qml" line="3375"/>
+        <location filename="../settings-tiles.qml" line="3488"/>
+        <location filename="../settings-tiles.qml" line="3601"/>
+        <location filename="../settings-tiles.qml" line="3714"/>
+        <location filename="../settings-tiles.qml" line="3827"/>
+        <location filename="../settings-tiles.qml" line="3936"/>
+        <location filename="../settings-tiles.qml" line="4046"/>
+        <location filename="../settings-tiles.qml" line="4154"/>
+        <location filename="../settings-tiles.qml" line="4263"/>
+        <location filename="../settings-tiles.qml" line="4372"/>
+        <location filename="../settings-tiles.qml" line="4474"/>
+        <location filename="../settings-tiles.qml" line="4575"/>
+        <location filename="../settings-tiles.qml" line="4676"/>
+        <location filename="../settings-tiles.qml" line="4777"/>
+        <location filename="../settings-tiles.qml" line="4878"/>
+        <location filename="../settings-tiles.qml" line="4979"/>
+        <location filename="../settings-tiles.qml" line="5080"/>
         <source>Please choose a color</source>
         <translation>Виберіть колір</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2853"/>
+        <location filename="../settings-tiles.qml" line="2855"/>
         <source>Preset Resistance 2</source>
         <translation>Пресет опору 2</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="2962"/>
+        <location filename="../settings-tiles.qml" line="2964"/>
         <source>Preset Resistance 3</source>
         <translation>Пресет опору 3</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="3071"/>
+        <location filename="../settings-tiles.qml" line="3073"/>
         <source>Preset Resistance 4</source>
         <translation>Пресет опору 4</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="3180"/>
+        <location filename="../settings-tiles.qml" line="3182"/>
         <source>Preset Resistance 5</source>
         <translation>Пресет опору 5</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="3289"/>
+        <location filename="../settings-tiles.qml" line="3291"/>
         <source>Preset Speed 1</source>
         <translation>Пресет швидкості 1</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="3402"/>
+        <location filename="../settings-tiles.qml" line="3404"/>
         <source>Preset Speed 2</source>
         <translation>Пресет швидкості 2</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="3515"/>
+        <location filename="../settings-tiles.qml" line="3517"/>
         <source>Preset Speed 3</source>
         <translation>Пресет швидкості 3</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="3628"/>
+        <location filename="../settings-tiles.qml" line="3630"/>
         <source>Preset Speed 4</source>
         <translation>Пресет швидкості 4</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="3741"/>
+        <location filename="../settings-tiles.qml" line="3743"/>
         <source>Preset Speed 5</source>
         <translation>Пресет швидкості 5</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="3854"/>
+        <location filename="../settings-tiles.qml" line="3856"/>
         <source>Preset Inclination 1</source>
         <translation>Пресет нахилу 1</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="3963"/>
+        <location filename="../settings-tiles.qml" line="3965"/>
         <source>Preset Inclination 2</source>
         <translation>Пресет нахилу 2</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="4072"/>
+        <location filename="../settings-tiles.qml" line="4074"/>
         <source>Preset Inclination 3</source>
         <translation>Пресет нахилу 3</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="4181"/>
+        <location filename="../settings-tiles.qml" line="4183"/>
         <source>Preset Inclination 4</source>
         <translation>Пресет нахилу 4</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="4290"/>
+        <location filename="../settings-tiles.qml" line="4292"/>
         <source>Preset Inclination 5</source>
         <translation>Пресет нахилу 5</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="4399"/>
+        <location filename="../settings-tiles.qml" line="4401"/>
         <source>Preset Power Zone 1</source>
         <translation>Пресет зони потужності 1</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="4428"/>
-        <location filename="../settings-tiles.qml" line="4529"/>
-        <location filename="../settings-tiles.qml" line="4630"/>
-        <location filename="../settings-tiles.qml" line="4731"/>
-        <location filename="../settings-tiles.qml" line="4832"/>
-        <location filename="../settings-tiles.qml" line="4933"/>
-        <location filename="../settings-tiles.qml" line="5034"/>
+        <location filename="../settings-tiles.qml" line="4430"/>
+        <location filename="../settings-tiles.qml" line="4531"/>
+        <location filename="../settings-tiles.qml" line="4632"/>
+        <location filename="../settings-tiles.qml" line="4733"/>
+        <location filename="../settings-tiles.qml" line="4834"/>
+        <location filename="../settings-tiles.qml" line="4935"/>
+        <location filename="../settings-tiles.qml" line="5036"/>
         <source>zone value:</source>
         <translation>значення зони:</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="4500"/>
+        <location filename="../settings-tiles.qml" line="4502"/>
         <source>Preset Power Zone 2</source>
         <translation>Пресет зони потужності 2</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="4601"/>
+        <location filename="../settings-tiles.qml" line="4603"/>
         <source>Preset Power Zone 3</source>
         <translation>Пресет зони потужності 3</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="4702"/>
+        <location filename="../settings-tiles.qml" line="4704"/>
         <source>Preset Power Zone 4</source>
         <translation>Пресет зони потужності 4</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="4803"/>
+        <location filename="../settings-tiles.qml" line="4805"/>
         <source>Preset Power Zone 5</source>
         <translation>Пресет зони потужності 5</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="4904"/>
+        <location filename="../settings-tiles.qml" line="4906"/>
         <source>Preset Power Zone 6</source>
         <translation>Пресет зони потужності 6</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5005"/>
+        <location filename="../settings-tiles.qml" line="5007"/>
         <source>Preset Power Zone 7</source>
         <translation>Пресет зони потужності 7</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5105"/>
+        <location filename="../settings-tiles.qml" line="5107"/>
         <source>Power zone presets allow quick access to specific training zones with customizable labels and values.</source>
         <translation>Пресети зон потужності дають швидкий доступ до потрібних тренувальних зон із власними підписами та значеннями.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5119"/>
+        <location filename="../settings-tiles.qml" line="5121"/>
         <source>Heart Rate Time in Zone 1+</source>
         <translation>Час у пульсовій зоні 1+</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5150"/>
+        <location filename="../settings-tiles.qml" line="5152"/>
         <source>Displays total time spent in heart rate Zone 1 or higher during the session.</source>
         <translation>Загальний час у пульсовій зоні 1 і вище за тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5164"/>
+        <location filename="../settings-tiles.qml" line="5166"/>
         <source>Heart Rate Time in Zone 2+</source>
         <translation>Час у пульсовій зоні 2+</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5195"/>
+        <location filename="../settings-tiles.qml" line="5197"/>
         <source>Displays total time spent in heart rate Zone 2 or higher during the session.</source>
         <translation>Загальний час у пульсовій зоні 2 і вище за тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5209"/>
+        <location filename="../settings-tiles.qml" line="5211"/>
         <source>Heart Rate Time in Zone 3+</source>
         <translation>Час у пульсовій зоні 3+</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5240"/>
+        <location filename="../settings-tiles.qml" line="5242"/>
         <source>Displays total time spent in heart rate Zone 3 or higher during the session.</source>
         <translation>Загальний час у пульсовій зоні 3 і вище за тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5254"/>
+        <location filename="../settings-tiles.qml" line="5256"/>
         <source>Heart Rate Time in Zone 4+</source>
         <translation>Час у пульсовій зоні 4+</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5285"/>
+        <location filename="../settings-tiles.qml" line="5287"/>
         <source>Displays total time spent in heart rate Zone 4 or higher during the session.</source>
         <translation>Загальний час у пульсовій зоні 4 і вище за тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5299"/>
+        <location filename="../settings-tiles.qml" line="5301"/>
         <source>Heart Rate Time in Zone 5+</source>
         <translation>Час у пульсовій зоні 5+</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5330"/>
+        <location filename="../settings-tiles.qml" line="5332"/>
         <source>Displays total time spent in heart rate Zone 5 or higher during the session.</source>
         <translation>Загальний час у пульсовій зоні 5 і вище за тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5348"/>
+        <location filename="../settings-tiles.qml" line="5350"/>
         <source>Show individual zone times (instead of cumulative)</source>
         <translation>Показувати час окремо для кожної зони (а не наростаючим підсумком)</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5359"/>
+        <location filename="../settings-tiles.qml" line="5361"/>
         <source>When enabled, each zone shows only the time spent in that specific zone. When disabled (default), each zone shows cumulative time spent in that zone or higher.</source>
         <translation>Якщо ввімкнено, для кожної зони показується лише час у цій зоні. Якщо вимкнено (типово), для кожної зони показується сумарний час у ній і в зонах вище.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5373"/>
+        <location filename="../settings-tiles.qml" line="5375"/>
         <source>Core Temperature</source>
         <translation>Температура ядра тіла</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5404"/>
+        <location filename="../settings-tiles.qml" line="5406"/>
         <source>Shows Core, Body Temperature and Heat Strain Index from a Core Temperature sensor.</source>
         <translation>Показує температуру ядра тіла, температуру шкіри та індекс теплового навантаження з датчика температури ядра тіла.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5418"/>
+        <location filename="../settings-tiles.qml" line="5420"/>
         <source>Heat Time in Zone 1</source>
         <translation>Час у тепловій зоні 1</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5449"/>
+        <location filename="../settings-tiles.qml" line="5451"/>
         <source>Displays total time spent in heat Zone 1 during the session.</source>
         <translation>Загальний час у тепловій зоні 1 за тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5463"/>
+        <location filename="../settings-tiles.qml" line="5465"/>
         <source>Heat Time in Zone 2</source>
         <translation>Час у тепловій зоні 2</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5494"/>
+        <location filename="../settings-tiles.qml" line="5496"/>
         <source>Displays total time spent in heat Zone 2 during the session.</source>
         <translation>Загальний час у тепловій зоні 2 за тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5508"/>
+        <location filename="../settings-tiles.qml" line="5510"/>
         <source>Heat Time in Zone 3</source>
         <translation>Час у тепловій зоні 3</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5539"/>
+        <location filename="../settings-tiles.qml" line="5541"/>
         <source>Displays total time spent in heat Zone 3 during the session.</source>
         <translation>Загальний час у тепловій зоні 3 за тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5553"/>
+        <location filename="../settings-tiles.qml" line="5555"/>
         <source>Heat Time in Zone 4</source>
         <translation>Час у тепловій зоні 4</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5584"/>
+        <location filename="../settings-tiles.qml" line="5586"/>
         <source>Displays total time spent in heat Zone 4 during the session.</source>
         <translation>Загальний час у тепловій зоні 4 за тренування.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5598"/>
+        <location filename="../settings-tiles.qml" line="5600"/>
         <source>Auto Virtual Shifting Cruise</source>
         <translation>Автоперемикання передач: круїз</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5627"/>
+        <location filename="../settings-tiles.qml" line="5629"/>
         <source>Button tile to switch automatic virtual shifting to Cruise profile.</source>
         <translation>Плитка-кнопка: вмикає профіль «Круїз» для автоматичного віртуального перемикання передач.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5641"/>
+        <location filename="../settings-tiles.qml" line="5643"/>
         <source>Auto Virtual Shifting Climb</source>
         <translation>Автоперемикання передач: підйом</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5670"/>
+        <location filename="../settings-tiles.qml" line="5672"/>
         <source>Button tile to switch automatic virtual shifting to Climb profile.</source>
         <translation>Плитка-кнопка: вмикає профіль «Підйом» для автоматичного віртуального перемикання передач.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5684"/>
+        <location filename="../settings-tiles.qml" line="5686"/>
         <source>Auto Virtual Shifting Sprint</source>
         <translation>Автоперемикання передач: спринт</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5713"/>
+        <location filename="../settings-tiles.qml" line="5715"/>
         <source>Button tile to switch automatic virtual shifting to Sprint profile.</source>
         <translation>Плитка-кнопка: вмикає профіль «Спринт» для автоматичного віртуального перемикання передач.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5727"/>
+        <location filename="../settings-tiles.qml" line="5729"/>
         <source>Power Averaging</source>
         <translation>Усереднення потужності</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5756"/>
+        <location filename="../settings-tiles.qml" line="5758"/>
         <source>Button tile to cycle through power averaging modes: Off, 3s avg (harmonic), 5s avg (harmonic). Tap to cycle between modes. Only for bikes.</source>
         <translation>Плитка-кнопка для зміни режиму усереднення потужності: Off, 3s avg (гармонічне), 5s avg (гармонічне). Натискайте, щоб перемикати режими. Лише для велотренажерів.</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5770"/>
+        <location filename="../settings-tiles.qml" line="5772"/>
         <source>HRV (Heart Rate Variability)</source>
         <translation>HRV (варіабельність серцевого ритму)</translation>
     </message>
     <message>
-        <location filename="../settings-tiles.qml" line="5801"/>
+        <location filename="../settings-tiles.qml" line="5803"/>
         <source>Shows Heart Rate Variability (HRV) from a compatible heart rate belt. Displays RMSSD value in milliseconds.</source>
         <translation>Показує варіабельність серцевого ритму (HRV) із сумісного нагрудного пульсометра. Значення RMSSD у мілісекундах.</translation>
     </message>
@@ -11014,51 +11015,14 @@ Default: A = -0.96, B = 1.33</source>
 <context>
     <name>settings-treadmill-inclination-override</name>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="63"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="65"/>
         <source>Treadmill Inclination Overrides</source>
         <translation>Перевизначення нахилу бігової доріжки</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="73"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="75"/>
         <source>Inclination Override Gain:</source>
         <translation>Коефіцієнт перевизначення нахилу:</translation>
-    </message>
-    <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="87"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="110"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="133"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="155"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="177"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="199"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="221"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="243"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="265"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="287"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="309"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="331"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="353"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="375"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="397"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="419"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="441"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="463"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="485"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="507"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="529"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="551"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="573"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="595"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="617"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="639"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="661"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="683"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="705"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="727"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="749"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="771"/>
-        <location filename="../settings-treadmill-inclination-override.qml" line="793"/>
-        <source>OK</source>
-        <translation>OK</translation>
     </message>
     <message>
         <location filename="../settings-treadmill-inclination-override.qml" line="89"/>
@@ -11094,166 +11058,203 @@ Default: A = -0.96, B = 1.33</source>
         <location filename="../settings-treadmill-inclination-override.qml" line="751"/>
         <location filename="../settings-treadmill-inclination-override.qml" line="773"/>
         <location filename="../settings-treadmill-inclination-override.qml" line="795"/>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../settings-treadmill-inclination-override.qml" line="91"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="114"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="137"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="159"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="181"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="203"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="225"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="247"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="269"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="291"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="313"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="335"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="357"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="379"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="401"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="423"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="445"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="467"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="489"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="511"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="533"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="555"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="577"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="599"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="621"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="643"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="665"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="687"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="709"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="731"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="753"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="775"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="797"/>
         <source>Setting saved!</source>
         <translation>Налаштування збережено!</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="96"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="98"/>
         <source>Inclination Override Offset:</source>
         <translation>Зміщення перевизначення нахилу:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="119"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="121"/>
         <source>Override 0%:</source>
         <translation>Замість 0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="141"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="143"/>
         <source>Override 0.5%:</source>
         <translation>Замість 0.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="163"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="165"/>
         <source>Override 1.0%:</source>
         <translation>Замість 1.0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="185"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="187"/>
         <source>Override 1.5%:</source>
         <translation>Замість 1.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="207"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="209"/>
         <source>Override 2.0%:</source>
         <translation>Замість 2.0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="229"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="231"/>
         <source>Override 2.5%:</source>
         <translation>Замість 2.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="251"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="253"/>
         <source>Override 3.0%:</source>
         <translation>Замість 3.0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="273"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="275"/>
         <source>Override 3.5%:</source>
         <translation>Замість 3.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="295"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="297"/>
         <source>Override 4.0%:</source>
         <translation>Замість 4.0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="317"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="319"/>
         <source>Override 4.5%:</source>
         <translation>Замість 4.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="339"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="341"/>
         <source>Override 5.0%:</source>
         <translation>Замість 5.0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="361"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="363"/>
         <source>Override 5.5%:</source>
         <translation>Замість 5.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="383"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="385"/>
         <source>Override 6.0%:</source>
         <translation>Замість 6.0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="405"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="407"/>
         <source>Override 6.5%:</source>
         <translation>Замість 6.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="427"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="429"/>
         <source>Override 7.0%:</source>
         <translation>Замість 7.0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="449"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="451"/>
         <source>Override 7.5%:</source>
         <translation>Замість 7.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="471"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="473"/>
         <source>Override 8.0%:</source>
         <translation>Замість 8.0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="493"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="495"/>
         <source>Override 8.5%:</source>
         <translation>Замість 8.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="515"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="517"/>
         <source>Override 9.0%:</source>
         <translation>Замість 9.0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="537"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="539"/>
         <source>Override 9.5%:</source>
         <translation>Замість 9.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="559"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="561"/>
         <source>Override 10.0%:</source>
         <translation>Замість 10.0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="581"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="583"/>
         <source>Override 10.5%:</source>
         <translation>Замість 10.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="603"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="605"/>
         <source>Override 11.0%:</source>
         <translation>Замість 11.0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="625"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="627"/>
         <source>Override 11.5%:</source>
         <translation>Замість 11.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="647"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="649"/>
         <source>Override 12.0%:</source>
         <translation>Замість 12.0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="669"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="671"/>
         <source>Override 12.5%:</source>
         <translation>Замість 12.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="691"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="693"/>
         <source>Override 13.0%:</source>
         <translation>Замість 13.0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="713"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="715"/>
         <source>Override 13.5%:</source>
         <translation>Замість 13.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="735"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="737"/>
         <source>Override 14.0%:</source>
         <translation>Замість 14.0%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="757"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="759"/>
         <source>Override 14.5%:</source>
         <translation>Замість 14.5%:</translation>
     </message>
     <message>
-        <location filename="../settings-treadmill-inclination-override.qml" line="779"/>
+        <location filename="../settings-treadmill-inclination-override.qml" line="781"/>
         <source>Override 15.0%:</source>
         <translation>Замість 15.0%:</translation>
     </message>
@@ -11261,222 +11262,222 @@ Default: A = -0.96, B = 1.33</source>
 <context>
     <name>settings-tts</name>
     <message>
-        <location filename="../settings-tts.qml" line="72"/>
+        <location filename="../settings-tts.qml" line="74"/>
         <source>TTS (Text to Speech) Settings</source>
         <translation>Налаштування TTS (синтез мовлення)</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="80"/>
+        <location filename="../settings-tts.qml" line="82"/>
         <source>TTS Enabled</source>
         <translation>Увімкнути TTS</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="96"/>
+        <location filename="../settings-tts.qml" line="98"/>
         <source>Summary Each Seconds:</source>
         <translation>Зведення кожні N секунд:</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="111"/>
+        <location filename="../settings-tts.qml" line="113"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="113"/>
+        <location filename="../settings-tts.qml" line="115"/>
         <source>Setting saved!</source>
         <translation>Налаштування збережено!</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="118"/>
+        <location filename="../settings-tts.qml" line="120"/>
         <source>TTS Description Enabled</source>
         <translation>Озвучувати назви показників</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="132"/>
+        <location filename="../settings-tts.qml" line="134"/>
         <source>Actual Speed</source>
         <translation>Поточна швидкість</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="146"/>
+        <location filename="../settings-tts.qml" line="148"/>
         <source>Average Speed</source>
         <translation>Середня швидкість</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="160"/>
+        <location filename="../settings-tts.qml" line="162"/>
         <source>Max Speed</source>
         <translation>Макс. швидкість</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="174"/>
+        <location filename="../settings-tts.qml" line="176"/>
         <source>Actual Inclination</source>
         <translation>Поточний нахил</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="188"/>
+        <location filename="../settings-tts.qml" line="190"/>
         <source>Actual Cadence</source>
         <translation>Поточний каденс</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="202"/>
+        <location filename="../settings-tts.qml" line="204"/>
         <source>Average Cadence</source>
         <translation>Середній каденс</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="216"/>
+        <location filename="../settings-tts.qml" line="218"/>
         <source>Max Cadence</source>
         <translation>Макс. каденс</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="230"/>
+        <location filename="../settings-tts.qml" line="232"/>
         <source>Actual Elevation</source>
         <translation>Набір висоти</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="244"/>
+        <location filename="../settings-tts.qml" line="246"/>
         <source>Actual Calories</source>
         <translation>Калорії</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="258"/>
+        <location filename="../settings-tts.qml" line="260"/>
         <source>Actual Odometer</source>
         <translation>Пробіг</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="272"/>
+        <location filename="../settings-tts.qml" line="274"/>
         <source>Actual Pace</source>
         <translation>Поточний темп</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="286"/>
+        <location filename="../settings-tts.qml" line="288"/>
         <source>Average Pace</source>
         <translation>Середній темп</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="300"/>
+        <location filename="../settings-tts.qml" line="302"/>
         <source>Max Pace</source>
         <translation>Макс. темп</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="314"/>
+        <location filename="../settings-tts.qml" line="316"/>
         <source>Actual Resistance</source>
         <translation>Поточний опір</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="328"/>
+        <location filename="../settings-tts.qml" line="330"/>
         <source>Average Resistance</source>
         <translation>Середній опір</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="342"/>
+        <location filename="../settings-tts.qml" line="344"/>
         <source>Max Resistance</source>
         <translation>Макс. опір</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="356"/>
+        <location filename="../settings-tts.qml" line="358"/>
         <source>Actual Watt</source>
         <translation>Поточна потужність</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="370"/>
+        <location filename="../settings-tts.qml" line="372"/>
         <source>Average Watt</source>
         <translation>Середня потужність</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="384"/>
+        <location filename="../settings-tts.qml" line="386"/>
         <source>Max Watt</source>
         <translation>Макс. потужність</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="398"/>
+        <location filename="../settings-tts.qml" line="400"/>
         <source>Actual FTP</source>
         <translation>Поточний FTP</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="440"/>
+        <location filename="../settings-tts.qml" line="442"/>
         <source>Actual Heart</source>
         <translation>Поточний пульс</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="454"/>
+        <location filename="../settings-tts.qml" line="456"/>
         <source>Average Heart</source>
         <translation>Середній пульс</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="468"/>
+        <location filename="../settings-tts.qml" line="470"/>
         <source>Max Heart</source>
         <translation>Макс. пульс</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="482"/>
+        <location filename="../settings-tts.qml" line="484"/>
         <source>Actual Jouls</source>
         <translation>Джоулі</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="496"/>
+        <location filename="../settings-tts.qml" line="498"/>
         <source>Actual Elapsed</source>
         <translation>Час, що минув</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="510"/>
+        <location filename="../settings-tts.qml" line="512"/>
         <source>Actual Peloton Resistance</source>
         <translation>Поточний опір Peloton</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="524"/>
+        <location filename="../settings-tts.qml" line="526"/>
         <source>Average Peloton Resistance</source>
         <translation>Середній опір Peloton</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="538"/>
+        <location filename="../settings-tts.qml" line="540"/>
         <source>Max Peloton Resistance</source>
         <translation>Макс. опір Peloton</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="552"/>
+        <location filename="../settings-tts.qml" line="554"/>
         <source>Actual Target Peloton Resistance</source>
         <translation>Цільовий опір Peloton</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="566"/>
+        <location filename="../settings-tts.qml" line="568"/>
         <source>Actual Target Cadence</source>
         <translation>Цільовий каденс</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="580"/>
+        <location filename="../settings-tts.qml" line="582"/>
         <source>Actual Target Power</source>
         <translation>Цільова потужність</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="594"/>
+        <location filename="../settings-tts.qml" line="596"/>
         <source>Actual Target Zone</source>
         <translation>Цільова зона</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="608"/>
+        <location filename="../settings-tts.qml" line="610"/>
         <source>Actual Target Speed</source>
         <translation>Цільова швидкість</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="622"/>
+        <location filename="../settings-tts.qml" line="624"/>
         <source>Actual Target Pace</source>
         <translation>Цільовий темп</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="636"/>
+        <location filename="../settings-tts.qml" line="638"/>
         <source>Actual Target Incline</source>
         <translation>Цільовий нахил</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="650"/>
+        <location filename="../settings-tts.qml" line="652"/>
         <source>Actual Watt/KG</source>
         <translation>Поточні W/kg</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="664"/>
+        <location filename="../settings-tts.qml" line="666"/>
         <source>Average Watt/KG</source>
         <translation>Середні W/kg</translation>
     </message>
     <message>
-        <location filename="../settings-tts.qml" line="678"/>
+        <location filename="../settings-tts.qml" line="680"/>
         <source>Max Watt/KG</source>
         <translation>Макс. W/kg</translation>
     </message>
