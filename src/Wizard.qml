@@ -93,8 +93,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -164,8 +162,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -228,8 +224,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -294,8 +288,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -379,8 +371,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -456,8 +446,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -546,8 +534,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -623,8 +609,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -686,8 +670,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -760,8 +742,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -872,8 +852,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -981,8 +959,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -1047,8 +1023,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -1109,8 +1083,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -1170,8 +1142,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -1250,8 +1220,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -1324,8 +1292,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
@@ -1455,8 +1421,6 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
-                leftPadding: window.contentSideMargin
-                rightPadding: window.contentSideMargin
                 topPadding: 16
                 // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
                 contentHeight: contentChildren[0].height
