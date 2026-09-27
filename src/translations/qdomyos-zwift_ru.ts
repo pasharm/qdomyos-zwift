@@ -244,32 +244,32 @@ Would you like to do that now?</source>
 Перезапустить сейчас?</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="321"/>
+        <location filename="../Home.qml" line="360"/>
         <source>Adjustable. Current value: </source>
         <translation>Регулируется. Текущее значение: </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="321"/>
+        <location filename="../Home.qml" line="360"/>
         <source>Current value: </source>
         <translation>Текущее значение: </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="465"/>
+        <location filename="../Home.qml" line="504"/>
         <source>Decrease </source>
         <translation>Уменьшить </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="466"/>
+        <location filename="../Home.qml" line="505"/>
         <source>Decrease the value of </source>
         <translation>Уменьшить значение параметра </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="484"/>
+        <location filename="../Home.qml" line="523"/>
         <source>Increase </source>
         <translation>Увеличить </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="485"/>
+        <location filename="../Home.qml" line="524"/>
         <source>Increase the value of </source>
         <translation>Увеличить значение параметра </translation>
     </message>
@@ -1160,8 +1160,8 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../devices/fitplusbike/fitplusbike.cpp" line="689"/>
-        <source>Virtufit Etappe data format detected: &quot;Virtufit Etappe 2.0 Bike&quot; has been enabled in the settings</source>
-        <translation>Обнаружен формат данных Virtufit Etappe: в настройках включён «Велотренажёр Virtufit Etappe 2.0»</translation>
+        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
+        <translation>QZ определил формат данных этого велотренажёра и включил в настройках «Велотренажёр Virtufit Etappe 2.0». Чтобы читать данные тренажёра, QZ нужно перезапустить.</translation>
     </message>
     <message>
         <location filename="../devices/fitplusbike/fitplusbike.cpp" line="1021"/>
@@ -1335,8 +1335,8 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../devices/fitshowtreadmill/fitshowtreadmill.cpp" line="878"/>
-        <source>FitShow bike detected: &quot;Fit Plus Bike&quot; has been enabled in the settings</source>
-        <translation>Обнаружен велотренажёр FitShow: в настройках включён «Велотренажёр Fit Plus»</translation>
+        <source>QZ has detected that this FitShow device is a bike and enabled &quot;Fit Plus Bike&quot; in the settings. QZ must be restarted to connect to it as a bike.</source>
+        <translation>QZ определил, что это устройство FitShow – велотренажёр, и включил в настройках «Велотренажёр Fit Plus». Чтобы подключиться к нему как к велотренажёру, QZ нужно перезапустить.</translation>
     </message>
 </context>
 <context>
@@ -4277,11 +4277,15 @@ restart the app.</source>
     </message>
     <message>
         <location filename="../main.qml" line="803"/>
-        <location filename="../main.qml" line="814"/>
         <source>In order to apply the changes you need to restart the app.
 Do you want to do it now?</source>
         <translation>Чтобы применить изменения, нужно перезапустить приложение.
 Перезапустить сейчас?</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="814"/>
+        <source>Restart now?</source>
+        <translation>Перезапустить сейчас?</translation>
     </message>
     <message>
         <location filename="../main.qml" line="831"/>
@@ -4440,7 +4444,7 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>Вы уже подключены к Intervals.icu. Выйти из учётной записи?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1521"/>
+        <location filename="../main.qml" line="1531"/>
         <source>Please choose a file</source>
         <translation>Выберите файл</translation>
     </message>
@@ -4450,102 +4454,102 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>Не забудьте сохранить профиль «%1», если хотите оставить в нём эти изменения.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1055"/>
+        <location filename="../main.qml" line="1063"/>
         <source>Auto Resistance enabled</source>
         <translation>Авто-сопротивление включено</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1055"/>
+        <location filename="../main.qml" line="1063"/>
         <source>Auto Resistance disabled</source>
         <translation>Авто-сопротивление выключено</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1090"/>
+        <location filename="../main.qml" line="1098"/>
         <source>You can move the tiles!</source>
         <translation>Плитки можно перемещать!</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1090"/>
+        <location filename="../main.qml" line="1098"/>
         <source>The tiles are locked now</source>
         <translation>Плитки закреплены</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1131"/>
+        <location filename="../main.qml" line="1139"/>
         <source>Search settings</source>
         <translation>Поиск настроек</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1241"/>
+        <location filename="../main.qml" line="1251"/>
         <source>Profile: </source>
         <translation>Профиль: </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1253"/>
+        <location filename="../main.qml" line="1263"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1264"/>
+        <location filename="../main.qml" line="1274"/>
         <source>Workouts History</source>
         <translation>История тренировок</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1273"/>
+        <location filename="../main.qml" line="1283"/>
         <source>Swag Bag</source>
         <translation>Swag Bag</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1282"/>
+        <location filename="../main.qml" line="1292"/>
         <source>Charts</source>
         <translation>Графики</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1295"/>
+        <location filename="../main.qml" line="1305"/>
         <source>Open GPX</source>
         <translation>Открыть GPX</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1311"/>
+        <location filename="../main.qml" line="1321"/>
         <source>Open Train Program</source>
         <translation>Открыть программу тренировки</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1329"/>
+        <location filename="../main.qml" line="1339"/>
         <source>Workout Editor</source>
         <translation>Редактор тренировок</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1357"/>
+        <location filename="../main.qml" line="1367"/>
         <source>Save GPX</source>
         <translation>Сохранить GPX</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1367"/>
+        <location filename="../main.qml" line="1377"/>
         <source>Save FIT</source>
         <translation>Сохранить FIT</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1377"/>
+        <location filename="../main.qml" line="1387"/>
         <source>Wizard</source>
         <translation>Мастер настройки</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1386"/>
+        <location filename="../main.qml" line="1396"/>
         <source>Help</source>
         <translation>Справка</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1395"/>
+        <location filename="../main.qml" line="1405"/>
         <source>Community</source>
         <translation>Сообщество</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1403"/>
+        <location filename="../main.qml" line="1413"/>
         <source>Credits</source>
         <translation>Благодарности</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1411"/>
+        <location filename="../main.qml" line="1421"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
