@@ -292,10 +292,10 @@ HomeForm {
         focus: true
         model: appModel
         leftMargin: { if(OS_VERSION === "Android") (Screen.width % cellWidth) / 2; else (parent.width % cellWidth) / 2; }
-        // The 30 px under the Start/Stop row hold the device name line; it hides with the
-        // toolbar, so the tiles take its place
+        // The gap under the Start/Stop row shrinks while the toolbar is scrolled away: the device
+        // name line at the bottom of that row hides with the toolbar
         anchors.topMargin: (!window.lockTiles ? rootItem.topBarHeight + (headerToolbar.scrolledAway ? 5 : 30) : 0)
-        Behavior on anchors.topMargin { NumberAnimation { duration: 150; easing.type: Easing.OutQuad } }
+        Behavior on anchors.topMargin { NumberAnimation { id: gridMarginAnimation; duration: 150; easing.type: Easing.OutQuad } }
         // While the tiles are being moved the gap above the first row is part of the content,
         // so it scrolls away with the tiles instead of staying as an empty band
         topMargin: window.lockTiles ? 30 : 0
@@ -311,10 +311,11 @@ HomeForm {
         // movement, and main.qml animates its height, so the page does not jump.
         // Hysteresis: the toolbar toggles only after the user has scrolled toolbarToggleDistance
         // in one direction since the last toggle. Collapsing it moves the page under the finger
-        // by the toolbar height plus the device name line (about 80 px), which a per-frame
-        // check reads as scrolling back, and slow
-        // scrolling made the toolbar flicker.
-        readonly property real toolbarToggleDistance: 120
+        // by toolbarShift, which a per-frame check reads as scrolling back, and slow scrolling
+        // made the toolbar flicker. The distance must stay larger than that shift, so it is
+        // derived from it (a larger font makes the toolbar taller).
+        readonly property real toolbarShift: headerToolbar.implicitHeight - headerToolbar.topPadding + 25
+        readonly property real toolbarToggleDistance: toolbarShift + 40
         property real toolbarTurnY: 0
         onContentYChanged: {
             if (window.lockTiles || contentY <= 0) {
@@ -324,12 +325,17 @@ HomeForm {
             }
             // Movement of our own making: the view is not being scrolled by the user, or it is
             // resizing while the toolbar animates
-            if (!(draggingVertically || flickingVertically) || headerToolbar.animating) {
+            if (!(draggingVertically || flickingVertically) || headerToolbar.animating || gridMarginAnimation.running) {
                 toolbarTurnY = contentY
                 return
             }
             if (!headerToolbar.scrolledAway) {
-                if (contentY - toolbarTurnY > toolbarToggleDistance) {
+                // Only while the tiles still overflow once the toolbar is gone, and not while the
+                // view is pulled past its end: otherwise it would spring back to the top and bring
+                // the toolbar back at once
+                if (contentY - toolbarTurnY > toolbarToggleDistance
+                        && contentHeight - height > toolbarShift
+                        && contentY <= originY + contentHeight - height) {
                     headerToolbar.scrolledAway = true
                     toolbarTurnY = contentY
                 } else if (contentY < toolbarTurnY) {
