@@ -460,25 +460,8 @@ jobs:
 
             echo "Orientation test completed - 4 screenshots captured"
 
-            # Back button test: back navigates inside the app, only a double back on the home page exits
-            echo "Starting back button test..."
-            adb shell settings put system user_rotation 0
-            sleep 5
-            # Close system screens opened at startup (e.g. Health Connect permissions) until QZ is in front
-            for i in 1 2 3 4 5; do adb shell dumpsys activity activities | grep -E "mResumedActivity|topResumedActivity" | grep -q CustomQtActivity && break; echo "QZ is not in front, pressing back ($i)"; adb shell input keyevent KEYCODE_BACK; sleep 5; done
-            adb shell screencap -p /sdcard/screenshot_back_0.png
-            adb pull /sdcard/screenshot_back_0.png
-            adb shell dumpsys activity activities | grep -E "mResumedActivity|topResumedActivity" | grep -q CustomQtActivity || (echo "TEST FAILED: QZ is not in front before the back button test" && exit 1)
-            # Single presses, more than 2 s apart: the first leaves the wizard, the next ones show "Press back again to exit"
-            for i in 1 2 3; do echo "Single back press $i"; adb shell input keyevent KEYCODE_BACK; sleep 1; adb shell screencap -p /sdcard/screenshot_back_$i.png; adb pull /sdcard/screenshot_back_$i.png; sleep 4; adb shell dumpsys activity activities | grep -E "mResumedActivity|topResumedActivity" | grep -q CustomQtActivity || { echo "TEST FAILED: single back press $i closed the app"; exit 1; }; done
-            echo "Single back presses kept the app open"
-            # Two presses in one command, well within 2 s: the app must exit
-            adb shell input keyevent KEYCODE_BACK KEYCODE_BACK
-            sleep 10
-            adb shell screencap -p /sdcard/screenshot_back_exit.png
-            adb pull /sdcard/screenshot_back_exit.png
-            if adb shell dumpsys activity activities | grep -E "mResumedActivity|topResumedActivity" | grep -q CustomQtActivity; then echo "TEST FAILED: double back press did not close the app"; exit 1; fi
-            echo "Back button test completed"
+            # Back button test (single presses navigate back, a double press on the home page exits)
+            sh .github/scripts/android_back_button_test.sh
 
             # Check if the package is installed
             adb shell pm list packages | grep org.cagnulen.qdomyoszwift
