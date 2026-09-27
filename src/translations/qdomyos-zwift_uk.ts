@@ -3698,7 +3698,7 @@ This may take a few moments on first startup.</source>
     <message>
         <location filename="../homeform.cpp" line="603"/>
         <source>KJouls</source>
-        <translation>Кілоджоулі</translation>
+        <translation>Робота (kJ)</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="606"/>
@@ -10414,7 +10414,7 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings-tiles.qml" line="1229"/>
         <source>Jouls</source>
-        <translation>Джоулі</translation>
+        <translation>Робота (kJ)</translation>
     </message>
     <message>
         <location filename="../settings-tiles.qml" line="1260"/>
@@ -11507,7 +11507,7 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings-tts.qml" line="484"/>
         <source>Actual Jouls</source>
-        <translation>Джоулі</translation>
+        <translation>Робота</translation>
     </message>
     <message>
         <location filename="../settings-tts.qml" line="498"/>
