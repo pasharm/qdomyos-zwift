@@ -304,7 +304,7 @@ void fitshowtreadmill::serviceDiscovered(const QBluetoothUuid &gatt) {
         settings.setValue(QZSettings::ftms_treadmill, bluetoothDevice.name());
         qDebug() << "forcing FTMS treadmill since it has FTMS";
         if(homeform::singleton())
-            homeform::singleton()->setToastRequested("FTMS treadmill found, restart the app to apply the change");
+            homeform::singleton()->setToastRequested(QObject::tr("FTMS treadmill found, restart the app to apply the change"));
     }
 }
 
@@ -875,7 +875,7 @@ void fitshowtreadmill::serviceScanDone(void) {
                         qDebug() << "FitShow bike detected (FTMS Indoor Bike Data), fitplus_bike enabled";
                         if (homeform::singleton())
                             homeform::singleton()->setToastRequested(
-                                "FitShow bike found, restart the app to apply the change!");
+                                QObject::tr("FitShow bike found, restart the app to apply the change!"));
                     });
 #ifdef _MSC_VER
             QTimer::singleShot(0, [=]() { gattFTMSProbeService->discoverDetails(); });
