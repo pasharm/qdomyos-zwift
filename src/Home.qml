@@ -362,7 +362,55 @@ HomeForm {
         interactive: !window.lockTiles
         id: gridView
         objectName: "gridview"
-        onMovementEnded: { headerToolbar.visible = (contentY == 0) || window.lockTiles; }
+        // Tiles scroll under the Start/Stop row instead of being drawn over it
+        clip: true
+
+        // The app toolbar scrolls away while the tiles scroll down and comes back when they
+        // scroll up (Material "hide on scroll"). It follows the finger, not the end of the
+        // movement, and main.qml animates its height, so the page does not jump.
+        // Hysteresis: the toolbar toggles only after the user has scrolled toolbarToggleDistance
+        // in one direction since the last toggle. Collapsing it moves the page under the finger
+        // by toolbarShift, which a per-frame check reads as scrolling back, and slow scrolling
+        // made the toolbar flicker. The distance must stay larger than that shift, so it is
+        // derived from it (a larger font makes the toolbar taller).
+        readonly property real toolbarShift: headerToolbar.implicitHeight - headerToolbar.topPadding
+        readonly property real toolbarToggleDistance: toolbarShift + 40
+        property real toolbarTurnY: 0
+        onContentYChanged: {
+            if (window.lockTiles || contentY <= 0) {
+                headerToolbar.scrolledAway = false
+                toolbarTurnY = contentY
+                return
+            }
+            // Movement of our own making: the view is not being scrolled by the user, or it is
+            // resizing while the toolbar animates
+            if (!(draggingVertically || flickingVertically) || headerToolbar.animating) {
+                toolbarTurnY = contentY
+                return
+            }
+            if (!headerToolbar.scrolledAway) {
+                // Only while the tiles still overflow once the toolbar is gone, and not while the
+                // view is pulled past its end: otherwise it would spring back to the top and bring
+                // the toolbar back at once
+                if (contentY - toolbarTurnY > toolbarToggleDistance
+                        && contentHeight - height > toolbarShift
+                        && contentY <= originY + contentHeight - height) {
+                    headerToolbar.scrolledAway = true
+                    toolbarTurnY = contentY
+                } else if (contentY < toolbarTurnY) {
+                    toolbarTurnY = contentY
+                }
+            } else {
+                if (toolbarTurnY - contentY > toolbarToggleDistance && !atYEnd) {
+                    headerToolbar.scrolledAway = false
+                    toolbarTurnY = contentY
+                } else if (contentY > toolbarTurnY) {
+                    // Not past the end: after pulling beyond it the view springs back, and the
+                    // first move up would otherwise bring the toolbar back at once
+                    toolbarTurnY = Math.min(contentY, originY + contentHeight - height)
+                }
+            }
+        }
         Screen.orientationUpdateMask:  Qt.LandscapeOrientation | Qt.PortraitOrientation | Qt.InvertedLandscapeOrientation | Qt.InvertedPortraitOrientation
         Screen.onPrimaryOrientationChanged:{
             // Nothing to recompute: cellWidth and the grid width follow the page width

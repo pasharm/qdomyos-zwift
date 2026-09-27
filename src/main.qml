@@ -1256,6 +1256,22 @@ ApplicationWindow {
         // Opacity, not visible: some pages set headerToolbar.visible themselves
         opacity: window.rootReady ? 1 : 0
         property bool settingsPageActive: stackView.currentItem && typeof stackView.currentItem.showSettingsSearch === "function"
+        // Set by the tile grid in Home.qml. The toolbar collapses to the status bar inset
+        // (topPadding) with an animation instead of disappearing at once
+        property bool scrolledAway: false
+        // The animation runs on this share and not on the height: the height also changes on
+        // start, when the toolbar gets its real size, and must follow that at once
+        property real collapsed: scrolledAway ? 1 : 0
+        Behavior on collapsed { NumberAnimation { id: headerHeightAnimation; duration: 150; easing.type: Easing.OutQuad } }
+        height: implicitHeight - collapsed * (implicitHeight - topPadding)
+        clip: collapsed > 0   // keeps the Material shadow when fully shown
+        // The buttons are centred in the content, which has no height once collapsed: they would
+        // sit on the edge of the status bar, with a line of their pixels showing under it. They
+        // fade out with the collapse and are hidden at its end, from TalkBack as well
+        contentItem.opacity: 1 - collapsed
+        contentItem.visible: collapsed < 1
+        // While the height animates the page moves under the finger; Home.qml ignores that movement
+        property bool animating: headerHeightAnimation.running
         topPadding: getTopPadding()
         // Clear of the side system bar and the cutout held sideways, as the page stack: with
         // button navigation the bar on the right covered the rightmost button
@@ -1512,7 +1528,9 @@ ApplicationWindow {
 
         Label {
             text: stackView.currentItem.title
-            anchors.centerIn: parent
+            // Fixed position, like the buttons: centred in the full bar, it moved on its own when the bar collapsed
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: (headerToolbar.contentHeight - height) / 2
             // Grows with the text size, but no wider than the room between the nearest shown
             // buttons, centred: a title that does not fit takes a smaller font down to its size at
             // 100 %, and only then an ellipsis. At 100 % it stays as it was
@@ -1877,6 +1895,8 @@ ApplicationWindow {
             anchors.rightMargin: getRightPadding()
             anchors.leftMargin: getLeftPadding()
             focus: true
+            // Only the tile grid scrolls the toolbar away; any other page gets it back
+            onCurrentItemChanged: headerToolbar.scrolledAway = false
             Connections {
                 target: stackView.currentItem
                 ignoreUnknownSignals: true
