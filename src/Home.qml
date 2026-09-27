@@ -293,13 +293,17 @@ HomeForm {
         focus: true
         model: appModel
         leftMargin: { if(OS_VERSION === "Android") (Screen.width % cellWidth) / 2; else (parent.width % cellWidth) / 2; }
-        anchors.topMargin: (!window.lockTiles ? rootItem.topBarHeight + 5 : 0)
+        // The grid starts right under the Start/Stop buttons (they end 5 px above the bottom of
+        // the top bar), so scrolled tiles leave no empty band under them
+        readonly property real gridTopInset: window.lockTiles ? 0 : Math.max(0, rootItem.topBarHeight - 3)
+        anchors.topMargin: gridTopInset
         // The gap above the first row is part of the content, so it scrolls away with the tiles.
         // In normal mode it holds the device name line and signal icon at the bottom of the
-        // Start/Stop row: they hide as soon as the tiles move into it (deviceLineHidden), and the
-        // grid itself never moves, so nothing jumps. While the tiles are being moved it keeps the
-        // first row off the toolbar instead of staying as an empty band.
-        topMargin: window.lockTiles ? 30 : 25
+        // Start/Stop row: at rest the first row is 30 px below the top bar as before, the line
+        // hides as soon as the tiles move into the gap (deviceLineHidden), and the grid itself
+        // never moves, so nothing jumps. While the tiles are being moved it keeps the first row
+        // off the toolbar instead of staying as an empty band.
+        topMargin: window.lockTiles ? 30 : rootItem.topBarHeight + 30 - gridTopInset
         onTopMarginChanged: if (contentY <= 0) contentY = -topMargin
         interactive: !window.lockTiles
         id: gridView
@@ -319,7 +323,9 @@ HomeForm {
         readonly property real toolbarToggleDistance: toolbarShift + 40
         property real toolbarTurnY: 0
         onContentYChanged: {
-            if (window.lockTiles || contentY <= 0) {
+            // At the top of the gap everything comes back together with the device line. With
+            // the gap scrolled away and the first row in full view the toolbar may stay hidden.
+            if (window.lockTiles || contentY <= -topMargin + 1) {
                 headerToolbar.scrolledAway = false
                 toolbarTurnY = contentY
                 return
@@ -335,7 +341,7 @@ HomeForm {
                 // view is pulled past its end: otherwise it would spring back to the top and bring
                 // the toolbar back at once
                 if (contentY - toolbarTurnY > toolbarToggleDistance
-                        && contentHeight - height > toolbarShift
+                        && contentHeight + topMargin - height > toolbarShift
                         && contentY <= originY + contentHeight - height) {
                     headerToolbar.scrolledAway = true
                     toolbarTurnY = contentY
@@ -353,6 +359,14 @@ HomeForm {
                 }
             }
         }
+        // With the toolbar hidden, a scroll that stops with the first row cut by less than half a
+        // tile settles on the first row in full view: both bars hidden, no tile cut in half
+        NumberAnimation { id: snapToFirstRow; target: gridView; property: "contentY"; to: 0; duration: 150; easing.type: Easing.OutQuad }
+        onMovementEnded: {
+            if (!window.lockTiles && headerToolbar.scrolledAway && contentY > 0 && contentY < cellHeight / 2)
+                snapToFirstRow.start()
+        }
+        onMovementStarted: snapToFirstRow.stop()
         Screen.orientationUpdateMask:  Qt.LandscapeOrientation | Qt.PortraitOrientation
         Screen.onPrimaryOrientationChanged:{
             if(OS_VERSION === "Android")
