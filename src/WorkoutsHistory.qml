@@ -89,7 +89,7 @@ Page {
                 id: calendarButton
                 anchors.left: parent.left
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.leftMargin: 12
+                anchors.leftMargin: window.contentSideMargin
                 width: 48
                 height: 48
                 
@@ -141,7 +141,7 @@ Page {
                 id: clearFilterButton
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.rightMargin: 12
+                anchors.rightMargin: window.contentSideMargin
                 width: 100
                 height: 36
                 visible: workoutModel && workoutModel.isDateFiltered
@@ -252,6 +252,8 @@ Page {
                 Rectangle {
                     anchors.fill: parent
                     anchors.margins: 8
+                    anchors.leftMargin: window.contentSideMargin
+                    anchors.rightMargin: window.contentSideMargin
                     radius: 10
                     color: "white"
                     border.color: "#e0e0e0"
