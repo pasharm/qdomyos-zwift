@@ -1867,7 +1867,7 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="58"/>
-        <location filename="../webtranslation.cpp" line="219"/>
+        <location filename="../webtranslation.cpp" line="232"/>
         <source>Speed</source>
         <translation>Скорость</translation>
     </message>
@@ -1883,13 +1883,13 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="61"/>
-        <location filename="../webtranslation.cpp" line="227"/>
+        <location filename="../webtranslation.cpp" line="240"/>
         <source>Resistance</source>
         <translation>Сопротивление</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="62"/>
-        <location filename="../webtranslation.cpp" line="220"/>
+        <location filename="../webtranslation.cpp" line="233"/>
         <source>Cadence</source>
         <translation>Каденс</translation>
     </message>
@@ -2326,7 +2326,7 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="149"/>
-        <location filename="../webtranslation.cpp" line="222"/>
+        <location filename="../webtranslation.cpp" line="235"/>
         <source>Calories</source>
         <translation>Калории</translation>
     </message>
@@ -2472,236 +2472,301 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="179"/>
+        <source>W</source>
+        <translation>Вт</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="180"/>
+        <source>kJ</source>
+        <translation>кДж</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="181"/>
+        <source>kcal</source>
+        <translation>ккал</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="182"/>
+        <source>km</source>
+        <translation>км</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="183"/>
+        <source>mi</source>
+        <translation>миль</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="184"/>
+        <source>rpm</source>
+        <translation>об/мин</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="185"/>
+        <source>bpm</source>
+        <translation>уд/мин</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="186"/>
+        <source>km/h</source>
+        <translation>км/ч</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="187"/>
+        <source>mph</source>
+        <translation>миль/ч</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="188"/>
+        <source>min/km</source>
+        <translation>мин/км</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="189"/>
+        <source>min/mi</source>
+        <translation>мин/миля</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="190"/>
+        <source>lvl</source>
+        <translation>ур.</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="191"/>
+        <source>spm</source>
+        <translation>гр/мин</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="192"/>
         <source>Marathon</source>
         <translation>Марафон</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="180"/>
+        <location filename="../webtranslation.cpp" line="193"/>
         <source>Half Marathon</source>
         <translation>Полумарафон</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="181"/>
+        <location filename="../webtranslation.cpp" line="194"/>
         <source>10K</source>
         <translation>10K</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="182"/>
+        <location filename="../webtranslation.cpp" line="195"/>
         <source>5K</source>
         <translation>5K</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="183"/>
+        <location filename="../webtranslation.cpp" line="196"/>
         <source>1 Mile</source>
         <translation>1 миля</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="184"/>
+        <location filename="../webtranslation.cpp" line="197"/>
         <source>Peloton Workout in progress!</source>
         <translation>Идёт тренировка Peloton!</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="185"/>
+        <location filename="../webtranslation.cpp" line="198"/>
         <source>Do you want to follow the resistance?</source>
         <translation>Следовать заданному сопротивлению?</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="186"/>
+        <location filename="../webtranslation.cpp" line="199"/>
         <source>AVG</source>
         <translation>СР.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="187"/>
+        <location filename="../webtranslation.cpp" line="200"/>
         <source>MAX</source>
         <translation>МАКС.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="188"/>
+        <location filename="../webtranslation.cpp" line="201"/>
         <source>TOTAL</source>
         <translation>ВСЕГО</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="189"/>
+        <location filename="../webtranslation.cpp" line="202"/>
         <source>OFFSET</source>
         <translation>СМЕЩ.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="190"/>
+        <location filename="../webtranslation.cpp" line="203"/>
         <source>N/A</source>
         <translation>Н/Д</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="191"/>
+        <location filename="../webtranslation.cpp" line="204"/>
         <source>P.ZONE</source>
         <translation>ЗОНА МОЩ.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="192"/>
+        <location filename="../webtranslation.cpp" line="205"/>
         <source>P.RESISTANCE</source>
         <translation>P.СОПР.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="193"/>
+        <location filename="../webtranslation.cpp" line="206"/>
         <source>TOT.OUTPUT</source>
         <translation>СУММ.МОЩ.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="194"/>
+        <location filename="../webtranslation.cpp" line="207"/>
         <source>ELAPSED</source>
         <translation>ВРЕМЯ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="195"/>
+        <location filename="../webtranslation.cpp" line="208"/>
         <source>REM.TIME</source>
         <translation>ОСТАЛОСЬ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="196"/>
+        <location filename="../webtranslation.cpp" line="209"/>
         <source>P.OFFSET</source>
         <translation>P.СМЕЩ.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="197"/>
+        <location filename="../webtranslation.cpp" line="210"/>
         <source>GEARS</source>
         <translation>ПЕРЕДАЧИ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="198"/>
+        <location filename="../webtranslation.cpp" line="211"/>
         <source>NEXT</source>
         <translation>ДАЛЕЕ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="199"/>
+        <location filename="../webtranslation.cpp" line="212"/>
         <source>CLEAR</source>
         <translation>КРУГ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="200"/>
+        <location filename="../webtranslation.cpp" line="213"/>
         <source>GEAR -</source>
         <translation>ПЕРЕДАЧА -</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="201"/>
+        <location filename="../webtranslation.cpp" line="214"/>
         <source>GEAR +</source>
         <translation>ПЕРЕДАЧА +</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="202"/>
+        <location filename="../webtranslation.cpp" line="215"/>
         <source>Select metrics to display</source>
         <translation>Выберите показатели</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="203"/>
+        <location filename="../webtranslation.cpp" line="216"/>
         <source>Select Metrics</source>
         <translation>Показатели</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="204"/>
+        <location filename="../webtranslation.cpp" line="217"/>
         <source>Full Controls</source>
         <translation>Полная панель</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="205"/>
+        <location filename="../webtranslation.cpp" line="218"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="206"/>
+        <location filename="../webtranslation.cpp" line="219"/>
         <source>Start/Pause</source>
         <translation>Старт/пауза</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="207"/>
+        <location filename="../webtranslation.cpp" line="220"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="208"/>
+        <location filename="../webtranslation.cpp" line="221"/>
         <source>Auto Resistance</source>
         <translation>Авто-сопротивление</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="209"/>
+        <location filename="../webtranslation.cpp" line="222"/>
         <source>SPEED</source>
         <translation>СКОРОСТЬ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="210"/>
+        <location filename="../webtranslation.cpp" line="223"/>
         <source>INCLINE</source>
         <translation>НАКЛОН</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="211"/>
+        <location filename="../webtranslation.cpp" line="224"/>
         <source>PACE</source>
         <translation>ТЕМП</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="212"/>
+        <location filename="../webtranslation.cpp" line="225"/>
         <source>ELEV.</source>
         <translation>ВЫС.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="213"/>
+        <location filename="../webtranslation.cpp" line="226"/>
         <source>CADENCE</source>
         <translation>КАДЕНС</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="214"/>
+        <location filename="../webtranslation.cpp" line="227"/>
         <source>PULSE</source>
         <translation>ПУЛЬС</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="215"/>
+        <location filename="../webtranslation.cpp" line="228"/>
         <source>POWER</source>
         <translation>МОЩНОСТЬ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="216"/>
+        <location filename="../webtranslation.cpp" line="229"/>
         <source>RESISTANCE</source>
         <translation>СОПРОТИВЛЕНИЕ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="217"/>
+        <location filename="../webtranslation.cpp" line="230"/>
         <source>CALORIES</source>
         <translation>КАЛОРИИ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="218"/>
+        <location filename="../webtranslation.cpp" line="231"/>
         <source>DISTANCE</source>
         <translation>ДИСТАНЦИЯ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="221"/>
+        <location filename="../webtranslation.cpp" line="234"/>
         <source>Heart</source>
         <translation>Пульс</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="223"/>
+        <location filename="../webtranslation.cpp" line="236"/>
         <source>Odometer</source>
         <translation>Пробег</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="224"/>
+        <location filename="../webtranslation.cpp" line="237"/>
         <source>Watt</source>
         <translation>Мощность</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="225"/>
+        <location filename="../webtranslation.cpp" line="238"/>
         <source>Elapsed</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="226"/>
+        <location filename="../webtranslation.cpp" line="239"/>
         <source>Inclination</source>
         <translation>Наклон</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="228"/>
+        <location filename="../webtranslation.cpp" line="241"/>
         <source>Altitude</source>
         <translation>Высота</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="229"/>
+        <location filename="../webtranslation.cpp" line="242"/>
         <source>Elevation</source>
         <translation>Набор высоты</translation>
     </message>
