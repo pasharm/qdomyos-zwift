@@ -376,7 +376,7 @@ HomeForm {
             snapToFirstRow.start()
         }
         onMovementStarted: snapToFirstRow.stop()
-        Screen.orientationUpdateMask:  Qt.LandscapeOrientation | Qt.PortraitOrientation
+        Screen.orientationUpdateMask:  Qt.LandscapeOrientation | Qt.PortraitOrientation | Qt.InvertedLandscapeOrientation | Qt.InvertedPortraitOrientation
         Screen.onPrimaryOrientationChanged:{
             if(OS_VERSION === "Android")
                 gridView.leftMargin = (Screen.width % cellWidth) / 2;
