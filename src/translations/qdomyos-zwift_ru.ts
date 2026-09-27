@@ -1412,17 +1412,17 @@ Would you like to do that now?</source>
 <context>
     <name>Wizard</name>
     <message>
-        <location filename="../Wizard.qml" line="101"/>
+        <location filename="../Wizard.qml" line="113"/>
         <source>Welcome to QZ</source>
         <translation>Добро пожаловать в QZ</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="109"/>
+        <location filename="../Wizard.qml" line="124"/>
         <source>Created by Roberto Viola</source>
         <translation>Автор – Roberto Viola</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="116"/>
+        <location filename="../Wizard.qml" line="131"/>
         <source>QZ is designed to maximize your workout experience on a range of fitness equipment, including indoor bikes, treadmills, ellipticals, and rower. By connecting seamlessly with your devices, QZ provides realtime data, personalized workout plans, and interactive elements to keep you motivated.
 
 The following questions will customize QZ for your equipment and goals.</source>
@@ -1431,242 +1431,242 @@ The following questions will customize QZ for your equipment and goals.</source>
 Следующие вопросы помогут настроить QZ под ваш тренажёр и цели.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="127"/>
+        <location filename="../Wizard.qml" line="142"/>
         <source>Start</source>
         <translation>Старт</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="155"/>
+        <location filename="../Wizard.qml" line="173"/>
         <source>How can I help you?</source>
         <translation>Чем я могу помочь?</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="163"/>
+        <location filename="../Wizard.qml" line="181"/>
         <source>First-time setup</source>
         <translation>Первоначальная настройка</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="172"/>
+        <location filename="../Wizard.qml" line="190"/>
         <source>Help with a specific feature</source>
         <translation>Помощь с конкретной функцией</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="181"/>
+        <location filename="../Wizard.qml" line="199"/>
         <source>I&apos;m fine, thanks.</source>
         <translation>Всё в порядке, спасибо.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="211"/>
+        <location filename="../Wizard.qml" line="232"/>
         <source>What&apos;s your fitness device?</source>
         <translation>Какой у вас тренажёр?</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="218"/>
+        <location filename="../Wizard.qml" line="239"/>
         <source>Bike</source>
         <translation>Велотренажёр</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="218"/>
+        <location filename="../Wizard.qml" line="239"/>
         <source>Treadmill</source>
         <translation>Беговая дорожка</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="218"/>
+        <location filename="../Wizard.qml" line="239"/>
         <source>Rower</source>
         <translation>Гребной тренажёр</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="218"/>
+        <location filename="../Wizard.qml" line="239"/>
         <source>Elliptical</source>
         <translation>Эллиптический тренажёр</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="241"/>
-        <location filename="../Wizard.qml" line="318"/>
-        <location filename="../Wizard.qml" line="387"/>
-        <location filename="../Wizard.qml" line="466"/>
-        <location filename="../Wizard.qml" line="535"/>
-        <location filename="../Wizard.qml" line="584"/>
-        <location filename="../Wizard.qml" line="656"/>
-        <location filename="../Wizard.qml" line="754"/>
-        <location filename="../Wizard.qml" line="846"/>
-        <location filename="../Wizard.qml" line="904"/>
+        <location filename="../Wizard.qml" line="262"/>
+        <location filename="../Wizard.qml" line="342"/>
+        <location filename="../Wizard.qml" line="414"/>
+        <location filename="../Wizard.qml" line="499"/>
+        <location filename="../Wizard.qml" line="571"/>
+        <location filename="../Wizard.qml" line="623"/>
+        <location filename="../Wizard.qml" line="698"/>
+        <location filename="../Wizard.qml" line="805"/>
+        <location filename="../Wizard.qml" line="900"/>
         <location filename="../Wizard.qml" line="961"/>
-        <location filename="../Wizard.qml" line="1092"/>
-        <location filename="../Wizard.qml" line="1155"/>
-        <location filename="../Wizard.qml" line="1269"/>
-        <location filename="../Wizard.qml" line="1411"/>
+        <location filename="../Wizard.qml" line="1021"/>
+        <location filename="../Wizard.qml" line="1158"/>
+        <location filename="../Wizard.qml" line="1227"/>
+        <location filename="../Wizard.qml" line="1353"/>
+        <location filename="../Wizard.qml" line="1510"/>
         <source>Back</source>
         <translation>Назад</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="268"/>
+        <location filename="../Wizard.qml" line="292"/>
         <source>Choose your preferred app</source>
         <translation>Выберите приложение</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="276"/>
+        <location filename="../Wizard.qml" line="300"/>
         <source>QZ allows you to connect to both of them, even simultaneously if you want!</source>
         <translation>QZ может подключаться к обоим, даже одновременно, если хотите!</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="291"/>
+        <location filename="../Wizard.qml" line="315"/>
         <source>Other app</source>
         <translation>Другое приложение</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="291"/>
+        <location filename="../Wizard.qml" line="315"/>
         <source>QZ Standalone</source>
         <translation>Только QZ</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="345"/>
+        <location filename="../Wizard.qml" line="372"/>
         <source>Connect to Peloton</source>
         <translation>Подключить Peloton</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="353"/>
+        <location filename="../Wizard.qml" line="380"/>
         <source>Click the button below to connect your Peloton account</source>
         <translation>Нажмите кнопку ниже, чтобы подключить учётную запись Peloton</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="414"/>
+        <location filename="../Wizard.qml" line="444"/>
         <source>Peloton Difficulty</source>
         <translation>Сложность Peloton</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="421"/>
+        <location filename="../Wizard.qml" line="451"/>
         <source>Typically, Peloton coaches call out a range for target incline, resistance and/or speed. Use this setting to choose the difficulty of the target QZ communicates. Difficulty level can be set to lower, upper or average</source>
         <translation>Обычно тренеры Peloton называют диапазон целевого наклона, сопротивления и/или скорости. Эта настройка определяет, какую цель из диапазона будет передавать QZ: «нижняя граница», «верхняя граница» или «среднее»</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="432"/>
+        <location filename="../Wizard.qml" line="465"/>
         <source>Difficulty</source>
         <translation>Сложность</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="441"/>
+        <location filename="../Wizard.qml" line="474"/>
         <source>lower</source>
         <translation>нижняя граница</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="441"/>
+        <location filename="../Wizard.qml" line="474"/>
         <source>upper</source>
         <translation>верхняя граница</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="441"/>
+        <location filename="../Wizard.qml" line="474"/>
         <source>average</source>
         <translation>среднее</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="453"/>
-        <location filename="../Wizard.qml" line="590"/>
-        <location filename="../Wizard.qml" line="852"/>
-        <location filename="../Wizard.qml" line="910"/>
+        <location filename="../Wizard.qml" line="486"/>
+        <location filename="../Wizard.qml" line="629"/>
+        <location filename="../Wizard.qml" line="906"/>
         <location filename="../Wizard.qml" line="967"/>
+        <location filename="../Wizard.qml" line="1027"/>
         <source>Finish</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="493"/>
+        <location filename="../Wizard.qml" line="529"/>
         <source>Bike Resistance Level</source>
         <translation>Уровень сопротивления велотренажёра</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="501"/>
+        <location filename="../Wizard.qml" line="537"/>
         <source>What resistance level feels like a flat road on your bike?</source>
         <translation>Какой уровень сопротивления на вашем велотренажёре ощущается как ровная дорога?</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="525"/>
-        <location filename="../Wizard.qml" line="743"/>
-        <location filename="../Wizard.qml" line="1083"/>
-        <location filename="../Wizard.qml" line="1146"/>
-        <location filename="../Wizard.qml" line="1258"/>
-        <location filename="../Wizard.qml" line="1401"/>
+        <location filename="../Wizard.qml" line="561"/>
+        <location filename="../Wizard.qml" line="794"/>
+        <location filename="../Wizard.qml" line="1149"/>
+        <location filename="../Wizard.qml" line="1218"/>
+        <location filename="../Wizard.qml" line="1342"/>
+        <location filename="../Wizard.qml" line="1500"/>
         <source>Next</source>
         <translation>Далее</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="562"/>
-        <location filename="../Wizard.qml" line="940"/>
+        <location filename="../Wizard.qml" line="601"/>
+        <location filename="../Wizard.qml" line="1000"/>
         <source>Custom Configurations</source>
         <translation>Индивидуальные настройки</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="570"/>
+        <location filename="../Wizard.qml" line="609"/>
         <source>Here you will see custom configurations based on your previous choices.</source>
         <translation>Здесь появятся настройки, подобранные по вашим ответам.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="617"/>
+        <location filename="../Wizard.qml" line="659"/>
         <source>Select a feature</source>
         <translation>Выберите функцию</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="626"/>
+        <location filename="../Wizard.qml" line="668"/>
         <source>Auto-incline with treadmill and Zwift</source>
         <translation>Авто-наклон с беговой дорожкой и Zwift</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="627"/>
+        <location filename="../Wizard.qml" line="669"/>
         <source>Auto-resistance with Peloton</source>
         <translation>Авто-сопротивление с Peloton</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="628"/>
+        <location filename="../Wizard.qml" line="670"/>
         <source>Zwift Click or Zwift Play</source>
         <translation>Zwift Click или Zwift Play</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="629"/>
-        <location filename="../Wizard.qml" line="882"/>
+        <location filename="../Wizard.qml" line="671"/>
+        <location filename="../Wizard.qml" line="939"/>
         <source>Virtual Shifting</source>
         <translation>Виртуальное переключение передач</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="683"/>
+        <location filename="../Wizard.qml" line="728"/>
         <source>Zwift Credentials</source>
         <translation>Учётные данные Zwift</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="691"/>
+        <location filename="../Wizard.qml" line="736"/>
         <source>QZ will read the inclination in real time from the Zwift app and will adjust the inclination on your treadmill. It doesn&apos;t work on workout</source>
         <translation>QZ будет в реальном времени считывать наклон из приложения Zwift и менять наклон вашей беговой дорожки. В структурированных тренировках Zwift не работает</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="701"/>
+        <location filename="../Wizard.qml" line="749"/>
         <source>Username</source>
         <translation>Имя пользователя</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="719"/>
+        <location filename="../Wizard.qml" line="770"/>
         <source>Password</source>
         <translation>Пароль</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="781"/>
+        <location filename="../Wizard.qml" line="835"/>
         <source>Zwift Play and Click</source>
         <translation>Zwift Play и Click</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="790"/>
+        <location filename="../Wizard.qml" line="844"/>
         <source>Enable the one that you would like to use directly with QZ. Remember to update their firmware before using it.</source>
         <translation>Включите устройство, которое хотите использовать напрямую с QZ. Не забудьте перед этим обновить его прошивку.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="799"/>
+        <location filename="../Wizard.qml" line="853"/>
         <source>Zwift Click</source>
         <translation>Zwift Click</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="815"/>
+        <location filename="../Wizard.qml" line="869"/>
         <source>Zwift Play</source>
         <translation>Zwift Play</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="832"/>
+        <location filename="../Wizard.qml" line="886"/>
         <source>Correct startup phase:
 
 1. close any app that can connect to your Zwift devices
@@ -1683,131 +1683,131 @@ The following questions will customize QZ for your equipment and goals.</source>
 5. теперь при переключении передачи на устройстве Zwift вы увидите реакцию на плитке передач в qz, а значит, и на тренажёре.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="890"/>
+        <location filename="../Wizard.qml" line="947"/>
         <source>Virtual shifting enabled! You can change gears using the gears tile in QZ directly, or you can also add a bluetooth remote or a Zwift Play or a Zwift Click to control it!</source>
         <translation>Виртуальное переключение передач включено! Передачи можно переключать прямо на плитке передач в QZ, а для управления можно добавить Bluetooth-пульт, Zwift Play или Zwift Click!</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="948"/>
+        <location filename="../Wizard.qml" line="1008"/>
         <source>Here you will see custom configurations based on the selected feature.</source>
         <translation>Здесь появятся настройки для выбранной функции.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="994"/>
+        <location filename="../Wizard.qml" line="1057"/>
         <source>Thank you for setting up QZ!</source>
         <translation>Спасибо, что настроили QZ!</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1002"/>
+        <location filename="../Wizard.qml" line="1065"/>
         <source>If you have any questions or need further assistance, feel free to write to me at roberto.viola83@gmail.com. You can also restart this wizard from the left side bar menu. To apply some changes, you may need to restart the app.</source>
         <translation>Если у вас есть вопросы или нужна помощь, пишите мне на roberto.viola83@gmail.com. Этот мастер можно запустить снова из меню на левой боковой панели. Чтобы некоторые изменения вступили в силу, может потребоваться перезапуск приложения.</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1019"/>
+        <location filename="../Wizard.qml" line="1082"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1048"/>
+        <location filename="../Wizard.qml" line="1114"/>
         <source>Select Your Fitness Device</source>
         <translation>Выберите ваш тренажёр</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1059"/>
-        <location filename="../Wizard.qml" line="1319"/>
+        <location filename="../Wizard.qml" line="1125"/>
+        <location filename="../Wizard.qml" line="1406"/>
         <source>Disabled</source>
         <translation>Отключено</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1072"/>
-        <location filename="../Wizard.qml" line="1333"/>
+        <location filename="../Wizard.qml" line="1138"/>
+        <location filename="../Wizard.qml" line="1420"/>
         <source>Refresh</source>
         <translation>Обновить</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1120"/>
+        <location filename="../Wizard.qml" line="1189"/>
         <source>Unit System</source>
         <translation>Система единиц</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1128"/>
+        <location filename="../Wizard.qml" line="1200"/>
         <source>Select your preferred unit system</source>
         <translation>Выберите систему единиц</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1136"/>
+        <location filename="../Wizard.qml" line="1208"/>
         <source>Metric</source>
         <translation>Метрическая</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1136"/>
+        <location filename="../Wizard.qml" line="1208"/>
         <source>Imperial</source>
         <translation>Имперская</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1183"/>
+        <location filename="../Wizard.qml" line="1258"/>
         <source>User Information</source>
         <translation>Данные пользователя</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1191"/>
+        <location filename="../Wizard.qml" line="1269"/>
         <source>Weight (%1)</source>
         <translation>Вес (%1)</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1222"/>
+        <location filename="../Wizard.qml" line="1303"/>
         <source>Age</source>
         <translation>Возраст</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1238"/>
+        <location filename="../Wizard.qml" line="1322"/>
         <source>Gender</source>
         <translation>Пол</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1247"/>
+        <location filename="../Wizard.qml" line="1331"/>
         <source>Male</source>
         <translation>Мужской</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1247"/>
+        <location filename="../Wizard.qml" line="1331"/>
         <source>Female</source>
         <translation>Женский</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1297"/>
+        <location filename="../Wizard.qml" line="1384"/>
         <source>Select Your Heart Rate Device</source>
         <translation>Выберите пульсометр</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1305"/>
+        <location filename="../Wizard.qml" line="1392"/>
         <source>Choose your heart rate belt or select a smartwatch option:</source>
         <translation>Выберите нагрудный пульсометр или вариант со смарт-часами:</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1339"/>
+        <location filename="../Wizard.qml" line="1429"/>
         <source>Or select a smartwatch option:</source>
         <translation>Или выберите вариант со смарт-часами:</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1347"/>
+        <location filename="../Wizard.qml" line="1437"/>
         <source>Apple Watch</source>
         <translation>Apple Watch</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1357"/>
-        <location filename="../Wizard.qml" line="1374"/>
-        <location filename="../Wizard.qml" line="1391"/>
+        <location filename="../Wizard.qml" line="1450"/>
+        <location filename="../Wizard.qml" line="1470"/>
+        <location filename="../Wizard.qml" line="1490"/>
         <source>Download the QZ Companion App there</source>
         <translation>Установите на них приложение QZ Companion</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1364"/>
+        <location filename="../Wizard.qml" line="1457"/>
         <source>Wear OS watch</source>
         <translation>Часы на Wear OS</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="1381"/>
+        <location filename="../Wizard.qml" line="1477"/>
         <source>Garmin watch</source>
         <translation>Часы Garmin</translation>
     </message>
@@ -2559,17 +2559,22 @@ The following questions will customize QZ for your equipment and goals.</source>
         <translation>qDomyos-Zwift</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="414"/>
+        <location filename="../main.qml" line="416"/>
+        <source>Press back again to exit</source>
+        <translation>Нажмите «Назад» ещё раз, чтобы выйти</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="449"/>
         <source>Program has been loaded correctly. Press start to begin!</source>
         <translation>Программа успешно загружена. Нажмите «Старт», чтобы начать!</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="421"/>
+        <location filename="../main.qml" line="456"/>
         <source>Peloton Authentication Change</source>
         <translation>Смена способа входа в Peloton</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="422"/>
+        <location filename="../main.qml" line="457"/>
         <source>Peloton has moved to a new authentication system. Username and password are no longer required.
 
 Would you like to switch to the new authentication method now?</source>
@@ -2578,7 +2583,7 @@ Would you like to switch to the new authentication method now?</source>
 Перейти на новый способ входа сейчас?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="471"/>
+        <location filename="../main.qml" line="506"/>
         <source>QZ Classifica is a realtime viewer about the actual
 effort of every QZ users! If you want to join in,
 choose a nickname in the general settings
@@ -2593,109 +2598,109 @@ restart the app.</source>
 перезапустите приложение.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="495"/>
+        <location filename="../main.qml" line="530"/>
         <source>Select Your Gym Device</source>
         <translation>Выберите тренажёр</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="504"/>
+        <location filename="../main.qml" line="539"/>
         <source>QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.</source>
         <translation>QZ нашёл Bluetooth-тренажёры поблизости. Выберите тот, на котором будете заниматься сейчас.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="513"/>
+        <location filename="../main.qml" line="548"/>
         <source>Disabled</source>
         <translation>Отключено</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="514"/>
+        <location filename="../main.qml" line="549"/>
         <source>Select a device</source>
         <translation>Выберите устройство</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="530"/>
+        <location filename="../main.qml" line="565"/>
         <source>The list refreshes automatically every 10 seconds.</source>
         <translation>Список обновляется автоматически каждые 10 секунд.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="538"/>
+        <location filename="../main.qml" line="573"/>
         <source>Skip</source>
         <translation>Пропустить</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="588"/>
+        <location filename="../main.qml" line="623"/>
         <source>Browse the What&apos;s on Zwift workout library&lt;br&gt;and choose your workout. It will&lt;br&gt; be automatically loaded on QZ when you will&lt;br&gt;press the load button on the top!&lt;br&gt;&lt;br&gt;QZ is not affiliated with Zwift&lt;br&gt;or https://whatsonzwift.com/ website.</source>
         <translation>Откройте библиотеку тренировок What&apos;s on Zwift&lt;br&gt;и выберите тренировку. Она&lt;br&gt;автоматически загрузится в QZ, когда вы&lt;br&gt;нажмёте кнопку загрузки вверху!&lt;br&gt;&lt;br&gt;QZ не связан с Zwift&lt;br&gt;и сайтом https://whatsonzwift.com/.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="617"/>
+        <location filename="../main.qml" line="652"/>
         <source>Settings has been loaded correctly. Restart the app!</source>
         <translation>Настройки успешно загружены. Перезапустите приложение!</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="646"/>
+        <location filename="../main.qml" line="681"/>
         <source>Saved! Check your private folder (Android)&lt;br&gt;or Files App (iOS)</source>
         <translation>Сохранено! Проверьте личную папку (Android)&lt;br&gt;или приложение «Файлы» (iOS)</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="680"/>
+        <location filename="../main.qml" line="715"/>
         <source>Your Strava account is now connected!&lt;br&gt;&lt;br&gt;When you will save a FIT file it will&lt;br&gt;automatically uploaded to Strava!</source>
         <translation>Ваша учётная запись Strava подключена!&lt;br&gt;&lt;br&gt;Когда вы сохраните FIT-файл, он&lt;br&gt;автоматически загрузится в Strava!</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="714"/>
+        <location filename="../main.qml" line="749"/>
         <source>Your Peloton account is now connected!&lt;br&gt;&lt;br&gt;Restart the app to apply this change!</source>
         <translation>Ваша учётная запись Peloton подключена!&lt;br&gt;&lt;br&gt;Перезапустите приложение, чтобы применить изменение!</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="754"/>
+        <location filename="../main.qml" line="789"/>
         <source>Trial time expired!&lt;br&gt;&lt;br&gt;Please join the QZ Patreon Membership to unlock the full license!&lt;br&gt;https://www.patreon.com/bePatron?u=45290147&lt;br&gt;&lt;br&gt;Then add your patreon email in the email field in the general settings.&lt;br&gt;The App will now close.</source>
         <translation>Пробный период истёк!&lt;br&gt;&lt;br&gt;Оформите подписку QZ на Patreon, чтобы получить полную лицензию!&lt;br&gt;https://www.patreon.com/bePatron?u=45290147&lt;br&gt;&lt;br&gt;Затем укажите email от Patreon в поле электронной почты в общих настройках.&lt;br&gt;Сейчас приложение закроется.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="761"/>
+        <location filename="../main.qml" line="796"/>
         <source>Settings changed</source>
         <translation>Настройки изменены</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="762"/>
+        <location filename="../main.qml" line="797"/>
         <source>In order to apply the changes you need to restart the app.
 Do you want to do it now?</source>
         <translation>Чтобы применить изменения, нужно перезапустить приложение.
 Перезапустить сейчас?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="770"/>
-        <location filename="../main.qml" line="912"/>
+        <location filename="../main.qml" line="805"/>
+        <location filename="../main.qml" line="947"/>
         <source>Strava</source>
         <translation>Strava</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="771"/>
+        <location filename="../main.qml" line="806"/>
         <source>Do you want to upload the workout to Strava?</source>
         <translation>Загрузить тренировку в Strava?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="779"/>
+        <location filename="../main.qml" line="814"/>
         <source>Garmin Workout Planned</source>
         <translation>Запланирована тренировка Garmin</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="780"/>
+        <location filename="../main.qml" line="815"/>
         <source>Workout found:
 </source>
         <translation>Найдена тренировка:
 </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="781"/>
+        <location filename="../main.qml" line="816"/>
         <source>
 Date: </source>
         <translation>
 Дата: </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="782"/>
+        <location filename="../main.qml" line="817"/>
         <source>
 
 Do you want to start it now?</source>
@@ -2704,132 +2709,132 @@ Do you want to start it now?</source>
 Начать её сейчас?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="913"/>
+        <location filename="../main.qml" line="948"/>
         <source>You are already connected to Strava. Do you want to log out?</source>
         <translation>Вы уже подключены к Strava. Выйти из учётной записи?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="922"/>
+        <location filename="../main.qml" line="957"/>
         <source>Peloton</source>
         <translation>Peloton</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="923"/>
+        <location filename="../main.qml" line="958"/>
         <source>You are already connected to Peloton. Do you want to log out?</source>
         <translation>Вы уже подключены к Peloton. Выйти из учётной записи?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="932"/>
+        <location filename="../main.qml" line="967"/>
         <source>Intervals.icu</source>
         <translation>Intervals.icu</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="933"/>
+        <location filename="../main.qml" line="968"/>
         <source>You are already connected to Intervals.icu. Do you want to log out?</source>
         <translation>Вы уже подключены к Intervals.icu. Выйти из учётной записи?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="972"/>
+        <location filename="../main.qml" line="393"/>
         <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
         <translation>Не забудьте сохранить профиль «%1», если хотите оставить в нём эти изменения.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1012"/>
+        <location filename="../main.qml" line="1030"/>
         <source>Auto Resistance enabled</source>
         <translation>Авто-сопротивление включено</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1012"/>
+        <location filename="../main.qml" line="1030"/>
         <source>Auto Resistance disabled</source>
         <translation>Авто-сопротивление выключено</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1047"/>
+        <location filename="../main.qml" line="1065"/>
         <source>You can move the tiles!</source>
         <translation>Плитки можно перемещать!</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1047"/>
+        <location filename="../main.qml" line="1065"/>
         <source>The tiles are locked now</source>
         <translation>Плитки закреплены</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1088"/>
+        <location filename="../main.qml" line="1106"/>
         <source>Search settings</source>
         <translation>Поиск настроек</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1198"/>
+        <location filename="../main.qml" line="1216"/>
         <source>Profile: </source>
         <translation>Профиль: </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1210"/>
+        <location filename="../main.qml" line="1228"/>
         <source>Settings</source>
         <translation>Настройки</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1221"/>
+        <location filename="../main.qml" line="1239"/>
         <source>Workouts History</source>
         <translation>История тренировок</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1230"/>
+        <location filename="../main.qml" line="1248"/>
         <source>Swag Bag</source>
         <translation>Swag Bag</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1239"/>
+        <location filename="../main.qml" line="1257"/>
         <source>Charts</source>
         <translation>Графики</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1252"/>
+        <location filename="../main.qml" line="1270"/>
         <source>Open GPX</source>
         <translation>Открыть GPX</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1268"/>
+        <location filename="../main.qml" line="1286"/>
         <source>Open Train Program</source>
         <translation>Открыть программу тренировки</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1286"/>
+        <location filename="../main.qml" line="1304"/>
         <source>Workout Editor</source>
         <translation>Редактор тренировок</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1314"/>
+        <location filename="../main.qml" line="1332"/>
         <source>Save GPX</source>
         <translation>Сохранить GPX</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1324"/>
+        <location filename="../main.qml" line="1342"/>
         <source>Save FIT</source>
         <translation>Сохранить FIT</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1334"/>
+        <location filename="../main.qml" line="1352"/>
         <source>Wizard</source>
         <translation>Мастер настройки</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1343"/>
+        <location filename="../main.qml" line="1361"/>
         <source>Help</source>
         <translation>Справка</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1352"/>
+        <location filename="../main.qml" line="1370"/>
         <source>Community</source>
         <translation>Сообщество</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1360"/>
+        <location filename="../main.qml" line="1378"/>
         <source>Credits</source>
         <translation>Благодарности</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1368"/>
+        <location filename="../main.qml" line="1386"/>
         <source>Quit</source>
         <translation>Выход</translation>
     </message>
