@@ -685,7 +685,7 @@ void fitplusbike::characteristicChanged(const QLowEnergyCharacteristic &characte
                 settings.setValue(QZSettings::virtufit_etappe, true);
                 qDebug() << QStringLiteral("Virtufit Etappe data layout detected, setting enabled");
                 if (homeform::singleton())
-                    homeform::singleton()->setToastRequested(
+                    homeform::singleton()->requestRestartToApply(
                         QObject::tr("Virtufit Etappe bike layout detected, restart the app to apply the change!"));
             }
             return;

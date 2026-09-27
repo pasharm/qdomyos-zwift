@@ -874,7 +874,7 @@ void fitshowtreadmill::serviceScanDone(void) {
                         settings.setValue(QZSettings::fitplus_bike, true);
                         qDebug() << "FitShow bike detected (FTMS Indoor Bike Data), fitplus_bike enabled";
                         if (homeform::singleton())
-                            homeform::singleton()->setToastRequested(
+                            homeform::singleton()->requestRestartToApply(
                                 QObject::tr("FitShow bike found, restart the app to apply the change!"));
                     });
 #ifdef _MSC_VER
