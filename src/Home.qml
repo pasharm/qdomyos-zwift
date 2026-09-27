@@ -296,7 +296,27 @@ HomeForm {
         interactive: !window.lockTiles
         id: gridView
         objectName: "gridview"
-        onMovementEnded: { headerToolbar.visible = (contentY == 0) || window.lockTiles; }
+        // Tiles scroll under the Start/Stop row instead of being drawn over it
+        clip: true
+
+        // The app toolbar scrolls away while the tiles scroll down and comes back as soon as
+        // they scroll up (Material "hide on scroll"). It follows the finger, not the end of the
+        // movement, and main.qml animates its height, so the page does not jump.
+        property real lastContentY: 0
+        onContentYChanged: {
+            var dy = contentY - lastContentY
+            lastContentY = contentY
+            if (window.lockTiles || contentY <= 0) {
+                headerToolbar.scrolledAway = false
+            } else if (draggingVertically || flickingVertically) {
+                // Only the user's own scrolling counts: when the toolbar hides, the view grows
+                // and Flickable pulls contentY back at the bottom, which must not show it again
+                if (dy > 2)
+                    headerToolbar.scrolledAway = true
+                else if (dy < -2 && !atYEnd)
+                    headerToolbar.scrolledAway = false
+            }
+        }
         Screen.orientationUpdateMask:  Qt.LandscapeOrientation | Qt.PortraitOrientation
         Screen.onPrimaryOrientationChanged:{
             if(OS_VERSION === "Android")

@@ -1002,6 +1002,12 @@ ApplicationWindow {
         Material.primary: settings.theme_status_bar_background_color
         id: headerToolbar
         property bool settingsPageActive: stackView.currentItem && typeof stackView.currentItem.showSettingsSearch === "function"
+        // Set by the tile grid in Home.qml. The toolbar collapses to the status bar inset
+        // (topPadding) with an animation instead of disappearing at once
+        property bool scrolledAway: false
+        height: scrolledAway ? topPadding : implicitHeight
+        clip: height < implicitHeight   // keeps the Material shadow when fully shown
+        Behavior on height { NumberAnimation { duration: 150; easing.type: Easing.OutQuad } }
         topPadding: getTopPadding()
         leftPadding: getLeftPadding()
         rightPadding: getRightPadding()
@@ -1548,6 +1554,8 @@ ApplicationWindow {
             anchors.rightMargin: getRightPadding()
             anchors.leftMargin: getLeftPadding()
             focus: true
+            // Only the tile grid scrolls the toolbar away; any other page gets it back
+            onCurrentItemChanged: headerToolbar.scrolledAway = false
             Connections {
                 target: stackView.currentItem
                 ignoreUnknownSignals: true
