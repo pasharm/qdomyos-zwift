@@ -1736,7 +1736,7 @@ The following questions will customize QZ for your equipment and goals.</source>
     <message>
         <location filename="../Wizard.qml" line="318"/>
         <source>Other app</source>
-        <translation>Другое приложение</translation>
+        <translation>Другое</translation>
     </message>
     <message>
         <location filename="../Wizard.qml" line="318"/>
