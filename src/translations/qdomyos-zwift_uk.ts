@@ -317,7 +317,7 @@ Would you like to do that now?</source>
         <translation>Почати нове коло</translation>
     </message>
     <message>
-        <location filename="../HomeForm.ui.qml" line="206"/>
+        <location filename="../HomeForm.ui.qml" line="208"/>
         <source>This app should automatically connect to your bike/treadmill/rower. &lt;b&gt;If it doesn&apos;t, please check&lt;/b&gt;:&lt;br&gt;1) your Echelon/Domyos App MUST be closed while qdomyos-zwift is running;&lt;br&gt;2) both Bluetooth and Bluetooth permissions MUST be enabled&lt;br&gt;3) your bike/treadmill/rower should be turned on BEFORE starting this app&lt;br&gt;4) try to restart your device&lt;br&gt;&lt;br&gt;If your bike/treadmill disconnects every 30 seconds try to disable the &apos;virtual device&apos; setting on the left bar.&lt;br&gt;&lt;br&gt;In case of issues, please feel free to contact me at roberto.viola83@gmail.com.&lt;br&gt;&lt;br&gt;&lt;b&gt;Have a nice ride!&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZ specifically disclaims liability for&lt;br&gt;incidental or consequential damages and assumes&lt;br&gt;no responsibility or liability for any loss&lt;br&gt;or damage suffered by any person as a result of&lt;br&gt;the use or misuse of the app.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</source>
         <translation>Застосунок має сам під’єднатися до вашого велотренажера, бігової доріжки чи гребного тренажера. &lt;b&gt;Якщо цього не сталося, перевірте&lt;/b&gt;:&lt;br&gt;1) застосунок Echelon/Domyos ОБОВ’ЯЗКОВО має бути закритий, поки працює qdomyos-zwift;&lt;br&gt;2) Bluetooth і дозволи для Bluetooth ОБОВ’ЯЗКОВО мають бути ввімкнені&lt;br&gt;3) тренажер слід увімкнути ДО запуску цього застосунку&lt;br&gt;4) спробуйте перезавантажити свій пристрій&lt;br&gt;&lt;br&gt;Якщо велотренажер або доріжка від’єднується кожні 30 секунд, спробуйте вимкнути налаштування «Увімкнути віртуальний пристрій» на лівій панелі.&lt;br&gt;&lt;br&gt;Якщо виникнуть проблеми, сміливо пишіть мені на roberto.viola83@gmail.com.&lt;br&gt;&lt;br&gt;&lt;b&gt;Гарного тренування!&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZ прямо відмовляється від відповідальності за&lt;br&gt;випадкові чи непрямі збитки й не несе&lt;br&gt;жодної відповідальності за будь-які втрати&lt;br&gt;чи шкоду, завдані будь-кому внаслідок&lt;br&gt;використання або неправильного використання застосунку.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</translation>
     </message>
@@ -592,6 +592,29 @@ Would you like to do that now?</source>
     </message>
 </context>
 <context>
+    <name>QAndroidPlatformTheme</name>
+    <message>
+        <location filename="../main.cpp" line="919"/>
+        <source>Yes</source>
+        <translation>Так</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="920"/>
+        <source>Yes to All</source>
+        <translation>Так для всіх</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="921"/>
+        <source>No</source>
+        <translation>Ні</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="922"/>
+        <source>No to All</source>
+        <translation>Ні для всіх</translation>
+    </message>
+</context>
+<context>
     <name>QObject</name>
     <message>
         <location filename="../homeform.cpp" line="352"/>
@@ -630,6 +653,99 @@ Do you want to update QZ settings?</source>
 %1
 
 Оновити налаштування QZ?</translation>
+    </message>
+</context>
+<context>
+    <name>QPlatformTheme</name>
+    <message>
+        <location filename="../main.cpp" line="923"/>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="924"/>
+        <source>Save</source>
+        <translation>Зберегти</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="925"/>
+        <source>Save All</source>
+        <translation>Зберегти все</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="926"/>
+        <source>Open</source>
+        <translation>Відкрити</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="927"/>
+        <source>&amp;Yes</source>
+        <translation>&amp;Так</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="928"/>
+        <source>Yes to &amp;All</source>
+        <translation>Так для &amp;всіх</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="929"/>
+        <source>&amp;No</source>
+        <translation>&amp;Ні</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="930"/>
+        <source>N&amp;o to All</source>
+        <translation>Н&amp;і для всіх</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="931"/>
+        <source>Abort</source>
+        <translation>Перервати</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="932"/>
+        <source>Retry</source>
+        <translation>Повторити</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="933"/>
+        <source>Ignore</source>
+        <translation>Пропустити</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="934"/>
+        <source>Close</source>
+        <translation>Закрити</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="935"/>
+        <source>Cancel</source>
+        <translation>Скасувати</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="936"/>
+        <source>Discard</source>
+        <translation>Не зберігати</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="937"/>
+        <source>Help</source>
+        <translation>Довідка</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="938"/>
+        <source>Apply</source>
+        <translation>Застосувати</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="939"/>
+        <source>Reset</source>
+        <translation>Скинути</translation>
+    </message>
+    <message>
+        <location filename="../main.cpp" line="940"/>
+        <source>Restore Defaults</source>
+        <translation>Відновити типові значення</translation>
     </message>
 </context>
 <context>
@@ -1059,7 +1175,7 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="58"/>
-        <location filename="../webtranslation.cpp" line="166"/>
+        <location filename="../webtranslation.cpp" line="196"/>
         <source>Speed</source>
         <translation>Швидкість</translation>
     </message>
@@ -1075,13 +1191,13 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="61"/>
-        <location filename="../webtranslation.cpp" line="174"/>
+        <location filename="../webtranslation.cpp" line="204"/>
         <source>Resistance</source>
         <translation>Опір</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="62"/>
-        <location filename="../webtranslation.cpp" line="167"/>
+        <location filename="../webtranslation.cpp" line="197"/>
         <source>Cadence</source>
         <translation>Каденс</translation>
     </message>
@@ -1132,7 +1248,7 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="72"/>
-        <location filename="../webtranslation.cpp" line="146"/>
+        <location filename="../webtranslation.cpp" line="156"/>
         <source>Max Speed</source>
         <translation>Макс. швидкість</translation>
     </message>
@@ -1148,487 +1264,637 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="75"/>
+        <source>Ramp Unit</source>
+        <translation>Одиниця наростання</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="76"/>
+        <source>Ramp From</source>
+        <translation>Наростання від</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="77"/>
+        <source>Ramp To</source>
+        <translation>Наростання до</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="78"/>
         <source>Stroke Rate</source>
         <translation>Темп веслування</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="76"/>
+        <location filename="../webtranslation.cpp" line="79"/>
         <source>Strokes/min</source>
         <translation>Гребків/хв</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="77"/>
+        <location filename="../webtranslation.cpp" line="80"/>
         <source>Speed (mph)</source>
         <translation>Швидкість (mph)</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="78"/>
+        <location filename="../webtranslation.cpp" line="81"/>
         <source>Speed (km/h)</source>
         <translation>Швидкість (km/h)</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="79"/>
+        <location filename="../webtranslation.cpp" line="82"/>
         <source>Incline (%)</source>
         <translation>Нахил (%)</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="80"/>
+        <location filename="../webtranslation.cpp" line="83"/>
         <source>Cadence (rpm)</source>
         <translation>Каденс (rpm)</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="81"/>
+        <location filename="../webtranslation.cpp" line="84"/>
         <source>Power (W)</source>
         <translation>Потужність (W)</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="82"/>
+        <location filename="../webtranslation.cpp" line="85"/>
         <source>Ramp (%)</source>
         <translation>Наростання (%)</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="83"/>
+        <location filename="../webtranslation.cpp" line="86"/>
         <source>Offline mode: load/save/start disabled</source>
         <translation>Офлайн-режим: завантаження, збереження й запуск недоступні</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="84"/>
+        <location filename="../webtranslation.cpp" line="87"/>
         <source>Interval added</source>
         <translation>Інтервал додано</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="85"/>
+        <location filename="../webtranslation.cpp" line="88"/>
         <source>Remove all intervals?</source>
         <translation>Видалити всі інтервали?</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="86"/>
+        <location filename="../webtranslation.cpp" line="89"/>
         <source>Offline: cannot delete workouts</source>
         <translation>Офлайн: видалення тренувань недоступне</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="87"/>
+        <location filename="../webtranslation.cpp" line="90"/>
         <source>Offline: cannot load workouts</source>
         <translation>Офлайн: завантаження тренувань недоступне</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="88"/>
+        <location filename="../webtranslation.cpp" line="91"/>
         <source>Offline: cannot save workouts</source>
         <translation>Офлайн: збереження тренувань недоступне</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="89"/>
+        <location filename="../webtranslation.cpp" line="92"/>
         <source>Offline: cannot start workouts</source>
         <translation>Офлайн: запуск тренувань недоступний</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="90"/>
+        <location filename="../webtranslation.cpp" line="93"/>
         <source>Offline: cannot read clipboard</source>
         <translation>Офлайн: буфер обміну недоступний</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="91"/>
+        <location filename="../webtranslation.cpp" line="94"/>
         <source>Select a workout to load</source>
         <translation>Виберіть тренування для завантаження</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="92"/>
+        <location filename="../webtranslation.cpp" line="95"/>
         <source>Select a workout to delete</source>
         <translation>Виберіть тренування для видалення</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="93"/>
+        <location filename="../webtranslation.cpp" line="96"/>
         <source>Offline: cannot refresh list</source>
         <translation>Офлайн: оновлення списку недоступне</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="94"/>
+        <location filename="../webtranslation.cpp" line="97"/>
         <source>Environment not available</source>
         <translation>Середовище недоступне</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="95"/>
+        <location filename="../webtranslation.cpp" line="98"/>
         <source>Cannot load program list</source>
         <translation>Не вдається завантажити список програм</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="96"/>
+        <location filename="../webtranslation.cpp" line="99"/>
         <source>Cannot find workout file</source>
         <translation>Не вдається знайти файл тренування</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="97"/>
+        <location filename="../webtranslation.cpp" line="100"/>
         <source>New workout ready</source>
         <translation>Нове тренування готове</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="98"/>
+        <location filename="../webtranslation.cpp" line="101"/>
         <source>Workout is empty or cannot be read</source>
         <translation>Тренування порожнє або його не вдається прочитати</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="99"/>
+        <location filename="../webtranslation.cpp" line="102"/>
         <source>Unable to load workout</source>
         <translation>Не вдається завантажити тренування</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="100"/>
+        <location filename="../webtranslation.cpp" line="103"/>
         <source>Unable to paste XML from clipboard</source>
         <translation>Не вдається вставити XML із буфера обміну</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="101"/>
+        <location filename="../webtranslation.cpp" line="104"/>
         <source>Clipboard XML is empty or cannot be read</source>
         <translation>XML у буфері обміну порожній або його не вдається прочитати</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="102"/>
+        <location filename="../webtranslation.cpp" line="105"/>
         <source>Workout pasted from clipboard</source>
         <translation>Тренування вставлено з буфера обміну</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="103"/>
+        <location filename="../webtranslation.cpp" line="106"/>
         <source>Are you sure you want to delete &quot;{name}&quot;? This cannot be undone.</source>
         <translation>Видалити «{name}»? Цю дію не можна скасувати.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="104"/>
+        <location filename="../webtranslation.cpp" line="107"/>
         <source>Delete Workout</source>
         <translation>Видалити тренування</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="105"/>
+        <location filename="../webtranslation.cpp" line="108"/>
         <source>Failed to delete workout</source>
         <translation>Не вдалося видалити тренування</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="106"/>
+        <location filename="../webtranslation.cpp" line="109"/>
         <source>Unable to delete workout</source>
         <translation>Не вдається видалити тренування</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="107"/>
+        <location filename="../webtranslation.cpp" line="110"/>
         <source>Select interval</source>
         <translation>Виберіть інтервал</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="108"/>
+        <location filename="../webtranslation.cpp" line="111"/>
         <source>Interval {number}</source>
         <translation>Інтервал {number}</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="109"/>
+        <location filename="../webtranslation.cpp" line="112"/>
         <source>Cannot remove the only interval</source>
         <translation>Не можна видалити єдиний інтервал</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="110"/>
+        <location filename="../webtranslation.cpp" line="113"/>
         <source>Save failed</source>
         <translation>Не вдалося зберегти</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="111"/>
+        <location filename="../webtranslation.cpp" line="114"/>
         <source>Saved {name}</source>
         <translation>Збережено: {name}</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="112"/>
+        <location filename="../webtranslation.cpp" line="115"/>
         <source>Workout file not ready, please try again</source>
         <translation>Файл тренування не готовий, спробуйте ще раз</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="113"/>
+        <location filename="../webtranslation.cpp" line="116"/>
         <source>Unable to save workout</source>
         <translation>Не вдається зберегти тренування</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="114"/>
+        <location filename="../webtranslation.cpp" line="117"/>
         <source>Workout started</source>
         <translation>Тренування розпочато</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="115"/>
+        <location filename="../webtranslation.cpp" line="118"/>
         <source>Add at least one interval</source>
         <translation>Додайте хоча б один інтервал</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="116"/>
+        <location filename="../webtranslation.cpp" line="119"/>
         <source>Invalid duration in intervals</source>
         <translation>Некоректна тривалість в інтервалах</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="117"/>
+        <location filename="../webtranslation.cpp" line="120"/>
         <source>Enable duration or enter a valid distance</source>
         <translation>Увімкніть тривалість або введіть коректну дистанцію</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="118"/>
+        <location filename="../webtranslation.cpp" line="121"/>
         <source>Select one or more consecutive intervals first</source>
         <translation>Спершу виділіть один або кілька інтервалів, що йдуть поспіль</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="119"/>
+        <location filename="../webtranslation.cpp" line="122"/>
         <source>Selection must be consecutive</source>
         <translation>Виділені інтервали мають іти поспіль</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="120"/>
+        <location filename="../webtranslation.cpp" line="123"/>
         <source>Repeat block how many times (total cycles)?</source>
         <translation>Скільки разів повторити блок (усього циклів)?</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="121"/>
+        <location filename="../webtranslation.cpp" line="124"/>
         <source>Repeat cancelled</source>
         <translation>Повтор скасовано</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="122"/>
+        <location filename="../webtranslation.cpp" line="125"/>
         <source>Enter a number greater than 1</source>
         <translation>Введіть число, більше за 1</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="123"/>
+        <location filename="../webtranslation.cpp" line="126"/>
         <source>Error repeating selection: {message}</source>
         <translation>Помилка під час повтору виділеного: {message}</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="124"/>
+        <location filename="../webtranslation.cpp" line="127"/>
+        <source>Block repeated {times} times</source>
+        <translation>Повторень блоку: {times}</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="128"/>
+        <source>Loaded {name}</source>
+        <translation>Завантажено: {name}</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="129"/>
+        <source>Deleted {name}</source>
+        <translation>Видалено: {name}</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="130"/>
+        <source>Untitled Workout</source>
+        <translation>Тренування без назви</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="131"/>
+        <source>Time</source>
+        <translation>Час</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="132"/>
+        <source>Duration {value}</source>
+        <translation>Тривалість: {value}</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="133"/>
+        <source>{count} intervals</source>
+        <translation>Інтервалів: {count}</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="134"/>
         <source>Training Programs Browser</source>
         <translation>Огляд програм тренувань</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="125"/>
+        <location filename="../webtranslation.cpp" line="135"/>
         <source>Filter:</source>
         <translation>Фільтр:</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="126"/>
+        <location filename="../webtranslation.cpp" line="136"/>
         <source>Search...</source>
         <translation>Пошук...</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="127"/>
+        <location filename="../webtranslation.cpp" line="137"/>
         <source>Select a workout to preview</source>
         <translation>Виберіть тренування для перегляду</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="128"/>
+        <location filename="../webtranslation.cpp" line="138"/>
         <source>Other Folders</source>
         <translation>Інші папки</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="129"/>
+        <location filename="../webtranslation.cpp" line="139"/>
         <source>Start Workout?</source>
         <translation>Почати тренування?</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="130"/>
+        <location filename="../webtranslation.cpp" line="140"/>
         <source>Do you want to automatically start this workout?</source>
         <translation>Запустити це тренування автоматично?</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="131"/>
+        <location filename="../webtranslation.cpp" line="141"/>
         <source>Line Chart</source>
         <translation>Лінійний графік</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="132"/>
+        <location filename="../webtranslation.cpp" line="142"/>
         <source>Time (seconds)</source>
         <translation>Час (секунди)</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="133"/>
+        <location filename="../webtranslation.cpp" line="143"/>
         <source>Value</source>
         <translation>Значення</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="134"/>
+        <location filename="../webtranslation.cpp" line="144"/>
         <source>Cadence (RPM)</source>
         <translation>Каденс (RPM)</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="135"/>
+        <location filename="../webtranslation.cpp" line="145"/>
         <source>Inclination (%)</source>
         <translation>Нахил (%)</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="136"/>
+        <location filename="../webtranslation.cpp" line="146"/>
         <source>Avg Output</source>
         <translation>Сер. потужність</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="137"/>
+        <location filename="../webtranslation.cpp" line="147"/>
         <source>Max Output</source>
         <translation>Макс. потужність</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="138"/>
+        <location filename="../webtranslation.cpp" line="148"/>
         <source>Total Output</source>
         <translation>Сумарна потужність</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="139"/>
-        <location filename="../webtranslation.cpp" line="169"/>
+        <location filename="../webtranslation.cpp" line="149"/>
+        <location filename="../webtranslation.cpp" line="199"/>
         <source>Calories</source>
         <translation>Калорії</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="140"/>
+        <location filename="../webtranslation.cpp" line="150"/>
         <source>AVG Cadence</source>
         <translation>Сер. каденс</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="141"/>
+        <location filename="../webtranslation.cpp" line="151"/>
         <source>Max Cadence</source>
         <translation>Макс. каденс</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="142"/>
+        <location filename="../webtranslation.cpp" line="152"/>
         <source>AVG Resistance</source>
         <translation>Сер. опір</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="143"/>
+        <location filename="../webtranslation.cpp" line="153"/>
         <source>AVG Heart Rate</source>
         <translation>Сер. пульс</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="144"/>
+        <location filename="../webtranslation.cpp" line="154"/>
         <source>Max Heart Rate</source>
         <translation>Макс. пульс</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="145"/>
+        <location filename="../webtranslation.cpp" line="155"/>
         <source>AVG Speed</source>
         <translation>Сер. швидкість</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="147"/>
+        <location filename="../webtranslation.cpp" line="157"/>
         <source>Watts</source>
         <translation>Потужність</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="148"/>
+        <location filename="../webtranslation.cpp" line="158"/>
         <source>Req. Watts</source>
         <translation>Задана потужн.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="149"/>
+        <location filename="../webtranslation.cpp" line="159"/>
         <source>Target R.</source>
         <translation>Ціль оп.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="150"/>
+        <location filename="../webtranslation.cpp" line="160"/>
         <source>Target C.</source>
         <translation>Ціль кад.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="151"/>
+        <location filename="../webtranslation.cpp" line="161"/>
         <source>Target Speed (km/h)</source>
         <translation>Цільова швидкість (km/h)</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="152"/>
+        <location filename="../webtranslation.cpp" line="162"/>
         <source>Target Speed (mph)</source>
         <translation>Цільова швидкість (mph)</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="153"/>
+        <location filename="../webtranslation.cpp" line="163"/>
         <source>Target Incline</source>
         <translation>Цільовий нахил</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="154"/>
+        <location filename="../webtranslation.cpp" line="164"/>
+        <source>Heart Rate</source>
+        <translation>Пульс</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="165"/>
+        <source>Resistance vs Target Resistance</source>
+        <translation>Опір і цільовий опір</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="166"/>
+        <source>Peloton Resistance vs Target Peloton Resistance</source>
+        <translation>Опір Peloton і цільовий опір Peloton</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="167"/>
+        <source>Cadence vs Target Cadence</source>
+        <translation>Каденс і цільовий каденс</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="168"/>
+        <source>Power Distribution</source>
+        <translation>Розподіл потужності</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="169"/>
+        <source>Speed and Inclination</source>
+        <translation>Швидкість і нахил</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="170"/>
+        <source>Watt AVG: {value}</source>
+        <translation>Сер. потужність: {value}</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="171"/>
+        <source>Watt MAX: {value}</source>
+        <translation>Макс. потужність: {value}</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="172"/>
+        <source>Heart Rate AVG: {value}</source>
+        <translation>Сер. пульс: {value}</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="173"/>
+        <source>Heart Rate MAX: {value}</source>
+        <translation>Макс. пульс: {value}</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="174"/>
+        <source>zone {number}</source>
+        <translation>зона {number}</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="175"/>
+        <source>power z{number}</source>
+        <translation>потужн. Z{number}</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="176"/>
+        <source>heart z{number}</source>
+        <translation>пульс Z{number}</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="177"/>
+        <source>HR &gt;{value} bpm</source>
+        <translation>Пульс &gt;{value} bpm</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="178"/>
+        <source>HR &lt;{value} bpm</source>
+        <translation>Пульс &lt;{value} bpm</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="179"/>
+        <source>Marathon</source>
+        <translation>Марафон</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="180"/>
+        <source>Half Marathon</source>
+        <translation>Півмарафон</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="181"/>
+        <source>10K</source>
+        <translation>10K</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="182"/>
+        <source>5K</source>
+        <translation>5K</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="183"/>
+        <source>1 Mile</source>
+        <translation>1 миля</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="184"/>
         <source>Peloton Workout in progress!</source>
         <translation>Триває тренування Peloton!</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="155"/>
+        <location filename="../webtranslation.cpp" line="185"/>
         <source>Do you want to follow the resistance?</source>
         <translation>Дотримуватися заданого опору?</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="156"/>
+        <location filename="../webtranslation.cpp" line="186"/>
         <source>SPEED</source>
         <translation>ШВИДКІСТЬ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="157"/>
+        <location filename="../webtranslation.cpp" line="187"/>
         <source>INCLINE</source>
         <translation>НАХИЛ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="158"/>
+        <location filename="../webtranslation.cpp" line="188"/>
         <source>PACE</source>
         <translation>ТЕМП</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="159"/>
+        <location filename="../webtranslation.cpp" line="189"/>
         <source>ELEV.</source>
         <translation>ВИС.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="160"/>
+        <location filename="../webtranslation.cpp" line="190"/>
         <source>CADENCE</source>
         <translation>КАДЕНС</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="161"/>
+        <location filename="../webtranslation.cpp" line="191"/>
         <source>PULSE</source>
         <translation>ПУЛЬС</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="162"/>
+        <location filename="../webtranslation.cpp" line="192"/>
         <source>POWER</source>
         <translation>ПОТУЖНІСТЬ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="163"/>
+        <location filename="../webtranslation.cpp" line="193"/>
         <source>RESISTANCE</source>
         <translation>ОПІР</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="164"/>
+        <location filename="../webtranslation.cpp" line="194"/>
         <source>CALORIES</source>
         <translation>КАЛОРІЇ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="165"/>
+        <location filename="../webtranslation.cpp" line="195"/>
         <source>DISTANCE</source>
         <translation>ДИСТАНЦІЯ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="168"/>
+        <location filename="../webtranslation.cpp" line="198"/>
         <source>Heart</source>
         <translation>Пульс</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="170"/>
+        <location filename="../webtranslation.cpp" line="200"/>
         <source>Odometer</source>
         <translation>Пробіг</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="171"/>
+        <location filename="../webtranslation.cpp" line="201"/>
         <source>Watt</source>
         <translation>Потужність</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="172"/>
+        <location filename="../webtranslation.cpp" line="202"/>
         <source>Elapsed</source>
         <translation>Час</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="173"/>
+        <location filename="../webtranslation.cpp" line="203"/>
         <source>Inclination</source>
         <translation>Нахил</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="175"/>
+        <location filename="../webtranslation.cpp" line="205"/>
         <source>Altitude</source>
         <translation>Висота</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="176"/>
+        <location filename="../webtranslation.cpp" line="206"/>
         <source>Elevation</source>
         <translation>Набір висоти</translation>
     </message>
@@ -3107,22 +3373,22 @@ This may take a few moments on first startup.</source>
         <translation>qDomyos-Zwift</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="423"/>
+        <location filename="../main.qml" line="422"/>
         <source>Press back again to exit</source>
         <translation>Натисніть «Назад» ще раз, щоб вийти</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="456"/>
+        <location filename="../main.qml" line="455"/>
         <source>Program has been loaded correctly. Press start to begin!</source>
         <translation>Програму успішно завантажено. Натисніть «Старт», щоб почати!</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="463"/>
+        <location filename="../main.qml" line="462"/>
         <source>Peloton Authentication Change</source>
         <translation>Зміна способу входу в Peloton</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="464"/>
+        <location filename="../main.qml" line="463"/>
         <source>Peloton has moved to a new authentication system. Username and password are no longer required.
 
 Would you like to switch to the new authentication method now?</source>
@@ -3131,7 +3397,7 @@ Would you like to switch to the new authentication method now?</source>
 Перейти на новий спосіб входу зараз?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="513"/>
+        <location filename="../main.qml" line="512"/>
         <source>QZ Classifica is a realtime viewer about the actual
 effort of every QZ users! If you want to join in,
 choose a nickname in the general settings
@@ -3146,109 +3412,109 @@ restart the app.</source>
 перезапустіть застосунок.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="537"/>
+        <location filename="../main.qml" line="536"/>
         <source>Select Your Gym Device</source>
         <translation>Виберіть тренажер</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="546"/>
+        <location filename="../main.qml" line="545"/>
         <source>QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.</source>
         <translation>QZ знайшов Bluetooth-тренажери поблизу. Виберіть той, на якому займатиметеся зараз.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="555"/>
+        <location filename="../main.qml" line="554"/>
         <source>Disabled</source>
         <translation>Вимкнено</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="556"/>
+        <location filename="../main.qml" line="555"/>
         <source>Select a device</source>
         <translation>Виберіть пристрій</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="572"/>
+        <location filename="../main.qml" line="571"/>
         <source>The list refreshes automatically every 10 seconds.</source>
         <translation>Список оновлюється автоматично кожні 10 секунд.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="580"/>
+        <location filename="../main.qml" line="579"/>
         <source>Skip</source>
         <translation>Пропустити</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="630"/>
+        <location filename="../main.qml" line="629"/>
         <source>Browse the What&apos;s on Zwift workout library&lt;br&gt;and choose your workout. It will&lt;br&gt; be automatically loaded on QZ when you will&lt;br&gt;press the load button on the top!&lt;br&gt;&lt;br&gt;QZ is not affiliated with Zwift&lt;br&gt;or https://whatsonzwift.com/ website.</source>
         <translation>Відкрийте бібліотеку тренувань What&apos;s on Zwift&lt;br&gt;і виберіть тренування. Воно&lt;br&gt;автоматично завантажиться в QZ, коли ви&lt;br&gt;натиснете кнопку завантаження вгорі!&lt;br&gt;&lt;br&gt;QZ не пов’язаний із Zwift&lt;br&gt;і сайтом https://whatsonzwift.com/.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="659"/>
+        <location filename="../main.qml" line="658"/>
         <source>Settings has been loaded correctly. Restart the app!</source>
         <translation>Налаштування успішно завантажено. Перезапустіть застосунок!</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="688"/>
+        <location filename="../main.qml" line="687"/>
         <source>Saved! Check your private folder (Android)&lt;br&gt;or Files App (iOS)</source>
         <translation>Збережено! Перевірте особисту папку (Android)&lt;br&gt;або застосунок «Файли» (iOS)</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="722"/>
+        <location filename="../main.qml" line="721"/>
         <source>Your Strava account is now connected!&lt;br&gt;&lt;br&gt;When you will save a FIT file it will&lt;br&gt;automatically uploaded to Strava!</source>
         <translation>Ваш обліковий запис Strava під’єднано!&lt;br&gt;&lt;br&gt;Коли ви збережете FIT-файл, він&lt;br&gt;автоматично вивантажиться в Strava!</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="756"/>
+        <location filename="../main.qml" line="755"/>
         <source>Your Peloton account is now connected!&lt;br&gt;&lt;br&gt;Restart the app to apply this change!</source>
         <translation>Ваш обліковий запис Peloton під’єднано!&lt;br&gt;&lt;br&gt;Перезапустіть застосунок, щоб застосувати зміну!</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="796"/>
+        <location filename="../main.qml" line="795"/>
         <source>Trial time expired!&lt;br&gt;&lt;br&gt;Please join the QZ Patreon Membership to unlock the full license!&lt;br&gt;https://www.patreon.com/bePatron?u=45290147&lt;br&gt;&lt;br&gt;Then add your patreon email in the email field in the general settings.&lt;br&gt;The App will now close.</source>
         <translation>Пробний період закінчився!&lt;br&gt;&lt;br&gt;Оформте підписку QZ на Patreon, щоб отримати повну ліцензію!&lt;br&gt;https://www.patreon.com/bePatron?u=45290147&lt;br&gt;&lt;br&gt;Потім укажіть email від Patreon у полі електронної пошти в загальних налаштуваннях.&lt;br&gt;Зараз застосунок закриється.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="803"/>
+        <location filename="../main.qml" line="802"/>
         <source>Settings changed</source>
         <translation>Налаштування змінено</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="804"/>
+        <location filename="../main.qml" line="803"/>
         <source>In order to apply the changes you need to restart the app.
 Do you want to do it now?</source>
         <translation>Щоб застосувати зміни, потрібно перезапустити застосунок.
 Перезапустити зараз?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="812"/>
-        <location filename="../main.qml" line="953"/>
+        <location filename="../main.qml" line="811"/>
+        <location filename="../main.qml" line="952"/>
         <source>Strava</source>
         <translation>Strava</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="813"/>
+        <location filename="../main.qml" line="812"/>
         <source>Do you want to upload the workout to Strava?</source>
         <translation>Вивантажити тренування в Strava?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="821"/>
+        <location filename="../main.qml" line="820"/>
         <source>Garmin Workout Planned</source>
         <translation>Заплановано тренування Garmin</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="822"/>
+        <location filename="../main.qml" line="821"/>
         <source>Workout found:
 </source>
         <translation>Знайдено тренування:
 </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="823"/>
+        <location filename="../main.qml" line="822"/>
         <source>
 Date: </source>
         <translation>
 Дата: </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="824"/>
+        <location filename="../main.qml" line="823"/>
         <source>
 
 Do you want to start it now?</source>
@@ -3257,18 +3523,18 @@ Do you want to start it now?</source>
 Почати його зараз?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="832"/>
+        <location filename="../main.qml" line="831"/>
         <source>Garmin FTP Update</source>
         <translation>Оновлення FTP із Garmin</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="841"/>
-        <location filename="../main.qml" line="865"/>
+        <location filename="../main.qml" line="840"/>
+        <location filename="../main.qml" line="864"/>
         <source>Clipboard Workout</source>
         <translation>Тренування з буфера обміну</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="842"/>
+        <location filename="../main.qml" line="841"/>
         <source>Workout found in clipboard:
 %1
 
@@ -3279,7 +3545,7 @@ Do you want to open the workout preview?</source>
 Відкрити попередній перегляд?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="866"/>
+        <location filename="../main.qml" line="865"/>
         <source>The clipboard workout has ended.
 
 Do you want to delete the file?</source>
@@ -3288,12 +3554,12 @@ Do you want to delete the file?</source>
 Видалити файл?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="874"/>
+        <location filename="../main.qml" line="873"/>
         <source>Echelon Unlock</source>
         <translation>Розблокування Echelon</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="875"/>
+        <location filename="../main.qml" line="874"/>
         <source>The bike has been unlocked and cadence is flowing.
 
 Do you want to switch to the classic Bluetooth bridge for this session?</source>
@@ -3302,12 +3568,12 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
 Перейти до кінця сеансу на класичний віртуальний Bluetooth-пристрій?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="908"/>
+        <location filename="../main.qml" line="907"/>
         <source>Echelon Locked Bike</source>
         <translation>Велотренажер заблоковано Echelon</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="925"/>
+        <location filename="../main.qml" line="924"/>
         <source>Your bike is locked by Echelon, but QZ can unlock it.
 
 </source>
@@ -3316,7 +3582,7 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
 </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="926"/>
+        <location filename="../main.qml" line="925"/>
         <source>Enable Virtual Echelon in the experimental settings and restart qz, then open the official Echelon app on a separate device and connect to the bike once.
 
 </source>
@@ -3325,7 +3591,7 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
 </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="927"/>
+        <location filename="../main.qml" line="926"/>
         <source>After initialization, return to QZ and everything will work normally.
 
 </source>
@@ -3334,152 +3600,152 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
 </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="928"/>
+        <location filename="../main.qml" line="927"/>
         <source>You have to repeat this for each session, would you like to enable the Virtual Echelon setting now for this?</source>
         <translation>Це потрібно повторювати в кожному сеансі. Увімкнути налаштування «Віртуальний Echelon» зараз?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="939"/>
+        <location filename="../main.qml" line="938"/>
         <source>Yes</source>
         <translation>Так</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="944"/>
+        <location filename="../main.qml" line="943"/>
         <source>No</source>
         <translation>Ні</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="954"/>
+        <location filename="../main.qml" line="953"/>
         <source>You are already connected to Strava. Do you want to log out?</source>
         <translation>Ви вже під’єднані до Strava. Вийти з облікового запису?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="963"/>
+        <location filename="../main.qml" line="962"/>
         <source>Peloton</source>
         <translation>Peloton</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="964"/>
+        <location filename="../main.qml" line="963"/>
         <source>You are already connected to Peloton. Do you want to log out?</source>
         <translation>Ви вже під’єднані до Peloton. Вийти з облікового запису?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="973"/>
+        <location filename="../main.qml" line="972"/>
         <source>Intervals.icu</source>
         <translation>Intervals.icu</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="974"/>
+        <location filename="../main.qml" line="973"/>
         <source>You are already connected to Intervals.icu. Do you want to log out?</source>
         <translation>Ви вже під’єднані до Intervals.icu. Вийти з облікового запису?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1502"/>
+        <location filename="../main.qml" line="1501"/>
         <source>Please choose a file</source>
         <translation>Виберіть файл</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="400"/>
+        <location filename="../main.qml" line="399"/>
         <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
         <translation>Не забудьте зберегти профіль «%1», якщо хочете залишити в ньому ці зміни.</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1036"/>
+        <location filename="../main.qml" line="1035"/>
         <source>Auto Resistance enabled</source>
         <translation>Автоопір увімкнено</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1036"/>
+        <location filename="../main.qml" line="1035"/>
         <source>Auto Resistance disabled</source>
         <translation>Автоопір вимкнено</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1071"/>
+        <location filename="../main.qml" line="1070"/>
         <source>You can move the tiles!</source>
         <translation>Плитки можна переміщувати!</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1071"/>
+        <location filename="../main.qml" line="1070"/>
         <source>The tiles are locked now</source>
         <translation>Плитки закріплено</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1112"/>
+        <location filename="../main.qml" line="1111"/>
         <source>Search settings</source>
         <translation>Пошук налаштувань</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1222"/>
+        <location filename="../main.qml" line="1221"/>
         <source>Profile: </source>
         <translation>Профіль: </translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1234"/>
+        <location filename="../main.qml" line="1233"/>
         <source>Settings</source>
         <translation>Налаштування</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1245"/>
+        <location filename="../main.qml" line="1244"/>
         <source>Workouts History</source>
         <translation>Історія тренувань</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1254"/>
+        <location filename="../main.qml" line="1253"/>
         <source>Swag Bag</source>
         <translation>Swag Bag</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1263"/>
+        <location filename="../main.qml" line="1262"/>
         <source>Charts</source>
         <translation>Графіки</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1276"/>
+        <location filename="../main.qml" line="1275"/>
         <source>Open GPX</source>
         <translation>Відкрити GPX</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1292"/>
+        <location filename="../main.qml" line="1291"/>
         <source>Open Train Program</source>
         <translation>Відкрити програму тренування</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1310"/>
+        <location filename="../main.qml" line="1309"/>
         <source>Workout Editor</source>
         <translation>Редактор тренувань</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1338"/>
+        <location filename="../main.qml" line="1337"/>
         <source>Save GPX</source>
         <translation>Зберегти GPX</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1348"/>
+        <location filename="../main.qml" line="1347"/>
         <source>Save FIT</source>
         <translation>Зберегти FIT</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1358"/>
+        <location filename="../main.qml" line="1357"/>
         <source>Wizard</source>
         <translation>Майстер налаштування</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1367"/>
+        <location filename="../main.qml" line="1366"/>
         <source>Help</source>
         <translation>Довідка</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1376"/>
+        <location filename="../main.qml" line="1375"/>
         <source>Community</source>
         <translation>Спільнота</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1384"/>
+        <location filename="../main.qml" line="1383"/>
         <source>Credits</source>
         <translation>Подяки</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="1392"/>
+        <location filename="../main.qml" line="1391"/>
         <source>Quit</source>
         <translation>Вийти</translation>
     </message>
