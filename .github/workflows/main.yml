@@ -415,6 +415,7 @@ jobs:
 
             # Turn on location services, otherwise the "Permissions Required" dialog covers the app
             adb shell settings put secure location_mode 3 || true
+            adb shell settings put secure location_providers_allowed +gps,+network || true
             adb shell cmd location set-location-enabled true || true
 
             # Start the main activity
