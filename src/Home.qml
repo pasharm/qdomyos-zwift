@@ -359,6 +359,10 @@ HomeForm {
         focus: true
         model: appModel
         anchors.topMargin: (!window.lockTiles ? rootItem.topBarHeight + 30 : 0)
+        // While the tiles are being moved the gap above the first row is part of the content,
+        // so it scrolls away with the tiles instead of staying as an empty band
+        topMargin: window.lockTiles ? 30 : 0
+        onTopMarginChanged: if (contentY <= 0) contentY = -topMargin
         interactive: !window.lockTiles
         id: gridView
         objectName: "gridview"
@@ -784,7 +788,7 @@ HomeForm {
                 )
             } else if (loc.mouseY < edgeZone) {
                 var factor2 = (edgeZone - loc.mouseY) / edgeZone
-                gridView.contentY = Math.max(0, gridView.contentY - scrollSpeed * (1 + factor2 * 2))
+                gridView.contentY = Math.max(-gridView.topMargin, gridView.contentY - scrollSpeed * (1 + factor2 * 2))
             } else {
                 running = false
             }
@@ -851,7 +855,7 @@ HomeForm {
                 // No drag in progress: scroll the grid like a normal flick
                 var dy = mouseY - lastScrollY
                 if (Math.abs(dy) > 5) isSwiping = true
-                gridView.contentY = Math.max(0,
+                gridView.contentY = Math.max(-gridView.topMargin,
                     Math.min(gridView.contentHeight - gridView.height,
                              gridView.contentY - dy))
                 lastScrollY = mouseY
