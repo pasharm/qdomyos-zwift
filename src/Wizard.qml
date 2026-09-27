@@ -58,9 +58,6 @@ Page {
         color: settings.theme_background_color
     }
 
-    leftPadding: window.contentSideMargin
-    rightPadding: window.contentSideMargin
-
     StackView {
         id: stackViewLocal
         anchors.fill: parent
@@ -94,6 +91,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -160,6 +159,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -219,6 +220,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -280,6 +283,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -360,6 +365,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -432,6 +439,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -517,6 +526,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -589,6 +600,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -647,6 +660,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -716,6 +731,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -823,6 +840,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -927,6 +946,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -988,6 +1009,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -1045,6 +1068,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -1101,6 +1126,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -1176,6 +1203,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -1245,6 +1274,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -1371,6 +1402,8 @@ Page {
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
+                leftPadding: window.contentSideMargin
+                rightPadding: window.contentSideMargin
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
