@@ -1237,12 +1237,12 @@ Do you want to update QZ settings?</source>
     <message>
         <location filename="../trainprogram.cpp" line="1408"/>
         <source>Ride until heart rate is above %1 bpm</source>
-        <translation>Крутіть, доки пульс не стане вищим за %1 bpm</translation>
+        <translation>Продовжуйте, доки пульс не стане вищим за %1 bpm</translation>
     </message>
     <message>
         <location filename="../trainprogram.cpp" line="1410"/>
         <source>Ride until heart rate is below %1 bpm</source>
-        <translation>Крутіть, доки пульс не стане нижчим за %1 bpm</translation>
+        <translation>Продовжуйте, доки пульс не стане нижчим за %1 bpm</translation>
     </message>
     <message>
         <location filename="../trainprogram.cpp" line="1459"/>
@@ -2491,7 +2491,7 @@ Do you want to update QZ settings?</source>
     <message>
         <location filename="../webtranslation.cpp" line="199"/>
         <source>CLEAR</source>
-        <translation>СКИД</translation>
+        <translation>КОЛО</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="200"/>
