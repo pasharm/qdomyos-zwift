@@ -58,6 +58,9 @@ Page {
         color: settings.theme_background_color
     }
 
+    leftPadding: window.contentSideMargin()
+    rightPadding: window.contentSideMargin()
+
     StackView {
         id: stackViewLocal
         anchors.fill: parent

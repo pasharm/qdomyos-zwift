@@ -64,6 +64,13 @@ ApplicationWindow {
                AndroidStatusBar.rightInset : 0;
     }
 
+    // Side margin for text pages, per the Material 3 window margins: 16 on compact
+    // windows (under 600 wide, i.e. phones in portrait), 24 on wider ones. Keeps text
+    // clear of rounded screen corners and of the edges covered by protective glass.
+    function contentSideMargin() {
+        return window.width < 600 ? 16 : 24
+    }
+
     function isConfiguringShortcuts() {
         // Check if a TextField in the shortcuts settings has active focus
         // This prevents global shortcuts from intercepting key presses when configuring them
