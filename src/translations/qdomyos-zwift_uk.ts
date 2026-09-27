@@ -3623,7 +3623,7 @@ This may take a few moments on first startup.</source>
     <message>
         <location filename="../homeform.cpp" line="560"/>
         <source>T.Pace(m/%1)</source>
-        <translation>Ц.темп(хв/%1)</translation>
+        <translation>Ц.темп (хв/%1)</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="563"/>
@@ -3638,7 +3638,7 @@ This may take a few moments on first startup.</source>
     <message>
         <location filename="../homeform.cpp" line="570"/>
         <source>Peloton R(%)</source>
-        <translation>Опір Peloton(%)</translation>
+        <translation>Опір Peloton (%)</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="573"/>
@@ -3648,17 +3648,17 @@ This may take a few moments on first startup.</source>
     <message>
         <location filename="../homeform.cpp" line="576"/>
         <source>T.Peloton R(%)</source>
-        <translation>Ц.опір Peloton(%)</translation>
+        <translation>Ц.опір Peloton (%)</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="578"/>
         <source>T.Cadence(rpm)</source>
-        <translation>Ц.каденс(об/хв)</translation>
+        <translation>Ц.каденс (об/хв)</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="580"/>
         <source>T.Power(W)</source>
-        <translation>Ц.потужн.(Вт)</translation>
+        <translation>Ц.потужн. (Вт)</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="582"/>
@@ -3678,7 +3678,7 @@ This may take a few moments on first startup.</source>
     <message>
         <location filename="../homeform.cpp" line="593"/>
         <source>Weight Loss(%1)</source>
-        <translation>Втрата ваги(%1)</translation>
+        <translation>Втрата ваги (%1)</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="598"/>
@@ -3880,17 +3880,17 @@ This may take a few moments on first startup.</source>
     <message>
         <location filename="../homeform.cpp" line="669"/>
         <source>Stride L.(%1)</source>
-        <translation>Дов.кроку(%1)</translation>
+        <translation>Дов.кроку (%1)</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="671"/>
         <source>Ground C.(ms)</source>
-        <translation>Контакт(мс)</translation>
+        <translation>Контакт (мс)</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="674"/>
         <source>Vert.Osc.(mm)</source>
-        <translation>Верт.кол.(мм)</translation>
+        <translation>Верт.кол. (мм)</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="678"/>
@@ -3915,7 +3915,7 @@ This may take a few moments on first startup.</source>
     <message>
         <location filename="../homeform.cpp" line="3680"/>
         <source>T.Pace(m/500m)</source>
-        <translation>Ц.темп(хв/500 м)</translation>
+        <translation>Ц.темп (хв/500 м)</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="6041"/>
