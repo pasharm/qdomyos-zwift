@@ -608,6 +608,29 @@ Would you like to do that now?</source>
         <source>Failed to send workout email</source>
         <translation>Не удалось отправить тренировку по почте</translation>
     </message>
+    <message>
+        <location filename="../homeform.cpp" line="10234"/>
+        <source>Cycling FTP: %1 -&gt; %2 W</source>
+        <translation>FTP (велосипед): %1 -&gt; %2 W</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10246"/>
+        <source>Running FTP: %1 -&gt; %2 W</source>
+        <translation>FTP (бег): %1 -&gt; %2 W</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10254"/>
+        <source>Garmin Connect has newer FTP values:
+
+%1
+
+Do you want to update QZ settings?</source>
+        <translation>В Garmin Connect есть более новые значения FTP:
+
+%1
+
+Обновить настройки QZ?</translation>
+    </message>
 </context>
 <context>
     <name>SettingsList</name>
@@ -638,6 +661,11 @@ Would you like to do that now?</source>
         <location filename="../SwagBagView.qml" line="92"/>
         <source>&lt;html&gt;&lt;style type=&apos;text/css&apos;&gt;&lt;/style&gt;Swag bag feature:&lt;br&gt;• an auto-renewable subscription&lt;br&gt;• 1 month ($1.99)&lt;br&gt;• Your subscription will be charged to your iTunes account at confirmation of purchase and will automatically renew (at the duration selected) unless auto-renew is turned off at least 24 hours before the end of the current period.&lt;br&gt;• Current subscription may not be cancelled during the active subscription period; however, you can manage your subscription and/or turn off auto-renewal by visiting your iTunes Account Settings after purchase.&lt;br&gt;• Privacy policy: &lt;a href=&apos;https://robertoviola.cloud/privacy-policy-qdomyos-zwift/&apos;&gt;https://robertoviola.cloud/privacy-policy-qdomyos-zwift/&lt;/a&gt;&lt;br&gt;• Licensed Application end user license agreement: &lt;a href=&apos;https://www.apple.com/legal/internet-services/itunes/dev/stdeula/&apos;&gt;https://www.apple.com/legal/internet-services/itunes/dev/stdeula/&lt;/a&gt;&lt;br&gt;&lt;/html&gt;</source>
         <translation>&lt;html&gt;&lt;style type=&apos;text/css&apos;&gt;&lt;/style&gt;Функция Swag Bag:&lt;br&gt;• автоматически продлеваемая подписка&lt;br&gt;• 1 месяц ($1.99)&lt;br&gt;• Оплата списывается с вашей учётной записи iTunes при подтверждении покупки, и подписка автоматически продлевается (на выбранный срок), если автопродление не отключено как минимум за 24 часа до конца текущего периода.&lt;br&gt;• Текущую подписку нельзя отменить в течение активного периода, но после покупки вы можете управлять подпиской и/или отключить автопродление в настройках учётной записи iTunes.&lt;br&gt;• Политика конфиденциальности: &lt;a href=&apos;https://robertoviola.cloud/privacy-policy-qdomyos-zwift/&apos;&gt;https://robertoviola.cloud/privacy-policy-qdomyos-zwift/&lt;/a&gt;&lt;br&gt;• Лицензионное соглашение с конечным пользователем: &lt;a href=&apos;https://www.apple.com/legal/internet-services/itunes/dev/stdeula/&apos;&gt;https://www.apple.com/legal/internet-services/itunes/dev/stdeula/&lt;/a&gt;&lt;br&gt;&lt;/html&gt;</translation>
+    </message>
+    <message>
+        <location filename="../SwagBagView.qml" line="101"/>
+        <source>Restore Purchases</source>
+        <translation>Восстановить покупки</translation>
     </message>
     <message>
         <location filename="../SwagBagView.qml" line="104"/>
@@ -3271,7 +3299,7 @@ Do you want to delete the file?</source>
 Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>Велотренажёр разблокирован, каденс поступает.
 
-Переключиться на этот сеанс на классическое виртуальное Bluetooth-устройство?</translation>
+Переключиться до конца сеанса на классическое виртуальное Bluetooth-устройство?</translation>
     </message>
     <message>
         <location filename="../main.qml" line="908"/>
