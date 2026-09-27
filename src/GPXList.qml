@@ -59,13 +59,12 @@ ColumnLayout {
 
     RowLayout{
         spacing: 2
-        anchors.top: parent.top
-        anchors.fill: parent
+        Layout.fillWidth: true
+        Layout.fillHeight: true
 
         ColumnLayout {
             spacing: 0
-            anchors.top: parent.top
-            anchors.fill: parent
+            Layout.fillHeight: true
 
             Row
             {
@@ -103,9 +102,8 @@ ColumnLayout {
                 Layout.fillWidth: true
                 Layout.minimumWidth: 50
                 Layout.preferredWidth: 100
-                Layout.maximumWidth: row.left
                 Layout.minimumHeight: 150
-                Layout.preferredHeight: parent.height
+                Layout.fillHeight: true
                 ScrollBar.vertical: ScrollBar {}
                 id: list
                 FolderListModel {
@@ -201,12 +199,9 @@ ColumnLayout {
         }
 
         ScrollView {
-            anchors.top: parent.top
             ScrollBar.vertical.policy: ScrollBar.AlwaysOn
-            //contentHeight: map.height
-            Layout.preferredHeight: parent.height
-            Layout.fillWidth: true
             Layout.fillHeight: true
+            Layout.fillWidth: true
             Layout.minimumWidth: 100
             Layout.preferredWidth: 200
 
@@ -282,10 +277,9 @@ ColumnLayout {
 
     Button {
         id: searchButton
-        height: 50
-        width: parent.width
+        Layout.fillWidth: true
+        Layout.preferredHeight: 50
         text: qsTr("Other folders")
-        Layout.alignment: Qt.AlignCenter | Qt.AlignVCenter
         onClicked: {
             console.log("folder is " + rootItem.getWritableAppDir() + 'gpx')
             if (Qt.platform.os === "android") {
@@ -293,9 +287,6 @@ ColumnLayout {
             } else {
                 fileDialogLoader.active = true
             }
-        }
-        anchors {
-            bottom: parent.bottom
         }
     }
 }
