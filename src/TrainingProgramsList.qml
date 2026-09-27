@@ -103,6 +103,7 @@ ColumnLayout {
             Row
             {
                 spacing: 5
+                leftPadding: window.contentSideMargin
                 Text
                 {
                     text:qsTr("Filter")
@@ -159,6 +160,7 @@ ColumnLayout {
                         z: 1
                         Item {
                             id: root
+                            x: window.contentSideMargin
                             property alias text: fileTextBox.text
                             property int spacing: 30
                             width: fileTextBox.width + spacing
@@ -250,6 +252,8 @@ ColumnLayout {
 
         ScrollView {
             ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+            // Padding, not a margin: the content moves in, the scroll bar stays at the edge
+            rightPadding: window.contentSideMargin
             contentHeight: date.height + description.height + powerChart.height
             Layout.fillHeight: true
             Layout.fillWidth: true

@@ -65,11 +65,11 @@ ApplicationWindow {
                (settings.android_landscape_cutout_margin ? AndroidStatusBar.rightInset : AndroidStatusBar.systemBarRightInset) : 0;
     }
 
-    // Side margin for text, per the Material 3 window margins: 16 on compact windows
-    // (under 600 wide, i.e. phones in portrait), 24 on wider ones. Keeps text clear of
+    // Side margin for text, after the Material 3 window margins (16 on compact windows
+    // under 600 wide, 24 on wider ones) but tighter: 12 and 16. Keeps text clear of
     // rounded screen corners and of the edges covered by protective glass.
     // A property rather than a function, so .ui.qml forms can bind to it.
-    readonly property int contentSideMargin: width < 600 ? 16 : 24
+    readonly property int contentSideMargin: width < 600 ? 12 : 16
 
     function isConfiguringShortcuts() {
         // Check if a TextField in the shortcuts settings has active focus
