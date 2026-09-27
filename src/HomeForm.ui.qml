@@ -16,6 +16,8 @@ Page {
     property alias stop: stop
     property alias lap: lap
     property alias row: row
+    // Set by Home.qml while the tiles are scrolled into the gap under the Start/Stop row
+    property bool deviceLineHidden: false
 
     Settings {
 	     id: settings
@@ -89,6 +91,8 @@ Page {
                         source: rootItem.signal
                         smooth: true
                         Accessible.ignored: true
+                        // It hangs below the row, into the gap above the tiles
+                        visible: !page.deviceLineHidden
                     }
                 }
             }
@@ -195,8 +199,7 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 text: rootItem.info
-                // Hidden with the app toolbar while the tiles are scrolled down (Home.qml)
-                visible: !headerToolbar.scrolledAway
+                visible: !page.deviceLineHidden
             }
         }
 

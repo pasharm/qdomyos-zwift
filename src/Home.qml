@@ -9,6 +9,7 @@ import QtMultimedia 5.15
 
 HomeForm {
     objectName: "home"
+    deviceLineHidden: gridView.contentY > -gridView.topMargin + 1
     background: Rectangle {
         anchors.fill: parent
         width: parent.fill
@@ -292,13 +293,13 @@ HomeForm {
         focus: true
         model: appModel
         leftMargin: { if(OS_VERSION === "Android") (Screen.width % cellWidth) / 2; else (parent.width % cellWidth) / 2; }
-        // The gap under the Start/Stop row shrinks while the toolbar is scrolled away: the device
-        // name line at the bottom of that row hides with the toolbar
-        anchors.topMargin: (!window.lockTiles ? rootItem.topBarHeight + (headerToolbar.scrolledAway ? 5 : 30) : 0)
-        Behavior on anchors.topMargin { NumberAnimation { id: gridMarginAnimation; duration: 150; easing.type: Easing.OutQuad } }
-        // While the tiles are being moved the gap above the first row is part of the content,
-        // so it scrolls away with the tiles instead of staying as an empty band
-        topMargin: window.lockTiles ? 30 : 0
+        anchors.topMargin: (!window.lockTiles ? rootItem.topBarHeight + 5 : 0)
+        // The gap above the first row is part of the content, so it scrolls away with the tiles.
+        // In normal mode it holds the device name line and signal icon at the bottom of the
+        // Start/Stop row: they hide as soon as the tiles move into it (deviceLineHidden), and the
+        // grid itself never moves, so nothing jumps. While the tiles are being moved it keeps the
+        // first row off the toolbar instead of staying as an empty band.
+        topMargin: window.lockTiles ? 30 : 25
         onTopMarginChanged: if (contentY <= 0) contentY = -topMargin
         interactive: !window.lockTiles
         id: gridView
@@ -314,7 +315,7 @@ HomeForm {
         // by toolbarShift, which a per-frame check reads as scrolling back, and slow scrolling
         // made the toolbar flicker. The distance must stay larger than that shift, so it is
         // derived from it (a larger font makes the toolbar taller).
-        readonly property real toolbarShift: headerToolbar.implicitHeight - headerToolbar.topPadding + 25
+        readonly property real toolbarShift: headerToolbar.implicitHeight - headerToolbar.topPadding
         readonly property real toolbarToggleDistance: toolbarShift + 40
         property real toolbarTurnY: 0
         onContentYChanged: {
@@ -325,7 +326,7 @@ HomeForm {
             }
             // Movement of our own making: the view is not being scrolled by the user, or it is
             // resizing while the toolbar animates
-            if (!(draggingVertically || flickingVertically) || headerToolbar.animating || gridMarginAnimation.running) {
+            if (!(draggingVertically || flickingVertically) || headerToolbar.animating) {
                 toolbarTurnY = contentY
                 return
             }
@@ -334,7 +335,7 @@ HomeForm {
                 // view is pulled past its end: otherwise it would spring back to the top and bring
                 // the toolbar back at once
                 if (contentY - toolbarTurnY > toolbarToggleDistance
-                        && contentHeight - height > toolbarShift
+                        && contentHeight + topMargin - height > toolbarShift
                         && contentY <= originY + contentHeight - height) {
                     headerToolbar.scrolledAway = true
                     toolbarTurnY = contentY
@@ -346,7 +347,9 @@ HomeForm {
                     headerToolbar.scrolledAway = false
                     toolbarTurnY = contentY
                 } else if (contentY > toolbarTurnY) {
-                    toolbarTurnY = contentY
+                    // Not past the end: after pulling beyond it the view springs back, and the
+                    // first move up would otherwise bring the toolbar back at once
+                    toolbarTurnY = Math.min(contentY, originY + contentHeight - height)
                 }
             }
         }
