@@ -244,32 +244,32 @@ Would you like to do that now?</source>
 Перезапустити зараз?</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="360"/>
+        <location filename="../Home.qml" line="374"/>
         <source>Adjustable. Current value: </source>
         <translation>Регулюється. Поточне значення: </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="360"/>
+        <location filename="../Home.qml" line="374"/>
         <source>Current value: </source>
         <translation>Поточне значення: </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="504"/>
+        <location filename="../Home.qml" line="518"/>
         <source>Decrease </source>
         <translation>Зменшити </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="505"/>
+        <location filename="../Home.qml" line="519"/>
         <source>Decrease the value of </source>
         <translation>Зменшити значення параметра </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="523"/>
+        <location filename="../Home.qml" line="537"/>
         <source>Increase </source>
         <translation>Збільшити </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="524"/>
+        <location filename="../Home.qml" line="538"/>
         <source>Increase the value of </source>
         <translation>Збільшити значення параметра </translation>
     </message>
@@ -317,7 +317,7 @@ Would you like to do that now?</source>
         <translation>Почати нове коло</translation>
     </message>
     <message>
-        <location filename="../HomeForm.ui.qml" line="208"/>
+        <location filename="../HomeForm.ui.qml" line="210"/>
         <source>This app should automatically connect to your bike/treadmill/rower. &lt;b&gt;If it doesn&apos;t, please check&lt;/b&gt;:&lt;br&gt;1) your Echelon/Domyos App MUST be closed while qdomyos-zwift is running;&lt;br&gt;2) both Bluetooth and Bluetooth permissions MUST be enabled&lt;br&gt;3) your bike/treadmill/rower should be turned on BEFORE starting this app&lt;br&gt;4) try to restart your device&lt;br&gt;&lt;br&gt;If your bike/treadmill disconnects every 30 seconds try to disable the &apos;virtual device&apos; setting on the left bar.&lt;br&gt;&lt;br&gt;In case of issues, please feel free to contact me at roberto.viola83@gmail.com.&lt;br&gt;&lt;br&gt;&lt;b&gt;Have a nice ride!&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZ specifically disclaims liability for&lt;br&gt;incidental or consequential damages and assumes&lt;br&gt;no responsibility or liability for any loss&lt;br&gt;or damage suffered by any person as a result of&lt;br&gt;the use or misuse of the app.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</source>
         <translation>Застосунок має сам під’єднатися до вашого велотренажера, бігової доріжки чи гребного тренажера. &lt;b&gt;Якщо цього не сталося, перевірте&lt;/b&gt;:&lt;br&gt;1) застосунок Echelon/Domyos ОБОВ’ЯЗКОВО має бути закритий, поки працює qdomyos-zwift;&lt;br&gt;2) Bluetooth і дозволи для Bluetooth ОБОВ’ЯЗКОВО мають бути ввімкнені&lt;br&gt;3) тренажер слід увімкнути ДО запуску цього застосунку&lt;br&gt;4) спробуйте перезавантажити свій пристрій&lt;br&gt;&lt;br&gt;Якщо велотренажер або доріжка від’єднується кожні 30 секунд, спробуйте вимкнути налаштування «Увімкнути віртуальний пристрій» на лівій панелі.&lt;br&gt;&lt;br&gt;Якщо виникнуть проблеми, сміливо пишіть мені на roberto.viola83@gmail.com.&lt;br&gt;&lt;br&gt;&lt;b&gt;Гарного тренування!&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZ прямо відмовляється від відповідальності за&lt;br&gt;випадкові чи непрямі збитки й не несе&lt;br&gt;жодної відповідальності за будь-які втрати&lt;br&gt;чи шкоду, завдані будь-кому внаслідок&lt;br&gt;використання або неправильного використання застосунку.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</translation>
     </message>
@@ -3225,125 +3225,125 @@ The following questions will customize QZ for your equipment and goals.</source>
         <translation>Скинути фільтр</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="183"/>
+        <location filename="../WorkoutsHistory.qml" line="185"/>
         <source>Processing workout files...
 This may take a few moments on first startup.</source>
         <translation>Обробка файлів тренувань...
 Під час першого запуску це може тривати деякий час.</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="234"/>
-        <location filename="../WorkoutsHistory.qml" line="235"/>
+        <location filename="../WorkoutsHistory.qml" line="237"/>
+        <location filename="../WorkoutsHistory.qml" line="238"/>
         <source>Delete</source>
         <translation>Видалити</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="331"/>
+        <location filename="../WorkoutsHistory.qml" line="334"/>
         <source>Success</source>
         <translation>Готово</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="332"/>
+        <location filename="../WorkoutsHistory.qml" line="335"/>
         <source>Training program loaded successfully!</source>
         <translation>Програму тренування завантажено.</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="335"/>
+        <location filename="../WorkoutsHistory.qml" line="338"/>
         <source>Error</source>
         <translation>Помилка</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="336"/>
+        <location filename="../WorkoutsHistory.qml" line="339"/>
         <source>Failed to load training program. Please check if the file exists.</source>
         <translation>Не вдалося завантажити програму тренування. Перевірте, чи існує файл.</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="473"/>
+        <location filename="../WorkoutsHistory.qml" line="476"/>
         <source>Upload to Strava</source>
         <translation>Вивантажити в Strava</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="479"/>
+        <location filename="../WorkoutsHistory.qml" line="482"/>
         <source>Upload to Garmin</source>
         <translation>Вивантажити в Garmin</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="485"/>
+        <location filename="../WorkoutsHistory.qml" line="488"/>
         <source>Upload to Intervals.icu</source>
         <translation>Вивантажити в Intervals.icu</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="491"/>
+        <location filename="../WorkoutsHistory.qml" line="494"/>
         <source>Upload to Apple Health</source>
         <translation>Вивантажити в Apple Health</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="506"/>
+        <location filename="../WorkoutsHistory.qml" line="509"/>
         <source>Delete Workout</source>
         <translation>Видалити тренування</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="514"/>
+        <location filename="../WorkoutsHistory.qml" line="517"/>
         <source>Are you sure you want to delete &apos;%1&apos;?</source>
         <translation>Видалити «%1»?</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="686"/>
+        <location filename="../WorkoutsHistory.qml" line="689"/>
         <source>%1 days streak</source>
         <translation>Серія: %1 дн.</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="686"/>
+        <location filename="../WorkoutsHistory.qml" line="689"/>
         <source>%1 day streak</source>
         <translation>Серія: %1 дн.</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="751"/>
+        <location filename="../WorkoutsHistory.qml" line="754"/>
         <source>Personal best: %1 days</source>
         <translation>Рекорд: %1 дн.</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="751"/>
+        <location filename="../WorkoutsHistory.qml" line="754"/>
         <source>Personal best: %1 day</source>
         <translation>Рекорд: %1 дн.</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="853"/>
+        <location filename="../WorkoutsHistory.qml" line="856"/>
         <source>Sun</source>
         <translation>Нд</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="853"/>
+        <location filename="../WorkoutsHistory.qml" line="856"/>
         <source>Mon</source>
         <translation>Пн</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="853"/>
+        <location filename="../WorkoutsHistory.qml" line="856"/>
         <source>Tue</source>
         <translation>Вт</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="853"/>
+        <location filename="../WorkoutsHistory.qml" line="856"/>
         <source>Wed</source>
         <translation>Ср</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="853"/>
+        <location filename="../WorkoutsHistory.qml" line="856"/>
         <source>Thu</source>
         <translation>Чт</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="853"/>
+        <location filename="../WorkoutsHistory.qml" line="856"/>
         <source>Fri</source>
         <translation>Пт</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="853"/>
+        <location filename="../WorkoutsHistory.qml" line="856"/>
         <source>Sat</source>
         <translation>Сб</translation>
     </message>
     <message>
-        <location filename="../WorkoutsHistory.qml" line="944"/>
+        <location filename="../WorkoutsHistory.qml" line="947"/>
         <source>Close</source>
         <translation>Закрити</translation>
     </message>
@@ -4288,13 +4288,6 @@ Do you want to do it now?</source>
         <translation>Цей пристрій FitShow передає й дані велотренажера. Це велотренажер?</translation>
     </message>
     <message>
-        <location filename="../main.qml" line="825"/>
-        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
-No: QZ keeps it as a treadmill and won&apos;t ask again (the question can be turned back on in Fitplus Bike Options).</source>
-        <translation>Так: QZ увімкне «Велотренажер Fit Plus» і закриється – запустіть QZ знову, щоб під’єднатися до пристрою як до велотренажера.
-Ні: QZ залишить його біговою доріжкою й більше не питатиме (запитання можна знову ввімкнути в «Параметри велотренажера Fitplus»).</translation>
-    </message>
-    <message>
         <location filename="../main.qml" line="843"/>
         <location filename="../main.qml" line="984"/>
         <source>Strava</source>
@@ -4459,6 +4452,13 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <location filename="../main.qml" line="399"/>
         <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
         <translation>Не забудьте зберегти профіль «%1», якщо хочете залишити в ньому ці зміни.</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="825"/>
+        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
+No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
+        <translation>Так: QZ увімкне «Велотренажер Fit Plus» і закриється – запустіть QZ знову, щоб під’єднатися до пристрою як до велотренажера.
+Ні: QZ залишить його біговою доріжкою й більше не питатиме (велотренажер можна задати вручну: «Велотренажер Fit Plus» у «Параметри велотренажера Fitplus»).</translation>
     </message>
     <message>
         <location filename="../main.qml" line="1075"/>
@@ -4931,162 +4931,162 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <location filename="../settings.qml" line="4704"/>
         <location filename="../settings.qml" line="4728"/>
         <location filename="../settings.qml" line="4752"/>
-        <location filename="../settings.qml" line="5149"/>
-        <location filename="../settings.qml" line="5211"/>
-        <location filename="../settings.qml" line="5343"/>
-        <location filename="../settings.qml" line="5521"/>
-        <location filename="../settings.qml" line="5546"/>
-        <location filename="../settings.qml" line="5570"/>
-        <location filename="../settings.qml" line="5630"/>
-        <location filename="../settings.qml" line="5664"/>
-        <location filename="../settings.qml" line="5689"/>
-        <location filename="../settings.qml" line="5728"/>
-        <location filename="../settings.qml" line="5782"/>
-        <location filename="../settings.qml" line="5807"/>
-        <location filename="../settings.qml" line="5915"/>
-        <location filename="../settings.qml" line="6033"/>
-        <location filename="../settings.qml" line="6070"/>
-        <location filename="../settings.qml" line="6122"/>
-        <location filename="../settings.qml" line="6239"/>
-        <location filename="../settings.qml" line="6289"/>
-        <location filename="../settings.qml" line="6326"/>
-        <location filename="../settings.qml" line="6363"/>
-        <location filename="../settings.qml" line="6435"/>
-        <location filename="../settings.qml" line="6469"/>
-        <location filename="../settings.qml" line="6490"/>
-        <location filename="../settings.qml" line="6550"/>
-        <location filename="../settings.qml" line="6584"/>
-        <location filename="../settings.qml" line="6631"/>
-        <location filename="../settings.qml" line="6664"/>
-        <location filename="../settings.qml" line="6695"/>
-        <location filename="../settings.qml" line="6828"/>
-        <location filename="../settings.qml" line="6866"/>
-        <location filename="../settings.qml" line="6904"/>
-        <location filename="../settings.qml" line="6938"/>
-        <location filename="../settings.qml" line="6972"/>
-        <location filename="../settings.qml" line="7010"/>
-        <location filename="../settings.qml" line="7047"/>
-        <location filename="../settings.qml" line="7086"/>
-        <location filename="../settings.qml" line="7124"/>
-        <location filename="../settings.qml" line="7162"/>
-        <location filename="../settings.qml" line="7312"/>
-        <location filename="../settings.qml" line="7352"/>
-        <location filename="../settings.qml" line="7390"/>
-        <location filename="../settings.qml" line="7561"/>
-        <location filename="../settings.qml" line="7601"/>
-        <location filename="../settings.qml" line="7742"/>
-        <location filename="../settings.qml" line="8091"/>
-        <location filename="../settings.qml" line="8118"/>
-        <location filename="../settings.qml" line="9184"/>
-        <location filename="../settings.qml" line="9219"/>
-        <location filename="../settings.qml" line="9241"/>
-        <location filename="../settings.qml" line="9302"/>
-        <location filename="../settings.qml" line="9336"/>
-        <location filename="../settings.qml" line="9400"/>
-        <location filename="../settings.qml" line="9437"/>
-        <location filename="../settings.qml" line="9474"/>
-        <location filename="../settings.qml" line="9511"/>
-        <location filename="../settings.qml" line="9548"/>
-        <location filename="../settings.qml" line="9584"/>
-        <location filename="../settings.qml" line="9607"/>
-        <location filename="../settings.qml" line="9630"/>
-        <location filename="../settings.qml" line="9657"/>
-        <location filename="../settings.qml" line="9694"/>
-        <location filename="../settings.qml" line="9743"/>
-        <location filename="../settings.qml" line="9768"/>
-        <location filename="../settings.qml" line="9793"/>
-        <location filename="../settings.qml" line="9818"/>
-        <location filename="../settings.qml" line="9843"/>
-        <location filename="../settings.qml" line="9868"/>
-        <location filename="../settings.qml" line="9893"/>
-        <location filename="../settings.qml" line="9918"/>
-        <location filename="../settings.qml" line="10133"/>
-        <location filename="../settings.qml" line="10170"/>
-        <location filename="../settings.qml" line="10206"/>
-        <location filename="../settings.qml" line="10242"/>
-        <location filename="../settings.qml" line="10278"/>
-        <location filename="../settings.qml" line="10316"/>
-        <location filename="../settings.qml" line="10403"/>
-        <location filename="../settings.qml" line="10769"/>
-        <location filename="../settings.qml" line="10793"/>
-        <location filename="../settings.qml" line="11187"/>
-        <location filename="../settings.qml" line="11210"/>
-        <location filename="../settings.qml" line="11233"/>
-        <location filename="../settings.qml" line="11256"/>
-        <location filename="../settings.qml" line="11279"/>
-        <location filename="../settings.qml" line="11499"/>
-        <location filename="../settings.qml" line="11671"/>
-        <location filename="../settings.qml" line="11694"/>
-        <location filename="../settings.qml" line="11717"/>
-        <location filename="../settings.qml" line="11740"/>
-        <location filename="../settings.qml" line="11763"/>
-        <location filename="../settings.qml" line="12221"/>
-        <location filename="../settings.qml" line="12249"/>
-        <location filename="../settings.qml" line="12343"/>
-        <location filename="../settings.qml" line="12387"/>
-        <location filename="../settings.qml" line="12430"/>
-        <location filename="../settings.qml" line="12458"/>
-        <location filename="../settings.qml" line="12588"/>
-        <location filename="../settings.qml" line="12704"/>
-        <location filename="../settings.qml" line="12776"/>
-        <location filename="../settings.qml" line="12814"/>
-        <location filename="../settings.qml" line="12852"/>
-        <location filename="../settings.qml" line="12891"/>
-        <location filename="../settings.qml" line="12929"/>
-        <location filename="../settings.qml" line="12967"/>
-        <location filename="../settings.qml" line="13013"/>
-        <location filename="../settings.qml" line="13037"/>
-        <location filename="../settings.qml" line="13340"/>
-        <location filename="../settings.qml" line="13378"/>
-        <location filename="../settings.qml" line="13414"/>
-        <location filename="../settings.qml" line="13452"/>
-        <location filename="../settings.qml" line="13570"/>
-        <location filename="../settings.qml" line="13606"/>
-        <location filename="../settings.qml" line="13733"/>
-        <location filename="../settings.qml" line="13778"/>
-        <location filename="../settings.qml" line="13868"/>
-        <location filename="../settings.qml" line="13891"/>
-        <location filename="../settings.qml" line="13914"/>
-        <location filename="../settings.qml" line="13937"/>
-        <location filename="../settings.qml" line="14120"/>
-        <location filename="../settings.qml" line="14235"/>
-        <location filename="../settings.qml" line="14256"/>
-        <location filename="../settings.qml" line="14297"/>
-        <location filename="../settings.qml" line="14363"/>
-        <location filename="../settings.qml" line="14394"/>
-        <location filename="../settings.qml" line="14431"/>
-        <location filename="../settings.qml" line="14478"/>
-        <location filename="../settings.qml" line="14525"/>
-        <location filename="../settings.qml" line="14549"/>
-        <location filename="../settings.qml" line="14573"/>
-        <location filename="../settings.qml" line="14606"/>
-        <location filename="../settings.qml" line="14629"/>
-        <location filename="../settings.qml" line="14653"/>
-        <location filename="../settings.qml" line="14676"/>
-        <location filename="../settings.qml" line="14700"/>
-        <location filename="../settings.qml" line="14723"/>
-        <location filename="../settings.qml" line="14747"/>
-        <location filename="../settings.qml" line="14770"/>
-        <location filename="../settings.qml" line="14825"/>
-        <location filename="../settings.qml" line="14849"/>
-        <location filename="../settings.qml" line="14873"/>
-        <location filename="../settings.qml" line="14922"/>
-        <location filename="../settings.qml" line="14944"/>
-        <location filename="../settings.qml" line="14966"/>
-        <location filename="../settings.qml" line="15015"/>
-        <location filename="../settings.qml" line="15037"/>
-        <location filename="../settings.qml" line="15059"/>
-        <location filename="../settings.qml" line="15483"/>
-        <location filename="../settings.qml" line="15546"/>
-        <location filename="../settings.qml" line="16066"/>
-        <location filename="../settings.qml" line="16103"/>
-        <location filename="../settings.qml" line="16138"/>
-        <location filename="../settings.qml" line="16174"/>
-        <location filename="../settings.qml" line="16210"/>
-        <location filename="../settings.qml" line="16247"/>
-        <location filename="../settings.qml" line="16283"/>
-        <location filename="../settings.qml" line="16330"/>
-        <location filename="../settings.qml" line="16354"/>
+        <location filename="../settings.qml" line="5123"/>
+        <location filename="../settings.qml" line="5185"/>
+        <location filename="../settings.qml" line="5317"/>
+        <location filename="../settings.qml" line="5495"/>
+        <location filename="../settings.qml" line="5520"/>
+        <location filename="../settings.qml" line="5544"/>
+        <location filename="../settings.qml" line="5604"/>
+        <location filename="../settings.qml" line="5638"/>
+        <location filename="../settings.qml" line="5663"/>
+        <location filename="../settings.qml" line="5702"/>
+        <location filename="../settings.qml" line="5756"/>
+        <location filename="../settings.qml" line="5781"/>
+        <location filename="../settings.qml" line="5889"/>
+        <location filename="../settings.qml" line="6007"/>
+        <location filename="../settings.qml" line="6044"/>
+        <location filename="../settings.qml" line="6096"/>
+        <location filename="../settings.qml" line="6213"/>
+        <location filename="../settings.qml" line="6263"/>
+        <location filename="../settings.qml" line="6300"/>
+        <location filename="../settings.qml" line="6337"/>
+        <location filename="../settings.qml" line="6409"/>
+        <location filename="../settings.qml" line="6443"/>
+        <location filename="../settings.qml" line="6464"/>
+        <location filename="../settings.qml" line="6524"/>
+        <location filename="../settings.qml" line="6558"/>
+        <location filename="../settings.qml" line="6605"/>
+        <location filename="../settings.qml" line="6638"/>
+        <location filename="../settings.qml" line="6669"/>
+        <location filename="../settings.qml" line="6802"/>
+        <location filename="../settings.qml" line="6840"/>
+        <location filename="../settings.qml" line="6878"/>
+        <location filename="../settings.qml" line="6912"/>
+        <location filename="../settings.qml" line="6946"/>
+        <location filename="../settings.qml" line="6984"/>
+        <location filename="../settings.qml" line="7021"/>
+        <location filename="../settings.qml" line="7060"/>
+        <location filename="../settings.qml" line="7098"/>
+        <location filename="../settings.qml" line="7136"/>
+        <location filename="../settings.qml" line="7286"/>
+        <location filename="../settings.qml" line="7326"/>
+        <location filename="../settings.qml" line="7364"/>
+        <location filename="../settings.qml" line="7535"/>
+        <location filename="../settings.qml" line="7575"/>
+        <location filename="../settings.qml" line="7716"/>
+        <location filename="../settings.qml" line="8065"/>
+        <location filename="../settings.qml" line="8092"/>
+        <location filename="../settings.qml" line="9158"/>
+        <location filename="../settings.qml" line="9193"/>
+        <location filename="../settings.qml" line="9215"/>
+        <location filename="../settings.qml" line="9276"/>
+        <location filename="../settings.qml" line="9310"/>
+        <location filename="../settings.qml" line="9374"/>
+        <location filename="../settings.qml" line="9411"/>
+        <location filename="../settings.qml" line="9448"/>
+        <location filename="../settings.qml" line="9485"/>
+        <location filename="../settings.qml" line="9522"/>
+        <location filename="../settings.qml" line="9558"/>
+        <location filename="../settings.qml" line="9581"/>
+        <location filename="../settings.qml" line="9604"/>
+        <location filename="../settings.qml" line="9631"/>
+        <location filename="../settings.qml" line="9668"/>
+        <location filename="../settings.qml" line="9717"/>
+        <location filename="../settings.qml" line="9742"/>
+        <location filename="../settings.qml" line="9767"/>
+        <location filename="../settings.qml" line="9792"/>
+        <location filename="../settings.qml" line="9817"/>
+        <location filename="../settings.qml" line="9842"/>
+        <location filename="../settings.qml" line="9867"/>
+        <location filename="../settings.qml" line="9892"/>
+        <location filename="../settings.qml" line="10107"/>
+        <location filename="../settings.qml" line="10144"/>
+        <location filename="../settings.qml" line="10180"/>
+        <location filename="../settings.qml" line="10216"/>
+        <location filename="../settings.qml" line="10252"/>
+        <location filename="../settings.qml" line="10290"/>
+        <location filename="../settings.qml" line="10377"/>
+        <location filename="../settings.qml" line="10743"/>
+        <location filename="../settings.qml" line="10767"/>
+        <location filename="../settings.qml" line="11161"/>
+        <location filename="../settings.qml" line="11184"/>
+        <location filename="../settings.qml" line="11207"/>
+        <location filename="../settings.qml" line="11230"/>
+        <location filename="../settings.qml" line="11253"/>
+        <location filename="../settings.qml" line="11473"/>
+        <location filename="../settings.qml" line="11645"/>
+        <location filename="../settings.qml" line="11668"/>
+        <location filename="../settings.qml" line="11691"/>
+        <location filename="../settings.qml" line="11714"/>
+        <location filename="../settings.qml" line="11737"/>
+        <location filename="../settings.qml" line="12195"/>
+        <location filename="../settings.qml" line="12223"/>
+        <location filename="../settings.qml" line="12317"/>
+        <location filename="../settings.qml" line="12361"/>
+        <location filename="../settings.qml" line="12404"/>
+        <location filename="../settings.qml" line="12432"/>
+        <location filename="../settings.qml" line="12562"/>
+        <location filename="../settings.qml" line="12678"/>
+        <location filename="../settings.qml" line="12750"/>
+        <location filename="../settings.qml" line="12788"/>
+        <location filename="../settings.qml" line="12826"/>
+        <location filename="../settings.qml" line="12865"/>
+        <location filename="../settings.qml" line="12903"/>
+        <location filename="../settings.qml" line="12941"/>
+        <location filename="../settings.qml" line="12987"/>
+        <location filename="../settings.qml" line="13011"/>
+        <location filename="../settings.qml" line="13314"/>
+        <location filename="../settings.qml" line="13352"/>
+        <location filename="../settings.qml" line="13388"/>
+        <location filename="../settings.qml" line="13426"/>
+        <location filename="../settings.qml" line="13544"/>
+        <location filename="../settings.qml" line="13580"/>
+        <location filename="../settings.qml" line="13707"/>
+        <location filename="../settings.qml" line="13752"/>
+        <location filename="../settings.qml" line="13842"/>
+        <location filename="../settings.qml" line="13865"/>
+        <location filename="../settings.qml" line="13888"/>
+        <location filename="../settings.qml" line="13911"/>
+        <location filename="../settings.qml" line="14094"/>
+        <location filename="../settings.qml" line="14209"/>
+        <location filename="../settings.qml" line="14230"/>
+        <location filename="../settings.qml" line="14271"/>
+        <location filename="../settings.qml" line="14337"/>
+        <location filename="../settings.qml" line="14368"/>
+        <location filename="../settings.qml" line="14405"/>
+        <location filename="../settings.qml" line="14452"/>
+        <location filename="../settings.qml" line="14499"/>
+        <location filename="../settings.qml" line="14523"/>
+        <location filename="../settings.qml" line="14547"/>
+        <location filename="../settings.qml" line="14580"/>
+        <location filename="../settings.qml" line="14603"/>
+        <location filename="../settings.qml" line="14627"/>
+        <location filename="../settings.qml" line="14650"/>
+        <location filename="../settings.qml" line="14674"/>
+        <location filename="../settings.qml" line="14697"/>
+        <location filename="../settings.qml" line="14721"/>
+        <location filename="../settings.qml" line="14744"/>
+        <location filename="../settings.qml" line="14799"/>
+        <location filename="../settings.qml" line="14823"/>
+        <location filename="../settings.qml" line="14847"/>
+        <location filename="../settings.qml" line="14896"/>
+        <location filename="../settings.qml" line="14918"/>
+        <location filename="../settings.qml" line="14940"/>
+        <location filename="../settings.qml" line="14989"/>
+        <location filename="../settings.qml" line="15011"/>
+        <location filename="../settings.qml" line="15033"/>
+        <location filename="../settings.qml" line="15457"/>
+        <location filename="../settings.qml" line="15520"/>
+        <location filename="../settings.qml" line="16040"/>
+        <location filename="../settings.qml" line="16077"/>
+        <location filename="../settings.qml" line="16112"/>
+        <location filename="../settings.qml" line="16148"/>
+        <location filename="../settings.qml" line="16184"/>
+        <location filename="../settings.qml" line="16221"/>
+        <location filename="../settings.qml" line="16257"/>
+        <location filename="../settings.qml" line="16304"/>
+        <location filename="../settings.qml" line="16328"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -5147,162 +5147,162 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <location filename="../settings.qml" line="4706"/>
         <location filename="../settings.qml" line="4730"/>
         <location filename="../settings.qml" line="4754"/>
-        <location filename="../settings.qml" line="5151"/>
-        <location filename="../settings.qml" line="5213"/>
-        <location filename="../settings.qml" line="5345"/>
-        <location filename="../settings.qml" line="5523"/>
-        <location filename="../settings.qml" line="5548"/>
-        <location filename="../settings.qml" line="5572"/>
-        <location filename="../settings.qml" line="5632"/>
-        <location filename="../settings.qml" line="5666"/>
-        <location filename="../settings.qml" line="5694"/>
-        <location filename="../settings.qml" line="5730"/>
-        <location filename="../settings.qml" line="5784"/>
-        <location filename="../settings.qml" line="5809"/>
-        <location filename="../settings.qml" line="5917"/>
-        <location filename="../settings.qml" line="6035"/>
-        <location filename="../settings.qml" line="6072"/>
-        <location filename="../settings.qml" line="6124"/>
-        <location filename="../settings.qml" line="6241"/>
-        <location filename="../settings.qml" line="6291"/>
-        <location filename="../settings.qml" line="6328"/>
-        <location filename="../settings.qml" line="6365"/>
-        <location filename="../settings.qml" line="6437"/>
-        <location filename="../settings.qml" line="6471"/>
-        <location filename="../settings.qml" line="6492"/>
-        <location filename="../settings.qml" line="6552"/>
-        <location filename="../settings.qml" line="6586"/>
-        <location filename="../settings.qml" line="6633"/>
-        <location filename="../settings.qml" line="6666"/>
-        <location filename="../settings.qml" line="6697"/>
-        <location filename="../settings.qml" line="6830"/>
-        <location filename="../settings.qml" line="6868"/>
-        <location filename="../settings.qml" line="6906"/>
-        <location filename="../settings.qml" line="6940"/>
-        <location filename="../settings.qml" line="6974"/>
-        <location filename="../settings.qml" line="7012"/>
-        <location filename="../settings.qml" line="7049"/>
-        <location filename="../settings.qml" line="7088"/>
-        <location filename="../settings.qml" line="7126"/>
-        <location filename="../settings.qml" line="7164"/>
-        <location filename="../settings.qml" line="7314"/>
-        <location filename="../settings.qml" line="7354"/>
-        <location filename="../settings.qml" line="7392"/>
-        <location filename="../settings.qml" line="7563"/>
-        <location filename="../settings.qml" line="7603"/>
-        <location filename="../settings.qml" line="7744"/>
-        <location filename="../settings.qml" line="8096"/>
-        <location filename="../settings.qml" line="8123"/>
-        <location filename="../settings.qml" line="9186"/>
-        <location filename="../settings.qml" line="9221"/>
-        <location filename="../settings.qml" line="9243"/>
-        <location filename="../settings.qml" line="9304"/>
-        <location filename="../settings.qml" line="9338"/>
-        <location filename="../settings.qml" line="9402"/>
-        <location filename="../settings.qml" line="9439"/>
-        <location filename="../settings.qml" line="9476"/>
-        <location filename="../settings.qml" line="9513"/>
-        <location filename="../settings.qml" line="9550"/>
-        <location filename="../settings.qml" line="9586"/>
-        <location filename="../settings.qml" line="9609"/>
-        <location filename="../settings.qml" line="9632"/>
-        <location filename="../settings.qml" line="9659"/>
-        <location filename="../settings.qml" line="9696"/>
-        <location filename="../settings.qml" line="9745"/>
-        <location filename="../settings.qml" line="9770"/>
-        <location filename="../settings.qml" line="9795"/>
-        <location filename="../settings.qml" line="9820"/>
-        <location filename="../settings.qml" line="9845"/>
-        <location filename="../settings.qml" line="9870"/>
-        <location filename="../settings.qml" line="9895"/>
-        <location filename="../settings.qml" line="9920"/>
-        <location filename="../settings.qml" line="10135"/>
-        <location filename="../settings.qml" line="10172"/>
-        <location filename="../settings.qml" line="10208"/>
-        <location filename="../settings.qml" line="10244"/>
-        <location filename="../settings.qml" line="10280"/>
-        <location filename="../settings.qml" line="10318"/>
-        <location filename="../settings.qml" line="10405"/>
-        <location filename="../settings.qml" line="10771"/>
-        <location filename="../settings.qml" line="10795"/>
-        <location filename="../settings.qml" line="11189"/>
-        <location filename="../settings.qml" line="11212"/>
-        <location filename="../settings.qml" line="11235"/>
-        <location filename="../settings.qml" line="11258"/>
-        <location filename="../settings.qml" line="11281"/>
-        <location filename="../settings.qml" line="11501"/>
-        <location filename="../settings.qml" line="11673"/>
-        <location filename="../settings.qml" line="11696"/>
-        <location filename="../settings.qml" line="11719"/>
-        <location filename="../settings.qml" line="11742"/>
-        <location filename="../settings.qml" line="11765"/>
-        <location filename="../settings.qml" line="12223"/>
-        <location filename="../settings.qml" line="12251"/>
-        <location filename="../settings.qml" line="12345"/>
-        <location filename="../settings.qml" line="12389"/>
-        <location filename="../settings.qml" line="12432"/>
-        <location filename="../settings.qml" line="12460"/>
-        <location filename="../settings.qml" line="12590"/>
-        <location filename="../settings.qml" line="12706"/>
-        <location filename="../settings.qml" line="12778"/>
-        <location filename="../settings.qml" line="12816"/>
-        <location filename="../settings.qml" line="12854"/>
-        <location filename="../settings.qml" line="12893"/>
-        <location filename="../settings.qml" line="12931"/>
-        <location filename="../settings.qml" line="12969"/>
-        <location filename="../settings.qml" line="13015"/>
-        <location filename="../settings.qml" line="13039"/>
-        <location filename="../settings.qml" line="13342"/>
-        <location filename="../settings.qml" line="13380"/>
-        <location filename="../settings.qml" line="13416"/>
-        <location filename="../settings.qml" line="13454"/>
-        <location filename="../settings.qml" line="13572"/>
-        <location filename="../settings.qml" line="13608"/>
-        <location filename="../settings.qml" line="13735"/>
-        <location filename="../settings.qml" line="13780"/>
-        <location filename="../settings.qml" line="13870"/>
-        <location filename="../settings.qml" line="13893"/>
-        <location filename="../settings.qml" line="13916"/>
-        <location filename="../settings.qml" line="13939"/>
-        <location filename="../settings.qml" line="14122"/>
-        <location filename="../settings.qml" line="14237"/>
-        <location filename="../settings.qml" line="14258"/>
-        <location filename="../settings.qml" line="14299"/>
-        <location filename="../settings.qml" line="14365"/>
-        <location filename="../settings.qml" line="14396"/>
-        <location filename="../settings.qml" line="14433"/>
-        <location filename="../settings.qml" line="14480"/>
-        <location filename="../settings.qml" line="14527"/>
-        <location filename="../settings.qml" line="14551"/>
-        <location filename="../settings.qml" line="14575"/>
-        <location filename="../settings.qml" line="14608"/>
-        <location filename="../settings.qml" line="14631"/>
-        <location filename="../settings.qml" line="14655"/>
-        <location filename="../settings.qml" line="14678"/>
-        <location filename="../settings.qml" line="14702"/>
-        <location filename="../settings.qml" line="14725"/>
-        <location filename="../settings.qml" line="14749"/>
-        <location filename="../settings.qml" line="14772"/>
-        <location filename="../settings.qml" line="14827"/>
-        <location filename="../settings.qml" line="14851"/>
-        <location filename="../settings.qml" line="14875"/>
-        <location filename="../settings.qml" line="14924"/>
-        <location filename="../settings.qml" line="14946"/>
-        <location filename="../settings.qml" line="14968"/>
-        <location filename="../settings.qml" line="15017"/>
-        <location filename="../settings.qml" line="15039"/>
-        <location filename="../settings.qml" line="15061"/>
-        <location filename="../settings.qml" line="15485"/>
-        <location filename="../settings.qml" line="15548"/>
-        <location filename="../settings.qml" line="16068"/>
-        <location filename="../settings.qml" line="16105"/>
-        <location filename="../settings.qml" line="16140"/>
-        <location filename="../settings.qml" line="16176"/>
-        <location filename="../settings.qml" line="16212"/>
-        <location filename="../settings.qml" line="16249"/>
-        <location filename="../settings.qml" line="16285"/>
-        <location filename="../settings.qml" line="16332"/>
-        <location filename="../settings.qml" line="16356"/>
+        <location filename="../settings.qml" line="5125"/>
+        <location filename="../settings.qml" line="5187"/>
+        <location filename="../settings.qml" line="5319"/>
+        <location filename="../settings.qml" line="5497"/>
+        <location filename="../settings.qml" line="5522"/>
+        <location filename="../settings.qml" line="5546"/>
+        <location filename="../settings.qml" line="5606"/>
+        <location filename="../settings.qml" line="5640"/>
+        <location filename="../settings.qml" line="5668"/>
+        <location filename="../settings.qml" line="5704"/>
+        <location filename="../settings.qml" line="5758"/>
+        <location filename="../settings.qml" line="5783"/>
+        <location filename="../settings.qml" line="5891"/>
+        <location filename="../settings.qml" line="6009"/>
+        <location filename="../settings.qml" line="6046"/>
+        <location filename="../settings.qml" line="6098"/>
+        <location filename="../settings.qml" line="6215"/>
+        <location filename="../settings.qml" line="6265"/>
+        <location filename="../settings.qml" line="6302"/>
+        <location filename="../settings.qml" line="6339"/>
+        <location filename="../settings.qml" line="6411"/>
+        <location filename="../settings.qml" line="6445"/>
+        <location filename="../settings.qml" line="6466"/>
+        <location filename="../settings.qml" line="6526"/>
+        <location filename="../settings.qml" line="6560"/>
+        <location filename="../settings.qml" line="6607"/>
+        <location filename="../settings.qml" line="6640"/>
+        <location filename="../settings.qml" line="6671"/>
+        <location filename="../settings.qml" line="6804"/>
+        <location filename="../settings.qml" line="6842"/>
+        <location filename="../settings.qml" line="6880"/>
+        <location filename="../settings.qml" line="6914"/>
+        <location filename="../settings.qml" line="6948"/>
+        <location filename="../settings.qml" line="6986"/>
+        <location filename="../settings.qml" line="7023"/>
+        <location filename="../settings.qml" line="7062"/>
+        <location filename="../settings.qml" line="7100"/>
+        <location filename="../settings.qml" line="7138"/>
+        <location filename="../settings.qml" line="7288"/>
+        <location filename="../settings.qml" line="7328"/>
+        <location filename="../settings.qml" line="7366"/>
+        <location filename="../settings.qml" line="7537"/>
+        <location filename="../settings.qml" line="7577"/>
+        <location filename="../settings.qml" line="7718"/>
+        <location filename="../settings.qml" line="8070"/>
+        <location filename="../settings.qml" line="8097"/>
+        <location filename="../settings.qml" line="9160"/>
+        <location filename="../settings.qml" line="9195"/>
+        <location filename="../settings.qml" line="9217"/>
+        <location filename="../settings.qml" line="9278"/>
+        <location filename="../settings.qml" line="9312"/>
+        <location filename="../settings.qml" line="9376"/>
+        <location filename="../settings.qml" line="9413"/>
+        <location filename="../settings.qml" line="9450"/>
+        <location filename="../settings.qml" line="9487"/>
+        <location filename="../settings.qml" line="9524"/>
+        <location filename="../settings.qml" line="9560"/>
+        <location filename="../settings.qml" line="9583"/>
+        <location filename="../settings.qml" line="9606"/>
+        <location filename="../settings.qml" line="9633"/>
+        <location filename="../settings.qml" line="9670"/>
+        <location filename="../settings.qml" line="9719"/>
+        <location filename="../settings.qml" line="9744"/>
+        <location filename="../settings.qml" line="9769"/>
+        <location filename="../settings.qml" line="9794"/>
+        <location filename="../settings.qml" line="9819"/>
+        <location filename="../settings.qml" line="9844"/>
+        <location filename="../settings.qml" line="9869"/>
+        <location filename="../settings.qml" line="9894"/>
+        <location filename="../settings.qml" line="10109"/>
+        <location filename="../settings.qml" line="10146"/>
+        <location filename="../settings.qml" line="10182"/>
+        <location filename="../settings.qml" line="10218"/>
+        <location filename="../settings.qml" line="10254"/>
+        <location filename="../settings.qml" line="10292"/>
+        <location filename="../settings.qml" line="10379"/>
+        <location filename="../settings.qml" line="10745"/>
+        <location filename="../settings.qml" line="10769"/>
+        <location filename="../settings.qml" line="11163"/>
+        <location filename="../settings.qml" line="11186"/>
+        <location filename="../settings.qml" line="11209"/>
+        <location filename="../settings.qml" line="11232"/>
+        <location filename="../settings.qml" line="11255"/>
+        <location filename="../settings.qml" line="11475"/>
+        <location filename="../settings.qml" line="11647"/>
+        <location filename="../settings.qml" line="11670"/>
+        <location filename="../settings.qml" line="11693"/>
+        <location filename="../settings.qml" line="11716"/>
+        <location filename="../settings.qml" line="11739"/>
+        <location filename="../settings.qml" line="12197"/>
+        <location filename="../settings.qml" line="12225"/>
+        <location filename="../settings.qml" line="12319"/>
+        <location filename="../settings.qml" line="12363"/>
+        <location filename="../settings.qml" line="12406"/>
+        <location filename="../settings.qml" line="12434"/>
+        <location filename="../settings.qml" line="12564"/>
+        <location filename="../settings.qml" line="12680"/>
+        <location filename="../settings.qml" line="12752"/>
+        <location filename="../settings.qml" line="12790"/>
+        <location filename="../settings.qml" line="12828"/>
+        <location filename="../settings.qml" line="12867"/>
+        <location filename="../settings.qml" line="12905"/>
+        <location filename="../settings.qml" line="12943"/>
+        <location filename="../settings.qml" line="12989"/>
+        <location filename="../settings.qml" line="13013"/>
+        <location filename="../settings.qml" line="13316"/>
+        <location filename="../settings.qml" line="13354"/>
+        <location filename="../settings.qml" line="13390"/>
+        <location filename="../settings.qml" line="13428"/>
+        <location filename="../settings.qml" line="13546"/>
+        <location filename="../settings.qml" line="13582"/>
+        <location filename="../settings.qml" line="13709"/>
+        <location filename="../settings.qml" line="13754"/>
+        <location filename="../settings.qml" line="13844"/>
+        <location filename="../settings.qml" line="13867"/>
+        <location filename="../settings.qml" line="13890"/>
+        <location filename="../settings.qml" line="13913"/>
+        <location filename="../settings.qml" line="14096"/>
+        <location filename="../settings.qml" line="14211"/>
+        <location filename="../settings.qml" line="14232"/>
+        <location filename="../settings.qml" line="14273"/>
+        <location filename="../settings.qml" line="14339"/>
+        <location filename="../settings.qml" line="14370"/>
+        <location filename="../settings.qml" line="14407"/>
+        <location filename="../settings.qml" line="14454"/>
+        <location filename="../settings.qml" line="14501"/>
+        <location filename="../settings.qml" line="14525"/>
+        <location filename="../settings.qml" line="14549"/>
+        <location filename="../settings.qml" line="14582"/>
+        <location filename="../settings.qml" line="14605"/>
+        <location filename="../settings.qml" line="14629"/>
+        <location filename="../settings.qml" line="14652"/>
+        <location filename="../settings.qml" line="14676"/>
+        <location filename="../settings.qml" line="14699"/>
+        <location filename="../settings.qml" line="14723"/>
+        <location filename="../settings.qml" line="14746"/>
+        <location filename="../settings.qml" line="14801"/>
+        <location filename="../settings.qml" line="14825"/>
+        <location filename="../settings.qml" line="14849"/>
+        <location filename="../settings.qml" line="14898"/>
+        <location filename="../settings.qml" line="14920"/>
+        <location filename="../settings.qml" line="14942"/>
+        <location filename="../settings.qml" line="14991"/>
+        <location filename="../settings.qml" line="15013"/>
+        <location filename="../settings.qml" line="15035"/>
+        <location filename="../settings.qml" line="15459"/>
+        <location filename="../settings.qml" line="15522"/>
+        <location filename="../settings.qml" line="16042"/>
+        <location filename="../settings.qml" line="16079"/>
+        <location filename="../settings.qml" line="16114"/>
+        <location filename="../settings.qml" line="16150"/>
+        <location filename="../settings.qml" line="16186"/>
+        <location filename="../settings.qml" line="16223"/>
+        <location filename="../settings.qml" line="16259"/>
+        <location filename="../settings.qml" line="16306"/>
+        <location filename="../settings.qml" line="16330"/>
         <source>Setting saved!</source>
         <translation>Налаштування збережено!</translation>
     </message>
@@ -5438,7 +5438,7 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
     </message>
     <message>
         <location filename="../settings.qml" line="2601"/>
-        <location filename="../settings.qml" line="10032"/>
+        <location filename="../settings.qml" line="10006"/>
         <source>Pause when App Starts</source>
         <translation>Пауза під час запуску застосунку</translation>
     </message>
@@ -5532,26 +5532,26 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <location filename="../settings.qml" line="3693"/>
         <location filename="../settings.qml" line="3705"/>
         <location filename="../settings.qml" line="4502"/>
-        <location filename="../settings.qml" line="7341"/>
-        <location filename="../settings.qml" line="9173"/>
-        <location filename="../settings.qml" line="10392"/>
-        <location filename="../settings.qml" line="12238"/>
-        <location filename="../settings.qml" line="12447"/>
-        <location filename="../settings.qml" line="12692"/>
-        <location filename="../settings.qml" line="13003"/>
-        <location filename="../settings.qml" line="13721"/>
-        <location filename="../settings.qml" line="14285"/>
-        <location filename="../settings.qml" line="14351"/>
-        <location filename="../settings.qml" line="14419"/>
-        <location filename="../settings.qml" line="14466"/>
-        <location filename="../settings.qml" line="15376"/>
-        <location filename="../settings.qml" line="15388"/>
-        <location filename="../settings.qml" line="15400"/>
-        <location filename="../settings.qml" line="15412"/>
-        <location filename="../settings.qml" line="15424"/>
-        <location filename="../settings.qml" line="15436"/>
-        <location filename="../settings.qml" line="15448"/>
-        <location filename="../settings.qml" line="15460"/>
+        <location filename="../settings.qml" line="7315"/>
+        <location filename="../settings.qml" line="9147"/>
+        <location filename="../settings.qml" line="10366"/>
+        <location filename="../settings.qml" line="12212"/>
+        <location filename="../settings.qml" line="12421"/>
+        <location filename="../settings.qml" line="12666"/>
+        <location filename="../settings.qml" line="12977"/>
+        <location filename="../settings.qml" line="13695"/>
+        <location filename="../settings.qml" line="14259"/>
+        <location filename="../settings.qml" line="14325"/>
+        <location filename="../settings.qml" line="14393"/>
+        <location filename="../settings.qml" line="14440"/>
+        <location filename="../settings.qml" line="15350"/>
+        <location filename="../settings.qml" line="15362"/>
+        <location filename="../settings.qml" line="15374"/>
+        <location filename="../settings.qml" line="15386"/>
+        <location filename="../settings.qml" line="15398"/>
+        <location filename="../settings.qml" line="15410"/>
+        <location filename="../settings.qml" line="15422"/>
+        <location filename="../settings.qml" line="15434"/>
         <source>Disabled</source>
         <translation>Вимкнено</translation>
     </message>
@@ -5562,14 +5562,14 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
     </message>
     <message>
         <location filename="../settings.qml" line="2859"/>
-        <location filename="../settings.qml" line="12256"/>
-        <location filename="../settings.qml" line="12465"/>
-        <location filename="../settings.qml" line="12712"/>
-        <location filename="../settings.qml" line="13741"/>
-        <location filename="../settings.qml" line="14305"/>
-        <location filename="../settings.qml" line="14371"/>
-        <location filename="../settings.qml" line="14439"/>
-        <location filename="../settings.qml" line="14486"/>
+        <location filename="../settings.qml" line="12230"/>
+        <location filename="../settings.qml" line="12439"/>
+        <location filename="../settings.qml" line="12686"/>
+        <location filename="../settings.qml" line="13715"/>
+        <location filename="../settings.qml" line="14279"/>
+        <location filename="../settings.qml" line="14345"/>
+        <location filename="../settings.qml" line="14413"/>
+        <location filename="../settings.qml" line="14460"/>
         <source>Refresh Devices List</source>
         <translation>Оновити список пристроїв</translation>
     </message>
@@ -5805,14 +5805,14 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <location filename="../settings.qml" line="3681"/>
         <location filename="../settings.qml" line="3693"/>
         <location filename="../settings.qml" line="3705"/>
-        <location filename="../settings.qml" line="15376"/>
-        <location filename="../settings.qml" line="15388"/>
-        <location filename="../settings.qml" line="15400"/>
-        <location filename="../settings.qml" line="15412"/>
-        <location filename="../settings.qml" line="15424"/>
-        <location filename="../settings.qml" line="15436"/>
-        <location filename="../settings.qml" line="15448"/>
-        <location filename="../settings.qml" line="15460"/>
+        <location filename="../settings.qml" line="15350"/>
+        <location filename="../settings.qml" line="15362"/>
+        <location filename="../settings.qml" line="15374"/>
+        <location filename="../settings.qml" line="15386"/>
+        <location filename="../settings.qml" line="15398"/>
+        <location filename="../settings.qml" line="15410"/>
+        <location filename="../settings.qml" line="15422"/>
+        <location filename="../settings.qml" line="15434"/>
         <source>Gear Up</source>
         <translation>Передача вгору</translation>
     </message>
@@ -5829,14 +5829,14 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <location filename="../settings.qml" line="3681"/>
         <location filename="../settings.qml" line="3693"/>
         <location filename="../settings.qml" line="3705"/>
-        <location filename="../settings.qml" line="15376"/>
-        <location filename="../settings.qml" line="15388"/>
-        <location filename="../settings.qml" line="15400"/>
-        <location filename="../settings.qml" line="15412"/>
-        <location filename="../settings.qml" line="15424"/>
-        <location filename="../settings.qml" line="15436"/>
-        <location filename="../settings.qml" line="15448"/>
-        <location filename="../settings.qml" line="15460"/>
+        <location filename="../settings.qml" line="15350"/>
+        <location filename="../settings.qml" line="15362"/>
+        <location filename="../settings.qml" line="15374"/>
+        <location filename="../settings.qml" line="15386"/>
+        <location filename="../settings.qml" line="15398"/>
+        <location filename="../settings.qml" line="15410"/>
+        <location filename="../settings.qml" line="15422"/>
+        <location filename="../settings.qml" line="15434"/>
         <source>Gear Down</source>
         <translation>Передача вниз</translation>
     </message>
@@ -6537,2023 +6537,2013 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
     </message>
     <message>
         <location filename="../settings.qml" line="5044"/>
-        <source>Ask if a FitShow (FS-) device is a bike</source>
-        <translation>Питати, чи пристрій FitShow (FS-) – велотренажер</translation>
-    </message>
-    <message>
-        <location filename="../settings.qml" line="5057"/>
-        <source>QZ opens FS- devices as treadmills unless &quot;Fit Plus Bike&quot; is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off.</source>
-        <translation>QZ відкриває пристрої FS- як бігові доріжки, якщо не ввімкнено «Велотренажер Fit Plus». Якщо пристрій FS- передає й дані велотренажера, QZ питає, чи це велотренажер; відповідь «Ні» вимикає це запитання.</translation>
-    </message>
-    <message>
-        <location filename="../settings.qml" line="5070"/>
         <source>Sportstech SX600 bike</source>
         <translation>Велотренажер Sportstech SX600</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5084"/>
+        <location filename="../settings.qml" line="5058"/>
         <source>Sportstech ESX500 bike</source>
         <translation>Велотренажер Sportstech ESX500</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5100"/>
+        <location filename="../settings.qml" line="5074"/>
         <source>LifeSpan Bike Options</source>
         <translation>Параметри велотренажера LifeSpan</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5124"/>
+        <location filename="../settings.qml" line="5098"/>
         <source>Flywheel Bike Options</source>
         <translation>Параметри велотренажера Flywheel</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5134"/>
+        <location filename="../settings.qml" line="5108"/>
         <source>Samples Filter:</source>
         <translation>Фільтр вибірок:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5186"/>
+        <location filename="../settings.qml" line="5160"/>
         <source>Domyos Bike Options</source>
         <translation>Параметри велотренажера Domyos</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5196"/>
+        <location filename="../settings.qml" line="5170"/>
         <source>Cadence Filter:</source>
         <translation>Фільтр каденсу:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5217"/>
+        <location filename="../settings.qml" line="5191"/>
         <source>Ignore FTMS</source>
         <translation>Ігнорувати FTMS</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5230"/>
+        <location filename="../settings.qml" line="5204"/>
         <source>Fix Calories/Km to Console</source>
         <translation>Калорії та km як на консолі</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5243"/>
+        <location filename="../settings.qml" line="5217"/>
         <source>Bike 500 wattage profile</source>
         <translation>Профіль потужності Bike 500</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5256"/>
+        <location filename="../settings.qml" line="5230"/>
         <source>Bike 500 wattage profile v2</source>
         <translation>Профіль потужності Bike 500 v2</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5271"/>
+        <location filename="../settings.qml" line="5245"/>
         <source>Tacx Neo Options</source>
         <translation>Параметри Tacx Neo</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5277"/>
+        <location filename="../settings.qml" line="5251"/>
         <source>Peloton Configuration</source>
         <translation>Налаштування Peloton</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5291"/>
+        <location filename="../settings.qml" line="5265"/>
         <source>Disable Negative Inclination due to gear</source>
         <translation>Без від’ємного нахилу від передач</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5304"/>
+        <location filename="../settings.qml" line="5278"/>
         <source>Enabling this QZ will ignore changing gears if the value is too low for this trainer. Default: disabled.</source>
         <translation>Якщо ввімкнено, QZ ігноруватиме перемикання передач, коли значення замале для цього тренажера. Типово: вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5319"/>
+        <location filename="../settings.qml" line="5293"/>
         <source>Proform/Norditrack Options</source>
         <translation>Параметри Proform/Norditrack</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5328"/>
-        <location filename="../settings.qml" line="13763"/>
+        <location filename="../settings.qml" line="5302"/>
+        <location filename="../settings.qml" line="13737"/>
         <source>Wheel Ratio:</source>
         <translation>Коефіцієнт колеса:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5350"/>
-        <location filename="../settings.qml" line="10444"/>
+        <location filename="../settings.qml" line="5324"/>
+        <location filename="../settings.qml" line="10418"/>
         <source>Specific Model:</source>
         <translation>Модель:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5491"/>
+        <location filename="../settings.qml" line="5465"/>
         <source>TDF CBC Jonseed watt table</source>
         <translation>Таблиця потужності TDF CBC Jonseed</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5507"/>
+        <location filename="../settings.qml" line="5481"/>
         <source>TDF1 IP:</source>
         <translation>IP-адреса TDF1:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5531"/>
+        <location filename="../settings.qml" line="5505"/>
         <source>TDF4 IP:</source>
         <translation>IP-адреса TDF4:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5555"/>
+        <location filename="../settings.qml" line="5529"/>
         <source>TDF Companion IP:</source>
         <translation>IP-адреса TDF Companion:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5577"/>
-        <location filename="../settings.qml" line="10800"/>
-        <location filename="../settings.qml" line="12594"/>
+        <location filename="../settings.qml" line="5551"/>
+        <location filename="../settings.qml" line="10774"/>
+        <location filename="../settings.qml" line="12568"/>
         <source>ADB Remote</source>
         <translation>Віддалений ADB</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5590"/>
+        <location filename="../settings.qml" line="5564"/>
         <source>Use Resistance instead of Inc.</source>
         <translation>Опір замість нахилу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5607"/>
+        <location filename="../settings.qml" line="5581"/>
         <source>Computrainer Bike Options</source>
         <translation>Параметри велотренажера Computrainer</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5615"/>
-        <location filename="../settings.qml" line="5650"/>
-        <location filename="../settings.qml" line="5714"/>
-        <location filename="../settings.qml" line="12207"/>
-        <location filename="../settings.qml" line="12416"/>
+        <location filename="../settings.qml" line="5589"/>
+        <location filename="../settings.qml" line="5624"/>
+        <location filename="../settings.qml" line="5688"/>
+        <location filename="../settings.qml" line="12181"/>
+        <location filename="../settings.qml" line="12390"/>
         <source>Serial Port:</source>
         <translation>Послідовний порт:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5640"/>
+        <location filename="../settings.qml" line="5614"/>
         <source>Kettler USB Bike Options</source>
         <translation>Параметри USB-велотренажера Kettler</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5673"/>
+        <location filename="../settings.qml" line="5647"/>
         <source>Baudrate:</source>
         <translation>Швидкість порту (бод):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5704"/>
+        <location filename="../settings.qml" line="5678"/>
         <source>Freebeat Bike Options</source>
         <translation>Параметри велотренажера Freebeat</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5739"/>
+        <location filename="../settings.qml" line="5713"/>
         <source>M3i Bike Options</source>
         <translation>Параметри велотренажера M3i</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5750"/>
+        <location filename="../settings.qml" line="5724"/>
         <source>Use QT search on Android / iOS</source>
         <translation>Пошук засобами Qt на Android / iOS</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5767"/>
+        <location filename="../settings.qml" line="5741"/>
         <source>Bike ID:</source>
         <translation>ID велотренажера:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5792"/>
+        <location filename="../settings.qml" line="5766"/>
         <source>Speed Buffer Size:</source>
         <translation>Розмір буфера швидкості:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5815"/>
+        <location filename="../settings.qml" line="5789"/>
         <source>Use KCal from the Bike</source>
         <translation>Калорії з велотренажера</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5832"/>
+        <location filename="../settings.qml" line="5806"/>
         <source>Sole Bike Options</source>
         <translation>Параметри велотренажера Sole</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5839"/>
-        <location filename="../settings.qml" line="10885"/>
-        <location filename="../settings.qml" line="11336"/>
-        <location filename="../settings.qml" line="11468"/>
+        <location filename="../settings.qml" line="5813"/>
+        <location filename="../settings.qml" line="10859"/>
+        <location filename="../settings.qml" line="11310"/>
+        <location filename="../settings.qml" line="11442"/>
         <source>Miles unit from the device</source>
         <translation>Пристрій передає милі</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5856"/>
+        <location filename="../settings.qml" line="5830"/>
         <source>Technogym Bike Options</source>
         <translation>Параметри велотренажера Technogym</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5864"/>
+        <location filename="../settings.qml" line="5838"/>
         <source>Technogym Bike (BIKE 1, BIKE 2, etc)</source>
         <translation>Велотренажер Technogym (BIKE 1, BIKE 2 тощо)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5878"/>
+        <location filename="../settings.qml" line="5852"/>
         <source>Group Cycle</source>
         <translation>Group Cycle</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5900"/>
+        <location filename="../settings.qml" line="5874"/>
         <source>ANT+ Bike Device Number (0=Auto):</source>
         <translation>Номер ANT+ пристрою велотренажера (0=авто):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5925"/>
+        <location filename="../settings.qml" line="5899"/>
         <source>Toputure Bikes</source>
         <translation>Велотренажери Toputure</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5947"/>
+        <location filename="../settings.qml" line="5921"/>
         <source>Enable the special SPORT01 instant power formula only for the Toputure TEB1 bike. Leave disabled to use the standard FTMS instant power reported by the device.</source>
         <translation>Вмикає особливу формулу миттєвої потужності SPORT01 лише для велотренажера Toputure TEB1. Залиште вимкненим, щоб використовувати стандартну миттєву потужність FTMS, яку повідомляє пристрій.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5965"/>
+        <location filename="../settings.qml" line="5939"/>
         <source>Ant+ Options (only for some Android)</source>
         <translation>Параметри ANT+ (лише для деяких Android)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5977"/>
+        <location filename="../settings.qml" line="5951"/>
         <source>Set 100mm as wheel circumference in settings of ant+ speed sensor</source>
         <translation>Укажіть окружність колеса 100mm у налаштуваннях датчика швидкості ANT+</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="5990"/>
+        <location filename="../settings.qml" line="5964"/>
         <source>Ant+ Cadence</source>
         <translation>Каденс через ANT+</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6004"/>
+        <location filename="../settings.qml" line="5978"/>
         <source>Turn this on if you need to use ANT+ along with Bluetooth. Power is also sent.</source>
         <translation>Увімкніть, якщо потрібно використовувати ANT+ разом із Bluetooth. Потужність теж передається.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6019"/>
+        <location filename="../settings.qml" line="5993"/>
         <source>ANT+ Speed Offset</source>
         <translation>Зміщення швидкості ANT+</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6040"/>
+        <location filename="../settings.qml" line="6014"/>
         <source>You can increase/decrease your speed sent over ANT+. The number you enter as an Offset adds that amount to your speed.</source>
         <translation>Дає змогу збільшити або зменшити швидкість, що передається через ANT+. Введене зміщення додається до вашої швидкості.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6056"/>
+        <location filename="../settings.qml" line="6030"/>
         <source>ANT+ Speed Gain:</source>
         <translation>Коефіцієнт швидкості ANT+:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6077"/>
+        <location filename="../settings.qml" line="6051"/>
         <source>You can increase/decrease your speed output sent over ANT+. For example, to use a rower to cycle in Zwift, you could double your speed output to better match your cycling speed. The number you enter is a multiplier applied to your actual speed.</source>
         <translation>Дає змогу збільшити або зменшити швидкість, що передається через ANT+. Наприклад, щоб їздити у Zwift на гребному тренажері, можна подвоїти швидкість і наблизити її до велосипедної. Введене число – множник до вашої фактичної швидкості.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6091"/>
+        <location filename="../settings.qml" line="6065"/>
         <source>Ant+ Heart</source>
         <translation>Пульс через ANT+</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6107"/>
+        <location filename="../settings.qml" line="6081"/>
         <source>ANT+ Heart Device Number (0=Auto):</source>
         <translation>Номер ANT+ пульсометра (0=авто):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6129"/>
+        <location filename="../settings.qml" line="6103"/>
         <source>This setting enables receiving the heart rate from an external HRM over ANT+ instead of from QZ.</source>
         <translation>Вмикає отримання пульсу від зовнішнього пульсометра через ANT+ замість пульсу з QZ.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6142"/>
+        <location filename="../settings.qml" line="6116"/>
         <source>Ant+ Bike</source>
         <translation>Велотренажер через ANT+</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6156"/>
+        <location filename="../settings.qml" line="6130"/>
         <source>Use this to connect to your bike using ANT+ instead of Bluetooth. Default: Disabled</source>
         <translation>Під’єднуватися до велотренажера через ANT+ замість Bluetooth. Типово: вимкнено</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6187"/>
+        <location filename="../settings.qml" line="6161"/>
         <source>Tiles Options</source>
         <translation>Параметри плиток</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6196"/>
+        <location filename="../settings.qml" line="6170"/>
         <source>General UI Options</source>
         <translation>Загальні параметри інтерфейсу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6207"/>
+        <location filename="../settings.qml" line="6181"/>
         <source>Top Bar Enabled</source>
         <translation>Показувати верхню панель</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6224"/>
+        <location filename="../settings.qml" line="6198"/>
         <source>Floating Window Type:</source>
         <translation>Тип плаваючого вікна:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6229"/>
+        <location filename="../settings.qml" line="6203"/>
         <source>Classic</source>
         <translation>Класичне</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6229"/>
+        <location filename="../settings.qml" line="6203"/>
         <source>Horizontal</source>
         <translation>Горизонтальне</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6246"/>
+        <location filename="../settings.qml" line="6220"/>
         <source>Choose the floating window layout type. Classic uses the standard floating.htm file, while Horizontal uses the hfloating.htm file for horizontal layout.</source>
         <translation>Виберіть вигляд плаваючого вікна. «Classic» використовує стандартний файл floating.htm, «Horizontal» – файл hfloating.htm із горизонтальним розташуванням.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6259"/>
+        <location filename="../settings.qml" line="6233"/>
         <source>Allows continuous display of the Start/Pause and Stop buttons across the top of the screen during your workouts. Default is on.</source>
         <translation>Кнопки «Старт/Пауза» і «Стоп» постійно відображаються вгорі екрана під час тренування. Типово ввімкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6275"/>
+        <location filename="../settings.qml" line="6249"/>
         <source>Floating Window Width:</source>
         <translation>Ширина плаваючого вікна:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6296"/>
+        <location filename="../settings.qml" line="6270"/>
         <source>Android Only: width of the floating window.</source>
         <translation>Лише Android: ширина плаваючого вікна.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6312"/>
+        <location filename="../settings.qml" line="6286"/>
         <source>Floating Window Height:</source>
         <translation>Висота плаваючого вікна:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6333"/>
+        <location filename="../settings.qml" line="6307"/>
         <source>Android Only: height of the floating window.</source>
         <translation>Лише Android: висота плаваючого вікна.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6349"/>
+        <location filename="../settings.qml" line="6323"/>
         <source>Floating Window % Transparency:</source>
         <translation>Прозорість плаваючого вікна, %:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6370"/>
+        <location filename="../settings.qml" line="6344"/>
         <source>Android Only: transparency percentage of the floating window.</source>
         <translation>Лише Android: прозорість плаваючого вікна у відсотках.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6384"/>
+        <location filename="../settings.qml" line="6358"/>
         <source>Floating Window Startup</source>
         <translation>Плаваюче вікно під час запуску</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6398"/>
+        <location filename="../settings.qml" line="6372"/>
         <source>Android Only: if enabled the floating window will start as soon as the fitness devices is connected.</source>
         <translation>Лише Android: якщо ввімкнено, плаваюче вікно відкриється одразу після під’єднання тренажера.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6411"/>
+        <location filename="../settings.qml" line="6385"/>
         <source>Open Floating on a Browser</source>
         <translation>Відкривати плаваюче вікно в браузері</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6420"/>
+        <location filename="../settings.qml" line="6394"/>
         <source>Chart Display Mode:</source>
         <translation>Режим графіків:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6425"/>
+        <location filename="../settings.qml" line="6399"/>
         <source>Both Charts</source>
         <translation>Обидва графіки</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6425"/>
+        <location filename="../settings.qml" line="6399"/>
         <source>Heart Rate Only</source>
         <translation>Лише пульс</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6425"/>
+        <location filename="../settings.qml" line="6399"/>
         <source>Power Only</source>
         <translation>Лише потужність</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6442"/>
+        <location filename="../settings.qml" line="6416"/>
         <source>Choose which charts to display in the footer: both heart rate and power charts, only heart rate chart, or only power chart.</source>
         <translation>Виберіть, які графіки показувати внизу екрана: пульс і потужність, лише пульс або лише потужність.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6457"/>
+        <location filename="../settings.qml" line="6431"/>
         <source>iOS Live Activity Left Metric:</source>
         <translation>Лівий показник Live Activity (iOS):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6478"/>
+        <location filename="../settings.qml" line="6452"/>
         <source>iOS Live Activity Right Metric:</source>
         <translation>Правий показник Live Activity (iOS):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6497"/>
+        <location filename="../settings.qml" line="6471"/>
         <source>iOS only: choose which two metrics are shown in the compact Dynamic Island bar for Live Activities. Default is Heart Rate on the left and Watt on the right.</source>
         <translation>Лише iOS: виберіть два показники для компактної панелі Dynamic Island у Live Activities. Типово – пульс ліворуч і потужність праворуч.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6511"/>
+        <location filename="../settings.qml" line="6485"/>
         <source>UI Themes</source>
         <translation>Теми інтерфейсу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6519"/>
+        <location filename="../settings.qml" line="6493"/>
         <source>Tiles Icons</source>
         <translation>Значки плиток</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6535"/>
+        <location filename="../settings.qml" line="6509"/>
         <source>Background Color:</source>
         <translation>Колір тла:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6556"/>
-        <location filename="../settings.qml" line="6590"/>
-        <location filename="../settings.qml" line="6637"/>
-        <location filename="../settings.qml" line="6670"/>
+        <location filename="../settings.qml" line="6530"/>
+        <location filename="../settings.qml" line="6564"/>
+        <location filename="../settings.qml" line="6611"/>
+        <location filename="../settings.qml" line="6644"/>
         <source>Please choose a color</source>
         <translation>Виберіть колір</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6569"/>
+        <location filename="../settings.qml" line="6543"/>
         <source>Tiles Background Color:</source>
         <translation>Колір тла плиток:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6600"/>
+        <location filename="../settings.qml" line="6574"/>
         <source>Tiles Shadow</source>
         <translation>Тінь плиток</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6616"/>
+        <location filename="../settings.qml" line="6590"/>
         <source>Tiles Shadow Color:</source>
         <translation>Колір тіні плиток:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6649"/>
+        <location filename="../settings.qml" line="6623"/>
         <source>Statusbar Background Color:</source>
         <translation>Колір тла рядка стану:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6682"/>
+        <location filename="../settings.qml" line="6656"/>
         <source>2nd line tile text size:</source>
         <translation>Розмір тексту 2-го рядка плитки:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6707"/>
+        <location filename="../settings.qml" line="6681"/>
         <source>Peloton Options</source>
         <translation>Параметри Peloton</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6811"/>
+        <location filename="../settings.qml" line="6785"/>
         <source>Difficulty:</source>
         <translation>Складність:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6817"/>
+        <location filename="../settings.qml" line="6791"/>
         <source>lower</source>
         <translation>нижня межа</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6817"/>
+        <location filename="../settings.qml" line="6791"/>
         <source>upper</source>
         <translation>верхня межа</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6817"/>
+        <location filename="../settings.qml" line="6791"/>
         <source>average</source>
         <translation>середнє</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6835"/>
+        <location filename="../settings.qml" line="6809"/>
         <source>Typically, Peloton coaches call out a range for target incline, resistance and/or speed. Use this setting to choose the difficulty of the target QZ communicates. Difficulty level can be set to lower, upper or average. Click OK.</source>
         <translation>Зазвичай тренери Peloton називають діапазон цільового нахилу, опору та/або швидкості. Це налаштування визначає, яку ціль передає QZ: «нижня межа», «верхня межа» чи «середнє». Натисніть OK.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6850"/>
+        <location filename="../settings.qml" line="6824"/>
         <source>Treadmill Level:</source>
         <translation>Рівень для доріжки:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6873"/>
+        <location filename="../settings.qml" line="6847"/>
         <source>Difficulty level for Peloton treadmill classes. 1 is easy 10 is hard.</source>
         <translation>Рівень складності для занять Peloton на біговій доріжці. 1 – легко, 10 – важко.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6888"/>
+        <location filename="../settings.qml" line="6862"/>
         <source>Treadmill Walk Level:</source>
         <translation>Рівень ходьби на доріжці:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6911"/>
+        <location filename="../settings.qml" line="6885"/>
         <source>Difficulty level for Peloton treadmill walking classes. 1 is easy 10 is hard.</source>
         <translation>Рівень складності для занять Peloton із ходьби на біговій доріжці. 1 – легко, 10 – важко.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6926"/>
+        <location filename="../settings.qml" line="6900"/>
         <source>Walking Min Speed:</source>
         <translation>Мін. швидкість ходьби:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6945"/>
+        <location filename="../settings.qml" line="6919"/>
         <source>Minimum speed for Peloton walking sessions. Set to 0 to disable. Applied to all speed targets in walking workouts.</source>
         <translation>Мінімальна швидкість для занять Peloton із ходьби. 0 – вимкнути. Застосовується до всіх цільових швидкостей у тренуваннях із ходьби.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6960"/>
+        <location filename="../settings.qml" line="6934"/>
         <source>Running Min Speed:</source>
         <translation>Мін. швидкість бігу:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6979"/>
+        <location filename="../settings.qml" line="6953"/>
         <source>Minimum speed for Peloton running sessions. Set to 0 to disable. Applied to all speed targets in running workouts.</source>
         <translation>Мінімальна швидкість для занять Peloton із бігу. 0 – вимкнути. Застосовується до всіх цільових швидкостей у бігових тренуваннях.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="6994"/>
+        <location filename="../settings.qml" line="6968"/>
         <source>Rower Level:</source>
         <translation>Рівень для гребного тренажера:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7017"/>
+        <location filename="../settings.qml" line="6991"/>
         <source>Difficulty level for Peloton rower classes. 1 is easy 10 is hard.</source>
         <translation>Рівень складності для занять Peloton на гребному тренажері. 1 – легко, 10 – важко.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7033"/>
+        <location filename="../settings.qml" line="7007"/>
         <source>PZP Username:</source>
         <translation>Ім’я користувача PZP:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7054"/>
+        <location filename="../settings.qml" line="7028"/>
         <source>As of 4/1/2022, this feature is broken due to a Power Zone Pack (PZP) website change. Leave (or change back to) the default of “username” (without quotation marks, all lowercase and all one word) until further notice.</source>
         <translation>Від 4/1/2022 ця функція не працює через зміни на сайті Power Zone Pack (PZP). До подальшого повідомлення залиште (або поверніть) типове значення «username» (без лапок, малими літерами, одним словом).</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7070"/>
+        <location filename="../settings.qml" line="7044"/>
         <source>PZP Password:</source>
         <translation>Пароль PZP:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7093"/>
+        <location filename="../settings.qml" line="7067"/>
         <source>As of 4/1/2022, this feature is broken due to a Power Zone Pack (PZP) website change. Leave this setting blank until further notice.</source>
         <translation>Від 4/1/2022 ця функція не працює через зміни на сайті Power Zone Pack (PZP). До подальшого повідомлення залиште це поле порожнім.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7109"/>
+        <location filename="../settings.qml" line="7083"/>
         <source>Conversion Gain:</source>
         <translation>Коефіцієнт перерахунку:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7131"/>
+        <location filename="../settings.qml" line="7105"/>
         <source>Conversion gain is a multiplier. Use this setting to align the Peloton resistance calculated by QZ with the relative effort required by your bike. In most cases the default values will be correct.</source>
         <translation>Коефіцієнт перерахунку – це множник. З його допомогою опір Peloton, розрахований QZ, узгоджується з реальним зусиллям на вашому велотренажері. У більшості випадків типові значення підходять.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7147"/>
+        <location filename="../settings.qml" line="7121"/>
         <source>Conversion Offset:</source>
         <translation>Зміщення перерахунку:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7169"/>
+        <location filename="../settings.qml" line="7143"/>
         <source>Increases the resistance that QZ displays in the Peloton Resistance tile. If QZ’s calculated conversion from your bike’s resistance scale to Peloton’s seems too low, the number you enter here will be added to the calculated resistance without increasing your effort or actual resistance. (Example: If QZ displays Peloton resistance of 30 and you enter 5, QZ will display 35.)</source>
         <translation>Збільшує опір, який QZ показує на плитці «Опір Peloton». Якщо перерахунок шкали опору вашого велотренажера в шкалу Peloton здається заниженим, введене тут число додасться до розрахованого опору, не збільшуючи ні вашого зусилля, ні реального опору. (Приклад: якщо QZ показує опір Peloton 30, а ви ввели 5, QZ покаже 35.)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7183"/>
+        <location filename="../settings.qml" line="7157"/>
         <source>Cycling/Running Sensor (Peloton compatibility)</source>
         <translation>Датчик вело/бігу (сумісність із Peloton)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7197"/>
+        <location filename="../settings.qml" line="7171"/>
         <source>Turn this on compatibility to Peloton over Bluetooth. Default is off.</source>
         <translation>Вмикає сумісність із Peloton через Bluetooth. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7210"/>
+        <location filename="../settings.qml" line="7184"/>
         <source>Auto Start (with intro)</source>
         <translation>Автостарт (зі вступом)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7224"/>
+        <location filename="../settings.qml" line="7198"/>
         <source>Turn this on to start a workout automatically when you start a workout on Peloton (waiting the intro). Default is off.</source>
         <translation>Увімкніть, щоб тренування в QZ починалося автоматично, коли ви запускаєте тренування в Peloton (дочекавшись вступу). Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7237"/>
+        <location filename="../settings.qml" line="7211"/>
         <source>Auto Start (without intro)</source>
         <translation>Автостарт (без вступу)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7251"/>
+        <location filename="../settings.qml" line="7225"/>
         <source>Turn this on to start a workout automatically when you start a workout on Peloton (skipping the intro). Default is off.</source>
         <translation>Увімкніть, щоб тренування в QZ починалося автоматично, коли ви запускаєте тренування в Peloton (пропускаючи вступ). Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7295"/>
+        <location filename="../settings.qml" line="7269"/>
         <source>Override HR Metric:</source>
         <translation>Замість пульсу передавати:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7319"/>
+        <location filename="../settings.qml" line="7293"/>
         <source>By default, QZ communicates heart rate to Peloton. Use this setting to change the metric that appears on the Peloton screen.</source>
         <translation>Типово QZ передає в Peloton пульс. Це налаштування дає змогу вибрати інший показник для екрана Peloton.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7335"/>
+        <location filename="../settings.qml" line="7309"/>
         <source>Date on Strava:</source>
         <translation>Дата в Strava:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7341"/>
+        <location filename="../settings.qml" line="7315"/>
         <source>Before Title</source>
         <translation>Перед назвою</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7341"/>
+        <location filename="../settings.qml" line="7315"/>
         <source>After Title</source>
         <translation>Після назви</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7359"/>
+        <location filename="../settings.qml" line="7333"/>
         <source>Allows you to choose whether you would like the Peloton class air date to display before or after the class title on Strava.</source>
         <translation>Дає змогу вибрати, показувати дату виходу заняття Peloton перед його назвою чи після неї в Strava.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7374"/>
+        <location filename="../settings.qml" line="7348"/>
         <source>Date Format:</source>
         <translation>Формат дати:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7398"/>
+        <location filename="../settings.qml" line="7372"/>
         <source>Activity Link in Strava</source>
         <translation>Посилання на заняття в Strava</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7412"/>
+        <location filename="../settings.qml" line="7386"/>
         <source>Turn this on if you want QZ to capture a link to the Peloton class and display it in Strava.</source>
         <translation>Увімкніть, якщо хочете, щоб QZ зберігав посилання на заняття Peloton і показував його в Strava.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7425"/>
+        <location filename="../settings.qml" line="7399"/>
         <source>Spinups Autoresistance</source>
         <translation>Автоопір у Spin-Ups</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7439"/>
+        <location filename="../settings.qml" line="7413"/>
         <source>By default, QZ treats Spin-UPS in Power Zone rides as an increasing ramp to warm you up. You can disable this, to leave the resistance up to you.</source>
         <translation>Типово QZ сприймає Spin-Ups у заїздах Power Zone як наростаюче навантаження для розминки. Це можна вимкнути й регулювати опір самостійно.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7453"/>
+        <location filename="../settings.qml" line="7427"/>
         <source>Peloton Auto Sync (Experimental)</source>
         <translation>Автосинхронізація Peloton (експериментально)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7467"/>
+        <location filename="../settings.qml" line="7441"/>
         <source>Only for Android where QZ is running on the same Peloton device. This setting enables the AI (Artificial Intelligence) on QZ that will read the Peloton workout screen and will adjust the Peloton offset in order to stay in sync in realtime with your Peloton workout. A popup about screen recording will appear in order to notify this.</source>
         <translation>Лише для Android, коли QZ запущено на тому самому пристрої Peloton. Вмикає ШІ (штучний інтелект) у QZ, який зчитує екран тренування Peloton і підлаштовує зміщення Peloton, щоб у реальному часі йти синхронно з вашим тренуванням Peloton. Про це повідомить спливне вікно щодо запису екрана.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7480"/>
+        <location filename="../settings.qml" line="7454"/>
         <source>Peloton Auto Sync Companion (Exp.)</source>
         <translation>Автосинхронізація Peloton через Companion (експ.)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7494"/>
+        <location filename="../settings.qml" line="7468"/>
         <source>This setting enables the AI (Artificial Intelligence) on the QZ Companion AI app that will read the Peloton workout screen and will adjust the Peloton offset in order to stay in sync in realtime with your Peloton workout.</source>
         <translation>Вмикає ШІ (штучний інтелект) у застосунку QZ Companion AI, який зчитує екран тренування Peloton і підлаштовує зміщення Peloton, щоб у реальному часі йти синхронно з вашим тренуванням Peloton.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7537"/>
+        <location filename="../settings.qml" line="7511"/>
         <source>Zwift Options</source>
         <translation>Параметри Zwift</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7547"/>
-        <location filename="../settings.qml" line="16197"/>
+        <location filename="../settings.qml" line="7521"/>
+        <location filename="../settings.qml" line="16171"/>
         <source>Username:</source>
         <translation>Ім’я користувача:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7569"/>
+        <location filename="../settings.qml" line="7543"/>
         <source>Enter the email address you use to login to Zwift. Ensure there are no spaces before or after your email. Click OK.</source>
         <translation>Введіть адресу електронної пошти, з якою входите у Zwift. Переконайтеся, що перед адресою й після неї немає пробілів. Натисніть OK.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7585"/>
-        <location filename="../settings.qml" line="16233"/>
+        <location filename="../settings.qml" line="7559"/>
+        <location filename="../settings.qml" line="16207"/>
         <source>Password:</source>
         <translation>Пароль:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7609"/>
+        <location filename="../settings.qml" line="7583"/>
         <source>Enter the password you use to login to Zwift. Click OK.</source>
         <translation>Введіть пароль, з яким входите у Zwift. Натисніть OK.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7623"/>
+        <location filename="../settings.qml" line="7597"/>
         <source>Zwift Play &amp; Click Settings</source>
         <translation>Налаштування Zwift Play і Click</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7624"/>
+        <location filename="../settings.qml" line="7598"/>
         <source>Would you like to disable Zwift Play and Zwift Click settings? Having them enabled together with &apos;Get gears from Zwift&apos; may cause conflicts.</source>
         <translation>Вимкнути налаштування Zwift Play і Zwift Click? Якщо їх увімкнено разом з «Отримувати передачі із Zwift», можливі конфлікти.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7636"/>
+        <location filename="../settings.qml" line="7610"/>
         <source>Get Gears from Zwift</source>
         <translation>Отримувати передачі із Zwift</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7659"/>
+        <location filename="../settings.qml" line="7633"/>
         <source>This setting bring virtual gearing from zwift to all the bikes directly from the Zwift interface. You have to configure Zwift: Wahoo virtual device from QZ as for power and cadence, and your QZ device as resistance. MUST be disabled for Mywhoosh app. Default: disabled.</source>
         <translation>Це налаштування переносить віртуальні передачі зі Zwift на будь-який велотренажер безпосередньо з інтерфейсу Zwift. У Zwift потрібно вибрати віртуальний пристрій Wahoo від QZ як джерело потужності й каденсу, а ваш пристрій QZ – як пристрій опору. ОБОВ’ЯЗКОВО вимкніть для застосунку MyWhoosh. Типово: вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7700"/>
+        <location filename="../settings.qml" line="7674"/>
         <source>Align Gear Value on Both Zwift and QZ</source>
         <translation>Узгоджувати передачу у Zwift і QZ</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7714"/>
+        <location filename="../settings.qml" line="7688"/>
         <source>By default QZ is showing the actual gears from the bike. Enabling this, QZ will show the same gears that you see on Zwift. This doesn&apos;t affect the real gear value one the bike. Default: disabled.</source>
         <translation>Типово QZ показує фактичні передачі велотренажера. Якщо ввімкнути, QZ показуватиме ті самі передачі, що й у Zwift. На реальну передачу велотренажера це не впливає. Типово: вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7729"/>
+        <location filename="../settings.qml" line="7703"/>
         <source>Poll Time:</source>
         <translation>Інтервал опитування:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7750"/>
+        <location filename="../settings.qml" line="7724"/>
         <source>Define the number of delay seconds between each inclination change from Zwift. This value can&apos;t be less than 5. Default: 5</source>
         <translation>Задайте затримку в секундах між змінами нахилу зі Zwift. Значення не може бути меншим за 5. Типово: 5</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7763"/>
-        <location filename="../settings.qml" line="7790"/>
+        <location filename="../settings.qml" line="7737"/>
+        <location filename="../settings.qml" line="7764"/>
         <source>Zwift Treadmill Auto Inclination</source>
         <translation>Автонахил доріжки за Zwift</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7777"/>
+        <location filename="../settings.qml" line="7751"/>
         <source>Only for Android and iOS: QZ will read the inclination in real time from the Zwift app and will adjust the inclination on your treadmill. It doesn&apos;t work on workout</source>
         <translation>Лише для Android та iOS: QZ у реальному часі зчитуватиме нахил із застосунку Zwift і змінюватиме нахил вашої бігової доріжки. У структурованих тренуваннях Zwift не працює</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7804"/>
+        <location filename="../settings.qml" line="7778"/>
         <source>Only for PC where QZ is running on the same Zwift device. This setting enables the AI (Artificial Intelligence) on QZ that will read the Zwift inclination from the Zwift app and will adjust the inclination on your treadmill. A popup about screen recording will appear in order to notify this.</source>
         <translation>Лише для ПК, коли QZ запущено на тому самому пристрої, що й Zwift. Вмикає ШІ (штучний інтелект) у QZ, який зчитує нахил із застосунку Zwift і змінює нахил вашої бігової доріжки. Про це повідомить спливне вікно щодо запису екрана.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7817"/>
+        <location filename="../settings.qml" line="7791"/>
         <source>Zwift Treadmill Climb Portal</source>
         <translation>Zwift: Climb Portal на доріжці</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7831"/>
+        <location filename="../settings.qml" line="7805"/>
         <source>Zwift Treadmill Auto Workout</source>
         <translation>Zwift: автотренування на доріжці</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7845"/>
+        <location filename="../settings.qml" line="7819"/>
         <source>Only for PC where QZ is running on the same Zwift device. This setting enables the AI (Artificial Intelligence) on QZ that will read the Zwift inclination and speed from the Zwift app during a workout and will adjust the inclination and the speed on your treadmill. A popup about screen recording will appear in order to notify this.</source>
         <translation>Лише для ПК, коли QZ запущено на тому самому пристрої, що й Zwift. Вмикає ШІ (штучний інтелект) у QZ, який під час тренування зчитує нахил і швидкість із застосунку Zwift і змінює нахил і швидкість вашої бігової доріжки. Про це повідомить спливне вікно щодо запису екрана.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7860"/>
+        <location filename="../settings.qml" line="7834"/>
         <source>Rouvy Options</source>
         <translation>Параметри Rouvy</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7868"/>
+        <location filename="../settings.qml" line="7842"/>
         <source>Rouvy Compatibility</source>
         <translation>Сумісність із Rouvy</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7882"/>
+        <location filename="../settings.qml" line="7856"/>
         <source>Wifi Compatibility for Rouvy</source>
         <translation>Сумісність із Rouvy через Wi-Fi</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7898"/>
+        <location filename="../settings.qml" line="7872"/>
         <source>Garmin Options</source>
         <translation>Параметри Garmin</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7906"/>
+        <location filename="../settings.qml" line="7880"/>
         <source>Garmin Bluetooth Sensor</source>
         <translation>Bluetooth-датчик Garmin</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7920"/>
+        <location filename="../settings.qml" line="7894"/>
         <source>If you want to send metrics to your Garmin device from your Mac, enable this. Otherwise leave it disabled.</source>
         <translation>Увімкніть, якщо хочете передавати показники з Mac на пристрій Garmin. Інакше залиште вимкненим.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7933"/>
+        <location filename="../settings.qml" line="7907"/>
         <source>Enable Companion App</source>
         <translation>Увімкнути застосунок-компаньйон</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7947"/>
+        <location filename="../settings.qml" line="7921"/>
         <source>You have to install the QZ Companion App on your Garmin Watch/Computer first.</source>
         <translation>Спершу встановіть застосунок QZ Companion на годинник або велокомп’ютер Garmin.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7960"/>
+        <location filename="../settings.qml" line="7934"/>
         <source>Ant+ Bike Over Garmin Watch</source>
         <translation>Велотренажер ANT+ через годинник Garmin</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7974"/>
+        <location filename="../settings.qml" line="7948"/>
         <source>Use your garmin watch to get the ANT+ metrics from a bike</source>
         <translation>Отримувати показники велотренажера через ANT+ за допомогою годинника Garmin</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="7995"/>
+        <location filename="../settings.qml" line="7969"/>
         <source>Enable Garmin Upload</source>
         <translation>Увімкнути вивантаження в Garmin</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8009"/>
+        <location filename="../settings.qml" line="7983"/>
         <source>Enable automatic upload of FIT files to Garmin Connect after workouts.</source>
         <translation>Автоматично вивантажувати FIT-файли в Garmin Connect після тренування.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8022"/>
+        <location filename="../settings.qml" line="7996"/>
         <source>Ask RPE / Feeling after workout</source>
         <translation>Питати RPE і самопочуття після тренування</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8036"/>
+        <location filename="../settings.qml" line="8010"/>
         <source>Show a popup after Stop to rate perceived exertion (RPE) and how you felt; the values are saved into the FIT file and shown in Garmin Connect.</source>
         <translation>Після «Стоп» показувати вікно, де можна оцінити відчутне навантаження (RPE) і самопочуття; оцінки зберігаються у FIT-файл і відображаються в Garmin Connect.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8049"/>
+        <location filename="../settings.qml" line="8023"/>
         <source>Fetch Garmin Workouts on Startup</source>
         <translation>Завантажувати тренування Garmin під час запуску</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8063"/>
+        <location filename="../settings.qml" line="8037"/>
         <source>Enable automatic download of today&apos;s Garmin workout when QZ starts. Default: enabled.</source>
         <translation>Автоматично завантажувати сьогоднішнє тренування Garmin під час запуску QZ. Типово: увімкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8078"/>
+        <location filename="../settings.qml" line="8052"/>
         <source>Garmin Email:</source>
         <translation>Пошта Garmin:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8104"/>
+        <location filename="../settings.qml" line="8078"/>
         <source>Garmin Password:</source>
         <translation>Пароль Garmin:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8131"/>
+        <location filename="../settings.qml" line="8105"/>
         <source>Garmin Server:</source>
         <translation>Сервер Garmin:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8138"/>
+        <location filename="../settings.qml" line="8112"/>
         <source>Global (garmin.com)</source>
         <translation>Глобальний (garmin.com)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8138"/>
+        <location filename="../settings.qml" line="8112"/>
         <source>China (garmin.cn)</source>
         <translation>Китай (garmin.cn)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8152"/>
+        <location filename="../settings.qml" line="8126"/>
         <source>Test Garmin Login</source>
         <translation>Перевірити вхід у Garmin</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8173"/>
+        <location filename="../settings.qml" line="8147"/>
         <source>Garmin MFA Required</source>
         <translation>Потрібен код підтвердження Garmin</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8181"/>
+        <location filename="../settings.qml" line="8155"/>
         <source>Garmin has sent a verification code to your email.
 Please enter it below:</source>
         <translation>Garmin надіслав код підтвердження на вашу пошту.
 Введіть його нижче:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8188"/>
+        <location filename="../settings.qml" line="8162"/>
         <source>If you don&apos;t receive the code, please enable 2FA in your Garmin profile privacy settings.</source>
         <translation>Якщо код не надходить, увімкніть 2FA в налаштуваннях конфіденційності профілю Garmin.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8199"/>
+        <location filename="../settings.qml" line="8173"/>
         <source>Enter MFA code</source>
         <translation>Введіть код підтвердження</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8218"/>
+        <location filename="../settings.qml" line="8192"/>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8227"/>
+        <location filename="../settings.qml" line="8201"/>
         <source>Submit</source>
         <translation>Надіслати</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8246"/>
+        <location filename="../settings.qml" line="8220"/>
         <source>Enter your Garmin Connect credentials to enable automatic upload. Your password is stored locally and securely.</source>
         <translation>Введіть облікові дані Garmin Connect, щоб увімкнути автоматичне вивантаження. Пароль зберігається локально в захищеному вигляді.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8259"/>
+        <location filename="../settings.qml" line="8233"/>
         <source>Use Garmin device in the FIT file</source>
         <translation>Пристрій Garmin у FIT-файлі</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8273"/>
+        <location filename="../settings.qml" line="8247"/>
         <source>With this enabled, QZ will write the FIT file as a Garmin device so Garmin will consider this fit file for the training effect. Default: disabled.</source>
         <translation>Якщо ввімкнено, QZ записує FIT-файл від імені пристрою Garmin, і Garmin враховує його під час розрахунку тренувального ефекту. Типово: вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8286"/>
+        <location filename="../settings.qml" line="8260"/>
         <source>Garmin device for FIT file</source>
         <translation>Пристрій Garmin для FIT-файлу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8978"/>
+        <location filename="../settings.qml" line="8952"/>
         <source>Garmin device UNIT ID</source>
         <translation>UNIT ID пристрою Garmin</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="8999"/>
+        <location filename="../settings.qml" line="8973"/>
         <source>IMPORTANT: You must set your real Garmin device UNIT ID here to see your actual device in Garmin Connect. You can find your device UNIT ID in the Garmin Connect app. The default value (3313379353) is just a placeholder. If you want to see also the Acute load in Garmin Connect leave the default Unit ID here.</source>
         <translation>ВАЖЛИВО: вкажіть тут справжній UNIT ID свого пристрою Garmin, щоб у Garmin Connect відображався саме він. UNIT ID пристрою можна знайти в застосунку Garmin Connect. Типове значення (3313379353) – лише заглушка. Якщо хочете бачити в Garmin Connect ще й гостре навантаження (Acute Load), залиште тут типовий Unit ID.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9015"/>
+        <location filename="../settings.qml" line="8989"/>
         <source>Training Program Options</source>
         <translation>Параметри програми тренування</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9028"/>
+        <location filename="../settings.qml" line="9002"/>
         <source>Stop Treadmill at the End</source>
         <translation>Зупиняти доріжку в кінці</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9042"/>
+        <location filename="../settings.qml" line="9016"/>
         <source>Treadmill only: enabling this if you want that QZ will stop the tape at the end of the current train program.</source>
         <translation>Лише для бігової доріжки: увімкніть, щоб QZ зупиняв полотно в кінці поточної програми тренування.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9055"/>
+        <location filename="../settings.qml" line="9029"/>
         <source>Enable Clipboard Workouts</source>
         <translation>Тренування з буфера обміну</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9069"/>
+        <location filename="../settings.qml" line="9043"/>
         <source>Enable detection of ZWO/XML workouts copied to the clipboard. Default: disabled.</source>
         <translation>Розпізнавати тренування ZWO/XML, скопійовані в буфер обміну. Типово: вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9082"/>
+        <location filename="../settings.qml" line="9056"/>
         <source>Sound on Segment Change</source>
         <translation>Звук під час зміни сегмента</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9096"/>
+        <location filename="../settings.qml" line="9070"/>
         <source>Play a short sound when a training program starts a new row. Default: disabled.</source>
         <translation>Відтворювати короткий звуковий сигнал, коли програма тренування переходить до наступного рядка. Типово: вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9110"/>
+        <location filename="../settings.qml" line="9084"/>
         <source>Auto Lap on Segment</source>
         <translation>Автоколо за сегментами</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9124"/>
+        <location filename="../settings.qml" line="9098"/>
         <source>Automatically trigger a lap when completing each workout segment/row. For ramp segments, lap is triggered only at the end of the ramp to avoid creating a lap every second.</source>
         <translation>Автоматично позначати коло після завершення кожного сегмента (рядка) тренування. Для сегментів із плавним наростанням коло позначається лише в їхньому кінці, щоб не створювати коло щосекунди.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9137"/>
+        <location filename="../settings.qml" line="9111"/>
         <source>Treadmill Auto-adjust speed by power</source>
         <translation>Доріжка: підлаштування швидкості за потужністю</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9151"/>
+        <location filename="../settings.qml" line="9125"/>
         <source>Treadmill only: Automatically adjusts speed to maintain consistent power output. Speed adjustments occur on incline changes and adapt to manual speed modifications.</source>
         <translation>Лише для бігової доріжки: автоматично підлаштовує швидкість, щоб потужність залишалася сталою. Швидкість змінюється зі зміною нахилу й ураховує ручні зміни швидкості.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9167"/>
+        <location filename="../settings.qml" line="9141"/>
         <source>PID on Heart Zone:</source>
         <translation>PID за пульсовою зоною:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9191"/>
+        <location filename="../settings.qml" line="9165"/>
         <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. Turn on, set a target heart rate (HR) zone in which to train and click OK. For example, enter 2 to train in HR zone 2 and the treadmill will auto adjust the speed (or resistance on a bike) to maintain your heart rate in zone 2. QZ gradually increases or decreases your speed (or bike resistance) in small increments every 40 seconds to reach and maintain your target HR zone. During a workout, you can display and use the ‘+’ and ‘-’ button on the PID HR Zone tile to change the target HR zone.</source>
         <translation>QZ керує біговою доріжкою або велотренажером, щоб утримувати вас у вибраній пульсовій зоні. Увімкніть, задайте цільову пульсову зону для тренування й натисніть OK. Наприклад, введіть 2, щоб тренуватися в 2-й пульсовій зоні, – доріжка автоматично змінюватиме швидкість (на велотренажері – опір), утримуючи пульс у зоні 2. QZ поступово, невеликими кроками кожні 40 секунд, підвищує або знижує швидкість (чи опір велотренажера), щоб вийти в цільову пульсову зону й утримуватися в ній. Під час тренування можна вивести плитку «Пульсова зона PID» і змінювати цільову зону її кнопками «+» і «-».</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9206"/>
+        <location filename="../settings.qml" line="9180"/>
         <source>PID on HR min:</source>
         <translation>PID за пульсом, мін.:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9228"/>
+        <location filename="../settings.qml" line="9202"/>
         <source>PID on HR max:</source>
         <translation>PID за пульсом, макс.:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9248"/>
+        <location filename="../settings.qml" line="9222"/>
         <source>Alternatively to &apos;PID on Heart Zone&apos; setting you can use this couple of settings in order to specify a HR range.</source>
         <translation>Замість налаштування «PID за пульсовою зоною» можна задати діапазон пульсу цією парою налаштувань.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9261"/>
+        <location filename="../settings.qml" line="9235"/>
         <source>PID &apos;Pushy&apos;</source>
         <translation>PID «Наполегливий»</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9275"/>
+        <location filename="../settings.qml" line="9249"/>
         <source>Enabling this the PID is trying to motivate yourself to always increase a little the effort trying anyway to keep you in the zone. Default: Enabled.</source>
         <translation>Якщо ввімкнено, PID спонукає вас потроху збільшувати зусилля, але все одно намагається втримати вас у зоні. Типово: увімкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9290"/>
+        <location filename="../settings.qml" line="9264"/>
         <source>PID Recovery Zone Lower Limit (%):</source>
         <translation>Нижня межа зони відновлення PID (%):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9309"/>
+        <location filename="../settings.qml" line="9283"/>
         <source>Lower HR boundary (% of max HR) that defines the bottom of Zone 1 for &apos;Pushy&apos; mode. Below this percentage the treadmill is at the bottom of the recovery area. Default: 60.</source>
         <translation>Нижня межа пульсу (% від максимального), з якої починається зона 1 для режиму «Наполегливий». Нижче цього значення доріжка перебуває в нижній частині зони відновлення. Типово: 60.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9324"/>
+        <location filename="../settings.qml" line="9298"/>
         <source>PID Pushy Zone Limit:</source>
         <translation>Межа «наполегливої» зони PID:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9343"/>
+        <location filename="../settings.qml" line="9317"/>
         <source>Fraction of zone above the target zone where &apos;Pushy&apos; mode stops pushing. 0.8 means the PID stops pushing at zone+0.8. Default: 0.8.</source>
         <translation>Частка зони над цільовою, на якій режим «Наполегливий» перестає підганяти. 0.8 означає, що PID перестає підганяти на рівні зона+0.8. Типово: 0.8.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9356"/>
+        <location filename="../settings.qml" line="9330"/>
         <source>PID Ignore Inclination</source>
         <translation>PID без урахування нахилу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9370"/>
+        <location filename="../settings.qml" line="9344"/>
         <source>Enabling this the PID will ignore the inclination changes. Default: Disabled.</source>
         <translation>Якщо ввімкнено, PID не враховує зміни нахилу. Типово: вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9386"/>
+        <location filename="../settings.qml" line="9360"/>
         <source>1 mile pace (total time):</source>
         <translation>Темп на 1 милю (загальний час):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9407"/>
+        <location filename="../settings.qml" line="9381"/>
         <source>Enter your 1 mile time goal, click OK. This setting will be used when you’re following a training program with the speed control. These settings should also match the Zwift app settings. More info: https://github.com/cagnulein/qdomyos-zwift/issues/609.</source>
         <translation>Введіть цільовий час на 1 милю й натисніть OK. Це налаштування використовується, коли ви виконуєте програму тренування з керуванням швидкістю. Значення мають збігатися з налаштуваннями в застосунку Zwift. Докладніше: https://github.com/cagnulein/qdomyos-zwift/issues/609.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9423"/>
+        <location filename="../settings.qml" line="9397"/>
         <source>5 km pace (total time):</source>
         <translation>Темп на 5 km (загальний час):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9444"/>
+        <location filename="../settings.qml" line="9418"/>
         <source>See 1 Mile Pace above; same except 5 km instead of 1 mile.</source>
         <translation>Див. «Темп на 1 милю» вище; те саме, але для 5 km замість 1 милі.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9460"/>
+        <location filename="../settings.qml" line="9434"/>
         <source>10 km pace (total time):</source>
         <translation>Темп на 10 km (загальний час):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9481"/>
+        <location filename="../settings.qml" line="9455"/>
         <source>See 1 Mile Pace above; same except 10 km instead of 1 mile.</source>
         <translation>Див. «Темп на 1 милю» вище; те саме, але для 10 km замість 1 милі.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9497"/>
+        <location filename="../settings.qml" line="9471"/>
         <source>Half Marathon pace (total time):</source>
         <translation>Темп на півмарафон (загальний час):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9518"/>
+        <location filename="../settings.qml" line="9492"/>
         <source>See 1 Mile Pace above; same except half marathon distance instead of 1 mile.</source>
         <translation>Див. «Темп на 1 милю» вище; те саме, але для півмарафонської дистанції замість 1 милі.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9534"/>
+        <location filename="../settings.qml" line="9508"/>
         <source>Marathon pace (total time):</source>
         <translation>Темп на марафон (загальний час):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9555"/>
+        <location filename="../settings.qml" line="9529"/>
         <source>See 1 Mile Pace above; same except marathon distance instead of 1 mile.</source>
         <translation>Див. «Темп на 1 милю» вище; те саме, але для марафонської дистанції замість 1 милі.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9571"/>
+        <location filename="../settings.qml" line="9545"/>
         <source>Warmup Speed (pace):</source>
         <translation>Швидкість розминки (темп):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9594"/>
+        <location filename="../settings.qml" line="9568"/>
         <source>Cooldown Speed (pace):</source>
         <translation>Швидкість заминки (темп):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9617"/>
+        <location filename="../settings.qml" line="9591"/>
         <source>Rest Speed (pace):</source>
         <translation>Швидкість відпочинку (темп):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9640"/>
+        <location filename="../settings.qml" line="9614"/>
         <source>Default Pace:</source>
         <translation>Типовий темп:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9646"/>
+        <location filename="../settings.qml" line="9620"/>
         <source>1 mile</source>
         <translation>1 миля</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9646"/>
+        <location filename="../settings.qml" line="9620"/>
         <source>Half Marathon</source>
         <translation>Півмарафон</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9646"/>
+        <location filename="../settings.qml" line="9620"/>
         <source>Marathon</source>
         <translation>Марафон</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9664"/>
+        <location filename="../settings.qml" line="9638"/>
         <source>Select the default Pace to be used when the ZWO file does not indicate a precise pace.</source>
         <translation>Виберіть темп, який використовується, якщо у файлі ZWO не вказано точного темпу.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9680"/>
+        <location filename="../settings.qml" line="9654"/>
         <source>ERG Mode Watt Step:</source>
         <translation>Крок потужності в режимі ERG:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9701"/>
+        <location filename="../settings.qml" line="9675"/>
         <source>Set the wattage step increment for ERG mode heart rate zone training. Default: 5 watts.</source>
         <translation>Крок зміни потужності в режимі ERG під час тренування за пульсовими зонами. Типово: 5 W.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9715"/>
+        <location filename="../settings.qml" line="9689"/>
         <source>Training Program Random</source>
         <translation>Випадкова програма тренування</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9728"/>
+        <location filename="../settings.qml" line="9702"/>
         <source>Duration (minutes):</source>
         <translation>Тривалість (хвилини):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9753"/>
+        <location filename="../settings.qml" line="9727"/>
         <source>Period (seconds):</source>
         <translation>Період (секунди):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9778"/>
+        <location filename="../settings.qml" line="9752"/>
         <source>Speed min.:</source>
         <translation>Швидкість, мін.:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9803"/>
+        <location filename="../settings.qml" line="9777"/>
         <source>Speed max.:</source>
         <translation>Швидкість, макс.:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9828"/>
+        <location filename="../settings.qml" line="9802"/>
         <source>Incline min.:</source>
         <translation>Нахил, мін.:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9853"/>
+        <location filename="../settings.qml" line="9827"/>
         <source>Incline max.:</source>
         <translation>Нахил, макс.:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9878"/>
+        <location filename="../settings.qml" line="9852"/>
         <source>Resistance min.:</source>
         <translation>Опір, мін.:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9903"/>
+        <location filename="../settings.qml" line="9877"/>
         <source>Resistance max.:</source>
         <translation>Опір, макс.:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9925"/>
+        <location filename="../settings.qml" line="9899"/>
         <source>Turn on and enter your choices for workout time (in minutes and seconds) and the maximum and minimum speed, incline (treadmill), and resistance (bike) and QZ will randomly change your speed and resistance or incline accordingly for the period of time you have selected.</source>
         <translation>Увімкніть і задайте тривалість тренування (у хвилинах і секундах), а також максимальну й мінімальну швидкість, нахил (для бігової доріжки) та опір (для велотренажера) – QZ випадково змінюватиме швидкість і опір або нахил із вибраним періодом.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9941"/>
+        <location filename="../settings.qml" line="9915"/>
         <source>Treadmill Options</source>
         <translation>Параметри бігової доріжки</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9949"/>
+        <location filename="../settings.qml" line="9923"/>
         <source>Treadmill as a Bike</source>
         <translation>Доріжка як велотренажер</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9962"/>
+        <location filename="../settings.qml" line="9936"/>
         <source>Turn on to convert your treadmill output to bike output when riding on Zwift. QZ sends your treadmill metrics to Zwift over Bluetooth so that you can participate as a bike rider. Default is off.</source>
         <translation>Увімкніть, щоб у Zwift показники бігової доріжки перетворювалися на показники велотренажера. QZ передає дані доріжки у Zwift через Bluetooth, і ви берете участь як велосипедист. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9976"/>
+        <location filename="../settings.qml" line="9950"/>
         <source>Treadmill Speed Forcing</source>
         <translation>Керування швидкістю доріжки</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="9990"/>
+        <location filename="../settings.qml" line="9964"/>
         <source>Turn this on to have QZ control the speed of your treadmill during, for example, Peloton classes based on the coach’s speed callouts. Your speed will be in the low, upper or average range based on your Peloton Options &gt; Difficulty setting. Default is off.</source>
         <translation>Увімкніть, щоб QZ керував швидкістю бігової доріжки, наприклад на заняттях Peloton, за командами тренера. Швидкість буде в нижній, верхній або середній частині діапазону залежно від налаштування «Параметри Peloton &gt; Складність». Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10004"/>
+        <location filename="../settings.qml" line="9978"/>
         <source>Force Running Activity</source>
         <translation>Завжди записувати як біг</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10018"/>
+        <location filename="../settings.qml" line="9992"/>
         <source>Turn this on to write treadmill FIT files as running activities even when the average speed is below 6.5 km/h. This can help Garmin calculate Training Effect for high-incline treadmill workouts. Default is off.</source>
         <translation>Увімкніть, щоб FIT-файли бігової доріжки записувалися як біг, навіть якщо середня швидкість нижча за 6.5 km/h. Це допомагає Garmin розрахувати Training Effect для тренувань із великим нахилом. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10046"/>
+        <location filename="../settings.qml" line="10020"/>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Увімкніть, щоб після запуску QZ одразу переходив у режим паузи, якщо використовується бігова доріжка. Лише для бігових доріжок. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10060"/>
+        <location filename="../settings.qml" line="10034"/>
         <source>Direct Distance from Treadmill</source>
         <translation>Дистанція безпосередньо з доріжки</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10074"/>
+        <location filename="../settings.qml" line="10048"/>
         <source>Turn this on to read the distance directly from the treadmill instead of calculating it from speed. Some treadmills report distance more accurately than the speed-based calculation. Default is off.</source>
         <translation>Увімкніть, щоб брати дистанцію безпосередньо з бігової доріжки, а не обчислювати її за швидкістю. Деякі доріжки повідомляють дистанцію точніше, ніж розрахунок за швидкістю. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10088"/>
+        <location filename="../settings.qml" line="10062"/>
         <source>Difficulty offset based</source>
         <translation>Складність через зміщення</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10102"/>
+        <location filename="../settings.qml" line="10076"/>
         <source>Target Speed and Target Incline tile offer a way to increase/decrease the current difficulty with the plus/minus buttons. By default, with this setting disabled, the speed and the inclination change with a 3% gain for every pressure. Switching this ON, QZ will add a 0.1 speed offset or a 0.5 incline offset instead.</source>
         <translation>На плитках «Цільова швидкість» і «Цільовий нахил» кнопками «плюс» і «мінус» можна підвищувати або знижувати поточну складність. Типово, коли це налаштування вимкнено, швидкість і нахил змінюються на 3% за кожне натискання. Якщо його ввімкнути, QZ натомість додаватиме зміщення 0.1 до швидкості або 0.5 до нахилу.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10118"/>
+        <location filename="../settings.qml" line="10092"/>
         <source>Speed Step:</source>
         <translation>Крок швидкості:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10140"/>
+        <location filename="../settings.qml" line="10114"/>
         <source>(Speed Tile) This controls the amount of the increase or decrease in the speed (in kph/mph) when you press the plus or minus button in the Speed Tile. Default is 0.5 kph.</source>
         <translation>(Плитка швидкості) Визначає, на скільки збільшується або зменшується швидкість (у km/h чи mph) після натискання кнопки «плюс» або «мінус» на плитці швидкості. Типово 0.5 km/h.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10156"/>
+        <location filename="../settings.qml" line="10130"/>
         <source>Min. Inclination:</source>
         <translation>Мін. нахил:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10177"/>
+        <location filename="../settings.qml" line="10151"/>
         <source>This overrides the minimum inclination value of your treadmill (in order to reduce the inclination movement). Default is -100</source>
         <translation>Перевизначає мінімальний нахил бігової доріжки (щоб зменшити хід нахилу). Типово -100</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10192"/>
+        <location filename="../settings.qml" line="10166"/>
         <source>Max. Inclination:</source>
         <translation>Макс. нахил:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10213"/>
+        <location filename="../settings.qml" line="10187"/>
         <source>This overrides the maximum inclination value of your treadmill (in order to reduce the inclination movement). Default is -100</source>
         <translation>Перевизначає максимальний нахил бігової доріжки (щоб зменшити хід нахилу). Типово -100</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10228"/>
+        <location filename="../settings.qml" line="10202"/>
         <source>Max. Speed:</source>
         <translation>Макс. швидкість:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10249"/>
+        <location filename="../settings.qml" line="10223"/>
         <source>This overrides the maximum speed value of your treadmill (in order to limit the max speed). Default is 100 km/h (62.1 mph)</source>
         <translation>Перевизначає максимальну швидкість бігової доріжки (щоб її обмежити). Типово 100 km/h (62.1 mph)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10264"/>
+        <location filename="../settings.qml" line="10238"/>
         <source>Min. Speed:</source>
         <translation>Мін. швидкість:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10285"/>
+        <location filename="../settings.qml" line="10259"/>
         <source>This overrides the minimum speed value of your treadmill (in order to limit the min speed). Default is 0 km/h (0 mph)</source>
         <translation>Перевизначає мінімальну швидкість бігової доріжки (щоб її обмежити). Типово 0 km/h (0 mph)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10301"/>
+        <location filename="../settings.qml" line="10275"/>
         <source>Step Count Gain:</source>
         <translation>Коефіцієнт кроків:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10323"/>
+        <location filename="../settings.qml" line="10297"/>
         <source>Multiplier applied to the step count calculated from cadence for calibration. Increase above 1.0 to count more steps, decrease below 1.0 to count fewer steps. Default is 1.0.</source>
         <translation>Множник для калібрування кількості кроків, обчисленої за каденсом. Більше 1.0 – кроків рахується більше, менше 1.0 – менше. Типово 1.0.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10336"/>
+        <location filename="../settings.qml" line="10310"/>
         <source>Inclination Overrides</source>
         <translation>Перевизначення нахилу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10344"/>
+        <location filename="../settings.qml" line="10318"/>
         <source>Overrides the default inclination values sent from the treadmill</source>
         <translation>Перевизначає стандартні значення нахилу, які передає бігова доріжка</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10357"/>
+        <location filename="../settings.qml" line="10331"/>
         <source>Simulate Inclination with Speed</source>
         <translation>Імітація нахилу швидкістю</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10371"/>
+        <location filename="../settings.qml" line="10345"/>
         <source>For treadmills without inclination: turning this on and QZ will transform inclination requests into speed changes.</source>
         <translation>Для доріжок без нахилу: якщо ввімкнути, QZ перетворюватиме запити нахилу на зміни швидкості.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10384"/>
+        <location filename="../settings.qml" line="10358"/>
         <source>FTMS Treadmill:</source>
         <translation>Бігова доріжка FTMS:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10410"/>
+        <location filename="../settings.qml" line="10384"/>
         <source>If you have a generic FTMS bike and the tiles doesn&apos;t appear on the main QZ screen, select here the Bluetooth name of your bike.</source>
         <translation>Якщо у вас звичайна бігова доріжка FTMS і плитки не з’являються на головному екрані QZ, виберіть тут Bluetooth-ім’я своєї доріжки.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10423"/>
+        <location filename="../settings.qml" line="10397"/>
         <source>Expand the bars to the right to display the options under this setting. Select your specific model (if it is listed) and leave all other settings on default. If you encounter problems or have a question about settings for your specific equipment with QZ, click here to open a support ticket on GitHub or ask the QZ community on the QZ Facebook Group.</source>
         <translation>Розгорніть розділ значком праворуч, щоб побачити його параметри. Виберіть свою модель (якщо вона є в списку) й залиште решту налаштувань типовими. Якщо виникли проблеми або є запитання щодо налаштувань вашого тренажера в QZ, натисніть тут, щоб створити звернення до підтримки на GitHub, або запитайте спільноту QZ у групі QZ у Facebook.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10437"/>
+        <location filename="../settings.qml" line="10411"/>
         <source>Proform/Nordictrack Options</source>
         <translation>Параметри Proform/Nordictrack</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10754"/>
+        <location filename="../settings.qml" line="10728"/>
         <source>Proform IP:</source>
         <translation>IP-адреса Proform:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10778"/>
+        <location filename="../settings.qml" line="10752"/>
         <source>Nordictrack 2950 IP:</source>
         <translation>IP-адреса Nordictrack 2950:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10817"/>
+        <location filename="../settings.qml" line="10791"/>
         <source>Pafers Options</source>
         <translation>Параметри Pafers</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10825"/>
+        <location filename="../settings.qml" line="10799"/>
         <source>Pafers Treadmill</source>
         <translation>Бігова доріжка Pafers</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10855"/>
+        <location filename="../settings.qml" line="10829"/>
         <source>GEM Module Options</source>
         <translation>Параметри модуля GEM</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10862"/>
+        <location filename="../settings.qml" line="10836"/>
         <source>Inclination</source>
         <translation>Нахил</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10878"/>
+        <location filename="../settings.qml" line="10852"/>
         <source>Echelon Options</source>
         <translation>Параметри Echelon</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10902"/>
+        <location filename="../settings.qml" line="10876"/>
         <source>KingSmith Options</source>
         <translation>Параметри KingSmith</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10982"/>
+        <location filename="../settings.qml" line="10956"/>
         <source>Hardware Buttons</source>
         <translation>Фізичні кнопки</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="10996"/>
+        <location filename="../settings.qml" line="10970"/>
         <source>Enable handling of physical Start/Pause/Stop buttons on the treadmill hardware</source>
         <translation>Обробляти натискання фізичних кнопок «Старт», «Пауза» і «Стоп» на корпусі бігової доріжки</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11012"/>
+        <location filename="../settings.qml" line="10986"/>
         <source>RunnerT Options</source>
         <translation>Параметри RunnerT</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11063"/>
+        <location filename="../settings.qml" line="11037"/>
         <source>Domyos Treadmill Options</source>
         <translation>Параметри бігової доріжки Domyos</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11071"/>
+        <location filename="../settings.qml" line="11045"/>
         <source>Speed/Inclination Buttons</source>
         <translation>Кнопки швидкості/нахилу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11099"/>
+        <location filename="../settings.qml" line="11073"/>
         <source>TS100 (Fixed 15° Inclination)</source>
         <translation>TS100 (фіксований нахил 15°)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11113"/>
+        <location filename="../settings.qml" line="11087"/>
         <source>RUN100E (Use Requested Inclination)</source>
         <translation>RUN100E (запитаний нахил)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11127"/>
+        <location filename="../settings.qml" line="11101"/>
         <source>Sync Start (Old Behavior)</source>
         <translation>Синхронний старт (стара поведінка)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11142"/>
+        <location filename="../settings.qml" line="11116"/>
         <source>Distance on Console</source>
         <translation>Дистанція на консолі</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11157"/>
+        <location filename="../settings.qml" line="11131"/>
         <source>Fix Distance on Display</source>
         <translation>Виправити дистанцію на дисплеї</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11173"/>
+        <location filename="../settings.qml" line="11147"/>
         <source>Remap 5 km/h button:</source>
         <translation>Перепризначити кнопку 5 km/h:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11196"/>
+        <location filename="../settings.qml" line="11170"/>
         <source>Remap 10 km/h button:</source>
         <translation>Перепризначити кнопку 10 km/h:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11219"/>
+        <location filename="../settings.qml" line="11193"/>
         <source>Remap 16 km/h button:</source>
         <translation>Перепризначити кнопку 16 km/h:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11242"/>
+        <location filename="../settings.qml" line="11216"/>
         <source>Remap 22 km/h button:</source>
         <translation>Перепризначити кнопку 22 km/h:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11265"/>
-        <location filename="../settings.qml" line="15469"/>
+        <location filename="../settings.qml" line="11239"/>
+        <location filename="../settings.qml" line="15443"/>
         <source>Pool time (ms):</source>
         <translation>Інтервал опитування (ms):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11285"/>
+        <location filename="../settings.qml" line="11259"/>
         <source>Default: 200. Change this only if you have random issues with speed or inclination (try to put 300)</source>
         <translation>Типово: 200. Змінюйте, лише якщо швидкість або нахил час від часу поводяться неправильно (спробуйте 300)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11301"/>
+        <location filename="../settings.qml" line="11275"/>
         <source>Sole Treadmill Options</source>
         <translation>Параметри бігової доріжки Sole</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11309"/>
+        <location filename="../settings.qml" line="11283"/>
         <source>Inclination (experimental)</source>
         <translation>Нахил (експериментально)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11322"/>
+        <location filename="../settings.qml" line="11296"/>
         <source>Fast Inclination (experimental)</source>
         <translation>Швидкий нахил (експериментально)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11395"/>
+        <location filename="../settings.qml" line="11369"/>
         <source>Technogym Options</source>
         <translation>Параметри Technogym</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11403"/>
+        <location filename="../settings.qml" line="11377"/>
         <source>MyRun Experimental</source>
         <translation>MyRun (експериментально)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11420"/>
+        <location filename="../settings.qml" line="11394"/>
         <source>Fitshow Treadmill Options</source>
         <translation>Параметри бігової доріжки Fitshow</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11454"/>
+        <location filename="../settings.qml" line="11428"/>
         <source>True timer</source>
         <translation>Точний таймер</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11484"/>
+        <location filename="../settings.qml" line="11458"/>
         <source>User ID:</source>
         <translation>ID користувача:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11509"/>
+        <location filename="../settings.qml" line="11483"/>
         <source>ESLinker Treadmill Options</source>
         <translation>Параметри бігової доріжки ESLinker</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11516"/>
+        <location filename="../settings.qml" line="11490"/>
         <source>Cadenza Treadmill (Bodytone)</source>
         <translation>Бігова доріжка Cadenza (Bodytone)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11530"/>
+        <location filename="../settings.qml" line="11504"/>
         <source>YPOO Mini Change</source>
         <translation>YPOO Mini Change</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11543"/>
+        <location filename="../settings.qml" line="11517"/>
         <source>Costaway Folding</source>
         <translation>Costaway Folding</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11560"/>
+        <location filename="../settings.qml" line="11534"/>
         <source>Horizon Treadmill Options</source>
         <translation>Параметри бігової доріжки Horizon</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11582"/>
-        <location filename="../settings.qml" line="11779"/>
+        <location filename="../settings.qml" line="11556"/>
+        <location filename="../settings.qml" line="11753"/>
         <source>Force Using FTMS</source>
         <translation>Примусово використовувати FTMS</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11596"/>
+        <location filename="../settings.qml" line="11570"/>
         <source>Horizon 7.8 start issue</source>
         <translation>Horizon 7.8: проблема зі стартом</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11625"/>
+        <location filename="../settings.qml" line="11599"/>
         <source>Disable Pause</source>
         <translation>Вимкнути паузу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11640"/>
+        <location filename="../settings.qml" line="11614"/>
         <source>Supends stats while paused</source>
         <translation>Призупиняє статистику під час паузи</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11657"/>
+        <location filename="../settings.qml" line="11631"/>
         <source>User 1:</source>
         <translation>Користувач 1:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11680"/>
+        <location filename="../settings.qml" line="11654"/>
         <source>User 2:</source>
         <translation>Користувач 2:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11703"/>
+        <location filename="../settings.qml" line="11677"/>
         <source>User 3:</source>
         <translation>Користувач 3:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11726"/>
+        <location filename="../settings.qml" line="11700"/>
         <source>User 4:</source>
         <translation>Користувач 4:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11749"/>
+        <location filename="../settings.qml" line="11723"/>
         <source>User 5:</source>
         <translation>Користувач 5:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11772"/>
+        <location filename="../settings.qml" line="11746"/>
         <source>Bodytone Treadmill Options</source>
         <translation>Параметри бігової доріжки Bodytone</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11796"/>
+        <location filename="../settings.qml" line="11770"/>
         <source>Bowflex Treadmill Options</source>
         <translation>Параметри бігової доріжки Bowflex</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11804"/>
+        <location filename="../settings.qml" line="11778"/>
         <source>T9 mi/h speed</source>
         <translation>T9: швидкість у mi/h</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11823"/>
+        <location filename="../settings.qml" line="11797"/>
         <source>Toorx/iConsole Options</source>
         <translation>Параметри Toorx/iConsole</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11831"/>
+        <location filename="../settings.qml" line="11805"/>
         <source>TRX ROUTE KEY Compatibility</source>
         <translation>Сумісність із TRX ROUTE KEY</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11860"/>
+        <location filename="../settings.qml" line="11834"/>
         <source>BH SPADA Compatibility</source>
         <translation>Сумісність із BH SPADA</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11874"/>
+        <location filename="../settings.qml" line="11848"/>
         <source>BH SPADA wattage</source>
         <translation>Потужність BH SPADA</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11960"/>
+        <location filename="../settings.qml" line="11934"/>
         <source>JTX Fitness Sprint Treadmill</source>
         <translation>Бігова доріжка JTX Fitness Sprint</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11975"/>
+        <location filename="../settings.qml" line="11949"/>
         <source>Flow Fitness Runner DTM2000i</source>
         <translation>Flow Fitness Runner DTM2000i</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="11990"/>
+        <location filename="../settings.qml" line="11964"/>
         <source>Reebok FR30 Treadmill</source>
         <translation>Бігова доріжка Reebok FR30</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12020"/>
+        <location filename="../settings.qml" line="11994"/>
         <source>Toorx 3.0 Compatibility</source>
         <translation>Сумісність із Toorx 3.0</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12050"/>
+        <location filename="../settings.qml" line="12024"/>
         <source>Toorx FTMS Treadmill</source>
         <translation>Бігова доріжка Toorx FTMS</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12065"/>
+        <location filename="../settings.qml" line="12039"/>
         <source>IConcept FTMS Treadmill</source>
         <translation>Бігова доріжка IConcept FTMS</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12080"/>
+        <location filename="../settings.qml" line="12054"/>
         <source>Toorx FTMS Bike</source>
         <translation>Велотренажер Toorx FTMS</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12109"/>
+        <location filename="../settings.qml" line="12083"/>
         <source>Fytter RI08 Bike</source>
         <translation>Велотренажер Fytter RI08</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12123"/>
+        <location filename="../settings.qml" line="12097"/>
         <source>Asviva Bike</source>
         <translation>Велотренажер Asviva</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12150"/>
+        <location filename="../settings.qml" line="12124"/>
         <source>iConsole Elliptical</source>
         <translation>Орбітрек iConsole</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12163"/>
+        <location filename="../settings.qml" line="12137"/>
         <source>iConsole Rower</source>
         <translation>Гребний тренажер iConsole</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12176"/>
+        <location filename="../settings.qml" line="12150"/>
         <source>Toorx Treadmill Discovery Completed</source>
         <translation>Пошук бігової доріжки Toorx завершено</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12192"/>
+        <location filename="../settings.qml" line="12166"/>
         <source>Rower Options</source>
         <translation>Параметри гребного тренажера</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12199"/>
+        <location filename="../settings.qml" line="12173"/>
         <source>PM3, PM4 Options</source>
         <translation>Параметри PM3, PM4</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12230"/>
+        <location filename="../settings.qml" line="12204"/>
         <source>FTMS Rower:</source>
         <translation>Гребний тренажер FTMS:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12262"/>
+        <location filename="../settings.qml" line="12236"/>
         <source>Allows you to force QZ to connect to your FTMS Rower. If you are in doubt, leave this Disabled and send an email to the QZ support. Default is “Disabled.”</source>
         <translation>Дає змогу примусово під’єднати QZ до вашого гребного тренажера FTMS. Якщо сумніваєтеся, залиште «Вимкнено» й напишіть до підтримки QZ. Типово – «Вимкнено».</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12276"/>
+        <location filename="../settings.qml" line="12250"/>
         <source>WaterRower USB</source>
         <translation>WaterRower USB</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12290"/>
+        <location filename="../settings.qml" line="12264"/>
         <source>Proform/Nordictrack Rower Options</source>
         <translation>Параметри гребних тренажерів Proform/Nordictrack</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12330"/>
+        <location filename="../settings.qml" line="12304"/>
         <source>ProForm Rower IP:</source>
         <translation>IP-адреса ProForm Rower:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12355"/>
+        <location filename="../settings.qml" line="12329"/>
         <source>Elliptical Options</source>
         <translation>Параметри орбітрека</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12364"/>
+        <location filename="../settings.qml" line="12338"/>
         <source>Domyos Elliptical Options</source>
         <translation>Параметри орбітрека Domyos</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12372"/>
+        <location filename="../settings.qml" line="12346"/>
         <source>Speed Ratio:</source>
         <translation>Коефіцієнт швидкості:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12394"/>
-        <location filename="../settings.qml" line="12618"/>
+        <location filename="../settings.qml" line="12368"/>
+        <location filename="../settings.qml" line="12592"/>
         <source>Inclination Supported</source>
         <translation>Підтримка нахилу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12439"/>
+        <location filename="../settings.qml" line="12413"/>
         <source>FTMS Elliptical:</source>
         <translation>Орбітрек FTMS:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12471"/>
+        <location filename="../settings.qml" line="12445"/>
         <source>Allows you to force QZ to connect to your FTMS Elliptical. If you are in doubt, leave this Disabled and send an email to the QZ support. Default is Disabled.</source>
         <translation>Дає змогу примусово під’єднати QZ до вашого орбітрека FTMS. Якщо сумніваєтеся, залиште «Вимкнено» й напишіть до підтримки QZ. Типово – «Вимкнено».</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12499"/>
+        <location filename="../settings.qml" line="12473"/>
         <source>Proform/Nordictrack Elliptical Options</source>
         <translation>Параметри орбітреків Proform/Nordictrack</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12520"/>
+        <location filename="../settings.qml" line="12494"/>
         <source>Proform Hybrid Trainer PFEL03815</source>
         <translation>Proform Hybrid Trainer PFEL03815</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12574"/>
+        <location filename="../settings.qml" line="12548"/>
         <source>Companion IP:</source>
         <translation>IP-адреса Companion:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12611"/>
+        <location filename="../settings.qml" line="12585"/>
         <source>Sole Elliptical Options</source>
         <translation>Параметри орбітрека Sole</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12632"/>
+        <location filename="../settings.qml" line="12606"/>
         <source>E55 elliptical</source>
         <translation>Орбітрек E55</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12648"/>
+        <location filename="../settings.qml" line="12622"/>
         <source>iConcept Elliptical Options</source>
         <translation>Параметри орбітрека iConcept</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12654"/>
+        <location filename="../settings.qml" line="12628"/>
         <source>iConcept elliptical</source>
         <translation>Орбітрек iConcept</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12673"/>
+        <location filename="../settings.qml" line="12647"/>
         <source>Advanced Settings</source>
         <translation>Додаткові налаштування</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12684"/>
+        <location filename="../settings.qml" line="12658"/>
         <source>Manual Device:</source>
         <translation>Пристрій вручну:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12718"/>
+        <location filename="../settings.qml" line="12692"/>
         <source>Allows you to force QZ to connect to your equipment (see “Bluetooth Troubleshooting” below). Default is “Disabled.”</source>
         <translation>Дає змогу примусово під’єднати QZ до вашого тренажера (див. «Усунення проблем із Bluetooth» нижче). Типово – «Вимкнено».</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12731"/>
+        <location filename="../settings.qml" line="12705"/>
         <source>Confirm Stop Workout</source>
         <translation>Підтверджувати зупинку тренування</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12745"/>
+        <location filename="../settings.qml" line="12719"/>
         <source>Shows a confirmation popup before stopping the workout from the UI.</source>
         <translation>Показувати вікно підтвердження перед зупинкою тренування з інтерфейсу.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12761"/>
+        <location filename="../settings.qml" line="12735"/>
         <source>Watt Offset:</source>
         <translation>Зміщення потужності:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12783"/>
+        <location filename="../settings.qml" line="12757"/>
         <source>You can increase/decrease your watt output for moving your avatar faster/slower in Zwift or other similar apps as a way of calibrating your equipment. The number you enter as an Offset adds that amount to your watts.</source>
         <translation>Можна збільшити або зменшити потужність, яку видає тренажер, щоб аватар рухався швидше чи повільніше у Zwift і подібних застосунках, – так калібрується тренажер. Уведене зміщення додається до вашої потужності.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12799"/>
+        <location filename="../settings.qml" line="12773"/>
         <source>Watt Gain:</source>
         <translation>Коефіцієнт потужності:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12821"/>
+        <location filename="../settings.qml" line="12795"/>
         <source>You can increase/decrease your watt output for moving your avatar faster/slower in Zwift or other similar apps as a way of calibrating your equipment. For example, to use a rower to cycle in Zwift, you could double your watt output to better match your cycling speed by entering 2. The number you enter is a multiplier applied to your actual watts.</source>
         <translation>Можна збільшити або зменшити потужність, яку видає тренажер, щоб аватар рухався швидше чи повільніше у Zwift і подібних застосунках, – так калібрується тренажер. Наприклад, щоб їздити у Zwift на гребному тренажері, можна подвоїти потужність, увівши 2, – так вона краще відповідатиме швидкості на велосипеді. Уведене число – множник до вашої реальної потужності.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12837"/>
+        <location filename="../settings.qml" line="12811"/>
         <source>Speed Offset</source>
         <translation>Зміщення швидкості</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12859"/>
+        <location filename="../settings.qml" line="12833"/>
         <source>You can increase/decrease your speed for moving your avatar faster/slower in Zwift if your equipment outputs speed but not watts. The number you enter as an Offset adds that amount to your speed.</source>
         <translation>Можна збільшити або зменшити швидкість, щоб аватар рухався швидше чи повільніше у Zwift, якщо тренажер передає швидкість, але не потужність. Уведене зміщення додається до вашої швидкості.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12876"/>
+        <location filename="../settings.qml" line="12850"/>
         <source>Speed Gain:</source>
         <translation>Коефіцієнт швидкості:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12898"/>
+        <location filename="../settings.qml" line="12872"/>
         <source>You can increase/decrease your speed output for moving your avatar faster/slower in Zwift or other apps as a way of calibrating your equipment if your equipment outputs speed but not watts. For example, to use a rower to cycle in Zwift, you could double your speed output to better match your cycling speed. The number you enter is a multiplier applied to your actual speed.</source>
         <translation>Можна збільшити або зменшити швидкість, яку видає тренажер, щоб аватар рухався швидше чи повільніше у Zwift та інших застосунках, – так калібрується тренажер, якщо він передає швидкість, але не потужність. Наприклад, щоб їздити у Zwift на гребному тренажері, можна подвоїти швидкість, щоб вона краще відповідала велосипедній. Уведене число – множник до вашої реальної швидкості.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12914"/>
+        <location filename="../settings.qml" line="12888"/>
         <source>Cadence Offset</source>
         <translation>Зміщення каденсу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12936"/>
+        <location filename="../settings.qml" line="12910"/>
         <source>You can increase/decrease your cadence output. The number you enter as an Offset adds that amount to your cadence.</source>
         <translation>Можна збільшити або зменшити каденс, який видає тренажер. Уведене зміщення додається до вашого каденсу.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12952"/>
+        <location filename="../settings.qml" line="12926"/>
         <source>Cadence Gain:</source>
         <translation>Коефіцієнт каденсу:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12974"/>
+        <location filename="../settings.qml" line="12948"/>
         <source>You can increase/decrease your cadence output as a way of calibrating your equipment if your equipment outputs cadence but not watts. The number you enter is a multiplier applied to your actual cadence.</source>
         <translation>Можна збільшити або зменшити каденс, який видає тренажер, щоб відкалібрувати його, якщо він передає каденс, але не потужність. Уведене число – множник до вашого реального каденсу.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12988"/>
+        <location filename="../settings.qml" line="12962"/>
         <source>Strava</source>
         <translation>Strava</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="12997"/>
+        <location filename="../settings.qml" line="12971"/>
         <source>Strava Upload:</source>
         <translation>Вивантаження в Strava:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13003"/>
+        <location filename="../settings.qml" line="12977"/>
         <source>Always</source>
         <translation>Завжди</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13003"/>
+        <location filename="../settings.qml" line="12977"/>
         <source>Request</source>
         <translation>Питати</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13023"/>
+        <location filename="../settings.qml" line="12997"/>
         <source>Suffix activity:</source>
         <translation>Суфікс активності:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13044"/>
+        <location filename="../settings.qml" line="13018"/>
         <source>Default is “QZ.” Please leave this set to default so that other Strava users will see the QZ; a tiny bit of advertising that helps promote the app and support its development. If you choose to remove it, please consider contributing to the developer’s Patreon or Buy Me a Coffee accounts or just subscribe to the Swag bag in the left side bar to allow me to continue developing and supporting the app.</source>
         <translation>Типово – «QZ». Будь ласка, залиште типове значення, щоб інші користувачі Strava бачили QZ: це невелика реклама, яка допомагає просувати застосунок і підтримує його розробку. Якщо вирішите його прибрати, будь ласка, підтримайте розробника на Patreon або Buy Me a Coffee чи просто оформте підписку Swag Bag на бічній панелі ліворуч, щоб я міг і далі розвивати й підтримувати застосунок.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13057"/>
+        <location filename="../settings.qml" line="13031"/>
         <source>Strava External Browser Auth</source>
         <translation>Авторизація Strava в зовнішньому браузері</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13071"/>
+        <location filename="../settings.qml" line="13045"/>
         <source>QZ can open an external browser to authorize Strava. Default: disabled.</source>
         <translation>QZ може відкрити зовнішній браузер для авторизації в Strava. Типово: вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13085"/>
+        <location filename="../settings.qml" line="13059"/>
         <source>Strava Virtual Activity Tag</source>
         <translation>Мітка віртуальної активності Strava</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13099"/>
+        <location filename="../settings.qml" line="13073"/>
         <source>Append the Virtual Tag to the Strava Activity</source>
         <translation>Додавати до активності Strava мітку віртуальної активності</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13112"/>
+        <location filename="../settings.qml" line="13086"/>
         <source>Strava Treadmill Tag</source>
         <translation>Мітка бігової доріжки Strava</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13126"/>
+        <location filename="../settings.qml" line="13100"/>
         <source>Append the Treadmill Tag to the Strava Activity when you are using a treadmill. If you want to see the elevation on Strava, you need to disable this.</source>
         <translation>Додавати до активності Strava мітку бігової доріжки, якщо ви тренуєтеся на доріжці. Щоб бачити висоту в Strava, це треба вимкнути.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13139"/>
+        <location filename="../settings.qml" line="13113"/>
         <source>Date Prefix on Strava Workout</source>
         <translation>Дата на початку назви тренування Strava</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13153"/>
+        <location filename="../settings.qml" line="13127"/>
         <source>Append the Date to the Strava Activity as a prefix only for non-Peloton workout</source>
         <translation>Додавати дату на початок назви активності Strava – лише для тренувань не з Peloton</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13167"/>
+        <location filename="../settings.qml" line="13141"/>
         <source>Volume buttons change gears</source>
         <translation>Кнопки гучності перемикають передачі</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13181"/>
+        <location filename="../settings.qml" line="13155"/>
         <source>Allows you to change resistance during auto-follow mode using the volume buttons of the device running QZ, Bluetooth headphones or a Bluetooth remote. Changes made using these external controls will be visible in the Gears tile. This is a VERY USEFUL feature! Default is off.</source>
         <translation>Дає змогу змінювати опір у режимі автостеження кнопками гучності пристрою, на якому запущено QZ, Bluetooth-навушників або Bluetooth-пульта. Зміни із цих зовнішніх кнопок видно на плитці передач. ДУЖЕ КОРИСНА функція! Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13194"/>
+        <location filename="../settings.qml" line="13168"/>
         <source>Volume buttons debouncing</source>
         <translation>Придушення брязкоту кнопок гучності</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13208"/>
+        <location filename="../settings.qml" line="13182"/>
         <source>Debounce the volume buttons, so you will only see 1 gear step if there are 2 or more volume near steps.  Default is off.</source>
         <translation>Придушувати брязкіт кнопок гучності: якщо натиснути кнопку гучності 2 і більше разів поспіль, передача зміниться лише на 1 крок. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13224"/>
+        <location filename="../settings.qml" line="13198"/>
         <source>Power Averaging Mode:</source>
         <translation>Режим усереднення потужності:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13229"/>
+        <location filename="../settings.qml" line="13203"/>
         <source>Off</source>
         <translation>Вимк.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13229"/>
+        <location filename="../settings.qml" line="13203"/>
         <source>3 seconds</source>
         <translation>3 секунди</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13229"/>
+        <location filename="../settings.qml" line="13203"/>
         <source>5 seconds</source>
         <translation>5 секунд</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13253"/>
+        <location filename="../settings.qml" line="13227"/>
         <source>If the power output/watts your equipment sends to QZ is quite variable, this setting will result in smoother Power Zone graphs. This is also helpful for use with Power Meter Pedals. Uses harmonic averaging which smooths power spikes better than arithmetic averaging. If any reading is 0, power immediately becomes 0. Default is Off.
 
 IMPORTANT NOTES:
@@ -8570,307 +8560,307 @@ IMPORTANT NOTES:
 - Для станків Elite та інших із гоночним режимом (10 Hz): якщо комусь цього мало, згладжування Elite/станка разом зі згладжуванням QZ дасть кращий результат.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13267"/>
+        <location filename="../settings.qml" line="13241"/>
         <source>Instant Power on Pause</source>
         <translation>Миттєва потужність на паузі</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13281"/>
+        <location filename="../settings.qml" line="13255"/>
         <source>Enables the calculation of watts, even while in Pause mode. Default is off.</source>
         <translation>Обчислювати потужність навіть у режимі паузи. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13295"/>
+        <location filename="../settings.qml" line="13269"/>
         <source>Double Negative Inclination</source>
         <translation>Подвоїти від’ємний нахил</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13309"/>
+        <location filename="../settings.qml" line="13283"/>
         <source>Turn this on if you have a bike with inclination capabilities to fix Zwift’s bug that sends half-negative downhill inclination</source>
         <translation>Увімкніть, якщо ваш велотренажер має нахил, щоб виправити помилку Zwift, через яку на спусках передається вдвічі менший від’ємний нахил</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13325"/>
+        <location filename="../settings.qml" line="13299"/>
         <source>Zwift Inclination Offset:</source>
         <translation>Зміщення нахилу Zwift:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13347"/>
+        <location filename="../settings.qml" line="13321"/>
         <source>Inclination Offset and Gain are used to adjust the incline set by Zwift instead of, or in addition to, using the QZ Zwift Gain setting. For example, when Zwift changes the incline to 1%, you can have your treadmill change to 2%. The number you enter as an offset adds to the inclination sent from Zwift or any other 3rd party app. Default is 0.</source>
         <translation>Зміщення й коефіцієнт нахилу коригують нахил, заданий Zwift, замість налаштування коефіцієнта Zwift у QZ або разом із ним. Наприклад, коли Zwift змінює нахил на 1%, доріжка може ставити 2%. Уведене зміщення додається до нахилу, який передає Zwift або інший сторонній застосунок. Типово 0.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13363"/>
+        <location filename="../settings.qml" line="13337"/>
         <source>Zwift Inclination Gain:</source>
         <translation>Коефіцієнт нахилу Zwift:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13385"/>
+        <location filename="../settings.qml" line="13359"/>
         <source>The number you enter as a Gain is a multiplier applied to the inclination sent from Zwift or any other 3rd party app. Default is 1.</source>
         <translation>Уведений коефіцієнт – множник до нахилу, який передає Zwift або інший сторонній застосунок. Типово 1.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13400"/>
+        <location filename="../settings.qml" line="13374"/>
         <source>Minimum Inclination:</source>
         <translation>Мінімальний нахил:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13421"/>
+        <location filename="../settings.qml" line="13395"/>
         <source>If you don&apos;t want to go below a certain inclination value for bikes and treadmill set the min. value here. Default: -999.</source>
         <translation>Якщо не хочете опускатися нижче певного нахилу на велотренажері й доріжці, задайте тут мінімальне значення. Типово: -999.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13437"/>
+        <location filename="../settings.qml" line="13411"/>
         <source>Inclination Step:</source>
         <translation>Крок нахилу:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13459"/>
+        <location filename="../settings.qml" line="13433"/>
         <source>(Incline Tile) This controls the amount of the increase or decrease in the inclination when you press the plus or minus button in the Incline Tile for both treadmills and bikes. Default is 0.5.</source>
         <translation>(Плитка нахилу) Визначає, на скільки збільшується або зменшується нахил після натискання кнопки «плюс» або «мінус» на плитці нахилу – і для бігових доріжок, і для велотренажерів. Типово 0.5.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13472"/>
+        <location filename="../settings.qml" line="13446"/>
         <source>Send real inclination to virtual bridge</source>
         <translation>Передавати реальний нахил на віртуальний пристрій</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13486"/>
+        <location filename="../settings.qml" line="13460"/>
         <source>By default QZ sends to the virtual Bluetooth/DIRCON bridge the current inclination of the treadmill. Enabling this, it will send instead the one wihtout considering inclination gain or offset. Default: False.</source>
         <translation>Типово QZ передає на віртуальний пристрій Bluetooth/DIRCON поточний нахил бігової доріжки. Якщо ввімкнути, передаватиметься нахил без урахування коефіцієнта й зміщення нахилу. Типово: вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13500"/>
+        <location filename="../settings.qml" line="13474"/>
         <source>Disable wattage from machinery</source>
         <translation>Не брати потужність із тренажера</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13514"/>
+        <location filename="../settings.qml" line="13488"/>
         <source>This prevents your fitness device from sending its wattage calculation to QZ and defaults to QZ’s more accurate calculation.</source>
         <translation>Тренажер не передаватиме в QZ свій розрахунок потужності – замість нього використовується точніший розрахунок QZ.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13527"/>
+        <location filename="../settings.qml" line="13501"/>
         <source>Use Resistance instead of Inclination</source>
         <translation>Опір замість нахилу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13541"/>
+        <location filename="../settings.qml" line="13515"/>
         <source>For the smart trainers, use resistance instead of inclination. This should help if you don&apos;t want to have the Wahoo Climb or similar to change inclination when you change gears. Default: disabled</source>
         <translation>Для смарт-тренажерів: використовувати опір замість нахилу. Допомагає, якщо ви не хочете, щоб Wahoo Climb чи подібний пристрій змінював нахил під час перемикання передач. Типово: вимкнено</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13556"/>
+        <location filename="../settings.qml" line="13530"/>
         <source>AutoLap on Distance:</source>
         <translation>Автоколо за дистанцією:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13577"/>
+        <location filename="../settings.qml" line="13551"/>
         <source>You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).</source>
         <translation>Можна автоматично позначати кола у FIT-файлі за дистанцією. Одиниця: %1. Типово: 0 (вимкнено).</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13592"/>
+        <location filename="../settings.qml" line="13566"/>
         <source>Inclination Delay:</source>
         <translation>Затримка нахилу:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13613"/>
+        <location filename="../settings.qml" line="13587"/>
         <source>This slow down the inclination changes adding a delay between each change. This is not applied to all the model of treadmill/bike. Default is 0.</source>
         <translation>Сповільнює зміну нахилу, додаючи затримку між змінами. Працює не на всіх моделях доріжок і велотренажерів. Типово 0.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13629"/>
+        <location filename="../settings.qml" line="13603"/>
         <source>Accessories</source>
         <translation>Аксесуари</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13638"/>
+        <location filename="../settings.qml" line="13612"/>
         <source>Cadence Sensor Options</source>
         <translation>Параметри датчика каденсу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13647"/>
+        <location filename="../settings.qml" line="13621"/>
         <source>Don&apos;t touch these settings if your bike works properly!</source>
         <translation>Не змінюйте цих налаштувань, якщо велотренажер працює нормально!</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13660"/>
+        <location filename="../settings.qml" line="13634"/>
         <source>Cadence Sensor as a Bike</source>
         <translation>Датчик каденсу як велотренажер</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13680"/>
+        <location filename="../settings.qml" line="13654"/>
         <source>Cadence Sensor as a Treadmill</source>
         <translation>Датчик каденсу як бігова доріжка</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13699"/>
+        <location filename="../settings.qml" line="13673"/>
         <source>If your equipment doesn’t have Bluetooth, these settings allow you to use a cadence sensor so it will work with QZ as a bike or treadmill. Default is off.</source>
         <translation>Якщо тренажер не має Bluetooth, ці налаштування дають змогу під’єднати датчик каденсу, і QZ працюватиме з тренажером як із велотренажером або біговою доріжкою. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13713"/>
+        <location filename="../settings.qml" line="13687"/>
         <source>Cadence Sensor:</source>
         <translation>Датчик каденсу:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13747"/>
+        <location filename="../settings.qml" line="13721"/>
         <source>Use this setting to connect QZ to your cadence sensor. Default is Disabled.</source>
         <translation>Під’єднання QZ до датчика каденсу. Типово – «Вимкнено».</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13785"/>
+        <location filename="../settings.qml" line="13759"/>
         <source>Wheel ratio is the multiplier used by QZ to calculate your speed based on your cadence. For example, if you enter 1 for your wheel ratio and you are riding at a cadence of 30, QZ will display your speed as 30 km/h. The default of 0.33 is correct for most bikes.</source>
         <translation>Коефіцієнт колеса – множник, за яким QZ обчислює швидкість із каденсу. Наприклад, якщо ввести 1 і крутити педалі з каденсом 30, QZ покаже швидкість 30 km/h. Типове значення 0.33 підходить для більшості велотренажерів.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13812"/>
+        <location filename="../settings.qml" line="13786"/>
         <source>Enable special wattage calculation for Rogue Echo Bike: m_watt = 0.000602337 * pow(rpm, 3.11762) + 32.6404. Default is off.</source>
         <translation>Вмикає особливий розрахунок потужності для Rogue Echo Bike: m_watt = 0.000602337 * pow(rpm, 3.11762) + 32.6404. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13825"/>
+        <location filename="../settings.qml" line="13799"/>
         <source>Custom CSC Resistance/Watt Table</source>
         <translation>Власна таблиця опір/потужність для CSC</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13839"/>
+        <location filename="../settings.qml" line="13813"/>
         <source>Enable a custom linear resistance/watt table for CSC bikes. Joroto bikes keep using their dedicated resistance power profile. Resistance is clamped using the existing Min. Resistance and Max. Resistance settings.</source>
         <translation>Вмикає власну лінійну таблицю опір/потужність для велотренажерів CSC. Велотренажери Joroto і далі використовують свій окремий профіль потужності за опором. Опір обмежується наявними налаштуваннями «Мін. опір» і «Макс. опір».</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13854"/>
+        <location filename="../settings.qml" line="13828"/>
         <source>Resistance Level 1:</source>
         <translation>Рівень опору 1:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13877"/>
+        <location filename="../settings.qml" line="13851"/>
         <source>Watt 1:</source>
         <translation>Потужність 1:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13900"/>
+        <location filename="../settings.qml" line="13874"/>
         <source>Resistance Level 2:</source>
         <translation>Рівень опору 2:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13923"/>
+        <location filename="../settings.qml" line="13897"/>
         <source>Watt 2:</source>
         <translation>Потужність 2:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13944"/>
+        <location filename="../settings.qml" line="13918"/>
         <source>QZ will build a linear equation from the two resistance/watt points and clamp the effective resistance using the existing Min. Resistance and Max. Resistance settings.</source>
         <translation>QZ побудує лінійну залежність за двома точками опір/потужність і обмежить підсумковий опір наявними налаштуваннями «Мін. опір» і «Макс. опір».</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13960"/>
+        <location filename="../settings.qml" line="13934"/>
         <source>Power Sensor Options</source>
         <translation>Параметри датчика потужності</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13968"/>
+        <location filename="../settings.qml" line="13942"/>
         <source>Power Sensor as a Bike</source>
         <translation>Датчик потужності як велотренажер</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13982"/>
+        <location filename="../settings.qml" line="13956"/>
         <source>If your bike doesn’t have Bluetooth, this setting allows you to use a power meter pedal sensor so your bike will work with QZ. Default is off.</source>
         <translation>Якщо велотренажер не має Bluetooth, це налаштування дає змогу використовувати педалі з вимірювачем потужності, і велотренажер працюватиме з QZ. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="13996"/>
+        <location filename="../settings.qml" line="13970"/>
         <source>Power Sensor as a Treadmill</source>
         <translation>Датчик потужності як бігова доріжка</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14010"/>
+        <location filename="../settings.qml" line="13984"/>
         <source>If your treadmill doesn’t have Bluetooth, this setting allows you to use a Stryde sensor (or similar) so your treadmill will work with QZ. Default is off.</source>
         <translation>Якщо бігова доріжка не має Bluetooth, це налаштування дає змогу використовувати датчик Stryd (або подібний), і доріжка працюватиме з QZ. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14024"/>
+        <location filename="../settings.qml" line="13998"/>
         <source>Doubling Cadence for Run</source>
         <translation>Подвоєння каденсу для бігу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14038"/>
+        <location filename="../settings.qml" line="14012"/>
         <source>Some power sensors send cadence divided by 2. This setting will fix this behavior.</source>
         <translation>Деякі датчики потужності передають каденс, поділений на 2. Це налаштування виправляє таку поведінку.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14052"/>
+        <location filename="../settings.qml" line="14026"/>
         <source>Half Cadence on Strava</source>
         <translation>Половинний каденс у Strava</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14066"/>
+        <location filename="../settings.qml" line="14040"/>
         <source>Divide the cadence sent to Strava by 2.</source>
         <translation>Ділити на 2 каденс, що передається в Strava.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14079"/>
+        <location filename="../settings.qml" line="14053"/>
         <source>Use speed from the power sensor</source>
         <translation>Швидкість із датчика потужності</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14093"/>
+        <location filename="../settings.qml" line="14067"/>
         <source>If you have a Bluetooth treadmill and also a Stryd device connected to QZ and you want to use the speed from the stryd instead of the speed of the treadmill, enable this. Default: disabled.</source>
         <translation>Якщо до QZ під’єднано Bluetooth-доріжку та датчик Stryd і ви хочете брати швидкість зі Stryd, а не з доріжки, увімкніть це налаштування. Типово: вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14106"/>
+        <location filename="../settings.qml" line="14080"/>
         <source>Power sensor speed correction threshold (%):</source>
         <translation>Поріг корекції швидкості за датчиком потужності (%):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14127"/>
+        <location filename="../settings.qml" line="14101"/>
         <source>Maximum allowed difference between power sensor speed and treadmill speed before QZ stops applying the relative correction. Default: 20%.</source>
         <translation>Найбільша допустима різниця між швидкістю за датчиком потужності та швидкістю доріжки, після якої QZ перестає застосовувати відносну корекцію. Типово: 20%.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14140"/>
+        <location filename="../settings.qml" line="14114"/>
         <source>Use inclination from the power sensor</source>
         <translation>Нахил із датчика потужності</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14154"/>
+        <location filename="../settings.qml" line="14128"/>
         <source>If you have a Bluetooth treadmill and also a Runn device connected to QZ and you want to use the inclination from the RUNN instead of the inclination of the treadmill, enable this. Default: disabled.</source>
         <translation>Якщо до QZ під’єднано Bluetooth-доріжку та пристрій Runn і ви хочете брати нахил із RUNN, а не з доріжки, увімкніть це налаштування. Типово: вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14167"/>
+        <location filename="../settings.qml" line="14141"/>
         <source>Use cadence from the power sensor</source>
         <translation>Каденс із датчика потужності</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14181"/>
+        <location filename="../settings.qml" line="14155"/>
         <source>If you have a Bluetooth treadmill and also a power sensor (like Stryd) connected to QZ and you want to use the cadence from the power sensor instead of the cadence of the treadmill, enable this. This is useful when the treadmill cadence sensor is unreliable at low speeds (walking/jogging). Default: disabled.</source>
         <translation>Якщо до QZ під’єднано Bluetooth-доріжку та датчик потужності (наприклад, Stryd) і ви хочете брати каденс із датчика потужності, а не з доріжки, увімкніть це налаштування. Це корисно, коли датчик каденсу доріжки неточний на малих швидкостях (ходьба, легкий біг). Типово: вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14194"/>
+        <location filename="../settings.qml" line="14168"/>
         <source>Add inclination gain factor to the power</source>
         <translation>Додавати до потужності поправку на нахил</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14208"/>
+        <location filename="../settings.qml" line="14182"/>
         <source>If you have a Bluetooth treadmill and also a Stryd device connected to QZ, by default Stryd can&apos;t get the inclination from the treadmill. Enabling this and QZ will add an inclination gain to the power read from the Stryd. Default: disabled.</source>
         <translation>Якщо до QZ під’єднано Bluetooth-доріжку та датчик Stryd, типово Stryd не отримує нахилу від доріжки. Якщо ввімкнути це налаштування, QZ додасть до потужності, зчитаної зі Stryd, поправку на нахил. Типово: вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14221"/>
+        <location filename="../settings.qml" line="14195"/>
         <source>Power Sensor Speed/Incline Coefficient A:</source>
         <translation>Коефіцієнт A датчика потужності (швидкість/нахил):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14242"/>
+        <location filename="../settings.qml" line="14216"/>
         <source>Power Sensor Speed/Incline Coefficient B:</source>
         <translation>Коефіцієнт B датчика потужності (швидкість/нахил):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14263"/>
+        <location filename="../settings.qml" line="14237"/>
         <source>Custom coefficients for power sensor inclination calculation using formula: vwatts = (A + B × speed) × inclination.
 
 For Stryd sensors use: A = -0.96, B = 1.33
@@ -8895,731 +8885,731 @@ Default: A = -0.96, B = 1.33</source>
 Типово: A = -0.96, B = 1.33</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14277"/>
+        <location filename="../settings.qml" line="14251"/>
         <source>Power Sensor:</source>
         <translation>Датчик потужності:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14311"/>
+        <location filename="../settings.qml" line="14285"/>
         <source>Leave on Disabled or select from list of found Bluetooth devices.</source>
         <translation>Залиште «Вимкнено» або виберіть пристрій зі списку знайдених Bluetooth-пристроїв.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14327"/>
+        <location filename="../settings.qml" line="14301"/>
         <source>Elite™ Products</source>
         <translation>Пристрої Elite™</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14335"/>
+        <location filename="../settings.qml" line="14309"/>
         <source>Elite Rizer Options</source>
         <translation>Параметри Elite Rizer</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14379"/>
+        <location filename="../settings.qml" line="14353"/>
         <source>Difficulty/Gain:</source>
         <translation>Складність/коефіцієнт:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14403"/>
+        <location filename="../settings.qml" line="14377"/>
         <source>Elite Sterzo Smart Options</source>
         <translation>Параметри Elite Sterzo Smart</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14450"/>
+        <location filename="../settings.qml" line="14424"/>
         <source>SmartSpin2k Options</source>
         <translation>Параметри SmartSpin2k</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14458"/>
+        <location filename="../settings.qml" line="14432"/>
         <source>SmartSpin2k device:</source>
         <translation>Пристрій SmartSpin2k:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14493"/>
+        <location filename="../settings.qml" line="14467"/>
         <source>Peloton Bike</source>
         <translation>Велотренажер Peloton</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14510"/>
+        <location filename="../settings.qml" line="14484"/>
         <source>Shift Step</source>
         <translation>Крок перемикання</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14534"/>
+        <location filename="../settings.qml" line="14508"/>
         <source>Max Resistance</source>
         <translation>Макс. опір</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14558"/>
+        <location filename="../settings.qml" line="14532"/>
         <source>Min Resistance</source>
         <translation>Мін. опір</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14581"/>
+        <location filename="../settings.qml" line="14555"/>
         <source>Advanced SmartSpin2k Calibration</source>
         <translation>Розширене калібрування SmartSpin2k</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14591"/>
+        <location filename="../settings.qml" line="14565"/>
         <source>Resistance Sample 1</source>
         <translation>Опір, вимір 1</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14614"/>
+        <location filename="../settings.qml" line="14588"/>
         <source>Shift Step Sample 1</source>
         <translation>Крок перемикання, вимір 1</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14638"/>
+        <location filename="../settings.qml" line="14612"/>
         <source>Resistance Sample 2</source>
         <translation>Опір, вимір 2</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14661"/>
+        <location filename="../settings.qml" line="14635"/>
         <source>Shift Step Sample 2</source>
         <translation>Крок перемикання, вимір 2</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14685"/>
+        <location filename="../settings.qml" line="14659"/>
         <source>Resistance Sample 3</source>
         <translation>Опір, вимір 3</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14708"/>
+        <location filename="../settings.qml" line="14682"/>
         <source>Shift Step Sample 3</source>
         <translation>Крок перемикання, вимір 3</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14732"/>
+        <location filename="../settings.qml" line="14706"/>
         <source>Resistance Sample 4</source>
         <translation>Опір, вимір 4</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14755"/>
+        <location filename="../settings.qml" line="14729"/>
         <source>Shift Step Sample 4</source>
         <translation>Крок перемикання, вимір 4</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14782"/>
+        <location filename="../settings.qml" line="14756"/>
         <source>Fitmetria Fitfan™ Options</source>
         <translation>Параметри Fitmetria Fitfan™</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14791"/>
-        <location filename="../settings.qml" line="14890"/>
-        <location filename="../settings.qml" line="14983"/>
+        <location filename="../settings.qml" line="14765"/>
+        <location filename="../settings.qml" line="14864"/>
+        <location filename="../settings.qml" line="14957"/>
         <source>Enable</source>
         <translation>Увімкнути</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14808"/>
-        <location filename="../settings.qml" line="14906"/>
-        <location filename="../settings.qml" line="14999"/>
+        <location filename="../settings.qml" line="14782"/>
+        <location filename="../settings.qml" line="14880"/>
+        <location filename="../settings.qml" line="14973"/>
         <source>Mode:</source>
         <translation>Режим:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14814"/>
-        <location filename="../settings.qml" line="14912"/>
-        <location filename="../settings.qml" line="15005"/>
+        <location filename="../settings.qml" line="14788"/>
+        <location filename="../settings.qml" line="14886"/>
+        <location filename="../settings.qml" line="14979"/>
         <source>Heart</source>
         <translation>Пульс</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14814"/>
-        <location filename="../settings.qml" line="14912"/>
-        <location filename="../settings.qml" line="15005"/>
+        <location filename="../settings.qml" line="14788"/>
+        <location filename="../settings.qml" line="14886"/>
+        <location filename="../settings.qml" line="14979"/>
         <source>Power</source>
         <translation>Потужність</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14814"/>
-        <location filename="../settings.qml" line="14912"/>
-        <location filename="../settings.qml" line="15005"/>
+        <location filename="../settings.qml" line="14788"/>
+        <location filename="../settings.qml" line="14886"/>
+        <location filename="../settings.qml" line="14979"/>
         <source>Manual</source>
         <translation>Вручну</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14834"/>
-        <location filename="../settings.qml" line="14930"/>
-        <location filename="../settings.qml" line="15023"/>
+        <location filename="../settings.qml" line="14808"/>
+        <location filename="../settings.qml" line="14904"/>
+        <location filename="../settings.qml" line="14997"/>
         <source>Min. value (0-100):</source>
         <translation>Мін. значення (0-100):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14858"/>
-        <location filename="../settings.qml" line="14952"/>
-        <location filename="../settings.qml" line="15045"/>
+        <location filename="../settings.qml" line="14832"/>
+        <location filename="../settings.qml" line="14926"/>
+        <location filename="../settings.qml" line="15019"/>
         <source>Max value (0-100):</source>
         <translation>Макс. значення (0-100):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14882"/>
+        <location filename="../settings.qml" line="14856"/>
         <source>Wahoo Kickr HeadWind Options</source>
         <translation>Параметри Wahoo Kickr HeadWind</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="14975"/>
+        <location filename="../settings.qml" line="14949"/>
         <source>Elite Aria Options</source>
         <translation>Параметри Elite Aria</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15106"/>
+        <location filename="../settings.qml" line="15080"/>
         <source>Thinkrider Options</source>
         <translation>Параметри Thinkrider</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15114"/>
+        <location filename="../settings.qml" line="15088"/>
         <source>Thinkrider Controller</source>
         <translation>Пульт Thinkrider</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15128"/>
+        <location filename="../settings.qml" line="15102"/>
         <source>Thinkrider VS200 remote controller. Use it to change gears on QZ!</source>
         <translation>Пульт Thinkrider VS200. Перемикайте ним передачі в QZ!</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15143"/>
+        <location filename="../settings.qml" line="15117"/>
         <source>CYCPLUS Options</source>
         <translation>Параметри CYCPLUS</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15165"/>
+        <location filename="../settings.qml" line="15139"/>
         <source>CYCPLUS BC2 virtual shifter. Use it to change gears on QZ!</source>
         <translation>Віртуальна манетка CYCPLUS BC2. Перемикайте нею передачі в QZ!</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15180"/>
+        <location filename="../settings.qml" line="15154"/>
         <source>Zwift Devices Options</source>
         <translation>Параметри пристроїв Zwift</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15188"/>
+        <location filename="../settings.qml" line="15162"/>
         <source>Zwift Click</source>
         <translation>Zwift Click</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15202"/>
+        <location filename="../settings.qml" line="15176"/>
         <source>Use it to change the gears on QZ!</source>
         <translation>Перемикайте ним передачі в QZ!</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15215"/>
+        <location filename="../settings.qml" line="15189"/>
         <source>Zwift Play</source>
         <translation>Zwift Play</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15229"/>
+        <location filename="../settings.qml" line="15203"/>
         <source>Also for Elite Square. Use it to change the gears on QZ!</source>
         <translation>Підходить і для Elite Square. Перемикайте ним передачі в QZ!</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15242"/>
+        <location filename="../settings.qml" line="15216"/>
         <source>Zwift Play Vibration</source>
         <translation>Вібрація Zwift Play</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15256"/>
+        <location filename="../settings.qml" line="15230"/>
         <source>Enable vibration feedback on Zwift Play controllers when changing gears. Default: enabled.</source>
         <translation>Вібровідгук контролерів Zwift Play під час перемикання передач. Типово: увімкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15269"/>
+        <location filename="../settings.qml" line="15243"/>
         <source>Buttons debouncing</source>
         <translation>Придушення брязкоту кнопок</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15283"/>
+        <location filename="../settings.qml" line="15257"/>
         <source>Debounce the buttons, so you will only see 1 gear step even if you are keep pressing the buttons.  Default is off.</source>
         <translation>Придушувати брязкіт кнопок: передача зміниться лише на 1 крок, навіть якщо ви й далі натискатимете кнопки.  Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15296"/>
+        <location filename="../settings.qml" line="15270"/>
         <source>Swap sides</source>
         <translation>Поміняти сторони</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15310"/>
+        <location filename="../settings.qml" line="15284"/>
         <source>You can swap the left to the right controller and viceversa.  Default is off.</source>
         <translation>Лівий і правий контролери можна поміняти місцями.  Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15323"/>
+        <location filename="../settings.qml" line="15297"/>
         <source>Use Zwift app ratio for gears (Experimental)</source>
         <translation>Передачі як у застосунку Zwift (експериментально)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15337"/>
+        <location filename="../settings.qml" line="15311"/>
         <source>Use the zwift gears table instead of the QZ classic gears algorithm.  Default is off.</source>
         <translation>Використовувати таблицю передач Zwift замість класичного алгоритму передач QZ.  Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15350"/>
+        <location filename="../settings.qml" line="15324"/>
         <source>Gear Controls</source>
         <translation>Кнопки передач</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15358"/>
+        <location filename="../settings.qml" line="15332"/>
         <source>Assign each physical button to Gear Up, Gear Down or Disabled. Applies before the Swap sides option above.</source>
         <translation>Призначте кожній фізичній кнопці «Передача вгору», «Передача вниз» або «Вимкнено». Застосовується перед параметром «Поміняти сторони» вище.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15372"/>
+        <location filename="../settings.qml" line="15346"/>
         <source>Left Shifter Up (LS1):</source>
         <translation>Ліва манетка вгору (LS1):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15384"/>
+        <location filename="../settings.qml" line="15358"/>
         <source>Left Shifter Down (LS2):</source>
         <translation>Ліва манетка вниз (LS2):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15396"/>
+        <location filename="../settings.qml" line="15370"/>
         <source>Right Shifter Up (RS1):</source>
         <translation>Права манетка вгору (RS1):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15408"/>
+        <location filename="../settings.qml" line="15382"/>
         <source>Right Shifter Down (RS2):</source>
         <translation>Права манетка вниз (RS2):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15420"/>
+        <location filename="../settings.qml" line="15394"/>
         <source>Left Paddle (ZL):</source>
         <translation>Ліва пелюстка (ZL):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15432"/>
+        <location filename="../settings.qml" line="15406"/>
         <source>Right Paddle (ZR):</source>
         <translation>Права пелюстка (ZR):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15444"/>
+        <location filename="../settings.qml" line="15418"/>
         <source>Power Up (LB):</source>
         <translation>Power Up (LB):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15456"/>
+        <location filename="../settings.qml" line="15430"/>
         <source>Ride On (RB):</source>
         <translation>Ride On (RB):</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15489"/>
+        <location filename="../settings.qml" line="15463"/>
         <source>Default: 200ms. Lower it if you want to improve the gear reactivity. Warning: lowering this value will cause more power used on the QZ device</source>
         <translation>Типово: 200ms. Зменште, щоб передачі реагували швидше. Увага: що менше значення, то більше енергії споживає пристрій, на якому працює QZ</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15507"/>
+        <location filename="../settings.qml" line="15481"/>
         <source>TTS (Text to Speech) Settings 🔊</source>
         <translation>Налаштування TTS (синтез мовлення)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15516"/>
+        <location filename="../settings.qml" line="15490"/>
         <source>Maps 🗺️</source>
         <translation>Карти</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15529"/>
+        <location filename="../settings.qml" line="15503"/>
         <source>Maps Type:</source>
         <translation>Тип карти:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15553"/>
+        <location filename="../settings.qml" line="15527"/>
         <source>Loop Start-End-Start</source>
         <translation>Петля старт-фініш-старт</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15610"/>
+        <location filename="../settings.qml" line="15584"/>
         <source>Experimental Features</source>
         <translation>Експериментальні функції</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15621"/>
+        <location filename="../settings.qml" line="15595"/>
         <source>Gym Mode</source>
         <translation>Режим спортзалу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15635"/>
+        <location filename="../settings.qml" line="15609"/>
         <source>Useful in gyms with multiple similar machines. When enabled, QZ scans nearby equipment at startup and asks you which trainer to use before opening any Bluetooth connection.</source>
         <translation>Корисно в спортзалах із кількома однаковими тренажерами. Якщо ввімкнено, QZ під час запуску шукає обладнання поблизу й запитує, який тренажер використовувати, перш ніж під’єднуватися через Bluetooth.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15649"/>
+        <location filename="../settings.qml" line="15623"/>
         <source>Relaxed Bluetooth for mad devices</source>
         <translation>М’який режим Bluetooth для примхливих пристроїв</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15663"/>
+        <location filename="../settings.qml" line="15637"/>
         <source>Leave this setting off unless the Support staff asks you to turn it on during troubleshooting. Can improve the Android Bluetooth connection to Zwift. Default is off.</source>
         <translation>Не вмикайте, доки про це не попросить служба підтримки під час діагностики. Може покращити Bluetooth-з’єднання Android із Zwift. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15677"/>
+        <location filename="../settings.qml" line="15651"/>
         <source>Bluetooth hangs after 30 m</source>
         <translation>Bluetooth зависає через 30 хв</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15691"/>
+        <location filename="../settings.qml" line="15665"/>
         <source>Same as “Relaxed Bluetooth for mad devices”. Leave off unless the Support staff asks you to turn it on. Default is off.</source>
         <translation>Те саме, що «М’який режим Bluetooth для примхливих пристроїв». Не вмикайте, доки про це не попросить служба підтримки. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15705"/>
+        <location filename="../settings.qml" line="15679"/>
         <source>Simulate Battery Service</source>
         <translation>Імітувати Battery Service</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15719"/>
+        <location filename="../settings.qml" line="15693"/>
         <source>Leave this off unless the Support staff asks you to turn it on. Enables a new Bluetooth service, indicating the battery level of your device. Default is off.</source>
         <translation>Не вмикайте, доки про це не попросить служба підтримки. Додає нову службу Bluetooth, яка повідомляє рівень заряду батареї вашого пристрою. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15748"/>
+        <location filename="../settings.qml" line="15722"/>
         <source>Enable Virtual Device</source>
         <translation>Увімкнути віртуальний пристрій</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15754"/>
+        <location filename="../settings.qml" line="15728"/>
         <source>Virtual Device Bluetooth</source>
         <translation>Віртуальний пристрій Bluetooth</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15760"/>
+        <location filename="../settings.qml" line="15734"/>
         <source>Virtual Heart Only</source>
         <translation>Лише віртуальний пульс</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15774"/>
+        <location filename="../settings.qml" line="15748"/>
         <source>Forces QZ to communicate ONLY the Heart Rate metric to third-party apps. Default is off.</source>
         <translation>QZ передаватиме стороннім застосункам ЛИШЕ пульс. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15788"/>
+        <location filename="../settings.qml" line="15762"/>
         <source>Virtual Echelon</source>
         <translation>Віртуальний Echelon</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15802"/>
+        <location filename="../settings.qml" line="15776"/>
         <source>Enables QZ to communicate with the Echelon app. This setting can only be used with iOS running QZ and iOS running the Echelon app. Default is off.</source>
         <translation>Дає змогу QZ обмінюватися даними із застосунком Echelon. Працює, лише якщо і QZ, і застосунок Echelon запущено на iOS. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15816"/>
+        <location filename="../settings.qml" line="15790"/>
         <source>Virtual Rower</source>
         <translation>Віртуальний гребний тренажер</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15830"/>
+        <location filename="../settings.qml" line="15804"/>
         <source>Enables QZ to send a rower Bluetooth profile instead of a bike profile to third party apps that support rowing (examples: Kinomap and BitGym). This should be off for Zwift. Default is off.</source>
         <translation>QZ передаватиме стороннім застосункам для веслування (наприклад, Kinomap і BitGym) Bluetooth-профіль гребного тренажера замість профілю велотренажера. Для Zwift має бути вимкнено. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15844"/>
+        <location filename="../settings.qml" line="15818"/>
         <source>Virtual Rower as PM5</source>
         <translation>Віртуальний гребний тренажер як PM5</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15859"/>
+        <location filename="../settings.qml" line="15833"/>
         <source>When enabled, the virtual rower will use the Concept2 PM5 protocol instead of FTMS. This provides compatibility with apps like Mywhoosh that only support PM5 rowers. Default is off.</source>
         <translation>Якщо ввімкнено, віртуальний гребний тренажер використовує протокол Concept2 PM5 замість FTMS. Це потрібно для сумісності із застосунками на кшталт MyWhoosh, які підтримують лише гребні тренажери PM5. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15874"/>
+        <location filename="../settings.qml" line="15848"/>
         <source>Force Virtual Treadmill</source>
         <translation>Завжди віртуальна бігова доріжка</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15888"/>
+        <location filename="../settings.qml" line="15862"/>
         <source>When enabled, forces QZ to impersonate a virtual treadmill regardless of the original device type. This allows any device (bike, rower, elliptical, etc.) to appear as a treadmill to third party apps. Default is off.</source>
         <translation>Якщо ввімкнено, QZ видає себе за віртуальну бігову доріжку незалежно від типу під’єднаного пристрою. Так будь-який тренажер (велотренажер, гребний тренажер, орбітрек тощо) виглядатиме для сторонніх застосунків як бігова доріжка. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15902"/>
+        <location filename="../settings.qml" line="15876"/>
         <source>Zwift Force Resistance</source>
         <translation>Zwift: керування опором</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15916"/>
+        <location filename="../settings.qml" line="15890"/>
         <source>Enables third-party apps to change the resistance of your equipment. Default is on.</source>
         <translation>Дає змогу стороннім застосункам змінювати опір вашого тренажера. Типово ввімкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15931"/>
+        <location filename="../settings.qml" line="15905"/>
         <source>Bike Power Sensor</source>
         <translation>Датчик потужності велосипеда</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15945"/>
+        <location filename="../settings.qml" line="15919"/>
         <source>This changes the virtual Bluetooth bridge from the standard FMTS to the Power Sensor interface. Default is off.</source>
         <translation>Перемикає віртуальний Bluetooth-пристрій зі стандартного FMTS на інтерфейс датчика потужності. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15959"/>
+        <location filename="../settings.qml" line="15933"/>
         <source>Virtual iFit</source>
         <translation>Віртуальний iFit</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15973"/>
+        <location filename="../settings.qml" line="15947"/>
         <source>Enables a virtual Bluetooth bridge to the iFit App. This setting requires that at least one device be Android. For example, this setting does NOT work with QZ on iOS and iFit to iOS, but DOES work with QZ on iOS and iFit to Android. On Android remember to rename your device into I_EL into the android settings and reboot your device.</source>
         <translation>Вмикає віртуальний Bluetooth-пристрій для застосунку iFit. Потрібно, щоб хоча б один із пристроїв працював на Android. Наприклад, зв’язка QZ на iOS та iFit на iOS НЕ працює, а QZ на iOS та iFit на Android – ПРАЦЮЄ. На Android не забудьте перейменувати пристрій на I_EL у налаштуваннях Android і перезавантажити його.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="15986"/>
+        <location filename="../settings.qml" line="15960"/>
         <source>Virtual Tacx</source>
         <translation>Віртуальний Tacx</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16000"/>
+        <location filename="../settings.qml" line="15974"/>
         <source>Enables a virtual bluetooth bridge to the Tacx App.</source>
         <translation>Вмикає віртуальний Bluetooth-пристрій для застосунку Tacx.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16015"/>
+        <location filename="../settings.qml" line="15989"/>
         <source>Wahoo direct connect</source>
         <translation>Пряме під’єднання Wahoo</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16023"/>
+        <location filename="../settings.qml" line="15997"/>
         <source>MyWhoosh Compatibility</source>
         <translation>Сумісність із MyWhoosh</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16037"/>
+        <location filename="../settings.qml" line="16011"/>
         <source>Enables the compatibility of the Wahoo KICKR protocol to MyWhoosh app. Leave the MyWhoosh compatibility disabled in order to use Zwift.</source>
         <translation>Робить протокол Wahoo KICKR сумісним із застосунком MyWhoosh. Щоб користуватися Zwift, залиште сумісність із MyWhoosh вимкненою.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16052"/>
+        <location filename="../settings.qml" line="16026"/>
         <source>ID:</source>
         <translation>ID:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16073"/>
+        <location filename="../settings.qml" line="16047"/>
         <source>If you have multiple QZ instances, you can change the id of the virtual wahoo device. Default: 0</source>
         <translation>Якщо у вас кілька екземплярів QZ, можна змінити ID віртуального пристрою Wahoo. Типово: 0</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16089"/>
+        <location filename="../settings.qml" line="16063"/>
         <source>Server Port:</source>
         <translation>Порт сервера:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16115"/>
+        <location filename="../settings.qml" line="16089"/>
         <source>MQTT Settings</source>
         <translation>Налаштування MQTT</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16125"/>
+        <location filename="../settings.qml" line="16099"/>
         <source>MQTT Host:</source>
         <translation>Хост MQTT:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16145"/>
+        <location filename="../settings.qml" line="16119"/>
         <source>Enter the MQTT broker hostname or IP address</source>
         <translation>Введіть ім’я хоста або IP-адресу MQTT-брокера</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16160"/>
+        <location filename="../settings.qml" line="16134"/>
         <source>MQTT Port:</source>
         <translation>Порт MQTT:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16181"/>
+        <location filename="../settings.qml" line="16155"/>
         <source>Enter the MQTT broker port (default: 1883)</source>
         <translation>Введіть порт MQTT-брокера (типово: 1883)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16217"/>
+        <location filename="../settings.qml" line="16191"/>
         <source>Enter the MQTT broker username (if required)</source>
         <translation>Введіть ім’я користувача MQTT-брокера (якщо потрібно)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16254"/>
+        <location filename="../settings.qml" line="16228"/>
         <source>Enter the MQTT broker password (if required)</source>
         <translation>Введіть пароль MQTT-брокера (якщо потрібно)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16270"/>
+        <location filename="../settings.qml" line="16244"/>
         <source>Device ID:</source>
         <translation>ID пристрою:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16290"/>
+        <location filename="../settings.qml" line="16264"/>
         <source>Enter a unique device identifier for MQTT client</source>
         <translation>Введіть унікальний ідентифікатор пристрою для MQTT-клієнта</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16306"/>
+        <location filename="../settings.qml" line="16280"/>
         <source>OSC Settings</source>
         <translation>Налаштування OSC</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16316"/>
+        <location filename="../settings.qml" line="16290"/>
         <source>OSC IP:</source>
         <translation>IP-адреса OSC:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16339"/>
+        <location filename="../settings.qml" line="16313"/>
         <source>OSC Port:</source>
         <translation>Порт OSC:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16363"/>
+        <location filename="../settings.qml" line="16337"/>
         <source>Race Mode</source>
         <translation>Режим гонки</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16377"/>
+        <location filename="../settings.qml" line="16351"/>
         <source>By default QZ sends the info to Zwift or any other 3rd party apps with a 1000ms interval rate. Enabling the Race Mode setting will cause QZ to send them to 100ms (10hz). Of course the bottleneck will be always your bike/treadmill.</source>
         <translation>Типово QZ надсилає дані у Zwift та інші сторонні застосунки з інтервалом 1000ms. У режимі гонки інтервал становить 100ms (10hz). Звісно, вузьким місцем однаково залишиться ваш велотренажер або бігова доріжка.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16391"/>
+        <location filename="../settings.qml" line="16365"/>
         <source>Run Cadence Sensor</source>
         <translation>Датчик каденсу бігу</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16405"/>
+        <location filename="../settings.qml" line="16379"/>
         <source>Forces the virtual Bluetooth bridge to send only the cadence information instead of the full FTMS metrics. Default is off.</source>
         <translation>Віртуальний Bluetooth-пристрій передаватиме лише каденс замість повного набору показників FTMS. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16419"/>
+        <location filename="../settings.qml" line="16393"/>
         <source>Template Settings</source>
         <translation>Налаштування шаблонів</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16464"/>
+        <location filename="../settings.qml" line="16438"/>
         <source>Android WakeLock</source>
         <translation>Android WakeLock</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16478"/>
+        <location filename="../settings.qml" line="16452"/>
         <source>Forces Android devices to remain awake while QZ is running. Default is on.</source>
         <translation>Не дає пристрою Android засинати, поки працює QZ. Типово ввімкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16492"/>
+        <location filename="../settings.qml" line="16466"/>
         <source>iOS Peloton Workaround</source>
         <translation>Обхід проблем Peloton на iOS</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16506"/>
+        <location filename="../settings.qml" line="16480"/>
         <source>This MUST be always ON on an iOS device. Turning it OFF will lead to unexpected crashes of QZ. Default is on.</source>
         <translation>На iOS це ОБОВ’ЯЗКОВО має бути ВВІМКНЕНО. Якщо вимкнути, QZ несподівано аварійно завершуватиме роботу. Типово ввімкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16519"/>
+        <location filename="../settings.qml" line="16493"/>
         <source>iOS Bluetooth Device Native</source>
         <translation>Нативний Bluetooth на iOS</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16533"/>
+        <location filename="../settings.qml" line="16507"/>
         <source>If you are experiencing crash on iOS midride, try to turn this on. Default is off.</source>
         <translation>Якщо QZ на iOS аварійно завершує роботу посеред тренування, спробуйте ввімкнути. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16547"/>
+        <location filename="../settings.qml" line="16521"/>
         <source>Fake Device</source>
         <translation>Фіктивний пристрій</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16561"/>
+        <location filename="../settings.qml" line="16535"/>
         <source>Simulates QZ being connected to a bike. When this is turned on QZ will calculate KCal based on your heart rate. Examples of when to use this setting: ○ To capture Peloton class data for classes without connected equipment (e.g., a strength or yoga workout).. ○ To arrange tiles on the QZ dashboard without connecting to your equipment. ○ To use the QZ Apple Watch app without connecting to your equipment.</source>
         <translation>Імітує під’єднання QZ до велотренажера. Коли ввімкнено, QZ рахує калорії за пульсом. Коли це потрібно: ○ Щоб записати дані заняття Peloton, для якого не потрібне обладнання (наприклад, силового тренування чи йоги). ○ Щоб розставити плитки на панелі QZ, не під’єднуючи тренажер. ○ Щоб користуватися застосунком QZ для Apple Watch, не під’єднуючи тренажер.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16575"/>
+        <location filename="../settings.qml" line="16549"/>
         <source>Fake Treadmill</source>
         <translation>Фіктивна бігова доріжка</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16589"/>
+        <location filename="../settings.qml" line="16563"/>
         <source>Same as Fake Device but instead of simulating a bike it simulates a treadmill.</source>
         <translation>Те саме, що «Фіктивний пристрій», але імітує бігову доріжку, а не велотренажер.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16603"/>
+        <location filename="../settings.qml" line="16577"/>
         <source>Use Apple Watch Cadence for Fake Treadmill Speed</source>
         <translation>Каденс Apple Watch для швидкості фіктивної доріжки</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16617"/>
+        <location filename="../settings.qml" line="16591"/>
         <source>iOS only. For Fake Treadmill mode: when no physical treadmill is connected, derives Speed from Apple Watch step cadence using the Wheel Ratio under Accessories &gt; Cadence Sensor Options. The cycling default is far too high for running - try 0.04-0.15 depending on pace, from walking to running, and tune to taste. Useful with apps like Kinomap or Zwift. Default is off.</source>
         <translation>Лише iOS. Для режиму «Фіктивна бігова доріжка»: коли справжню доріжку не під’єднано, швидкість обчислюється за каденсом кроків з Apple Watch через коефіцієнт колеса (Wheel Ratio) у розділі «Аксесуари &gt; Параметри датчика каденсу». Типове значення розраховане на велосипед і для бігу завелике – спробуйте 0.04-0.15 залежно від темпу (від ходьби до бігу) і підберіть на свій смак. Корисно із застосунками на кшталт Kinomap або Zwift. Типово вимкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16631"/>
+        <location filename="../settings.qml" line="16605"/>
         <source>Fake Elliptical</source>
         <translation>Фіктивний орбітрек</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16645"/>
+        <location filename="../settings.qml" line="16619"/>
         <source>Same as Fake Device but instead of simulating a bike it simulates an elliptical.</source>
         <translation>Те саме, що «Фіктивний пристрій», але імітує орбітрек, а не велотренажер.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16658"/>
+        <location filename="../settings.qml" line="16632"/>
         <source>Fake Rower</source>
         <translation>Фіктивний гребний тренажер</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16672"/>
+        <location filename="../settings.qml" line="16646"/>
         <source>Same as Fake Device but instead of simulating a bike it simulates a rower.</source>
         <translation>Те саме, що «Фіктивний пристрій», але імітує гребний тренажер, а не велотренажер.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16686"/>
+        <location filename="../settings.qml" line="16660"/>
         <source>iOS Heart Caching</source>
         <translation>Кешування пульсу на iOS</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16700"/>
+        <location filename="../settings.qml" line="16674"/>
         <source>Leave this on unless you have issues connecting your Bluetooth HRM to QZ. If turning this off does not solve the connection issue, open a support ticket on GitHub. Default is on.</source>
         <translation>Не вимикайте, якщо немає проблем із під’єднанням Bluetooth-пульсометра до QZ. Якщо вимкнення не розв’яже проблему з під’єднанням, створіть звернення до підтримки на GitHub. Типово ввімкнено.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16714"/>
+        <location filename="../settings.qml" line="16688"/>
         <source>Android Notification</source>
         <translation>Сповіщення Android</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16728"/>
+        <location filename="../settings.qml" line="16702"/>
         <source>Android Only: enable this to force Android to don&apos;t kill QZ when it&apos;s running on background</source>
         <translation>Лише Android: увімкніть, щоб Android не закривав QZ, коли той працює у фоні</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16741"/>
+        <location filename="../settings.qml" line="16715"/>
         <source>Android Force Documents/QZ Folder</source>
         <translation>Android: завжди папка Documents/QZ</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16755"/>
+        <location filename="../settings.qml" line="16729"/>
         <source>Android Only: force QZ to use the /Documents/QZ folder for debug log and fit files</source>
         <translation>Лише Android: QZ зберігатиме журнал налагодження та fit-файли в папку /Documents/QZ</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16769"/>
+        <location filename="../settings.qml" line="16743"/>
         <source>Debug Log</source>
         <translation>Журнал налагодження</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16783"/>
+        <location filename="../settings.qml" line="16757"/>
         <source>Turn this on to save a debug log to your device for use when requesting help with a bug.</source>
         <translation>Увімкніть, щоб зберігати на пристрій журнал налагодження: він знадобиться, коли звертатиметеся по допомогу через помилку.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16803"/>
+        <location filename="../settings.qml" line="16777"/>
         <source>Clear History</source>
         <translation>Очистити історію</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16811"/>
+        <location filename="../settings.qml" line="16785"/>
         <source>Show Logs Folder</source>
         <translation>Показати папку журналів</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16821"/>
+        <location filename="../settings.qml" line="16795"/>
         <source>Clears all the QZ logs, QZ .fit files and QZ images (these files are saved by QZ for every session) from your device while maintaining your saved Profiles and Settings.</source>
         <translation>Видаляє з пристрою всі журнали QZ, файли .fit і зображення QZ (QZ зберігає їх для кожного тренування), не зачіпаючи збережених профілів і налаштувань.</translation>
     </message>
