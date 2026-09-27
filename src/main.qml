@@ -1007,7 +1007,9 @@ ApplicationWindow {
         property bool scrolledAway: false
         height: scrolledAway ? topPadding : implicitHeight
         clip: height < implicitHeight   // keeps the Material shadow when fully shown
-        Behavior on height { NumberAnimation { duration: 150; easing.type: Easing.OutQuad } }
+        Behavior on height { NumberAnimation { id: headerHeightAnimation; duration: 150; easing.type: Easing.OutQuad } }
+        // While the height animates the page moves under the finger; Home.qml ignores that movement
+        property bool animating: headerHeightAnimation.running
         topPadding: getTopPadding()
         leftPadding: getLeftPadding()
         rightPadding: getRightPadding()
@@ -1219,7 +1221,9 @@ ApplicationWindow {
 
         Label {
             text: stackView.currentItem.title
-            anchors.centerIn: parent
+            // Fixed position, like the buttons: centred in the full bar, it moved on its own when the bar collapsed
+            anchors.horizontalCenter: parent.horizontalCenter
+            y: (headerToolbar.contentHeight - height) / 2
         }
     }
 
