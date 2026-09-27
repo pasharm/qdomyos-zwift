@@ -2523,7 +2523,7 @@ Do you want to update QZ settings?</source>
     <message>
         <location filename="../webtranslation.cpp" line="189"/>
         <source>min/mi</source>
-        <translation>мин/миля</translation>
+        <translation>мин/милю</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="190"/>

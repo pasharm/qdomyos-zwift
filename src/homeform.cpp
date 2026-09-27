@@ -6083,7 +6083,7 @@ void homeform::updateGearsValue() {
         gear = ((bike *)bluetoothManager->device())->VirtualBike()->currentGear();
     if (gears_custom_table_enabled) {
         this->gears->setValue(QString::number(gear));
-        this->gears->setSecondLine(tr("offset ") +QString::number(((bike *)bluetoothManager->device())->gearsModifier(), 'f', 1));
+        this->gears->setSecondLine(tr("offset ") + QString::number(((bike *)bluetoothManager->device())->gearsModifier(), 'f', 1));
     } else if (settings.value(QZSettings::gears_gain, QZSettings::default_gears_gain).toDouble() == 1.0 || gears_zwift_ratio || maxGear < maxGearDefault) {
         this->gears->setValue(QString::number(gear));
         this->gears->setSecondLine(wheelCircumference::gearsInfo(gear));
