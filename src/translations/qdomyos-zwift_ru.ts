@@ -3281,6 +3281,22 @@ This may take a few moments on first startup.</source>
         <translation>Не удалось загрузить программу тренировки. Проверьте, существует ли файл.</translation>
     </message>
     <message>
+        <location filename="../WorkoutsHistory.qml" line="421"/>
+        <source>mi</source>
+        <translation>миль</translation>
+    </message>
+    <message>
+        <location filename="../WorkoutsHistory.qml" line="421"/>
+        <source>km</source>
+        <translation>км</translation>
+    </message>
+    <message>
+        <location filename="../WorkoutsHistory.qml" line="431"/>
+        <location filename="../WorkoutsHistory.qml" line="432"/>
+        <source>kcal</source>
+        <translation>ккал</translation>
+    </message>
+    <message>
         <location filename="../WorkoutsHistory.qml" line="476"/>
         <source>Upload to Strava</source>
         <translation>Загрузить в Strava</translation>
@@ -3933,6 +3949,35 @@ This may take a few moments on first startup.</source>
         <translation>Пауза</translation>
     </message>
     <message>
+        <location filename="../homeform.cpp" line="6086"/>
+        <source>offset </source>
+        <translation>смещ. </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6332"/>
+        <location filename="../homeform.cpp" line="6339"/>
+        <source> /min</source>
+        <translation> /мин</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6365"/>
+        <location filename="../homeform.cpp" line="6368"/>
+        <source> sec.</source>
+        <translation> с</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6597"/>
+        <source>Incl: </source>
+        <translation>Накл.: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6603"/>
+        <location filename="../homeform.cpp" line="6927"/>
+        <location filename="../homeform.cpp" line="7080"/>
+        <source>%1%2W</source>
+        <translation>%1%2 Вт</translation>
+    </message>
+    <message>
         <location filename="../homeform.cpp" line="6695"/>
         <location filename="../homeform.cpp" line="6847"/>
         <location filename="../homeform.cpp" line="7035"/>
@@ -3996,6 +4041,23 @@ This may take a few moments on first startup.</source>
         <location filename="../homeform.cpp" line="7050"/>
         <source>N/A</source>
         <translation>Н/Д</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6912"/>
+        <source>Gain: </source>
+        <translation>Коэф.: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="7287"/>
+        <location filename="../homeform.cpp" line="7314"/>
+        <source>MIN: </source>
+        <translation>Мин.: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="7428"/>
+        <location filename="../homeform.cpp" line="7504"/>
+        <source>W </source>
+        <translation> Вт </translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="8369"/>
