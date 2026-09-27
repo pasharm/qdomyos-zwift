@@ -121,7 +121,7 @@ Page {
                 
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
-                    text: "Workout History"
+                    text: qsTr("Workout History")
                     font.pixelSize: 24
                     font.bold: true
                 }
@@ -129,7 +129,7 @@ Page {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: workoutModel && workoutModel.isDateFiltered ? 
-                          "Filtered: " + workoutModel.filteredDate.toLocaleDateString() : ""
+                          qsTr("Filtered: %1").arg(workoutModel.filteredDate.toLocaleDateString()) : ""
                     font.pixelSize: 12
                     color: "#666666"
                     visible: workoutModel && workoutModel.isDateFiltered
@@ -154,7 +154,7 @@ Page {
                 }
                 
                 contentItem: Text {
-                    text: "Clear Filter"
+                    text: qsTr("Clear Filter")
                     color: "white"
                     font.pixelSize: 12
                     font.bold: true
@@ -180,7 +180,7 @@ Page {
         Text {
             Layout.alignment: Qt.AlignHCenter
             visible: workoutModel ? workoutModel.isDatabaseProcessing : false
-            text: "Processing workout files...\nThis may take a few moments on first startup."
+            text: qsTr("Processing workout files...\nThis may take a few moments on first startup.")
             horizontalAlignment: Text.AlignHCenter
             color: "#666666"
             font.pixelSize: 16
@@ -231,8 +231,8 @@ Page {
 
                         Text {
                             text: Qt.platform.os === "android" ? 
-                                  wrapEmoji("🗑️") + " Delete" : 
-                                  "🗑️ Delete"
+                                  wrapEmoji("🗑️") + " " + qsTr("Delete") : 
+                                  "🗑️ " + qsTr("Delete")
                             textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
                             color: "white"
                             font.pixelSize: 16
@@ -326,12 +326,12 @@ Page {
                             onClicked: {
                                 var success = workoutModel.loadTrainingProgram(model.id)
                                 if (success) {
-                                    trainingProgramDialog.title = "Success"
-                                    trainingProgramDialog.message = "Training program loaded successfully!"
+                                    trainingProgramDialog.title = qsTr("Success")
+                                    trainingProgramDialog.message = qsTr("Training program loaded successfully!")
                                     trainingProgramDialog.isSuccess = true
                                 } else {
-                                    trainingProgramDialog.title = "Error"
-                                    trainingProgramDialog.message = "Failed to load training program. Please check if the file exists."
+                                    trainingProgramDialog.title = qsTr("Error")
+                                    trainingProgramDialog.message = qsTr("Failed to load training program. Please check if the file exists.")
                                     trainingProgramDialog.isSuccess = false
                                 }
                                 trainingProgramDialog.open()
@@ -468,25 +468,25 @@ Page {
         title: workoutTitle
 
         MenuItem {
-            text: "Upload to Strava"
+            text: qsTr("Upload to Strava")
             visible: rootItem && rootItem.isStravaLoggedIn()
             onTriggered: rootItem.uploadHistoricalWorkoutToStrava(uploadMenu.filePath)
         }
 
         MenuItem {
-            text: "Upload to Garmin"
+            text: qsTr("Upload to Garmin")
             visible: rootItem && rootItem.isGarminUploadConfigured()
             onTriggered: rootItem.uploadHistoricalWorkoutToGarmin(uploadMenu.filePath)
         }
 
         MenuItem {
-            text: "Upload to Intervals.icu"
+            text: qsTr("Upload to Intervals.icu")
             visible: rootItem && rootItem.isIntervalsICUUploadConfigured()
             onTriggered: rootItem.uploadHistoricalWorkoutToIntervalsICU(uploadMenu.filePath)
         }
 
         MenuItem {
-            text: "Upload to Apple Health"
+            text: qsTr("Upload to Apple Health")
             visible: Qt.platform.os === "ios" &&
                      workoutModel &&
                      workoutModel.canWriteAppleHealth(uploadMenu.workoutId)
@@ -501,7 +501,7 @@ Page {
         property int workoutId
         property string workoutTitle
 
-        title: "Delete Workout"
+        title: qsTr("Delete Workout")
         modal: true
         standardButtons: Dialog.Ok | Dialog.Cancel
 
@@ -509,7 +509,7 @@ Page {
         y: (parent.height - height) / 2
 
         Text {
-            text: "Are you sure you want to delete '" + confirmDialog.workoutTitle + "'?"
+            text: qsTr("Are you sure you want to delete '%1'?").arg(confirmDialog.workoutTitle)
         }
 
         onAccepted: {
@@ -681,7 +681,7 @@ Page {
 
                 // Current streak count
                 Text {
-                    text: workoutModel ? workoutModel.currentStreak + " day" + (workoutModel.currentStreak !== 1 ? "s" : "") + " streak" : ""
+                    text: workoutModel ? (workoutModel.currentStreak !== 1 ? qsTr("%1 days streak") : qsTr("%1 day streak")).arg(workoutModel.currentStreak) : ""
                     font.pixelSize: 18
                     font.bold: true
                     color: "white"
@@ -746,7 +746,7 @@ Page {
             // Best streak (smaller text)
             Text {
                 Layout.alignment: Qt.AlignHCenter
-                text: workoutModel ? "Personal best: " + workoutModel.longestStreak + " day" + (workoutModel.longestStreak !== 1 ? "s" : "") : ""
+                text: workoutModel ? (workoutModel.longestStreak !== 1 ? qsTr("Personal best: %1 days") : qsTr("Personal best: %1 day")).arg(workoutModel.longestStreak) : ""
                 font.pixelSize: 12
                 color: "white"
                 visible: workoutModel && workoutModel.longestStreak > workoutModel.currentStreak && workoutModel.longestStreak > 0
@@ -848,7 +848,7 @@ Page {
                 
                 // Day headers
                 Repeater {
-                    model: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+                    model: [qsTr("Sun"), qsTr("Mon"), qsTr("Tue"), qsTr("Wed"), qsTr("Thu"), qsTr("Fri"), qsTr("Sat")]
                     Text {
                         Layout.fillWidth: true
                         Layout.preferredHeight: 30
@@ -939,7 +939,7 @@ Page {
             // Close button
             Button {
                 Layout.alignment: Qt.AlignHCenter
-                text: "Close"
+                text: qsTr("Close")
                 onClicked: calendarPopup.close()
             }
         }
