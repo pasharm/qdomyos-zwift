@@ -335,7 +335,7 @@ HomeForm {
                 // view is pulled past its end: otherwise it would spring back to the top and bring
                 // the toolbar back at once
                 if (contentY - toolbarTurnY > toolbarToggleDistance
-                        && contentHeight + topMargin - height > toolbarShift
+                        && contentHeight - height > toolbarShift
                         && contentY <= originY + contentHeight - height) {
                     headerToolbar.scrolledAway = true
                     toolbarTurnY = contentY
