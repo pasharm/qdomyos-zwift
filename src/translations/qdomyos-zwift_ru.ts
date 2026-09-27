@@ -662,6 +662,80 @@ Would you like to do that now?</source>
         <translation>Тренировка Peloton запущена автоматически, вступление пропущено! %1 – %2</translation>
     </message>
     <message>
+        <location filename="../homeform.cpp" line="6301"/>
+        <location filename="../homeform.cpp" line="6315"/>
+        <location filename="../homeform.cpp" line="6474"/>
+        <location filename="../homeform.cpp" line="6482"/>
+        <location filename="../homeform.cpp" line="6509"/>
+        <location filename="../homeform.cpp" line="6574"/>
+        <location filename="../homeform.cpp" line="6607"/>
+        <location filename="../homeform.cpp" line="6618"/>
+        <location filename="../homeform.cpp" line="6625"/>
+        <location filename="../homeform.cpp" line="6632"/>
+        <location filename="../homeform.cpp" line="6774"/>
+        <location filename="../homeform.cpp" line="6785"/>
+        <location filename="../homeform.cpp" line="6875"/>
+        <location filename="../homeform.cpp" line="6933"/>
+        <location filename="../homeform.cpp" line="6938"/>
+        <location filename="../homeform.cpp" line="6989"/>
+        <location filename="../homeform.cpp" line="7085"/>
+        <location filename="../homeform.cpp" line="7090"/>
+        <location filename="../homeform.cpp" line="7104"/>
+        <location filename="../homeform.cpp" line="7155"/>
+        <location filename="../homeform.cpp" line="7180"/>
+        <location filename="../homeform.cpp" line="7199"/>
+        <location filename="../homeform.cpp" line="7215"/>
+        <location filename="../homeform.cpp" line="7262"/>
+        <source>AVG: </source>
+        <translation>Ср.: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6303"/>
+        <location filename="../homeform.cpp" line="6475"/>
+        <location filename="../homeform.cpp" line="6483"/>
+        <location filename="../homeform.cpp" line="6511"/>
+        <location filename="../homeform.cpp" line="6576"/>
+        <location filename="../homeform.cpp" line="6609"/>
+        <location filename="../homeform.cpp" line="6620"/>
+        <location filename="../homeform.cpp" line="6627"/>
+        <location filename="../homeform.cpp" line="6635"/>
+        <location filename="../homeform.cpp" line="6776"/>
+        <location filename="../homeform.cpp" line="6787"/>
+        <location filename="../homeform.cpp" line="6877"/>
+        <location filename="../homeform.cpp" line="6935"/>
+        <location filename="../homeform.cpp" line="6940"/>
+        <location filename="../homeform.cpp" line="6991"/>
+        <location filename="../homeform.cpp" line="7087"/>
+        <location filename="../homeform.cpp" line="7092"/>
+        <location filename="../homeform.cpp" line="7106"/>
+        <location filename="../homeform.cpp" line="7157"/>
+        <location filename="../homeform.cpp" line="7182"/>
+        <location filename="../homeform.cpp" line="7201"/>
+        <location filename="../homeform.cpp" line="7217"/>
+        <location filename="../homeform.cpp" line="7263"/>
+        <location filename="../homeform.cpp" line="7283"/>
+        <location filename="../homeform.cpp" line="7310"/>
+        <location filename="../homeform.cpp" line="7638"/>
+        <location filename="../homeform.cpp" line="7643"/>
+        <source> MAX: </source>
+        <translation> Макс.: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6581"/>
+        <location filename="../homeform.cpp" line="6781"/>
+        <location filename="../homeform.cpp" line="6996"/>
+        <location filename="../homeform.cpp" line="7162"/>
+        <location filename="../homeform.cpp" line="7187"/>
+        <source>MAX: </source>
+        <translation>Макс.: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="7636"/>
+        <location filename="../homeform.cpp" line="7641"/>
+        <source> AVG: </source>
+        <translation> Ср.: </translation>
+    </message>
+    <message>
         <location filename="../homeform.cpp" line="8347"/>
         <source>AutoLap %1</source>
         <translation>Авто-круг %1</translation>
