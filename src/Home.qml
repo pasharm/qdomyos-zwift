@@ -292,7 +292,7 @@ HomeForm {
         focus: true
         model: appModel
         leftMargin: { if(OS_VERSION === "Android") (Screen.width % cellWidth) / 2; else (parent.width % cellWidth) / 2; }
-        anchors.topMargin: (!window.lockTiles ? rootItem.topBarHeight + 30 : 0)
+        anchors.topMargin: (!window.lockTiles ? rootItem.topBarHeight + 30 : 30)
         interactive: !window.lockTiles
         id: gridView
         objectName: "gridview"
