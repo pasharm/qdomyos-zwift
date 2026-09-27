@@ -4159,7 +4159,7 @@ import AndroidStatusBar 1.0
                                 }
                                 ComboBox {
                                     id: automaticVirtualShiftingProfileComboBox
-                                    model: ["Cruise", "Climb", "Sprint"]
+                                    model: [qsTr("Cruise"), qsTr("Climb"), qsTr("Sprint")]
                                     currentIndex: settings.automatic_virtual_shifting_profile
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6199,7 +6199,7 @@ import AndroidStatusBar 1.0
                         }
                         ComboBox {
                             id: floatingWindowTypeComboBox
-                            model: ["Classic", "Horizontal"]
+                            model: [qsTr("Classic"), qsTr("Horizontal")]
                             currentIndex: settings.floatingwindow_type
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6395,7 +6395,7 @@ import AndroidStatusBar 1.0
                         }
                         ComboBox {
                             id: chartDisplayModeComboBox
-                            model: ["Both Charts", "Heart Rate Only", "Power Only"]
+                            model: [qsTr("Both Charts"), qsTr("Heart Rate Only"), qsTr("Power Only")]
                             currentIndex: settings.chart_display_mode
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7308,15 +7308,15 @@ import AndroidStatusBar 1.0
                             text: qsTr("Date on Strava:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        ValueComboBox {
                             id: pelotonDateOnStravaTextField
                             model: [ "Before Title", "After Title", "Disabled" ]
-                            displayText: settings.peloton_date
+                            labels: ({ "Before Title": qsTr("Before Title"), "After Title": qsTr("After Title"), "Disabled": qsTr("Disabled") })
+                            value: settings.peloton_date
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onActivated: {
                                 console.log("combomodel activated" + pelotonDateOnStravaTextField.currentIndex)
-                                displayText = pelotonDateOnStravaTextField.currentValue
                             }
 
                         }
@@ -7324,7 +7324,7 @@ import AndroidStatusBar 1.0
                             id: okPelotonDateOnStrava
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            onClicked: { settings.peloton_date = pelotonDateOnStravaTextField.displayText; toast.show(qsTr("Setting saved!")); }
+                            onClicked: { settings.peloton_date = pelotonDateOnStravaTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
                     }
 
@@ -8108,7 +8108,7 @@ import AndroidStatusBar 1.0
                             id: garminServerComboBox
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            model: ["Global (garmin.com)", "China (garmin.cn)"]
+                            model: [qsTr("Global (garmin.com)"), qsTr("China (garmin.cn)")]
                             currentIndex: settings.garmin_domain === "garmin.cn" ? 1 : 0
                             onCurrentIndexChanged: {
                                 var newDomain = currentIndex === 1 ? "garmin.cn" : "garmin.com";
@@ -9140,15 +9140,15 @@ import AndroidStatusBar 1.0
                             text: qsTr("PID on Heart Zone:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        ValueComboBox {
                             id: treadmillPidHRTextField
                             model: [ "Disabled", "1", "2","3","4","5" ]
-                            displayText: settings.treadmill_pid_heart_zone
+                            labels: ({ "Disabled": qsTr("Disabled") })
+                            value: settings.treadmill_pid_heart_zone
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onActivated: {
                                 console.log("combomodel activated" + treadmillPidHRTextField.currentIndex)
-                                displayText = treadmillPidHRTextField.currentValue
                              }
 
                         }
@@ -9156,7 +9156,7 @@ import AndroidStatusBar 1.0
                             id: okTreadmillPidHR
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            onClicked: { settings.treadmill_pid_heart_zone = treadmillPidHRTextField.displayText; toast.show(qsTr("Setting saved!")); }
+                            onClicked: { settings.treadmill_pid_heart_zone = treadmillPidHRTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
                     }
 
@@ -9613,15 +9613,15 @@ import AndroidStatusBar 1.0
                             text: qsTr("Default Pace:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        ValueComboBox {
                             id: treadmillPaceDefaultTextField
                             model: [ "1 mile", "5 km", "10 km","Half Marathon","Marathon", ]
-                            displayText: settings.pace_default
+                            labels: ({ "1 mile": qsTr("1 mile"), "Half Marathon": qsTr("Half Marathon"), "Marathon": qsTr("Marathon") })
+                            value: settings.pace_default
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onActivated: {
                                 console.log("combomodel activated" + treadmillPaceDefaultTextField.currentIndex)
-                                displayText = treadmillPaceDefaultTextField.currentValue
                              }
 
                         }
@@ -9629,7 +9629,7 @@ import AndroidStatusBar 1.0
                             id: okTreadmillPaceDefault
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            onClicked: { settings.pace_default = treadmillPaceDefaultTextField.displayText; toast.show(qsTr("Setting saved!")); }
+                            onClicked: { settings.pace_default = treadmillPaceDefaultTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
                     }
 
@@ -12970,22 +12970,22 @@ import AndroidStatusBar 1.0
                             text: qsTr("Strava Upload:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        ValueComboBox {
                             id: stravaUploadMode
                             model: [ "Always", "Request", "Disabled" ]
-                            displayText: settings.strava_upload_mode
+                            labels: ({ "Always": qsTr("Always"), "Request": qsTr("Request"), "Disabled": qsTr("Disabled") })
+                            value: settings.strava_upload_mode
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onActivated: {
                                 console.log("combomodel activated" + stravaUploadMode.currentIndex)
-                                displayText = stravaUploadMode.currentValue
                              }
 
                         }
                         Button {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            onClicked: { settings.strava_upload_mode = stravaUploadMode.displayText; toast.show(qsTr("Setting saved!")); }
+                            onClicked: { settings.strava_upload_mode = stravaUploadMode.value; toast.show(qsTr("Setting saved!")); }
                         }
                     }
 
@@ -13199,7 +13199,7 @@ import AndroidStatusBar 1.0
                         }
                         ComboBox {
                             id: powerAvgCombo
-                            model: ["Off", "3 seconds", "5 seconds"]
+                            model: [qsTr("Off"), qsTr("3 seconds"), qsTr("5 seconds")]
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             currentIndex: {
@@ -14781,15 +14781,15 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Mode:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                ValueComboBox {
                                     id: fitmetriaFanFitModeTextField
                                     model: [ "Heart", "Power", "Manual" ]
-                                    displayText: settings.fitmetria_fanfit_mode
+                                    labels: ({ "Heart": qsTr("Heart"), "Power": qsTr("Power"), "Manual": qsTr("Manual") })
+                                    value: settings.fitmetria_fanfit_mode
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onActivated: {
                                         console.log("combomodel activated" + fitmetriaFanFitModeTextField.currentIndex)
-                                        displayText = fitmetriaFanFitModeTextField.currentValue
                                     }
 
                                 }
@@ -14797,7 +14797,7 @@ import AndroidStatusBar 1.0
                                     id: okFitmetriaFanFitModeTextField
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                                    onClicked: { settings.fitmetria_fanfit_mode = fitmetriaFanFitModeTextField.displayText; toast.show(qsTr("Setting saved!")); }
+                                    onClicked: { settings.fitmetria_fanfit_mode = fitmetriaFanFitModeTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
                             }
                             RowLayout {
@@ -14879,22 +14879,22 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Mode:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                ValueComboBox {
                                     id: headWindModeTextField
                                     model: [ "Heart", "Power", "Manual" ]
-                                    displayText: settings.fitmetria_fanfit_mode
+                                    labels: ({ "Heart": qsTr("Heart"), "Power": qsTr("Power"), "Manual": qsTr("Manual") })
+                                    value: settings.fitmetria_fanfit_mode
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onActivated: {
                                         console.log("combomodel activated" + headWindModeTextField.currentIndex)
-                                        displayText = headWindModeTextField.currentValue
                                     }
 
                                 }
                                 Button {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                                    onClicked: { settings.fitmetria_fanfit_mode = headWindModeTextField.displayText; toast.show(qsTr("Setting saved!")); }
+                                    onClicked: { settings.fitmetria_fanfit_mode = headWindModeTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
                             }
                             RowLayout {
@@ -14972,22 +14972,22 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Mode:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                ValueComboBox {
                                     id: eliteAriaModeTextField
                                     model: [ "Heart", "Power", "Manual" ]
-                                    displayText: settings.fitmetria_fanfit_mode
+                                    labels: ({ "Heart": qsTr("Heart"), "Power": qsTr("Power"), "Manual": qsTr("Manual") })
+                                    value: settings.fitmetria_fanfit_mode
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onActivated: {
                                         console.log("combomodel activated" + eliteAriaModeTextField.currentIndex)
-                                        displayText = eliteAriaModeTextField.currentValue
                                     }
 
                                 }
                                 Button {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                                    onClicked: { settings.fitmetria_fanfit_mode = eliteAriaModeTextField.displayText; toast.show(qsTr("Setting saved!")); }
+                                    onClicked: { settings.fitmetria_fanfit_mode = eliteAriaModeTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
                             }
                             RowLayout {
