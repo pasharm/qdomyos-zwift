@@ -94,6 +94,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -163,6 +165,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -225,6 +229,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -289,6 +295,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -372,6 +380,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -447,6 +457,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -535,6 +547,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -610,6 +624,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -671,6 +687,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -743,6 +761,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -853,6 +873,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -960,6 +982,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -1024,6 +1048,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -1084,6 +1110,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -1143,6 +1171,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -1221,6 +1251,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -1293,6 +1325,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
@@ -1422,6 +1456,8 @@ Page {
                 leftPadding: window.contentSideMargin
                 rightPadding: window.contentSideMargin
                 topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
