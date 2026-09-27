@@ -39,6 +39,19 @@
     </message>
 </context>
 <context>
+    <name>Credits</name>
+    <message>
+        <location filename="../Credits.qml" line="18"/>
+        <source>Credits</source>
+        <translation>Подяки</translation>
+    </message>
+    <message>
+        <location filename="../Credits.qml" line="18"/>
+        <source>A very big thanks to&lt;br&gt;all the developers&lt;br&gt;(alphabetical sorted):</source>
+        <translation>Величезна подяка&lt;br&gt;усім розробникам&lt;br&gt;(за абеткою):</translation>
+    </message>
+</context>
+<context>
     <name>GPXList</name>
     <message>
         <location filename="../GPXList.qml" line="33"/>
@@ -74,142 +87,142 @@
 <context>
     <name>Home</name>
     <message>
-        <location filename="../Home.qml" line="57"/>
+        <location filename="../Home.qml" line="58"/>
         <source>Peloton Workout in progress</source>
         <translation>Триває тренування Peloton</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="58"/>
+        <location filename="../Home.qml" line="59"/>
         <source>Do you want to follow the resistance? </source>
         <translation>Дотримуватися заданого опору? </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="89"/>
+        <location filename="../Home.qml" line="90"/>
         <source>New lap started!</source>
         <translation>Почалося нове коло!</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="96"/>
+        <location filename="../Home.qml" line="97"/>
         <source>Stop Workout</source>
         <translation>Зупинити тренування</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="97"/>
+        <location filename="../Home.qml" line="98"/>
         <source>Do you really want to stop the current workout?</source>
         <translation>Зупинити поточне тренування?</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="125"/>
+        <location filename="../Home.qml" line="126"/>
         <source>Rest</source>
         <translation>Відпочинок</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="125"/>
+        <location filename="../Home.qml" line="126"/>
         <source>Very Light</source>
         <translation>Дуже легко</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="125"/>
+        <location filename="../Home.qml" line="126"/>
         <source>Light</source>
         <translation>Легко</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="125"/>
+        <location filename="../Home.qml" line="126"/>
         <source>Moderate</source>
         <translation>Помірно</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="126"/>
+        <location filename="../Home.qml" line="127"/>
         <source>Somewhat Hard</source>
         <translation>Досить важко</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="126"/>
+        <location filename="../Home.qml" line="127"/>
         <source>Hard</source>
         <translation>Важко</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="126"/>
+        <location filename="../Home.qml" line="127"/>
         <source>Harder</source>
         <translation>Ще важче</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="126"/>
+        <location filename="../Home.qml" line="127"/>
         <source>Very Hard</source>
         <translation>Дуже важко</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="127"/>
+        <location filename="../Home.qml" line="128"/>
         <source>Very Very Hard</source>
         <translation>Дуже-дуже важко</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="127"/>
+        <location filename="../Home.qml" line="128"/>
         <source>Extremely Hard</source>
         <translation>Граничне навантаження</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="127"/>
+        <location filename="../Home.qml" line="128"/>
         <source>Maximum Effort</source>
         <translation>Максимальне зусилля</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="136"/>
+        <location filename="../Home.qml" line="137"/>
         <source>How was this workout?</source>
         <translation>Як минуло тренування?</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="144"/>
+        <location filename="../Home.qml" line="145"/>
         <source>Perceived Exertion (RPE): </source>
         <translation>Відчутне навантаження (RPE): </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="160"/>
+        <location filename="../Home.qml" line="161"/>
         <source>How did you feel?</source>
         <translation>Як самопочуття?</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="168"/>
+        <location filename="../Home.qml" line="169"/>
         <source>Very Bad</source>
         <translation>Дуже погано</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="168"/>
+        <location filename="../Home.qml" line="169"/>
         <source>Bad</source>
         <translation>Погано</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="168"/>
+        <location filename="../Home.qml" line="169"/>
         <source>OK</source>
         <translation>Нормально</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="168"/>
+        <location filename="../Home.qml" line="169"/>
         <source>Good</source>
         <translation>Добре</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="168"/>
+        <location filename="../Home.qml" line="169"/>
         <source>Very Good</source>
         <translation>Чудово</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="178"/>
+        <location filename="../Home.qml" line="179"/>
         <source>Skip</source>
         <translation>Пропустити</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="187"/>
+        <location filename="../Home.qml" line="188"/>
         <source>Save</source>
         <translation>Зберегти</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="215"/>
+        <location filename="../Home.qml" line="216"/>
         <source>Permissions Required</source>
         <translation>Потрібні дозволи</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="216"/>
+        <location filename="../Home.qml" line="217"/>
         <source>QZ requires both Bluetooth and Location Services to be enabled.
 Location Services are necessary on Android to allow the app to find Bluetooth devices.
 The GPS will not be used.
@@ -222,54 +235,54 @@ GPS не використовуватиметься.
 Увімкнути їх?</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="228"/>
+        <location filename="../Home.qml" line="229"/>
         <source>Reminder Preference</source>
         <translation>Нагадування</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="229"/>
+        <location filename="../Home.qml" line="230"/>
         <source>Would you like to be reminded about enabling Location Services next time?</source>
         <translation>Нагадати про ввімкнення геолокації наступного разу?</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="237"/>
+        <location filename="../Home.qml" line="238"/>
         <source>Restart the app</source>
         <translation>Перезапуск застосунку</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="238"/>
+        <location filename="../Home.qml" line="239"/>
         <source>To apply the changes, you need to restart the app.
 Would you like to do that now?</source>
         <translation>Щоб застосувати зміни, потрібно перезапустити застосунок.
 Перезапустити зараз?</translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="374"/>
+        <location filename="../Home.qml" line="377"/>
         <source>Adjustable. Current value: </source>
         <translation>Регулюється. Поточне значення: </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="374"/>
+        <location filename="../Home.qml" line="377"/>
         <source>Current value: </source>
         <translation>Поточне значення: </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="518"/>
+        <location filename="../Home.qml" line="521"/>
         <source>Decrease </source>
         <translation>Зменшити </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="519"/>
+        <location filename="../Home.qml" line="522"/>
         <source>Decrease the value of </source>
         <translation>Зменшити значення параметра </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="537"/>
+        <location filename="../Home.qml" line="540"/>
         <source>Increase </source>
         <translation>Збільшити </translation>
     </message>
     <message>
-        <location filename="../Home.qml" line="538"/>
+        <location filename="../Home.qml" line="541"/>
         <source>Increase the value of </source>
         <translation>Збільшити значення параметра </translation>
     </message>
@@ -282,42 +295,42 @@ Would you like to do that now?</source>
         <translation>QZ Fitness</translation>
     </message>
     <message>
-        <location filename="../HomeForm.ui.qml" line="74"/>
+        <location filename="../HomeForm.ui.qml" line="76"/>
         <source>Bluetooth connection</source>
         <translation>З’єднання Bluetooth</translation>
     </message>
     <message>
-        <location filename="../HomeForm.ui.qml" line="75"/>
+        <location filename="../HomeForm.ui.qml" line="77"/>
         <source>Device connected</source>
         <translation>Пристрій під’єднано</translation>
     </message>
     <message>
-        <location filename="../HomeForm.ui.qml" line="75"/>
+        <location filename="../HomeForm.ui.qml" line="77"/>
         <source>Device not connected</source>
         <translation>Пристрій не під’єднано</translation>
     </message>
     <message>
-        <location filename="../HomeForm.ui.qml" line="115"/>
+        <location filename="../HomeForm.ui.qml" line="119"/>
         <source>Start workout</source>
         <translation>Почати тренування</translation>
     </message>
     <message>
-        <location filename="../HomeForm.ui.qml" line="145"/>
+        <location filename="../HomeForm.ui.qml" line="149"/>
         <source>Stop workout</source>
         <translation>Зупинити тренування</translation>
     </message>
     <message>
-        <location filename="../HomeForm.ui.qml" line="176"/>
+        <location filename="../HomeForm.ui.qml" line="180"/>
         <source>Lap</source>
         <translation>Коло</translation>
     </message>
     <message>
-        <location filename="../HomeForm.ui.qml" line="177"/>
+        <location filename="../HomeForm.ui.qml" line="181"/>
         <source>Record a new lap</source>
         <translation>Почати нове коло</translation>
     </message>
     <message>
-        <location filename="../HomeForm.ui.qml" line="210"/>
+        <location filename="../HomeForm.ui.qml" line="213"/>
         <source>This app should automatically connect to your bike/treadmill/rower. &lt;b&gt;If it doesn&apos;t, please check&lt;/b&gt;:&lt;br&gt;1) your Echelon/Domyos App MUST be closed while qdomyos-zwift is running;&lt;br&gt;2) both Bluetooth and Bluetooth permissions MUST be enabled&lt;br&gt;3) your bike/treadmill/rower should be turned on BEFORE starting this app&lt;br&gt;4) try to restart your device&lt;br&gt;&lt;br&gt;If your bike/treadmill disconnects every 30 seconds try to disable the &apos;virtual device&apos; setting on the left bar.&lt;br&gt;&lt;br&gt;In case of issues, please feel free to contact me at roberto.viola83@gmail.com.&lt;br&gt;&lt;br&gt;&lt;b&gt;Have a nice ride!&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZ specifically disclaims liability for&lt;br&gt;incidental or consequential damages and assumes&lt;br&gt;no responsibility or liability for any loss&lt;br&gt;or damage suffered by any person as a result of&lt;br&gt;the use or misuse of the app.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</source>
         <translation>Застосунок має сам під’єднатися до вашого велотренажера, бігової доріжки чи гребного тренажера. &lt;b&gt;Якщо цього не сталося, перевірте&lt;/b&gt;:&lt;br&gt;1) застосунок Echelon/Domyos ОБОВ’ЯЗКОВО має бути закритий, поки працює qdomyos-zwift;&lt;br&gt;2) Bluetooth і дозволи для Bluetooth ОБОВ’ЯЗКОВО мають бути ввімкнені&lt;br&gt;3) тренажер слід увімкнути ДО запуску цього застосунку&lt;br&gt;4) спробуйте перезавантажити свій пристрій&lt;br&gt;&lt;br&gt;Якщо велотренажер або доріжка від’єднується кожні 30 секунд, спробуйте вимкнути налаштування «Увімкнути віртуальний пристрій» на лівій панелі.&lt;br&gt;&lt;br&gt;Якщо виникнуть проблеми, сміливо пишіть мені на roberto.viola83@gmail.com.&lt;br&gt;&lt;br&gt;&lt;b&gt;Гарного тренування!&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZ прямо відмовляється від відповідальності за&lt;br&gt;випадкові чи непрямі збитки й не несе&lt;br&gt;жодної відповідальності за будь-які втрати&lt;br&gt;чи шкоду, завдані будь-кому внаслідок&lt;br&gt;використання або неправильного використання застосунку.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</translation>
     </message>
