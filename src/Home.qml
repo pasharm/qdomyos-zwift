@@ -359,12 +359,21 @@ HomeForm {
                 }
             }
         }
-        // With the toolbar hidden, a scroll that stops with the first row cut by less than half a
-        // tile settles on the first row in full view: both bars hidden, no tile cut in half
-        NumberAnimation { id: snapToFirstRow; target: gridView; property: "contentY"; to: 0; duration: 150; easing.type: Easing.OutQuad }
+        // With the toolbar hidden, a scroll that stops near the first row settles on it in full
+        // view (both bars hidden, no tile cut in half), or, inside the gap, on the nearer edge:
+        // the first row or the top, where the toolbar and the device line come back. Not when
+        // the list overflows by less than half a tile: its end would become unreachable.
+        NumberAnimation { id: snapToFirstRow; target: gridView; property: "contentY"; duration: 150; easing.type: Easing.OutQuad }
         onMovementEnded: {
-            if (!window.lockTiles && headerToolbar.scrolledAway && contentY > 0 && contentY < cellHeight / 2)
-                snapToFirstRow.start()
+            if (window.lockTiles || !headerToolbar.scrolledAway)
+                return
+            if (contentY > -topMargin + 1 && contentY < 0)
+                snapToFirstRow.to = contentY < -topMargin / 2 ? -topMargin : 0
+            else if (contentY > 0 && contentY < cellHeight / 2 && originY + contentHeight - height >= cellHeight / 2)
+                snapToFirstRow.to = 0
+            else
+                return
+            snapToFirstRow.start()
         }
         onMovementStarted: snapToFirstRow.stop()
         Screen.orientationUpdateMask:  Qt.LandscapeOrientation | Qt.PortraitOrientation
