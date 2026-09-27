@@ -292,7 +292,10 @@ HomeForm {
         focus: true
         model: appModel
         leftMargin: { if(OS_VERSION === "Android") (Screen.width % cellWidth) / 2; else (parent.width % cellWidth) / 2; }
-        anchors.topMargin: (!window.lockTiles ? rootItem.topBarHeight + 30 : 30)
+        // The 30 px under the Start/Stop row hold the device name line; it hides with the
+        // toolbar, so the tiles take its place
+        anchors.topMargin: (!window.lockTiles ? rootItem.topBarHeight + (headerToolbar.scrolledAway ? 5 : 30) : 30)
+        Behavior on anchors.topMargin { NumberAnimation { duration: 150; easing.type: Easing.OutQuad } }
         interactive: !window.lockTiles
         id: gridView
         objectName: "gridview"
@@ -304,9 +307,10 @@ HomeForm {
         // movement, and main.qml animates its height, so the page does not jump.
         // Hysteresis: the toolbar toggles only after the user has scrolled toolbarToggleDistance
         // in one direction since the last toggle. Collapsing it moves the page under the finger
-        // by the toolbar height, which a per-frame check reads as scrolling back, and slow
+        // by the toolbar height plus the device name line (about 80 px), which a per-frame
+        // check reads as scrolling back, and slow
         // scrolling made the toolbar flicker.
-        readonly property real toolbarToggleDistance: 80
+        readonly property real toolbarToggleDistance: 120
         property real toolbarTurnY: 0
         onContentYChanged: {
             if (window.lockTiles || contentY <= 0) {

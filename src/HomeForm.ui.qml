@@ -195,6 +195,8 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 text: rootItem.info
+                // Hidden with the app toolbar while the tiles are scrolled down (Home.qml)
+                visible: !headerToolbar.scrolledAway
             }
         }
 
