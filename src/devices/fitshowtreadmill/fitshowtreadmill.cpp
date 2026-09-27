@@ -858,9 +858,9 @@ void fitshowtreadmill::serviceScanDone(void) {
     gattCommunicationChannelService->discoverDetails();
 #endif
 
-    // FitShow bikes use FS- names too: if FTMS exposes Indoor Bike Data (2AD2), which a treadmill doesn't have,
-    // switch to the Fit Plus bike and ask for a restart (like the FTMS forcing in serviceDiscovered)
-    if (fs_connected) {
+    // FitShow bikes use FS- names too and expose FTMS Indoor Bike Data (2AD2). Some FitShow treadmills expose it
+    // as well, so don't switch on our own: ask the user once per session; No turns the question off for good.
+    if (fs_connected && !fitshowBikeQuestionAsked) {
         gattFTMSProbeService = m_control->createServiceObject(QBluetoothUuid((quint16)0x1826));
         if (gattFTMSProbeService) {
             connect(gattFTMSProbeService, &QLowEnergyService::stateChanged, this,
@@ -869,13 +869,16 @@ void fitshowtreadmill::serviceScanDone(void) {
                             !gattFTMSProbeService->characteristic(QBluetoothUuid((quint16)0x2AD2)).isValid())
                             return;
                         QSettings settings;
-                        if (settings.value(QZSettings::fitplus_bike, QZSettings::default_fitplus_bike).toBool())
+                        if (fitshowBikeQuestionAsked ||
+                            settings.value(QZSettings::fitplus_bike, QZSettings::default_fitplus_bike).toBool() ||
+                            !settings.value(QZSettings::fitshow_bike_question,
+                                            QZSettings::default_fitshow_bike_question)
+                                 .toBool())
                             return;
-                        settings.setValue(QZSettings::fitplus_bike, true);
-                        qDebug() << "FitShow bike detected (FTMS Indoor Bike Data), fitplus_bike enabled";
+                        fitshowBikeQuestionAsked = true;
+                        qDebug() << "FitShow device with FTMS Indoor Bike Data, asking whether it is a bike";
                         if (homeform::singleton())
-                            homeform::singleton()->requestRestartToApply(
-                                QObject::tr("QZ has detected that this FitShow device is a bike and enabled \"Fit Plus Bike\" in the settings. QZ must be restarted to connect to it as a bike."));
+                            homeform::singleton()->requestFitshowBikeQuestion();
                     });
 #ifdef _MSC_VER
             QTimer::singleShot(0, [=]() { gattFTMSProbeService->discoverDetails(); });
