@@ -3944,6 +3944,12 @@ This may take a few moments on first startup.</source>
         <translation>Ср. мощность</translation>
     </message>
     <message>
+        <location filename="../homeform.cpp" line="661"/>
+        <location filename="../homeform.cpp" line="6902"/>
+        <source>Off</source>
+        <translation>Выкл.</translation>
+    </message>
+    <message>
         <location filename="../homeform.cpp" line="662"/>
         <source>HRV (ms)</source>
         <translation>ВСР (мс)</translation>
@@ -4106,6 +4112,16 @@ This may take a few moments on first startup.</source>
         <location filename="../homeform.cpp" line="7050"/>
         <source>N/A</source>
         <translation>Н/Д</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6905"/>
+        <source>3s avg</source>
+        <translation>Ср. 3 с</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6908"/>
+        <source>5s avg</source>
+        <translation>Ср. 5 с</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="6912"/>
@@ -8826,7 +8842,7 @@ IMPORTANT NOTES:
 - Disable Average on 3rd party apps (Rouvy/Zwift/MyWhoosh etc) or select 1sec in the app!
 - Need to use QZ in bridge mode!
 - For Elite home trainers or those who have a race mode (10hz), if it&apos;s not sufficient for some users, using Elite/Hometrainer smoothing in addition to QZ smoothing will improve it.</source>
-        <translation>Если мощность, которую тренажёр передаёт в QZ, сильно скачет, эта настройка сгладит графики зон мощности. Полезно и для педалей-измерителей мощности. Используется гармоническое усреднение, которое сглаживает всплески мощности лучше арифметического. Если любое показание равно 0, мощность сразу становится 0. По умолчанию – «Off».
+        <translation>Если мощность, которую тренажёр передаёт в QZ, сильно скачет, эта настройка сгладит графики зон мощности. Полезно и для педалей-измерителей мощности. Используется гармоническое усреднение, которое сглаживает всплески мощности лучше арифметического. Если любое показание равно 0, мощность сразу становится 0. По умолчанию – «Выкл.».
 
 ВАЖНО:
 - Для обычных велостанков с частотой 1 Гц (без гоночного режима) не включайте усреднение/сглаживание в настройках станка
@@ -11387,7 +11403,7 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings-tiles.qml" line="5758"/>
         <source>Button tile to cycle through power averaging modes: Off, 3s avg (harmonic), 5s avg (harmonic). Tap to cycle between modes. Only for bikes.</source>
-        <translation>Плитка-кнопка для смены режима усреднения мощности: Off, 3s avg (гармоническое), 5s avg (гармоническое). Нажимайте, чтобы переключать режимы. Только для велотренажёров.</translation>
+        <translation>Плитка-кнопка для смены режима усреднения мощности: «Выкл.», «Ср. 3 с» и «Ср. 5 с» (гармоническое усреднение). Нажимайте, чтобы переключать режимы. Только для велотренажёров.</translation>
     </message>
     <message>
         <location filename="../settings-tiles.qml" line="5772"/>
