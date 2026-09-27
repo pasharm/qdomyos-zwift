@@ -632,6 +632,137 @@ Would you like to do that now?</source>
         <translation>Не вдалося надіслати тренування поштою</translation>
     </message>
     <message>
+        <location filename="../homeform.cpp" line="883"/>
+        <source>QZ is looking for %1. Please wake it up or change this device under the Manual Device setting in Advanced Settings.</source>
+        <translation>QZ шукає %1. Виведіть пристрій зі сну або змініть його в «Пристрій вручну» у розділі «Додаткові налаштування».</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1082"/>
+        <source>Bluetooth name too long, change it to a 4 letters one in the android settings and use only A-Z or 0-9 characters</source>
+        <translation>Задовге ім’я Bluetooth: змініть його в налаштуваннях Android на ім’я довжиною 4 символи, лише A-Z або 0-9</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1574"/>
+        <source>Peloton Login Error!</source>
+        <translation>Помилка входу до Peloton!</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1583"/>
+        <source>Zwift Login Error!</source>
+        <translation>Помилка входу до Zwift!</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1626"/>
+        <source>Peloton workout auto started! It will start automatically after the intro! %1 - %2</source>
+        <translation>Тренування Peloton запущено автоматично! Почнеться саме після вступу! %1 – %2</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1629"/>
+        <source>Peloton workout auto started skipping the intro! %1 - %2</source>
+        <translation>Тренування Peloton запущено автоматично, вступ пропущено! %1 – %2</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="8347"/>
+        <source>AutoLap %1</source>
+        <translation>Автоколо %1</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="9658"/>
+        <source>Strava Auth Failed!</source>
+        <translation>Strava: помилка авторизації!</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="9681"/>
+        <source>Strava Login OK!</source>
+        <translation>Strava: вхід виконано!</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="9823"/>
+        <source>Strava Upload Failed: %1</source>
+        <translation>Не вдалося вивантажити в Strava: %1</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="9825"/>
+        <source>Strava Upload Failed</source>
+        <translation>Не вдалося вивантажити в Strava</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="9840"/>
+        <source>Strava Upload Completed!</source>
+        <translation>Вивантаження в Strava завершено!</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10035"/>
+        <source>Garmin credentials not configured. Please set email and password in settings.</source>
+        <translation>Garmin не налаштовано: вкажіть email і пароль у налаштуваннях.</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10045"/>
+        <source>Garmin Connect: Authentication successful!</source>
+        <translation>Garmin Connect: вхід виконано!</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10050"/>
+        <source>Garmin Connect Login Failed: %1</source>
+        <translation>Не вдалося увійти в Garmin Connect: %1</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10054"/>
+        <source>Garmin Connect: Upload successful!</source>
+        <translation>Garmin Connect: вивантаження виконано!</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10058"/>
+        <source>Garmin Connect Upload Failed: %1</source>
+        <translation>Не вдалося вивантажити в Garmin Connect: %1</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10068"/>
+        <source>Garmin workout saved: %1</source>
+        <translation>Тренування Garmin збережено: %1</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10102"/>
+        <location filename="../homeform.cpp" line="10110"/>
+        <source>Garmin Connect: Authenticated!</source>
+        <translation>Garmin Connect: вхід виконано!</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10122"/>
+        <source>Garmin Connect: Login failed - %1</source>
+        <translation>Garmin Connect: не вдалося увійти – %1</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10131"/>
+        <source>Garmin Connect not initialized</source>
+        <translation>Garmin Connect не ініціалізовано</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10136"/>
+        <source>Please enter a valid MFA code</source>
+        <translation>Введіть правильний код MFA</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10145"/>
+        <source>Submitting MFA code...</source>
+        <translation>Надсилання коду MFA...</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10188"/>
+        <source>No Garmin workout file available</source>
+        <translation>Немає файлу тренування Garmin</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10193"/>
+        <source>Failed to load Garmin workout: %1</source>
+        <translation>Не вдалося завантажити тренування Garmin: %1</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10198"/>
+        <source>Starting Garmin workout: %1</source>
+        <translation>Запуск тренування Garmin: %1</translation>
+    </message>
+    <message>
         <location filename="../homeform.cpp" line="10234"/>
         <source>Cycling FTP: %1 -&gt; %2 W</source>
         <translation>FTP (велосипед): %1 -&gt; %2 W</translation>
@@ -653,6 +784,485 @@ Do you want to update QZ settings?</source>
 %1
 
 Оновити налаштування QZ?</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10278"/>
+        <source>cycling FTP</source>
+        <translation>FTP для велосипеда</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10282"/>
+        <source>running FTP</source>
+        <translation>FTP для бігу</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10295"/>
+        <source>Updated Garmin %1</source>
+        <translation>Оновлено з Garmin: %1</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10295"/>
+        <source> and </source>
+        <translation> та </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10314"/>
+        <location filename="../homeform.cpp" line="10339"/>
+        <source>No active Echelon device found</source>
+        <translation>Активний пристрій Echelon не знайдено</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10328"/>
+        <source>The connected device is neither an Echelon Connect Sport nor a fakebike</source>
+        <translation>Під’єднаний пристрій – не Echelon Connect Sport і не fakebike</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10348"/>
+        <source>The connected device is not an Echelon Connect Sport</source>
+        <translation>Під’єднаний пристрій – не Echelon Connect Sport</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10393"/>
+        <source>Strava: unable to open FIT file</source>
+        <translation>Strava: не вдалося відкрити файл FIT</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10402"/>
+        <source>Garmin: FIT file not found</source>
+        <translation>Garmin: файл FIT не знайдено</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10407"/>
+        <source>Garmin is not configured</source>
+        <translation>Garmin не налаштовано</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10416"/>
+        <location filename="../homeform.cpp" line="10539"/>
+        <source>Garmin: Not authenticated. Please login first.</source>
+        <translation>Garmin: вхід не виконано. Спочатку увійдіть.</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10420"/>
+        <location filename="../homeform.cpp" line="10545"/>
+        <source>Uploading to Garmin Connect...</source>
+        <translation>Вивантаження в Garmin Connect...</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10422"/>
+        <location filename="../homeform.cpp" line="10553"/>
+        <source>Garmin: Upload failed - %1</source>
+        <translation>Garmin: не вдалося вивантажити – %1</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10429"/>
+        <source>Intervals.icu: unable to open FIT file</source>
+        <translation>Intervals.icu: не вдалося відкрити файл FIT</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10550"/>
+        <source>Garmin: Upload successful!</source>
+        <translation>Garmin: вивантаження виконано!</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="10563"/>
+        <source>Downloading Garmin daily workout...</source>
+        <translation>Отримання тренування дня з Garmin...</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11538"/>
+        <location filename="../homeform.cpp" line="11578"/>
+        <source>Intervals.icu: Authentication failed</source>
+        <translation>Intervals.icu: помилка авторизації</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11582"/>
+        <source>Intervals.icu: Error %1</source>
+        <translation>Intervals.icu: помилка %1</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11593"/>
+        <source>Intervals.icu error: %1</source>
+        <translation>Помилка Intervals.icu: %1</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11697"/>
+        <source>Intervals.icu: Not authenticated</source>
+        <translation>Intervals.icu: вхід не виконано</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11703"/>
+        <source>Intervals.icu: No athlete ID configured</source>
+        <translation>Intervals.icu: не вказано ID спортсмена</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11804"/>
+        <source>Intervals.icu upload successful!</source>
+        <translation>Вивантаження в Intervals.icu виконано!</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11806"/>
+        <source>Intervals.icu upload failed (HTTP %1)</source>
+        <translation>Не вдалося вивантажити в Intervals.icu (HTTP %1)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11822"/>
+        <source>Intervals.icu upload failed: %1</source>
+        <translation>Не вдалося вивантажити в Intervals.icu: %1</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11824"/>
+        <source>Intervals.icu upload failed</source>
+        <translation>Не вдалося вивантажити в Intervals.icu</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11839"/>
+        <source>Intervals.icu: Configure athlete ID first</source>
+        <translation>Intervals.icu: спочатку вкажіть ID спортсмена</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11860"/>
+        <source>Intervals.icu: Please authenticate first</source>
+        <translation>Intervals.icu: спочатку увійдіть</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11877"/>
+        <source>Downloading workout from Intervals.icu...</source>
+        <translation>Отримання тренування з Intervals.icu...</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11887"/>
+        <source>Failed to get workouts (HTTP %1)</source>
+        <translation>Не вдалося отримати тренування (HTTP %1)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11889"/>
+        <source>Intervals.icu: %1</source>
+        <translation>Intervals.icu: %1</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11898"/>
+        <source>Intervals.icu: Invalid response</source>
+        <translation>Intervals.icu: неправильна відповідь</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11906"/>
+        <source>No workouts planned for today on Intervals.icu</source>
+        <translation>На сьогодні в Intervals.icu тренувань немає</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11976"/>
+        <source>Workout saved: %1</source>
+        <translation>Тренування збережено: %1</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="11979"/>
+        <source>Failed to save workout file</source>
+        <translation>Не вдалося зберегти файл тренування</translation>
+    </message>
+    <message>
+        <location filename="../devices/bluetooth.cpp" line="3225"/>
+        <source>%1 (HR sensor) connected!</source>
+        <translation>Під’єднано: %1 (пульсометр)!</translation>
+    </message>
+    <message>
+        <location filename="../devices/bluetooth.cpp" line="3313"/>
+        <source>%1 (cadence sensor) connected!</source>
+        <translation>Під’єднано: %1 (датчик каденсу)!</translation>
+    </message>
+    <message>
+        <location filename="../devices/bluetooth.cpp" line="3365"/>
+        <source>%1 (power sensor) connected!</source>
+        <translation>Під’єднано: %1 (датчик потужності)!</translation>
+    </message>
+    <message>
+        <location filename="../devices/bluetooth.cpp" line="3429"/>
+        <source>SRAM Connected!</source>
+        <translation>SRAM під’єднано!</translation>
+    </message>
+    <message>
+        <location filename="../devices/bluetooth.cpp" line="3463"/>
+        <source>Zwift Click Connected!</source>
+        <translation>Zwift Click під’єднано!</translation>
+    </message>
+    <message>
+        <location filename="../devices/bluetooth.cpp" line="3534"/>
+        <source>Zwift Click v2 Connected!</source>
+        <translation>Zwift Click v2 під’єднано!</translation>
+    </message>
+    <message>
+        <location filename="../devices/bluetooth.cpp" line="3551"/>
+        <source>Thinkrider Controller Connected!</source>
+        <translation>Пульт Thinkrider під’єднано!</translation>
+    </message>
+    <message>
+        <location filename="../devices/bluetooth.cpp" line="3571"/>
+        <source>CYCPLUS BC2 Connected!</source>
+        <translation>CYCPLUS BC2 під’єднано!</translation>
+    </message>
+    <message>
+        <location filename="../devices/bluetooth.cpp" line="3590"/>
+        <source>Elite Square Connected!</source>
+        <translation>Elite Square під’єднано!</translation>
+    </message>
+    <message>
+        <location filename="../devices/bluetooth.cpp" line="3688"/>
+        <source>Zwift Play/Ride Connected!</source>
+        <translation>Zwift Play/Ride під’єднано!</translation>
+    </message>
+    <message>
+        <location filename="../devices/coresensor/coresensor.cpp" line="62"/>
+        <location filename="../devices/heartratebelt/heartratebelt.cpp" line="247"/>
+        <location filename="../devices/moxy5sensor/moxy5sensor.cpp" line="169"/>
+        <location filename="../devices/wahookickrheadwind/wahookickrheadwind.cpp" line="325"/>
+        <source>%1 connected!</source>
+        <translation>Під’єднано: %1!</translation>
+    </message>
+    <message>
+        <location filename="../devices/cscbike/cscbike.cpp" line="47"/>
+        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
+        <translation>Ручну поправку потужності за опором увімкнено: потужність тепер залежить від значення плитки «Опір».</translation>
+    </message>
+    <message>
+        <location filename="../devices/cscbike/cscbike.cpp" line="49"/>
+        <location filename="../devices/ftmsbike/ftmsbike.cpp" line="288"/>
+        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
+        <translation>Власну таблицю потужності CSC увімкнено: потужність тепер рахується за заданими точками опір/вати.</translation>
+    </message>
+    <message>
+        <location filename="../devices/cscbike/cscbike.cpp" line="290"/>
+        <location filename="../devices/ftmsbike/ftmsbike.cpp" line="775"/>
+        <location filename="../devices/heartratebelt/heartratebelt.cpp" line="77"/>
+        <location filename="../devices/strydrunpowersensor/strydrunpowersensor.cpp" line="161"/>
+        <source>%1 Battery Level %2 %</source>
+        <translation>%1: заряд батареї %2 %</translation>
+    </message>
+    <message>
+        <location filename="../devices/domyosbike/domyosbike.cpp" line="762"/>
+        <location filename="../devices/solebike/solebike.cpp" line="530"/>
+        <source>FTMS bike found, restart the app to apply the change</source>
+        <translation>Знайдено велотренажер FTMS, перезапустіть застосунок, щоб застосувати зміну</translation>
+    </message>
+    <message>
+        <location filename="../devices/domyoselliptical/domyoselliptical.cpp" line="572"/>
+        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
+        <translation>Орбітрек Domyos працює за FTMS. Перезапустіть QZ, щоб застосувати виправлення.</translation>
+    </message>
+    <message>
+        <location filename="../devices/domyosrower/domyosrower.cpp" line="901"/>
+        <source>FTMS rower found, restart the app to apply the change</source>
+        <translation>Знайдено гребний тренажер FTMS, перезапустіть застосунок, щоб застосувати зміну</translation>
+    </message>
+    <message>
+        <location filename="../devices/echelonconnectsport/echelonconnectsport.cpp" line="559"/>
+        <location filename="../devices/kineticinroadbike/kineticinroadbike.cpp" line="503"/>
+        <location filename="../devices/pitpatbike/pitpatbike.cpp" line="398"/>
+        <source>Bluetooth Service Error! Restart the bike!</source>
+        <translation>Помилка служби Bluetooth! Перезапустіть велотренажер!</translation>
+    </message>
+    <message>
+        <location filename="../devices/echelonconnectsport/echelonconnectsport.cpp" line="632"/>
+        <location filename="../devices/fakebike/fakebike.cpp" line="189"/>
+        <source>Switching to classic Bluetooth bridge</source>
+        <translation>Перемикання на міст класичного Bluetooth</translation>
+    </message>
+    <message>
+        <location filename="../devices/echelonconnectsport/echelonconnectsport.cpp" line="672"/>
+        <source>Virtual Echelon enabled for this bike</source>
+        <translation>Для цього велотренажера увімкнено віртуальний Echelon</translation>
+    </message>
+    <message>
+        <location filename="../devices/eslinkertreadmill/eslinkertreadmill.cpp" line="337"/>
+        <location filename="../devices/fitshowtreadmill/fitshowtreadmill.cpp" line="307"/>
+        <location filename="../devices/kingsmithr1protreadmill/kingsmithr1protreadmill.cpp" line="496"/>
+        <location filename="../devices/yesoulbike/yesoulbike.cpp" line="329"/>
+        <source>FTMS treadmill found, restart the app to apply the change</source>
+        <translation>Знайдено бігову доріжку FTMS, перезапустіть застосунок, щоб застосувати зміну</translation>
+    </message>
+    <message>
+        <location filename="../devices/eslinkertreadmill/eslinkertreadmill.cpp" line="632"/>
+        <source>Init completed, you can use the treadmill now!</source>
+        <translation>Ініціалізацію завершено, можна користуватися біговою доріжкою!</translation>
+    </message>
+    <message>
+        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="689"/>
+        <source>Virtufit Etappe bike layout detected, restart the app to apply the change!</source>
+        <translation>Виявлено схему велотренажера Virtufit Etappe, перезапустіть застосунок, щоб застосувати зміну!</translation>
+    </message>
+    <message>
+        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="1021"/>
+        <location filename="../devices/stagesbike/stagesbike.cpp" line="178"/>
+        <location filename="../devices/tacxneo2/tacxneo2.cpp" line="39"/>
+        <source>FTMS bike found, restart the app to apply the change!</source>
+        <translation>Знайдено велотренажер FTMS, перезапустіть застосунок, щоб застосувати зміну!</translation>
+    </message>
+    <message>
+        <location filename="../devices/fitplusrower/fitplusrower.cpp" line="387"/>
+        <source>FTMS rower found, restart the app to apply the change!</source>
+        <translation>Знайдено гребний тренажер FTMS, перезапустіть застосунок, щоб застосувати зміну!</translation>
+    </message>
+    <message>
+        <location filename="../devices/fitshowtreadmill/fitshowtreadmill.cpp" line="878"/>
+        <source>FitShow bike found, restart the app to apply the change!</source>
+        <translation>Знайдено велотренажер FitShow, перезапустіть застосунок, щоб застосувати зміну!</translation>
+    </message>
+    <message>
+        <location filename="../devices/ftmsbike/ftmsbike.cpp" line="1819"/>
+        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Велотренажер Domyos видає себе за FTMS, але ним не є. Перезапустіть QZ, щоб застосувати виправлення.</translation>
+    </message>
+    <message>
+        <location filename="../devices/ftmsbike/ftmsbike.cpp" line="1823"/>
+        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
+        <translation>Знайдено гребний тренажер PM5. Перезапустіть QZ, щоб застосувати виправлення.</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="214"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="307"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="397"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="487"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="577"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="667"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="757"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="847"/>
+        <source>Treadmill initialization in progress...%1%</source>
+        <translation>Ініціалізація бігової доріжки...%1%</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="299"/>
+        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
+        <translation>Увімкніть «Примусово використовувати FTMS» у «Налаштування → Параметри бігової доріжки → Параметри бігової доріжки Horizon» і перезапустіть застосунок</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="877"/>
+        <source>Treadmill initialization completed!</source>
+        <translation>Ініціалізацію бігової доріжки завершено!</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="2370"/>
+        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Бігова доріжка Domyos видає себе за FTMS, але нею не є. Перезапустіть QZ, щоб застосувати виправлення.</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="2565"/>
+        <source>Treadmill ready</source>
+        <translation>Бігова доріжка готова</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="2726"/>
+        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
+        <translation>Виявлено пристрій T01_. Якщо значення нахилу дивні, увімкніть «Бігова доріжка IConcept FTMS» у «Параметри бігової доріжки».</translation>
+    </message>
+    <message>
+        <location filename="../devices/moxy5sensor/moxy5sensor.cpp" line="76"/>
+        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
+        <translation>SmO2 зараз: %1%, попереднє SmO2: %2%, THb: %3 g/dL</translation>
+    </message>
+    <message>
+        <location filename="../devices/nordictrackelliptical/nordictrackelliptical.cpp" line="685"/>
+        <source>SE7i init completed!</source>
+        <translation>Ініціалізацію SE7i завершено!</translation>
+    </message>
+    <message>
+        <location filename="../devices/proformtreadmill/proformtreadmill.cpp" line="179"/>
+        <source>Starting treadmill before applying requested speed %1</source>
+        <translation>Запуск бігової доріжки перед встановленням швидкості %1</translation>
+    </message>
+    <message>
+        <location filename="../devices/proformtreadmill/proformtreadmill.cpp" line="191"/>
+        <source>Applying cached speed request %1</source>
+        <translation>Встановлення відкладеної швидкості %1</translation>
+    </message>
+    <message>
+        <location filename="../devices/skandikawiribike/skandikawiribike.cpp" line="411"/>
+        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
+        <translation>Службу не знайдено, напишіть на roberto.viola83@gmail.com!</translation>
+    </message>
+    <message>
+        <location filename="../devices/wahookickrsnapbike/wahookickrsnapbike.cpp" line="896"/>
+        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
+        <translation>Знайдено Zwift Hub, перезапустіть застосунок, щоб увімкнути віртуальні передачі!</translation>
+    </message>
+    <message>
+        <location filename="../peloton.cpp" line="929"/>
+        <location filename="../peloton.cpp" line="2699"/>
+        <location filename="../peloton.cpp" line="2840"/>
+        <location filename="../peloton.cpp" line="2859"/>
+        <location filename="../peloton.cpp" line="3066"/>
+        <source>Peloton Auth Failed!</source>
+        <translation>Peloton: помилка авторизації!</translation>
+    </message>
+    <message>
+        <location filename="../peloton.cpp" line="950"/>
+        <source>Welcome %1</source>
+        <translation>Вітаємо, %1</translation>
+    </message>
+    <message>
+        <location filename="../peloton.cpp" line="1104"/>
+        <source>Error: Failed to load workout data after 3 attempts</source>
+        <translation>Помилка: не вдалося завантажити дані тренування за 3 спроби</translation>
+    </message>
+    <message>
+        <location filename="../peloton.cpp" line="2565"/>
+        <source>Peloton desktop relay failed!</source>
+        <translation>Збій ретранслятора Peloton для комп’ютера!</translation>
+    </message>
+    <message>
+        <location filename="../peloton.cpp" line="2889"/>
+        <location filename="../peloton.cpp" line="3091"/>
+        <source>Peloton Login OK!</source>
+        <translation>Peloton: вхід виконано!</translation>
+    </message>
+    <message>
+        <location filename="../trainprogram.cpp" line="615"/>
+        <source>Peloton Syncing! Skipping intro...</source>
+        <translation>Синхронізація з Peloton! Вступ пропускається...</translation>
+    </message>
+    <message>
+        <location filename="../trainprogram.cpp" line="632"/>
+        <source>Peloton Syncing!</source>
+        <translation>Синхронізація з Peloton!</translation>
+    </message>
+    <message>
+        <location filename="../trainprogram.cpp" line="1101"/>
+        <source>Heart rate target reached. Continuing workout.</source>
+        <translation>Цільового пульсу досягнуто. Тренування триває.</translation>
+    </message>
+    <message>
+        <location filename="../trainprogram.cpp" line="1404"/>
+        <location filename="../trainprogram.cpp" line="1412"/>
+        <source>Waiting for heart rate target</source>
+        <translation>Очікування цільового пульсу</translation>
+    </message>
+    <message>
+        <location filename="../trainprogram.cpp" line="1408"/>
+        <source>Ride until heart rate is above %1 bpm</source>
+        <translation>Крутіть, доки пульс не стане вищим за %1 bpm</translation>
+    </message>
+    <message>
+        <location filename="../trainprogram.cpp" line="1410"/>
+        <source>Ride until heart rate is below %1 bpm</source>
+        <translation>Крутіть, доки пульс не стане нижчим за %1 bpm</translation>
+    </message>
+    <message>
+        <location filename="../trainprogram.cpp" line="1459"/>
+        <source>Lap received. Continuing workout.</source>
+        <translation>Коло отримано. Тренування триває.</translation>
+    </message>
+    <message>
+        <location filename="../zwift-api/zwift_client_auth.h" line="107"/>
+        <source>Zwift Login OK!</source>
+        <translation>Zwift: вхід виконано!</translation>
+    </message>
+    <message>
+        <location filename="../zwift-api/zwift_client_auth.h" line="110"/>
+        <source>Zwift Auth Failed!</source>
+        <translation>Zwift: помилка авторизації!</translation>
+    </message>
+    <message>
+        <location filename="../zwift_play/zwiftclickremote.cpp" line="47"/>
+        <source>Zwift device: UPGRADE THE FIRMWARE!</source>
+        <translation>Пристрій Zwift: ОНОВІТЬ ПРОШИВКУ!</translation>
     </message>
 </context>
 <context>
@@ -1175,7 +1785,7 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="58"/>
-        <location filename="../webtranslation.cpp" line="196"/>
+        <location filename="../webtranslation.cpp" line="219"/>
         <source>Speed</source>
         <translation>Швидкість</translation>
     </message>
@@ -1191,13 +1801,13 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="61"/>
-        <location filename="../webtranslation.cpp" line="204"/>
+        <location filename="../webtranslation.cpp" line="227"/>
         <source>Resistance</source>
         <translation>Опір</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="62"/>
-        <location filename="../webtranslation.cpp" line="197"/>
+        <location filename="../webtranslation.cpp" line="220"/>
         <source>Cadence</source>
         <translation>Каденс</translation>
     </message>
@@ -1634,7 +2244,7 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="149"/>
-        <location filename="../webtranslation.cpp" line="199"/>
+        <location filename="../webtranslation.cpp" line="222"/>
         <source>Calories</source>
         <translation>Калорії</translation>
     </message>
@@ -1815,86 +2425,201 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="186"/>
+        <source>AVG</source>
+        <translation>СЕР.</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="187"/>
+        <source>MAX</source>
+        <translation>МАКС.</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="188"/>
+        <source>TOTAL</source>
+        <translation>ВСЬОГО</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="189"/>
+        <source>OFFSET</source>
+        <translation>ЗМІЩ.</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="190"/>
+        <source>N/A</source>
+        <translation>Н/Д</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="191"/>
+        <source>P.ZONE</source>
+        <translation>ЗОНА ПОТ.</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="192"/>
+        <source>P.RESISTANCE</source>
+        <translation>P.ОПІР</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="193"/>
+        <source>TOT.OUTPUT</source>
+        <translation>СУМ.ПОТ.</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="194"/>
+        <source>ELAPSED</source>
+        <translation>ЧАС</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="195"/>
+        <source>REM.TIME</source>
+        <translation>ЗАЛИШОК</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="196"/>
+        <source>P.OFFSET</source>
+        <translation>P.ЗМІЩ.</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="197"/>
+        <source>GEARS</source>
+        <translation>ПЕРЕДАЧІ</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="198"/>
+        <source>NEXT</source>
+        <translation>ДАЛІ</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="199"/>
+        <source>CLEAR</source>
+        <translation>СКИД</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="200"/>
+        <source>GEAR -</source>
+        <translation>ПЕРЕДАЧА -</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="201"/>
+        <source>GEAR +</source>
+        <translation>ПЕРЕДАЧА +</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="202"/>
+        <source>Select metrics to display</source>
+        <translation>Виберіть показники</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="203"/>
+        <source>Select Metrics</source>
+        <translation>Показники</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="204"/>
+        <source>Full Controls</source>
+        <translation>Повна панель</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="205"/>
+        <source>Close</source>
+        <translation>Закрити</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="206"/>
+        <source>Start/Pause</source>
+        <translation>Старт/пауза</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="207"/>
+        <source>Stop</source>
+        <translation>Стоп</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="208"/>
+        <source>Auto Resistance</source>
+        <translation>Автоопір</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="209"/>
         <source>SPEED</source>
         <translation>ШВИДКІСТЬ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="187"/>
+        <location filename="../webtranslation.cpp" line="210"/>
         <source>INCLINE</source>
         <translation>НАХИЛ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="188"/>
+        <location filename="../webtranslation.cpp" line="211"/>
         <source>PACE</source>
         <translation>ТЕМП</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="189"/>
+        <location filename="../webtranslation.cpp" line="212"/>
         <source>ELEV.</source>
         <translation>ВИС.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="190"/>
+        <location filename="../webtranslation.cpp" line="213"/>
         <source>CADENCE</source>
         <translation>КАДЕНС</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="191"/>
+        <location filename="../webtranslation.cpp" line="214"/>
         <source>PULSE</source>
         <translation>ПУЛЬС</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="192"/>
+        <location filename="../webtranslation.cpp" line="215"/>
         <source>POWER</source>
         <translation>ПОТУЖНІСТЬ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="193"/>
+        <location filename="../webtranslation.cpp" line="216"/>
         <source>RESISTANCE</source>
         <translation>ОПІР</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="194"/>
+        <location filename="../webtranslation.cpp" line="217"/>
         <source>CALORIES</source>
         <translation>КАЛОРІЇ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="195"/>
+        <location filename="../webtranslation.cpp" line="218"/>
         <source>DISTANCE</source>
         <translation>ДИСТАНЦІЯ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="198"/>
+        <location filename="../webtranslation.cpp" line="221"/>
         <source>Heart</source>
         <translation>Пульс</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="200"/>
+        <location filename="../webtranslation.cpp" line="223"/>
         <source>Odometer</source>
         <translation>Пробіг</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="201"/>
+        <location filename="../webtranslation.cpp" line="224"/>
         <source>Watt</source>
         <translation>Потужність</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="202"/>
+        <location filename="../webtranslation.cpp" line="225"/>
         <source>Elapsed</source>
         <translation>Час</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="203"/>
+        <location filename="../webtranslation.cpp" line="226"/>
         <source>Inclination</source>
         <translation>Нахил</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="205"/>
+        <location filename="../webtranslation.cpp" line="228"/>
         <source>Altitude</source>
         <translation>Висота</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="206"/>
+        <location filename="../webtranslation.cpp" line="229"/>
         <source>Elevation</source>
         <translation>Набір висоти</translation>
     </message>
