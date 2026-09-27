@@ -858,6 +858,33 @@ void fitshowtreadmill::serviceScanDone(void) {
     gattCommunicationChannelService->discoverDetails();
 #endif
 
+    // FitShow bikes use FS- names too: if FTMS exposes Indoor Bike Data (2AD2), which a treadmill doesn't have,
+    // switch to the Fit Plus bike and ask for a restart (like the FTMS forcing in serviceDiscovered)
+    if (fs_connected) {
+        gattFTMSProbeService = m_control->createServiceObject(QBluetoothUuid((quint16)0x1826));
+        if (gattFTMSProbeService) {
+            connect(gattFTMSProbeService, &QLowEnergyService::stateChanged, this,
+                    [this](QLowEnergyService::ServiceState state) {
+                        if (state != QLowEnergyService::ServiceDiscovered ||
+                            !gattFTMSProbeService->characteristic(QBluetoothUuid((quint16)0x2AD2)).isValid())
+                            return;
+                        QSettings settings;
+                        if (settings.value(QZSettings::fitplus_bike, QZSettings::default_fitplus_bike).toBool())
+                            return;
+                        settings.setValue(QZSettings::fitplus_bike, true);
+                        qDebug() << "FitShow bike detected (FTMS Indoor Bike Data), fitplus_bike enabled";
+                        if (homeform::singleton())
+                            homeform::singleton()->setToastRequested(
+                                "FitShow bike found, restart the app to apply the change!");
+                    });
+#ifdef _MSC_VER
+            QTimer::singleShot(0, [=]() { gattFTMSProbeService->discoverDetails(); });
+#else
+            gattFTMSProbeService->discoverDetails();
+#endif
+        }
+    }
+
     // useful for the cadence
     gattCommunicationRSCService = m_control->createServiceObject(QBluetoothUuid((quint16)0x1814));
     if (!gattCommunicationRSCService) {

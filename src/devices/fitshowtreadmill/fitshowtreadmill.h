@@ -142,6 +142,7 @@ class fitshowtreadmill : public treadmill {
 
     QLowEnergyService *gattCommunicationChannelService = nullptr;
     QLowEnergyService *gattCommunicationRSCService = nullptr;
+    QLowEnergyService *gattFTMSProbeService = nullptr;
     QLowEnergyCharacteristic gattWriteCharacteristic;
     QLowEnergyCharacteristic gattNotifyCharacteristic;
 
