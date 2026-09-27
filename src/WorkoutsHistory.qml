@@ -178,9 +178,12 @@ Page {
         
         // Database processing message
         Text {
-            Layout.alignment: Qt.AlignHCenter
+            Layout.fillWidth: true
+            Layout.leftMargin: window.contentSideMargin
+            Layout.rightMargin: window.contentSideMargin
             visible: workoutModel ? workoutModel.isDatabaseProcessing : false
             text: qsTr("Processing workout files...\nThis may take a few moments on first startup.")
+            wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
             color: "#666666"
             font.pixelSize: 16
