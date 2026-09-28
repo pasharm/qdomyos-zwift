@@ -687,7 +687,8 @@ function process_workout(arr) {
     }
     if(watts_max < arr.watts)
         watts_max = arr.watts;
-    powerChart.update();
+    // a new point with every workout message: without 'none' the chart keeps running its 1 s animation
+    powerChart.update('none');
     refresh();
 }
 
