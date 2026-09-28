@@ -83,6 +83,18 @@
         <source>Other folders</source>
         <translation>Другие папки</translation>
     </message>
+    <message>
+        <source>Open</source>
+        <translation>Открыть</translation>
+    </message>
+    <message>
+        <source>Parent folder</source>
+        <translation>Папка выше</translation>
+    </message>
+    <message>
+        <source>No GPX files here</source>
+        <translation>Здесь нет GPX-файлов</translation>
+    </message>
 </context>
 <context>
     <name>Home</name>
