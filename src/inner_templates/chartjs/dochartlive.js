@@ -687,7 +687,8 @@ function process_workout(arr) {
     }
     if(watts_max < arr.watts)
         watts_max = arr.watts;
-    powerChart.update();
+    // a new point every second: without 'none' the chart runs its 1 s animation all the time
+    powerChart.update('none');
     refresh();
 }
 
