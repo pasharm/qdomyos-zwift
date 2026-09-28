@@ -144,6 +144,13 @@ if [ "$UI_MODERN" = "true" ]; then
   sleep 5
   shot 19b-gpx-route-dark
 fi
+# Landscape: the list column and the map side by side
+adb shell settings put system accelerometer_rotation 0 || true
+adb shell settings put system user_rotation 1 || true
+sleep 5
+shot 19c-gpx-landscape-dark
+adb shell settings put system user_rotation 0 || true
+sleep 5
 adb shell input tap 84 168 || true      # back arrow: home page
 sleep 3
 adb shell input tap 84 168 || true      # menu
