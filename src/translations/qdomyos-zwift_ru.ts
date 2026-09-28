@@ -11495,6 +11495,10 @@ Default: A = -0.96, B = 1.33</source>
         <source>Shows Heart Rate Variability (HRV) from a compatible heart rate belt. Displays RMSSD value in milliseconds.</source>
         <translation>Показывает вариабельность сердечного ритма (HRV) с совместимого нагрудного пульсометра. Значение RMSSD в миллисекундах.</translation>
     </message>
+    <message>
+        <source>Tiles Options</source>
+        <translation>Параметры плиток</translation>
+    </message>
 </context>
 <context>
     <name>settings-treadmill-inclination-override</name>

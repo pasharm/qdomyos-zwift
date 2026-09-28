@@ -376,6 +376,19 @@ ScrollView {
         spacing: 0
         anchors.fill: parent
 
+        // Modern look: a page title like the TTS and shortcut pages (classic had none)
+        Label {
+            visible: window.ui.modern
+            Layout.fillWidth: true
+            text: qsTr("Tiles Options")
+            wrapMode: Text.WordWrap
+            color: window.ui.textMain
+            font.pixelSize: 22
+            font.weight: Font.DemiBold
+            topPadding: 12
+            bottomPadding: 8
+        }
+
         NewPageElement {
             id: labelShortcutsSettings
             title: qsTr("Keyboard Shortcuts ⌨️")
