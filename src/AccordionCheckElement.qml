@@ -63,31 +63,20 @@ ColumnLayout {
         }
     }
 
-    // Modern look: a card like the section headers, the switch on the right, the accent
-    // strip and title while it is on; a tap anywhere on the card switches it
+    // Modern look: a plain switch row like the other switches of the settings (no card,
+    // no accent: a page of tiles has dozens of them); a tap anywhere on the row switches it
     Rectangle {
         id: modernHeader
         visible: window.ui.modern
         Layout.fillWidth: true
-        Layout.topMargin: 6
-        implicitHeight: Math.max(56, modernTitle.implicitHeight + 24)
-        radius: 16
-        color: modernArea.pressed ? window.ui.surfaceHighest
-             : rootElement.isOpen ? window.ui.surfaceHigh : window.ui.surface
+        implicitHeight: Math.max(48, modernTitle.implicitHeight + 16)
+        radius: 12
+        color: modernArea.pressed ? window.ui.surfaceHigh : "transparent"
 
         Accessible.role: Accessible.CheckBox
         Accessible.name: rootElement.title
         Accessible.checked: rootElement.isOpen
         Accessible.onPressAction: rootElement.toggle(!rootElement.isOpen)
-
-        Rectangle {
-            visible: rootElement.isOpen
-            width: 4
-            height: parent.height - 24
-            anchors.verticalCenter: parent.verticalCenter
-            radius: 2
-            color: window.ui.accent
-        }
 
         MouseArea {
             id: modernArea
@@ -98,21 +87,19 @@ ColumnLayout {
         Label {
             id: modernTitle
             anchors.left: parent.left
-            anchors.leftMargin: 18
+            anchors.leftMargin: 4
             anchors.right: modernSwitch.left
             anchors.rightMargin: 8
             anchors.verticalCenter: parent.verticalCenter
             text: rootElement.title
             wrapMode: Text.WordWrap
-            font.pixelSize: 16
-            font.weight: Font.Medium
-            color: rootElement.isOpen ? window.ui.accent : window.ui.textMain
+            color: window.ui.textMain
         }
 
         Switch {
             id: modernSwitch
             anchors.right: parent.right
-            anchors.rightMargin: 6
+            anchors.rightMargin: 0
             anchors.verticalCenter: parent.verticalCenter
             checked: rootElement.isOpen
             onClicked: rootElement.toggle(checked)
