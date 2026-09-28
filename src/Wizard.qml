@@ -55,31 +55,67 @@ Page {
         anchors.fill: parent
         width: parent.fill
         height: parent.fill
-        color: settings.theme_background_color
+        color: window.ui.modern ? window.ui.bg : settings.theme_background_color
+    }
+
+    // Modern look: progress along the wizard as a thin bar on top. The number of steps
+    // depends on the answers, so it is an estimate that fills up at the last steps
+    Rectangle {
+        visible: window.ui.modern
+        z: 1
+        width: parent.width
+        height: 3
+        color: window.ui.surfaceHigh
+        Rectangle {
+            height: parent.height
+            radius: 1.5
+            width: parent.width * Math.min(1, stackViewLocal.depth / 10)
+            color: window.ui.accent
+            Behavior on width { NumberAnimation { duration: 200; easing.type: Easing.OutQuad } }
+        }
     }
 
     StackView {
         id: stackViewLocal
         anchors.fill: parent
+        anchors.topMargin: window.ui.modern ? 3 : 0
 
         initialItem: welcomeComponent
     }
 
     component WizardButton: Button {
+             id: wizardButton
              property color textColor: "#800080"
              property color backgroundColor: "white"
+             // Modern look: "primary" moves on (Next, Finish), "secondary" goes back,
+             // "choice" is an answer drawn as a full-width card
+             readonly property string kind: text === qsTr("Back") ? "secondary"
+                                          : (text === qsTr("Next") || text === qsTr("Finish") || text === qsTr("Start") || text === qsTr("Close")) ? "primary"
+                                          : "choice"
              // A translated label can be wider than the screen: cap the button and wrap the text.
              // Capped by the screen, not by parent.width: in a GridLayout the parent's width comes
              // from the buttons themselves, and the loop squeezed them on Android
-             Layout.maximumWidth: stackViewLocal.width * 0.8
+             Layout.maximumWidth: window.ui.modern ? Math.min(480, stackViewLocal.width * 0.9) : stackViewLocal.width * 0.8
+             Layout.fillWidth: window.ui.modern && kind === "choice"
+             Layout.minimumWidth: window.ui.modern && kind !== "choice" ? 200 : 0
+             // Classic: the stock Button formula
+             implicitHeight: window.ui.modern ? Math.max(kind === "choice" ? 60 : 52, implicitContentHeight + 24)
+                                              : Math.max(implicitBackgroundHeight + topInset + bottomInset, implicitContentHeight + topPadding + bottomPadding)
              background: Rectangle {
-                 color: parent.backgroundColor
-                 radius: 5
+                 color: !window.ui.modern ? wizardButton.backgroundColor
+                      : wizardButton.kind === "primary" ? (wizardButton.down ? Qt.darker(window.ui.accent, 1.15) : window.ui.accent)
+                      : wizardButton.kind === "secondary" ? (wizardButton.down ? window.ui.surfaceHigh : "transparent")
+                      : (wizardButton.down ? window.ui.surfaceHighest : window.ui.surfaceHigh)
+                 radius: !window.ui.modern ? 5 : wizardButton.kind === "choice" ? 16 : height / 2
+                 border.width: window.ui.modern && wizardButton.kind !== "primary" ? 1 : 0
+                 border.color: wizardButton.kind === "choice" ? window.ui.alpha(window.ui.onSurface, 0.08) : window.ui.outline
              }
              contentItem: Text {
-                 font.pixelSize: 20
+                 font.pixelSize: window.ui.modern ? 17 : 20
+                 font.weight: window.ui.modern ? Font.Medium : Font.Normal
                  text: parent.text
-                 color: parent.textColor
+                 color: !window.ui.modern ? parent.textColor
+                      : wizardButton.kind === "primary" ? window.ui.onAccent : window.ui.onSurface
                  wrapMode: Text.WordWrap
                  horizontalAlignment: Text.AlignHCenter
                  verticalAlignment: Text.AlignVCenter
@@ -121,7 +157,7 @@ Page {
                         text: qsTr("Welcome to QZ")
                         font.pixelSize: 28
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
@@ -131,18 +167,18 @@ Page {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Created by Roberto Viola")
                         font.pixelSize: 24
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("QZ is designed to maximize your workout experience on a range of fitness equipment, including indoor bikes, treadmills, ellipticals, and rower. By connecting seamlessly with your devices, QZ provides realtime data, personalized workout plans, and interactive elements to keep you motivated.\n\nThe following questions will customize QZ for your equipment and goals.")
-                        font.pixelSize: 20
+                        font.pixelSize: window.ui.modern ? 16 : 20
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
                         width: stackViewLocal.width * 0.8
                         horizontalAlignment: Text.AlignHCenter
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurfaceVariant : "white"
                     }
 
                     WizardButton {
@@ -184,7 +220,7 @@ Page {
                         text: qsTr("How can I help you?")
                         font.pixelSize: 24
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     WizardButton {
@@ -246,7 +282,7 @@ Page {
                         text: qsTr("What's your fitness device?")
                         font.pixelSize: 24
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Repeater {
@@ -309,18 +345,18 @@ Page {
                         text: qsTr("Choose your preferred app")
                         font.pixelSize: 24
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("QZ allows you to connect to both of them, even simultaneously if you want!")
-                        font.pixelSize: 20
+                        font.pixelSize: window.ui.modern ? 16 : 20
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
                         width: stackViewLocal.width * 0.8
                         horizontalAlignment: Text.AlignHCenter
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurfaceVariant : "white"
                     }
 
                     GridLayout {
@@ -392,18 +428,18 @@ Page {
                         text: qsTr("Connect to Peloton")
                         font.pixelSize: 24
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Click the button below to connect your Peloton account")
-                        font.pixelSize: 20
+                        font.pixelSize: window.ui.modern ? 16 : 20
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
                         width: stackViewLocal.width * 0.8
                         horizontalAlignment: Text.AlignHCenter
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurfaceVariant : "white"
                     }
 
                     Image {
@@ -467,16 +503,16 @@ Page {
                         text: qsTr("Peloton Difficulty")
                         font.pixelSize: 24
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
                         text: qsTr("Typically, Peloton coaches call out a range for target incline, resistance and/or speed. Use this setting to choose the difficulty of the target QZ communicates. Difficulty level can be set to lower, upper or average")
-                        font.pixelSize: 20
+                        font.pixelSize: window.ui.modern ? 16 : 20
                         wrapMode: Text.WordWrap
                         width: stackViewLocal.width * 0.8
                         horizontalAlignment: Text.AlignHCenter
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurfaceVariant : "white"
                         Layout.fillWidth: true
                     }
 
@@ -488,7 +524,7 @@ Page {
                         text: qsTr("Difficulty")
                         font.pixelSize: 20
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     ValueComboBox {
@@ -555,17 +591,17 @@ Page {
                         text: qsTr("Bike Resistance Level")
                         font.pixelSize: 24
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("What resistance level feels like a flat road on your bike?")
-                        font.pixelSize: 20
+                        font.pixelSize: window.ui.modern ? 16 : 20
                         wrapMode: Text.WordWrap
                         width: stackViewLocal.width * 0.8
                         horizontalAlignment: Text.AlignHCenter
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurfaceVariant : "white"
                         Layout.fillWidth: true
                     }
 
@@ -630,7 +666,7 @@ Page {
                         text: qsTr("Custom Configurations")
                         font.pixelSize: 20
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
@@ -638,9 +674,9 @@ Page {
                         text: qsTr("Here you will see custom configurations based on your previous choices.")
                         wrapMode: Text.WordWrap
                         width: parent.width * 0.8
-                        font.pixelSize: 20
+                        font.pixelSize: window.ui.modern ? 16 : 20
                         horizontalAlignment: Text.AlignHCenter
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurfaceVariant : "white"
                     }
 
                     Item {
@@ -691,7 +727,7 @@ Page {
                         text: qsTr("Select a feature")
                         font.pixelSize: 24
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Repeater {
@@ -763,7 +799,7 @@ Page {
                         text: qsTr("Zwift Credentials")
                         font.pixelSize: 24
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
@@ -773,7 +809,7 @@ Page {
                         Layout.fillWidth: true
                         width: stackViewLocal.width * 0.8
                         horizontalAlignment: Text.AlignHCenter
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
@@ -784,7 +820,7 @@ Page {
                         text: qsTr("Username")
                         font.pixelSize: 20
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     TextField {
@@ -805,7 +841,7 @@ Page {
                         text: qsTr("Password")
                         font.pixelSize: 20
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     TextField {
@@ -873,7 +909,7 @@ Page {
                         text: qsTr("Zwift Play and Click")
                         font.pixelSize: 20
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
@@ -884,7 +920,7 @@ Page {
                         Layout.fillWidth: true
                         width: stackViewLocal.width * 0.8
                         horizontalAlignment: Text.AlignHCenter
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     SwitchDelegate {
@@ -926,7 +962,7 @@ Page {
                         Layout.fillWidth: true
                         width: stackViewLocal.width * 0.8
                         horizontalAlignment: Text.AlignHCenter
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Item {
@@ -980,7 +1016,7 @@ Page {
                         text: qsTr("Virtual Shifting")
                         font.pixelSize: 24
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
@@ -989,7 +1025,7 @@ Page {
                         wrapMode: Text.WordWrap
                         width: stackViewLocal.width * 0.8
                         horizontalAlignment: Text.AlignHCenter
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                         Layout.fillWidth: true
                     }
 
@@ -1044,7 +1080,7 @@ Page {
                         text: qsTr("Custom Configurations")
                         font.pixelSize: 20
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
@@ -1053,7 +1089,7 @@ Page {
                         wrapMode: Text.WordWrap
                         width: parent.width * 0.8
                         horizontalAlignment: Text.AlignHCenter
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Item {
@@ -1104,7 +1140,7 @@ Page {
                         text: qsTr("Thank you for setting up QZ!")
                         font.pixelSize: 20
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
@@ -1113,7 +1149,7 @@ Page {
                         wrapMode: Text.WordWrap
                         width: stackViewLocal.width * 0.8
                         horizontalAlignment: Text.AlignHCenter
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                         Layout.fillWidth: true
                         MouseArea {
                             anchors.fill: parent
@@ -1164,7 +1200,7 @@ Page {
                         text: qsTr("Select Your Fitness Device")
                         font.pixelSize: 24
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     RowLayout {
@@ -1242,7 +1278,7 @@ Page {
                         text: qsTr("Unit System")
                         font.pixelSize: 24
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
@@ -1251,8 +1287,8 @@ Page {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Select your preferred unit system")
-                        font.pixelSize: 20
-                        color: "white"
+                        font.pixelSize: window.ui.modern ? 16 : 20
+                        color: window.ui.modern ? window.ui.onSurfaceVariant : "white"
                     }
 
                     ComboBox {
@@ -1314,7 +1350,7 @@ Page {
                         text: qsTr("User Information")
                         font.pixelSize: 24
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
@@ -1323,8 +1359,8 @@ Page {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Weight (%1)").arg((settings.miles_unit && !settings.weight_kg_unit) ? qsTr("lbs") : qsTr("kg"))
-                        font.pixelSize: 20
-                        color: "white"
+                        font.pixelSize: window.ui.modern ? 16 : 20
+                        color: window.ui.modern ? window.ui.onSurfaceVariant : "white"
                     }
 
                     SpinBox {
@@ -1357,8 +1393,8 @@ Page {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Age")
-                        font.pixelSize: 20
-                        color: "white"
+                        font.pixelSize: window.ui.modern ? 16 : 20
+                        color: window.ui.modern ? window.ui.onSurfaceVariant : "white"
                     }
 
                     SpinBox {
@@ -1376,8 +1412,8 @@ Page {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Gender")
-                        font.pixelSize: 20
-                        color: "white"
+                        font.pixelSize: window.ui.modern ? 16 : 20
+                        color: window.ui.modern ? window.ui.onSurfaceVariant : "white"
                     }
 
                     ValueComboBox {
@@ -1443,14 +1479,14 @@ Page {
                         text: qsTr("Select Your Heart Rate Device")
                         font.pixelSize: 24
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Choose your heart rate belt or select a smartwatch option:")
-                        font.pixelSize: 20
-                        color: "white"
+                        font.pixelSize: window.ui.modern ? 16 : 20
+                        color: window.ui.modern ? window.ui.onSurfaceVariant : "white"
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
                     }
@@ -1486,8 +1522,8 @@ Page {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Or select a smartwatch option:")
-                        font.pixelSize: 20
-                        color: "white"
+                        font.pixelSize: window.ui.modern ? 16 : 20
+                        color: window.ui.modern ? window.ui.onSurfaceVariant : "white"
                         Layout.topMargin: 20
                     }
 
@@ -1507,7 +1543,7 @@ Page {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Download the QZ Companion App there")
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                         Layout.bottomMargin: 20
                     }
 
@@ -1527,7 +1563,7 @@ Page {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Download the QZ Companion App there")
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                         Layout.bottomMargin: 20
                     }
 
@@ -1547,7 +1583,7 @@ Page {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Download the QZ Companion App there")
-                        color: "white"
+                        color: window.ui.modern ? window.ui.onSurface : "white"
                     }
 
                     Item {

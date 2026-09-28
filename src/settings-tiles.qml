@@ -419,15 +419,15 @@ ScrollView {
 
         Label {
             text: qsTr("Speed in kilometers per hour. (To set your speed units to miles, go to Settings > General Options > Use Miles unit in UI).")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -485,15 +485,15 @@ ScrollView {
 
                 Label {
                     text: qsTr("Bike pedal cadence changes color to indicate how your cadence compares to the cadence called out in Peloton classes. The tile displays the following colors: white if there is no target cadence in the program, red if your cadence is lower than the target, green if your cadence matches the target, and orange if your cadence is higher than the target.")
-                    font.bold: true
-                    font.italic: true
+                    font.bold: !window.ui.modern
+                    font.italic: !window.ui.modern
                     font.pixelSize: Qt.application.font.pixelSize - 2
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     Layout.fillWidth: true
-                    color: Material.color(Material.Lime)
+                    color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
                 }
 
                 RowLayout {
@@ -526,15 +526,15 @@ ScrollView {
 
         Label {
             text: qsTr("Bike pedal cadence in rotations per minute (RPM) or Treadmill cadence if a shoe-mounted cadence sensor or Apple Watch QZ app is used.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -601,15 +601,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays the total negative elevation gain (descent) in meters or feet accumulated during the workout.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -646,15 +646,15 @@ ScrollView {
 
         Label {
             text: qsTr("Estimated calories burned during session, calculated on weight, age, and watts.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -691,15 +691,15 @@ ScrollView {
 
         Label {
             text: qsTr("Estimated distance traveled during the session.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -817,28 +817,28 @@ ScrollView {
 
         Label {
             text: qsTr("Current pace per mile or kilometer (Treadmill, Elliptical and Rower)")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         Label {
             text: qsTr("Flat-equivalent pace computed from treadmill incline using the Minetti cost model.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -875,15 +875,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays your bike’s resistance. The +/- buttons can be used to change resistance, if your bike is compatible.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -937,15 +937,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays the watts generated by your current effort. Watt is also referred to as output (for example, in Peloton). If your equipment does not communicate watts, QZ will calculate watts using resistance and cadence.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -982,15 +982,15 @@ ScrollView {
 
         Label {
             text: qsTr("Estimation of weight loss during the session.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
 
@@ -1028,15 +1028,15 @@ ScrollView {
 
         Label {
             text: qsTr("Average watts produced for the session.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
 
@@ -1106,15 +1106,15 @@ ScrollView {
 
         Label {
             text: qsTr("Percentage of current FTP and current FTP zone.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1140,15 +1140,15 @@ ScrollView {
 
                 Label {
                     text: qsTr("When enabled, displays heart rate as percentage of maximum heart rate (%FC Max) instead of BPM. AVG and MAX values will also show percentages.")
-                    font.bold: true
-                    font.italic: true
+                    font.bold: !window.ui.modern
+                    font.italic: !window.ui.modern
                     font.pixelSize: Qt.application.font.pixelSize - 2
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     Layout.fillWidth: true
-                    color: Material.color(Material.Lime)
+                    color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
                 }
 
                 RowLayout {
@@ -1213,15 +1213,15 @@ ScrollView {
 
         Label {
             text: qsTr("Built-in treadmill fan speed (Treadmill only)")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1258,15 +1258,15 @@ ScrollView {
 
         Label {
             text: qsTr("Cumulative power produced during the session in kilojoules.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1303,15 +1303,15 @@ ScrollView {
 
         Label {
             text: qsTr("Total time from start of the session.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1348,15 +1348,15 @@ ScrollView {
 
         Label {
             text: qsTr("Total time moving during the session.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1393,15 +1393,15 @@ ScrollView {
 
         Label {
             text: qsTr("Allows you to sync resistance and cadence target changes with the Peloton coach’s callouts. If the targets are changing in QZ after the coach’s callouts, use the ‘+’ button to add seconds (essentially speeding QZ up). Use the ‘-’ button to slow QZ down. Use this tile in conjunction with the Remaining Time/Row tile (see below).")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1438,15 +1438,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays time remaining in Peloton class.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         /*
@@ -1564,15 +1564,15 @@ ScrollView {
 
         Label {
             text: qsTr("Resistance of your bike converted to the Peloton bike scale of 1 to 100.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1609,15 +1609,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class's resistance target up or down for the rest of the ride.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
 
@@ -1655,15 +1655,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays target resistance converted to the Peloton bike scale of 1 to 100. For example, during a Peloton class, you want the resistance displayed in this tile to match the Peloton Resistance Tile.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1700,15 +1700,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays target cadence.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1745,15 +1745,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays target output (watts) when this information is provided by third-party apps.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
 
@@ -1791,15 +1791,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays the target power zone when this information is provided by third-party apps.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1931,15 +1931,15 @@ ScrollView {
 
         Label {
             text: qsTr("Calculates your output (watts) divided by your weight. This is the primary metric used by Zwift and similar apps to calculate your virtual speed. NOTE: This is a much better metric to use than Output/Watts when comparing your effort to other users. This is why Peloton’s leaderboard, which uses only Output, is flawed.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1976,15 +1976,15 @@ ScrollView {
 
         Label {
             text: qsTr("Allows you to change resistance while in Auto-Follow Mode.This tile allows you override the target resistance sent by third-party apps. For example, you would use the Gears Tile to increase resistance and generate more watts for sprinting in Zwift.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2033,15 +2033,15 @@ ScrollView {
 
         Label {
             text: qsTr("It shows 2 big gear buttons on the UI")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2078,15 +2078,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays the time remaining until the next cadence and/or resistance interval.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2123,15 +2123,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays the next Peloton interval with duration and FTP Zone (in Power Zone classes) or Peloton Resistance (non–Power Zone classes).")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2168,15 +2168,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays metabolic equivalents (METs), a measurement of energy expenditure and amount of oxygen used by the body compared to the body at rest. (e.g., 4 METS requires the body to use 4 times as much oxygen than when at rest, which means it requires more energy and burns more calories).")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2245,15 +2245,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays the current time.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2290,15 +2290,15 @@ ScrollView {
 
         Label {
             text: qsTr("(Rower only) Displays the number of strokes rowed.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2335,15 +2335,15 @@ ScrollView {
 
         Label {
             text: qsTr("(Rower only) Displays the stroke length.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2380,15 +2380,15 @@ ScrollView {
 
         Label {
             text: qsTr("(Elite Rizer only) Displays steering angle.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2425,15 +2425,15 @@ ScrollView {
 
         Label {
             text: qsTr("Use this tile to display the target heart rate zone in which you’ve chosen to work out in Settings > Training Program Options.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2470,15 +2470,15 @@ ScrollView {
 
         Label {
             text: qsTr("(Elite Rizer only) Allows control of the incline of external inclination equipment.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2515,15 +2515,15 @@ ScrollView {
 
         Label {
             text: qsTr("(requires a compatible footpod with accelerometer; treadmill only) Displays stride while walking or running.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2560,15 +2560,15 @@ ScrollView {
 
         Label {
             text: qsTr("(requires a compatible footpod with accelerometer; treadmill only) Displays time foot is on contact with ground while walking or running.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2605,15 +2605,15 @@ ScrollView {
 
         Label {
             text: qsTr("(requires a compatible footpod with accelerometer; treadmill only) Displays the up and down movement while walking or running.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5105,15 +5105,15 @@ ScrollView {
 
         Label {
             text: qsTr("Power zone presets allow quick access to specific training zones with customizable labels and values.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5150,15 +5150,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays total time spent in heart rate Zone 1 or higher during the session.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5195,15 +5195,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays total time spent in heart rate Zone 2 or higher during the session.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5240,15 +5240,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays total time spent in heart rate Zone 3 or higher during the session.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5285,15 +5285,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays total time spent in heart rate Zone 4 or higher during the session.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5330,15 +5330,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays total time spent in heart rate Zone 5 or higher during the session.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         RowLayout {
@@ -5404,15 +5404,15 @@ ScrollView {
 
         Label {
             text: qsTr("Shows Core, Body Temperature and Heat Strain Index from a Core Temperature sensor.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5449,15 +5449,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays total time spent in heat Zone 1 during the session.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5494,15 +5494,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays total time spent in heat Zone 2 during the session.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5539,15 +5539,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays total time spent in heat Zone 3 during the session.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5584,15 +5584,15 @@ ScrollView {
 
         Label {
             text: qsTr("Displays total time spent in heat Zone 4 during the session.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5627,15 +5627,15 @@ ScrollView {
 
         Label {
             text: qsTr("Button tile to switch automatic virtual shifting to Cruise profile.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5670,15 +5670,15 @@ ScrollView {
 
         Label {
             text: qsTr("Button tile to switch automatic virtual shifting to Climb profile.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5713,15 +5713,15 @@ ScrollView {
 
         Label {
             text: qsTr("Button tile to switch automatic virtual shifting to Sprint profile.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5756,15 +5756,15 @@ ScrollView {
 
         Label {
             text: qsTr("Button tile to cycle through power averaging modes: Off, 3s avg (harmonic), 5s avg (harmonic). Tap to cycle between modes. Only for bikes.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5801,15 +5801,15 @@ ScrollView {
 
         Label {
             text: qsTr("Shows Heart Rate Variability (HRV) from a compatible heart rate belt. Displays RMSSD value in milliseconds.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
         }
     }
 }

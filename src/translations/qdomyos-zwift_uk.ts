@@ -4798,6 +4798,18 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
         <translation>QDomyos-Zwift – міст між тренажерами та застосунками</translation>
     </message>
+    <message>
+        <source>Workout</source>
+        <translation>Тренування</translation>
+    </message>
+    <message>
+        <source>App</source>
+        <translation>Застосунок</translation>
+    </message>
+    <message>
+        <source>Services</source>
+        <translation>Сервіси</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -9914,6 +9926,34 @@ Default: A = -0.96, B = 1.33</source>
         <source>Clears all the QZ logs, QZ .fit files and QZ images (these files are saved by QZ for every session) from your device while maintaining your saved Profiles and Settings.</source>
         <translation>Видаляє з пристрою всі журнали QZ, файли .fit і зображення QZ (QZ зберігає їх для кожного тренування), не зачіпаючи збережених профілів і налаштувань.</translation>
     </message>
+    <message>
+        <source>Modern interface</source>
+        <translation>Новий інтерфейс</translation>
+    </message>
+    <message>
+        <source>New look of the main screen, the side menu, the settings and the wizard. Turn it off to get the classic look back.</source>
+        <translation>Новий вигляд головного екрана, бічного меню, налаштувань і майстра. Вимкніть, щоб повернути класичний вигляд.</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation>Тема</translation>
+    </message>
+    <message>
+        <source>Graphite</source>
+        <translation>Графіт</translation>
+    </message>
+    <message>
+        <source>Black (OLED)</source>
+        <translation>Чорна (OLED)</translation>
+    </message>
+    <message>
+        <source>Midnight blue</source>
+        <translation>Темно-синя</translation>
+    </message>
+    <message>
+        <source>Accent colour</source>
+        <translation>Акцентний колір</translation>
+    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>
@@ -11884,6 +11924,17 @@ Default: A = -0.96, B = 1.33</source>
         <location filename="../settings-tts.qml" line="680"/>
         <source>Max Watt/KG</source>
         <translation>Макс. Вт/кг</translation>
+    </message>
+</context>
+<context>
+    <name>UiSectionHeader</name>
+    <message>
+        <source>Expanded</source>
+        <translation>Розгорнуто</translation>
+    </message>
+    <message>
+        <source>Collapsed</source>
+        <translation>Згорнуто</translation>
     </message>
 </context>
 </TS>

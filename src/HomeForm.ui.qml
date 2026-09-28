@@ -32,8 +32,160 @@ Page {
         id: topBar
         visible: !window.lockTiles
 
+        // Modern controls. They forward to the classic buttons below, which Home.qml listens to
+        Row {
+            id: modernRow
+            visible: window.ui.modern
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.verticalCenter: row.verticalCenter
+            spacing: 8
+
+            Item {
+                width: 48
+                height: 56
+                Rectangle {
+                    anchors.centerIn: parent
+                    width: 48
+                    height: 48
+                    radius: 24
+                    color: rootItem.device ? window.ui.alpha(window.ui.ok, 0.16) : window.ui.surfaceHigh
+                    UiIcon {
+                        anchors.centerIn: parent
+                        width: 24
+                        height: 24
+                        name: rootItem.device ? "bluetooth_connected" : "bluetooth"
+                        color: rootItem.device ? window.ui.ok : window.ui.onSurfaceVariant
+                    }
+                    Accessible.role: Accessible.Indicator
+                    Accessible.name: qsTr("Bluetooth connection")
+                    Accessible.description: rootItem.device ? qsTr("Device connected") : qsTr("Device not connected")
+                }
+                Image {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.top: parent.bottom
+                    anchors.topMargin: 2
+                    width: 22
+                    height: 14
+                    fillMode: Image.PreserveAspectFit
+                    source: rootItem.signal
+                    smooth: true
+                    visible: !page.deviceLineHidden
+                    Accessible.ignored: true
+                }
+            }
+
+            AbstractButton {
+                id: modernStart
+                width: 120
+                height: 56
+                onClicked: start.clicked()
+                background: Rectangle {
+                    radius: height / 2
+                    color: rootItem.startColor === "red" ? window.ui.danger : window.ui.accent
+                    opacity: modernStart.down ? 0.8 : 1
+                }
+                contentItem: Item {
+                    Row {
+                        anchors.centerIn: parent
+                        spacing: 6
+                        UiIcon {
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 26
+                            height: 26
+                            name: rootItem.startIcon.indexOf("pause") >= 0 ? "pause" : "play_arrow"
+                            color: window.ui.onAccent
+                            visible: rootItem.startIcon !== ""
+                        }
+                        Label {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: rootItem.startText
+                            color: window.ui.onAccent
+                            font.pixelSize: 16
+                            font.weight: Font.DemiBold
+                            visible: text !== ""
+                        }
+                    }
+                }
+                Accessible.role: Accessible.Button
+                Accessible.name: rootItem.startText
+                Accessible.description: qsTr("Start workout")
+                Accessible.focusable: true
+                Accessible.onPressAction: start.clicked()
+            }
+
+            AbstractButton {
+                id: modernStop
+                width: 120
+                height: 56
+                onClicked: stop.clicked()
+                background: Rectangle {
+                    radius: height / 2
+                    color: modernStop.down ? window.ui.surfaceHighest : window.ui.surfaceHigh
+                    border.width: 1
+                    border.color: window.ui.alpha(window.ui.danger, 0.45)
+                }
+                contentItem: Item {
+                    Row {
+                        anchors.centerIn: parent
+                        spacing: 6
+                        UiIcon {
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 24
+                            height: 24
+                            name: "stop"
+                            color: window.ui.danger
+                        }
+                        Label {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: rootItem.stopText
+                            color: window.ui.onSurface
+                            font.pixelSize: 16
+                            font.weight: Font.DemiBold
+                            visible: text !== ""
+                        }
+                    }
+                }
+                Accessible.role: Accessible.Button
+                Accessible.name: rootItem.stopText
+                Accessible.description: qsTr("Stop workout")
+                Accessible.focusable: true
+                Accessible.onPressAction: stop.clicked()
+            }
+
+            AbstractButton {
+                id: modernLap
+                width: 48
+                height: 56
+                enabled: rootItem.lap
+                opacity: enabled ? 1 : 0.4
+                onClicked: lap.clicked()
+                background: Rectangle {
+                    anchors.centerIn: parent
+                    width: 48
+                    height: 48
+                    radius: 24
+                    color: modernLap.down ? window.ui.surfaceHighest : window.ui.surfaceHigh
+                }
+                contentItem: Item {
+                    UiIcon {
+                        anchors.centerIn: parent
+                        width: 24
+                        height: 24
+                        name: "flag"
+                        color: window.ui.onSurface
+                    }
+                }
+                Accessible.role: Accessible.Button
+                Accessible.name: qsTr("Lap")
+                Accessible.description: qsTr("Record a new lap")
+                Accessible.focusable: true
+                Accessible.onPressAction: lap.clicked()
+            }
+        }
+
         Row {
             id: row
+            visible: !window.ui.modern
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             height: topBar.height - 20
@@ -200,6 +352,8 @@ Page {
                 anchors.verticalCenter: parent.verticalCenter
                 text: rootItem.info
                 visible: !page.deviceLineHidden
+                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.foreground
+                font.pixelSize: window.ui.modern ? 13 : Qt.application.font.pixelSize
             }
         }
 

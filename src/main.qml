@@ -217,7 +217,54 @@ ApplicationWindow {
         property string shortcut_start_stop: ""
         property string shortcut_stop: ""
         property bool android_landscape_cutout_margin: true
+        property bool ui_modern: true
+        property string ui_theme: "graphite"
+        property string ui_accent: "violet"
     }
+
+    // Modern look (fork only), switched in Settings > General Options. Pages read the palette
+    // through window.ui; with ui.modern off every page keeps its classic look.
+    readonly property QtObject ui: QtObject {
+        readonly property bool modern: settings.ui_modern
+
+        readonly property var themes: ({
+            "graphite": { bg: "#111318", surface: "#1B1E24", surfaceHigh: "#23272E", surfaceHighest: "#2D323A",
+                          outline: "#3B414B", onSurface: "#E4E6EB", onSurfaceVariant: "#A2A8B3" },
+            "oled":     { bg: "#000000", surface: "#101215", surfaceHigh: "#181B1F", surfaceHighest: "#22262B",
+                          outline: "#30353C", onSurface: "#E6E7EA", onSurfaceVariant: "#9CA2AC" },
+            "midnight": { bg: "#0B1220", surface: "#131C2D", surfaceHigh: "#1B2639", surfaceHighest: "#243148",
+                          outline: "#35445F", onSurface: "#E3E9F4", onSurfaceVariant: "#99A6BE" }
+        })
+        readonly property var accents: ({
+            "violet": "#B69DF8", "blue": "#7AB8FF", "teal": "#4FD8C4",
+            "green": "#7EDC8A", "orange": "#FFB36B", "pink": "#F7A1C4"
+        })
+        readonly property var t: themes[settings.ui_theme] || themes["graphite"]
+
+        readonly property color bg: t.bg
+        readonly property color surface: t.surface
+        readonly property color surfaceHigh: t.surfaceHigh
+        readonly property color surfaceHighest: t.surfaceHighest
+        readonly property color outline: t.outline
+        readonly property color onSurface: t.onSurface
+        readonly property color onSurfaceVariant: t.onSurfaceVariant
+        readonly property color accent: accents[settings.ui_accent] || accents["violet"]
+        readonly property color onAccent: "#12101A"
+        readonly property color danger: "#FF8A80"
+        readonly property color ok: "#7EDC8A"
+        readonly property int radius: 16
+
+        readonly property string themeName: settings.ui_theme
+        readonly property string accentName: settings.ui_accent
+
+        function alpha(c, a) { return Qt.rgba(c.r, c.g, c.b, a) }
+        // The settings page has its own Settings object, which the window's does not hear
+        // about until a restart: it writes through here, so the look changes at once
+        function setOption(key, value) { settings[key] = value }
+    }
+
+    Material.accent: ui.modern ? ui.accent : Material.color(Material.Pink, Material.Shade200)
+    Material.background: ui.modern ? ui.bg : "#303030"
 
 
     Store {
@@ -1013,7 +1060,8 @@ ApplicationWindow {
 
     header: ToolBar {
         contentHeight: toolButton.implicitHeight
-        Material.primary: settings.theme_status_bar_background_color
+        Material.primary: window.ui.modern ? window.ui.bg : settings.theme_status_bar_background_color
+        Material.elevation: window.ui.modern ? 0 : 4
         id: headerToolbar
         property bool settingsPageActive: stackView.currentItem && typeof stackView.currentItem.showSettingsSearch === "function"
         // Set by the tile grid in Home.qml. The toolbar collapses to the status bar inset
@@ -1028,8 +1076,9 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButton
-            icon.source: "icons/icons/icon.png"
-            text: stackView.depth > 1 ? "◄" : "◄"
+            icon.source: window.ui.modern ? "" : "icons/icons/icon.png"
+            text: window.ui.modern ? "" : (stackView.depth > 1 ? "◄" : "◄")
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: stackView.depth > 1 ? "arrow_back" : "menu"; color: window.ui.onSurface; visible: window.ui.modern }
             font.pixelSize: Qt.application.font.pixelSize * 1.6
             onClicked: {
                 if (stackView.depth > 1) {
@@ -1042,7 +1091,8 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonFloating
-            icon.source: "icons/icons/mini-display.png"
+            icon.source: window.ui.modern ? "" : "icons/icons/mini-display.png"
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "picture_in_picture_alt"; color: window.ui.onSurface; visible: window.ui.modern }
             onClicked: { console.log("floating!"); floatingOpen(); }
             anchors.left: toolButton.right
             visible: OS_VERSION === "Android" ? true : false
@@ -1120,7 +1170,8 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonLoadSettings
-            icon.source: "icons/icons/tray-arrow-up.png"
+            icon.source: window.ui.modern ? "" : "icons/icons/tray-arrow-up.png"
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "upload_file"; color: window.ui.onSurface; visible: window.ui.modern }
             onClicked: {
                 stackView.push("SettingsList.qml")
                 stackView.currentItem.loadSettings.connect(loadSettings)
@@ -1139,7 +1190,8 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonSettingsSearch
-            text: "\uD83D\uDD0D"
+            text: window.ui.modern ? "" : "\uD83D\uDD0D"
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "search"; color: window.ui.onSurface; visible: window.ui.modern }
             font.pixelSize: Qt.application.font.pixelSize * 1.25
             onClicked: {
                 if (headerToolbar.settingsPageActive)
@@ -1153,7 +1205,8 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonSaveSettings
-            icon.source: "icons/icons/tray-arrow-down.png"
+            icon.source: window.ui.modern ? "" : "icons/icons/tray-arrow-down.png"
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "save"; color: window.ui.onSurface; visible: window.ui.modern }
             onClicked: {
                 saveSettings("settings");
                 popupSaveFile.open()
@@ -1183,7 +1236,8 @@ ApplicationWindow {
                 }
             }
             id: toolButtonMaps
-            icon.source: ( "icons/icons/maps-icon-16.png" )
+            icon.source: window.ui.modern ? "" : ( "icons/icons/maps-icon-16.png" )
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "map"; color: window.ui.onSurface; visible: window.ui.modern }
             onClicked: { loadMaps(); }
             anchors.right: toolButtonChart.left
             visible: rootItem.mapsVisible
@@ -1200,7 +1254,8 @@ ApplicationWindow {
                 }
             }
             id: toolButtonVideo
-            icon.source: ( "icons/icons/video.png" )
+            icon.source: window.ui.modern ? "" : ( "icons/icons/video.png" )
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "videocam"; color: window.ui.onSurface; visible: window.ui.modern }
             onClicked: { loadVideo(); }
             anchors.right: toolButtonMaps.left
             visible: rootItem.videoIconVisible
@@ -1208,7 +1263,8 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonChart
-            icon.source: ( "icons/icons/chart.png" )
+            icon.source: window.ui.modern ? "" : ( "icons/icons/chart.png" )
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "show_chart"; color: window.ui.onSurface; visible: window.ui.modern }
             onClicked: { rootItem.chartFooterVisible = !rootItem.chartFooterVisible }
             anchors.right: toolButtonLockTiles.left
             visible: rootItem.chartIconVisible
@@ -1216,7 +1272,8 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonLockTiles
-            icon.source: ( window.lockTiles ? "icons/icons/unlock.png" : "icons/icons/lock.png")
+            icon.source: window.ui.modern ? "" : ( window.lockTiles ? "icons/icons/unlock.png" : "icons/icons/lock.png")
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (window.lockTiles ? "lock_open" : "lock"); color: window.ui.onSurface; visible: window.ui.modern }
             onClicked: { window.lockTiles = !window.lockTiles; console.log("lock tiles toggled " + window.lockTiles); popuplockTiles.open(); popuplockTilesAutoClose.running = true; }
             anchors.right: toolButtonAutoResistance.left
             visible: !toolButtonSaveSettings.visible
@@ -1224,7 +1281,8 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonAutoResistance
-            icon.source: ( rootItem.autoResistance ? "icons/icons/resistance.png" : "icons/icons/pause.png")
+            icon.source: window.ui.modern ? "" : ( rootItem.autoResistance ? "icons/icons/resistance.png" : "icons/icons/pause.png")
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (rootItem.autoResistance ? "auto_mode" : "pause_circle"); color: window.ui.onSurface; visible: window.ui.modern }
             onClicked: { rootItem.autoResistance = !rootItem.autoResistance; console.log("auto resistance toggled " + rootItem.autoResistance); popupAutoResistance.open(); popupAutoResistanceAutoClose.running = true; }
             anchors.right: parent.right
             visible: !headerToolbar.settingsPageActive
@@ -1233,23 +1291,168 @@ ApplicationWindow {
 
         Label {
             text: stackView.currentItem.title
+            font.pixelSize: window.ui.modern ? 18 : Qt.application.font.pixelSize
+            font.weight: window.ui.modern ? Font.DemiBold : Font.Normal
+            color: window.ui.modern ? window.ui.onSurface : Material.foreground
             // Fixed position, like the buttons: centred in the full bar, it moved on its own when the bar collapsed
             anchors.horizontalCenter: parent.horizontalCenter
             y: (headerToolbar.contentHeight - height) / 2
         }
     }
 
+    // Drawer entries, shared by the classic and the modern drawer
+    function drawerAction(key) {
+        switch (key) {
+        case "profile":
+            toolButtonLoadSettings.visible = true;
+            toolButtonSaveSettings.visible = true;
+            stackView.push("profiles.qml")
+            stackView.currentItem.profile_open_clicked.connect(profile_open_clicked)
+            break
+        case "settings":
+            toolButtonLoadSettings.visible = true;
+            toolButtonSaveSettings.visible = true;
+            stackView.push("settings.qml")
+            break
+        case "history":
+            stackView.push("WorkoutsHistory.qml")
+            stackView.currentItem.fitfile_preview_clicked.connect(fitfile_preview_clicked)
+            break
+        case "swagbag":
+            stackView.push("SwagBagView.qml")
+            break
+        case "charts":
+            console.log(CHARTJS)
+            if(CHARTJS)
+                stackView.push("ChartJsTest.qml")
+            else
+                stackView.push("ChartsEndWorkout.qml")
+            break
+        case "opengpx":
+            stackView.push("GPXList.qml")
+            stackView.currentItem.trainprogram_open_clicked.connect(gpx_open_clicked)
+            stackView.currentItem.trainprogram_open_other_folder.connect(gpx_open_other_folder)
+            stackView.currentItem.trainprogram_preview.connect(gpxpreview_open_clicked)
+            stackView.currentItem.trainprogram_open_clicked.connect(function(url) {
+                stackView.pop();
+                popup.open();
+             });
+            break
+        case "trainprogram":
+            if(CHARTJS)
+                stackView.push("TrainingProgramsListJS.qml")
+            else
+                stackView.push("TrainingProgramsList.qml")
+            stackView.currentItem.trainprogram_open_clicked.connect(trainprogram_open_clicked)
+            stackView.currentItem.trainprogram_open_other_folder.connect(trainprogram_open_other_folder)
+            stackView.currentItem.trainprogram_preview.connect(trainprogram_preview)
+            stackView.currentItem.trainprogram_autostart_requested.connect(trainprogram_autostart_requested)
+            stackView.currentItem.trainprogram_open_clicked.connect(function(url) {
+                stackView.pop();
+             });
+            break
+        case "editor":
+            var editorPage = stackView.push("WorkoutEditor.qml")
+            if (editorPage) {
+                editorPage.closeRequested.connect(function() {
+                    stackView.pop()
+                })
+                // Close editor when workout is started from Save & Start
+                trainprogram_autostart_requested.connect(function() {
+                    console.log("[main.qml] trainprogram_autostart_requested received, closing editor")
+                    editorPage.closeRequested()
+                })
+            }
+            break
+        case "savegpx":
+            gpx_save_clicked()
+            drawer.close()
+            popupSaveFile.open()
+            return
+        case "savefit":
+            fit_save_clicked()
+            drawer.close()
+            popupSaveFile.open()
+            return
+        case "wizard":
+            stackView.push("Wizard.qml")
+            break
+        case "help":
+            Qt.openUrlExternally("https://robertoviola.cloud/qdomyos-zwift-guide/");
+            break
+        case "community":
+            Qt.openUrlExternally("https://www.facebook.com/groups/149984563348738");
+            break
+        case "credits":
+            stackView.push("Credits.qml")
+            break
+        case "quit":
+            console.log("closing...")
+            Qt.callLater(Qt.quit)
+            return
+        case "strava":
+            if (rootItem.isStravaLoggedIn()) {
+                stravaLogoutConfirm.visible = true
+            } else {
+                stackView.push("WebStravaAuth.qml")
+                strava_connect_clicked()
+            }
+            break
+        case "peloton":
+            if (rootItem.isPelotonLoggedIn()) {
+                pelotonLogoutConfirm.visible = true
+            } else {
+                stackView.push("WebPelotonAuth.qml")
+                stackView.currentItem.goBack.connect(function() {
+                    stackView.pop();
+                })
+                peloton_connect_clicked()
+            }
+            break
+        case "garmin":
+            toolButtonLoadSettings.visible = true;
+            toolButtonSaveSettings.visible = true;
+            stackView.push("settings.qml")
+            if (stackView.currentItem) {
+                if (stackView.currentItem.openGarminSection) {
+                    stackView.currentItem.openGarminSection()
+                }
+            }
+            break
+        case "intervals":
+            if (rootItem.isIntervalsICULoggedIn()) {
+                intervalsICULogoutConfirm.visible = true
+            } else {
+                stackView.push("WebIntervalsICUAuth.qml")
+                intervalsicu_connect_clicked()
+            }
+            break
+        }
+        drawer.close()
+    }
+
     Drawer {
         id: drawer
-        width: window.width * 0.66
+        width: window.ui.modern ? Math.min(window.width * 0.82, 340 + getLeftPadding()) : window.width * 0.66
         height: window.height
         topPadding: getTopPadding()
         bottomPadding: getBottomPadding()
         leftPadding: getLeftPadding()
-        rightPadding: getRightPadding()
+        rightPadding: window.ui.modern ? 0 : getRightPadding()
         Accessible.ignored: !drawer.opened
 
+        // Modern: a sheet with rounded outer corners. The rectangle runs past the left edge,
+        // so only the right-hand corners show
+        background: Rectangle {
+            color: window.ui.modern ? window.ui.surface : Material.dialogColor
+            radius: window.ui.modern ? 20 : 0
+            x: window.ui.modern ? -radius : 0
+            width: parent.width + (window.ui.modern ? radius : 0)
+            height: parent.height
+        }
+
         ScrollView {
+            visible: !window.ui.modern
             contentWidth: -1
             focus: true
             anchors.horizontalCenter: parent.horizontalCenter
@@ -1262,108 +1465,47 @@ ApplicationWindow {
                 ItemDelegate {
                     text: qsTr("Profile: ") + settings.profile_name
                     width: parent.width
-                    onClicked: {
-                        toolButtonLoadSettings.visible = true;
-                        toolButtonSaveSettings.visible = true;
-                        stackView.push("profiles.qml")
-                        stackView.currentItem.profile_open_clicked.connect(profile_open_clicked)
-                        drawer.close()
-                    }
+                    onClicked: drawerAction("profile")
                 }
 
                 ItemDelegate {
                     text: qsTr("Settings")
                     width: parent.width
-                    onClicked: {
-                        toolButtonLoadSettings.visible = true;
-                        toolButtonSaveSettings.visible = true;                        
-                        stackView.push("settings.qml")
-                         drawer.close()
-                    }
+                    onClicked: drawerAction("settings")
                 }
 
             ItemDelegate {
                 text: qsTr("Workouts History")
                 width: parent.width
-                onClicked: {
-                    stackView.push("WorkoutsHistory.qml")
-                    stackView.currentItem.fitfile_preview_clicked.connect(fitfile_preview_clicked)
-                    drawer.close()
-                }
+                onClicked: drawerAction("history")
             }
                 ItemDelegate {
                     text: qsTr("Swag Bag")
                     width: parent.width
-                    onClicked: {
-                        stackView.push("SwagBagView.qml")
-                        drawer.close()
-                    }
+                    onClicked: drawerAction("swagbag")
                 }
 
                 ItemDelegate {
                     text: qsTr("Charts")
                     width: parent.width
-                    onClicked: {
-                        console.log(CHARTJS)
-                        if(CHARTJS)
-                            stackView.push("ChartJsTest.qml")
-                        else
-                            stackView.push("ChartsEndWorkout.qml")
-                        drawer.close()
-                    }
+                    onClicked: drawerAction("charts")
                 }
                 ItemDelegate {
                     id: gpx_open
                     text: qsTr("Open GPX")
                     width: parent.width
-                    onClicked: {
-                        stackView.push("GPXList.qml")
-                        stackView.currentItem.trainprogram_open_clicked.connect(gpx_open_clicked)
-                        stackView.currentItem.trainprogram_open_other_folder.connect(gpx_open_other_folder)
-                        stackView.currentItem.trainprogram_preview.connect(gpxpreview_open_clicked)
-                        stackView.currentItem.trainprogram_open_clicked.connect(function(url) {
-                            stackView.pop();
-                            popup.open();
-                         });
-                        drawer.close()
-                    }
+                    onClicked: drawerAction("opengpx")
                 }
                 ItemDelegate {
                     id: trainprogram_open
                     text: qsTr("Open Train Program")
                     width: parent.width
-                    onClicked: {
-                        if(CHARTJS)
-                            stackView.push("TrainingProgramsListJS.qml")
-                        else
-                            stackView.push("TrainingProgramsList.qml")
-                        stackView.currentItem.trainprogram_open_clicked.connect(trainprogram_open_clicked)
-                        stackView.currentItem.trainprogram_open_other_folder.connect(trainprogram_open_other_folder)
-                        stackView.currentItem.trainprogram_preview.connect(trainprogram_preview)
-                        stackView.currentItem.trainprogram_autostart_requested.connect(trainprogram_autostart_requested)
-                        stackView.currentItem.trainprogram_open_clicked.connect(function(url) {
-                            stackView.pop();
-                         });
-                        drawer.close()
-                    }
+                    onClicked: drawerAction("trainprogram")
                 }
                 ItemDelegate {
                     text: qsTr("Workout Editor")
                     width: parent.width
-                    onClicked: {
-                        var editorPage = stackView.push("WorkoutEditor.qml")
-                        if (editorPage) {
-                            editorPage.closeRequested.connect(function() {
-                                stackView.pop()
-                            })
-                            // Close editor when workout is started from Save & Start
-                            trainprogram_autostart_requested.connect(function() {
-                                console.log("[main.qml] trainprogram_autostart_requested received, closing editor")
-                                editorPage.closeRequested()
-                            })
-                        }
-                        drawer.close()
-                    }
+                    onClicked: drawerAction("editor")
                 }
                 /*
                 ItemDelegate {
@@ -1378,65 +1520,42 @@ ApplicationWindow {
                     id: gpx_save
                     text: qsTr("Save GPX")
                     width: parent.width
-                    onClicked: {
-                        gpx_save_clicked()
-                        drawer.close()
-                        popupSaveFile.open()
-                    }
+                    onClicked: drawerAction("savegpx")
                 }
                 ItemDelegate {
                     id: fit_save
                     text: qsTr("Save FIT")
                     width: parent.width
-                    onClicked: {
-                        fit_save_clicked()
-                        drawer.close()
-                        popupSaveFile.open()
-                    }
+                    onClicked: drawerAction("savefit")
                 }
                 ItemDelegate {
                     id: wizardItem
                     text: qsTr("Wizard")
                     width: parent.width
-                    onClicked: {
-                        stackView.push("Wizard.qml")
-                        drawer.close()
-                    }
+                    onClicked: drawerAction("wizard")
                 }
                 ItemDelegate {
                     id: help
                     text: qsTr("Help")
                     width: parent.width
-                    onClicked: {
-                        Qt.openUrlExternally("https://robertoviola.cloud/qdomyos-zwift-guide/");
-                        drawer.close()
-                    }
+                    onClicked: drawerAction("help")
                 }
                 ItemDelegate {
                     id: community
                     text: qsTr("Community")
                     width: parent.width
-                    onClicked: {
-                        Qt.openUrlExternally("https://www.facebook.com/groups/149984563348738");
-                        drawer.close()
-                    }
+                    onClicked: drawerAction("community")
                 }
                 ItemDelegate {
                     text: qsTr("Credits")
                     width: parent.width
-                    onClicked: {
-                        stackView.push("Credits.qml")
-                        drawer.close()
-                    }
+                    onClicked: drawerAction("credits")
                 }
                 ItemDelegate {
                     text: qsTr("Quit")
                     width: parent.width
                     visible: OS_VERSION === "Other" ? true : false
-                    onClicked: {
-                        console.log("closing...")
-                        Qt.callLater(Qt.quit)
-                    }
+                    onClicked: drawerAction("quit")
                 }
 
                 ItemDelegate {
@@ -1455,16 +1574,7 @@ ApplicationWindow {
                         width: parent.width
                     }
                     width: parent.width
-                    onClicked: {
-                        if (rootItem.isStravaLoggedIn()) {
-                            stravaLogoutConfirm.visible = true
-                            drawer.close()
-                        } else {
-                            stackView.push("WebStravaAuth.qml")
-                            strava_connect_clicked()
-                            drawer.close()
-                        }
-                    }
+                    onClicked: drawerAction("strava")
                 }
 
                 ItemDelegate {
@@ -1477,19 +1587,7 @@ ApplicationWindow {
                         width: parent.width
                     }
                     width: parent.width
-                    onClicked: {
-                        if (rootItem.isPelotonLoggedIn()) {
-                            pelotonLogoutConfirm.visible = true
-                            drawer.close()
-                        } else {
-                            stackView.push("WebPelotonAuth.qml")
-                            stackView.currentItem.goBack.connect(function() {
-                                stackView.pop();
-                            })
-                            peloton_connect_clicked()
-                            drawer.close()
-                        }
-                    }
+                    onClicked: drawerAction("peloton")
                 }
 
                 ItemDelegate {
@@ -1503,17 +1601,7 @@ ApplicationWindow {
                         height: 48
                     }
                     width: parent.width
-                    onClicked: {
-                        toolButtonLoadSettings.visible = true;
-                        toolButtonSaveSettings.visible = true;
-                        stackView.push("settings.qml")
-                        if (stackView.currentItem) {
-                            if (stackView.currentItem.openGarminSection) {
-                                stackView.currentItem.openGarminSection()
-                            }
-                        }
-                        drawer.close()
-                    }
+                    onClicked: drawerAction("garmin")
                 }
 
 				ItemDelegate {
@@ -1526,16 +1614,7 @@ ApplicationWindow {
                         width: parent.width
                     }
                     width: parent.width
-                    onClicked: {
-                        if (rootItem.isIntervalsICULoggedIn()) {
-                            intervalsICULogoutConfirm.visible = true
-                            drawer.close()
-                        } else {
-                            stackView.push("WebIntervalsICUAuth.qml")
-                            intervalsicu_connect_clicked()
-                            drawer.close()
-                        }
-                    }
+                    onClicked: drawerAction("intervals")
                 }
 
                     FileDialog {
@@ -1553,6 +1632,190 @@ ApplicationWindow {
                               fileDialogGPX.close()
                             }
                         }
+            }
+        }
+
+        // Modern drawer: header with the connection state and the profile, grouped entries,
+        // the service logins as cards at the bottom
+        Flickable {
+            id: modernDrawerList
+            visible: window.ui.modern
+            anchors.fill: parent
+            contentHeight: modernDrawerColumn.height + 16
+            clip: true
+            boundsBehavior: Flickable.StopAtBounds
+            ScrollIndicator.vertical: ScrollIndicator { }
+
+            Column {
+                id: modernDrawerColumn
+                width: modernDrawerList.width
+
+                Item {
+                    width: parent.width
+                    height: 132
+
+                    Image {
+                        id: drawerLogo
+                        x: 24
+                        y: 22
+                        width: 44
+                        height: 44
+                        source: "qrc:/inner_templates/chartjs/qzlogo.png"
+                        fillMode: Image.PreserveAspectFit
+                        smooth: true
+                        mipmap: true
+                    }
+                    Label {
+                        id: drawerAppName
+                        anchors.left: drawerLogo.right
+                        anchors.leftMargin: 14
+                        anchors.right: parent.right
+                        anchors.rightMargin: 16
+                        y: drawerLogo.y + 1
+                        text: "QZ Fitness"
+                        font.pixelSize: 20
+                        font.weight: Font.DemiBold
+                        color: window.ui.onSurface
+                    }
+                    Row {
+                        anchors.left: drawerAppName.left
+                        anchors.right: drawerAppName.right
+                        anchors.top: drawerAppName.bottom
+                        anchors.topMargin: 2
+                        spacing: 6
+                        Rectangle {
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 8
+                            height: 8
+                            radius: 4
+                            color: (typeof rootItem !== "undefined" && rootItem && rootItem.device) ? "#7EDC8A" : window.ui.onSurfaceVariant
+                        }
+                        Label {
+                            width: parent.width - 14
+                            text: (typeof rootItem !== "undefined" && rootItem) ? rootItem.info : ""
+                            font.pixelSize: 13
+                            color: window.ui.onSurfaceVariant
+                            elide: Text.ElideRight
+                        }
+                    }
+
+                    // Profile chip
+                    Rectangle {
+                        x: 24
+                        y: 82
+                        height: 36
+                        width: Math.min(parent.width - 48, profileChipRow.implicitWidth + 28)
+                        radius: 18
+                        color: profileChipArea.pressed ? window.ui.alpha(window.ui.accent, 0.28) : window.ui.alpha(window.ui.accent, 0.16)
+                        Row {
+                            id: profileChipRow
+                            anchors.verticalCenter: parent.verticalCenter
+                            x: 12
+                            spacing: 8
+                            UiIcon {
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: 18
+                                height: 18
+                                name: "person"
+                                color: window.ui.accent
+                            }
+                            Label {
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: Math.min(implicitWidth, drawer.width - 110)
+                                text: qsTr("Profile: ") + settings.profile_name
+                                font.pixelSize: 14
+                                font.weight: Font.Medium
+                                color: window.ui.onSurface
+                                elide: Text.ElideRight
+                            }
+                        }
+                        MouseArea {
+                            id: profileChipArea
+                            anchors.fill: parent
+                            onClicked: drawerAction("profile")
+                        }
+                    }
+                }
+
+                Component {
+                    id: drawerSectionHeader
+                    Label {
+                        leftPadding: 28
+                        topPadding: 14
+                        bottomPadding: 6
+                        font.pixelSize: 13
+                        font.weight: Font.DemiBold
+                        font.letterSpacing: 0.4
+                        color: window.ui.accent
+                    }
+                }
+
+                Loader { sourceComponent: drawerSectionHeader; onLoaded: item.text = qsTr("Workout") }
+                UiDrawerItem { text: qsTr("Open Train Program"); iconName: "list_alt"; onClicked: drawerAction("trainprogram") }
+                UiDrawerItem { text: qsTr("Workout Editor"); iconName: "edit_note"; onClicked: drawerAction("editor") }
+                UiDrawerItem { text: qsTr("Open GPX"); iconName: "route"; onClicked: drawerAction("opengpx") }
+                UiDrawerItem { text: qsTr("Charts"); iconName: "bar_chart"; onClicked: drawerAction("charts") }
+                UiDrawerItem { text: qsTr("Workouts History"); iconName: "history"; onClicked: drawerAction("history") }
+                UiDrawerItem { text: qsTr("Save FIT"); iconName: "download"; onClicked: drawerAction("savefit") }
+                UiDrawerItem { text: qsTr("Save GPX"); iconName: "download"; onClicked: drawerAction("savegpx") }
+
+                Rectangle { x: 28; width: parent.width - 56; height: 1; color: window.ui.outline; opacity: 0.6 }
+
+                Loader { sourceComponent: drawerSectionHeader; onLoaded: item.text = qsTr("App") }
+                UiDrawerItem { text: qsTr("Settings"); iconName: "settings"; onClicked: drawerAction("settings") }
+                UiDrawerItem { text: qsTr("Wizard"); iconName: "auto_fix_high"; onClicked: drawerAction("wizard") }
+                UiDrawerItem { text: qsTr("Swag Bag"); iconName: "redeem"; onClicked: drawerAction("swagbag") }
+                UiDrawerItem { text: qsTr("Help"); iconName: "help"; external: true; onClicked: drawerAction("help") }
+                UiDrawerItem { text: qsTr("Community"); iconName: "groups"; external: true; onClicked: drawerAction("community") }
+                UiDrawerItem { text: qsTr("Credits"); iconName: "info"; onClicked: drawerAction("credits") }
+                UiDrawerItem { text: qsTr("Quit"); iconName: "power_settings_new"; visible: OS_VERSION === "Other"; onClicked: drawerAction("quit") }
+
+                Rectangle { x: 28; width: parent.width - 56; height: 1; color: window.ui.outline; opacity: 0.6 }
+
+                Loader { sourceComponent: drawerSectionHeader; onLoaded: item.text = qsTr("Services") }
+
+                Grid {
+                    x: 16
+                    width: parent.width - 32
+                    columns: 2
+                    spacing: 8
+                    Repeater {
+                        model: [
+                            { key: "strava", image: "icons/icons/btn_strava_connectwith_orange.png" },
+                            { key: "peloton", image: "icons/icons/Button_Connect_Rect_DarkMode.png" },
+                            { key: "garmin", image: "icons/icons/garmin-connect-badge.png" },
+                            { key: "intervals", image: "icons/icons/intervals-logo-with-name.png" }
+                        ]
+                        delegate: Rectangle {
+                            width: (parent.width - 8) / 2
+                            height: 52
+                            radius: 14
+                            color: serviceArea.pressed ? window.ui.surfaceHighest : window.ui.surfaceHigh
+                            Image {
+                                anchors.fill: parent
+                                anchors.margins: 8
+                                source: modelData.image
+                                fillMode: Image.PreserveAspectFit
+                                smooth: true
+                                mipmap: true
+                            }
+                            MouseArea {
+                                id: serviceArea
+                                anchors.fill: parent
+                                onClicked: drawerAction(modelData.key)
+                            }
+                        }
+                    }
+                }
+
+                Label {
+                    width: parent.width
+                    leftPadding: 28
+                    topPadding: 16
+                    text: "version 2.22.0"
+                    font.pixelSize: 12
+                    color: window.ui.onSurfaceVariant
+                }
             }
         }
     }

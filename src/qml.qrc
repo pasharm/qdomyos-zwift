@@ -9,6 +9,10 @@
         <file>settings.qml</file>
         <file>settings-catalog.json</file>
         <file>AccordionElement.qml</file>
+        <file>UiIcon.qml</file>
+        <file>UiIcons.js</file>
+        <file>UiDrawerItem.qml</file>
+        <file>UiSectionHeader.qml</file>
         <file>AccordionCheckElement.qml</file>
         <file>icons/arrow-collapse-vertical.png</file>
         <file>icons/arrow-expand-vertical.png</file>
