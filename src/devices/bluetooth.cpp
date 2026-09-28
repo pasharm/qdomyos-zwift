@@ -342,8 +342,9 @@ void bluetooth::finished() {
 bool bluetooth::isSearching() const { return discoveryAgent && discoveryAgent->isActive(); }
 
 bool bluetooth::searchNow() {
+    // nothing to search with or for: not a busy Bluetooth, so no toast either
     if (!useDiscovery || !discoveryAgent || device())
-        return false;
+        return true;
 
     const qint64 now = QDateTime::currentMSecsSinceEpoch();
     rescanCount = 0;
@@ -369,11 +370,14 @@ void bluetooth::startDiscovery() {
     if (!this->useDiscovery)
         return;
 
-    // Android ignores the scan starts after the 5th one in 30 s: searchNow() checks this list
-    const qint64 now = QDateTime::currentMSecsSinceEpoch();
-    while (!scanStartsMs.isEmpty() && now - scanStartsMs.first() > 30000)
-        scanStartsMs.removeFirst();
-    scanStartsMs.append(now);
+    // Android ignores the scan starts after the 5th one in 30 s: searchNow() checks this list.
+    // A start while scanning does nothing, so it is not counted.
+    if (discoveryAgent && !discoveryAgent->isActive()) {
+        const qint64 now = QDateTime::currentMSecsSinceEpoch();
+        while (!scanStartsMs.isEmpty() && now - scanStartsMs.first() > 30000)
+            scanStartsMs.removeFirst();
+        scanStartsMs.append(now);
+    }
 
 #ifndef Q_OS_IOS
     QSettings settings;
