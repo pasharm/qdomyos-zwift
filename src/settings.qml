@@ -16596,8 +16596,10 @@ import QtQuick 2.12 as Quick212
                     AccordionElement {
                         id: templateSettingsAccordion
                         // Filled from the user's *.qzt template files; without any it only
-                        // shows a header that opens to nothing: the modern look hides it then
-                        visible: !window.ui.modern || templateSettingsContent.children.length > 0
+                        // shows a header that opens to nothing: the modern look hides it then.
+                        // Counted here: the content id is not reachable from the handler below.
+                        property int shownTemplates: 0
+                        visible: !window.ui.modern || shownTemplates > 0
                         title: qsTr("Template Settings")
                         indicatRectColor: Material.color(Material.Grey)
                         textColor: Material.color(Material.Grey)
@@ -16634,6 +16636,8 @@ import QtQuick 2.12 as Quick212
                                                                                                           linkedBoolSetting: key_enabled,
                                                                                                           accordionContent: template_object
                                                                                                       });
+                                            if (accordionCheck)
+                                                templateSettingsAccordion.shownTemplates++;
                                         }
                                     }
                                 });
