@@ -6569,7 +6569,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="4175"/>
         <source>Cruise Profile Settings</source>
-        <translation>Налаштування профілю Cruise</translation>
+        <translation>Налаштування профілю «Круїз»</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4188"/>
@@ -6594,7 +6594,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="4281"/>
         <source>Climb Profile Settings</source>
-        <translation>Налаштування профілю Climb</translation>
+        <translation>Налаштування профілю «Підйом»</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4294"/>
@@ -6619,7 +6619,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <location filename="../settings.qml" line="4387"/>
         <source>Sprint Profile Settings</source>
-        <translation>Налаштування профілю Sprint</translation>
+        <translation>Налаштування профілю «Спринт»</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="4400"/>
