@@ -5359,15 +5359,15 @@ ScrollView {
 
         Label {
             text: qsTr("When enabled, each zone shows only the time spent in that specific zone. When disabled (default), each zone shows cumulative time spent in that zone or higher.")
-            font.bold: true
-            font.italic: true
+            font.bold: !window.ui.modern
+            font.italic: !window.ui.modern
             font.pixelSize: Qt.application.font.pixelSize - 2
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: Material.color(Material.Orange)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Orange)
         }
 
         AccordionCheckElement {

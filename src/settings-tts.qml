@@ -75,7 +75,12 @@ ScrollView {
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
-            color: Material.color(Material.Red)
+            // Modern look: a page title instead of the red caption
+            color: window.ui.modern ? window.ui.textMain : Material.color(Material.Red)
+            font.pixelSize: window.ui.modern ? 22 : Qt.application.font.pixelSize
+            font.weight: window.ui.modern ? Font.DemiBold : Font.Normal
+            topPadding: window.ui.modern ? 12 : 0
+            bottomPadding: window.ui.modern ? 8 : 0
         }
         SwitchDelegate {
             id: ttsEnableDelegate
