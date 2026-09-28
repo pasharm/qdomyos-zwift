@@ -24,9 +24,9 @@ Rectangle {
         }
     }
     
-    // Subtle border for better definition
+    // Subtle border for better definition (the modern look keeps the tag flat)
     border.color: Qt.darker(color, 1.2)
-    border.width: 1
+    border.width: window.ui.modern ? 0 : 1
     
     Text {
         id: tagText
@@ -40,6 +40,7 @@ Rectangle {
     
     // Subtle shadow effect
     Rectangle {
+        visible: !window.ui.modern
         anchors.fill: parent
         anchors.topMargin: 1
         anchors.leftMargin: 1

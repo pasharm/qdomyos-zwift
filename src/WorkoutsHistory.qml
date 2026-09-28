@@ -4,10 +4,24 @@ import QtQuick.Layouts 1.15
 import QtCharts 2.15
 import Qt.labs.calendar 1.0
 import Qt.labs.settings 1.0
+import Qt.labs.platform 1.1 as P
 
 Page {
     id: workoutHistoryPage
 
+    // Modern look: theme colours and icons instead of the fixed light palette and emoji of
+    // this page; the classic look keeps them
+    readonly property bool modern: window.ui.modern
+
+    function sportIconName(sport) {
+        switch(parseInt(sport)) {
+            case 1: return "directions_run"
+            case 11: return "directions_walk"
+            case 2: return "pedal_bike"
+            case 15: return "rowing"
+            default: return "fitness_center"
+        }
+    }
 
 
     Settings {
@@ -82,7 +96,7 @@ Page {
         Rectangle {
             Layout.fillWidth: true
             height: 60
-            color: "#f5f5f5"
+            color: workoutHistoryPage.modern ? "transparent" : "#f5f5f5"
 
             // Calendar Icon Button - positioned absolutely on the left
             Button {
@@ -94,15 +108,26 @@ Page {
                 height: 48
                 
                 background: Rectangle {
-                    radius: 8
-                    color: calendarButton.pressed ? "#e0e0e0" : "#f0f0f0"
+                    radius: workoutHistoryPage.modern ? 24 : 8
+                    color: workoutHistoryPage.modern ? (calendarButton.pressed ? window.ui.surfaceHighest : window.ui.surfaceHigh)
+                                 : (calendarButton.pressed ? "#e0e0e0" : "#f0f0f0")
                     border.color: "#d0d0d0"
-                    border.width: 1
+                    border.width: workoutHistoryPage.modern ? 0 : 1
                 }
-                
+
+                UiIcon {
+                    anchors.centerIn: parent
+                    visible: workoutHistoryPage.modern
+                    width: 22
+                    height: 22
+                    name: "calendar_month"
+                    color: window.ui.textMain
+                }
+
                 contentItem: Text {
-                    text: Qt.platform.os === "android" ? 
-                          wrapEmoji("📅") : 
+                    visible: !workoutHistoryPage.modern
+                    text: Qt.platform.os === "android" ?
+                          wrapEmoji("📅") :
                           "📅"
                     textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
                     font.pixelSize: 20
@@ -122,8 +147,9 @@ Page {
                 Text {
                     anchors.horizontalCenter: parent.horizontalCenter
                     text: qsTr("Workout History")
-                    font.pixelSize: 24
-                    font.bold: true
+                    font.pixelSize: workoutHistoryPage.modern ? 22 : 24
+                    font.weight: workoutHistoryPage.modern ? Font.DemiBold : Font.Bold
+                    color: workoutHistoryPage.modern ? window.ui.textMain : "black"
                 }
                 
                 Text {
@@ -131,7 +157,7 @@ Page {
                     text: workoutModel && workoutModel.isDateFiltered ? 
                           qsTr("Filtered: %1").arg(workoutModel.filteredDate.toLocaleDateString()) : ""
                     font.pixelSize: 12
-                    color: "#666666"
+                    color: workoutHistoryPage.modern ? window.ui.textMuted : "#666666"
                     visible: workoutModel && workoutModel.isDateFiltered
                 }
             }
@@ -147,15 +173,16 @@ Page {
                 visible: workoutModel && workoutModel.isDateFiltered
                 
                 background: Rectangle {
-                    radius: 6
-                    color: clearFilterButton.pressed ? "#ff6666" : "#ff8888"
+                    radius: workoutHistoryPage.modern ? 18 : 6
+                    color: workoutHistoryPage.modern ? window.ui.alpha(window.ui.danger, clearFilterButton.pressed ? 0.28 : 0.16)
+                                 : (clearFilterButton.pressed ? "#ff6666" : "#ff8888")
                     border.color: "#ff4444"
-                    border.width: 1
+                    border.width: workoutHistoryPage.modern ? 0 : 1
                 }
-                
+
                 contentItem: Text {
                     text: qsTr("Clear Filter")
-                    color: "white"
+                    color: workoutHistoryPage.modern ? window.ui.danger : "white"
                     font.pixelSize: 12
                     font.bold: true
                     horizontalAlignment: Text.AlignHCenter
@@ -185,7 +212,7 @@ Page {
             text: qsTr("Processing workout files...\nThis may take a few moments on first startup.")
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
-            color: "#666666"
+            color: workoutHistoryPage.modern ? window.ui.textMuted : "#666666"
             font.pixelSize: 16
         }
 
@@ -245,6 +272,13 @@ Page {
                 }
 
                 swipe.onCompleted: {
+                    if (workoutHistoryPage.modern) {
+                        modernDeleteDialog.workoutId = model.id
+                        modernDeleteDialog.workoutTitle = model.title
+                        modernDeleteDialog.swipeItem = swipeDelegate
+                        modernDeleteDialog.open()
+                        return
+                    }
                     // Show confirmation dialog
                     confirmDialog.workoutId = model.id
                     confirmDialog.workoutTitle = model.title
@@ -257,9 +291,9 @@ Page {
                     anchors.margins: 8
                     anchors.leftMargin: window.contentSideMargin
                     anchors.rightMargin: window.contentSideMargin
-                    radius: 10
-                    color: "white"
-                    border.color: "#e0e0e0"
+                    radius: workoutHistoryPage.modern ? 16 : 10
+                    color: workoutHistoryPage.modern ? window.ui.surface : "white"
+                    border.color: workoutHistoryPage.modern ? "transparent" : "#e0e0e0"
 
                     // Workout Type Tag - positioned absolutely in top-right
                     WorkoutTypeTag {
@@ -284,10 +318,11 @@ Page {
                                     workoutModel.getPelotonUrl(model.id) !== ""
                             
                             background: Rectangle {
-                                color: parent.pressed ? "#ff8855" : "#ff6b35"
-                                radius: 6
+                                color: workoutHistoryPage.modern ? (parent.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest)
+                                             : (parent.pressed ? "#ff8855" : "#ff6b35")
+                                radius: workoutHistoryPage.modern ? 20 : 6
                                 border.color: "#cc5529"
-                                border.width: 1
+                                border.width: workoutHistoryPage.modern ? 0 : 1
                             }
                             
                             contentItem: Text {
@@ -312,10 +347,11 @@ Page {
                             visible: workoutModel && workoutModel.hasTrainingProgram(model.id)
                             
                             background: Rectangle {
-                                color: parent.pressed ? "#1976d2" : "#2196f3"
-                                radius: 6
+                                color: workoutHistoryPage.modern ? (parent.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest)
+                                             : (parent.pressed ? "#1976d2" : "#2196f3")
+                                radius: workoutHistoryPage.modern ? 20 : 6
                                 border.color: "#1565c0"
-                                border.width: 1
+                                border.width: workoutHistoryPage.modern ? 0 : 1
                             }
                             
                             contentItem: Text {
@@ -339,7 +375,10 @@ Page {
                                     trainingProgramDialog.message = qsTr("Failed to load training program. Please check if the file exists.")
                                     trainingProgramDialog.isSuccess = false
                                 }
-                                trainingProgramDialog.open()
+                                if (workoutHistoryPage.modern)
+                                    modernInfoDialog.open()
+                                else
+                                    trainingProgramDialog.open()
                             }
                         }
                     }
@@ -352,9 +391,24 @@ Page {
                         // Sport icon
                         Column {
                             Layout.alignment: Qt.AlignVCenter
+                            Rectangle {
+                                visible: workoutHistoryPage.modern
+                                width: 44
+                                height: 44
+                                radius: 22
+                                color: window.ui.surfaceHighest
+                                UiIcon {
+                                    anchors.centerIn: parent
+                                    width: 24
+                                    height: 24
+                                    name: workoutHistoryPage.sportIconName(sport)
+                                    color: window.ui.accent
+                                }
+                            }
                             Text {
-                                text: Qt.platform.os === "android" ? 
-                                      wrapEmoji(getSportIcon(sport)) : 
+                                visible: !workoutHistoryPage.modern
+                                text: Qt.platform.os === "android" ?
+                                      wrapEmoji(getSportIcon(sport)) :
                                       getSportIcon(sport)
                                 textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
                                 font.pixelSize: 32
@@ -379,6 +433,7 @@ Page {
                                     text: title
                                     font.bold: true
                                     font.pixelSize: 18
+                                    color: workoutHistoryPage.modern ? window.ui.textMain : "black"
                                     anchors.verticalCenter: parent.verticalCenter
                                     
                                     // Auto-scroll animation for long titles
@@ -403,7 +458,7 @@ Page {
 
                             Text {
                                 text: date
-                                color: "#666666"
+                                color: workoutHistoryPage.modern ? window.ui.textMuted : "#666666"
                             }
 
                             // Stats row
@@ -411,15 +466,17 @@ Page {
                                 spacing: 16
 
                                 Text {
-                                    text: "⏱ " + duration
+                                    text: (workoutHistoryPage.modern ? "" : "⏱ ") + duration
+                                    color: workoutHistoryPage.modern ? window.ui.textMain : "black"
                                 }
 
                                 Text {
                                     text: {
                                         var useMiles = settings && settings.miles_unit
                                         var displayDistance = useMiles ? (distance / 1.60934) : distance
-                                        return "📏 " + displayDistance.toFixed(2) + " " + (useMiles ? qsTr("mi") : qsTr("km"))
+                                        return (workoutHistoryPage.modern ? "" : "📏 ") + displayDistance.toFixed(2) + " " + (useMiles ? qsTr("mi") : qsTr("km"))
                                     }
+                                    color: workoutHistoryPage.modern ? window.ui.textMain : "black"
                                 }
                             }
 
@@ -427,10 +484,12 @@ Page {
                                 spacing: 16
 
                                 Text {
-                                    text: Qt.platform.os === "android" ? 
+                                    text: workoutHistoryPage.modern ? Math.round(calories) + " " + qsTr("kcal") :
+                                          Qt.platform.os === "android" ?
                                           wrapEmoji("🔥") + " " + Math.round(calories) + " " + qsTr("kcal") :
                                           "🔥 " + Math.round(calories) + " " + qsTr("kcal")
-                                    textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
+                                    textFormat: Qt.platform.os === "android" && !workoutHistoryPage.modern ? Text.RichText : Text.PlainText
+                                    color: workoutHistoryPage.modern ? window.ui.textMuted : "black"
                                 }
                             }
                         }
@@ -526,6 +585,31 @@ Page {
         }
     }
 
+    // Modern look: the same questions in the card dialog of the other screens
+    UiMessageDialog {
+        id: modernDeleteDialog
+        property int workoutId
+        property string workoutTitle
+        property var swipeItem: null
+        title: qsTr("Delete Workout")
+        text: qsTr("Are you sure you want to delete '%1'?").arg(workoutTitle)
+        buttons: P.MessageDialog.Ok | P.MessageDialog.Cancel
+        onAccepted: workoutModel.deleteWorkout(workoutId)
+        // any way out (Cancel, the back key, a deleted row) closes the swiped row again
+        onClosed: {
+            if (swipeItem)
+                swipeItem.swipe.close()
+            swipeItem = null
+        }
+    }
+
+    UiMessageDialog {
+        id: modernInfoDialog
+        title: trainingProgramDialog.title
+        text: trainingProgramDialog.message
+        buttons: P.MessageDialog.Ok
+    }
+
     // Training Program Loading Dialog
     Dialog {
         id: trainingProgramDialog
@@ -586,6 +670,11 @@ Page {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
+        // Modern look: a rounded card like the rest of the page instead of a full-width strip
+        anchors.leftMargin: workoutHistoryPage.modern ? Math.max(16, window.contentSideMargin) : 0
+        anchors.rightMargin: workoutHistoryPage.modern ? Math.max(16, window.contentSideMargin) : 0
+        anchors.bottomMargin: workoutHistoryPage.modern ? 8 : 0
+        radius: workoutHistoryPage.modern ? 20 : 0
         height: 80
         visible: workoutModel
         
@@ -626,6 +715,7 @@ Page {
         
         Rectangle {
             anchors.fill: parent
+            radius: parent.radius
             gradient: Gradient {
                 GradientStop { position: 0.0; color: "#40FFFFFF" }
                 GradientStop { position: 1.0; color: "#00FFFFFF" }
@@ -761,6 +851,7 @@ Page {
         
         // Subtle shadow effect at the top
         Rectangle {
+            visible: !workoutHistoryPage.modern
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
@@ -773,7 +864,7 @@ Page {
     }
 
     // Calendar Popup
-    Popup {
+    UiPopup {
         id: calendarPopup
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
@@ -792,13 +883,14 @@ Page {
         }
 
         background: Rectangle {
-            color: "white"
-            radius: 12
+            color: workoutHistoryPage.modern ? window.ui.surfaceHigh : "white"
+            radius: workoutHistoryPage.modern ? 28 : 12
             border.color: "#d0d0d0"
-            border.width: 1
-            
+            border.width: workoutHistoryPage.modern ? 0 : 1
+
             // Shadow effect
             Rectangle {
+                visible: !workoutHistoryPage.modern
                 anchors.fill: parent
                 anchors.topMargin: 2
                 anchors.leftMargin: 2
@@ -817,8 +909,9 @@ Page {
             RowLayout {
                 Layout.fillWidth: true
                 
-                Button {
+                UiButton {
                     text: "<"
+                    flat: workoutHistoryPage.modern
                     onClicked: calendar.selectedDate = new Date(calendar.selectedDate.getFullYear(), calendar.selectedDate.getMonth() - 1, 1)
                 }
                 
@@ -827,11 +920,13 @@ Page {
                     text: calendar.selectedDate.toLocaleDateString(Qt.locale(), "MMMM yyyy")
                     font.pixelSize: 18
                     font.bold: true
+                    color: workoutHistoryPage.modern ? window.ui.textMain : "black"
                     horizontalAlignment: Text.AlignHCenter
                 }
                 
-                Button {
+                UiButton {
                     text: ">"
+                    flat: workoutHistoryPage.modern
                     onClicked: calendar.selectedDate = new Date(calendar.selectedDate.getFullYear(), calendar.selectedDate.getMonth() + 1, 1)
                 }
             }
@@ -861,7 +956,7 @@ Page {
                         font.bold: true
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
-                        color: "#666666"
+                        color: workoutHistoryPage.modern ? window.ui.textMuted : "#666666"
                     }
                 }
                 
@@ -880,15 +975,21 @@ Page {
                         property bool isToday: dayDate.toDateString() === new Date().toDateString()
                         
                         color: {
+                            if (workoutHistoryPage.modern) {
+                                if (mouseArea.pressed) return window.ui.surfaceHighest
+                                if (isToday) return window.ui.alpha(window.ui.accent, 0.18)
+                                if (!isCurrentMonth) return "transparent"
+                                return window.ui.surface
+                            }
                             if (mouseArea.pressed) return "#e3f2fd"
                             if (isToday) return "#bbdefb"
                             if (!isCurrentMonth) return "#f5f5f5"
                             return "white"
                         }
-                        
-                        border.color: isToday ? "#2196f3" : "#e0e0e0"
-                        border.width: isToday ? 2 : 1
-                        radius: 4
+
+                        border.color: workoutHistoryPage.modern ? window.ui.accent : (isToday ? "#2196f3" : "#e0e0e0")
+                        border.width: workoutHistoryPage.modern ? (isToday ? 1 : 0) : (isToday ? 2 : 1)
+                        radius: workoutHistoryPage.modern ? 10 : 4
                         
                         Column {
                             anchors.centerIn: parent
@@ -897,7 +998,8 @@ Page {
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 text: dayDate.getDate()
-                                color: isCurrentMonth ? "black" : "#cccccc"
+                                color: workoutHistoryPage.modern ? (isCurrentMonth ? window.ui.textMain : window.ui.textMuted)
+                                                                 : (isCurrentMonth ? "black" : "#cccccc")
                                 font.pixelSize: 14
                             }
                             
@@ -907,9 +1009,9 @@ Page {
                                 width: 8
                                 height: 8
                                 radius: 4
-                                color: "#ff6b35"
+                                color: workoutHistoryPage.modern ? window.ui.accent : "#ff6b35"
                                 visible: hasWorkout
-                                border.width: 1
+                                border.width: workoutHistoryPage.modern ? 0 : 1
                                 border.color: "#cc5529"
                                 
                                 // Debug: log when a dot should be visible
@@ -942,7 +1044,7 @@ Page {
             }
             
             // Close button
-            Button {
+            UiButton {
                 Layout.alignment: Qt.AlignHCenter
                 text: qsTr("Close")
                 onClicked: calendarPopup.close()
