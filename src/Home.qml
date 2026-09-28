@@ -204,6 +204,14 @@ HomeForm {
     }
 
     Timer {
+        id: searchStatusTimer
+        interval: 1000; repeat: true; triggeredOnStart: true
+        running: !rootItem.device
+        onTriggered: searchStatus = rootItem.bluetoothSearchStatus()
+        onRunningChanged: if (!running) searchStatus = ""
+    }
+
+    Timer {
         id: checkStartStopFromWeb
         interval: 200; running: true; repeat: true
         onTriggered: {if(rootItem.stopRequested) {rootItem.stopRequested = false; inner_stop(); }}
