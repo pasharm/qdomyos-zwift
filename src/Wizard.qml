@@ -21,6 +21,7 @@ Page {
         property string peloton_password: "password"
         property string peloton_difficulty: "lower"
         property int bike_resistance_offset: 4
+        property int bike_resistance_start: 1
         property string zwift_username: ""
         property string zwift_password: ""
         property bool speed_power_based: false
@@ -525,6 +526,9 @@ Page {
                         text: qsTr("Next")
                         onClicked: {
                             settings.bike_resistance_offset = spinBoxResistanceOffset.value;
+                            // no app sends a slope to add this offset to: start the workout at the flat road level
+                            if (selectedOptions.step3 === "QZ Standalone" && spinBoxResistanceOffset.value >= 1)
+                                settings.bike_resistance_start = spinBoxResistanceOffset.value;
                             settings.speed_power_based = true;
                             stackViewLocal.push(finalStepComponent);
                         }
