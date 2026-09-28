@@ -127,6 +127,15 @@ shot 17-editor-dark
 adb shell input swipe 700 2000 700 900 400 || true
 sleep 2
 shot 18-editor-dark-scrolled
+adb shell input tap 84 168 || true      # back arrow: home page
+sleep 3
+adb shell input tap 84 168 || true      # menu
+sleep 3
+adb shell input swipe 500 700 500 2300 300 || true   # drawer to the top
+sleep 2
+adb shell input tap 346 1096 || true    # Open GPX
+sleep 8
+shot 19-gpx-dark
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
