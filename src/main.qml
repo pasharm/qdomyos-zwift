@@ -1663,7 +1663,6 @@ ApplicationWindow {
                         source: "qrc:/inner_templates/chartjs/qzlogo.png"
                         fillMode: Image.PreserveAspectFit
                         smooth: true
-                        mipmap: true
                     }
                     Label {
                         id: drawerAppName
@@ -1797,7 +1796,6 @@ ApplicationWindow {
                                 source: modelData.image
                                 fillMode: Image.PreserveAspectFit
                                 smooth: true
-                                mipmap: true
                             }
                             MouseArea {
                                 id: serviceArea

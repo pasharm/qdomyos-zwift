@@ -457,7 +457,6 @@ HomeForm {
                     source: icon
                     fillMode: Image.PreserveAspectFit
                     smooth: true
-                    mipmap: true
                     visible: settings.theme_tile_icon_enabled && !largeButton
                     Accessible.ignored: true
                 }
