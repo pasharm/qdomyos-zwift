@@ -62,9 +62,9 @@ Page {
                     Accessible.name: qsTr("Bluetooth connection")
                     Accessible.description: rootItem.device ? qsTr("Device connected") : qsTr("Device not connected")
                     // No device yet: a tap searches right away instead of waiting for the next search
+                    // (with a device connected bluetoothSearchNow() does nothing)
                     MouseArea {
                         anchors.fill: parent
-                        enabled: !rootItem.device
                         onClicked: rootItem.bluetoothSearchNow()
                     }
                 }
