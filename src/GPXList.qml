@@ -375,7 +375,9 @@ ColumnLayout {
         }
 
         ScrollView {
-            ScrollBar.vertical.policy: ScrollBar.AlwaysOn
+            // The map fills the view, there is nothing to scroll: in the modern look the bar
+            // would only be a grey stripe next to the map
+            ScrollBar.vertical.policy: window.ui.modern ? ScrollBar.AlwaysOff : ScrollBar.AlwaysOn
             // Padding, not a margin: the content moves in, the scroll bar stays at the edge
             rightPadding: window.ui.modern && !gpxPage.sideBySide ? gpxPage.modernMargin : window.contentSideMargin
             leftPadding: window.ui.modern && !gpxPage.sideBySide ? gpxPage.modernMargin : 0
