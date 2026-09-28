@@ -150,6 +150,18 @@ sleep 3
 shot 21-calendar-dark
 adb shell input keyevent KEYCODE_BACK || true
 sleep 2
+adb shell input tap 84 168 || true      # back arrow: home page
+sleep 3
+adb shell input tap 84 168 || true      # menu
+sleep 3
+adb shell input swipe 500 700 500 2300 300 || true   # drawer to the top
+sleep 2
+adb shell input tap 307 1263 || true    # Charts
+sleep 10
+shot 22-charts-dark
+adb shell input swipe 700 2000 700 900 400 || true
+sleep 2
+shot 23-charts-dark-scrolled
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
