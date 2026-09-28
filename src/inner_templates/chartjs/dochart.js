@@ -276,10 +276,15 @@ function process_arr(arr) {
             animation: {
               onComplete: function() {
                 if(saveScreenshot[7] === false) {
+                    // before withLight(): its redraw calls this onComplete again
+                    saveScreenshot[7] = true;
                     var watt_badge = document.getElementById('watt_badge');
-   
-                    // Capture the containers using html2canvas
-                    html2canvas(watt_badge, qzChartTheme.snapshotOptions()).then(function(canvas1) {
+
+                    // Capture the containers using html2canvas; the power chart inside the badge
+                    // is drawn light for the copy
+                    qzChartTheme.withLight(powerChart, function () {
+                        return html2canvas(watt_badge, qzChartTheme.snapshotOptions());
+                    }).then(function(canvas1) {
             
                         // Convert the merged canvas to a PNG image
                         var image = canvas1.toDataURL('image/png');

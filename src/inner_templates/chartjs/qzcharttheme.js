@@ -8,7 +8,6 @@
 (function () {
     // Colours drawn for a white background, replaced in the dark theme
     var NEUTRAL = /^(black|#000|#000000|#666|#666666|rgb\(0,\s*0,\s*0\)|rgba\(0,\s*0,\s*0,[^)]*\))$/i;
-    var FONT = "Roboto, 'Segoe UI', sans-serif";
     var charts = [];
 
     function palette() {
@@ -76,8 +75,6 @@
             return pal.dark && isNeutral(light) ? darkValue : light;
         }
 
-        add(['options', 'font', 'family'], function () { return FONT; });
-
         var scales = (config.options && config.options.scales) || {};
         var ids = Object.keys(scales);
         ['x', 'y'].forEach(function (id) {
@@ -140,6 +137,8 @@
             var chart = new Chart(ctx, config);
             chart.$qzPatches = list;
             chart.$qzPalette = pal;
+            // Pages that recreate their chart (workout preview) drop the destroyed ones here
+            charts = charts.filter(function (c) { return !!c.canvas; });
             charts.push(chart);
             return chart;
         },
@@ -161,24 +160,34 @@
             });
         },
 
-        // The chart as a PNG in the original light look; the screen gets the theme back in
-        // the same task, so nothing flashes
-        image: function (chart) {
-            var pal = chart.$qzPalette;
+        // Runs fn with the chart drawn in the original light look and returns its result; the
+        // screen gets the theme back in the same task, so nothing flashes. Redrawing calls the
+        // chart's animation.onComplete again: the callers set their "saved" flag first.
+        withLight: function (chart, fn) {
+            var pal = chart && chart.$qzPalette;
             if (!pal || !chart.$qzPatches) {
-                return chart.toBase64Image();
+                return fn();
             }
             chart.$qzPalette = null;
             apply(rootOf(chart), chart.$qzPatches, null);
             chart.update('none');
-            var image = chart.toBase64Image();
-            chart.$qzPalette = pal;
-            apply(rootOf(chart), chart.$qzPatches, pal);
-            chart.update('none');
-            return image;
+            try {
+                return fn();
+            } finally {
+                chart.$qzPalette = pal;
+                apply(rootOf(chart), chart.$qzPatches, pal);
+                chart.update('none');
+            }
         },
 
-        // html2canvas options: the saved summary badge keeps the classic look
+        // The chart as a PNG for the workout mail, in the original light look
+        image: function (chart) {
+            return this.withLight(chart, function () { return chart.toBase64Image(); });
+        },
+
+        // html2canvas options: the saved summary badge keeps the classic look. html2canvas
+        // copies the canvases synchronously when called, so the call goes inside withLight()
+        // for the chart in the badge
         snapshotOptions: function () {
             return {
                 onclone: function (doc) {
