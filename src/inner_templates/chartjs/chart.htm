@@ -5,6 +5,40 @@
     <title>Line Chart</title>
 	 <meta charset="utf-8">
 	 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Modern look of the app: ChartJsTest.qml passes its theme colours in the fragment
+        // (#modern=1&dark=1&bg=...) and later calls qzApplyTheme() when the theme changes.
+        // Without the fragment the page keeps its own palette. The charts themselves stay on
+        // white cards: dochart.js draws them for a white background.
+        window.qzApplyTheme = function (theme) {
+            var root = document.documentElement;
+            var vars = {
+                bg: '--qz-bg', surface: '--qz-surface', surfaceHigh: '--qz-surface-high',
+                outline: '--qz-outline', text: '--qz-text', muted: '--qz-muted', accent: '--qz-accent'
+            };
+            for (var key in vars) {
+                if (theme[key]) {
+                    root.style.setProperty(vars[key], theme[key]);
+                }
+            }
+            root.classList.add('modern');
+            root.classList.toggle('light', !theme.dark);
+            root.style.colorScheme = theme.dark ? 'dark' : 'light';
+        };
+        (function () {
+            var theme = {};
+            window.location.hash.substring(1).split('&').forEach(function (pair) {
+                var i = pair.indexOf('=');
+                if (i > 0) {
+                    theme[pair.substring(0, i)] = decodeURIComponent(pair.substring(i + 1));
+                }
+            });
+            if (theme.modern === '1') {
+                theme.dark = theme.dark === '1';
+                window.qzApplyTheme(theme);
+            }
+        })();
+    </script>
     <script src="resize-observer.min.js"></script>
     <script src="jquery-3.6.0.min.js"></script>
     <script src="chartjs.3.4.1.min.js"></script>
@@ -21,6 +55,60 @@
         -moz-user-select: none;
         -webkit-user-select: none;
         -ms-user-select: none;
+    }
+    /* Modern look: the page chrome in the app theme; the inline styles of the markup need
+       !important. Charts keep their white cards. */
+    html.modern body,
+    html.modern #watt_badge {
+        background-color: var(--qz-bg) !important;
+        font-family: Roboto, "Segoe UI", sans-serif;
+    }
+    html.modern body {
+        margin: 0;
+        padding: 12px 16px;
+    }
+    html.modern .workoutName,
+    html.modern .instructorName,
+    html.modern td[class^="summary_"] {
+        color: var(--qz-text) !important;
+        font-family: inherit !important;
+    }
+    html.modern .workoutStartDate,
+    html.modern tr[align="center"],
+    html.modern .watts_avg, html.modern .watts_max,
+    html.modern .heart_avg, html.modern .heart_max {
+        color: var(--qz-muted) !important;
+        font-family: inherit !important;
+    }
+    html.modern td[class^="summary_"] {
+        font-size: 18px !important;
+        font-weight: 600 !important;
+        padding-bottom: 10px;
+    }
+    html.modern hr {
+        border: 0;
+        height: 1px;
+        width: 100%;
+        background: var(--qz-outline);
+        opacity: 0.5;
+        margin: 12px 0;
+    }
+    /* The summary block: a filled card, the logo watermark stays inside it */
+    html.modern table[background] {
+        background-color: var(--qz-surface);
+        border-radius: 20px;
+        padding: 8px 4px;
+        border-spacing: 0 4px;
+    }
+    html.modern div[style*="background-color:white"] {
+        border-radius: 20px !important;
+    }
+    html.modern .watts_avg, html.modern .watts_max,
+    html.modern .heart_avg, html.modern .heart_max {
+        padding: 6px 8px 0;
+    }
+    html.modern #loading {
+        background-color: var(--qz-bg) !important;
     }
     </style>
 </head>
