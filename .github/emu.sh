@@ -75,6 +75,17 @@ adb shell input tap 952 462 || true
 sleep 3
 shot 12-stop-dialog-dark
 adb shell input keyevent KEYCODE_BACK || true
+sleep 2
+adb shell input tap 84 168 || true      # menu
+sleep 3
+adb shell input tap 335 434 || true     # profile chip in the drawer
+sleep 5
+shot 13-profiles-dark
+adb shell input tap 84 168 || true      # back arrow: home page
+sleep 3
+adb shell input tap 1187 168 || true    # lock button on the home toolbar: notice popup
+sleep 1
+shot 14-lock-popup-dark
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
