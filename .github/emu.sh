@@ -118,6 +118,7 @@ shot 16-tiles-scrolled-dark
 
 adb shell input tap 84 168 || true      # back arrow: settings
 sleep 3
+shot 16b-settings-after-tiles-dark      # load and save buttons still in the toolbar
 adb shell input tap 84 168 || true      # back arrow: home page
 sleep 3
 adb shell input tap 84 168 || true      # menu
@@ -177,11 +178,16 @@ sleep 3
 adb shell input swipe 500 700 500 2300 300 || true   # drawer to the top
 sleep 2
 adb shell input tap 307 1263 || true    # Charts
-sleep 10
+sleep 1
+shot 22a-charts-loading-dark            # while loading: the busy indicator, no white page
+sleep 9
 shot 22-charts-dark
 adb shell input swipe 700 2000 700 900 400 || true
 sleep 2
 shot 23-charts-dark-scrolled
+adb shell input tap 720 2364 || true    # Close at the bottom of the charts page
+sleep 3
+shot 24-after-close-dark                # the home page again
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
