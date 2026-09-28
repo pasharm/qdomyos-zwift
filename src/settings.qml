@@ -2129,126 +2129,6 @@ import AndroidStatusBar 1.0
                 accordionContent: ColumnLayout {
                     spacing: 0
 
-                    // Look of the app (fork only): modern or classic, theme and accent colour
-                    IndicatorOnlySwitch {
-                        text: qsTr("Modern interface")
-                        spacing: 0
-                        bottomPadding: 0
-                        topPadding: 0
-                        rightPadding: 0
-                        leftPadding: 0
-                        clip: false
-                        checked: window.ui.modern
-                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                        Layout.fillWidth: true
-                        onClicked: window.ui.setOption("ui_modern", checked)
-                    }
-                    Label {
-                        text: qsTr("New look of the main screen, the side menu, the settings and the wizard. Turn it off to get the classic look back.")
-                        font.bold: !window.ui.modern
-                        font.italic: !window.ui.modern
-                        font.pixelSize: Qt.application.font.pixelSize - 2
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-                    }
-
-                    RowLayout {
-                        visible: window.ui.modern
-                        spacing: 10
-                        Layout.topMargin: 8
-                        Label {
-                            text: qsTr("Appearance")
-                            Layout.fillWidth: true
-                        }
-                        UiComboBox {
-                            id: uiThemeModeCombo
-                            readonly property var options: [
-                                { value: "auto", label: qsTr("As on the phone") },
-                                { value: "dark", label: qsTr("Dark") },
-                                { value: "light", label: qsTr("Light") }
-                            ]
-                            model: options
-                            textRole: "label"
-                            Layout.preferredWidth: 190
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            currentIndex: {
-                                for (var i = 0; i < options.length; i++)
-                                    if (options[i].value === window.ui.themeMode)
-                                        return i
-                                return 0
-                            }
-                            onActivated: {
-                                window.ui.refreshSystemDark()
-                                window.ui.setOption("ui_theme_mode", options[index].value)
-                            }
-                        }
-                    }
-
-                    RowLayout {
-                        visible: window.ui.modern
-                        spacing: 10
-                        Layout.topMargin: 8
-                        Label {
-                            text: qsTr("Theme")
-                            Layout.fillWidth: true
-                        }
-                        UiComboBox {
-                            id: uiThemeCombo
-                            readonly property var options: [
-                                { value: "graphite", label: qsTr("Graphite") },
-                                { value: "oled", label: qsTr("Black / white") },
-                                { value: "midnight", label: qsTr("Midnight blue") }
-                            ]
-                            model: options
-                            textRole: "label"
-                            Layout.preferredWidth: 190
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            currentIndex: {
-                                for (var i = 0; i < options.length; i++)
-                                    if (options[i].value === window.ui.themeName)
-                                        return i
-                                return 0
-                            }
-                            onActivated: window.ui.setOption("ui_theme", options[index].value)
-                        }
-                    }
-
-                    RowLayout {
-                        visible: window.ui.modern
-                        spacing: 10
-                        Layout.topMargin: 8
-                        Layout.bottomMargin: 12
-                        Label {
-                            text: qsTr("Accent colour")
-                            Layout.fillWidth: true
-                        }
-                        Row {
-                            spacing: 8
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            Repeater {
-                                model: ["violet", "blue", "teal", "green", "orange", "pink"]
-                                delegate: Rectangle {
-                                    width: 30
-                                    height: 30
-                                    radius: 15
-                                    color: window.ui.a[modelData]
-                                    border.width: window.ui.accentName === modelData ? 3 : 0
-                                    border.color: window.ui.textMain
-                                    Accessible.role: Accessible.RadioButton
-                                    Accessible.name: modelData
-                                    Accessible.checked: window.ui.accentName === modelData
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        anchors.margins: -4
-                                        onClicked: window.ui.setOption("ui_accent", modelData)
-                                    }
-                                }
-                            }
-                        }
-                    }
-
                     RowLayout {
                         spacing: 10
                         Label {
@@ -15742,6 +15622,126 @@ import AndroidStatusBar 1.0
                 //anchors.topMargin: 10
                 accordionContent: ColumnLayout {
                     spacing: 0
+                    // Look of the app (fork only): modern or classic, theme and accent colour
+                    IndicatorOnlySwitch {
+                        text: qsTr("Modern interface")
+                        spacing: 0
+                        bottomPadding: 0
+                        topPadding: 0
+                        rightPadding: 0
+                        leftPadding: 0
+                        clip: false
+                        checked: window.ui.modern
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        onClicked: window.ui.setOption("ui_modern", checked)
+                    }
+                    Label {
+                        text: qsTr("New look of the main screen, the side menu, the settings and the wizard. Turn it off to get the classic look back.")
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
+                        font.pixelSize: Qt.application.font.pixelSize - 2
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                    }
+
+                    RowLayout {
+                        visible: window.ui.modern
+                        spacing: 10
+                        Layout.topMargin: 8
+                        Label {
+                            text: qsTr("Appearance")
+                            Layout.fillWidth: true
+                        }
+                        UiComboBox {
+                            id: uiThemeModeCombo
+                            readonly property var options: [
+                                { value: "auto", label: qsTr("As on the phone") },
+                                { value: "dark", label: qsTr("Dark") },
+                                { value: "light", label: qsTr("Light") }
+                            ]
+                            model: options
+                            textRole: "label"
+                            Layout.preferredWidth: 190
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            currentIndex: {
+                                for (var i = 0; i < options.length; i++)
+                                    if (options[i].value === window.ui.themeMode)
+                                        return i
+                                return 0
+                            }
+                            onActivated: {
+                                window.ui.refreshSystemDark()
+                                window.ui.setOption("ui_theme_mode", options[index].value)
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        visible: window.ui.modern
+                        spacing: 10
+                        Layout.topMargin: 8
+                        Label {
+                            text: qsTr("Theme")
+                            Layout.fillWidth: true
+                        }
+                        UiComboBox {
+                            id: uiThemeCombo
+                            readonly property var options: [
+                                { value: "graphite", label: qsTr("Graphite") },
+                                { value: "oled", label: qsTr("Black / white") },
+                                { value: "midnight", label: qsTr("Midnight blue") }
+                            ]
+                            model: options
+                            textRole: "label"
+                            Layout.preferredWidth: 190
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            currentIndex: {
+                                for (var i = 0; i < options.length; i++)
+                                    if (options[i].value === window.ui.themeName)
+                                        return i
+                                return 0
+                            }
+                            onActivated: window.ui.setOption("ui_theme", options[index].value)
+                        }
+                    }
+
+                    RowLayout {
+                        visible: window.ui.modern
+                        spacing: 10
+                        Layout.topMargin: 8
+                        Layout.bottomMargin: 12
+                        Label {
+                            text: qsTr("Accent colour")
+                            Layout.fillWidth: true
+                        }
+                        Row {
+                            spacing: 8
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            Repeater {
+                                model: ["violet", "blue", "teal", "green", "orange", "pink"]
+                                delegate: Rectangle {
+                                    width: 30
+                                    height: 30
+                                    radius: 15
+                                    color: window.ui.a[modelData]
+                                    border.width: window.ui.accentName === modelData ? 3 : 0
+                                    border.color: window.ui.textMain
+                                    Accessible.role: Accessible.RadioButton
+                                    Accessible.name: modelData
+                                    Accessible.checked: window.ui.accentName === modelData
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        anchors.margins: -4
+                                        onClicked: window.ui.setOption("ui_accent", modelData)
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     IndicatorOnlySwitch {
                         id: gymModeDelegate
                         text: qsTr("Gym Mode")

@@ -217,7 +217,7 @@ ApplicationWindow {
         property string shortcut_start_stop: ""
         property string shortcut_stop: ""
         property bool android_landscape_cutout_margin: true
-        property bool ui_modern: true
+        property bool ui_modern: false
         property string ui_theme: "graphite"
         property string ui_accent: "violet"
         property string ui_theme_mode: "auto"
