@@ -611,12 +611,6 @@ void fitplusbike::characteristicChanged(const QLowEnergyCharacteristic &characte
             qint64 nowMs = QDateTime::currentMSecsSinceEpoch();
             if (status == 0x02 && workoutStatus != 0x02) {
                 workoutRunningSinceMs = nowMs;
-                // the bike has just set its own default level: send the last level QZ asked for again
-                if (lastForcedResistance > 0) {
-                    qDebug() << QStringLiteral("workout running, applying the level again: ") +
-                                    QString::number(lastForcedResistance);
-                    requestResistance = lastForcedResistance;
-                }
             } else if (status == 0x00 && workoutStatus == 0x02 && initDone) {
                 // Right after QZ reopens, the bike can stop the workout it has just started, then it acks the level
                 // commands without applying them. Only within 30 s of the start, so a stop from the console later
@@ -638,7 +632,17 @@ void fitplusbike::characteristicChanged(const QLowEnergyCharacteristic &characte
 
         if (newValue.length() == 15) {
             resistance_t res = newValue.at(5);
-            if (settings.value(QZSettings::gears_from_bike, QZSettings::default_gears_from_bike).toBool()) {
+            // In the first seconds of a workout the bike reports the old level, then sets its own default one:
+            // not a gear change from the console, and the level QZ asked for has to be sent again.
+            bool levelSettling = virtufit_etappe && workoutStatus == 0x02 &&
+                                 QDateTime::currentMSecsSinceEpoch() - workoutRunningSinceMs < 5000;
+            if (levelSettling && autoResistanceEnable && lastForcedResistance > 0 && res != lastForcedResistance) {
+                qDebug() << QStringLiteral("workout starting, applying the level again: ") +
+                                QString::number(lastForcedResistance);
+                requestResistance = lastForcedResistance;
+            }
+            if (!levelSettling &&
+                settings.value(QZSettings::gears_from_bike, QZSettings::default_gears_from_bike).toBool()) {
                 qDebug() << QStringLiteral("gears_from_bike") << res << Resistance.value() << gears()
                          << lastRawRequestedResistanceValue << lastRequestedResistance().value() << requestResistance << requestResistanceCompleted;
                 if (
