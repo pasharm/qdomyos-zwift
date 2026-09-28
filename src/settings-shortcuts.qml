@@ -108,6 +108,8 @@ ScrollView {
             font.pixelSize: window.ui.modern ? 22 : 24
             font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
             color: window.ui.modern ? window.ui.textMain : Material.color(Material.Red)
+            // The layout margin is 10: 2 more puts the title 12 from the top, as on Tiles and TTS
+            topPadding: window.ui.modern ? 2 : 0
         }
 
         SwitchDelegate {

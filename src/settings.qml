@@ -68,6 +68,9 @@ import QtQuick 2.12 as Quick212
         function showSettingsSearch() {
             settingsSearchVisible = true
             loadSettingsCatalog()
+            // The search bar is the top row of the page: bring it into view from any scroll position
+            if (settingsPane.contentItem)
+                settingsPane.contentItem.contentY = 0
             Qt.callLater(function() {
                 settingsSearchTextField.forceActiveFocus()
             })
@@ -1935,7 +1938,7 @@ import QtQuick 2.12 as Quick212
             ColumnLayout {
                 id: settingsSearchResults
                 visible: settingsSearchActive
-                spacing: 4
+                spacing: window.ui.modern ? 8 : 4
                 Layout.fillWidth: true
                 Layout.preferredWidth: Math.max(1, column1.width)
 
@@ -1960,16 +1963,17 @@ import QtQuick 2.12 as Quick212
                         Layout.fillWidth: true
                         Layout.minimumWidth: 0
                         Layout.preferredWidth: width
-                        Layout.preferredHeight: searchResultContent.implicitHeight + 8
+                        Layout.preferredHeight: implicitHeight
                         implicitWidth: width
-                        implicitHeight: searchResultContent.implicitHeight + 8
+                        implicitHeight: searchResultContent.implicitHeight + (window.ui.modern ? 24 : 8)
 
+                        // Modern look: a filled card like the other groups instead of a grey frame
                         Rectangle {
                             anchors.fill: parent
-                            color: "transparent"
+                            color: window.ui.modern ? window.ui.surfaceHigh : "transparent"
                             border.color: Material.color(Material.Grey)
-                            border.width: 1
-                            radius: 2
+                            border.width: window.ui.modern ? 0 : 1
+                            radius: window.ui.modern ? 16 : 2
                         }
 
                         ColumnLayout {
@@ -1978,7 +1982,7 @@ import QtQuick 2.12 as Quick212
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.top: parent.top
-                            anchors.margins: 4
+                            anchors.margins: window.ui.modern ? 12 : 4
 
                             RowLayout {
                                 Layout.fillWidth: true
@@ -2000,7 +2004,7 @@ import QtQuick 2.12 as Quick212
 
                                     Label {
                                         text: settingsPane.parentDisplayName(entry)
-                                        color: Material.color(Material.Grey)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey)
                                         font.pixelSize: Qt.application.font.pixelSize - 2
                                         wrapMode: Text.WordWrap
                                         Layout.fillWidth: true
@@ -2078,7 +2082,7 @@ import QtQuick 2.12 as Quick212
                                     rightPadding: 36
                                     text: searchSettingComboBox.displayText
                                     font: searchSettingComboBox.font
-                                    color: searchSettingComboBox.palette.text
+                                    color: window.ui.modern ? window.ui.textMain : searchSettingComboBox.palette.text
                                     verticalAlignment: Text.AlignVCenter
                                     elide: Text.ElideRight
                                 }
@@ -2088,7 +2092,7 @@ import QtQuick 2.12 as Quick212
                                     contentItem: Label {
                                         text: modelData
                                         font: searchSettingComboBox.font
-                                        color: searchSettingComboBox.palette.text
+                                        color: window.ui.modern ? window.ui.textMain : searchSettingComboBox.palette.text
                                         verticalAlignment: Text.AlignVCenter
                                         elide: Text.ElideRight
                                     }
@@ -2115,7 +2119,7 @@ import QtQuick 2.12 as Quick212
                                     rightPadding: 36
                                     text: searchVirtualComboBox.displayText
                                     font: searchVirtualComboBox.font
-                                    color: searchVirtualComboBox.palette.text
+                                    color: window.ui.modern ? window.ui.textMain : searchVirtualComboBox.palette.text
                                     verticalAlignment: Text.AlignVCenter
                                     elide: Text.ElideRight
                                 }
@@ -2125,7 +2129,7 @@ import QtQuick 2.12 as Quick212
                                     contentItem: Label {
                                         text: modelData
                                         font: searchVirtualComboBox.font
-                                        color: searchVirtualComboBox.palette.text
+                                        color: window.ui.modern ? window.ui.textMain : searchVirtualComboBox.palette.text
                                         verticalAlignment: Text.AlignVCenter
                                         elide: Text.ElideRight
                                     }
