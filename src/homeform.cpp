@@ -1906,6 +1906,26 @@ void homeform::refresh_bluetooth_devices_clicked() {
     bluetoothManager->restart();
 }
 
+QString homeform::bluetoothSearchStatus() {
+    if (!bluetoothManager || bluetoothManager->device())
+        return QString();
+    if (bluetoothManager->isSearching())
+        return tr("Searching for the device...");
+    if (bluetoothManager->searchStopped())
+        return tr("Search stopped, tap the Bluetooth icon");
+    const qint64 left = bluetoothManager->nextSearchMs() - QDateTime::currentMSecsSinceEpoch();
+    if (bluetoothManager->nextSearchMs() && left > 0)
+        return tr("Next search in %1 s").arg((left + 999) / 1000);
+    return QString();
+}
+
+void homeform::bluetoothSearchNow() {
+    if (!bluetoothManager || bluetoothManager->device())
+        return;
+    if (!bluetoothManager->searchNow())
+        setToastRequested(tr("Bluetooth is busy, try again in a few seconds"));
+}
+
 void homeform::selectGymModeDevice(const QString &deviceName) {
     if (!bluetoothManager)
         return;

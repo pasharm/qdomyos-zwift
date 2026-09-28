@@ -191,6 +191,16 @@ class bluetooth : public QObject, public SignalHandler {
     bool onlyDiscover = false;
     volatile bool homeformLoaded = false;
 
+    // Search for the equipment, for the status line on the home page
+    bool isSearching() const;
+    qint64 nextSearchMs() const { return nextRescanMs; }
+    bool searchStopped() const { return rescanStopped; }
+    /**
+     * @brief searchNow Starts a search right away and resets the pause between the automatic ones.
+     * @return false if the search was not started because Android would ignore it: it allows 5 scan starts in 30 s.
+     */
+    bool searchNow();
+
   private:
     bool useDiscovery = false;
     QFile *debugCommsLog = nullptr;
@@ -386,6 +396,10 @@ class bluetooth : public QObject, public SignalHandler {
     qint64 rescanStartedMs = 0;
     // Android: while Bluetooth is off, asks the adapter every 2 s whether it is on again
     QTimer bluetoothOffPoll;
+    QTimer rescanTimer;
+    qint64 nextRescanMs = 0;
+    bool rescanStopped = false;
+    QList<qint64> scanStartsMs;
 
 #ifdef Q_OS_IOS
     lockscreen *h = nullptr;
