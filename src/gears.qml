@@ -524,7 +524,8 @@ ScrollView {
                     font.bold: true
                     background: Rectangle {
                         color: "#9C27B0"
-                        radius: 4
+                        // Modern look: the pill of the other buttons, the colour stays (a trainer action)
+                        radius: window.ui.modern ? height / 2 : 4
                     }
                     contentItem: Text {
                         text: parent.text

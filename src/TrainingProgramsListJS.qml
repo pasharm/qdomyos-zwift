@@ -286,8 +286,8 @@ ColumnLayout {
 
                             Rectangle {
                                 visible: window.ui.modern
-                                width: 40
-                                height: 40
+                                Layout.preferredWidth: 40
+                                Layout.preferredHeight: 40
                                 radius: 20
                                 color: window.ui.surfaceHighest
                                 UiIcon {
@@ -336,8 +336,8 @@ ColumnLayout {
 
                             UiIcon {
                                 visible: window.ui.modern
-                                width: 22
-                                height: 22
+                                Layout.preferredWidth: 22
+                                Layout.preferredHeight: 22
                                 name: "chevron_right"
                                 color: window.ui.textMuted
                             }
@@ -363,7 +363,9 @@ ColumnLayout {
                     Label {
                         parent: list
                         anchors.centerIn: parent
+                        // only once the folder is read: the model fills in asynchronously
                         visible: window.ui.modern && list.count === 0
+                                 && (isSearching || folderModel.status === FolderListModel.Ready)
                         text: isSearching ? qsTr("No workouts found") : qsTr("No workouts here")
                         color: window.ui.textMuted
                     }
@@ -440,7 +442,6 @@ ColumnLayout {
                     Layout.margins: 10
                     text: rootItem.previewWorkoutDescription
                     font.pixelSize: window.ui.modern ? 16 : 14
-                    font.bold: !window.ui.modern
                     font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
                     color: window.ui.ink("white")
                     wrapMode: Text.WordWrap

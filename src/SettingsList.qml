@@ -85,7 +85,9 @@ ColumnLayout {
             FolderListModel {
                 id: modernFolderModel
                 nameFilters: ["*.qzs"]
-                folder: window.ui.modern ? "file://" + rootItem.getWritableAppDir() + 'settings' : ""
+                // Always the settings folder: an empty one makes FolderListModel watch the
+                // working directory instead
+                folder: "file://" + rootItem.getWritableAppDir() + 'settings'
                 showDotAndDotDot: false
                 showDirs: false
                 sortReversed: true
@@ -166,7 +168,8 @@ ColumnLayout {
             Label {
                 parent: modernList
                 anchors.centerIn: parent
-                visible: modernList.count === 0
+                // only once the folder is read: the model fills in asynchronously
+                visible: modernList.count === 0 && modernFolderModel.status === FolderListModel.Ready
                 text: qsTr("No saved settings")
                 color: window.ui.textMuted
             }
