@@ -23,8 +23,9 @@ class bike : public bluetoothdevice {
     metric lastRequestedPower();
     metric currentResistance() override;
     /**
-     * @brief resistanceStepBase Resistance the +/- buttons step from: the last requested one while
-     * the equipment has not reported it back yet (up to 2 s after the request), the current one otherwise.
+     * @brief resistanceStepBase Resistance the +/- buttons step from: the last requested one (from any source:
+     * buttons, Zwift, workouts), limited to 1..maxResistance(), while the equipment has not reported it back yet
+     * (up to 2 s after the request), the current one otherwise.
      * Stepping from the reported value alone turned several quick taps into a single step.
      */
     double resistanceStepBase();

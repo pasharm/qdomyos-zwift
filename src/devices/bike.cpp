@@ -341,7 +341,8 @@ metric bike::currentResistance() { return Resistance; }
 double bike::resistanceStepBase() {
     const double current = currentResistance().value();
     if (lastResistanceRequestMs > 0 && QDateTime::currentMSecsSinceEpoch() - lastResistanceRequestMs < 2000) {
-        const double requested = RequestedResistance.value();
+        // Requests from Zwift or a workout can be outside the bike's range: step from what it can reach.
+        const double requested = qBound(1.0, RequestedResistance.value(), (double)maxResistance());
         if (qRound(requested) != qRound(current))
             return requested;
     }
