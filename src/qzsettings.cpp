@@ -726,6 +726,7 @@ const QString QZSettings::nordictrack_incline_trainer_x7i_ntl15010_0 =
     QStringLiteral("nordictrack_incline_trainer_x7i_ntl15010_0");
 const QString QZSettings::nordictrack_incline_trainer_x7i_netl18716_0 =
     QStringLiteral("nordictrack_incline_trainer_x7i_netl18716_0");
+const QString QZSettings::resistance_buttons_accumulate = QStringLiteral("resistance_buttons_accumulate");
 const QString QZSettings::strava_auth_external_webbrowser = QStringLiteral("strava_auth_external_webbrowser");
 const QString QZSettings::gears_from_bike = QStringLiteral("gears_from_bike");
 const QString QZSettings::peloton_spinups_autoresistance = QStringLiteral("peloton_spinups_autoresistance");
@@ -1289,7 +1290,7 @@ const QString QZSettings::default_shortcut_start_stop = QStringLiteral("");
 const QString QZSettings::shortcut_stop = QStringLiteral("shortcut_stop");
 const QString QZSettings::default_shortcut_stop = QStringLiteral("");
 
-const uint32_t allSettingsCount = 1008;
+const uint32_t allSettingsCount = 1009;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -2314,6 +2315,7 @@ QVariant allSettings[allSettingsCount][2] = {
      QZSettings::default_nordictrack_incline_trainer_x7i_ntl15010_0},
     {QZSettings::nordictrack_incline_trainer_x7i_netl18716_0,
      QZSettings::default_nordictrack_incline_trainer_x7i_netl18716_0},
+    {QZSettings::resistance_buttons_accumulate, QZSettings::default_resistance_buttons_accumulate},
     {QZSettings::zwiftplay_gear_ls1, QZSettings::default_zwiftplay_gear_ls1},
     {QZSettings::zwiftplay_gear_ls2, QZSettings::default_zwiftplay_gear_ls2},
     {QZSettings::zwiftplay_gear_rs1, QZSettings::default_zwiftplay_gear_rs1},
