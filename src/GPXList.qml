@@ -153,7 +153,9 @@ ColumnLayout {
             model: window.ui.modern ? folderModel : null
             ScrollBar.vertical: ScrollBar {}
 
-            onCurrentIndexChanged: {
+            // The item, not the index, as in the classic list: a folder change or a new filter
+            // rebuilds the rows and can leave the index number as it was over another file
+            onCurrentItemChanged: {
                 if (currentIndex < 0 || folderModel.isFolder(currentIndex))
                     return
                 let fileUrl = folderModel.get(currentIndex, 'fileUrl') || folderModel.get(currentIndex, 'fileURL');
@@ -230,6 +232,8 @@ ColumnLayout {
             }
 
             Label {
+                // On the list itself: children of a ListView land in its content item, empty here
+                parent: modernList
                 anchors.centerIn: parent
                 visible: modernList.count === 0
                 text: qsTr("No GPX files here")
@@ -373,7 +377,7 @@ ColumnLayout {
         ScrollView {
             ScrollBar.vertical.policy: ScrollBar.AlwaysOn
             // Padding, not a margin: the content moves in, the scroll bar stays at the edge
-            rightPadding: window.contentSideMargin
+            rightPadding: window.ui.modern && !gpxPage.sideBySide ? gpxPage.modernMargin : window.contentSideMargin
             leftPadding: window.ui.modern && !gpxPage.sideBySide ? gpxPage.modernMargin : 0
             Layout.fillHeight: true
             Layout.fillWidth: true

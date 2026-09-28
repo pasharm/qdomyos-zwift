@@ -78,6 +78,9 @@ Item {
         onLoadingChanged: {
             if (loadRequest.status === WebView.LoadSucceededStatus) {
                 root.pageLoaded = true
+                // A theme change during the load only moved the fragment: apply the current one
+                if (root.pageTheme)
+                    webView.runJavaScript("window.qzApplyTheme && window.qzApplyTheme(" + JSON.stringify(root.pageTheme) + ")")
                 busy.visible = false
                 busy.running = false
                 portPoller.stop()

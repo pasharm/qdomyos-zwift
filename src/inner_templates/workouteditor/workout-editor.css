@@ -658,12 +658,19 @@ html.modern .card-actions button:disabled {
     color: var(--muted-color);
 }
 
+/* Narrow -/+ buttons and padding: a phone gives the field about 157px, and "00:05:00" must fit */
 html.modern .field-with-buttons button {
-    width: 40px;
+    width: 32px;
     height: 40px;
     min-height: 40px;
     padding: 0;
     font-size: 1.1rem;
+}
+
+html.modern .field-with-buttons input {
+    padding-left: 6px;
+    padding-right: 6px;
+    text-align: center;
 }
 
 html.modern .status-strip {
