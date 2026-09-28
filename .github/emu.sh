@@ -23,9 +23,14 @@ shot 01-healthconnect
 adb shell input keyevent KEYCODE_BACK || true
 sleep 30
 shot 02-first-screen        # the wizard opens on the first run
-adb shell input tap 720 1600 || true
+adb shell input tap 720 2244 || true   # Start
 sleep 4
-shot 03-wizard-step
+shot 03-wizard-step1
+adb shell input tap 720 620 || true    # first answer
+sleep 4
+shot 03b-wizard-step2
+adb shell input keyevent KEYCODE_BACK || true
+sleep 2
 adb shell input keyevent KEYCODE_BACK || true
 sleep 3
 adb shell input keyevent KEYCODE_BACK || true
@@ -37,16 +42,15 @@ shot 05-drawer
 adb shell input swipe 500 2200 500 900 400 || true
 sleep 3
 shot 06-drawer-scrolled
-adb shell input keyevent KEYCODE_BACK || true
-sleep 3
-adb shell input tap 84 168 || true
-sleep 4
-adb shell input tap 525 2103 || true    # Settings entry
+adb shell input tap 525 861 || true     # Settings entry in the scrolled drawer
 sleep 8
 shot 07-settings
-adb shell input tap 720 700 || true     # first section
+adb shell input tap 720 520 || true     # a section header
 sleep 4
 shot 08-settings-open
+adb shell input swipe 700 2100 700 700 400 || true
+sleep 3
+shot 09-settings-scrolled
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
 adb logcat -d > full_logcat.txt || true

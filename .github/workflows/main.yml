@@ -4,14 +4,14 @@ name: CI
 
 on:
   workflow_dispatch:
+    inputs:
+      source:
+        description: run id of the build to test
+        required: true
 
 jobs:
   emulator-logcat:
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        source: [36412607189]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -29,7 +29,7 @@ jobs:
         with:
           name: fdroid-android-trial
           path: apk-debug
-          run-id: ${{ matrix.source }}
+          run-id: ${{ inputs.source }}
           github-token: ${{ github.token }}
 
       - name: Setup Java for Android Emulator
@@ -52,7 +52,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ matrix.source }}
+          name: emulator-logcat-${{ inputs.source }}
           path: |
             screenshot.png
             *.png
