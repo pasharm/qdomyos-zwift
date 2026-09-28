@@ -129,10 +129,10 @@ ScrollView {
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
             font.pixelSize: Qt.application.font.pixelSize - 2
-            color: Material.accent
+            color: window.ui.modern ? window.ui.textMuted : Material.accent
         }
 
-        Button {
+        UiButton {
             text: qsTr("Reset to Linear Defaults")
             Layout.fillWidth: true
             Layout.preferredHeight: 40
@@ -146,9 +146,9 @@ ScrollView {
         Rectangle {
             Layout.fillWidth: true
             Layout.preferredHeight: 40
-            color: "#f0f0f0"
+            color: window.ui.modern ? window.ui.surfaceHigh : "#f0f0f0"
             border.width: 1
-            border.color: "#cccccc"
+            border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
 
             Row {
                 anchors.fill: parent
@@ -157,14 +157,14 @@ ScrollView {
                     width: parent.width / 2
                     height: parent.height
                     border.width: 1
-                    border.color: "#cccccc"
+                    border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                     color: "transparent"
 
                     Text {
                         anchors.centerIn: parent
                         text: qsTr("Gear")
                         font.bold: true
-                        color: "black"
+                        color: window.ui.modern ? window.ui.textMain : "black"
                     }
                 }
 
@@ -172,14 +172,14 @@ ScrollView {
                     width: parent.width / 2
                     height: parent.height
                     border.width: 1
-                    border.color: "#cccccc"
+                    border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                     color: "transparent"
 
                     Text {
                         anchors.centerIn: parent
                         text: qsTr("Offset")
                         font.bold: true
-                        color: "black"
+                        color: window.ui.modern ? window.ui.textMain : "black"
                     }
                 }
             }
@@ -203,7 +203,7 @@ ScrollView {
             delegate: Rectangle {
                 width: gearTable.width
                 height: rowHeight
-                color: index % 2 === 0 ? "white" : "#fafafa"
+                color: window.ui.modern ? (index % 2 === 0 ? window.ui.surface : window.ui.bg) : (index % 2 === 0 ? "white" : "#fafafa")
 
                 Row {
                     anchors.fill: parent
@@ -212,13 +212,13 @@ ScrollView {
                         width: parent.width / 2
                         height: parent.height
                         border.width: 1
-                        border.color: "#cccccc"
+                        border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                         color: "transparent"
 
                         Text {
                             anchors.centerIn: parent
                             text: gear
-                            color: "black"
+                            color: window.ui.modern ? window.ui.textMain : "black"
                         }
                     }
 
@@ -226,7 +226,7 @@ ScrollView {
                         width: parent.width / 2
                         height: parent.height
                         border.width: 1
-                        border.color: "#cccccc"
+                        border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                         color: "transparent"
 
                         RowLayout {
@@ -235,7 +235,7 @@ ScrollView {
                             height: offsetControlHeight
                             spacing: 4
 
-                            Button {
+                            UiButton {
                                 text: "-"
                                 Layout.preferredWidth: 34
                                 Layout.fillHeight: true
@@ -251,13 +251,13 @@ ScrollView {
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
                                 text: offset
-                                color: "black"
-                                selectedTextColor: "white"
+                                color: window.ui.modern ? window.ui.textMain : "black"
+                                selectedTextColor: window.ui.modern ? window.ui.accentInk : "white"
                                 selectionColor: Material.accent
                                 horizontalAlignment: Text.AlignHCenter
                                 background: Rectangle {
-                                    color: "white"
-                                    border.color: "#cccccc"
+                                    color: window.ui.modern ? window.ui.surfaceHighest : "white"
+                                    border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                                     radius: 2
                                 }
                                 function applyOffset() {
@@ -270,7 +270,7 @@ ScrollView {
                                 onEditingFinished: applyOffset()
                             }
 
-                            Button {
+                            UiButton {
                                 text: "+"
                                 Layout.preferredWidth: 34
                                 Layout.fillHeight: true

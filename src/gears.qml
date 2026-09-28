@@ -351,7 +351,7 @@ ScrollView {
                     Layout.fillWidth: true
                     Layout.maximumWidth: chainringColumn.width - 20
                     font.pixelSize: Qt.application.font.pixelSize - 2
-                    color: Material.accent
+                    color: window.ui.modern ? window.ui.textMuted : Material.accent
                 }
             }
         }
@@ -517,7 +517,7 @@ ScrollView {
                 }
 
                 // Restore Default Wheel Diameter Button
-                Button {
+                UiButton {
                     text: qsTr("Restore Default Setting to the Trainer")
                     Layout.fillWidth: true
                     Layout.preferredHeight: 50
@@ -589,14 +589,14 @@ ScrollView {
                     Layout.preferredHeight: 40
                     spacing: 10
 
-                    Button {
+                    UiButton {
                         text: qsTr("Add Gear")
                         Layout.fillWidth: true
                         Layout.preferredHeight: 40
                         onClicked: addNewGear()
                     }
 
-                    Button {
+                    UiButton {
                         text: qsTr("Clear Selected Gear and Following")
                         Layout.fillWidth: true
                         Layout.preferredHeight: 40
@@ -607,7 +607,7 @@ ScrollView {
                         }
                     }
 
-                    Button {
+                    UiButton {
                         text: qsTr("Reset All Gears")
                         Layout.fillWidth: true
                         Layout.preferredHeight: 40
@@ -619,9 +619,9 @@ ScrollView {
                 Rectangle {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 40
-                    color: "#f0f0f0"
+                    color: window.ui.modern ? window.ui.surfaceHigh : "#f0f0f0"
                     border.width: 1
-                    border.color: "#cccccc"
+                    border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
 
                     Row {
                         anchors.fill: parent
@@ -630,14 +630,14 @@ ScrollView {
                             width: parent.width / 3
                             height: parent.height
                             border.width: 1
-                            border.color: "#cccccc"
+                            border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                             color: "transparent"
 
                             Text {
                                 anchors.centerIn: parent
                                 text: qsTr("Gear")
                                 font.bold: true
-                                color: "black"
+                                color: window.ui.modern ? window.ui.textMain : "black"
                             }
                         }
 
@@ -645,14 +645,14 @@ ScrollView {
                             width: parent.width / 3
                             height: parent.height
                             border.width: 1
-                            border.color: "#cccccc"
+                            border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                             color: "transparent"
 
                             Text {
                                 anchors.centerIn: parent
                                 text: qsTr("Chainring")
                                 font.bold: true
-                                color: "black"
+                                color: window.ui.modern ? window.ui.textMain : "black"
                             }
                         }
 
@@ -660,14 +660,14 @@ ScrollView {
                             width: parent.width / 3
                             height: parent.height
                             border.width: 1
-                            border.color: "#cccccc"
+                            border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                             color: "transparent"
 
                             Text {
                                 anchors.centerIn: parent
                                 text: qsTr("Rear Cog")
                                 font.bold: true
-                                color: "black"
+                                color: window.ui.modern ? window.ui.textMain : "black"
                             }
                         }
                     }
@@ -705,7 +705,7 @@ ScrollView {
                     delegate: Rectangle {
                         width: gearTable.width
                         height: 40
-                        color: gearTable.currentRow === index ? "#e0e0e0" : "white"
+                        color: window.ui.modern ? (gearTable.currentRow === index ? window.ui.alpha(window.ui.accent, 0.14) : window.ui.surface) : (gearTable.currentRow === index ? "#e0e0e0" : "white")
 
                         MouseArea {
                             anchors.fill: parent
@@ -720,13 +720,13 @@ ScrollView {
                                 width: parent.width / 3
                                 height: parent.height
                                 border.width: 1
-                                border.color: "#cccccc"
+                                border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                                 color: "transparent"
 
                                 Text {
                                     anchors.centerIn: parent
                                     text: gear
-                                    color: "black"
+                                    color: window.ui.modern ? window.ui.textMain : "black"
                                 }
                             }
 
@@ -735,7 +735,7 @@ ScrollView {
                                 width: parent.width / 3
                                 height: parent.height
                                 border.width: 1
-                                border.color: "#cccccc"
+                                border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                                 color: "transparent"
 
                                 SpinBox {
@@ -756,9 +756,9 @@ ScrollView {
                                         z: 2
                                         text: cranksetSpinBox.textFromValue(cranksetSpinBox.value, cranksetSpinBox.locale)
                                         font: cranksetSpinBox.font
-                                        color: "black"
-                                        selectionColor: "#21be2b"
-                                        selectedTextColor: "#ffffff"
+                                        color: window.ui.modern ? window.ui.textMain : "black"
+                                        selectionColor: window.ui.modern ? window.ui.accent : "#21be2b"
+                                        selectedTextColor: window.ui.modern ? window.ui.accentInk : "#ffffff"
                                         horizontalAlignment: Qt.AlignHCenter
                                         verticalAlignment: Qt.AlignVCenter
                                     }
@@ -767,12 +767,12 @@ ScrollView {
                                         x: parent.width - width
                                         height: parent.height
                                         width: height
-                                        color: parent.up.pressed ? "#e4e4e4" : "#f6f6f6"
-                                        border.color: "#cccccc"
+                                        color: window.ui.modern ? (parent.up.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest) : (parent.up.pressed ? "#e4e4e4" : "#f6f6f6")
+                                        border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
 
                                         Text {
                                             text: "+"
-                                            color: "black"
+                                            color: window.ui.modern ? window.ui.textMain : "black"
                                             anchors.centerIn: parent
                                             font.pixelSize: 12
                                         }
@@ -782,20 +782,20 @@ ScrollView {
                                         x: 0
                                         height: parent.height
                                         width: height
-                                        color: parent.down.pressed ? "#e4e4e4" : "#f6f6f6"
-                                        border.color: "#cccccc"
+                                        color: window.ui.modern ? (parent.down.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest) : (parent.down.pressed ? "#e4e4e4" : "#f6f6f6")
+                                        border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
 
                                         Text {
                                             text: "-"
-                                            color: "black"
+                                            color: window.ui.modern ? window.ui.textMain : "black"
                                             anchors.centerIn: parent
                                             font.pixelSize: 12
                                         }
                                     }
 
                                     background: Rectangle {
-                                        color: "white"
-                                        border.color: "#cccccc"
+                                        color: window.ui.modern ? window.ui.surfaceHighest : "white"
+                                        border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                                     }
                                 }
                             }
@@ -805,7 +805,7 @@ ScrollView {
                                 width: parent.width / 3
                                 height: parent.height
                                 border.width: 1
-                                border.color: "#cccccc"
+                                border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                                 color: "transparent"
 
                                 SpinBox {
@@ -826,9 +826,9 @@ ScrollView {
                                         z: 2
                                         text: cogSpinBox.textFromValue(cogSpinBox.value, cogSpinBox.locale)
                                         font: cogSpinBox.font
-                                        color: "black"
-                                        selectionColor: "#21be2b"
-                                        selectedTextColor: "#ffffff"
+                                        color: window.ui.modern ? window.ui.textMain : "black"
+                                        selectionColor: window.ui.modern ? window.ui.accent : "#21be2b"
+                                        selectedTextColor: window.ui.modern ? window.ui.accentInk : "#ffffff"
                                         horizontalAlignment: Qt.AlignHCenter
                                         verticalAlignment: Qt.AlignVCenter
                                     }
@@ -837,12 +837,12 @@ ScrollView {
                                         x: parent.width - width
                                         height: parent.height
                                         width: height
-                                        color: parent.up.pressed ? "#e4e4e4" : "#f6f6f6"
-                                        border.color: "#cccccc"
+                                        color: window.ui.modern ? (parent.up.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest) : (parent.up.pressed ? "#e4e4e4" : "#f6f6f6")
+                                        border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
 
                                         Text {
                                             text: "+"
-                                            color: "black"
+                                            color: window.ui.modern ? window.ui.textMain : "black"
                                             anchors.centerIn: parent
                                             font.pixelSize: 12
                                         }
@@ -852,20 +852,20 @@ ScrollView {
                                         x: 0
                                         height: parent.height
                                         width: height
-                                        color: parent.down.pressed ? "#e4e4e4" : "#f6f6f6"
-                                        border.color: "#cccccc"
+                                        color: window.ui.modern ? (parent.down.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest) : (parent.down.pressed ? "#e4e4e4" : "#f6f6f6")
+                                        border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
 
                                         Text {
                                             text: "-"
-                                            color: "black"
+                                            color: window.ui.modern ? window.ui.textMain : "black"
                                             anchors.centerIn: parent
                                             font.pixelSize: 12
                                         }
                                     }
 
                                     background: Rectangle {
-                                        color: "white"
-                                        border.color: "#cccccc"
+                                        color: window.ui.modern ? window.ui.surfaceHighest : "white"
+                                        border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                                     }
                                 }
                             }
