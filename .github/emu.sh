@@ -16,13 +16,38 @@ adb shell "run-as $PKG ls -la 'files/.config/Roberto Viola'" || true
 
 adb logcat -c || true
 adb shell am start -n $PKG/$PKG.CustomQtActivity
+shot() { adb shell screencap -p /sdcard/$1.png || true; adb pull /sdcard/$1.png || true; }
+# Nexus 6: 1440x2560 px, 3.5 px per dp
 sleep 20
-adb shell screencap -p /sdcard/shot1.png || true
-adb pull /sdcard/shot1.png || true
+shot 01-healthconnect
 adb shell input keyevent KEYCODE_BACK || true
-sleep 40
+sleep 30
+shot 02-first-screen        # the wizard opens on the first run
+adb shell input tap 720 1600 || true
+sleep 4
+shot 03-wizard-step
+adb shell input keyevent KEYCODE_BACK || true
+sleep 3
+adb shell input keyevent KEYCODE_BACK || true
+sleep 5
+shot 04-home
+adb shell input tap 84 168 || true      # menu button on the toolbar
+sleep 4
+shot 05-drawer
+adb shell input swipe 500 2200 500 900 400 || true
+sleep 3
+shot 06-drawer-scrolled
+adb shell input keyevent KEYCODE_BACK || true
+sleep 3
+adb shell input tap 84 168 || true
+sleep 4
+adb shell input tap 525 2103 || true    # Settings entry
+sleep 8
+shot 07-settings
+adb shell input tap 720 700 || true     # first section
+sleep 4
+shot 08-settings-open
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
-adb shell screencap -p /sdcard/screenshot.png || true
-adb pull /sdcard/screenshot.png || true
+shot screenshot
 adb logcat -d > full_logcat.txt || true
 grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true

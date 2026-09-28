@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        source: [36375984323]
+        source: [36412607189]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -55,7 +55,7 @@ jobs:
           name: emulator-logcat-${{ matrix.source }}
           path: |
             screenshot.png
-            shot1.png
+            *.png
             process_list.txt
             full_logcat.txt
           if-no-files-found: warn
