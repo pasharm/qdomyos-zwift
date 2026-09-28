@@ -10500,6 +10500,7 @@ import QtQuick 2.12 as Quick212
                         accordionContent: ColumnLayout {
                             spacing: 0    
                             Label {
+                                Layout.topMargin: window.ui.modern ? 8 : 0
                                 text: qsTr("Specific Model:")
                                 Layout.fillWidth: true
                             }
@@ -12739,6 +12740,7 @@ import QtQuick 2.12 as Quick212
                 accordionContent: ColumnLayout {
                     spacing: 0
                     Label {
+                        Layout.topMargin: window.ui.modern ? 8 : 0
                         id: labelFilterDevice
                         text: qsTr("Manual Device:")
                         Layout.fillWidth: true
@@ -14398,6 +14400,7 @@ import QtQuick 2.12 as Quick212
                                 accordionContent: ColumnLayout {
                                     spacing: 0
                                     Label {
+                                        Layout.topMargin: window.ui.modern ? 8 : 0
                                         id: labelEliteRizerName
                                         text: "Elite Rizer:"
                                         Layout.fillWidth: true
@@ -14466,6 +14469,7 @@ import QtQuick 2.12 as Quick212
                                 accordionContent: ColumnLayout {
                                     spacing: 0
                                     Label {
+                                        Layout.topMargin: window.ui.modern ? 8 : 0
                                         id: labelEliteSterzoSmartName
                                         text: "Elite Sterzo Smart:"
                                         Layout.fillWidth: true
@@ -14513,6 +14517,7 @@ import QtQuick 2.12 as Quick212
                         accordionContent: ColumnLayout {
                             spacing: 0
                             Label {
+                                Layout.topMargin: window.ui.modern ? 8 : 0
                                 id: labelFTMSAccessoryName
                                 text: qsTr("SmartSpin2k device:")
                                 Layout.fillWidth: true
