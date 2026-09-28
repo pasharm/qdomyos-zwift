@@ -49,7 +49,7 @@ Rectangle {
         wrapMode: Text.WordWrap
         font.pixelSize: header.nested ? 15 : 16
         font.weight: Font.Medium
-        color: header.isOpen ? window.ui.accent : window.ui.onSurface
+        color: header.isOpen ? window.ui.accent : window.ui.textMain
     }
 
     UiIcon {
@@ -60,7 +60,7 @@ Rectangle {
         width: 24
         height: 24
         name: header.chevron
-        color: window.ui.onSurfaceVariant
+        color: window.ui.textMuted
         rotation: header.chevron === "expand_more" && header.isOpen ? 180 : 0
         Behavior on rotation { NumberAnimation { duration: 150; easing.type: Easing.OutQuad } }
     }

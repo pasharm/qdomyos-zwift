@@ -229,11 +229,11 @@ ApplicationWindow {
 
         readonly property var themes: ({
             "graphite": { bg: "#111318", surface: "#1B1E24", surfaceHigh: "#23272E", surfaceHighest: "#2D323A",
-                          outline: "#3B414B", onSurface: "#E4E6EB", onSurfaceVariant: "#A2A8B3" },
+                          outline: "#3B414B", textMain: "#E4E6EB", textMuted: "#A2A8B3" },
             "oled":     { bg: "#000000", surface: "#101215", surfaceHigh: "#181B1F", surfaceHighest: "#22262B",
-                          outline: "#30353C", onSurface: "#E6E7EA", onSurfaceVariant: "#9CA2AC" },
+                          outline: "#30353C", textMain: "#E6E7EA", textMuted: "#9CA2AC" },
             "midnight": { bg: "#0B1220", surface: "#131C2D", surfaceHigh: "#1B2639", surfaceHighest: "#243148",
-                          outline: "#35445F", onSurface: "#E3E9F4", onSurfaceVariant: "#99A6BE" }
+                          outline: "#35445F", textMain: "#E3E9F4", textMuted: "#99A6BE" }
         })
         readonly property var accents: ({
             "violet": "#B69DF8", "blue": "#7AB8FF", "teal": "#4FD8C4",
@@ -246,10 +246,10 @@ ApplicationWindow {
         readonly property color surfaceHigh: t.surfaceHigh
         readonly property color surfaceHighest: t.surfaceHighest
         readonly property color outline: t.outline
-        readonly property color onSurface: t.onSurface
-        readonly property color onSurfaceVariant: t.onSurfaceVariant
+        readonly property color textMain: t.textMain
+        readonly property color textMuted: t.textMuted
         readonly property color accent: accents[settings.ui_accent] || accents["violet"]
-        readonly property color onAccent: "#12101A"
+        readonly property color accentInk: "#12101A"
         readonly property color danger: "#FF8A80"
         readonly property color ok: "#7EDC8A"
         readonly property int radius: 16
@@ -1078,7 +1078,7 @@ ApplicationWindow {
             id: toolButton
             icon.source: window.ui.modern ? "" : "icons/icons/icon.png"
             text: window.ui.modern ? "" : (stackView.depth > 1 ? "◄" : "◄")
-            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: stackView.depth > 1 ? "arrow_back" : "menu"; color: window.ui.onSurface; visible: window.ui.modern }
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: stackView.depth > 1 ? "arrow_back" : "menu"; color: window.ui.textMain; visible: window.ui.modern }
             font.pixelSize: Qt.application.font.pixelSize * 1.6
             onClicked: {
                 if (stackView.depth > 1) {
@@ -1092,7 +1092,7 @@ ApplicationWindow {
         ToolButton {
             id: toolButtonFloating
             icon.source: window.ui.modern ? "" : "icons/icons/mini-display.png"
-            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "picture_in_picture_alt"; color: window.ui.onSurface; visible: window.ui.modern }
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "picture_in_picture_alt"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { console.log("floating!"); floatingOpen(); }
             anchors.left: toolButton.right
             visible: OS_VERSION === "Android" ? true : false
@@ -1171,7 +1171,7 @@ ApplicationWindow {
         ToolButton {
             id: toolButtonLoadSettings
             icon.source: window.ui.modern ? "" : "icons/icons/tray-arrow-up.png"
-            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "upload_file"; color: window.ui.onSurface; visible: window.ui.modern }
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "upload_file"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: {
                 stackView.push("SettingsList.qml")
                 stackView.currentItem.loadSettings.connect(loadSettings)
@@ -1191,7 +1191,7 @@ ApplicationWindow {
         ToolButton {
             id: toolButtonSettingsSearch
             text: window.ui.modern ? "" : "\uD83D\uDD0D"
-            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "search"; color: window.ui.onSurface; visible: window.ui.modern }
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "search"; color: window.ui.textMain; visible: window.ui.modern }
             font.pixelSize: Qt.application.font.pixelSize * 1.25
             onClicked: {
                 if (headerToolbar.settingsPageActive)
@@ -1206,7 +1206,7 @@ ApplicationWindow {
         ToolButton {
             id: toolButtonSaveSettings
             icon.source: window.ui.modern ? "" : "icons/icons/tray-arrow-down.png"
-            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "save"; color: window.ui.onSurface; visible: window.ui.modern }
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "save"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: {
                 saveSettings("settings");
                 popupSaveFile.open()
@@ -1237,7 +1237,7 @@ ApplicationWindow {
             }
             id: toolButtonMaps
             icon.source: window.ui.modern ? "" : ( "icons/icons/maps-icon-16.png" )
-            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "map"; color: window.ui.onSurface; visible: window.ui.modern }
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "map"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { loadMaps(); }
             anchors.right: toolButtonChart.left
             visible: rootItem.mapsVisible
@@ -1255,7 +1255,7 @@ ApplicationWindow {
             }
             id: toolButtonVideo
             icon.source: window.ui.modern ? "" : ( "icons/icons/video.png" )
-            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "videocam"; color: window.ui.onSurface; visible: window.ui.modern }
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "videocam"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { loadVideo(); }
             anchors.right: toolButtonMaps.left
             visible: rootItem.videoIconVisible
@@ -1264,7 +1264,7 @@ ApplicationWindow {
         ToolButton {
             id: toolButtonChart
             icon.source: window.ui.modern ? "" : ( "icons/icons/chart.png" )
-            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "show_chart"; color: window.ui.onSurface; visible: window.ui.modern }
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "show_chart"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { rootItem.chartFooterVisible = !rootItem.chartFooterVisible }
             anchors.right: toolButtonLockTiles.left
             visible: rootItem.chartIconVisible
@@ -1273,7 +1273,7 @@ ApplicationWindow {
         ToolButton {
             id: toolButtonLockTiles
             icon.source: window.ui.modern ? "" : ( window.lockTiles ? "icons/icons/unlock.png" : "icons/icons/lock.png")
-            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (window.lockTiles ? "lock_open" : "lock"); color: window.ui.onSurface; visible: window.ui.modern }
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (window.lockTiles ? "lock_open" : "lock"); color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { window.lockTiles = !window.lockTiles; console.log("lock tiles toggled " + window.lockTiles); popuplockTiles.open(); popuplockTilesAutoClose.running = true; }
             anchors.right: toolButtonAutoResistance.left
             visible: !toolButtonSaveSettings.visible
@@ -1282,7 +1282,7 @@ ApplicationWindow {
         ToolButton {
             id: toolButtonAutoResistance
             icon.source: window.ui.modern ? "" : ( rootItem.autoResistance ? "icons/icons/resistance.png" : "icons/icons/pause.png")
-            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (rootItem.autoResistance ? "motion_mode" : "pause_circle"); color: window.ui.onSurface; visible: window.ui.modern }
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (rootItem.autoResistance ? "motion_mode" : "pause_circle"); color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { rootItem.autoResistance = !rootItem.autoResistance; console.log("auto resistance toggled " + rootItem.autoResistance); popupAutoResistance.open(); popupAutoResistanceAutoClose.running = true; }
             anchors.right: parent.right
             visible: !headerToolbar.settingsPageActive
@@ -1293,7 +1293,7 @@ ApplicationWindow {
             text: stackView.currentItem.title
             font.pixelSize: window.ui.modern ? 18 : Qt.application.font.pixelSize
             font.weight: window.ui.modern ? Font.DemiBold : Font.Normal
-            color: window.ui.modern ? window.ui.onSurface : Material.foreground
+            color: window.ui.modern ? window.ui.textMain : Material.foreground
             // Fixed position, like the buttons: centred in the full bar, it moved on its own when the bar collapsed
             anchors.horizontalCenter: parent.horizontalCenter
             y: (headerToolbar.contentHeight - height) / 2
@@ -1675,7 +1675,7 @@ ApplicationWindow {
                         text: "QZ Fitness"
                         font.pixelSize: 20
                         font.weight: Font.DemiBold
-                        color: window.ui.onSurface
+                        color: window.ui.textMain
                     }
                     Row {
                         anchors.left: drawerAppName.left
@@ -1688,13 +1688,13 @@ ApplicationWindow {
                             width: 8
                             height: 8
                             radius: 4
-                            color: (typeof rootItem !== "undefined" && rootItem && rootItem.device) ? "#7EDC8A" : window.ui.onSurfaceVariant
+                            color: (typeof rootItem !== "undefined" && rootItem && rootItem.device) ? "#7EDC8A" : window.ui.textMuted
                         }
                         Label {
                             width: parent.width - 14
                             text: (typeof rootItem !== "undefined" && rootItem) ? rootItem.info : ""
                             font.pixelSize: 13
-                            color: window.ui.onSurfaceVariant
+                            color: window.ui.textMuted
                             elide: Text.ElideRight
                         }
                     }
@@ -1725,7 +1725,7 @@ ApplicationWindow {
                                 text: qsTr("Profile: ") + settings.profile_name
                                 font.pixelSize: 14
                                 font.weight: Font.Medium
-                                color: window.ui.onSurface
+                                color: window.ui.textMain
                                 elide: Text.ElideRight
                             }
                         }
@@ -1814,7 +1814,7 @@ ApplicationWindow {
                     topPadding: 16
                     text: "version 2.22.0"
                     font.pixelSize: 12
-                    color: window.ui.onSurfaceVariant
+                    color: window.ui.textMuted
                 }
             }
         }

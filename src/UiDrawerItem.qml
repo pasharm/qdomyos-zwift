@@ -20,7 +20,7 @@ ItemDelegate {
         height: control.height - 4
         radius: height / 2
         color: control.down ? window.ui.alpha(window.ui.accent, 0.22)
-             : control.hovered ? window.ui.alpha(window.ui.onSurface, 0.06)
+             : control.hovered ? window.ui.alpha(window.ui.textMain, 0.06)
              : "transparent"
     }
 
@@ -31,7 +31,7 @@ ItemDelegate {
             width: 22
             height: 22
             name: control.iconName
-            color: control.down ? window.ui.accent : window.ui.onSurfaceVariant
+            color: control.down ? window.ui.accent : window.ui.textMuted
         }
         Label {
             anchors.left: itemIcon.right
@@ -41,7 +41,7 @@ ItemDelegate {
             text: control.text
             font.pixelSize: 15
             font.weight: Font.Medium
-            color: window.ui.onSurface
+            color: window.ui.textMain
             elide: Text.ElideRight
         }
         UiIcon {
@@ -51,7 +51,7 @@ ItemDelegate {
             width: 16
             height: 16
             name: "open_in_new"
-            color: window.ui.onSurfaceVariant
+            color: window.ui.textMuted
             visible: control.external
         }
     }

@@ -427,7 +427,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -493,7 +493,7 @@ ScrollView {
                     verticalAlignment: Text.AlignVCenter
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     Layout.fillWidth: true
-                    color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                    color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                 }
 
                 RowLayout {
@@ -534,7 +534,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -609,7 +609,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -654,7 +654,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -699,7 +699,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -825,7 +825,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         Label {
@@ -838,7 +838,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -883,7 +883,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -945,7 +945,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -990,7 +990,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
 
@@ -1036,7 +1036,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
 
@@ -1114,7 +1114,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1148,7 +1148,7 @@ ScrollView {
                     verticalAlignment: Text.AlignVCenter
                     Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                     Layout.fillWidth: true
-                    color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                    color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                 }
 
                 RowLayout {
@@ -1221,7 +1221,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1266,7 +1266,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1311,7 +1311,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1356,7 +1356,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1401,7 +1401,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1446,7 +1446,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         /*
@@ -1572,7 +1572,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1617,7 +1617,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
 
@@ -1663,7 +1663,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1708,7 +1708,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1753,7 +1753,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
 
@@ -1799,7 +1799,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1939,7 +1939,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -1984,7 +1984,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2041,7 +2041,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2086,7 +2086,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2131,7 +2131,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2176,7 +2176,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2253,7 +2253,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2298,7 +2298,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2343,7 +2343,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2388,7 +2388,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2433,7 +2433,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2478,7 +2478,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2523,7 +2523,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2568,7 +2568,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -2613,7 +2613,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5113,7 +5113,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5158,7 +5158,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5203,7 +5203,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5248,7 +5248,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5293,7 +5293,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5338,7 +5338,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         RowLayout {
@@ -5412,7 +5412,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5457,7 +5457,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5502,7 +5502,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5547,7 +5547,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5592,7 +5592,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5635,7 +5635,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5678,7 +5678,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5721,7 +5721,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5764,7 +5764,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -5809,7 +5809,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
     }
 }

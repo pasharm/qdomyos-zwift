@@ -2000,7 +2000,7 @@ import AndroidStatusBar 1.0
                                 Layout.preferredHeight: visible ? implicitHeight : 0
                                 Layout.maximumHeight: visible ? implicitHeight : 0
                                 text: entry.description || ""
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: Qt.application.font.pixelSize - 2
@@ -2151,7 +2151,7 @@ import AndroidStatusBar 1.0
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -2203,7 +2203,7 @@ import AndroidStatusBar 1.0
                                     radius: 15
                                     color: window.ui.accents[modelData]
                                     border.width: window.ui.accentName === modelData ? 3 : 0
-                                    border.color: window.ui.onSurface
+                                    border.color: window.ui.textMain
                                     Accessible.role: Accessible.RadioButton
                                     Accessible.name: modelData
                                     Accessible.checked: window.ui.accentName === modelData
@@ -2252,7 +2252,7 @@ import AndroidStatusBar 1.0
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         width: column1.width * 0.8
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -2302,7 +2302,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -2339,7 +2339,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -2398,7 +2398,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -2436,7 +2436,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -2476,7 +2476,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
 
@@ -2515,7 +2515,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -2551,7 +2551,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -2588,7 +2588,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -2625,7 +2625,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -2653,7 +2653,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -2682,7 +2682,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                         visible: settings.miles_unit
                     }
 
@@ -2711,7 +2711,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -2739,7 +2739,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }                    
                 }
             }
@@ -2788,7 +2788,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -2816,7 +2816,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -2844,7 +2844,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -2872,7 +2872,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -2900,7 +2900,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     Label {
@@ -3069,7 +3069,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             Label {
@@ -3082,7 +3082,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             AccordionElement {
@@ -3143,7 +3143,7 @@ import AndroidStatusBar 1.0
                                         verticalAlignment: Text.AlignVCenter
                                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                         Layout.fillWidth: true
-                                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
 
                                     RowLayout {
@@ -3181,7 +3181,7 @@ import AndroidStatusBar 1.0
                                         verticalAlignment: Text.AlignVCenter
                                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                         Layout.fillWidth: true
-                                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
                                 }
                             }
@@ -3305,7 +3305,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
                         }
                     }               
@@ -3347,7 +3347,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -3376,7 +3376,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     // Add the new specific gear value restore setting
@@ -3440,7 +3440,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
                     RowLayout {
                         spacing: 10
@@ -3509,7 +3509,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -3585,7 +3585,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }                    
 
                     AccordionElement {
@@ -3618,7 +3618,7 @@ import AndroidStatusBar 1.0
                                 font.pixelSize: Qt.application.font.pixelSize - 2
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             IndicatorOnlySwitch {
@@ -3635,7 +3635,7 @@ import AndroidStatusBar 1.0
                                 font.pixelSize: Qt.application.font.pixelSize - 2
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             Label {
@@ -3846,7 +3846,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -3884,7 +3884,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -3922,7 +3922,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -3960,7 +3960,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -3998,7 +3998,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -4036,7 +4036,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -4074,7 +4074,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -4112,7 +4112,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -4148,7 +4148,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     NewPageElement {
@@ -4200,7 +4200,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     AccordionElement {
@@ -4237,7 +4237,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                             }
 
@@ -4616,7 +4616,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     Label {
@@ -4629,7 +4629,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }                    
 
                     NewPageElement {
@@ -4723,7 +4723,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
                         }
                     }
@@ -5088,7 +5088,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
                         }
                     }
@@ -5374,7 +5374,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
                         }
                     }
@@ -6017,7 +6017,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
                         }
                     }
@@ -6074,7 +6074,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -6110,7 +6110,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
 
@@ -6147,7 +6147,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -6199,7 +6199,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -6226,7 +6226,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
                 }
             }
@@ -6308,7 +6308,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -6346,7 +6346,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     Label {
@@ -6359,7 +6359,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -6396,7 +6396,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -6433,7 +6433,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -6470,7 +6470,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -6498,7 +6498,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     Button {
@@ -6542,7 +6542,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -6597,7 +6597,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     AccordionElement {
@@ -6840,7 +6840,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -6879,7 +6879,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 */
 
@@ -6935,7 +6935,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -6973,7 +6973,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -7011,7 +7011,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -7045,7 +7045,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -7079,7 +7079,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -7117,7 +7117,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -7154,7 +7154,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -7193,7 +7193,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -7231,7 +7231,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -7269,7 +7269,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -7297,7 +7297,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }                    
 
                     IndicatorOnlySwitch {
@@ -7324,7 +7324,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -7351,7 +7351,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     /*
@@ -7419,7 +7419,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -7459,7 +7459,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -7512,7 +7512,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -7539,7 +7539,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -7567,7 +7567,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -7594,7 +7594,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
                     /*
                     IndicatorOnlySwitch {
@@ -7622,7 +7622,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }*/
                 }
             }
@@ -7669,7 +7669,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -7709,7 +7709,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }              
 
                     MessageDialog {
@@ -7759,7 +7759,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 /*
                     IndicatorOnlySwitch {
@@ -7786,7 +7786,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 */
 
@@ -7814,7 +7814,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -7850,7 +7850,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }               
 
                     IndicatorOnlySwitch {
@@ -7877,7 +7877,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -7904,7 +7904,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -7945,7 +7945,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
                 }
             }
@@ -7982,7 +7982,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
                 }
             }
@@ -8020,7 +8020,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -8047,7 +8047,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -8074,7 +8074,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     Label {
@@ -8109,7 +8109,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -8136,7 +8136,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -8163,7 +8163,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -8346,7 +8346,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -8373,7 +8373,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     Label {
@@ -9142,7 +9142,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -9169,7 +9169,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -9196,7 +9196,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -9224,7 +9224,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -9251,7 +9251,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -9291,7 +9291,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -9348,7 +9348,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -9375,7 +9375,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -9409,7 +9409,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -9443,7 +9443,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -9470,7 +9470,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -9507,7 +9507,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -9544,7 +9544,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -9581,7 +9581,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -9618,7 +9618,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -9655,7 +9655,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -9764,7 +9764,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -9801,7 +9801,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -10025,7 +10025,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
                 }
             }
@@ -10062,7 +10062,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -10090,7 +10090,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -10118,7 +10118,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -10146,7 +10146,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -10174,7 +10174,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -10202,7 +10202,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -10240,7 +10240,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
 
@@ -10277,7 +10277,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }                
 
                     RowLayout {
@@ -10313,7 +10313,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -10349,7 +10349,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -10385,7 +10385,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -10423,7 +10423,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     NewPageElement {
@@ -10444,7 +10444,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -10471,7 +10471,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     Label {
@@ -10510,7 +10510,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     Label {
@@ -10523,7 +10523,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     AccordionElement {
@@ -11096,7 +11096,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
                         }
                     }
@@ -11385,7 +11385,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
                         }
                     }
@@ -12362,7 +12362,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     CheckBox {
@@ -12571,7 +12571,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
                     IndicatorOnlySwitch {
                         id: gymstickGX60EllipticalDelegate
@@ -12818,7 +12818,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -12845,7 +12845,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -12883,7 +12883,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -12921,7 +12921,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -12959,7 +12959,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
 
@@ -12998,7 +12998,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -13036,7 +13036,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -13074,7 +13074,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }                   
 
                     Label {
@@ -13144,7 +13144,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -13171,7 +13171,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }                    
 
                     IndicatorOnlySwitch {
@@ -13199,7 +13199,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -13226,7 +13226,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -13253,7 +13253,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -13281,7 +13281,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -13308,7 +13308,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -13353,7 +13353,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -13381,7 +13381,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -13409,7 +13409,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -13447,7 +13447,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -13485,7 +13485,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -13521,7 +13521,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -13559,7 +13559,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }           
 
                     IndicatorOnlySwitch {
@@ -13586,7 +13586,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
 
@@ -13614,7 +13614,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -13641,7 +13641,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }                    
 
                     RowLayout {
@@ -13677,7 +13677,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -13713,7 +13713,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }                    
                 }
             }
@@ -13799,7 +13799,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             Label {
@@ -13847,7 +13847,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             RowLayout {
@@ -13885,7 +13885,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             IndicatorOnlySwitch {
@@ -13912,7 +13912,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             IndicatorOnlySwitch {
@@ -13939,7 +13939,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             RowLayout {
@@ -14044,7 +14044,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
                         }
                     }
@@ -14082,7 +14082,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             IndicatorOnlySwitch {
@@ -14110,7 +14110,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             IndicatorOnlySwitch {
@@ -14138,7 +14138,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             IndicatorOnlySwitch {
@@ -14166,7 +14166,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             IndicatorOnlySwitch {
@@ -14193,7 +14193,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             Label {
@@ -14227,7 +14227,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             IndicatorOnlySwitch {
@@ -14254,7 +14254,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             IndicatorOnlySwitch {
@@ -14281,7 +14281,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             IndicatorOnlySwitch {
@@ -14308,7 +14308,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             Label {
@@ -14363,7 +14363,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             Label {
@@ -14411,7 +14411,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
                         }
                     }
@@ -15191,7 +15191,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
                         }
                     }*/
@@ -15228,7 +15228,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
                         }
                     }
@@ -15265,7 +15265,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
                         }
                     }
@@ -15302,7 +15302,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             IndicatorOnlySwitch {
@@ -15329,7 +15329,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             IndicatorOnlySwitch {
@@ -15356,7 +15356,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }                            
 
                             IndicatorOnlySwitch {
@@ -15383,7 +15383,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             IndicatorOnlySwitch {
@@ -15410,7 +15410,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             IndicatorOnlySwitch {
@@ -15437,7 +15437,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             Label {
@@ -15458,7 +15458,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             RowLayout {
@@ -15589,7 +15589,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
                         }
                     }                    
@@ -15735,7 +15735,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -15763,7 +15763,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -15791,7 +15791,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -15819,7 +15819,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
         /*
                     IndicatorOnlySwitch {
@@ -15874,7 +15874,7 @@ import AndroidStatusBar 1.0
                                         verticalAlignment: Text.AlignVCenter
                                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                         Layout.fillWidth: true
-                                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
 
                                     IndicatorOnlySwitch {
@@ -15902,7 +15902,7 @@ import AndroidStatusBar 1.0
                                         verticalAlignment: Text.AlignVCenter
                                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                         Layout.fillWidth: true
-                                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
 
                                     IndicatorOnlySwitch {
@@ -15930,7 +15930,7 @@ import AndroidStatusBar 1.0
                                         verticalAlignment: Text.AlignVCenter
                                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                         Layout.fillWidth: true
-                                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
 
                                     IndicatorOnlySwitch {
@@ -15960,7 +15960,7 @@ import AndroidStatusBar 1.0
                                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                         Layout.fillWidth: true
                                         visible: settings.virtual_device_rower
-                                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
 
                                     IndicatorOnlySwitch {
@@ -15988,7 +15988,7 @@ import AndroidStatusBar 1.0
                                         verticalAlignment: Text.AlignVCenter
                                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                         Layout.fillWidth: true
-                                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
 
                                     IndicatorOnlySwitch {
@@ -16016,7 +16016,7 @@ import AndroidStatusBar 1.0
                                         verticalAlignment: Text.AlignVCenter
                                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                         Layout.fillWidth: true
-                                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
 
 
@@ -16045,7 +16045,7 @@ import AndroidStatusBar 1.0
                                         verticalAlignment: Text.AlignVCenter
                                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                         Layout.fillWidth: true
-                                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
 
                                     IndicatorOnlySwitch {
@@ -16073,7 +16073,7 @@ import AndroidStatusBar 1.0
                                         verticalAlignment: Text.AlignVCenter
                                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                         Layout.fillWidth: true
-                                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
 
                                     SwitchDelegate {
@@ -16100,7 +16100,7 @@ import AndroidStatusBar 1.0
                                         verticalAlignment: Text.AlignVCenter
                                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                         Layout.fillWidth: true
-                                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
                                 }
                             }
@@ -16137,7 +16137,7 @@ import AndroidStatusBar 1.0
                                         verticalAlignment: Text.AlignVCenter
                                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                         Layout.fillWidth: true
-                                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
 
                                     RowLayout {
@@ -16173,7 +16173,7 @@ import AndroidStatusBar 1.0
                                         verticalAlignment: Text.AlignVCenter
                                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                         Layout.fillWidth: true
-                                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
 
                                     RowLayout {
@@ -16245,7 +16245,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             RowLayout {
@@ -16281,7 +16281,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             // Username field
@@ -16317,7 +16317,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             // Password field
@@ -16354,7 +16354,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             // Device ID field
@@ -16390,7 +16390,7 @@ import AndroidStatusBar 1.0
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
                         }
                     }               
@@ -16477,7 +16477,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -16505,7 +16505,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     AccordionElement {
@@ -16578,7 +16578,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -16606,7 +16606,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -16633,7 +16633,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -16661,7 +16661,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -16689,7 +16689,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -16717,7 +16717,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -16745,7 +16745,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -16772,7 +16772,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -16800,7 +16800,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -16828,7 +16828,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
@@ -16855,7 +16855,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }                    
 
                     IndicatorOnlySwitch {
@@ -16883,7 +16883,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     GridLayout {
@@ -16921,7 +16921,7 @@ import AndroidStatusBar 1.0
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.onSurfaceVariant : Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
                 }
             }

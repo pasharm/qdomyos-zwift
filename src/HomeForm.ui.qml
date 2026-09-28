@@ -54,7 +54,7 @@ Page {
                         width: 24
                         height: 24
                         name: rootItem.device ? "bluetooth_connected" : "bluetooth"
-                        color: rootItem.device ? window.ui.ok : window.ui.onSurfaceVariant
+                        color: rootItem.device ? window.ui.ok : window.ui.textMuted
                     }
                     Accessible.role: Accessible.Indicator
                     Accessible.name: qsTr("Bluetooth connection")
@@ -93,13 +93,13 @@ Page {
                             width: 26
                             height: 26
                             name: rootItem.startIcon.indexOf("pause") >= 0 ? "pause" : "play_arrow"
-                            color: window.ui.onAccent
+                            color: window.ui.accentInk
                             visible: rootItem.startIcon !== ""
                         }
                         Label {
                             anchors.verticalCenter: parent.verticalCenter
                             text: rootItem.startText
-                            color: window.ui.onAccent
+                            color: window.ui.accentInk
                             font.pixelSize: 16
                             font.weight: Font.DemiBold
                             visible: text !== ""
@@ -138,7 +138,7 @@ Page {
                         Label {
                             anchors.verticalCenter: parent.verticalCenter
                             text: rootItem.stopText
-                            color: window.ui.onSurface
+                            color: window.ui.textMain
                             font.pixelSize: 16
                             font.weight: Font.DemiBold
                             visible: text !== ""
@@ -172,7 +172,7 @@ Page {
                         width: 24
                         height: 24
                         name: "flag"
-                        color: window.ui.onSurface
+                        color: window.ui.textMain
                     }
                 }
                 Accessible.role: Accessible.Button
@@ -352,7 +352,7 @@ Page {
                 anchors.verticalCenter: parent.verticalCenter
                 text: rootItem.info
                 visible: !page.deviceLineHidden
-                color: window.ui.modern ? window.ui.onSurfaceVariant : Material.foreground
+                color: window.ui.modern ? window.ui.textMuted : Material.foreground
                 font.pixelSize: window.ui.modern ? 13 : Qt.application.font.pixelSize
             }
         }

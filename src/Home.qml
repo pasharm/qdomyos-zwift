@@ -432,7 +432,7 @@ HomeForm {
                     radius: 16 * modernTile.zoom
                     color: window.ui.surface
                     border.width: 1
-                    border.color: window.ui.alpha(window.ui.onSurface, 0.06)
+                    border.color: window.ui.alpha(window.ui.textMain, 0.06)
                     visible: !largeButton
                     Accessible.ignored: true
                 }
@@ -469,7 +469,7 @@ HomeForm {
                     anchors.rightMargin: 10 * modernTile.zoom
                     anchors.verticalCenter: modernIcon.verticalCenter
                     text: name
-                    color: window.ui.onSurfaceVariant
+                    color: window.ui.textMuted
                     font.pixelSize: 13 * modernTile.zoom
                     font.weight: Font.Medium
                     elide: Text.ElideRight
@@ -484,7 +484,7 @@ HomeForm {
                     width: Math.max(40, modernCard.width - (writable ? 100 : 20) * modernTile.zoom)
                     height: 50 * modernTile.zoom
                     text: value
-                    color: modernTile.zoned ? valueFontColor : window.ui.onSurface
+                    color: modernTile.zoned ? valueFontColor : window.ui.textMain
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.pointSize: valueFontSize * modernTile.zoom
@@ -501,7 +501,7 @@ HomeForm {
                     width: modernCard.width - 16 * modernTile.zoom
                     height: 26 * modernTile.zoom
                     text: secondLine
-                    color: window.ui.onSurfaceVariant
+                    color: window.ui.textMuted
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.pointSize: settings.theme_tile_secondline_textsize * modernTile.zoom
@@ -531,7 +531,7 @@ HomeForm {
                             width: 22 * modernTile.zoom
                             height: 22 * modernTile.zoom
                             name: "remove"
-                            color: window.ui.onSurface
+                            color: window.ui.textMain
                         }
                     }
 
@@ -562,7 +562,7 @@ HomeForm {
                             width: 22 * modernTile.zoom
                             height: 22 * modernTile.zoom
                             name: "add"
-                            color: window.ui.onSurface
+                            color: window.ui.textMain
                         }
                     }
 
