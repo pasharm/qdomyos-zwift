@@ -76,8 +76,11 @@ sleep 3
 shot 12-stop-dialog-dark
 adb shell input keyevent KEYCODE_BACK || true
 sleep 2
+# The drawer keeps its scroll position between openings: scroll it to a known end first
 adb shell input tap 84 168 || true      # menu
 sleep 3
+adb shell input swipe 500 700 500 2300 300 || true   # drawer to the top
+sleep 2
 adb shell input tap 335 434 || true     # profile chip in the drawer
 sleep 5
 shot 13-profiles-dark
@@ -86,10 +89,12 @@ sleep 3
 adb shell input tap 1187 168 || true    # lock button on the home toolbar: notice popup
 sleep 1
 shot 14-lock-popup-dark
-sleep 2
+sleep 4                                 # the popup closes by itself after 2 s
 adb shell input tap 84 168 || true      # menu
 sleep 3
-adb shell input tap 326 2068 || true    # Settings in the drawer (not scrolled)
+adb shell input swipe 500 2200 500 900 400 || true   # drawer scrolled as in step 06
+sleep 3
+adb shell input tap 525 861 || true     # Settings entry in the scrolled drawer
 sleep 8
 adb shell input tap 717 1239 || true    # Tiles Options page
 sleep 6
