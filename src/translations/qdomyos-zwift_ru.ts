@@ -4005,6 +4005,11 @@ This may take a few moments on first startup.</source>
         <translation>Ц.темп (мин/500 м)</translation>
     </message>
     <message>
+        <location filename="../homeform.cpp" line="4703"/>
+        <source>%1 found</source>
+        <translation>Найдено: %1</translation>
+    </message>
+    <message>
         <location filename="../homeform.cpp" line="6041"/>
         <source>Stop</source>
         <translation>Стоп</translation>

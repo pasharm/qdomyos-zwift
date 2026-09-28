@@ -4700,7 +4700,7 @@ void homeform::deviceFound(const QString &name) {
     if (!settings.value(QZSettings::top_bar_enabled, QZSettings::default_top_bar_enabled).toBool()) {
         return;
     }
-    m_info = name + QStringLiteral(" found");
+    m_info = tr("%1 found").arg(name);
     emit infoChanged(m_info);
 }
 
