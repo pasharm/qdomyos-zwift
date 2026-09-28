@@ -1,14 +1,17 @@
 #!/bin/bash
 # Test only: start an already built APK on the emulator with log_debug on, so the Qt
 # warnings (QML errors among them) reach logcat, then keep logcat and screenshots.
+# The emulator starts in the day mode of the system: with the appearance on "auto" the
+# first screens are the light theme, the last ones the dark theme after "night yes".
 PKG=org.cagnulen.qdomyoszwift
 adb install apk-debug/android-debug.apk
 for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
   adb shell pm grant $PKG android.permission.$p || true
 done
 adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
+adb shell cmd uimode night no || true
 
-printf '[General]\nlog_debug=true\n' > qz.conf
+printf '[General]\nlog_debug=true\nconfirm_stop_workout=true\n' > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -36,6 +39,11 @@ sleep 3
 adb shell input keyevent KEYCODE_BACK || true
 sleep 5
 shot 04-home
+adb shell input tap 952 462 || true     # Stop pill: confirmation dialog
+sleep 3
+shot 04b-stop-dialog
+adb shell input keyevent KEYCODE_BACK || true
+sleep 2
 adb shell input tap 84 168 || true      # menu button on the toolbar
 sleep 4
 shot 05-drawer
@@ -51,6 +59,23 @@ shot 08-settings-open
 adb shell input swipe 700 2100 700 700 400 || true
 sleep 3
 shot 09-settings-scrolled
+
+# Night mode of the system while the app runs: it is read again on return to the foreground
+adb shell cmd uimode night yes || true
+sleep 2
+adb shell input keyevent KEYCODE_HOME || true
+sleep 3
+adb shell am start -n $PKG/$PKG.CustomQtActivity
+sleep 5
+shot 10-settings-dark
+adb shell input keyevent KEYCODE_BACK || true
+sleep 3
+shot 11-home-dark
+adb shell input tap 952 462 || true
+sleep 3
+shot 12-stop-dialog-dark
+adb shell input keyevent KEYCODE_BACK || true
+
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
 adb logcat -d > full_logcat.txt || true
