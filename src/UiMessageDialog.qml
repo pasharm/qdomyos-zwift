@@ -25,7 +25,14 @@ Popup {
 
     readonly property bool modern: window.ui.modern
 
+    // The card stays tappable during its closing animation: one answer per opening
+    property bool answered: false
+    onAboutToShow: answered = false
+
     function answer(button) {
+        if (answered)
+            return
+        answered = true
         if (button === P.MessageDialog.Yes) yesClicked()
         else if (button === P.MessageDialog.No) noClicked()
         else if (button === P.MessageDialog.Ok) okClicked()
