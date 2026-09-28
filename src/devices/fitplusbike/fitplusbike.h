@@ -84,6 +84,14 @@ class fitplusbike : public bike {
     bool virtufitLayoutDetected = false;
     bool validFrameSeen = false;
 
+    // Virtufit Etappe workout state from the 02 42 <status> frames: 00 stopped, 01 starting, 02 running.
+    // The bike sets its own default level when a workout starts and ignores level commands while stopped.
+    int workoutStatus = -1;
+    qint64 workoutRunningSinceMs = 0;
+    uint8_t workoutRestarts = 0;
+    bool workoutRestartRequest = false;
+    resistance_t lastForcedResistance = -1;
+
 #ifdef Q_OS_IOS
     lockscreen *h = 0;
 #endif
