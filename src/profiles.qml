@@ -253,6 +253,8 @@ ColumnLayout {
                 id: cardArea
                 anchors.fill: parent
                 onClicked: {
+                    // as in the classic list: the user picked, a rescan must not reset it
+                    list.clicked = true
                     if (index === modernList.currentIndex)
                         loadProfileAt(index)
                     else

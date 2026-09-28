@@ -48,7 +48,9 @@ import QtQuick 2.12 as Quick212
         function dropTextFocus() {
             var item = window.activeFocusItem
             if (item && item.cursorPosition !== undefined) {
-                settingsPane.forceActiveFocus()
+                // The page is a focus scope that already holds the focus: forcing it again
+                // changes nothing, so the field gives it up and the scope takes it back
+                item.focus = false
                 Qt.inputMethod.hide()
             }
         }
