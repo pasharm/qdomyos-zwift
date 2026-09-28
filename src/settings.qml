@@ -16595,6 +16595,9 @@ import QtQuick 2.12 as Quick212
 
                     AccordionElement {
                         id: templateSettingsAccordion
+                        // Filled from the user's *.qzt template files; without any it only
+                        // shows a header that opens to nothing: the modern look hides it then
+                        visible: !window.ui.modern || templateSettingsContent.children.length > 0
                         title: qsTr("Template Settings")
                         indicatRectColor: Material.color(Material.Grey)
                         textColor: Material.color(Material.Grey)
