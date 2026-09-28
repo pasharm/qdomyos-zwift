@@ -231,9 +231,9 @@ Page {
                             color: treadmill_connection.enabled ? "#00000000" : "#B0D3d3d3"
                         }
                         // No device yet: a tap searches right away instead of waiting for the next search
+                        // (with a device connected bluetoothSearchNow() does nothing)
                         MouseArea {
                             anchors.fill: parent
-                            enabled: !rootItem.device
                             onClicked: rootItem.bluetoothSearchNow()
                         }
                     }
