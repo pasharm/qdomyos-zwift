@@ -136,6 +136,10 @@ QString logfilename = QStringLiteral("debug-") +
                           .replace(QStringLiteral(" "), QStringLiteral("_"))
                           .replace(QStringLiteral("."), QStringLiteral("_")) +
                       QStringLiteral(".log");
+// Set in main() before the message handler is installed: the folder does not change while the app runs, and
+// getWritableAppDir() reads the settings twice and on Android asks for the Documents folder, creates it and
+// checks .nomedia, which was done for every log line.
+QString logFilePath;
 QUrl profileToLoad;
 static const QtMessageHandler QT_DEFAULT_MESSAGE_HANDLER = qInstallMessageHandler(0);
 
@@ -532,17 +536,13 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 
     if (logs == true || logdebug == true) {
 
-        // The folder does not change while the app runs. getWritableAppDir() reads the settings twice and on
-        // Android asks for the Documents folder, creates it and checks .nomedia: that was done for every line.
-        static const QString logPath = homeform::getWritableAppDir() + logfilename;
-
         // Ensure thread is initialized
         initializeLogThread();
 
         // Write log in the worker thread
         QMetaObject::invokeMethod(logWriter, "writeLog",
                                  Qt::QueuedConnection,
-                                 Q_ARG(QString, logPath),
+                                 Q_ARG(QString, logFilePath),
                                  Q_ARG(QString, txt));
 
     }
@@ -707,6 +707,7 @@ int main(int argc, char *argv[]) {
     qRegisterMetaType<uint32_t>("uint32_t");
     qRegisterMetaType<FIT_SPORT>("FIT_SPORT");
 
+    logFilePath = homeform::getWritableAppDir() + logfilename;
     qInstallMessageHandler(myMessageOutput);
     qDebug() << QStringLiteral("version ") << app->applicationVersion();
     foreach (QString s, settings.allKeys()) {
