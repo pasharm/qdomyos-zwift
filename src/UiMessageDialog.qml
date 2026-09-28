@@ -54,6 +54,12 @@ Popup {
     padding: 24
     bottomPadding: 12
 
+    // Material dims with a light veil in the dark theme; the card darkens the page instead
+    Overlay.modal: Rectangle {
+        color: Qt.rgba(0, 0, 0, window.ui.dark ? 0.6 : 0.4)
+        Behavior on opacity { NumberAnimation { duration: 150 } }
+    }
+
     onOpened: if (!modern) nativeDialog.open()
     onClosed: if (nativeDialog.visible) nativeDialog.close()
 

@@ -11,6 +11,19 @@ Popup {
 
     readonly property bool modern: window.ui.modern
 
+    // Material dims with a light veil in the dark theme, and the page looks washed out:
+    // the modern look darkens it. Classic: the Material Popup overlay as is.
+    Overlay.modal: Rectangle {
+        color: control.modern ? Qt.rgba(0, 0, 0, window.ui.dark ? 0.6 : 0.4)
+                              : control.Material.backgroundDimColor
+        Behavior on opacity { NumberAnimation { duration: 150 } }
+    }
+    Overlay.modeless: Rectangle {
+        color: control.modern ? Qt.rgba(0, 0, 0, window.ui.dark ? 0.6 : 0.4)
+                              : control.Material.backgroundDimColor
+        Behavior on opacity { NumberAnimation { duration: 150 } }
+    }
+
     background: Rectangle {
         radius: control.modern ? 20 : 2
         color: control.modern ? window.ui.surfaceHigh : control.Material.dialogColor
