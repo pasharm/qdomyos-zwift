@@ -764,6 +764,30 @@ html.modern .card-actions button.icon-button:disabled {
     color: var(--muted-color);
 }
 
+/* Move up/down: chevrons in the accent colour on a tonal pair of buttons - bare thin arrows
+   in the muted colour were hard to see, and the disabled one all but vanished */
+html.modern .card-actions button.icon-button.icon-move {
+    width: 40px;
+    border-radius: 12px;
+    color: var(--accent-color);
+    background: var(--field-color, var(--panel-color));
+    background: color-mix(in srgb, var(--accent-color) 16%, transparent);
+}
+
+html.modern .card-actions button.icon-move + button.icon-move {
+    margin-left: -4px;
+}
+
+html.modern .card-actions button.icon-button.icon-move svg {
+    width: 26px;
+    height: 26px;
+}
+
+html.modern .card-actions button.icon-button.icon-move:disabled {
+    opacity: 0.4;
+    color: var(--muted-color);
+}
+
 /* "Advanced" as a switch, like the switches of the settings pages */
 html.modern #advancedToggle {
     -webkit-appearance: none;
