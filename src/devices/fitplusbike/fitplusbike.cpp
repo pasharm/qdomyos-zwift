@@ -622,6 +622,10 @@ void fitplusbike::characteristicChanged(const QLowEnergyCharacteristic &characte
                                     QString::number(workoutRestarts) + QStringLiteral(")");
                 } else {
                     qDebug() << QStringLiteral("the bike stopped the workout");
+                    // the restarts did not help: without a word QZ looks connected while the bike ignores the levels
+                    if (nowMs - workoutRunningSinceMs < 30000 && homeform::singleton())
+                        homeform::singleton()->setToastRequested(
+                            tr("The bike keeps stopping the workout: turn the bike off and on again"));
                 }
             }
             workoutStatus = status;
