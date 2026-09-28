@@ -5389,6 +5389,9 @@ void homeform::Plus(const QString &name) {
 
             if (dev->deviceType() == BIKE) {
                 double g = ((bike *)dev)->gears();
+                if (settings.value(QZSettings::resistance_buttons_accumulate,
+                                   QZSettings::default_resistance_buttons_accumulate).toBool())
+                    current = ((bike *)dev)->resistanceStepBase();
                 double target = current + 1; // device-space target
                 int raw = qRound((target - g) / diff);
                 if (raw < 1) raw = 1;
@@ -5697,6 +5700,9 @@ void homeform::Minus(const QString &name) {
 
             if (dev->deviceType() == BIKE) {
                 double g = ((bike *)dev)->gears();
+                if (settings.value(QZSettings::resistance_buttons_accumulate,
+                                   QZSettings::default_resistance_buttons_accumulate).toBool())
+                    current = ((bike *)dev)->resistanceStepBase();
                 double target = current - 1; // device-space target
                 int raw = qRound((target - g) / diff);
                 if (raw < 1) raw = 1;

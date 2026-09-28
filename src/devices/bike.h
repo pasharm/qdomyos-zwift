@@ -22,6 +22,12 @@ class bike : public bluetoothdevice {
     metric lastRequestedCadence();
     metric lastRequestedPower();
     metric currentResistance() override;
+    /**
+     * @brief resistanceStepBase Resistance the +/- buttons step from: the last requested one while
+     * the equipment has not reported it back yet (up to 2 s after the request), the current one otherwise.
+     * Stepping from the reported value alone turned several quick taps into a single step.
+     */
+    double resistanceStepBase();
     uint8_t fanSpeed() override;
     double currentCrankRevolutions() override;
     uint16_t lastCrankEventTime() override;
@@ -110,6 +116,7 @@ class bike : public bluetoothdevice {
 
     double m_gears = 0;
     resistance_t lastRawRequestedResistanceValue = -1;
+    qint64 lastResistanceRequestMs = 0;
     double lastRawRequestedInclinationValue = -100;
     uint16_t LastCrankEventTime = 0;
     double CrankRevs = 0;

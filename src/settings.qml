@@ -1807,6 +1807,7 @@ import QtQuick 2.12 as Quick212
             property bool nordictrack_incline_trainer_x7i_netl18716_0: false
             property bool fitshow_bike_question: true
             property bool android_landscape_cutout_margin: true
+            property bool resistance_buttons_accumulate: false
         }
 
 
@@ -3275,6 +3276,33 @@ import QtQuick 2.12 as Quick212
                     }
                     Label {
                         text: qsTr("QZ calculates speed based on your pedal cadence (RPMs). Enable this setting if you want your speed to be calculated based on your power output (watts), as Zwift and some other apps do. Default is off.")
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
+                        font.pixelSize: Qt.application.font.pixelSize - 2
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                    }
+
+                    IndicatorOnlySwitch {
+                        id: resistanceButtonsAccumulateDelegate
+                        text: qsTr("Add Up Quick Resistance Taps")
+                        spacing: 0
+                        bottomPadding: 0
+                        topPadding: 0
+                        rightPadding: 0
+                        leftPadding: 0
+                        clip: false
+                        checked: settings.resistance_buttons_accumulate
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        onClicked: settings.resistance_buttons_accumulate = checked
+                    }
+                    Label {
+                        text: qsTr("Bikes that report their resistance back take about a second to confirm a new level, so several quick taps on the resistance +/- buttons change it by only one. Enable this setting to add the taps up: 3 quick taps change the resistance by 3. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: Qt.application.font.pixelSize - 2

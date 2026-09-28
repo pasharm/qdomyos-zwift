@@ -58,6 +58,7 @@ void bike::changeResistance(resistance_t resistance) {
     qDebug() << QStringLiteral("bike::changeResistance") << autoResistanceEnable << resistance;
 
     lastRawRequestedResistanceValue = resistance;
+    lastResistanceRequestMs = QDateTime::currentMSecsSinceEpoch();
     if (autoResistanceEnable) {
         double v = (resistance * m_difficult) + gearsModifier();
         if ((double)v > zwift_erg_resistance_up) {
@@ -336,6 +337,16 @@ metric bike::lastRequestedPelotonResistance() { return RequestedPelotonResistanc
 metric bike::lastRequestedCadence() { return RequestedCadence; }
 metric bike::lastRequestedPower() { return RequestedPower; }
 metric bike::currentResistance() { return Resistance; }
+
+double bike::resistanceStepBase() {
+    const double current = currentResistance().value();
+    if (lastResistanceRequestMs > 0 && QDateTime::currentMSecsSinceEpoch() - lastResistanceRequestMs < 2000) {
+        const double requested = RequestedResistance.value();
+        if (qRound(requested) != qRound(current))
+            return requested;
+    }
+    return current;
+}
 uint8_t bike::fanSpeed() { return FanSpeed; }
 bool bike::connected() { return false; }
 uint16_t bike::watts() { return 0; }

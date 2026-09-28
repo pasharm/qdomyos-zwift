@@ -2010,6 +2010,13 @@ class QZSettings {
     static const QString nordictrack_incline_trainer_x7i_netl18716_0;
     static constexpr bool default_nordictrack_incline_trainer_x7i_netl18716_0 = false;
 
+    /**
+     *@brief Bike resistance +/- buttons step from the level already requested but not yet reported by the bike,
+     * so several quick taps add up instead of all stepping from the same reported level.
+     */
+    static const QString resistance_buttons_accumulate;
+    static constexpr bool default_resistance_buttons_accumulate = false;
+
     static const QString strava_auth_external_webbrowser;
     static constexpr bool default_strava_auth_external_webbrowser = false;
 
