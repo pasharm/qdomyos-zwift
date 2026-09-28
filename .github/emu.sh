@@ -11,7 +11,10 @@ done
 adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
 adb shell cmd uimode night no || true
 
-printf '[General]\nlog_debug=true\nconfirm_stop_workout=true\nui_modern=true\n' > qz.conf
+# UI_MODERN (workflow input "modern"): false runs the same steps in the classic look, for a
+# before/after comparison; the taps are laid out for the modern look
+UI_MODERN=${UI_MODERN:-true}
+printf '[General]\nlog_debug=true\nconfirm_stop_workout=true\nui_modern=%s\n' "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -136,6 +139,11 @@ sleep 2
 adb shell input tap 346 1096 || true    # Open GPX
 sleep 8
 shot 19-gpx-dark
+if [ "$UI_MODERN" = "true" ]; then
+  adb shell input tap 400 589 || true   # first route card: selected, its figures as chips
+  sleep 5
+  shot 19b-gpx-route-dark
+fi
 adb shell input tap 84 168 || true      # back arrow: home page
 sleep 3
 adb shell input tap 84 168 || true      # menu
@@ -145,7 +153,12 @@ sleep 2
 adb shell input tap 433 1431 || true    # Workouts History
 sleep 8
 shot 20-history-dark
-adb shell input tap 126 300 || true     # calendar button in the page header
+# Calendar button: on the right of the modern header, on the left of the classic one
+if [ "$UI_MODERN" = "true" ]; then
+  adb shell input tap 1299 322 || true
+else
+  adb shell input tap 126 300 || true
+fi
 sleep 3
 shot 21-calendar-dark
 adb shell input keyevent KEYCODE_BACK || true

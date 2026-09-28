@@ -8,6 +8,10 @@ on:
       source:
         description: run id of the build to test
         required: true
+      modern:
+        description: ui_modern for the run (false = the classic look, for comparison)
+        required: false
+        default: 'true'
 
 jobs:
   emulator-logcat:
@@ -40,6 +44,8 @@ jobs:
 
       - name: Start the app and record logcat
         uses: ReactiveCircus/android-emulator-runner@v2
+        env:
+          UI_MODERN: ${{ inputs.modern }}
         with:
           api-level: 35
           target: google_apis
@@ -52,7 +58,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.source }}
+          name: emulator-logcat-${{ inputs.source }}-${{ inputs.modern }}
           path: |
             screenshot.png
             *.png
