@@ -47,6 +47,16 @@ sleep 2
 adb shell input tap 84 168 || true      # menu button on the toolbar
 sleep 4
 shot 05-drawer
+adb shell input tap 403 927 || true     # Workout Editor (drawer still at the top)
+sleep 15
+shot 05b-editor-light
+adb shell input swipe 700 2000 700 900 400 || true
+sleep 2
+shot 05c-editor-light-scrolled
+adb shell input tap 84 168 || true      # back arrow: home page
+sleep 3
+adb shell input tap 84 168 || true      # menu again
+sleep 4
 adb shell input swipe 500 2200 500 900 400 || true
 sleep 3
 shot 06-drawer-scrolled
@@ -102,6 +112,21 @@ shot 15-tiles-dark
 adb shell input swipe 700 2100 700 900 400 || true
 sleep 3
 shot 16-tiles-scrolled-dark
+
+adb shell input tap 84 168 || true      # back arrow: settings
+sleep 3
+adb shell input tap 84 168 || true      # back arrow: home page
+sleep 3
+adb shell input tap 84 168 || true      # menu
+sleep 3
+adb shell input swipe 500 700 500 2300 300 || true   # drawer to the top
+sleep 2
+adb shell input tap 403 927 || true     # Workout Editor
+sleep 15
+shot 17-editor-dark
+adb shell input swipe 700 2000 700 900 400 || true
+sleep 2
+shot 18-editor-dark-scrolled
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
