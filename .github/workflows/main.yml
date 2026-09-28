@@ -8,6 +8,10 @@ on:
 jobs:
   emulator-logcat:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        source: [36375984323, 36352320583]
     steps:
       - name: Enable KVM
         run: |
@@ -20,7 +24,7 @@ jobs:
         with:
           name: fdroid-android-trial
           path: apk-debug
-          run-id: 36375984323
+          run-id: ${{ matrix.source }}
           github-token: ${{ github.token }}
 
       - name: Setup Java for Android Emulator
@@ -49,7 +53,11 @@ jobs:
             adb shell appops set org.cagnulen.qdomyoszwift SYSTEM_ALERT_WINDOW allow || true
             adb logcat -c || true
             adb shell am start -n org.cagnulen.qdomyoszwift/org.cagnulen.qdomyoszwift.CustomQtActivity
-            sleep 60
+            sleep 20
+            adb shell screencap -p /sdcard/shot1.png || true
+            adb pull /sdcard/shot1.png || true
+            adb shell input keyevent KEYCODE_BACK || true
+            sleep 40
             adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
             adb shell screencap -p /sdcard/screenshot.png || true
             adb pull /sdcard/screenshot.png || true
@@ -60,9 +68,10 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat
+          name: emulator-logcat-${{ matrix.source }}
           path: |
             screenshot.png
+            shot1.png
             process_list.txt
             full_logcat.txt
           if-no-files-found: warn
