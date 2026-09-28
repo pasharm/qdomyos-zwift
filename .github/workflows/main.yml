@@ -11,8 +11,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        source: [36375984323, 36352320583]
+        source: [36375984323]
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: .github
+
       - name: Enable KVM
         run: |
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
@@ -41,28 +46,7 @@ jobs:
           arch: x86_64
           profile: Nexus 6
           disable-animations: true
-          script: |
-            adb install apk-debug/android-debug.apk
-            adb shell pm grant org.cagnulen.qdomyoszwift android.permission.ACCESS_FINE_LOCATION || true
-            adb shell pm grant org.cagnulen.qdomyoszwift android.permission.ACCESS_COARSE_LOCATION || true
-            adb shell pm grant org.cagnulen.qdomyoszwift android.permission.BLUETOOTH_ADVERTISE || true
-            adb shell pm grant org.cagnulen.qdomyoszwift android.permission.BLUETOOTH_CONNECT || true
-            adb shell pm grant org.cagnulen.qdomyoszwift android.permission.BLUETOOTH_SCAN || true
-            adb shell pm grant org.cagnulen.qdomyoszwift android.permission.POST_NOTIFICATIONS || true
-            adb shell appops set org.cagnulen.qdomyoszwift MANAGE_EXTERNAL_STORAGE allow || true
-            adb shell appops set org.cagnulen.qdomyoszwift SYSTEM_ALERT_WINDOW allow || true
-            adb logcat -c || true
-            adb shell am start -n org.cagnulen.qdomyoszwift/org.cagnulen.qdomyoszwift.CustomQtActivity
-            sleep 20
-            adb shell screencap -p /sdcard/shot1.png || true
-            adb pull /sdcard/shot1.png || true
-            adb shell input keyevent KEYCODE_BACK || true
-            sleep 40
-            adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
-            adb shell screencap -p /sdcard/screenshot.png || true
-            adb pull /sdcard/screenshot.png || true
-            adb logcat -d > full_logcat.txt || true
-            grep -iE "qml|qt|qdomyos|fatal|crash" full_logcat.txt | tail -n 200 || true
+          script: bash .github/emu.sh
 
       - name: Upload evidence
         if: always()
