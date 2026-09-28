@@ -104,9 +104,10 @@ ScrollView {
 
         Label {
             text: qsTr("Keyboard Shortcuts")
-            font.pixelSize: 24
-            font.bold: true
-            color: Material.color(Material.Red)
+            // Modern look: a page title like the TTS page instead of the red caption
+            font.pixelSize: window.ui.modern ? 22 : 24
+            font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
+            color: window.ui.modern ? window.ui.textMain : Material.color(Material.Red)
         }
 
         SwitchDelegate {

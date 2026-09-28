@@ -1927,7 +1927,7 @@ import QtQuick 2.12 as Quick212
             Label {
                 visible: settingsCatalogError.length > 0
                 text: settingsCatalogError
-                color: Material.color(Material.Red)
+                color: window.ui.modern ? window.ui.danger : Material.color(Material.Red)
                 wrapMode: Text.WordWrap
                 Layout.fillWidth: true
             }
@@ -1944,7 +1944,8 @@ import QtQuick 2.12 as Quick212
                           settingsSearchPending ? qsTr("Searching...") :
                           filteredSettings.length === 0 ? qsTr("No settings found") :
                           qsTr("Search results") + " (" + filteredSettings.length + ")"
-                    color: Material.color(Material.Red)
+                    // A status line, not an error: plain muted text in the modern look
+                    color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Red)
                     font.bold: true
                     Layout.fillWidth: true
                 }
@@ -2878,7 +2879,7 @@ import QtQuick 2.12 as Quick212
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
                         Layout.fillWidth: true
-                        color: Material.color(Material.Red)
+                        color: window.ui.modern ? window.ui.danger : Material.color(Material.Red)
                     }
 
                     UiButton {
@@ -3770,7 +3771,7 @@ import QtQuick 2.12 as Quick212
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
                                 Layout.topMargin: 10
-                                color: Material.color(Material.Orange)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Orange)
                             }
                         }
                     }
