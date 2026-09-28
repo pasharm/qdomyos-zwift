@@ -12,6 +12,9 @@ T.Button {
     id: control
 
     readonly property bool modern: window.ui.modern
+    // Modern look: a destructive action (Delete) in the danger colour instead of the accent;
+    // the classic look ignores it and keeps whatever Material.background the caller sets
+    property bool danger: false
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding)
@@ -48,6 +51,7 @@ T.Button {
         font: control.font
         color: control.modern
                ? (!control.enabled ? window.ui.textMuted
+                  : control.danger ? window.ui.danger
                   : control.highlighted && !control.flat ? window.ui.accentInk
                   : control.flat ? window.ui.accent : window.ui.textMain)
                : (!control.enabled ? control.Material.hintTextColor :
@@ -63,6 +67,7 @@ T.Button {
         color: control.modern
                ? (control.flat ? "transparent"
                   : !control.enabled ? window.ui.alpha(window.ui.textMain, 0.08)
+                  : control.danger ? window.ui.alpha(window.ui.danger, 0.16)
                   : control.highlighted ? window.ui.accent : window.ui.surfaceHighest)
                : (!control.enabled ? control.Material.buttonDisabledColor :
                   control.highlighted ? control.Material.highlightedButtonColor : control.Material.buttonColor)

@@ -5,6 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Workout Preview</title>
     <script src="../i18n/i18n.js"></script>
+    <script>
+        // Modern look of the app: TrainingProgramsListJS.qml passes the theme colours in the
+        // fragment (#modern=1&dark=1&bg=...) and later calls qzApplyTheme() when the theme
+        // changes. Without the fragment the page keeps its own palette; the chart stays on its
+        // white card, drawn for a white background.
+        window.qzApplyTheme = function (theme) {
+            var root = document.documentElement;
+            var vars = { bg: '--qz-bg', text: '--qz-text', muted: '--qz-muted' };
+            for (var key in vars) {
+                if (theme[key]) {
+                    root.style.setProperty(vars[key], theme[key]);
+                }
+            }
+            root.classList.add('modern');
+            root.classList.toggle('light', !theme.dark);
+            root.style.colorScheme = theme.dark ? 'dark' : 'light';
+        };
+        (function () {
+            var theme = {};
+            window.location.hash.substring(1).split('&').forEach(function (pair) {
+                var i = pair.indexOf('=');
+                if (i > 0) {
+                    theme[pair.substring(0, i)] = decodeURIComponent(pair.substring(i + 1));
+                }
+            });
+            if (theme.modern === '1') {
+                theme.dark = theme.dark === '1';
+                window.qzApplyTheme(theme);
+            }
+        })();
+    </script>
     <style>
         * {
             margin: 0;
@@ -30,6 +61,19 @@
         canvas {
             width: 100% !important;
             height: 100% !important;
+        }
+
+        /* Modern look: the page in the app theme, the chart on a rounder white card */
+        html.modern body {
+            background: var(--qz-bg);
+            color: var(--qz-text);
+            padding: 8px 16px;
+            font-family: Roboto, 'Segoe UI', sans-serif;
+        }
+
+        html.modern #chart-container {
+            border-radius: 20px;
+            padding: 12px;
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>

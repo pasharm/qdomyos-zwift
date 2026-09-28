@@ -1630,6 +1630,18 @@ Do you want to update QZ settings?</source>
         <source>Start Workout</source>
         <translation>Начать тренировку</translation>
     </message>
+    <message>
+        <source>Parent folder</source>
+        <translation>Папка выше</translation>
+    </message>
+    <message>
+        <source>No workouts here</source>
+        <translation>Здесь нет тренировок</translation>
+    </message>
+    <message>
+        <source>No workouts found</source>
+        <translation>Тренировки не найдены</translation>
+    </message>
 </context>
 <context>
     <name>WebIntervalsICUAuth</name>
