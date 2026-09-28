@@ -295,7 +295,8 @@ ApplicationWindow {
     Material.background: ui.modern ? ui.bg : undefined
 
     // The phone can switch its night mode while the app runs (by schedule or from the quick
-    // settings): ask again on return to the foreground and once a minute
+    // settings). Qt 5.15 passes no such event on to QML, so ask again on return to the
+    // foreground and every 2 s while the app is on screen (three light JNI calls)
     Connections {
         target: Qt.application
         function onStateChanged() {
@@ -304,9 +305,10 @@ ApplicationWindow {
         }
     }
     Timer {
-        interval: 60000
+        interval: 2000
         repeat: true
         running: window.ui.modern && window.ui.themeMode === "auto"
+                 && Qt.application.state === Qt.ApplicationActive
         onTriggered: window.ui.refreshSystemDark()
     }
 

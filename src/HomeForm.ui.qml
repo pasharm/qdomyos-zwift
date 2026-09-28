@@ -60,21 +60,6 @@ Page {
                     Accessible.name: qsTr("Bluetooth connection")
                     Accessible.description: rootItem.device ? qsTr("Device connected") : qsTr("Device not connected")
                 }
-                Image {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    anchors.top: parent.bottom
-                    anchors.topMargin: 2
-                    width: 22
-                    height: 14
-                    fillMode: Image.PreserveAspectFit
-                    source: rootItem.signal
-                    smooth: true
-                    visible: !page.deviceLineHidden
-                    Accessible.ignored: true
-                    // The bars are white: on a light page paint them in the text colour
-                    layer.enabled: !window.ui.dark
-                    layer.effect: ColorOverlay { color: window.ui.textMuted }
-                }
             }
 
             AbstractButton {
@@ -354,9 +339,37 @@ Page {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 text: rootItem.info
-                visible: !page.deviceLineHidden
-                color: window.ui.modern ? window.ui.textMuted : Material.foreground
-                font.pixelSize: window.ui.modern ? 13 : Qt.application.font.pixelSize
+                visible: !window.ui.modern && !page.deviceLineHidden
+                color: Material.foreground
+                font.pixelSize: Qt.application.font.pixelSize
+            }
+        }
+
+        // Modern status line: signal bars and the device status on one line
+        Row {
+            id: modernInfo
+            visible: window.ui.modern && !page.deviceLineHidden
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.bottom: row1.bottom
+            spacing: 8
+
+            Image {
+                anchors.verticalCenter: parent.verticalCenter
+                width: 20
+                height: 13
+                fillMode: Image.PreserveAspectFit
+                source: rootItem.signal
+                smooth: true
+                Accessible.ignored: true
+                // The bars are white: on a light page paint them in the text colour
+                layer.enabled: !window.ui.dark
+                layer.effect: ColorOverlay { color: window.ui.textMuted }
+            }
+            Label {
+                anchors.verticalCenter: parent.verticalCenter
+                text: rootItem.info
+                color: window.ui.textMuted
+                font.pixelSize: 13
             }
         }
 
