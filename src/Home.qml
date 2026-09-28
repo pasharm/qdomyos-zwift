@@ -287,12 +287,21 @@ HomeForm {
 
     GridView {
         anchors.horizontalCenter: parent.horizontalCenter
-        anchors.fill: parent
-        cellWidth: 175 * settings.ui_zoom / 100
+        anchors.top: parent.top
+        anchors.bottom: parent.bottom
+        // The tiles stretch to fill the row: the space left over by a whole number of columns
+        // is shared between the columns, up to a quarter of the tile width, and what remains
+        // centres the grid. Measured on the page, so the Android insets are excluded.
+        // The grid is exactly as wide as its columns and centred by the anchor above, not
+        // by leftMargin: Qt 5.15 does not recount the columns when leftMargin changes, so
+        // after a resize a row could come out one column short
+        readonly property real tileBaseWidth: 175 * settings.ui_zoom / 100
+        readonly property int tileColumns: Math.max(1, Math.floor(parent.width / tileBaseWidth))
+        cellWidth: Math.floor(Math.min(parent.width / tileColumns, tileBaseWidth * 1.25))
+        width: tileColumns * cellWidth
         cellHeight: 130 * settings.ui_zoom / 100
         focus: true
         model: appModel
-        leftMargin: { if(OS_VERSION === "Android") (Screen.width % cellWidth) / 2; else (parent.width % cellWidth) / 2; }
         // The grid starts right under the Start/Stop buttons (they end 5 px above the bottom of
         // the top bar), so scrolled tiles leave no empty band under them
         readonly property real gridTopInset: window.lockTiles ? 0 : Math.max(0, rootItem.topBarHeight - 3)
@@ -378,17 +387,14 @@ HomeForm {
         onMovementStarted: snapToFirstRow.stop()
         Screen.orientationUpdateMask:  Qt.LandscapeOrientation | Qt.PortraitOrientation | Qt.InvertedLandscapeOrientation | Qt.InvertedPortraitOrientation
         Screen.onPrimaryOrientationChanged:{
-            if(OS_VERSION === "Android")
-                gridView.leftMargin = (Screen.width % cellWidth) / 2;
-            else
-                gridView.leftMargin = (parent.width % cellWidth) / 2;
+            // Nothing to recompute: cellWidth and the grid width follow the page width
         }
 
         Accessible.ignored: true
 
         delegate: Item {
             id: id1
-            width: 170 * settings.ui_zoom / 100
+            width: gridView.cellWidth - 5 * settings.ui_zoom / 100
             height: 125 * settings.ui_zoom / 100
 
             visible: visibleItem
@@ -427,7 +433,7 @@ HomeForm {
 
                 Rectangle {
                     id: modernCard
-                    width: 168 * modernTile.zoom
+                    width: modernTile.width - 2 * modernTile.zoom
                     height: 123 * modernTile.zoom
                     radius: 16 * modernTile.zoom
                     color: window.ui.surface
@@ -583,7 +589,7 @@ HomeForm {
                     objectName: identificator
                     autoRepeat: true
                     visible: largeButton
-                    width: 168 * modernTile.zoom
+                    width: modernTile.width - 2 * modernTile.zoom
                     height: 123 * modernTile.zoom
                     onClicked: largeButton_clicked(objectName)
                     background: Rectangle {
@@ -615,7 +621,7 @@ HomeForm {
                 visible: !window.ui.modern
 
             Rectangle {
-                width: 168 * settings.ui_zoom / 100
+                width: id1.width - 2 * settings.ui_zoom / 100
                 height: 123 * settings.ui_zoom / 100
                 radius: 3
                 border.width: 1
@@ -965,9 +971,10 @@ HomeForm {
         property bool isSwiping: false
 
         function indexAtMouse(mx, my) {
-            var cols = Math.max(1, Math.floor(gridView.width / gridView.cellWidth))
+            var cols = gridView.tileColumns
             var adjustedY = my + gridView.contentY
-            var col = Math.floor(mx / gridView.cellWidth)
+            var col = Math.floor((mx - gridView.x) / gridView.cellWidth)
+            if (col < 0 || col >= cols) return -1
             var row = Math.floor(adjustedY / gridView.cellHeight)
             var idx = row * cols + col
             if (idx < 0 || idx >= appModel.count) return -1
