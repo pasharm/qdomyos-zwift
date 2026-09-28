@@ -137,7 +137,7 @@ QString logfilename = QStringLiteral("debug-") +
                           .replace(QStringLiteral("."), QStringLiteral("_")) +
                       QStringLiteral(".log");
 // Set in main() before the message handler is installed: the folder does not change while the app runs, and
-// getWritableAppDir() reads the settings twice and on Android asks for the Documents folder, creates it and
+// getWritableAppDir() reads a setting and on Android 14+ gets the Documents path, tries to create the folder and
 // checks .nomedia, which was done for every log line.
 QString logFilePath;
 QUrl profileToLoad;
