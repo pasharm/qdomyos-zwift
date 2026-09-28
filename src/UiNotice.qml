@@ -16,7 +16,8 @@ UiPopup {
     parent: Overlay.overlay
 
     x: Math.round((parent.width - width) / 2)
-    y: snackbar ? parent.height - height - 24 : Math.round((parent.height - height) / 2)
+    // Above the Android navigation bar: the window is drawn under it from API 31
+    y: snackbar ? parent.height - height - 24 - window.getBottomPadding() : Math.round((parent.height - height) / 2)
     width: snackbar ? Math.min(parent.width - 32, 560) : 380
     height: snackbar ? Math.max(52, noticeLabel.implicitHeight + topPadding + bottomPadding) : 60
     leftPadding: snackbar ? 20 : padding

@@ -294,6 +294,9 @@ HomeForm {
         topMargin: window.lockTiles ? 30 : rootItem.topBarHeight + 30 - gridTopInset
         onTopMarginChanged: if (contentY <= 0) contentY = -topMargin
         interactive: !window.lockTiles
+        // Modern look before connection: the grid is still empty but lies over the "searching"
+        // state (HomeForm modernEmpty) and would take its taps and scrolling
+        enabled: !(window.ui.modern && rootItem.labelHelp)
         id: gridView
         objectName: "gridview"
         // Tiles scroll under the Start/Stop row instead of being drawn over it

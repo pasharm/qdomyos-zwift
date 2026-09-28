@@ -1302,7 +1302,9 @@ function dochart_init() {
         msg: 'getpelotonimage',
     }, function(msg) {
         if (msg.msg === 'R_getpelotonimage' && msg.content.length > 0) {
-            $('.workout_image').attr("src","data:image/png;base64," + msg.content);
+            // The class picture replaces the sport icon for good: neither the theme nor the
+            // mail snapshot may swap it back to the sport PNG
+            $('.workout_image').removeAttr("data-classic-src").attr("src","data:image/png;base64," + msg.content);
         }
         return null;
     }, 15000, 1);
