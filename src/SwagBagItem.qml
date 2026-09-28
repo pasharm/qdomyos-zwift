@@ -60,10 +60,12 @@ Rectangle {
     state: "NORMAL"
 
     visible: product.status == Product.Registered
-    radius: 10
-    color: "white"
+    // Modern look: a filled card of the theme with room around the text
+    readonly property int pad: window.ui.modern ? 16 : 0
+    radius: window.ui.modern ? 20 : 10
+    color: window.ui.modern ? window.ui.surface : "white"
 
-    height: titleText.contentHeight + descriptionText.contentHeight +  2
+    height: titleText.contentHeight + descriptionText.contentHeight +  2 + 2 * pad
     // ![0]
     Text {
         id: titleText
@@ -72,6 +74,10 @@ Rectangle {
         anchors.right: priceText.left
         anchors.top: parent.top
         anchors.left: parent.left
+        anchors.topMargin: storeItem.pad
+        anchors.leftMargin: storeItem.pad
+        anchors.rightMargin: storeItem.pad
+        color: window.ui.modern ? window.ui.textMain : "black"
     }
 
     Text {
@@ -80,14 +86,21 @@ Rectangle {
         anchors.right: priceText.left
         anchors.left: parent.left
         anchors.top: titleText.bottom
+        anchors.leftMargin: storeItem.pad
+        anchors.rightMargin: storeItem.pad
+        anchors.topMargin: window.ui.modern ? 4 : 0
         wrapMode: Text.WordWrap
+        color: window.ui.modern ? window.ui.textMuted : "black"
     }
 
     Text {
         id: priceText
         text: product.price
         anchors.right: parent.right
+        anchors.rightMargin: storeItem.pad
         anchors.verticalCenter: parent.verticalCenter
+        color: window.ui.modern ? window.ui.accent : "black"
+        font.weight: window.ui.modern ? Font.DemiBold : Font.Normal
     }
 
     MouseArea {
@@ -112,7 +125,7 @@ Rectangle {
         id: pendingRect
         anchors.fill: parent
         opacity: 0.0
-        color: "white"
+        color: window.ui.modern ? window.ui.surfaceHigh : "white"
         radius: parent.radius
         Text {
             id: statusText
@@ -120,7 +133,9 @@ Rectangle {
             anchors.bottom: parent.bottom
             anchors.left: parent.left
             anchors.right: spinBox.left
+            anchors.leftMargin: storeItem.pad
             verticalAlignment: Text.AlignVCenter
+            color: window.ui.modern ? window.ui.textMain : "black"
         }
         BusyIndicator {
             id: spinBox
@@ -150,7 +165,7 @@ Rectangle {
             name: "NORMAL"
             PropertyChanges {
                 target: storeItem
-                color: "white"
+                color: window.ui.modern ? window.ui.surface : "white"
                 border.color: "transparent"
             }
             PropertyChanges {
@@ -162,8 +177,8 @@ Rectangle {
             name: "PRESSED"
             PropertyChanges {
                 target: storeItem
-                color: "transparent"
-                border.color: window.ui.ink("white")
+                color: window.ui.modern ? window.ui.surfaceHigh : "transparent"
+                border.color: window.ui.modern ? "transparent" : window.ui.ink("white")
             }
         },
         State {

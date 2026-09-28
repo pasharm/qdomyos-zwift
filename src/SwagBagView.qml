@@ -54,23 +54,31 @@ import QtQuick.Layouts 1.3
 import org.cagnulein.qdomyoszwift 1.0
 
 Item {
+    // Modern look: side margins like the other pages, a readable text size instead of the
+    // poster-size one, the product as a card and a pill button
+    readonly property int modernMargin: Math.max(16, window.contentSideMargin)
 
     Text {
         padding: 5
         id: description
-        width: parent.width
+        width: window.ui.modern ? parent.width - 2 * parent.modernMargin : parent.width
         anchors.horizontalCenter: parent.horizontalCenter
         color: window.ui.ink("white")
-        font.pointSize: 22
+        font.pointSize: window.ui.modern ? 15 : 22
+        topPadding: window.ui.modern ? 16 : 5
+        lineHeight: window.ui.modern ? 1.15 : 1
         wrapMode: TextArea.Wrap
         text: qsTr("Hi! Do you know that QZ is just an Open Source Indie App?<br><br>No Big Companies are running this!<br>The \"Swag Bag\" is a way to support the ongoing development, maintenance and support of QZ Fitness!")
     }
     Column {
         //anchors.top: description.bottom + 10
         anchors.top: description.bottom
+        anchors.topMargin: window.ui.modern ? 16 : 0
         //anchors.bottom: restoreButton.top
         anchors.right: parent.right
         anchors.left: parent.left
+        anchors.leftMargin: window.ui.modern ? parent.modernMargin : 0
+        anchors.rightMargin: window.ui.modern ? parent.modernMargin : 0
         id: itemSwagBag
 
         SwagBagItem {
@@ -85,7 +93,9 @@ Item {
         }
         padding: 5
         id: appleDescription
-        width: parent.width
+        width: window.ui.modern ? parent.width - 2 * parent.modernMargin : parent.width
+        topPadding: window.ui.modern ? 16 : 5
+        linkColor: window.ui.modern ? window.ui.accent : "blue"
         color: window.ui.modern ? window.ui.textMuted : "white"
         font.pointSize: 8
         wrapMode: TextArea.Wrap
@@ -93,9 +103,10 @@ Item {
         onLinkActivated: Qt.openUrlExternally(link)
     }
 
-    Button {
+    UiButton {
         id: restoreButton
         anchors.bottom: parent.bottom
+        anchors.bottomMargin: window.ui.modern ? 16 : 0
         anchors.horizontalCenter: parent.horizontalCenter
         width: parent.width * .5
         text: qsTr("Restore Purchases")
