@@ -3688,6 +3688,26 @@ This may take a few moments on first startup.</source>
 <context>
     <name>homeform</name>
     <message>
+        <location filename="../homeform.cpp" line="1829"/>
+        <source>Searching for the device...</source>
+        <translation>Пошук тренажера…</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1831"/>
+        <source>Search stopped, tap the Bluetooth icon</source>
+        <translation>Пошук зупинено, натисніть значок Bluetooth</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1834"/>
+        <source>Next search in %1 s</source>
+        <translation>Наступний пошук через %1 с</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1842"/>
+        <source>Bluetooth is busy, try again in a few seconds</source>
+        <translation>Bluetooth зайнятий, спробуйте за кілька секунд</translation>
+    </message>
+    <message>
         <location filename="../homeform.cpp" line="529"/>
         <source>Speed (%1/h)</source>
         <translation>Швидкість (%1/год)</translation>
