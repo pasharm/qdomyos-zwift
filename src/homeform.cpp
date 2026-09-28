@@ -1842,8 +1842,9 @@ QString homeform::bluetoothSearchStatus() {
 void homeform::bluetoothSearchNow() {
     if (!bluetoothManager || bluetoothManager->device())
         return;
-    if (!bluetoothManager->searchNow())
-        setToastRequested(tr("Bluetooth is busy, try again in a few seconds"));
+    const int waitSec = bluetoothManager->searchNow();
+    if (waitSec > 0)
+        setToastRequested(tr("Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s").arg(waitSec));
 }
 
 void homeform::selectGymModeDevice(const QString &deviceName) {
