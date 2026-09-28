@@ -89,7 +89,7 @@ Page {
              property color backgroundColor: "white"
              // Modern look: "primary" moves on (Next, Finish), "secondary" goes back,
              // "choice" is an answer drawn as a full-width card
-             readonly property string kind: text === qsTr("Back") ? "secondary"
+             readonly property string kind: (text === qsTr("Back") || text === qsTr("Refresh")) ? "secondary"
                                           : (text === qsTr("Next") || text === qsTr("Finish") || text === qsTr("Start") || text === qsTr("Close")) ? "primary"
                                           : "choice"
              // A translated label can be wider than the screen: cap the button and wrap the text.

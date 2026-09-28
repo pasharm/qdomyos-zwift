@@ -644,7 +644,8 @@ HomeForm {
                 id: myIcon
                 x: 5
                 anchors {
-                         bottom: id1.bottom
+                         // parent, not id1: the classic tile sits in a wrapper filling id1
+                         bottom: parent.bottom
                 }
                 width: 48 * settings.ui_zoom / 100
                 height: 48 * settings.ui_zoom / 100

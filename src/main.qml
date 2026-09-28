@@ -264,7 +264,7 @@ ApplicationWindow {
     }
 
     Material.accent: ui.modern ? ui.accent : Material.color(Material.Pink, Material.Shade200)
-    Material.background: ui.modern ? ui.bg : "#303030"
+    Material.background: ui.modern ? ui.bg : undefined
 
 
     Store {
@@ -1282,7 +1282,7 @@ ApplicationWindow {
         ToolButton {
             id: toolButtonAutoResistance
             icon.source: window.ui.modern ? "" : ( rootItem.autoResistance ? "icons/icons/resistance.png" : "icons/icons/pause.png")
-            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (rootItem.autoResistance ? "auto_mode" : "pause_circle"); color: window.ui.onSurface; visible: window.ui.modern }
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (rootItem.autoResistance ? "motion_mode" : "pause_circle"); color: window.ui.onSurface; visible: window.ui.modern }
             onClicked: { rootItem.autoResistance = !rootItem.autoResistance; console.log("auto resistance toggled " + rootItem.autoResistance); popupAutoResistance.open(); popupAutoResistanceAutoClose.running = true; }
             anchors.right: parent.right
             visible: !headerToolbar.settingsPageActive
@@ -1763,7 +1763,7 @@ ApplicationWindow {
 
                 Loader { sourceComponent: drawerSectionHeader; onLoaded: item.text = qsTr("App") }
                 UiDrawerItem { text: qsTr("Settings"); iconName: "settings"; onClicked: drawerAction("settings") }
-                UiDrawerItem { text: qsTr("Wizard"); iconName: "auto_fix_high"; onClicked: drawerAction("wizard") }
+                UiDrawerItem { text: qsTr("Wizard"); iconName: "rocket_launch"; onClicked: drawerAction("wizard") }
                 UiDrawerItem { text: qsTr("Swag Bag"); iconName: "redeem"; onClicked: drawerAction("swagbag") }
                 UiDrawerItem { text: qsTr("Help"); iconName: "help"; external: true; onClicked: drawerAction("help") }
                 UiDrawerItem { text: qsTr("Community"); iconName: "groups"; external: true; onClicked: drawerAction("community") }
