@@ -521,8 +521,11 @@ ApplicationWindow {
         }
 
         stackView.pop()
-        toolButtonLoadSettings.visible = false;
-        toolButtonSaveSettings.visible = false;
+        // Modern look: back from a page opened out of the settings (Tiles Options...) the
+        // settings keep their load and save buttons; hidden, they left a gap next to search
+        var backOnSettings = window.ui.modern && stackView.depth > 1 && headerToolbar.settingsPageActive
+        toolButtonLoadSettings.visible = backOnSettings;
+        toolButtonSaveSettings.visible = backOnSettings;
         rootItem.sortTiles()
         if (remindToSaveProfile) {
             toast.show(qsTr("Remember to save profile \"%1\" if you want to keep these changes in this profile.").arg(activeProfileName))

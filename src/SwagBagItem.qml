@@ -108,7 +108,7 @@ Rectangle {
         onClicked: {
             pendingRect.visible = true;
             spinBox.visible = true;
-            statusText.text = "Purchasing...";
+            statusText.text = qsTr("Purchasing...");
             storeItem.state = "PURCHASING";
             product.purchase();
         }
@@ -148,12 +148,12 @@ Rectangle {
         Connections {
             target: product
             function onPurchaseSucceeded() {
-                statusText.text = "Purchase Succeeded";
+                statusText.text = qsTr("Purchase Succeeded");
                 spinBox.visible = false;
 
             }
             function onPurchaseFailed() {
-                statusText.text = "Purchase Failed";
+                statusText.text = qsTr("Purchase Failed");
                 spinBox.visible = false;
                 storeItem.state = "NORMAL";
             }

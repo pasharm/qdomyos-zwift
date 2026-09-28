@@ -15,6 +15,10 @@ ColumnLayout {
     // from the URL fragment of the first load and through runJavaScript on a later change
     readonly property var pageTheme: window.ui.webTheme
     property bool pageLoaded: false
+    // Modern look: the native web view stays hidden until the page has drawn once. It is
+    // white before its first paint and lies over everything QML draws, so it flashed white
+    // on the dark theme
+    property bool pageShown: !window.ui.modern
     readonly property int modernMargin: Math.max(16, window.contentSideMargin)
 
     onPageThemeChanged: {
@@ -30,7 +34,7 @@ ColumnLayout {
         anchors.fill: parent
         // Modern look: the page ends above the Close button instead of under it
         anchors.bottomMargin: window.ui.modern ? closeButton.height + 16 : 0
-        visible: true
+        visible: column1.pageShown
         onLoadingChanged: {
             if (loadRequest.errorString) {
                 console.error(loadRequest.errorString);
@@ -38,11 +42,30 @@ ColumnLayout {
             }
             if (loadRequest.status === WebView.LoadSucceededStatus) {
                 column1.pageLoaded = true
+                revealTimer.start()
                 // A theme change during the load only moved the fragment: apply the current one
                 if (column1.pageTheme)
                     webView.runJavaScript(window.ui.webThemeScript())
             }
         }
+    }
+
+    Timer {
+        id: revealTimer
+        interval: 150; repeat: false
+        onTriggered: column1.pageShown = true
+    }
+
+    // Safety net: a page that never reports the end of its load is shown anyway
+    Timer {
+        interval: 4000; running: !column1.pageShown; repeat: false
+        onTriggered: column1.pageShown = true
+    }
+
+    BusyIndicator {
+        anchors.centerIn: parent
+        running: !column1.pageShown
+        visible: running
     }
 
     Timer {
@@ -60,6 +83,10 @@ ColumnLayout {
         Layout.alignment: Qt.AlignCenter | Qt.AlignVCenter
         onClicked: {
             popupclose();
+            // Nothing listens to popupclose, so the button did nothing; the modern look goes
+            // back like the toolbar arrow
+            if (window.ui.modern)
+                window.navigateBack(false)
         }
         anchors {
             bottom: parent.bottom
