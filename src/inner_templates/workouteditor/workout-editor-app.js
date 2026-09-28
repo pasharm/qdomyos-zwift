@@ -818,10 +818,10 @@
 
             const actions = document.createElement('div');
             actions.className = 'card-actions';
-            actions.appendChild(actionButton('↑', () => moveInterval(index, -1), index === 0));
-            actions.appendChild(actionButton('↓', () => moveInterval(index, 1), index === state.intervals.length - 1));
-            actions.appendChild(actionButton(t('common.copy', 'Copy'), () => duplicateInterval(index)));
-            actions.appendChild(actionButton(t('common.del', 'Del'), () => removeInterval(index), state.intervals.length === 1));
+            actions.appendChild(actionButton('↑', () => moveInterval(index, -1), index === 0, 'arrow_upward'));
+            actions.appendChild(actionButton('↓', () => moveInterval(index, 1), index === state.intervals.length - 1, 'arrow_downward'));
+            actions.appendChild(actionButton(t('common.copy', 'Copy'), () => duplicateInterval(index), false, 'content_copy'));
+            actions.appendChild(actionButton(t('common.del', 'Del'), () => removeInterval(index), state.intervals.length === 1, 'delete'));
             header.appendChild(actions);
             card.appendChild(header);
 
@@ -961,7 +961,8 @@
                     // Add +/- buttons for duration, number, and pace fields
                     if (field.type === 'duration' || field.type === 'number' || field.type === 'pace') {
                         const decreaseBtn = document.createElement('button');
-                        decreaseBtn.textContent = '-';
+                        // Modern look: a real minus sign, as wide as the plus
+                        decreaseBtn.textContent = isModernLook() ? '\u2212' : '-';
                         decreaseBtn.type = 'button';
                         decreaseBtn.title = t('common.decrease', 'Decrease');
                         decreaseBtn.addEventListener('click', () => handleIncrement(input, field, -1));
@@ -1025,10 +1026,35 @@
         return label;
     }
 
-    function actionButton(text, handler, disabled) {
+    // Material Symbols Rounded (the same set as the app's UiIcons.js) for the modern look
+    const MODERN_ICONS = {
+        arrow_upward: 'M440-647 244-451q-12 12-28 11.5T188-452q-11-12-11.5-28t11.5-28l264-264q6-6 13-8.5t15-2.5q8 0 15 2.5t13 8.5l264 264q11 11 11 27.5T772-452q-12 12-28.5 12T715-452L520-647v447q0 17-11.5 28.5T480-160q-17 0-28.5-11.5T440-200v-447Z',
+        arrow_downward: 'M440-313v-447q0-17 11.5-28.5T480-800q17 0 28.5 11.5T520-760v447l196-196q12-12 28-11.5t28 12.5q11 12 11.5 28T772-452L508-188q-6 6-13 8.5t-15 2.5q-8 0-15-2.5t-13-8.5L188-452q-11-11-11-27.5t11-28.5q12-12 28.5-12t28.5 12l195 195Z',
+        content_copy: 'M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-520q0-17 11.5-28.5T160-720q17 0 28.5 11.5T200-680v520h400q17 0 28.5 11.5T640-120q0 17-11.5 28.5T600-80H200Zm160-240v-480 480Z',
+        delete: 'M280-120q-33 0-56.5-23.5T200-200v-520q-17 0-28.5-11.5T160-760q0-17 11.5-28.5T200-800h160q0-17 11.5-28.5T400-840h160q17 0 28.5 11.5T600-800h160q17 0 28.5 11.5T800-760q0 17-11.5 28.5T760-720v520q0 33-23.5 56.5T680-120H280Zm400-600H280v520h400v-520ZM400-280q17 0 28.5-11.5T440-320v-280q0-17-11.5-28.5T400-640q-17 0-28.5 11.5T360-600v280q0 17 11.5 28.5T400-280Zm160 0q17 0 28.5-11.5T600-320v-280q0-17-11.5-28.5T560-640q-17 0-28.5 11.5T520-600v280q0 17 11.5 28.5T560-280ZM280-720v520-520Z'
+    };
+
+    function isModernLook() {
+        return document.documentElement.classList.contains('modern');
+    }
+
+    // Modern look: an icon button with the text as its tooltip and accessible name;
+    // classic look: the text button, as before
+    function actionButton(text, handler, disabled, iconName) {
         const btn = document.createElement('button');
         btn.className = 'small';
-        btn.textContent = text;
+        if (iconName && MODERN_ICONS[iconName] && isModernLook()) {
+            btn.classList.add('icon-button');
+            btn.title = text;
+            btn.setAttribute('aria-label', text);
+            btn.innerHTML = '<svg viewBox="0 -960 960 960" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="'
+                + MODERN_ICONS[iconName] + '"/></svg>';
+            if (iconName === 'delete') {
+                btn.classList.add('icon-danger');
+            }
+        } else {
+            btn.textContent = text;
+        }
         if (disabled) {
             btn.disabled = true;
         }

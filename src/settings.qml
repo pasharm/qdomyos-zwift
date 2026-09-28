@@ -1900,7 +1900,7 @@ import QtQuick 2.12 as Quick212
                 spacing: 8
                 Layout.fillWidth: true
 
-                TextField {
+                UiTextField {
                     id: settingsSearchTextField
                     Layout.fillWidth: true
                     placeholderText: qsTr("Search settings")
@@ -2012,7 +2012,7 @@ import QtQuick 2.12 as Quick212
                                     }
                                 }
 
-                                Switch {
+                                UiSwitch {
                                     visible: entry.catalogKind === "setting" && entry.type === "boolean"
                                     checked: visible ? settingsPane.settingValue(entry) : false
                                     onClicked: settingsPane.setSettingValue(entry, checked)
@@ -2048,7 +2048,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.maximumHeight: visible ? implicitHeight : 0
                                 spacing: 8
 
-                                TextField {
+                                UiTextField {
                                     id: searchSettingTextField
                                     Layout.fillWidth: true
                                     Layout.minimumWidth: 0
@@ -2166,7 +2166,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("UI Zoom:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: uiZoomTextField
                             text: settings.ui_zoom
                             horizontalAlignment: Text.AlignRight
@@ -2254,7 +2254,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Player Weight") + "(" + ((settings.miles_unit && !settings.weight_kg_unit)?qsTr("lbs"):qsTr("kg")) + ")"
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: weightTextField
                             text: ((settings.miles_unit && !settings.weight_kg_unit)?settings.weight * 2.20462:settings.weight)
                             horizontalAlignment: Text.AlignRight
@@ -2291,7 +2291,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Player Height") + "(" + (settings.miles_unit?qsTr("ft/in"):qsTr("cm")) + ")"
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: heightTextField
                             text: settings.miles_unit ? Math.floor(settings.height / 30.48) + "'" + Math.round((settings.height % 30.48) / 2.54) + '"' : settings.height
                             horizontalAlignment: Text.AlignRight
@@ -2350,7 +2350,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Player Age:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: ageTextField
                             text: settings.age
                             horizontalAlignment: Text.AlignRight
@@ -2429,7 +2429,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("FTP value:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: ftpTextField
                             text: settings.ftp
                             horizontalAlignment: Text.AlignRight
@@ -2466,7 +2466,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Critical Power Run value:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: ftpRunTextField
                             text: settings.ftp_run
                             horizontalAlignment: Text.AlignRight
@@ -2503,7 +2503,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Nickname:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: nicknameTextField
                             text: settings.user_nickname
                             horizontalAlignment: Text.AlignRight
@@ -2540,7 +2540,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Email:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: emailTextField
                             text: settings.user_email
                             horizontalAlignment: Text.AlignRight
@@ -2908,7 +2908,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Zone 1 %:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: heartRateZone1TextField
                                     text: settings.heart_rate_zone1
                                     horizontalAlignment: Text.AlignRight
@@ -2933,7 +2933,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Zone 2 %:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: heartRateZone2TextField
                                     text: settings.heart_rate_zone2
                                     horizontalAlignment: Text.AlignRight
@@ -2958,7 +2958,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Zone 3 %:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: heartRateZone3TextField
                                     text: settings.heart_rate_zone3
                                     horizontalAlignment: Text.AlignRight
@@ -2983,7 +2983,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Zone 4 %:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: heartRateZone4TextField
                                     text: settings.heart_rate_zone4
                                     horizontalAlignment: Text.AlignRight
@@ -3057,7 +3057,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Max Heart Rate")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: heartRateMaxOverrideValueTextField
                                             text: settings.heart_max_override_value
                                             horizontalAlignment: Text.AlignRight
@@ -3095,7 +3095,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Resting Heart Rate")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: heartRateRestingValueTextField
                                             text: settings.heart_rate_resting
                                             horizontalAlignment: Text.AlignRight
@@ -3143,7 +3143,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Session 1 Watt:")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: powerFromHeartPWR1TextField
                                             text: settings.power_hr_pwr1
                                             horizontalAlignment: Text.AlignRight
@@ -3168,7 +3168,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Session 1 HR:")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: powerFromHeartHR1TextField
                                             text: settings.power_hr_hr1
                                             horizontalAlignment: Text.AlignRight
@@ -3193,7 +3193,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Session 2 Watt:")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: powerFromHeartPWR2TextField
                                             text: settings.power_hr_pwr2
                                             horizontalAlignment: Text.AlignRight
@@ -3218,7 +3218,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Session 2 HR:")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: powerFromHeartHR2TextField
                                             text: settings.power_hr_hr2
                                             horizontalAlignment: Text.AlignRight
@@ -3378,7 +3378,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Gear Value:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: specificGearValueField
                             text: settings.gears_current_value_f
                             horizontalAlignment: Text.AlignRight
@@ -3418,7 +3418,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Rolling Resistance Factor")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: rollingreistanceTextField
                             text: settings.rolling_resistance
                             horizontalAlignment: Text.AlignRight
@@ -3450,7 +3450,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Bike Weight (%1)").arg((settings.miles_unit && !settings.weight_kg_unit) ? qsTr("lbs") : qsTr("kg"))
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: bikeweightTextField
                             text: ((settings.miles_unit && !settings.weight_kg_unit)?settings.bike_weight * 2.20462:settings.bike_weight)
                             horizontalAlignment: Text.AlignRight
@@ -3488,7 +3488,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Rolling Res. Gain")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: crrGainTextField
                             text: settings.crrGain
                             horizontalAlignment: Text.AlignRight
@@ -3512,7 +3512,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Wind Res. Gain")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: cwGainTextField
                             text: settings.cwGain
                             horizontalAlignment: Text.AlignRight
@@ -3787,7 +3787,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Zwift Resistance Offset:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: bikeResistanceOffsetTextField
                             text: settings.bike_resistance_offset
                             horizontalAlignment: Text.AlignRight
@@ -3825,7 +3825,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Zwift Power Offset (W):")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: bikePowerOffsetTextField
                             text: settings.bike_power_offset
                             horizontalAlignment: Text.AlignRight
@@ -3863,7 +3863,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Zwift Resistance Gain:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: bikeResistanceGainTextField
                             text: settings.bike_resistance_gain_f
                             horizontalAlignment: Text.AlignRight
@@ -3901,7 +3901,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Zwift ERG Watt Up Filter:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: zwiftErgFilterTextField
                             text: settings.zwift_erg_filter
                             horizontalAlignment: Text.AlignRight
@@ -3939,7 +3939,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Zwift ERG Watt Down Filter:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: zwiftErgDownFilterTextField
                             text: settings.zwift_erg_filter_down
                             horizontalAlignment: Text.AlignRight
@@ -3977,7 +3977,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Min. Resistance:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: zwiftErgResistanceDownTextField
                             text: settings.zwift_erg_resistance_down
                             horizontalAlignment: Text.AlignRight
@@ -4015,7 +4015,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Max. Resistance:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: zwiftErgResistanceUpTextField
                             text: settings.zwift_erg_resistance_up
                             horizontalAlignment: Text.AlignRight
@@ -4053,7 +4053,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Resistance at Startup:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: bikeResistanceStartTextField
                             text: settings.bike_resistance_start
                             horizontalAlignment: Text.AlignRight
@@ -4090,7 +4090,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Gears Gain:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: gearsGainTextField
                             text: settings.gears_gain
                             horizontalAlignment: Text.AlignRight
@@ -4142,7 +4142,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Gears Offset:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: gearsOffsetTextField
                             text: settings.gears_offset
                             horizontalAlignment: Text.AlignRight
@@ -4246,7 +4246,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Cruise - Gear Up Cadence (RPM):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: automaticVirtualShiftingGearUpCadenceTextField
                                     text: settings.automatic_virtual_shifting_gear_up_cadence
                                     horizontalAlignment: Text.AlignRight
@@ -4270,7 +4270,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Cruise - Gear Up Time (seconds):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: automaticVirtualShiftingGearUpTimeTextField
                                     text: settings.automatic_virtual_shifting_gear_up_time
                                     horizontalAlignment: Text.AlignRight
@@ -4294,7 +4294,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Cruise - Gear Down Cadence (RPM):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: automaticVirtualShiftingGearDownCadenceTextField
                                     text: settings.automatic_virtual_shifting_gear_down_cadence
                                     horizontalAlignment: Text.AlignRight
@@ -4318,7 +4318,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Cruise - Gear Down Time (seconds):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: automaticVirtualShiftingGearDownTimeTextField
                                     text: settings.automatic_virtual_shifting_gear_down_time
                                     horizontalAlignment: Text.AlignRight
@@ -4352,7 +4352,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Climb - Gear Up Cadence (RPM):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: automaticVirtualShiftingClimbGearUpCadenceTextField
                                     text: settings.automatic_virtual_shifting_climb_gear_up_cadence
                                     horizontalAlignment: Text.AlignRight
@@ -4376,7 +4376,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Climb - Gear Up Time (seconds):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: automaticVirtualShiftingClimbGearUpTimeTextField
                                     text: settings.automatic_virtual_shifting_climb_gear_up_time
                                     horizontalAlignment: Text.AlignRight
@@ -4400,7 +4400,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Climb - Gear Down Cadence (RPM):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: automaticVirtualShiftingClimbGearDownCadenceTextField
                                     text: settings.automatic_virtual_shifting_climb_gear_down_cadence
                                     horizontalAlignment: Text.AlignRight
@@ -4424,7 +4424,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Climb - Gear Down Time (seconds):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: automaticVirtualShiftingClimbGearDownTimeTextField
                                     text: settings.automatic_virtual_shifting_climb_gear_down_time
                                     horizontalAlignment: Text.AlignRight
@@ -4458,7 +4458,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Sprint - Gear Up Cadence (RPM):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: automaticVirtualShiftingSprintGearUpCadenceTextField
                                     text: settings.automatic_virtual_shifting_sprint_gear_up_cadence
                                     horizontalAlignment: Text.AlignRight
@@ -4482,7 +4482,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Sprint - Gear Up Time (seconds):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: automaticVirtualShiftingSprintGearUpTimeTextField
                                     text: settings.automatic_virtual_shifting_sprint_gear_up_time
                                     horizontalAlignment: Text.AlignRight
@@ -4506,7 +4506,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Sprint - Gear Down Cadence (RPM):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: automaticVirtualShiftingSprintGearDownCadenceTextField
                                     text: settings.automatic_virtual_shifting_sprint_gear_down_cadence
                                     horizontalAlignment: Text.AlignRight
@@ -4530,7 +4530,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Sprint - Gear Down Time (seconds):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: automaticVirtualShiftingSprintGearDownTimeTextField
                                     text: settings.automatic_virtual_shifting_sprint_gear_down_time
                                     horizontalAlignment: Text.AlignRight
@@ -4665,7 +4665,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Resistance Smoothing:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: scwhinnResistanceSmoothTextField
                                     text: settings.schwinn_resistance_smooth
                                     horizontalAlignment: Text.AlignRight
@@ -4709,7 +4709,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("GR7 Cadence Multiplier:")
                                 Layout.fillWidth: true
                             }
-                            TextField {
+                            UiTextField {
                                 id: horizonGr7CadenceMultiplierTextField
                                 text: settings.horizon_gr7_cadence_multiplier
                                 horizontalAlignment: Text.AlignRight
@@ -4772,7 +4772,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Resistance Gain:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: echelonResistanceGainTextField
                                     text: settings.echelon_resistance_gain
                                     horizontalAlignment: Text.AlignRight
@@ -4796,7 +4796,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Resistance Offset:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: echelonResistanceOffsetTextField
                                     text: settings.echelon_resistance_offset
                                     horizontalAlignment: Text.AlignRight
@@ -5167,7 +5167,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Samples Filter:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: flywheelBikeFilterTextField
                                     text: settings.flywheel_filter
                                     horizontalAlignment: Text.AlignRight
@@ -5229,7 +5229,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Cadence Filter:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: domyosBikeCadenceFilterTextField
                                     text: settings.domyos_bike_cadence_filter
                                     horizontalAlignment: Text.AlignRight
@@ -5361,7 +5361,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Wheel Ratio:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: proformBikeWheelRatioTextField
                                     text: settings.proform_wheel_ratio
                                     horizontalAlignment: Text.AlignRight
@@ -5540,7 +5540,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("TDF1 IP:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: proformTDF1IPTextField
                                     text: settings.proformtdf1ip
                                     horizontalAlignment: Text.AlignRight
@@ -5564,7 +5564,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("TDF4 IP:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: proformTDF4IPTextField
                                     text: settings.proformtdf4ip
                                     horizontalAlignment: Text.AlignRight
@@ -5588,7 +5588,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("TDF Companion IP:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: proformTDFCompanionIPTextField
                                     text: settings.tdf_10_ip
                                     horizontalAlignment: Text.AlignRight
@@ -5648,7 +5648,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Serial Port:")
                                 Layout.fillWidth: true
                             }
-                            TextField {
+                            UiTextField {
                                 id: computrainerSerialPortTextField
                                 text: settings.computrainer_serialport
                                 horizontalAlignment: Text.AlignRight
@@ -5683,7 +5683,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Serial Port:")
                                 Layout.fillWidth: true
                             }
-                            TextField {
+                            UiTextField {
                                 id: kettlerUsbSerialPortTextField
                                 text: settings.kettler_usb_serialport
                                 horizontalAlignment: Text.AlignRight
@@ -5747,7 +5747,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Serial Port:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: freebeatSerialPortTextField
                                     text: settings.freebeat_serialport
                                     horizontalAlignment: Text.AlignRight
@@ -5800,7 +5800,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Bike ID:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: m3iBikeIdTextField
                                     text: settings.m3i_bike_id
                                     horizontalAlignment: Text.AlignRight
@@ -5825,7 +5825,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Speed Buffer Size:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: m3iBikeSpeedBuffsizeTextField
                                     text: settings.m3i_bike_speed_buffsize
                                     horizontalAlignment: Text.AlignRight
@@ -5933,7 +5933,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("ANT+ Bike Device Number (0=Auto):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: antBikeDeviceNumberTextField
                                     text: settings.ant_bike_device_number
                                     horizontalAlignment: Text.AlignRight
@@ -6052,7 +6052,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("ANT+ Speed Offset")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: antspeedOffsetTextField
                             text: settings.ant_speed_offset
                             horizontalAlignment: Text.AlignRight
@@ -6089,7 +6089,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("ANT+ Speed Gain:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: antspeedGainTextField
                             text: settings.ant_speed_gain
                             horizontalAlignment: Text.AlignRight
@@ -6140,7 +6140,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("ANT+ Heart Device Number (0=Auto):")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: antHeartDeviceNumberTextField
                             text: settings.ant_heart_device_number
                             horizontalAlignment: Text.AlignRight
@@ -6338,7 +6338,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Floating Window Width:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: floatingWidthField
                             text: settings.floating_width
                             horizontalAlignment: Text.AlignRight
@@ -6375,7 +6375,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Floating Window Height:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: floatingHeightField
                             text: settings.floating_height
                             horizontalAlignment: Text.AlignRight
@@ -6412,7 +6412,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Floating Window % Transparency:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: floatingTransparencyField
                             text: settings.floating_transparency
                             horizontalAlignment: Text.AlignRight
@@ -6598,7 +6598,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Background Color:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                       id: backgroundColorTextField
                                       text: settings.theme_background_color
                                       Layout.fillHeight: false
@@ -6632,7 +6632,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Tiles Background Color:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                       id: tilebackgroundColorTextField
                                       text: settings.theme_tile_background_color
                                       Layout.fillHeight: false
@@ -6679,7 +6679,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Tiles Shadow Color:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                       id: tileShadowColorTextField
                                       text: settings.theme_tile_shadow_color
                                       Layout.fillHeight: false
@@ -6712,7 +6712,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Statusbar Background Color:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                       id: statusbarbackgroundColorTextField
                                       text: settings.theme_status_bar_background_color
                                       Layout.fillHeight: false
@@ -6745,7 +6745,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("2nd line tile text size:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: secondLineTextSizeField
                                     text: settings.theme_tile_secondline_textsize
                                     horizontalAlignment: Text.AlignRight
@@ -6781,7 +6781,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Username:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: pelotonUsernameTextField
                             text: settings.peloton_username
                             horizontalAlignment: Text.AlignRight
@@ -6819,7 +6819,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Password:") + ((rootItem.pelotonLogin===-1)?"":(rootItem.pelotonLogin===1?"\u2705":"\u274c"))
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: pelotonPasswordTextField
                             text: settings.peloton_password
                             horizontalAlignment: Text.AlignRight
@@ -6989,7 +6989,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Walking Min Speed:") + " (" + (settings.miles_unit ? qsTr("mph") : qsTr("km/h")) + ")"
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: pelotonTreadmillWalkingMinSpeedTextField
                             text: (settings.miles_unit ? settings.peloton_treadmill_walking_min_speed * 0.621371 : settings.peloton_treadmill_walking_min_speed).toFixed(1)
                             horizontalAlignment: Text.AlignRight
@@ -7023,7 +7023,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Running Min Speed:") + " (" + (settings.miles_unit ? qsTr("mph") : qsTr("km/h")) + ")"
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: pelotonTreadmillRunningMinSpeedTextField
                             text: (settings.miles_unit ? settings.peloton_treadmill_running_min_speed * 0.621371 : settings.peloton_treadmill_running_min_speed).toFixed(1)
                             horizontalAlignment: Text.AlignRight
@@ -7096,7 +7096,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("PZP Username:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: pzpUsernameTextField
                             text: settings.pzp_username
                             horizontalAlignment: Text.AlignRight
@@ -7133,7 +7133,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("PZP Password:") + ((rootItem.pzpLogin===-1)?"":(rootItem.pzpLogin===1?"\u2705":"\u274c"))
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: pzpPasswordTextField
                             text: settings.pzp_password
                             horizontalAlignment: Text.AlignRight
@@ -7172,7 +7172,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Conversion Gain:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: pelotonGainTextField
                             text: settings.peloton_gain
                             horizontalAlignment: Text.AlignRight
@@ -7210,7 +7210,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Conversion Offset:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: pelotonOffsetTextField
                             text: settings.peloton_offset
                             horizontalAlignment: Text.AlignRight
@@ -7610,7 +7610,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Username:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: zwiftUsernameTextField
                             text: settings.zwift_username
                             horizontalAlignment: Text.AlignRight
@@ -7648,7 +7648,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Password:") + ((rootItem.zwiftLogin===-1)?"":(rootItem.zwiftLogin===1?"\u2705":"\u274c"))
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: zwiftPasswordTextField
                             text: settings.zwift_password
                             horizontalAlignment: Text.AlignRight
@@ -7792,7 +7792,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Poll Time:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: zwiftPollTimeTextField
                             text: settings.zwift_api_poll
                             horizontalAlignment: Text.AlignRight
@@ -8141,7 +8141,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Garmin Email:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: garminEmailTextField
                             text: settings.garmin_email
                             horizontalAlignment: Text.AlignRight
@@ -8167,7 +8167,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Garmin Password:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: garminPasswordTextField
                             text: settings.garmin_password
                             echoMode: TextInput.Password
@@ -8257,7 +8257,7 @@ import QtQuick 2.12 as Quick212
                                 color: Material.color(Material.Grey)
                             }
 
-                            TextField {
+                            UiTextField {
                                 id: mfaCodeTextField
                                 placeholderText: qsTr("Enter MFA code")
                                 horizontalAlignment: Text.AlignHCenter
@@ -9045,7 +9045,7 @@ import QtQuick 2.12 as Quick212
 
                     RowLayout {
                         spacing: 10
-                        TextField {
+                        UiTextField {
                             id: garminDeviceSerialTextField
                             text: settings.garmin_device_serial
                             Layout.fillWidth: true
@@ -9269,7 +9269,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("PID on HR min:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: treadmillPidHRminTextField
                             text: settings.treadmill_pid_heart_min
                             horizontalAlignment: Text.AlignRight
@@ -9291,7 +9291,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("PID on HR max:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: treadmillPidHRmaxTextField
                             text: settings.treadmill_pid_heart_max
                             horizontalAlignment: Text.AlignRight
@@ -9353,7 +9353,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("PID Recovery Zone Lower Limit (%):")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: pidHrRecoveryZoneLimitTextField
                             text: settings.trainprogram_pid_hr_recovery_zone_limit
                             horizontalAlignment: Text.AlignRight
@@ -9387,7 +9387,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("PID Pushy Zone Limit:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: pidHrPushyZoneLimitTextField
                             text: settings.trainprogram_pid_hr_pushy_zone_limit
                             horizontalAlignment: Text.AlignRight
@@ -9449,7 +9449,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("1 mile pace (total time):")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramPace1mileTextField
                             text: (paddingZeros(formatLimitDecimals((settings.pacef_1mile * 1.60934) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_1mile * 1.60934) / 60) % 60,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals((((settings.pacef_1mile * 1.60934) % 60)),0).toString(), 2))
                             horizontalAlignment: Text.AlignRight
@@ -9486,7 +9486,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("5 km pace (total time):")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramPace5kmTextField
                             text: (paddingZeros(formatLimitDecimals((settings.pacef_5km * 5) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_5km * 5) / 60) % 60,0).toString(), 2) + ":" + paddingZeros((formatLimitDecimals(((settings.pacef_5km * 5) % 60),0)).toString(), 2))
                             horizontalAlignment: Text.AlignRight
@@ -9523,7 +9523,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("10 km pace (total time):")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramPace10kmTextField
                             text: (paddingZeros(formatLimitDecimals((settings.pacef_10km * 10) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_10km * 10) / 60) % 60,0).toString(), 2) + ":" + paddingZeros((formatLimitDecimals(((settings.pacef_10km * 10) % 60),0)).toString(), 2))
                             horizontalAlignment: Text.AlignRight
@@ -9560,7 +9560,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Half Marathon pace (total time):")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramPaceHalfMarathonTextField
                             text: (paddingZeros(formatLimitDecimals((settings.pacef_halfmarathon * 21) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_halfmarathon * 21) / 60) % 60,0).toString(), 2) + ":" + paddingZeros((formatLimitDecimals(((settings.pacef_halfmarathon * 21) % 60),0)).toString(), 2))
                             horizontalAlignment: Text.AlignRight
@@ -9597,7 +9597,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Marathon pace (total time):")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramPaceMarathonTextField
                             text: (paddingZeros(formatLimitDecimals((settings.pacef_marathon * 42) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_marathon * 42) / 60) % 60,0).toString(), 2) + ":" + paddingZeros((formatLimitDecimals(((settings.pacef_marathon * 42) % 60),0)).toString(), 2))
                             horizontalAlignment: Text.AlignRight
@@ -9634,7 +9634,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Warmup Speed (pace):")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramWarmupSpeedTextField
                             text: paceSecondsToTime(settings.trainprogram_warmup_speed)
                             horizontalAlignment: Text.AlignRight
@@ -9657,7 +9657,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Cooldown Speed (pace):")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramCooldownSpeedTextField
                             text: paceSecondsToTime(settings.trainprogram_cooldown_speed)
                             horizontalAlignment: Text.AlignRight
@@ -9680,7 +9680,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Rest Speed (pace):")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramRestSpeedTextField
                             text: paceSecondsToTime(settings.trainprogram_rest_speed)
                             horizontalAlignment: Text.AlignRight
@@ -9743,7 +9743,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("ERG Mode Watt Step:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: pidHeartZoneErgModeWattStepTextField
                             text: settings.pid_heart_zone_erg_mode_watt_step.toString()
                             horizontalAlignment: Text.AlignRight
@@ -9791,7 +9791,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Duration (minutes):")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramRandomDurationTextField
                             text: settings.trainprogram_total
                             horizontalAlignment: Text.AlignRight
@@ -9816,7 +9816,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Period (seconds):")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramRandomPeriodTextField
                             text: settings.trainprogram_period_seconds
                             horizontalAlignment: Text.AlignRight
@@ -9841,7 +9841,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Speed min.:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramRandomSpeedMinTextField
                             text: settings.trainprogram_speed_min
                             horizontalAlignment: Text.AlignRight
@@ -9866,7 +9866,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Speed max.:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramRandomSpeedMaxTextField
                             text: settings.trainprogram_speed_max
                             horizontalAlignment: Text.AlignRight
@@ -9891,7 +9891,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Incline min.:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramRandomInclineMinTextField
                             text: settings.trainprogram_incline_min
                             horizontalAlignment: Text.AlignRight
@@ -9916,7 +9916,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Incline max.:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramRandomInclineMaxTextField
                             text: settings.trainprogram_incline_max
                             horizontalAlignment: Text.AlignRight
@@ -9941,7 +9941,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Resistance min.:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramRandomResistanceMinTextField
                             text: settings.trainprogram_resistance_min
                             horizontalAlignment: Text.AlignRight
@@ -9966,7 +9966,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Resistance max.:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: trainProgramRandomResistanceMaxTextField
                             text: settings.trainprogram_resistance_max
                             horizontalAlignment: Text.AlignRight
@@ -10181,7 +10181,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Speed Step:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: treadmillSpeedStepTextField
                             text: (settings.miles_unit?settings.treadmill_step_speed * 0.621371:settings.treadmill_step_speed).toFixed(1)
                             horizontalAlignment: Text.AlignRight
@@ -10219,7 +10219,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Min. Inclination:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: treadmillInclinationMinTextField
                             text: settings.treadmill_incline_min
                             horizontalAlignment: Text.AlignRight
@@ -10255,7 +10255,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Max. Inclination:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: treadmillInclinationMaxTextField
                             text: settings.treadmill_incline_max
                             horizontalAlignment: Text.AlignRight
@@ -10291,7 +10291,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Max. Speed:") + "(" + (settings.miles_unit?qsTr("mph"):qsTr("km/h")) + ")"
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: treadmillSpeedMaxTextField
                             text: (settings.miles_unit?settings.treadmill_speed_max * 0.621371:settings.treadmill_speed_max).toFixed(1)
                             horizontalAlignment: Text.AlignRight
@@ -10327,7 +10327,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Min. Speed:") + "(" + (settings.miles_unit?qsTr("mph"):qsTr("km/h")) + ")"
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: treadmillSpeedMinTextField
                             text: (settings.miles_unit?settings.treadmill_speed_min * 0.621371:settings.treadmill_speed_min).toFixed(1)
                             horizontalAlignment: Text.AlignRight
@@ -10364,7 +10364,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Step Count Gain:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: stepGainTextField
                             text: settings.step_gain
                             horizontalAlignment: Text.AlignRight
@@ -10818,7 +10818,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Proform IP:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: proformtreadmillIPTextField
                                     text: settings.proformtreadmillip
                                     horizontalAlignment: Text.AlignRight
@@ -10842,7 +10842,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Nordictrack 2950 IP:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: nordictrack2950IPTextField
                                     text: settings.nordictrack_2950_ip
                                     horizontalAlignment: Text.AlignRight
@@ -11237,7 +11237,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Remap 5 km/h button:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: domyosTreadmillButton5KmhTimeTextField
                                     text: settings.domyos_treadmill_button_5kmh
                                     horizontalAlignment: Text.AlignRight
@@ -11260,7 +11260,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Remap 10 km/h button:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: domyosTreadmillButton10KmhTimeTextField
                                     text: settings.domyos_treadmill_button_10kmh
                                     horizontalAlignment: Text.AlignRight
@@ -11283,7 +11283,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Remap 16 km/h button:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: domyosTreadmillButton16KmhTimeTextField
                                     text: settings.domyos_treadmill_button_16kmh
                                     horizontalAlignment: Text.AlignRight
@@ -11306,7 +11306,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Remap 22 km/h button:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: domyosTreadmillButton22KmhTimeTextField
                                     text: settings.domyos_treadmill_button_22kmh
                                     horizontalAlignment: Text.AlignRight
@@ -11329,7 +11329,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Pool time (ms):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: pollDeviceTimeTextField
                                     text: settings.poll_device_time
                                     horizontalAlignment: Text.AlignRight
@@ -11548,7 +11548,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("User ID:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: fitshowTreadmillUserIdTextField
                                     text: settings.fitshow_user_id
                                     horizontalAlignment: Text.AlignRight
@@ -11721,7 +11721,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("User 1:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: horizonTreadmillProfile1TextField
                                     text: settings.horizon_treadmill_profile_user1
                                     horizontalAlignment: Text.AlignRight
@@ -11744,7 +11744,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("User 2:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: horizonTreadmillProfile2TextField
                                     text: settings.horizon_treadmill_profile_user2
                                     horizontalAlignment: Text.AlignRight
@@ -11767,7 +11767,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("User 3:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: horizonTreadmillProfile3TextField
                                     text: settings.horizon_treadmill_profile_user3
                                     horizontalAlignment: Text.AlignRight
@@ -11790,7 +11790,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("User 4:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: horizonTreadmillProfile4TextField
                                     text: settings.horizon_treadmill_profile_user4
                                     horizontalAlignment: Text.AlignRight
@@ -11813,7 +11813,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("User 5:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: horizonTreadmillProfile5TextField
                                     text: settings.horizon_treadmill_profile_user5
                                     horizontalAlignment: Text.AlignRight
@@ -12271,7 +12271,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Serial Port:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: csaferowerSerialPortTextField
                                     text: settings.csafe_rower
                                     horizontalAlignment: Text.AlignRight
@@ -12394,7 +12394,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("ProForm Rower IP:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: proformRowerIPTextField
                                     text: settings.proform_rower_ip
                                     horizontalAlignment: Text.AlignRight
@@ -12436,7 +12436,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Speed Ratio:")
                                 Layout.fillWidth: true
                             }
-                            TextField {
+                            UiTextField {
                                 id: domyosEllipticalSpeedRatioTextField
                                 text: settings.domyos_elliptical_speed_ratio
                                 horizontalAlignment: Text.AlignRight
@@ -12480,7 +12480,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Serial Port:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: csafeellipticalSerialPortTextField
                                     text: settings.csafe_elliptical_port
                                     horizontalAlignment: Text.AlignRight
@@ -12638,7 +12638,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Companion IP:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: proformEllipticalCompanionIPTextField
                                     text: settings.proform_elliptical_ip
                                     horizontalAlignment: Text.AlignRight
@@ -12826,7 +12826,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Watt Offset:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: wattOffsetTextField
                             text: settings.watt_offset
                             horizontalAlignment: Text.AlignRight
@@ -12864,7 +12864,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Watt Gain:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: wattGainTextField
                             text: settings.watt_gain
                             horizontalAlignment: Text.AlignRight
@@ -12902,7 +12902,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Speed Offset")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: speedOffsetTextField
                             text: settings.speed_offset
                             horizontalAlignment: Text.AlignRight
@@ -12941,7 +12941,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Speed Gain:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: speedGainTextField
                             text: settings.speed_gain
                             horizontalAlignment: Text.AlignRight
@@ -12979,7 +12979,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Cadence Offset")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: cadenceOffsetTextField
                             text: settings.cadence_offset
                             horizontalAlignment: Text.AlignRight
@@ -13017,7 +13017,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Cadence Gain:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: cadenceGainTextField
                             text: settings.cadence_gain
                             horizontalAlignment: Text.AlignRight
@@ -13088,7 +13088,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Suffix activity:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: stravaSuffixTextField
                             text: settings.strava_suffix
                             horizontalAlignment: Text.AlignRight
@@ -13390,7 +13390,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Zwift Inclination Offset:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: treadmillInclinationOffsetTextField
                             text: settings.zwift_inclination_offset
                             horizontalAlignment: Text.AlignRight
@@ -13428,7 +13428,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Zwift Inclination Gain:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: treadmillInclinationGainTextField
                             text: settings.zwift_inclination_gain
                             horizontalAlignment: Text.AlignRight
@@ -13465,7 +13465,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Minimum Inclination:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: minInclinationTextField
                             text: settings.min_inclination
                             horizontalAlignment: Text.AlignRight
@@ -13502,7 +13502,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Inclination Step:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: inclinationStepTextField
                             text: settings.treadmill_step_incline
                             horizontalAlignment: Text.AlignRight
@@ -13621,7 +13621,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("AutoLap on Distance:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: autoLapOnDistanceTextField
                             text: (settings.miles_unit?settings.autolap_distance * 0.621371:settings.autolap_distance).toFixed(1)
                             horizontalAlignment: Text.AlignRight
@@ -13657,7 +13657,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Inclination Delay:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: treadmillInclinationDelayTextField
                             text: settings.inclination_delay_seconds
                             horizontalAlignment: Text.AlignRight
@@ -13828,7 +13828,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Wheel Ratio:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: cadenceSpeedRatioTextField
                                     text: settings.cadence_sensor_speed_ratio
                                     horizontalAlignment: Text.AlignRight
@@ -13919,7 +13919,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Resistance Level 1:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: cscBikeCustomResistanceLevel1TextField
                                     text: settings.cscbike_custom_resistance_level_1
                                     horizontalAlignment: Text.AlignRight
@@ -13942,7 +13942,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Watt 1:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: cscBikeCustomWatt1TextField
                                     text: settings.cscbike_custom_watt_1
                                     horizontalAlignment: Text.AlignRight
@@ -13965,7 +13965,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Resistance Level 2:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: cscBikeCustomResistanceLevel2TextField
                                     text: settings.cscbike_custom_resistance_level_2
                                     horizontalAlignment: Text.AlignRight
@@ -13988,7 +13988,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Watt 2:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: cscBikeCustomWatt2TextField
                                     text: settings.cscbike_custom_watt_2
                                     horizontalAlignment: Text.AlignRight
@@ -14173,7 +14173,7 @@ import QtQuick 2.12 as Quick212
                             }
                             RowLayout {
                                 spacing: 10
-                                TextField {
+                                UiTextField {
                                     id: powerSensorSpeedCorrectionThresholdTextField
                                     text: settings.power_sensor_speed_correction_threshold
                                     horizontalAlignment: Text.AlignRight
@@ -14288,7 +14288,7 @@ import QtQuick 2.12 as Quick212
                             }
                             RowLayout {
                                 spacing: 10
-                                TextField {
+                                UiTextField {
                                     id: powerSensorSpeedInclinationCoeffATextField
                                     text: settings.power_sensor_speed_inclination_coeff_a
                                     horizontalAlignment: Text.AlignRight
@@ -14309,7 +14309,7 @@ import QtQuick 2.12 as Quick212
                             }
                             RowLayout {
                                 spacing: 10
-                                TextField {
+                                UiTextField {
                                     id: powerSensorSpeedInclinationCoeffBTextField
                                     text: settings.power_sensor_speed_inclination_coeff_b
                                     horizontalAlignment: Text.AlignRight
@@ -14445,7 +14445,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Difficulty/Gain:")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: eliteRizerGainTextField
                                             text: settings.elite_rizer_gain
                                             horizontalAlignment: Text.AlignRight
@@ -14578,7 +14578,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Shift Step")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: ss2kShiftStepTextField
                                     text: settings.ss2k_shift_step
                                     horizontalAlignment: Text.AlignRight
@@ -14602,7 +14602,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Max Resistance")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: ss2kMaxResistanceTextField
                                     text: settings.ss2k_max_resistance
                                     horizontalAlignment: Text.AlignRight
@@ -14626,7 +14626,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Min Resistance")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: ss2kMinResistanceTextField
                                     text: settings.ss2k_min_resistance
                                     horizontalAlignment: Text.AlignRight
@@ -14659,7 +14659,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Resistance Sample 1")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: ss2kResistanceSample1TextField
                                             text: settings.ss2k_resistance_sample_1
                                             horizontalAlignment: Text.AlignRight
@@ -14682,7 +14682,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Shift Step Sample 1")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: ss2kShiftStepSample1TextField
                                             text: settings.ss2k_shift_step_sample_1
                                             horizontalAlignment: Text.AlignRight
@@ -14706,7 +14706,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Resistance Sample 2")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: ss2kResistanceSample2TextField
                                             text: settings.ss2k_resistance_sample_2
                                             horizontalAlignment: Text.AlignRight
@@ -14729,7 +14729,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Shift Step Sample 2")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: ss2kShiftStepSample2TextField
                                             text: settings.ss2k_shift_step_sample_2
                                             horizontalAlignment: Text.AlignRight
@@ -14753,7 +14753,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Resistance Sample 3")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: ss2kResistanceSample3TextField
                                             text: settings.ss2k_resistance_sample_3
                                             horizontalAlignment: Text.AlignRight
@@ -14776,7 +14776,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Shift Step Sample 3")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: ss2kShiftStepSample3TextField
                                             text: settings.ss2k_shift_step_sample_3
                                             horizontalAlignment: Text.AlignRight
@@ -14800,7 +14800,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Resistance Sample 4")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: ss2kResistanceSample4TextField
                                             text: settings.ss2k_resistance_sample_4
                                             horizontalAlignment: Text.AlignRight
@@ -14823,7 +14823,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Shift Step Sample 4")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: ss2kShiftStepSample4TextField
                                             text: settings.ss2k_shift_step_sample_4
                                             horizontalAlignment: Text.AlignRight
@@ -14902,7 +14902,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Min. value (0-100):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: fitmetriaFanFitMinTextField
                                     text: settings.fitmetria_fanfit_min
                                     horizontalAlignment: Text.AlignRight
@@ -14926,7 +14926,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Max value (0-100):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: fitmetriaFanFitMaxTextField
                                     text: settings.fitmetria_fanfit_max
                                     horizontalAlignment: Text.AlignRight
@@ -14998,7 +14998,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Min. value (0-100):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: headWindMinTextField
                                     text: settings.fitmetria_fanfit_min
                                     horizontalAlignment: Text.AlignRight
@@ -15020,7 +15020,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Max value (0-100):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: headWindMaxTextField
                                     text: settings.fitmetria_fanfit_max
                                     horizontalAlignment: Text.AlignRight
@@ -15091,7 +15091,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Min. value (0-100):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: eliteAriaMinTextField
                                     text: settings.fitmetria_fanfit_min
                                     horizontalAlignment: Text.AlignRight
@@ -15113,7 +15113,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Max value (0-100):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: eliteAriaMaxTextField
                                     text: settings.fitmetria_fanfit_max
                                     horizontalAlignment: Text.AlignRight
@@ -15537,7 +15537,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Pool time (ms):")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
 																		id: zwiftDevPollTimeTextField
                                     text: settings.poll_device_time
                                     horizontalAlignment: Text.AlignRight
@@ -15652,7 +15652,7 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Window Time (sec.):")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: videoWindowTextField
                             text: settings.video_playback_window_s
                             horizontalAlignment: Text.AlignRight
@@ -15784,13 +15784,14 @@ import QtQuick 2.12 as Quick212
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             Repeater {
                                 model: ["violet", "blue", "teal", "green", "orange", "pink"]
-                                delegate: Rectangle {
+                                // UiFrame: a Rectangle.border ring breaks up on Android
+                                delegate: UiFrame {
                                     width: 30
                                     height: 30
                                     radius: 15
-                                    color: window.ui.a[modelData]
-                                    border.width: window.ui.accentName === modelData ? 3 : 0
-                                    border.color: window.ui.textMain
+                                    fill: window.ui.a[modelData]
+                                    strokeWidth: window.ui.accentName === modelData ? 3 : 0
+                                    stroke: window.ui.textMain
                                     Accessible.role: Accessible.RadioButton
                                     Accessible.name: modelData
                                     Accessible.checked: window.ui.accentName === modelData
@@ -16170,7 +16171,7 @@ import QtQuick 2.12 as Quick212
                                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
 
-                                    SwitchDelegate {
+                                    UiSwitchDelegate {
                                         text: qsTr("Virtual Tacx")
                                         spacing: 0
                                         bottomPadding: 0
@@ -16240,7 +16241,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("ID:")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: dirconIdTextField
                                             text: settings.dircon_id
                                             horizontalAlignment: Text.AlignRight
@@ -16277,7 +16278,7 @@ import QtQuick 2.12 as Quick212
                                             text: qsTr("Server Port:")
                                             Layout.fillWidth: true
                                         }
-                                        TextField {
+                                        UiTextField {
                                             id: dirconServerPortTextField
                                             text: settings.dircon_server_base_port
                                             horizontalAlignment: Text.AlignRight
@@ -16313,7 +16314,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("MQTT Host:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: mqttHostTextField
                                     text: settings.mqtt_host
                                     horizontalAlignment: Text.AlignRight
@@ -16348,7 +16349,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("MQTT Port:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: mqttPortTextField
                                     text: settings.mqtt_port
                                     horizontalAlignment: Text.AlignRight
@@ -16385,7 +16386,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Username:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: mqttUsernameTextField
                                     text: settings.mqtt_username
                                     horizontalAlignment: Text.AlignRight
@@ -16421,7 +16422,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Password:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: mqttPasswordTextField
                                     text: settings.mqtt_password
                                     horizontalAlignment: Text.AlignRight
@@ -16458,7 +16459,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("Device ID:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: mqttDeviceIdTextField
                                     text: settings.mqtt_deviceid
                                     horizontalAlignment: Text.AlignRight
@@ -16504,7 +16505,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("OSC IP:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: oscIPTextField
                                     text: settings.osc_ip
                                     horizontalAlignment: Text.AlignRight
@@ -16527,7 +16528,7 @@ import QtQuick 2.12 as Quick212
                                     text: qsTr("OSC Port:")
                                     Layout.fillWidth: true
                                 }
-                                TextField {
+                                UiTextField {
                                     id: oscPortTextField
                                     text: settings.osc_port
                                     horizontalAlignment: Text.AlignRight

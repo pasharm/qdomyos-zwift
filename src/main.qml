@@ -557,34 +557,10 @@ ApplicationWindow {
         interval: 2000 // ms
     }
 
-    UiPopup {
-	    id: popup
-		 parent: Overlay.overlay
-
-       x: Math.round((parent.width - width) / 2)
-		 y: Math.round((parent.height - height) / 2)
-		 width: 380
-         height: 60
-		 modal: true
-		 focus: true
-		 palette.text: "white"
-		 closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-		 enter: Transition
-		 {
-		     NumberAnimation { property: "opacity"; from: 0.0; to: 1.0 }
-		 }
-		 exit: Transition
-		 {
-		     NumberAnimation { property: "opacity"; from: 1.0; to: 0.0 }
-		 }
-		 Column {
-             anchors.horizontalCenter: parent.horizontalCenter
-		 Label {
-             anchors.horizontalCenter: parent.horizontalCenter
-		     text: qsTr("Program has been loaded correctly. Press start to begin!")
-		 }
-		 }
-	}
+    UiNotice {
+        id: popup
+        text: qsTr("Program has been loaded correctly. Press start to begin!")
+    }
 
     UiMessageDialog {
            id: popupPelotonAuth
@@ -760,62 +736,14 @@ ApplicationWindow {
          }
     }
 
-    UiPopup {
+    UiNotice {
         id: popupLoadSettings
-         parent: Overlay.overlay
-
-       x: Math.round((parent.width - width) / 2)
-         y: Math.round((parent.height - height) / 2)
-         width: 380
-         height: 60
-         modal: true
-         focus: true
-         palette.text: "white"
-         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-         enter: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 0.0; to: 1.0 }
-         }
-         exit: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 1.0; to: 0.0 }
-         }
-         Column {
-             anchors.horizontalCenter: parent.horizontalCenter
-         Label {
-             anchors.horizontalCenter: parent.horizontalCenter
-             text: qsTr("Settings has been loaded correctly. Restart the app!")
-            }
-         }
+        text: qsTr("Settings has been loaded correctly. Restart the app!")
     }
 
-    UiPopup {
+    UiNotice {
         id: popupSaveFile
-         parent: Overlay.overlay
-
-         x: Math.round((parent.width - width) / 2)
-         y: Math.round((parent.height - height) / 2)
-         width: 380
-         height: 60
-         modal: true
-         focus: true
-         palette.text: "white"
-         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-         enter: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 0.0; to: 1.0 }
-         }
-         exit: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 1.0; to: 0.0 }
-         }
-         Column {
-             anchors.horizontalCenter: parent.horizontalCenter
-         Label {
-             anchors.horizontalCenter: parent.horizontalCenter
-             text: qsTr("Saved! Check your private folder (Android)<br>or Files App (iOS)")
-            }
-         }
+        text: qsTr("Saved! Check your private folder (Android)<br>or Files App (iOS)")
     }
 
     UiPopup {
@@ -1178,33 +1106,9 @@ ApplicationWindow {
             visible: OS_VERSION === "Android" ? true : false
         }
 
-        UiPopup {
+        UiNotice {
             id: popupAutoResistance
-             parent: Overlay.overlay
-
-             x: Math.round((parent.width - width) / 2)
-             y: Math.round((parent.height - height) / 2)
-             width: 380
-             height: 60
-             modal: true
-             focus: true
-             palette.text: "white"
-             closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-             enter: Transition
-             {
-                 NumberAnimation { property: "opacity"; from: 0.0; to: 1.0 }
-             }
-             exit: Transition
-             {
-                 NumberAnimation { property: "opacity"; from: 1.0; to: 0.0 }
-             }
-             Column {
-                 anchors.horizontalCenter: parent.horizontalCenter
-             Label {
-                 anchors.horizontalCenter: parent.horizontalCenter
-                 text: rootItem.autoResistance ? qsTr("Auto Resistance enabled") : qsTr("Auto Resistance disabled")
-                }
-             }
+            text: rootItem.autoResistance ? qsTr("Auto Resistance enabled") : qsTr("Auto Resistance disabled")
         }
 
         Timer {
@@ -1213,33 +1117,9 @@ ApplicationWindow {
             onTriggered: popupAutoResistance.close();
         }
 
-        UiPopup {
+        UiNotice {
             id: popuplockTiles
-             parent: Overlay.overlay
-
-             x: Math.round((parent.width - width) / 2)
-             y: Math.round((parent.height - height) / 2)
-             width: 380
-             height: 60
-             modal: true
-             focus: true
-             palette.text: "white"
-             closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-             enter: Transition
-             {
-                 NumberAnimation { property: "opacity"; from: 0.0; to: 1.0 }
-             }
-             exit: Transition
-             {
-                 NumberAnimation { property: "opacity"; from: 1.0; to: 0.0 }
-             }
-             Column {
-                 anchors.horizontalCenter: parent.horizontalCenter
-             Label {
-                 anchors.horizontalCenter: parent.horizontalCenter
-                 text: window.lockTiles ? qsTr("You can move the tiles!") : qsTr("The tiles are locked now")
-                }
-             }
+            text: window.lockTiles ? qsTr("You can move the tiles!") : qsTr("The tiles are locked now")
         }
 
         Timer {

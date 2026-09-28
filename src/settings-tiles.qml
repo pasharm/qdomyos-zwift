@@ -403,13 +403,15 @@ ScrollView {
             title: qsTr("Speed")
             linkedBoolSetting: "tile_speed_enabled"
             settings: settings
+            card: true
+            description: qsTr("Speed in kilometers per hour. (To set your speed units to miles, go to Settings > General Options > Use Miles unit in UI).")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelSpeedOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: speedOrderTextField
@@ -419,9 +421,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = speedOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_speed_order = speedOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okSpeedOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -430,31 +434,19 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Speed in kilometers per hour. (To set your speed units to miles, go to Settings > General Options > Use Miles unit in UI).")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: inclinationEnabledAccordion
             title: qsTr("Inclination")
             linkedBoolSetting: "tile_inclination_enabled"
             settings: settings
+            card: true
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelinclinationOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: inclinationOrderTextField
@@ -464,9 +456,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = inclinationOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_inclination_order = inclinationOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okinclinationOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -480,8 +474,10 @@ ScrollView {
             title: qsTr("Cadence")
             linkedBoolSetting: "tile_cadence_enabled"
             settings: settings
+            card: true
+            description: qsTr("Bike pedal cadence in rotations per minute (RPM) or Treadmill cadence if a shoe-mounted cadence sensor or Apple Watch QZ app is used.")
             accordionContent:  ColumnLayout {
-                SwitchDelegate {
+                UiSwitchDelegate {
                     id: cadenceColorEnabled
                     text: qsTr("Enable Cadence color")
                     spacing: 0
@@ -515,7 +511,7 @@ ScrollView {
                         id: labelcadenceOrder
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: cadenceOrderTextField
@@ -525,9 +521,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = cadenceOrderTextField.currentValue
+                            if (window.ui.modern) { settings.tile_cadence_order = cadenceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                          }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okcadenceOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -537,31 +535,19 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Bike pedal cadence in rotations per minute (RPM) or Treadmill cadence if a shoe-mounted cadence sensor or Apple Watch QZ app is used.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: elevationEnabledAccordion
             title: qsTr("Elevation Gain")
             linkedBoolSetting: "tile_elevation_enabled"
             settings: settings
+            card: true
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelelevationOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: elevationOrderTextField
@@ -571,9 +557,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = elevationOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_elevation_order = elevationOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okelevationOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -587,12 +575,14 @@ ScrollView {
             title: qsTr("Negative Elevation Gain (Descent)")
             linkedBoolSetting: "tile_negative_inclination_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays the total negative elevation gain (descent) in meters or feet accumulated during the workout.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: negativeInclinationOrderTextField
@@ -602,9 +592,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = negativeInclinationOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_negative_inclination_order = negativeInclinationOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_negative_inclination_order = negativeInclinationOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -612,31 +604,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays the total negative elevation gain (descent) in meters or feet accumulated during the workout.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: caloriesEnabledAccordion
             title: qsTr("Calories")
             linkedBoolSetting: "tile_calories_enabled"
             settings: settings
+            card: true
+            description: qsTr("Estimated calories burned during session, calculated on weight, age, and watts.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelcaloriesOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: caloriesOrderTextField
@@ -646,9 +627,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = caloriesOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_calories_order = caloriesOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okcaloriesOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -657,31 +640,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Estimated calories burned during session, calculated on weight, age, and watts.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: odometerEnabledAccordion
             title: qsTr("Odometer")
             linkedBoolSetting: "tile_odometer_enabled"
             settings: settings
+            card: true
+            description: qsTr("Estimated distance traveled during the session.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelodometerOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: odometerOrderTextField
@@ -691,9 +663,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = odometerOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_odometer_order = odometerOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okodometerOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -702,26 +676,14 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Estimated distance traveled during the session.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: paceEnabledAccordion
             title: qsTr("Pace")
             linkedBoolSetting: "tile_pace_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
-                SwitchDelegate {
+                UiSwitchDelegate {
                     id: paceColorEnabled
                     text: qsTr("Enable Pace color")
                     spacing: 0
@@ -742,7 +704,7 @@ ScrollView {
                         id: labelpaceOrder
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: paceOrderTextField
@@ -752,9 +714,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = paceOrderTextField.currentValue
+                            if (window.ui.modern) { settings.tile_pace_order = paceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                          }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okpaceOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -769,13 +733,14 @@ ScrollView {
             title: qsTr("Average Pace")
             linkedBoolSetting: "tile_avg_pace_enabled"
             settings: settings
+            card: true
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelavgpaceOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: avgpaceOrderTextField
@@ -785,9 +750,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = avgpaceOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_avg_pace_order = avgpaceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okavgpaceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -801,13 +768,15 @@ ScrollView {
             title: qsTr("Grade Adjusted Pace")
             linkedBoolSetting: "tile_grade_adjusted_pace_enabled"
             settings: settings
+            card: true
+            description: qsTr("Current pace per mile or kilometer (Treadmill, Elliptical and Rower)")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelgradeAdjustedPaceOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: gradeAdjustedPaceOrderTextField
@@ -817,28 +786,17 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = gradeAdjustedPaceOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_grade_adjusted_pace_order = gradeAdjustedPaceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okgradeAdjustedPaceOrderButton
                     text: "OK"
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_grade_adjusted_pace_order = gradeAdjustedPaceOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
                 }
             }
-        }
-
-        Label {
-            text: qsTr("Current pace per mile or kilometer (Treadmill, Elliptical and Rower)")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         Label {
@@ -859,13 +817,15 @@ ScrollView {
             title: qsTr("Resistance")
             linkedBoolSetting: "tile_resistance_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays your bike’s resistance. The +/- buttons can be used to change resistance, if your bike is compatible.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelresistanceOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: resistanceOrderTextField
@@ -875,9 +835,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = resistanceOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_resistance_order = resistanceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okresistanceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -886,26 +848,15 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays your bike’s resistance. The +/- buttons can be used to change resistance, if your bike is compatible.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: wattEnabledAccordion
             title: qsTr("Watt")
             linkedBoolSetting: "tile_watt_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays the watts generated by your current effort. Watt is also referred to as output (for example, in Peloton). If your equipment does not communicate watts, QZ will calculate watts using resistance and cadence.")
             accordionContent:  ColumnLayout {
-                SwitchDelegate {
+                UiSwitchDelegate {
                     id: wattColorEnabled
                     text: qsTr("Enable Watt color")
                     spacing: 0
@@ -926,7 +877,7 @@ ScrollView {
                         id: labelwattOrder
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: wattOrderTextField
@@ -936,9 +887,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = wattOrderTextField.currentValue
+                            if (window.ui.modern) { settings.tile_watt_order = wattOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                          }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okwattOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -948,31 +901,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays the watts generated by your current effort. Watt is also referred to as output (for example, in Peloton). If your equipment does not communicate watts, QZ will calculate watts using resistance and cadence.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: weightLossEnabledAccordion
             title: qsTr("Weight loss")
             linkedBoolSetting: "tile_weight_loss_enabled"
             settings: settings
+            card: true
+            description: qsTr("Estimation of weight loss during the session.")
             accordionContent:  RowLayout {
                 spacing: 10
                 Label {
                     id: labelweightLossOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: weightLossOrderTextField
@@ -982,9 +924,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = weightLossOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_weight_loss_order = weightLossOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okweightLossOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -993,32 +937,21 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Estimation of weight loss during the session.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
 
         AccordionCheckElement {
             id: avgwattEnabledAccordion
             title: qsTr("AVG Watt")
             linkedBoolSetting: "tile_avgwatt_enabled"
             settings: settings
+            card: true
+            description: qsTr("Average watts produced for the session.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelavgwattOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: avgwattOrderTextField
@@ -1028,9 +961,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = avgwattOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_avgwatt_order = avgwattOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okavgwattOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1039,32 +974,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Average watts produced for the session.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
 
         AccordionCheckElement {
 		      id: avgwattLapEnabledAccordion
 				title: qsTr("AVG Watt Lap")
 				linkedBoolSetting: "tile_avg_watt_lap_enabled"
 				settings: settings
+				card: true
 				accordionContent: RowLayout {
 				    spacing: 10
 					 Label {
 					     id: labelavgwattLapOrder
 						  text: qsTr("order index:")
 						  Layout.fillWidth: true
-						  horizontalAlignment: Text.AlignRight
+						  horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
 						}
 					 UiComboBox {
 					     id: avgwattLapOrderTextField
@@ -1074,9 +997,11 @@ ScrollView {
 						  Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 						  onActivated: {
 						      displayText = avgwattLapOrderTextField.currentValue
+						      if (window.ui.modern) { settings.tile_avg_watt_lap_order = avgwattLapOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
 								}
 							}
 					 UiButton {
+					     visible: !window.ui.modern
 					     id: okavgwattLapOrderButton
 						  text: qsTr("OK")
 						  Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1090,13 +1015,15 @@ ScrollView {
             title: "FTP %"
             linkedBoolSetting: "tile_ftp_enabled"
             settings: settings
+            card: true
+            description: qsTr("Percentage of current FTP and current FTP zone.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelftpOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: ftpOrderTextField
@@ -1106,9 +1033,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = ftpOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_ftp_order = ftpOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okftpOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1117,26 +1046,14 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Percentage of current FTP and current FTP zone.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: heartEnabledAccordion
             title: qsTr("Heart")
             linkedBoolSetting: "tile_heart_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
-                SwitchDelegate {
+                UiSwitchDelegate {
                     id: heartShowAsPercentSwitch
                     text: qsTr("Show as %FC Max")
                     spacing: 0
@@ -1170,7 +1087,7 @@ ScrollView {
                         id: labelheartrateOrder
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: heartrateOrderTextField
@@ -1180,9 +1097,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = heartrateOrderTextField.currentValue
+                            if (window.ui.modern) { settings.tile_heart_order = heartrateOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                          }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okheartrateOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1197,13 +1116,15 @@ ScrollView {
             title: qsTr("Fan")
             linkedBoolSetting: "tile_fan_enabled"
             settings: settings
+            card: true
+            description: qsTr("Built-in treadmill fan speed (Treadmill only)")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelfanOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: fanOrderTextField
@@ -1213,9 +1134,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = fanOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_fan_order = fanOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okfanOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1224,31 +1147,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Built-in treadmill fan speed (Treadmill only)")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: joulsEnabledAccordion
             title: qsTr("Jouls")
             linkedBoolSetting: "tile_jouls_enabled"
             settings: settings
+            card: true
+            description: qsTr("Cumulative power produced during the session in kilojoules.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labeljoulsOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: joulsOrderTextField
@@ -1258,9 +1170,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = joulsOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_jouls_order = joulsOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okjoulsOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1269,31 +1183,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Cumulative power produced during the session in kilojoules.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: elapsedEnabledAccordion
             title: qsTr("Elapsed")
             linkedBoolSetting: "tile_elapsed_enabled"
             settings: settings
+            card: true
+            description: qsTr("Total time from start of the session.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelelapsedOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: elapsedOrderTextField
@@ -1303,9 +1206,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = elapsedOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_elapsed_order = elapsedOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okelapsedOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1314,31 +1219,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Total time from start of the session.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: movingTimeEnabledAccordion
             title: qsTr("Moving Time")
             linkedBoolSetting: "tile_moving_time_enabled"
             settings: settings
+            card: true
+            description: qsTr("Total time moving during the session.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelmovingTimeOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: movingTimeOrderTextField
@@ -1348,9 +1242,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = movingTimeOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_moving_time_order = movingTimeOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okmovingTimeOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1359,31 +1255,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Total time moving during the session.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: pelotonOffsetEnabledAccordion
             title: qsTr("Peloton Offset")
             linkedBoolSetting: "tile_peloton_offset_enabled"
             settings: settings
+            card: true
+            description: qsTr("Allows you to sync resistance and cadence target changes with the Peloton coach’s callouts. If the targets are changing in QZ after the coach’s callouts, use the ‘+’ button to add seconds (essentially speeding QZ up). Use the ‘-’ button to slow QZ down. Use this tile in conjunction with the Remaining Time/Row tile (see below).")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelpelotonOffsetOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: pelotonOffsetOrderTextField
@@ -1393,9 +1278,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = pelotonOffsetOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_peloton_offset_order = pelotonOffsetOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okpelotonOffsetOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1404,31 +1291,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Allows you to sync resistance and cadence target changes with the Peloton coach’s callouts. If the targets are changing in QZ after the coach’s callouts, use the ‘+’ button to add seconds (essentially speeding QZ up). Use the ‘-’ button to slow QZ down. Use this tile in conjunction with the Remaining Time/Row tile (see below).")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: pelotonRemainingEnabledAccordion
             title: qsTr("Peloton Remaining")
             linkedBoolSetting: "tile_peloton_remaining_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays time remaining in Peloton class.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelPelotonRemainingOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: pelotonRemainingOrderTextField
@@ -1438,9 +1314,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = pelotonRemainingOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_peloton_remaining_order = pelotonRemainingOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okPelotonRemainingOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1449,32 +1327,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays time remaining in Peloton class.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         /*
         AccordionCheckElement {
             id: pelotonDifficultyEnabledAccordion
             title: qsTr("Peloton Difficulty")
             linkedBoolSetting: "tile_peloton_difficulty_enabled"
             settings: settings
+            card: true
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelpelotonDifficultyOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: pelotonDifficultyOrderTextField
@@ -1484,9 +1350,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = pelotonDifficultyOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_peloton_difficulty_order = pelotonDifficultyOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okpelotonDifficultyOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1500,13 +1368,14 @@ ScrollView {
             title: qsTr("Lap Elapsed")
             linkedBoolSetting: "tile_lapelapsed_enabled"
             settings: settings
+            card: true
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labellapElapsedOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: lapElapsedOrderTextField
@@ -1516,9 +1385,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = lapElapsedOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_lapelapsed_order = lapElapsedOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: oklapElapsedOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1532,8 +1403,10 @@ ScrollView {
             title: qsTr("Peloton Resistance")
             linkedBoolSetting: "tile_peloton_resistance_enabled"
             settings: settings
+            card: true
+            description: qsTr("Resistance of your bike converted to the Peloton bike scale of 1 to 100.")
             accordionContent: ColumnLayout {
-                SwitchDelegate {
+                UiSwitchDelegate {
                     id: pelotonResistanceColorEnabled
                     text: qsTr("Enable Peloton Resistance color")
                     spacing: 0
@@ -1553,7 +1426,7 @@ ScrollView {
                         id: labelpeloton_resistanceOrder
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: peloton_resistanceOrderTextField
@@ -1563,9 +1436,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = peloton_resistanceOrderTextField.currentValue
+                            if (window.ui.modern) { settings.tile_peloton_resistance_order = peloton_resistanceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                          }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okpeloton_resistanceOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1575,31 +1450,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Resistance of your bike converted to the Peloton bike scale of 1 to 100.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: targetResistanceEnabledAccordion
             title: qsTr("Target Resistance")
             linkedBoolSetting: "tile_target_resistance_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class's resistance target up or down for the rest of the ride.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labeltarget_resistanceOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: target_resistanceOrderTextField
@@ -1609,9 +1473,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_resistanceOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_target_resistance_order = target_resistanceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: oktarget_resistanceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1620,32 +1486,21 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class's resistance target up or down for the rest of the ride.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
 
         AccordionCheckElement {
             id: targetPelotonResistanceEnabledAccordion
             title: qsTr("Target Peloton Resistance")
             linkedBoolSetting: "tile_target_peloton_resistance_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays target resistance converted to the Peloton bike scale of 1 to 100. For example, during a Peloton class, you want the resistance displayed in this tile to match the Peloton Resistance Tile.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labeltarget_peloton_resistanceOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: target_peloton_resistanceOrderTextField
@@ -1655,9 +1510,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_peloton_resistanceOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_target_peloton_resistance_order = target_peloton_resistanceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: oktarget_peloton_resistanceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1666,31 +1523,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays target resistance converted to the Peloton bike scale of 1 to 100. For example, during a Peloton class, you want the resistance displayed in this tile to match the Peloton Resistance Tile.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: targetCadenceEnabledAccordion
             title: qsTr("Target Cadence")
             linkedBoolSetting: "tile_target_cadence_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays target cadence.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labeltarget_cadenceOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: target_cadenceOrderTextField
@@ -1700,9 +1546,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_cadenceOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_target_cadence_order = target_cadenceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: oktarget_cadenceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1711,31 +1559,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays target cadence.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: targetPowerEnabledAccordion
             title: qsTr("Target Power")
             linkedBoolSetting: "tile_target_power_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays target output (watts) when this information is provided by third-party apps.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labeltarget_powerOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: target_powerOrderTextField
@@ -1745,9 +1582,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_powerOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_target_power_order = target_powerOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: oktarget_powerOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1756,32 +1595,21 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays target output (watts) when this information is provided by third-party apps.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
 
         AccordionCheckElement {
             id: targetZoneEnabledAccordion
             title: qsTr("Target Power Zone")
             linkedBoolSetting: "tile_target_zone_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays the target power zone when this information is provided by third-party apps.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labeltarget_zoneOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: target_zoneOrderTextField
@@ -1791,9 +1619,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_zoneOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_target_zone_order = target_zoneOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: oktarget_zoneOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1802,31 +1632,19 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays the target power zone when this information is provided by third-party apps.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: targetSpeedEnabledAccordion
             title: qsTr("Target Speed")
             linkedBoolSetting: "tile_target_speed_enabled"
             settings: settings
+            card: true
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labeltargetspeedOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: target_speedOrderTextField
@@ -1836,9 +1654,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_speedOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_target_speed_order = target_speedOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: oktarget_speedOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1852,13 +1672,14 @@ ScrollView {
             title: qsTr("Target Pace")
             linkedBoolSetting: "tile_target_pace_enabled"
             settings: settings
+            card: true
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labeltargetpaceOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: target_paceOrderTextField
@@ -1868,9 +1689,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_paceOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_target_pace_order = target_paceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: oktarget_paceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1884,13 +1707,14 @@ ScrollView {
             title: qsTr("Target Incline")
             linkedBoolSetting: "tile_target_incline_enabled"
             settings: settings
+            card: true
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labeltarget_inclineOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: target_inclineOrderTextField
@@ -1900,9 +1724,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_inclineOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_target_incline_order = target_inclineOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: oktarget_inclineOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1915,13 +1741,15 @@ ScrollView {
             title: qsTr("Watt/Kg")
             linkedBoolSetting: "tile_watt_kg_enabled"
             settings: settings
+            card: true
+            description: qsTr("Calculates your output (watts) divided by your weight. This is the primary metric used by Zwift and similar apps to calculate your virtual speed. NOTE: This is a much better metric to use than Output/Watts when comparing your effort to other users. This is why Peloton’s leaderboard, which uses only Output, is flawed.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelwatt_kgOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: watt_kgOrderTextField
@@ -1931,9 +1759,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = watt_kgOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_watt_kg_order = watt_kgOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okwatt_kgOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1942,31 +1772,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Calculates your output (watts) divided by your weight. This is the primary metric used by Zwift and similar apps to calculate your virtual speed. NOTE: This is a much better metric to use than Output/Watts when comparing your effort to other users. This is why Peloton’s leaderboard, which uses only Output, is flawed.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: gearsEnabledAccordion
             title: qsTr("Gears")
             linkedBoolSetting: "tile_gears_enabled"
             settings: settings
+            card: true
+            description: qsTr("Allows you to change resistance while in Auto-Follow Mode.This tile allows you override the target resistance sent by third-party apps. For example, you would use the Gears Tile to increase resistance and generate more watts for sprinting in Zwift.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelgearsOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: gearsOrderTextField
@@ -1976,9 +1795,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = gearsOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_gears_order = gearsOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okgearsOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1987,30 +1808,19 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Allows you to change resistance while in Auto-Follow Mode.This tile allows you override the target resistance sent by third-party apps. For example, you would use the Gears Tile to increase resistance and generate more watts for sprinting in Zwift.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             title: qsTr("Gears Big Buttons")
             linkedBoolSetting: "tile_biggears_enabled"
             settings: settings
+            card: true
+            description: qsTr("It shows 2 big gear buttons on the UI")
             accordionContent: ColumnLayout {
                 RowLayout {
                     spacing: 10
                     Label {
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: biggearsOrderTextField
@@ -2020,15 +1830,17 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = biggearsOrderTextField.currentValue
+                            if (window.ui.modern) { settings.tile_biggears_order = biggearsOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                          }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_biggears_order = biggearsOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
                     }
                 }
-                SwitchDelegate {
+                UiSwitchDelegate {
                     text: qsTr("Swap Buttons")
                     spacing: 0
                     bottomPadding: 0
@@ -2044,31 +1856,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("It shows 2 big gear buttons on the UI")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: remainingTimeTrainingProgramRowEnabledAccordion
             title: qsTr("Remaining Time/Row")
             linkedBoolSetting: "tile_remainingtimetrainprogramrow_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays the time remaining until the next cadence and/or resistance interval.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelremainingTimeTrainingProgramRowOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: remainingTimeTrainingProgramRowOrderTextField
@@ -2078,9 +1879,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = remainingTimeTrainingProgramRowOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_remainingtimetrainprogramrow_order = remainingTimeTrainingProgramRowOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okremainingTimeTrainingProgramRowOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2089,31 +1892,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays the time remaining until the next cadence and/or resistance interval.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: nextRowsTrainingProgramRowEnabledAccordion
             title: qsTr("Next Rows")
             linkedBoolSetting: "tile_nextrowstrainprogram_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays the next Peloton interval with duration and FTP Zone (in Power Zone classes) or Peloton Resistance (non–Power Zone classes).")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelnextRowsTrainingProgramOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: nextRowsTrainingProgramOrderTextField
@@ -2123,9 +1915,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = nextRowsTrainingProgramOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_nextrowstrainprogram_order = nextRowsTrainingProgramOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: oknextRowsTrainingProgramOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2134,31 +1928,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays the next Peloton interval with duration and FTP Zone (in Power Zone classes) or Peloton Resistance (non–Power Zone classes).")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: metsEnabledAccordion
             title: qsTr("METS")
             linkedBoolSetting: "tile_mets_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays metabolic equivalents (METs), a measurement of energy expenditure and amount of oxygen used by the body compared to the body at rest. (e.g., 4 METS requires the body to use 4 times as much oxygen than when at rest, which means it requires more energy and burns more calories).")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelmetsOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: metsOrderTextField
@@ -2168,9 +1951,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = metsOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_mets_order = metsOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okmetsOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2179,31 +1964,19 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays metabolic equivalents (METs), a measurement of energy expenditure and amount of oxygen used by the body compared to the body at rest. (e.g., 4 METS requires the body to use 4 times as much oxygen than when at rest, which means it requires more energy and burns more calories).")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: targetMetsEnabledAccordion
             title: qsTr("Target METS")
             linkedBoolSetting: "tile_targetmets_enabled"
             settings: settings
+            card: true
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labeltargetmetsOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: targetmetsOrderTextField
@@ -2213,9 +1986,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = targetmetsOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_targetmets_order = targetmetsOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: oktargetmetsOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2229,13 +2004,15 @@ ScrollView {
             title: qsTr("Time")
             linkedBoolSetting: "tile_datetime_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays the current time.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labeldatetimeOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: datetimeOrderTextField
@@ -2245,9 +2022,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = datetimeOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_datetime_order = datetimeOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okdatetimeOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2256,31 +2035,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays the current time.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: targetStrokesCountAccordion
             title: qsTr("Strokes Count")
             linkedBoolSetting: "tile_strokes_count_enabled"
             settings: settings
+            card: true
+            description: qsTr("(Rower only) Displays the number of strokes rowed.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelstrokes_countOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: strokes_countOrderTextField
@@ -2290,9 +2058,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = strokes_countOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_strokes_count_order = strokes_countOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okstrokes_countOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2301,31 +2071,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("(Rower only) Displays the number of strokes rowed.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: targetStrokesLengthAccordion
             title: qsTr("Stroke Length")
             linkedBoolSetting: "tile_strokes_length_enabled"
             settings: settings
+            card: true
+            description: qsTr("(Rower only) Displays the stroke length.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelstrokes_lengthOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: strokes_lengthOrderTextField
@@ -2335,9 +2094,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = strokes_lengthOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_strokes_length_order = strokes_lengthOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okstrokes_lengthOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2346,31 +2107,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("(Rower only) Displays the stroke length.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: targetSteeringAngleEnabledAccordion
             title: qsTr("Steering Angle")
             linkedBoolSetting: "tile_steering_angle_enabled"
             settings: settings
+            card: true
+            description: qsTr("(Elite Rizer only) Displays steering angle.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelsteeringAngleOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: steeringAngleOrderTextField
@@ -2380,9 +2130,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = steeringAngleOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_steering_angle_order = steeringAngleOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: oksteeringAngleOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2391,31 +2143,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("(Elite Rizer only) Displays steering angle.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: targetPIDHrAccordion
             title: qsTr("PID HR Zone")
             linkedBoolSetting: "tile_pid_hr_enabled"
             settings: settings
+            card: true
+            description: qsTr("Use this tile to display the target heart rate zone in which you’ve chosen to work out in Settings > Training Program Options.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelPIDHROrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: pidHROrderTextField
@@ -2425,9 +2166,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = pidHROrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_pid_hr_order = pidHROrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okpidHROrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2436,31 +2179,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Use this tile to display the target heart rate zone in which you’ve chosen to work out in Settings > Training Program Options.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: extInclineAccordion
             title: qsTr("External Incline")
             linkedBoolSetting: "tile_ext_incline_enabled"
             settings: settings
+            card: true
+            description: qsTr("(Elite Rizer only) Allows control of the incline of external inclination equipment.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelExtInclineOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: extInclineOrderTextField
@@ -2470,9 +2202,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = extInclineOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_ext_incline_order = extInclineOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okextInclineOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2481,31 +2215,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("(Elite Rizer only) Allows control of the incline of external inclination equipment.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: strideLength
             title: qsTr("Stride Length")
             linkedBoolSetting: "tile_instantaneous_stride_length_enabled"
             settings: settings
+            card: true
+            description: qsTr("(requires a compatible footpod with accelerometer; treadmill only) Displays stride while walking or running.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelStrideLengthOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: strideLengthOrderTextField
@@ -2515,9 +2238,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = strideLengthOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_instantaneous_stride_length_order = strideLengthOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okStrideLengthOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2526,31 +2251,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("(requires a compatible footpod with accelerometer; treadmill only) Displays stride while walking or running.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: groundContact
             title: qsTr("Ground Contact")
             linkedBoolSetting: "tile_ground_contact_enabled"
             settings: settings
+            card: true
+            description: qsTr("(requires a compatible footpod with accelerometer; treadmill only) Displays time foot is on contact with ground while walking or running.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelGroundContactOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: groundContactOrderTextField
@@ -2560,9 +2274,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = groundContactOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_ground_contact_order = groundContactOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okGroundContactOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2571,31 +2287,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("(requires a compatible footpod with accelerometer; treadmill only) Displays time foot is on contact with ground while walking or running.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: verticalOscillation
             title: qsTr("Vertical Oscillation")
             linkedBoolSetting: "tile_vertical_oscillation_enabled"
             settings: settings
+            card: true
+            description: qsTr("(requires a compatible footpod with accelerometer; treadmill only) Displays the up and down movement while walking or running.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelVerticalOscillationOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: verticalOscillationOrderTextField
@@ -2605,9 +2310,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = verticalOscillationOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_vertical_oscillation_order = verticalOscillationOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okVerticalOscillationOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2616,31 +2323,19 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("(requires a compatible footpod with accelerometer; treadmill only) Displays the up and down movement while walking or running.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: paceLast500mEnabledAccordion
             title: qsTr("Pace Last 500m")
             linkedBoolSetting: "tile_pace_last500m_enabled"
             settings: settings
+            card: true
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelPacelast500mOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: pacelast500mOrderTextField
@@ -2650,9 +2345,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = pacelast500mOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_pace_last500m_order = pacelast500mOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okPacelast500mOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2666,13 +2363,14 @@ ScrollView {
             title: qsTr("Step Count")
             linkedBoolSetting: "tile_step_count_enabled"
             settings: settings
+            card: true
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelStepCountOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: stepCountOrderTextField
@@ -2682,9 +2380,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = stepCountOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_step_count_order = stepCountOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okStepCountOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2698,13 +2398,14 @@ ScrollView {
             title: qsTr("Erg Mode")
             linkedBoolSetting: "tile_erg_mode_enabled"
             settings: settings
+            card: true
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelErgModeOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: ergModeOrderTextField
@@ -2714,9 +2415,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = ergModeOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_erg_mode_order = ergModeOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okErgModeOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2729,12 +2432,13 @@ ScrollView {
             title: qsTr("Running Stress Score")
             linkedBoolSetting: "tile_rss_enabled"
             settings: settings
+            card: true
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: rssOrderTextField
@@ -2744,9 +2448,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = rssOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_rss_order = rssOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_rss_order = rssOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -2759,6 +2465,7 @@ ScrollView {
             title: qsTr("Preset Resistance 1")
             linkedBoolSetting: "tile_preset_resistance_1_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -2766,7 +2473,7 @@ ScrollView {
                         id: labelPresetResistance1Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetResistance1TextField
@@ -2776,9 +2483,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetResistance1TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_resistance_1_order = presetResistance1TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetResistance1OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2792,7 +2501,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetResistance1ValueTextField
                         text: settings.tile_preset_resistance_1_value
                         Layout.fillHeight: false
@@ -2813,7 +2522,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetResistance1LabelTextField
                         text: settings.tile_preset_resistance_1_label
                         Layout.fillHeight: false
@@ -2844,7 +2553,7 @@ ScrollView {
 
                         }
 						  }
-						  TextField {
+						  UiTextField {
 						      id: presetResistance1ColorTextField
 								text: settings.tile_preset_resistance_1_color
 								Layout.fillHeight: false
@@ -2868,6 +2577,7 @@ ScrollView {
             title: qsTr("Preset Resistance 2")
             linkedBoolSetting: "tile_preset_resistance_2_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -2875,7 +2585,7 @@ ScrollView {
                         id: labelPresetResistance2Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetResistance2TextField
@@ -2885,9 +2595,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetResistance2TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_resistance_2_order = presetResistance2TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetResistance2OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2901,7 +2613,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetResistance2ValueTextField
                         text: settings.tile_preset_resistance_2_value
                         Layout.fillHeight: false
@@ -2922,7 +2634,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetResistance2LabelTextField
                         text: settings.tile_preset_resistance_2_label
                         Layout.fillHeight: false
@@ -2953,7 +2665,7 @@ ScrollView {
 
                         }
 						  }
-						  TextField {
+						  UiTextField {
 						      id: presetResistance2ColorTextField
 								text: settings.tile_preset_resistance_2_color
 								Layout.fillHeight: false
@@ -2977,6 +2689,7 @@ ScrollView {
             title: qsTr("Preset Resistance 3")
             linkedBoolSetting: "tile_preset_resistance_3_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -2984,7 +2697,7 @@ ScrollView {
                         id: labelPresetResistance3Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetResistance3TextField
@@ -2994,9 +2707,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetResistance3TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_resistance_3_order = presetResistance3TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetResistance3OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3010,7 +2725,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetResistance3ValueTextField
                         text: settings.tile_preset_resistance_3_value
                         Layout.fillHeight: false
@@ -3031,7 +2746,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetResistance3LabelTextField
                         text: settings.tile_preset_resistance_3_label
                         Layout.fillHeight: false
@@ -3062,7 +2777,7 @@ ScrollView {
 
                         }
 						  }
-						  TextField {
+						  UiTextField {
 						      id: presetResistance3ColorTextField
 								text: settings.tile_preset_resistance_3_color
 								Layout.fillHeight: false
@@ -3086,6 +2801,7 @@ ScrollView {
             title: qsTr("Preset Resistance 4")
             linkedBoolSetting: "tile_preset_resistance_4_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -3093,7 +2809,7 @@ ScrollView {
                         id: labelPresetResistance4Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetResistance4TextField
@@ -3103,9 +2819,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetResistance4TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_resistance_4_order = presetResistance4TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetResistance4OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3119,7 +2837,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetResistance4ValueTextField
                         text: settings.tile_preset_resistance_4_value
                         Layout.fillHeight: false
@@ -3140,7 +2858,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetResistance4LabelTextField
                         text: settings.tile_preset_resistance_4_label
                         Layout.fillHeight: false
@@ -3171,7 +2889,7 @@ ScrollView {
 
                         }
 						  }
-						  TextField {
+						  UiTextField {
 						      id: presetResistance4ColorTextField
 								text: settings.tile_preset_resistance_4_color
 								Layout.fillHeight: false
@@ -3195,6 +2913,7 @@ ScrollView {
             title: qsTr("Preset Resistance 5")
             linkedBoolSetting: "tile_preset_resistance_5_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -3202,7 +2921,7 @@ ScrollView {
                         id: labelPresetResistance5Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetResistance5TextField
@@ -3212,9 +2931,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetResistance5TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_resistance_5_order = presetResistance5TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetResistance5OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3228,7 +2949,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetResistance5ValueTextField
                         text: settings.tile_preset_resistance_5_value
                         Layout.fillHeight: false
@@ -3249,7 +2970,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetResistance5LabelTextField
                         text: settings.tile_preset_resistance_5_label
                         Layout.fillHeight: false
@@ -3280,7 +3001,7 @@ ScrollView {
 
                         }
 						  }
-						  TextField {
+						  UiTextField {
 						      id: presetResistance5ColorTextField
 								text: settings.tile_preset_resistance_5_color
 								Layout.fillHeight: false
@@ -3304,6 +3025,7 @@ ScrollView {
             title: qsTr("Preset Speed 1")
             linkedBoolSetting: "tile_preset_speed_1_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -3311,7 +3033,7 @@ ScrollView {
                         id: labelPresetSpeed1Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetSpeed1TextField
@@ -3321,9 +3043,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetSpeed1TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_speed_1_order = presetSpeed1TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetSpeed1OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3337,7 +3061,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetSpeed1ValueTextField
                         text: settingsTilesPane.formatPresetSpeedValue(settings.tile_preset_speed_1_value)
                         Layout.fillHeight: false
@@ -3362,7 +3086,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetSpeed1LabelTextField
                         text: settings.tile_preset_speed_1_label
                         Layout.fillHeight: false
@@ -3393,7 +3117,7 @@ ScrollView {
 
                         }
 						  }
-						  TextField {
+						  UiTextField {
 						      id: presetSpeed1ColorTextField
 								text: settings.tile_preset_speed_1_color
 								Layout.fillHeight: false
@@ -3417,6 +3141,7 @@ ScrollView {
             title: qsTr("Preset Speed 2")
             linkedBoolSetting: "tile_preset_speed_2_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -3424,7 +3149,7 @@ ScrollView {
                         id: labelPresetSpeed2Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetSpeed2TextField
@@ -3434,9 +3159,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetSpeed2TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_speed_2_order = presetSpeed2TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetSpeed2OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3450,7 +3177,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetSpeed2ValueTextField
                         text: settingsTilesPane.formatPresetSpeedValue(settings.tile_preset_speed_2_value)
                         Layout.fillHeight: false
@@ -3475,7 +3202,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetSpeed2LabelTextField
                         text: settings.tile_preset_speed_2_label
                         Layout.fillHeight: false
@@ -3506,7 +3233,7 @@ ScrollView {
 
                         }
 						  }
-						  TextField {
+						  UiTextField {
 						      id: presetSpeed2ColorTextField
 								text: settings.tile_preset_speed_2_color
 								Layout.fillHeight: false
@@ -3530,6 +3257,7 @@ ScrollView {
             title: qsTr("Preset Speed 3")
             linkedBoolSetting: "tile_preset_speed_3_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -3537,7 +3265,7 @@ ScrollView {
                         id: labelPresetSpeed3Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetSpeed3TextField
@@ -3547,9 +3275,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetSpeed3TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_speed_3_order = presetSpeed3TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetSpeed3OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3563,7 +3293,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetSpeed3ValueTextField
                         text: settingsTilesPane.formatPresetSpeedValue(settings.tile_preset_speed_3_value)
                         Layout.fillHeight: false
@@ -3588,7 +3318,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetSpeed3LabelTextField
                         text: settings.tile_preset_speed_3_label
                         Layout.fillHeight: false
@@ -3619,7 +3349,7 @@ ScrollView {
 
                         }
 						  }
-						  TextField {
+						  UiTextField {
 						      id: presetSpeed3ColorTextField
 								text: settings.tile_preset_speed_3_color
 								Layout.fillHeight: false
@@ -3643,6 +3373,7 @@ ScrollView {
             title: qsTr("Preset Speed 4")
             linkedBoolSetting: "tile_preset_speed_4_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -3650,7 +3381,7 @@ ScrollView {
                         id: labelPresetSpeed4Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetSpeed4TextField
@@ -3660,9 +3391,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetSpeed4TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_speed_4_order = presetSpeed4TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetSpeed4OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3676,7 +3409,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetSpeed4ValueTextField
                         text: settingsTilesPane.formatPresetSpeedValue(settings.tile_preset_speed_4_value)
                         Layout.fillHeight: false
@@ -3701,7 +3434,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetSpeed4LabelTextField
                         text: settings.tile_preset_speed_4_label
                         Layout.fillHeight: false
@@ -3732,7 +3465,7 @@ ScrollView {
 
                         }
 						  }
-						  TextField {
+						  UiTextField {
 						      id: presetSpeed4ColorTextField
 								text: settings.tile_preset_speed_4_color
 								Layout.fillHeight: false
@@ -3756,6 +3489,7 @@ ScrollView {
             title: qsTr("Preset Speed 5")
             linkedBoolSetting: "tile_preset_speed_5_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -3763,7 +3497,7 @@ ScrollView {
                         id: labelPresetSpeed5Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetSpeed5TextField
@@ -3773,9 +3507,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetSpeed5TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_speed_5_order = presetSpeed5TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetSpeed5OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3789,7 +3525,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetSpeed5ValueTextField
                         text: settingsTilesPane.formatPresetSpeedValue(settings.tile_preset_speed_5_value)
                         Layout.fillHeight: false
@@ -3814,7 +3550,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetSpeed5LabelTextField
                         text: settings.tile_preset_speed_5_label
                         Layout.fillHeight: false
@@ -3845,7 +3581,7 @@ ScrollView {
 
                         }
 						  }
-						  TextField {
+						  UiTextField {
 						      id: presetSpeed5ColorTextField
 								text: settings.tile_preset_speed_5_color
 								Layout.fillHeight: false
@@ -3869,6 +3605,7 @@ ScrollView {
             title: qsTr("Preset Inclination 1")
             linkedBoolSetting: "tile_preset_inclination_1_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -3876,7 +3613,7 @@ ScrollView {
                         id: labelPresetInclination1Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetInclination1TextField
@@ -3886,9 +3623,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetInclination1TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_inclination_1_order = presetInclination1TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetInclination1OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3902,7 +3641,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetInclination1ValueTextField
                         text: settings.tile_preset_inclination_1_value
                         Layout.fillHeight: false
@@ -3923,7 +3662,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetInclination1LabelTextField
                         text: settings.tile_preset_inclination_1_label
                         Layout.fillHeight: false
@@ -3954,7 +3693,7 @@ ScrollView {
 
                         }
 						  }
-						  TextField {
+						  UiTextField {
 						      id: presetInclination1ColorTextField
 								text: settings.tile_preset_inclination_1_color
 								Layout.fillHeight: false
@@ -3978,6 +3717,7 @@ ScrollView {
             title: qsTr("Preset Inclination 2")
             linkedBoolSetting: "tile_preset_inclination_2_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -3985,7 +3725,7 @@ ScrollView {
                         id: labelPresetInclination2Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetInclination2TextField
@@ -3995,9 +3735,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetInclination2TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_inclination_2_order = presetInclination2TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetInclination2OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4011,7 +3753,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetInclination2ValueTextField
                         text: settings.tile_preset_inclination_2_value
                         Layout.fillHeight: false
@@ -4032,7 +3774,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetInclination2LabelTextField
                         text: settings.tile_preset_inclination_2_label
                         Layout.fillHeight: false
@@ -4064,7 +3806,7 @@ ScrollView {
 
                     }
 						}
-					 TextField {
+					 UiTextField {
 					     id: presetInclination2ColorTextField
 						  text: settings.tile_preset_inclination_2_color
 						  Layout.fillHeight: false
@@ -4087,6 +3829,7 @@ ScrollView {
             title: qsTr("Preset Inclination 3")
             linkedBoolSetting: "tile_preset_inclination_3_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -4094,7 +3837,7 @@ ScrollView {
                         id: labelPresetInclination3Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetInclination3TextField
@@ -4104,9 +3847,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetInclination3TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_inclination_3_order = presetInclination3TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetInclination3OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4120,7 +3865,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetInclination3ValueTextField
                         text: settings.tile_preset_inclination_3_value
                         Layout.fillHeight: false
@@ -4141,7 +3886,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetInclination3LabelTextField
                         text: settings.tile_preset_inclination_3_label
                         Layout.fillHeight: false
@@ -4172,7 +3917,7 @@ ScrollView {
 
                         }
 						  }
-						  TextField {
+						  UiTextField {
 						      id: presetInclination3ColorTextField
 								text: settings.tile_preset_inclination_3_color
 								Layout.fillHeight: false
@@ -4196,6 +3941,7 @@ ScrollView {
             title: qsTr("Preset Inclination 4")
             linkedBoolSetting: "tile_preset_inclination_4_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -4203,7 +3949,7 @@ ScrollView {
                         id: labelPresetInclination4Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetInclination4TextField
@@ -4213,9 +3959,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetInclination4TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_inclination_4_order = presetInclination4TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetInclination4OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4229,7 +3977,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetInclination4ValueTextField
                         text: settings.tile_preset_inclination_4_value
                         Layout.fillHeight: false
@@ -4250,7 +3998,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetInclination4LabelTextField
                         text: settings.tile_preset_inclination_4_label
                         Layout.fillHeight: false
@@ -4281,7 +4029,7 @@ ScrollView {
 
                         }
 						  }
-						  TextField {
+						  UiTextField {
 						      id: presetInclination4ColorTextField
 								text: settings.tile_preset_inclination_4_color
 								Layout.fillHeight: false
@@ -4305,6 +4053,7 @@ ScrollView {
             title: qsTr("Preset Inclination 5")
             linkedBoolSetting: "tile_preset_inclination_5_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
@@ -4312,7 +4061,7 @@ ScrollView {
                         id: labelPresetInclination5Order
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetInclination5TextField
@@ -4322,9 +4071,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetInclination5TextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_inclination_5_order = presetInclination5TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         id: okPresetInclination5OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4338,7 +4089,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetInclination5ValueTextField
                         text: settings.tile_preset_inclination_5_value
                         Layout.fillHeight: false
@@ -4359,7 +4110,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetInclination5LabelTextField
                         text: settings.tile_preset_inclination_5_label
                         Layout.fillHeight: false
@@ -4390,7 +4141,7 @@ ScrollView {
 
                         }
 						  }
-						  TextField {
+						  UiTextField {
 						      id: presetInclination5ColorTextField
 								text: settings.tile_preset_inclination_5_color
 								Layout.fillHeight: false
@@ -4414,13 +4165,14 @@ ScrollView {
             title: qsTr("Preset Power Zone 1")
             linkedBoolSetting: "tile_preset_powerzone_1_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
                     Label {
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetPowerZone1OrderTextField
@@ -4430,9 +4182,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetPowerZone1OrderTextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_powerzone_1_order = presetPowerZone1OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_1_order = presetPowerZone1OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4444,7 +4198,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerZone1Value
                         text: settings.tile_preset_powerzone_1_value
                         Layout.fillHeight: false
@@ -4463,7 +4217,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerZone1Label
                         text: settings.tile_preset_powerzone_1_label
                         Layout.fillHeight: false
@@ -4490,7 +4244,7 @@ ScrollView {
                         }
                         onRejected: {}
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerzone1ColorTextField
                         text: settings.tile_preset_powerzone_1_color
                         Layout.fillHeight: false
@@ -4515,13 +4269,14 @@ ScrollView {
             title: qsTr("Preset Power Zone 2")
             linkedBoolSetting: "tile_preset_powerzone_2_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
                     Label {
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetPowerZone2OrderTextField
@@ -4531,9 +4286,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetPowerZone2OrderTextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_powerzone_2_order = presetPowerZone2OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_2_order = presetPowerZone2OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4545,7 +4302,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerZone2Value
                         text: settings.tile_preset_powerzone_2_value
                         Layout.fillHeight: false
@@ -4564,7 +4321,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerZone2Label
                         text: settings.tile_preset_powerzone_2_label
                         Layout.fillHeight: false
@@ -4591,7 +4348,7 @@ ScrollView {
                         }
                         onRejected: {}
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerzone2ColorTextField
                         text: settings.tile_preset_powerzone_2_color
                         Layout.fillHeight: false
@@ -4616,13 +4373,14 @@ ScrollView {
             title: qsTr("Preset Power Zone 3")
             linkedBoolSetting: "tile_preset_powerzone_3_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
                     Label {
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetPowerZone3OrderTextField
@@ -4632,9 +4390,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetPowerZone3OrderTextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_powerzone_3_order = presetPowerZone3OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_3_order = presetPowerZone3OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4646,7 +4406,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerZone3Value
                         text: settings.tile_preset_powerzone_3_value
                         Layout.fillHeight: false
@@ -4665,7 +4425,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerZone3Label
                         text: settings.tile_preset_powerzone_3_label
                         Layout.fillHeight: false
@@ -4692,7 +4452,7 @@ ScrollView {
                         }
                         onRejected: {}
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerzone3ColorTextField
                         text: settings.tile_preset_powerzone_3_color
                         Layout.fillHeight: false
@@ -4717,13 +4477,14 @@ ScrollView {
             title: qsTr("Preset Power Zone 4")
             linkedBoolSetting: "tile_preset_powerzone_4_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
                     Label {
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetPowerZone4OrderTextField
@@ -4733,9 +4494,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetPowerZone4OrderTextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_powerzone_4_order = presetPowerZone4OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_4_order = presetPowerZone4OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4747,7 +4510,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerZone4Value
                         text: settings.tile_preset_powerzone_4_value
                         Layout.fillHeight: false
@@ -4766,7 +4529,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerZone4Label
                         text: settings.tile_preset_powerzone_4_label
                         Layout.fillHeight: false
@@ -4793,7 +4556,7 @@ ScrollView {
                         }
                         onRejected: {}
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerzone4ColorTextField
                         text: settings.tile_preset_powerzone_4_color
                         Layout.fillHeight: false
@@ -4818,13 +4581,14 @@ ScrollView {
             title: qsTr("Preset Power Zone 5")
             linkedBoolSetting: "tile_preset_powerzone_5_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
                     Label {
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetPowerZone5OrderTextField
@@ -4834,9 +4598,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetPowerZone5OrderTextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_powerzone_5_order = presetPowerZone5OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_5_order = presetPowerZone5OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4848,7 +4614,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerZone5Value
                         text: settings.tile_preset_powerzone_5_value
                         Layout.fillHeight: false
@@ -4867,7 +4633,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerZone5Label
                         text: settings.tile_preset_powerzone_5_label
                         Layout.fillHeight: false
@@ -4894,7 +4660,7 @@ ScrollView {
                         }
                         onRejected: {}
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerzone5ColorTextField
                         text: settings.tile_preset_powerzone_5_color
                         Layout.fillHeight: false
@@ -4919,13 +4685,14 @@ ScrollView {
             title: qsTr("Preset Power Zone 6")
             linkedBoolSetting: "tile_preset_powerzone_6_enabled"
             settings: settings
+            card: true
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
                     Label {
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetPowerZone6OrderTextField
@@ -4935,9 +4702,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetPowerZone6OrderTextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_powerzone_6_order = presetPowerZone6OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_6_order = presetPowerZone6OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4949,7 +4718,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerZone6Value
                         text: settings.tile_preset_powerzone_6_value
                         Layout.fillHeight: false
@@ -4968,7 +4737,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerZone6Label
                         text: settings.tile_preset_powerzone_6_label
                         Layout.fillHeight: false
@@ -4995,7 +4764,7 @@ ScrollView {
                         }
                         onRejected: {}
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerzone6ColorTextField
                         text: settings.tile_preset_powerzone_6_color
                         Layout.fillHeight: false
@@ -5020,13 +4789,15 @@ ScrollView {
             title: qsTr("Preset Power Zone 7")
             linkedBoolSetting: "tile_preset_powerzone_7_enabled"
             settings: settings
+            card: true
+            description: qsTr("Power zone presets allow quick access to specific training zones with customizable labels and values.")
             accordionContent: ColumnLayout {
                 spacing: 10
                 RowLayout {
                     Label {
                         text: qsTr("order index:")
                         Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignRight
+                        horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
                     UiComboBox {
                         id: presetPowerZone7OrderTextField
@@ -5036,9 +4807,11 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetPowerZone7OrderTextField.currentValue
+                            if (window.ui.modern) { settings.tile_preset_powerzone_7_order = presetPowerZone7OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
+                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_7_order = presetPowerZone7OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -5050,7 +4823,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerZone7Value
                         text: settings.tile_preset_powerzone_7_value
                         Layout.fillHeight: false
@@ -5069,7 +4842,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerZone7Label
                         text: settings.tile_preset_powerzone_7_label
                         Layout.fillHeight: false
@@ -5096,7 +4869,7 @@ ScrollView {
                         }
                         onRejected: {}
                     }
-                    TextField {
+                    UiTextField {
                         id: presetPowerzone7ColorTextField
                         text: settings.tile_preset_powerzone_7_color
                         Layout.fillHeight: false
@@ -5116,31 +4889,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Power zone presets allow quick access to specific training zones with customizable labels and values.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: hrTimeInZone1EnabledAccordion
             title: qsTr("Heart Rate Time in Zone 1+")
             linkedBoolSetting: "tile_hr_time_in_zone_1_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays total time spent in heart rate Zone 1 or higher during the session.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelHrTimeInZone1Order
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: hrTimeInZone1OrderTextField
@@ -5150,9 +4912,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = hrTimeInZone1OrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_hr_time_in_zone_1_order = hrTimeInZone1OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okHrTimeInZone1OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5161,31 +4925,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays total time spent in heart rate Zone 1 or higher during the session.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: hrTimeInZone2EnabledAccordion
             title: qsTr("Heart Rate Time in Zone 2+")
             linkedBoolSetting: "tile_hr_time_in_zone_2_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays total time spent in heart rate Zone 2 or higher during the session.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelHrTimeInZone2Order
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: hrTimeInZone2OrderTextField
@@ -5195,9 +4948,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = hrTimeInZone2OrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_hr_time_in_zone_2_order = hrTimeInZone2OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okHrTimeInZone2OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5206,31 +4961,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays total time spent in heart rate Zone 2 or higher during the session.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: hrTimeInZone3EnabledAccordion
             title: qsTr("Heart Rate Time in Zone 3+")
             linkedBoolSetting: "tile_hr_time_in_zone_3_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays total time spent in heart rate Zone 3 or higher during the session.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelHrTimeInZone3Order
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: hrTimeInZone3OrderTextField
@@ -5240,9 +4984,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = hrTimeInZone3OrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_hr_time_in_zone_3_order = hrTimeInZone3OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okHrTimeInZone3OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5251,31 +4997,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays total time spent in heart rate Zone 3 or higher during the session.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: hrTimeInZone4EnabledAccordion
             title: qsTr("Heart Rate Time in Zone 4+")
             linkedBoolSetting: "tile_hr_time_in_zone_4_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays total time spent in heart rate Zone 4 or higher during the session.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelHrTimeInZone4Order
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: hrTimeInZone4OrderTextField
@@ -5285,9 +5020,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = hrTimeInZone4OrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_hr_time_in_zone_4_order = hrTimeInZone4OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okHrTimeInZone4OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5296,31 +5033,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays total time spent in heart rate Zone 4 or higher during the session.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: hrTimeInZone5EnabledAccordion
             title: qsTr("Heart Rate Time in Zone 5+")
             linkedBoolSetting: "tile_hr_time_in_zone_5_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays total time spent in heart rate Zone 5 or higher during the session.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelHrTimeInZone5Order
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: hrTimeInZone5OrderTextField
@@ -5330,28 +5056,17 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = hrTimeInZone5OrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_hr_time_in_zone_5_order = hrTimeInZone5OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okHrTimeInZone5OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_hr_time_in_zone_5_order = hrTimeInZone5OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
                 }
             }
-        }
-
-        Label {
-            text: qsTr("Displays total time spent in heart rate Zone 5 or higher during the session.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         RowLayout {
@@ -5388,13 +5103,15 @@ ScrollView {
             title: qsTr("Core Temperature")
             linkedBoolSetting: "tile_coretemperature_enabled"
             settings: settings
+            card: true
+            description: qsTr("Shows Core, Body Temperature and Heat Strain Index from a Core Temperature sensor.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelcoretemperatureOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: coretemperatureOrderTextField
@@ -5404,9 +5121,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = coretemperatureOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_coretemperature_order = coretemperatureOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okcoretemperatureOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5415,31 +5134,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Shows Core, Body Temperature and Heat Strain Index from a Core Temperature sensor.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: heatTimeInZone1EnabledAccordion
             title: qsTr("Heat Time in Zone 1")
             linkedBoolSetting: "tile_heat_time_in_zone_1_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays total time spent in heat Zone 1 during the session.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelHeatTimeInZone1Order
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: heatTimeInZone1OrderTextField
@@ -5449,9 +5157,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = heatTimeInZone1OrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_heat_time_in_zone_1_order = heatTimeInZone1OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okHeatTimeInZone1OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5460,31 +5170,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays total time spent in heat Zone 1 during the session.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: heatTimeInZone2EnabledAccordion
             title: qsTr("Heat Time in Zone 2")
             linkedBoolSetting: "tile_heat_time_in_zone_2_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays total time spent in heat Zone 2 during the session.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelHeatTimeInZone2Order
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: heatTimeInZone2OrderTextField
@@ -5494,9 +5193,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = heatTimeInZone2OrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_heat_time_in_zone_2_order = heatTimeInZone2OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okHeatTimeInZone2OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5505,31 +5206,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays total time spent in heat Zone 2 during the session.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: heatTimeInZone3EnabledAccordion
             title: qsTr("Heat Time in Zone 3")
             linkedBoolSetting: "tile_heat_time_in_zone_3_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays total time spent in heat Zone 3 during the session.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelHeatTimeInZone3Order
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: heatTimeInZone3OrderTextField
@@ -5539,9 +5229,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = heatTimeInZone3OrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_heat_time_in_zone_3_order = heatTimeInZone3OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okHeatTimeInZone3OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5550,31 +5242,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays total time spent in heat Zone 3 during the session.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: heatTimeInZone4EnabledAccordion
             title: qsTr("Heat Time in Zone 4")
             linkedBoolSetting: "tile_heat_time_in_zone_4_enabled"
             settings: settings
+            card: true
+            description: qsTr("Displays total time spent in heat Zone 4 during the session.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelHeatTimeInZone4Order
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: heatTimeInZone4OrderTextField
@@ -5584,9 +5265,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = heatTimeInZone4OrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_heat_time_in_zone_4_order = heatTimeInZone4OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okHeatTimeInZone4OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5595,30 +5278,19 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Displays total time spent in heat Zone 4 during the session.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: autoVirtualShiftingCruiseEnabledAccordion
             title: qsTr("Auto Virtual Shifting Cruise")
             linkedBoolSetting: "tile_auto_virtual_shifting_cruise_enabled"
             settings: settings
+            card: true
+            description: qsTr("Button tile to switch automatic virtual shifting to Cruise profile.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: autoVirtualShiftingCruiseOrderTextField
@@ -5628,9 +5300,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = autoVirtualShiftingCruiseOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_auto_virtual_shifting_cruise_order = autoVirtualShiftingCruiseOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_auto_virtual_shifting_cruise_order = autoVirtualShiftingCruiseOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -5638,30 +5312,19 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Button tile to switch automatic virtual shifting to Cruise profile.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: autoVirtualShiftingClimbEnabledAccordion
             title: qsTr("Auto Virtual Shifting Climb")
             linkedBoolSetting: "tile_auto_virtual_shifting_climb_enabled"
             settings: settings
+            card: true
+            description: qsTr("Button tile to switch automatic virtual shifting to Climb profile.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: autoVirtualShiftingClimbOrderTextField
@@ -5671,9 +5334,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = autoVirtualShiftingClimbOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_auto_virtual_shifting_climb_order = autoVirtualShiftingClimbOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_auto_virtual_shifting_climb_order = autoVirtualShiftingClimbOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -5681,30 +5346,19 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Button tile to switch automatic virtual shifting to Climb profile.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: autoVirtualShiftingSprintEnabledAccordion
             title: qsTr("Auto Virtual Shifting Sprint")
             linkedBoolSetting: "tile_auto_virtual_shifting_sprint_enabled"
             settings: settings
+            card: true
+            description: qsTr("Button tile to switch automatic virtual shifting to Sprint profile.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: autoVirtualShiftingSprintOrderTextField
@@ -5714,9 +5368,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = autoVirtualShiftingSprintOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_auto_virtual_shifting_sprint_order = autoVirtualShiftingSprintOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_auto_virtual_shifting_sprint_order = autoVirtualShiftingSprintOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -5724,30 +5380,19 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Button tile to switch automatic virtual shifting to Sprint profile.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: powerAvgEnabledAccordion
             title: qsTr("Power Averaging")
             linkedBoolSetting: "tile_power_avg_enabled"
             settings: settings
+            card: true
+            description: qsTr("Button tile to cycle through power averaging modes: Off, 3s avg (harmonic), 5s avg (harmonic). Tap to cycle between modes. Only for bikes.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: powerAvgOrderTextField
@@ -5757,9 +5402,11 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = powerAvgOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_power_avg_order = powerAvgOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_power_avg_order = powerAvgOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -5767,31 +5414,20 @@ ScrollView {
             }
         }
 
-        Label {
-            text: qsTr("Button tile to cycle through power averaging modes: Off, 3s avg (harmonic), 5s avg (harmonic). Tap to cycle between modes. Only for bikes.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-        }
-
         AccordionCheckElement {
             id: hrvEnabledAccordion
             title: qsTr("HRV (Heart Rate Variability)")
             linkedBoolSetting: "tile_hrv_enabled"
             settings: settings
+            card: true
+            description: qsTr("Shows Heart Rate Variability (HRV) from a compatible heart rate belt. Displays RMSSD value in milliseconds.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
                     id: labelhrvOrder
                     text: qsTr("order index:")
                     Layout.fillWidth: true
-                    horizontalAlignment: Text.AlignRight
+                    horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                 }
                 UiComboBox {
                     id: hrvOrderTextField
@@ -5801,28 +5437,17 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = hrvOrderTextField.currentValue
+                        if (window.ui.modern) { settings.tile_hrv_order = hrvOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
+                    visible: !window.ui.modern
                     id: okhrvOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_hrv_order = hrvOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
                 }
             }
-        }
-
-        Label {
-            text: qsTr("Shows Heart Rate Variability (HRV) from a compatible heart rate belt. Displays RMSSD value in milliseconds.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
     }
 }

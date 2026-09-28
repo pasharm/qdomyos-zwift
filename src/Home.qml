@@ -63,33 +63,9 @@ HomeForm {
         visible: rootItem.pelotonAskStart
     }
 
-    UiPopup {
+    UiNotice {
         id: popupLap
-         parent: Overlay.overlay
-
-         x: Math.round((parent.width - width) / 2)
-         y: Math.round((parent.height - height) / 2)
-         width: 380
-         height: 60
-         modal: true
-         focus: true
-         palette.text: "white"
-         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-         enter: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 0.0; to: 1.0 }
-         }
-         exit: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 1.0; to: 0.0 }
-         }
-         Column {
-             anchors.horizontalCenter: parent.horizontalCenter
-         Label {
-             anchors.horizontalCenter: parent.horizontalCenter
-             text: qsTr("New lap started!")
-            }
-        }
+        text: qsTr("New lap started!")
     }
 
     UiMessageDialog {
@@ -97,6 +73,9 @@ HomeForm {
         text: qsTr("Stop Workout")
         informativeText: qsTr("Do you really want to stop the current workout?")
         buttons: (MessageDialog.Yes | MessageDialog.No)
+        yesText: qsTr("Stop")
+        noText: qsTr("Cancel")
+        destructive: true
         onYesClicked: {
             close();
             inner_stop();
@@ -431,14 +410,15 @@ HomeForm {
                 readonly property real zoom: settings.ui_zoom / 100
                 readonly property bool zoned: !largeButton && valueFontColor !== "white"
 
-                Rectangle {
+                // UiFrame, not Rectangle.border: a thin border breaks up on Android
+                UiFrame {
                     id: modernCard
                     width: modernTile.width - 2 * modernTile.zoom
                     height: 123 * modernTile.zoom
                     radius: 16 * modernTile.zoom
-                    color: window.ui.surface
-                    border.width: 1
-                    border.color: window.ui.alpha(window.ui.textMain, 0.06)
+                    fill: window.ui.surface
+                    stroke: window.ui.alpha(window.ui.textMain, 0.06)
+                    strokeWidth: 1
                     visible: !largeButton
                     Accessible.ignored: true
                 }
@@ -917,13 +897,14 @@ HomeForm {
         height: 63 * settings.ui_zoom / 100
         z: 200
 
-        Rectangle {
+        // UiFrame: in the modern look a thin border breaks up on Android
+        UiFrame {
             anchors.fill: parent
             radius: window.ui.modern ? 12 : 3
-            color: window.ui.modern ? window.ui.surfaceHighest : settings.theme_tile_background_color
+            fill: window.ui.modern ? window.ui.surfaceHighest : settings.theme_tile_background_color
             opacity: 0.9
-            border.width: 2
-            border.color: window.ui.modern ? window.ui.accent : settings.theme_tile_shadow_color
+            strokeWidth: 2
+            stroke: window.ui.modern ? window.ui.accent : settings.theme_tile_shadow_color
 
             Text {
                 anchors.centerIn: parent

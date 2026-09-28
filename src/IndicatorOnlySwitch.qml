@@ -5,7 +5,7 @@ import QtQuick.Controls.Material 2.0
 import Qt.labs.settings 1.0
 import QtQuick.Dialogs 1.0
 
-SwitchDelegate {
+UiSwitchDelegate {
     id: root
 
     // Preserve Material styling while making translated setting titles responsive.

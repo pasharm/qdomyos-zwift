@@ -100,16 +100,17 @@ ColumnLayout {
                     loadSettings(fileUrl);
             }
 
-            delegate: Rectangle {
+            // UiFrame, not Rectangle.border: a thin border breaks up on Android
+            delegate: UiFrame {
                 id: settingsCard
                 readonly property bool selected: ListView.isCurrentItem
                 width: ListView.view.width
                 height: 60
                 radius: 16
-                color: selected ? window.ui.alpha(window.ui.accent, 0.14)
-                                : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
-                border.width: selected ? 1 : 0
-                border.color: window.ui.alpha(window.ui.accent, 0.6)
+                fill: selected ? window.ui.alpha(window.ui.accent, 0.14)
+                               : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
+                strokeWidth: selected ? 1 : 0
+                stroke: window.ui.alpha(window.ui.accent, 0.6)
 
                 MouseArea {
                     id: cardArea

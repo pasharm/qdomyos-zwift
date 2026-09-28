@@ -14,6 +14,12 @@ Popup {
     property string text: ""
     property string informativeText: ""
     property int buttons: P.MessageDialog.Ok
+    // Modern look only (the native dialog keeps its Yes/No): the answer buttons named after
+    // the action ("Stop" / "Cancel"), and the positive one in the danger colour when it
+    // cannot be undone
+    property string yesText: ""
+    property string noText: ""
+    property bool destructive: false
 
     signal yesClicked()
     signal noClicked()
@@ -78,12 +84,13 @@ Popup {
         onRejected: if (root.visible) root.close()
     }
 
-    background: Rectangle {
+    // UiFrame, not Rectangle.border: a thin border breaks up on Android
+    background: UiFrame {
         visible: root.modern
         radius: 28
-        color: window.ui.surfaceHigh
-        border.width: window.ui.dark ? 0 : 1
-        border.color: window.ui.outline
+        fill: window.ui.surfaceHigh
+        stroke: window.ui.outline
+        strokeWidth: window.ui.dark ? 0 : 1
     }
 
     contentItem: Column {
@@ -131,12 +138,13 @@ Popup {
                         P.MessageDialog.Yes, P.MessageDialog.Ok].filter(function(b) { return (root.buttons & b) !== 0 })
                 UiButton {
                     readonly property bool positive: modelData === P.MessageDialog.Yes || modelData === P.MessageDialog.Ok
-                    text: modelData === P.MessageDialog.Yes ? qsTr("Yes")
-                        : modelData === P.MessageDialog.No ? qsTr("No")
+                    text: modelData === P.MessageDialog.Yes ? (root.yesText.length > 0 ? root.yesText : qsTr("Yes"))
+                        : modelData === P.MessageDialog.No ? (root.noText.length > 0 ? root.noText : qsTr("No"))
                         : modelData === P.MessageDialog.Ok ? qsTr("OK")
                         : qsTr("Cancel")
                     flat: !positive
                     highlighted: positive
+                    danger: positive && root.destructive
                     onClicked: root.answer(modelData)
                 }
             }

@@ -10,6 +10,9 @@ Popup {
     id: control
 
     readonly property bool modern: window.ui.modern
+    // Modern look: a snackbar (UiNotice) - the inverse colours, dark on a light page and
+    // light on a dark one, and no outline
+    property bool inverse: false
 
     // Material dims with a light veil in the dark theme, and the page looks washed out:
     // the modern look darkens it. Classic: the Material Popup overlay as is.
@@ -24,11 +27,12 @@ Popup {
         Behavior on opacity { NumberAnimation { duration: 150 } }
     }
 
-    background: Rectangle {
-        radius: control.modern ? 20 : 2
-        color: control.modern ? window.ui.surfaceHigh : control.Material.dialogColor
-        border.width: control.modern && !window.ui.dark ? 1 : 0
-        border.color: window.ui.outline
+    // Modern: UiFrame, not Rectangle.border - a thin border breaks up on Android
+    background: UiFrame {
+        radius: control.modern ? (control.inverse ? 14 : 20) : 2
+        fill: control.modern ? (control.inverse ? window.ui.textMain : window.ui.surfaceHigh) : control.Material.dialogColor
+        stroke: window.ui.outline
+        strokeWidth: control.modern && !control.inverse && !window.ui.dark ? 1 : 0
 
         layer.enabled: !control.modern && control.Material.elevation > 0
         layer.effect: ElevationEffect {

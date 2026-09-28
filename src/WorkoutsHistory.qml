@@ -92,8 +92,118 @@ Page {
         anchors.fill: parent
         spacing: 10
 
+        // Modern header: the title on the left, the streak (or the date filter) under it as a
+        // small chip, the calendar and "Clear Filter" on the right. The streak used to be a
+        // big orange banner at the bottom, the loudest thing on the page even at zero days.
+        Item {
+            id: modernHeader
+            visible: workoutHistoryPage.modern
+            Layout.fillWidth: true
+            Layout.leftMargin: Math.max(16, window.contentSideMargin)
+            Layout.rightMargin: Math.max(16, window.contentSideMargin)
+            Layout.topMargin: 8
+            implicitHeight: Math.max(56, modernTitleColumn.implicitHeight)
+
+            readonly property int streak: workoutModel ? workoutModel.currentStreak : 0
+            readonly property bool filtered: workoutModel ? workoutModel.isDateFiltered : false
+
+            Column {
+                id: modernTitleColumn
+                anchors.left: parent.left
+                anchors.right: modernHeaderButtons.left
+                anchors.rightMargin: 8
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 6
+
+                Text {
+                    width: parent.width
+                    text: qsTr("Workout History")
+                    font.pixelSize: 22
+                    font.weight: Font.DemiBold
+                    color: window.ui.textMain
+                    elide: Text.ElideRight
+                }
+
+                Text {
+                    width: parent.width
+                    visible: modernHeader.filtered
+                    text: modernHeader.filtered ? qsTr("Filtered: %1").arg(workoutModel.filteredDate.toLocaleDateString()) : ""
+                    font.pixelSize: 13
+                    color: window.ui.textMuted
+                    elide: Text.ElideRight
+                }
+
+                Rectangle {
+                    visible: !modernHeader.filtered && modernHeader.streak > 0
+                    width: streakChipRow.implicitWidth + 20
+                    height: 28
+                    radius: 14
+                    color: window.ui.alpha(window.ui.accent, 0.16)
+
+                    Row {
+                        id: streakChipRow
+                        anchors.centerIn: parent
+                        spacing: 4
+                        UiIcon {
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 18
+                            height: 18
+                            name: "local_fire_department"
+                            color: window.ui.accent
+                        }
+                        Text {
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: (modernHeader.streak !== 1 ? qsTr("%1 days streak") : qsTr("%1 day streak")).arg(modernHeader.streak)
+                            font.pixelSize: 13
+                            font.weight: Font.DemiBold
+                            color: window.ui.accent
+                        }
+                    }
+                }
+            }
+
+            Row {
+                id: modernHeaderButtons
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                spacing: 8
+
+                UiButton {
+                    visible: modernHeader.filtered
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: qsTr("Clear Filter")
+                    danger: true
+                    onClicked: workoutModel.clearDateFilter()
+                }
+
+                RoundButton {
+                    id: modernCalendarButton
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 48
+                    height: 48
+                    onClicked: calendarPopup.open()
+                    background: Rectangle {
+                        radius: 24
+                        color: modernCalendarButton.down ? window.ui.surfaceHighest : window.ui.surfaceHigh
+                    }
+                    contentItem: Item {
+                        UiIcon {
+                            anchors.centerIn: parent
+                            width: 22
+                            height: 22
+                            name: "calendar_month"
+                            color: window.ui.textMain
+                        }
+                    }
+                    Accessible.role: Accessible.Button
+                    Accessible.name: qsTr("Calendar")
+                }
+            }
+        }
+
         // Header
         Rectangle {
+            visible: !workoutHistoryPage.modern
             Layout.fillWidth: true
             height: 60
             color: workoutHistoryPage.modern ? "transparent" : "#f5f5f5"
@@ -225,10 +335,57 @@ Page {
             model: workoutModel
             spacing: 8
             clip: true
-            
+
+            // Modern look: an empty list says so, instead of a blank page
+            Column {
+                // On the list itself: children of a ListView land in its content item
+                parent: workoutListView
+                anchors.centerIn: parent
+                width: Math.min(parent.width - 48, 360)
+                spacing: 10
+                visible: workoutHistoryPage.modern && workoutListView.count === 0
+                         && !(workoutModel && (workoutModel.isLoading || workoutModel.isDatabaseProcessing))
+
+                Rectangle {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: 88
+                    height: 88
+                    radius: 44
+                    color: window.ui.alpha(window.ui.accent, 0.14)
+                    UiIcon {
+                        anchors.centerIn: parent
+                        width: 44
+                        height: 44
+                        name: "history"
+                        color: window.ui.accent
+                    }
+                }
+                Text {
+                    width: parent.width
+                    topPadding: 4
+                    text: workoutModel && workoutModel.isDateFiltered ? qsTr("No workouts on this day")
+                                                                      : qsTr("No workouts yet")
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 20
+                    font.weight: Font.DemiBold
+                    color: window.ui.textMain
+                }
+                Text {
+                    width: parent.width
+                    visible: !(workoutModel && workoutModel.isDateFiltered)
+                    text: qsTr("Finished workouts appear here: open one to see its charts.")
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WordWrap
+                    font.pixelSize: 15
+                    color: window.ui.textMuted
+                }
+            }
+
             onContentYChanged: {
-                // Hide banner when scrolling down, show when at top
-                streakBanner.visible = contentY <= 20
+                // Hide banner when scrolling down, show when at top (the modern look has
+                // the streak as a chip in the header instead)
+                streakBanner.visible = !workoutHistoryPage.modern && contentY <= 20
             }
 
             delegate: SwipeDelegate {
@@ -676,7 +833,7 @@ Page {
         anchors.bottomMargin: workoutHistoryPage.modern ? 8 : 0
         radius: workoutHistoryPage.modern ? 20 : 0
         height: 80
-        visible: workoutModel
+        visible: workoutModel && !workoutHistoryPage.modern
         
         Behavior on visible {
             NumberAnimation {
@@ -910,14 +1067,27 @@ Page {
                 Layout.fillWidth: true
                 
                 UiButton {
-                    text: "<"
+                    text: workoutHistoryPage.modern ? "" : "<"
                     flat: workoutHistoryPage.modern
+                    implicitWidth: workoutHistoryPage.modern ? 48 : Math.max(implicitBackgroundWidth + leftInset + rightInset, implicitContentWidth + leftPadding + rightPadding)
+                    Accessible.name: qsTr("Previous month")
                     onClicked: calendar.selectedDate = new Date(calendar.selectedDate.getFullYear(), calendar.selectedDate.getMonth() - 1, 1)
+                    UiIcon {
+                        anchors.centerIn: parent
+                        visible: workoutHistoryPage.modern
+                        width: 24
+                        height: 24
+                        name: "chevron_left"
+                        color: window.ui.textMain
+                    }
                 }
                 
                 Text {
                     Layout.fillWidth: true
-                    text: calendar.selectedDate.toLocaleDateString(Qt.locale(), "MMMM yyyy")
+                    // Modern: the standalone month name of the locale (nominative, capitalised)
+                    text: workoutHistoryPage.modern
+                          ? workoutHistoryPage.monthTitle(calendar.selectedDate)
+                          : calendar.selectedDate.toLocaleDateString(Qt.locale(), "MMMM yyyy")
                     font.pixelSize: 18
                     font.bold: true
                     color: workoutHistoryPage.modern ? window.ui.textMain : "black"
@@ -925,9 +1095,19 @@ Page {
                 }
                 
                 UiButton {
-                    text: ">"
+                    text: workoutHistoryPage.modern ? "" : ">"
                     flat: workoutHistoryPage.modern
+                    implicitWidth: workoutHistoryPage.modern ? 48 : Math.max(implicitBackgroundWidth + leftInset + rightInset, implicitContentWidth + leftPadding + rightPadding)
+                    Accessible.name: qsTr("Next month")
                     onClicked: calendar.selectedDate = new Date(calendar.selectedDate.getFullYear(), calendar.selectedDate.getMonth() + 1, 1)
+                    UiIcon {
+                        anchors.centerIn: parent
+                        visible: workoutHistoryPage.modern
+                        width: 24
+                        height: 24
+                        name: "chevron_right"
+                        color: window.ui.textMain
+                    }
                 }
             }
 
@@ -948,7 +1128,9 @@ Page {
                 
                 // Day headers
                 Repeater {
-                    model: [qsTr("Sun"), qsTr("Mon"), qsTr("Tue"), qsTr("Wed"), qsTr("Thu"), qsTr("Fri"), qsTr("Sat")]
+                    // Modern: the short day names of the locale, from its first day of the week
+                    model: workoutHistoryPage.modern ? workoutHistoryPage.weekDayNames()
+                         : [qsTr("Sun"), qsTr("Mon"), qsTr("Tue"), qsTr("Wed"), qsTr("Thu"), qsTr("Fri"), qsTr("Sat")]
                     Text {
                         Layout.fillWidth: true
                         Layout.preferredHeight: 30
@@ -974,33 +1156,47 @@ Page {
                         property bool hasWorkout: modelData.hasWorkout
                         property bool isToday: dayDate.toDateString() === new Date().toDateString()
                         
+                        // Modern: the cell itself is bare; the round day on top of it is filled
+                        // only when there was a workout, and today gets a ring
                         color: {
-                            if (workoutHistoryPage.modern) {
-                                if (mouseArea.pressed) return window.ui.surfaceHighest
-                                if (isToday) return window.ui.alpha(window.ui.accent, 0.18)
-                                if (!isCurrentMonth) return "transparent"
-                                return window.ui.surface
-                            }
+                            if (workoutHistoryPage.modern)
+                                return "transparent"
                             if (mouseArea.pressed) return "#e3f2fd"
                             if (isToday) return "#bbdefb"
                             if (!isCurrentMonth) return "#f5f5f5"
                             return "white"
                         }
 
-                        border.color: workoutHistoryPage.modern ? window.ui.accent : (isToday ? "#2196f3" : "#e0e0e0")
-                        border.width: workoutHistoryPage.modern ? (isToday ? 1 : 0) : (isToday ? 2 : 1)
+                        border.color: isToday ? "#2196f3" : "#e0e0e0"
+                        border.width: workoutHistoryPage.modern ? 0 : (isToday ? 2 : 1)
                         radius: workoutHistoryPage.modern ? 10 : 4
-                        
+
+                        UiFrame {
+                            visible: workoutHistoryPage.modern
+                            anchors.centerIn: parent
+                            width: Math.min(40, parent.width - 2, parent.height - 2)
+                            height: width
+                            radius: width / 2
+                            base: window.ui.surfaceHigh
+                            fill: mouseArea.pressed ? window.ui.surfaceHighest
+                                : hasWorkout ? window.ui.alpha(window.ui.accent, isCurrentMonth ? 0.28 : 0.12)
+                                : "transparent"
+                            stroke: window.ui.accent
+                            strokeWidth: isToday ? 2 : 0
+                        }
+
                         Column {
                             anchors.centerIn: parent
                             spacing: 2
-                            
+
                             Text {
                                 anchors.horizontalCenter: parent.horizontalCenter
                                 text: dayDate.getDate()
                                 color: workoutHistoryPage.modern ? (isCurrentMonth ? window.ui.textMain : window.ui.textMuted)
                                                                  : (isCurrentMonth ? "black" : "#cccccc")
+                                opacity: workoutHistoryPage.modern && !isCurrentMonth ? 0.6 : 1
                                 font.pixelSize: 14
+                                font.weight: workoutHistoryPage.modern && (hasWorkout || isToday) ? Font.DemiBold : Font.Normal
                             }
                             
                             // Workout indicator dot
@@ -1010,7 +1206,7 @@ Page {
                                 height: 8
                                 radius: 4
                                 color: workoutHistoryPage.modern ? window.ui.accent : "#ff6b35"
-                                visible: hasWorkout
+                                visible: hasWorkout && !workoutHistoryPage.modern
                                 border.width: workoutHistoryPage.modern ? 0 : 1
                                 border.color: "#cc5529"
                                 
@@ -1053,12 +1249,31 @@ Page {
     }
 
     // JavaScript functions for calendar
+
+    // First day of the week (0 = Sunday, as Date.getDay()): the locale's in the modern look
+    function weekStart() {
+        return workoutHistoryPage.modern ? Qt.locale().firstDayOfWeek % 7 : 0
+    }
+
+    function weekDayNames() {
+        var names = []
+        for (var i = 0; i < 7; i++)
+            names.push(Qt.locale().dayName((weekStart() + i) % 7, Locale.ShortFormat))
+        return names
+    }
+
+    function monthTitle(date) {
+        var name = Qt.locale().standaloneMonthName(date.getMonth(), Locale.LongFormat)
+        return name.charAt(0).toUpperCase() + name.slice(1) + " " + date.getFullYear()
+    }
+
     function getCalendarDays() {
         var days = []
         var firstDay = new Date(calendar.selectedDate.getFullYear(), calendar.selectedDate.getMonth(), 1)
         var lastDay = new Date(calendar.selectedDate.getFullYear(), calendar.selectedDate.getMonth() + 1, 0)
         var startDate = new Date(firstDay)
-        startDate.setDate(startDate.getDate() - firstDay.getDay()) // Go back to start of week
+        // Go back to start of week: Sunday in the classic look, the locale's first day in the modern one
+        startDate.setDate(startDate.getDate() - (firstDay.getDay() - weekStart() + 7) % 7)
         
         var workoutDates = calendar.workoutDates || []
         console.log("getCalendarDays: workoutDates received:", JSON.stringify(workoutDates))

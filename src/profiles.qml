@@ -167,7 +167,7 @@ ColumnLayout {
                 color: window.ui.textMuted
                 font.pixelSize: 13
             }
-            TextField {
+            UiTextField {
                 id: modernNameField
                 Layout.fillWidth: true
                 text: settings.profile_name
@@ -236,7 +236,8 @@ ColumnLayout {
         model: folderModel
         boundsBehavior: Flickable.StopAtBounds
 
-        delegate: Rectangle {
+        // UiFrame, not Rectangle.border: a thin border breaks up on Android
+        delegate: UiFrame {
             id: profileCard
             readonly property bool selected: ListView.isCurrentItem
             readonly property string profileName: fileName.substring(0, fileName.length-4)
@@ -244,10 +245,10 @@ ColumnLayout {
             width: ListView.view.width
             height: 64
             radius: 16
-            color: selected ? window.ui.alpha(window.ui.accent, 0.14)
-                            : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
-            border.width: selected ? 1 : 0
-            border.color: window.ui.alpha(window.ui.accent, 0.6)
+            fill: selected ? window.ui.alpha(window.ui.accent, 0.14)
+                           : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
+            strokeWidth: selected ? 1 : 0
+            stroke: window.ui.alpha(window.ui.accent, 0.6)
 
             MouseArea {
                 id: cardArea
@@ -343,7 +344,7 @@ ColumnLayout {
             text: qsTr("Profile name")
             Layout.fillWidth: true
         }
-        TextField {
+        UiTextField {
             id: profileNameTextField
             text: settings.profile_name
             horizontalAlignment: Text.AlignRight

@@ -80,7 +80,7 @@ ScrollView {
                 text: qsTr("Inclination Override Gain:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverrideGainTextField
                 text: settings.treadmill_inclination_ovveride_gain
                 horizontalAlignment: Text.AlignRight
@@ -103,7 +103,7 @@ ScrollView {
                 text: qsTr("Inclination Override Offset:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverrideOffsetTextField
                 text: settings.treadmill_inclination_ovveride_offset
                 horizontalAlignment: Text.AlignRight
@@ -126,7 +126,7 @@ ScrollView {
                 text: qsTr("Override 0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride0TextField
                 text: settings.treadmill_inclination_override_0
                 horizontalAlignment: Text.AlignRight
@@ -148,7 +148,7 @@ ScrollView {
                 text: qsTr("Override 0.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride05TextField
                 text: settings.treadmill_inclination_override_05
                 horizontalAlignment: Text.AlignRight
@@ -170,7 +170,7 @@ ScrollView {
                 text: qsTr("Override 1.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride10TextField
                 text: settings.treadmill_inclination_override_10
                 horizontalAlignment: Text.AlignRight
@@ -192,7 +192,7 @@ ScrollView {
                 text: qsTr("Override 1.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride15TextField
                 text: settings.treadmill_inclination_override_15
                 horizontalAlignment: Text.AlignRight
@@ -214,7 +214,7 @@ ScrollView {
                 text: qsTr("Override 2.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride20TextField
                 text: settings.treadmill_inclination_override_20
                 horizontalAlignment: Text.AlignRight
@@ -236,7 +236,7 @@ ScrollView {
                 text: qsTr("Override 2.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride25TextField
                 text: settings.treadmill_inclination_override_25
                 horizontalAlignment: Text.AlignRight
@@ -258,7 +258,7 @@ ScrollView {
                 text: qsTr("Override 3.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride30TextField
                 text: settings.treadmill_inclination_override_30
                 horizontalAlignment: Text.AlignRight
@@ -280,7 +280,7 @@ ScrollView {
                 text: qsTr("Override 3.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride35TextField
                 text: settings.treadmill_inclination_override_35
                 horizontalAlignment: Text.AlignRight
@@ -302,7 +302,7 @@ ScrollView {
                 text: qsTr("Override 4.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride40TextField
                 text: settings.treadmill_inclination_override_40
                 horizontalAlignment: Text.AlignRight
@@ -324,7 +324,7 @@ ScrollView {
                 text: qsTr("Override 4.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride45TextField
                 text: settings.treadmill_inclination_override_45
                 horizontalAlignment: Text.AlignRight
@@ -346,7 +346,7 @@ ScrollView {
                 text: qsTr("Override 5.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride50TextField
                 text: settings.treadmill_inclination_override_50
                 horizontalAlignment: Text.AlignRight
@@ -368,7 +368,7 @@ ScrollView {
                 text: qsTr("Override 5.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride55TextField
                 text: settings.treadmill_inclination_override_55
                 horizontalAlignment: Text.AlignRight
@@ -390,7 +390,7 @@ ScrollView {
                 text: qsTr("Override 6.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride60TextField
                 text: settings.treadmill_inclination_override_60
                 horizontalAlignment: Text.AlignRight
@@ -412,7 +412,7 @@ ScrollView {
                 text: qsTr("Override 6.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride65TextField
                 text: settings.treadmill_inclination_override_65
                 horizontalAlignment: Text.AlignRight
@@ -434,7 +434,7 @@ ScrollView {
                 text: qsTr("Override 7.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride70TextField
                 text: settings.treadmill_inclination_override_70
                 horizontalAlignment: Text.AlignRight
@@ -456,7 +456,7 @@ ScrollView {
                 text: qsTr("Override 7.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride75TextField
                 text: settings.treadmill_inclination_override_75
                 horizontalAlignment: Text.AlignRight
@@ -478,7 +478,7 @@ ScrollView {
                 text: qsTr("Override 8.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride80TextField
                 text: settings.treadmill_inclination_override_80
                 horizontalAlignment: Text.AlignRight
@@ -500,7 +500,7 @@ ScrollView {
                 text: qsTr("Override 8.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride85TextField
                 text: settings.treadmill_inclination_override_85
                 horizontalAlignment: Text.AlignRight
@@ -522,7 +522,7 @@ ScrollView {
                 text: qsTr("Override 9.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride90TextField
                 text: settings.treadmill_inclination_override_90
                 horizontalAlignment: Text.AlignRight
@@ -544,7 +544,7 @@ ScrollView {
                 text: qsTr("Override 9.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride95TextField
                 text: settings.treadmill_inclination_override_95
                 horizontalAlignment: Text.AlignRight
@@ -566,7 +566,7 @@ ScrollView {
                 text: qsTr("Override 10.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride100TextField
                 text: settings.treadmill_inclination_override_100
                 horizontalAlignment: Text.AlignRight
@@ -588,7 +588,7 @@ ScrollView {
                 text: qsTr("Override 10.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride105TextField
                 text: settings.treadmill_inclination_override_105
                 horizontalAlignment: Text.AlignRight
@@ -610,7 +610,7 @@ ScrollView {
                 text: qsTr("Override 11.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride110TextField
                 text: settings.treadmill_inclination_override_110
                 horizontalAlignment: Text.AlignRight
@@ -632,7 +632,7 @@ ScrollView {
                 text: qsTr("Override 11.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride115TextField
                 text: settings.treadmill_inclination_override_115
                 horizontalAlignment: Text.AlignRight
@@ -654,7 +654,7 @@ ScrollView {
                 text: qsTr("Override 12.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride120TextField
                 text: settings.treadmill_inclination_override_120
                 horizontalAlignment: Text.AlignRight
@@ -676,7 +676,7 @@ ScrollView {
                 text: qsTr("Override 12.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride125TextField
                 text: settings.treadmill_inclination_override_125
                 horizontalAlignment: Text.AlignRight
@@ -698,7 +698,7 @@ ScrollView {
                 text: qsTr("Override 13.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride130TextField
                 text: settings.treadmill_inclination_override_130
                 horizontalAlignment: Text.AlignRight
@@ -720,7 +720,7 @@ ScrollView {
                 text: qsTr("Override 13.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride135TextField
                 text: settings.treadmill_inclination_override_135
                 horizontalAlignment: Text.AlignRight
@@ -742,7 +742,7 @@ ScrollView {
                 text: qsTr("Override 14.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride140TextField
                 text: settings.treadmill_inclination_override_140
                 horizontalAlignment: Text.AlignRight
@@ -764,7 +764,7 @@ ScrollView {
                 text: qsTr("Override 14.5%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride145TextField
                 text: settings.treadmill_inclination_override_145
                 horizontalAlignment: Text.AlignRight
@@ -786,7 +786,7 @@ ScrollView {
                 text: qsTr("Override 15.0%:")
                 Layout.fillWidth: true
             }
-            TextField {
+            UiTextField {
                 id: treadmillOverride150TextField
                 text: settings.treadmill_inclination_override_150
                 horizontalAlignment: Text.AlignRight

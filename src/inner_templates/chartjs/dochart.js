@@ -211,6 +211,9 @@ function process_arr(arr) {
             $('.workout_image').attr("src","elliptical.png");
         else
             $('.workout_image').attr("src","bike.png");
+        // Modern look: the picture as an icon in the theme colours (the saved badge keeps the PNG)
+        if (window.qzChartTheme && qzChartTheme.sportIcon)
+            qzChartTheme.sportIcon($('.workout_image')[0]);
     }
     $('.workout_image').attr("crossOrigin","anonymous");
     $('.watts_avg').text(t('chart.wattAvgValue', 'Watt AVG: {value}').replace('{value}', Math.floor(watts_avg)));

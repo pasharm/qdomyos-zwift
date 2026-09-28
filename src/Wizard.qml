@@ -87,6 +87,10 @@ Page {
              id: wizardButton
              property color textColor: "#800080"
              property color backgroundColor: "white"
+             // Modern look, answers only: an icon on the left and a line of explanation
+             // under the label; the classic look shows the label alone, as before
+             property string iconName: ""
+             property string subtitle: ""
              // Modern look: "primary" moves on (Next, Finish), "secondary" goes back,
              // "choice" is an answer drawn as a full-width card
              readonly property string kind: (text === qsTr("Back") || text === qsTr("Refresh")) ? "secondary"
@@ -101,24 +105,79 @@ Page {
              // Classic: the stock Button formula
              implicitHeight: window.ui.modern ? Math.max(kind === "choice" ? 60 : 52, implicitContentHeight + 24)
                                               : Math.max(implicitBackgroundHeight + topInset + bottomInset, implicitContentHeight + topPadding + bottomPadding)
-             background: Rectangle {
-                 color: !window.ui.modern ? wizardButton.backgroundColor
+             // UiFrame, not Rectangle.border: a thin border breaks up on Android
+             background: UiFrame {
+                 fill: !window.ui.modern ? wizardButton.backgroundColor
                       : wizardButton.kind === "primary" ? (wizardButton.down ? Qt.darker(window.ui.accent, 1.15) : window.ui.accent)
                       : wizardButton.kind === "secondary" ? (wizardButton.down ? window.ui.surfaceHigh : "transparent")
                       : (wizardButton.down ? window.ui.surfaceHighest : window.ui.surfaceHigh)
                  radius: !window.ui.modern ? 5 : wizardButton.kind === "choice" ? 16 : height / 2
-                 border.width: window.ui.modern && wizardButton.kind !== "primary" ? 1 : 0
-                 border.color: wizardButton.kind === "choice" ? window.ui.alpha(window.ui.textMain, 0.08) : window.ui.outline
+                 strokeWidth: window.ui.modern && wizardButton.kind !== "primary" ? 1 : 0
+                 stroke: wizardButton.kind === "choice" ? window.ui.alpha(window.ui.textMain, 0.08) : window.ui.outline
              }
-             contentItem: Text {
-                 font.pixelSize: window.ui.modern ? 17 : 20
-                 font.weight: window.ui.modern ? Font.Medium : Font.Normal
-                 text: parent.text
-                 color: !window.ui.modern ? parent.textColor
-                      : wizardButton.kind === "primary" ? window.ui.accentInk : window.ui.textMain
-                 wrapMode: Text.WordWrap
-                 horizontalAlignment: Text.AlignHCenter
-                 verticalAlignment: Text.AlignVCenter
+             contentItem: Item {
+                 readonly property bool rich: window.ui.modern && wizardButton.kind === "choice" && wizardButton.iconName !== ""
+                 implicitWidth: rich ? richRow.implicitWidth : plainText.implicitWidth
+                 implicitHeight: rich ? richRow.implicitHeight : plainText.implicitHeight
+
+                 Text {
+                     id: plainText
+                     anchors.fill: parent
+                     visible: !parent.rich
+                     font.pixelSize: window.ui.modern ? 17 : 20
+                     font.weight: window.ui.modern ? Font.Medium : Font.Normal
+                     text: wizardButton.text
+                     color: !window.ui.modern ? wizardButton.textColor
+                          : wizardButton.kind === "primary" ? window.ui.accentInk : window.ui.textMain
+                     wrapMode: Text.WordWrap
+                     horizontalAlignment: Text.AlignHCenter
+                     verticalAlignment: Text.AlignVCenter
+                 }
+
+                 Row {
+                     id: richRow
+                     visible: parent.rich
+                     anchors.verticalCenter: parent.verticalCenter
+                     width: parent.width
+                     spacing: 14
+
+                     Rectangle {
+                         anchors.verticalCenter: parent.verticalCenter
+                         width: 40
+                         height: 40
+                         radius: 20
+                         color: window.ui.alpha(window.ui.accent, 0.14)
+                         UiIcon {
+                             anchors.centerIn: parent
+                             width: 22
+                             height: 22
+                             name: wizardButton.iconName !== "" ? wizardButton.iconName : "help"
+                             color: window.ui.accent
+                         }
+                     }
+
+                     Column {
+                         anchors.verticalCenter: parent.verticalCenter
+                         width: parent.width - 54
+                         spacing: 2
+                         Text {
+                             width: parent.width
+                             text: wizardButton.text
+                             font.pixelSize: 17
+                             font.weight: Font.Medium
+                             color: window.ui.textMain
+                             wrapMode: Text.WordWrap
+                         }
+                         Text {
+                             width: parent.width
+                             visible: wizardButton.subtitle !== ""
+                             text: wizardButton.subtitle
+                             font.pixelSize: 14
+                             color: window.ui.textMuted
+                             wrapMode: Text.WordWrap
+                         }
+                     }
+                 }
              }
      }
 
@@ -226,6 +285,8 @@ Page {
                     WizardButton {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("First-time setup")
+                        iconName: "rocket_launch"
+                        subtitle: qsTr("Your equipment, units and profile, step by step")
                         onClicked: {
                             selectedOptions.step1 = "First-time setup"
                             stackViewLocal.push(step2Component)
@@ -235,6 +296,8 @@ Page {
                     WizardButton {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Help with a specific feature")
+                        iconName: "help"
+                        subtitle: qsTr("Pick a topic and go straight to its settings")
                         onClicked: {
                             selectedOptions.step1 = "Help with a specific feature"
                             stackViewLocal.push(step2HelpComponent)
@@ -244,6 +307,8 @@ Page {
                     WizardButton {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("I'm fine, thanks.")
+                        iconName: "check_circle"
+                        subtitle: qsTr("Close the wizard")
                         onClicked: {
                                 stackView.pop();
                         }
@@ -823,7 +888,7 @@ Page {
                         color: window.ui.modern ? window.ui.textMain : "white"
                     }
 
-                    TextField {
+                    UiTextField {
                         id: zwiftUsernameTextField
                         text: settings.zwift_username
                         horizontalAlignment: Text.AlignHCenter
@@ -844,7 +909,7 @@ Page {
                         color: window.ui.modern ? window.ui.textMain : "white"
                     }
 
-                    TextField {
+                    UiTextField {
                         id: zwiftPasswordTextField
                         text: settings.zwift_password
                         horizontalAlignment: Text.AlignHCenter
@@ -923,7 +988,7 @@ Page {
                         color: window.ui.modern ? window.ui.textMain : "white"
                     }
 
-                    SwitchDelegate {
+                    UiSwitchDelegate {
                         text: qsTr("Zwift Click")
                         spacing: 0
                         bottomPadding: 0
@@ -939,7 +1004,7 @@ Page {
                         onClicked: { settings.zwift_click = checked;  }
                     }
 
-                    SwitchDelegate {
+                    UiSwitchDelegate {
                         text: qsTr("Zwift Play")
                         spacing: 0
                         bottomPadding: 0

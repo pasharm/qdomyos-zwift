@@ -17,6 +17,12 @@
         <file>UiComboBox.qml</file>
         <file>UiMessageDialog.qml</file>
         <file>UiPopup.qml</file>
+        <file>UiFrame.qml</file>
+        <file>UiNotice.qml</file>
+        <file>UiSwitchIndicator.qml</file>
+        <file>UiSwitchDelegate.qml</file>
+        <file>UiSwitch.qml</file>
+        <file>UiTextField.qml</file>
         <file>AccordionCheckElement.qml</file>
         <file>icons/arrow-collapse-vertical.png</file>
         <file>icons/arrow-expand-vertical.png</file>

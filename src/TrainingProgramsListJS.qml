@@ -164,7 +164,7 @@ ColumnLayout {
                         verticalAlignment: Text.AlignVCenter
                     }
 
-                    TextField {
+                    UiTextField {
                         id: filterField
                         Layout.fillWidth: true
                         // Row has no fill: the modern field takes what the up button leaves

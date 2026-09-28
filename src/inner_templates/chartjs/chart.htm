@@ -97,8 +97,9 @@
         opacity: 0.5;
         margin: 12px 0;
     }
-    /* The summary block: a filled card, the logo watermark stays inside it */
+    /* The summary block: a filled card without the logo watermark (the saved badge keeps it) */
     html.modern table[background] {
+        background-image: none !important;
         background-color: var(--qz-surface);
         border-radius: 20px;
         padding: 8px 4px;

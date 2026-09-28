@@ -106,11 +106,11 @@ Page {
                 width: 120
                 height: 56
                 onClicked: stop.clicked()
-                background: Rectangle {
+                background: UiFrame {
                     radius: height / 2
-                    color: modernStop.down ? window.ui.surfaceHighest : window.ui.surfaceHigh
-                    border.width: 1
-                    border.color: window.ui.alpha(window.ui.danger, 0.45)
+                    fill: modernStop.down ? window.ui.surfaceHighest : window.ui.surfaceHigh
+                    stroke: window.ui.alpha(window.ui.danger, 0.45)
+                    strokeWidth: 1
                 }
                 contentItem: Item {
                     Row {
@@ -382,7 +382,134 @@ Page {
             anchors.topMargin: 30
             text: qsTr("This app should automatically connect to your bike/treadmill/rower. <b>If it doesn't, please check</b>:<br>1) your Echelon/Domyos App MUST be closed while qdomyos-zwift is running;<br>2) both Bluetooth and Bluetooth permissions MUST be enabled<br>3) your bike/treadmill/rower should be turned on BEFORE starting this app<br>4) try to restart your device<br><br>If your bike/treadmill disconnects every 30 seconds try to disable the 'virtual device' setting on the left bar.<br><br>In case of issues, please feel free to contact me at roberto.viola83@gmail.com.<br><br><b>Have a nice ride!</b><br/ ><i>QZ specifically disclaims liability for<br>incidental or consequential damages and assumes<br>no responsibility or liability for any loss<br>or damage suffered by any person as a result of<br>the use or misuse of the app.</i><br><br>Roberto Viola")
             wrapMode: Label.WordWrap
-            visible: rootItem.labelHelp
+            visible: rootItem.labelHelp && !window.ui.modern
+        }
+
+        // Modern look: while nothing is connected, a short "searching" state instead of the
+        // wall of text. The same help text (already translated) folds out on demand.
+        Flickable {
+            id: modernEmpty
+            visible: rootItem.labelHelp && window.ui.modern
+            anchors.top: row1.bottom
+            anchors.topMargin: 24
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: Math.min(parent.width - 2 * window.contentSideMargin, 560)
+            height: page.height - (row1.y + row1.height) - 24
+            contentHeight: emptyColumn.height + 24
+            clip: true
+            boundsBehavior: Flickable.StopAtBounds
+            property bool helpOpen: false
+
+            Column {
+                id: emptyColumn
+                width: parent.width
+                spacing: 12
+
+                Rectangle {
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: 88
+                    height: 88
+                    radius: 44
+                    color: window.ui.alpha(window.ui.accent, 0.14)
+                    UiIcon {
+                        anchors.centerIn: parent
+                        width: 44
+                        height: 44
+                        name: "bluetooth_searching"
+                        color: window.ui.accent
+                    }
+                    SequentialAnimation on opacity {
+                        running: modernEmpty.visible
+                        loops: Animation.Infinite
+                        NumberAnimation { to: 0.55; duration: 1100; easing.type: Easing.InOutSine }
+                        NumberAnimation { to: 1; duration: 1100; easing.type: Easing.InOutSine }
+                    }
+                }
+
+                Label {
+                    width: parent.width
+                    topPadding: 4
+                    text: qsTr("Looking for your equipment…")
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WordWrap
+                    color: window.ui.textMain
+                    font.pixelSize: 20
+                    font.weight: Font.DemiBold
+                }
+
+                Label {
+                    width: parent.width
+                    text: qsTr("Turn on your bike, treadmill or rower: QZ connects to it automatically.")
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WordWrap
+                    color: window.ui.textMuted
+                    font.pixelSize: 15
+                }
+
+                Item { width: 1; height: 4 }
+
+                // "Not connecting?" - folds the old help text out
+                AbstractButton {
+                    id: helpToggle
+                    width: parent.width
+                    height: 52
+                    onClicked: modernEmpty.helpOpen = !modernEmpty.helpOpen
+                    background: Rectangle {
+                        radius: 16
+                        color: helpToggle.down ? window.ui.surfaceHigh : window.ui.surface
+                    }
+                    contentItem: Item {
+                        UiIcon {
+                            id: helpIcon
+                            anchors.left: parent.left
+                            anchors.leftMargin: 16
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 22
+                            height: 22
+                            name: "help"
+                            color: window.ui.textMuted
+                        }
+                        Label {
+                            anchors.left: helpIcon.right
+                            anchors.leftMargin: 12
+                            anchors.right: helpChevron.left
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: qsTr("Not connecting?")
+                            color: window.ui.textMain
+                            font.pixelSize: 16
+                            font.weight: Font.Medium
+                            elide: Text.ElideRight
+                        }
+                        UiIcon {
+                            id: helpChevron
+                            anchors.right: parent.right
+                            anchors.rightMargin: 14
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 24
+                            height: 24
+                            name: "expand_more"
+                            color: window.ui.textMuted
+                            rotation: modernEmpty.helpOpen ? 180 : 0
+                            Behavior on rotation { NumberAnimation { duration: 150 } }
+                        }
+                    }
+                    Accessible.role: Accessible.Button
+                    Accessible.name: qsTr("Not connecting?")
+                }
+
+                Label {
+                    width: parent.width
+                    visible: modernEmpty.helpOpen
+                    leftPadding: 16
+                    rightPadding: 16
+                    text: lblHelp.text
+                    textFormat: Text.StyledText
+                    wrapMode: Text.WordWrap
+                    color: window.ui.textMuted
+                    font.pixelSize: 14
+                    lineHeight: 1.15
+                }
+            }
         }
     }
 }

@@ -94,7 +94,7 @@ ColumnLayout {
         Layout.rightMargin: gpxPage.modernMargin
         Layout.topMargin: 8
 
-        TextField {
+        UiTextField {
             id: modernFilterField
             Layout.fillWidth: true
             placeholderText: qsTr("Filter")
@@ -122,7 +122,7 @@ ColumnLayout {
                 anchors.centerIn: parent
                 width: 22
                 height: 22
-                name: "arrow_back"
+                name: "drive_folder_upload"
                 color: window.ui.textMain
             }
         }
@@ -165,17 +165,18 @@ ColumnLayout {
                 }
             }
 
-            delegate: Rectangle {
+            // UiFrame, not Rectangle.border: a thin border breaks up on Android
+            delegate: UiFrame {
                 id: gpxCard
                 readonly property bool selected: ListView.isCurrentItem
                 readonly property bool folder: folderModel.isFolder(index)
                 width: ListView.view.width
                 height: 60
                 radius: 16
-                color: selected && !folder ? window.ui.alpha(window.ui.accent, 0.14)
-                                           : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
-                border.width: selected && !folder ? 1 : 0
-                border.color: window.ui.alpha(window.ui.accent, 0.6)
+                fill: selected && !folder ? window.ui.alpha(window.ui.accent, 0.14)
+                                          : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
+                strokeWidth: selected && !folder ? 1 : 0
+                stroke: window.ui.alpha(window.ui.accent, 0.6)
 
                 MouseArea {
                     id: cardArea
@@ -256,7 +257,7 @@ ColumnLayout {
                     color: window.ui.ink("white")
                     verticalAlignment: Text.AlignVCenter
                 }
-                TextField
+                UiTextField
                 {
                     function updateFilter()
                     {
@@ -389,10 +390,16 @@ ColumnLayout {
             Row {
                 id: row
                 anchors.fill: parent
+                // Route figures for the modern chips; -1 until a route is loaded
+                property real routeKm: -1
+                property real routeGain: 0
+                readonly property bool chips: window.ui.modern && routeKm >= 0
 
                 Text {
                     id: distance
                     width: parent.width
+                    // Modern look: the text gives way to the chips below, laid over it
+                    height: row.chips ? routeChips.height + 8 : implicitHeight
                     text: rootItem.previewWorkoutDescription
                     font.pixelSize: window.ui.modern ? 14 : 16
                     color: window.ui.modern ? window.ui.textMuted : window.ui.ink("white")
@@ -401,6 +408,46 @@ ColumnLayout {
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.horizontalCenter: parent.horizontalCenter
+
+                    Row {
+                        id: routeChips
+                        visible: row.chips
+                        anchors.horizontalCenter: parent.horizontalCenter
+                        anchors.top: parent.top
+                        spacing: 8
+
+                        Repeater {
+                            model: [
+                                { icon: "straighten", text: qsTr("%1 km").arg(row.routeKm.toFixed(1)) },
+                                { icon: "trending_up", text: qsTr("%1 m").arg(Math.round(row.routeGain)) }
+                            ]
+                            Rectangle {
+                                height: 32
+                                width: chipRow.implicitWidth + 24
+                                radius: 16
+                                color: window.ui.surfaceHigh
+                                Row {
+                                    id: chipRow
+                                    anchors.centerIn: parent
+                                    spacing: 6
+                                    UiIcon {
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        width: 18
+                                        height: 18
+                                        name: modelData.icon
+                                        color: window.ui.textMuted
+                                    }
+                                    Label {
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        text: modelData.text
+                                        color: window.ui.textMain
+                                        font.pixelSize: 14
+                                        font.weight: Font.DemiBold
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
                 Plugin {
@@ -438,7 +485,9 @@ ColumnLayout {
                             elevationGain = elevationGain + (pathController.geopath.coordinateAt(i).altitude - pathController.geopath.coordinateAt(i-1).altitude)
                         lines[i] = pathController.geopath.coordinateAt(i)
                     }
-                    distance.text = qsTr("Distance %1 km Elevation Gain: %2 meters").arg(pathController.distance.toFixed(1)).arg(elevationGain.toFixed(1))
+                    row.routeKm = lines.length > 0 ? pathController.distance : -1
+                    row.routeGain = elevationGain
+                    distance.text = window.ui.modern ? "" : qsTr("Distance %1 km Elevation Gain: %2 meters").arg(pathController.distance.toFixed(1)).arg(elevationGain.toFixed(1))
                     return lines;
                 }
 

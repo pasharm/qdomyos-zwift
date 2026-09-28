@@ -1,6 +1,7 @@
 import QtQuick 2.7
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.0
 import Qt.labs.settings 1.0
 
 ColumnLayout {
@@ -10,8 +11,16 @@ ColumnLayout {
     property string linkedBoolSetting: "example_setting"
     property bool isOpen: false
     property string title: ""
+    // Help text under the element. Classic look: the bold italic lime note that the pages
+    // used to place right after the element. Modern look: muted text inside the card.
+    property string description: ""
+    // Modern look: the element as a card of its own (the tile page: one card per tile).
+    // Off for the elements nested in the settings accordions.
+    property bool card: false
     default property alias accordionContent: contentPlaceholder.data
     spacing: 0
+
+    readonly property bool modernCard: window.ui.modern && card
 
     function convertValue(val) {
         let tpval = typeof(val);
@@ -29,14 +38,16 @@ ColumnLayout {
         else
             isOpen = convertValue(settings[linkedBoolSetting]);
     }
- 
+
     Layout.fillWidth: true;
- 
+    Layout.topMargin: modernCard ? 4 : 0
+    Layout.bottomMargin: modernCard ? 4 : 0
+
     /*RowLayout {
         id: accordionHeader
         Layout.alignment: Qt.AlignTop
         Layout.fillWidth: true;
- 
+
         Rectangle{
            id:indicatRect
            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
@@ -44,7 +55,7 @@ ColumnLayout {
            radius: 8
            color: "white"
         }
- 
+
         Text {
             id: accordionText
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
@@ -63,80 +74,139 @@ ColumnLayout {
         }
     }
 
-    // Modern look: a plain switch row like the other switches of the settings (no card,
-    // no accent: a page of tiles has dozens of them); a tap anywhere on the row switches it
-    Rectangle {
-        id: modernHeader
-        visible: window.ui.modern
+    // Everything sits in one item, so that the modern card can be drawn behind all of it
+    // (a layout would place a background child as one more row). Classic: no padding, no
+    // background - the rows lie on the page as before.
+    Item {
+        id: cardItem
         Layout.fillWidth: true
-        implicitHeight: Math.max(48, modernTitle.implicitHeight + 16)
-        radius: 12
-        color: modernArea.pressed ? window.ui.surfaceHigh : "transparent"
+        implicitHeight: cardColumn.implicitHeight + cardColumn.anchors.topMargin + cardColumn.anchors.bottomMargin
 
-        Accessible.role: Accessible.CheckBox
-        Accessible.name: rootElement.title
-        Accessible.checked: rootElement.isOpen
-        Accessible.onPressAction: rootElement.toggle(!rootElement.isOpen)
-
-        MouseArea {
-            id: modernArea
+        Rectangle {
+            visible: rootElement.modernCard
             anchors.fill: parent
-            onClicked: rootElement.toggle(!rootElement.isOpen)
+            radius: 16
+            color: window.ui.surface
         }
 
-        Label {
-            id: modernTitle
+        ColumnLayout {
+            id: cardColumn
+            spacing: 0
             anchors.left: parent.left
-            anchors.leftMargin: 4
-            anchors.right: modernSwitch.left
-            anchors.rightMargin: 8
-            anchors.verticalCenter: parent.verticalCenter
-            text: rootElement.title
-            wrapMode: Text.WordWrap
-            color: window.ui.textMain
-        }
-
-        Switch {
-            id: modernSwitch
             anchors.right: parent.right
-            anchors.rightMargin: 0
-            anchors.verticalCenter: parent.verticalCenter
-            checked: rootElement.isOpen
-            onClicked: rootElement.toggle(checked)
-            Accessible.ignored: true
-        }
-    }
+            anchors.top: parent.top
+            anchors.leftMargin: rootElement.modernCard ? 12 : 0
+            anchors.rightMargin: rootElement.modernCard ? 8 : 0
+            anchors.topMargin: rootElement.modernCard ? 4 : 0
+            anchors.bottomMargin: rootElement.modernCard ? 12 : 0
 
-    SwitchDelegate {
-        visible: !window.ui.modern
-        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-        Layout.fillWidth: true
-        spacing: 0
-        bottomPadding: 0
-        topPadding: 0
-        rightPadding: 0
-        leftPadding: 0
-        clip: false
-        id: indicatCbx
-        text: rootElement.title
-        checked: rootElement.isOpen
-        onClicked: {
-            rootElement.isOpen = checked;
-            if (typeof(settings[rootElement.linkedBoolSetting])=="undefined") {
-                settings.setValue(rootElement.linkedBoolSetting, rootElement.convertValue(checked));
+            // Modern look: a plain switch row like the other switches of the settings (no
+            // accent: a page of tiles has dozens of them); a tap anywhere on the row switches it
+            Rectangle {
+                id: modernHeader
+                visible: window.ui.modern
+                Layout.fillWidth: true
+                implicitHeight: Math.max(48, modernTitle.implicitHeight + 16)
+                radius: 12
+                color: modernArea.pressed ? window.ui.surfaceHigh : "transparent"
+
+                Accessible.role: Accessible.CheckBox
+                Accessible.name: rootElement.title
+                Accessible.checked: rootElement.isOpen
+                Accessible.onPressAction: rootElement.toggle(!rootElement.isOpen)
+
+                MouseArea {
+                    id: modernArea
+                    anchors.fill: parent
+                    onClicked: rootElement.toggle(!rootElement.isOpen)
+                }
+
+                Label {
+                    id: modernTitle
+                    anchors.left: parent.left
+                    anchors.leftMargin: 4
+                    anchors.right: modernSwitch.left
+                    anchors.rightMargin: 8
+                    anchors.verticalCenter: parent.verticalCenter
+                    text: rootElement.title
+                    wrapMode: Text.WordWrap
+                    color: window.ui.textMain
+                    font.weight: rootElement.modernCard ? Font.DemiBold : Font.Normal
+                }
+
+                UiSwitch {
+                    id: modernSwitch
+                    anchors.right: parent.right
+                    anchors.rightMargin: 0
+                    anchors.verticalCenter: parent.verticalCenter
+                    checked: rootElement.isOpen
+                    onClicked: rootElement.toggle(checked)
+                    Accessible.ignored: true
+                }
             }
-            else {
-                settings[rootElement.linkedBoolSetting] = rootElement.convertValue(checked);
+
+            UiSwitchDelegate {
+                visible: !window.ui.modern
+                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                Layout.fillWidth: true
+                spacing: 0
+                bottomPadding: 0
+                topPadding: 0
+                rightPadding: 0
+                leftPadding: 0
+                clip: false
+                id: indicatCbx
+                text: rootElement.title
+                checked: rootElement.isOpen
+                onClicked: {
+                    rootElement.isOpen = checked;
+                    if (typeof(settings[rootElement.linkedBoolSetting])=="undefined") {
+                        settings.setValue(rootElement.linkedBoolSetting, rootElement.convertValue(checked));
+                    }
+                    else {
+                        settings[rootElement.linkedBoolSetting] = rootElement.convertValue(checked);
+                    }
+                }
+            }
+
+            // Modern card: the help text right under the title, before the options
+            Label {
+                visible: rootElement.modernCard && rootElement.description.length > 0
+                Layout.fillWidth: true
+                Layout.leftMargin: 4
+                Layout.rightMargin: 8
+                Layout.bottomMargin: 4
+                text: rootElement.description
+                font.pixelSize: Qt.application.font.pixelSize - 2
+                textFormat: Text.PlainText
+                wrapMode: Text.WordWrap
+                color: window.ui.textMuted
+            }
+
+            // This will get filled with the content
+            ColumnLayout {
+                id: contentPlaceholder
+                visible: rootElement.isOpen
+                Layout.fillWidth: true;
+                Layout.leftMargin: window.ui.modern && !rootElement.modernCard ? 12 : 0
+                Layout.rightMargin: window.ui.modern && !rootElement.modernCard ? 8 : 0
+            }
+
+            // Classic look (and the modern look outside a card): the note after the element,
+            // as the pages had it
+            Label {
+                visible: !rootElement.modernCard && rootElement.description.length > 0
+                text: rootElement.description
+                font.bold: !window.ui.modern
+                font.italic: !window.ui.modern
+                font.pixelSize: Qt.application.font.pixelSize - 2
+                textFormat: Text.PlainText
+                wrapMode: Text.WordWrap
+                verticalAlignment: Text.AlignVCenter
+                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                Layout.fillWidth: true
+                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
             }
         }
-    }
- 
-    // This will get filled with the content
-    ColumnLayout {
-        id: contentPlaceholder
-        visible: rootElement.isOpen
-        Layout.fillWidth: true;
-        Layout.leftMargin: window.ui.modern ? 12 : 0
-        Layout.rightMargin: window.ui.modern ? 8 : 0
     }
 }

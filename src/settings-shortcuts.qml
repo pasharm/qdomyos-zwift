@@ -112,7 +112,7 @@ ScrollView {
             topPadding: window.ui.modern ? 2 : 0
         }
 
-        SwitchDelegate {
+        UiSwitchDelegate {
             id: shortcutsEnabledDelegate
             text: qsTr("Enable Keyboard Shortcuts")
             checked: settings.shortcuts_enabled
@@ -129,7 +129,7 @@ ScrollView {
             color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
-        component ShortcutField : TextField {
+        component ShortcutField : UiTextField {
             property string settingName: ""
             placeholderText: qsTr("None")
             horizontalAlignment: Text.AlignRight
