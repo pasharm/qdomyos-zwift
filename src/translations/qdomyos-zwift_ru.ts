@@ -1469,6 +1469,18 @@ Do you want to update QZ settings?</source>
         <source>Other folders</source>
         <translation>Другие папки</translation>
     </message>
+    <message>
+        <source>Tap a file to select it, then Load.</source>
+        <translation>Нажмите на файл, чтобы выбрать его, затем «Загрузить».</translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation>Загрузить</translation>
+    </message>
+    <message>
+        <source>No saved settings</source>
+        <translation>Нет сохранённых настроек</translation>
+    </message>
 </context>
 <context>
     <name>SwagBagView</name>
