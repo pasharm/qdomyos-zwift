@@ -22,7 +22,7 @@ Item {
         url: rootItem.getIntervalsICUAuthUrl
     }
 
-    Popup {
+    UiPopup {
         id: popupIntervalsICUConnectedWeb
         parent: Overlay.overlay
         enabled: rootItem.generalPopupVisible

@@ -8161,7 +8161,7 @@ import AndroidStatusBar 1.0
                     }
 
                     // MFA Dialog
-                    Popup {
+                    UiPopup {
                         id: garminMfaDialog
                         modal: true
                         focus: true

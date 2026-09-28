@@ -50,14 +50,15 @@ Rectangle {
     }
 
     height: message.height + margin
-    radius: margin
+    radius: window.ui.modern ? 14 : margin
 
     opacity: 0
-    color: "#222222"
+    // Modern look: inverse of the theme, dark on a light page and light on a dark one
+    color: window.ui.modern ? (window.ui.dark ? "#E4E6EB" : "#2B2F36") : "#222222"
 
     Text {
         id: message
-        color: "white"
+        color: window.ui.modern ? (window.ui.dark ? "#1A1C20" : "#F1F2F4") : "white"
         wrapMode: Text.Wrap
         horizontalAlignment: Text.AlignHCenter
         anchors {

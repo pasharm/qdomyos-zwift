@@ -22,7 +22,7 @@ Item {
         url: rootItem.getStravaAuthUrl
     }
 
-    Popup {
+    UiPopup {
         id: popupStravaConnectedWeb
         parent: Overlay.overlay
         enabled: rootItem.generalPopupVisible

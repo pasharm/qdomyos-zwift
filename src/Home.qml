@@ -63,7 +63,7 @@ HomeForm {
         visible: rootItem.pelotonAskStart
     }
 
-    Popup {
+    UiPopup {
         id: popupLap
          parent: Overlay.overlay
 
@@ -107,7 +107,7 @@ HomeForm {
     // Optional post-workout popup (settings.rpe_feel_popup_enabled) asking for perceived exertion
     // and how the user felt. Saving the FIT file (rootItem.finalizeFitSave) is suspended until this
     // popup is answered, so the values can be embedded in the FIT file before it's written/uploaded.
-    Popup {
+    UiPopup {
         id: rpeFeelPopup
         parent: Overlay.overlay
 

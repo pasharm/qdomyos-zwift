@@ -40,7 +40,7 @@ Item {
         }
     }
 
-    Popup {
+    UiPopup {
         id: popupPelotonConnectedWeb
         parent: Overlay.overlay
         enabled: rootItem.pelotonPopupVisible

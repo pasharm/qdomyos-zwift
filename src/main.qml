@@ -523,7 +523,7 @@ ApplicationWindow {
         interval: 2000 // ms
     }
 
-    Popup {
+    UiPopup {
 	    id: popup
 		 parent: Overlay.overlay
 
@@ -579,7 +579,7 @@ ApplicationWindow {
        }
     }
 
-    Popup {
+    UiPopup {
         id: popupClassificaHelper
          parent: Overlay.overlay
 
@@ -609,7 +609,7 @@ ApplicationWindow {
          }
     }
 
-    Popup {
+    UiPopup {
         id: popupGymMode
         parent: Overlay.overlay
         x: Math.round((parent.width - width) / 2)
@@ -688,7 +688,7 @@ ApplicationWindow {
         onTriggered: refresh_bluetooth_devices_clicked()
     }
 
-    Popup {
+    UiPopup {
         id: popupWhatsOnZwiftHelper
          parent: Overlay.overlay
 
@@ -726,7 +726,7 @@ ApplicationWindow {
          }
     }
 
-    Popup {
+    UiPopup {
         id: popupLoadSettings
          parent: Overlay.overlay
 
@@ -755,7 +755,7 @@ ApplicationWindow {
          }
     }
 
-    Popup {
+    UiPopup {
         id: popupSaveFile
          parent: Overlay.overlay
 
@@ -784,7 +784,7 @@ ApplicationWindow {
          }
     }
 
-    Popup {
+    UiPopup {
         id: popupStravaConnected
          parent: Overlay.overlay
          enabled: rootItem.generalPopupVisible
@@ -818,7 +818,7 @@ ApplicationWindow {
          }
     }
 
-    Popup {
+    UiPopup {
         id: popupPelotonConnected
          parent: Overlay.overlay
          enabled: rootItem.pelotonPopupVisible
@@ -858,7 +858,7 @@ ApplicationWindow {
         onTriggered: popupLicense.close();
     }
 
-    Popup {
+    UiPopup {
         id: popupLicense
          parent: Overlay.overlay
          enabled: rootItem.licensePopupVisible
@@ -1005,7 +1005,7 @@ ApplicationWindow {
         visible: rootItem.echelonBridgeSwitchPromptRequested
     }
 
-    Popup {
+    UiPopup {
         id: echelonEnablePopup
         parent: Overlay.overlay
         modal: true
@@ -1144,7 +1144,7 @@ ApplicationWindow {
             visible: OS_VERSION === "Android" ? true : false
         }
 
-        Popup {
+        UiPopup {
             id: popupAutoResistance
              parent: Overlay.overlay
 
@@ -1179,7 +1179,7 @@ ApplicationWindow {
             onTriggered: popupAutoResistance.close();
         }
 
-        Popup {
+        UiPopup {
             id: popuplockTiles
              parent: Overlay.overlay
 
