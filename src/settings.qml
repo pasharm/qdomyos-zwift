@@ -6,6 +6,7 @@ import Qt.labs.settings 1.0
 import QtQuick.Dialogs 1.0
 import Qt.labs.platform 1.1
 import AndroidStatusBar 1.0
+import QtQuick 2.12 as Quick212
 
 //Page {
     ScrollView {
@@ -40,6 +41,27 @@ import AndroidStatusBar 1.0
         property bool settingsSearchActive: false
         property bool settingsSearchPending: false
         property string initialProfileSettingsSnapshot: ""
+
+        // A text field keeps the focus (the cursor and the keyboard) until another control
+        // takes it; empty space of the page never does. A tap on it or the start of a scroll
+        // drops the focus, as in other Android apps.
+        function dropTextFocus() {
+            var item = window.activeFocusItem
+            if (item && item.cursorPosition !== undefined) {
+                settingsPane.forceActiveFocus()
+                Qt.inputMethod.hide()
+            }
+        }
+
+        Connections {
+            target: settingsPane.contentItem
+            function onMovementStarted() { settingsPane.dropTextFocus() }
+        }
+
+        // QtQuick 2.7 of this file has no pointer handlers
+        Quick212.TapHandler {
+            onTapped: settingsPane.dropTextFocus()
+        }
 
         function showSettingsSearch() {
             settingsSearchVisible = true
