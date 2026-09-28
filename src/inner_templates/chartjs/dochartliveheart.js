@@ -483,7 +483,8 @@ function process_workout_heart(arr) {
         heartChart.options.scales.y.max = arr.heart + 5;
         heartChart.options.plugins.annotation.annotations.box5.yMax = arr.heart + 5;
     }
-    heartChart.update();
+    // a new point every second: without 'none' the chart runs its 1 s animation all the time
+    heartChart.update('none');
     refresh_heart();
 }
 
