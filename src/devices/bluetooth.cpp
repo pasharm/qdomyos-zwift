@@ -400,29 +400,34 @@ void bluetooth::finished() {
 
 bool bluetooth::isSearching() const { return discoveryAgent && discoveryAgent->isActive(); }
 
-bool bluetooth::searchNow() {
-    // nothing to search with or for: not a busy Bluetooth, so no toast either
+int bluetooth::searchNow() {
     if (!useDiscovery || !discoveryAgent || device())
-        return true;
+        return 0;
 
     const qint64 now = QDateTime::currentMSecsSinceEpoch();
     rescanCount = 0;
     rescanStartedMs = now;
     rescanStopped = false;
     if (discoveryAgent->isActive())
-        return true;
+        return 0;
 
     while (!scanStartsMs.isEmpty() && now - scanStartsMs.first() > 30000)
         scanStartsMs.removeFirst();
-    // the limit exists on Android 7.0 and later only
-    if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::AndroidNougat && scanStartsMs.size() >= 4)
-        return false;
+    // Android 7.0 and later ignore the 6th scan start in 30 s. 4 leaves room for an automatic search.
+    // Instead of a search that would find nothing, the next one is due when a start leaves the 30 s window.
+    if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::AndroidNougat && scanStartsMs.size() >= 4) {
+        const qint64 waitMs = 30000 - (now - scanStartsMs.at(scanStartsMs.size() - 4)) + 500;
+        nextRescanMs = now + waitMs;
+        rescanTimer.start(int(waitMs));
+        debug(QStringLiteral("BTLE scanning on request postponed by the Android limit"));
+        return int((waitMs + 999) / 1000);
+    }
 
     rescanTimer.stop();
     nextRescanMs = 0;
     debug(QStringLiteral("BTLE scanning on request"));
     startDiscovery();
-    return true;
+    return 0;
 }
 
 void bluetooth::startDiscovery() {
@@ -430,7 +435,7 @@ void bluetooth::startDiscovery() {
     if (!this->useDiscovery)
         return;
 
-    // Android ignores the scan starts after the 5th one in 30 s: searchNow() checks this list.
+    // Android 7.0 and later ignore the scan starts after the 5th one in 30 s: searchNow() checks this list.
     // A start while scanning does nothing, so it is not counted.
     if (discoveryAgent && !discoveryAgent->isActive()) {
         const qint64 now = QDateTime::currentMSecsSinceEpoch();
