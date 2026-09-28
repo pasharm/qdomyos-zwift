@@ -500,3 +500,226 @@ canvas {
 .custom-dialog-footer button {
     min-width: 80px;
 }
+
+/* Modern look of the app (index.html adds the "modern" class and the theme colours from
+   WorkoutEditor.qml): flat filled cards, pill buttons and filled fields like the QML pages.
+   The classic look keeps the rules above untouched. */
+html.modern {
+    font-family: Roboto, "Segoe UI", sans-serif;
+}
+
+html.modern #app {
+    padding: 12px;
+    gap: 12px;
+}
+
+html.modern .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+}
+
+/* The app bar above the page already shows "Workout Editor" */
+html.modern .toolbar-title {
+    display: none;
+}
+
+html.modern .toolbar-controls {
+    gap: 8px;
+    align-items: flex-end;
+}
+
+html.modern .toolbar-controls label {
+    font-size: 0.75rem;
+    flex: 1 1 140px;
+}
+
+html.modern .toolbar-controls .checkbox-label {
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: center;
+    min-height: 40px;
+}
+
+html.modern input[type="text"],
+html.modern input[type="number"],
+html.modern select {
+    background: var(--field-color, var(--panel-elevated));
+    border: 2px solid transparent;
+    border-radius: 12px;
+    min-height: 40px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    font-family: inherit;
+}
+
+html.modern input[type="text"]:focus,
+html.modern input[type="number"]:focus,
+html.modern select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+html.modern button {
+    background: var(--field-color, var(--panel-elevated));
+    border: none;
+    border-radius: 999px;
+    min-height: 40px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    font-family: inherit;
+}
+
+html.modern button.small {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+}
+
+html.modern button:hover {
+    border-color: transparent;
+}
+
+html.modern button:active {
+    filter: brightness(1.15);
+}
+
+html.modern.light button:active {
+    filter: brightness(0.92);
+}
+
+html.modern button:disabled {
+    opacity: 0.38;
+    cursor: default;
+}
+
+html.modern button.primary {
+    background: var(--accent-color);
+    color: var(--accent-ink, #0a111c);
+}
+
+html.modern button.danger {
+    background: transparent;
+    color: var(--danger-color);
+    box-shadow: inset 0 0 0 1px var(--danger-color);
+}
+
+html.modern input[type="checkbox"] {
+    accent-color: var(--accent-color);
+    width: 18px;
+    height: 18px;
+}
+
+html.modern .interval-panel,
+html.modern .chart-card,
+html.modern .program-bar {
+    background: var(--panel-color);
+    border: none;
+    border-radius: 20px;
+}
+
+html.modern .interval-panel {
+    min-width: 0;
+}
+
+html.modern .interval-panel-actions {
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+html.modern .interval-panel-hint {
+    font-size: 0.75rem;
+}
+
+html.modern .interval-card {
+    background: var(--panel-elevated);
+    border: 2px solid transparent;
+    border-radius: 16px;
+}
+
+html.modern .interval-card.selected {
+    border-color: var(--accent-color);
+    box-shadow: none;
+}
+
+html.modern .card-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+html.modern .card-actions button {
+    background: transparent;
+    min-height: 32px;
+    padding: 4px 10px;
+    color: var(--accent-color);
+}
+
+html.modern .card-actions button:disabled {
+    color: var(--muted-color);
+}
+
+html.modern .field-with-buttons button {
+    width: 40px;
+    height: 40px;
+    min-height: 40px;
+    padding: 0;
+    font-size: 1.1rem;
+}
+
+html.modern .status-strip {
+    flex-wrap: wrap;
+    padding: 0 4px;
+}
+
+html.modern .custom-dialog-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: none;
+}
+
+html.modern.light .custom-dialog-overlay {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+html.modern .custom-dialog-content {
+    background: var(--panel-elevated);
+    border: none;
+    border-radius: 28px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+html.modern .custom-dialog-header,
+html.modern .custom-dialog-footer {
+    border: none;
+}
+
+html.modern .custom-dialog-header {
+    padding: 24px 24px 8px;
+}
+
+html.modern .custom-dialog-body {
+    padding: 8px 24px 8px;
+}
+
+html.modern .custom-dialog-body input[type="text"] {
+    background: var(--field-color, var(--panel-color));
+    border: 2px solid transparent;
+    border-radius: 12px;
+}
+
+html.modern .custom-dialog-body input[type="text"]:focus {
+    border-color: var(--accent-color);
+    box-shadow: none;
+}
+
+html.modern .custom-dialog-footer {
+    padding: 8px 16px 20px;
+}
+
+html.modern .custom-dialog-footer button {
+    min-width: 72px;
+}
+
+html.modern .custom-dialog-footer button:not(.primary) {
+    background: transparent;
+    color: var(--accent-color);
+}

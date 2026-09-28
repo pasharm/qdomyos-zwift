@@ -5,6 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Workout Editor</title>
     <link rel="stylesheet" href="workout-editor.css">
+    <script>
+        // Modern look of the app: WorkoutEditor.qml passes its theme colours in the fragment
+        // (#modern=1&dark=1&bg=...) and later calls qzApplyTheme() when the theme changes.
+        // Without the fragment the page keeps its own dark palette.
+        window.qzApplyTheme = function (theme) {
+            var root = document.documentElement;
+            var vars = {
+                bg: '--bg-color', surface: '--panel-color', surfaceHigh: '--panel-elevated',
+                surfaceHighest: '--field-color', outline: '--border-color', text: '--text-color',
+                muted: '--muted-color', accent: '--accent-color', accentInk: '--accent-ink',
+                danger: '--danger-color'
+            };
+            for (var key in vars) {
+                if (theme[key]) {
+                    root.style.setProperty(vars[key], theme[key]);
+                }
+            }
+            root.classList.add('modern');
+            root.classList.toggle('light', !theme.dark);
+            root.style.colorScheme = theme.dark ? 'dark' : 'light';
+            if (window.WorkoutEditorApp && window.WorkoutEditorApp.refreshTheme) {
+                window.WorkoutEditorApp.refreshTheme();
+            }
+        };
+        (function () {
+            var theme = {};
+            window.location.hash.substring(1).split('&').forEach(function (pair) {
+                var i = pair.indexOf('=');
+                if (i > 0) {
+                    theme[pair.substring(0, i)] = decodeURIComponent(pair.substring(i + 1));
+                }
+            });
+            if (theme.modern === '1') {
+                theme.dark = theme.dark === '1';
+                window.qzApplyTheme(theme);
+            }
+        })();
+    </script>
     <script src="../i18n/i18n.js"></script>
     <script src="../chartjs/resize-observer.min.js"></script>
     <script src="../chartjs/chartjs.3.4.1.min.js"></script>

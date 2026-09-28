@@ -22,19 +22,33 @@
 
     const state = {
         chart: null,
-        axisTemplate: {
+        lastPayload: null
+    };
+
+    // The light theme of the modern look (index.html marks it with the "light" class)
+    function light() {
+        return document.documentElement.classList.contains('light');
+    }
+
+    // Chart lines and labels over the page background: white on the dark palettes, black on light
+    function ink(alpha) {
+        return (light() ? 'rgba(0,0,0,' : 'rgba(255,255,255,') + alpha + ')';
+    }
+
+    function axisTemplate() {
+        return {
             type: 'linear',
             grid: {
-                color: 'rgba(255,255,255,0.04)'
+                color: ink(light() ? 0.08 : 0.04)
             },
             ticks: {
-                color: 'rgba(255,255,255,0.65)'
+                color: ink(0.65)
             },
             border: {
-                color: 'rgba(255,255,255,0.16)'
+                color: ink(0.16)
             }
-        }
-    };
+        };
+    }
 
     function formatSeconds(total) {
         if (!isFinite(total)) {
@@ -104,19 +118,19 @@
         const axis = {
             type: 'linear',
             grid: {
-                color: 'rgba(255,255,255,0.04)'
+                color: ink(light() ? 0.08 : 0.04)
             },
             border: {
-                color: 'rgba(255,255,255,0.16)'
+                color: ink(0.16)
             },
             ticks: {
-                color: 'rgba(255,255,255,0.65)',
+                color: ink(0.65),
                 callback: (value) => formatSeconds(value)
             },
             title: {
                 display: true,
                 text: t('workoutEditor.time', 'Time'),
-                color: 'rgba(255,255,255,0.75)'
+                color: ink(0.75)
             }
         };
         if (typeof suggestedMax === 'number') {
@@ -130,13 +144,13 @@
         seriesList.forEach((series) => {
             const axisId = series.axis || 'y';
             if (!axes[axisId]) {
-                axes[axisId] = JSON.parse(JSON.stringify(state.axisTemplate));
+                axes[axisId] = axisTemplate();
                 axes[axisId].position = series.axisPosition || 'left';
                 axes[axisId].id = axisId;
                 axes[axisId].title = {
                     display: !!series.axisLabel,
                     text: series.axisLabel || '',
-                    color: 'rgba(255,255,255,0.75)'
+                    color: ink(0.75)
                 };
                 if (typeof series.min === 'number') {
                     axes[axisId].min = series.min;
@@ -198,6 +212,7 @@
         if (!chart) {
             return;
         }
+        state.lastPayload = payload;
         const seriesList = Array.isArray(payload.series) ? payload.series : [];
         const axes = buildAxes(seriesList);
         chart.options.scales = Object.assign({ x: buildTimeAxis(payload.totalSeconds) }, axes);
@@ -228,14 +243,23 @@
         if (!chart) {
             return;
         }
+        state.lastPayload = null;
         chart.data.datasets = [];
         chart.update();
         updateLegend([]);
     }
 
+    // The app switched its theme while the editor is open: redraw the axes in the new colours
+    function refreshTheme() {
+        if (state.lastPayload) {
+            updateChart(state.lastPayload);
+        }
+    }
+
     window.WorkoutEditorApp = {
         update: updateChart,
-        reset
+        reset,
+        refreshTheme
     };
 
     window.addEventListener('DOMContentLoaded', ensureChart);

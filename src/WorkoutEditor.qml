@@ -10,6 +10,46 @@ Item {
 
     signal closeRequested()
 
+    // Modern look: the page takes the app theme colours (index.html, qzApplyTheme). They go in
+    // the URL fragment for the first load and through runJavaScript when the theme changes
+    // later, so an open workout is not reloaded. Null in the classic look: the page keeps its
+    // own dark palette.
+    readonly property var pageTheme: {
+        var ui = window.ui
+        if (!ui.modern)
+            return null
+        return {
+            modern: "1",
+            dark: ui.dark,
+            bg: ui.bg.toString(),
+            surface: ui.surface.toString(),
+            surfaceHigh: ui.surfaceHigh.toString(),
+            surfaceHighest: ui.surfaceHighest.toString(),
+            outline: ui.outline.toString(),
+            text: ui.textMain.toString(),
+            muted: ui.textMuted.toString(),
+            accent: ui.accent.toString(),
+            accentInk: ui.accentInk.toString(),
+            danger: ui.danger.toString()
+        }
+    }
+
+    function themeFragment() {
+        if (!pageTheme)
+            return ""
+        var parts = []
+        for (var key in pageTheme) {
+            var value = key === "dark" ? (pageTheme.dark ? "1" : "0") : pageTheme[key]
+            parts.push(key + "=" + encodeURIComponent(value))
+        }
+        return "#" + parts.join("&")
+    }
+
+    onPageThemeChanged: {
+        if (pageLoaded && pageTheme)
+            webView.runJavaScript("window.qzApplyTheme && window.qzApplyTheme(" + JSON.stringify(pageTheme) + ")")
+    }
+
     Settings {
         id: settings
     }
@@ -24,7 +64,7 @@ Item {
             if (!port) {
                 return
             }
-            var targetUrl = "http://localhost:" + port + "/workouteditor/index.html"
+            var targetUrl = "http://localhost:" + port + "/workouteditor/index.html" + root.themeFragment()
             if (webView.url !== targetUrl) {
                 webView.url = targetUrl
             }
