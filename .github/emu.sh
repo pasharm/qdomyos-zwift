@@ -136,6 +136,20 @@ sleep 2
 adb shell input tap 346 1096 || true    # Open GPX
 sleep 8
 shot 19-gpx-dark
+adb shell input tap 84 168 || true      # back arrow: home page
+sleep 3
+adb shell input tap 84 168 || true      # menu
+sleep 3
+adb shell input swipe 500 700 500 2300 300 || true   # drawer to the top
+sleep 2
+adb shell input tap 433 1431 || true    # Workouts History
+sleep 8
+shot 20-history-dark
+adb shell input tap 126 300 || true     # calendar button in the page header
+sleep 3
+shot 21-calendar-dark
+adb shell input keyevent KEYCODE_BACK || true
+sleep 2
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
