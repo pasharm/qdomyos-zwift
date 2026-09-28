@@ -86,6 +86,17 @@ sleep 3
 adb shell input tap 1187 168 || true    # lock button on the home toolbar: notice popup
 sleep 1
 shot 14-lock-popup-dark
+sleep 2
+adb shell input tap 84 168 || true      # menu
+sleep 3
+adb shell input tap 326 2068 || true    # Settings in the drawer (not scrolled)
+sleep 8
+adb shell input tap 717 1239 || true    # Tiles Options page
+sleep 6
+shot 15-tiles-dark
+adb shell input swipe 700 2100 700 900 400 || true
+sleep 3
+shot 16-tiles-scrolled-dark
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
