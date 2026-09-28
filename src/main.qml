@@ -1322,7 +1322,9 @@ ApplicationWindow {
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (window.lockTiles ? "lock_open" : "lock"); color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { window.lockTiles = !window.lockTiles; console.log("lock tiles toggled " + window.lockTiles); popuplockTiles.open(); popuplockTilesAutoClose.running = true; }
             anchors.right: toolButtonAutoResistance.left
-            visible: !toolButtonSaveSettings.visible
+            // Modern look: the tiles are on the home page only, so is their lock
+            visible: window.ui.modern ? stackView.depth === 1 : !toolButtonSaveSettings.visible
+            width: visible ? implicitWidth : 0
         }
 
         ToolButton {
@@ -1331,7 +1333,8 @@ ApplicationWindow {
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (rootItem.autoResistance ? "motion_mode" : "pause_circle"); color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { rootItem.autoResistance = !rootItem.autoResistance; console.log("auto resistance toggled " + rootItem.autoResistance); popupAutoResistance.open(); popupAutoResistanceAutoClose.running = true; }
             anchors.right: parent.right
-            visible: !headerToolbar.settingsPageActive
+            // Modern look: a workout control, on the home page only
+            visible: window.ui.modern ? stackView.depth === 1 : !headerToolbar.settingsPageActive
             width: visible ? implicitWidth : 0
         }
 
