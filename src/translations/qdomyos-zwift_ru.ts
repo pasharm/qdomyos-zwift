@@ -645,222 +645,222 @@ Would you like to do that now?</source>
         <translation>Не удалось отправить тренировку по почте</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="883"/>
+        <location filename="../homeform.cpp" line="888"/>
         <source>QZ is looking for %1. Please wake it up or change this device under the Manual Device setting in Advanced Settings.</source>
         <translation>QZ ищет %1. Выведите устройство из сна или смените его в «Устройство вручную» в разделе «Дополнительные настройки».</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="1082"/>
+        <location filename="../homeform.cpp" line="1087"/>
         <source>Bluetooth name too long, change it to a 4 letters one in the android settings and use only A-Z or 0-9 characters</source>
         <translation>Слишком длинное имя Bluetooth: смените его в настройках Android на имя из 4 символов, только A-Z или 0-9</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="1574"/>
+        <location filename="../homeform.cpp" line="1579"/>
         <source>Peloton Login Error!</source>
         <translation>Ошибка входа в Peloton!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="1583"/>
+        <location filename="../homeform.cpp" line="1588"/>
         <source>Zwift Login Error!</source>
         <translation>Ошибка входа в Zwift!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="1626"/>
+        <location filename="../homeform.cpp" line="1631"/>
         <source>Peloton workout auto started! It will start automatically after the intro! %1 - %2</source>
         <translation>Тренировка Peloton запущена автоматически! Начнётся сама после вступления! %1 – %2</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="1629"/>
+        <location filename="../homeform.cpp" line="1634"/>
         <source>Peloton workout auto started skipping the intro! %1 - %2</source>
         <translation>Тренировка Peloton запущена автоматически, вступление пропущено! %1 – %2</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6301"/>
-        <location filename="../homeform.cpp" line="6315"/>
-        <location filename="../homeform.cpp" line="6474"/>
-        <location filename="../homeform.cpp" line="6482"/>
-        <location filename="../homeform.cpp" line="6509"/>
-        <location filename="../homeform.cpp" line="6574"/>
-        <location filename="../homeform.cpp" line="6607"/>
-        <location filename="../homeform.cpp" line="6618"/>
-        <location filename="../homeform.cpp" line="6625"/>
-        <location filename="../homeform.cpp" line="6632"/>
-        <location filename="../homeform.cpp" line="6774"/>
-        <location filename="../homeform.cpp" line="6785"/>
-        <location filename="../homeform.cpp" line="6875"/>
-        <location filename="../homeform.cpp" line="6933"/>
+        <location filename="../homeform.cpp" line="6306"/>
+        <location filename="../homeform.cpp" line="6320"/>
+        <location filename="../homeform.cpp" line="6479"/>
+        <location filename="../homeform.cpp" line="6487"/>
+        <location filename="../homeform.cpp" line="6514"/>
+        <location filename="../homeform.cpp" line="6579"/>
+        <location filename="../homeform.cpp" line="6612"/>
+        <location filename="../homeform.cpp" line="6623"/>
+        <location filename="../homeform.cpp" line="6630"/>
+        <location filename="../homeform.cpp" line="6637"/>
+        <location filename="../homeform.cpp" line="6779"/>
+        <location filename="../homeform.cpp" line="6790"/>
+        <location filename="../homeform.cpp" line="6880"/>
         <location filename="../homeform.cpp" line="6938"/>
-        <location filename="../homeform.cpp" line="6989"/>
-        <location filename="../homeform.cpp" line="7085"/>
+        <location filename="../homeform.cpp" line="6943"/>
+        <location filename="../homeform.cpp" line="6994"/>
         <location filename="../homeform.cpp" line="7090"/>
-        <location filename="../homeform.cpp" line="7104"/>
-        <location filename="../homeform.cpp" line="7155"/>
-        <location filename="../homeform.cpp" line="7180"/>
-        <location filename="../homeform.cpp" line="7199"/>
-        <location filename="../homeform.cpp" line="7215"/>
-        <location filename="../homeform.cpp" line="7262"/>
+        <location filename="../homeform.cpp" line="7095"/>
+        <location filename="../homeform.cpp" line="7109"/>
+        <location filename="../homeform.cpp" line="7160"/>
+        <location filename="../homeform.cpp" line="7185"/>
+        <location filename="../homeform.cpp" line="7204"/>
+        <location filename="../homeform.cpp" line="7220"/>
+        <location filename="../homeform.cpp" line="7267"/>
         <source>AVG: </source>
         <translation>Ср.: </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6303"/>
-        <location filename="../homeform.cpp" line="6475"/>
-        <location filename="../homeform.cpp" line="6483"/>
-        <location filename="../homeform.cpp" line="6511"/>
-        <location filename="../homeform.cpp" line="6576"/>
-        <location filename="../homeform.cpp" line="6609"/>
-        <location filename="../homeform.cpp" line="6620"/>
-        <location filename="../homeform.cpp" line="6627"/>
-        <location filename="../homeform.cpp" line="6635"/>
-        <location filename="../homeform.cpp" line="6776"/>
-        <location filename="../homeform.cpp" line="6787"/>
-        <location filename="../homeform.cpp" line="6877"/>
-        <location filename="../homeform.cpp" line="6935"/>
+        <location filename="../homeform.cpp" line="6308"/>
+        <location filename="../homeform.cpp" line="6480"/>
+        <location filename="../homeform.cpp" line="6488"/>
+        <location filename="../homeform.cpp" line="6516"/>
+        <location filename="../homeform.cpp" line="6581"/>
+        <location filename="../homeform.cpp" line="6614"/>
+        <location filename="../homeform.cpp" line="6625"/>
+        <location filename="../homeform.cpp" line="6632"/>
+        <location filename="../homeform.cpp" line="6640"/>
+        <location filename="../homeform.cpp" line="6781"/>
+        <location filename="../homeform.cpp" line="6792"/>
+        <location filename="../homeform.cpp" line="6882"/>
         <location filename="../homeform.cpp" line="6940"/>
-        <location filename="../homeform.cpp" line="6991"/>
-        <location filename="../homeform.cpp" line="7087"/>
+        <location filename="../homeform.cpp" line="6945"/>
+        <location filename="../homeform.cpp" line="6996"/>
         <location filename="../homeform.cpp" line="7092"/>
-        <location filename="../homeform.cpp" line="7106"/>
-        <location filename="../homeform.cpp" line="7157"/>
-        <location filename="../homeform.cpp" line="7182"/>
-        <location filename="../homeform.cpp" line="7201"/>
-        <location filename="../homeform.cpp" line="7217"/>
-        <location filename="../homeform.cpp" line="7263"/>
-        <location filename="../homeform.cpp" line="7283"/>
-        <location filename="../homeform.cpp" line="7310"/>
-        <location filename="../homeform.cpp" line="7638"/>
+        <location filename="../homeform.cpp" line="7097"/>
+        <location filename="../homeform.cpp" line="7111"/>
+        <location filename="../homeform.cpp" line="7162"/>
+        <location filename="../homeform.cpp" line="7187"/>
+        <location filename="../homeform.cpp" line="7206"/>
+        <location filename="../homeform.cpp" line="7222"/>
+        <location filename="../homeform.cpp" line="7268"/>
+        <location filename="../homeform.cpp" line="7288"/>
+        <location filename="../homeform.cpp" line="7315"/>
         <location filename="../homeform.cpp" line="7643"/>
+        <location filename="../homeform.cpp" line="7648"/>
         <source> MAX: </source>
         <translation> Макс.: </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6581"/>
-        <location filename="../homeform.cpp" line="6781"/>
-        <location filename="../homeform.cpp" line="6996"/>
-        <location filename="../homeform.cpp" line="7162"/>
-        <location filename="../homeform.cpp" line="7187"/>
+        <location filename="../homeform.cpp" line="6586"/>
+        <location filename="../homeform.cpp" line="6786"/>
+        <location filename="../homeform.cpp" line="7001"/>
+        <location filename="../homeform.cpp" line="7167"/>
+        <location filename="../homeform.cpp" line="7192"/>
         <source>MAX: </source>
         <translation>Макс.: </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="7636"/>
         <location filename="../homeform.cpp" line="7641"/>
+        <location filename="../homeform.cpp" line="7646"/>
         <source> AVG: </source>
         <translation> Ср.: </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8347"/>
+        <location filename="../homeform.cpp" line="8352"/>
         <source>AutoLap %1</source>
         <translation>Авто-круг %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="9658"/>
+        <location filename="../homeform.cpp" line="9663"/>
         <source>Strava Auth Failed!</source>
         <translation>Strava: ошибка авторизации!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="9681"/>
+        <location filename="../homeform.cpp" line="9686"/>
         <source>Strava Login OK!</source>
         <translation>Strava: вход выполнен!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="9823"/>
+        <location filename="../homeform.cpp" line="9828"/>
         <source>Strava Upload Failed: %1</source>
         <translation>Не удалось загрузить в Strava: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="9825"/>
+        <location filename="../homeform.cpp" line="9830"/>
         <source>Strava Upload Failed</source>
         <translation>Не удалось загрузить в Strava</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="9840"/>
+        <location filename="../homeform.cpp" line="9845"/>
         <source>Strava Upload Completed!</source>
         <translation>Загрузка в Strava завершена!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10035"/>
+        <location filename="../homeform.cpp" line="10040"/>
         <source>Garmin credentials not configured. Please set email and password in settings.</source>
         <translation>Garmin не настроен: укажите email и пароль в настройках.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10045"/>
+        <location filename="../homeform.cpp" line="10050"/>
         <source>Garmin Connect: Authentication successful!</source>
         <translation>Garmin Connect: вход выполнен!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10050"/>
+        <location filename="../homeform.cpp" line="10055"/>
         <source>Garmin Connect Login Failed: %1</source>
         <translation>Не удалось войти в Garmin Connect: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10054"/>
+        <location filename="../homeform.cpp" line="10059"/>
         <source>Garmin Connect: Upload successful!</source>
         <translation>Garmin Connect: загрузка выполнена!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10058"/>
+        <location filename="../homeform.cpp" line="10063"/>
         <source>Garmin Connect Upload Failed: %1</source>
         <translation>Не удалось загрузить в Garmin Connect: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10068"/>
+        <location filename="../homeform.cpp" line="10073"/>
         <source>Garmin workout saved: %1</source>
         <translation>Тренировка Garmin сохранена: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10102"/>
-        <location filename="../homeform.cpp" line="10110"/>
+        <location filename="../homeform.cpp" line="10107"/>
+        <location filename="../homeform.cpp" line="10115"/>
         <source>Garmin Connect: Authenticated!</source>
         <translation>Garmin Connect: вход выполнен!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10122"/>
+        <location filename="../homeform.cpp" line="10127"/>
         <source>Garmin Connect: Login failed - %1</source>
         <translation>Garmin Connect: не удалось войти – %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10131"/>
+        <location filename="../homeform.cpp" line="10136"/>
         <source>Garmin Connect not initialized</source>
         <translation>Garmin Connect не инициализирован</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10136"/>
+        <location filename="../homeform.cpp" line="10141"/>
         <source>Please enter a valid MFA code</source>
         <translation>Введите правильный код MFA</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10145"/>
+        <location filename="../homeform.cpp" line="10150"/>
         <source>Submitting MFA code...</source>
         <translation>Отправка кода MFA...</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10188"/>
+        <location filename="../homeform.cpp" line="10193"/>
         <source>No Garmin workout file available</source>
         <translation>Нет файла тренировки Garmin</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10193"/>
+        <location filename="../homeform.cpp" line="10198"/>
         <source>Failed to load Garmin workout: %1</source>
         <translation>Не удалось загрузить тренировку Garmin: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10198"/>
+        <location filename="../homeform.cpp" line="10203"/>
         <source>Starting Garmin workout: %1</source>
         <translation>Запуск тренировки Garmin: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10234"/>
+        <location filename="../homeform.cpp" line="10239"/>
         <source>Cycling FTP: %1 -&gt; %2 W</source>
         <translation>FTP (велосипед): %1 -&gt; %2 Вт</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10246"/>
+        <location filename="../homeform.cpp" line="10251"/>
         <source>Running FTP: %1 -&gt; %2 W</source>
         <translation>FTP (бег): %1 -&gt; %2 Вт</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10254"/>
+        <location filename="../homeform.cpp" line="10259"/>
         <source>Garmin Connect has newer FTP values:
 
 %1
@@ -873,177 +873,177 @@ Do you want to update QZ settings?</source>
 Обновить настройки QZ?</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10278"/>
+        <location filename="../homeform.cpp" line="10283"/>
         <source>cycling FTP</source>
         <translation>FTP для велосипеда</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10282"/>
+        <location filename="../homeform.cpp" line="10287"/>
         <source>running FTP</source>
         <translation>FTP для бега</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10295"/>
+        <location filename="../homeform.cpp" line="10300"/>
         <source>Updated Garmin %1</source>
         <translation>Обновлено из Garmin: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10295"/>
+        <location filename="../homeform.cpp" line="10300"/>
         <source> and </source>
         <translation> и </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10314"/>
-        <location filename="../homeform.cpp" line="10339"/>
+        <location filename="../homeform.cpp" line="10319"/>
+        <location filename="../homeform.cpp" line="10344"/>
         <source>No active Echelon device found</source>
         <translation>Активное устройство Echelon не найдено</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10328"/>
+        <location filename="../homeform.cpp" line="10333"/>
         <source>The connected device is neither an Echelon Connect Sport nor a fakebike</source>
         <translation>Подключённое устройство – не Echelon Connect Sport и не fakebike</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10348"/>
+        <location filename="../homeform.cpp" line="10353"/>
         <source>The connected device is not an Echelon Connect Sport</source>
         <translation>Подключённое устройство – не Echelon Connect Sport</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10393"/>
+        <location filename="../homeform.cpp" line="10398"/>
         <source>Strava: unable to open FIT file</source>
         <translation>Strava: не удалось открыть файл FIT</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10402"/>
+        <location filename="../homeform.cpp" line="10407"/>
         <source>Garmin: FIT file not found</source>
         <translation>Garmin: файл FIT не найден</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10407"/>
+        <location filename="../homeform.cpp" line="10412"/>
         <source>Garmin is not configured</source>
         <translation>Garmin не настроен</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10416"/>
-        <location filename="../homeform.cpp" line="10539"/>
+        <location filename="../homeform.cpp" line="10421"/>
+        <location filename="../homeform.cpp" line="10544"/>
         <source>Garmin: Not authenticated. Please login first.</source>
         <translation>Garmin: вход не выполнен. Сначала войдите.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10420"/>
-        <location filename="../homeform.cpp" line="10545"/>
+        <location filename="../homeform.cpp" line="10425"/>
+        <location filename="../homeform.cpp" line="10550"/>
         <source>Uploading to Garmin Connect...</source>
         <translation>Загрузка в Garmin Connect...</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10422"/>
-        <location filename="../homeform.cpp" line="10553"/>
+        <location filename="../homeform.cpp" line="10427"/>
+        <location filename="../homeform.cpp" line="10558"/>
         <source>Garmin: Upload failed - %1</source>
         <translation>Garmin: не удалось загрузить – %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10429"/>
+        <location filename="../homeform.cpp" line="10434"/>
         <source>Intervals.icu: unable to open FIT file</source>
         <translation>Intervals.icu: не удалось открыть файл FIT</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10550"/>
+        <location filename="../homeform.cpp" line="10555"/>
         <source>Garmin: Upload successful!</source>
         <translation>Garmin: загрузка выполнена!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="10563"/>
+        <location filename="../homeform.cpp" line="10568"/>
         <source>Downloading Garmin daily workout...</source>
         <translation>Получение тренировки дня из Garmin...</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11538"/>
-        <location filename="../homeform.cpp" line="11578"/>
+        <location filename="../homeform.cpp" line="11543"/>
+        <location filename="../homeform.cpp" line="11583"/>
         <source>Intervals.icu: Authentication failed</source>
         <translation>Intervals.icu: ошибка авторизации</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11582"/>
+        <location filename="../homeform.cpp" line="11587"/>
         <source>Intervals.icu: Error %1</source>
         <translation>Intervals.icu: ошибка %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11593"/>
+        <location filename="../homeform.cpp" line="11598"/>
         <source>Intervals.icu error: %1</source>
         <translation>Ошибка Intervals.icu: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11697"/>
+        <location filename="../homeform.cpp" line="11702"/>
         <source>Intervals.icu: Not authenticated</source>
         <translation>Intervals.icu: вход не выполнен</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11703"/>
+        <location filename="../homeform.cpp" line="11708"/>
         <source>Intervals.icu: No athlete ID configured</source>
         <translation>Intervals.icu: не указан ID спортсмена</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11804"/>
+        <location filename="../homeform.cpp" line="11809"/>
         <source>Intervals.icu upload successful!</source>
         <translation>Загрузка в Intervals.icu выполнена!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11806"/>
+        <location filename="../homeform.cpp" line="11811"/>
         <source>Intervals.icu upload failed (HTTP %1)</source>
         <translation>Не удалось загрузить в Intervals.icu (HTTP %1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11822"/>
+        <location filename="../homeform.cpp" line="11827"/>
         <source>Intervals.icu upload failed: %1</source>
         <translation>Не удалось загрузить в Intervals.icu: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11824"/>
+        <location filename="../homeform.cpp" line="11829"/>
         <source>Intervals.icu upload failed</source>
         <translation>Не удалось загрузить в Intervals.icu</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11839"/>
+        <location filename="../homeform.cpp" line="11844"/>
         <source>Intervals.icu: Configure athlete ID first</source>
         <translation>Intervals.icu: сначала укажите ID спортсмена</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11860"/>
+        <location filename="../homeform.cpp" line="11865"/>
         <source>Intervals.icu: Please authenticate first</source>
         <translation>Intervals.icu: сначала войдите</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11877"/>
+        <location filename="../homeform.cpp" line="11882"/>
         <source>Downloading workout from Intervals.icu...</source>
         <translation>Получение тренировки из Intervals.icu...</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11887"/>
+        <location filename="../homeform.cpp" line="11892"/>
         <source>Failed to get workouts (HTTP %1)</source>
         <translation>Не удалось получить тренировки (HTTP %1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11889"/>
+        <location filename="../homeform.cpp" line="11894"/>
         <source>Intervals.icu: %1</source>
         <translation>Intervals.icu: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11898"/>
+        <location filename="../homeform.cpp" line="11903"/>
         <source>Intervals.icu: Invalid response</source>
         <translation>Intervals.icu: неверный ответ</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11906"/>
+        <location filename="../homeform.cpp" line="11911"/>
         <source>No workouts planned for today on Intervals.icu</source>
         <translation>На сегодня в Intervals.icu тренировок нет</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11976"/>
+        <location filename="../homeform.cpp" line="11981"/>
         <source>Workout saved: %1</source>
         <translation>Тренировка сохранена: %1</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11979"/>
+        <location filename="../homeform.cpp" line="11984"/>
         <source>Failed to save workout file</source>
         <translation>Не удалось сохранить файл тренировки</translation>
     </message>
@@ -1867,7 +1867,7 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="58"/>
-        <location filename="../webtranslation.cpp" line="219"/>
+        <location filename="../webtranslation.cpp" line="232"/>
         <source>Speed</source>
         <translation>Скорость</translation>
     </message>
@@ -1883,13 +1883,13 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="61"/>
-        <location filename="../webtranslation.cpp" line="227"/>
+        <location filename="../webtranslation.cpp" line="240"/>
         <source>Resistance</source>
         <translation>Сопротивление</translation>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="62"/>
-        <location filename="../webtranslation.cpp" line="220"/>
+        <location filename="../webtranslation.cpp" line="233"/>
         <source>Cadence</source>
         <translation>Каденс</translation>
     </message>
@@ -2326,7 +2326,7 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="149"/>
-        <location filename="../webtranslation.cpp" line="222"/>
+        <location filename="../webtranslation.cpp" line="235"/>
         <source>Calories</source>
         <translation>Калории</translation>
     </message>
@@ -2472,236 +2472,301 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <location filename="../webtranslation.cpp" line="179"/>
+        <source>W</source>
+        <translation>Вт</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="180"/>
+        <source>kJ</source>
+        <translation>кДж</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="181"/>
+        <source>kcal</source>
+        <translation>ккал</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="182"/>
+        <source>km</source>
+        <translation>км</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="183"/>
+        <source>mi</source>
+        <translation>миль</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="184"/>
+        <source>rpm</source>
+        <translation>об/мин</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="185"/>
+        <source>bpm</source>
+        <translation>уд/мин</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="186"/>
+        <source>km/h</source>
+        <translation>км/ч</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="187"/>
+        <source>mph</source>
+        <translation>миль/ч</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="188"/>
+        <source>min/km</source>
+        <translation>мин/км</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="189"/>
+        <source>min/mi</source>
+        <translation>мин/милю</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="190"/>
+        <source>lvl</source>
+        <translation>ур.</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="191"/>
+        <source>spm</source>
+        <translation>гр/мин</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="192"/>
         <source>Marathon</source>
         <translation>Марафон</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="180"/>
+        <location filename="../webtranslation.cpp" line="193"/>
         <source>Half Marathon</source>
         <translation>Полумарафон</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="181"/>
+        <location filename="../webtranslation.cpp" line="194"/>
         <source>10K</source>
         <translation>10K</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="182"/>
+        <location filename="../webtranslation.cpp" line="195"/>
         <source>5K</source>
         <translation>5K</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="183"/>
+        <location filename="../webtranslation.cpp" line="196"/>
         <source>1 Mile</source>
         <translation>1 миля</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="184"/>
+        <location filename="../webtranslation.cpp" line="197"/>
         <source>Peloton Workout in progress!</source>
         <translation>Идёт тренировка Peloton!</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="185"/>
+        <location filename="../webtranslation.cpp" line="198"/>
         <source>Do you want to follow the resistance?</source>
         <translation>Следовать заданному сопротивлению?</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="186"/>
+        <location filename="../webtranslation.cpp" line="199"/>
         <source>AVG</source>
         <translation>СР.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="187"/>
+        <location filename="../webtranslation.cpp" line="200"/>
         <source>MAX</source>
         <translation>МАКС.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="188"/>
+        <location filename="../webtranslation.cpp" line="201"/>
         <source>TOTAL</source>
         <translation>ВСЕГО</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="189"/>
+        <location filename="../webtranslation.cpp" line="202"/>
         <source>OFFSET</source>
         <translation>СМЕЩ.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="190"/>
+        <location filename="../webtranslation.cpp" line="203"/>
         <source>N/A</source>
         <translation>Н/Д</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="191"/>
+        <location filename="../webtranslation.cpp" line="204"/>
         <source>P.ZONE</source>
         <translation>ЗОНА МОЩ.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="192"/>
+        <location filename="../webtranslation.cpp" line="205"/>
         <source>P.RESISTANCE</source>
         <translation>P.СОПР.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="193"/>
+        <location filename="../webtranslation.cpp" line="206"/>
         <source>TOT.OUTPUT</source>
         <translation>СУММ.МОЩ.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="194"/>
+        <location filename="../webtranslation.cpp" line="207"/>
         <source>ELAPSED</source>
         <translation>ВРЕМЯ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="195"/>
+        <location filename="../webtranslation.cpp" line="208"/>
         <source>REM.TIME</source>
         <translation>ОСТАЛОСЬ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="196"/>
+        <location filename="../webtranslation.cpp" line="209"/>
         <source>P.OFFSET</source>
         <translation>P.СМЕЩ.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="197"/>
+        <location filename="../webtranslation.cpp" line="210"/>
         <source>GEARS</source>
         <translation>ПЕРЕДАЧИ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="198"/>
+        <location filename="../webtranslation.cpp" line="211"/>
         <source>NEXT</source>
         <translation>ДАЛЕЕ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="199"/>
+        <location filename="../webtranslation.cpp" line="212"/>
         <source>CLEAR</source>
         <translation>КРУГ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="200"/>
+        <location filename="../webtranslation.cpp" line="213"/>
         <source>GEAR -</source>
         <translation>ПЕРЕДАЧА -</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="201"/>
+        <location filename="../webtranslation.cpp" line="214"/>
         <source>GEAR +</source>
         <translation>ПЕРЕДАЧА +</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="202"/>
+        <location filename="../webtranslation.cpp" line="215"/>
         <source>Select metrics to display</source>
         <translation>Выберите показатели</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="203"/>
+        <location filename="../webtranslation.cpp" line="216"/>
         <source>Select Metrics</source>
         <translation>Показатели</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="204"/>
+        <location filename="../webtranslation.cpp" line="217"/>
         <source>Full Controls</source>
         <translation>Полная панель</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="205"/>
+        <location filename="../webtranslation.cpp" line="218"/>
         <source>Close</source>
         <translation>Закрыть</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="206"/>
+        <location filename="../webtranslation.cpp" line="219"/>
         <source>Start/Pause</source>
         <translation>Старт/пауза</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="207"/>
+        <location filename="../webtranslation.cpp" line="220"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="208"/>
+        <location filename="../webtranslation.cpp" line="221"/>
         <source>Auto Resistance</source>
         <translation>Авто-сопротивление</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="209"/>
+        <location filename="../webtranslation.cpp" line="222"/>
         <source>SPEED</source>
         <translation>СКОРОСТЬ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="210"/>
+        <location filename="../webtranslation.cpp" line="223"/>
         <source>INCLINE</source>
         <translation>НАКЛОН</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="211"/>
+        <location filename="../webtranslation.cpp" line="224"/>
         <source>PACE</source>
         <translation>ТЕМП</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="212"/>
+        <location filename="../webtranslation.cpp" line="225"/>
         <source>ELEV.</source>
         <translation>ВЫС.</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="213"/>
+        <location filename="../webtranslation.cpp" line="226"/>
         <source>CADENCE</source>
         <translation>КАДЕНС</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="214"/>
+        <location filename="../webtranslation.cpp" line="227"/>
         <source>PULSE</source>
         <translation>ПУЛЬС</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="215"/>
+        <location filename="../webtranslation.cpp" line="228"/>
         <source>POWER</source>
         <translation>МОЩНОСТЬ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="216"/>
+        <location filename="../webtranslation.cpp" line="229"/>
         <source>RESISTANCE</source>
         <translation>СОПРОТИВЛЕНИЕ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="217"/>
+        <location filename="../webtranslation.cpp" line="230"/>
         <source>CALORIES</source>
         <translation>КАЛОРИИ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="218"/>
+        <location filename="../webtranslation.cpp" line="231"/>
         <source>DISTANCE</source>
         <translation>ДИСТАНЦИЯ</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="221"/>
+        <location filename="../webtranslation.cpp" line="234"/>
         <source>Heart</source>
         <translation>Пульс</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="223"/>
+        <location filename="../webtranslation.cpp" line="236"/>
         <source>Odometer</source>
         <translation>Пробег</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="224"/>
+        <location filename="../webtranslation.cpp" line="237"/>
         <source>Watt</source>
         <translation>Мощность</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="225"/>
+        <location filename="../webtranslation.cpp" line="238"/>
         <source>Elapsed</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="226"/>
+        <location filename="../webtranslation.cpp" line="239"/>
         <source>Inclination</source>
         <translation>Наклон</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="228"/>
+        <location filename="../webtranslation.cpp" line="241"/>
         <source>Altitude</source>
         <translation>Высота</translation>
     </message>
     <message>
-        <location filename="../webtranslation.cpp" line="229"/>
+        <location filename="../webtranslation.cpp" line="242"/>
         <source>Elevation</source>
         <translation>Набор высоты</translation>
     </message>
@@ -3052,6 +3117,16 @@ The following questions will customize QZ for your equipment and goals.</source>
         <translation>Вес (%1)</translation>
     </message>
     <message>
+        <location filename="../Wizard.qml" line="1191"/>
+        <source>lbs</source>
+        <translation>фунт</translation>
+    </message>
+    <message>
+        <location filename="../Wizard.qml" line="1191"/>
+        <source>kg</source>
+        <translation>кг</translation>
+    </message>
+    <message>
         <location filename="../Wizard.qml" line="1222"/>
         <source>Age</source>
         <translation>Возраст</translation>
@@ -3269,6 +3344,22 @@ This may take a few moments on first startup.</source>
         <location filename="../WorkoutsHistory.qml" line="334"/>
         <source>Failed to load training program. Please check if the file exists.</source>
         <translation>Не удалось загрузить программу тренировки. Проверьте, существует ли файл.</translation>
+    </message>
+    <message>
+        <location filename="../WorkoutsHistory.qml" line="416"/>
+        <source>mi</source>
+        <translation>миль</translation>
+    </message>
+    <message>
+        <location filename="../WorkoutsHistory.qml" line="416"/>
+        <source>km</source>
+        <translation>км</translation>
+    </message>
+    <message>
+        <location filename="../WorkoutsHistory.qml" line="426"/>
+        <location filename="../WorkoutsHistory.qml" line="427"/>
+        <source>kcal</source>
+        <translation>ккал</translation>
     </message>
     <message>
         <location filename="../WorkoutsHistory.qml" line="471"/>
@@ -3561,613 +3652,742 @@ This may take a few moments on first startup.</source>
 <context>
     <name>homeform</name>
     <message>
-        <location filename="../homeform.cpp" line="524"/>
+        <location filename="../homeform.cpp" line="529"/>
         <source>Speed (%1/h)</source>
         <translation>Скорость (%1/ч)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="527"/>
+        <location filename="../homeform.cpp" line="532"/>
         <source>Inclination (%)</source>
         <translation>Наклон (%)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="529"/>
+        <location filename="../homeform.cpp" line="534"/>
         <source>Descent (%1)</source>
         <translation>Спуск (%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="531"/>
+        <location filename="../homeform.cpp" line="536"/>
         <source>Cadence (rpm)</source>
         <translation>Каденс (об/мин)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="533"/>
+        <location filename="../homeform.cpp" line="538"/>
         <source>Elev. Gain (%1)</source>
         <translation>Набор выс. (%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="536"/>
+        <location filename="../homeform.cpp" line="541"/>
         <source>Calories (KCal)</source>
         <translation>Калории (ккал)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="538"/>
+        <location filename="../homeform.cpp" line="543"/>
         <source>Odometer (%1)</source>
         <translation>Пробег (%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="542"/>
+        <location filename="../homeform.cpp" line="547"/>
         <source>Pace (m/%1)</source>
         <translation>Темп (мин/%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="546"/>
+        <location filename="../homeform.cpp" line="551"/>
         <source>Avg Pace (m/%1)</source>
         <translation>Ср. темп (мин/%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="550"/>
+        <location filename="../homeform.cpp" line="555"/>
         <source>GAP (m/%1)</source>
         <translation>GAP (мин/%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="555"/>
+        <location filename="../homeform.cpp" line="560"/>
         <source>T.Pace(m/%1)</source>
         <translation>Ц.темп (мин/%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="558"/>
+        <location filename="../homeform.cpp" line="563"/>
         <source>Pace 500m (m/%1)</source>
         <translation>Темп 500 м (мин/%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="562"/>
+        <location filename="../homeform.cpp" line="567"/>
         <source>Resistance</source>
         <translation>Сопротивление</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="565"/>
+        <location filename="../homeform.cpp" line="570"/>
         <source>Peloton R(%)</source>
         <translation>Сопр.Peloton (%)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="568"/>
+        <location filename="../homeform.cpp" line="573"/>
         <source>Target R.</source>
         <translation>Цель сопр.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="571"/>
+        <location filename="../homeform.cpp" line="576"/>
         <source>T.Peloton R(%)</source>
         <translation>Ц.сопр.Peloton (%)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="573"/>
+        <location filename="../homeform.cpp" line="578"/>
         <source>T.Cadence(rpm)</source>
         <translation>Ц.каденс (об/мин)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="575"/>
+        <location filename="../homeform.cpp" line="580"/>
         <source>T.Power(W)</source>
         <translation>Ц.мощн. (Вт)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="577"/>
+        <location filename="../homeform.cpp" line="582"/>
         <source>T.Zone</source>
         <translation>Ц.зона</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="579"/>
+        <location filename="../homeform.cpp" line="584"/>
         <source>T.Speed (%1/h)</source>
         <translation>Ц.скорость (%1/ч)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="583"/>
+        <location filename="../homeform.cpp" line="588"/>
         <source>T.Incline (%)</source>
         <translation>Ц.наклон (%)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="588"/>
+        <location filename="../homeform.cpp" line="593"/>
         <source>Weight Loss(%1)</source>
         <translation>Потеря веса (%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="593"/>
+        <location filename="../homeform.cpp" line="598"/>
         <source>AVG Watt Lap</source>
         <translation>Ср. мощн. круга</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="595"/>
+        <location filename="../homeform.cpp" line="600"/>
         <source>Watt/Kg</source>
         <translation>Вт/кг</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="597"/>
+        <location filename="../homeform.cpp" line="602"/>
         <source>FTP Zone</source>
         <translation>Зона FTP</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="599"/>
+        <location filename="../homeform.cpp" line="604"/>
         <source>Heart (bpm)</source>
         <translation>Пульс (уд/мин)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="601"/>
+        <location filename="../homeform.cpp" line="606"/>
         <source>Fan Speed</source>
         <translation>Вентилятор</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="603"/>
+        <location filename="../homeform.cpp" line="608"/>
         <source>KJouls</source>
         <translation>Работа (кДж)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="606"/>
+        <location filename="../homeform.cpp" line="611"/>
         <source>Elapsed</source>
         <translation>Время</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="609"/>
+        <location filename="../homeform.cpp" line="614"/>
         <source>Moving T.</source>
         <translation>В движении</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="611"/>
+        <location filename="../homeform.cpp" line="616"/>
         <source>Clock</source>
         <translation>Часы</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="614"/>
+        <location filename="../homeform.cpp" line="619"/>
         <source>Lap Elapsed</source>
         <translation>Время круга</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="618"/>
+        <location filename="../homeform.cpp" line="623"/>
         <source>Time to Next</source>
         <translation>До следующего</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="622"/>
+        <location filename="../homeform.cpp" line="627"/>
         <source>Next Rows</source>
         <translation>След. строки</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="625"/>
+        <location filename="../homeform.cpp" line="630"/>
         <source>METS</source>
         <translation>METS</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="627"/>
+        <location filename="../homeform.cpp" line="632"/>
         <source>Target METS</source>
         <translation>Цель METS</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="629"/>
+        <location filename="../homeform.cpp" line="634"/>
         <source>RSS</source>
         <translation>RSS</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="631"/>
+        <location filename="../homeform.cpp" line="636"/>
         <source>Steering</source>
         <translation>Руль</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="634"/>
+        <location filename="../homeform.cpp" line="639"/>
         <source>Peloton Offset</source>
         <translation>Смещение Peloton</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="637"/>
+        <location filename="../homeform.cpp" line="642"/>
         <source>Peloton Rem.</source>
         <translation>Ост. Peloton</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="639"/>
+        <location filename="../homeform.cpp" line="644"/>
         <source>Strokes Count</source>
         <translation>Число гребков</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="641"/>
+        <location filename="../homeform.cpp" line="646"/>
         <source>Strokes Length</source>
         <translation>Длина гребка</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="643"/>
+        <location filename="../homeform.cpp" line="648"/>
         <source>Gears</source>
         <translation>Передачи</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="645"/>
+        <location filename="../homeform.cpp" line="650"/>
         <source>GearsPlus</source>
         <translation>Передача+</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="647"/>
+        <location filename="../homeform.cpp" line="652"/>
         <source>GearsMinus</source>
         <translation>Передача-</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="649"/>
+        <location filename="../homeform.cpp" line="654"/>
         <source>Cruise</source>
         <translation>Круиз</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="651"/>
+        <location filename="../homeform.cpp" line="656"/>
         <source>Climb</source>
         <translation>Подъём</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="586"/>
+        <location filename="../homeform.cpp" line="591"/>
         <source>Watts</source>
         <translation>Мощность</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="591"/>
+        <location filename="../homeform.cpp" line="473"/>
+        <source>km</source>
+        <translation>км</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="474"/>
+        <source>m</source>
+        <comment>unit: meters</comment>
+        <translation>м</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="475"/>
+        <source>Kg</source>
+        <translation>кг</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="476"/>
+        <source>cm</source>
+        <translation>см</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="478"/>
+        <source>mi</source>
+        <translation>миль</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="479"/>
+        <source>ft</source>
+        <translation>фут</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="480"/>
+        <source>in</source>
+        <comment>unit: inches</comment>
+        <translation>дюйм</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="484"/>
+        <source>Oz</source>
+        <translation>унц.</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="596"/>
         <source>AVG Watts</source>
         <translation>Ср. мощность</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="655"/>
+        <location filename="../homeform.cpp" line="660"/>
         <source>Power Avg</source>
         <translation>Ср. мощность</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="659"/>
+        <location filename="../homeform.cpp" line="661"/>
+        <location filename="../homeform.cpp" line="6902"/>
+        <source>Off</source>
+        <translation>Выкл.</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="662"/>
+        <source>HRV (ms)</source>
+        <translation>ВСР (мс)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="664"/>
         <source>PID Heart</source>
         <translation>PID пульса</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="661"/>
+        <location filename="../homeform.cpp" line="666"/>
         <source>Ext.Inclin.(%)</source>
         <translation>Внеш.накл. (%)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="664"/>
+        <location filename="../homeform.cpp" line="669"/>
         <source>Stride L.(%1)</source>
         <translation>Дл.шага (%1)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="666"/>
+        <location filename="../homeform.cpp" line="671"/>
         <source>Ground C.(ms)</source>
         <translation>Контакт (мс)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="669"/>
+        <location filename="../homeform.cpp" line="674"/>
         <source>Vert.Osc.(mm)</source>
         <translation>Верт.кол. (мм)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="673"/>
+        <location filename="../homeform.cpp" line="678"/>
         <source>Step Count</source>
         <translation>Шаги</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6036"/>
+        <location filename="../homeform.cpp" line="3488"/>
+        <source>Odometer (m)</source>
+        <translation>Пробег (м)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3609"/>
+        <source>Pace (m/500m)</source>
+        <translation>Темп (мин/500 м)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3616"/>
+        <source>Avg Pace (m/500m)</source>
+        <translation>Ср. темп (мин/500 м)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3680"/>
+        <source>T.Pace(m/500m)</source>
+        <translation>Ц.темп (мин/500 м)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6041"/>
         <source>Stop</source>
         <translation>Стоп</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6048"/>
+        <location filename="../homeform.cpp" line="6053"/>
         <source>Start</source>
         <translation>Старт</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6050"/>
+        <location filename="../homeform.cpp" line="6055"/>
         <source>Pause</source>
         <translation>Пауза</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6690"/>
-        <location filename="../homeform.cpp" line="6842"/>
-        <location filename="../homeform.cpp" line="7030"/>
+        <location filename="../homeform.cpp" line="6086"/>
+        <source>offset </source>
+        <translation>смещ. </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6332"/>
+        <location filename="../homeform.cpp" line="6339"/>
+        <source> /min</source>
+        <translation> /мин</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6365"/>
+        <location filename="../homeform.cpp" line="6368"/>
+        <source> sec.</source>
+        <translation> с</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6597"/>
+        <source>Incl: </source>
+        <translation>Накл.: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6603"/>
+        <location filename="../homeform.cpp" line="6927"/>
+        <location filename="../homeform.cpp" line="7080"/>
+        <source>%1%2W</source>
+        <translation>%1%2 Вт</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6695"/>
+        <location filename="../homeform.cpp" line="6847"/>
+        <location filename="../homeform.cpp" line="7035"/>
         <source>Rec.</source>
         <translation>Восст.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6693"/>
-        <location filename="../homeform.cpp" line="6845"/>
-        <location filename="../homeform.cpp" line="7033"/>
+        <location filename="../homeform.cpp" line="6698"/>
+        <location filename="../homeform.cpp" line="6850"/>
+        <location filename="../homeform.cpp" line="7038"/>
         <source>Easy</source>
         <translation>Лёгкий</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6697"/>
+        <location filename="../homeform.cpp" line="6702"/>
         <source>Brisk</source>
         <translation>Бодрый</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6699"/>
-        <location filename="../homeform.cpp" line="6848"/>
-        <location filename="../homeform.cpp" line="7036"/>
+        <location filename="../homeform.cpp" line="6704"/>
+        <location filename="../homeform.cpp" line="6853"/>
+        <location filename="../homeform.cpp" line="7041"/>
         <source>Moder.</source>
         <translation>Умерен.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6704"/>
+        <location filename="../homeform.cpp" line="6709"/>
         <source>Power</source>
         <translation>Мощность</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6706"/>
-        <location filename="../homeform.cpp" line="6851"/>
-        <location filename="../homeform.cpp" line="7039"/>
+        <location filename="../homeform.cpp" line="6711"/>
+        <location filename="../homeform.cpp" line="6856"/>
+        <location filename="../homeform.cpp" line="7044"/>
         <source>Chall.</source>
         <translation>Напряж.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6711"/>
-        <location filename="../homeform.cpp" line="6720"/>
-        <location filename="../homeform.cpp" line="6860"/>
-        <location filename="../homeform.cpp" line="7042"/>
+        <location filename="../homeform.cpp" line="6716"/>
+        <location filename="../homeform.cpp" line="6725"/>
+        <location filename="../homeform.cpp" line="6865"/>
+        <location filename="../homeform.cpp" line="7047"/>
         <source>Max</source>
         <translation>Макс.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6713"/>
-        <location filename="../homeform.cpp" line="6854"/>
+        <location filename="../homeform.cpp" line="6718"/>
+        <location filename="../homeform.cpp" line="6859"/>
         <source>Hard</source>
         <translation>Тяжёлый</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6717"/>
-        <location filename="../homeform.cpp" line="6857"/>
+        <location filename="../homeform.cpp" line="6722"/>
+        <location filename="../homeform.cpp" line="6862"/>
         <source>V.Hard</source>
         <translation>Оч.тяж.</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="6723"/>
-        <location filename="../homeform.cpp" line="6863"/>
-        <location filename="../homeform.cpp" line="7045"/>
+        <location filename="../homeform.cpp" line="6728"/>
+        <location filename="../homeform.cpp" line="6868"/>
+        <location filename="../homeform.cpp" line="7050"/>
         <source>N/A</source>
         <translation>Н/Д</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8364"/>
+        <location filename="../homeform.cpp" line="6905"/>
+        <source>3s avg</source>
+        <translation>Ср. 3 с</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6908"/>
+        <source>5s avg</source>
+        <translation>Ср. 5 с</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6912"/>
+        <source>Gain: </source>
+        <translation>Коэф.: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="7287"/>
+        <location filename="../homeform.cpp" line="7314"/>
+        <source>MIN: </source>
+        <translation>Мин.: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="7428"/>
+        <location filename="../homeform.cpp" line="7504"/>
+        <source>W </source>
+        <translation> Вт </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="8369"/>
         <source>, speed </source>
         <translation>, скорость </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8366"/>
-        <location filename="../homeform.cpp" line="8384"/>
-        <location filename="../homeform.cpp" line="8545"/>
-        <location filename="../homeform.cpp" line="8578"/>
+        <location filename="../homeform.cpp" line="8371"/>
+        <location filename="../homeform.cpp" line="8389"/>
+        <location filename="../homeform.cpp" line="8550"/>
+        <location filename="../homeform.cpp" line="8583"/>
         <source> kilometers per hour</source>
         <translation> километров в час</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8370"/>
-        <location filename="../homeform.cpp" line="8379"/>
-        <location filename="../homeform.cpp" line="8388"/>
-        <location filename="../homeform.cpp" line="8550"/>
-        <location filename="../homeform.cpp" line="8582"/>
+        <location filename="../homeform.cpp" line="8375"/>
+        <location filename="../homeform.cpp" line="8384"/>
+        <location filename="../homeform.cpp" line="8393"/>
+        <location filename="../homeform.cpp" line="8555"/>
+        <location filename="../homeform.cpp" line="8587"/>
         <source> miles per hour</source>
         <translation> миль в час</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8372"/>
+        <location filename="../homeform.cpp" line="8377"/>
         <source>, Average speed </source>
         <translation>, средняя скорость </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8375"/>
+        <location filename="../homeform.cpp" line="8380"/>
         <source>kilometers per hour</source>
         <translation> километров в час</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8381"/>
+        <location filename="../homeform.cpp" line="8386"/>
         <source>, Max speed </source>
         <translation>, максимальная скорость </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8391"/>
+        <location filename="../homeform.cpp" line="8396"/>
         <source>, inclination </source>
         <translation>, наклон </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8394"/>
+        <location filename="../homeform.cpp" line="8399"/>
         <source>, cadence </source>
         <translation>, каденс </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8397"/>
+        <location filename="../homeform.cpp" line="8402"/>
         <source>, Average cadence </source>
         <translation>, средний каденс </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8401"/>
+        <location filename="../homeform.cpp" line="8406"/>
         <source>, Max cadence </source>
         <translation>, максимальный каденс </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8406"/>
+        <location filename="../homeform.cpp" line="8411"/>
         <source>, elevation </source>
         <translation>, набор высоты </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8408"/>
+        <location filename="../homeform.cpp" line="8413"/>
         <source> meters</source>
         <translation> метров</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8412"/>
+        <location filename="../homeform.cpp" line="8417"/>
         <source> feet</source>
         <translation> футов</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8414"/>
+        <location filename="../homeform.cpp" line="8419"/>
         <source>, calories burned </source>
         <translation>, сожжено калорий </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8417"/>
+        <location filename="../homeform.cpp" line="8422"/>
         <source>, distance </source>
         <translation>, дистанция </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8419"/>
+        <location filename="../homeform.cpp" line="8424"/>
         <source>kilometers</source>
         <translation> километров</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8422"/>
+        <location filename="../homeform.cpp" line="8427"/>
         <source> miles</source>
         <translation> миль</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8426"/>
-        <location filename="../homeform.cpp" line="8430"/>
+        <location filename="../homeform.cpp" line="8431"/>
         <location filename="../homeform.cpp" line="8435"/>
-        <location filename="../homeform.cpp" line="8438"/>
-        <location filename="../homeform.cpp" line="8441"/>
+        <location filename="../homeform.cpp" line="8440"/>
+        <location filename="../homeform.cpp" line="8443"/>
+        <location filename="../homeform.cpp" line="8446"/>
         <source>, pace </source>
         <translation>, темп </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8445"/>
+        <location filename="../homeform.cpp" line="8450"/>
         <source>, resistance </source>
         <translation>, сопротивление </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8450"/>
+        <location filename="../homeform.cpp" line="8455"/>
         <source>, average resistance </source>
         <translation>, среднее сопротивление </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8454"/>
+        <location filename="../homeform.cpp" line="8459"/>
         <source>, max resistance </source>
         <translation>, максимальное сопротивление </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8457"/>
+        <location filename="../homeform.cpp" line="8462"/>
         <source>, watt </source>
         <translation>, мощность </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8460"/>
+        <location filename="../homeform.cpp" line="8465"/>
         <source>, average watt </source>
         <translation>, средняя мощность </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8463"/>
+        <location filename="../homeform.cpp" line="8468"/>
         <source>, max watt </source>
         <translation>, максимальная мощность </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8469"/>
+        <location filename="../homeform.cpp" line="8474"/>
         <source>, heart rate </source>
         <translation>, пульс </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8472"/>
+        <location filename="../homeform.cpp" line="8477"/>
         <source>, average heart rate </source>
         <translation>, средний пульс </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8475"/>
+        <location filename="../homeform.cpp" line="8480"/>
         <source>, max heart rate </source>
         <translation>, максимальный пульс </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8478"/>
+        <location filename="../homeform.cpp" line="8483"/>
         <source>, jouls </source>
         <translation>, джоули </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8481"/>
+        <location filename="../homeform.cpp" line="8486"/>
         <source>, elapsed </source>
         <translation>, прошло </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8483"/>
+        <location filename="../homeform.cpp" line="8488"/>
         <source> minutes </source>
         <translation> минут </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8485"/>
+        <location filename="../homeform.cpp" line="8490"/>
         <source> seconds</source>
         <translation> секунд</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8491"/>
+        <location filename="../homeform.cpp" line="8496"/>
         <source>, peloton resistance </source>
         <translation>, сопротивление Peloton </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8499"/>
+        <location filename="../homeform.cpp" line="8504"/>
         <source>, average peloton resistance </source>
         <translation>, среднее сопротивление Peloton </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8507"/>
+        <location filename="../homeform.cpp" line="8512"/>
         <source>, max peloton resistance </source>
         <translation>, максимальное сопротивление Peloton </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8515"/>
+        <location filename="../homeform.cpp" line="8520"/>
         <source>, target peloton resistance </source>
         <translation>, целевое сопротивление Peloton </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8523"/>
+        <location filename="../homeform.cpp" line="8528"/>
         <source>, target cadence </source>
         <translation>, целевой каденс </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8529"/>
+        <location filename="../homeform.cpp" line="8534"/>
         <source>, target power </source>
         <translation>, целевая мощность </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8535"/>
+        <location filename="../homeform.cpp" line="8540"/>
         <source>, target zone </source>
         <translation>, целевая зона </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8541"/>
+        <location filename="../homeform.cpp" line="8546"/>
         <source>, target speed </source>
         <translation>, целевая скорость </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8555"/>
+        <location filename="../homeform.cpp" line="8560"/>
         <source>, target incline </source>
         <translation>, целевой наклон </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8560"/>
+        <location filename="../homeform.cpp" line="8565"/>
         <source>, watt for kilograms </source>
         <translation>, ватт на килограмм </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8563"/>
+        <location filename="../homeform.cpp" line="8568"/>
         <source>, average watt for kilograms</source>
         <translation>, средняя мощность на килограмм </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8566"/>
+        <location filename="../homeform.cpp" line="8571"/>
         <source>, max watt for kilograms</source>
         <translation>, максимальная мощность на килограмм </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="8576"/>
+        <location filename="../homeform.cpp" line="8581"/>
         <source>speed changed to</source>
         <translation>скорость изменена на </translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="9671"/>
+        <location filename="../homeform.cpp" line="9676"/>
         <source>JSON parser error</source>
         <translation>Ошибка разбора JSON</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="9958"/>
+        <location filename="../homeform.cpp" line="9963"/>
         <source>Error retrieving access token, %1 (%2)</source>
         <translation>Ошибка получения токена доступа, %1 (%2)</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11232"/>
+        <location filename="../homeform.cpp" line="11237"/>
         <source>License Approved!</source>
         <translation>Лицензия подтверждена!</translation>
     </message>
     <message>
-        <location filename="../homeform.cpp" line="11237"/>
+        <location filename="../homeform.cpp" line="11242"/>
         <source>License not found</source>
         <translation>Лицензия не найдена</translation>
     </message>
@@ -6316,6 +6536,28 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>Вес велосипеда (%1)</translation>
     </message>
     <message>
+        <location filename="../settings.qml" line="2218"/>
+        <location filename="../settings.qml" line="3387"/>
+        <source>lbs</source>
+        <translation>фунт</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2218"/>
+        <location filename="../settings.qml" line="3387"/>
+        <source>kg</source>
+        <translation>кг</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2255"/>
+        <source>ft/in</source>
+        <translation>фут/дюйм</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2255"/>
+        <source>cm</source>
+        <translation>см</translation>
+    </message>
+    <message>
         <location filename="../settings.qml" line="3499"/>
         <source>OpenBikeControl</source>
         <translation>OpenBikeControl</translation>
@@ -7046,6 +7288,22 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>Мин. скорость ходьбы:</translation>
     </message>
     <message>
+        <location filename="../settings.qml" line="6896"/>
+        <location filename="../settings.qml" line="6930"/>
+        <location filename="../settings.qml" line="10198"/>
+        <location filename="../settings.qml" line="10234"/>
+        <source>mph</source>
+        <translation>миль/ч</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="6896"/>
+        <location filename="../settings.qml" line="6930"/>
+        <location filename="../settings.qml" line="10198"/>
+        <location filename="../settings.qml" line="10234"/>
+        <source>km/h</source>
+        <translation>км/ч</translation>
+    </message>
+    <message>
         <location filename="../settings.qml" line="6915"/>
         <source>Minimum speed for Peloton walking sessions. Set to 0 to disable. Applied to all speed targets in walking workouts.</source>
         <translation>Минимальная скорость для занятий Peloton по ходьбе. 0 – отключить. Применяется ко всем целевым скоростям в тренировках по ходьбе.</translation>
@@ -7689,6 +7947,16 @@ Please enter it below:</source>
         <location filename="../settings.qml" line="9616"/>
         <source>Marathon</source>
         <translation>Марафон</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="9616"/>
+        <source>5 km</source>
+        <translation>5 км</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="9616"/>
+        <source>10 km</source>
+        <translation>10 км</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="9634"/>
@@ -8654,6 +8922,16 @@ IMPORTANT NOTES:
         <location filename="../settings.qml" line="13547"/>
         <source>You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).</source>
         <translation>Можно автоматически отмечать круги в FIT-файле по дистанции. Единица: %1. По умолчанию: 0 (выключено).</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="13547"/>
+        <source>Mi</source>
+        <translation>мили</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="13547"/>
+        <source>KM</source>
+        <translation>км</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="13562"/>
@@ -10835,6 +11113,24 @@ Default: A = -0.96, B = 1.33</source>
         <location filename="../settings-tiles.qml" line="3289"/>
         <source>Preset Speed 1</source>
         <translation>Предустановка скорости 1</translation>
+    </message>
+    <message>
+        <location filename="../settings-tiles.qml" line="3321"/>
+        <location filename="../settings-tiles.qml" line="3434"/>
+        <location filename="../settings-tiles.qml" line="3547"/>
+        <location filename="../settings-tiles.qml" line="3660"/>
+        <location filename="../settings-tiles.qml" line="3773"/>
+        <source>mph</source>
+        <translation>миль/ч</translation>
+    </message>
+    <message>
+        <location filename="../settings-tiles.qml" line="3321"/>
+        <location filename="../settings-tiles.qml" line="3434"/>
+        <location filename="../settings-tiles.qml" line="3547"/>
+        <location filename="../settings-tiles.qml" line="3660"/>
+        <location filename="../settings-tiles.qml" line="3773"/>
+        <source>km/h</source>
+        <translation>км/ч</translation>
     </message>
     <message>
         <location filename="../settings-tiles.qml" line="3402"/>
