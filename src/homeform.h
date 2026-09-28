@@ -241,7 +241,7 @@ class homeform : public QObject {
     QByteArray currentPelotonImage();
     // Status line of the search for the equipment on the home page; empty once it is connected
     Q_INVOKABLE QString bluetoothSearchStatus();
-    // Tap on the Bluetooth icon: search right away, or a toast when Android would ignore the search
+    // Tap on the Bluetooth icon: search right away, or when Android allows it again (with a toast saying when)
     Q_INVOKABLE void bluetoothSearchNow();
     Q_INVOKABLE void save_screenshot() {
 
