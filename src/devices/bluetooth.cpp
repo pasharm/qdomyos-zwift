@@ -842,6 +842,10 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
             const bool isConfiguredFtmsRowerDevice =
                 !ftms_rower.contains(QZSettings::default_ftms_rower) &&
                 !deviceName.compare(ftms_rower, Qt::CaseInsensitive);
+            const bool isIonFitnessBike =
+                QRegularExpression(QStringLiteral("^FI\\d+\\s+ION$"), QRegularExpression::CaseInsensitiveOption)
+                    .match(deviceName)
+                    .hasMatch();
             bool isRI009R = upperDeviceName.contains(QStringLiteral("RI009R"));
             bool isTrxAppGateUsbBikeTC = false;
             if (upperDeviceName.startsWith(QStringLiteral("TC")) && deviceName.length() == 5) {
@@ -853,6 +857,9 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                     }
                 }
             }
+            // The device chain below is split in two: MSVC 2019 fails with C1061 (blocks nested too deeply)
+            // on a single else-if chain this long. A match in the first part skips the second part, as before.
+            bool firstChainMatched = true;
             if (deviceName.startsWith(QStringLiteral("M3")) && !m3iBike && filter) {
 
                 if (m3ibike::isCorrectUnit(b)) {
@@ -2001,6 +2008,7 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                         (b.name().toUpper().startsWith("DOMYOS-BIKING-")) ||
                         (b.name().startsWith(QStringLiteral("Domyos-Bike")) && deviceHasService(b, QBluetoothUuid((quint16)0x1826)) && !settings.value(QZSettings::domyosbike_notfmts, QZSettings::default_domyosbike_notfmts).toBool()) ||
                         (b.name().toUpper().startsWith("F") && b.name().toUpper().endsWith("ARROW")) || // FI9110 Arrow, https://www.fitnessdigital.it/bicicletta-smart-bike-ion-fitness-arrow-connect/p/10022863/ IO Fitness Arrow
+                        isIonFitnessBike || // ION Fitness bikes (e.g. FI9117 ion), ignoring the model identifier
                         (b.name().toUpper().startsWith("ICSE") && b.name().length() == 4) ||
                         (b.name().toUpper().startsWith("TUO") && b.name().length() == 3) ||
                         (b.name().toUpper().startsWith("FLX") && b.name().length() == 10) ||
@@ -2200,7 +2208,14 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                 // connect(stagesBike, SIGNAL(inclinationChanged(double)), this, SLOT(inclinationChanged(double)));
                 stagesBike->deviceDiscovered(b);
                 this->signalBluetoothDeviceConnected(stagesBike);
-            } else if (b.name().toUpper().startsWith(QStringLiteral("SMARTROW")) && !b.name().toUpper().startsWith(QStringLiteral("SMARTROWER")) && ftms_rower.contains(QZSettings::default_ftms_rower) && !smartrowRower && filter) { // Issue #4033
+            } else {
+                firstChainMatched = false;
+            }
+            if (firstChainMatched) {
+                continue;
+            }
+            // second part of the device chain
+            if (b.name().toUpper().startsWith(QStringLiteral("SMARTROW")) && !b.name().toUpper().startsWith(QStringLiteral("SMARTROWER")) && ftms_rower.contains(QZSettings::default_ftms_rower) && !smartrowRower && filter) { // Issue #4033
                 this->setLastBluetoothDevice(b);
                 this->stopDiscovery();
                 smartrowRower =
