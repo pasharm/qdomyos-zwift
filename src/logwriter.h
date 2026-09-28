@@ -14,6 +14,11 @@ public:
 
 public slots:
     void writeLog(const QString &path, const QString &txt);
+
+private:
+    // kept open between lines: the handler logs dozens of lines per second
+    QFile outFile;
+    QTextStream ts;
 };
 
 #endif // LOGWRITER_H
