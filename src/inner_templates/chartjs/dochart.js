@@ -232,7 +232,7 @@ function process_arr(arr) {
         const ctx = chart.canvas.getContext('2d');
         ctx.save();
         ctx.globalCompositeOperation = 'destination-over';
-        ctx.fillStyle = 'white';
+        ctx.fillStyle = qzChartTheme.background(chart);
         ctx.fillRect(0, 0, chart.width, chart.height);
         ctx.restore();
       }
@@ -279,7 +279,7 @@ function process_arr(arr) {
                     var watt_badge = document.getElementById('watt_badge');
    
                     // Capture the containers using html2canvas
-                    html2canvas(watt_badge).then(function(canvas1) {
+                    html2canvas(watt_badge, qzChartTheme.snapshotOptions()).then(function(canvas1) {
             
                         // Convert the merged canvas to a PNG image
                         var image = canvas1.toDataURL('image/png');
@@ -310,7 +310,7 @@ function process_arr(arr) {
                       msg: 'savechart',
                       content: {
                           name: 'power',
-                          image: powerChart.toBase64Image()
+                          image: qzChartTheme.image(powerChart)
                       }
                   }, function(msg) {
                       if (msg.msg === 'R_savechart') {
@@ -466,7 +466,7 @@ function process_arr(arr) {
     };
 
     let ctx = document.getElementById('canvas').getContext('2d');
-    var powerChart = new Chart(ctx, config);
+    var powerChart = qzChartTheme.create(ctx, config);
 
     const minRecordedHeart = heart.reduce(function(minValue, point) {
         return point.y > 0 ? Math.min(minValue, point.y) : minValue;
@@ -520,7 +520,7 @@ function process_arr(arr) {
                       msg: 'savechart',
                       content: {
                           name: 'heart',
-                          image: heartChart.toBase64Image()
+                          image: qzChartTheme.image(heartChart)
                       }
                   }, function(msg) {
                       if (msg.msg === 'R_savechart') {
@@ -651,7 +651,7 @@ function process_arr(arr) {
     };
 
     ctx = document.getElementById('canvasHeart').getContext('2d');
-    var heartChart = new Chart(ctx, config);
+    var heartChart = qzChartTheme.create(ctx, config);
 
     config = {
         type: 'line',
@@ -690,7 +690,7 @@ function process_arr(arr) {
                       msg: 'savechart',
                       content: {
                           name: 'resistance',
-                          image: resistanceChart.toBase64Image()
+                          image: qzChartTheme.image(resistanceChart)
                       }
                   }, function(msg) {
                       if (msg.msg === 'R_savechart') {
@@ -768,7 +768,7 @@ function process_arr(arr) {
     };
 
     ctx = document.getElementById('canvasResistance').getContext('2d');
-    var resistanceChart = new Chart(ctx, config);
+    var resistanceChart = qzChartTheme.create(ctx, config);
 
     config = {
         type: 'line',
@@ -807,7 +807,7 @@ function process_arr(arr) {
                       msg: 'savechart',
                       content: {
                           name: 'pelotonresistance',
-                          image: pelotonresistanceChart.toBase64Image()
+                          image: qzChartTheme.image(pelotonresistanceChart)
                       }
                   }, function(msg) {
                       if (msg.msg === 'R_savechart') {
@@ -885,7 +885,7 @@ function process_arr(arr) {
     };
 
     ctx = document.getElementById('canvasPelotonResistance').getContext('2d');
-    var pelotonresistanceChart = new Chart(ctx, config);
+    var pelotonresistanceChart = qzChartTheme.create(ctx, config);
 
     config = {
         type: 'line',
@@ -924,7 +924,7 @@ function process_arr(arr) {
                       msg: 'savechart',
                       content: {
                           name: 'cadence',
-                          image: cadenceChart.toBase64Image()
+                          image: qzChartTheme.image(cadenceChart)
                       }
                   }, function(msg) {
                       if (msg.msg === 'R_savechart') {
@@ -1002,7 +1002,7 @@ function process_arr(arr) {
     };
 
     ctx = document.getElementById('canvasCadence').getContext('2d');
-    var cadenceChart = new Chart(ctx, config);
+    var cadenceChart = qzChartTheme.create(ctx, config);
 
     config = {
         type: 'bar',
@@ -1028,7 +1028,7 @@ function process_arr(arr) {
                       msg: 'savechart',
                       content: {
                           name: 'powerDistribution',
-                          image: powerDistributionChart.toBase64Image()
+                          image: qzChartTheme.image(powerDistributionChart)
                       }
                   }, function(msg) {
                       if (msg.msg === 'R_savechart') {
@@ -1082,7 +1082,7 @@ function process_arr(arr) {
     };
 
     ctx = document.getElementById('canvasPowerDistribution').getContext('2d');
-    var powerDistributionChart = new Chart(ctx, config);
+    var powerDistributionChart = qzChartTheme.create(ctx, config);
 
     config = {
         type: 'line',
@@ -1121,7 +1121,7 @@ function process_arr(arr) {
                       msg: 'savechart',
                       content: {
                           name: 'speedInclination',
-                          image: speedInclinationChart.toBase64Image()
+                          image: qzChartTheme.image(speedInclinationChart)
                       }
                   }, function(msg) {
                       if (msg.msg === 'R_savechart') {
@@ -1199,7 +1199,7 @@ function process_arr(arr) {
     };
 
     ctx = document.getElementById('canvasSpeedInclination').getContext('2d');
-    var speedInclinationChart = new Chart(ctx, config);
+    var speedInclinationChart = qzChartTheme.create(ctx, config);
 }
 
 function dochart_init() {

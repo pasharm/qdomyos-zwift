@@ -8,8 +8,8 @@
     <script>
         // Modern look of the app: ChartJsTest.qml / PreviewChart.qml pass the theme colours in the fragment
         // (#modern=1&dark=1&bg=...) and later calls qzApplyTheme() when the theme changes.
-        // Without the fragment the page keeps its own palette. The charts themselves stay on
-        // white cards: dochart.js draws them for a white background.
+        // Without the fragment the page keeps its own palette. The charts take the theme
+        // through qzcharttheme.js; the images saved for the workout mail stay light.
         window.qzApplyTheme = function (theme) {
             var root = document.documentElement;
             var vars = {
@@ -24,6 +24,9 @@
             root.classList.add('modern');
             root.classList.toggle('light', !theme.dark);
             root.style.colorScheme = theme.dark ? 'dark' : 'light';
+            if (window.qzChartTheme) {
+                window.qzChartTheme.refresh();
+            }
         };
         (function () {
             var theme = {};
@@ -45,6 +48,7 @@
     <script src="../chartjs/moment.js"></script>
     <script src="../chartjs/chartjs-adapter-moment.js"></script>
     <script src="../chartjs/chartjs-plugin-annotation.min.js"></script>
+    <script src="../chartjs/qzcharttheme.js"></script>
     <script src="../chartjs/globals.js"></script>
     <script src="main_ws_manager.js"></script>
     <script src="../i18n/i18n.js"></script>
@@ -105,6 +109,10 @@
     html.modern .watts_avg, html.modern .watts_max,
     html.modern .heart_avg, html.modern .heart_max {
         padding: 6px 8px 0;
+    }
+    /* Dark theme: the chart cards in the surface colour, the canvas fills them */
+    html.modern:not(.light) div[style*="background-color:white"] {
+        background-color: var(--qz-surface) !important;
     }
     html.modern #loading {
         background-color: var(--qz-bg) !important;
