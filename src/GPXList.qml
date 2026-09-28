@@ -73,7 +73,7 @@ ColumnLayout {
                 Text
                 {
                     text:qsTr("Filter")
-                    color: "white"
+                    color: window.ui.ink("white")
                     verticalAlignment: Text.AlignVCenter
                 }
                 TextField
@@ -189,7 +189,7 @@ ColumnLayout {
                 onCurrentItemChanged: {
                     let fileUrl = folderModel.get(list.currentIndex, 'fileUrl') || folderModel.get(list.currentIndex, 'fileURL');
                     if (fileUrl) {
-                        list.currentItem.textColor = Material.color(Material.Yellow)
+                        list.currentItem.textColor = window.ui.modern && !window.ui.dark ? window.ui.accent : Material.color(Material.Yellow)
                         console.log(fileUrl + ' selected');
                         trainprogram_preview(fileUrl)
                     }
@@ -218,7 +218,7 @@ ColumnLayout {
                     width: parent.width
                     text: rootItem.previewWorkoutDescription
                     font.pixelSize: 16
-                    color: "white"
+                    color: window.ui.ink("white")
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter

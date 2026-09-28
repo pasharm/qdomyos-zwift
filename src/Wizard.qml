@@ -1291,7 +1291,7 @@ Page {
                         color: window.ui.modern ? window.ui.textMuted : "white"
                     }
 
-                    ComboBox {
+                    UiComboBox {
                         id: unitSystemComboBox
                         Layout.alignment: Qt.AlignHCenter
                         model: [qsTr("Metric"), qsTr("Imperial")]

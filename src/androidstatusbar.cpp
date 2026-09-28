@@ -38,6 +38,31 @@ int AndroidStatusBar::apiLevel() const
 #endif
 }
 
+bool AndroidStatusBar::systemDarkMode() const
+{
+#ifdef Q_OS_ANDROID
+    QAndroidJniObject context = QtAndroid::androidContext();
+    if (!context.isValid())
+        return true;
+    QAndroidJniObject resources = context.callObjectMethod("getResources", "()Landroid/content/res/Resources;");
+    QAndroidJniObject configuration = resources.isValid()
+        ? resources.callObjectMethod("getConfiguration", "()Landroid/content/res/Configuration;")
+        : QAndroidJniObject();
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck()) {
+        env->ExceptionClear();
+        return true;
+    }
+    if (!configuration.isValid())
+        return true;
+    const jint uiMode = configuration.getField<jint>("uiMode");
+    // Configuration.UI_MODE_NIGHT_MASK = 0x30, UI_MODE_NIGHT_YES = 0x20
+    return (uiMode & 0x30) == 0x20;
+#else
+    return true;
+#endif
+}
+
 void AndroidStatusBar::onInsetsChanged(int top, int bottom, int left, int right, int waterfallTop,
                                         int waterfallBottom, int waterfallLeft, int waterfallRight)
 {

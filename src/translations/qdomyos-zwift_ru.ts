@@ -9954,6 +9954,26 @@ Default: A = -0.96, B = 1.33</source>
         <source>Accent colour</source>
         <translation>Акцентный цвет</translation>
     </message>
+    <message>
+        <source>Appearance</source>
+        <translation>Оформление</translation>
+    </message>
+    <message>
+        <source>As on the phone</source>
+        <translation>Как в системе</translation>
+    </message>
+    <message>
+        <source>Dark</source>
+        <translation>Тёмное</translation>
+    </message>
+    <message>
+        <source>Light</source>
+        <translation>Светлое</translation>
+    </message>
+    <message>
+        <source>Black / white</source>
+        <translation>Чёрная / белая</translation>
+    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>
@@ -11935,6 +11955,25 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>Collapsed</source>
         <translation>Свёрнуто</translation>
+    </message>
+</context>
+<context>
+    <name>UiMessageDialog</name>
+    <message>
+        <source>Yes</source>
+        <translation>Да</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>Нет</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>OK</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Отмена</translation>
     </message>
 </context>
 </TS>

@@ -39,6 +39,9 @@ public:
     int waterfallRightInset() const { return m_waterfallRight; }
     bool hasWaterfallDisplay() const { return m_waterfallTop > 0 || m_waterfallBottom > 0 || m_waterfallLeft > 0 || m_waterfallRight > 0; }
     int apiLevel() const;
+    // Night mode of the system (Configuration.uiMode). Read on demand: QML asks again when
+    // the app comes back to the foreground. Not Android: true (the app is dark by default).
+    Q_INVOKABLE bool systemDarkMode() const;
 
 public slots:
     void onInsetsChanged(int top, int bottom, int left, int right, int waterfallTop, int waterfallBottom,

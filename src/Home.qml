@@ -53,7 +53,7 @@ HomeForm {
         onTrainingProgramIntervalSoundRequested: trainingProgramSegmentSound.play()
     }
 
-    MessageDialog {
+    UiMessageDialog {
         id: messagePelotonAskStart
         text: qsTr("Peloton Workout in progress")
         informativeText: qsTr("Do you want to follow the resistance? ") + rootItem.pelotonProvider
@@ -92,7 +92,7 @@ HomeForm {
         }
     }
 
-    MessageDialog {
+    UiMessageDialog {
         id: stopConfirmationDialog
         text: qsTr("Stop Workout")
         informativeText: qsTr("Do you really want to stop the current workout?")
@@ -211,7 +211,7 @@ HomeForm {
 
     property bool locationServiceRequsted: false
 
-    MessageDialog {
+    UiMessageDialog {
         id: locationServicesDialog
         text: qsTr("Permissions Required")
         informativeText: qsTr("QZ requires both Bluetooth and Location Services to be enabled.\nLocation Services are necessary on Android to allow the app to find Bluetooth devices.\nThe GPS will not be used.\n\nWould you like to enable them?")
@@ -224,7 +224,7 @@ HomeForm {
         visible: !rootItem.locationServices() && !locationServiceRequsted && !settings.skipLocationServicesDialog
     }
 
-    MessageDialog {
+    UiMessageDialog {
         id: remindLocationServicesDialog
         text: qsTr("Reminder Preference")
         informativeText: qsTr("Would you like to be reminded about enabling Location Services next time?")
@@ -234,7 +234,7 @@ HomeForm {
         visible: false
     }
 
-    MessageDialog {
+    UiMessageDialog {
         text: qsTr("Restart the app")
         informativeText: qsTr("To apply the changes, you need to restart the app.\nWould you like to do that now?")
         buttons: (MessageDialog.Yes | MessageDialog.No)
@@ -459,6 +459,12 @@ HomeForm {
                     smooth: true
                     visible: settings.theme_tile_icon_enabled && !largeButton
                     Accessible.ignored: true
+                    // Some tile icons are plain black and some plain white, so either kind
+                    // gets lost on one of the themes: paint those in the text colour.
+                    // Coloured icons (heart, watt, kcal, resistance) stay as they are.
+                    readonly property bool mono: /\/(cadence|clock|elevationgain|fan|inclination|joul|odometer|pace|speed)\.png$/.test(String(source))
+                    layer.enabled: mono
+                    layer.effect: ColorOverlay { color: window.ui.textMuted }
                 }
 
                 Text {
@@ -483,7 +489,7 @@ HomeForm {
                     width: Math.max(40, modernCard.width - (writable ? 100 : 20) * modernTile.zoom)
                     height: 50 * modernTile.zoom
                     text: value
-                    color: modernTile.zoned ? valueFontColor : window.ui.textMain
+                    color: modernTile.zoned ? window.ui.zoneInk(valueFontColor) : window.ui.textMain
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     font.pointSize: valueFontSize * modernTile.zoom
@@ -915,7 +921,7 @@ HomeForm {
 
             Text {
                 anchors.centerIn: parent
-                color: "white"
+                color: window.ui.ink("white")
                 text: loc.tileName
                 font.pointSize: 10 * settings.ui_zoom / 100
                 font.bold: true

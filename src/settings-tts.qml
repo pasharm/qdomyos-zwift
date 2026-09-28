@@ -108,7 +108,7 @@ ScrollView {
                 onAccepted: settings.tts_summary_sec = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
-            Button {
+            UiButton {
                 id: okTTSSummarySec
                 text: qsTr("OK")
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter

@@ -1893,7 +1893,7 @@ import AndroidStatusBar 1.0
                     }
                 }
 
-                Button {
+                UiButton {
                     text: qsTr("Clear")
                     onClicked: settingsPane.hideSettingsSearch()
                 }
@@ -1988,7 +1988,7 @@ import AndroidStatusBar 1.0
                                     onClicked: settingsPane.setSettingValue(entry, checked)
                                 }
 
-                                Button {
+                                UiButton {
                                     visible: entry.catalogKind === "page"
                                     text: qsTr("Open")
                                     onClicked: stackView.push(entry.target)
@@ -2029,13 +2029,13 @@ import AndroidStatusBar 1.0
                                     onActiveFocusChanged: if (this.focus) this.cursorPosition = this.text.length
                                 }
 
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     onClicked: settingsPane.setSettingValue(entry, searchSettingTextField.text)
                                 }
                             }
 
-                            ComboBox {
+                            UiComboBox {
                                 id: searchSettingComboBox
                                 visible: entry.catalogKind === "setting" && settingsPane.optionValues(entry).length > 0
                                 Layout.fillWidth: true
@@ -2075,7 +2075,7 @@ import AndroidStatusBar 1.0
                                 }
                             }
 
-                            ComboBox {
+                            UiComboBox {
                                 id: searchVirtualComboBox
                                 visible: entry.catalogKind === "virtual"
                                 Layout.fillWidth: true
@@ -2159,14 +2159,46 @@ import AndroidStatusBar 1.0
                         spacing: 10
                         Layout.topMargin: 8
                         Label {
+                            text: qsTr("Appearance")
+                            Layout.fillWidth: true
+                        }
+                        UiComboBox {
+                            id: uiThemeModeCombo
+                            readonly property var options: [
+                                { value: "auto", label: qsTr("As on the phone") },
+                                { value: "dark", label: qsTr("Dark") },
+                                { value: "light", label: qsTr("Light") }
+                            ]
+                            model: options
+                            textRole: "label"
+                            Layout.preferredWidth: 190
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            currentIndex: {
+                                for (var i = 0; i < options.length; i++)
+                                    if (options[i].value === window.ui.themeMode)
+                                        return i
+                                return 0
+                            }
+                            onActivated: {
+                                window.ui.refreshSystemDark()
+                                window.ui.setOption("ui_theme_mode", options[index].value)
+                            }
+                        }
+                    }
+
+                    RowLayout {
+                        visible: window.ui.modern
+                        spacing: 10
+                        Layout.topMargin: 8
+                        Label {
                             text: qsTr("Theme")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: uiThemeCombo
                             readonly property var options: [
                                 { value: "graphite", label: qsTr("Graphite") },
-                                { value: "oled", label: qsTr("Black (OLED)") },
+                                { value: "oled", label: qsTr("Black / white") },
                                 { value: "midnight", label: qsTr("Midnight blue") }
                             ]
                             model: options
@@ -2201,7 +2233,7 @@ import AndroidStatusBar 1.0
                                     width: 30
                                     height: 30
                                     radius: 15
-                                    color: window.ui.accents[modelData]
+                                    color: window.ui.a[modelData]
                                     border.width: window.ui.accentName === modelData ? 3 : 0
                                     border.color: window.ui.textMain
                                     Accessible.role: Accessible.RadioButton
@@ -2234,7 +2266,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.ui_zoom = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okUiZoomButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2262,7 +2294,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("App Language:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: appLanguageCombo
                             model: appLanguageOptions
                             textRole: "label"
@@ -2281,7 +2313,7 @@ import AndroidStatusBar 1.0
                                 currentIndex = 0
                             }
                         }
-                        Button {
+                        UiButton {
                             id: okAppLanguageButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2322,7 +2354,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.weight = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okWeightButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2368,7 +2400,7 @@ import AndroidStatusBar 1.0
                             }
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okHeightButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2418,7 +2450,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.age = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okAgeButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2458,7 +2490,7 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             id: okSex
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2497,7 +2529,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.ftp = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okFTPButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2534,7 +2566,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.ftp_run = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ftp_run = ftpRunTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -2570,7 +2602,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.user_nickname = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okNicknameButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2607,7 +2639,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.user_email = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okEmailButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2923,7 +2955,7 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             id: okHeartBeltNameButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2944,7 +2976,7 @@ import AndroidStatusBar 1.0
                         color: Material.color(Material.Red)
                     }
 
-                    Button {
+                    UiButton {
                         id: refreshHeartBeltNameButton
                         text: qsTr("Refresh Devices List")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2976,7 +3008,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.heart_rate_zone1 = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okHeartRateZone1Button
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3001,7 +3033,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.heart_rate_zone2 = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okHeartRateZone2Button
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3026,7 +3058,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.heart_rate_zone3 = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okHeartRateZone3Button
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3051,7 +3083,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.heart_rate_zone4 = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okHeartRateZone4Button
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3125,7 +3157,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.heart_max_override_value = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okHeartRateMaxOverrideValue
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3163,7 +3195,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.heart_rate_resting = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okHeartRateRestingValue
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3211,7 +3243,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.power_hr_pwr1 = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okPowerFromHeartPWR1
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3236,7 +3268,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.power_hr_hr1 = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okPowerFromHeartHR1
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3261,7 +3293,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.power_hr_pwr2 = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okPowerFromHeartPWR2
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3286,7 +3318,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.power_hr_hr2 = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okPowerFromHeartHR2
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3419,7 +3451,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.gears_current_value_f = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             enabled: gearsRestoreValueDelegate.checked
@@ -3459,7 +3491,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.rolling_resistance = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okRollingResistanceButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3491,7 +3523,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.bike_weight = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okBikeWeightButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3529,7 +3561,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.crrGain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okCRRGainButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3553,7 +3585,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.cwGain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okCWGainButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3651,7 +3683,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Left Up:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down"), qsTr("Steer Left"), qsTr("Steer Right"), qsTr("U-Turn"), qsTr("Camera Angle"), qsTr("Emote"), qsTr("Tuck"), qsTr("Nav Up"), qsTr("Nav Down"), qsTr("Nav Left"), qsTr("Nav Right"), qsTr("Select/Confirm"), qsTr("Back/Cancel"), qsTr("Menu"), qsTr("Home")]
                                     currentIndex: settings.mywhoosh_link_left_up
                                     onActivated: { settings.mywhoosh_link_left_up = currentIndex; window.settings_restart_to_apply = true; }
@@ -3663,7 +3695,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Left Down:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down"), qsTr("Steer Left"), qsTr("Steer Right"), qsTr("U-Turn"), qsTr("Camera Angle"), qsTr("Emote"), qsTr("Tuck"), qsTr("Nav Up"), qsTr("Nav Down"), qsTr("Nav Left"), qsTr("Nav Right"), qsTr("Select/Confirm"), qsTr("Back/Cancel"), qsTr("Menu"), qsTr("Home")]
                                     currentIndex: settings.mywhoosh_link_left_down
                                     onActivated: { settings.mywhoosh_link_left_down = currentIndex; window.settings_restart_to_apply = true; }
@@ -3675,7 +3707,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Left Left:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down"), qsTr("Steer Left"), qsTr("Steer Right"), qsTr("U-Turn"), qsTr("Camera Angle"), qsTr("Emote"), qsTr("Tuck"), qsTr("Nav Up"), qsTr("Nav Down"), qsTr("Nav Left"), qsTr("Nav Right"), qsTr("Select/Confirm"), qsTr("Back/Cancel"), qsTr("Menu"), qsTr("Home")]
                                     currentIndex: settings.mywhoosh_link_left_left
                                     onActivated: { settings.mywhoosh_link_left_left = currentIndex; window.settings_restart_to_apply = true; }
@@ -3687,7 +3719,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Left Right:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down"), qsTr("Steer Left"), qsTr("Steer Right"), qsTr("U-Turn"), qsTr("Camera Angle"), qsTr("Emote"), qsTr("Tuck"), qsTr("Nav Up"), qsTr("Nav Down"), qsTr("Nav Left"), qsTr("Nav Right"), qsTr("Select/Confirm"), qsTr("Back/Cancel"), qsTr("Menu"), qsTr("Home")]
                                     currentIndex: settings.mywhoosh_link_left_right
                                     onActivated: { settings.mywhoosh_link_left_right = currentIndex; window.settings_restart_to_apply = true; }
@@ -3699,7 +3731,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Left Shoulder:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down"), qsTr("Steer Left"), qsTr("Steer Right"), qsTr("U-Turn"), qsTr("Camera Angle"), qsTr("Emote"), qsTr("Tuck"), qsTr("Nav Up"), qsTr("Nav Down"), qsTr("Nav Left"), qsTr("Nav Right"), qsTr("Select/Confirm"), qsTr("Back/Cancel"), qsTr("Menu"), qsTr("Home")]
                                     currentIndex: settings.mywhoosh_link_left_shoulder
                                     onActivated: { settings.mywhoosh_link_left_shoulder = currentIndex; window.settings_restart_to_apply = true; }
@@ -3711,7 +3743,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Left Power:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down"), qsTr("Steer Left"), qsTr("Steer Right"), qsTr("U-Turn"), qsTr("Camera Angle"), qsTr("Emote"), qsTr("Tuck"), qsTr("Nav Up"), qsTr("Nav Down"), qsTr("Nav Left"), qsTr("Nav Right"), qsTr("Select/Confirm"), qsTr("Back/Cancel"), qsTr("Menu"), qsTr("Home")]
                                     currentIndex: settings.mywhoosh_link_left_power
                                     onActivated: { settings.mywhoosh_link_left_power = currentIndex; window.settings_restart_to_apply = true; }
@@ -3731,7 +3763,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Right Y:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down"), qsTr("Steer Left"), qsTr("Steer Right"), qsTr("U-Turn"), qsTr("Camera Angle"), qsTr("Emote"), qsTr("Tuck"), qsTr("Nav Up"), qsTr("Nav Down"), qsTr("Nav Left"), qsTr("Nav Right"), qsTr("Select/Confirm"), qsTr("Back/Cancel"), qsTr("Menu"), qsTr("Home")]
                                     currentIndex: settings.mywhoosh_link_right_y
                                     onActivated: { settings.mywhoosh_link_right_y = currentIndex; window.settings_restart_to_apply = true; }
@@ -3743,7 +3775,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Right A:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down"), qsTr("Steer Left"), qsTr("Steer Right"), qsTr("U-Turn"), qsTr("Camera Angle"), qsTr("Emote"), qsTr("Tuck"), qsTr("Nav Up"), qsTr("Nav Down"), qsTr("Nav Left"), qsTr("Nav Right"), qsTr("Select/Confirm"), qsTr("Back/Cancel"), qsTr("Menu"), qsTr("Home")]
                                     currentIndex: settings.mywhoosh_link_right_a
                                     onActivated: { settings.mywhoosh_link_right_a = currentIndex; window.settings_restart_to_apply = true; }
@@ -3755,7 +3787,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Right B:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down"), qsTr("Steer Left"), qsTr("Steer Right"), qsTr("U-Turn"), qsTr("Camera Angle"), qsTr("Emote"), qsTr("Tuck"), qsTr("Nav Up"), qsTr("Nav Down"), qsTr("Nav Left"), qsTr("Nav Right"), qsTr("Select/Confirm"), qsTr("Back/Cancel"), qsTr("Menu"), qsTr("Home")]
                                     currentIndex: settings.mywhoosh_link_right_b
                                     onActivated: { settings.mywhoosh_link_right_b = currentIndex; window.settings_restart_to_apply = true; }
@@ -3767,7 +3799,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Right Z:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down"), qsTr("Steer Left"), qsTr("Steer Right"), qsTr("U-Turn"), qsTr("Camera Angle"), qsTr("Emote"), qsTr("Tuck"), qsTr("Nav Up"), qsTr("Nav Down"), qsTr("Nav Left"), qsTr("Nav Right"), qsTr("Select/Confirm"), qsTr("Back/Cancel"), qsTr("Menu"), qsTr("Home")]
                                     currentIndex: settings.mywhoosh_link_right_z
                                     onActivated: { settings.mywhoosh_link_right_z = currentIndex; window.settings_restart_to_apply = true; }
@@ -3779,7 +3811,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Right Shoulder:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down"), qsTr("Steer Left"), qsTr("Steer Right"), qsTr("U-Turn"), qsTr("Camera Angle"), qsTr("Emote"), qsTr("Tuck"), qsTr("Nav Up"), qsTr("Nav Down"), qsTr("Nav Left"), qsTr("Nav Right"), qsTr("Select/Confirm"), qsTr("Back/Cancel"), qsTr("Menu"), qsTr("Home")]
                                     currentIndex: settings.mywhoosh_link_right_shoulder
                                     onActivated: { settings.mywhoosh_link_right_shoulder = currentIndex; window.settings_restart_to_apply = true; }
@@ -3791,7 +3823,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Right Power:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down"), qsTr("Steer Left"), qsTr("Steer Right"), qsTr("U-Turn"), qsTr("Camera Angle"), qsTr("Emote"), qsTr("Tuck"), qsTr("Nav Up"), qsTr("Nav Down"), qsTr("Nav Left"), qsTr("Nav Right"), qsTr("Select/Confirm"), qsTr("Back/Cancel"), qsTr("Menu"), qsTr("Home")]
                                     currentIndex: settings.mywhoosh_link_right_power
                                     onActivated: { settings.mywhoosh_link_right_power = currentIndex; window.settings_restart_to_apply = true; }
@@ -3828,7 +3860,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.bike_resistance_offset = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okBikeResistanceOffsetButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3866,7 +3898,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.bike_power_offset = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okBikePowerOffsetButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3904,7 +3936,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.bike_resistance_gain_f = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okBikeResistanceGainButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3942,7 +3974,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.zwift_erg_filter = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okzwiftErgFilterButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3980,7 +4012,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.zwift_erg_filter_down = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okzwiftErgDownFilterButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4018,7 +4050,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.zwift_erg_resistance_down = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okzwiftErgResistanceDownButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4056,7 +4088,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.zwift_erg_resistance_up = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okzwiftErgResistanceUpButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4094,7 +4126,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.bike_resistance_start = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okBikeResistanceStartButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4131,7 +4163,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.gears_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.gears_gain = gearsGainTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -4183,7 +4215,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.gears_offset = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.gears_offset = gearsOffsetTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -4248,7 +4280,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Profile:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     id: automaticVirtualShiftingProfileComboBox
                                     model: [qsTr("Cruise"), qsTr("Climb"), qsTr("Sprint")]
                                     currentIndex: settings.automatic_virtual_shifting_profile
@@ -4287,7 +4319,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.automatic_virtual_shifting_gear_up_cadence = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_gear_up_cadence = automaticVirtualShiftingGearUpCadenceTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -4311,7 +4343,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.automatic_virtual_shifting_gear_up_time = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_gear_up_time = automaticVirtualShiftingGearUpTimeTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -4335,7 +4367,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.automatic_virtual_shifting_gear_down_cadence = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_gear_down_cadence = automaticVirtualShiftingGearDownCadenceTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -4359,7 +4391,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.automatic_virtual_shifting_gear_down_time = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_gear_down_time = automaticVirtualShiftingGearDownTimeTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -4393,7 +4425,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.automatic_virtual_shifting_climb_gear_up_cadence = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_climb_gear_up_cadence = automaticVirtualShiftingClimbGearUpCadenceTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -4417,7 +4449,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.automatic_virtual_shifting_climb_gear_up_time = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_climb_gear_up_time = automaticVirtualShiftingClimbGearUpTimeTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -4441,7 +4473,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.automatic_virtual_shifting_climb_gear_down_cadence = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_climb_gear_down_cadence = automaticVirtualShiftingClimbGearDownCadenceTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -4465,7 +4497,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.automatic_virtual_shifting_climb_gear_down_time = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_climb_gear_down_time = automaticVirtualShiftingClimbGearDownTimeTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -4499,7 +4531,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.automatic_virtual_shifting_sprint_gear_up_cadence = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_sprint_gear_up_cadence = automaticVirtualShiftingSprintGearUpCadenceTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -4523,7 +4555,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.automatic_virtual_shifting_sprint_gear_up_time = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_sprint_gear_up_time = automaticVirtualShiftingSprintGearUpTimeTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -4547,7 +4579,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.automatic_virtual_shifting_sprint_gear_down_cadence = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_sprint_gear_down_cadence = automaticVirtualShiftingSprintGearDownCadenceTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -4571,7 +4603,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.automatic_virtual_shifting_sprint_gear_down_time = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_sprint_gear_down_time = automaticVirtualShiftingSprintGearDownTimeTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -4599,7 +4631,7 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ftms_bike = stripRssi(ftmsBikeTextField.value); window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
@@ -4706,7 +4738,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.schwinn_resistance_smooth = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okschwinnResistanceSmoothButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4750,7 +4782,7 @@ import AndroidStatusBar 1.0
                                 onAccepted: settings.horizon_gr7_cadence_multiplier = text
                                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                             }
-                            Button {
+                            UiButton {
                                 id: okhorizonGr7CadenceMultiplierButton
                                 text: qsTr("OK")
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4777,7 +4809,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Watt Profile:")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     id: echelonWattTableTextField
                                     model: [ "Echelon", "mgarcea" ]
                                     displayText: settings.echelon_watttable
@@ -4789,7 +4821,7 @@ import AndroidStatusBar 1.0
                                     }
 
                                 }
-                                Button {
+                                UiButton {
                                     id: okEchelonWattTable
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4813,7 +4845,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.echelon_resistance_gain = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okechelonResistanceGainButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4837,7 +4869,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.echelon_resistance_offset = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okechelonResistanceOffsetButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5208,7 +5240,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.flywheel_filter = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okflywheelBikeFilterButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5270,7 +5302,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.domyos_bike_cadence_filter = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okDomyosBikeCadenceFilter
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5402,7 +5434,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.proform_wheel_ratio = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okproformBikeWheelRatioButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5415,7 +5447,7 @@ import AndroidStatusBar 1.0
                                 Layout.fillWidth: true
                             }
 
-                            ComboBox {
+                            UiComboBox {
                                 Layout.fillWidth: true
                                 id: bikeModelComboBox
                                 property bool initialized: false
@@ -5581,7 +5613,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.proformtdf1ip = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.proformtdf1ip = proformTDF1IPTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
@@ -5605,7 +5637,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.proformtdf4ip = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okproformTDF4IPButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5629,7 +5661,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.tdf_10_ip = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okproformTDFCompanionIPButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5689,7 +5721,7 @@ import AndroidStatusBar 1.0
                                 onAccepted: settings.computrainer_serialport = text
                                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                             }
-                            Button {
+                            UiButton {
                                 id: okcomputrainerSerialPortButton
                                 text: qsTr("OK")
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5723,7 +5755,7 @@ import AndroidStatusBar 1.0
                                 onAccepted: settings.kettler_usb_serialport = text
                                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                             }
-                            Button {
+                            UiButton {
                                 id: okKettlerUsbSerialPortButton
                                 text: qsTr("OK")
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5737,7 +5769,7 @@ import AndroidStatusBar 1.0
                                 text: qsTr("Baudrate:")
                                 Layout.fillWidth: true
                             }
-                            ComboBox {
+                            UiComboBox {
                                 id: kettlerUsbBaudrateComboBox
                                 model: [ "9600", "57600" ]
                                 displayText: settings.kettler_usb_baudrate.toString()
@@ -5748,7 +5780,7 @@ import AndroidStatusBar 1.0
                                     displayText = kettlerUsbBaudrateComboBox.currentValue
                                 }
                             }
-                            Button {
+                            UiButton {
                                 id: okKettlerUsbBaudrateButton
                                 text: qsTr("OK")
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5787,7 +5819,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.freebeat_serialport = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okFreebeatSerialPortButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5841,7 +5873,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.m3i_bike_id = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okm3iBikeIdButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5866,7 +5898,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.m3i_bike_speed_buffsize = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okm3iBikeSpeedBuffsizeButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5974,7 +6006,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.ant_bike_device_number = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okAntBikeDeviceNumberButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6093,7 +6125,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.ant_speed_offset = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ant_speed_offset = antspeedOffsetTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -6130,7 +6162,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.ant_speed_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ant_speed_gain = antspeedGainTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -6181,7 +6213,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.ant_heart_device_number = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okAntHeartDeviceNumberButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6318,7 +6350,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("Floating Window Type:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: floatingWindowTypeComboBox
                             model: [qsTr("Classic"), qsTr("Horizontal")]
                             currentIndex: settings.floatingwindow_type
@@ -6328,7 +6360,7 @@ import AndroidStatusBar 1.0
                                 console.log("floatingwindow_type activated" + floatingWindowTypeComboBox.currentIndex)
                             }
                         }
-                        Button {
+                        UiButton {
                             id: okFloatingWindowTypeButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6378,7 +6410,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.floating_width = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okFloatingWidthButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6415,7 +6447,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.floating_height = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okFloatingHeightButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6452,7 +6484,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.floating_transparency = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okFloatingTransparencyButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6501,7 +6533,7 @@ import AndroidStatusBar 1.0
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    Button {
+                    UiButton {
                         text: qsTr("Open Floating on a Browser")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: openFloatingWindowBrowser();
@@ -6514,7 +6546,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("Chart Display Mode:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: chartDisplayModeComboBox
                             model: [qsTr("Both Charts"), qsTr("Heart Rate Only"), qsTr("Power Only")]
                             currentIndex: settings.chart_display_mode
@@ -6524,7 +6556,7 @@ import AndroidStatusBar 1.0
                                 console.log("chart_display_mode activated" + chartDisplayModeComboBox.currentIndex)
                             }
                         }
-                        Button {
+                        UiButton {
                             id: okChartDisplayModeButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6551,7 +6583,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("iOS Live Activity Left Metric:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: iosLiveActivityCompactLeadingMetricComboBox
                             model: rootItem.metrics
                             displayText: settings.ios_live_activity_compact_leading_metric
@@ -6559,7 +6591,7 @@ import AndroidStatusBar 1.0
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onActivated: displayText = currentValue
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ios_live_activity_compact_leading_metric = iosLiveActivityCompactLeadingMetricComboBox.displayText; toast.show(qsTr("Setting saved!")); }
@@ -6572,7 +6604,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("iOS Live Activity Right Metric:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: iosLiveActivityCompactTrailingMetricComboBox
                             model: rootItem.metrics
                             displayText: settings.ios_live_activity_compact_trailing_metric
@@ -6580,7 +6612,7 @@ import AndroidStatusBar 1.0
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onActivated: displayText = currentValue
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ios_live_activity_compact_trailing_metric = iosLiveActivityCompactTrailingMetricComboBox.displayText; toast.show(qsTr("Setting saved!")); }
@@ -6639,7 +6671,7 @@ import AndroidStatusBar 1.0
                                           if(OS_VERSION !== "Android") backgroundColorDialog.visible = true
                                       }
                                 }
-                                Button {
+                                UiButton {
                                     id: okBackgroundColor
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6673,7 +6705,7 @@ import AndroidStatusBar 1.0
                                           if(OS_VERSION !== "Android") tilebackgroundColorDialog.visible = true
                                       }
                                 }
-                                Button {
+                                UiButton {
                                     id: oktileBackgroundColor
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6720,7 +6752,7 @@ import AndroidStatusBar 1.0
                                           if(OS_VERSION !== "Android") tileShadowColorDialog.visible = true
                                       }
                                 }
-                                Button {
+                                UiButton {
                                     id: oktileShadowColor
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6753,7 +6785,7 @@ import AndroidStatusBar 1.0
                                           if(OS_VERSION !== "Android") statusbarbackgroundColorDialog.visible = true
                                       }
                                 }
-                                Button {
+                                UiButton {
                                     id: okStatusbarBackgroundColor
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6785,7 +6817,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.theme_tile_secondline_textsize = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.theme_tile_secondline_textsize = secondLineTextSizeField.text; window.settings_restart_to_apply = true;  toast.show(qsTr("Setting saved!")); }
@@ -6821,7 +6853,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.peloton_username = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okPelotonUsernameButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6861,7 +6893,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.peloton_password = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okPelotonPasswordButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6917,7 +6949,7 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             id: okPelotonDifficultyButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6944,7 +6976,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("Treadmill Level:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: pelotonTreadmillLevelTextField
                             model: [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" ]
                             displayText: settings.peloton_treadmill_level
@@ -6956,7 +6988,7 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.peloton_treadmill_level = parseInt(pelotonTreadmillLevelTextField.displayText); toast.show(qsTr("Setting saved!")); }
@@ -6982,7 +7014,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("Treadmill Walk Level:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: pelotonTreadmillWalkLevelTextField
                             model: [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" ]
                             displayText: settings.peloton_treadmill_walk_level
@@ -6994,7 +7026,7 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.peloton_treadmill_walk_level = parseInt(pelotonTreadmillWalkLevelTextField.displayText); toast.show(qsTr("Setting saved!")); }
@@ -7028,7 +7060,7 @@ import AndroidStatusBar 1.0
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             inputMethodHints: Qt.ImhFormattedNumbersOnly
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.peloton_treadmill_walking_min_speed = (settings.miles_unit ? pelotonTreadmillWalkingMinSpeedTextField.text / 0.621371 : pelotonTreadmillWalkingMinSpeedTextField.text); toast.show(qsTr("Setting saved!")); }
@@ -7062,7 +7094,7 @@ import AndroidStatusBar 1.0
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             inputMethodHints: Qt.ImhFormattedNumbersOnly
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.peloton_treadmill_running_min_speed = (settings.miles_unit ? pelotonTreadmillRunningMinSpeedTextField.text / 0.621371 : pelotonTreadmillRunningMinSpeedTextField.text); toast.show(qsTr("Setting saved!")); }
@@ -7088,7 +7120,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("Rower Level:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: pelotonRowerLevelTextField
                             model: [ "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" ]
                             displayText: settings.peloton_rower_level
@@ -7100,7 +7132,7 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.peloton_rower_level = parseInt(pelotonRowerLevelTextField.displayText); toast.show(qsTr("Setting saved!")); }
@@ -7136,7 +7168,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.pzp_username = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okPZPUsernameButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7175,7 +7207,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.pzp_password = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okPZPPasswordButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7213,7 +7245,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.peloton_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okPelotonGainButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7251,7 +7283,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.peloton_offset = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okPelotonOffsetButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7362,7 +7394,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("Override Cadence Metric:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: pelotonCadenceMetricTextField
                             model: rootItem.metrics
                             displayText: settings.peloton_cadence_metric
@@ -7374,7 +7406,7 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             id: okPelotonCadenceMetric
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7389,7 +7421,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("Override HR Metric:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: pelotonHeartRateMetricTextField
                             model: rootItem.metrics
                             displayText: settings.peloton_heartrate_metric
@@ -7401,7 +7433,7 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             id: okPelotonHeartRateMetric
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7441,7 +7473,7 @@ import AndroidStatusBar 1.0
                             }
 
                         }
-                        Button {
+                        UiButton {
                             id: okPelotonDateOnStrava
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7468,7 +7500,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("Date Format:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: pelotonDateFormatTextField
                             model: [ "MM/dd/yy", "yy/MM/dd" ]
                             displayText: settings.peloton_date_format
@@ -7480,7 +7512,7 @@ import AndroidStatusBar 1.0
                             }
 
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.peloton_date_format = pelotonDateFormatTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -7650,7 +7682,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.zwift_username = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okZwiftUsernameButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7690,7 +7722,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.zwift_password = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okZwiftPasswordButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7712,7 +7744,7 @@ import AndroidStatusBar 1.0
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }              
 
-                    MessageDialog {
+                    UiMessageDialog {
                         id: zwiftPlaySettingsDialog
                         text: qsTr("Zwift Play & Click Settings")
                         informativeText: qsTr("Would you like to disable Zwift Play and Zwift Click settings? Having them enabled together with 'Get gears from Zwift' may cause conflicts.")
@@ -7832,7 +7864,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.zwift_api_poll = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.zwift_api_poll = zwiftPollTimeTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
@@ -8181,7 +8213,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.garmin_email = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: {
@@ -8208,7 +8240,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.garmin_password = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: {
@@ -8225,7 +8257,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("Garmin Server:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: garminServerComboBox
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -8242,7 +8274,7 @@ import AndroidStatusBar 1.0
                         }
                     }
 
-                    Button {
+                    UiButton {
                         text: qsTr("Test Garmin Login")
                         Layout.alignment: Qt.AlignHCenter
                         onClicked: { rootItem.garmin_connect_login(); }
@@ -8308,7 +8340,7 @@ import AndroidStatusBar 1.0
                                 Layout.fillWidth: true
                                 spacing: 10
 
-                                Button {
+                                UiButton {
                                     text: qsTr("Cancel")
                                     Layout.fillWidth: true
                                     onClicked: {
@@ -8317,7 +8349,7 @@ import AndroidStatusBar 1.0
                                     }
                                 }
 
-                                Button {
+                                UiButton {
                                     text: qsTr("Submit")
                                     Layout.fillWidth: true
                                     highlighted: true
@@ -8382,7 +8414,7 @@ import AndroidStatusBar 1.0
                         Layout.fillWidth: true
                     }
 
-                    ComboBox {
+                    UiComboBox {
                         id: garminDeviceComboBoxDelegate
                         model: [
                             "Approach G10",
@@ -9273,7 +9305,7 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             id: okTreadmillPidHR
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9309,7 +9341,7 @@ import AndroidStatusBar 1.0
                             //inputMethodHints: Qt.ImhDigitsOnly
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.treadmill_pid_heart_min = treadmillPidHRminTextField.text ; toast.show(qsTr("Setting saved!")); }
@@ -9331,7 +9363,7 @@ import AndroidStatusBar 1.0
                             //inputMethodHints: Qt.ImhDigitsOnly
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.treadmill_pid_heart_max = treadmillPidHRmaxTextField.text ; toast.show(qsTr("Setting saved!")); }
@@ -9392,7 +9424,7 @@ import AndroidStatusBar 1.0
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_pid_hr_recovery_zone_limit = parseFloat(pidHrRecoveryZoneLimitTextField.text); toast.show(qsTr("Setting saved!")); }
@@ -9426,7 +9458,7 @@ import AndroidStatusBar 1.0
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_pid_hr_pushy_zone_limit = parseFloat(pidHrPushyZoneLimitTextField.text); toast.show(qsTr("Setting saved!")); }
@@ -9489,7 +9521,7 @@ import AndroidStatusBar 1.0
                             //inputMethodHints: Qt.ImhDigitsOnly
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramPace1Mile
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9526,7 +9558,7 @@ import AndroidStatusBar 1.0
                             //inputMethodHints: Qt.ImhDigitsOnly
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramPace5km
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9563,7 +9595,7 @@ import AndroidStatusBar 1.0
                             //inputMethodHints: Qt.ImhDigitsOnly
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramPace10KM
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9600,7 +9632,7 @@ import AndroidStatusBar 1.0
                             //inputMethodHints: Qt.ImhDigitsOnly
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramPaceHalfMarathon
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9637,7 +9669,7 @@ import AndroidStatusBar 1.0
                             //inputMethodHints: Qt.ImhDigitsOnly
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramPaceMarathon
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9673,7 +9705,7 @@ import AndroidStatusBar 1.0
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramWarmupSpeed
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9696,7 +9728,7 @@ import AndroidStatusBar 1.0
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramCooldownSpeed
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9719,7 +9751,7 @@ import AndroidStatusBar 1.0
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramRestSpeed
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9746,7 +9778,7 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             id: okTreadmillPaceDefault
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9783,7 +9815,7 @@ import AndroidStatusBar 1.0
                             inputMethodHints: Qt.ImhDigitsOnly
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okPidHeartZoneErgModeWattStep
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9832,7 +9864,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.trainprogram_total = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramRandomDuration
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9857,7 +9889,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.trainprogram_period_seconds = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramRandomPeriod
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9882,7 +9914,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.trainprogram_speed_min = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramRandomSpeedMin
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9907,7 +9939,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.trainprogram_speed_max = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramRandomSpeedMax
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9932,7 +9964,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.trainprogram_incline_min = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramRandomInclineMin
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9957,7 +9989,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.trainprogram_incline_max = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramRandomInclineMax
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9982,7 +10014,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.trainprogram_resistance_min = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramRandomResistanceMin
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -10007,7 +10039,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.trainprogram_resistance_max = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTrainProgramRandomResistanceMax
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -10222,7 +10254,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.treadmill_step_speed = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTreadmillSpeedStepButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -10260,7 +10292,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.treadmill_incline_min = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.treadmill_incline_min = treadmillInclinationMinTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -10296,7 +10328,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.treadmill_incline_max = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.treadmill_incline_max = treadmillInclinationMaxTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -10332,7 +10364,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.treadmill_speed_max = (settings.miles_unit?text * 1.60934:text)
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.treadmill_speed_max = (settings.miles_unit?treadmillSpeedMaxTextField.text * 1.60934:treadmillSpeedMaxTextField.text); toast.show(qsTr("Setting saved!")); }
@@ -10368,7 +10400,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.treadmill_speed_min = (settings.miles_unit?text * 1.60934:text)
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.treadmill_speed_min = (settings.miles_unit?treadmillSpeedMinTextField.text * 1.60934:treadmillSpeedMinTextField.text); toast.show(qsTr("Setting saved!")); }
@@ -10405,7 +10437,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.step_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okStepGainButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -10493,7 +10525,7 @@ import AndroidStatusBar 1.0
                             }
 
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ftms_treadmill = stripRssi(ftmsTreadmillTextField.value); window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
@@ -10539,7 +10571,7 @@ import AndroidStatusBar 1.0
                                 Layout.fillWidth: true
                             }
 
-                            ComboBox {
+                            UiComboBox {
                                 Layout.fillWidth: true
                                 id: treadmillModelComboBox
                                 property bool initialized: false
@@ -10858,7 +10890,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.proformtreadmillip = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okproformtreadmillIPButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -10882,7 +10914,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.nordictrack_2950_ip = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: oknordictrack2950IPButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11277,7 +11309,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.domyos_treadmill_button_5kmh = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.domyos_treadmill_button_5kmh = domyosTreadmillButton5KmhTimeTextField.text; toast.show(qsTr("Setting saved!")); window.settings_restart_to_apply = true;}
@@ -11300,7 +11332,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.domyos_treadmill_button_10kmh = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.domyos_treadmill_button_10kmh = domyosTreadmillButton10KmhTimeTextField.text; toast.show(qsTr("Setting saved!")); window.settings_restart_to_apply = true;}
@@ -11323,7 +11355,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.domyos_treadmill_button_16kmh = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.domyos_treadmill_button_16kmh = domyosTreadmillButton16KmhTimeTextField.text; toast.show(qsTr("Setting saved!")); window.settings_restart_to_apply = true;}
@@ -11346,7 +11378,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.domyos_treadmill_button_22kmh = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.domyos_treadmill_button_22kmh = domyosTreadmillButton22KmhTimeTextField.text; toast.show(qsTr("Setting saved!")); window.settings_restart_to_apply = true;}
@@ -11369,7 +11401,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.poll_device_time = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.poll_device_time = pollDeviceTimeTextField.text; toast.show(qsTr("Setting saved!")); window.settings_restart_to_apply = true;}
@@ -11588,7 +11620,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.fitshow_user_id = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okfitshowTreadmillUserIdButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11760,7 +11792,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.horizon_treadmill_profile_user1 = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okhorizonTreadmillProfile1Button
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11783,7 +11815,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.horizon_treadmill_profile_user2 = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okhorizonTreadmillProfile2Button
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11806,7 +11838,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.horizon_treadmill_profile_user3 = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okhorizonTreadmillProfile3Button
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11829,7 +11861,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.horizon_treadmill_profile_user4 = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okhorizonTreadmillProfile4Button
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11852,7 +11884,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.horizon_treadmill_profile_user5 = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okhorizonTreadmillProfile5Button
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12311,7 +12343,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.csafe_rower = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.csafe_rower = csaferowerSerialPortTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
@@ -12339,14 +12371,14 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ftms_rower = stripRssi(ftmsRowerTextField.value); window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                         }
                     }                   
 
-                    Button {
+                    UiButton {
                         text: qsTr("Refresh Devices List")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: refresh_bluetooth_devices_clicked();
@@ -12433,7 +12465,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.proform_rower_ip = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.proform_rower_ip = proformRowerIPTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
@@ -12476,7 +12508,7 @@ import AndroidStatusBar 1.0
                                 onAccepted: settings.domyos_elliptical_speed_ratio = text
                                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                             }
-                            Button {
+                            UiButton {
                                 id: okDomyosEllipticalRatioButton
                                 text: qsTr("OK")
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12520,7 +12552,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.csafe_elliptical_port = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.csafe_elliptical_port = csafeellipticalSerialPortTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
@@ -12548,14 +12580,14 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ftms_elliptical = stripRssi(ftmsEllipticalTextField.value); window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                         }
                     }
 
-                    Button {
+                    UiButton {
                         text: qsTr("Refresh Devices List")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: refresh_bluetooth_devices_clicked();
@@ -12678,7 +12710,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.proform_elliptical_ip = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.proform_elliptical_ip = proformEllipticalCompanionIPTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
@@ -12793,7 +12825,7 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             id: okFilterDeviceButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12801,7 +12833,7 @@ import AndroidStatusBar 1.0
                         }
                     }
 
-                    Button {
+                    UiButton {
                         id: refreshFilterDeviceButton
                         text: qsTr("Refresh Devices List")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12865,7 +12897,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.watt_offset = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okwattOffsetButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12903,7 +12935,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.watt_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okWattGainButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12941,7 +12973,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.speed_offset = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okspeedOffsetButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12980,7 +13012,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.speed_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okSpeedGainButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13018,7 +13050,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.cadence_offset = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okcadenceOffsetButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13056,7 +13088,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.cadence_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okCadenceGainButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13103,7 +13135,7 @@ import AndroidStatusBar 1.0
                              }
 
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.strava_upload_mode = stravaUploadMode.value; toast.show(qsTr("Setting saved!")); }
@@ -13126,7 +13158,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.strava_suffix = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okStravaSuffixButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13318,7 +13350,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("Power Averaging Mode:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: powerAvgCombo
                             model: [qsTr("Off"), qsTr("3 seconds"), qsTr("5 seconds")]
                             Layout.fillHeight: false
@@ -13429,7 +13461,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.zwift_inclination_offset = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTreadmillInclinationOffsetButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13467,7 +13499,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.zwift_inclination_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okTreadmillInclinationGainButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13504,7 +13536,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.min_inclination = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.min_inclination = minInclinationTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -13541,7 +13573,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.treadmill_step_incline = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okInclinationStepButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13660,7 +13692,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.autolap_distance = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.autolap_distance = (settings.miles_unit?autoLapOnDistanceTextField.text * 1.60934:autoLapOnDistanceTextField.text); toast.show(qsTr("Setting saved!")); }
@@ -13696,7 +13728,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.inclination_delay_seconds = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.inclination_delay_seconds = treadmillInclinationDelayTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -13822,7 +13854,7 @@ import AndroidStatusBar 1.0
                                     }
 
                                 }
-                                Button {
+                                UiButton {
                                     id: okCadenceSensorNameButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13830,7 +13862,7 @@ import AndroidStatusBar 1.0
                                 }
                             }
 
-                            Button {
+                            UiButton {
                                 id: refreshCadenceSensorNameButton
                                 text: qsTr("Refresh Devices List")
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13867,7 +13899,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.cadence_sensor_speed_ratio = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okCadenceSpeedRatio
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13958,7 +13990,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.cscbike_custom_resistance_level_1 = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.cscbike_custom_resistance_level_1 = cscBikeCustomResistanceLevel1TextField.text; toast.show(qsTr("Setting saved!")); }
@@ -13981,7 +14013,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.cscbike_custom_watt_1 = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.cscbike_custom_watt_1 = cscBikeCustomWatt1TextField.text; toast.show(qsTr("Setting saved!")); }
@@ -14004,7 +14036,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.cscbike_custom_resistance_level_2 = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.cscbike_custom_resistance_level_2 = cscBikeCustomResistanceLevel2TextField.text; toast.show(qsTr("Setting saved!")); }
@@ -14027,7 +14059,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.cscbike_custom_watt_2 = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.cscbike_custom_watt_2 = cscBikeCustomWatt2TextField.text; toast.show(qsTr("Setting saved!")); }
@@ -14210,7 +14242,7 @@ import AndroidStatusBar 1.0
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.power_sensor_speed_correction_threshold = powerSensorSpeedCorrectionThresholdTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -14325,7 +14357,7 @@ import AndroidStatusBar 1.0
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.power_sensor_speed_inclination_coeff_a = powerSensorSpeedInclinationCoeffATextField.text; toast.show(qsTr("Setting saved!")); }
@@ -14346,7 +14378,7 @@ import AndroidStatusBar 1.0
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     inputMethodHints: Qt.ImhFormattedNumbersOnly
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.power_sensor_speed_inclination_coeff_b = powerSensorSpeedInclinationCoeffBTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -14386,7 +14418,7 @@ import AndroidStatusBar 1.0
                                     }
 
                                 }
-                                Button {
+                                UiButton {
                                     id: okPowerSensorNameButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14394,7 +14426,7 @@ import AndroidStatusBar 1.0
                                 }
                             }
 
-                            Button {
+                            UiButton {
                                 id: refreshPowerSensorNameButton
                                 text: qsTr("Refresh Devices List")
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14452,7 +14484,7 @@ import AndroidStatusBar 1.0
                                             }
 
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okEliteRizerNameButton
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14460,7 +14492,7 @@ import AndroidStatusBar 1.0
                                         }
                                     }
 
-                                    Button {
+                                    UiButton {
                                         id: refreshEliteRizerNameButton
                                         text: qsTr("Refresh Devices List")
                                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14483,7 +14515,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.elite_rizer_gain = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okEliteRizerGainButton
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14520,7 +14552,7 @@ import AndroidStatusBar 1.0
                                             }
 
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okEliteSterzoSmartNameButton
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14528,7 +14560,7 @@ import AndroidStatusBar 1.0
                                         }
                                     }
 
-                                    Button {
+                                    UiButton {
                                         id: refreshEliteSterzoSmartNameButton
                                         text: qsTr("Refresh Devices List")
                                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14567,7 +14599,7 @@ import AndroidStatusBar 1.0
                                     }
 
                                 }
-                                Button {
+                                UiButton {
                                     id: okFTMSAccessoryNameButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14575,7 +14607,7 @@ import AndroidStatusBar 1.0
                                 }
                             }
 
-                            Button {
+                            UiButton {
                                 id: refreshFTMSAccessoryNameButton
                                 text: qsTr("Refresh Devices List")
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14614,7 +14646,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.ss2k_shift_step = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okSS2kShiftStep
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14638,7 +14670,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.ss2k_max_resistance = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okSS2kMaxResistance
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14662,7 +14694,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.ss2k_min_resistance = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okSS2kMinResistance
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14695,7 +14727,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.resistance_sample_1 = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okSS2kResistanceSample1
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14718,7 +14750,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.ss2k_shift_step_sample_1 = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okSS2kShiftStepSample1
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14742,7 +14774,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.resistance_sample_2 = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okSS2kResistanceSample2
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14765,7 +14797,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.ss2k_shift_step_sample_2 = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okSS2kShiftStepSample2
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14789,7 +14821,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.resistance_sample_3 = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okSS2kResistanceSample3
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14812,7 +14844,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.ss2k_shift_step_sample_3 = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okSS2kShiftStepSample3
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14836,7 +14868,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.resistance_sample_4 = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okSS2kResistanceSample4
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14859,7 +14891,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.ss2k_shift_step_sample_4 = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okSS2kShiftStepSample4
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14914,7 +14946,7 @@ import AndroidStatusBar 1.0
                                     }
 
                                 }
-                                Button {
+                                UiButton {
                                     id: okFitmetriaFanFitModeTextField
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14938,7 +14970,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.fitmetria_fanfit_min = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okFitmetriaFanFitMin
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14962,7 +14994,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.fitmetria_fanfit_max = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     id: okFitmetriaFanFitMax
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15012,7 +15044,7 @@ import AndroidStatusBar 1.0
                                     }
 
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.fitmetria_fanfit_mode = headWindModeTextField.value; toast.show(qsTr("Setting saved!")); }
@@ -15034,7 +15066,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.fitmetria_fanfit_min = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.fitmetria_fanfit_min = headWindMinTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -15056,7 +15088,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.fitmetria_fanfit_max = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.fitmetria_fanfit_max = headWindMaxTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -15105,7 +15137,7 @@ import AndroidStatusBar 1.0
                                     }
 
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.fitmetria_fanfit_mode = eliteAriaModeTextField.value; toast.show(qsTr("Setting saved!")); }
@@ -15127,7 +15159,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.fitmetria_fanfit_min = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.fitmetria_fanfit_min = eliteAriaMinTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -15149,7 +15181,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.fitmetria_fanfit_max = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.fitmetria_fanfit_max = eliteAriaMaxTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -15466,7 +15498,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Left Shifter Up (LS1):")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down")]
                                     currentIndex: settings.zwiftplay_gear_ls1
                                     onActivated: settings.zwiftplay_gear_ls1 = currentIndex
@@ -15478,7 +15510,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Left Shifter Down (LS2):")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down")]
                                     currentIndex: settings.zwiftplay_gear_ls2
                                     onActivated: settings.zwiftplay_gear_ls2 = currentIndex
@@ -15490,7 +15522,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Right Shifter Up (RS1):")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down")]
                                     currentIndex: settings.zwiftplay_gear_rs1
                                     onActivated: settings.zwiftplay_gear_rs1 = currentIndex
@@ -15502,7 +15534,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Right Shifter Down (RS2):")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down")]
                                     currentIndex: settings.zwiftplay_gear_rs2
                                     onActivated: settings.zwiftplay_gear_rs2 = currentIndex
@@ -15514,7 +15546,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Left Paddle (ZL):")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down")]
                                     currentIndex: settings.zwiftplay_gear_paddle_left
                                     onActivated: settings.zwiftplay_gear_paddle_left = currentIndex
@@ -15526,7 +15558,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Right Paddle (ZR):")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down")]
                                     currentIndex: settings.zwiftplay_gear_paddle_right
                                     onActivated: settings.zwiftplay_gear_paddle_right = currentIndex
@@ -15538,7 +15570,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Power Up (LB):")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down")]
                                     currentIndex: settings.zwiftplay_gear_lb
                                     onActivated: settings.zwiftplay_gear_lb = currentIndex
@@ -15550,7 +15582,7 @@ import AndroidStatusBar 1.0
                                     text: qsTr("Ride On (RB):")
                                     Layout.fillWidth: true
                                 }
-                                ComboBox {
+                                UiComboBox {
                                     model: [qsTr("Disabled"), qsTr("Gear Up"), qsTr("Gear Down")]
                                     currentIndex: settings.zwiftplay_gear_rb
                                     onActivated: settings.zwiftplay_gear_rb = currentIndex
@@ -15573,7 +15605,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.poll_device_time = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.poll_device_time = zwiftDevPollTimeTextField.text; toast.show(qsTr("Setting saved!")); window.settings_restart_to_apply = true;}
@@ -15623,7 +15655,7 @@ import AndroidStatusBar 1.0
                             text: qsTr("Maps Type:")
                             Layout.fillWidth: true
                         }
-                        ComboBox {
+                        UiComboBox {
                             id: mapsTypeTextField
                             model: [ "2D", "3D" ]
                             displayText: settings.maps_type
@@ -15635,7 +15667,7 @@ import AndroidStatusBar 1.0
                             }
 
                         }
-                        Button {
+                        UiButton {
                             id: okMapsType
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15688,7 +15720,7 @@ import AndroidStatusBar 1.0
                             onAccepted: settings.video_playback_window_s = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okVideoWindow
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16156,7 +16188,7 @@ import AndroidStatusBar 1.0
                                             onAccepted: settings.dircon_id = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
-                                        Button {
+                                        UiButton {
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.dircon_id = dirconIdTextField.text; toast.show(qsTr("Setting saved!")); window.settings_restart_to_apply = true; }
@@ -16192,7 +16224,7 @@ import AndroidStatusBar 1.0
                                             inputMethodHints: Qt.ImhDigitsOnly
                                             onAccepted: settings.dircon_server_base_port = text
                                         }
-                                        Button {
+                                        UiButton {
                                             id: okDirconServerPort
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16228,7 +16260,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.mqtt_host = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.mqtt_host = mqttHostTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -16264,7 +16296,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.mqtt_port = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.mqtt_port = mqttPortTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -16300,7 +16332,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.mqtt_username = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.mqtt_username = mqttUsernameTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -16337,7 +16369,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.mqtt_password = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.mqtt_password = mqttPasswordTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -16373,7 +16405,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.mqtt_deviceid = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.mqtt_deviceid = mqttDeviceIdTextField.text; toast.show(qsTr("Setting saved!")); }
@@ -16420,7 +16452,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.osc_ip = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.osc_ip = oscIPTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
@@ -16444,7 +16476,7 @@ import AndroidStatusBar 1.0
                                     onAccepted: settings.osc_port = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
-                                Button {
+                                UiButton {
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.osc_port = oscPortTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
@@ -16892,7 +16924,7 @@ import AndroidStatusBar 1.0
                         Layout.minimumWidth: 0
                         columns: width >= clearLogs.implicitWidth + showLogs.implicitWidth + columnSpacing ? 2 : 1
 
-                        Button {
+                        UiButton {
                             id: clearLogs
                             text: qsTr("Clear History")
                             Layout.fillWidth: true
@@ -16900,7 +16932,7 @@ import AndroidStatusBar 1.0
                             onClicked: rootItem.clearFiles();
                         }
 
-                        Button {
+                        UiButton {
                             id: showLogs
                             text: qsTr("Show Logs Folder")
                             Layout.fillWidth: true

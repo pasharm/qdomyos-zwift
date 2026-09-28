@@ -163,7 +163,7 @@ Rectangle {
             PropertyChanges {
                 target: storeItem
                 color: "transparent"
-                border.color: "white"
+                border.color: window.ui.ink("white")
             }
         },
         State {

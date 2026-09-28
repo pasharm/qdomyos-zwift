@@ -114,7 +114,7 @@ ColumnLayout {
         }
     }
 
-    MessageDialog {
+    UiMessageDialog {
         id: deleteDialog
         property url fileUrl: ""
         text: qsTr("Delete workout?")
@@ -151,7 +151,7 @@ ColumnLayout {
 
                     Text {
                         text: qsTr("Filter")
-                        color: "white"
+                        color: window.ui.ink("white")
                         verticalAlignment: Text.AlignVCenter
                     }
 
@@ -249,7 +249,8 @@ ColumnLayout {
                                     text: !isItemFolder ?
                                           itemFileName.substring(0, itemFileName.length-4) :
                                           itemFileName
-                                    color: isItemFolder ? Material.color(Material.Orange) : "white"
+                                    color: isItemFolder ? Material.color(Material.Orange)
+                                         : (workoutDelegate.ListView.isCurrentItem ? "white" : window.ui.ink("white"))
                                     font.pixelSize: 16
                                     elide: Text.ElideRight
                                 }
@@ -355,7 +356,7 @@ ColumnLayout {
                     text: rootItem.previewWorkoutDescription
                     font.pixelSize: 14
                     font.bold: true
-                    color: "white"
+                    color: window.ui.ink("white")
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignHCenter
                 }
@@ -367,7 +368,7 @@ ColumnLayout {
                     text: rootItem.previewWorkoutTags
                     font.pixelSize: 12
                     wrapMode: Text.WordWrap
-                    color: Material.color(Material.Grey, Material.Shade400)
+                    color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey, Material.Shade400)
                     horizontalAlignment: Text.AlignHCenter
                 }
 

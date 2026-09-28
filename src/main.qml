@@ -220,12 +220,20 @@ ApplicationWindow {
         property bool ui_modern: true
         property string ui_theme: "graphite"
         property string ui_accent: "violet"
+        property string ui_theme_mode: "auto"
     }
 
     // Modern look (fork only), switched in Settings > General Options. Pages read the palette
     // through window.ui; with ui.modern off every page keeps its classic look.
     readonly property QtObject ui: QtObject {
         readonly property bool modern: settings.ui_modern
+
+        // Appearance: "auto" follows the night mode of the phone, "dark" and "light" are fixed.
+        // The classic look is always dark.
+        readonly property string themeMode: settings.ui_theme_mode
+        property bool systemDark: AndroidStatusBar.systemDarkMode()
+        readonly property bool dark: !modern || themeMode === "dark" || (themeMode !== "light" && systemDark)
+        function refreshSystemDark() { systemDark = AndroidStatusBar.systemDarkMode() }
 
         readonly property var themes: ({
             "graphite": { bg: "#111318", surface: "#1B1E24", surfaceHigh: "#23272E", surfaceHighest: "#2D323A",
@@ -239,7 +247,21 @@ ApplicationWindow {
             "violet": "#B69DF8", "blue": "#7AB8FF", "teal": "#4FD8C4",
             "green": "#7EDC8A", "orange": "#FFB36B", "pink": "#F7A1C4"
         })
-        readonly property var t: themes[settings.ui_theme] || themes["graphite"]
+        readonly property var lightThemes: ({
+            "graphite": { bg: "#F4F5F7", surface: "#FFFFFF", surfaceHigh: "#ECEEF1", surfaceHighest: "#E1E4E8",
+                          outline: "#C4C8CF", textMain: "#1A1C20", textMuted: "#5B616B" },
+            "oled":     { bg: "#FFFFFF", surface: "#F3F4F6", surfaceHigh: "#E9EBEE", surfaceHighest: "#DDE0E4",
+                          outline: "#C8CCD2", textMain: "#111214", textMuted: "#5A5F68" },
+            "midnight": { bg: "#EEF2F9", surface: "#FFFFFF", surfaceHigh: "#E3E9F4", surfaceHighest: "#D6DFEE",
+                          outline: "#B8C4D9", textMain: "#162033", textMuted: "#55627A" }
+        })
+        readonly property var lightAccents: ({
+            "violet": "#6D4FC2", "blue": "#1E63C6", "teal": "#00796B",
+            "green": "#2E7D32", "orange": "#C25400", "pink": "#B8326E"
+        })
+        readonly property var t: dark ? (themes[settings.ui_theme] || themes["graphite"])
+                                      : (lightThemes[settings.ui_theme] || lightThemes["graphite"])
+        readonly property var a: dark ? accents : lightAccents
 
         readonly property color bg: t.bg
         readonly property color surface: t.surface
@@ -248,10 +270,10 @@ ApplicationWindow {
         readonly property color outline: t.outline
         readonly property color textMain: t.textMain
         readonly property color textMuted: t.textMuted
-        readonly property color accent: accents[settings.ui_accent] || accents["violet"]
-        readonly property color accentInk: "#12101A"
-        readonly property color danger: "#FF8A80"
-        readonly property color ok: "#7EDC8A"
+        readonly property color accent: a[settings.ui_accent] || a["violet"]
+        readonly property color accentInk: dark ? "#12101A" : "#FFFFFF"
+        readonly property color danger: dark ? "#FF8A80" : "#C62828"
+        readonly property color ok: dark ? "#7EDC8A" : "#2E7D32"
         readonly property int radius: 16
 
         readonly property string themeName: settings.ui_theme
@@ -261,10 +283,32 @@ ApplicationWindow {
         // The settings page has its own Settings object, which the window's does not hear
         // about until a restart: it writes through here, so the look changes at once
         function setOption(key, value) { settings[key] = value }
+        // Text that the classic look paints in a fixed colour (mostly white) on the page
+        // background: the theme text colour in the modern look, the old colour otherwise
+        function ink(classic) { return modern ? textMain : classic }
+        // Zone colours of the tiles are made for a dark page: darker ones on a light page
+        function zoneInk(c) { return dark ? c : Qt.darker(c, 1.7) }
     }
 
+    Material.theme: ui.dark ? Material.Dark : Material.Light
     Material.accent: ui.modern ? ui.accent : Material.color(Material.Pink, Material.Shade200)
     Material.background: ui.modern ? ui.bg : undefined
+
+    // The phone can switch its night mode while the app runs (by schedule or from the quick
+    // settings): ask again on return to the foreground and once a minute
+    Connections {
+        target: Qt.application
+        function onStateChanged() {
+            if (Qt.application.state === Qt.ApplicationActive)
+                window.ui.refreshSystemDark()
+        }
+    }
+    Timer {
+        interval: 60000
+        repeat: true
+        running: window.ui.modern && window.ui.themeMode === "auto"
+        onTriggered: window.ui.refreshSystemDark()
+    }
 
 
     Store {
@@ -506,7 +550,7 @@ ApplicationWindow {
 		 }
 	}
 
-    MessageDialog {
+    UiMessageDialog {
            id: popupPelotonAuth
            text: qsTr("Peloton Authentication Change")
            informativeText: qsTr("Peloton has moved to a new authentication system. Username and password are no longer required.\n\nWould you like to switch to the new authentication method now?")
@@ -846,7 +890,7 @@ ApplicationWindow {
          }
     }
 
-    MessageDialog {
+    UiMessageDialog {
         id: popupRestartApp
         text: qsTr("Settings changed")
         informativeText: qsTr("In order to apply the changes you need to restart the app.\nDo you want to do it now?")
@@ -857,7 +901,7 @@ ApplicationWindow {
     }
 
     // a device changed a setting on its own (auto-detection): the message says what QZ found and why it must restart
-    MessageDialog {
+    UiMessageDialog {
         id: popupRestartAppDetected
         text: ""
         informativeText: qsTr("Restart now?")
@@ -868,7 +912,7 @@ ApplicationWindow {
     }
 
     // an FS- device that reports bike data: ask, because some FitShow treadmills report it too
-    MessageDialog {
+    UiMessageDialog {
         id: popupFitshowBikeQuestion
         text: qsTr("This FitShow device also reports bike data. Is it a bike?")
         informativeText: qsTr("Yes: QZ enables \"Fit Plus Bike\" and closes, open it again to connect to it as a bike.\nNo: QZ keeps it as a treadmill and won't ask again (a bike can still be set by hand: \"Fit Plus Bike\" in Fitplus Bike Options).")
@@ -888,7 +932,7 @@ ApplicationWindow {
         function onFitshowBikeQuestionRequested() { popupFitshowBikeQuestion.visible = true; }
     }
 
-    MessageDialog {
+    UiMessageDialog {
         text: qsTr("Strava")
         informativeText: qsTr("Do you want to upload the workout to Strava?")
         buttons: (MessageDialog.Yes | MessageDialog.No)
@@ -897,7 +941,7 @@ ApplicationWindow {
         visible: rootItem.stravaUploadRequested
     }
 
-    MessageDialog {
+    UiMessageDialog {
         text: qsTr("Garmin Workout Planned")
         informativeText: qsTr("Workout found:\n") + rootItem.garminWorkoutPromptName +
                          (rootItem.garminWorkoutPromptDate.length > 0 ? qsTr("\nDate: ") + rootItem.garminWorkoutPromptDate : "") +
@@ -908,7 +952,7 @@ ApplicationWindow {
         visible: rootItem.garminWorkoutPromptRequested
     }
 
-    MessageDialog {
+    UiMessageDialog {
         text: qsTr("Garmin FTP Update")
         informativeText: rootItem.garminFtpPromptMessage
         buttons: (MessageDialog.Yes | MessageDialog.No)
@@ -917,7 +961,7 @@ ApplicationWindow {
         visible: rootItem.garminFtpPromptRequested
     }
 
-    MessageDialog {
+    UiMessageDialog {
         text: qsTr("Clipboard Workout")
         informativeText: qsTr("Workout found in clipboard:\n%1\n\nDo you want to open the workout preview?").arg(rootItem.clipboardWorkoutPromptName)
         buttons: (MessageDialog.Yes | MessageDialog.No)
@@ -941,7 +985,7 @@ ApplicationWindow {
         visible: rootItem.clipboardWorkoutPromptRequested
     }
 
-    MessageDialog {
+    UiMessageDialog {
         text: qsTr("Clipboard Workout")
         informativeText: qsTr("The clipboard workout has ended.\n\nDo you want to delete the file?")
         buttons: (MessageDialog.Yes | MessageDialog.No)
@@ -950,7 +994,7 @@ ApplicationWindow {
         visible: rootItem.clipboardWorkoutDeletePromptRequested
     }
 
-    MessageDialog {
+    UiMessageDialog {
         text: qsTr("Echelon Unlock")
         informativeText: qsTr("The bike has been unlocked and cadence is flowing.\n\nDo you want to switch to the classic Bluetooth bridge for this session?")
         buttons: (MessageDialog.Yes | MessageDialog.No)
@@ -1028,7 +1072,7 @@ ApplicationWindow {
         }
     }
 
-    MessageDialog {
+    UiMessageDialog {
         id: stravaLogoutConfirm
         text: qsTr("Strava")
         informativeText: qsTr("You are already connected to Strava. Do you want to log out?")
@@ -1038,7 +1082,7 @@ ApplicationWindow {
         visible: false
     }
 
-    MessageDialog {
+    UiMessageDialog {
         id: pelotonLogoutConfirm
         text: qsTr("Peloton")
         informativeText: qsTr("You are already connected to Peloton. Do you want to log out?")
@@ -1048,7 +1092,7 @@ ApplicationWindow {
         visible: false
     }
 
-    MessageDialog {
+    UiMessageDialog {
         id: intervalsICULogoutConfirm
         text: qsTr("Intervals.icu")
         informativeText: qsTr("You are already connected to Intervals.icu. Do you want to log out?")

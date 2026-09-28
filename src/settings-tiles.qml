@@ -398,7 +398,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: speedOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_speed_order
@@ -408,7 +408,7 @@ ScrollView {
                         displayText = speedOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okSpeedOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -443,7 +443,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: inclinationOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_inclination_order
@@ -453,7 +453,7 @@ ScrollView {
                         displayText = inclinationOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okinclinationOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -504,7 +504,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: cadenceOrderTextField
                         model: rootItem.tile_order
                         displayText: settings.tile_cadence_order
@@ -514,7 +514,7 @@ ScrollView {
                             displayText = cadenceOrderTextField.currentValue
                          }
                     }
-                    Button {
+                    UiButton {
                         id: okcadenceOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -550,7 +550,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: elevationOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_elevation_order
@@ -560,7 +560,7 @@ ScrollView {
                         displayText = elevationOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okelevationOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -581,7 +581,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: negativeInclinationOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_negative_inclination_order
@@ -591,7 +591,7 @@ ScrollView {
                         displayText = negativeInclinationOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_negative_inclination_order = negativeInclinationOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -625,7 +625,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: caloriesOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_calories_order
@@ -635,7 +635,7 @@ ScrollView {
                         displayText = caloriesOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okcaloriesOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -670,7 +670,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: odometerOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_odometer_order
@@ -680,7 +680,7 @@ ScrollView {
                         displayText = odometerOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okodometerOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -731,7 +731,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: paceOrderTextField
                         model: rootItem.tile_order
                         displayText: settings.tile_pace_order
@@ -741,7 +741,7 @@ ScrollView {
                             displayText = paceOrderTextField.currentValue
                          }
                     }
-                    Button {
+                    UiButton {
                         id: okpaceOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -764,7 +764,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: avgpaceOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_avg_pace_order
@@ -774,7 +774,7 @@ ScrollView {
                         displayText = avgpaceOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okavgpaceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -796,7 +796,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: gradeAdjustedPaceOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_grade_adjusted_pace_order
@@ -806,7 +806,7 @@ ScrollView {
                         displayText = gradeAdjustedPaceOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okgradeAdjustedPaceOrderButton
                     text: "OK"
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -854,7 +854,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: resistanceOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_resistance_order
@@ -864,7 +864,7 @@ ScrollView {
                         displayText = resistanceOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okresistanceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -915,7 +915,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: wattOrderTextField
                         model: rootItem.tile_order
                         displayText: settings.tile_watt_order
@@ -925,7 +925,7 @@ ScrollView {
                             displayText = wattOrderTextField.currentValue
                          }
                     }
-                    Button {
+                    UiButton {
                         id: okwattOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -961,7 +961,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: weightLossOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_weight_loss_order
@@ -971,7 +971,7 @@ ScrollView {
                         displayText = weightLossOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okweightLossOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1007,7 +1007,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: avgwattOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_avgwatt_order
@@ -1017,7 +1017,7 @@ ScrollView {
                         displayText = avgwattOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okavgwattOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1053,7 +1053,7 @@ ScrollView {
 						  Layout.fillWidth: true
 						  horizontalAlignment: Text.AlignRight
 						}
-					 ComboBox {
+					 UiComboBox {
 					     id: avgwattLapOrderTextField
 						  model: rootItem.tile_order
 						  displayText: settings.tile_avg_watt_lap_order
@@ -1063,7 +1063,7 @@ ScrollView {
 						      displayText = avgwattLapOrderTextField.currentValue
 								}
 							}
-					 Button {
+					 UiButton {
 					     id: okavgwattLapOrderButton
 						  text: qsTr("OK")
 						  Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1085,7 +1085,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: ftpOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_ftp_order
@@ -1095,7 +1095,7 @@ ScrollView {
                         displayText = ftpOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okftpOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1159,7 +1159,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: heartrateOrderTextField
                         model: rootItem.tile_order
                         displayText: settings.tile_heart_order
@@ -1169,7 +1169,7 @@ ScrollView {
                             displayText = heartrateOrderTextField.currentValue
                          }
                     }
-                    Button {
+                    UiButton {
                         id: okheartrateOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1192,7 +1192,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: fanOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_fan_order
@@ -1202,7 +1202,7 @@ ScrollView {
                         displayText = fanOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okfanOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1237,7 +1237,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: joulsOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_jouls_order
@@ -1247,7 +1247,7 @@ ScrollView {
                         displayText = joulsOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okjoulsOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1282,7 +1282,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: elapsedOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_elapsed_order
@@ -1292,7 +1292,7 @@ ScrollView {
                         displayText = elapsedOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okelapsedOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1327,7 +1327,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: movingTimeOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_moving_time_order
@@ -1337,7 +1337,7 @@ ScrollView {
                         displayText = movingTimeOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okmovingTimeOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1372,7 +1372,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: pelotonOffsetOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_peloton_offset_order
@@ -1382,7 +1382,7 @@ ScrollView {
                         displayText = pelotonOffsetOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okpelotonOffsetOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1417,7 +1417,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: pelotonRemainingOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_peloton_remaining_order
@@ -1427,7 +1427,7 @@ ScrollView {
                         displayText = pelotonRemainingOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okPelotonRemainingOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1463,7 +1463,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: pelotonDifficultyOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_peloton_difficulty_order
@@ -1473,7 +1473,7 @@ ScrollView {
                         displayText = pelotonDifficultyOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okpelotonDifficultyOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1495,7 +1495,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: lapElapsedOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_lapelapsed_order
@@ -1505,7 +1505,7 @@ ScrollView {
                         displayText = lapElapsedOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: oklapElapsedOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1542,7 +1542,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: peloton_resistanceOrderTextField
                         model: rootItem.tile_order
                         displayText: settings.tile_peloton_resistance_order
@@ -1552,7 +1552,7 @@ ScrollView {
                             displayText = peloton_resistanceOrderTextField.currentValue
                          }
                     }
-                    Button {
+                    UiButton {
                         id: okpeloton_resistanceOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1588,7 +1588,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: target_resistanceOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_target_resistance_order
@@ -1598,7 +1598,7 @@ ScrollView {
                         displayText = target_resistanceOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: oktarget_resistanceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1634,7 +1634,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: target_peloton_resistanceOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_target_peloton_resistance_order
@@ -1644,7 +1644,7 @@ ScrollView {
                         displayText = target_peloton_resistanceOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: oktarget_peloton_resistanceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1679,7 +1679,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: target_cadenceOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_target_cadence_order
@@ -1689,7 +1689,7 @@ ScrollView {
                         displayText = target_cadenceOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: oktarget_cadenceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1724,7 +1724,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: target_powerOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_target_power_order
@@ -1734,7 +1734,7 @@ ScrollView {
                         displayText = target_powerOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: oktarget_powerOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1770,7 +1770,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: target_zoneOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_target_zone_order
@@ -1780,7 +1780,7 @@ ScrollView {
                         displayText = target_zoneOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: oktarget_zoneOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1815,7 +1815,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: target_speedOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_target_speed_order
@@ -1825,7 +1825,7 @@ ScrollView {
                         displayText = target_speedOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: oktarget_speedOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1847,7 +1847,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: target_paceOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_target_pace_order
@@ -1857,7 +1857,7 @@ ScrollView {
                         displayText = target_paceOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: oktarget_paceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1879,7 +1879,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: target_inclineOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_target_incline_order
@@ -1889,7 +1889,7 @@ ScrollView {
                         displayText = target_inclineOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: oktarget_inclineOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1910,7 +1910,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: watt_kgOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_watt_kg_order
@@ -1920,7 +1920,7 @@ ScrollView {
                         displayText = watt_kgOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okwatt_kgOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1955,7 +1955,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: gearsOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_gears_order
@@ -1965,7 +1965,7 @@ ScrollView {
                         displayText = gearsOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okgearsOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1999,7 +1999,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: biggearsOrderTextField
                         model: rootItem.tile_order
                         displayText: settings.tile_biggears_order
@@ -2009,7 +2009,7 @@ ScrollView {
                             displayText = biggearsOrderTextField.currentValue
                          }
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_biggears_order = biggearsOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -2057,7 +2057,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: remainingTimeTrainingProgramRowOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_remainingtimetrainprogramrow_order
@@ -2067,7 +2067,7 @@ ScrollView {
                         displayText = remainingTimeTrainingProgramRowOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okremainingTimeTrainingProgramRowOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2102,7 +2102,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: nextRowsTrainingProgramOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_nextrowstrainprogram_order
@@ -2112,7 +2112,7 @@ ScrollView {
                         displayText = nextRowsTrainingProgramOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: oknextRowsTrainingProgramOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2147,7 +2147,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: metsOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_mets_order
@@ -2157,7 +2157,7 @@ ScrollView {
                         displayText = metsOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okmetsOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2192,7 +2192,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: targetmetsOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_targetmets_order
@@ -2202,7 +2202,7 @@ ScrollView {
                         displayText = targetmetsOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: oktargetmetsOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2224,7 +2224,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: datetimeOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_datetime_order
@@ -2234,7 +2234,7 @@ ScrollView {
                         displayText = datetimeOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okdatetimeOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2269,7 +2269,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: strokes_countOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_strokes_count_order
@@ -2279,7 +2279,7 @@ ScrollView {
                         displayText = strokes_countOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okstrokes_countOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2314,7 +2314,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: strokes_lengthOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_strokes_length_order
@@ -2324,7 +2324,7 @@ ScrollView {
                         displayText = strokes_lengthOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okstrokes_lengthOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2359,7 +2359,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: steeringAngleOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_steering_angle_order
@@ -2369,7 +2369,7 @@ ScrollView {
                         displayText = steeringAngleOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: oksteeringAngleOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2404,7 +2404,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: pidHROrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_pid_hr_order
@@ -2414,7 +2414,7 @@ ScrollView {
                         displayText = pidHROrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okpidHROrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2449,7 +2449,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: extInclineOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_ext_incline_order
@@ -2459,7 +2459,7 @@ ScrollView {
                         displayText = extInclineOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okextInclineOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2494,7 +2494,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: strideLengthOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_instantaneous_stride_length_order
@@ -2504,7 +2504,7 @@ ScrollView {
                         displayText = strideLengthOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okStrideLengthOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2539,7 +2539,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: groundContactOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_ground_contact_order
@@ -2549,7 +2549,7 @@ ScrollView {
                         displayText = groundContactOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okGroundContactOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2584,7 +2584,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: verticalOscillationOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_vertical_oscillation_order
@@ -2594,7 +2594,7 @@ ScrollView {
                         displayText = verticalOscillationOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okVerticalOscillationOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2629,7 +2629,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: pacelast500mOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_pace_last500m_order
@@ -2639,7 +2639,7 @@ ScrollView {
                         displayText = pacelast500mOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okPacelast500mOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2661,7 +2661,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: stepCountOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_step_count_order
@@ -2671,7 +2671,7 @@ ScrollView {
                         displayText = stepCountOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okStepCountOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2693,7 +2693,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: ergModeOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_erg_mode_order
@@ -2703,7 +2703,7 @@ ScrollView {
                         displayText = ergModeOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okErgModeOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2723,7 +2723,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: rssOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_rss_order
@@ -2733,7 +2733,7 @@ ScrollView {
                         displayText = rssOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_rss_order = rssOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -2755,7 +2755,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetResistance1TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_resistance_1_order
@@ -2765,7 +2765,7 @@ ScrollView {
                             displayText = presetResistance1TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance1OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2786,7 +2786,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance1ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2807,7 +2807,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance1LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2841,7 +2841,7 @@ ScrollView {
                                     if(OS_VERSION !== "Android") colorPresetResistance1.visible = true
 								}
 						  }
-						  Button {
+						  UiButton {
 						      id: okPresetResistance1ColorButton
 								text: qsTr("OK")
 								Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2864,7 +2864,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetResistance2TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_resistance_2_order
@@ -2874,7 +2874,7 @@ ScrollView {
                             displayText = presetResistance2TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance2OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2895,7 +2895,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance2ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2916,7 +2916,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance2LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2950,7 +2950,7 @@ ScrollView {
                                     if(OS_VERSION !== "Android") colorPresetResistance2.visible = true
 								}
 						  }
-						  Button {
+						  UiButton {
 						      id: okPresetResistance2ColorButton
 								text: qsTr("OK")
 								Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2973,7 +2973,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetResistance3TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_resistance_3_order
@@ -2983,7 +2983,7 @@ ScrollView {
                             displayText = presetResistance3TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance3OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3004,7 +3004,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance3ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3025,7 +3025,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance3LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3059,7 +3059,7 @@ ScrollView {
                                     if(OS_VERSION !== "Android") colorPresetResistance3.visible = true
 								}
 						  }
-						  Button {
+						  UiButton {
 						      id: okPresetResistance3ColorButton
 								text: qsTr("OK")
 								Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3082,7 +3082,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetResistance4TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_resistance_4_order
@@ -3092,7 +3092,7 @@ ScrollView {
                             displayText = presetResistance4TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance4OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3113,7 +3113,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance4ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3134,7 +3134,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance4LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3168,7 +3168,7 @@ ScrollView {
                                     if(OS_VERSION !== "Android") colorPresetResistance4.visible = true
 								}
 						  }
-						  Button {
+						  UiButton {
 						      id: okPresetResistance4ColorButton
 								text: qsTr("OK")
 								Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3191,7 +3191,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetResistance5TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_resistance_5_order
@@ -3201,7 +3201,7 @@ ScrollView {
                             displayText = presetResistance5TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance5OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3222,7 +3222,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance5ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3243,7 +3243,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetResistance5LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3277,7 +3277,7 @@ ScrollView {
                                     if(OS_VERSION !== "Android") colorPresetResistance5.visible = true
 								}
 						  }
-						  Button {
+						  UiButton {
 						      id: okPresetResistance5ColorButton
 								text: qsTr("OK")
 								Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3300,7 +3300,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetSpeed1TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_speed_1_order
@@ -3310,7 +3310,7 @@ ScrollView {
                             displayText = presetSpeed1TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed1OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3331,7 +3331,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed1ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3356,7 +3356,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed1LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3390,7 +3390,7 @@ ScrollView {
                                     if(OS_VERSION !== "Android") colorPresetSpeed1.visible = true
 								}
 						  }
-						  Button {
+						  UiButton {
 						      id: okPresetSpeed1ColorButton
 								text: qsTr("OK")
 								Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3413,7 +3413,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetSpeed2TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_speed_2_order
@@ -3423,7 +3423,7 @@ ScrollView {
                             displayText = presetSpeed2TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed2OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3444,7 +3444,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed2ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3469,7 +3469,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed2LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3503,7 +3503,7 @@ ScrollView {
                                     if(OS_VERSION !== "Android") colorPresetSpeed2.visible = true
 								}
 						  }
-						  Button {
+						  UiButton {
 						      id: okPresetSpeed2ColorButton
 								text: qsTr("OK")
 								Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3526,7 +3526,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetSpeed3TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_speed_3_order
@@ -3536,7 +3536,7 @@ ScrollView {
                             displayText = presetSpeed3TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed3OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3557,7 +3557,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed3ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3582,7 +3582,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed3LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3616,7 +3616,7 @@ ScrollView {
                                     if(OS_VERSION !== "Android") colorPresetSpeed3.visible = true
 								}
 						  }
-						  Button {
+						  UiButton {
 						      id: okPresetSpeed3ColorButton
 								text: qsTr("OK")
 								Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3639,7 +3639,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetSpeed4TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_speed_4_order
@@ -3649,7 +3649,7 @@ ScrollView {
                             displayText = presetSpeed4TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed4OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3670,7 +3670,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed4ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3695,7 +3695,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed4LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3729,7 +3729,7 @@ ScrollView {
                                     if(OS_VERSION !== "Android") colorPresetSpeed4.visible = true
 								}
 						  }
-						  Button {
+						  UiButton {
 						      id: okPresetSpeed4ColorButton
 								text: qsTr("OK")
 								Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3752,7 +3752,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetSpeed5TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_speed_5_order
@@ -3762,7 +3762,7 @@ ScrollView {
                             displayText = presetSpeed5TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed5OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3783,7 +3783,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed5ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3808,7 +3808,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetSpeed5LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3842,7 +3842,7 @@ ScrollView {
                                     if(OS_VERSION !== "Android") colorPresetSpeed5.visible = true
 								}
 						  }
-						  Button {
+						  UiButton {
 						      id: okPresetSpeed5ColorButton
 								text: qsTr("OK")
 								Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3865,7 +3865,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetInclination1TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_inclination_1_order
@@ -3875,7 +3875,7 @@ ScrollView {
                             displayText = presetInclination1TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination1OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3896,7 +3896,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination1ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3917,7 +3917,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination1LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3951,7 +3951,7 @@ ScrollView {
                                     if(OS_VERSION !== "Android") colorPresetInclination1.visible = true
 								}
 						  }
-						  Button {
+						  UiButton {
 						      id: okPresetInclination1ColorButton
 								text: qsTr("OK")
 								Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3974,7 +3974,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetInclination2TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_inclination_2_order
@@ -3984,7 +3984,7 @@ ScrollView {
                             displayText = presetInclination2TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination2OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4005,7 +4005,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination2ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4026,7 +4026,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination2LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4061,7 +4061,7 @@ ScrollView {
                               if(OS_VERSION !== "Android") colorPresetInclination2.visible = true
 						  }
 						}
-					 Button {
+					 UiButton {
 					     id: okPresetInclination2ColorButton
 						  text: qsTr("OK")
 						  Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4083,7 +4083,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetInclination3TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_inclination_3_order
@@ -4093,7 +4093,7 @@ ScrollView {
                             displayText = presetInclination3TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination3OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4114,7 +4114,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination3ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4135,7 +4135,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination3LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4169,7 +4169,7 @@ ScrollView {
                                     if(OS_VERSION !== "Android") colorPresetInclination3.visible = true
 								}
 						  }
-						  Button {
+						  UiButton {
 						      id: okPresetInclination3ColorButton
 								text: qsTr("OK")
 								Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4192,7 +4192,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetInclination4TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_inclination_4_order
@@ -4202,7 +4202,7 @@ ScrollView {
                             displayText = presetInclination4TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination4OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4223,7 +4223,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination4ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4244,7 +4244,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination4LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4278,7 +4278,7 @@ ScrollView {
                                     if(OS_VERSION !== "Android") colorPresetInclination4.visible = true
 								}
 						  }
-						  Button {
+						  UiButton {
 						      id: okPresetInclination4ColorButton
 								text: qsTr("OK")
 								Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4301,7 +4301,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetInclination5TextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_inclination_5_order
@@ -4311,7 +4311,7 @@ ScrollView {
                             displayText = presetInclination5TextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination5OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4332,7 +4332,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination5ValueButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4353,7 +4353,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                     }
-                    Button {
+                    UiButton {
                         id: okPresetInclination5LabelButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4387,7 +4387,7 @@ ScrollView {
                                     if(OS_VERSION !== "Android") colorPresetInclination5.visible = true
 								}
 						  }
-						  Button {
+						  UiButton {
 						      id: okPresetInclination5ColorButton
 								text: qsTr("OK")
 								Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4409,7 +4409,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetPowerZone1OrderTextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_powerzone_1_order
@@ -4419,7 +4419,7 @@ ScrollView {
                             displayText = presetPowerZone1OrderTextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_1_order = presetPowerZone1OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4438,7 +4438,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         validator: DoubleValidator {bottom: 1; top: 7;}
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_1_value = parseFloat(presetPowerZone1Value.text); toast.show(qsTr("Setting saved!")); }
@@ -4456,7 +4456,7 @@ ScrollView {
                         Layout.fillHeight: false
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_1_label = presetPowerZone1Label.text; toast.show(qsTr("Setting saved!")); }
@@ -4487,7 +4487,7 @@ ScrollView {
                             if(OS_VERSION !== "Android") colorPresetPowerzone1.visible = true
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetPowerzone1ColorButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4510,7 +4510,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetPowerZone2OrderTextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_powerzone_2_order
@@ -4520,7 +4520,7 @@ ScrollView {
                             displayText = presetPowerZone2OrderTextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_2_order = presetPowerZone2OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4539,7 +4539,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         validator: DoubleValidator {bottom: 1; top: 7;}
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_2_value = parseFloat(presetPowerZone2Value.text); toast.show(qsTr("Setting saved!")); }
@@ -4557,7 +4557,7 @@ ScrollView {
                         Layout.fillHeight: false
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_2_label = presetPowerZone2Label.text; toast.show(qsTr("Setting saved!")); }
@@ -4588,7 +4588,7 @@ ScrollView {
                             if(OS_VERSION !== "Android") colorPresetPowerzone2.visible = true
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetPowerzone2ColorButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4611,7 +4611,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetPowerZone3OrderTextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_powerzone_3_order
@@ -4621,7 +4621,7 @@ ScrollView {
                             displayText = presetPowerZone3OrderTextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_3_order = presetPowerZone3OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4640,7 +4640,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         validator: DoubleValidator {bottom: 1; top: 7;}
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_3_value = parseFloat(presetPowerZone3Value.text); toast.show(qsTr("Setting saved!")); }
@@ -4658,7 +4658,7 @@ ScrollView {
                         Layout.fillHeight: false
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_3_label = presetPowerZone3Label.text; toast.show(qsTr("Setting saved!")); }
@@ -4689,7 +4689,7 @@ ScrollView {
                             if(OS_VERSION !== "Android") colorPresetPowerzone3.visible = true
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetPowerzone3ColorButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4712,7 +4712,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetPowerZone4OrderTextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_powerzone_4_order
@@ -4722,7 +4722,7 @@ ScrollView {
                             displayText = presetPowerZone4OrderTextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_4_order = presetPowerZone4OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4741,7 +4741,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         validator: DoubleValidator {bottom: 1; top: 7;}
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_4_value = parseFloat(presetPowerZone4Value.text); toast.show(qsTr("Setting saved!")); }
@@ -4759,7 +4759,7 @@ ScrollView {
                         Layout.fillHeight: false
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_4_label = presetPowerZone4Label.text; toast.show(qsTr("Setting saved!")); }
@@ -4790,7 +4790,7 @@ ScrollView {
                             if(OS_VERSION !== "Android") colorPresetPowerzone4.visible = true
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetPowerzone4ColorButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4813,7 +4813,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetPowerZone5OrderTextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_powerzone_5_order
@@ -4823,7 +4823,7 @@ ScrollView {
                             displayText = presetPowerZone5OrderTextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_5_order = presetPowerZone5OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4842,7 +4842,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         validator: DoubleValidator {bottom: 1; top: 7;}
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_5_value = parseFloat(presetPowerZone5Value.text); toast.show(qsTr("Setting saved!")); }
@@ -4860,7 +4860,7 @@ ScrollView {
                         Layout.fillHeight: false
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_5_label = presetPowerZone5Label.text; toast.show(qsTr("Setting saved!")); }
@@ -4891,7 +4891,7 @@ ScrollView {
                             if(OS_VERSION !== "Android") colorPresetPowerzone5.visible = true
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetPowerzone5ColorButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4914,7 +4914,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetPowerZone6OrderTextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_powerzone_6_order
@@ -4924,7 +4924,7 @@ ScrollView {
                             displayText = presetPowerZone6OrderTextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_6_order = presetPowerZone6OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4943,7 +4943,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         validator: DoubleValidator {bottom: 1; top: 7;}
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_6_value = parseFloat(presetPowerZone6Value.text); toast.show(qsTr("Setting saved!")); }
@@ -4961,7 +4961,7 @@ ScrollView {
                         Layout.fillHeight: false
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_6_label = presetPowerZone6Label.text; toast.show(qsTr("Setting saved!")); }
@@ -4992,7 +4992,7 @@ ScrollView {
                             if(OS_VERSION !== "Android") colorPresetPowerzone6.visible = true
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetPowerzone6ColorButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5015,7 +5015,7 @@ ScrollView {
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
-                    ComboBox {
+                    UiComboBox {
                         id: presetPowerZone7OrderTextField
                         model: rootItem.tile_order
                         displayText: settings.tile_preset_powerzone_7_order
@@ -5025,7 +5025,7 @@ ScrollView {
                             displayText = presetPowerZone7OrderTextField.currentValue
                         }
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_7_order = presetPowerZone7OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -5044,7 +5044,7 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         validator: DoubleValidator {bottom: 1; top: 7;}
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_7_value = parseFloat(presetPowerZone7Value.text); toast.show(qsTr("Setting saved!")); }
@@ -5062,7 +5062,7 @@ ScrollView {
                         Layout.fillHeight: false
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     }
-                    Button {
+                    UiButton {
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_7_label = presetPowerZone7Label.text; toast.show(qsTr("Setting saved!")); }
@@ -5093,7 +5093,7 @@ ScrollView {
                             if(OS_VERSION !== "Android") colorPresetPowerzone7.visible = true
                         }
                     }
-                    Button {
+                    UiButton {
                         id: okPresetPowerzone7ColorButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5129,7 +5129,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: hrTimeInZone1OrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_hr_time_in_zone_1_order
@@ -5139,7 +5139,7 @@ ScrollView {
                         displayText = hrTimeInZone1OrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okHrTimeInZone1OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5174,7 +5174,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: hrTimeInZone2OrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_hr_time_in_zone_2_order
@@ -5184,7 +5184,7 @@ ScrollView {
                         displayText = hrTimeInZone2OrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okHrTimeInZone2OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5219,7 +5219,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: hrTimeInZone3OrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_hr_time_in_zone_3_order
@@ -5229,7 +5229,7 @@ ScrollView {
                         displayText = hrTimeInZone3OrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okHrTimeInZone3OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5264,7 +5264,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: hrTimeInZone4OrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_hr_time_in_zone_4_order
@@ -5274,7 +5274,7 @@ ScrollView {
                         displayText = hrTimeInZone4OrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okHrTimeInZone4OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5309,7 +5309,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: hrTimeInZone5OrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_hr_time_in_zone_5_order
@@ -5319,7 +5319,7 @@ ScrollView {
                         displayText = hrTimeInZone5OrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okHrTimeInZone5OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5383,7 +5383,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: coretemperatureOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_coretemperature_order
@@ -5393,7 +5393,7 @@ ScrollView {
                         displayText = coretemperatureOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okcoretemperatureOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5428,7 +5428,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: heatTimeInZone1OrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_heat_time_in_zone_1_order
@@ -5438,7 +5438,7 @@ ScrollView {
                         displayText = heatTimeInZone1OrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okHeatTimeInZone1OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5473,7 +5473,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: heatTimeInZone2OrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_heat_time_in_zone_2_order
@@ -5483,7 +5483,7 @@ ScrollView {
                         displayText = heatTimeInZone2OrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okHeatTimeInZone2OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5518,7 +5518,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: heatTimeInZone3OrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_heat_time_in_zone_3_order
@@ -5528,7 +5528,7 @@ ScrollView {
                         displayText = heatTimeInZone3OrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okHeatTimeInZone3OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5563,7 +5563,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: heatTimeInZone4OrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_heat_time_in_zone_4_order
@@ -5573,7 +5573,7 @@ ScrollView {
                         displayText = heatTimeInZone4OrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okHeatTimeInZone4OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5607,7 +5607,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: autoVirtualShiftingCruiseOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_auto_virtual_shifting_cruise_order
@@ -5617,7 +5617,7 @@ ScrollView {
                         displayText = autoVirtualShiftingCruiseOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_auto_virtual_shifting_cruise_order = autoVirtualShiftingCruiseOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -5650,7 +5650,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: autoVirtualShiftingClimbOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_auto_virtual_shifting_climb_order
@@ -5660,7 +5660,7 @@ ScrollView {
                         displayText = autoVirtualShiftingClimbOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_auto_virtual_shifting_climb_order = autoVirtualShiftingClimbOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -5693,7 +5693,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: autoVirtualShiftingSprintOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_auto_virtual_shifting_sprint_order
@@ -5703,7 +5703,7 @@ ScrollView {
                         displayText = autoVirtualShiftingSprintOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_auto_virtual_shifting_sprint_order = autoVirtualShiftingSprintOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -5736,7 +5736,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: powerAvgOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_power_avg_order
@@ -5746,7 +5746,7 @@ ScrollView {
                         displayText = powerAvgOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_power_avg_order = powerAvgOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -5780,7 +5780,7 @@ ScrollView {
                     Layout.fillWidth: true
                     horizontalAlignment: Text.AlignRight
                 }
-                ComboBox {
+                UiComboBox {
                     id: hrvOrderTextField
                     model: rootItem.tile_order
                     displayText: settings.tile_hrv_order
@@ -5790,7 +5790,7 @@ ScrollView {
                         displayText = hrvOrderTextField.currentValue
                      }
                 }
-                Button {
+                UiButton {
                     id: okhrvOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter

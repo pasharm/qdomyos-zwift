@@ -71,6 +71,9 @@ Page {
                     smooth: true
                     visible: !page.deviceLineHidden
                     Accessible.ignored: true
+                    // The bars are white: on a light page paint them in the text colour
+                    layer.enabled: !window.ui.dark
+                    layer.effect: ColorOverlay { color: window.ui.textMuted }
                 }
             }
 

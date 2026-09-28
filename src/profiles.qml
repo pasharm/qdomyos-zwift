@@ -53,7 +53,7 @@ ColumnLayout {
         }
     }
 
-    MessageDialog {
+    UiMessageDialog {
         id: quitDialog
         title: qsTr("Profile loaded")
         text: qsTr("Would you like to quit?")
@@ -67,7 +67,7 @@ ColumnLayout {
         }
     }
 
-    MessageDialog {
+    UiMessageDialog {
         id: deleteDialog
         property string fileUrl
         title: qsTr("Delete profile")
@@ -81,7 +81,7 @@ ColumnLayout {
         }
     }
 
-    MessageDialog {
+    UiMessageDialog {
         id: saveDialog
         title: qsTr("Profile Saved")
         text: qsTr("Profile saved correctly!")
@@ -91,7 +91,7 @@ ColumnLayout {
         }
     }
 
-    MessageDialog {
+    UiMessageDialog {
         id: restoreSettingsDialog
         title: qsTr("New Profile")
         text: qsTr("New Profile Created with default values. Save it with a name and restart the app to apply them.")
@@ -101,7 +101,7 @@ ColumnLayout {
         }
     }
 
-    MessageDialog {
+    UiMessageDialog {
         id: newProfileDialog
         title: qsTr("Save Current Profile?")
         text: qsTr("You're creating a new profile with the default values, would you like to save the current one before?")
@@ -263,7 +263,7 @@ ColumnLayout {
                         for(var i=0; i<folderModel.count; i++) {
                             list.itemAtIndex(i).textColor = Material.color(Material.Grey)
                         }
-                        list.currentItem.textColor = Material.color(Material.Yellow)
+                        list.currentItem.textColor = window.ui.modern && !window.ui.dark ? window.ui.accent : Material.color(Material.Yellow)
                         console.log(fileUrl + ' selected');
                     }
                 }
