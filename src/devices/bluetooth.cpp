@@ -1,5 +1,6 @@
 #include "bluetooth.h"
 #include "homeform.h"
+#include <QOperatingSystemVersion>
 #include "mywhooshlink.h"
 #include <QBluetoothLocalDevice>
 #include <QRegularExpression>
@@ -355,7 +356,8 @@ bool bluetooth::searchNow() {
 
     while (!scanStartsMs.isEmpty() && now - scanStartsMs.first() > 30000)
         scanStartsMs.removeFirst();
-    if (scanStartsMs.size() >= 4)
+    // the limit exists on Android 7.0 and later only
+    if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::AndroidNougat && scanStartsMs.size() >= 4)
         return false;
 
     rescanTimer.stop();
