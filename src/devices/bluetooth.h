@@ -197,7 +197,8 @@ class bluetooth : public QObject, public SignalHandler {
     bool searchStopped() const { return rescanStopped; }
     /**
      * @brief searchNow Starts a search right away and resets the pause between the automatic ones.
-     * @return false if the search was not started because Android would ignore it: it allows 5 scan starts in 30 s.
+     * @return false only if the search was not started because Android would ignore it: it allows 5 scan starts
+     * in 30 s. true also when there is nothing to do (a device is connected, discovery is off or already running).
      */
     bool searchNow();
 

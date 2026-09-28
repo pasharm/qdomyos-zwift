@@ -204,10 +204,10 @@ HomeForm {
 
     Timer {
         id: searchStatusTimer
-        interval: 1000; repeat: true; triggeredOnStart: true
-        running: !rootItem.device
+        // Always running: rootItem.device blinks while no device is connected (it drives the icon),
+        // and bluetoothSearchStatus() is empty once a device is connected
+        interval: 1000; repeat: true; triggeredOnStart: true; running: true
         onTriggered: searchStatus = rootItem.bluetoothSearchStatus()
-        onRunningChanged: if (!running) searchStatus = ""
     }
 
     Timer {

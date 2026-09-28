@@ -1913,10 +1913,13 @@ QString homeform::bluetoothSearchStatus() {
         return tr("Searching for the device...");
     if (bluetoothManager->searchStopped())
         return tr("Search stopped, tap the Bluetooth icon");
+    if (!bluetoothManager->nextSearchMs())
+        return QString();
     const qint64 left = bluetoothManager->nextSearchMs() - QDateTime::currentMSecsSinceEpoch();
-    if (bluetoothManager->nextSearchMs() && left > 0)
-        return tr("Next search in %1 s").arg((left + 999) / 1000);
-    return QString();
+    // the timer may fire a little late: the search is about to start
+    if (left <= 0)
+        return tr("Searching for the device...");
+    return tr("Next search in %1 s").arg((left + 999) / 1000);
 }
 
 void homeform::bluetoothSearchNow() {
