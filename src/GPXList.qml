@@ -85,49 +85,19 @@ ColumnLayout {
         }
     }
 
-    // Modern look: a filled filter field and a round "up one folder" button
-    RowLayout {
-        visible: window.ui.modern
-        spacing: 8
-        Layout.fillWidth: true
-        Layout.leftMargin: gpxPage.modernMargin
-        Layout.rightMargin: gpxPage.modernMargin
-        Layout.topMargin: 8
-
-        UiTextField {
-            id: modernFilterField
-            Layout.fillWidth: true
-            placeholderText: qsTr("Filter")
-            inputMethodHints: Qt.ImhNoPredictiveText
-            leftPadding: 44
-            onTextChanged: gpxPage.applyFilter(text)
-            UiIcon {
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                anchors.verticalCenter: parent.verticalCenter
-                width: 22
-                height: 22
-                name: "search"
-                color: window.ui.textMuted
-            }
-        }
-
-        UiButton {
-            implicitWidth: 48
-            leftPadding: 0
-            rightPadding: 0
-            onClicked: folderModel.folder = folderModel.parentFolder
-            Accessible.name: qsTr("Parent folder")
-            UiIcon {
-                anchors.centerIn: parent
-                width: 22
-                height: 22
-                name: "drive_folder_upload"
-                color: window.ui.textMain
-            }
+    function openOtherFolders() {
+        console.log("folder is " + rootItem.getWritableAppDir() + 'gpx')
+        if (Qt.platform.os === "android") {
+            rootItem.openAndroidDocumentPicker("gpx")
+        } else {
+            fileDialogLoader.active = true
         }
     }
 
+    // Cells by explicit row and column. Modern look upright: filter, list, map, Other folders,
+    // one under another; side by side: the filter, the list and Other folders on the left and
+    // the map over the whole height on the right. Classic look: the list column and the map in
+    // one row, Other folders under the grid as before (the page-level button below).
     GridLayout {
         columns: gpxPage.sideBySide ? 2 : 1
         columnSpacing: 2
@@ -135,18 +105,65 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.fillHeight: true
 
+        // Modern look: a filled filter field and a round "up one folder" button
+        RowLayout {
+            visible: window.ui.modern
+            Layout.row: 0
+            Layout.column: 0
+            spacing: 8
+            Layout.fillWidth: true
+            Layout.preferredWidth: 100
+            Layout.leftMargin: gpxPage.modernMargin
+            Layout.rightMargin: gpxPage.sideBySide ? 4 : gpxPage.modernMargin
+            Layout.topMargin: 8
+
+            UiTextField {
+                id: modernFilterField
+                Layout.fillWidth: true
+                placeholderText: qsTr("Filter")
+                inputMethodHints: Qt.ImhNoPredictiveText
+                leftPadding: 44
+                onTextChanged: gpxPage.applyFilter(text)
+                UiIcon {
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 22
+                    height: 22
+                    name: "search"
+                    color: window.ui.textMuted
+                }
+            }
+
+            UiButton {
+                implicitWidth: 48
+                leftPadding: 0
+                rightPadding: 0
+                onClicked: folderModel.folder = folderModel.parentFolder
+                Accessible.name: qsTr("Parent folder")
+                UiIcon {
+                    anchors.centerIn: parent
+                    width: 22
+                    height: 22
+                    name: "drive_folder_upload"
+                    color: window.ui.textMain
+                }
+            }
+        }
+
         // Modern look: cards like the profile list. A tap on a folder opens it; a tap on a
         // route selects it and shows it on the map, a second tap or Open loads it.
         ListView {
             id: modernList
             visible: window.ui.modern
+            Layout.row: 1
+            Layout.column: 0
             Layout.fillWidth: true
             Layout.fillHeight: gpxPage.sideBySide
             Layout.preferredWidth: 100
             Layout.preferredHeight: gpxPage.sideBySide ? -1 : gpxPage.height * 0.4
             Layout.leftMargin: gpxPage.modernMargin
             Layout.rightMargin: gpxPage.sideBySide ? 4 : gpxPage.modernMargin
-            Layout.topMargin: 4
             clip: true
             spacing: 8
             boundsBehavior: Flickable.StopAtBounds
@@ -244,6 +261,8 @@ ColumnLayout {
 
         ColumnLayout {
             visible: !window.ui.modern
+            Layout.row: 0
+            Layout.column: 0
             spacing: 0
             Layout.fillHeight: true
 
@@ -382,6 +401,11 @@ ColumnLayout {
             // Padding, not a margin: the content moves in, the scroll bar stays at the edge
             rightPadding: window.ui.modern && !gpxPage.sideBySide ? gpxPage.modernMargin : window.contentSideMargin
             leftPadding: window.ui.modern && !gpxPage.sideBySide ? gpxPage.modernMargin : 0
+            Layout.row: window.ui.modern && !gpxPage.sideBySide ? 2 : 0
+            Layout.column: gpxPage.sideBySide ? 1 : 0
+            Layout.rowSpan: window.ui.modern && gpxPage.sideBySide ? 3 : 1
+            Layout.topMargin: window.ui.modern && gpxPage.sideBySide ? 8 : 0
+            Layout.bottomMargin: window.ui.modern && gpxPage.sideBySide ? 8 : 0
             Layout.fillHeight: true
             Layout.fillWidth: true
             Layout.minimumWidth: 100
@@ -504,23 +528,27 @@ ColumnLayout {
                 Component.onCompleted: pl.path = loadPath()
             }
         }
+
+        UiButton {
+            visible: window.ui.modern
+            Layout.row: gpxPage.sideBySide ? 2 : 3
+            Layout.column: 0
+            Layout.fillWidth: true
+            Layout.preferredWidth: 100
+            Layout.leftMargin: gpxPage.modernMargin
+            Layout.rightMargin: gpxPage.sideBySide ? 4 : gpxPage.modernMargin
+            Layout.bottomMargin: 8
+            text: qsTr("Other folders")
+            onClicked: gpxPage.openOtherFolders()
+        }
     }
 
     UiButton {
         id: searchButton
+        visible: !window.ui.modern
         Layout.fillWidth: true
-        Layout.preferredHeight: window.ui.modern ? -1 : 50
-        Layout.leftMargin: window.ui.modern ? gpxPage.modernMargin : 0
-        Layout.rightMargin: window.ui.modern ? gpxPage.modernMargin : 0
-        Layout.bottomMargin: window.ui.modern ? 8 : 0
+        Layout.preferredHeight: 50
         text: qsTr("Other folders")
-        onClicked: {
-            console.log("folder is " + rootItem.getWritableAppDir() + 'gpx')
-            if (Qt.platform.os === "android") {
-                rootItem.openAndroidDocumentPicker("gpx")
-            } else {
-                fileDialogLoader.active = true
-            }
-        }
+        onClicked: gpxPage.openOtherFolders()
     }
 }
