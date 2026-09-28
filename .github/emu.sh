@@ -11,7 +11,7 @@ done
 adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
 adb shell cmd uimode night no || true
 
-printf '[General]\nlog_debug=true\nconfirm_stop_workout=true\n' > qz.conf
+printf '[General]\nlog_debug=true\nconfirm_stop_workout=true\nui_modern=true\n' > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
