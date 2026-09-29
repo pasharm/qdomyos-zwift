@@ -20,6 +20,8 @@ Page {
     property bool deviceLineHidden: false
     // Set by Home.qml: whether the modern status line has anything the drawer does not show
     property bool modernInfoShown: true
+    // Search for the equipment ("Next search in 12 s"), set by Home.qml while no device is connected
+    property string searchStatus: ""
 
     Settings {
 	     id: settings
@@ -61,6 +63,12 @@ Page {
                     Accessible.role: Accessible.Indicator
                     Accessible.name: qsTr("Bluetooth connection")
                     Accessible.description: rootItem.device ? qsTr("Device connected") : qsTr("Device not connected")
+                    // No device yet: a tap searches right away instead of waiting for the next search
+                    // (with a device connected bluetoothSearchNow() does nothing)
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: rootItem.bluetoothSearchNow()
+                    }
                 }
             }
 
@@ -224,6 +232,12 @@ Page {
                             source: treadmill_connection
                             color: treadmill_connection.enabled ? "#00000000" : "#B0D3d3d3"
                         }
+                        // No device yet: a tap searches right away instead of waiting for the next search
+                        // (with a device connected bluetoothSearchNow() does nothing)
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: rootItem.bluetoothSearchNow()
+                        }
                     }
                     Image {
                         anchors.horizontalCenter: parent.horizontalCenter
@@ -340,7 +354,7 @@ Page {
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                text: rootItem.info
+                text: page.searchStatus !== "" ? page.searchStatus : rootItem.info
                 visible: !window.ui.modern && !page.deviceLineHidden
                 color: Material.foreground
                 font.pixelSize: Qt.application.font.pixelSize
@@ -369,7 +383,7 @@ Page {
             }
             Label {
                 anchors.verticalCenter: parent.verticalCenter
-                text: rootItem.info
+                text: page.searchStatus !== "" ? page.searchStatus : rootItem.info
                 color: window.ui.textMuted
                 font.pixelSize: 13
             }

@@ -3750,7 +3750,35 @@ This may take a few moments on first startup.</source>
     </message>
 </context>
 <context>
+    <name>fitplusbike</name>
+    <message>
+        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="628"/>
+        <source>The bike keeps stopping the workout: turn the bike off and on again</source>
+        <translation>Тренажер знову й знову зупиняє тренування: вимкніть і ввімкніть його</translation>
+    </message>
+</context>
+<context>
     <name>homeform</name>
+    <message>
+        <location filename="../homeform.cpp" line="1829"/>
+        <source>Searching for the device...</source>
+        <translation>Пошук тренажера…</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1831"/>
+        <source>Search stopped, tap the Bluetooth icon</source>
+        <translation>Пошук зупинено, натисніть значок Bluetooth</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1834"/>
+        <source>Next search in %1 s</source>
+        <translation>Наступний пошук через %1 с</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1842"/>
+        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
+        <translation>Android дозволяє 5 пошуків Bluetooth за 30 с, наступний почнеться через %1 с</translation>
+    </message>
     <message>
         <location filename="../homeform.cpp" line="529"/>
         <source>Speed (%1/h)</source>

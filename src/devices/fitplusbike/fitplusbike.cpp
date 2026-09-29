@@ -92,6 +92,7 @@ void fitplusbike::forceResistance(resistance_t requestResistance) {
                            settings.value(QZSettings::virtufit_etappe, QZSettings::default_virtufit_etappe).toBool();
     bool sportstech_sx600 = settings.value(QZSettings::sportstech_sx600, QZSettings::default_sportstech_sx600).toBool();
     requestResistanceCompleted = false;
+    lastForcedResistance = requestResistance;
     if (virtufit_etappe || merach_MRK || H9110_OSAKA) {
         if (requestResistance == 1) {
             uint8_t res[] = {0x02, 0x44, 0x05, 0x01, 0xf9, 0xb9, 0x03};
@@ -369,6 +370,12 @@ void fitplusbike::update() {
             }
         }
 
+        if (workoutRestartRequest) {
+            workoutRestartRequest = false;
+            uint8_t startWorkout[] = {0x02, 0x44, 0x02, 0x46, 0x03};
+            writeCharacteristic(startWorkout, sizeof(startWorkout), QStringLiteral("restart workout"), false, true);
+        }
+
         if (requestResistance != -1) {
             if (requestResistance > max_resistance) {
                 requestResistance = max_resistance;
@@ -598,12 +605,48 @@ void fitplusbike::characteristicChanged(const QLowEnergyCharacteristic &characte
             // todo
         }
     } else if (virtufit_etappe || merach_MRK || H9110_OSAKA || (sportstech_sx600 && !gattCommunicationChannelServiceFTMS)) {
+        if (virtufit_etappe && newValue.length() >= 5 && (uint8_t)newValue.at(0) == 0x02 &&
+            (uint8_t)newValue.at(1) == 0x42) {
+            int status = (uint8_t)newValue.at(2);
+            qint64 nowMs = QDateTime::currentMSecsSinceEpoch();
+            if (status == 0x02 && workoutStatus != 0x02) {
+                workoutRunningSinceMs = nowMs;
+            } else if (status == 0x00 && workoutStatus == 0x02 && initDone) {
+                // Right after QZ reopens, the bike can stop the workout it has just started, then it acks the level
+                // commands without applying them. Only within 30 s of the start, so a stop from the console later
+                // in the ride is left alone.
+                if (nowMs - workoutRunningSinceMs < 30000 && workoutRestarts < 3) {
+                    workoutRestarts++;
+                    workoutRestartRequest = true;
+                    qDebug() << QStringLiteral("the bike stopped the workout, starting it again (attempt ") +
+                                    QString::number(workoutRestarts) + QStringLiteral(")");
+                } else {
+                    qDebug() << QStringLiteral("the bike stopped the workout");
+                    // the restarts did not help: without a word QZ looks connected while the bike ignores the levels
+                    if (nowMs - workoutRunningSinceMs < 30000 && homeform::singleton())
+                        homeform::singleton()->setToastRequested(
+                            tr("The bike keeps stopping the workout: turn the bike off and on again"));
+                }
+            }
+            workoutStatus = status;
+        }
+
         if (newValue.length() != 15 && newValue.length() != 13)
             return;
 
         if (newValue.length() == 15) {
             resistance_t res = newValue.at(5);
-            if (settings.value(QZSettings::gears_from_bike, QZSettings::default_gears_from_bike).toBool()) {
+            // In the first seconds of a workout the bike reports the old level, then sets its own default one:
+            // not a gear change from the console, and the level QZ asked for has to be sent again.
+            bool levelSettling = virtufit_etappe && workoutStatus == 0x02 &&
+                                 QDateTime::currentMSecsSinceEpoch() - workoutRunningSinceMs < 5000;
+            if (levelSettling && autoResistanceEnable && lastForcedResistance > 0 && res != lastForcedResistance) {
+                qDebug() << QStringLiteral("workout starting, applying the level again: ") +
+                                QString::number(lastForcedResistance);
+                requestResistance = lastForcedResistance;
+            }
+            if (!levelSettling &&
+                settings.value(QZSettings::gears_from_bike, QZSettings::default_gears_from_bike).toBool()) {
                 qDebug() << QStringLiteral("gears_from_bike") << res << Resistance.value() << gears()
                          << lastRawRequestedResistanceValue << lastRequestedResistance().value() << requestResistance << requestResistanceCompleted;
                 if (
@@ -778,6 +821,11 @@ double fitplusbike::bikeResistanceToPeloton(double resistance) {
 }
 
 void fitplusbike::btinit() {
+
+    // a new connection: the init below starts a new workout on the bike
+    workoutStatus = -1;
+    workoutRestarts = 0;
+    workoutRestartRequest = false;
 
     QSettings settings;
     bool virtufit_etappe = virtufitEtappe ||

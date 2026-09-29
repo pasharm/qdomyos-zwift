@@ -18,6 +18,9 @@ HomeForm {
     // Modern look: the line under Start/Stop only while it names a loaded workout. "<device>
     // found" (homeform.cpp) and the signal are in the drawer header already
     modernInfoShown: {
+        // The search for the equipment ("Next search in 12 s") is not in the drawer
+        if (searchStatus !== "")
+            return true
         var info = typeof rootItem !== "undefined" && rootItem ? rootItem.info : ""
         if (!info)
             return false
@@ -196,6 +199,14 @@ HomeForm {
         id: popupLapAutoClose
         interval: 2000; running: false; repeat: false
         onTriggered: popupLap.close();
+    }
+
+    Timer {
+        id: searchStatusTimer
+        // Always running: rootItem.device blinks while no device is connected (it drives the icon),
+        // and bluetoothSearchStatus() is empty once a device is connected
+        interval: 1000; repeat: true; triggeredOnStart: true; running: true
+        onTriggered: searchStatus = rootItem.bluetoothSearchStatus()
     }
 
     Timer {

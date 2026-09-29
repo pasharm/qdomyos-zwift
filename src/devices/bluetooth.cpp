@@ -1,5 +1,6 @@
 #include "bluetooth.h"
 #include "homeform.h"
+#include <QOperatingSystemVersion>
 #include "mywhooshlink.h"
 #include <QBluetoothLocalDevice>
 #include <QRegularExpression>
@@ -67,6 +68,16 @@ bluetooth::bluetooth(bool logs, const QString &deviceName, bool noWriteResistanc
     this->bikeResistanceOffset = bikeResistanceOffset;
 
     this->useDiscovery = startDiscovery;
+
+    // one timer, so a search started from the home page does not leave a second chain of automatic ones
+    rescanTimer.setSingleShot(true);
+    connect(&rescanTimer, &QTimer::timeout, this, [this]() {
+        nextRescanMs = 0;
+        if (!device() && discoveryAgent && !discoveryAgent->isActive()) {
+            debug(QStringLiteral("BTLE scanning again, no device found yet"));
+            this->startDiscovery();
+        }
+    });
 
     QString nordictrack_2950_ip =
         settings.value(QZSettings::nordictrack_2950_ip, QZSettings::default_nordictrack_2950_ip).toString();
@@ -204,23 +215,22 @@ void bluetooth::finished() {
         // otherwise discovery stopped for good about 20 s after launch, and equipment that was
         // rebooting or still held by the previous app session was never found again.
         // The pause grows from 3 s to 60 s and scanning gives up after 10 minutes (the device list
-        // refresh starts it again), so an app left open without equipment does not scan for hours.
+        // refresh and the Bluetooth icon on the home page start it again), so an app left open
+        // without equipment does not scan for hours.
         if (!device()) {
             const qint64 now = QDateTime::currentMSecsSinceEpoch();
             if (!rescanStartedMs)
                 rescanStartedMs = now;
             if (now - rescanStartedMs > 10 * 60 * 1000) {
                 debug(QStringLiteral("BTLE scanning stopped, no device found in 10 minutes"));
+                nextRescanMs = 0;
+                rescanStopped = true;
                 return;
             }
             const int delayMs = qMin(3000 << qMin(rescanCount, 5), 60000);
             rescanCount++;
-            QTimer::singleShot(delayMs, this, [this]() {
-                if (!device() && discoveryAgent && !discoveryAgent->isActive()) {
-                    debug(QStringLiteral("BTLE scanning again, no device found yet"));
-                    startDiscovery();
-                }
-            });
+            nextRescanMs = now + delayMs;
+            rescanTimer.start(delayMs);
         }
         return;
     }
@@ -330,10 +340,51 @@ void bluetooth::finished() {
     this->startDiscovery();
 }
 
+bool bluetooth::isSearching() const { return discoveryAgent && discoveryAgent->isActive(); }
+
+int bluetooth::searchNow() {
+    if (!useDiscovery || !discoveryAgent || device())
+        return 0;
+
+    const qint64 now = QDateTime::currentMSecsSinceEpoch();
+    rescanCount = 0;
+    rescanStartedMs = now;
+    rescanStopped = false;
+    if (discoveryAgent->isActive())
+        return 0;
+
+    while (!scanStartsMs.isEmpty() && now - scanStartsMs.first() > 30000)
+        scanStartsMs.removeFirst();
+    // Android 7.0 and later ignore the 6th scan start in 30 s. 4 leaves room for an automatic search.
+    // Instead of a search that would find nothing, the next one is due when a start leaves the 30 s window.
+    if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::AndroidNougat && scanStartsMs.size() >= 4) {
+        const qint64 waitMs = 30000 - (now - scanStartsMs.at(scanStartsMs.size() - 4)) + 500;
+        nextRescanMs = now + waitMs;
+        rescanTimer.start(int(waitMs));
+        debug(QStringLiteral("BTLE scanning on request postponed by the Android limit"));
+        return int((waitMs + 999) / 1000);
+    }
+
+    rescanTimer.stop();
+    nextRescanMs = 0;
+    debug(QStringLiteral("BTLE scanning on request"));
+    startDiscovery();
+    return 0;
+}
+
 void bluetooth::startDiscovery() {
 
     if (!this->useDiscovery)
         return;
+
+    // Android 7.0 and later ignore the scan starts after the 5th one in 30 s: searchNow() checks this list.
+    // A start while scanning does nothing, so it is not counted.
+    if (discoveryAgent && !discoveryAgent->isActive()) {
+        const qint64 now = QDateTime::currentMSecsSinceEpoch();
+        while (!scanStartsMs.isEmpty() && now - scanStartsMs.first() > 30000)
+            scanStartsMs.removeFirst();
+        scanStartsMs.append(now);
+    }
 
 #ifndef Q_OS_IOS
     QSettings settings;
@@ -3923,6 +3974,9 @@ void bluetooth::restart() {
 
     rescanCount = 0;
     rescanStartedMs = 0;
+    rescanTimer.stop();
+    nextRescanMs = 0;
+    rescanStopped = false;
 
     if (onlyDiscover) {
 

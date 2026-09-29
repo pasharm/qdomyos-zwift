@@ -190,6 +190,18 @@ class bluetooth : public QObject, public SignalHandler {
     bool onlyDiscover = false;
     volatile bool homeformLoaded = false;
 
+    // Search for the equipment, for the status line on the home page
+    bool isSearching() const;
+    qint64 nextSearchMs() const { return nextRescanMs; }
+    bool searchStopped() const { return rescanStopped; }
+    /**
+     * @brief searchNow Starts a search right away and resets the pause between the automatic ones.
+     * Android 7.0 and later ignore the 6th scan start in 30 s: then the search is scheduled for when it is allowed.
+     * @return 0 if the search started or there is nothing to do (a device is connected, discovery is off or
+     * already running), otherwise the seconds until the scheduled search.
+     */
+    int searchNow();
+
   private:
     bool useDiscovery = false;
     QFile *debugCommsLog = nullptr;
@@ -382,6 +394,10 @@ class bluetooth : public QObject, public SignalHandler {
     bool discoveryFinishedHandled = false;
     int rescanCount = 0;
     qint64 rescanStartedMs = 0;
+    QTimer rescanTimer;
+    qint64 nextRescanMs = 0;
+    bool rescanStopped = false;
+    QList<qint64> scanStartsMs;
 
 #ifdef Q_OS_IOS
     lockscreen *h = nullptr;

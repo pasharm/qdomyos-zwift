@@ -136,6 +136,10 @@ QString logfilename = QStringLiteral("debug-") +
                           .replace(QStringLiteral(" "), QStringLiteral("_"))
                           .replace(QStringLiteral("."), QStringLiteral("_")) +
                       QStringLiteral(".log");
+// Set in main() before the message handler is installed: the folder does not change while the app runs, and
+// getWritableAppDir() reads the settings twice and on Android asks for the Documents folder, creates it and
+// checks .nomedia, which was done for every log line.
+QString logFilePath;
 QUrl profileToLoad;
 static const QtMessageHandler QT_DEFAULT_MESSAGE_HANDLER = qInstallMessageHandler(0);
 
@@ -498,8 +502,8 @@ void initializeLogThread() {
 
 void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QString &msg) {
 
-    QSettings settings;
-    static bool logdebug = settings.value(QZSettings::log_debug, QZSettings::default_log_debug).toBool();
+    // read once: a QSettings object for every message cost even with the log off
+    static const bool logdebug = QSettings().value(QZSettings::log_debug, QZSettings::default_log_debug).toBool();
 #if defined(Q_OS_LINUX) // Linux OS does not read settings file for now
     if ( (logs == false && !forceQml) || (logdebug == false && forceQml))
 #else
@@ -532,15 +536,13 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
 
     if (logs == true || logdebug == true) {
 
-        QString path = homeform::getWritableAppDir();
-
         // Ensure thread is initialized
         initializeLogThread();
 
         // Write log in the worker thread
         QMetaObject::invokeMethod(logWriter, "writeLog",
                                  Qt::QueuedConnection,
-                                 Q_ARG(QString, path + logfilename),
+                                 Q_ARG(QString, logFilePath),
                                  Q_ARG(QString, txt));
 
     }
@@ -705,6 +707,7 @@ int main(int argc, char *argv[]) {
     qRegisterMetaType<uint32_t>("uint32_t");
     qRegisterMetaType<FIT_SPORT>("FIT_SPORT");
 
+    logFilePath = homeform::getWritableAppDir() + logfilename;
     qInstallMessageHandler(myMessageOutput);
     qDebug() << QStringLiteral("version ") << app->applicationVersion();
     foreach (QString s, settings.allKeys()) {
