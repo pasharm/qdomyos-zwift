@@ -174,7 +174,7 @@ ColumnLayout {
             spacing: 8
             boundsBehavior: Flickable.StopAtBounds
             model: window.ui.modern ? folderModel : null
-            ScrollBar.vertical: ScrollBar {}
+            ScrollIndicator.vertical: ScrollIndicator {}
 
             // The item, not the index, as in the classic list: a folder change or a new filter
             // rebuilds the rows and can leave the index number as it was over another file

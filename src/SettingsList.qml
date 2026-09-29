@@ -80,7 +80,7 @@ ColumnLayout {
             spacing: 8
             currentIndex: -1
             boundsBehavior: Flickable.StopAtBounds
-            ScrollBar.vertical: ScrollBar {}
+            ScrollIndicator.vertical: ScrollIndicator {}
 
             FolderListModel {
                 id: modernFolderModel

@@ -769,7 +769,9 @@ ScrollView {
             linkedBoolSetting: "tile_grade_adjusted_pace_enabled"
             settings: settings
             card: true
-            description: qsTr("Current pace per mile or kilometer (Treadmill, Elliptical and Rower)")
+            // Modern look: the Minetti text below goes into the card; upstream repeats the pace one here
+            description: window.ui.modern ? qsTr("Flat-equivalent pace computed from treadmill incline using the Minetti cost model.")
+                                          : qsTr("Current pace per mile or kilometer (Treadmill, Elliptical and Rower)")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
@@ -800,6 +802,7 @@ ScrollView {
         }
 
         Label {
+            visible: !window.ui.modern
             text: qsTr("Flat-equivalent pace computed from treadmill incline using the Minetti cost model.")
             font.bold: !window.ui.modern
             font.italic: !window.ui.modern

@@ -414,33 +414,12 @@ Page {
             contentHeight: emptyColumn.height + 24
             clip: true
             boundsBehavior: Flickable.StopAtBounds
-            property bool helpOpen: false
+            property bool helpOpen: true
 
             Column {
                 id: emptyColumn
                 width: parent.width
                 spacing: 12
-
-                Rectangle {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    width: 88
-                    height: 88
-                    radius: 44
-                    color: window.ui.alpha(window.ui.accent, 0.14)
-                    UiIcon {
-                        anchors.centerIn: parent
-                        width: 44
-                        height: 44
-                        name: "bluetooth_searching"
-                        color: window.ui.accent
-                    }
-                    SequentialAnimation on opacity {
-                        running: modernEmpty.visible
-                        loops: Animation.Infinite
-                        NumberAnimation { to: 0.55; duration: 1100; easing.type: Easing.InOutSine }
-                        NumberAnimation { to: 1; duration: 1100; easing.type: Easing.InOutSine }
-                    }
-                }
 
                 Label {
                     width: parent.width
