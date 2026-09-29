@@ -975,7 +975,7 @@ import QtQuick 2.12 as Quick212
             property bool virtual_device_bluetooth: true
             property bool ios_peloton_workaround: true
             property bool android_wakelock: true
-            property bool log_debug: false
+            property bool log_debug: true
             property bool virtual_device_onlyheart: false
             property bool virtual_device_echelon: false
             property bool virtual_device_ifit: false
