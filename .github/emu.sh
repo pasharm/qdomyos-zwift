@@ -181,9 +181,10 @@ shot 08-settings-open
 adb shell input swipe 700 2100 700 700 400 || true
 sleep 3
 shot 09-settings-scrolled
-# Accent colours, with the wallpaper colour first where Android offers it (API 31+)
-if scroll_to 'General UI Options'; then
-  tap_ui 'General UI Options'
+# Accent colours, with the wallpaper colour first where Android offers it (API 31+). They sit
+# with the switch of the look in Experimental Features, near the end of the page
+if scroll_to 'Experimental Features'; then
+  tap_ui 'Experimental Features'
   sleep 3
   if scroll_to 'Accent colour'; then
     shot 09b-accent-colours
