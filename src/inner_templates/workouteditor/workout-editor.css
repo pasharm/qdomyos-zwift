@@ -622,9 +622,24 @@ html.modern .interval-panel {
     min-width: 0;
 }
 
+/* One row on a phone too: the buttons share the width, and a long label (Ukrainian,
+   Russian) breaks inside its own button instead of pushing Clear to a second row */
 html.modern .interval-panel-actions {
-    flex-wrap: wrap;
-    gap: 8px;
+    flex-wrap: nowrap;
+    gap: 6px;
+    align-items: stretch;
+}
+
+html.modern .interval-panel-actions button.small {
+    flex: 1 1 auto;
+    padding: 6px 10px;
+    white-space: normal;
+    line-height: 1.15;
+}
+
+/* A single word: kept whole, the other two give way */
+html.modern .interval-panel-actions #clearIntervals {
+    flex: none;
 }
 
 html.modern .interval-panel-hint {
