@@ -1098,11 +1098,14 @@ ApplicationWindow {
         property bool settingsPageActive: stackView.currentItem && typeof stackView.currentItem.showSettingsSearch === "function"
         // Modern look: load and save belong to the settings page itself. The pages opened from
         // it (the settings files of the load button among them) kept both, and load could open
-        // the list again and again. The classic look sets them where it always did
+        // the list again and again. The profiles keep them as the drawer opens them from home.
+        // The classic look sets them where it always did
         onSettingsPageActiveChanged: {
             if (window.ui.modern) {
-                toolButtonLoadSettings.visible = settingsPageActive
-                toolButtonSaveSettings.visible = settingsPageActive
+                var keep = settingsPageActive || (stackView.currentItem
+                        && typeof stackView.currentItem.profile_open_clicked === "function")
+                toolButtonLoadSettings.visible = keep
+                toolButtonSaveSettings.visible = keep
             }
         }
         // Set by the tile grid in Home.qml. The toolbar collapses to the status bar inset

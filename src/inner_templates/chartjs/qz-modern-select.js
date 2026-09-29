@@ -16,15 +16,29 @@
         }
     }
 
-    // The select under the point: it takes no taps itself, so the event lands on its parent
-    function selectAt(x, y) {
+    function inside(r, x, y) {
+        return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom;
+    }
+
+    // The point is not cut off by a scrolling box around the select
+    function unclipped(sel, x, y) {
+        for (var el = sel.parentElement; el && el !== document.body; el = el.parentElement) {
+            if (getComputedStyle(el).overflowY !== 'visible' && !inside(el.getBoundingClientRect(), x, y))
+                return false;
+        }
+        return true;
+    }
+
+    // The select under the tap: it takes no taps itself, so the event lands on its parent. The
+    // tap target has to hold it - a dialog or a header lying over the field got the tap itself
+    function selectAt(target, x, y) {
         var selects = document.querySelectorAll('select');
         for (var i = 0; i < selects.length; i++) {
             var sel = selects[i];
             if (sel.disabled || sel.offsetParent === null)
                 continue;
-            var r = sel.getBoundingClientRect();
-            if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom)
+            if (inside(sel.getBoundingClientRect(), x, y) && target instanceof Node
+                    && target.contains(sel) && unclipped(sel, x, y))
                 return sel;
         }
         return null;
@@ -88,7 +102,7 @@
     document.addEventListener('click', function (e) {
         if (!document.documentElement.classList.contains('modern') || backdrop)
             return;
-        var sel = selectAt(e.clientX, e.clientY);
+        var sel = selectAt(e.target, e.clientX, e.clientY);
         if (!sel)
             return;
         // A label around the select would focus it: the menu takes its place
