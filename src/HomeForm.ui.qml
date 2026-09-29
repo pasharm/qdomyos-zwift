@@ -22,6 +22,8 @@ Page {
     property bool modernInfoShown: true
     // Search for the equipment ("Next search in 12 s"), set by Home.qml while no device is connected
     property string searchStatus: ""
+    // The search has stopped: the empty state says so instead of "Looking for your equipment"
+    property bool searchStopped: false
 
     Settings {
 	     id: settings
@@ -424,7 +426,7 @@ Page {
                 Label {
                     width: parent.width
                     topPadding: 4
-                    text: qsTr("Looking for your equipment…")
+                    text: page.searchStopped ? qsTr("Equipment not found") : qsTr("Looking for your equipment…")
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
                     color: window.ui.textMain
@@ -434,7 +436,8 @@ Page {
 
                 Label {
                     width: parent.width
-                    text: qsTr("Turn on your bike, treadmill or rower: QZ connects to it automatically.")
+                    text: page.searchStopped ? qsTr("Turn on your bike, treadmill or rower, then tap the Bluetooth icon at the top to search again.")
+                                             : qsTr("Turn on your bike, treadmill or rower: QZ connects to it automatically.")
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
                     color: window.ui.textMuted

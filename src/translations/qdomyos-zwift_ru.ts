@@ -363,6 +363,14 @@ Would you like to do that now?</source>
         <translation>Приложение должно само подключиться к вашему велотренажёру, беговой дорожке или гребному тренажёру. &lt;b&gt;Если этого не произошло, проверьте&lt;/b&gt;:&lt;br&gt;1) приложение Echelon/Domyos ОБЯЗАТЕЛЬНО должно быть закрыто, пока работает qdomyos-zwift;&lt;br&gt;2) Bluetooth и разрешения для Bluetooth ОБЯЗАТЕЛЬНО должны быть включены&lt;br&gt;3) тренажёр нужно включить ДО запуска этого приложения&lt;br&gt;4) попробуйте перезагрузить ваше устройство&lt;br&gt;&lt;br&gt;Если велотренажёр или дорожка отключается каждые 30 секунд, попробуйте выключить настройку «Включить виртуальное устройство» на левой панели.&lt;br&gt;&lt;br&gt;Если возникнут проблемы, смело пишите мне на roberto.viola83@gmail.com.&lt;br&gt;&lt;br&gt;&lt;b&gt;Хорошей тренировки!&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZ прямо отказывается от ответственности за&lt;br&gt;случайный или косвенный ущерб и не несёт&lt;br&gt;никакой ответственности за любые потери&lt;br&gt;или вред, понесённые кем-либо в результате&lt;br&gt;использования или неправильного использования приложения.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</translation>
     </message>
     <message>
+        <source>Equipment not found</source>
+        <translation>Тренажёр не найден</translation>
+    </message>
+    <message>
+        <source>Turn on your bike, treadmill or rower, then tap the Bluetooth icon at the top to search again.</source>
+        <translation>Включите велотренажёр, беговую дорожку или гребной тренажёр и нажмите значок Bluetooth вверху, чтобы искать снова.</translation>
+    </message>
+    <message>
         <source>Looking for your equipment…</source>
         <translation>Ищем ваш тренажёр…</translation>
     </message>

@@ -1844,6 +1844,11 @@ QString homeform::bluetoothSearchStatus() {
     return tr("Next search in %1 s").arg((left + 999) / 1000);
 }
 
+bool homeform::bluetoothSearchStopped() {
+    return bluetoothManager && !bluetoothManager->device() && !bluetoothManager->isSearching() &&
+           bluetoothManager->searchStopped();
+}
+
 void homeform::bluetoothSearchNow() {
     if (!bluetoothManager || bluetoothManager->device())
         return;
