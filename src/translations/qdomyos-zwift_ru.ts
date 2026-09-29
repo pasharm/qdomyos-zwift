@@ -10139,6 +10139,14 @@ Default: A = -0.96, B = 1.33</source>
         <source>%1 settings reset</source>
         <translation>Сброшено настроек: %1</translation>
     </message>
+    <message>
+        <source>Add Up Quick Resistance Taps</source>
+        <translation>Суммировать быстрые нажатия сопротивления</translation>
+    </message>
+    <message>
+        <source>Bikes that report their resistance back take about a second to confirm a new level, so several quick taps on the resistance +/- buttons change it by only one. Enable this setting to add the taps up: 3 quick taps change the resistance by 3. Default is off.</source>
+        <translation>Велотренажёры, которые сообщают текущее сопротивление, подтверждают новый уровень примерно за секунду, поэтому несколько быстрых нажатий на кнопки сопротивления +/- меняют его только на единицу. Включите эту настройку, чтобы нажатия суммировались: 3 быстрых нажатия изменят сопротивление на 3. По умолчанию выключено.</translation>
+    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>

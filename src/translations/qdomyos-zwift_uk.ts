@@ -10139,6 +10139,14 @@ Default: A = -0.96, B = 1.33</source>
         <source>%1 settings reset</source>
         <translation>Скинуто налаштувань: %1</translation>
     </message>
+    <message>
+        <source>Add Up Quick Resistance Taps</source>
+        <translation>Підсумовувати швидкі натискання опору</translation>
+    </message>
+    <message>
+        <source>Bikes that report their resistance back take about a second to confirm a new level, so several quick taps on the resistance +/- buttons change it by only one. Enable this setting to add the taps up: 3 quick taps change the resistance by 3. Default is off.</source>
+        <translation>Велотренажери, які повідомляють поточний опір, підтверджують новий рівень приблизно за секунду, тому кілька швидких натискань на кнопки опору +/- змінюють його лише на одиницю. Увімкніть це налаштування, щоб натискання підсумовувалися: 3 швидкі натискання змінять опір на 3. Типово вимкнено.</translation>
+    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>
