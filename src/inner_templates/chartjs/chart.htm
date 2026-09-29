@@ -54,6 +54,8 @@
     <script src="../i18n/i18n.js"></script>
          <script src="dochart.js"></script>
          <script src="html2canvas.min.js"></script>
+    <!-- Modern look: sizes shared with the QML pages and the other web pages -->
+    <link rel="stylesheet" href="qz-modern.css">
     <style>
     canvas{
         -moz-user-select: none;
@@ -101,12 +103,12 @@
     html.modern table[background] {
         background-image: none !important;
         background-color: var(--qz-surface);
-        border-radius: 20px;
+        border-radius: var(--qz-radius-card, 16px);
         padding: 8px 4px;
         border-spacing: 0 4px;
     }
     html.modern div[style*="background-color:white"] {
-        border-radius: 20px !important;
+        border-radius: var(--qz-radius-card, 16px) !important;
     }
     html.modern .watts_avg, html.modern .watts_max,
     html.modern .heart_avg, html.modern .heart_max {

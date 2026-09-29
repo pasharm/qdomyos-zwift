@@ -42,6 +42,245 @@ import QtQuick 2.12 as Quick212
         property bool settingsSearchPending: false
         property string initialProfileSettingsSnapshot: ""
 
+        // Modern look: the search field stays on top of the page, a result opens the setting
+        // itself, and "Changed" lists the settings that differ from their defaults. Where every
+        // setting lives (page and sections) comes from the page sources: settings-index-worker.js
+        property bool changedOnly: false
+        property var settingsIndex: null
+        property bool settingsIndexLoading: false
+        readonly property var settingsIndexPages: ["settings.qml", "settings-tiles.qml", "settings-tts.qml",
+                                                   "settings-shortcuts.qml", "settings-treadmill-inclination-override.qml"]
+        property var pendingReveal: null
+        property string resetSectionName: ""
+
+        function loadSettingsIndex() {
+            if (settingsIndex || settingsIndexLoading)
+                return
+            settingsIndexLoading = true
+            var pages = []
+            var left = settingsIndexPages.length
+            settingsIndexPages.forEach(function (file) {
+                var xhr = new XMLHttpRequest()
+                xhr.open("GET", "qrc:/" + file)
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState !== XMLHttpRequest.DONE)
+                        return
+                    pages.push({ file: file, source: (xhr.status === 200 || xhr.status === 0) ? xhr.responseText : "" })
+                    if (--left === 0)
+                        settingsIndexWorker.sendMessage({ pages: pages })
+                }
+                xhr.send()
+            })
+        }
+
+        WorkerScript {
+            id: settingsIndexWorker
+            source: "settings-index-worker.js"
+            onMessage: {
+                settingsPane.settingsIndex = messageObject.map
+                settingsPane.settingsIndexLoading = false
+                console.log("QZ-TIMING settings index: " + messageObject.keys + " settings in " + messageObject.ms + " ms")
+                if (settingsPane.settingsSearchActive || settingsPane.changedOnly)
+                    settingsPane.updateFilteredSettings()
+            }
+        }
+
+        function pageTitleOf(file) {
+            var pages = settingsCatalog.pages || []
+            for (var i = 0; i < pages.length; i++)
+                if (pages[i].target === file)
+                    return computeTranslatedName(pages[i])
+            return file
+        }
+
+        // "Page › Section › Subsection" of a setting; the catalog's nearest group until the
+        // index is ready or when the setting is not on these pages
+        function sectionOf(entry) {
+            var where = settingsIndex ? settingsIndex[entry.key] : null
+            if (!where)
+                return parentDisplayName(entry)
+            var context = where.file.replace(/\.qml$/, "")
+            var parts = []
+            if (where.file !== "settings.qml")
+                parts.push(pageTitleOf(where.file))
+            for (var i = 0; i < where.chain.length; i++)
+                parts.push(qsTranslate(context, where.chain[i]))
+            return parts.length > 0 ? parts.join(" › ") : parentDisplayName(entry)
+        }
+
+        // Credentials and tokens: not shown among the changed settings and never reset with a
+        // whole section (that would sign the user out of a service)
+        function isPrivateSetting(entry) {
+            return /pass|token|secret|refresh|api_?key|auth|cookie|session|expires/i.test(entry.key || "")
+        }
+
+        function differsFromDefault(entry) {
+            var fallback = entry.defaultValue
+            if (fallback === null || fallback === undefined)
+                return false
+            var value = settingValue(entry)
+            if (entry.type === "boolean")
+                return !!value !== !!fallback
+            if (entry.type === "integer" || entry.type === "number")
+                return Math.abs(Number(value) - Number(fallback)) > 1e-9
+            return String(value) !== String(fallback)
+        }
+
+        function isChanged(entry) {
+            return entry.catalogKind === "setting" && !isPrivateSetting(entry) && differsFromDefault(entry)
+        }
+
+        // setSettingValue() without its toast, for a reset of several settings at once
+        function writeSetting(entry, value) {
+            if (entry.type === "boolean")
+                settings[entry.key] = !!value
+            else if (entry.type === "integer")
+                settings[entry.key] = parseInt(value)
+            else if (entry.type === "number")
+                settings[entry.key] = parseFloat(value)
+            else
+                settings[entry.key] = value
+        }
+
+        function resetSetting(entry) {
+            writeSetting(entry, entry.defaultValue)
+            window.settings_restart_to_apply = true
+            toast.show(qsTr("Setting reset"))
+            updateFilteredSettings()
+        }
+
+        function changedIn(section) {
+            var list = []
+            for (var i = 0; i < searchableSettings.length; i++)
+                if (isChanged(searchableSettings[i]) && sectionOf(searchableSettings[i]) === section)
+                    list.push(searchableSettings[i])
+            return list
+        }
+
+        function resetSection(section) {
+            var list = changedIn(section)
+            for (var i = 0; i < list.length; i++)
+                writeSetting(list[i], list[i].defaultValue)
+            window.settings_restart_to_apply = true
+            toast.show(qsTr("%1 settings reset").arg(list.length))
+            updateFilteredSettings()
+        }
+
+        function findItem(item, predicate) {
+            if (!item)
+                return null
+            var kids = item.children
+            for (var i = 0; i < kids.length; i++) {
+                if (predicate(kids[i]))
+                    return kids[i]
+                var found = findItem(kids[i], predicate)
+                if (found)
+                    return found
+            }
+            return null
+        }
+
+        function normalizedLabel(text) {
+            return String(text).replace(/:\s*$/, "").trim().toLowerCase()
+        }
+
+        function settingLabels(entry, context) {
+            var name = entry.name || entry.key
+            return [name, qsTranslate(context, name), qsTranslate(context, name + ":"), entry._translatedName || ""]
+                .map(normalizedLabel)
+        }
+
+        // A search result opens the setting itself: its page, its sections, scrolled to it and
+        // lit for a moment. Without a label to find, the innermost section is shown.
+        function jumpToSetting(entry) {
+            var where = settingsIndex ? settingsIndex[entry.key] : null
+            var page = settingsPane
+            var context = "settings"
+            if (where && where.file !== "settings.qml") {
+                stackView.push(where.file)
+                page = stackView.currentItem
+                context = where.file.replace(/\.qml$/, "")
+            }
+            changedOnly = false
+            settingsSearchTextField.text = ""
+            dropTextFocus()
+
+            var chain = where ? where.chain : []
+            var container = page.contentItem
+            for (var i = 0; i < chain.length; i++) {
+                var wanted = qsTranslate(context, chain[i])
+                var english = chain[i]
+                // Starts with: some titles carry a medal emoji after the translated text
+                var section = findItem(container, function (item) {
+                    return item.isOpen !== undefined && item.accordionContent !== undefined &&
+                           typeof item.title === "string" &&
+                           (item.title.indexOf(wanted) === 0 || item.title.indexOf(english) === 0)
+                })
+                if (!section)
+                    break
+                section.isOpen = true
+                container = section
+            }
+            var names = settingLabels(entry, context)
+            var target = findItem(container, function (item) {
+                return item.visible && typeof item.text === "string" && item.text.length > 0 &&
+                       names.indexOf(normalizedLabel(item.text)) >= 0
+            })
+            pendingReveal = { flickable: page.contentItem, target: target || container }
+            revealTimer.restart()
+        }
+
+        function revealPending() {
+            var reveal = pendingReveal
+            pendingReveal = null
+            if (!reveal || !reveal.flickable || !reveal.target)
+                return
+            var flickable = reveal.flickable
+            var target = reveal.target
+            // The whole row when the label sits in one (label, field, OK)
+            var row = (target.parent && target.parent.height > target.height && target.parent.height < 200)
+                      ? target.parent : target
+            var at = row.mapToItem(flickable.contentItem, 0, 0)
+            flickable.contentY = Math.max(0, Math.min(at.y - 96, flickable.contentHeight - flickable.height))
+            settingHighlight.createObject(flickable.contentItem,
+                                          { x: 4, y: at.y - 6, width: flickable.width - 8, height: row.height + 12 })
+        }
+
+        Timer {
+            id: revealTimer
+            // The sections just opened have to be laid out before the position is read
+            interval: 250
+            onTriggered: settingsPane.revealPending()
+        }
+
+        Component {
+            id: settingHighlight
+            Rectangle {
+                id: glow
+                radius: 12
+                color: window.ui.alpha(window.ui.accent, 0.22)
+                SequentialAnimation {
+                    running: true
+                    PauseAnimation { duration: 1200 }
+                    NumberAnimation { target: glow; property: "opacity"; to: 0; duration: 800 }
+                    ScriptAction { script: glow.destroy() }
+                }
+            }
+        }
+
+        UiMessageDialog {
+            id: resetSectionDialog
+            text: qsTr("Reset section?")
+            informativeText: qsTr("%1 settings in “%2” go back to their default values.")
+                             .arg(settingsPane.resetSectionName ? settingsPane.changedIn(settingsPane.resetSectionName).length : 0)
+                             .arg(settingsPane.resetSectionName)
+            buttons: (MessageDialog.Yes | MessageDialog.No)
+            yesText: qsTr("Reset")
+            noText: qsTr("Cancel")
+            destructive: true
+            onYesClicked: settingsPane.resetSection(settingsPane.resetSectionName)
+        }
+
         // A text field keeps the focus (the cursor and the keyboard) until another control
         // takes it; empty space of the page never does. A tap on it or the start of a scroll
         // drops the focus, as in other Android apps.
@@ -119,6 +358,8 @@ import QtQuick 2.12 as Quick212
         }
 
         function loadSettingsCatalog() {
+            if (window.ui.modern)
+                loadSettingsIndex()
             if (settingsCatalogLoaded || settingsCatalogLoading)
                 return
 
@@ -268,34 +509,53 @@ import QtQuick 2.12 as Quick212
         function updateFilteredSettings() {
             if (!settingsCatalogLoaded) {
                 filteredSettings = []
-                settingsSearchPending = settingsSearchActive
+                settingsSearchPending = settingsSearchActive || changedOnly
                 return
             }
 
             var query = settingsSearchTextField ? settingsSearchTextField.text.trim().toLowerCase() : ""
-            if (query.length === 0) {
+            if (query.length === 0 && !changedOnly) {
                 filteredSettings = []
                 settingsSearchPending = false
                 return
             }
 
-            var tokens = query.split(/\s+/)
+            // "Changed": the changed settings only, all of them, the query narrowing them down
+            var tokens = query.length > 0 ? query.split(/\s+/) : []
             var results = []
             for (var i = 0; i < searchableSettings.length; i++) {
-                var haystack = searchableText(searchableSettings[i])
+                if (changedOnly && !isChanged(searchableSettings[i]))
+                    continue
                 var matched = true
-                for (var tokenIndex = 0; tokenIndex < tokens.length; tokenIndex++) {
-                    if (haystack.indexOf(tokens[tokenIndex]) < 0) {
-                        matched = false
-                        break
+                if (tokens.length > 0) {
+                    var haystack = searchableText(searchableSettings[i])
+                    for (var tokenIndex = 0; tokenIndex < tokens.length; tokenIndex++) {
+                        if (haystack.indexOf(tokens[tokenIndex]) < 0) {
+                            matched = false
+                            break
+                        }
                     }
                 }
 
                 if (matched)
                     results.push(searchableSettings[i])
 
-                if (results.length >= 80)
+                if (results.length >= (changedOnly ? 400 : 80))
                     break
+            }
+            // Grouped by section, for the section headers and their reset
+            if (changedOnly) {
+                // The catalog order within a section: the sort of the engine need not keep it
+                var sections = {}
+                var order = {}
+                for (var r = 0; r < results.length; r++) {
+                    sections[results[r].key] = sectionOf(results[r])
+                    order[results[r].key] = r
+                }
+                results.sort(function (a, b) {
+                    var sa = sections[a.key], sb = sections[b.key]
+                    return sa < sb ? -1 : (sa > sb ? 1 : order[a.key] - order[b.key])
+                })
             }
             filteredSettings = results
             settingsSearchPending = false
@@ -1884,7 +2144,8 @@ import QtQuick 2.12 as Quick212
         ]
         Timer {
             id: settingsSearchDebounceTimer
-            interval: 1500
+            // Modern: results while typing; 1.5 s felt like the search did not react
+            interval: window.ui.modern ? 300 : 1500
             repeat: false
             onTriggered: settingsPane.updateFilteredSettings()
         }
@@ -1894,11 +2155,15 @@ import QtQuick 2.12 as Quick212
             spacing: 0
             anchors.fill: parent
 
+            // Modern: always on top of the page (the toolbar has no search button then), with a
+            // clear button inside the field and the "Changed" filter next to it
             RowLayout {
                 id: settingsSearchBar
-                visible: settingsSearchVisible
+                visible: settingsSearchVisible || window.ui.modern
                 spacing: 8
                 Layout.fillWidth: true
+                Layout.topMargin: window.ui.modern ? 8 : 0
+                Layout.bottomMargin: window.ui.modern ? 8 : 0
 
                 UiTextField {
                     id: settingsSearchTextField
@@ -1906,6 +2171,8 @@ import QtQuick 2.12 as Quick212
                     placeholderText: qsTr("Search settings")
                     selectByMouse: true
                     inputMethodHints: Qt.ImhNoPredictiveText
+                    leftPadding: window.ui.modern ? 44 : undefined
+                    rightPadding: window.ui.modern ? 44 : undefined
                     onTextChanged: {
                         settingsPane.settingsSearchActive = text.trim().length > 0
                         settingsSearchDebounceTimer.stop()
@@ -1914,16 +2181,65 @@ import QtQuick 2.12 as Quick212
                             settingsPane.settingsSearchPending = true
                             settingsPane.loadSettingsCatalog()
                             settingsSearchDebounceTimer.restart()
+                        } else if (settingsPane.changedOnly) {
+                            settingsPane.updateFilteredSettings()
                         } else {
                             settingsPane.filteredSettings = []
                             settingsPane.settingsSearchPending = false
                         }
                     }
+
+                    UiIcon {
+                        visible: window.ui.modern
+                        anchors.left: parent.left
+                        anchors.leftMargin: 12
+                        anchors.verticalCenter: parent.verticalCenter
+                        width: 22
+                        height: 22
+                        name: "search"
+                        color: window.ui.textMuted
+                    }
+
+                    MouseArea {
+                        visible: window.ui.modern && settingsSearchTextField.text.length > 0
+                        anchors.right: parent.right
+                        anchors.top: parent.top
+                        anchors.bottom: parent.bottom
+                        width: 44
+                        Accessible.role: Accessible.Button
+                        Accessible.name: qsTr("Clear")
+                        onClicked: settingsSearchTextField.text = ""
+                        UiIcon {
+                            anchors.centerIn: parent
+                            width: 20
+                            height: 20
+                            name: "close"
+                            color: window.ui.textMuted
+                        }
+                    }
                 }
 
                 UiButton {
+                    visible: !window.ui.modern
                     text: qsTr("Clear")
                     onClicked: settingsPane.hideSettingsSearch()
+                }
+
+                UiButton {
+                    visible: window.ui.modern
+                    text: qsTr("Changed")
+                    highlighted: settingsPane.changedOnly
+                    onClicked: {
+                        settingsPane.changedOnly = !settingsPane.changedOnly
+                        if (settingsPane.changedOnly) {
+                            settingsPane.loadSettingsCatalog()
+                            settingsPane.updateFilteredSettings()
+                        } else if (!settingsPane.settingsSearchActive) {
+                            settingsPane.filteredSettings = []
+                        } else {
+                            settingsPane.updateFilteredSettings()
+                        }
+                    }
                 }
             }
 
@@ -1937,7 +2253,7 @@ import QtQuick 2.12 as Quick212
 
             ColumnLayout {
                 id: settingsSearchResults
-                visible: settingsSearchActive
+                visible: settingsSearchActive || changedOnly
                 spacing: window.ui.modern ? 8 : 4
                 Layout.fillWidth: true
                 Layout.preferredWidth: Math.max(1, column1.width)
@@ -1945,6 +2261,8 @@ import QtQuick 2.12 as Quick212
                 Label {
                     text: settingsCatalogLoading ? qsTr("Loading settings...") :
                           settingsSearchPending ? qsTr("Searching...") :
+                          changedOnly ? (filteredSettings.length === 0 ? qsTr("No changed settings")
+                                                                       : qsTr("Changed settings") + " (" + filteredSettings.length + ")") :
                           filteredSettings.length === 0 ? qsTr("No settings found") :
                           qsTr("Search results") + " (" + filteredSettings.length + ")"
                     // A status line, not an error: plain muted text in the modern look
@@ -1959,21 +2277,65 @@ import QtQuick 2.12 as Quick212
                     delegate: Item {
                         id: searchResultFrame
                         property var entry: modelData
+                        // "Changed": a header with the section and its reset above the first
+                        // setting of every section
+                        readonly property string section: settingsPane.changedOnly ? settingsPane.sectionOf(entry) : ""
+                        readonly property bool firstInSection: settingsPane.changedOnly &&
+                            (index === 0 || settingsPane.sectionOf(filteredSettings[index - 1]) !== section)
+                        readonly property real headerHeight: firstInSection ? sectionHeader.implicitHeight + 8 : 0
                         width: Math.max(1, settingsSearchResults.width)
                         Layout.fillWidth: true
                         Layout.minimumWidth: 0
                         Layout.preferredWidth: width
                         Layout.preferredHeight: implicitHeight
                         implicitWidth: width
-                        implicitHeight: searchResultContent.implicitHeight + (window.ui.modern ? 24 : 8)
+                        implicitHeight: headerHeight + searchResultContent.implicitHeight + (window.ui.modern ? 24 : 8)
+
+                        RowLayout {
+                            id: sectionHeader
+                            visible: searchResultFrame.firstInSection
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: parent.top
+                            anchors.topMargin: 4
+                            spacing: 8
+                            Label {
+                                text: searchResultFrame.section
+                                color: window.ui.accent
+                                font.weight: Font.DemiBold
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                                Layout.minimumWidth: 0
+                            }
+                            UiButton {
+                                flat: true
+                                danger: true
+                                text: qsTr("Reset section")
+                                onClicked: {
+                                    settingsPane.resetSectionName = searchResultFrame.section
+                                    resetSectionDialog.open()
+                                }
+                            }
+                        }
 
                         // Modern look: a filled card like the other groups instead of a grey frame
                         Rectangle {
                             anchors.fill: parent
-                            color: window.ui.modern ? window.ui.surfaceHigh : "transparent"
+                            anchors.topMargin: searchResultFrame.headerHeight
+                            color: window.ui.modern ? (resultArea.pressed ? window.ui.surfaceHighest : window.ui.surfaceHigh)
+                                                    : "transparent"
                             border.color: Material.color(Material.Grey)
                             border.width: window.ui.modern ? 0 : 1
                             radius: window.ui.modern ? 16 : 2
+                        }
+
+                        // Modern: a tap on the card (not on its controls) opens the setting itself
+                        MouseArea {
+                            id: resultArea
+                            anchors.fill: parent
+                            anchors.topMargin: searchResultFrame.headerHeight
+                            enabled: window.ui.modern && entry.catalogKind !== "page"
+                            onClicked: settingsPane.jumpToSetting(entry)
                         }
 
                         ColumnLayout {
@@ -1983,6 +2345,7 @@ import QtQuick 2.12 as Quick212
                             anchors.right: parent.right
                             anchors.top: parent.top
                             anchors.margins: window.ui.modern ? 12 : 4
+                            anchors.topMargin: searchResultFrame.headerHeight + (window.ui.modern ? 12 : 4)
 
                             RowLayout {
                                 Layout.fillWidth: true
@@ -2002,9 +2365,12 @@ import QtQuick 2.12 as Quick212
                                         Layout.minimumWidth: 0
                                     }
 
+                                    // Modern: the full path, in the accent colour as the way to
+                                    // the setting; not repeated under the section header
                                     Label {
-                                        text: settingsPane.parentDisplayName(entry)
-                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey)
+                                        visible: !settingsPane.changedOnly
+                                        text: window.ui.modern ? settingsPane.sectionOf(entry) : settingsPane.parentDisplayName(entry)
+                                        color: window.ui.modern ? window.ui.accent : Material.color(Material.Grey)
                                         font.pixelSize: Qt.application.font.pixelSize - 2
                                         wrapMode: Text.WordWrap
                                         Layout.fillWidth: true
@@ -2022,6 +2388,13 @@ import QtQuick 2.12 as Quick212
                                     visible: entry.catalogKind === "page"
                                     text: qsTr("Open")
                                     onClicked: stackView.push(entry.target)
+                                }
+
+                                UiButton {
+                                    visible: settingsPane.changedOnly
+                                    flat: true
+                                    text: qsTr("Reset")
+                                    onClicked: settingsPane.resetSetting(entry)
                                 }
                             }
 
@@ -2143,7 +2516,7 @@ import QtQuick 2.12 as Quick212
 
             ColumnLayout {
                 id: settingsContent
-                visible: !settingsSearchActive
+                visible: !settingsSearchActive && !changedOnly
                 spacing: 0
                 Layout.fillWidth: true
 

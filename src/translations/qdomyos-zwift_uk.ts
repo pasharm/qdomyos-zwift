@@ -10103,6 +10103,42 @@ Default: A = -0.96, B = 1.33</source>
         <source>Wallpaper colour</source>
         <translation>Колір шпалер</translation>
     </message>
+    <message>
+        <source>Changed</source>
+        <translation>Змінені</translation>
+    </message>
+    <message>
+        <source>Changed settings</source>
+        <translation>Змінені налаштування</translation>
+    </message>
+    <message>
+        <source>No changed settings</source>
+        <translation>Усі налаштування типові</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Скинути</translation>
+    </message>
+    <message>
+        <source>Reset section</source>
+        <translation>Скинути розділ</translation>
+    </message>
+    <message>
+        <source>Reset section?</source>
+        <translation>Скинути розділ?</translation>
+    </message>
+    <message>
+        <source>%1 settings in “%2” go back to their default values.</source>
+        <translation>Налаштування розділу «%2» (%1) повернуться до типових значень.</translation>
+    </message>
+    <message>
+        <source>Setting reset</source>
+        <translation>Налаштування скинуто</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>Скинуто налаштувань: %1</translation>
+    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>

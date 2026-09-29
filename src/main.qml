@@ -1182,7 +1182,8 @@ ApplicationWindow {
                     stackView.currentItem.showSettingsSearch()
             }
             anchors.right: toolButtonLoadSettings.left
-            visible: headerToolbar.settingsPageActive
+            // Modern look: the settings keep their search field on the page itself
+            visible: headerToolbar.settingsPageActive && !window.ui.modern
             ToolTip.visible: hovered
             ToolTip.text: qsTr("Search settings")
         }

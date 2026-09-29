@@ -546,7 +546,7 @@ html.modern input[type="number"],
 html.modern select {
     background: var(--field-color, var(--panel-elevated));
     border: 2px solid transparent;
-    border-radius: 12px;
+    border-radius: var(--qz-radius-field, 12px);
     min-height: 40px;
     padding: 8px 12px;
     font-size: 0.95rem;
@@ -567,7 +567,7 @@ html.modern button {
     min-height: 40px;
     padding: 8px 16px;
     font-size: 0.9rem;
-    font-weight: 500;
+    font-weight: var(--qz-weight-strong, 600);
     font-family: inherit;
 }
 
@@ -615,7 +615,7 @@ html.modern .chart-card,
 html.modern .program-bar {
     background: var(--panel-color);
     border: none;
-    border-radius: 20px;
+    border-radius: var(--qz-radius-card, 16px);
 }
 
 html.modern .interval-panel {

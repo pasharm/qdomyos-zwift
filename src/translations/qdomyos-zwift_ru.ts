@@ -10103,6 +10103,42 @@ Default: A = -0.96, B = 1.33</source>
         <source>Wallpaper colour</source>
         <translation>Цвет обоев</translation>
     </message>
+    <message>
+        <source>Changed</source>
+        <translation>Изменённые</translation>
+    </message>
+    <message>
+        <source>Changed settings</source>
+        <translation>Изменённые настройки</translation>
+    </message>
+    <message>
+        <source>No changed settings</source>
+        <translation>Все настройки по умолчанию</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Сбросить</translation>
+    </message>
+    <message>
+        <source>Reset section</source>
+        <translation>Сбросить раздел</translation>
+    </message>
+    <message>
+        <source>Reset section?</source>
+        <translation>Сбросить раздел?</translation>
+    </message>
+    <message>
+        <source>%1 settings in “%2” go back to their default values.</source>
+        <translation>Настройки раздела «%2» (%1) вернутся к значениям по умолчанию.</translation>
+    </message>
+    <message>
+        <source>Setting reset</source>
+        <translation>Настройка сброшена</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>Сброшено настроек: %1</translation>
+    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>

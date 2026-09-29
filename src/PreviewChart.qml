@@ -19,7 +19,6 @@ ColumnLayout {
     // white before its first paint and lies over everything QML draws, so it flashed white
     // on the dark theme
     property bool pageShown: !window.ui.modern
-    readonly property int modernMargin: Math.max(16, window.contentSideMargin)
 
     onPageThemeChanged: {
         if (pageLoaded && pageTheme)
@@ -32,8 +31,8 @@ ColumnLayout {
     WebView {
         id: webView
         anchors.fill: parent
-        // Modern look: the page ends above the Close button instead of under it
-        anchors.bottomMargin: window.ui.modern ? closeButton.height + 16 : 0
+        // Modern look: no Close button at the bottom (the back arrow of the toolbar does
+        // it), the page runs down to the edge like the other pages
         visible: column1.pageShown
         onLoadingChanged: {
             if (loadRequest.errorString) {
@@ -76,21 +75,16 @@ ColumnLayout {
 
     UiButton {
         id: closeButton
-        height: window.ui.modern ? implicitHeight : 50
-        width: window.ui.modern ? parent.width - 2 * column1.modernMargin : parent.width
-        x: window.ui.modern ? column1.modernMargin : 0
+        visible: !window.ui.modern
+        height: 50
+        width: parent.width
         text: qsTr("Close")
         Layout.alignment: Qt.AlignCenter | Qt.AlignVCenter
         onClicked: {
             popupclose();
-            // Nothing listens to popupclose, so the button did nothing; the modern look goes
-            // back like the toolbar arrow
-            if (window.ui.modern)
-                window.navigateBack(false)
         }
         anchors {
             bottom: parent.bottom
-            bottomMargin: window.ui.modern ? 8 : 0
         }
     }
      Component.onCompleted: {
