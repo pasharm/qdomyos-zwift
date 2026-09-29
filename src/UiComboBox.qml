@@ -123,12 +123,6 @@ T.ComboBox {
         topPadding: control.modern ? 8 : 0
         bottomPadding: control.modern ? 8 : 0
 
-        // Diagnostics of the combo opened a second time, to remove after the emulator check
-        onOpened: console.log("QZ-COMBO opened opacity " + opacity + " scale " + scale + " visible " + visible)
-        onAboutToHide: console.log("QZ-COMBO about to hide opacity " + opacity + " scale " + scale)
-        onClosed: console.log("QZ-COMBO closed opacity " + opacity + " scale " + scale)
-        onAboutToShow: console.log("QZ-COMBO about to show opacity " + opacity + " scale " + scale)
-
         enter: Transition {
             // grow_fade_in. The end values are given (as in Qt 6): Qt 5.15 restores opacity and
             // scale after the exit to what they were when it began, and a list closed during
