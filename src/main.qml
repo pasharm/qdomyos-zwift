@@ -1681,6 +1681,12 @@ ApplicationWindow {
             contentHeight: modernDrawerColumn.height + 16
             clip: true
             boundsBehavior: Flickable.StopAtBounds
+            // A scroll that starts on an entry: the entry took the press at once (lit up) and
+            // the list got the move only past the drag threshold, while the drawer took a
+            // slightly sideways one to close - the list often did not scroll. The entries get
+            // the press only when the finger stays put, and only vertical moves scroll
+            flickableDirection: Flickable.VerticalFlick
+            pressDelay: 120
             ScrollIndicator.vertical: ScrollIndicator { }
 
             Column {
