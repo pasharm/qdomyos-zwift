@@ -10147,6 +10147,10 @@ Default: A = -0.96, B = 1.33</source>
         <source>Bikes that report their resistance back take about a second to confirm a new level, so several quick taps on the resistance +/- buttons change it by only one. Enable this setting to add the taps up: 3 quick taps change the resistance by 3. Default is off.</source>
         <translation>Велотренажери, які повідомляють поточний опір, підтверджують новий рівень приблизно за секунду, тому кілька швидких натискань на кнопки опору +/- змінюють його лише на одиницю. Увімкніть це налаштування, щоб натискання підсумовувалися: 3 швидкі натискання змінять опір на 3. Типово вимкнено.</translation>
     </message>
+    <message>
+        <source>QZ opens FS- devices as treadmills unless &quot;Fit Plus Bike&quot; is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off. Not shown in the settings page.</source>
+        <translation>QZ відкриває пристрої FS- як бігові доріжки, якщо не ввімкнено «Fit Plus Bike». Коли пристрій FS- передає й дані велотренажера, QZ питає, чи це велотренажер; відповідь «Ні» вимикає це питання. На сторінці налаштувань не показується.</translation>
+    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>

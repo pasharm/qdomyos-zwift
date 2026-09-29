@@ -465,14 +465,22 @@ import QtQuick 2.12 as Quick212
 
         // Try to find a translation for a catalog entry name by probing common QML contexts.
         // Returns the translated string if found, or the original name as fallback.
+        readonly property var translationContexts: [
+            "settings", "settings-tiles", "settings-tts",
+            "settings-shortcuts", "settings-treadmill-inclination-override",
+            "custominclinationresistance", "homeform"
+        ]
+
+        // Descriptions of catalog settings without a label on any page, only here so that
+        // lupdate takes them into the settings context
+        readonly property var catalogOnlyDescriptions: [
+            QT_TR_NOOP("QZ opens FS- devices as treadmills unless \"Fit Plus Bike\" is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off. Not shown in the settings page.")
+        ]
+
         function computeTranslatedName(entry) {
             var name = entry.name || entry.key
             if (!name) return name
-            var contexts = [
-                "settings", "settings-tiles", "settings-tts",
-                "settings-shortcuts", "settings-treadmill-inclination-override",
-                "homeform"
-            ]
+            var contexts = translationContexts
             for (var i = 0; i < contexts.length; i++) {
                 // Try with trailing colon (common label pattern "Foo:")
                 var withColon = qsTranslate(contexts[i], name + ":")
@@ -489,11 +497,7 @@ import QtQuick 2.12 as Quick212
         function computeTranslatedDescription(entry) {
             var text = entry.description
             if (!text) return ""
-            var contexts = [
-                "settings", "settings-tiles", "settings-tts",
-                "settings-shortcuts", "settings-treadmill-inclination-override",
-                "homeform"
-            ]
+            var contexts = translationContexts
             for (var i = 0; i < contexts.length; i++) {
                 var translated = qsTranslate(contexts[i], text)
                 if (translated !== text) return translated

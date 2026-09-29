@@ -3419,7 +3419,7 @@
     {
       "key": "power_avg_5s",
       "name": "Power Averaging Mode",
-      "description": "If the power output/watts your equipment sends to QZ is quite variable, this setting will result in smoother Power Zone graphs. This is also helpful for use with Power Meter Pedals. Uses harmonic averaging which smooths power spikes better than arithmetic averaging. If any reading is 0, power immediately becomes 0. Default is Off. IMPORTANT NOTES: - No Average/smooth in Hometrainer config for standard home trainers which work at 1hz (No race mode available) - Disable Average on 3rd party apps (Rouvy/Zwift/MyWhoosh etc) or select 1sec in the app! - Need to use QZ in bridge mode! - For Elite home trainers or those who have a race mode (10hz), if it's not sufficient for some users, using Elite/Hometrainer smoothing in addition to QZ smoothing will improve it.",
+      "description": "If the power output/watts your equipment sends to QZ is quite variable, this setting will result in smoother Power Zone graphs. This is also helpful for use with Power Meter Pedals. Uses harmonic averaging which smooths power spikes better than arithmetic averaging. If any reading is 0, power immediately becomes 0. Default is Off.\n\nIMPORTANT NOTES:\n- No Average/smooth in Hometrainer config for standard home trainers which work at 1hz (No race mode available)\n- Disable Average on 3rd party apps (Rouvy/Zwift/MyWhoosh etc) or select 1sec in the app!\n- Need to use QZ in bridge mode!\n- For Elite home trainers or those who have a race mode (10hz), if it's not sufficient for some users, using Elite/Hometrainer smoothing in addition to QZ smoothing will improve it.",
       "parent": "Advanced Settings",
       "type": "boolean",
       "qmlType": "bool",
@@ -5597,7 +5597,7 @@
     {
       "key": "rolling_resistance",
       "name": "Rolling Resistance Factor",
-      "description": "0.005 = Clinchers 0.004 = Tubulars 0.012 = MTB",
+      "description": "0.005 = Clinchers\n0.004 = Tubulars\n0.012 = MTB",
       "parent": "Bike Options",
       "type": "number",
       "qmlType": "real",
@@ -8786,7 +8786,7 @@
     {
       "key": "zwift_password",
       "name": "Password",
-      "description": "Enter the password you use to login to Zwift. Click OK. If you have entered the correct login credentials and the QZ is able to access your account, you will see a when you reopen QZ. This is a secure login, not accessible by anyone but you.",
+      "description": "Enter the password you use to login to Zwift. Click OK.",
       "parent": "Zwift Options",
       "type": "string",
       "qmlType": "string",
@@ -9633,7 +9633,7 @@
     {
       "key": "gears_volume_debouncing",
       "name": "Volume buttons debouncing",
-      "description": "Debounce the volume buttons, so you will only see 1 gear step if there are 2 or more volume near steps. Default is off.",
+      "description": "Debounce the volume buttons, so you will only see 1 gear step if there are 2 or more volume near steps.  Default is off.",
       "parent": "Advanced Settings",
       "type": "boolean",
       "qmlType": "bool",
@@ -9692,7 +9692,7 @@
     {
       "key": "zwiftplay_swap",
       "name": "Swap sides",
-      "description": "You can swap the left to the right controller and viceversa. Default is off.",
+      "description": "You can swap the left to the right controller and viceversa.  Default is off.",
       "parent": "Zwift Devices Options",
       "type": "boolean",
       "qmlType": "bool",
@@ -9706,7 +9706,7 @@
     {
       "key": "gears_zwift_ratio",
       "name": "Use Zwift app ratio for gears (Experimental)",
-      "description": "Use the zwift gears table instead of the QZ classic gears algorithm. Default is off.",
+      "description": "Use the zwift gears table instead of the QZ classic gears algorithm.  Default is off.",
       "parent": "Zwift Devices Options",
       "type": "boolean",
       "qmlType": "bool",
@@ -12977,7 +12977,7 @@
     {
       "key": "power_avg_3s",
       "name": "Power Averaging Mode",
-      "description": "If the power output/watts your equipment sends to QZ is quite variable, this setting will result in smoother Power Zone graphs. This is also helpful for use with Power Meter Pedals. Uses harmonic averaging which smooths power spikes better than arithmetic averaging. If any reading is 0, power immediately becomes 0. Default is Off. IMPORTANT NOTES: - No Average/smooth in Hometrainer config for standard home trainers which work at 1hz (No race mode available) - Disable Average on 3rd party apps (Rouvy/Zwift/MyWhoosh etc) or select 1sec in the app! - Need to use QZ in bridge mode! - For Elite home trainers or those who have a race mode (10hz), if it's not sufficient for some users, using Elite/Hometrainer smoothing in addition to QZ smoothing will improve it.",
+      "description": "If the power output/watts your equipment sends to QZ is quite variable, this setting will result in smoother Power Zone graphs. This is also helpful for use with Power Meter Pedals. Uses harmonic averaging which smooths power spikes better than arithmetic averaging. If any reading is 0, power immediately becomes 0. Default is Off.\n\nIMPORTANT NOTES:\n- No Average/smooth in Hometrainer config for standard home trainers which work at 1hz (No race mode available)\n- Disable Average on 3rd party apps (Rouvy/Zwift/MyWhoosh etc) or select 1sec in the app!\n- Need to use QZ in bridge mode!\n- For Elite home trainers or those who have a race mode (10hz), if it's not sufficient for some users, using Elite/Hometrainer smoothing in addition to QZ smoothing will improve it.",
       "parent": "Advanced Settings",
       "type": "boolean",
       "qmlType": "bool",
@@ -13496,7 +13496,7 @@
     {
       "key": "power_sensor_speed_inclination_coeff_b",
       "name": "Power Sensor Speed/Incline Coefficient B",
-      "description": "Custom coefficients for power sensor inclination calculation using formula: vwatts = (A + B × speed) × inclination. For Stryd sensors use: A = -0.96, B = 1.33 Examples with these values: • 8 km/h, 10% incline: (-0.96 + 1.33×8) × 10 = 97W added • 11 km/h, 10% incline: (-0.96 + 1.33×11) × 10 = 137W added If both A and B are 0, QZ will use the default formula: 9.8 × weight × (inclination/100). Default: A = -0.96, B = 1.33",
+      "description": "Custom coefficients for power sensor inclination calculation using formula: vwatts = (A + B × speed) × inclination.\n\nFor Stryd sensors use: A = -0.96, B = 1.33\n\nExamples with these values:\n• 8 km/h, 10% incline: (-0.96 + 1.33×8) × 10 = 97W added\n• 11 km/h, 10% incline: (-0.96 + 1.33×11) × 10 = 137W added\n\nIf both A and B are 0, QZ will use the default formula: 9.8 × weight × (inclination/100).\n\nDefault: A = -0.96, B = 1.33",
       "parent": "Power Sensor Options",
       "type": "number",
       "qmlType": "double",
@@ -15874,7 +15874,7 @@
     {
       "key": "custom_inclination_resistance_table_enabled",
       "name": "Enable Custom Inclination to Resistance Table",
-      "description": "Use a custom mapping when QZ converts virtual-app inclination into resistance.",
+      "description": "Set the resistance QZ should target at each incline. QZ interpolates automatically between points and uses the nearest endpoint outside the configured range. Changes are saved automatically.",
       "parent": "Custom Inclination to Resistance Table",
       "type": "boolean",
       "qmlType": "bool",
@@ -15888,7 +15888,7 @@
     {
       "key": "custom_inclination_resistance_table",
       "name": "Custom Inclination to Resistance Table",
-      "description": "One inclination|resistance pair per line. QZ interpolates between points and clamps outside the configured range.",
+      "description": "Set the resistance QZ should target at each incline. QZ interpolates automatically between points and uses the nearest endpoint outside the configured range. Changes are saved automatically.",
       "parent": "Custom Inclination to Resistance Table",
       "type": "string",
       "qmlType": "string",
