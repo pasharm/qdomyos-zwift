@@ -109,7 +109,7 @@ T.ComboBox {
     popup: T.Popup {
         y: control.editable ? control.height - 5 : 0
         width: control.width
-        height: Math.min(contentItem.implicitHeight, control.Window.height - topMargin - bottomMargin)
+        height: Math.min(contentItem.implicitHeight + topPadding + bottomPadding, control.Window.height - topMargin - bottomMargin)
         transformOrigin: Item.Top
         topMargin: 12
         bottomMargin: 12
@@ -118,10 +118,24 @@ T.ComboBox {
         Material.accent: control.Material.accent
         Material.primary: control.Material.primary
 
+        // Modern: the list keeps clear of the rounded corners, the highlight of the first and
+        // the last item was a square block in them
+        topPadding: control.modern ? 8 : 0
+        bottomPadding: control.modern ? 8 : 0
+
+        // Diagnostics of the combo opened a second time, to remove after the emulator check
+        onOpened: console.log("QZ-COMBO opened opacity " + opacity + " scale " + scale + " visible " + visible)
+        onAboutToHide: console.log("QZ-COMBO about to hide opacity " + opacity + " scale " + scale)
+        onClosed: console.log("QZ-COMBO closed opacity " + opacity + " scale " + scale)
+        onAboutToShow: console.log("QZ-COMBO about to show opacity " + opacity + " scale " + scale)
+
         enter: Transition {
-            // grow_fade_in
-            NumberAnimation { property: "scale"; from: 0.9; easing.type: Easing.OutQuint; duration: 220 }
-            NumberAnimation { property: "opacity"; from: 0.0; easing.type: Easing.OutCubic; duration: 150 }
+            // grow_fade_in. The end values are given (as in Qt 6): Qt 5.15 restores opacity and
+            // scale after the exit to what they were when it began, and a list closed during
+            // its own opening kept a part of them - opened again, it stayed invisible and took
+            // the next tap on an item nobody could see (the second tap on a combo did nothing)
+            NumberAnimation { property: "scale"; from: 0.9; to: 1.0; easing.type: Easing.OutQuint; duration: 220 }
+            NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; easing.type: Easing.OutCubic; duration: 150 }
         }
 
         exit: Transition {
