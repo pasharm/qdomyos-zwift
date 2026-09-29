@@ -682,6 +682,7 @@ ScrollView {
             linkedBoolSetting: "tile_pace_enabled"
             settings: settings
             card: true
+            description: qsTr("Current pace per mile or kilometer (Treadmill, Elliptical and Rower)")
             accordionContent: ColumnLayout {
                 UiSwitchDelegate {
                     id: paceColorEnabled
@@ -769,9 +770,8 @@ ScrollView {
             linkedBoolSetting: "tile_grade_adjusted_pace_enabled"
             settings: settings
             card: true
-            // Modern look: the Minetti text below goes into the card; upstream repeats the pace one here
-            description: window.ui.modern ? qsTr("Flat-equivalent pace computed from treadmill incline using the Minetti cost model.")
-                                          : qsTr("Current pace per mile or kilometer (Treadmill, Elliptical and Rower)")
+            // Modern look: the Minetti label below goes into the card
+            description: window.ui.modern ? qsTr("Flat-equivalent pace computed from treadmill incline using the Minetti cost model.") : ""
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
