@@ -1072,13 +1072,23 @@ Page {
                     implicitWidth: workoutHistoryPage.modern ? 48 : Math.max(implicitBackgroundWidth + leftInset + rightInset, implicitContentWidth + leftPadding + rightPadding)
                     Accessible.name: qsTr("Previous month")
                     onClicked: calendar.selectedDate = new Date(calendar.selectedDate.getFullYear(), calendar.selectedDate.getMonth() - 1, 1)
+                    // Modern: an accent chevron on a tonal circle, like the move buttons of the
+                    // workout editor; the bare thin chevron was hard to see
+                    Rectangle {
+                        anchors.centerIn: parent
+                        visible: workoutHistoryPage.modern
+                        width: 44
+                        height: 44
+                        radius: 22
+                        color: window.ui.alpha(window.ui.accent, parent.pressed ? 0.28 : 0.16)
+                    }
                     UiIcon {
                         anchors.centerIn: parent
                         visible: workoutHistoryPage.modern
-                        width: 24
-                        height: 24
+                        width: 30
+                        height: 30
                         name: "chevron_left"
-                        color: window.ui.textMain
+                        color: window.ui.accent
                     }
                 }
                 
@@ -1100,13 +1110,23 @@ Page {
                     implicitWidth: workoutHistoryPage.modern ? 48 : Math.max(implicitBackgroundWidth + leftInset + rightInset, implicitContentWidth + leftPadding + rightPadding)
                     Accessible.name: qsTr("Next month")
                     onClicked: calendar.selectedDate = new Date(calendar.selectedDate.getFullYear(), calendar.selectedDate.getMonth() + 1, 1)
+                    // Modern: an accent chevron on a tonal circle, like the move buttons of the
+                    // workout editor; the bare thin chevron was hard to see
+                    Rectangle {
+                        anchors.centerIn: parent
+                        visible: workoutHistoryPage.modern
+                        width: 44
+                        height: 44
+                        radius: 22
+                        color: window.ui.alpha(window.ui.accent, parent.pressed ? 0.28 : 0.16)
+                    }
                     UiIcon {
                         anchors.centerIn: parent
                         visible: workoutHistoryPage.modern
-                        width: 24
-                        height: 24
+                        width: 30
+                        height: 30
                         name: "chevron_right"
-                        color: window.ui.textMain
+                        color: window.ui.accent
                     }
                 }
             }
