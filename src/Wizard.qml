@@ -537,6 +537,14 @@ Page {
                         Layout.preferredHeight: 50
                     }
 
+                    // Modern look: go on without signing in now (already connected, or later)
+                    WizardButton {
+                        visible: window.ui.modern
+                        Layout.alignment: Qt.AlignHCenter
+                        text: qsTr("Next")
+                        onClicked: stackViewLocal.push(pelotonDifficultyComponent)
+                    }
+
                     WizardButton {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Back")

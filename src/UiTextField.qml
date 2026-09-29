@@ -36,6 +36,28 @@ T.TextField {
     placeholderTextColor: modern ? window.ui.textMuted : Material.hintTextColor
     verticalAlignment: TextInput.AlignVCenter
 
+    // Modern look: a number field (digit keyboard hint) or a time field ("04:12:00") takes no
+    // letters, the OK button next to it saved them as they were. Only the characters of the
+    // formats in use pass: sign, decimal point or comma, ":" of times, ' and " of feet and
+    // inches. A field with its own validator keeps it; the classic look has none, as before
+    readonly property bool numericHint: (inputMethodHints & (Qt.ImhDigitsOnly | Qt.ImhFormattedNumbersOnly)) !== 0
+    property bool timeShaped: false
+    Component.onCompleted: timeShaped = /^\d+:\d{2}(:\d{2})?$/.test(text)
+    validator: !modern ? null
+             : numericHint ? numberValidator
+             : timeShaped ? timeValidator : null
+    RegExpValidator { id: numberValidator; regExp: /^-?[0-9.,:'"]*$/ }
+    RegExpValidator { id: timeValidator; regExp: /^[0-9:]*$/ }
+    // A decimal comma (the keyboard of the phone's language) is read by parseFloat as the end
+    // of the number: "2,5" saved 2. Turned into a point while typing
+    onTextEdited: {
+        if (modern && numericHint && text.indexOf(",") >= 0 && !/[:'"]/.test(text)) {
+            var pos = cursorPosition
+            text = text.replace(/,/g, ".")
+            cursorPosition = pos
+        }
+    }
+
     cursorDelegate: CursorDelegate { }
 
     PlaceholderText {

@@ -1741,7 +1741,8 @@ ApplicationWindow {
                         }
                         Label {
                             width: parent.width - 14
-                            text: (typeof rootItem !== "undefined" && rootItem) ? rootItem.info : ""
+                            // "Connecting..." - the untranslated start value of homeform::m_info, see HomeForm.ui.qml
+                            text: (typeof rootItem !== "undefined" && rootItem) ? (rootItem.info === "Connecting..." ? qsTranslate("homeform", "Searching for the device...") : rootItem.info) : ""
                             font.pixelSize: 13
                             color: window.ui.textMuted
                             elide: Text.ElideRight

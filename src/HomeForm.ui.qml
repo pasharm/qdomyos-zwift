@@ -385,7 +385,9 @@ Page {
             }
             Label {
                 anchors.verticalCenter: parent.verticalCenter
-                text: page.searchStatus !== "" ? page.searchStatus : rootItem.info
+                // "Connecting..." is the untranslated start value of homeform::m_info: before the
+                // first search it means the same as the search status
+                text: page.searchStatus !== "" ? page.searchStatus : (rootItem.info === "Connecting..." ? qsTranslate("homeform", "Searching for the device...") : rootItem.info)
                 color: window.ui.textMuted
                 font.pixelSize: 13
             }
@@ -418,6 +420,8 @@ Page {
             boundsBehavior: Flickable.StopAtBounds
             property bool helpOpen: true
 
+            // qsTr inside an expression looks the text up under the context of the file that
+            // creates the page (Home), not this one: the context is given explicitly
             Column {
                 id: emptyColumn
                 width: parent.width
@@ -426,7 +430,7 @@ Page {
                 Label {
                     width: parent.width
                     topPadding: 4
-                    text: page.searchStopped ? qsTr("Equipment not found") : qsTr("Looking for your equipment…")
+                    text: page.searchStopped ? qsTranslate("HomeForm.ui", "Equipment not found") : qsTranslate("HomeForm.ui", "Looking for your equipment…")
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
                     color: window.ui.textMain
@@ -436,8 +440,8 @@ Page {
 
                 Label {
                     width: parent.width
-                    text: page.searchStopped ? qsTr("Turn on your bike, treadmill or rower, then tap the Bluetooth icon at the top to search again.")
-                                             : qsTr("Turn on your bike, treadmill or rower: QZ connects to it automatically.")
+                    text: page.searchStopped ? qsTranslate("HomeForm.ui", "Turn on your bike, treadmill or rower, then tap the Bluetooth icon at the top to search again.")
+                                             : qsTranslate("HomeForm.ui", "Turn on your bike, treadmill or rower: QZ connects to it automatically.")
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
                     color: window.ui.textMuted
