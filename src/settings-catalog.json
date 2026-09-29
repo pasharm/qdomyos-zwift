@@ -734,8 +734,8 @@
     },
     {
       "key": "miles_unit",
-      "name": "Player Weight",
-      "description": "Enter your weight in kilograms so QZ can more accurately calculate calories burned. NOTE: If you choose to use miles as the unit for distance traveled, you will be asked to enter your weight in pounds (lbs) unless you enable 'Use kg for weight'.",
+      "name": "Use Miles unit in UI",
+      "description": "Turn on if you want QZ to display distance traveled in miles. Default is off and set to kilometers.",
       "parent": "General Options",
       "type": "boolean",
       "qmlType": "bool",
@@ -13112,8 +13112,8 @@
     },
     {
       "key": "weight_kg_unit",
-      "name": "Player Weight",
-      "description": "Enter your weight in kilograms so QZ can more accurately calculate calories burned. NOTE: If you choose to use miles as the unit for distance traveled, you will be asked to enter your weight in pounds (lbs) unless you enable 'Use kg for weight'.",
+      "name": "Use kg for weight",
+      "description": "Turn on if you want to use kilograms (kg) for weight instead of pounds (lbs). Useful for UK users who use miles for distance but kg for weight.",
       "parent": "General Options",
       "type": "boolean",
       "qmlType": "bool",
@@ -15269,8 +15269,8 @@
     },
     {
       "key": "mywhoosh_link_override_gears",
-      "name": "OpenBikeControl Override Gears",
-      "description": null,
+      "name": "Override Local Gear Changes",
+      "description": "When enabled, gear shift commands go only to OpenBikeControl clients. When disabled, they go to both OpenBikeControl clients and the local gear system",
       "parent": "OpenBikeControl",
       "type": "boolean",
       "qmlType": "bool",
