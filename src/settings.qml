@@ -15783,18 +15783,30 @@ import QtQuick 2.12 as Quick212
                             spacing: 8
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             Repeater {
-                                model: ["violet", "blue", "teal", "green", "orange", "pink"]
+                                // "system" first, where Android offers the wallpaper colour (API 31+)
+                                model: (window.ui.systemAccentAvailable ? ["system"] : [])
+                                       .concat(["violet", "blue", "teal", "green", "orange", "pink"])
                                 // UiFrame: a Rectangle.border ring breaks up on Android
                                 delegate: UiFrame {
                                     width: 30
                                     height: 30
                                     radius: 15
-                                    fill: window.ui.a[modelData]
+                                    fill: window.ui.accentOf(modelData)
                                     strokeWidth: window.ui.accentName === modelData ? 3 : 0
                                     stroke: window.ui.textMain
                                     Accessible.role: Accessible.RadioButton
-                                    Accessible.name: modelData
+                                    Accessible.name: modelData === "system" ? qsTr("Wallpaper colour") : modelData
                                     Accessible.checked: window.ui.accentName === modelData
+                                    // The wallpaper colour is marked, so it does not pass for one
+                                    // more fixed colour
+                                    UiIcon {
+                                        visible: modelData === "system"
+                                        anchors.centerIn: parent
+                                        width: 18
+                                        height: 18
+                                        name: "palette"
+                                        color: window.ui.accentInk
+                                    }
                                     MouseArea {
                                         anchors.fill: parent
                                         anchors.margins: -4

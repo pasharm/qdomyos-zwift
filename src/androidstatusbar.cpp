@@ -1,6 +1,7 @@
 #include "androidstatusbar.h"
 #include <QQmlEngine>
 #include <QDebug>
+#include <QColor>
 
 #ifdef Q_OS_ANDROID
 #include <QtAndroid>
@@ -60,6 +61,34 @@ bool AndroidStatusBar::systemDarkMode() const
     return (uiMode & 0x30) == 0x20;
 #else
     return true;
+#endif
+}
+
+QString AndroidStatusBar::systemAccentColor(bool dark) const
+{
+#ifdef Q_OS_ANDROID
+    if (apiLevel() < 31)
+        return QString();
+    // Material 3 primary of the dynamic palette: tone 80 on a dark page, tone 40 on a light one
+    const char *name = dark ? "system_accent1_200" : "system_accent1_600";
+    QAndroidJniEnvironment env;
+    const jint id = QAndroidJniObject::getStaticField<jint>("android/R$color", name);
+    if (env->ExceptionCheck()) {
+        env->ExceptionClear();
+        return QString();
+    }
+    QAndroidJniObject context = QtAndroid::androidContext();
+    if (!context.isValid() || id == 0)
+        return QString();
+    const jint argb = context.callMethod<jint>("getColor", "(I)I", id);
+    if (env->ExceptionCheck()) {
+        env->ExceptionClear();
+        return QString();
+    }
+    return QColor::fromRgb(static_cast<QRgb>(argb)).name(QColor::HexRgb);
+#else
+    Q_UNUSED(dark)
+    return QString();
 #endif
 }
 

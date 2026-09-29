@@ -43,6 +43,10 @@ public:
     // the app comes back to the foreground and every 2 s while it is on screen.
     // Not Android: true (the app is dark by default).
     Q_INVOKABLE bool systemDarkMode() const;
+    // Accent of the dynamic palette that Android 12+ (API 31) builds from the wallpaper, as
+    // "#rrggbb": the Material 3 primary for a dark page (dark = true) or a light one. Empty
+    // below API 31 and off Android. Read on demand: QML asks again on return to the foreground.
+    Q_INVOKABLE QString systemAccentColor(bool dark) const;
 
 public slots:
     void onInsetsChanged(int top, int bottom, int left, int right, int waterfallTop, int waterfallBottom,

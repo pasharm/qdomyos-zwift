@@ -10099,6 +10099,10 @@ Default: A = -0.96, B = 1.33</source>
         <source>Black / white</source>
         <translation>Чёрная / белая</translation>
     </message>
+    <message>
+        <source>Wallpaper colour</source>
+        <translation>Цвет обоев</translation>
+    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>

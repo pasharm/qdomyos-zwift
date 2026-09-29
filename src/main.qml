@@ -263,6 +263,25 @@ ApplicationWindow {
                                       : (lightThemes[settings.ui_theme] || lightThemes["graphite"])
         readonly property var a: dark ? accents : lightAccents
 
+        // Accent "system": the colour Android 12+ takes from the wallpaper (Material You), for
+        // the dark and the light page. Empty elsewhere, then the choice is not offered and a
+        // saved "system" falls back to violet. Read again on return to the foreground, since
+        // the wallpaper is changed outside the app.
+        property string systemAccentDark: AndroidStatusBar.systemAccentColor(true)
+        property string systemAccentLight: AndroidStatusBar.systemAccentColor(false)
+        readonly property bool systemAccentAvailable: systemAccentDark !== "" && systemAccentLight !== ""
+        Component.onCompleted: console.log("QZ-THEME system accent dark '" + systemAccentDark
+                                           + "' light '" + systemAccentLight + "'")
+        function refreshSystemAccent() {
+            systemAccentDark = AndroidStatusBar.systemAccentColor(true)
+            systemAccentLight = AndroidStatusBar.systemAccentColor(false)
+        }
+        function accentOf(name) {
+            if (name === "system" && systemAccentAvailable)
+                return dark ? systemAccentDark : systemAccentLight
+            return a[name] || a["violet"]
+        }
+
         readonly property color bg: t.bg
         readonly property color surface: t.surface
         readonly property color surfaceHigh: t.surfaceHigh
@@ -270,7 +289,7 @@ ApplicationWindow {
         readonly property color outline: t.outline
         readonly property color textMain: t.textMain
         readonly property color textMuted: t.textMuted
-        readonly property color accent: a[settings.ui_accent] || a["violet"]
+        readonly property color accent: accentOf(settings.ui_accent)
         readonly property color accentInk: dark ? "#12101A" : "#FFFFFF"
         readonly property color danger: dark ? "#FF8A80" : "#C62828"
         readonly property color ok: dark ? "#7EDC8A" : "#2E7D32"
@@ -334,8 +353,10 @@ ApplicationWindow {
     Connections {
         target: Qt.application
         function onStateChanged() {
-            if (Qt.application.state === Qt.ApplicationActive)
+            if (Qt.application.state === Qt.ApplicationActive) {
                 window.ui.refreshSystemDark()
+                window.ui.refreshSystemAccent()
+            }
         }
     }
     Timer {
