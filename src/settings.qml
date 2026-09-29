@@ -2340,15 +2340,17 @@ import QtQuick 2.12 as Quick212
                         Layout.preferredWidth: width
                         Layout.preferredHeight: implicitHeight
                         implicitWidth: width
-                        // Modern: a switch, button or field at the top or the bottom of the card
-                        // brings its own empty band (the 48 px touch height), and 12 on top of it
-                        // looked like a gap: 6 there instead
+                        // Modern: a switch or button in the title row makes it 48 px high, the title
+                        // sits in its middle, and 12 on top of that looked like a gap: 6 there. At
+                        // the bottom only when that row is also the last one; a field or list at the
+                        // bottom keeps 12, its own inset matches the gap above the title then
                         readonly property bool controlOnTop: window.ui.modern && (settingsPane.changedOnly ||
                             entry.catalogKind === "page" || (entry.catalogKind === "setting" && entry.type === "boolean"))
                         readonly property bool hasDescription: entry.description !== null && entry.description !== undefined &&
                                                                entry.description.length > 0
-                        readonly property bool controlAtBottom: window.ui.modern && (entry.catalogKind === "virtual" ||
-                            (entry.catalogKind === "setting" && entry.type !== "boolean") || (controlOnTop && !hasDescription))
+                        readonly property bool editorBelow: entry.catalogKind === "virtual" ||
+                                                            (entry.catalogKind === "setting" && entry.type !== "boolean")
+                        readonly property bool controlAtBottom: controlOnTop && !hasDescription && !editorBelow
                         readonly property real topPad: window.ui.modern ? (controlOnTop ? 6 : 12) : 4
                         readonly property real bottomPad: window.ui.modern ? (controlAtBottom ? 6 : 12) : 4
                         implicitHeight: headerHeight + searchResultContent.implicitHeight + topPad + bottomPad
