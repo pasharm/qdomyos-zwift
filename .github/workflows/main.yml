@@ -64,4 +64,6 @@ jobs:
             *.png
             process_list.txt
             full_logcat.txt
+            steps.log
+            dumps/
           if-no-files-found: warn
