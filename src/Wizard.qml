@@ -59,7 +59,9 @@ Page {
     }
 
     // Modern look: progress along the wizard as a thin bar on top. The number of steps
-    // depends on the answers, so it is an estimate that fills up at the last steps
+    // depends on the answers: an estimate of ten steps while the branch is open, one step
+    // left on a step with Finish (wizardLastStep), full on the last page (wizardDone). A
+    // short branch (a feature, virtual shifting) ended at half the bar before
     Rectangle {
         visible: window.ui.modern
         z: 1
@@ -69,7 +71,11 @@ Page {
         Rectangle {
             height: parent.height
             radius: 1.5
-            width: parent.width * Math.min(1, stackViewLocal.depth / 10)
+            readonly property Item page: stackViewLocal.currentItem
+            readonly property int depth: stackViewLocal.depth
+            width: parent.width * (page && page.wizardDone ? 1
+                                   : page && page.wizardLastStep ? depth / (depth + 1)
+                                   : Math.min(0.9, depth / 10))
             color: window.ui.accent
             Behavior on width { NumberAnimation { duration: 200; easing.type: Easing.OutQuad } }
         }
@@ -544,6 +550,7 @@ Page {
         id: pelotonDifficultyComponent
 
         Item {
+            readonly property bool wizardLastStep: true
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
@@ -707,6 +714,7 @@ Page {
         id: step4Component
 
         Item {
+            readonly property bool wizardLastStep: true
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
@@ -748,7 +756,10 @@ Page {
                         Layout.preferredHeight: 50
                     }
 
+                    // Classic: Back above Finish, as before; modern: the step goes on first, like
+                    // Next on the other steps, and Back under it
                     WizardButton {
+                        visible: !window.ui.modern
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Back")
                         onClicked: stackViewLocal.pop()
@@ -758,6 +769,13 @@ Page {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Finish")
                         onClicked: stackViewLocal.push(finalStepComponent)
+                    }
+
+                    WizardButton {
+                        visible: window.ui.modern
+                        Layout.alignment: Qt.AlignHCenter
+                        text: qsTr("Back")
+                        onClicked: stackViewLocal.pop()
                     }
                 }
             }
@@ -950,6 +968,7 @@ Page {
         id: zwiftPlayClick
 
         Item {
+            readonly property bool wizardLastStep: true
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
@@ -1034,7 +1053,10 @@ Page {
                         Layout.preferredHeight: 50
                     }
 
+                    // Classic: Back above Finish, as before; modern: the step goes on first, like
+                    // Next on the other steps, and Back under it
                     WizardButton {
+                        visible: !window.ui.modern
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Back")
                         onClicked: stackViewLocal.pop()
@@ -1048,6 +1070,13 @@ Page {
                             stackViewLocal.push(finalStepComponent);
                         }
                     }
+
+                    WizardButton {
+                        visible: window.ui.modern
+                        Layout.alignment: Qt.AlignHCenter
+                        text: qsTr("Back")
+                        onClicked: stackViewLocal.pop()
+                    }
                 }
             }
         }
@@ -1057,6 +1086,7 @@ Page {
         id: virtualShifting
 
         Item {
+            readonly property bool wizardLastStep: true
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
@@ -1098,7 +1128,10 @@ Page {
                         Layout.preferredHeight: 50
                     }
 
+                    // Classic: Back above Finish, as before; modern: the step goes on first, like
+                    // Next on the other steps, and Back under it
                     WizardButton {
+                        visible: !window.ui.modern
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Back")
                         onClicked: stackViewLocal.pop()
@@ -1112,6 +1145,13 @@ Page {
                             stackViewLocal.push(finalStepComponent);
                         }
                     }
+
+                    WizardButton {
+                        visible: window.ui.modern
+                        Layout.alignment: Qt.AlignHCenter
+                        text: qsTr("Back")
+                        onClicked: stackViewLocal.pop()
+                    }
                 }
             }
         }
@@ -1121,6 +1161,7 @@ Page {
         id: step3HelpComponent
 
         Item {
+            readonly property bool wizardLastStep: true
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
@@ -1161,7 +1202,10 @@ Page {
                         Layout.preferredHeight: 50
                     }
 
+                    // Classic: Back above Finish, as before; modern: the step goes on first, like
+                    // Next on the other steps, and Back under it
                     WizardButton {
+                        visible: !window.ui.modern
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Back")
                         onClicked: stackViewLocal.pop()
@@ -1172,6 +1216,13 @@ Page {
                         text: qsTr("Finish")
                         onClicked: stackViewLocal.push(finalStepComponent)
                     }
+
+                    WizardButton {
+                        visible: window.ui.modern
+                        Layout.alignment: Qt.AlignHCenter
+                        text: qsTr("Back")
+                        onClicked: stackViewLocal.pop()
+                    }
                 }
             }
         }
@@ -1181,6 +1232,7 @@ Page {
         id: finalStepComponent
 
         Item {
+            readonly property bool wizardDone: true
             anchors.fill: parent
             ScrollView {
                 contentWidth: availableWidth
