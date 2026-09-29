@@ -132,7 +132,10 @@ ScrollView {
         component ShortcutField : UiTextField {
             property string settingName: ""
             placeholderText: qsTr("None")
-            horizontalAlignment: Text.AlignRight
+            // Modern: the letter and "None" in the middle, with room for the whole word
+            horizontalAlignment: window.ui.modern ? Text.AlignHCenter : Text.AlignRight
+            leftPadding: window.ui.modern ? 6 : padding
+            rightPadding: window.ui.modern ? 6 : padding
             // Modern: one letter needs less than 100; three of them (the AVS row) left no
             // room for the label on a phone
             Layout.preferredWidth: window.ui.modern ? 76 : 100
