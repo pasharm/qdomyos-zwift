@@ -199,6 +199,19 @@ shot 07-settings
 tap_ui 'General Options' 720 520   # a section header
 sleep 4
 shot 08-settings-open
+# Combo box opened again (from the phone: the second tap on the same field did nothing).
+# Gender sits at the bottom of the opened section; OK is not pressed, nothing is saved
+tap 928 2118 "gender combo, 1st"; sleep 2
+shot 08a-combo-open-1
+tap_ui '^Female$'; sleep 2
+tap 928 2118 "gender combo, 2nd"; sleep 2
+shot 08b-combo-open-2
+tap_ui '^Male$'; sleep 2
+tap 928 2118 "gender combo, 3rd"; sleep 2
+back "combo popup"; sleep 2
+tap 928 2118 "gender combo, 4th after back"; sleep 2
+shot 08c-combo-open-after-back
+back "combo popup"; sleep 2
 adb shell input swipe 700 2100 700 700 400 || true
 sleep 3
 shot 09-settings-scrolled
