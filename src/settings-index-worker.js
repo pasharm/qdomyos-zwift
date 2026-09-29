@@ -112,8 +112,13 @@ WorkerScript.onMessage = function (message) {
     var started = Date.now()
     var map = {}
     var pages = message.pages || []
-    for (var i = 0; i < pages.length; i++)
-        parse(pages[i].file, pages[i].source || "", map)
+    // Always answer: without a map the page keeps the catalog paths, but it must stop waiting
+    try {
+        for (var i = 0; i < pages.length; i++)
+            parse(pages[i].file, pages[i].source || "", map)
+    } catch (e) {
+        map = {}
+    }
     var keys = 0
     for (var key in map) {
         delete map[key].strength
