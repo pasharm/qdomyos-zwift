@@ -8,6 +8,7 @@ import QtCharts 2.2
 import Qt.labs.settings 1.0
 import QtPositioning 5.5
 import QtLocation 5.6
+import QtQuick.Window 2.2
 
 ColumnLayout {
     id: gpxPage
@@ -20,6 +21,11 @@ ColumnLayout {
     // otherwise (the classic look is always side by side)
     readonly property bool sideBySide: !window.ui.modern || width > height
     readonly property int modernMargin: Math.max(16, window.contentSideMargin)
+    // The page stack keeps clear of the Android navigation bar held upright only (main.qml);
+    // held sideways the gesture bar is still at the bottom and covered Other folders
+    readonly property real landscapeBottomInset:
+        (Screen.orientation === Qt.LandscapeOrientation || Screen.orientation === Qt.InvertedLandscapeOrientation)
+        ? window.getBottomPadding() : 0
 
     // Case-insensitive name filter shared by the classic and the modern filter field
     function applyFilter(text) {
@@ -405,7 +411,7 @@ ColumnLayout {
             Layout.column: gpxPage.sideBySide ? 1 : 0
             Layout.rowSpan: window.ui.modern && gpxPage.sideBySide ? 3 : 1
             Layout.topMargin: window.ui.modern && gpxPage.sideBySide ? 8 : 0
-            Layout.bottomMargin: window.ui.modern && gpxPage.sideBySide ? 8 : 0
+            Layout.bottomMargin: window.ui.modern && gpxPage.sideBySide ? 8 + gpxPage.landscapeBottomInset : 0
             Layout.fillHeight: true
             Layout.fillWidth: true
             Layout.minimumWidth: 100
@@ -537,7 +543,7 @@ ColumnLayout {
             Layout.preferredWidth: 100
             Layout.leftMargin: gpxPage.modernMargin
             Layout.rightMargin: gpxPage.sideBySide ? 4 : gpxPage.modernMargin
-            Layout.bottomMargin: 8
+            Layout.bottomMargin: 8 + gpxPage.landscapeBottomInset
             text: qsTr("Other folders")
             onClicked: gpxPage.openOtherFolders()
         }
