@@ -152,9 +152,30 @@ shot 03-wizard-step1
 tap_ui 'First-time setup' 720 620
 sleep 4
 shot 03b-wizard-step2
-back "wizard"; sleep 2
+# The short branch to its end: a feature, virtual shifting, Finish, the last page (the
+# order of Finish and Back, the progress bar full at the end). Finish turns the gears tile
+# on, so the home page below has it and "Changed" lists it
 back "wizard"; sleep 3
-back "wizard"; sleep 5
+wizard_done=false
+if tap_ui 'Help with a specific feature'; then
+  sleep 3
+  shot 03c-wizard-features
+  if tap_ui 'Virtual Shifting'; then
+    sleep 3
+    shot 03d-wizard-virtual-shifting
+    if tap_ui 'Finish'; then
+      sleep 3
+      shot 03e-wizard-done
+      tap_ui 'Close' && wizard_done=true
+      sleep 5
+    fi
+  fi
+fi
+if [ "$wizard_done" != true ]; then
+  back "wizard"; sleep 2
+  back "wizard"; sleep 3
+  back "wizard"; sleep 5
+fi
 shot 04-home
 tap_ui 'Stop' 952 462        # confirmation dialog
 sleep 3
