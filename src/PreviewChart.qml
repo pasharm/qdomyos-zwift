@@ -16,10 +16,12 @@ ColumnLayout {
     // from the URL fragment of the first load and through runJavaScript on a later change
     readonly property var pageTheme: window.ui.webTheme
     property bool pageLoaded: false
-    // Modern look: the native web view stays hidden until the page has drawn once. It is
-    // white before its first paint and lies over everything QML draws, so it flashed white
-    // on the dark theme
+    // Modern look: the native web view stays off the screen until the page has drawn once.
+    // It is white before its first paint and lies over everything QML draws, so it flashed
+    // white on the dark theme. Moved aside, not hidden: a hidden view has no size, the page
+    // laid out for a wrong width and opened zoomed in
     property bool pageShown: !window.ui.modern
+    readonly property real offScreen: pageShown ? 0 : Screen.width + Screen.height
 
     onPageThemeChanged: {
         if (pageLoaded && pageTheme)
@@ -38,7 +40,8 @@ ColumnLayout {
         anchors.bottomMargin: window.ui.modern && (Screen.orientation === Qt.LandscapeOrientation ||
                                                    Screen.orientation === Qt.InvertedLandscapeOrientation)
                               ? window.getBottomPadding() : 0
-        visible: column1.pageShown
+        anchors.leftMargin: -column1.offScreen
+        anchors.rightMargin: column1.offScreen
         onLoadingChanged: {
             if (loadRequest.errorString) {
                 console.error(loadRequest.errorString);
