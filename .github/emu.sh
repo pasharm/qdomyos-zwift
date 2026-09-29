@@ -108,6 +108,19 @@ scroll_to() {
   echo "scroll to '$1': NOT FOUND" >> $STEPLOG
   return 1
 }
+# The top of a page: a few quick swipes down
+scroll_top() {
+  local i
+  for i in 1 2 3 4 5; do adb shell input swipe 700 800 700 2200 150 || true; done
+  sleep 1
+}
+# The back key closes the keyboard, but only while it is shown: otherwise it leaves the page
+hide_keyboard() {
+  if adb shell dumpsys input_method | grep -q "mInputShown=true"; then
+    back "keyboard"
+    sleep 1
+  fi
+}
 tap() { ensure_app; echo "tap $1 $2 ($3)" >> $STEPLOG; adb shell input tap $1 $2 || true; }
 back() { echo "back ($1)" >> $STEPLOG; adb shell input keyevent KEYCODE_BACK || true; }
 # Toolbar buttons are icons without text: the same place in both looks (Nexus 6: 1440x2560
@@ -179,6 +192,27 @@ sleep 3
 adb shell am start -n $PKG/$PKG.CustomQtActivity
 sleep 5
 shot 10-settings-dark
+# Modern: the search field on top of the settings, a result opens the setting itself, and
+# "Changed" lists what differs from the defaults
+if [ "$UI_MODERN" = "true" ]; then
+  scroll_top
+  tap_ui 'Search settings' 600 330
+  sleep 2
+  adb shell input text "miles" || true
+  sleep 3
+  hide_keyboard
+  shot 10b-search-dark
+  tap_ui 'Use Miles unit in UI'
+  sleep 1
+  shot 10c-search-jump-dark          # scrolled to the setting, lit for a moment
+  sleep 3
+  scroll_top
+  tap_ui 'Changed'
+  sleep 3
+  shot 10d-changed-dark
+  tap_ui 'Changed'                   # off again
+  sleep 2
+fi
 tap $MENU "back: home"; sleep 3
 shot 11-home-dark
 tap_ui 'Stop' 952 462
@@ -251,7 +285,12 @@ shot 22-charts-dark
 adb shell input swipe 700 2000 700 900 400 || true
 sleep 2
 shot 23-charts-dark-scrolled
-tap_ui 'Close' 720 2364             # the bottom of the charts page
+# Modern: no Close at the bottom any more, the back arrow of the toolbar; classic: its Close
+if [ "$UI_MODERN" = "true" ]; then
+  tap $MENU "back: home"
+else
+  tap_ui 'Close' 720 2364
+fi
 sleep 3
 shot 24-after-close-dark            # the home page again
 
