@@ -1096,6 +1096,15 @@ ApplicationWindow {
         Material.elevation: window.ui.modern ? 0 : 4
         id: headerToolbar
         property bool settingsPageActive: stackView.currentItem && typeof stackView.currentItem.showSettingsSearch === "function"
+        // Modern look: load and save belong to the settings page itself. The pages opened from
+        // it (the settings files of the load button among them) kept both, and load could open
+        // the list again and again. The classic look sets them where it always did
+        onSettingsPageActiveChanged: {
+            if (window.ui.modern) {
+                toolButtonLoadSettings.visible = settingsPageActive
+                toolButtonSaveSettings.visible = settingsPageActive
+            }
+        }
         // Set by the tile grid in Home.qml. The toolbar collapses to the status bar inset
         // (topPadding) with an animation instead of disappearing at once
         property bool scrolledAway: false
