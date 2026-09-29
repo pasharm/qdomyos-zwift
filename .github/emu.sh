@@ -291,6 +291,10 @@ open_menu
 tap_drawer 'Workout Editor' 403 927
 sleep 15
 shot 17-editor-dark
+# Device list: modern – the page's own menu under the field, classic – the system list
+tap 1148 426 "editor device select"; sleep 2
+shot 17a-editor-device-menu
+tap 200 2300 "close the list"; sleep 2
 adb shell input swipe 700 2000 700 900 400 || true
 sleep 2
 shot 18-editor-dark-scrolled
