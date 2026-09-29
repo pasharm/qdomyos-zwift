@@ -93,6 +93,21 @@ tap_drawer() {
   fi
   tap_ui "$@"
 }
+# scroll_to 'regex': swipe the page up until the control shows (at most 12 swipes)
+scroll_to() {
+  local i
+  for i in $(seq 1 12); do
+    dump
+    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
+      echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
+      return 0
+    fi
+    adb shell input swipe 700 2000 700 1300 400 || true
+    sleep 1
+  done
+  echo "scroll to '$1': NOT FOUND" >> $STEPLOG
+  return 1
+}
 tap() { ensure_app; echo "tap $1 $2 ($3)" >> $STEPLOG; adb shell input tap $1 $2 || true; }
 back() { echo "back ($1)" >> $STEPLOG; adb shell input keyevent KEYCODE_BACK || true; }
 # Toolbar buttons are icons without text: the same place in both looks (Nexus 6: 1440x2560
@@ -143,6 +158,18 @@ shot 08-settings-open
 adb shell input swipe 700 2100 700 700 400 || true
 sleep 3
 shot 09-settings-scrolled
+# Accent colours, with the wallpaper colour first where Android offers it (API 31+)
+if scroll_to 'General UI Options'; then
+  tap_ui 'General UI Options'
+  sleep 3
+  if scroll_to 'Accent colour'; then
+    shot 09b-accent-colours
+    if tap_ui 'Wallpaper colour'; then
+      sleep 2
+      shot 09c-accent-wallpaper
+    fi
+  fi
+fi
 
 # Night mode of the system while the app runs: it is read again on return to the foreground
 adb shell cmd uimode night yes || true
@@ -232,5 +259,5 @@ adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
 adb logcat -d > full_logcat.txt || true
 echo "== steps"; cat $STEPLOG
-echo "== timing"; grep "QZ-TIMING" full_logcat.txt || true
+echo "== timing"; grep -E "QZ-TIMING|QZ-THEME" full_logcat.txt || true
 grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
