@@ -1176,7 +1176,12 @@ ApplicationWindow {
                     if (stackView.depth > 1) {
                         stackView.pop()
                     }
-                    popupLoadSettings.open();
+                    // Modern: the restart asked right away (Yes/No) rather than a notice
+                    // at the bottom that only says to do it
+                    if (window.ui.modern)
+                        popupRestartApp.visible = true;
+                    else
+                        popupLoadSettings.open();
                  });
                 drawer.close()
             }
