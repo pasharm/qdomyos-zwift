@@ -108,17 +108,32 @@ import QtQuick 2.12 as Quick212
             return parts.length > 0 ? parts.join(" › ") : parentDisplayName(entry)
         }
 
-        // Credentials and tokens: not shown among the changed settings and never reset with a
-        // whole section (that would sign the user out of a service)
+        // Not shown among the changed settings and never reset with a whole section:
+        // - credentials and account data (a reset would sign the user out of a service, and a
+        //   login without its password is no better than both gone);
+        // - state that the app writes by itself after detecting the equipment: it differs from
+        //   the default without anyone touching it, and a reset starts the detection over
         function isPrivateSetting(entry) {
-            return /pass|token|secret|refresh|api_?key|auth|cookie|session|expires/i.test(entry.key || "")
+            var key = entry.key || ""
+            return /pass|token|secret|refresh|api_?key|auth|cookie|session|expires|user|email|login|host|serial/i.test(key) ||
+                   /discovery|_completed$|_notfmts$|force_ftms$/i.test(key)
+        }
+
+        // From the store, not from this page's Settings: another settings page (tiles, voice)
+        // writes through a Settings object of its own, which this one does not hear about. The
+        // store may give a boolean back as the string "true"
+        function storedValue(entry) {
+            var value = settings.value(entry.key, entry.defaultValue)
+            if (entry.type === "boolean")
+                return value === true || value === "true"
+            return value
         }
 
         function differsFromDefault(entry) {
             var fallback = entry.defaultValue
             if (fallback === null || fallback === undefined)
                 return false
-            var value = settingValue(entry)
+            var value = storedValue(entry)
             if (entry.type === "boolean")
                 return !!value !== !!fallback
             if (entry.type === "integer" || entry.type === "number")
@@ -130,16 +145,19 @@ import QtQuick 2.12 as Quick212
             return entry.catalogKind === "setting" && !isPrivateSetting(entry) && differsFromDefault(entry)
         }
 
-        // setSettingValue() without its toast, for a reset of several settings at once
+        // setSettingValue() without its toast, for a reset of several settings at once. Also
+        // straight into the store: when this page's copy is stale and already equal to the
+        // default, the property assignment alone changes nothing and writes nothing
         function writeSetting(entry, value) {
+            var typed = value
             if (entry.type === "boolean")
-                settings[entry.key] = !!value
+                typed = !!value
             else if (entry.type === "integer")
-                settings[entry.key] = parseInt(value)
+                typed = parseInt(value)
             else if (entry.type === "number")
-                settings[entry.key] = parseFloat(value)
-            else
-                settings[entry.key] = value
+                typed = parseFloat(value)
+            settings[entry.key] = typed
+            settings.setValue(entry.key, typed)
         }
 
         function resetSetting(entry) {
@@ -242,8 +260,14 @@ import QtQuick 2.12 as Quick212
                       ? target.parent : target
             var at = row.mapToItem(flickable.contentItem, 0, 0)
             flickable.contentY = Math.max(0, Math.min(at.y - 96, flickable.contentHeight - flickable.height))
-            settingHighlight.createObject(flickable.contentItem,
-                                          { x: 4, y: at.y - 6, width: flickable.width - 8, height: row.height + 12 })
+            // Nothing to light when not even a section was found: the whole page would glow
+            if (target === flickable)
+                return
+            // On the flickable, not in its content: a ScrollView takes the content height from
+            // the only child of the content, a second child would zero it and throw the page to
+            // the top. So the highlight follows the scroll itself.
+            settingHighlight.createObject(flickable, { flickable: flickable, contentTop: at.y - 6,
+                                                       x: 4, width: flickable.width - 8, height: row.height + 12 })
         }
 
         Timer {
@@ -257,6 +281,9 @@ import QtQuick 2.12 as Quick212
             id: settingHighlight
             Rectangle {
                 id: glow
+                property Item flickable
+                property real contentTop: 0
+                y: flickable ? contentTop - flickable.contentY : 0
                 radius: 12
                 color: window.ui.alpha(window.ui.accent, 0.22)
                 SequentialAnimation {

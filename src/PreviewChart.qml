@@ -4,6 +4,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
 import Qt.labs.settings 1.0
 import QtWebView 1.1
+import QtQuick.Window 2.2
 
 ColumnLayout {
     signal popupclose()
@@ -32,7 +33,11 @@ ColumnLayout {
         id: webView
         anchors.fill: parent
         // Modern look: no Close button at the bottom (the back arrow of the toolbar does
-        // it), the page runs down to the edge like the other pages
+        // it), the page runs down to the edge like the other pages. Held sideways the page
+        // stack does not keep clear of the gesture bar (main.qml), so the page does
+        anchors.bottomMargin: window.ui.modern && (Screen.orientation === Qt.LandscapeOrientation ||
+                                                   Screen.orientation === Qt.InvertedLandscapeOrientation)
+                              ? window.getBottomPadding() : 0
         visible: column1.pageShown
         onLoadingChanged: {
             if (loadRequest.errorString) {

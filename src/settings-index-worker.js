@@ -63,8 +63,15 @@ function record(map, key, file, chain, strength) {
         map[key] = { file: file, chain: chain, strength: strength }
 }
 
+// Block comments out, line breaks kept: commented-out controls are not where a setting lives
+function withoutBlockComments(source) {
+    return source.replace(/\/\*[\s\S]*?\*\//g, function (comment) {
+        return comment.replace(/[^\n]/g, " ")
+    })
+}
+
 function parse(file, source, map) {
-    var lines = source.split("\n")
+    var lines = withoutBlockComments(source).split("\n")
     var stack = []
     var depth = 0
     for (var i = 0; i < lines.length; i++) {
