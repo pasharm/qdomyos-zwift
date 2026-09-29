@@ -16,6 +16,13 @@ T.ComboBox {
 
     readonly property bool modern: window.ui.modern
 
+    // Shown text for a raw value: ValueComboBox puts its translated labels here; values
+    // missing from the map are shown unchanged
+    property var itemLabels: null
+    function labelFor(v) {
+        return itemLabels && itemLabels.hasOwnProperty(v) ? itemLabels[v] : v
+    }
+
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
@@ -36,7 +43,7 @@ T.ComboBox {
     delegate: MenuItem {
         id: menuItem
         width: ListView.view.width
-        text: control.textRole ? (Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]) : modelData
+        text: control.labelFor(control.textRole ? (Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]) : modelData)
         Material.foreground: control.currentIndex === index ? ListView.view.contentItem.Material.accent : ListView.view.contentItem.Material.foreground
         highlighted: control.highlightedIndex === index
         hoverEnabled: control.hoverEnabled
