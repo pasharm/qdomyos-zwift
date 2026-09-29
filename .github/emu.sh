@@ -343,6 +343,33 @@ fi
 sleep 3
 shot 24-after-close-dark            # the home page again
 
+# Yes to a restart question closes the app (from the phone: after Yes on the FitShow question
+# the card stayed on the screen and the process lived on). OK of UI Zoom asks for a restart
+# on the way back; the value stays 100
+open_menu
+tap_drawer 'Settings' 525 861
+sleep 8
+dump
+if [ -z "$(python3 .github/uitap.py ui.xml 'UI Zoom:?' 2>/dev/null)" ]; then
+  tap_ui 'General Options' 720 520
+  sleep 4
+  dump
+fi
+xy=$(python3 .github/uitap.py ui.xml 'UI Zoom:?' 2>/dev/null)
+if [ -n "$xy" ]; then
+  tap 1290 "${xy#* }" "UI Zoom OK"
+  sleep 2
+  tap $MENU "back: home"; sleep 3
+  shot 25-restart-question
+  tap_ui '^(Yes|YES)$' || true
+  sleep 10
+  echo "after Yes: pid '$(adb shell pidof $PKG | tr -d '\r')'" >> $STEPLOG
+  adb shell screencap -p /sdcard/26-after-yes.png || true
+  adb pull /sdcard/26-after-yes.png || true
+else
+  echo "UI Zoom not found, restart question skipped" >> $STEPLOG
+fi
+
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
 adb logcat -d > full_logcat.txt || true
