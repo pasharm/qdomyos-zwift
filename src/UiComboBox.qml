@@ -34,11 +34,35 @@ T.ComboBox {
     Material.foreground: flat ? undefined : Material.primaryTextColor
 
     delegate: MenuItem {
+        id: menuItem
         width: ListView.view.width
         text: control.textRole ? (Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]) : modelData
         Material.foreground: control.currentIndex === index ? ListView.view.contentItem.Material.accent : ListView.view.contentItem.Material.foreground
         highlighted: control.highlightedIndex === index
         hoverEnabled: control.hoverEnabled
+
+        // Material's MenuItem background; modern: the highlight is a rounded block inset from
+        // the edges, not a square bar across the whole list
+        background: Rectangle {
+            x: control.modern ? 8 : 0
+            implicitWidth: 200
+            implicitHeight: menuItem.Material.menuItemHeight
+            width: menuItem.width - 2 * x
+            height: menuItem.height
+            radius: control.modern ? 10 : 0
+            color: menuItem.highlighted ? menuItem.Material.listHighlightColor : "transparent"
+
+            Ripple {
+                width: parent.width
+                height: parent.height
+                clip: visible
+                clipRadius: parent.radius
+                pressed: menuItem.pressed
+                anchor: menuItem
+                active: menuItem.down || menuItem.highlighted
+                color: menuItem.Material.rippleColor
+            }
+        }
     }
 
     indicator: ColorImage {
