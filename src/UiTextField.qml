@@ -13,6 +13,9 @@ T.TextField {
     id: control
 
     readonly property bool modern: window.ui.modern
+    // A search bar on top of a list: the full 48, no inset
+    property bool searchBar: false
+    readonly property int modernInset: modern && !searchBar ? 6 : 0
 
     implicitWidth: implicitBackgroundWidth + leftInset + rightInset
                    || Math.max(contentWidth, placeholder.implicitWidth) + leftPadding + rightPadding
@@ -20,6 +23,10 @@ T.TextField {
                              contentHeight + topPadding + bottomPadding,
                              placeholder.implicitHeight + topPadding + bottomPadding)
 
+    // Modern: 48 tall with the 6 inset of Material buttons and combo boxes, so the visible
+    // field is 36 like the OK button and the combo box next to it
+    topInset: modernInset
+    bottomInset: modernInset
     topPadding: modern ? 12 : 8
     bottomPadding: modern ? 12 : 16
     leftPadding: modern ? 14 : padding
@@ -50,7 +57,7 @@ T.TextField {
 
     background: Item {
         implicitWidth: 120
-        implicitHeight: control.modern ? 48 : 0
+        implicitHeight: control.modern ? 48 - 2 * control.modernInset : 0
 
         // Classic: the Material underline
         Rectangle {

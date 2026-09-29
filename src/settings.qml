@@ -447,8 +447,10 @@ import QtQuick 2.12 as Quick212
                 items.push(pages[k])
             }
 
-            for (var t = 0; t < items.length; t++)
+            for (var t = 0; t < items.length; t++) {
                 items[t]._translatedName = computeTranslatedName(items[t])
+                items[t]._translatedDescription = computeTranslatedDescription(items[t])
+            }
 
             searchableSettings = items
             if (settingsSearchActive && settingsSearchPending && settingsSearchDebounceTimer.running)
@@ -482,12 +484,30 @@ import QtQuick 2.12 as Quick212
             return name
         }
 
+        // The same for the description: the catalog keeps the English text of the label under
+        // the setting, so its translation is found by the same contexts. Empty when there is none
+        function computeTranslatedDescription(entry) {
+            var text = entry.description
+            if (!text) return ""
+            var contexts = [
+                "settings", "settings-tiles", "settings-tts",
+                "settings-shortcuts", "settings-treadmill-inclination-override",
+                "homeform"
+            ]
+            for (var i = 0; i < contexts.length; i++) {
+                var translated = qsTranslate(contexts[i], text)
+                if (translated !== text) return translated
+            }
+            return ""
+        }
+
         function searchableText(entry) {
             var parts = [
                 entry.key,
                 entry.name,
                 entry._translatedName,
                 entry.description,
+                entry._translatedDescription,
                 entry.parent,
                 parentDisplayName(entry),
                 entry.type,
@@ -2195,6 +2215,7 @@ import QtQuick 2.12 as Quick212
                 UiTextField {
                     id: settingsSearchTextField
                     Layout.fillWidth: true
+                    searchBar: true
                     placeholderText: qsTr("Search settings")
                     selectByMouse: true
                     inputMethodHints: Qt.ImhNoPredictiveText
@@ -2429,7 +2450,7 @@ import QtQuick 2.12 as Quick212
                                 visible: entry.description !== null && entry.description !== undefined && entry.description.length > 0
                                 Layout.preferredHeight: visible ? implicitHeight : 0
                                 Layout.maximumHeight: visible ? implicitHeight : 0
-                                text: entry.description || ""
+                                text: entry._translatedDescription || entry.description || ""
                                 color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern

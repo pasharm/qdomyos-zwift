@@ -172,6 +172,7 @@ ColumnLayout {
                                          - (upButton.visible ? upButton.width + filterRow.spacing : 0)
                                      : implicitWidth
                         leftPadding: window.ui.modern ? 44 : undefined
+                        searchBar: true
                         placeholderText: qsTr("Search (recursive)...")
 
                         UiIcon {
