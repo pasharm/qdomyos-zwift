@@ -78,6 +78,7 @@ ScrollView {
             spacing: 10
             Label {
                 text: qsTr("Inclination Override Gain:")
+                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                 Layout.fillWidth: true
             }
             UiTextField {
@@ -101,6 +102,7 @@ ScrollView {
             spacing: 10
             Label {
                 text: qsTr("Inclination Override Offset:")
+                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                 Layout.fillWidth: true
             }
             UiTextField {

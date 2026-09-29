@@ -101,6 +101,7 @@ ScrollView {
             Label {
                 id: labelTTSSummarySec
                 text: qsTr("Summary Each Seconds:")
+                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                 Layout.fillWidth: true
             }
             UiTextField {

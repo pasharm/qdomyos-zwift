@@ -2901,6 +2901,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Critical Power Run value:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -3853,6 +3854,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelRollingResistance
                             text: qsTr("Rolling Resistance Factor")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -4115,6 +4117,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Power:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4195,6 +4198,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right Power:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4222,6 +4226,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelBikeResistanceOffset
                             text: qsTr("Zwift Resistance Offset:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -4260,6 +4265,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelBikePowerOffset
                             text: qsTr("Zwift Power Offset (W):")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -4298,6 +4304,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelBikeResistanceGain
                             text: qsTr("Zwift Resistance Gain:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -4336,6 +4343,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelZwiftErgFilter
                             text: qsTr("Zwift ERG Watt Up Filter:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -4374,6 +4382,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelZwiftErgDownFilter
                             text: qsTr("Zwift ERG Watt Down Filter:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -4488,6 +4497,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelBikeResistanceStart
                             text: qsTr("Resistance at Startup:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -4681,6 +4691,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Cruise - Gear Up Cadence (RPM):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -4705,6 +4716,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Cruise - Gear Up Time (seconds):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -4729,6 +4741,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Cruise - Gear Down Cadence (RPM):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -4753,6 +4766,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Cruise - Gear Down Time (seconds):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -4787,6 +4801,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Climb - Gear Up Cadence (RPM):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -4811,6 +4826,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Climb - Gear Up Time (seconds):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -4835,6 +4851,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Climb - Gear Down Cadence (RPM):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -4859,6 +4876,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Climb - Gear Down Time (seconds):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -4893,6 +4911,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Sprint - Gear Up Cadence (RPM):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -4917,6 +4936,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Sprint - Gear Up Time (seconds):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -4941,6 +4961,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Sprint - Gear Down Cadence (RPM):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -4965,6 +4986,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Sprint - Gear Down Time (seconds):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -5100,6 +5122,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelSchwinnResistancSmoothing
                                     text: qsTr("Resistance Smoothing:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -5144,6 +5167,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 id: labelHorizonGr7CadenceMultiplier
                                 text: qsTr("GR7 Cadence Multiplier:")
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                 Layout.fillWidth: true
                             }
                             UiTextField {
@@ -5207,6 +5231,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelEchelonResistanceGain
                                     text: qsTr("Resistance Gain:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -5231,6 +5256,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelEchelonResistanceOffset
                                     text: qsTr("Resistance Offset:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -6023,6 +6049,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelproformTDFCompanionIP
                                     text: qsTr("TDF Companion IP:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -6083,6 +6110,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 id: labelcomputrainerSerialPort
                                 text: qsTr("Serial Port:")
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                 Layout.fillWidth: true
                             }
                             UiTextField {
@@ -6118,6 +6146,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 id: labelKettlerUsbSerialPort
                                 text: qsTr("Serial Port:")
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                 Layout.fillWidth: true
                             }
                             UiTextField {
@@ -6141,6 +6170,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 id: labelKettlerUsbBaudrate
                                 text: qsTr("Baudrate:")
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                 Layout.fillWidth: true
                             }
                             UiComboBox {
@@ -6182,6 +6212,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelFreebeatSerialPort
                                     text: qsTr("Serial Port:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -6260,6 +6291,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelm3iBikeSpeedBuffsize
                                     text: qsTr("Speed Buffer Size:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -6368,6 +6400,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("ANT+ Bike Device Number (0=Auto):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -6487,6 +6520,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("ANT+ Speed Offset")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -6524,6 +6558,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("ANT+ Speed Gain:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -6575,6 +6610,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("ANT+ Heart Device Number (0=Auto):")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -6722,6 +6758,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelFloatingWindowType
                             text: qsTr("Floating Window Type:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -6773,6 +6810,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelFloatingWidth
                             text: qsTr("Floating Window Width:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -6810,6 +6848,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelFloatingHeight
                             text: qsTr("Floating Window Height:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -6847,6 +6886,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelFloatingTransparency
                             text: qsTr("Floating Window % Transparency:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -6955,6 +6995,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("iOS Live Activity Left Metric:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -6976,6 +7017,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("iOS Live Activity Right Metric:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -7067,6 +7109,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelBackgroundColor
                                     text: qsTr("Tiles Background Color:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -7147,6 +7190,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Statusbar Background Color:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -7180,6 +7224,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("2nd line tile text size:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -7386,6 +7431,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Treadmill Walk Level:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -7424,6 +7470,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Walking Min Speed:") + " (" + (settings.miles_unit ? qsTr("mph") : qsTr("km/h")) + ")"
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -7492,6 +7539,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Rower Level:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -7531,6 +7579,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPZPUsername
                             text: qsTr("PZP Username:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -7607,6 +7656,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPelotonGain
                             text: qsTr("Conversion Gain:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -7645,6 +7695,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPelotonOffset
                             text: qsTr("Conversion Offset:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -7766,6 +7817,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPelotonCadenceMetric
                             text: qsTr("Override Cadence Metric:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -7793,6 +7845,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPelotonHeartRateMetric
                             text: qsTr("Override HR Metric:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -8784,6 +8837,7 @@ import QtQuick 2.12 as Quick212
 
                     Label {
                         text: qsTr("Garmin device for FIT file")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
                     }
@@ -9704,6 +9758,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("PID on HR min:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -9726,6 +9781,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("PID on HR max:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -9788,6 +9844,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("PID Recovery Zone Lower Limit (%):")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -9822,6 +9879,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("PID Pushy Zone Limit:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -9884,6 +9942,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramPace1mile
                             text: qsTr("1 mile pace (total time):")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -9921,6 +9980,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramPace5km
                             text: qsTr("5 km pace (total time):")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -9958,6 +10018,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramPace10km
                             text: qsTr("10 km pace (total time):")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -9995,6 +10056,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramPaceHalfMarathon
                             text: qsTr("Half Marathon pace (total time):")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -10032,6 +10094,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramPaceMarathon
                             text: qsTr("Marathon pace (total time):")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -10069,6 +10132,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramWarmupSpeed
                             text: qsTr("Warmup Speed (pace):")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -10092,6 +10156,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramCooldownSpeed
                             text: qsTr("Cooldown Speed (pace):")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -10115,6 +10180,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRestSpeed
                             text: qsTr("Rest Speed (pace):")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -10178,6 +10244,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPidHeartZoneErgModeWattStep
                             text: qsTr("ERG Mode Watt Step:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -10226,6 +10293,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomDuration
                             text: qsTr("Duration (minutes):")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -10401,6 +10469,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomResistanceMax
                             text: qsTr("Resistance max.:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -11277,6 +11346,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelnordictrack2950IP
                                     text: qsTr("Nordictrack 2950 IP:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -11672,6 +11742,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Remap 5 km/h button:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -11695,6 +11766,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Remap 10 km/h button:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -11718,6 +11790,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Remap 16 km/h button:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -11741,6 +11814,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Remap 22 km/h button:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -11764,6 +11838,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Pool time (ms):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -12706,6 +12781,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Serial Port:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -12829,6 +12905,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("ProForm Rower IP:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -12871,6 +12948,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 id: labelDomyosEllipticalSpeedRatio
                                 text: qsTr("Speed Ratio:")
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                 Layout.fillWidth: true
                             }
                             UiTextField {
@@ -12915,6 +12993,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Serial Port:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -13299,6 +13378,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelwattGain
                             text: qsTr("Watt Gain:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -13376,6 +13456,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelspeedGain
                             text: qsTr("Speed Gain:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -13724,6 +13805,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPowerAvg
                             text: qsTr("Power Averaging Mode:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -13825,6 +13907,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTreadmillInclinationOffset
                             text: qsTr("Zwift Inclination Offset:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -13863,6 +13946,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTreadmillInclinationGain
                             text: qsTr("Zwift Inclination Gain:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -14056,6 +14140,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("AutoLap on Distance:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -14354,6 +14439,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Resistance Level 1:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -14400,6 +14486,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Resistance Level 2:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -14880,6 +14967,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelEliteRizerGain
                                             text: qsTr("Difficulty/Gain:")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         UiTextField {
@@ -15094,6 +15182,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KResistanceSample1
                                             text: qsTr("Resistance Sample 1")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         UiTextField {
@@ -15117,6 +15206,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KShiftStepSample1
                                             text: qsTr("Shift Step Sample 1")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         UiTextField {
@@ -15141,6 +15231,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KResistanceSample2
                                             text: qsTr("Resistance Sample 2")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         UiTextField {
@@ -15164,6 +15255,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KShiftStepSample2
                                             text: qsTr("Shift Step Sample 2")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         UiTextField {
@@ -15188,6 +15280,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KResistanceSample3
                                             text: qsTr("Resistance Sample 3")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         UiTextField {
@@ -15211,6 +15304,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KShiftStepSample3
                                             text: qsTr("Shift Step Sample 3")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         UiTextField {
@@ -15235,6 +15329,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KResistanceSample4
                                             text: qsTr("Resistance Sample 4")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         UiTextField {
@@ -15258,6 +15353,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KShiftStepSample4
                                             text: qsTr("Shift Step Sample 4")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         UiTextField {
@@ -15337,6 +15433,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelFitmetriaFanFitMin
                                     text: qsTr("Min. value (0-100):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -15361,6 +15458,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelFitmetriaFanFitMax
                                     text: qsTr("Max value (0-100):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -15433,6 +15531,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Min. value (0-100):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -15455,6 +15554,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Max value (0-100):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -15526,6 +15626,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Min. value (0-100):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -15548,6 +15649,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Max value (0-100):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -15875,6 +15977,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Shifter Up (LS1):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -15887,6 +15990,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Shifter Down (LS2):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -15899,6 +16003,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right Shifter Up (RS1):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -15911,6 +16016,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right Shifter Down (RS2):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -15935,6 +16041,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right Paddle (ZR):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -15972,6 +16079,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Pool time (ms):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
