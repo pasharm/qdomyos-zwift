@@ -10,6 +10,11 @@ import QtMultimedia 5.15
 HomeForm {
     objectName: "home"
     deviceLineHidden: gridView.contentY > -gridView.topMargin + 1
+    // Modern look: rootItem comes from C++ only after main.qml is loaded (main.cpp). Until
+    // then every binding on it fails and leaves its default, visible, so the first frames
+    // drew the classic help text and the unstyled buttons over the searching state. The
+    // content waits for it, the background is drawn at once
+    contentItem.visible: !window.ui.modern || typeof rootItem !== "undefined"
     background: Rectangle {
         anchors.fill: parent
         width: parent.fill

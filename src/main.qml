@@ -1263,7 +1263,7 @@ ApplicationWindow {
             anchors.right: toolButtonAutoResistance.left
             // Modern look: the tiles are on the home page only, so is their lock; while the
             // equipment is being searched (rootItem.labelHelp) there are no tiles yet
-            visible: window.ui.modern ? stackView.depth === 1 && !rootItem.labelHelp : !toolButtonSaveSettings.visible
+            visible: window.ui.modern ? stackView.depth === 1 && typeof rootItem !== "undefined" && !rootItem.labelHelp : !toolButtonSaveSettings.visible
             width: visible ? implicitWidth : 0
         }
 
@@ -1275,7 +1275,7 @@ ApplicationWindow {
             anchors.right: parent.right
             // Modern look: a workout control, on the home page only and once the equipment is
             // connected (before that there is no resistance to follow)
-            visible: window.ui.modern ? stackView.depth === 1 && !rootItem.labelHelp : !headerToolbar.settingsPageActive
+            visible: window.ui.modern ? stackView.depth === 1 && typeof rootItem !== "undefined" && !rootItem.labelHelp : !headerToolbar.settingsPageActive
             width: visible ? implicitWidth : 0
         }
 
