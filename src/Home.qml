@@ -15,6 +15,17 @@ HomeForm {
     // drew the classic help text and the unstyled buttons over the searching state. The
     // content waits for it, the background is drawn at once
     contentItem.visible: !window.ui.modern || typeof rootItem !== "undefined"
+    // Modern look: the line under Start/Stop only while it names a loaded workout. "<device>
+    // found" (homeform.cpp) and the signal are in the drawer header already
+    modernInfoShown: {
+        var info = typeof rootItem !== "undefined" && rootItem ? rootItem.info : ""
+        if (!info)
+            return false
+        var found = qsTranslate("homeform", "%1 found").split("%1")
+        return !(found.length === 2 && info.indexOf(found[0]) === 0
+                 && info.length >= found[0].length + found[1].length
+                 && info.lastIndexOf(found[1]) === info.length - found[1].length)
+    }
     background: Rectangle {
         anchors.fill: parent
         width: parent.fill
@@ -296,7 +307,8 @@ HomeForm {
         // hides as soon as the tiles move into the gap (deviceLineHidden), and the grid itself
         // never moves, so nothing jumps. While the tiles are being moved it keeps the first row
         // off the toolbar instead of staying as an empty band.
-        topMargin: window.lockTiles ? 30 : rootItem.topBarHeight + 30 - gridTopInset
+        // Modern look without the line (see modernInfoShown): a small gap only
+        topMargin: window.lockTiles ? 30 : rootItem.topBarHeight + (window.ui.modern && !modernInfoShown ? 12 : 30) - gridTopInset
         onTopMarginChanged: if (contentY <= 0) contentY = -topMargin
         interactive: !window.lockTiles
         // Modern look before connection: the grid is still empty but lies over the "searching"

@@ -18,6 +18,8 @@ Page {
     property alias row: row
     // Set by Home.qml while the tiles are scrolled into the gap under the Start/Stop row
     property bool deviceLineHidden: false
+    // Set by Home.qml: whether the modern status line has anything the drawer does not show
+    property bool modernInfoShown: true
 
     Settings {
 	     id: settings
@@ -348,7 +350,7 @@ Page {
         // Modern status line: signal bars and the device status on one line
         Row {
             id: modernInfo
-            visible: window.ui.modern && !page.deviceLineHidden
+            visible: window.ui.modern && !page.deviceLineHidden && page.modernInfoShown
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: row1.bottom
             spacing: 8
