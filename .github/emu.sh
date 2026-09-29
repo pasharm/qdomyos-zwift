@@ -21,6 +21,11 @@ for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOO
 done
 adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
 adb shell cmd uimode night no || true
+# The launcher of the emulator image hangs on the slow CI machine and its "isn't responding"
+# dialog came back before every step, however often Wait was tapped: the classic run
+# 36505671077 got the dialog on nearly every shot. No error dialogs at all for the run; an
+# ANR still reaches logcat and the end of steps.log ("ANR in")
+adb shell settings put global hide_error_dialogs 1 || true
 
 printf '[General]\nlog_debug=true\nconfirm_stop_workout=true\nui_modern=%s\n' "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
@@ -46,7 +51,12 @@ ensure_app() {
     [ -f ui.xml ] || return 0
     pkg=$(python3 .github/uitap.py ui.xml --package)
     [ -z "$pkg" ] || [ "$pkg" = "$PKG" ] && return 0
-    if grep -q "t responding" ui.xml && xy=$(python3 .github/uitap.py ui.xml 'Wait'); then
+    # Somebody else hanging (the launcher) is closed, the app itself is waited for
+    if grep -q "t responding" ui.xml && ! grep -q "QZ\|qdomyos" ui.xml &&
+       xy=$(python3 .github/uitap.py ui.xml 'Close app'); then
+      echo "!! $pkg: another app not responding, Close app at $xy" >> $STEPLOG
+      adb shell input tap $xy || true
+    elif grep -q "t responding" ui.xml && xy=$(python3 .github/uitap.py ui.xml 'Wait'); then
       echo "!! $pkg not responding: Wait at $xy" >> $STEPLOG
       adb shell input tap $xy || true
     else
@@ -299,4 +309,7 @@ shot screenshot
 adb logcat -d > full_logcat.txt || true
 echo "== steps"; cat $STEPLOG
 echo "== timing"; grep -E "QZ-TIMING|QZ-THEME" full_logcat.txt || true
+# The dialogs are hidden (hide_error_dialogs above), so hangs are only here
+grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
+echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
 grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
