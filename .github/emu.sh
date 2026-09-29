@@ -209,4 +209,5 @@ adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
 adb logcat -d > full_logcat.txt || true
 echo "== steps"; cat $STEPLOG
+echo "== timing"; grep "QZ-TIMING" full_logcat.txt || true
 grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
