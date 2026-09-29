@@ -3,14 +3,23 @@ import QtQuick.Controls 2.12
 import QtQuick.Controls.Material 2.12
 
 // Short notice ("New lap started!", "The tiles are locked now"): the caller opens it and
-// closes it with its own timer. Classic look: the old 380x60 popup in the middle of the page,
-// modal, as before. Modern look: a snackbar at the bottom - no dimming, the page under it
-// stays usable, a long text wraps instead of running off the card.
+// most callers close it with their own timer. Classic look: the old 380x60 popup in the
+// middle of the page, modal, as before. Modern look: a snackbar at the bottom - no dimming,
+// the page under it stays usable, a long text wraps instead of running off the card.
 UiPopup {
     id: control
 
     property string text: ""
     readonly property bool snackbar: modern
+
+    // Modern: the snackbar goes by itself. Some notices ("Saved! Check your private folder")
+    // have no timer of their caller: the classic popup is modal and went with a tap anywhere,
+    // a tap on the page under the snackbar reaches the page instead
+    Timer {
+        running: control.snackbar && control.opened
+        interval: control.text.length > 60 ? 6000 : 4000
+        onTriggered: control.close()
+    }
 
     inverse: snackbar
     parent: Overlay.overlay
