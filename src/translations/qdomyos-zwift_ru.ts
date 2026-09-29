@@ -9667,12 +9667,12 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings.qml" line="15512"/>
         <source>TTS (Text to Speech) Settings 🔊</source>
-        <translation>Настройки TTS (синтез речи)</translation>
+        <translation>Настройки TTS (синтез речи) 🔊</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="15521"/>
         <source>Maps 🗺️</source>
-        <translation>Карты</translation>
+        <translation>Карты 🗺️</translation>
     </message>
     <message>
         <location filename="../settings.qml" line="15534"/>
@@ -10368,7 +10368,7 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <location filename="../settings-tiles.qml" line="381"/>
         <source>Keyboard Shortcuts ⌨️</source>
-        <translation>Сочетания клавиш</translation>
+        <translation>Сочетания клавиш ⌨️</translation>
     </message>
     <message>
         <location filename="../settings-tiles.qml" line="390"/>
