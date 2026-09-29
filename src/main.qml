@@ -1268,6 +1268,41 @@ ApplicationWindow {
         }
     }
 
+    // The settings pages are about 1.3 MB of QML. The first time after install the engine
+    // compiles them when they are opened (then from the disk cache), and the settings froze
+    // for a moment. They are compiled ahead instead, off the GUI thread: a few seconds after
+    // start, or as soon as the drawer starts to open if that comes first. Only compiled, not
+    // created. The components are kept so the engine does not drop the compiled types; a push
+    // of the same file while the compilation runs picks it up rather than starting over.
+    property var settingsWarmup: []
+    function warmUpSettings() {
+        if (settingsWarmup.length > 0)
+            return
+        var started = Date.now()
+        var pages = ["settings.qml", "settings-tiles.qml"]
+        var components = []
+        pages.forEach(function (page) {
+            var component = Qt.createComponent(page, Component.Asynchronous)
+            var report = function () {
+                if (component.status === Component.Ready)
+                    console.log("QZ-TIMING warm-up " + page + " ready in " + (Date.now() - started) + " ms")
+                else if (component.status === Component.Error)
+                    console.warn("QZ-TIMING warm-up " + page + ": " + component.errorString())
+            }
+            if (component.status === Component.Loading)
+                component.statusChanged.connect(report)
+            else
+                report()
+            components.push(component)
+        })
+        settingsWarmup = components
+    }
+
+    Timer {
+        interval: 4000; running: true; repeat: false
+        onTriggered: window.warmUpSettings()
+    }
+
     // Drawer entries, shared by the classic and the modern drawer
     function drawerAction(key) {
         switch (key) {
@@ -1280,7 +1315,9 @@ ApplicationWindow {
         case "settings":
             toolButtonLoadSettings.visible = true;
             toolButtonSaveSettings.visible = true;
+            var settingsPushStarted = Date.now()
             stackView.push("settings.qml")
+            console.log("QZ-TIMING settings.qml opened in " + (Date.now() - settingsPushStarted) + " ms")
             break
         case "history":
             stackView.push("WorkoutsHistory.qml")
@@ -1408,6 +1445,7 @@ ApplicationWindow {
         leftPadding: getLeftPadding()
         rightPadding: window.ui.modern ? 0 : getRightPadding()
         Accessible.ignored: !drawer.opened
+        onAboutToShow: window.warmUpSettings()
 
         // Modern: a sheet with rounded outer corners. The rectangle runs past the left edge,
         // so only the right-hand corners show
