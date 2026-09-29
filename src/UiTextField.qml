@@ -13,9 +13,7 @@ T.TextField {
     id: control
 
     readonly property bool modern: window.ui.modern
-    // A search bar on top of a list: the full 48, no inset
-    property bool searchBar: false
-    readonly property int modernInset: modern && !searchBar ? 6 : 0
+    readonly property int modernInset: modern ? 6 : 0
 
     implicitWidth: implicitBackgroundWidth + leftInset + rightInset
                    || Math.max(contentWidth, placeholder.implicitWidth) + leftPadding + rightPadding

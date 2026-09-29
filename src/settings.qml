@@ -2219,7 +2219,6 @@ import QtQuick 2.12 as Quick212
                 UiTextField {
                     id: settingsSearchTextField
                     Layout.fillWidth: true
-                    searchBar: true
                     placeholderText: qsTr("Search settings")
                     selectByMouse: true
                     inputMethodHints: Qt.ImhNoPredictiveText

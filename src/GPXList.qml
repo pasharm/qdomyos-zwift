@@ -126,7 +126,6 @@ ColumnLayout {
             UiTextField {
                 id: modernFilterField
                 Layout.fillWidth: true
-                searchBar: true
                 placeholderText: qsTr("Filter")
                 inputMethodHints: Qt.ImhNoPredictiveText
                 leftPadding: 44

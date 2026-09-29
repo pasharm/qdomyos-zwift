@@ -16,6 +16,7 @@
         <file>UiSectionHeader.qml</file>
         <file>UiButton.qml</file>
         <file>UiComboBox.qml</file>
+        <file>UiGroupBox.qml</file>
         <file>UiMessageDialog.qml</file>
         <file>UiPopup.qml</file>
         <file>UiFrame.qml</file>

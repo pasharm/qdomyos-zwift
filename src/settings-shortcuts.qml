@@ -133,7 +133,9 @@ ScrollView {
             property string settingName: ""
             placeholderText: qsTr("None")
             horizontalAlignment: Text.AlignRight
-            Layout.preferredWidth: 100
+            // Modern: one letter needs less than 100; three of them (the AVS row) left no
+            // room for the label on a phone
+            Layout.preferredWidth: window.ui.modern ? 76 : 100
             selectByMouse: false
             inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhSensitiveData | Qt.ImhNoAutoUppercase
 
@@ -179,7 +181,7 @@ ScrollView {
             Layout.maximumWidth: 100
         }
 
-        GroupBox {
+        UiGroupBox {
             title: qsTr("General Controls")
             Layout.fillWidth: true
             ColumnLayout {
@@ -199,7 +201,7 @@ ScrollView {
             }
         }
 
-        GroupBox {
+        UiGroupBox {
             title: qsTr("Main Metrics")
             Layout.fillWidth: true
             ColumnLayout {
@@ -232,7 +234,7 @@ ScrollView {
             }
         }
 
-        GroupBox {
+        UiGroupBox {
             title: qsTr("Target Controls")
             Layout.fillWidth: true
             ColumnLayout {
@@ -265,7 +267,7 @@ ScrollView {
             }
         }
 
-        GroupBox {
+        UiGroupBox {
             title: qsTr("Peloton & Others")
             Layout.fillWidth: true
             ColumnLayout {
@@ -318,7 +320,9 @@ ScrollView {
                     ShortcutField { text: settings.shortcut_auto_resistance; settingName: "shortcut_auto_resistance" }
                 }
                 RowLayout {
-                    Label { text: qsTr("AVS Cruise / Climb / Sprint"); Layout.fillWidth: true }
+                    // Modern: wraps instead of running under the three fields
+                    Label { text: qsTr("AVS Cruise / Climb / Sprint"); Layout.fillWidth: true
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap }
                     ShortcutField { text: settings.shortcut_avs_cruise; settingName: "shortcut_avs_cruise" }
                     ShortcutField { text: settings.shortcut_avs_climb; settingName: "shortcut_avs_climb" }
                     ShortcutField { text: settings.shortcut_avs_sprint; settingName: "shortcut_avs_sprint" }
@@ -326,7 +330,7 @@ ScrollView {
             }
         }
 
-        GroupBox {
+        UiGroupBox {
             title: qsTr("Preset Resistance")
             Layout.fillWidth: true
             RowLayout {
@@ -339,7 +343,7 @@ ScrollView {
             }
         }
 
-        GroupBox {
+        UiGroupBox {
             title: qsTr("Preset Speed")
             Layout.fillWidth: true
             RowLayout {
@@ -352,7 +356,7 @@ ScrollView {
             }
         }
 
-        GroupBox {
+        UiGroupBox {
             title: qsTr("Preset Inclination")
             Layout.fillWidth: true
             RowLayout {
@@ -365,7 +369,7 @@ ScrollView {
             }
         }
 
-        GroupBox {
+        UiGroupBox {
             title: qsTr("Preset Power Zone")
             Layout.fillWidth: true
             RowLayout {
