@@ -8,12 +8,22 @@ import re
 import sys
 import xml.etree.ElementTree as ET
 
+#   uitap.py dump.xml --package
+# prints the package of the window on top instead (the first node of the dump).
 path, pattern = sys.argv[1], sys.argv[2]
-rx = re.compile(pattern, re.I)
 try:
     root = ET.parse(path).getroot()
 except (ET.ParseError, OSError):
     sys.exit(1)
+
+if pattern == "--package":
+    first = next(root.iter("node"), None)
+    if first is None or not first.get("package"):
+        sys.exit(1)
+    print(first.get("package"))
+    sys.exit(0)
+
+rx = re.compile(pattern, re.I)
 
 best = None
 for node in root.iter("node"):

@@ -35,7 +35,29 @@ dump() {
   timeout 25 adb shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 || true
   adb pull /sdcard/ui.xml ui.xml > /dev/null 2>&1 || true
 }
+# The emulator itself may put a window over the app: "Pixel Launcher isn't responding", or
+# the Health Connect screen left over when the back key went to such a dialog. They made a
+# whole run useless once. Clear them before every step: Wait on a "not responding" dialog,
+# the back key on anything else that is not the app. Logged in steps.log.
+ensure_app() {
+  local i pkg xy
+  for i in 1 2 3; do
+    dump
+    [ -f ui.xml ] || return 0
+    pkg=$(python3 .github/uitap.py ui.xml --package)
+    [ -z "$pkg" ] || [ "$pkg" = "$PKG" ] && return 0
+    if grep -q "t responding" ui.xml && xy=$(python3 .github/uitap.py ui.xml 'Wait'); then
+      echo "!! $pkg not responding: Wait at $xy" >> $STEPLOG
+      adb shell input tap $xy || true
+    else
+      echo "!! $pkg over the app: back key" >> $STEPLOG
+      adb shell input keyevent KEYCODE_BACK || true
+    fi
+    sleep 3
+  done
+}
 shot() {
+  [ "$1" = "01-healthconnect" ] || ensure_app
   echo "-- shot $1" >> $STEPLOG
   adb shell screencap -p /sdcard/$1.png || true
   adb pull /sdcard/$1.png || true
@@ -46,6 +68,7 @@ shot() {
 # fallback coordinates; without them the step is skipped (return 1)
 tap_ui() {
   local rx="$1" fx="$2" fy="$3" xy=""
+  ensure_app
   dump
   [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$rx")
   if [ -n "$xy" ]; then
@@ -70,7 +93,7 @@ tap_drawer() {
   fi
   tap_ui "$@"
 }
-tap() { echo "tap $1 $2 ($3)" >> $STEPLOG; adb shell input tap $1 $2 || true; }
+tap() { ensure_app; echo "tap $1 $2 ($3)" >> $STEPLOG; adb shell input tap $1 $2 || true; }
 back() { echo "back ($1)" >> $STEPLOG; adb shell input keyevent KEYCODE_BACK || true; }
 # Toolbar buttons are icons without text: the same place in both looks (Nexus 6: 1440x2560
 # px, 3.5 px per dp)
