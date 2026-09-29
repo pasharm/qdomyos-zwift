@@ -1684,12 +1684,11 @@ ApplicationWindow {
             contentHeight: modernDrawerColumn.height + 16
             clip: true
             boundsBehavior: Flickable.StopAtBounds
-            // A scroll that starts on an entry: the entry took the press at once (lit up) and
-            // the list got the move only past the drag threshold, while the drawer took a
-            // slightly sideways one to close - the list often did not scroll. The entries get
-            // the press only when the finger stays put, and only vertical moves scroll
+            // Only vertical moves scroll: a slightly sideways one went to the drawer and the list
+            // did not move. No pressDelay: in Qt 5 an entry pressed through it and then taken
+            // over by the scroll stayed pressed for good. The entries light up late instead
+            // (UiDrawerItem), so a scroll starting on one does not flash it
             flickableDirection: Flickable.VerticalFlick
-            pressDelay: 120
             ScrollIndicator.vertical: ScrollIndicator { }
 
             Column {

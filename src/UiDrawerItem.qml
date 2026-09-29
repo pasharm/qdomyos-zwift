@@ -13,13 +13,30 @@ ItemDelegate {
     rightPadding: 24
     focusPolicy: Qt.NoFocus
 
+    // Lit only when the finger stays on the entry: a scroll starting on it takes the press
+    // away within this time, and the entry does not flash
+    property bool lit: false
+    onDownChanged: {
+        if (down) {
+            litTimer.restart()
+        } else {
+            litTimer.stop()
+            lit = false
+        }
+    }
+    Timer {
+        id: litTimer
+        interval: 100
+        onTriggered: control.lit = control.down
+    }
+
     background: Rectangle {
         x: 12
         y: 2
         width: control.width - 24
         height: control.height - 4
         radius: height / 2
-        color: control.down ? window.ui.alpha(window.ui.accent, 0.22)
+        color: control.lit ?window.ui.alpha(window.ui.accent, 0.22)
              : control.hovered ? window.ui.alpha(window.ui.textMain, 0.06)
              : "transparent"
     }
@@ -31,7 +48,7 @@ ItemDelegate {
             width: 22
             height: 22
             name: control.iconName
-            color: control.down ? window.ui.accent : window.ui.textMuted
+            color: control.lit ? window.ui.accent : window.ui.textMuted
         }
         Label {
             anchors.left: itemIcon.right
