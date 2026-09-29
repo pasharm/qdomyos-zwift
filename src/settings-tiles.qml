@@ -751,6 +751,19 @@ ScrollView {
             }
         }
 
+        Label {
+            text: qsTr("Current pace per mile or kilometer (Treadmill, Elliptical and Rower)")
+            font.bold: true
+            font.italic: true
+            font.pixelSize: Qt.application.font.pixelSize - 2
+            textFormat: Text.PlainText
+            wrapMode: Text.WordWrap
+            verticalAlignment: Text.AlignVCenter
+            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+            Layout.fillWidth: true
+            color: Material.color(Material.Lime)
+        }
+
         AccordionCheckElement {
             id: avgPaceEnabledAccordion
             title: qsTr("Average Pace")
@@ -813,19 +826,6 @@ ScrollView {
                     onClicked: {settings.tile_grade_adjusted_pace_order = gradeAdjustedPaceOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
                 }
             }
-        }
-
-        Label {
-            text: qsTr("Current pace per mile or kilometer (Treadmill, Elliptical and Rower)")
-            font.bold: true
-            font.italic: true
-            font.pixelSize: Qt.application.font.pixelSize - 2
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: Material.color(Material.Lime)
         }
 
         Label {
