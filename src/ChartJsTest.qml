@@ -27,10 +27,15 @@ ColumnLayout {
     // far are drawn anew, and the mail goes as on a fresh open. Drawn at once ("still" in the
     // query, chart.htm): growing from zero again every block looked like a redraw. A new query
     // loads the page anew, the fragment keeps the current theme
+    // The new load is kept off the screen like the first one: the page showed its empty cards
+    // and the alt text of the picture for a moment before the charts came
     function reopen() {
         headerToolbar.visible = true
-        if (pageLoaded)
+        if (pageLoaded) {
+            if (window.ui.modern)
+                pageShown = false
             webView.url = pageUrl("?still=" + Date.now())
+        }
         sendMailFallback.restart()
     }
 
@@ -81,10 +86,23 @@ ColumnLayout {
         }
     }
 
+    // Shown once the page has drawn: the charts made (they come after the session data over the
+    // web socket) and the picture loaded. The end of the load alone came before both
     Timer {
         id: revealTimer
-        interval: 150; repeat: false
-        onTriggered: column1.pageShown = true
+        interval: 100; repeat: true
+        onTriggered: {
+            if (column1.pageShown) {
+                stop()
+                return
+            }
+            webView.runJavaScript("(function () { var i = document.querySelector('.workout_image');" +
+                                  " return typeof Chart !== 'undefined' && Object.keys(Chart.instances).length > 0 &&" +
+                                  " (!i || i.complete); })()", function (drawn) {
+                if (drawn)
+                    column1.pageShown = true
+            })
+        }
     }
 
     // Safety net: a page that never reports the end of its load is shown anyway
