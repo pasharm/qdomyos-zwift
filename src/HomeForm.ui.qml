@@ -366,7 +366,9 @@ Page {
         // Modern status line: signal bars and the device status on one line
         Row {
             id: modernInfo
-            visible: window.ui.modern && !page.deviceLineHidden && page.modernInfoShown
+            // Not over the empty state: its heading says the same ("Looking for your equipment"),
+            // the time to the next search moves under its subtitle
+            visible: window.ui.modern && !page.deviceLineHidden && page.modernInfoShown && !modernEmpty.visible
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: row1.bottom
             spacing: 8
@@ -448,6 +450,20 @@ Page {
                     font.pixelSize: 15
                 }
 
+                // The time to the next search ("Next search in 12 s") from the status line, which
+                // is hidden here; not the plain "Searching..." or "stopped", the heading says those
+                Label {
+                    readonly property string status: page.searchStatus
+                    visible: !page.searchStopped && status !== ""
+                             && status !== qsTranslate("homeform", "Searching for the device...")
+                    width: parent.width
+                    text: status
+                    horizontalAlignment: Text.AlignHCenter
+                    wrapMode: Text.WordWrap
+                    color: window.ui.textMuted
+                    font.pixelSize: 13
+                }
+
                 Item { width: 1; height: 4 }
 
                 // "Not connecting?" - folds the old help text out
@@ -504,7 +520,13 @@ Page {
                     visible: modernEmpty.helpOpen
                     leftPadding: 16
                     rightPadding: 16
-                    text: lblHelp.text
+                    // Without the first sentence ("This app should automatically connect..."):
+                    // the subtitle above says it. The checklist starts at the bold "If it doesn't"
+                    text: {
+                        var t = lblHelp.text
+                        var i = t.indexOf("<b>")
+                        return i > 0 ? t.substring(i) : t
+                    }
                     textFormat: Text.StyledText
                     wrapMode: Text.WordWrap
                     color: window.ui.textMuted
