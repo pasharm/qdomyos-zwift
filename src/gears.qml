@@ -6,6 +6,10 @@ import Qt.labs.settings 1.0
 
 ScrollView {
     contentWidth: -1
+    // The column's margins are not in its implicit height, which the ScrollView takes: in the
+    // modern look the end of the gear table was cut off. The classic look keeps the plain height
+    contentHeight: chainringColumn.implicitHeight +
+                   (window.ui.modern ? 2 * window.contentSideMargin : 0)
     focus: true
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.fill: parent

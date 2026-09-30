@@ -6,6 +6,9 @@ import Qt.labs.settings 1.0
 
 ScrollView {
     contentWidth: -1
+    // Modern look: with the column's top and bottom margins, not in its implicit height (the
+    // end of the page was cut off). The classic look keeps the plain height
+    contentHeight: customGearsColumn.implicitHeight + (window.ui.modern ? 20 : 0)
     focus: true
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.fill: parent
@@ -104,6 +107,7 @@ ScrollView {
     }
 
     ColumnLayout {
+        id: customGearsColumn
         anchors.fill: parent
         anchors.margins: 10
         anchors.leftMargin: window.contentSideMargin
