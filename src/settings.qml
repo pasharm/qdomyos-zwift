@@ -53,6 +53,8 @@ import QtQuick 2.12 as Quick212
         property var pendingReveal: null
         // The search (text and "Changed") a result was opened from: back returns to it
         property var searchReturn: null
+        // A result tapped before the index was built: opened once the index arrives
+        property var pendingJump: null
         property string resetSectionName: ""
 
         function loadSettingsIndex() {
@@ -81,6 +83,11 @@ import QtQuick 2.12 as Quick212
             onMessage: {
                 settingsPane.settingsIndex = messageObject.map
                 settingsPane.settingsIndexLoading = false
+                if (settingsPane.pendingJump) {
+                    var entry = settingsPane.pendingJump
+                    settingsPane.pendingJump = null
+                    settingsPane.jumpToSetting(entry)
+                }
                 console.log("QZ-TIMING settings index: " + messageObject.keys + " settings in " + messageObject.ms + " ms")
                 if (settingsPane.settingsSearchActive || settingsPane.changedOnly)
                     settingsPane.updateFilteredSettings()
@@ -213,6 +220,13 @@ import QtQuick 2.12 as Quick212
         // A search result opens the setting itself: its page, its sections, scrolled to it and
         // lit for a moment. Without a label to find, the innermost section is shown.
         function jumpToSetting(entry) {
+            // The index is built in the background after the page opens: without it the jump
+            // knew no section and left the plain page (a quick first search)
+            if (!settingsIndex) {
+                pendingJump = entry
+                loadSettingsIndex()
+                return
+            }
             var where = settingsIndex ? settingsIndex[entry.key] : null
             var page = settingsPane
             var context = "settings"
@@ -230,6 +244,7 @@ import QtQuick 2.12 as Quick212
 
             var chain = where ? where.chain : []
             var container = page.contentItem
+            var switchedOff = null
             for (var i = 0; i < chain.length; i++) {
                 var wanted = qsTranslate(context, chain[i])
                 var english = chain[i]
@@ -241,11 +256,17 @@ import QtQuick 2.12 as Quick212
                 })
                 if (!section)
                     break
+                // A section that is a switched-off setting itself (Wahoo direct connect): opened
+                // by force it showed its switch as on. It is lit instead, to be turned on first
+                if (section.linkedBoolSetting && !section.isOpen) {
+                    switchedOff = section
+                    break
+                }
                 section.isOpen = true
                 container = section
             }
             var names = settingLabels(entry, context)
-            var target = findItem(container, function (item) {
+            var target = switchedOff ? switchedOff : findItem(container, function (item) {
                 return item.visible && typeof item.text === "string" && item.text.length > 0 &&
                        names.indexOf(normalizedLabel(item.text)) >= 0
             })
@@ -326,7 +347,10 @@ import QtQuick 2.12 as Quick212
                     if (!flickable || !row)
                         return
                     ticks++
-                    if (ticks <= 20 && !flickable.moving) {
+                    // The finger wins: once the page is touched the glow stops scrolling it
+                    if (flickable.dragging || flickable.moving)
+                        ticks = 1000
+                    if (ticks <= 20) {
                         var at = row.mapToItem(flickable.contentItem, 0, 0).y
                         flickable.contentY = Math.max(0, Math.min(at - 96, flickable.contentHeight - flickable.height))
                     }
