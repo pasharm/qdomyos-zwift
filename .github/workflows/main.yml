@@ -231,7 +231,9 @@ jobs:
           # Test builds only need two ABIs: arm64-v8a for the phone, x86_64 for the emulator.
           # ANDROID_ABIS is given twice: defaults.pri sets all four, and an assignment after
           # -after is read after the project files.
-          qmake -spec android-clang 'ANDROID_ABIS=arm64-v8a x86_64' 'ANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/21.1.6352462' 'CONFIG+=debug' -after 'ANDROID_ABIS=arm64-v8a x86_64' && make -j4 && make INSTALL_ROOT=${{ github.workspace }}/output/android/ install
+          # CONFIG+=debug compiles without optimisation (the -O3 of the .pri is a release flag),
+          # so -O2 is added to the debug flags: same packaging, optimised code.
+          qmake -spec android-clang 'ANDROID_ABIS=arm64-v8a x86_64' 'ANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/21.1.6352462' 'CONFIG+=debug' 'QMAKE_CFLAGS_DEBUG+=-O2' 'QMAKE_CXXFLAGS_DEBUG+=-O2' -after 'ANDROID_ABIS=arm64-v8a x86_64' && make -j4 && make INSTALL_ROOT=${{ github.workspace }}/output/android/ install
           cat src/android-qdomyos-zwift-deployment-settings.json
 
       - name: Cache Gradle
@@ -250,6 +252,18 @@ jobs:
           mkdir -p ${{ github.workspace }}/output/android
           rsync -a --exclude build --exclude .gradle android/ ${{ github.workspace }}/output/android/
           androiddeployqt --input android-qdomyos-zwift-deployment-settings.json --output ${{ github.workspace }}/output/android/ --android-platform android-35 --gradle --aux-mode
+          # The QZ library is ~230 MB per ABI, ~200 MB of it debug info: the full copy goes to a
+          # separate artifact (to symbolise crashes), the APK gets the stripped one.
+          STRIP=/usr/local/lib/android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip
+          mkdir -p ${{ github.workspace }}/symbols
+          for so in ${{ github.workspace }}/output/android/libs/*/libqdomyos-zwift_*.so; do
+            abi=$(basename "$(dirname "$so")")
+            mkdir -p "${{ github.workspace }}/symbols/$abi"
+            cp "$so" "${{ github.workspace }}/symbols/$abi/"
+            ls -l "$so"
+            "$STRIP" --strip-debug "$so"
+            ls -l "$so"
+          done
           export GRADLE_USER_HOME="${{ github.workspace }}/.gradle-android"
           export GRADLE_OPTS="-Dgradle.user.home=$GRADLE_USER_HOME"
           export GRADLE_DIST_DIR="${{ github.workspace }}/gradle-8.13"
@@ -304,3 +318,10 @@ jobs:
         with:
           name: fdroid-android-trial
           path: ${{ github.workspace }}/output/android/build/outputs/apk/debug/android-debug.apk
+
+      - name: Archive the QZ library with debug info
+        uses: actions/upload-artifact@v4
+        with:
+          name: qz-library-with-debug-info
+          path: ${{ github.workspace }}/symbols/
+          retention-days: 14
