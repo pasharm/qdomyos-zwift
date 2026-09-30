@@ -220,7 +220,7 @@ jobs:
           make -j8
           make install
 
-      - name: Build QZ for Android (4 ABIs)
+      - name: Build QZ for Android (arm64-v8a, x86_64)
         run: |
           lrelease src/qdomyos-zwift.pri
           # CONFIG+=debug matches the real reference build validated against the Mac-built
@@ -228,7 +228,10 @@ jobs:
           # with this custom Qt, naturally leaves android-extra-libs unset - the bundled
           # android_openssl libs are not 16K-page-aligned, so we must NOT inject them (see
           # below); Qt's own QtNetwork already has openssl linked in.
-          qmake -spec android-clang 'ANDROID_ABIS=armeabi-v7a arm64-v8a x86 x86_64' 'ANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/21.1.6352462' 'CONFIG+=debug' && make -j4 && make INSTALL_ROOT=${{ github.workspace }}/output/android/ install
+          # Test builds only need two ABIs: arm64-v8a for the phone, x86_64 for the emulator.
+          # ANDROID_ABIS is given twice: defaults.pri sets all four, and an assignment after
+          # -after is read after the project files.
+          qmake -spec android-clang 'ANDROID_ABIS=arm64-v8a x86_64' 'ANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/21.1.6352462' 'CONFIG+=debug' -after 'ANDROID_ABIS=arm64-v8a x86_64' && make -j4 && make INSTALL_ROOT=${{ github.workspace }}/output/android/ install
           cat src/android-qdomyos-zwift-deployment-settings.json
 
       - name: Cache Gradle
