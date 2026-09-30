@@ -143,7 +143,13 @@ adb logcat -c || true
 adb shell am start -n $PKG/$PKG.CustomQtActivity
 sleep 20
 shot 01-healthconnect
-back "health connect"
+# Only while that screen is on top: once it had closed by itself and the back key closed
+# the first-run wizard instead
+if [ -f ui.xml ] && [ "$(python3 .github/uitap.py ui.xml --package)" = "$PKG" ]; then
+  echo "health connect screen not shown: no back key" >> $STEPLOG
+else
+  back "health connect"
+fi
 sleep 30
 shot 02-first-screen        # the wizard opens on the first run
 tap_ui 'Start' 720 2244
