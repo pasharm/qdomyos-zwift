@@ -45,6 +45,13 @@
     <script src="resize-observer.min.js"></script>
     <script src="jquery-3.6.0.min.js"></script>
     <script src="chartjs.3.4.1.min.js"></script>
+    <script>
+        // Opened again from the app (ChartJsTest.qml, ?still=): the charts appear at once
+        // instead of growing from zero. 1 ms, not off: animation.onComplete saves the images
+        if (/[?&]still=/.test(window.location.search)) {
+            Chart.defaults.animation.duration = 1;
+        }
+    </script>
     <script src="moment.js"></script>
     <script src="chartjs-adapter-moment.js"></script>
     <script src="chartjs-plugin-annotation.min.js"></script>

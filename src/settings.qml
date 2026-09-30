@@ -288,8 +288,10 @@ import QtQuick 2.12 as Quick212
             }
             var names = settingLabels(entry, context)
             var target = switchedOff ? switchedOff : findItem(container, function (item) {
+                // The unit a label carries on the page ("Bike Weight (kg)") is not in the name
                 return item.visible && typeof item.text === "string" && item.text.length > 0 &&
-                       names.indexOf(normalizedLabel(item.text)) >= 0
+                       (names.indexOf(normalizedLabel(item.text)) >= 0 ||
+                        names.indexOf(normalizedLabel(item.text.replace(/\s*\([^()]*\)\s*:?\s*$/, ""))) >= 0)
             })
             pendingReveal = { flickable: page.contentItem, target: target || container }
             revealTimer.restart()
@@ -699,6 +701,9 @@ import QtQuick 2.12 as Quick212
                 // Try without colon
                 var plain = qsTranslate(contexts[i], name)
                 if (plain !== name) return plain
+                // A label with its unit filled in on the page: "Bike Weight (%1)"
+                var withUnit = qsTranslate(contexts[i], name + " (%1)")
+                if (withUnit !== name + " (%1)") return withUnit.replace(/\s*\(%1\)$/, "").trim()
             }
             return name
         }

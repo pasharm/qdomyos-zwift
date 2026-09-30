@@ -24,12 +24,19 @@ ColumnLayout {
     readonly property real offScreen: pageShown ? 0 : Screen.width + Screen.height
 
     // Modern look: the page is kept (main.qml) and opened again: the charts of the workout so
-    // far are drawn anew, and the mail goes as on a fresh open
+    // far are drawn anew, and the mail goes as on a fresh open. Drawn at once ("still" in the
+    // query, chart.htm): growing from zero again every block looked like a redraw. A new query
+    // loads the page anew, the fragment keeps the current theme
     function reopen() {
         headerToolbar.visible = true
         if (pageLoaded)
-            webView.reload()
+            webView.url = pageUrl("?still=" + Date.now())
         sendMailFallback.restart()
+    }
+
+    function pageUrl(query) {
+        return "http://localhost:" + settings.value("template_inner_QZWS_port") + "/chartjs/chart.htm" +
+               query + window.ui.webThemeFragment()
     }
     // A kept page is taken off the stack, not destroyed: hidden until pushed again
     // (and the mail timer stopped: a page destroyed before its 10 s sent nothing)
@@ -123,6 +130,6 @@ ColumnLayout {
 	     headerToolbar.visible = true;
 	     // Set once, not bound: the fragment follows the theme, and a new fragment would
 	     // not reload the page anyway (the theme goes through runJavaScript then)
-	     webView.url = "http://localhost:" + settings.value("template_inner_QZWS_port") + "/chartjs/chart.htm" + window.ui.webThemeFragment()
+	     webView.url = pageUrl("")
 	 }
 }
