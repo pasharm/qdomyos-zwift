@@ -662,6 +662,8 @@ import QtQuick 2.12 as Quick212
                 }
                 if (!persistentSettings[j].visible)
                     continue
+                if (window.ui.modern && searchHiddenSettings[persistentSettings[j].key])
+                    continue
                 if (settingsPane.isTileOrderSetting(persistentSettings[j]))
                     continue
                 persistentSettings[j].catalogKind = "setting"
@@ -698,6 +700,12 @@ import QtQuick 2.12 as Quick212
             "settings-shortcuts", "settings-treadmill-inclination-override",
             "custominclinationresistance", "homeform"
         ].concat(window.ui.modern ? ["gears"] : [])
+
+        // Modern look: settings the catalog lists but no page shows - the author took their
+        // control off the page on purpose. Garmin ANT+ moves the ANT channels to Garmin's private
+        // network (ChannelService.java), switched on by chance it would cut the ANT+ sensors
+        // off; its result was the only place left to change it, and a tap on it led nowhere
+        readonly property var searchHiddenSettings: ({ "ant_garmin": true })
 
         // The English titles and descriptions as written on gears.qml: translated through its
         // context (the texts are extracted there, not here)
