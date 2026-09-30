@@ -138,6 +138,8 @@ ApplicationWindow {
 
     property bool lockTiles: false
     property bool settings_restart_to_apply: false
+    // Modern look: the workout editor page, made on its first opening and kept (see "editor")
+    property var keptWorkoutEditor: null
     property bool gymModePopupDismissed: false
 
     Settings {
@@ -1401,6 +1403,28 @@ ApplicationWindow {
              });
             break
         case "editor":
+            // Modern look: the editor is made once and kept (StackView does not destroy a page it
+            // did not create), so opening it again shows it at once instead of loading the web
+            // page anew, with the workout left as it was
+            if (window.ui.modern) {
+                if (!keptWorkoutEditor) {
+                    keptWorkoutEditor = Qt.createComponent("WorkoutEditor.qml").createObject(window.contentItem, { visible: false })
+                    if (keptWorkoutEditor) {
+                        keptWorkoutEditor.closeRequested.connect(function() {
+                            if (stackView.currentItem === keptWorkoutEditor)
+                                stackView.pop()
+                        })
+                        trainprogram_autostart_requested.connect(function() {
+                            if (stackView.currentItem === keptWorkoutEditor)
+                                keptWorkoutEditor.closeRequested()
+                        })
+                    }
+                }
+                if (keptWorkoutEditor) {
+                    stackView.push(keptWorkoutEditor)
+                    break
+                }
+            }
             var editorPage = stackView.push("WorkoutEditor.qml")
             if (editorPage) {
                 editorPage.closeRequested.connect(function() {

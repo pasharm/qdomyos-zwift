@@ -45,7 +45,9 @@ Item {
     WebView {
         id: webView
         anchors.fill: parent
-        visible: root.pageLoaded
+        // root.visible too: the kept page (modern look, main.qml) is only hidden when closed,
+        // and the native view does not follow the visibility of its parents by itself
+        visible: root.pageLoaded && root.visible
         onLoadingChanged: {
             if (loadRequest.status === WebView.LoadSucceededStatus) {
                 root.pageLoaded = true
@@ -70,6 +72,9 @@ Item {
         visible: !root.pageLoaded
         running: !root.pageLoaded
     }
+
+    // The kept page (modern look) goes back to its first parent when closed: hidden there
+    StackView.onRemoved: root.visible = false
 
     Component.onCompleted: portPoller.start()
 }
