@@ -68,13 +68,17 @@ ensure_app() {
     fi
     sleep 3
   done
+  # The last dump showed the window that was then closed: not the screen any more
+  rm -f ui.xml
 }
+# ensure_app leaves ui.xml of the app on top: the callers take it instead of a second dump
+# of the same screen (a dump costs about 2 s, half of all dumps of a run were such repeats)
 shot() {
-  [ "$1" = "01-healthconnect" ] || ensure_app
+  if [ "$1" = "01-healthconnect" ]; then rm -f ui.xml; else ensure_app; fi
   echo "-- shot $1" >> $STEPLOG
   adb shell screencap -p /sdcard/$1.png || true
   adb pull /sdcard/$1.png || true
-  dump
+  [ -f ui.xml ] || dump
   [ -f ui.xml ] && cp ui.xml dumps/$1.xml
 }
 # tap_ui 'regex' [x y]: the control whose whole text or accessible name matches, else the
@@ -82,7 +86,7 @@ shot() {
 tap_ui() {
   local rx="$1" fx="$2" fy="$3" xy=""
   ensure_app
-  dump
+  [ -f ui.xml ] || dump
   [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$rx")
   if [ -n "$xy" ]; then
     echo "tap '$rx': by label at $xy" >> $STEPLOG
