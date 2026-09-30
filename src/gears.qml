@@ -766,6 +766,12 @@ ScrollView {
                                     anchors.centerIn: parent
                                     width: parent.width * 0.8
                                     height: window.ui.modern ? 36 : 30
+                                    // Modern look: no Material paddings and insets, they differ above and below
+                                    // and the number sat high in the low field
+                                    topPadding: window.ui.modern ? 0 : undefined
+                                    bottomPadding: window.ui.modern ? 0 : undefined
+                                    topInset: window.ui.modern ? 0 : undefined
+                                    bottomInset: window.ui.modern ? 0 : undefined
                                     from: 1
                                     to: 999
                                     value: crankset
@@ -864,6 +870,12 @@ ScrollView {
                                     anchors.centerIn: parent
                                     width: parent.width * 0.8
                                     height: window.ui.modern ? 36 : 30
+                                    // Modern look: no Material paddings and insets, they differ above and below
+                                    // and the number sat high in the low field
+                                    topPadding: window.ui.modern ? 0 : undefined
+                                    bottomPadding: window.ui.modern ? 0 : undefined
+                                    topInset: window.ui.modern ? 0 : undefined
+                                    bottomInset: window.ui.modern ? 0 : undefined
                                     from: 1
                                     to: 999
                                     value: cog
