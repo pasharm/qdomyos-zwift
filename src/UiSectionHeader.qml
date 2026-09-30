@@ -45,7 +45,7 @@ Rectangle {
         anchors.right: headerChevron.left
         anchors.rightMargin: 8
         anchors.verticalCenter: parent.verticalCenter
-        text: header.title
+        text: window.ui.plainTitle(header.title)
         wrapMode: Text.WordWrap
         font.pixelSize: header.nested ? 15 : 16
         font.weight: Font.Medium

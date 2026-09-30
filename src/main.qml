@@ -342,6 +342,11 @@ ApplicationWindow {
         readonly property string accentName: settings.ui_accent
 
         function alpha(c, a) { return Qt.rgba(c.r, c.g, c.b, a) }
+        // A title without its emoji ("Maps 🗺️", "Video 🎥"): Qt 5 on Android draws no colour
+        // emoji with the app font, they showed as boxes. Titles of the modern look only
+        function plainTitle(text) {
+            return String(text).replace(/\s*(?:[\uD83C-\uD83E][\uDC00-\uDFFF]|[⌀-⏿☀-➿])️?/g, "").trim()
+        }
         // The settings page has its own Settings object, which the window's does not hear
         // about until a restart: it writes through here, so the look changes at once
         function setOption(key, value) { settings[key] = value }

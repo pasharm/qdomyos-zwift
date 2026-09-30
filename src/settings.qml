@@ -2656,7 +2656,7 @@ import QtQuick 2.12 as Quick212
                             anchors.topMargin: 4
                             spacing: 8
                             Label {
-                                text: searchResultFrame.section
+                                text: window.ui.plainTitle(searchResultFrame.section)
                                 color: window.ui.accent
                                 font.weight: Font.DemiBold
                                 wrapMode: Text.WordWrap
@@ -2715,7 +2715,8 @@ import QtQuick 2.12 as Quick212
                                     spacing: 2
 
                                     Label {
-                                        text: entry._translatedName || entry.name || entry.key
+                                        readonly property string title: entry._translatedName || entry.name || entry.key
+                                        text: window.ui.modern ? window.ui.plainTitle(title) : title
                                         font.bold: true
                                         wrapMode: Text.WordWrap
                                         Layout.fillWidth: true
@@ -2726,7 +2727,8 @@ import QtQuick 2.12 as Quick212
                                     // the setting; not repeated under the section header
                                     Label {
                                         visible: !settingsPane.changedOnly
-                                        text: window.ui.modern ? settingsPane.sectionOf(entry) : settingsPane.parentDisplayName(entry)
+                                        text: window.ui.modern ? window.ui.plainTitle(settingsPane.sectionOf(entry))
+                                                               : settingsPane.parentDisplayName(entry)
                                         color: window.ui.modern ? window.ui.accent : Material.color(Material.Grey)
                                         font.pixelSize: Qt.application.font.pixelSize - 2
                                         wrapMode: Text.WordWrap
