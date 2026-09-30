@@ -584,9 +584,16 @@ ApplicationWindow {
                 stackView.currentItem.profileSaveReminderNeeded()
         var activeProfileName = settings.profile_name
 
-        if(window.settings_restart_to_apply === true) {
+        // Modern look: not when the settings are back as they were at the opening of the page
+        // (a setting switched on and off again)
+        var restartNeeded = window.settings_restart_to_apply === true &&
+                !(window.ui.modern && stackView.currentItem &&
+                  typeof stackView.currentItem.settingsChangedSinceOpen === "function" &&
+                  !stackView.currentItem.settingsChangedSinceOpen())
+        if (window.settings_restart_to_apply === true) {
             window.settings_restart_to_apply = false;
-            popupRestartApp.visible = true;
+            if (restartNeeded)
+                popupRestartApp.visible = true;
         }
 
         stackView.pop()

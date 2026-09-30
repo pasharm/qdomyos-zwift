@@ -630,6 +630,13 @@ import QtQuick 2.12 as Quick212
                    initialProfileSettingsSnapshot !== profileSettingsSnapshot()
         }
 
+        // main.qml, back from the settings: a setting switched and switched back raised the
+        // restart question although nothing had changed. Without a snapshot - changed
+        function settingsChangedSinceOpen() {
+            return initialProfileSettingsSnapshot.length === 0 ||
+                   initialProfileSettingsSnapshot !== profileSettingsSnapshot()
+        }
+
         Component.onCompleted: {
             initialProfileSettingsSnapshot = profileSettingsSnapshot()
             window.settings_restart_to_apply = false
