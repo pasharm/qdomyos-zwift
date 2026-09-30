@@ -688,6 +688,9 @@ Page {
 
                     SpinBox {
                         id: spinBoxResistanceOffset
+                        // Modern look: Material pads 8 above and 16 below, the number sat above the -/+
+                        topPadding: window.ui.modern ? 12 : undefined
+                        bottomPadding: window.ui.modern ? 12 : undefined
                         Layout.alignment: Qt.AlignHCenter
                         from: 0
                         to: 100
@@ -1494,6 +1497,9 @@ Page {
 
                     SpinBox {
                         id: weightSpinBox
+                        // Modern look: Material pads 8 above and 16 below, the number sat above the -/+
+                        topPadding: window.ui.modern ? 12 : undefined
+                        bottomPadding: window.ui.modern ? 12 : undefined
                         Layout.alignment: Qt.AlignHCenter
                         from: (settings.miles_unit && !settings.weight_kg_unit) ? 660 : 300  // 66.0 lbs or 30.0 kg
                         to: (settings.miles_unit && !settings.weight_kg_unit) ? 4400 : 2000  // 440.0 lbs or 200.0 kg
@@ -1528,6 +1534,9 @@ Page {
 
                     SpinBox {
                         id: ageSpinBox
+                        // Modern look: Material pads 8 above and 16 below, the number sat above the -/+
+                        topPadding: window.ui.modern ? 12 : undefined
+                        bottomPadding: window.ui.modern ? 12 : undefined
                         Layout.alignment: Qt.AlignHCenter
                         from: 1
                         to: 120
