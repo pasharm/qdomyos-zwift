@@ -454,13 +454,13 @@ import QtQuick 2.12 as Quick212
                         }
                     }
                     radius = 12
-                    // Modern look: not past the side margins of the section cards (8,
-                    // UiSectionHeader): a row whose text starts at the page edge (Toputure TEB1)
-                    // lit beyond the cards, and its 2 above ran onto the header of the section
-                    var side = window.ui.modern ? 8 : 0
+                    // Not past the page's side margins. Modern look: no extra 2 above and below,
+                    // a row whose text starts at the page edge (Toputure TEB1) ran onto the header
+                    // of its section; the width stays to the page edges (8 in, like the section
+                    // cards, cut the glow tight around its switch)
                     var grow = window.ui.modern ? 0 : 2
-                    x = Math.max(side, pos.x - 6)
-                    width = Math.min(pos.x + w + 6, flickable.width - side) - x
+                    x = Math.max(0, pos.x - 6)
+                    width = Math.min(pos.x + w + 6, flickable.width) - x
                     y = top - grow
                     height = bottom - top + 2 * grow
                 }
