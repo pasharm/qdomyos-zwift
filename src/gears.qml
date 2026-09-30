@@ -320,12 +320,12 @@ ScrollView {
 
     ColumnLayout {
         anchors.fill: parent
-        anchors.margins: 20
-        spacing: 20
+        anchors.margins: window.ui.modern ? window.contentSideMargin : 20
+        spacing: window.ui.modern ? 12 : 20
         id: chainringColumn
 
         // Wahoo Options
-        GroupBox {
+        UiGroupBox {
             title: qsTr("Wahoo Options")
             Layout.fillWidth: true
 
@@ -357,7 +357,7 @@ ScrollView {
         }
 
         // Crankset Size
-        GroupBox {
+        UiGroupBox {
             title: qsTr("Chainring Size")
             Layout.fillWidth: true
 
@@ -367,6 +367,7 @@ ScrollView {
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                     Layout.maximumWidth: chainringColumn.width - 20
+                    color: window.ui.modern ? window.ui.textMuted : Material.foreground
                 }
 
                 SpinBox {
@@ -383,7 +384,7 @@ ScrollView {
         }
 
         // Cog Size
-        GroupBox {
+        UiGroupBox {
             title: qsTr("Cog Size")
             Layout.fillWidth: true
 
@@ -393,6 +394,7 @@ ScrollView {
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                     Layout.maximumWidth: chainringColumn.width - 20
+                    color: window.ui.modern ? window.ui.textMuted : Material.foreground
                 }
                 SpinBox {
                     from: 1
@@ -408,12 +410,12 @@ ScrollView {
         }
 
         // Wheel Size
-        GroupBox {
+        UiGroupBox {
             title: qsTr("Virtual Wheel Size")
             Layout.fillWidth: true
 
             ColumnLayout {
-                ComboBox {
+                UiComboBox {
                        id: wheelSizeCombo
                        width: parent.width
                        currentIndex: initialWheelSizeIndex
@@ -542,11 +544,11 @@ ScrollView {
             }
         }
 
-        GroupBox {
+        UiGroupBox {
         title: qsTr("Preset Gear Profiles")
         Layout.fillWidth: true
 
-            ComboBox {
+            UiComboBox {
                 id: profileCombo
                 width: parent.width
                 textRole: "text"
@@ -574,7 +576,7 @@ ScrollView {
 
 
         // Gear Table GroupBox
-        GroupBox {
+        UiGroupBox {
             title: qsTr("Virtual Gear Table")
             Layout.fillWidth: true
             Layout.fillHeight: true
@@ -584,11 +586,14 @@ ScrollView {
                 anchors.fill: parent
                 spacing: 10
 
-                // Updated Buttons Row
-                RowLayout {
+                // Updated Buttons Row. Modern look: one button per line, three long labels
+                // side by side were cut on a phone
+                GridLayout {
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 40
-                    spacing: 10
+                    Layout.preferredHeight: window.ui.modern ? -1 : 40
+                    columns: window.ui.modern ? 1 : 3
+                    columnSpacing: 10
+                    rowSpacing: window.ui.modern ? 8 : 10
 
                     UiButton {
                         text: qsTr("Add Gear")
@@ -621,8 +626,9 @@ ScrollView {
                     Layout.fillWidth: true
                     Layout.preferredHeight: 40
                     color: window.ui.modern ? window.ui.surfaceHigh : "#f0f0f0"
-                    border.width: 1
+                    border.width: window.ui.modern ? 0 : 1
                     border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                    radius: window.ui.modern ? 12 : 0
 
                     Row {
                         anchors.fill: parent
@@ -630,7 +636,7 @@ ScrollView {
                         Rectangle {
                             width: parent.width / 3
                             height: parent.height
-                            border.width: 1
+                            border.width: window.ui.modern ? 0 : 1
                             border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                             color: "transparent"
 
@@ -645,7 +651,7 @@ ScrollView {
                         Rectangle {
                             width: parent.width / 3
                             height: parent.height
-                            border.width: 1
+                            border.width: window.ui.modern ? 0 : 1
                             border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                             color: "transparent"
 
@@ -660,7 +666,7 @@ ScrollView {
                         Rectangle {
                             width: parent.width / 3
                             height: parent.height
-                            border.width: 1
+                            border.width: window.ui.modern ? 0 : 1
                             border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                             color: "transparent"
 
@@ -680,6 +686,8 @@ ScrollView {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
                     clip: true
+                    // Modern look: rounded rows apart from each other
+                    spacing: window.ui.modern ? 4 : 0
                     property int currentRow: -1
                     model: ListModel {
                         id: gearListModel
@@ -705,7 +713,8 @@ ScrollView {
 
                     delegate: Rectangle {
                         width: gearTable.width
-                        height: 40
+                        height: window.ui.modern ? 48 : 40
+                        radius: window.ui.modern ? 12 : 0
                         color: window.ui.modern ? (gearTable.currentRow === index ? window.ui.alpha(window.ui.accent, 0.14) : window.ui.surface) : (gearTable.currentRow === index ? "#e0e0e0" : "white")
 
                         MouseArea {
@@ -720,7 +729,7 @@ ScrollView {
                             Rectangle {
                                 width: parent.width / 3
                                 height: parent.height
-                                border.width: 1
+                                border.width: window.ui.modern ? 0 : 1
                                 border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                                 color: "transparent"
 
@@ -735,7 +744,7 @@ ScrollView {
                             Rectangle {
                                 width: parent.width / 3
                                 height: parent.height
-                                border.width: 1
+                                border.width: window.ui.modern ? 0 : 1
                                 border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                                 color: "transparent"
 
@@ -743,7 +752,7 @@ ScrollView {
                                     id: cranksetSpinBox
                                     anchors.centerIn: parent
                                     width: parent.width * 0.8
-                                    height: 30
+                                    height: window.ui.modern ? 36 : 30
                                     from: 1
                                     to: 999
                                     value: crankset
@@ -770,12 +779,14 @@ ScrollView {
                                         width: height
                                         color: window.ui.modern ? (parent.up.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest) : (parent.up.pressed ? "#e4e4e4" : "#f6f6f6")
                                         border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                                        border.width: window.ui.modern ? 0 : 1
+                                        radius: window.ui.modern ? 8 : 0
 
                                         Text {
                                             text: "+"
                                             color: window.ui.modern ? window.ui.textMain : "black"
                                             anchors.centerIn: parent
-                                            font.pixelSize: 12
+                                            font.pixelSize: window.ui.modern ? 18 : 12
                                         }
                                     }
 
@@ -785,18 +796,22 @@ ScrollView {
                                         width: height
                                         color: window.ui.modern ? (parent.down.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest) : (parent.down.pressed ? "#e4e4e4" : "#f6f6f6")
                                         border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                                        border.width: window.ui.modern ? 0 : 1
+                                        radius: window.ui.modern ? 8 : 0
 
                                         Text {
                                             text: "-"
                                             color: window.ui.modern ? window.ui.textMain : "black"
                                             anchors.centerIn: parent
-                                            font.pixelSize: 12
+                                            font.pixelSize: window.ui.modern ? 18 : 12
                                         }
                                     }
 
                                     background: Rectangle {
                                         color: window.ui.modern ? window.ui.surfaceHighest : "white"
                                         border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                                        border.width: window.ui.modern ? 0 : 1
+                                        radius: window.ui.modern ? 8 : 0
                                     }
                                 }
                             }
@@ -805,7 +820,7 @@ ScrollView {
                             Rectangle {
                                 width: parent.width / 3
                                 height: parent.height
-                                border.width: 1
+                                border.width: window.ui.modern ? 0 : 1
                                 border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                                 color: "transparent"
 
@@ -813,7 +828,7 @@ ScrollView {
                                     id: cogSpinBox
                                     anchors.centerIn: parent
                                     width: parent.width * 0.8
-                                    height: 30
+                                    height: window.ui.modern ? 36 : 30
                                     from: 1
                                     to: 999
                                     value: cog
@@ -840,12 +855,14 @@ ScrollView {
                                         width: height
                                         color: window.ui.modern ? (parent.up.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest) : (parent.up.pressed ? "#e4e4e4" : "#f6f6f6")
                                         border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                                        border.width: window.ui.modern ? 0 : 1
+                                        radius: window.ui.modern ? 8 : 0
 
                                         Text {
                                             text: "+"
                                             color: window.ui.modern ? window.ui.textMain : "black"
                                             anchors.centerIn: parent
-                                            font.pixelSize: 12
+                                            font.pixelSize: window.ui.modern ? 18 : 12
                                         }
                                     }
 
@@ -855,18 +872,22 @@ ScrollView {
                                         width: height
                                         color: window.ui.modern ? (parent.down.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest) : (parent.down.pressed ? "#e4e4e4" : "#f6f6f6")
                                         border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                                        border.width: window.ui.modern ? 0 : 1
+                                        radius: window.ui.modern ? 8 : 0
 
                                         Text {
                                             text: "-"
                                             color: window.ui.modern ? window.ui.textMain : "black"
                                             anchors.centerIn: parent
-                                            font.pixelSize: 12
+                                            font.pixelSize: window.ui.modern ? 18 : 12
                                         }
                                     }
 
                                     background: Rectangle {
                                         color: window.ui.modern ? window.ui.surfaceHighest : "white"
                                         border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                                        border.width: window.ui.modern ? 0 : 1
+                                        radius: window.ui.modern ? 8 : 0
                                     }
                                 }
                             }
