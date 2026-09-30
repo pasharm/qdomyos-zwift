@@ -423,43 +423,65 @@ DataObject::DataObject(const QString &name, const QString &icon, const QString &
     emit largeButtonColorChanged(this->largeButtonColor());
 }
 
+// The setters below are called for every tile at every update: notify QML only when the value changes,
+// otherwise it evaluates all the bindings of the tile again for nothing
 void DataObject::setName(const QString &v) {
+    if (m_name == v)
+        return;
     m_name = v;
     emit nameChanged(m_name);
 }
 void DataObject::setValue(const QString &v) {
+    if (m_value == v)
+        return;
     m_value = v;
     emit valueChanged(m_value);
 }
 void DataObject::setSecondLine(const QString &value) {
+    if (m_secondLine == value)
+        return;
     m_secondLine = value;
     emit secondLineChanged(m_secondLine);
 }
 void DataObject::setValueFontSize(int value) {
+    if (m_valueFontSize == value)
+        return;
     m_valueFontSize = value;
     emit valueFontSizeChanged(m_valueFontSize);
 }
 void DataObject::setValueFontColor(const QString &value) {
+    if (m_valueFontColor == value)
+        return;
     m_valueFontColor = value;
     emit valueFontColorChanged(m_valueFontColor);
 }
 void DataObject::setLargeButtonColor(const QString &color) {
+    if (m_largeButtonColor == color)
+        return;
     m_largeButtonColor = color;
     emit largeButtonColorChanged(m_largeButtonColor);
 }
 void DataObject::setLargeButtonLabel(const QString &label) {
+    if (m_largeButtonLabel == label)
+        return;
     m_largeButtonLabel = label;
     emit largeButtonLabelChanged(m_largeButtonLabel);
 }
 void DataObject::setLabelFontSize(int value) {
+    if (m_labelFontSize == value)
+        return;
     m_labelFontSize = value;
     emit labelFontSizeChanged(m_labelFontSize);
 }
 void DataObject::setGridId(int id) {
+    if (m_gridId == id)
+        return;
     m_gridId = id;
     emit gridIdChanged(m_gridId);
 }
 void DataObject::setVisible(bool visible) {
+    if (m_visible == visible)
+        return;
     m_visible = visible;
     emit visibleChanged(m_visible);
 }
