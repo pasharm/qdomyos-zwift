@@ -455,15 +455,39 @@ Page {
 
                 Item { width: 1; height: 8 }
 
-                // "Not connecting?": a short checklist, always open. From the old help text
-                // (already translated) only the numbered checks and the hint about the virtual
-                // device: without the lead sentence (the subtitle says it), the bold "If it
-                // doesn't, please check" (the heading says it), the e-mail and the disclaimer
+                // "Not connecting?": a short checklist, always open, cut from the old help text
+                // (already translated): the numbered checks and the hint about the virtual device,
+                // then the rest (the e-mail, the disclaimer, the author) in small muted text.
+                // Without the lead sentence (the subtitle says it) and the bold "If it doesn't,
+                // please check" (the heading says it)
                 Rectangle {
                     width: parent.width
                     height: helpColumn.height + 32
                     radius: 16
                     color: window.ui.surface
+
+                    // [checks, rest]
+                    readonly property var helpParts: {
+                        var t = lblHelp.text
+                        var b = t.indexOf("<b>")
+                        if (b < 0)
+                            return [t, ""]
+                        t = t.substring(b)
+                        var br = t.indexOf("<br>")
+                        if (br < 0)
+                            return [t, ""]
+                        t = t.substring(br + 4)
+                        var p1 = t.indexOf("<br><br>")
+                        var p2 = p1 < 0 ? -1 : t.indexOf("<br><br>", p1 + 8)
+                        if (p2 < 0)
+                            return [t, ""]
+                        // The disclaimer is broken into short lines by hand for the wide
+                        // classic page: here it wraps by itself
+                        var rest = t.substring(p2 + 8).replace(/<i>([\s\S]*?)<\/i>/, function (m, x) {
+                            return "<i>" + x.replace(/<br\s*\/?\s*>/g, " ") + "</i>"
+                        })
+                        return [t.substring(0, p2), rest]
+                    }
 
                     Column {
                         id: helpColumn
@@ -492,24 +516,24 @@ Page {
 
                         Label {
                             width: parent.width
-                            text: {
-                                var t = lblHelp.text
-                                var b = t.indexOf("<b>")
-                                if (b < 0)
-                                    return t
-                                t = t.substring(b)
-                                var br = t.indexOf("<br>")
-                                if (br < 0)
-                                    return t
-                                t = t.substring(br + 4)
-                                var p1 = t.indexOf("<br><br>")
-                                var p2 = p1 < 0 ? -1 : t.indexOf("<br><br>", p1 + 8)
-                                return p2 < 0 ? t : t.substring(0, p2)
-                            }
+                            text: helpColumn.parent.helpParts[0]
                             textFormat: Text.StyledText
                             wrapMode: Text.WordWrap
                             color: window.ui.textMuted
                             font.pixelSize: 13
+                            lineHeight: 1.1
+                        }
+
+                        Label {
+                            visible: text !== ""
+                            width: parent.width
+                            topPadding: 4
+                            text: helpColumn.parent.helpParts[1]
+                            textFormat: Text.StyledText
+                            wrapMode: Text.WordWrap
+                            color: window.ui.textMuted
+                            opacity: 0.75
+                            font.pixelSize: 11
                             lineHeight: 1.1
                         }
                     }
