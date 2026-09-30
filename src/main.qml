@@ -1098,12 +1098,11 @@ ApplicationWindow {
         property bool settingsPageActive: stackView.currentItem && typeof stackView.currentItem.showSettingsSearch === "function"
         // Modern look: load and save belong to the settings page itself. The pages opened from
         // it (the settings files of the load button among them) kept both, and load could open
-        // the list again and again. The profiles keep them as the drawer opens them from home.
+        // the list again and again. The profiles page has its own buttons and none of these.
         // The classic look sets them where it always did
         onSettingsPageActiveChanged: {
             if (window.ui.modern) {
-                var keep = settingsPageActive || (stackView.currentItem
-                        && typeof stackView.currentItem.profile_open_clicked === "function")
+                var keep = settingsPageActive
                 toolButtonLoadSettings.visible = keep
                 toolButtonSaveSettings.visible = keep
             }
@@ -1143,7 +1142,8 @@ ApplicationWindow {
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "picture_in_picture_alt"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { console.log("floating!"); floatingOpen(); }
             anchors.left: toolButton.right
-            visible: OS_VERSION === "Android" ? true : false
+            // Modern look: on the home page only, the other pages have nothing to float
+            visible: OS_VERSION === "Android" ? (!window.ui.modern || stackView.depth === 1) : false
         }
 
         UiNotice {
@@ -1350,8 +1350,9 @@ ApplicationWindow {
     function drawerAction(key) {
         switch (key) {
         case "profile":
-            toolButtonLoadSettings.visible = true;
-            toolButtonSaveSettings.visible = true;
+            // Modern look: the settings file buttons belong to the settings page only
+            toolButtonLoadSettings.visible = !window.ui.modern;
+            toolButtonSaveSettings.visible = !window.ui.modern;
             stackView.push("profiles.qml")
             stackView.currentItem.profile_open_clicked.connect(profile_open_clicked)
             break
