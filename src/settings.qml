@@ -50,7 +50,7 @@ import QtQuick 2.12 as Quick212
         property bool settingsIndexLoading: false
         readonly property var settingsIndexPages: ["settings.qml", "settings-tiles.qml", "settings-tts.qml",
                                                    "settings-shortcuts.qml", "settings-treadmill-inclination-override.qml",
-                                                   "gears.qml"]
+                                                   "gears.qml", "custominclinationresistance.qml"]
         property var pendingReveal: null
         // The search (text and "Changed") a result was opened from: back returns to it
         property var searchReturn: null
@@ -242,6 +242,11 @@ import QtQuick 2.12 as Quick212
                 return
             }
             var where = settingsIndex ? settingsIndex[entry.key] : null
+            // A setting that is on no page (Garmin ANT+, Peloton Bike OCR...): the result is
+            // the only place to change it, the tap leaves the results as they are instead of
+            // dropping them for the top of the settings
+            if (!where)
+                return
             var page = settingsPane
             var context = "settings"
             // The results and their scroll as they were: back shows them without searching again
