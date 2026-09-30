@@ -143,11 +143,20 @@ ApplicationWindow {
     property var keptCharts: null
 
     // The kept pages hold a web view each (tens of MB): given back 3 minutes after they are
-    // closed, and at once when the equipment connects (the ride needs the memory more)
+    // closed, and at once while riding (the equipment moving: the ride needs the memory more).
+    // The equipment connecting would not do: it connects once, when the app opens
+    readonly property bool riding: typeof rootItem !== "undefined" && rootItem !== null && rootItem.currentSpeed > 0
+    onRidingChanged: if (riding) releaseKeptPages()
     function keptInStack(item) {
         return item && stackView.find(function(i) { return i === item }) !== null
     }
     function releaseKeptPages() {
+        // Not while a page is sliding out: it is off the stack already but still drawn
+        if (stackView.busy) {
+            keptPagesReleaseTimer.interval = 1000
+            keptPagesReleaseTimer.restart()
+            return
+        }
         if (keptWorkoutEditor && !keptInStack(keptWorkoutEditor)) {
             keptWorkoutEditor.destroy()
             keptWorkoutEditor = null
@@ -161,14 +170,6 @@ ApplicationWindow {
         id: keptPagesReleaseTimer
         interval: 3 * 60 * 1000
         onTriggered: releaseKeptPages()
-    }
-    Connections {
-        target: rootItem
-        ignoreUnknownSignals: true
-        function onChangeLabelHelp() {
-            if (!rootItem.labelHelp)
-                releaseKeptPages()
-        }
     }
     // Once, not per editor made: a closure per editor would close it once for each
     onTrainprogram_autostart_requested: {
@@ -1963,10 +1964,13 @@ ApplicationWindow {
             // Only the tile grid scrolls the toolbar away; any other page gets it back
             onCurrentItemChanged: {
                 headerToolbar.scrolledAway = false
-                // A kept page just left the stack: the countdown to giving its memory back
+                // A kept page just left the stack: the countdown to giving its memory back,
+                // a second while riding (once the page has slid out)
                 if ((keptWorkoutEditor && !window.keptInStack(keptWorkoutEditor))
-                        || (keptCharts && !window.keptInStack(keptCharts)))
+                        || (keptCharts && !window.keptInStack(keptCharts))) {
+                    keptPagesReleaseTimer.interval = window.riding ? 1000 : 3 * 60 * 1000
                     keptPagesReleaseTimer.restart()
+                }
             }
             Connections {
                 target: stackView.currentItem
