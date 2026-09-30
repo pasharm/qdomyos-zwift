@@ -288,6 +288,32 @@ if [ "$UI_MODERN" = "true" ]; then
   adb shell input keyevent 4          # back: the results again
   sleep 2
   shot 10h-back-to-results
+  # A setting on no page (Garmin ANT+): the tap keeps the results. Reported to throw out to
+  # the home page
+  tap_ui 'Clear'
+  sleep 1
+  tap_ui 'Search settings' 600 330
+  sleep 2
+  adb shell input text "garmin%sant" || true
+  sleep 3
+  hide_keyboard
+  shot 10i-search-garmin-ant
+  tap_ui 'Garmin ANT\+'
+  sleep 2
+  shot 10j-tap-garmin-ant            # the same results
+  # A label with its unit on the page: "Bike Weight (kg)" lit itself, not its whole section
+  tap_ui 'Clear'
+  sleep 1
+  tap_ui 'Search settings' 600 330
+  sleep 2
+  adb shell input text "bike%sweight" || true
+  sleep 3
+  hide_keyboard
+  tap_ui 'Bike Weight'
+  sleep 1
+  shot 10k-jump-bike-weight
+  adb shell input keyevent 4
+  sleep 2
 fi
 tap $MENU "back: home"; sleep 3
 shot 11-home-dark
@@ -373,6 +399,17 @@ else
 fi
 sleep 3
 shot 24-after-close-dark            # the home page again
+# Modern: the kept charts page opened again draws its charts at once (?still=), no growing
+if [ "$UI_MODERN" = "true" ]; then
+  open_menu
+  tap_drawer 'Charts' 307 1263
+  sleep 1
+  shot 24a-charts-reopen
+  sleep 3
+  shot 24b-charts-reopen-later
+  tap $MENU "back: home"
+  sleep 3
+fi
 
 # Yes to a restart question closes the app (from the phone: after Yes on the FitShow question
 # the card stayed on the screen and the process lived on). OK of UI Zoom asks for a restart
