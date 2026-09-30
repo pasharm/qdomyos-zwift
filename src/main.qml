@@ -769,7 +769,10 @@ ApplicationWindow {
 
     UiNotice {
         id: popupSaveFile
-        text: qsTr("Saved! Check your private folder (Android)<br>or Files App (iOS)")
+        // Modern look: only the place of this phone's system, one line that wraps by itself
+        text: !window.ui.modern ? qsTr("Saved! Check your private folder (Android)<br>or Files App (iOS)")
+              : Qt.platform.os === "ios" ? qsTr("Saved! Look in the Files app.")
+              : qsTr("Saved! Look in the app's private folder.")
     }
 
     UiPopup {
@@ -1421,7 +1424,9 @@ ApplicationWindow {
                     }
                 }
                 if (keptWorkoutEditor) {
-                    stackView.push(keptWorkoutEditor)
+                    // Already open (the drawer swiped over it): not pushed a second time
+                    if (stackView.find(function(item) { return item === keptWorkoutEditor }) === null)
+                        stackView.push(keptWorkoutEditor)
                     break
                 }
             }

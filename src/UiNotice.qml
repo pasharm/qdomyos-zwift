@@ -47,12 +47,12 @@ UiPopup {
     Column {
         anchors.horizontalCenter: control.snackbar ? undefined : parent.horizontalCenter
         anchors.verticalCenter: control.snackbar ? parent.verticalCenter : undefined
-        width: control.snackbar ? parent.width : implicitWidth
+        width: control.snackbar ? control.availableWidth : implicitWidth
 
         Label {
             id: noticeLabel
             anchors.horizontalCenter: control.snackbar ? undefined : parent.horizontalCenter
-            width: control.snackbar ? parent.width : implicitWidth
+            width: control.snackbar ? control.availableWidth : implicitWidth
             text: control.text
             wrapMode: control.snackbar ? Text.WordWrap : Text.NoWrap
             color: control.snackbar ? window.ui.bg : Material.foreground

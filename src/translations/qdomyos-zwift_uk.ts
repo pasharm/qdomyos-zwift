@@ -4620,6 +4620,14 @@ restart the app.</source>
         <translation>Налаштування успішно завантажено. Перезапустіть застосунок!</translation>
     </message>
     <message>
+        <source>Saved! Look in the Files app.</source>
+        <translation>Збережено! Шукайте в застосунку «Файли».</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the app&apos;s private folder.</source>
+        <translation>Збережено! Шукайте в особистій папці застосунку.</translation>
+    </message>
+    <message>
         <location filename="../main.qml" line="689"/>
         <source>Saved! Check your private folder (Android)&lt;br&gt;or Files App (iOS)</source>
         <translation>Збережено! Перевірте особисту папку (Android)&lt;br&gt;або застосунок «Файли» (iOS)</translation>
