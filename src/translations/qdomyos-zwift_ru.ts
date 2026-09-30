@@ -5085,6 +5085,16 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
 <context>
     <name>settings</name>
     <message>
+        <location filename="../settings.qml" line="312"/>
+        <source>Hidden on its page right now: change it here</source>
+        <translation>Сейчас скрыта на своей странице – меняйте её здесь</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="317"/>
+        <source>Turn on “%1” to change this setting</source>
+        <translation>Включите «%1», чтобы изменить эту настройку</translation>
+    </message>
+    <message>
         <location filename="../settings.qml" line="236"/>
         <source>General</source>
         <translation>Общие</translation>

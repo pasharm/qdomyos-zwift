@@ -266,6 +266,7 @@ import QtQuick 2.12 as Quick212
             var chain = where ? where.chain : []
             var container = page.contentItem
             var switchedOff = null
+            var opened = []
             for (var i = 0; i < chain.length; i++) {
                 var wanted = qsTranslate(context, chain[i])
                 var english = chain[i]
@@ -283,16 +284,37 @@ import QtQuick 2.12 as Quick212
                     switchedOff = section
                     break
                 }
+                if (!section.isOpen)
+                    opened.push(section)
                 section.isOpen = true
                 container = section
             }
             var names = settingLabels(entry, context)
-            var target = switchedOff ? switchedOff : findItem(container, function (item) {
+            function named(item) {
                 // The unit a label carries on the page ("Bike Weight (kg)") is not in the name
-                return item.visible && typeof item.text === "string" && item.text.length > 0 &&
+                return typeof item.text === "string" && item.text.length > 0 &&
                        (names.indexOf(normalizedLabel(item.text)) >= 0 ||
                         names.indexOf(normalizedLabel(item.text.replace(/\s*\([^()]*\)\s*:?\s*$/, ""))) >= 0)
+            }
+            var target = switchedOff ? switchedOff : findItem(container, function (item) {
+                return item.visible && named(item)
             })
+            // Modern look: a setting its page hides with the current values ("Use kg for weight"
+            // shows only with miles on) - the whole section was lit instead. Back to the results,
+            // the sections opened on the way closed again: the result has the control itself
+            if (window.ui.modern && !target && searchReturn && findItem(container, named)) {
+                for (var k = 0; k < opened.length; k++)
+                    opened[k].isOpen = false
+                if (searchReturn.viaPush)
+                    stackView.pop()
+                else
+                    restoreSearch()
+                toast.show(qsTr("Hidden on its page right now: change it here"))
+                return
+            }
+            // Modern look: the fields of a switched-off section are not on the page yet
+            if (window.ui.modern && switchedOff)
+                toast.show(qsTr("Turn on “%1” to change this setting").arg(window.ui.plainTitle(switchedOff.title)))
             pendingReveal = { flickable: page.contentItem, target: target || container }
             revealTimer.restart()
         }
