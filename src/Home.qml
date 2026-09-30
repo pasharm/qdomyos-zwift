@@ -506,7 +506,7 @@ HomeForm {
                     id: modernValue
                     anchors.horizontalCenter: modernCard.horizontalCenter
                     y: 34 * modernTile.zoom
-                    width: Math.max(40, modernCard.width - (writable ? 100 : 20) * modernTile.zoom)
+                    width: Math.max(40, modernCard.width - (writable ? 112 : 20) * modernTile.zoom)
                     height: 50 * modernTile.zoom
                     text: value
                     color: modernTile.zoned ? window.ui.zoneInk(valueFontColor) : window.ui.textMain
@@ -541,20 +541,28 @@ HomeForm {
                     objectName: minusName
                     autoRepeat: true
                     visible: writable && !largeButton
-                    x: 6 * modernTile.zoom
-                    anchors.verticalCenter: modernValue.verticalCenter
-                    width: 44 * modernTile.zoom
-                    height: 44 * modernTile.zoom
+                    // A pill of 48 x 64 in a touch area 8 wider all round: easier to hit while
+                    // riding, without taking width from the value. A little below the value's
+                    // centre, clear of the tile icon
+                    x: (6 - 8) * modernTile.zoom
+                    y: modernValue.y + modernValue.height / 2 + 3 * modernTile.zoom - height / 2
+                    width: 64 * modernTile.zoom
+                    height: 80 * modernTile.zoom
                     onClicked: minus_clicked(objectName)
-                    background: Rectangle {
-                        radius: width / 2
-                        color: modernMinus.down ? window.ui.alpha(window.ui.accent, 0.35) : window.ui.surfaceHighest
+                    background: Item {
+                        Rectangle {
+                            anchors.centerIn: parent
+                            width: 48 * modernTile.zoom
+                            height: 64 * modernTile.zoom
+                            radius: width / 2
+                            color: modernMinus.down ? window.ui.alpha(window.ui.accent, 0.35) : window.ui.surfaceHighest
+                        }
                     }
                     contentItem: Item {
                         UiIcon {
                             anchors.centerIn: parent
-                            width: 22 * modernTile.zoom
-                            height: 22 * modernTile.zoom
+                            width: 24 * modernTile.zoom
+                            height: 24 * modernTile.zoom
                             name: "remove"
                             color: window.ui.textMain
                         }
@@ -572,20 +580,28 @@ HomeForm {
                     objectName: plusName
                     autoRepeat: true
                     visible: writable && !largeButton
-                    x: modernCard.width - width - 6 * modernTile.zoom
-                    anchors.verticalCenter: modernValue.verticalCenter
-                    width: 44 * modernTile.zoom
-                    height: 44 * modernTile.zoom
+                    // A pill of 48 x 64 in a touch area 8 wider all round: easier to hit while
+                    // riding, without taking width from the value. A little below the value's
+                    // centre, clear of the tile icon
+                    x: modernCard.width - width + (8 - 6) * modernTile.zoom
+                    y: modernValue.y + modernValue.height / 2 + 3 * modernTile.zoom - height / 2
+                    width: 64 * modernTile.zoom
+                    height: 80 * modernTile.zoom
                     onClicked: plus_clicked(objectName)
-                    background: Rectangle {
-                        radius: width / 2
-                        color: modernPlus.down ? window.ui.alpha(window.ui.accent, 0.35) : window.ui.surfaceHighest
+                    background: Item {
+                        Rectangle {
+                            anchors.centerIn: parent
+                            width: 48 * modernTile.zoom
+                            height: 64 * modernTile.zoom
+                            radius: width / 2
+                            color: modernPlus.down ? window.ui.alpha(window.ui.accent, 0.35) : window.ui.surfaceHighest
+                        }
                     }
                     contentItem: Item {
                         UiIcon {
                             anchors.centerIn: parent
-                            width: 22 * modernTile.zoom
-                            height: 22 * modernTile.zoom
+                            width: 24 * modernTile.zoom
+                            height: 24 * modernTile.zoom
                             name: "add"
                             color: window.ui.textMain
                         }
