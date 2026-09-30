@@ -2320,11 +2320,7 @@ import QtQuick 2.12 as Quick212
         ColumnLayout {
             id: column1
             spacing: 0
-            // Modern: laid out from the top at its own height. Stretched to the content area, a
-            // taller area (the long page just left for the search results) was shared out as
-            // empty space above the search bar and between the rows
-            anchors.fill: window.ui.modern ? undefined : parent
-            width: parent.width
+            anchors.fill: parent
 
             // Modern: always on top of the page (the toolbar has no search button then), with a
             // clear button inside the field and the "Changed" filter next to it
@@ -17740,6 +17736,15 @@ import QtQuick 2.12 as Quick212
                     }
                 }
             }
+            }
+
+            // Modern: a content area taller than the rows (the long page just left for the
+            // search results) goes here, at the bottom. Without it the layout shared it out as
+            // empty space above the search bar and between the rows
+            Item {
+                visible: window.ui.modern
+                Layout.fillWidth: true
+                Layout.fillHeight: true
             }
         }
 
