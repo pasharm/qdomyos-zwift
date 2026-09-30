@@ -3339,6 +3339,8 @@ import QtQuick 2.12 as Quick212
                     Label {
                         id: labelHeartRateBelt
                         text: qsTr("Heart Belt Name:")
+                        // Modern look: apart from the description above it, the name of a picker below
+                        topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
                     }
                     RowLayout {
@@ -5063,6 +5065,8 @@ import QtQuick 2.12 as Quick212
 
                     Label {
                         text: qsTr("FTMS Bike:")
+                        // Modern look: apart from the description above it, the name of a picker below
+                        topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
                     }
                     RowLayout {
@@ -11004,6 +11008,8 @@ import QtQuick 2.12 as Quick212
 
                     Label {
                         text: qsTr("FTMS Treadmill:")
+                        // Modern look: apart from the description above it, the name of a picker below
+                        topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
                     }
                     RowLayout {
@@ -12858,6 +12864,8 @@ import QtQuick 2.12 as Quick212
 
                     Label {
                         text: qsTr("FTMS Rower:")
+                        // Modern look: apart from the description above it, the name of a picker below
+                        topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
                     }
                     RowLayout {
@@ -13070,6 +13078,8 @@ import QtQuick 2.12 as Quick212
 
                     Label {
                         text: qsTr("FTMS Elliptical:")
+                        // Modern look: apart from the description above it, the name of a picker below
+                        topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
                     }
                     RowLayout {
@@ -14351,6 +14361,8 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 id: labelCadenceSensorName
                                 text: qsTr("Cadence Sensor:")
+                                // Modern look: apart from the description above it, the name of a picker below
+                                topPadding: window.ui.modern ? 16 : 0
                                 Layout.fillWidth: true
                             }
                             RowLayout {
@@ -14917,6 +14929,8 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 id: labelPowerSensorName
                                 text: qsTr("Power Sensor:")
+                                // Modern look: apart from the description above it, the name of a picker below
+                                topPadding: window.ui.modern ? 16 : 0
                                 Layout.fillWidth: true
                             }
                             RowLayout {
@@ -14984,6 +14998,8 @@ import QtQuick 2.12 as Quick212
                                         Layout.topMargin: window.ui.modern ? 8 : 0
                                         id: labelEliteRizerName
                                         text: "Elite Rizer:"
+                                        // Modern look: apart from the description above it, the name of a picker below
+                                        topPadding: window.ui.modern ? 16 : 0
                                         Layout.fillWidth: true
                                     }
                                     RowLayout {
@@ -15054,6 +15070,8 @@ import QtQuick 2.12 as Quick212
                                         Layout.topMargin: window.ui.modern ? 8 : 0
                                         id: labelEliteSterzoSmartName
                                         text: "Elite Sterzo Smart:"
+                                        // Modern look: apart from the description above it, the name of a picker below
+                                        topPadding: window.ui.modern ? 16 : 0
                                         Layout.fillWidth: true
                                     }
                                     RowLayout {
@@ -15102,6 +15120,8 @@ import QtQuick 2.12 as Quick212
                                 Layout.topMargin: window.ui.modern ? 8 : 0
                                 id: labelFTMSAccessoryName
                                 text: qsTr("SmartSpin2k device:")
+                                // Modern look: apart from the description above it, the name of a picker below
+                                topPadding: window.ui.modern ? 16 : 0
                                 Layout.fillWidth: true
                             }
                             RowLayout {
