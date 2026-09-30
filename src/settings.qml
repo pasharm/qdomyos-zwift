@@ -764,6 +764,19 @@ import QtQuick 2.12 as Quick212
             return []
         }
 
+        // Modern look: the labels of a search result's list, as on the setting's own page
+        // (ValueComboBox labels). The stored "Disabled" of the device pickers, and every value
+        // of a fixed list ("Always", "Request") that has a translation in this page's context;
+        // a value without one ("MM/dd/yy", "700 x 18C") comes back as it is
+        function optionLabels(entry) {
+            var labels = { "Disabled": qsTr("Disabled") }
+            var values = entry && entry.options && entry.options.values ? entry.options.values : []
+            for (var i = 0; i < values.length; i++)
+                if (typeof values[i] === "string")
+                    labels[values[i]] = qsTranslate("settings", values[i])
+            return labels
+        }
+
         function isBluetoothDeviceSetting(entry) {
             return entry && entry.options && entry.options.expression &&
                    entry.options.expression.indexOf("bluetoothDevices") >= 0
@@ -2632,9 +2645,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.maximumHeight: visible ? implicitHeight : 0
                                 model: visible ? settingsPane.optionValues(entry) : []
                                 currentIndex: visible ? settingsPane.optionIndex(entry) : 0
-                                // The stored "Disabled" of the device pickers (and the PID zone) shown
-                                // translated, as on the setting's own page (ValueComboBox labels)
-                                itemLabels: window.ui.modern ? ({ "Disabled": qsTr("Disabled") }) : null
+                                itemLabels: window.ui.modern && visible ? settingsPane.optionLabels(entry) : null
                                 displayText: labelFor(visible && settingsPane.isBluetoothDeviceSetting(entry)
                                                       ? settingsPane.settingValue(entry)
                                                       : currentText)
