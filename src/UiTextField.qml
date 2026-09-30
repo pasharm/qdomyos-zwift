@@ -73,12 +73,14 @@ T.TextField {
         id: timePicker
         parent: Overlay.overlay
         modal: true
-        // A fixed size: sized by its content, the popup grew out of the corner while the
-        // wheels laid out on the first open, and anchors.centerIn followed it
+        // Placed by x/y, not anchors.centerIn: centred by anchors, the popup grew out of the
+        // corner while it opened. The wheels have a fixed size, so the height is known before
+        // the first open and still follows the text of the labels and buttons; the width
+        // never runs past a narrow screen
         x: Math.round((parent.width - width) / 2)
-        y: Math.round((parent.height - height) / 2)
-        width: 292
-        height: 16 + 20 + 4 + 200 + 12 + 48 + 16
+        y: Math.max(0, Math.round((parent.height - height) / 2))
+        width: Math.min(292, parent.width - 16)
+        height: Math.min(topPadding + contentItem.implicitHeight + bottomPadding, parent.height)
         padding: 16
         property bool withSeconds: true
 
