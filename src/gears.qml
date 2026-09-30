@@ -25,6 +25,16 @@ ScrollView {
         topInset: 0
         bottomInset: 0
         contentItem: TextInput {
+            id: spinText
+            // Centred by the line, not by the digits: the line box has more room above them
+            // than below, and the number sat higher than the signs. Moved by the difference
+            readonly property real digitsOffset: {
+                var r = digitMetrics.tightBoundingRect("0")
+                return -(digitMetrics.ascent - digitMetrics.descent + 2 * r.y + r.height)
+            }
+            FontMetrics { id: digitMetrics; font: spinText.font }
+            topPadding: Math.max(0, digitsOffset)
+            bottomPadding: Math.max(0, -digitsOffset)
             text: spin.textFromValue(spin.value, spin.locale)
             font.pixelSize: 16
             color: window.ui.textMain

@@ -347,8 +347,10 @@ import QtQuick 2.12 as Quick212
                 return
             var flickable = reveal.flickable
             var target = reveal.target
-            // The whole row when the label sits in one (label, field, OK)
-            var row = (target.parent && target.parent.height > target.height && target.parent.height < 200)
+            // The whole row when the label sits in one (label, field, OK). A row only: a switch
+            // in a small column with its description (Toputure TEB1) was lit with all of it
+            var row = (target.parent && String(target.parent).indexOf("Row") >= 0 &&
+                       target.parent.height > target.height && target.parent.height < 200)
                       ? target.parent : target
             var at = row.mapToItem(flickable.contentItem, 0, 0)
             flickable.contentY = Math.max(0, Math.min(at.y - 96, flickable.contentHeight - flickable.height))
@@ -414,11 +416,39 @@ import QtQuick 2.12 as Quick212
                         height = card.height
                         return
                     }
+                    // A title label: without the space it keeps above itself (it ran over the
+                    // description of the setting above), and with the control it names right
+                    // under it ("FTMS Bike:" over its list and OK)
+                    var top = pos.y
+                    var bottom = pos.y + row.height
+                    if (String(row).indexOf("Label") >= 0) {
+                        if (row.topPadding > 0)
+                            top += row.topPadding
+                        var next = nextShown(row)
+                        if (next && next.text === undefined) {
+                            var nextPos = next.mapToItem(flickable, 0, 0)
+                            if (nextPos.y >= top && nextPos.y - bottom < 24)
+                                bottom = Math.max(bottom, nextPos.y + next.height)
+                        }
+                    }
                     radius = 12
-                    x = pos.x - 6
-                    width = w + 12
-                    y = pos.y - 2
-                    height = row.height + 4
+                    // Not past the page's side margins: the cards of the sections end there,
+                    // and a glow sticking out beyond them looked misplaced
+                    x = Math.max(0, pos.x - 6)
+                    width = Math.min(pos.x + w + 6, flickable.width) - x
+                    y = top - 2
+                    height = bottom - top + 4
+                }
+                function nextShown(item) {
+                    var siblings = item.parent ? item.parent.children : []
+                    for (var i = 0; i < siblings.length; i++) {
+                        if (siblings[i] !== item)
+                            continue
+                        for (var j = i + 1; j < siblings.length; j++)
+                            if (siblings[j].visible && siblings[j].height > 0)
+                                return siblings[j]
+                    }
+                    return null
                 }
                 Component.onCompleted: follow()
                 Timer { interval: 40; repeat: true; running: true; onTriggered: glow.follow() }
