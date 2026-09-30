@@ -2727,7 +2727,10 @@ import QtQuick 2.12 as Quick212
 
                                     Label {
                                         readonly property string title: entry._translatedName || entry.name || entry.key
-                                        text: window.ui.modern ? window.ui.plainTitle(title) : title
+                                        // Modern look: a capital first letter - the fields of a
+                                        // tile preset are "value:" and "label:" on their page
+                                        readonly property string plain: window.ui.plainTitle(title)
+                                        text: window.ui.modern ? plain.charAt(0).toUpperCase() + plain.slice(1) : title
                                         font.bold: true
                                         wrapMode: Text.WordWrap
                                         Layout.fillWidth: true
