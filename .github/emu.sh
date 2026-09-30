@@ -340,6 +340,19 @@ if [ "$UI_MODERN" = "true" ]; then
   shot 10m-wahoo-options-page
   adb shell input keyevent 4
   sleep 2
+  # The inclination to resistance table: modern +/- fields instead of the grid
+  tap_ui 'Clear'
+  sleep 1
+  tap_ui 'Search settings' 600 330
+  sleep 2
+  adb shell input text "resistance%stable" || true
+  sleep 3
+  hide_keyboard
+  tap_ui 'Custom Inclination to Resistance Table'
+  sleep 3
+  shot 10n-inclination-table
+  adb shell input keyevent 4
+  sleep 2
 fi
 tap $MENU "back: home"; sleep 3
 shot 11-home-dark
