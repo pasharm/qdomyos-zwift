@@ -292,8 +292,9 @@ if [ "$UI_MODERN" = "true" ]; then
   adb shell input keyevent 4          # back: the results again
   sleep 2
   shot 10h-back-to-results
-  # A setting on no page (Garmin ANT+): the tap keeps the results. Reported to throw out to
-  # the home page
+  # A setting on no page (Garmin ANT+): not among the results any more (settings.qml,
+  # searchHiddenSettings), steps.log must say "tap 'Garmin ANT\+': NOT FOUND, skipped". Before,
+  # its result led nowhere; reported to throw out to the home page
   tap_ui 'Clear'
   sleep 1
   tap_ui 'Search settings' 600 330
@@ -304,7 +305,7 @@ if [ "$UI_MODERN" = "true" ]; then
   shot 10i-search-garmin-ant
   tap_ui 'Garmin ANT\+'
   sleep 2
-  shot 10j-tap-garmin-ant            # the same results
+  shot 10j-tap-garmin-ant            # the same results, without Garmin ANT+
   # A label with its unit on the page: "Bike Weight (kg)" lit itself, not its whole section
   tap_ui 'Clear'
   sleep 1
