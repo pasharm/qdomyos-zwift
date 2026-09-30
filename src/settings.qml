@@ -432,12 +432,15 @@ import QtQuick 2.12 as Quick212
                         }
                     }
                     radius = 12
-                    // Not past the page's side margins: the cards of the sections end there,
-                    // and a glow sticking out beyond them looked misplaced
-                    x = Math.max(0, pos.x - 6)
-                    width = Math.min(pos.x + w + 6, flickable.width) - x
-                    y = top - 2
-                    height = bottom - top + 4
+                    // Modern look: not past the side margins of the section cards (8,
+                    // UiSectionHeader): a row whose text starts at the page edge (Toputure TEB1)
+                    // lit beyond the cards, and its 2 above ran onto the header of the section
+                    var side = window.ui.modern ? 8 : 0
+                    var grow = window.ui.modern ? 0 : 2
+                    x = Math.max(side, pos.x - 6)
+                    width = Math.min(pos.x + w + 6, flickable.width - side) - x
+                    y = top - grow
+                    height = bottom - top + 2 * grow
                 }
                 function nextShown(item) {
                     var siblings = item.parent ? item.parent.children : []
