@@ -55,6 +55,8 @@ import QtQuick 2.12 as Quick212
         property var searchReturn: null
         // A result tapped before the index was built: opened once the index arrives
         property var pendingJump: null
+        // The glow of the last jump: gone at once when back returns to the results
+        property var activeGlow: null
         property string resetSectionName: ""
 
         function loadSettingsIndex() {
@@ -283,6 +285,9 @@ import QtQuick 2.12 as Quick212
         }
 
         function restoreSearch() {
+            if (activeGlow)
+                activeGlow.destroy()
+            activeGlow = null
             var back = searchReturn
             searchReturn = null
             changedOnly = back.changedOnly
@@ -322,7 +327,7 @@ import QtQuick 2.12 as Quick212
             // On the flickable, not in its content: a ScrollView takes the content height from
             // the only child of the content, a second child would zero it and throw the page to
             // the top. So the highlight follows the scroll itself.
-            settingHighlight.createObject(flickable, { flickable: flickable, row: row,
+            activeGlow = settingHighlight.createObject(flickable, { flickable: flickable, row: row,
                                                        x: 4, width: flickable.width - 8 })
         }
 
