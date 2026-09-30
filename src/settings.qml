@@ -51,6 +51,8 @@ import QtQuick 2.12 as Quick212
         readonly property var settingsIndexPages: ["settings.qml", "settings-tiles.qml", "settings-tts.qml",
                                                    "settings-shortcuts.qml", "settings-treadmill-inclination-override.qml"]
         property var pendingReveal: null
+        // The search (text and "Changed") a result was opened from: back returns to it
+        property var searchReturn: null
         property string resetSectionName: ""
 
         function loadSettingsIndex() {
@@ -214,7 +216,10 @@ import QtQuick 2.12 as Quick212
             var where = settingsIndex ? settingsIndex[entry.key] : null
             var page = settingsPane
             var context = "settings"
+            searchReturn = window.ui.modern ? { query: settingsSearchTextField.text, changedOnly: changedOnly } : null
             if (where && where.file !== "settings.qml") {
+                if (searchReturn)
+                    searchReturn.viaPush = true
                 stackView.push(where.file)
                 page = stackView.currentItem
                 context = where.file.replace(/\.qml$/, "")
@@ -248,6 +253,36 @@ import QtQuick 2.12 as Quick212
             revealTimer.restart()
         }
 
+        // Back (main.qml navigateBack) after a result was opened on this page: the results again
+        function handleBack() {
+            if (!searchReturn)
+                return false
+            restoreSearch()
+            return true
+        }
+
+        function restoreSearch() {
+            var back = searchReturn
+            searchReturn = null
+            changedOnly = back.changedOnly
+            settingsSearchTextField.text = back.query
+            if (changedOnly && back.query.trim().length === 0)
+                updateFilteredSettings()
+            contentItem.contentY = 0
+        }
+
+        // A result on another page (Tiles...): back from it lands on the results. A result on
+        // this page is forgotten once another page opens over it, or coming back from that
+        // page would bring the old search up
+        StackView.onActivated: {
+            if (searchReturn && searchReturn.viaPush)
+                restoreSearch()
+        }
+        StackView.onDeactivated: {
+            if (searchReturn && !searchReturn.viaPush)
+                searchReturn = null
+        }
+
         function revealPending() {
             var reveal = pendingReveal
             pendingReveal = null
@@ -266,8 +301,8 @@ import QtQuick 2.12 as Quick212
             // On the flickable, not in its content: a ScrollView takes the content height from
             // the only child of the content, a second child would zero it and throw the page to
             // the top. So the highlight follows the scroll itself.
-            settingHighlight.createObject(flickable, { flickable: flickable, contentTop: at.y - 6,
-                                                       x: 4, width: flickable.width - 8, height: row.height + 12 })
+            settingHighlight.createObject(flickable, { flickable: flickable, row: row,
+                                                       x: 4, width: flickable.width - 8 })
         }
 
         Timer {
@@ -282,9 +317,24 @@ import QtQuick 2.12 as Quick212
             Rectangle {
                 id: glow
                 property Item flickable
-                property real contentTop: 0
-                y: flickable ? contentTop - flickable.contentY : 0
+                property Item row
+                property int ticks: 0
                 radius: 12
+                // The sections above are still opening (their height animates) when the row is
+                // first measured: the row moves after it, so the glow and the scroll follow it
+                function follow() {
+                    if (!flickable || !row)
+                        return
+                    ticks++
+                    if (ticks <= 20 && !flickable.moving) {
+                        var at = row.mapToItem(flickable.contentItem, 0, 0).y
+                        flickable.contentY = Math.max(0, Math.min(at - 96, flickable.contentHeight - flickable.height))
+                    }
+                    y = row.mapToItem(flickable, 0, 0).y - 6
+                    height = row.height + 12
+                }
+                Component.onCompleted: follow()
+                Timer { interval: 40; repeat: true; running: true; onTriggered: glow.follow() }
                 color: window.ui.alpha(window.ui.accent, 0.22)
                 SequentialAnimation {
                     running: true
@@ -2224,6 +2274,8 @@ import QtQuick 2.12 as Quick212
                     inputMethodHints: Qt.ImhNoPredictiveText
                     leftPadding: window.ui.modern ? 44 : undefined
                     rightPadding: window.ui.modern ? 44 : undefined
+                    // A new search of one's own: back no longer returns to the previous one
+                    onTextEdited: settingsPane.searchReturn = null
                     onTextChanged: {
                         settingsPane.settingsSearchActive = text.trim().length > 0
                         settingsSearchDebounceTimer.stop()
@@ -2281,6 +2333,7 @@ import QtQuick 2.12 as Quick212
                     text: qsTr("Changed")
                     highlighted: settingsPane.changedOnly
                     onClicked: {
+                        settingsPane.searchReturn = null
                         settingsPane.changedOnly = !settingsPane.changedOnly
                         if (settingsPane.changedOnly) {
                             settingsPane.loadSettingsCatalog()
