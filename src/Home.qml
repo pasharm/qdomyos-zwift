@@ -506,7 +506,7 @@ HomeForm {
                     id: modernValue
                     anchors.horizontalCenter: modernCard.horizontalCenter
                     y: 34 * modernTile.zoom
-                    width: Math.max(40, modernCard.width - (writable ? 112 : 20) * modernTile.zoom)
+                    width: Math.max(40, modernCard.width - (writable ? 100 : 20) * modernTile.zoom)
                     height: 50 * modernTile.zoom
                     text: value
                     color: modernTile.zoned ? window.ui.zoneInk(valueFontColor) : window.ui.textMain
@@ -541,32 +541,35 @@ HomeForm {
                     objectName: minusName
                     autoRepeat: true
                     visible: writable && !largeButton
-                    // A pill of 48 x 64 in a touch area 8 wider all round: easier to hit while
-                    // riding, without taking width from the value. A little below the value's
-                    // centre, clear of the tile icon
+                    // A touch area of 64 x 80, easier to hit while riding, around the 44 circle
+                    // that is drawn where it always was: 6 from the edge, on the value's centre
                     x: (6 - 8) * modernTile.zoom
                     y: modernValue.y + modernValue.height / 2 + 3 * modernTile.zoom - height / 2
                     width: 64 * modernTile.zoom
                     height: 80 * modernTile.zoom
+                    topInset: 0
+                    bottomInset: 0
+                    leftInset: 0
+                    rightInset: 0
                     onClicked: minus_clicked(objectName)
                     background: Item {
                         Rectangle {
-                            anchors.centerIn: parent
-                            width: 48 * modernTile.zoom
-                            height: 64 * modernTile.zoom
+                            x: 8 * modernTile.zoom
+                            y: parent.height / 2 - 25 * modernTile.zoom
+                            width: 44 * modernTile.zoom
+                            height: 44 * modernTile.zoom
                             radius: width / 2
                             color: modernMinus.down ? window.ui.alpha(window.ui.accent, 0.35) : window.ui.surfaceHighest
+                            UiIcon {
+                                anchors.centerIn: parent
+                                width: 22 * modernTile.zoom
+                                height: 22 * modernTile.zoom
+                                name: "remove"
+                                color: window.ui.textMain
+                            }
                         }
                     }
-                    contentItem: Item {
-                        UiIcon {
-                            anchors.centerIn: parent
-                            width: 24 * modernTile.zoom
-                            height: 24 * modernTile.zoom
-                            name: "remove"
-                            color: window.ui.textMain
-                        }
-                    }
+                    contentItem: Item {}
 
                     Accessible.role: Accessible.Button
                     Accessible.name: qsTr("Decrease ") + name
@@ -580,32 +583,35 @@ HomeForm {
                     objectName: plusName
                     autoRepeat: true
                     visible: writable && !largeButton
-                    // A pill of 48 x 64 in a touch area 8 wider all round: easier to hit while
-                    // riding, without taking width from the value. A little below the value's
-                    // centre, clear of the tile icon
+                    // A touch area of 64 x 80, easier to hit while riding, around the 44 circle
+                    // that is drawn where it always was: 6 from the edge, on the value's centre
                     x: modernCard.width - width + (8 - 6) * modernTile.zoom
                     y: modernValue.y + modernValue.height / 2 + 3 * modernTile.zoom - height / 2
                     width: 64 * modernTile.zoom
                     height: 80 * modernTile.zoom
+                    topInset: 0
+                    bottomInset: 0
+                    leftInset: 0
+                    rightInset: 0
                     onClicked: plus_clicked(objectName)
                     background: Item {
                         Rectangle {
-                            anchors.centerIn: parent
-                            width: 48 * modernTile.zoom
-                            height: 64 * modernTile.zoom
+                            x: 12 * modernTile.zoom
+                            y: parent.height / 2 - 25 * modernTile.zoom
+                            width: 44 * modernTile.zoom
+                            height: 44 * modernTile.zoom
                             radius: width / 2
                             color: modernPlus.down ? window.ui.alpha(window.ui.accent, 0.35) : window.ui.surfaceHighest
+                            UiIcon {
+                                anchors.centerIn: parent
+                                width: 22 * modernTile.zoom
+                                height: 22 * modernTile.zoom
+                                name: "add"
+                                color: window.ui.textMain
+                            }
                         }
                     }
-                    contentItem: Item {
-                        UiIcon {
-                            anchors.centerIn: parent
-                            width: 24 * modernTile.zoom
-                            height: 24 * modernTile.zoom
-                            name: "add"
-                            color: window.ui.textMain
-                        }
-                    }
+                    contentItem: Item {}
 
                     Accessible.role: Accessible.Button
                     Accessible.name: qsTr("Increase ") + name
