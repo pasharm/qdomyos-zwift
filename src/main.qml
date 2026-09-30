@@ -141,6 +141,40 @@ ApplicationWindow {
     // Modern look: the workout editor page, made on its first opening and kept (see "editor")
     property var keptWorkoutEditor: null
     property var keptCharts: null
+
+    // The kept pages hold a web view each (tens of MB): given back 3 minutes after they are
+    // closed, and at once when the equipment connects (the ride needs the memory more)
+    function keptInStack(item) {
+        return item && stackView.find(function(i) { return i === item }) !== null
+    }
+    function releaseKeptPages() {
+        if (keptWorkoutEditor && !keptInStack(keptWorkoutEditor)) {
+            keptWorkoutEditor.destroy()
+            keptWorkoutEditor = null
+        }
+        if (keptCharts && !keptInStack(keptCharts)) {
+            keptCharts.destroy()
+            keptCharts = null
+        }
+    }
+    Timer {
+        id: keptPagesReleaseTimer
+        interval: 3 * 60 * 1000
+        onTriggered: releaseKeptPages()
+    }
+    Connections {
+        target: rootItem
+        ignoreUnknownSignals: true
+        function onChangeLabelHelp() {
+            if (!rootItem.labelHelp)
+                releaseKeptPages()
+        }
+    }
+    // Once, not per editor made: a closure per editor would close it once for each
+    onTrainprogram_autostart_requested: {
+        if (keptWorkoutEditor && stackView.currentItem === keptWorkoutEditor)
+            keptWorkoutEditor.closeRequested()
+    }
     property bool gymModePopupDismissed: false
 
     Settings {
@@ -1431,10 +1465,6 @@ ApplicationWindow {
                             if (stackView.currentItem === keptWorkoutEditor)
                                 stackView.pop()
                         })
-                        trainprogram_autostart_requested.connect(function() {
-                            if (stackView.currentItem === keptWorkoutEditor)
-                                keptWorkoutEditor.closeRequested()
-                        })
                     }
                 }
                 if (keptWorkoutEditor) {
@@ -1931,7 +1961,13 @@ ApplicationWindow {
             anchors.leftMargin: getLeftPadding()
             focus: true
             // Only the tile grid scrolls the toolbar away; any other page gets it back
-            onCurrentItemChanged: headerToolbar.scrolledAway = false
+            onCurrentItemChanged: {
+                headerToolbar.scrolledAway = false
+                // A kept page just left the stack: the countdown to giving its memory back
+                if ((keptWorkoutEditor && !window.keptInStack(keptWorkoutEditor))
+                        || (keptCharts && !window.keptInStack(keptCharts)))
+                    keptPagesReleaseTimer.restart()
+            }
             Connections {
                 target: stackView.currentItem
                 ignoreUnknownSignals: true
