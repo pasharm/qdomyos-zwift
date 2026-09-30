@@ -923,7 +923,7 @@ function process_arr(arr) {
                     backgroundColor: window.chartColors.blue,
                     borderColor: window.chartColors.blue,
                     label: miles === 1 ? t('workoutEditor.speedKmh', 'Speed (km/h)') : t('workoutEditor.speedMph', 'Speed (mph)'),
-                    //cubicInterpolationMode: 'monotone',
+                    cubicInterpolationMode: 'monotone',
                     data: speed,
                     fill: false,
                     pointRadius: 0,
