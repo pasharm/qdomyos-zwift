@@ -250,7 +250,9 @@ jobs:
         run: |
           cd src
           mkdir -p ${{ github.workspace }}/output/android
-          rsync -a --exclude build --exclude .gradle android/ ${{ github.workspace }}/output/android/
+          # libs/armeabi-v7a and libs/x86 only have libc++_shared.so: without the exclude the APK
+          # gets folders for ABIs that QZ is not built for
+          rsync -a --exclude build --exclude .gradle --exclude /libs/armeabi-v7a --exclude /libs/x86 android/ ${{ github.workspace }}/output/android/
           androiddeployqt --input android-qdomyos-zwift-deployment-settings.json --output ${{ github.workspace }}/output/android/ --android-platform android-35 --gradle --aux-mode
           # The QZ library is ~230 MB per ABI, ~200 MB of it debug info: the full copy goes to a
           # separate artifact (to symbolise crashes), the APK gets the stripped one.
