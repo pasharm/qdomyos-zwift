@@ -314,6 +314,32 @@ if [ "$UI_MODERN" = "true" ]; then
   shot 10k-jump-bike-weight
   adb shell input keyevent 4
   sleep 2
+  # A title label over its list and OK: lit together, inside the page margins
+  tap_ui 'Clear'
+  sleep 1
+  tap_ui 'Search settings' 600 330
+  sleep 2
+  adb shell input text "ftms%sbike" || true
+  sleep 3
+  hide_keyboard
+  tap_ui 'FTMS Bike'
+  sleep 1
+  shot 10l-jump-ftms-bike
+  adb shell input keyevent 4
+  sleep 2
+  # The Wahoo Options page from the results: the +/- fields, the number centred
+  tap_ui 'Clear'
+  sleep 1
+  tap_ui 'Search settings' 600 330
+  sleep 2
+  adb shell input text "chainring" || true
+  sleep 3
+  hide_keyboard
+  tap_ui 'Chainring Size'
+  sleep 3
+  shot 10m-wahoo-options-page
+  adb shell input keyevent 4
+  sleep 2
 fi
 tap $MENU "back: home"; sleep 3
 shot 11-home-dark
