@@ -1220,9 +1220,9 @@ Do you want to update QZ settings?</source>
         <translation>Ініціалізацію завершено, можна користуватися біговою доріжкою!</translation>
     </message>
     <message>
-        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="689"/>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>QZ визначив формат даних цього велотренажера й увімкнув у налаштуваннях «Велотренажер Virtufit Etappe 2.0». Щоб читати дані тренажера, QZ потрібно перезапустити.</translation>
+        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="734"/>
+        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings.</source>
+        <translation>QZ визначив формат даних цього велотренажера й увімкнув у налаштуваннях «Велотренажер Virtufit Etappe 2.0».</translation>
     </message>
     <message>
         <location filename="../devices/fitplusbike/fitplusbike.cpp" line="1021"/>
