@@ -49,7 +49,8 @@ import QtQuick 2.12 as Quick212
         property var settingsIndex: null
         property bool settingsIndexLoading: false
         readonly property var settingsIndexPages: ["settings.qml", "settings-tiles.qml", "settings-tts.qml",
-                                                   "settings-shortcuts.qml", "settings-treadmill-inclination-override.qml"]
+                                                   "settings-shortcuts.qml", "settings-treadmill-inclination-override.qml",
+                                                   "gears.qml"]
         property var pendingReveal: null
         // The search (text and "Changed") a result was opened from: back returns to it
         property var searchReturn: null
@@ -221,6 +222,15 @@ import QtQuick 2.12 as Quick212
                 .map(normalizedLabel)
         }
 
+        // A page among the results ("Wahoo Options"). Modern look: back from it lands on the
+        // results, as from a setting
+        function openPageResult(entry) {
+            if (window.ui.modern)
+                searchReturn = { query: settingsSearchTextField.text, changedOnly: changedOnly,
+                                 results: filteredSettings, scroll: contentItem.contentY, viaPush: true }
+            stackView.push(entry.target)
+        }
+
         // A search result opens the setting itself: its page, its sections, scrolled to it and
         // lit for a moment. Without a label to find, the innermost section is shown.
         function jumpToSetting(entry) {
@@ -377,16 +387,31 @@ import QtQuick 2.12 as Quick212
                     // and hardly taller, the rows carry their own space above and below
                     var pos = row.mapToItem(flickable, 0, 0)
                     // A lone label is as wide as its text: up to the same indent on the right
-                    var w = row.width < flickable.width * 0.6 ? flickable.width - 2 * pos.x : row.width
-                    // A card of its own (a tile of the tiles page) is lit exactly, corners too
-                    var card = row.modernCard === true
-                    var ox = card ? 0 : 6
-                    var oy = card ? 0 : 2
-                    radius = card ? 16 : 12
-                    x = pos.x - ox
-                    width = w + 2 * ox
-                    y = pos.y - oy
-                    height = row.height + 2 * oy
+                    // and no row runs further right than its indent on the left (a row inside a
+                    // group box is laid out almost to the edge of the box)
+                    var w = row.width < flickable.width * 0.6 ? flickable.width - 2 * pos.x
+                                                              : Math.min(row.width, flickable.width - 2 * pos.x)
+                    if (w < row.width / 2)
+                        w = row.width
+                    // A card of its own is lit exactly, corners too: a tile of the tiles page,
+                    // a group box of the modern look (its background is the whole card)
+                    var bg = row.background
+                    var card = row.modernCard === true ? row
+                             : (bg && bg.visible && bg.radius >= 12 ? bg : null)
+                    if (card) {
+                        pos = card.mapToItem(flickable, 0, 0)
+                        radius = card === row ? 16 : bg.radius
+                        x = pos.x
+                        width = card.width
+                        y = pos.y
+                        height = card.height
+                        return
+                    }
+                    radius = 12
+                    x = pos.x - 6
+                    width = w + 12
+                    y = pos.y - 2
+                    height = row.height + 4
                 }
                 Component.onCompleted: follow()
                 Timer { interval: 40; repeat: true; running: true; onTriggered: glow.follow() }
@@ -537,6 +562,16 @@ import QtQuick 2.12 as Quick212
             for (var j = 0; j < persistentSettings.length; j++) {
                 if (persistentSettings[j].control === "virtualOption")
                     continue
+                // Modern look: the settings of the Wahoo Options page. The catalog hides them
+                // (names made from the keys, no description); here they go under the titles
+                // of that page, as links only - the page sends the new values to the trainer
+                var pageOnly = window.ui.modern ? pageOnlySettings[persistentSettings[j].key] : undefined
+                if (pageOnly) {
+                    items.push({ key: persistentSettings[j].key, name: pageOnly.name,
+                                 description: pageOnly.description || null, parent: "Wahoo Options",
+                                 type: persistentSettings[j].type, catalogKind: "link" })
+                    continue
+                }
                 if (!persistentSettings[j].visible)
                     continue
                 if (settingsPane.isTileOrderSetting(persistentSettings[j]))
@@ -574,7 +609,22 @@ import QtQuick 2.12 as Quick212
             "settings", "settings-tiles", "settings-tts",
             "settings-shortcuts", "settings-treadmill-inclination-override",
             "custominclinationresistance", "homeform"
-        ]
+        ].concat(window.ui.modern ? ["gears"] : [])
+
+        // The English titles and descriptions as written on gears.qml: translated through its
+        // context (the texts are extracted there, not here)
+        readonly property var pageOnlySettings: ({
+            "wahoo_without_wheel_diameter": {
+                name: "Without Wheel Diameter Protocol",
+                description: "Enable this for simplified Wahoo protocol that adds gears directly to grade instead of using wheel diameter changes. Default is false." },
+            "gear_crankset_size": {
+                name: "Chainring Size",
+                description: "Tooth count of your chainring on the bike you are currently riding on your trainer - enter 42 for Zwift Ride" },
+            "gear_cog_size": {
+                name: "Cog Size",
+                description: "Tooth count of your rear cog on your trainer - enter 14 if you have the Zwift Cog" },
+            "gear_wheel_size": { name: "Virtual Wheel Size" }
+        })
 
         // Descriptions of catalog settings without a label on any page, only here so that
         // lupdate takes them into the settings context
@@ -681,6 +731,10 @@ import QtQuick 2.12 as Quick212
             var results = []
             for (var i = 0; i < searchableSettings.length; i++) {
                 if (changedOnly && !isChanged(searchableSettings[i]))
+                    continue
+                // The links to another page are of the modern look (the list is built once,
+                // the look may be switched on this very page)
+                if (searchableSettings[i].catalogKind === "link" && !window.ui.modern)
                     continue
                 var matched = true
                 if (tokens.length > 0) {
@@ -2544,8 +2598,9 @@ import QtQuick 2.12 as Quick212
                             id: resultArea
                             anchors.fill: parent
                             anchors.topMargin: searchResultFrame.headerHeight
-                            enabled: window.ui.modern && entry.catalogKind !== "page"
-                            onClicked: settingsPane.jumpToSetting(entry)
+                            enabled: window.ui.modern
+                            onClicked: entry.catalogKind === "page" ? settingsPane.openPageResult(entry)
+                                                                    : settingsPane.jumpToSetting(entry)
                         }
 
                         ColumnLayout {
@@ -2597,7 +2652,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     visible: entry.catalogKind === "page"
                                     text: qsTr("Open")
-                                    onClicked: stackView.push(entry.target)
+                                    onClicked: settingsPane.openPageResult(entry)
                                 }
 
                                 UiButton {
