@@ -11,6 +11,9 @@
 # says which way every tap went; dumps/<shot>.xml is the control tree behind every shot.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-true}
+# LOG_DEBUG (workflow input "log_debug"): false runs with the debug log off, to see that the app
+# works without it and writes no log file. QML errors do not reach logcat then.
+LOG_DEBUG=${LOG_DEBUG:-true}
 STEPLOG=steps.log
 : > $STEPLOG
 mkdir -p dumps
@@ -27,7 +30,7 @@ adb shell cmd uimode night no || true
 # ANR still reaches logcat and the end of steps.log ("ANR in")
 adb shell settings put global hide_error_dialogs 1 || true
 
-printf '[General]\nlog_debug=true\nconfirm_stop_workout=true\nui_modern=%s\n' "$UI_MODERN" > qz.conf
+printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -140,6 +143,11 @@ LOCK="1187 168"        # tile lock on the home page
 open_menu() { tap $MENU "menu"; sleep 3; adb shell input swipe 500 700 500 2300 300 || true; sleep 2; }
 
 adb logcat -c || true
+# Recorded from the start: a dump at the end (logcat -d) has lost the first lines of the app by
+# then - the main buffer wraps in a long run, so the version line and the settings dump of
+# main() were missing in the runs of the modern look
+adb logcat > full_logcat.txt 2>/dev/null &
+LOGCAT_PID=$!
 adb shell am start -n $PKG/$PKG.CustomQtActivity
 sleep 20
 shot 01-healthconnect
@@ -395,7 +403,23 @@ fi
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
-adb logcat -d > full_logcat.txt || true
+kill $LOGCAT_PID 2>/dev/null || true
+wait $LOGCAT_PID 2>/dev/null || true
+# If the recording broke off (adb restarted), the dump of the end is better than nothing
+adb logcat -d > end_logcat.txt || true
+if [ "$(wc -l < full_logcat.txt)" -lt "$(wc -l < end_logcat.txt)" ]; then
+  echo "!! logcat recording shorter than the dump at the end: the dump is kept" >> $STEPLOG
+  mv end_logcat.txt full_logcat.txt
+else
+  rm -f end_logcat.txt
+fi
+# The debug logs the app wrote itself (Documents/QZ on Android 14+): none with the log off
+mkdir -p qz-logs
+adb shell 'ls -la /sdcard/Documents/QZ/ 2>&1' > qz-logs/listing.txt || true
+for f in $(adb shell 'ls /sdcard/Documents/QZ/ 2>/dev/null' | tr -d '\r' | grep '^debug-.*[.]log$'); do
+  adb pull "/sdcard/Documents/QZ/$f" "qz-logs/$f" > /dev/null 2>&1 || true
+done
+echo "== app debug logs"; cat qz-logs/listing.txt; ls -la qz-logs
 echo "== steps"; cat $STEPLOG
 echo "== timing"; grep -E "QZ-TIMING|QZ-THEME" full_logcat.txt || true
 # The dialogs are hidden (hide_error_dialogs above), so hangs are only here

@@ -12,6 +12,10 @@ on:
         description: ui_modern for the run (false = the classic look, for comparison)
         required: false
         default: 'true'
+      log_debug:
+        description: log_debug for the run (false = the debug log off)
+        required: false
+        default: 'true'
 
 jobs:
   emulator-logcat:
@@ -46,6 +50,7 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2
         env:
           UI_MODERN: ${{ inputs.modern }}
+          LOG_DEBUG: ${{ inputs.log_debug }}
         with:
           api-level: 35
           target: google_apis
@@ -58,7 +63,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.source }}-${{ inputs.modern }}
+          name: emulator-logcat-${{ inputs.source }}-${{ inputs.modern }}${{ inputs.log_debug == 'false' && '-nolog' || '' }}
           path: |
             screenshot.png
             *.png
@@ -66,4 +71,5 @@ jobs:
             full_logcat.txt
             steps.log
             dumps/
+            qz-logs/
           if-no-files-found: warn
