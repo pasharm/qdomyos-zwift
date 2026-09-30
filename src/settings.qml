@@ -341,8 +341,7 @@ import QtQuick 2.12 as Quick212
             // On the flickable, not in its content: a ScrollView takes the content height from
             // the only child of the content, a second child would zero it and throw the page to
             // the top. So the highlight follows the scroll itself.
-            activeGlow = settingHighlight.createObject(flickable, { flickable: flickable, row: row,
-                                                       x: 4, width: flickable.width - 8 })
+            activeGlow = settingHighlight.createObject(flickable, { flickable: flickable, row: row })
         }
 
         Timer {
@@ -373,8 +372,16 @@ import QtQuick 2.12 as Quick212
                         var at = row.mapToItem(flickable.contentItem, 0, 0).y
                         flickable.contentY = Math.max(0, Math.min(at - 96, flickable.contentHeight - flickable.height))
                     }
-                    y = row.mapToItem(flickable, 0, 0).y - 6
-                    height = row.height + 12
+                    // Around the row itself (an indented row of a subsection is narrower than
+                    // the page): a little wider than its text, which starts at its very edge,
+                    // and hardly taller, the rows carry their own space above and below
+                    var pos = row.mapToItem(flickable, 0, 0)
+                    // A lone label is as wide as its text: up to the same indent on the right
+                    var w = row.width < flickable.width * 0.6 ? flickable.width - 2 * pos.x : row.width
+                    x = pos.x - 8
+                    width = w + 16
+                    y = pos.y - 2
+                    height = row.height + 4
                 }
                 Component.onCompleted: follow()
                 Timer { interval: 40; repeat: true; running: true; onTriggered: glow.follow() }
