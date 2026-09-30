@@ -42,8 +42,7 @@ ColumnLayout {
 
         Accessible.role: Accessible.Button 
         Accessible.name: title 
-        Accessible.description: expanded ? "Expanded" : "Collapsed"
-        Accessible.onPressAction: toggle()
+        Accessible.onPressAction: stackView.push(accordionContent)
 
         Rectangle{
            id:indicatRect

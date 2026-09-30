@@ -35,6 +35,16 @@ ColumnLayout {
         onClicked: rootElement.isOpen = !rootElement.isOpen
     }
 
+    // Open or close the section: a tap on the header, or the press action of a screen reader
+    function toggle() {
+        isOpen = !isOpen
+        if (isOpen) {
+            indicatImg.source = "qrc:/icons/arrow-expand-vertical.png"
+        } else {
+            indicatImg.source = "qrc:/icons/arrow-collapse-vertical.png"
+        }
+    }
+
     Rectangle {
         id: accordionHeader
         visible: !window.ui.modern
@@ -45,8 +55,8 @@ ColumnLayout {
 
         Accessible.role: Accessible.Button         
         Accessible.name: title 
-        Accessible.description: expanded ? "Expanded" : "Collapsed"
-        Accessible.onPressAction: toggle()
+        Accessible.description: rootElement.isOpen ? "Expanded" : "Collapsed"
+        Accessible.onPressAction: rootElement.toggle()
 
         Rectangle {
             id: indicatRect
@@ -75,14 +85,7 @@ ColumnLayout {
         MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
-            onClicked: {
-                rootElement.isOpen = !rootElement.isOpen
-                if(rootElement.isOpen) {
-                    indicatImg.source = "qrc:/icons/arrow-expand-vertical.png"
-                } else {
-                    indicatImg.source = "qrc:/icons/arrow-collapse-vertical.png"
-                }
-            }
+            onClicked: rootElement.toggle()
         }
     }
 
