@@ -497,10 +497,14 @@ ScrollView {
             title: qsTr("Virtual Wheel Size")
             Layout.fillWidth: true
 
+            // Modern look: across the card like the profile list below; without a width the
+            // layout was as wide as the button text, and the button hung off to the left
             ColumnLayout {
+                width: window.ui.modern ? parent.width : implicitWidth
                 UiComboBox {
                        id: wheelSizeCombo
                        width: parent.width
+                       Layout.fillWidth: window.ui.modern
                        currentIndex: initialWheelSizeIndex
                        textRole: "text"
                        model: ListModel {
@@ -608,14 +612,16 @@ ScrollView {
                     Layout.preferredHeight: 50
                     font.bold: true
                     background: Rectangle {
-                        color: "#9C27B0"
-                        // Modern look: the pill of the other buttons, the colour stays (a trainer action)
+                        // Modern look: the tonal pill of the other buttons, the bright purple
+                        // stood out of the page palette for a reset
+                        color: window.ui.modern ? (parent.down ? window.ui.surfaceHigh : window.ui.surfaceHighest)
+                                                : "#9C27B0"
                         radius: window.ui.modern ? height / 2 : 4
                     }
                     contentItem: Text {
                         text: parent.text
                         font: parent.font
-                        color: "white"
+                        color: window.ui.modern ? window.ui.textMain : "white"
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
