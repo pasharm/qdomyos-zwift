@@ -15,6 +15,46 @@
     <script src="../i18n/i18n.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/build/ol.js"></script>
     <title>OpenLayers example</title>
+  <!-- Modern look of the app: GoogleMap.qml passes its theme in the URL fragment
+       (#modern=1&dark=1&bg=...) and calls qzApplyTheme() when it changes later. Without the
+       fragment (classic look) the page keeps its own look. -->
+  <style>
+    html.qz-modern, html.qz-modern body { background: var(--qz-bg, #111); }
+    /* The map fills the screen instead of a fixed 1000 px; the tiles keep their own colours */
+    html.qz-modern .map { height: 100vh; }
+    html.qz-modern body { margin: 0; }
+    html.qz-modern .ol-control button { background: var(--qz-surface); color: var(--qz-text); border-radius: 8px; }
+    html.qz-modern .ol-control { background: transparent; }
+  </style>
+  <script>
+    (function () {
+      var vars = { bg: '--qz-bg', surface: '--qz-surface', text: '--qz-text', muted: '--qz-muted',
+                   accent: '--qz-accent', outline: '--qz-outline' };
+      window.qzApplyTheme = function (theme) {
+        var root = document.documentElement;
+        if (!theme)
+          return;
+        for (var key in vars) {
+          if (theme[key])
+            root.style.setProperty(vars[key], theme[key]);
+        }
+        var dark = theme.dark === true || theme.dark === '1';
+        root.classList.add('qz-modern');
+        root.classList.toggle('qz-dark', dark);
+        root.style.colorScheme = dark ? 'dark' : 'light';
+      };
+      var hash = location.hash.replace(/^#/, '');
+      if (!hash)
+        return;
+      var theme = {};
+      hash.split('&').forEach(function (part) {
+        var kv = part.split('=');
+        theme[kv[0]] = decodeURIComponent(kv[1] || '');
+      });
+      if (theme.modern === '1')
+        window.qzApplyTheme(theme);
+    })();
+  </script>
   </head>
   <body>
     <div id="map" class="map"></div>

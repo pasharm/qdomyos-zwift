@@ -20,6 +20,47 @@
       -ms-user-select: none;
   }
   </style>
+  <!-- Modern look of the app: GoogleMap.qml passes its theme in the URL fragment
+       (#modern=1&dark=1&bg=...) and calls qzApplyTheme() when it changes later. Without the
+       fragment (classic look) the page keeps its own look. -->
+  <style>
+    html.qz-modern, html.qz-modern body { background: var(--qz-bg, #111); }
+    /* The metrics box and the chart in the theme colours instead of the green box */
+    html.qz-modern .metrics { background: var(--qz-surface) !important; border: 1px solid var(--qz-outline) !important;
+                              color: var(--qz-text) !important; border-radius: 16px !important; }
+    html.qz-modern #resizeHandle { border-bottom-right-radius: 15px !important;
+                                   background: linear-gradient(135deg, transparent 50%, var(--qz-outline) 50%) !important; }
+    html.qz-modern #chartContainer { border-radius: 12px !important; background: var(--qz-surface); }
+  </style>
+  <script>
+    (function () {
+      var vars = { bg: '--qz-bg', surface: '--qz-surface', text: '--qz-text', muted: '--qz-muted',
+                   accent: '--qz-accent', outline: '--qz-outline' };
+      window.qzApplyTheme = function (theme) {
+        var root = document.documentElement;
+        if (!theme)
+          return;
+        for (var key in vars) {
+          if (theme[key])
+            root.style.setProperty(vars[key], theme[key]);
+        }
+        var dark = theme.dark === true || theme.dark === '1';
+        root.classList.add('qz-modern');
+        root.classList.toggle('qz-dark', dark);
+        root.style.colorScheme = dark ? 'dark' : 'light';
+      };
+      var hash = location.hash.replace(/^#/, '');
+      if (!hash)
+        return;
+      var theme = {};
+      hash.split('&').forEach(function (part) {
+        var kv = part.split('=');
+        theme[kv[0]] = decodeURIComponent(kv[1] || '');
+      });
+      if (theme.modern === '1')
+        window.qzApplyTheme(theme);
+    })();
+  </script>
 </head>
 <body>
   <div id="cesiumContainer" style="display: block;
