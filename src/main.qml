@@ -143,10 +143,15 @@ ApplicationWindow {
     property var keptCharts: null
 
     // The kept pages hold a web view each (tens of MB): given back 3 minutes after they are
-    // closed, and at once while riding (the equipment moving: the ride needs the memory more).
+    // closed, 1 minute while riding (the equipment moving: the ride needs the memory more).
     // The equipment connecting would not do: it connects once, when the app opens
     readonly property bool riding: typeof rootItem !== "undefined" && rootItem !== null && rootItem.currentSpeed > 0
-    onRidingChanged: if (riding) releaseKeptPages()
+    onRidingChanged: {
+        if (riding && keptPagesReleaseTimer.running && keptPagesReleaseTimer.interval > 60 * 1000) {
+            keptPagesReleaseTimer.interval = 60 * 1000
+            keptPagesReleaseTimer.restart()
+        }
+    }
     function keptInStack(item) {
         return item && stackView.find(function(i) { return i === item }) !== null
     }
@@ -1965,10 +1970,10 @@ ApplicationWindow {
             onCurrentItemChanged: {
                 headerToolbar.scrolledAway = false
                 // A kept page just left the stack: the countdown to giving its memory back,
-                // a second while riding (once the page has slid out)
+                // a minute while riding
                 if ((keptWorkoutEditor && !window.keptInStack(keptWorkoutEditor))
                         || (keptCharts && !window.keptInStack(keptCharts))) {
-                    keptPagesReleaseTimer.interval = window.riding ? 1000 : 3 * 60 * 1000
+                    keptPagesReleaseTimer.interval = window.riding ? 60 * 1000 : 3 * 60 * 1000
                     keptPagesReleaseTimer.restart()
                 }
             }
