@@ -20,6 +20,10 @@ ScrollView {
         implicitWidth: 160
         implicitHeight: 44
         padding: 0
+        // Material sets its own top 8 and bottom 16, "padding" does not override them and the
+        // number sat 4 px above the signs
+        topPadding: 0
+        bottomPadding: 0
         leftPadding: 44
         rightPadding: 44
         topInset: 0
