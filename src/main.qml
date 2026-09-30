@@ -140,6 +140,7 @@ ApplicationWindow {
     property bool settings_restart_to_apply: false
     // Modern look: the workout editor page, made on its first opening and kept (see "editor")
     property var keptWorkoutEditor: null
+    property var keptCharts: null
     property bool gymModePopupDismissed: false
 
     Settings {
@@ -1377,6 +1378,19 @@ ApplicationWindow {
             break
         case "charts":
             console.log(CHARTJS)
+            // Modern look: kept like the workout editor, opening it again redraws the kept page
+            // instead of starting the web view anew
+            if (CHARTJS && window.ui.modern) {
+                if (!keptCharts)
+                    keptCharts = Qt.createComponent("ChartJsTest.qml").createObject(window.contentItem, { visible: false })
+                else
+                    keptCharts.reopen()
+                if (keptCharts) {
+                    if (stackView.find(function(item) { return item === keptCharts }) === null)
+                        stackView.push(keptCharts)
+                    break
+                }
+            }
             if(CHARTJS)
                 stackView.push("ChartJsTest.qml")
             else

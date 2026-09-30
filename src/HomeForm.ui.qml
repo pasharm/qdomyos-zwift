@@ -366,14 +366,18 @@ Page {
         // Modern status line: signal bars and the device status on one line
         Row {
             id: modernInfo
-            // Not over the empty state: its heading says the same ("Looking for your equipment"),
-            // the time to the next search moves under its subtitle
-            visible: window.ui.modern && !page.deviceLineHidden && page.modernInfoShown && !modernEmpty.visible
+            // Over the empty state only the time to the next search ("Next search in 12 s"): its
+            // heading says the rest ("Looking for your equipment"). The line has its own place
+            // under the buttons, so it comes and goes without moving the page
+            readonly property bool countdown: !page.searchStopped && page.searchStatus !== ""
+                                              && page.searchStatus !== qsTranslate("homeform", "Searching for the device...")
+            visible: window.ui.modern && !page.deviceLineHidden && page.modernInfoShown && (!modernEmpty.visible || countdown)
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: row1.bottom
             spacing: 8
 
             Image {
+                visible: !modernEmpty.visible
                 anchors.verticalCenter: parent.verticalCenter
                 width: 20
                 height: 13
@@ -408,7 +412,7 @@ Page {
         }
 
         // Modern look: while nothing is connected, a short "searching" state instead of the
-        // wall of text. The same help text (already translated) folds out on demand.
+        // wall of text, and a short checklist cut from the same help text (already translated)
         Flickable {
             id: modernEmpty
             visible: rootItem.labelHelp && window.ui.modern
@@ -420,7 +424,6 @@ Page {
             contentHeight: emptyColumn.height + 24
             clip: true
             boundsBehavior: Flickable.StopAtBounds
-            property bool helpOpen: true
 
             // qsTr inside an expression looks the text up under the context of the file that
             // creates the page (Home), not this one: the context is given explicitly
@@ -450,88 +453,66 @@ Page {
                     font.pixelSize: 15
                 }
 
-                // The time to the next search ("Next search in 12 s") from the status line, which
-                // is hidden here; not the plain "Searching..." or "stopped", the heading says those
-                Label {
-                    readonly property string status: page.searchStatus
-                    visible: !page.searchStopped && status !== ""
-                             && status !== qsTranslate("homeform", "Searching for the device...")
-                    width: parent.width
-                    text: status
-                    horizontalAlignment: Text.AlignHCenter
-                    wrapMode: Text.WordWrap
-                    color: window.ui.textMuted
-                    font.pixelSize: 13
-                }
+                Item { width: 1; height: 8 }
 
-                Item { width: 1; height: 4 }
-
-                // "Not connecting?" - folds the old help text out
-                AbstractButton {
-                    id: helpToggle
+                // "Not connecting?": a short checklist, always open. From the old help text
+                // (already translated) only the numbered checks and the hint about the virtual
+                // device: without the lead sentence (the subtitle says it), the bold "If it
+                // doesn't, please check" (the heading says it), the e-mail and the disclaimer
+                Rectangle {
                     width: parent.width
-                    height: 52
-                    onClicked: modernEmpty.helpOpen = !modernEmpty.helpOpen
-                    background: Rectangle {
-                        radius: 16
-                        color: helpToggle.down ? window.ui.surfaceHigh : window.ui.surface
-                    }
-                    contentItem: Item {
-                        UiIcon {
-                            id: helpIcon
-                            anchors.left: parent.left
-                            anchors.leftMargin: 16
-                            anchors.verticalCenter: parent.verticalCenter
-                            width: 22
-                            height: 22
-                            name: "help"
-                            color: window.ui.textMuted
+                    height: helpColumn.height + 32
+                    radius: 16
+                    color: window.ui.surface
+
+                    Column {
+                        id: helpColumn
+                        x: 16
+                        y: 16
+                        width: parent.width - 32
+                        spacing: 8
+
+                        Row {
+                            spacing: 10
+                            UiIcon {
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: 20
+                                height: 20
+                                name: "help"
+                                color: window.ui.textMuted
+                            }
+                            Label {
+                                anchors.verticalCenter: parent.verticalCenter
+                                text: qsTr("Not connecting?")
+                                color: window.ui.textMain
+                                font.pixelSize: 15
+                                font.weight: Font.Medium
+                            }
                         }
+
                         Label {
-                            anchors.left: helpIcon.right
-                            anchors.leftMargin: 12
-                            anchors.right: helpChevron.left
-                            anchors.verticalCenter: parent.verticalCenter
-                            text: qsTr("Not connecting?")
-                            color: window.ui.textMain
-                            font.pixelSize: 16
-                            font.weight: Font.Medium
-                            elide: Text.ElideRight
-                        }
-                        UiIcon {
-                            id: helpChevron
-                            anchors.right: parent.right
-                            anchors.rightMargin: 14
-                            anchors.verticalCenter: parent.verticalCenter
-                            width: 24
-                            height: 24
-                            name: "expand_more"
+                            width: parent.width
+                            text: {
+                                var t = lblHelp.text
+                                var b = t.indexOf("<b>")
+                                if (b < 0)
+                                    return t
+                                t = t.substring(b)
+                                var br = t.indexOf("<br>")
+                                if (br < 0)
+                                    return t
+                                t = t.substring(br + 4)
+                                var p1 = t.indexOf("<br><br>")
+                                var p2 = p1 < 0 ? -1 : t.indexOf("<br><br>", p1 + 8)
+                                return p2 < 0 ? t : t.substring(0, p2)
+                            }
+                            textFormat: Text.StyledText
+                            wrapMode: Text.WordWrap
                             color: window.ui.textMuted
-                            rotation: modernEmpty.helpOpen ? 180 : 0
-                            Behavior on rotation { NumberAnimation { duration: 150 } }
+                            font.pixelSize: 13
+                            lineHeight: 1.1
                         }
                     }
-                    Accessible.role: Accessible.Button
-                    Accessible.name: qsTr("Not connecting?")
-                }
-
-                Label {
-                    width: parent.width
-                    visible: modernEmpty.helpOpen
-                    leftPadding: 16
-                    rightPadding: 16
-                    // Without the first sentence ("This app should automatically connect..."):
-                    // the subtitle above says it. The checklist starts at the bold "If it doesn't"
-                    text: {
-                        var t = lblHelp.text
-                        var i = t.indexOf("<b>")
-                        return i > 0 ? t.substring(i) : t
-                    }
-                    textFormat: Text.StyledText
-                    wrapMode: Text.WordWrap
-                    color: window.ui.textMuted
-                    font.pixelSize: 14
-                    lineHeight: 1.15
                 }
             }
         }

@@ -10,6 +10,55 @@ ScrollView {
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.fill: parent
     id: gearSettingsWindow
+
+    // The +/- field of the modern look: rounded, drawn signs, no hover or ripple
+    component ModernSpin: SpinBox {
+        id: spin
+        from: 1
+        to: 999
+        hoverEnabled: false
+        implicitWidth: 160
+        implicitHeight: 44
+        padding: 0
+        leftPadding: 44
+        rightPadding: 44
+        topInset: 0
+        bottomInset: 0
+        contentItem: TextInput {
+            text: spin.textFromValue(spin.value, spin.locale)
+            font.pixelSize: 16
+            color: window.ui.textMain
+            selectionColor: window.ui.accent
+            selectedTextColor: window.ui.accentInk
+            horizontalAlignment: Qt.AlignHCenter
+            verticalAlignment: Qt.AlignVCenter
+            readOnly: !spin.editable
+            validator: spin.validator
+            inputMethodHints: Qt.ImhDigitsOnly
+        }
+        up.indicator: Rectangle {
+            x: spin.width - width
+            height: spin.height
+            width: height
+            radius: 12
+            color: spin.up.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest
+            Rectangle { anchors.centerIn: parent; width: 14; height: 2; radius: 1; color: window.ui.textMain }
+            Rectangle { anchors.centerIn: parent; width: 2; height: 14; radius: 1; color: window.ui.textMain }
+        }
+        down.indicator: Rectangle {
+            x: 0
+            height: spin.height
+            width: height
+            radius: 12
+            color: spin.down.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest
+            Rectangle { anchors.centerIn: parent; width: 14; height: 2; radius: 1; color: window.ui.textMain }
+        }
+        background: Rectangle {
+            radius: 12
+            color: window.ui.surfaceHighest
+        }
+    }
+
     visible: true
     clip: true
 
@@ -373,12 +422,22 @@ ScrollView {
                 }
 
                 SpinBox {
-                    // Modern look: a tap left the +/- lit (touch counts as hover until the next tap)
-                    hoverEnabled: window.ui.modern ? false : Qt.styleHints.useHoverEffects
+                    visible: !window.ui.modern
                     from: 1
                     to: 999
                     value: selectedCranksetSize
                     onValueChanged: {
+                        selectedCranksetSize = value
+                        console.log("Crankset Size changed");
+                        settingsChanged()
+                    }
+                }
+                // Modern look: the buttons of the table below. The Material one kept its +/- lit
+                // after a tap and did not match the rest of the page
+                ModernSpin {
+                    visible: window.ui.modern
+                    value: selectedCranksetSize
+                    onValueModified: {
                         selectedCranksetSize = value
                         console.log("Crankset Size changed");
                         settingsChanged()
@@ -401,12 +460,22 @@ ScrollView {
                     color: window.ui.modern ? window.ui.textMuted : Material.foreground
                 }
                 SpinBox {
-                    // Modern look: a tap left the +/- lit (touch counts as hover until the next tap)
-                    hoverEnabled: window.ui.modern ? false : Qt.styleHints.useHoverEffects
+                    visible: !window.ui.modern
                     from: 1
                     to: 999
                     value: selectedCogSize
                     onValueChanged: {
+                        selectedCogSize = value
+                        console.log("Cog Size changed");
+                        settingsChanged()
+                    }
+                }
+                // Modern look: the buttons of the table below. The Material one kept its +/- lit
+                // after a tap and did not match the rest of the page
+                ModernSpin {
+                    visible: window.ui.modern
+                    value: selectedCogSize
+                    onValueModified: {
                         selectedCogSize = value
                         console.log("Cog Size changed");
                         settingsChanged()

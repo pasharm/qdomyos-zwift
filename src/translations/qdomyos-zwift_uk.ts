@@ -12183,6 +12183,21 @@ Default: A = -0.96, B = 1.33</source>
     </message>
 </context>
 <context>
+    <name>UiTextField</name>
+    <message>
+        <source>hours</source>
+        <translation>год</translation>
+    </message>
+    <message>
+        <source>min</source>
+        <translation>хв</translation>
+    </message>
+    <message>
+        <source>sec</source>
+        <translation>с</translation>
+    </message>
+</context>
+<context>
     <name>UiMessageDialog</name>
     <message>
         <source>Yes</source>

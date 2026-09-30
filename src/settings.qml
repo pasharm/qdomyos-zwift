@@ -305,7 +305,10 @@ import QtQuick 2.12 as Quick212
             if (changedOnly)
                 updateFilteredSettings()
             // After the list is laid out again
-            Qt.callLater(function () { contentItem.contentY = back.scroll })
+            contentItem.contentY = 0
+            Qt.callLater(function () {
+                contentItem.contentY = Math.max(0, Math.min(back.scroll, contentItem.contentHeight - contentItem.height))
+            })
         }
 
         // A result on another page (Tiles...): back from it lands on the results. A result on
@@ -707,7 +710,30 @@ import QtQuick 2.12 as Quick212
             return value === undefined ? entry.defaultValue : value
         }
 
+        // Modern look: the paces are stored as seconds per km, their own page shows the time of
+        // the whole distance ("00:25:00" for 5 km). The search shows and takes the same time
+        function paceDistance(entry) {
+            var d = { pacef_1mile: 1.60934, pacef_5km: 5, pacef_10km: 10, pacef_halfmarathon: 21, pacef_marathon: 42 }
+            return window.ui.modern && d[entry.key] ? d[entry.key] : 0
+        }
+
+        function searchFieldValue(entry) {
+            var d = paceDistance(entry)
+            if (!d)
+                return settingValue(entry)
+            var t = Math.round(settingValue(entry) * d)
+            var pad = function (n) { return n < 10 ? "0" + n : "" + n }
+            return pad(Math.floor(t / 3600)) + ":" + pad(Math.floor(t / 60) % 60) + ":" + pad(t % 60)
+        }
+
         function setSettingValue(entry, value) {
+            var d = paceDistance(entry)
+            if (d && String(value).indexOf(":") >= 0) {
+                var p = String(value).split(":").map(function (v) { return parseInt(v, 10) || 0 })
+                while (p.length < 3)
+                    p.unshift(0)
+                value = (p[0] * 3600 + p[1] * 60 + p[2]) / d
+            }
             if (entry.type === "boolean") {
                 settings[entry.key] = !!value
             } else if (entry.type === "integer") {
@@ -2294,7 +2320,11 @@ import QtQuick 2.12 as Quick212
         ColumnLayout {
             id: column1
             spacing: 0
-            anchors.fill: parent
+            // Modern: laid out from the top at its own height. Stretched to the content area, a
+            // taller area (the long page just left for the search results) was shared out as
+            // empty space above the search bar and between the rows
+            anchors.fill: window.ui.modern ? undefined : parent
+            width: parent.width
 
             // Modern: always on top of the page (the toolbar has no search button then), with a
             // clear button inside the field and the "Changed" filter next to it
@@ -2584,7 +2614,7 @@ import QtQuick 2.12 as Quick212
                                     id: searchSettingTextField
                                     Layout.fillWidth: true
                                     Layout.minimumWidth: 0
-                                    text: visible ? settingsPane.settingValue(entry) : ""
+                                    text: visible ? settingsPane.searchFieldValue(entry) : ""
                                     horizontalAlignment: Text.AlignRight
                                     inputMethodHints: entry.type === "string" ? Qt.ImhNoPredictiveText : Qt.ImhFormattedNumbersOnly
                                     onAccepted: settingsPane.setSettingValue(entry, text)

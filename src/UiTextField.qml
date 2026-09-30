@@ -73,7 +73,12 @@ T.TextField {
         id: timePicker
         parent: Overlay.overlay
         modal: true
-        anchors.centerIn: parent
+        // A fixed size: sized by its content, the popup grew out of the corner while the
+        // wheels laid out on the first open, and anchors.centerIn followed it
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
+        width: 292
+        height: 16 + 20 + 4 + 200 + 12 + 48 + 16
         padding: 16
         property bool withSeconds: true
 
@@ -89,18 +94,34 @@ T.TextField {
 
         contentItem: Column {
             spacing: 12
-            Row {
+            Column {
                 anchors.horizontalCenter: parent.horizontalCenter
                 spacing: 4
-                Tumbler { id: hours; model: 100; visibleItemCount: 5; width: 64
-                          delegate: timeDigit }
-                Label { text: ":"; font.pixelSize: 24; anchors.verticalCenter: parent.verticalCenter }
-                Tumbler { id: minutes; model: 60; visibleItemCount: 5; width: 64
-                          delegate: timeDigit }
-                Label { text: ":"; font.pixelSize: 24; visible: timePicker.withSeconds
-                        anchors.verticalCenter: parent.verticalCenter }
-                Tumbler { id: seconds; model: 60; visibleItemCount: 5; width: 64
-                          visible: timePicker.withSeconds; delegate: timeDigit }
+                // Which wheel is what: "00" alone does not say hours or minutes
+                Row {
+                    spacing: 4
+                    Label { text: qsTr("hours"); width: 64; horizontalAlignment: Text.AlignHCenter
+                            font.pixelSize: 12; color: window.ui.textMuted }
+                    Item { width: timeColon.width; height: 1 }
+                    Label { text: qsTr("min"); width: 64; horizontalAlignment: Text.AlignHCenter
+                            font.pixelSize: 12; color: window.ui.textMuted }
+                    Item { width: timeColon.width; height: 1; visible: timePicker.withSeconds }
+                    Label { text: qsTr("sec"); width: 64; horizontalAlignment: Text.AlignHCenter
+                            font.pixelSize: 12; color: window.ui.textMuted; visible: timePicker.withSeconds }
+                }
+                Row {
+                    spacing: 4
+                    height: 200
+                    Tumbler { id: hours; model: 100; visibleItemCount: 5; width: 64; height: 200
+                              delegate: timeDigit }
+                    Label { id: timeColon; text: ":"; font.pixelSize: 24; anchors.verticalCenter: parent.verticalCenter }
+                    Tumbler { id: minutes; model: 60; visibleItemCount: 5; width: 64; height: 200
+                              delegate: timeDigit }
+                    Label { text: ":"; font.pixelSize: 24; visible: timePicker.withSeconds
+                            anchors.verticalCenter: parent.verticalCenter }
+                    Tumbler { id: seconds; model: 60; visibleItemCount: 5; width: 64; height: 200
+                              visible: timePicker.withSeconds; delegate: timeDigit }
+                }
             }
             Row {
                 anchors.right: parent.right

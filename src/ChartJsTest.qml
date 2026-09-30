@@ -23,6 +23,21 @@ ColumnLayout {
     property bool pageShown: !window.ui.modern
     readonly property real offScreen: pageShown ? 0 : Screen.width + Screen.height
 
+    // Modern look: the page is kept (main.qml) and opened again: the charts of the workout so
+    // far are drawn anew, and the mail goes as on a fresh open
+    function reopen() {
+        headerToolbar.visible = true
+        if (pageLoaded)
+            webView.reload()
+        sendMailFallback.restart()
+    }
+    // A kept page is taken off the stack, not destroyed: hidden until pushed again
+    // (and the mail timer stopped: a page destroyed before its 10 s sent nothing)
+    StackView.onRemoved: {
+        sendMailFallback.stop()
+        column1.visible = false
+    }
+
     onPageThemeChanged: {
         if (pageLoaded && pageTheme)
             webView.runJavaScript(window.ui.webThemeScript())
@@ -34,6 +49,8 @@ ColumnLayout {
     WebView {
         id: webView
         anchors.fill: parent
+        // The native view lies over everything QML draws: it goes with the page when kept
+        visible: column1.visible
         // Modern look: no Close button at the bottom (the back arrow of the toolbar does
         // it), the page runs down to the edge like the other pages. Held sideways the page
         // stack does not keep clear of the gesture bar (main.qml), so the page does
@@ -77,7 +94,8 @@ ColumnLayout {
 
     Timer {
         id: chartJscheckStartFromWeb
-        interval: 200; running: true; repeat: true
+        // Not while the kept page is off the stack: its pop would close another page
+        interval: 200; running: column1.visible; repeat: true
         onTriggered: {if(rootItem.startRequested) {rootItem.startRequested = false; rootItem.stopRequested = false; stackView.pop(); }}
     }
 
