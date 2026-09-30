@@ -257,6 +257,23 @@ if [ "$UI_MODERN" = "true" ]; then
   shot 10d-changed-dark
   tap_ui 'Changed'                   # off again
   sleep 2
+  # A setting three sections deep (Experimental > Virtual Device > Wahoo direct connect):
+  # reported to open the plain settings list instead of the setting
+  scroll_top
+  tap_ui 'Search settings' 600 330
+  sleep 2
+  adb shell input text "wah" || true
+  sleep 3
+  hide_keyboard
+  shot 10e-search-wah
+  tap_ui 'MyWhoosh Compatibility'
+  sleep 1
+  shot 10f-jump-mywhoosh
+  sleep 2
+  shot 10g-jump-mywhoosh-later
+  adb shell input keyevent 4          # back: the results again
+  sleep 2
+  shot 10h-back-to-results
 fi
 tap $MENU "back: home"; sleep 3
 shot 11-home-dark
