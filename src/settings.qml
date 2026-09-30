@@ -2588,9 +2588,12 @@ import QtQuick 2.12 as Quick212
                                 Layout.maximumHeight: visible ? implicitHeight : 0
                                 model: visible ? settingsPane.optionValues(entry) : []
                                 currentIndex: visible ? settingsPane.optionIndex(entry) : 0
-                                displayText: visible && settingsPane.isBluetoothDeviceSetting(entry)
-                                             ? settingsPane.settingValue(entry)
-                                             : currentText
+                                // The stored "Disabled" of the device pickers (and the PID zone) shown
+                                // translated, as on the setting's own page (ValueComboBox labels)
+                                itemLabels: window.ui.modern ? ({ "Disabled": qsTr("Disabled") }) : null
+                                displayText: labelFor(visible && settingsPane.isBluetoothDeviceSetting(entry)
+                                                      ? settingsPane.settingValue(entry)
+                                                      : currentText)
                                 contentItem: Label {
                                     leftPadding: 12
                                     rightPadding: 36
@@ -2602,9 +2605,9 @@ import QtQuick 2.12 as Quick212
                                 }
                                 delegate: ItemDelegate {
                                     width: searchSettingComboBox.width
-                                    text: modelData
+                                    text: searchSettingComboBox.labelFor(modelData)
                                     contentItem: Label {
-                                        text: modelData
+                                        text: searchSettingComboBox.labelFor(modelData)
                                         font: searchSettingComboBox.font
                                         color: window.ui.modern ? window.ui.textMain : searchSettingComboBox.palette.text
                                         verticalAlignment: Text.AlignVCenter
