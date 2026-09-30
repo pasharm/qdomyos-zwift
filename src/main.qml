@@ -1126,7 +1126,11 @@ ApplicationWindow {
             font.pixelSize: Qt.application.font.pixelSize * 1.6
             onClicked: {
                 if (stackView.depth > 1) {
-                    navigateBack(false)
+                    // Modern look: after a settings search result the arrow returns to the
+                    // results as the back gesture does (settings.qml handleBack); other pages
+                    // with steps (wizard, lists) still leave at once
+                    var page = stackView.currentItem
+                    navigateBack(window.ui.modern && page && page.searchReturn !== undefined)
                 } else {
                     drawer.open()
                 }

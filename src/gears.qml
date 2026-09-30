@@ -311,6 +311,8 @@ ScrollView {
         var temp = gearRows
         gearRows = []
         gearRows = temp
+        // Without it the table kept the removed gears and the reset was not saved
+        gearConfigurationChanged(gearRows)
     }
 
     // Signals to notify when values change
@@ -371,6 +373,8 @@ ScrollView {
                 }
 
                 SpinBox {
+                    // Modern look: a tap left the +/- lit (touch counts as hover until the next tap)
+                    hoverEnabled: window.ui.modern ? false : Qt.styleHints.useHoverEffects
                     from: 1
                     to: 999
                     value: selectedCranksetSize
@@ -397,6 +401,8 @@ ScrollView {
                     color: window.ui.modern ? window.ui.textMuted : Material.foreground
                 }
                 SpinBox {
+                    // Modern look: a tap left the +/- lit (touch counts as hover until the next tap)
+                    hoverEnabled: window.ui.modern ? false : Qt.styleHints.useHoverEffects
                     from: 1
                     to: 999
                     value: selectedCogSize
@@ -579,11 +585,14 @@ ScrollView {
         UiGroupBox {
             title: qsTr("Virtual Gear Table")
             Layout.fillWidth: true
-            Layout.fillHeight: true
-            Layout.preferredHeight: parent.height
+            // Modern look: the table is as tall as its rows and the page scrolls as one; a list
+            // scrolling inside the scrolling page caught the finger half way down
+            Layout.fillHeight: !window.ui.modern
+            Layout.preferredHeight: window.ui.modern ? -1 : parent.height
 
             ColumnLayout {
-                anchors.fill: parent
+                anchors.fill: window.ui.modern ? undefined : parent
+                width: parent.width
                 spacing: 10
 
                 // Updated Buttons Row. Modern look: one button per line, three long labels
@@ -684,7 +693,11 @@ ScrollView {
                 ListView {
                     id: gearTable
                     Layout.fillWidth: true
-                    Layout.fillHeight: true
+                    Layout.fillHeight: !window.ui.modern
+                    Layout.preferredHeight: window.ui.modern ? contentHeight : -1
+                    // The page margins are not in the implicit height: never squeeze the rows
+                    Layout.minimumHeight: window.ui.modern ? contentHeight : 0
+                    interactive: !window.ui.modern
                     clip: true
                     // Modern look: rounded rows apart from each other
                     spacing: window.ui.modern ? 4 : 0
@@ -783,10 +796,24 @@ ScrollView {
                                         radius: window.ui.modern ? 8 : 0
 
                                         Text {
+                                            visible: !window.ui.modern
                                             text: "+"
                                             color: window.ui.modern ? window.ui.textMain : "black"
                                             anchors.centerIn: parent
                                             font.pixelSize: window.ui.modern ? 18 : 12
+                                        }
+                                        // Modern look: drawn, the glyph sat off the centre of the button
+                                        Rectangle {
+                                            visible: window.ui.modern
+                                            anchors.centerIn: parent
+                                            width: 12; height: 2; radius: 1
+                                            color: window.ui.textMain
+                                        }
+                                        Rectangle {
+                                            visible: window.ui.modern
+                                            anchors.centerIn: parent
+                                            width: 2; height: 12; radius: 1
+                                            color: window.ui.textMain
                                         }
                                     }
 
@@ -800,10 +827,18 @@ ScrollView {
                                         radius: window.ui.modern ? 8 : 0
 
                                         Text {
+                                            visible: !window.ui.modern
                                             text: "-"
                                             color: window.ui.modern ? window.ui.textMain : "black"
                                             anchors.centerIn: parent
                                             font.pixelSize: window.ui.modern ? 18 : 12
+                                        }
+                                        // Modern look: drawn, the glyph sat off the centre of the button
+                                        Rectangle {
+                                            visible: window.ui.modern
+                                            anchors.centerIn: parent
+                                            width: 12; height: 2; radius: 1
+                                            color: window.ui.textMain
                                         }
                                     }
 
@@ -859,10 +894,24 @@ ScrollView {
                                         radius: window.ui.modern ? 8 : 0
 
                                         Text {
+                                            visible: !window.ui.modern
                                             text: "+"
                                             color: window.ui.modern ? window.ui.textMain : "black"
                                             anchors.centerIn: parent
                                             font.pixelSize: window.ui.modern ? 18 : 12
+                                        }
+                                        // Modern look: drawn, the glyph sat off the centre of the button
+                                        Rectangle {
+                                            visible: window.ui.modern
+                                            anchors.centerIn: parent
+                                            width: 12; height: 2; radius: 1
+                                            color: window.ui.textMain
+                                        }
+                                        Rectangle {
+                                            visible: window.ui.modern
+                                            anchors.centerIn: parent
+                                            width: 2; height: 12; radius: 1
+                                            color: window.ui.textMain
                                         }
                                     }
 
@@ -876,10 +925,18 @@ ScrollView {
                                         radius: window.ui.modern ? 8 : 0
 
                                         Text {
+                                            visible: !window.ui.modern
                                             text: "-"
                                             color: window.ui.modern ? window.ui.textMain : "black"
                                             anchors.centerIn: parent
                                             font.pixelSize: window.ui.modern ? 18 : 12
+                                        }
+                                        // Modern look: drawn, the glyph sat off the centre of the button
+                                        Rectangle {
+                                            visible: window.ui.modern
+                                            anchors.centerIn: parent
+                                            width: 12; height: 2; radius: 1
+                                            color: window.ui.textMain
                                         }
                                     }
 

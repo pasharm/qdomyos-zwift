@@ -6063,6 +6063,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: proformTDF1IPTextField
                                     text: settings.proformtdf1ip
+                                    ipAddress: true
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6087,6 +6088,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: proformTDF4IPTextField
                                     text: settings.proformtdf4ip
+                                    ipAddress: true
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6112,6 +6114,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: proformTDFCompanionIPTextField
                                     text: settings.tdf_10_ip
+                                    ipAddress: true
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11386,6 +11389,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: proformtreadmillIPTextField
                                     text: settings.proformtreadmillip
+                                    ipAddress: true
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11411,6 +11415,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: nordictrack2950IPTextField
                                     text: settings.nordictrack_2950_ip
+                                    ipAddress: true
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12972,6 +12977,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: proformRowerIPTextField
                                     text: settings.proform_rower_ip
+                                    ipAddress: true
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13220,6 +13226,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: proformEllipticalCompanionIPTextField
                                     text: settings.proform_elliptical_ip
+                                    ipAddress: true
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -17138,6 +17145,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: oscIPTextField
                                     text: settings.osc_ip
+                                    ipAddress: true
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
