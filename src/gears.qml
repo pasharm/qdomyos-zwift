@@ -24,17 +24,7 @@ ScrollView {
         rightPadding: 44
         topInset: 0
         bottomInset: 0
-        contentItem: TextInput {
-            id: spinText
-            // Centred by the line, not by the digits: the line box has more room above them
-            // than below, and the number sat higher than the signs. Moved by the difference
-            readonly property real digitsOffset: {
-                var r = digitMetrics.tightBoundingRect("0")
-                return -(digitMetrics.ascent - digitMetrics.descent + 2 * r.y + r.height)
-            }
-            FontMetrics { id: digitMetrics; font: spinText.font }
-            topPadding: Math.max(0, digitsOffset)
-            bottomPadding: Math.max(0, -digitsOffset)
+        contentItem: UiSpinInput {
             text: spin.textFromValue(spin.value, spin.locale)
             font.pixelSize: 16
             color: window.ui.textMain
@@ -860,7 +850,7 @@ ScrollView {
                                     }
 
                                     // Style the SpinBox
-                                    contentItem: TextInput {
+                                    contentItem: UiSpinInput {
                                         z: 2
                                         text: cranksetSpinBox.textFromValue(cranksetSpinBox.value, cranksetSpinBox.locale)
                                         font: cranksetSpinBox.font
@@ -964,7 +954,7 @@ ScrollView {
                                     }
 
                                     // Style the SpinBox (same as cranksetSpinBox)
-                                    contentItem: TextInput {
+                                    contentItem: UiSpinInput {
                                         z: 2
                                         text: cogSpinBox.textFromValue(cogSpinBox.value, cogSpinBox.locale)
                                         font: cogSpinBox.font

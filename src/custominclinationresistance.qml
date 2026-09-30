@@ -16,6 +16,58 @@ ScrollView {
     property int rowHeight: 55
     property int controlHeight: 43
 
+    // Modern look: a +/- field of the table, as on the Wahoo Options page. The classic one is a
+    // text field between two buttons; its "-" and "+" did not fit the modern button and showed
+    // as empty circles
+    component Stepper: Rectangle {
+        id: stepper
+        property alias text: stepperInput.text
+        signal step(real delta)
+        signal edited(string value)
+        radius: 12
+        color: window.ui.surfaceHighest
+
+        MouseArea {
+            id: stepperMinus
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: height
+            onClicked: stepper.step(-0.5)
+            Accessible.role: Accessible.Button
+            Accessible.name: "-"
+            Rectangle { anchors.fill: parent; radius: 12; color: window.ui.surfaceHigh; visible: stepperMinus.pressed }
+            Rectangle { anchors.centerIn: parent; width: 12; height: 2; radius: 1; color: window.ui.textMain }
+        }
+        MouseArea {
+            id: stepperPlus
+            anchors.right: parent.right
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            width: height
+            onClicked: stepper.step(0.5)
+            Accessible.role: Accessible.Button
+            Accessible.name: "+"
+            Rectangle { anchors.fill: parent; radius: 12; color: window.ui.surfaceHigh; visible: stepperPlus.pressed }
+            Rectangle { anchors.centerIn: parent; width: 12; height: 2; radius: 1; color: window.ui.textMain }
+            Rectangle { anchors.centerIn: parent; width: 2; height: 12; radius: 1; color: window.ui.textMain }
+        }
+        UiSpinInput {
+            id: stepperInput
+            anchors.left: stepperMinus.right
+            anchors.right: stepperPlus.left
+            anchors.top: parent.top
+            anchors.bottom: parent.bottom
+            font.pixelSize: 16
+            color: window.ui.textMain
+            selectionColor: window.ui.accent
+            selectedTextColor: window.ui.accentInk
+            inputMethodHints: Qt.ImhFormattedNumbersOnly
+            onAccepted: stepper.edited(text)
+            onEditingFinished: stepper.edited(text)
+        }
+    }
+
     Settings {
         id: settings
         property bool custom_inclination_resistance_table_enabled: false
@@ -223,7 +275,31 @@ ScrollView {
             color: window.ui.modern ? window.ui.textMuted : Material.accent
         }
 
+        // Modern look: the column titles over the fields, no grid
+        RowLayout {
+            visible: window.ui.modern
+            Layout.fillWidth: true
+            Layout.topMargin: 4
+            spacing: 8
+            Label {
+                text: qsTr("Inclination (%)")
+                color: window.ui.textMuted
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
+                Layout.preferredWidth: 1
+            }
+            Label {
+                text: qsTr("Resistance")
+                color: window.ui.textMuted
+                horizontalAlignment: Text.AlignHCenter
+                Layout.fillWidth: true
+                Layout.preferredWidth: 1
+            }
+            Item { Layout.preferredWidth: 44 }
+        }
+
         Rectangle {
+            visible: !window.ui.modern
             Layout.fillWidth: true
             Layout.preferredHeight: 40
             color: window.ui.modern ? window.ui.surfaceHigh : "#f0f0f0"
@@ -284,9 +360,65 @@ ScrollView {
             delegate: Rectangle {
                 width: pointTable.width
                 height: rowHeight
-                color: window.ui.modern ? (index % 2 === 0 ? window.ui.surface : window.ui.bg) : (index % 2 === 0 ? "white" : "#fafafa")
+                color: window.ui.modern ? "transparent" : (index % 2 === 0 ? "white" : "#fafafa")
+
+                RowLayout {
+                    visible: window.ui.modern
+                    anchors.fill: parent
+                    anchors.topMargin: 5
+                    anchors.bottomMargin: 6
+                    spacing: 8
+
+                    Stepper {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        Layout.fillHeight: true
+                        text: formatNumber(inclination)
+                        onStep: {
+                            text = adjustPoint(index, "inclination", delta)
+                            Qt.callLater(sortPointsAndSave)
+                        }
+                        onEdited: {
+                            text = updatePoint(index, "inclination", value)
+                            Qt.callLater(sortPointsAndSave)
+                        }
+                    }
+
+                    Stepper {
+                        Layout.fillWidth: true
+                        Layout.preferredWidth: 1
+                        Layout.fillHeight: true
+                        text: formatNumber(resistance)
+                        onStep: text = adjustPoint(index, "resistance", delta)
+                        onEdited: text = updatePoint(index, "resistance", value)
+                    }
+
+                    MouseArea {
+                        id: removeButton
+                        Layout.preferredWidth: 44
+                        Layout.fillHeight: true
+                        enabled: pointListModel.count > 1
+                        onClicked: removePoint(index)
+                        Accessible.role: Accessible.Button
+                        Accessible.name: qsTr("Remove")
+                        Rectangle {
+                            anchors.fill: parent
+                            radius: 12
+                            color: removeButton.pressed ? window.ui.surfaceHigh : "transparent"
+                        }
+                        UiIcon {
+                            anchors.centerIn: parent
+                            width: 20
+                            height: 20
+                            name: "close"
+                            color: window.ui.textMuted
+                            opacity: removeButton.enabled ? 1 : 0.35
+                        }
+                    }
+                }
 
                 Row {
+                    visible: !window.ui.modern
                     anchors.fill: parent
 
                     Rectangle {
