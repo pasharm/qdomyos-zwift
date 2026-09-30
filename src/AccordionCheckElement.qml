@@ -123,6 +123,8 @@ ColumnLayout {
 
                 Label {
                     id: modernTitle
+                    // settings.qml (search): a result named as the title lights the element
+                    objectName: "accordionTitle"
                     anchors.left: parent.left
                     anchors.leftMargin: 4
                     anchors.right: modernSwitch.left

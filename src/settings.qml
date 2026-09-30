@@ -374,6 +374,19 @@ import QtQuick 2.12 as Quick212
             var row = (target.parent && String(target.parent).indexOf("Row") >= 0 &&
                        target.parent.height > target.height && target.parent.height < 200)
                       ? target.parent : target
+            // Modern look: the title of a switch section (a tile named as its setting, "Heart")
+            // was lit alone, a thin bar without its switch. A tile card is lit whole like the
+            // tiles whose name differs from the title, a section inside a page - its switch row
+            if (target.objectName === "accordionTitle") {
+                row = target.parent
+                for (var up = target.parent; up; up = up.parent) {
+                    if (up.modernCard !== undefined) {
+                        if (up.modernCard)
+                            row = up
+                        break
+                    }
+                }
+            }
             var at = row.mapToItem(flickable.contentItem, 0, 0)
             flickable.contentY = Math.max(0, Math.min(at.y - 96, flickable.contentHeight - flickable.height))
             // Nothing to light when not even a section was found: the whole page would glow
