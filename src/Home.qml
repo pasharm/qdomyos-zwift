@@ -541,8 +541,9 @@ HomeForm {
                     objectName: minusName
                     autoRepeat: true
                     visible: writable && !largeButton
-                    // A touch area of 64 x 80, easier to hit while riding, around the 44 circle
-                    // that is drawn where it always was: 6 from the edge, on the value's centre
+                    // A touch area of 64 x 80, easier to hit while riding, around the circle as it
+                    // always looked: 32 (a 44 button less the 6 insets of Material), 12 from the
+                    // edge, on the value's centre
                     x: (6 - 8) * modernTile.zoom
                     y: modernValue.y + modernValue.height / 2 + 3 * modernTile.zoom - height / 2
                     width: 64 * modernTile.zoom
@@ -554,10 +555,10 @@ HomeForm {
                     onClicked: minus_clicked(objectName)
                     background: Item {
                         Rectangle {
-                            x: 8 * modernTile.zoom
-                            y: parent.height / 2 - 25 * modernTile.zoom
-                            width: 44 * modernTile.zoom
-                            height: 44 * modernTile.zoom
+                            x: 14 * modernTile.zoom
+                            y: parent.height / 2 - 19 * modernTile.zoom
+                            width: 32 * modernTile.zoom
+                            height: 32 * modernTile.zoom
                             radius: width / 2
                             color: modernMinus.down ? window.ui.alpha(window.ui.accent, 0.35) : window.ui.surfaceHighest
                             UiIcon {
@@ -583,8 +584,9 @@ HomeForm {
                     objectName: plusName
                     autoRepeat: true
                     visible: writable && !largeButton
-                    // A touch area of 64 x 80, easier to hit while riding, around the 44 circle
-                    // that is drawn where it always was: 6 from the edge, on the value's centre
+                    // A touch area of 64 x 80, easier to hit while riding, around the circle as it
+                    // always looked: 32 (a 44 button less the 6 insets of Material), 12 from the
+                    // edge, on the value's centre
                     x: modernCard.width - width + (8 - 6) * modernTile.zoom
                     y: modernValue.y + modernValue.height / 2 + 3 * modernTile.zoom - height / 2
                     width: 64 * modernTile.zoom
@@ -596,10 +598,10 @@ HomeForm {
                     onClicked: plus_clicked(objectName)
                     background: Item {
                         Rectangle {
-                            x: 12 * modernTile.zoom
-                            y: parent.height / 2 - 25 * modernTile.zoom
-                            width: 44 * modernTile.zoom
-                            height: 44 * modernTile.zoom
+                            x: 18 * modernTile.zoom
+                            y: parent.height / 2 - 19 * modernTile.zoom
+                            width: 32 * modernTile.zoom
+                            height: 32 * modernTile.zoom
                             radius: width / 2
                             color: modernPlus.down ? window.ui.alpha(window.ui.accent, 0.35) : window.ui.surfaceHighest
                             UiIcon {

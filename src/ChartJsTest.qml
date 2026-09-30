@@ -32,8 +32,13 @@ ColumnLayout {
     function reopen() {
         headerToolbar.visible = true
         if (pageLoaded) {
-            if (window.ui.modern)
+            if (window.ui.modern) {
+                // Opened again before the last load showed: that poll and the rest of that
+                // safety net are for the old page, both start over with the new load
+                revealTimer.stop()
                 pageShown = false
+                revealSafety.restart()
+            }
             webView.url = pageUrl("?still=" + Date.now())
         }
         sendMailFallback.restart()
@@ -107,6 +112,7 @@ ColumnLayout {
 
     // Safety net: a page that never reports the end of its load is shown anyway
     Timer {
+        id: revealSafety
         interval: 4000; running: !column1.pageShown; repeat: false
         onTriggered: column1.pageShown = true
     }
