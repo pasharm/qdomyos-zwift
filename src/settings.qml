@@ -57,6 +57,8 @@ import QtQuick 2.12 as Quick212
         property var pendingJump: null
         // The glow of the last jump: gone at once when back returns to the results
         property var activeGlow: null
+        // Set while back puts the old query into the field: its onTextChanged must not search
+        property bool restoringSearch: false
         property string resetSectionName: ""
 
         function loadSettingsIndex() {
@@ -232,7 +234,9 @@ import QtQuick 2.12 as Quick212
             var where = settingsIndex ? settingsIndex[entry.key] : null
             var page = settingsPane
             var context = "settings"
-            searchReturn = window.ui.modern ? { query: settingsSearchTextField.text, changedOnly: changedOnly } : null
+            // The results and their scroll as they were: back shows them without searching again
+            searchReturn = window.ui.modern ? { query: settingsSearchTextField.text, changedOnly: changedOnly,
+                                                results: filteredSettings, scroll: contentItem.contentY } : null
             if (where && where.file !== "settings.qml") {
                 if (searchReturn)
                     searchReturn.viaPush = true
@@ -291,10 +295,17 @@ import QtQuick 2.12 as Quick212
             var back = searchReturn
             searchReturn = null
             changedOnly = back.changedOnly
+            restoringSearch = true
             settingsSearchTextField.text = back.query
-            if (changedOnly && back.query.trim().length === 0)
+            restoringSearch = false
+            settingsSearchActive = back.query.trim().length > 0
+            settingsSearchPending = false
+            filteredSettings = back.results
+            // "Changed" may differ now (the setting just opened was edited): that list is rebuilt
+            if (changedOnly)
                 updateFilteredSettings()
-            contentItem.contentY = 0
+            // After the list is laid out again
+            Qt.callLater(function () { contentItem.contentY = back.scroll })
         }
 
         // A result on another page (Tiles...): back from it lands on the results. A result on
@@ -2306,6 +2317,8 @@ import QtQuick 2.12 as Quick212
                     // A new search of one's own: back no longer returns to the previous one
                     onTextEdited: settingsPane.searchReturn = null
                     onTextChanged: {
+                        if (settingsPane.restoringSearch)
+                            return
                         settingsPane.settingsSearchActive = text.trim().length > 0
                         settingsSearchDebounceTimer.stop()
                         if (settingsPane.settingsSearchActive) {
