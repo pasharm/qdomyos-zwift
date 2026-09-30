@@ -716,11 +716,12 @@ ScrollView {
                     border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                     radius: window.ui.modern ? 12 : 0
 
+                    // Modern look: a narrow gear number, the chainring and cog fields get the room
                     Row {
                         anchors.fill: parent
 
                         Rectangle {
-                            width: parent.width / 3
+                            width: parent.width * (window.ui.modern ? 0.24 : 1 / 3)
                             height: parent.height
                             border.width: window.ui.modern ? 0 : 1
                             border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
@@ -728,6 +729,11 @@ ScrollView {
 
                             Text {
                                 anchors.centerIn: parent
+                                // Modern look: one line inside its column, smaller if it does not fit
+                                width: window.ui.modern ? parent.width - 8 : implicitWidth
+                                horizontalAlignment: Text.AlignHCenter
+                                fontSizeMode: window.ui.modern ? Text.HorizontalFit : Text.FixedSize
+                                minimumPixelSize: 9
                                 text: qsTr("Gear")
                                 font.bold: true
                                 color: window.ui.modern ? window.ui.textMain : "black"
@@ -735,7 +741,7 @@ ScrollView {
                         }
 
                         Rectangle {
-                            width: parent.width / 3
+                            width: parent.width * (window.ui.modern ? 0.38 : 1 / 3)
                             height: parent.height
                             border.width: window.ui.modern ? 0 : 1
                             border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
@@ -743,6 +749,11 @@ ScrollView {
 
                             Text {
                                 anchors.centerIn: parent
+                                // Modern look: one line inside its column, smaller if it does not fit
+                                width: window.ui.modern ? parent.width - 8 : implicitWidth
+                                horizontalAlignment: Text.AlignHCenter
+                                fontSizeMode: window.ui.modern ? Text.HorizontalFit : Text.FixedSize
+                                minimumPixelSize: 9
                                 text: qsTr("Chainring")
                                 font.bold: true
                                 color: window.ui.modern ? window.ui.textMain : "black"
@@ -750,7 +761,7 @@ ScrollView {
                         }
 
                         Rectangle {
-                            width: parent.width / 3
+                            width: parent.width * (window.ui.modern ? 0.38 : 1 / 3)
                             height: parent.height
                             border.width: window.ui.modern ? 0 : 1
                             border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
@@ -758,6 +769,11 @@ ScrollView {
 
                             Text {
                                 anchors.centerIn: parent
+                                // Modern look: one line inside its column, smaller if it does not fit
+                                width: window.ui.modern ? parent.width - 8 : implicitWidth
+                                horizontalAlignment: Text.AlignHCenter
+                                fontSizeMode: window.ui.modern ? Text.HorizontalFit : Text.FixedSize
+                                minimumPixelSize: 9
                                 text: qsTr("Rear Cog")
                                 font.bold: true
                                 color: window.ui.modern ? window.ui.textMain : "black"
@@ -817,7 +833,7 @@ ScrollView {
 
                             // Gear Number (non-editable)
                             Rectangle {
-                                width: parent.width / 3
+                                width: parent.width * (window.ui.modern ? 0.24 : 1 / 3)
                                 height: parent.height
                                 border.width: window.ui.modern ? 0 : 1
                                 border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
@@ -832,7 +848,7 @@ ScrollView {
 
                             // Crankset (editable)
                             Rectangle {
-                                width: parent.width / 3
+                                width: parent.width * (window.ui.modern ? 0.38 : 1 / 3)
                                 height: parent.height
                                 border.width: window.ui.modern ? 0 : 1
                                 border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
@@ -936,7 +952,7 @@ ScrollView {
 
                             // Rear Cog (editable)
                             Rectangle {
-                                width: parent.width / 3
+                                width: parent.width * (window.ui.modern ? 0.38 : 1 / 3)
                                 height: parent.height
                                 border.width: window.ui.modern ? 0 : 1
                                 border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
