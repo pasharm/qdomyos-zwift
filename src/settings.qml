@@ -378,10 +378,15 @@ import QtQuick 2.12 as Quick212
                     var pos = row.mapToItem(flickable, 0, 0)
                     // A lone label is as wide as its text: up to the same indent on the right
                     var w = row.width < flickable.width * 0.6 ? flickable.width - 2 * pos.x : row.width
-                    x = pos.x - 8
-                    width = w + 16
-                    y = pos.y - 2
-                    height = row.height + 4
+                    // A card of its own (a tile of the tiles page) is lit exactly, corners too
+                    var card = row.modernCard === true
+                    var ox = card ? 0 : 6
+                    var oy = card ? 0 : 2
+                    radius = card ? 16 : 12
+                    x = pos.x - ox
+                    width = w + 2 * ox
+                    y = pos.y - oy
+                    height = row.height + 2 * oy
                 }
                 Component.onCompleted: follow()
                 Timer { interval: 40; repeat: true; running: true; onTriggered: glow.follow() }
