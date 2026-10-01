@@ -48,6 +48,8 @@ Page {
         property bool miles_unit: false
         property string heart_rate_belt_name: "Disabled"
         property bool garmin_companion: false
+        property bool bike_power_sensor: false
+        property bool run_cadence_sensor: false
         property string filter_device: "Disabled"
         property bool weight_kg_unit: false
     }
@@ -443,18 +445,133 @@ Page {
                                 text: qsTr(modelData)
                                 onClicked: {
                                     selectedOptions.step3 = modelData
-                                    if (modelData === "Peloton") {
-                                        stackViewLocal.push(pelotonLoginComponent)
-                                    } else {
+                                    if (modelData !== "Peloton") {
                                         if(modelData === "Zwift") {
                                             settings.wahoo_rgt_dircon = false
                                         } else {
                                             settings.wahoo_rgt_dircon = true
                                         }
-                                        stackViewLocal.push(zwiftComponent)
                                     }
+                                    stackViewLocal.push(watchRecordingComponent)
                                 }
                             }
+                        }
+                    }
+
+                    Item {
+                        Layout.preferredHeight: 50
+                    }
+
+                    WizardButton {
+                        Layout.alignment: Qt.AlignHCenter
+                        text: qsTr("Back")
+                        onClicked: stackViewLocal.pop()
+                    }
+                }
+            }
+        }
+    }
+
+    Component {
+        id: watchRecordingComponent
+
+        Item {
+            id: watchStep
+            anchors.fill: parent
+
+            // bike_power_sensor / run_cadence_sensor replace FTMS, so they only exist for bikes and treadmills
+            readonly property bool sensorModeAvailable: selectedOptions.step2 === "Bike" || selectedOptions.step2 === "Treadmill"
+
+            function setSensorMode(enabled) {
+                if (selectedOptions.step2 === "Bike") {
+                    settings.bike_power_sensor = enabled
+                } else if (selectedOptions.step2 === "Treadmill") {
+                    settings.run_cadence_sensor = enabled
+                }
+            }
+
+            function next() {
+                if (selectedOptions.step3 === "Peloton") {
+                    stackViewLocal.push(pelotonLoginComponent)
+                } else {
+                    stackViewLocal.push(zwiftComponent)
+                }
+            }
+
+            ScrollView {
+                contentWidth: -1
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.fill: parent
+                Layout.preferredHeight: parent.height
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                ColumnLayout {
+                    anchors.centerIn: parent
+                    spacing: 20
+                    width: parent.width * 0.9
+
+                    Text {
+                        Layout.alignment: Qt.AlignHCenter
+                        text: qsTr("Record the workout on your watch?")
+                        font.pixelSize: 24
+                        font.bold: true
+                        color: "white"
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                        horizontalAlignment: Text.AlignHCenter
+                    }
+
+                    WizardButton {
+                        Layout.alignment: Qt.AlignHCenter
+                        text: qsTr("Garmin watch")
+                        onClicked: {
+                            settings.garmin_companion = true
+                            watchStep.setSensorMode(false)
+                            watchStep.next()
+                        }
+                    }
+
+                    Text {
+                        Layout.alignment: Qt.AlignHCenter
+                        text: qsTr("Recommended. Install the QZ app on the watch from Connect IQ. Works together with Zwift and other apps.")
+                        font.pixelSize: 16
+                        color: "white"
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                        horizontalAlignment: Text.AlignHCenter
+                        Layout.bottomMargin: 20
+                    }
+
+                    WizardButton {
+                        Layout.alignment: Qt.AlignHCenter
+                        visible: watchStep.sensorModeAvailable
+                        text: qsTr("Other watch")
+                        onClicked: {
+                            watchStep.setSensorMode(true)
+                            watchStep.next()
+                        }
+                    }
+
+                    Text {
+                        Layout.alignment: Qt.AlignHCenter
+                        visible: watchStep.sensorModeAvailable
+                        text: selectedOptions.step2 === "Treadmill"
+                              ? qsTr("QZ will appear to the watch as a running speed and cadence sensor. In this mode Zwift and other apps can't control your treadmill.")
+                              : qsTr("QZ will appear to the watch as a power sensor. In this mode Zwift and other apps can't control the resistance.")
+                        font.pixelSize: 16
+                        color: "white"
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                        horizontalAlignment: Text.AlignHCenter
+                        Layout.bottomMargin: 20
+                    }
+
+                    WizardButton {
+                        Layout.alignment: Qt.AlignHCenter
+                        text: qsTr("No")
+                        onClicked: {
+                            watchStep.setSensorMode(false)
+                            watchStep.next()
                         }
                     }
 
