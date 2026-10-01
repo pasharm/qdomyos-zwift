@@ -10144,6 +10144,14 @@ Default: A = -0.96, B = 1.33</source>
         <translation>Новий вигляд головного екрана, бічного меню, налаштувань і майстра. Вимкніть, щоб повернути класичний вигляд.</translation>
     </message>
     <message>
+        <source>Snap tiles to rows</source>
+        <translation>Прилипання плиток до рядів</translation>
+    </message>
+    <message>
+        <source>When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.</source>
+        <translation>Коли плитки на головному екрані перестають прокручуватися, вони стають рівно по ряду або по кінцю списку, і жодна плитка не обрізана.</translation>
+    </message>
+    <message>
         <source>Theme</source>
         <translation>Тема</translation>
     </message>

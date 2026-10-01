@@ -381,25 +381,33 @@ HomeForm {
                 }
             }
         }
-        // A scroll that stops near the first row settles on it in full view (no tile cut in
-        // half), or, inside the gap, on the nearer edge: the first row or the top with the
-        // device line. With the toolbar shown or hidden alike: the snap is not a finger move,
-        // so it does not toggle the toolbar. The snap never goes past the end of the list, and
-        // a list that overflows by less than half a tile is left alone below the first row:
-        // its end would become unreachable.
-        NumberAnimation { id: snapToFirstRow; target: gridView; property: "contentY"; duration: 150; easing.type: Easing.OutQuad }
+        // A scroll that stops settles on the nearest whole row at the top (no tile cut in half)
+        // or on the end of the list, whichever is nearer; inside the gap, on the nearer edge:
+        // the first row or the top with the device line. It runs once the movement has ended,
+        // so a flick settles by the row where it stopped by itself, not by the one where the
+        // finger let go. With the toolbar shown or hidden alike: the snap is not a finger move,
+        // so it does not toggle the toolbar. Moving a tile scrolls the grid by contentY, which
+        // ends no movement, so it does not snap. Off in Settings (ui.tileSnap)
+        NumberAnimation { id: snapToRow; target: gridView; property: "contentY"; duration: 150; easing.type: Easing.OutQuad }
         onMovementEnded: {
-            if (window.lockTiles)
+            if (window.lockTiles || !window.ui.tileSnap)
                 return
-            if (contentY > -topMargin + 1 && contentY < 0)
-                snapToFirstRow.to = contentY < -topMargin / 2 ? -topMargin : Math.min(0, originY + contentHeight - height)
-            else if (contentY > 0 && contentY < cellHeight / 2 && originY + contentHeight - height >= cellHeight / 2)
-                snapToFirstRow.to = 0
-            else
+            var endY = originY + contentHeight - height
+            var to
+            if (contentY <= -topMargin + 1 || endY <= -topMargin)
                 return
-            snapToFirstRow.start()
+            if (contentY < 0) {
+                to = contentY < -topMargin / 2 ? -topMargin : Math.min(0, endY)
+            } else {
+                var row = originY + Math.round((contentY - originY) / cellHeight) * cellHeight
+                to = row > endY || Math.abs(endY - contentY) < Math.abs(row - contentY) ? endY : row
+            }
+            if (Math.abs(to - contentY) < 1)
+                return
+            snapToRow.to = to
+            snapToRow.start()
         }
-        onMovementStarted: snapToFirstRow.stop()
+        onMovementStarted: snapToRow.stop()
         Screen.orientationUpdateMask:  Qt.LandscapeOrientation | Qt.PortraitOrientation | Qt.InvertedLandscapeOrientation | Qt.InvertedPortraitOrientation
         Screen.onPrimaryOrientationChanged:{
             // Nothing to recompute: cellWidth and the grid width follow the page width

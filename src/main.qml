@@ -264,12 +264,16 @@ ApplicationWindow {
         property string ui_theme: "graphite"
         property string ui_accent: "violet"
         property string ui_theme_mode: "auto"
+        property bool ui_tile_snap: true
     }
 
     // Modern look (fork only), switched in Settings > General Options. Pages read the palette
     // through window.ui; with ui.modern off every page keeps its classic look.
     readonly property QtObject ui: QtObject {
         readonly property bool modern: settings.ui_modern
+        // The tiles of the main page settle on a whole row (and on the end of the list) when
+        // a scroll stops; off, they stay where the scroll left them
+        readonly property bool tileSnap: settings.ui_tile_snap
 
         // Appearance: "auto" follows the night mode of the phone, "dark" and "light" are fixed.
         // The classic look is always dark.

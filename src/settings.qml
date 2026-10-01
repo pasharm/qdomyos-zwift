@@ -16633,6 +16633,31 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
+                    IndicatorOnlySwitch {
+                        text: qsTr("Snap tiles to rows")
+                        spacing: 0
+                        bottomPadding: 0
+                        topPadding: 0
+                        rightPadding: 0
+                        leftPadding: 0
+                        clip: false
+                        checked: window.ui.tileSnap
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        Layout.topMargin: 8
+                        onClicked: window.ui.setOption("ui_tile_snap", checked)
+                    }
+                    Label {
+                        text: qsTr("When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.")
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
+                        font.pixelSize: Qt.application.font.pixelSize - 2
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                    }
+
                     RowLayout {
                         visible: window.ui.modern
                         spacing: 10

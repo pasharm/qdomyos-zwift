@@ -10144,6 +10144,14 @@ Default: A = -0.96, B = 1.33</source>
         <translation>Новый вид главного экрана, бокового меню, настроек и мастера. Выключите, чтобы вернуть классический вид.</translation>
     </message>
     <message>
+        <source>Snap tiles to rows</source>
+        <translation>Прилипание плиток к рядам</translation>
+    </message>
+    <message>
+        <source>When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.</source>
+        <translation>Когда плитки на главном экране перестают прокручиваться, они встают ровно по ряду или по концу списка, и ни одна плитка не обрезана.</translation>
+    </message>
+    <message>
         <source>Theme</source>
         <translation>Тема</translation>
     </message>
