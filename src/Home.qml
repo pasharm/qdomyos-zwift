@@ -388,7 +388,11 @@ HomeForm {
         // finger let go. With the toolbar shown or hidden alike: the snap is not a finger move,
         // so it does not toggle the toolbar. Moving a tile scrolls the grid by contentY, which
         // ends no movement, so it does not snap. Off in Settings (ui.tileSnap)
-        NumberAnimation { id: snapToRow; target: gridView; property: "contentY"; duration: 150; easing.type: Easing.OutQuad }
+        // The end is taken from the grid height at the moment the movement ends: when the
+        // toolbar is still sliding away, the grid grows after that and the end moves up, so
+        // the snap could stop past it. Back within the bounds once it is done
+        NumberAnimation { id: snapToRow; target: gridView; property: "contentY"; duration: 150; easing.type: Easing.OutQuad
+                          onFinished: gridView.returnToBounds() }
         onMovementEnded: {
             if (window.lockTiles || !window.ui.tileSnap)
                 return
