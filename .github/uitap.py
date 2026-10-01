@@ -10,7 +10,10 @@ import xml.etree.ElementTree as ET
 
 #   uitap.py dump.xml --package
 # prints the package of the window on top instead (the first node of the dump).
+#   uitap.py dump.xml 'regex' --bounds
+# prints the bounds "x1 y1 x2 y2" of the match instead of its centre.
 path, pattern = sys.argv[1], sys.argv[2]
+want_bounds = "--bounds" in sys.argv[3:]
 try:
     root = ET.parse(path).getroot()
 except (ET.ParseError, OSError):
@@ -36,10 +39,13 @@ for node in root.iter("node"):
     x1, y1, x2, y2 = map(int, m.groups())
     if x2 <= x1 or y2 <= y1:
         continue
-    cand = ((x1 + x2) // 2, (y1 + y2) // 2)
+    cand = ((x1 + x2) // 2, (y1 + y2) // 2, x1, y1, x2, y2)
     if best is None or cand[1] < best[1]:
         best = cand
 
 if best is None:
     sys.exit(1)
-print(best[0], best[1])
+if want_bounds:
+    print(*best[2:])
+else:
+    print(best[0], best[1])
