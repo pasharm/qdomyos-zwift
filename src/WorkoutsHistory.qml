@@ -381,9 +381,12 @@ Page {
                                     font.pixelSize: 18
                                     anchors.verticalCenter: parent.verticalCenter
                                     
-                                    // Auto-scroll animation for long titles
+                                    // Auto-scroll animation for long titles.
+                                    // The row has zero width until the layout runs, so wait for it,
+                                    // and put the title back when the animation stops mid-scroll.
                                     SequentialAnimation on x {
-                                        running: titleText.contentWidth > titleText.parent.width
+                                        running: titleText.parent.width > 0 && titleText.contentWidth > titleText.parent.width
+                                        onRunningChanged: if (!running) titleText.x = 0
                                         loops: Animation.Infinite
                                         NumberAnimation {
                                             from: 0
