@@ -170,317 +170,65 @@ shot 03-wizard-step1
 tap_ui 'First-time setup' 720 620
 sleep 4
 shot 03b-wizard-step2
-# The short branch to its end: a feature, virtual shifting, Finish, the last page (the
-# order of Finish and Back, the progress bar full at the end). Finish turns the gears tile
-# on, so the home page below has it and "Changed" lists it
+
+# T-057: the step "Record the workout on your watch?" after the app choice. Each answer is
+# checked in the settings file; the back key goes one wizard step back (handleBack)
+CONF="files/.config/Roberto Viola/qDomyos-Zwift.conf"
+conf() {
+  sleep 3
+  echo "conf after $1: $(adb shell "run-as $PKG cat '$CONF'" | tr -d '\r' | grep -E '^(bike_power_sensor|run_cadence_sensor|garmin_companion)=' | tr '\n' ' ')" >> $STEPLOG
+}
+# From the device type to the app choice: device, units, profile, heart rate - Next on each
+to_apps() {
+  tap_ui "$1"; sleep 4
+  local i
+  for i in 1 2 3 4; do
+    if ! tap_ui 'Next'; then scroll_to 'Next' && tap_ui 'Next'; fi
+    sleep 4
+  done
+  shot "w-$2-apps"
+}
+# Back from the watch step to the device type: apps, heart rate, profile, units, device
+to_types() {
+  local i
+  for i in 1 2 3 4 5; do back "wizard"; sleep 3; done
+}
+
+to_apps 'Bike' bike
+tap_ui 'Zwift'; sleep 4
+shot w-bike-watch
+tap_ui 'Other watch'; sleep 4
+shot w-bike-other-next
+conf "bike, Other watch"
 back "wizard"; sleep 3
-wizard_done=false
-if tap_ui 'Help with a specific feature'; then
-  sleep 3
-  shot 03c-wizard-features
-  if tap_ui 'Virtual Shifting'; then
-    sleep 3
-    shot 03d-wizard-virtual-shifting
-    if tap_ui 'Finish'; then
-      sleep 3
-      shot 03e-wizard-done
-      tap_ui 'Close' && wizard_done=true
-      sleep 5
-    fi
-  fi
-fi
-if [ "$wizard_done" != true ]; then
-  back "wizard"; sleep 2
-  back "wizard"; sleep 3
-  back "wizard"; sleep 5
-fi
-shot 04-home
-tap_ui 'Stop' 952 462        # confirmation dialog
-sleep 3
-shot 04b-stop-dialog
-# The classic dialog does not close on the back key: its own button
-tap_ui 'Cancel|No' || back "stop dialog"
-sleep 2
-open_menu
-shot 05-drawer
-tap_drawer 'Workout Editor' 403 927
-sleep 15
-shot 05b-editor-light
-adb shell input swipe 700 2000 700 900 400 || true
-sleep 2
-shot 05c-editor-light-scrolled
-tap $MENU "back: home"; sleep 3
-open_menu
-tap_drawer 'Settings' 525 861
-sleep 8
-shot 07-settings
-tap_ui 'General Options' 720 520   # a section header
-sleep 4
-shot 08-settings-open
-# Combo box opened again (from the phone: the second tap on the same field did nothing).
-# Gender sits at the bottom of the opened section; OK is not pressed, nothing is saved
-tap 928 2118 "gender combo, 1st"; sleep 2
-shot 08a-combo-open-1
-tap_ui '^Female$'; sleep 2
-tap 928 2118 "gender combo, 2nd"; sleep 2
-shot 08b-combo-open-2
-tap_ui '^Male$'; sleep 2
-tap 928 2118 "gender combo, 3rd"; sleep 2
-back "combo popup"; sleep 2
-tap 928 2118 "gender combo, 4th after back"; sleep 2
-shot 08c-combo-open-after-back
-back "combo popup"; sleep 2
-adb shell input swipe 700 2100 700 700 400 || true
-sleep 3
-shot 09-settings-scrolled
-# Accent colours, with the wallpaper colour first where Android offers it (API 31+). They sit
-# with the switch of the look in Experimental Features, near the end of the page
-if scroll_to 'Experimental Features'; then
-  tap_ui 'Experimental Features'
-  sleep 3
-  if scroll_to 'Accent colour'; then
-    shot 09b-accent-colours
-    if tap_ui 'Wallpaper colour'; then
-      sleep 2
-      shot 09c-accent-wallpaper
-    fi
-  fi
-fi
+tap_ui 'No'; sleep 4
+conf "bike, No"
+back "wizard"; sleep 3
+tap_ui 'Garmin watch'; sleep 4
+conf "bike, Garmin watch"
+back "wizard"; sleep 3
+back "wizard"; sleep 3
+to_types
 
-# Night mode of the system while the app runs: it is read again on return to the foreground
-adb shell cmd uimode night yes || true
-sleep 2
-adb shell input keyevent KEYCODE_HOME || true
-sleep 3
-adb shell am start -n $PKG/$PKG.CustomQtActivity
-sleep 5
-shot 10-settings-dark
-# Modern: the search field on top of the settings, a result opens the setting itself, and
-# "Changed" lists what differs from the defaults
-if [ "$UI_MODERN" = "true" ]; then
-  scroll_top
-  tap_ui 'Search settings' 600 330
-  sleep 2
-  adb shell input text "miles" || true
-  sleep 3
-  hide_keyboard
-  shot 10b-search-dark
-  tap_ui 'Use Miles unit in UI'
-  sleep 1
-  shot 10c-search-jump-dark          # scrolled to the setting, lit for a moment
-  sleep 3
-  scroll_top
-  tap_ui 'Changed'
-  sleep 3
-  shot 10d-changed-dark
-  tap_ui 'Changed'                   # off again
-  sleep 2
-  # A setting three sections deep (Experimental > Virtual Device > Wahoo direct connect):
-  # reported to open the plain settings list instead of the setting
-  scroll_top
-  tap_ui 'Search settings' 600 330
-  sleep 2
-  adb shell input text "wah" || true
-  sleep 3
-  hide_keyboard
-  shot 10e-search-wah
-  tap_ui 'MyWhoosh Compatibility'
-  sleep 1
-  shot 10f-jump-mywhoosh
-  sleep 2
-  shot 10g-jump-mywhoosh-later
-  adb shell input keyevent 4          # back: the results again
-  sleep 2
-  shot 10h-back-to-results
-  # A setting on no page (Garmin ANT+): not among the results any more (settings.qml,
-  # searchHiddenSettings), steps.log must say "tap 'Garmin ANT\+': NOT FOUND, skipped". Before,
-  # its result led nowhere; reported to throw out to the home page
-  tap_ui 'Clear'
-  sleep 1
-  tap_ui 'Search settings' 600 330
-  sleep 2
-  adb shell input text "garmin%sant" || true
-  sleep 3
-  hide_keyboard
-  shot 10i-search-garmin-ant
-  tap_ui 'Garmin ANT\+'
-  sleep 2
-  shot 10j-tap-garmin-ant            # the same results, without Garmin ANT+
-  # A label with its unit on the page: "Bike Weight (kg)" lit itself, not its whole section
-  tap_ui 'Clear'
-  sleep 1
-  tap_ui 'Search settings' 600 330
-  sleep 2
-  adb shell input text "bike%sweight" || true
-  sleep 3
-  hide_keyboard
-  tap_ui 'Bike Weight'
-  sleep 1
-  shot 10k-jump-bike-weight
-  adb shell input keyevent 4
-  sleep 2
-  # A title label over its list and OK: lit together, inside the page margins
-  tap_ui 'Clear'
-  sleep 1
-  tap_ui 'Search settings' 600 330
-  sleep 2
-  adb shell input text "ftms%sbike" || true
-  sleep 3
-  hide_keyboard
-  tap_ui 'FTMS Bike'
-  sleep 1
-  shot 10l-jump-ftms-bike
-  adb shell input keyevent 4
-  sleep 2
-  # The Wahoo Options page from the results: the +/- fields, the number centred
-  tap_ui 'Clear'
-  sleep 1
-  tap_ui 'Search settings' 600 330
-  sleep 2
-  adb shell input text "chainring" || true
-  sleep 3
-  hide_keyboard
-  tap_ui 'Chainring Size'
-  sleep 3
-  shot 10m-wahoo-options-page
-  adb shell input keyevent 4
-  sleep 2
-  # The inclination to resistance table: modern +/- fields instead of the grid
-  tap_ui 'Clear'
-  sleep 1
-  tap_ui 'Search settings' 600 330
-  sleep 2
-  adb shell input text "resistance%stable" || true
-  sleep 3
-  hide_keyboard
-  tap_ui 'Custom Inclination to Resistance Table'
-  sleep 3
-  shot 10n-inclination-table
-  adb shell input keyevent 4
-  sleep 2
-fi
-tap $MENU "back: home"; sleep 3
-shot 11-home-dark
-tap_ui 'Stop' 952 462
-sleep 3
-shot 12-stop-dialog-dark
-tap_ui 'Cancel|No' || back "stop dialog"
-sleep 2
-open_menu
-tap_ui 'Profile: .*' 335 434        # classic drawer entry; the modern drawer has a chip there
-sleep 5
-shot 13-profiles-dark
-tap $MENU "back: home"; sleep 3
-tap $LOCK "tile lock"               # modern: hidden until the equipment is connected
-sleep 1
-shot 14-lock-popup-dark
-sleep 4                             # the notice closes by itself after 2 s
-open_menu
-tap_drawer 'Settings' 525 861
-sleep 8
-tap_ui 'Tiles Options' 717 1239
-sleep 6
-shot 15-tiles-dark
-adb shell input swipe 700 2100 700 900 400 || true
-sleep 3
-shot 16-tiles-scrolled-dark
-tap $MENU "back: settings"; sleep 3
-shot 16b-settings-after-tiles-dark  # load and save buttons still in the toolbar
-tap $MENU "back: home"; sleep 3
+to_apps 'Treadmill' treadmill
+tap_ui 'Peloton'; sleep 4
+shot w-treadmill-watch
+tap_ui 'Other watch'; sleep 4
+shot w-treadmill-other-next
+conf "treadmill, Other watch"
+back "wizard"; sleep 3
+back "wizard"; sleep 3
+to_types
 
-open_menu
-tap_drawer 'Workout Editor' 403 927
-sleep 15
-shot 17-editor-dark
-# Device list: modern – the page's own menu under the field, classic – the system list
-tap 1148 426 "editor device select"; sleep 2
-shot 17a-editor-device-menu
-tap 200 2300 "close the list"; sleep 2
-adb shell input swipe 700 2000 700 900 400 || true
-sleep 2
-shot 18-editor-dark-scrolled
-tap $MENU "back: home"; sleep 3
-open_menu
-tap_drawer 'Open GPX' 346 1096
-sleep 8
-shot 19-gpx-dark
-# Landscape: the list column and the map side by side
-adb shell settings put system accelerometer_rotation 0 || true
-adb shell settings put system user_rotation 1 || true
-sleep 5
-shot 19c-gpx-landscape-dark
-adb shell settings put system user_rotation 0 || true
-sleep 5
-tap $MENU "back: home"; sleep 3
-open_menu
-tap_drawer 'Workouts History' 433 1431
-sleep 8
-shot 20-history-dark
-# Calendar button: on the right of the modern header, on the left of the classic one
-if [ "$UI_MODERN" = "true" ]; then
-  tap_ui 'Calendar' 1299 322
+to_apps 'Rower' rower
+tap_ui 'Zwift'; sleep 4
+shot w-rower-watch
+if [ -f ui.xml ] && python3 .github/uitap.py ui.xml 'Other watch' > /dev/null; then
+  echo "!! rower: Other watch is shown" >> $STEPLOG
 else
-  tap_ui 'Calendar|📅' 126 300
+  echo "rower: no Other watch, as expected" >> $STEPLOG
 fi
-sleep 3
-shot 21-calendar-dark
-back "calendar"; sleep 2
-tap $MENU "back: home"; sleep 3
-open_menu
-tap_drawer 'Charts' 307 1263
-sleep 1
-shot 22a-charts-loading-dark        # while loading: the busy indicator, no white page
-sleep 9
-shot 22-charts-dark
-adb shell input swipe 700 2000 700 900 400 || true
-sleep 2
-shot 23-charts-dark-scrolled
-# Modern: no Close at the bottom any more, the back arrow of the toolbar; classic: its Close
-if [ "$UI_MODERN" = "true" ]; then
-  tap $MENU "back: home"
-else
-  tap_ui 'Close' 720 2364
-fi
-sleep 3
-shot 24-after-close-dark            # the home page again
-# Modern: the kept charts page opened again draws its charts at once (?still=), no growing
-if [ "$UI_MODERN" = "true" ]; then
-  open_menu
-  tap_drawer 'Charts' 307 1263
-  sleep 1
-  shot 24a-charts-reopen
-  sleep 3
-  shot 24b-charts-reopen-later
-  tap $MENU "back: home"
-  sleep 3
-fi
-
-# Yes to a restart question closes the app (from the phone: after Yes on the FitShow question
-# the card stayed on the screen and the process lived on). OK of UI Zoom asks for a restart
-# on the way back; the value stays 100
-open_menu
-tap_drawer 'Settings' 525 861
-sleep 8
-dump
-if [ -z "$(python3 .github/uitap.py ui.xml 'UI Zoom:?' 2>/dev/null)" ]; then
-  tap_ui 'General Options' 720 520
-  sleep 4
-  dump
-fi
-xy=$(python3 .github/uitap.py ui.xml 'UI Zoom:?' 2>/dev/null)
-if [ -n "$xy" ]; then
-  tap 1290 "${xy#* }" "UI Zoom OK"
-  sleep 2
-  tap $MENU "back: home"; sleep 3
-  shot 25-restart-question
-  tap_ui '^(Yes|YES)$' || true
-  sleep 10
-  echo "after Yes: pid '$(adb shell pidof $PKG | tr -d '\r')'" >> $STEPLOG
-  adb shell screencap -p /sdcard/26-after-yes.png || true
-  adb pull /sdcard/26-after-yes.png || true
-else
-  echo "UI Zoom not found, restart question skipped" >> $STEPLOG
-fi
+echo "== T-057 conf"; grep -E "^conf|rower:" $STEPLOG
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
