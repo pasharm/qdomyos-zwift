@@ -3267,6 +3267,36 @@ The following questions will customize QZ for your equipment and goals.</source>
         <source>Close the wizard</source>
         <translation>Закрыть мастер</translation>
     </message>
+    <message>
+        <location filename="../Wizard.qml" line="523"/>
+        <source>Record the workout on your watch?</source>
+        <translation>Записывать тренировку на часы?</translation>
+    </message>
+    <message>
+        <location filename="../Wizard.qml" line="501"/>
+        <source>Recommended. Install the QZ app on the watch from Connect IQ. Works together with Zwift and other apps.</source>
+        <translation>Рекомендуется. Установите на часы приложение QZ из Connect IQ. Работает вместе с Zwift и другими приложениями.</translation>
+    </message>
+    <message>
+        <location filename="../Wizard.qml" line="560"/>
+        <source>Other watch</source>
+        <translation>Другие часы</translation>
+    </message>
+    <message>
+        <location filename="../Wizard.qml" line="503"/>
+        <source>QZ will appear to the watch as a running speed and cadence sensor. In this mode Zwift and other apps can&apos;t control your treadmill.</source>
+        <translation>Часы увидят QZ как датчик скорости и каденса бега. В этом режиме Zwift и другие приложения не управляют дорожкой.</translation>
+    </message>
+    <message>
+        <location filename="../Wizard.qml" line="504"/>
+        <source>QZ will appear to the watch as a power sensor. In this mode Zwift and other apps can&apos;t control the resistance.</source>
+        <translation>Часы увидят QZ как датчик мощности. В этом режиме Zwift и другие приложения не управляют сопротивлением.</translation>
+    </message>
+    <message>
+        <location filename="../Wizard.qml" line="583"/>
+        <source>No</source>
+        <translation>Нет</translation>
+    </message>
 </context>
 <context>
     <name>WorkoutEditor</name>

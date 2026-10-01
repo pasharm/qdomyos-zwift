@@ -498,15 +498,23 @@ Page {
                 }
             }
 
+            readonly property string garminHint: qsTr("Recommended. Install the QZ app on the watch from Connect IQ. Works together with Zwift and other apps.")
+            readonly property string sensorHint: selectedOptions.step2 === "Treadmill"
+                                                 ? qsTr("QZ will appear to the watch as a running speed and cadence sensor. In this mode Zwift and other apps can't control your treadmill.")
+                                                 : qsTr("QZ will appear to the watch as a power sensor. In this mode Zwift and other apps can't control the resistance.")
+
             ScrollView {
-                contentWidth: -1
+                contentWidth: availableWidth
+                topPadding: 16
+                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
+                contentHeight: contentChildren[0].height
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.fill: parent
                 Layout.preferredHeight: parent.height
                 Layout.fillWidth: true
                 Layout.fillHeight: true
                 ColumnLayout {
-                    anchors.centerIn: parent
+                    anchors.horizontalCenter: parent.horizontalCenter
                     spacing: 20
                     width: parent.width * 0.9
 
@@ -515,7 +523,7 @@ Page {
                         text: qsTr("Record the workout on your watch?")
                         font.pixelSize: 24
                         font.bold: true
-                        color: "white"
+                        color: window.ui.modern ? window.ui.textMain : "white"
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignHCenter
@@ -524,6 +532,8 @@ Page {
                     WizardButton {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Garmin watch")
+                        iconName: "bluetooth_connected"
+                        subtitle: watchStep.garminHint
                         onClicked: {
                             settings.garmin_companion = true
                             watchStep.setSensorMode(false)
@@ -531,9 +541,11 @@ Page {
                         }
                     }
 
+                    // Classic look: the explanation under the button; the modern card shows it as its subtitle
                     Text {
                         Layout.alignment: Qt.AlignHCenter
-                        text: qsTr("Recommended. Install the QZ app on the watch from Connect IQ. Works together with Zwift and other apps.")
+                        visible: !window.ui.modern
+                        text: watchStep.garminHint
                         font.pixelSize: 16
                         color: "white"
                         wrapMode: Text.WordWrap
@@ -546,6 +558,8 @@ Page {
                         Layout.alignment: Qt.AlignHCenter
                         visible: watchStep.sensorModeAvailable
                         text: qsTr("Other watch")
+                        iconName: "bluetooth"
+                        subtitle: watchStep.sensorHint
                         onClicked: {
                             watchStep.setSensorMode(true)
                             watchStep.next()
@@ -554,10 +568,8 @@ Page {
 
                     Text {
                         Layout.alignment: Qt.AlignHCenter
-                        visible: watchStep.sensorModeAvailable
-                        text: selectedOptions.step2 === "Treadmill"
-                              ? qsTr("QZ will appear to the watch as a running speed and cadence sensor. In this mode Zwift and other apps can't control your treadmill.")
-                              : qsTr("QZ will appear to the watch as a power sensor. In this mode Zwift and other apps can't control the resistance.")
+                        visible: !window.ui.modern && watchStep.sensorModeAvailable
+                        text: watchStep.sensorHint
                         font.pixelSize: 16
                         color: "white"
                         wrapMode: Text.WordWrap
@@ -569,6 +581,7 @@ Page {
                     WizardButton {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("No")
+                        iconName: "close"
                         onClicked: {
                             watchStep.setSensorMode(false)
                             watchStep.next()
