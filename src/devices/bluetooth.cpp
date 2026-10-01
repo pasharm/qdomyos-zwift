@@ -176,9 +176,12 @@ bluetooth::bluetooth(bool logs, const QString &deviceName, bool noWriteResistanc
         connect(discoveryAgent, &QBluetoothDeviceDiscoveryAgent::canceled, this, &bluetooth::canceled);
 #ifndef Q_OS_WIN
         connect(discoveryAgent, &QBluetoothDeviceDiscoveryAgent::finished, this, &bluetooth::finished);
+#endif
+#ifdef Q_OS_ANDROID
         // With Bluetooth off the scan fails at once and finished() never comes, so the rescan loop
         // in finished() never started: the equipment was not found until the user tapped the
         // Bluetooth icon or restarted the app. Treat this failure as an empty scan.
+        // Android only: on iOS every new scan may show the system "Turn On Bluetooth" alert again.
 #if (QT_VERSION >= QT_VERSION_CHECK(6, 2, 0))
         connect(discoveryAgent, &QBluetoothDeviceDiscoveryAgent::errorOccurred, this,
 #else
@@ -187,14 +190,17 @@ bluetooth::bluetooth(bool logs, const QString &deviceName, bool noWriteResistanc
                 [this](QBluetoothDeviceDiscoveryAgent::Error error) {
                     debug(QStringLiteral("BTLE scanning error ") + QString::number(error) + QStringLiteral(" ") +
                           discoveryAgent->errorString());
-                    if (error == QBluetoothDeviceDiscoveryAgent::PoweredOffError)
+                    if (error == QBluetoothDeviceDiscoveryAgent::PoweredOffError) {
+                        // Qt drops this start before it reaches Android: it is not one of the 5 per 30 s,
+                        // or searchNow() would postpone the scan when Bluetooth is switched on
+                        if (!scanStartsMs.isEmpty())
+                            scanStartsMs.removeLast();
                         finished();
+                    }
                 },
                 // start() reports the error from inside itself, the first time in this constructor:
                 // finished() must run once the app has connected to our signals
                 Qt::QueuedConnection);
-#endif
-#if !defined(WIN32) && !defined(Q_OS_IOS)
         // ...and scan as soon as Bluetooth is switched on, rather than at the next rescan (up to 60 s later)
         QBluetoothLocalDevice *localDevice = new QBluetoothLocalDevice(this);
         connect(localDevice, &QBluetoothLocalDevice::hostModeStateChanged, this,
