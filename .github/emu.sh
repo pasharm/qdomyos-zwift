@@ -30,7 +30,7 @@ adb shell cmd uimode night no || true
 # ANR still reaches logcat and the end of steps.log ("ANR in")
 adb shell settings put global hide_error_dialogs 1 || true
 
-# T-060: a fake treadmill, so the home page has tiles (without a device it shows the search help)
+# T-060, T-066: a fake treadmill, so the home page has tiles (without a device it shows the search help)
 printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\nfakedevice_treadmill=true\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
@@ -168,36 +168,75 @@ shot 02-first-screen        # the wizard opens on the first run
 # T-060: with the fake treadmill the wizard does not open; its back keys would leave the app
 shot 04-home
 
-# T-060: the home list let go near its start settles on the top or on the first row in full
-# view, with the toolbar shown too. Slow drags (no fling) of a given length from the top;
-# the dumps give the tile bounds after the snap
-home_drag() {
-  local d=$1
-  scroll_top
-  sleep 2
-  echo "home drag up $d px (slow)" >> $STEPLOG
-  adb shell input swipe 700 1800 700 $((1800 - d)) 1500 || true
-  sleep 3
-  shot "h-drag-$d"
+# T-066: the home list settles on the nearest whole row, or on the end of the list, wherever
+# the scroll stops; a flick settles where it stopped by itself. The dumps give the tile bounds
+# after the snap (rows line up with the top of the grid, or the last row with its bottom).
+wait_tiles() {
+  local i
+  # The fake treadmill comes after the first search ends: wait for its tiles (at most 3 min)
+  for i in $(seq 1 18); do
+    dump
+    if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then
+      echo "tiles shown after $i looks" >> $STEPLOG; return 0
+    fi
+    sleep 10
+  done
+  echo "!! tiles NOT shown" >> $STEPLOG
 }
-# The fake treadmill comes after the first search ends: wait for its tiles (at most 3 min)
-for i in $(seq 1 18); do
-  dump
-  if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then
-    echo "tiles shown after $i looks" >> $STEPLOG; break
-  fi
-  sleep 10
-done
-grep -q 'content-desc="Speed' ui.xml 2>/dev/null || echo "!! tiles NOT shown" >> $STEPLOG
+drag_from_top() {
+  scroll_top; sleep 2
+  echo "[$1] drag up $2 px (slow)" >> $STEPLOG
+  adb shell input swipe 700 1800 700 $((1800 - $2)) 1500 || true
+  sleep 3
+  shot "h-$1-drag-$2"
+}
+flick_from_top() {
+  scroll_top; sleep 2
+  echo "[$1] flick up 700 px in 120 ms" >> $STEPLOG
+  adb shell input swipe 700 1900 700 1200 120 || true
+  sleep 5
+  shot "h-$1-flick"
+}
+# The app again with other settings (read at start): ui_tile_snap, ui_zoom
+restart_with() {
+  echo "== restart: $*" >> $STEPLOG
+  adb shell am force-stop $PKG || true
+  sleep 2
+  { printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\nfakedevice_treadmill=true\n' "$LOG_DEBUG" "$UI_MODERN"
+    for kv in "$@"; do echo "$kv"; done; } > qz.conf
+  adb push qz.conf /data/local/tmp/qz.conf
+  adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
+  adb shell am start -n $PKG/$PKG.CustomQtActivity
+  sleep 20
+  wait_tiles
+}
+
+wait_tiles
 shot h-top
-for d in 60 150 250 400 600 900; do home_drag $d; done
-# Pulled down from the first row back into the gap
-scroll_top; sleep 2
-adb shell input swipe 700 1800 700 1000 1500 || true; sleep 3
-shot h-row-then
-echo "home drag down 150 px from there (slow)" >> $STEPLOG
-adb shell input swipe 700 1000 700 1150 1500 || true; sleep 3
-shot h-row-back-150
+for d in 300 600 900 1300; do drag_from_top on $d; done
+flick_from_top on
+# The end of the list: quick swipes up, then a slow pull back down
+for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 600 150 || true; done
+sleep 4
+shot h-on-end
+echo "[on] drag down 200 px from the end (slow)" >> $STEPLOG
+adb shell input swipe 700 1000 700 1200 1500 || true; sleep 3
+shot h-on-end-back-200
+echo "[on] drag down 350 px from there (slow)" >> $STEPLOG
+adb shell input swipe 700 1000 700 1350 1500 || true; sleep 3
+shot h-on-end-back-350
+
+# Switched off: the list stays where it stopped
+restart_with ui_tile_snap=false
+shot h-off-top
+drag_from_top off 600
+flick_from_top off
+
+# A short list: small tiles, so all of them or nearly all fit on the screen
+restart_with ui_zoom=50
+shot h-short-top
+drag_from_top short 150
+drag_from_top short 400
 scroll_top; sleep 2
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
