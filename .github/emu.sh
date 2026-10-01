@@ -30,7 +30,8 @@ adb shell cmd uimode night no || true
 # ANR still reaches logcat and the end of steps.log ("ANR in")
 adb shell settings put global hide_error_dialogs 1 || true
 
-printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+# T-060: a fake treadmill, so the home page has tiles (without a device it shows the search help)
+printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\nfakedevice_treadmill=true\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -208,6 +209,15 @@ home_drag() {
   sleep 3
   shot "h-drag-$d"
 }
+# The fake treadmill comes after the first search ends: wait for its tiles (at most 3 min)
+for i in $(seq 1 18); do
+  dump
+  if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then
+    echo "tiles shown after $i looks" >> $STEPLOG; break
+  fi
+  sleep 10
+done
+grep -q 'content-desc="Speed' ui.xml 2>/dev/null || echo "!! tiles NOT shown" >> $STEPLOG
 shot h-top
 for d in 60 150 250 400 600 900; do home_drag $d; done
 # Pulled down from the first row back into the gap
