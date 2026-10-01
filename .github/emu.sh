@@ -165,36 +165,7 @@ else
 fi
 sleep 30
 shot 02-first-screen        # the wizard opens on the first run
-tap_ui 'Start' 720 2244
-sleep 4
-shot 03-wizard-step1
-tap_ui 'First-time setup' 720 620
-sleep 4
-shot 03b-wizard-step2
-# The short branch to its end: a feature, virtual shifting, Finish, the last page (the
-# order of Finish and Back, the progress bar full at the end). Finish turns the gears tile
-# on, so the home page below has it and "Changed" lists it
-back "wizard"; sleep 3
-wizard_done=false
-if tap_ui 'Help with a specific feature'; then
-  sleep 3
-  shot 03c-wizard-features
-  if tap_ui 'Virtual Shifting'; then
-    sleep 3
-    shot 03d-wizard-virtual-shifting
-    if tap_ui 'Finish'; then
-      sleep 3
-      shot 03e-wizard-done
-      tap_ui 'Close' && wizard_done=true
-      sleep 5
-    fi
-  fi
-fi
-if [ "$wizard_done" != true ]; then
-  back "wizard"; sleep 2
-  back "wizard"; sleep 3
-  back "wizard"; sleep 5
-fi
+# T-060: with the fake treadmill the wizard does not open; its back keys would leave the app
 shot 04-home
 
 # T-060: the home list let go near its start settles on the top or on the first row in full
