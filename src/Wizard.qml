@@ -24,6 +24,19 @@ Page {
         return deviceName.replace(/ \(\d+%\)$/, "")
     }
 
+    // bike_power_sensor / run_cadence_sensor replace FTMS, so the watch step exists only for bikes and treadmills
+    function watchStepAvailable() {
+        return selectedOptions.step2 === "Bike" || selectedOptions.step2 === "Treadmill"
+    }
+
+    function pushAfterWatchStep() {
+        if (selectedOptions.step3 === "Peloton") {
+            stackViewLocal.push(pelotonLoginComponent)
+        } else {
+            stackViewLocal.push(zwiftComponent)
+        }
+    }
+
     Settings {
         id: settings
         property string peloton_username: "username"
@@ -452,7 +465,11 @@ Page {
                                             settings.wahoo_rgt_dircon = true
                                         }
                                     }
-                                    stackViewLocal.push(watchRecordingComponent)
+                                    if (wizardPage.watchStepAvailable()) {
+                                        stackViewLocal.push(watchRecordingComponent)
+                                    } else {
+                                        wizardPage.pushAfterWatchStep()
+                                    }
                                 }
                             }
                         }
@@ -479,9 +496,6 @@ Page {
             id: watchStep
             anchors.fill: parent
 
-            // bike_power_sensor / run_cadence_sensor replace FTMS, so they only exist for bikes and treadmills
-            readonly property bool sensorModeAvailable: selectedOptions.step2 === "Bike" || selectedOptions.step2 === "Treadmill"
-
             function setSensorMode(enabled) {
                 if (selectedOptions.step2 === "Bike") {
                     settings.bike_power_sensor = enabled
@@ -490,15 +504,6 @@ Page {
                 }
             }
 
-            function next() {
-                if (selectedOptions.step3 === "Peloton") {
-                    stackViewLocal.push(pelotonLoginComponent)
-                } else {
-                    stackViewLocal.push(zwiftComponent)
-                }
-            }
-
-            readonly property string garminHint: qsTr("Recommended. Install the QZ app on the watch from Connect IQ. Works together with Zwift and other apps.")
             readonly property string sensorHint: selectedOptions.step2 === "Treadmill"
                                                  ? qsTr("QZ will appear to the watch as a running speed and cadence sensor. In this mode Zwift and other apps can't control your treadmill.")
                                                  : qsTr("QZ will appear to the watch as a power sensor. In this mode Zwift and other apps can't control the resistance.")
@@ -531,13 +536,12 @@ Page {
 
                     WizardButton {
                         Layout.alignment: Qt.AlignHCenter
-                        text: qsTr("Garmin watch")
-                        iconName: "bluetooth_connected"
-                        subtitle: watchStep.garminHint
+                        text: qsTr("Yes")
+                        iconName: "bluetooth"
+                        subtitle: watchStep.sensorHint
                         onClicked: {
-                            settings.garmin_companion = true
-                            watchStep.setSensorMode(false)
-                            watchStep.next()
+                            watchStep.setSensorMode(true)
+                            wizardPage.pushAfterWatchStep()
                         }
                     }
 
@@ -545,30 +549,6 @@ Page {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         visible: !window.ui.modern
-                        text: watchStep.garminHint
-                        font.pixelSize: 16
-                        color: "white"
-                        wrapMode: Text.WordWrap
-                        Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignHCenter
-                        Layout.bottomMargin: 20
-                    }
-
-                    WizardButton {
-                        Layout.alignment: Qt.AlignHCenter
-                        visible: watchStep.sensorModeAvailable
-                        text: qsTr("Other watch")
-                        iconName: "bluetooth"
-                        subtitle: watchStep.sensorHint
-                        onClicked: {
-                            watchStep.setSensorMode(true)
-                            watchStep.next()
-                        }
-                    }
-
-                    Text {
-                        Layout.alignment: Qt.AlignHCenter
-                        visible: !window.ui.modern && watchStep.sensorModeAvailable
                         text: watchStep.sensorHint
                         font.pixelSize: 16
                         color: "white"
@@ -584,7 +564,7 @@ Page {
                         iconName: "close"
                         onClicked: {
                             watchStep.setSensorMode(false)
-                            watchStep.next()
+                            wizardPage.pushAfterWatchStep()
                         }
                     }
 

@@ -3273,14 +3273,9 @@ The following questions will customize QZ for your equipment and goals.</source>
         <translation>Записывать тренировку на часы?</translation>
     </message>
     <message>
-        <location filename="../Wizard.qml" line="501"/>
-        <source>Recommended. Install the QZ app on the watch from Connect IQ. Works together with Zwift and other apps.</source>
-        <translation>Рекомендуется. Установите на часы приложение QZ из Connect IQ. Работает вместе с Zwift и другими приложениями.</translation>
-    </message>
-    <message>
-        <location filename="../Wizard.qml" line="560"/>
-        <source>Other watch</source>
-        <translation>Другие часы</translation>
+        <location filename="../Wizard.qml" line="539"/>
+        <source>Yes</source>
+        <translation>Да</translation>
     </message>
     <message>
         <location filename="../Wizard.qml" line="503"/>
