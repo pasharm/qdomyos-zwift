@@ -195,6 +195,8 @@ bluetooth::bluetooth(bool logs, const QString &deviceName, bool noWriteResistanc
                         // or searchNow() would postpone the scan when Bluetooth is switched on
                         if (!scanStartsMs.isEmpty())
                             scanStartsMs.removeLast();
+                        if (!bluetoothOffPoll.isActive())
+                            bluetoothOffPoll.start();
                         finished();
                     }
                 },
@@ -202,15 +204,33 @@ bluetooth::bluetooth(bool logs, const QString &deviceName, bool noWriteResistanc
                 // finished() must run once the app has connected to our signals
                 Qt::QueuedConnection);
         // ...and scan as soon as Bluetooth is switched on, rather than at the next rescan (up to 60 s later)
+        auto bluetoothSwitchedOn = [this]() {
+            bluetoothOffPoll.stop();
+            if (device() || !discoveryAgent || discoveryAgent->isActive())
+                return;
+            debug(QStringLiteral("BTLE scanning, Bluetooth switched on"));
+            searchNow();
+        };
         QBluetoothLocalDevice *localDevice = new QBluetoothLocalDevice(this);
         connect(localDevice, &QBluetoothLocalDevice::hostModeStateChanged, this,
-                [this](QBluetoothLocalDevice::HostMode mode) {
-                    if (mode == QBluetoothLocalDevice::HostPoweredOff || device() || !discoveryAgent ||
-                        discoveryAgent->isActive())
-                        return;
-                    debug(QStringLiteral("BTLE scanning, Bluetooth switched on"));
-                    searchNow();
+                [bluetoothSwitchedOn](QBluetoothLocalDevice::HostMode mode) {
+                    if (mode != QBluetoothLocalDevice::HostPoweredOff)
+                        bluetoothSwitchedOn();
                 });
+        // Qt 5 learns about Bluetooth only from the scan mode broadcast, and switching Bluetooth on
+        // from the quick settings may never send one: then the equipment was found only at the next
+        // rescan. So the adapter is also asked directly, by the same check that start() makes.
+        bluetoothOffPoll.setInterval(2000);
+        connect(&bluetoothOffPoll, &QTimer::timeout, this, [this, bluetoothSwitchedOn]() {
+            if (device()) {
+                bluetoothOffPoll.stop();
+                return;
+            }
+            QAndroidJniObject adapter = QAndroidJniObject::callStaticObjectMethod(
+                "android/bluetooth/BluetoothAdapter", "getDefaultAdapter", "()Landroid/bluetooth/BluetoothAdapter;");
+            if (adapter.isValid() && adapter.callMethod<jint>("getState") == 12) // BluetoothAdapter.STATE_ON
+                bluetoothSwitchedOn();
+        });
 #endif
         // Safety net: on some platforms (e.g. Android containers/emulators without a functional
         // Bluetooth adapter, such as Waydroid) the discovery agent's finished()/timeout signal never

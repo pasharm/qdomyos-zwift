@@ -398,6 +398,8 @@ class bluetooth : public QObject, public SignalHandler {
     qint64 nextRescanMs = 0;
     bool rescanStopped = false;
     QList<qint64> scanStartsMs;
+    // Android: while Bluetooth is off, asks the adapter every 2 s whether it is on again
+    QTimer bluetoothOffPoll;
 
 #ifdef Q_OS_IOS
     lockscreen *h = nullptr;
