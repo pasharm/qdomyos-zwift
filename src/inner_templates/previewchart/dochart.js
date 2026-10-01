@@ -33,6 +33,36 @@ var maxHeartRate = 190;
 var heartZones = [];
 var miles = 1;
 
+function ensurePowerZones() {
+    ftp = Number(ftp);
+    if (!Number.isFinite(ftp) || ftp <= 0) {
+        ftp = 200;
+    }
+
+    const zoneRatios = [0.55, 0.75, 0.90, 1.05, 1.20, 1.50];
+    for (let i = 0; i < zoneRatios.length; i++) {
+        ftpZones[i] = Number(ftpZones[i]);
+        if (!Number.isFinite(ftpZones[i]) || ftpZones[i] <= 0) {
+            ftpZones[i] = Math.round(ftp * zoneRatios[i]);
+        }
+    }
+}
+
+function ensureHeartZones() {
+    maxHeartRate = Number(maxHeartRate);
+    if (!Number.isFinite(maxHeartRate) || maxHeartRate <= 0) {
+        maxHeartRate = 190;
+    }
+
+    const defaultZoneRatios = [0.70, 0.80, 0.90, 1.00];
+    for (let i = 0; i < defaultZoneRatios.length; i++) {
+        heartZones[i] = Number(heartZones[i]);
+        if (!Number.isFinite(heartZones[i]) || heartZones[i] <= 0) {
+            heartZones[i] = Math.round(maxHeartRate * defaultZoneRatios[i]);
+        }
+    }
+}
+
 function t(key, fallback) {
     return window.qzTranslate ? window.qzTranslate(key, fallback) : fallback;
 }
@@ -1016,7 +1046,6 @@ function process_arr(arr) {
 }
 
 function dochart_init() {
-    onSettingsOK = true;
     keys_arr = ['ftp', 'miles_unit', 'age', 'heart_rate_zone1', 'heart_rate_zone2', 'heart_rate_zone3', 'heart_rate_zone4', 'heart_max_override_enable', 'heart_max_override_value']
     let el = new MainWSQueueElement({
             msg: 'getsettings',
@@ -1078,20 +1107,33 @@ function dochart_init() {
             }
             return null;
         }, 5000, 3);
-    el.enqueue().then(onSettingsOK).catch(function(err) {
+    // The workout is loaded only after the settings: the zones and the units are needed to draw
+    // it, and with both requests sent at once a workout that arrived first was drawn without
+    // zones (all the time in zone 7, the zone 7 band from 0)
+    function load_workout_data() {
+        let el = new MainWSQueueElement({
+            msg: 'getpreviewsessionarray'
+        }, function(msg) {
+            if (msg.msg === 'R_getpreviewsessionarray') {
+                return msg.content;
+            }
+            return null;
+        }, 15000, 3);
+        el.enqueue().then(process_arr).catch(function(err) {
             console.error('Error is ' + err);
-    })
-    el = new MainWSQueueElement({
-        msg: 'getpreviewsessionarray'
-    }, function(msg) {
-        if (msg.msg === 'R_getpreviewsessionarray') {
-            return msg.content;
-        }
-        return null;
-    }, 15000, 3);
-    el.enqueue().then(process_arr).catch(function(err) {
+        });
+    }
+
+    el.enqueue().then(function() {
+        ensurePowerZones();
+        ensureHeartZones();
+        load_workout_data();
+    }).catch(function(err) {
         console.error('Error is ' + err);
-    });
+        ensurePowerZones();
+        ensureHeartZones();
+        load_workout_data();
+    })
 }
 
 
