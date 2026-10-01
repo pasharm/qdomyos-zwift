@@ -3267,31 +3267,6 @@ The following questions will customize QZ for your equipment and goals.</source>
         <source>Close the wizard</source>
         <translation>Закрити майстер</translation>
     </message>
-    <message>
-        <location filename="../Wizard.qml" line="523"/>
-        <source>Record the workout on your watch?</source>
-        <translation>Записувати тренування на годинник?</translation>
-    </message>
-    <message>
-        <location filename="../Wizard.qml" line="539"/>
-        <source>Yes</source>
-        <translation>Так</translation>
-    </message>
-    <message>
-        <location filename="../Wizard.qml" line="503"/>
-        <source>QZ will appear to the watch as a running speed and cadence sensor. In this mode Zwift and other apps can&apos;t control your treadmill.</source>
-        <translation>Годинник бачитиме QZ як датчик швидкості й каденсу бігу. У цьому режимі Zwift та інші застосунки не керують доріжкою.</translation>
-    </message>
-    <message>
-        <location filename="../Wizard.qml" line="504"/>
-        <source>QZ will appear to the watch as a power sensor. In this mode Zwift and other apps can&apos;t control the resistance.</source>
-        <translation>Годинник бачитиме QZ як датчик потужності. У цьому режимі Zwift та інші застосунки не керують опором.</translation>
-    </message>
-    <message>
-        <location filename="../Wizard.qml" line="583"/>
-        <source>No</source>
-        <translation>Ні</translation>
-    </message>
 </context>
 <context>
     <name>WorkoutEditor</name>

@@ -24,19 +24,6 @@ Page {
         return deviceName.replace(/ \(\d+%\)$/, "")
     }
 
-    // bike_power_sensor / run_cadence_sensor replace FTMS, so the watch step exists only for bikes and treadmills
-    function watchStepAvailable() {
-        return selectedOptions.step2 === "Bike" || selectedOptions.step2 === "Treadmill"
-    }
-
-    function pushAfterWatchStep() {
-        if (selectedOptions.step3 === "Peloton") {
-            stackViewLocal.push(pelotonLoginComponent)
-        } else {
-            stackViewLocal.push(zwiftComponent)
-        }
-    }
-
     Settings {
         id: settings
         property string peloton_username: "username"
@@ -61,8 +48,6 @@ Page {
         property bool miles_unit: false
         property string heart_rate_belt_name: "Disabled"
         property bool garmin_companion: false
-        property bool bike_power_sensor: false
-        property bool run_cadence_sensor: false
         property string filter_device: "Disabled"
         property bool weight_kg_unit: false
     }
@@ -458,113 +443,18 @@ Page {
                                 text: qsTr(modelData)
                                 onClicked: {
                                     selectedOptions.step3 = modelData
-                                    if (modelData !== "Peloton") {
+                                    if (modelData === "Peloton") {
+                                        stackViewLocal.push(pelotonLoginComponent)
+                                    } else {
                                         if(modelData === "Zwift") {
                                             settings.wahoo_rgt_dircon = false
                                         } else {
                                             settings.wahoo_rgt_dircon = true
                                         }
-                                    }
-                                    if (wizardPage.watchStepAvailable()) {
-                                        stackViewLocal.push(watchRecordingComponent)
-                                    } else {
-                                        wizardPage.pushAfterWatchStep()
+                                        stackViewLocal.push(zwiftComponent)
                                     }
                                 }
                             }
-                        }
-                    }
-
-                    Item {
-                        Layout.preferredHeight: 50
-                    }
-
-                    WizardButton {
-                        Layout.alignment: Qt.AlignHCenter
-                        text: qsTr("Back")
-                        onClicked: stackViewLocal.pop()
-                    }
-                }
-            }
-        }
-    }
-
-    Component {
-        id: watchRecordingComponent
-
-        Item {
-            id: watchStep
-            anchors.fill: parent
-
-            function setSensorMode(enabled) {
-                if (selectedOptions.step2 === "Bike") {
-                    settings.bike_power_sensor = enabled
-                } else if (selectedOptions.step2 === "Treadmill") {
-                    settings.run_cadence_sensor = enabled
-                }
-            }
-
-            readonly property string sensorHint: selectedOptions.step2 === "Treadmill"
-                                                 ? qsTr("QZ will appear to the watch as a running speed and cadence sensor. In this mode Zwift and other apps can't control your treadmill.")
-                                                 : qsTr("QZ will appear to the watch as a power sensor. In this mode Zwift and other apps can't control the resistance.")
-
-            ScrollView {
-                contentWidth: availableWidth
-                topPadding: 16
-                // Qt 5.15 keeps a stale implicit height after text wraps: size the content by the column itself
-                contentHeight: contentChildren[0].height
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.fill: parent
-                Layout.preferredHeight: parent.height
-                Layout.fillWidth: true
-                Layout.fillHeight: true
-                ColumnLayout {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    spacing: 20
-                    width: parent.width * 0.9
-
-                    Text {
-                        Layout.alignment: Qt.AlignHCenter
-                        text: qsTr("Record the workout on your watch?")
-                        font.pixelSize: 24
-                        font.bold: true
-                        color: window.ui.modern ? window.ui.textMain : "white"
-                        wrapMode: Text.WordWrap
-                        Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignHCenter
-                    }
-
-                    WizardButton {
-                        Layout.alignment: Qt.AlignHCenter
-                        text: qsTr("Yes")
-                        iconName: "bluetooth"
-                        subtitle: watchStep.sensorHint
-                        onClicked: {
-                            watchStep.setSensorMode(true)
-                            wizardPage.pushAfterWatchStep()
-                        }
-                    }
-
-                    // Classic look: the explanation under the button; the modern card shows it as its subtitle
-                    Text {
-                        Layout.alignment: Qt.AlignHCenter
-                        visible: !window.ui.modern
-                        text: watchStep.sensorHint
-                        font.pixelSize: 16
-                        color: "white"
-                        wrapMode: Text.WordWrap
-                        Layout.fillWidth: true
-                        horizontalAlignment: Text.AlignHCenter
-                        Layout.bottomMargin: 20
-                    }
-
-                    WizardButton {
-                        Layout.alignment: Qt.AlignHCenter
-                        text: qsTr("No")
-                        iconName: "close"
-                        onClicked: {
-                            watchStep.setSensorMode(false)
-                            wizardPage.pushAfterWatchStep()
                         }
                     }
 
