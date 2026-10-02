@@ -265,6 +265,7 @@ ApplicationWindow {
         property string ui_accent: "violet"
         property string ui_theme_mode: "auto"
         property bool ui_tile_snap: true
+        property bool android_landscape_cutout_prompt_shown: false
     }
 
     // Modern look (fork only), switched in Settings > General Options. Pages read the palette
@@ -419,7 +420,6 @@ ApplicationWindow {
         running: window.ui.modern && window.ui.themeMode === "auto"
                  && Qt.application.state === Qt.ApplicationActive
         onTriggered: window.ui.refreshSystemDark()
-        property bool android_landscape_cutout_prompt_shown: false
     }
 
 
@@ -972,7 +972,7 @@ ApplicationWindow {
         }
     }
 
-    MessageDialog {
+    UiMessageDialog {
         id: popupLandscapeCutout
         text: qsTr("Camera Cutout")
         informativeText: qsTr("In landscape, QZ keeps a margin on the camera side so the camera hole does not cover the content.\nDo you want to use the full screen width instead?\n\nYou can change it later in Settings > General UI Options > Keep Content Clear of the Camera Cutout.")
