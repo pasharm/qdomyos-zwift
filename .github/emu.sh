@@ -31,7 +31,7 @@ adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
 # T-060, T-066: a fake treadmill, so the home page has tiles (without a device it shows the search help)
-printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\nui_accent=system\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -323,7 +323,7 @@ for f in $(adb shell 'ls /sdcard/Documents/QZ/ 2>/dev/null' | tr -d '\r' | grep 
 done
 echo "== app debug logs"; cat qz-logs/listing.txt; ls -la qz-logs
 echo "== steps"; cat $STEPLOG
-echo "== timing"; grep -E "QZ-TIMING|QZ-THEME" full_logcat.txt || true
+echo "== timing"; grep -E "QZ-TIMING|QZ-THEME|main.qml" full_logcat.txt || true
 # The dialogs are hidden (hide_error_dialogs above), so hangs are only here
 grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
 echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
