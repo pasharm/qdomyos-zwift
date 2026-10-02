@@ -4964,6 +4964,22 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <source>Services</source>
         <translation>Сервіси</translation>
     </message>
+    <message>
+        <location filename="../main.qml" line="799"/>
+        <source>Camera Cutout</source>
+        <translation>Виріз камери</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="800"/>
+        <source>In landscape, QZ keeps a margin on the camera side so the camera hole does not cover the content.
+Do you want to use the full screen width instead?
+
+You can change it later in Settings &gt; General UI Options &gt; Keep Content Clear of the Camera Cutout.</source>
+        <translation>У горизонтальній орієнтації QZ залишає відступ з боку камери, щоб виріз під камеру не закривав вміст.
+Розтягнути вміст на всю ширину екрана?
+
+Це можна змінити пізніше: Налаштування &gt; Загальні параметри інтерфейсу &gt; Не заходити під виріз камери.</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
