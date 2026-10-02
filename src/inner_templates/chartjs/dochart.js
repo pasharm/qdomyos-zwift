@@ -271,9 +271,9 @@ function process_arr(arr) {
             distributionHeartZones[zone]++;
         }
         wattsRow.push(Number(el.watts) || 0);
-        // pace in minutes per km or mile; standing still and slow walking (20+ min/km) give no point
+        // pace in minutes per km or mile; below 3 km/h (standing, slow walking) gives no point, in any unit
         let speedUnit = el.speed * miles;
-        pace.push({x: time, y: speedUnit >= 3 ? 60 / speedUnit : null});
+        pace.push({x: time, y: el.speed >= 3 ? 60 / speedUnit : null});
     }
 
     $('.workoutName').text(workoutName);
