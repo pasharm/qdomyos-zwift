@@ -255,13 +255,9 @@ sleep 15
 shot c-30
 page c-30
 
-# The period: 1 s from the selector
-if tap_node 'Live update' android.view.View; then
-  sleep 3
-  shot c-select-open
-  tap_node '1 s' && echo "picked 1 s" >> $STEPLOG
-  sleep 3
-fi
+# The period: the buttons at the top right
+tap_node '1 s' && echo "picked 1 s" >> $STEPLOG
+sleep 3
 shot c-1s-a
 sleep 4
 shot c-1s-b
@@ -275,14 +271,19 @@ sleep 4
 shot c-tip-4
 
 # Off: no redraws
-if tap_node 'Live update' android.view.View; then sleep 3; shot c-select-open2; tap_node 'Off'; sleep 3; fi
+tap_node 'Off' && echo "picked Off" >> $STEPLOG
+sleep 3
 shot c-off-a
 sleep 15
 shot c-off-b                         # the same as c-off-a
 
-# Back home, Stop: the page of the end draws once, without the selector
+# 1 s again, then home: the page left behind (kept hidden in the modern look) must not poll
+tap_node '1 s' && echo "picked 1 s again" >> $STEPLOG
+sleep 3
+adb shell log -t T095 "mark charts-left" || true
 back "charts"
-sleep 4
+sleep 20
+adb shell log -t T095 "mark home-20s" || true
 shot h-back
 tap_ui 'Stop' 1200 2300
 sleep 3
@@ -328,3 +329,5 @@ grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
 echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
 grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
 echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
+echo "== polling while the charts page was left (between the marks; 0 expected)"
+awk '/T095.*mark charts-left/{f=1;next} /T095.*mark home-20s/{f=0} f && /WS >> \{"msg":"getsessionarray"\}/' full_logcat.txt | tee -a $STEPLOG | wc -l
