@@ -137,7 +137,7 @@ import QtQuick 2.12 as Quick212
         // writes through a Settings object of its own, which this one does not hear about. The
         // store may give a boolean back as the string "true"
         function storedValue(entry) {
-            var value = settings.value(entry.key, entry.defaultValue)
+            var value = isUiOption(entry.key) ? window.ui.option(entry.key) : settings.value(entry.key, entry.defaultValue)
             if (entry.type === "boolean")
                 return value === true || value === "true"
             return value
@@ -170,13 +170,35 @@ import QtQuick 2.12 as Quick212
                 typed = parseInt(value)
             else if (entry.type === "number")
                 typed = parseFloat(value)
+            if (isUiOption(entry.key)) {
+                setUiOption(entry.key, typed)
+                return
+            }
             settings[entry.key] = typed
             settings.setValue(entry.key, typed)
         }
 
+        // The look of the modern interface (see the declarations at the end of the Settings
+        // below): kept by main.qml, which applies it at once
+        readonly property var uiOptionKeys: ["ui_modern", "ui_theme", "ui_accent", "ui_theme_mode", "ui_tile_snap"]
+        function isUiOption(key) {
+            return uiOptionKeys.indexOf(key) >= 0
+        }
+        // Into main.qml, which applies it at once, and into this page's copy as well: a change
+        // of any setting makes this page's Settings write all its properties (Qt.labs.settings
+        // 5.15), and a stale copy would bring the old look back after a restart
+        function setUiOption(key, value) {
+            // "As on the phone" takes the night mode of the phone as it is now
+            if (key === "ui_theme_mode")
+                window.ui.refreshSystemDark()
+            window.ui.setOption(key, value)
+            settings[key] = value
+        }
+
         function resetSetting(entry) {
             writeSetting(entry, entry.defaultValue)
-            window.settings_restart_to_apply = true
+            if (!isUiOption(entry.key))
+                window.settings_restart_to_apply = true
             toast.show(qsTr("Setting reset"))
             updateFilteredSettings()
         }
@@ -191,9 +213,11 @@ import QtQuick 2.12 as Quick212
 
         function resetSection(section) {
             var list = changedIn(section)
-            for (var i = 0; i < list.length; i++)
+            for (var i = 0; i < list.length; i++) {
                 writeSetting(list[i], list[i].defaultValue)
-            window.settings_restart_to_apply = true
+                if (!isUiOption(list[i].key))
+                    window.settings_restart_to_apply = true
+            }
             toast.show(qsTr("%1 settings reset").arg(list.length))
             updateFilteredSettings()
         }
@@ -615,6 +639,9 @@ import QtQuick 2.12 as Quick212
         function profileSettingsSnapshot() {
             var values = []
             for (var key in settings) {
+                // The look applies at once: it raises no restart question
+                if (isUiOption(key))
+                    continue
                 var value = settings[key]
                 if (typeof value === "boolean" || typeof value === "number" || typeof value === "string")
                     values.push(key + "=" + String(value))
@@ -916,7 +943,7 @@ import QtQuick 2.12 as Quick212
         }
 
         function settingValue(entry) {
-            var value = settings[entry.key]
+            var value = isUiOption(entry.key) ? window.ui.option(entry.key) : settings[entry.key]
             return value === undefined ? entry.defaultValue : value
         }
 
@@ -944,6 +971,12 @@ import QtQuick 2.12 as Quick212
                     p.unshift(0)
                 value = (p[0] * 3600 + p[1] * 60 + p[2]) / d
             }
+            if (isUiOption(entry.key)) {
+                // Applied at once, like the switch on the page: no restart question
+                setUiOption(entry.key, entry.type === "boolean" ? !!value : value)
+                toast.show(qsTr("Setting saved!"))
+                return
+            }
             if (entry.type === "boolean") {
                 settings[entry.key] = !!value
             } else if (entry.type === "integer") {
@@ -962,6 +995,9 @@ import QtQuick 2.12 as Quick212
             if (!entry.options)
                 return []
 
+            // The wallpaper colour only where Android offers it (API 31+), as on the page
+            if (entry.key === "ui_accent" && !window.ui.systemAccentAvailable)
+                return entry.options.values.filter(function (v) { return v !== "system" })
             if (entry.options.values)
                 return entry.options.values
 
@@ -978,12 +1014,15 @@ import QtQuick 2.12 as Quick212
         // (ValueComboBox labels). The stored "Disabled" of the device pickers, and every value
         // of a fixed list ("Always", "Request") that has a translation in this page's context;
         // a value without one ("MM/dd/yy", "700 x 18C") comes back as it is
+        // A list whose catalog entry has its own labels (the look of the modern interface: "auto"
+        // shows as "As on the phone") takes those
         function optionLabels(entry) {
             var labels = { "Disabled": qsTr("Disabled") }
             var values = entry && entry.options && entry.options.values ? entry.options.values : []
+            var names = entry && entry.options && entry.options.labels ? entry.options.labels : []
             for (var i = 0; i < values.length; i++)
                 if (typeof values[i] === "string")
-                    labels[values[i]] = qsTranslate("settings", values[i])
+                    labels[values[i]] = qsTranslate("settings", names[i] || values[i])
             return labels
         }
 
@@ -2461,6 +2500,14 @@ import QtQuick 2.12 as Quick212
             property bool fitshow_bike_question: true
             property bool android_landscape_cutout_margin: true
             property bool resistance_buttons_accumulate: false
+            // The look of the modern interface: main.qml keeps the same keys and applies them at
+            // once. Declared here for the settings catalog; the page and the search read them
+            // through window.ui and write both copies (setUiOption)
+            property bool ui_modern: true
+            property string ui_theme: "graphite"
+            property string ui_accent: "violet"
+            property string ui_theme_mode: "auto"
+            property bool ui_tile_snap: true
         }
 
 
@@ -16620,7 +16667,7 @@ import QtQuick 2.12 as Quick212
                         checked: window.ui.modern
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        onClicked: window.ui.setOption("ui_modern", checked)
+                        onClicked: settingsPane.setUiOption("ui_modern", checked)
                     }
                     Label {
                         text: qsTr("New look of the main screen, the side menu, the settings and the wizard. Turn it off to get the classic look back.")
@@ -16645,7 +16692,7 @@ import QtQuick 2.12 as Quick212
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
                         Layout.topMargin: 8
-                        onClicked: window.ui.setOption("ui_tile_snap", checked)
+                        onClicked: settingsPane.setUiOption("ui_tile_snap", checked)
                     }
                     Label {
                         text: qsTr("When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.")
@@ -16683,10 +16730,7 @@ import QtQuick 2.12 as Quick212
                                         return i
                                 return 0
                             }
-                            onActivated: {
-                                window.ui.refreshSystemDark()
-                                window.ui.setOption("ui_theme_mode", options[index].value)
-                            }
+                            onActivated: settingsPane.setUiOption("ui_theme_mode", options[index].value)
                         }
                     }
 
@@ -16715,7 +16759,7 @@ import QtQuick 2.12 as Quick212
                                         return i
                                 return 0
                             }
-                            onActivated: window.ui.setOption("ui_theme", options[index].value)
+                            onActivated: settingsPane.setUiOption("ui_theme", options[index].value)
                         }
                     }
 
@@ -16744,7 +16788,10 @@ import QtQuick 2.12 as Quick212
                                     strokeWidth: window.ui.accentName === modelData ? 3 : 0
                                     stroke: window.ui.textMain
                                     Accessible.role: Accessible.RadioButton
-                                    Accessible.name: modelData === "system" ? qsTr("Wallpaper colour") : modelData
+                                    // The same names as in settings-catalog.json (ui_accent): the search shows them
+                                    Accessible.name: ({ system: qsTr("Wallpaper colour"), violet: qsTr("Violet"), blue: qsTr("Blue"),
+                                                        teal: qsTr("Teal"), green: qsTr("Green"), orange: qsTr("Orange"),
+                                                        pink: qsTr("Pink") })[modelData] || modelData
                                     Accessible.checked: window.ui.accentName === modelData
                                     // The wallpaper colour is marked, so it does not pass for one
                                     // more fixed colour
@@ -16759,7 +16806,7 @@ import QtQuick 2.12 as Quick212
                                     MouseArea {
                                         anchors.fill: parent
                                         anchors.margins: -4
-                                        onClicked: window.ui.setOption("ui_accent", modelData)
+                                        onClicked: settingsPane.setUiOption("ui_accent", modelData)
                                     }
                                 }
                             }

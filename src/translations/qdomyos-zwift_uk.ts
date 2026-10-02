@@ -10166,6 +10166,30 @@ Default: A = -0.96, B = 1.33</source>
         <translation>Колір шпалер</translation>
     </message>
     <message>
+        <source>Violet</source>
+        <translation>Фіолетовий</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation>Синій</translation>
+    </message>
+    <message>
+        <source>Teal</source>
+        <translation>Бірюзовий</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation>Зелений</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation>Помаранчевий</translation>
+    </message>
+    <message>
+        <source>Pink</source>
+        <translation>Рожевий</translation>
+    </message>
+    <message>
         <source>Changed</source>
         <translation>Змінені</translation>
     </message>

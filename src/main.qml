@@ -354,6 +354,8 @@ ApplicationWindow {
         // The settings page has its own Settings object, which the window's does not hear
         // about until a restart: it writes through here, so the look changes at once
         function setOption(key, value) { settings[key] = value }
+        // ...and reads through here (the settings search): its own copy is stale after setOption
+        function option(key) { return settings[key] }
         // Text that the classic look paints in a fixed colour (mostly white) on the page
         // background: the theme text colour in the modern look, the old colour otherwise
         function ink(classic) { return modern ? textMain : classic }

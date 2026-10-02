@@ -18,6 +18,8 @@ var KEY = /\bsettings\.([A-Za-z_][A-Za-z0-9_]*)/g
 // the control); any other mention (a visible: of some other row, say) is the weakest hint
 var SHOWS = /^\s*(checked|text|currentIndex|value|displayText)\s*:/
 var WRITES = /\bsettings\.[A-Za-z0-9_]+\s*=[^=]/
+// The look of the modern interface is written through main.qml: settingsPane.setUiOption("ui_theme", ...)
+var UI_OPTION = /\bset(?:Ui)?Option\(\s*"([A-Za-z0-9_]+)"/
 
 // Braces of a line outside string literals and // comments
 function braceDelta(line) {
@@ -90,6 +92,9 @@ function parse(file, source, map) {
             var linked = LINKED.exec(line)
             if (linked)
                 record(map, linked[1], file, titlesOf(stack), 3)
+            var uiOption = UI_OPTION.exec(line)
+            if (uiOption)
+                record(map, uiOption[1], file, titlesOf(stack), 1)
             if (line.indexOf("settings.") >= 0) {
                 var strength = SHOWS.test(line) ? 2 : (WRITES.test(line) ? 1 : 0)
                 var chain = null
