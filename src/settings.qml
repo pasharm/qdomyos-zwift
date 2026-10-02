@@ -2497,8 +2497,8 @@ import QtQuick 2.12 as Quick212
             property real power_sensor_speed_correction_threshold: 20.0
             property bool flow_fitness_runner_dtm2000i: false
             property bool nordictrack_incline_trainer_x7i_netl18716_0: false
-            property bool fitshow_bike_question: true
             property bool android_landscape_cutout_margin: true
+            property bool fitshow_bike_question: true
             property bool resistance_buttons_accumulate: false
             // The look of the modern interface: main.qml keeps the same keys and applies them at
             // once. Declared here for the settings catalog; the page and the search read them
