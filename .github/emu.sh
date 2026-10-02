@@ -331,3 +331,5 @@ grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || tru
 echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
 echo "== polling while the charts page was left (between the marks; 0 expected)"
 awk '/T095.*mark charts-left/{f=1;next} /T095.*mark home-20s/{f=0} f && /WS >> \{"msg":"getsessionarray"\}/' full_logcat.txt | tee -a $STEPLOG | wc -l
+echo "== requests of the charts page: whole / parts (\"from\")"
+echo "whole: $(grep -c 'WS >> {"msg":"getsessionarray"}' full_logcat.txt) parts: $(grep -c 'WS >> {"msg":"getsessionarray","content":{"from"' full_logcat.txt)" | tee -a $STEPLOG
