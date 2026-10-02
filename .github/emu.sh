@@ -197,6 +197,38 @@ for n in ET.parse(sys.argv[1]).getroot().iter("node"):
   cp ui.xml dumps/page-$1.xml 2>/dev/null || true
 }
 
+# Taps the node matching rx that is the lowest on the screen, or of class cls when given:
+# the Stop of the confirmation lies under the Stop button, the select under its label
+tap_node() {
+  local rx="$1" cls="$2" xy=""
+  dump
+  [ -f ui.xml ] && xy=$(python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+rx, cls = sys.argv[2], sys.argv[3]
+best = None
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    if not re.fullmatch(rx, t, re.I) or (cls and n.get("class") != cls):
+        continue
+    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+    if not m:
+        continue
+    x1, y1, x2, y2 = map(int, m.groups())
+    if x2 <= x1 or y2 <= y1:
+        continue
+    if best is None or y1 > best[1]:
+        best = ((x1 + x2) // 2, y1, (y1 + y2) // 2)
+if best:
+    print(best[0], best[2])
+' ui.xml "$rx" "$cls")
+  if [ -n "$xy" ]; then
+    echo "tap node '$rx' ${cls:+($cls) }at $xy" >> $STEPLOG
+    adb shell input tap $xy || true
+  else
+    echo "!! tap node '$rx' ${cls:+($cls) }NOT FOUND" >> $STEPLOG
+    return 1
+  fi
+}
 has() {
   dump
   if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
@@ -224,10 +256,10 @@ shot c-30
 page c-30
 
 # The period: 1 s from the selector
-if tap_ui '(5 s|Live update.*)'; then
+if tap_node 'Live update' android.view.View; then
   sleep 3
   shot c-select-open
-  tap_ui '1 s' && echo "picked 1 s" >> $STEPLOG
+  tap_node '1 s' && echo "picked 1 s" >> $STEPLOG
   sleep 3
 fi
 shot c-1s-a
@@ -243,7 +275,7 @@ sleep 4
 shot c-tip-4
 
 # Off: no redraws
-if tap_ui '(1 s|Live update.*)'; then sleep 3; tap_ui 'Off'; sleep 3; fi
+if tap_node 'Live update' android.view.View; then sleep 3; shot c-select-open2; tap_node 'Off'; sleep 3; fi
 shot c-off-a
 sleep 15
 shot c-off-b                         # the same as c-off-a
@@ -255,7 +287,7 @@ shot h-back
 tap_ui 'Stop' 1200 2300
 sleep 3
 shot h-stop-confirm
-tap_ui '(Yes|OK|Stop)' && echo "stop confirmed" >> $STEPLOG
+tap_node '(Yes|OK|Stop)' && echo "stop confirmed" >> $STEPLOG
 sleep 12
 shot e-end
 page e-end
