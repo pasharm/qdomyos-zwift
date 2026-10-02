@@ -177,6 +177,15 @@
             return chart;
         },
 
+        // A chart made by create() takes the config of a redraw in place (the live update of
+        // dochart.js): the new options get the chart's palette and become its patches, so
+        // refresh() and withLight() keep working on them
+        restyle: function (chart, config) {
+            var list = patches(config);
+            apply(config, list, chart.$qzPalette);
+            chart.$qzPatches = list;
+        },
+
         // The fill of the canvas: dochart.js draws it under each chart
         background: function (chart) {
             var pal = chart && chart.$qzPalette;

@@ -33,6 +33,59 @@ var maxHeartRate = 190;
 var heartZones = [];
 var miles = 1;
 
+// live update during a workout: the session array is polled and the charts are rebuilt;
+// the period (seconds, 0 = off) is chosen in the top-right selector, shown only while a workout
+// is running (see setLiveActive), and kept in localStorage
+var LIVE_REFRESH_OPTIONS = [0, 1, 2, 5, 10, 30];
+var LIVE_REFRESH_KEY = 'chart_live_refresh_s';
+var liveRefreshSec = 5;
+var liveTimer = null;
+var liveLoading = false;
+var liveActive = false;
+var liveFinalPending = false;
+var lastSessionLength = -1;
+var liveRefresh = false;
+
+try {
+    var savedRefresh = parseInt(localStorage.getItem(LIVE_REFRESH_KEY), 10);
+    if (LIVE_REFRESH_OPTIONS.indexOf(savedRefresh) >= 0)
+        liveRefreshSec = savedRefresh;
+} catch (e) {}
+
+function fillLiveRefreshSelect() {
+    var select = $('#live_refresh');
+    select.empty();
+    LIVE_REFRESH_OPTIONS.forEach(function(sec) {
+        var label = sec === 0 ? t('chart.liveRefreshOff', 'Off') : t('chart.secondsValue', '{value} s').replace('{value}', sec);
+        select.append($('<option>').val(sec).text(label));
+    });
+    select.val(liveRefreshSec);
+}
+
+// creates a chart on ctx; on a live refresh the existing chart gets the new data and options
+// in place instead, so an open tooltip stays and nothing flickers; the animation is off there,
+// so its onComplete (saving screenshots) does not run again
+function makeChart(ctx, config) {
+    var old = Chart.getChart(ctx.canvas);
+    if (old && liveRefresh && old.data.datasets.length === config.data.datasets.length) {
+        config.options.animation = false;
+        // keep the dataset objects: the chart's per-dataset state is bound to them
+        for (var i = 0; i < config.data.datasets.length; i++)
+            old.data.datasets[i].data = config.data.datasets[i].data;
+        if (config.data.labels)
+            old.data.labels = config.data.labels;
+        qzChartTheme.restyle(old, config); // the new options in the app theme, like create()
+        old.options = config.options;
+        old.update('none');
+        return old;
+    }
+    if (old)
+        old.destroy();
+    if (liveRefresh)
+        config.options.animation = false;
+    return qzChartTheme.create(ctx, config);
+}
+
 function t(key, fallback) {
     return window.qzTranslate ? window.qzTranslate(key, fallback) : fallback;
 }
@@ -474,7 +527,7 @@ function process_arr(arr) {
     };
 
     let ctx = document.getElementById('canvas').getContext('2d');
-    var powerChart = qzChartTheme.create(ctx, config);
+    var powerChart = makeChart(ctx, config);
 
     const minRecordedHeart = heart.reduce(function(minValue, point) {
         return point.y > 0 ? Math.min(minValue, point.y) : minValue;
@@ -659,7 +712,7 @@ function process_arr(arr) {
     };
 
     ctx = document.getElementById('canvasHeart').getContext('2d');
-    var heartChart = qzChartTheme.create(ctx, config);
+    var heartChart = makeChart(ctx, config);
 
     config = {
         type: 'line',
@@ -776,7 +829,7 @@ function process_arr(arr) {
     };
 
     ctx = document.getElementById('canvasResistance').getContext('2d');
-    var resistanceChart = qzChartTheme.create(ctx, config);
+    var resistanceChart = makeChart(ctx, config);
 
     config = {
         type: 'line',
@@ -893,7 +946,7 @@ function process_arr(arr) {
     };
 
     ctx = document.getElementById('canvasPelotonResistance').getContext('2d');
-    var pelotonresistanceChart = qzChartTheme.create(ctx, config);
+    var pelotonresistanceChart = makeChart(ctx, config);
 
     config = {
         type: 'line',
@@ -1010,7 +1063,7 @@ function process_arr(arr) {
     };
 
     ctx = document.getElementById('canvasCadence').getContext('2d');
-    var cadenceChart = qzChartTheme.create(ctx, config);
+    var cadenceChart = makeChart(ctx, config);
 
     config = {
         type: 'bar',
@@ -1090,7 +1143,7 @@ function process_arr(arr) {
     };
 
     ctx = document.getElementById('canvasPowerDistribution').getContext('2d');
-    var powerDistributionChart = qzChartTheme.create(ctx, config);
+    var powerDistributionChart = makeChart(ctx, config);
 
     config = {
         type: 'line',
@@ -1207,13 +1260,68 @@ function process_arr(arr) {
     };
 
     ctx = document.getElementById('canvasSpeedInclination').getContext('2d');
-    var speedInclinationChart = qzChartTheme.create(ctx, config);
+    var speedInclinationChart = makeChart(ctx, config);
 }
 
 function dochart_init() {
     keys_arr = ['ftp', 'miles_unit', 'age', 'heart_rate_zone1', 'heart_rate_zone2', 'heart_rate_zone3', 'heart_rate_zone4', 'heart_max_override_enable', 'heart_max_override_value']
 
+    function scheduleLiveRefresh() {
+        clearTimeout(liveTimer);
+        liveTimer = null;
+        // not before the first load: it runs after getsettings and draws with the right zones
+        if (liveActive && liveRefreshSec > 0 && !liveLoading && lastSessionLength >= 0)
+            liveTimer = setTimeout(load_workout_data, liveRefreshSec * 1000);
+    }
+
+    // the selector and the polling work only while a workout is running: device connected,
+    // not paused and not stopped (stop pauses the device); state comes with the 'workout' push
+    function setLiveActive(active) {
+        if (active === liveActive)
+            return;
+        liveActive = active;
+        $('#live_refresh_box').toggle(active);
+        if (!active) {
+            clearTimeout(liveTimer);
+            liveTimer = null;
+            // pick up the last points before going idle; a load in flight may predate the stop
+            if (liveLoading)
+                liveFinalPending = true;
+            else if (lastSessionLength >= 0)
+                load_workout_data();
+        } else
+            scheduleLiveRefresh();
+    }
+
+    function watchWorkoutState() {
+        let el = new MainWSQueueElement({
+            msg: null
+        }, function(msg) {
+            if (msg.msg === 'workout') {
+                return msg.content;
+            }
+            return null;
+        }); // nothing is sent, so no timeout: it waits for the next push
+        el.enqueue().then(function(w) {
+            setLiveActive(!!(w && w.deviceId && w.deviceConnected && !w.devicePaused));
+        }).then(function() {
+            setTimeout(watchWorkoutState, 500);
+        });
+    }
+    watchWorkoutState();
+
+    fillLiveRefreshSelect();
+    document.addEventListener('qz-translations-updated', fillLiveRefreshSelect);
+    $('#live_refresh').on('change', function() {
+        liveRefreshSec = parseInt($(this).val(), 10) || 0;
+        try {
+            localStorage.setItem(LIVE_REFRESH_KEY, String(liveRefreshSec));
+        } catch (e) {}
+        scheduleLiveRefresh();
+    });
+
     function load_workout_data() {
+        liveLoading = true;
         let el = new MainWSQueueElement({
             msg: 'getsessionarray'
         }, function(msg) {
@@ -1222,8 +1330,23 @@ function dochart_init() {
             }
             return null;
         }, 15000, 3);
-        el.enqueue().then(process_arr).catch(function(err) {
+        el.enqueue().then(function(arr) {
+            // redraw only when the session grew: after stop the array stays the same,
+            // so the end-of-workout screenshots are taken just once
+            if (arr && arr.length !== lastSessionLength) {
+                liveRefresh = lastSessionLength >= 0;
+                lastSessionLength = arr.length;
+                process_arr(arr);
+            }
+        }).catch(function(err) {
             console.error('Error is ' + err);
+        }).then(function() {
+            liveLoading = false;
+            if (liveFinalPending) {
+                liveFinalPending = false;
+                load_workout_data();
+            } else
+                scheduleLiveRefresh();
         });
     }
 
