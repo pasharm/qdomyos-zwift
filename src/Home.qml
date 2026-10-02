@@ -320,9 +320,19 @@ HomeForm {
         // by leftMargin: Qt 5.15 does not recount the columns when leftMargin changes, so
         // after a resize a row could come out one column short
         readonly property real tileBaseWidth: 175 * settings.ui_zoom / 100
+        // Every tile is narrower than its cell by tileGap and sits at the cell's left edge, so the
+        // last column ends with the gap: the grid is shifted by half the gap, so the outer margins
+        // are equal. The modern look also adds the page side margin of its other screens (the
+        // "Not connecting?" card, the header): the outer tile edges line up with the card
+        readonly property real tileGap: 5 * settings.ui_zoom / 100
+        readonly property real tileSideMargin: window.ui.modern ? window.contentSideMargin : 0
+        readonly property real tileRowWidth: parent.width - (window.ui.modern ? 2 * tileSideMargin - tileGap : 0)
+        // Columns counted on the whole page, as before the margins: on a 360 dp phone the margins
+        // would leave one column instead of two. The tiles get narrower there instead (165 dp)
         readonly property int tileColumns: Math.max(1, Math.floor(parent.width / tileBaseWidth))
-        cellWidth: Math.floor(Math.min(parent.width / tileColumns, tileBaseWidth * 1.25))
+        cellWidth: Math.floor(Math.min(tileRowWidth / tileColumns, tileBaseWidth * 1.25))
         width: tileColumns * cellWidth
+        anchors.horizontalCenterOffset: tileGap / 2
         cellHeight: 130 * settings.ui_zoom / 100
         focus: true
         model: appModel
@@ -436,7 +446,7 @@ HomeForm {
 
         delegate: Item {
             id: id1
-            width: gridView.cellWidth - 5 * settings.ui_zoom / 100
+            width: gridView.cellWidth - gridView.tileGap
             height: 125 * settings.ui_zoom / 100
 
             visible: visibleItem
