@@ -1782,6 +1782,7 @@ import AndroidStatusBar 1.0
             property bool flow_fitness_runner_dtm2000i: false
             property bool nordictrack_incline_trainer_x7i_netl18716_0: false
             property bool android_landscape_cutout_margin: true
+            property bool android_landscape_cutout_prompt_shown: false
         }
 
 
