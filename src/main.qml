@@ -303,9 +303,10 @@ ApplicationWindow {
             "midnight": { bg: "#EEF2F9", surface: "#FFFFFF", surfaceHigh: "#E3E9F4", surfaceHighest: "#D6DFEE",
                           outline: "#B8C4D9", textMain: "#162033", textMuted: "#55627A" }
         })
+        // At least 5:1 as text on every light surface (WCAG AA asks 4.5), and white on them as fill
         readonly property var lightAccents: ({
-            "violet": "#6D4FC2", "blue": "#1E63C6", "teal": "#00796B",
-            "green": "#2E7D32", "orange": "#C25400", "pink": "#B8326E"
+            "violet": "#6444BE", "blue": "#1B59B3", "teal": "#00675B",
+            "green": "#26682A", "orange": "#984200", "pink": "#A32C62"
         })
         readonly property var t: dark ? (themes[settings.ui_theme] || themes["graphite"])
                                       : (lightThemes[settings.ui_theme] || lightThemes["graphite"])
@@ -326,8 +327,30 @@ ApplicationWindow {
         }
         function accentOf(name) {
             if (name === "system" && systemAccentAvailable)
-                return dark ? systemAccentDark : systemAccentLight
+                return readableAccent(dark ? systemAccentDark : systemAccentLight)
             return a[name] || a["violet"]
+        }
+        // WCAG contrast ratio of two colours
+        function contrast(c1, c2) {
+            function lum(c) {
+                function ch(v) { return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4) }
+                return 0.2126 * ch(c.r) + 0.7152 * ch(c.g) + 0.0722 * ch(c.b)
+            }
+            var l1 = lum(c1), l2 = lum(c2)
+            return (Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05)
+        }
+        // The wallpaper accent is not ours to vouch for (vendors ship their own palettes): if it
+        // reads below 4.5:1 on the darkest surface of the theme, darken it on a light page and
+        // lighten it on a dark one, keeping its hue
+        function readableAccent(hex) {
+            var c = Qt.lighter(hex, 1.0)  // string -> color; Qt.color() is Qt 6 only
+            var worst = Qt.lighter(t.surfaceHighest, 1.0)
+            var h = Math.max(0, c.hslHue), s = c.hslSaturation, l = c.hslLightness  // grey: hue -1
+            for (var i = 0; i < 50 && contrast(c, worst) < 4.5; i++) {
+                l = dark ? Math.min(1, l + 0.02) : Math.max(0, l - 0.02)
+                c = Qt.hsla(h, s, l, 1)
+            }
+            return c
         }
 
         readonly property color bg: t.bg
