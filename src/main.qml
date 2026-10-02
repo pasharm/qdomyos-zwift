@@ -1005,6 +1005,18 @@ ApplicationWindow {
         visible: false
     }
 
+    // a new workout history database was started (first start, reinstall, database removed):
+    // the workouts of a previous install may still be in the QZ folder, hidden from the app
+    UiMessageDialog {
+        id: popupHistoryRecovery
+        text: qsTr("Workout History")
+        informativeText: qsTr("Workouts of a previous installation may still be in the QZ folder.\nDo you want to look for them?\n\nIn the next window, allow access to the QZ folder.")
+        buttons: (MessageDialog.Yes | MessageDialog.No)
+        onYesClicked: rootItem.importFitFolder()
+        onNoClicked: this.visible = false
+        visible: false
+    }
+
     // a FitShow bike sends its data in the Virtufit Etappe layout: ask before enabling the setting, no restart needed
     UiMessageDialog {
         id: popupVirtufitLayoutQuestion
@@ -1020,6 +1032,14 @@ ApplicationWindow {
         target: rootItem
         ignoreUnknownSignals: true
         function onVirtufitLayoutQuestionRequested() { popupVirtufitLayoutQuestion.visible = true; }
+    }
+
+    Connections {
+        target: rootItem
+        ignoreUnknownSignals: true
+        function onHistoryRecoveryOfferRequested() {
+            popupHistoryRecovery.visible = true
+        }
     }
 
     // a device changed a setting on its own (auto-detection): the message says what QZ found and why it must restart
