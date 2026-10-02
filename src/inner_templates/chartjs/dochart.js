@@ -172,6 +172,9 @@ function process_arr(arr) {
     distributionPowerZones[4] = 0;
     distributionPowerZones[5] = 0;
     distributionPowerZones[6] = 0;
+    let distributionHeartZones = [0, 0, 0, 0, 0];
+    let wattsRow = [];
+    let pace = [];
 
     for (let el of arr) {
         let wattel = {};
@@ -250,6 +253,22 @@ function process_arr(arr) {
         inclinationel.x = time;
         inclinationel.y = el.inclination;
         inclination.push(inclinationel);
+
+        // rows without a heart rate (no sensor yet) stay out of the heart zones
+        if (el.heart > 0) {
+            let zone = 4;
+            for (let z = 0; z < 4; z++) {
+                if (el.heart < heartZones[z]) {
+                    zone = z;
+                    break;
+                }
+            }
+            distributionHeartZones[zone]++;
+        }
+        wattsRow.push(Number(el.watts) || 0);
+        // pace in minutes per km or mile; standing still and slow walking (20+ min/km) give no point
+        let speedUnit = el.speed * miles;
+        pace.push({x: time, y: speedUnit >= 3 ? 60 / speedUnit : null});
     }
 
     $('.workoutName').text(workoutName);
@@ -1261,6 +1280,232 @@ function process_arr(arr) {
 
     ctx = document.getElementById('canvasSpeedInclination').getContext('2d');
     var speedInclinationChart = makeChart(ctx, config);
+
+    drawHeartDistribution(distributionHeartZones, backgroundFill);
+    // power curve only for bikes and rowers: elsewhere the watts are mostly estimated
+    drawPowerCurve((deviceType === 2 || deviceType === 3) && watts_max > 0 ? wattsRow : [], backgroundFill);
+    drawPace(deviceType === 1 ? pace : [], maxEl, backgroundFill);
+}
+
+function formatMinSec(value) {
+    return Math.floor(value / 60).toString().padStart(2, "0") + ":" + Math.floor(value % 60).toString().padStart(2, "0");
+}
+
+// time spent in each of the 5 heart rate zones; hidden while there is no heart rate at all
+function drawHeartDistribution(distribution, backgroundFill) {
+    let total = distribution.reduce(function(a, b) { return a + b; }, 0);
+    $('#heartDistributionBox').toggle(total > 0);
+    if (total === 0)
+        return;
+    let labels = [
+        [zoneLabel(1), '<' + heartZones[0]],
+        [zoneLabel(2), heartZones[0] + '-' + heartZones[1]],
+        [zoneLabel(3), heartZones[1] + '-' + heartZones[2]],
+        [zoneLabel(4), heartZones[2] + '-' + heartZones[3]],
+        [zoneLabel(5), '>' + heartZones[3]],
+    ];
+    let config = {
+        type: 'bar',
+        plugins: [backgroundFill],
+        data: {
+            labels: labels,
+            datasets: [{
+                data: distribution,
+                backgroundColor: [
+                    window.chartColors.lightsteelbluet, window.chartColors.limegreent, window.chartColors.goldt, window.chartColors.oranget, window.chartColors.redt
+                ],
+            }]
+        },
+        options: {
+            responsive: true,
+            aspectRatio: 1.5,
+            plugins: {
+                title: {
+                    display: true,
+                    text: t('chart.heartDistribution', 'Heart Rate Distribution')
+                },
+                tooltip: {
+                    callbacks: {
+                        title: function(items) {
+                            return items.length ? labels[items[0].dataIndex].join(' ') : '';
+                        },
+                        label: function(item) {
+                            return formatMinSec(item.raw) + ' (' + Math.round(100 * item.raw / total) + '%)';
+                        }
+                    }
+                },
+                legend: {
+                    display: false,
+                },
+            },
+            scales: {
+                y: {
+                    type: 'linear',
+                    display: true,
+                    ticks: {
+                        callback: function(value, index, values) {
+                            return value !== 0 ? formatMinSec(value) : "";
+                        },
+                        align: "end",
+                    },
+                },
+            }
+        }
+    };
+    makeChart(document.getElementById('canvasHeartDistribution').getContext('2d'), config);
+}
+
+// best average power over 5 s ... 60 min; the session array has one row per second
+var POWER_CURVE_DURATIONS = [5, 15, 30, 60, 120, 300, 600, 1200, 2400, 3600];
+
+function bestAverages(values, durations) {
+    let best = [];
+    for (let d of durations) {
+        if (d > values.length)
+            break;
+        let sum = 0;
+        let max = 0;
+        for (let i = 0; i < values.length; i++) {
+            sum += values[i];
+            if (i >= d)
+                sum -= values[i - d];
+            if (i >= d - 1 && sum > max)
+                max = sum;
+        }
+        best.push(Math.round(max / d));
+    }
+    return best;
+}
+
+function drawPowerCurve(wattsRow, backgroundFill) {
+    let best = bestAverages(wattsRow, POWER_CURVE_DURATIONS);
+    $('#powerCurveBox').toggle(best.length > 0);
+    if (best.length === 0)
+        return;
+    let labels = POWER_CURVE_DURATIONS.slice(0, best.length).map(function(d) {
+        return d < 60 ? t('chart.secondsValue', '{value} s').replace('{value}', d)
+                      : t('chart.minutesValue', '{value} min').replace('{value}', d / 60);
+    });
+    let config = {
+        type: 'line',
+        plugins: [backgroundFill],
+        data: {
+            labels: labels,
+            datasets: [{
+                label: t('chart.watts', 'Watts'),
+                backgroundColor: window.chartColors.darkoranget,
+                borderColor: window.chartColors.darkorange,
+                data: best,
+                fill: true,
+                pointRadius: 3,
+                borderWidth: 2,
+                tension: 0.3,
+            }, {
+                label: 'FTP',
+                borderColor: window.chartColors.grey,
+                data: labels.map(function() { return ftp; }),
+                fill: false,
+                pointRadius: 0,
+                borderWidth: 1,
+                borderDash: [5, 4],
+            }]
+        },
+        options: {
+            responsive: true,
+            aspectRatio: 1.5,
+            plugins: {
+                title: {
+                    display: true,
+                    text: t('chart.powerCurve', 'Power Curve')
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(item) {
+                            return item.dataset.label + ': ' + item.raw + ' W';
+                        }
+                    }
+                },
+                legend: {
+                    display: false,
+                },
+            },
+            scales: {
+                y: {
+                    display: true,
+                    min: 0,
+                },
+            }
+        }
+    };
+    makeChart(document.getElementById('canvasPowerCurve').getContext('2d'), config);
+}
+
+// treadmill pace, minutes per km or mile; the axis is reversed so faster is higher
+function drawPace(pace, maxEl, backgroundFill) {
+    let any = pace.some(function(p) { return p.y !== null; });
+    $('#paceBox').toggle(any);
+    if (!any)
+        return;
+    let unit = miles === 1 ? t('chart.paceUnitKm', 'min/km') : t('chart.paceUnitMile', 'min/mi');
+    let config = {
+        type: 'line',
+        plugins: [backgroundFill],
+        data: {
+            datasets: [{
+                label: unit,
+                backgroundColor: window.chartColors.blue,
+                borderColor: window.chartColors.blue,
+                data: pace,
+                fill: false,
+                pointRadius: 0,
+                borderWidth: 2,
+                spanGaps: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            aspectRatio: 1.5,
+            plugins: {
+                title: {
+                    display: true,
+                    text: t('chart.pace', 'Pace') + ' (' + unit + ')'
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(item) {
+                            return formatMinSec(item.raw.y * 60) + ' ' + unit;
+                        }
+                    }
+                },
+                legend: {
+                    display: false,
+                },
+            },
+            scales: {
+                x: {
+                    type: 'linear',
+                    display: true,
+                    ticks: {
+                        callback: function(value, index, values) {
+                            return value !== 0 ? Math.floor(value / 3600).toString().padStart(2, "0") + ":" + Math.floor((value / 60) - (Math.floor(value / 3600) * 60)).toString().padStart(2, "0")  : "";
+                        },
+                        align: "end",
+                    },
+                    max: maxEl,
+                },
+                y: {
+                    display: true,
+                    reverse: true,
+                    ticks: {
+                        callback: function(value, index, values) {
+                            return formatMinSec(value * 60);
+                        },
+                    }
+                }
+            }
+        }
+    };
+    makeChart(document.getElementById('canvasPace').getContext('2d'), config);
 }
 
 function dochart_init() {
