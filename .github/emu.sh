@@ -248,10 +248,10 @@ spin '36' plus
 spin '37' plus
 shot p-age-plus3                      # the + of the age unlit
 has '38' "age 35 + 3"
-spin '75[.,]0' minus
-spin '74[.,]9' minus
+spin '750' minus
+spin '749' minus
 shot p-weight-minus2                  # the - of the weight unlit
-has '74[.,]8' "weight 75.0 - 0.2"
+has '748' "weight 75.0 - 0.2 (the raw value, tenths)"
 spin '38' plus 1500
 shot p-age-held                       # after a hold of 1.5 s
 nums "age after a hold"
