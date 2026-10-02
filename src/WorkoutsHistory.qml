@@ -5,6 +5,7 @@ import QtCharts 2.15
 import Qt.labs.calendar 1.0
 import Qt.labs.settings 1.0
 import Qt.labs.platform 1.1 as P
+import QtQuick.Dialogs 1.0 as Dialogs
 
 Page {
     id: workoutHistoryPage
@@ -272,10 +273,39 @@ Page {
                 }
             }
 
-            // Clear Filter Button - positioned absolutely on the right
+            // Import Button - on the right: a single .fit file, or every workout of the QZ folder
+            Button {
+                id: importButton
+                anchors.right: parent.right
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.rightMargin: window.contentSideMargin
+                width: 48
+                height: 48
+
+                background: Rectangle {
+                    radius: 8
+                    color: importButton.pressed ? "#e0e0e0" : "#f0f0f0"
+                    border.color: "#d0d0d0"
+                    border.width: 1
+                }
+
+                contentItem: Text {
+                    text: Qt.platform.os === "android" ?
+                          wrapEmoji("📥") :
+                          "📥"
+                    textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
+                    font.pixelSize: 20
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                }
+
+                onClicked: importMenu.popup(importButton, 0, importButton.height)
+            }
+
+            // Clear Filter Button - left of the import button
             Button {
                 id: clearFilterButton
-                anchors.right: parent.right
+                anchors.right: importButton.left
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.rightMargin: window.contentSideMargin
                 width: 100
@@ -678,6 +708,46 @@ Page {
                 onPressAndHold: {
                     workoutHistoryPage.openUploadMenu(swipeDelegate, model.id, model.title)
                 }
+            }
+        }
+    }
+
+    Menu {
+        id: importMenu
+
+        MenuItem {
+            text: qsTr("Import FIT File...")
+            onTriggered: {
+                if (Qt.platform.os === "android") {
+                    rootItem.openAndroidDocumentPicker("fit")
+                } else {
+                    fitFileDialogLoader.active = true
+                }
+            }
+        }
+
+        MenuItem {
+            // after a reinstall the workouts of the previous install stay in this folder,
+            // but Android hides them from the app until the folder is picked once
+            text: qsTr("Import from QZ Folder...")
+            onTriggered: rootItem.importFitFolder()
+        }
+    }
+
+    Loader {
+        id: fitFileDialogLoader
+        active: false
+        sourceComponent: Component {
+            Dialogs.FileDialog {
+                title: qsTr("Please choose a file")
+                folder: shortcuts.home
+                nameFilters: [qsTr("FIT files (*.fit *.FIT)"), qsTr("All files (*)")]
+                visible: true
+                onAccepted: {
+                    rootItem.importFitFile(fileUrl)
+                    fitFileDialogLoader.active = false
+                }
+                onRejected: fitFileDialogLoader.active = false
             }
         }
     }
