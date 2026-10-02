@@ -1853,6 +1853,9 @@ void homeform::refresh_bluetooth_devices_clicked() {
 QString homeform::bluetoothSearchStatus() {
     if (!bluetoothManager || bluetoothManager->device())
         return QString();
+    if (bluetoothManager->bluetoothOff())
+        // the text warning sign, not the emoji one: old Android may lack the emoji font
+        return QString(QChar(0x26A0)) + QLatin1Char(' ') + tr("Bluetooth is off");
     if (bluetoothManager->isSearching())
         return tr("Searching for the device...");
     if (bluetoothManager->searchStopped())

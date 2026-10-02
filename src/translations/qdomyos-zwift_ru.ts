@@ -3769,6 +3769,11 @@ This may take a few moments on first startup.</source>
     <name>homeform</name>
     <message>
         <location filename="../homeform.cpp" line="1829"/>
+        <source>Bluetooth is off</source>
+        <translation>Bluetooth выключен</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1829"/>
         <source>Searching for the device...</source>
         <translation>Поиск тренажёра…</translation>
     </message>
