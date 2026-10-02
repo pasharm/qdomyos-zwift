@@ -1536,8 +1536,12 @@ function dochart_init() {
                 liveFinalPending = true;
             else if (lastSessionLength >= 0)
                 load_workout_data();
-        } else
+        } else {
+            // a start or a resume: the session may be a new one of any length (the app clears
+            // it on start only), so the next load takes it whole instead of appending a part
+            sessionCache = null;
             scheduleLiveRefresh();
+        }
     }
 
     function watchWorkoutState() {
@@ -1587,8 +1591,12 @@ function dochart_init() {
         }, 15000, 3);
         el.enqueue().then(function(msg) {
             let arr = msg && msg.content;
-            if (arr && sessionCache && msg.from === sessionCache.length)
-                arr = sessionCache.concat(arr);
+            // a part fits only the cache it was asked for; one asked before the cache was
+            // dropped (a new start) is thrown away, the next load takes the whole session
+            if (arr && typeof msg.from === 'number')
+                arr = sessionCache && msg.from === sessionCache.length ? sessionCache.concat(arr) : null;
+            if (!arr && msg && msg.content)
+                liveFinalPending = true; // load again at once, whole
             if (arr)
                 sessionCache = arr;
             // redraw only when the session grew: after stop the array stays the same,
