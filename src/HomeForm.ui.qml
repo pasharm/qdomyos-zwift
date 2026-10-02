@@ -375,7 +375,25 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: row1.bottom
             spacing: 8
+            // Bluetooth is off: a warning, drawn here because the app font has no warning sign
+            readonly property bool bluetoothOff: page.searchStatus === qsTranslate("homeform", "Bluetooth is off")
 
+            Rectangle {
+                visible: modernInfo.bluetoothOff
+                anchors.verticalCenter: parent.verticalCenter
+                width: 16
+                height: 16
+                radius: 8
+                color: window.ui.danger
+                Accessible.ignored: true
+                Label {
+                    anchors.centerIn: parent
+                    text: "!"
+                    color: window.ui.dark ? "#000000" : "#FFFFFF"
+                    font.pixelSize: 12
+                    font.bold: true
+                }
+            }
             Image {
                 visible: !modernEmpty.visible
                 anchors.verticalCenter: parent.verticalCenter
@@ -394,7 +412,7 @@ Page {
                 // "Connecting..." is the untranslated start value of homeform::m_info: before the
                 // first search it means the same as the search status
                 text: page.searchStatus !== "" ? page.searchStatus : (rootItem.info === "Connecting..." ? qsTranslate("homeform", "Searching for the device...") : rootItem.info)
-                color: window.ui.textMuted
+                color: modernInfo.bluetoothOff ? window.ui.danger : window.ui.textMuted
                 font.pixelSize: 13
             }
         }
