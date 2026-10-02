@@ -44,6 +44,7 @@ var liveLoading = false;
 var liveActive = false;
 var liveFinalPending = false;
 var lastSessionLength = -1;
+var sessionCache = null; // the session so far, grown by the parts the live update asks for
 var liveRefresh = false;
 
 try {
@@ -1571,15 +1572,25 @@ function dochart_init() {
 
     function load_workout_data() {
         liveLoading = true;
-        let el = new MainWSQueueElement({
+        let request = {
             msg: 'getsessionarray'
-        }, function(msg) {
+        };
+        // after the first load only the new points are asked for; an app that does not know
+        // "from" (or a session started anew) answers with the whole array, without "from"
+        if (sessionCache)
+            request.content = { from: sessionCache.length };
+        let el = new MainWSQueueElement(request, function(msg) {
             if (msg.msg === 'R_getsessionarray') {
-                return msg.content;
+                return msg;
             }
             return null;
         }, 15000, 3);
-        el.enqueue().then(function(arr) {
+        el.enqueue().then(function(msg) {
+            let arr = msg && msg.content;
+            if (arr && sessionCache && msg.from === sessionCache.length)
+                arr = sessionCache.concat(arr);
+            if (arr)
+                sessionCache = arr;
             // redraw only when the session grew: after stop the array stays the same,
             // so the end-of-workout screenshots are taken just once
             if (arr && arr.length !== lastSessionLength) {

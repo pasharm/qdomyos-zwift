@@ -1042,9 +1042,19 @@ void TemplateInfoSenderBuilder::onGetPreviewSessionArray(TemplateInfoSender *tem
     tempSender->send(out.toJson());
 }
 
-void TemplateInfoSenderBuilder::onGetSessionArray(TemplateInfoSender *tempSender) {
+void TemplateInfoSenderBuilder::onGetSessionArray(const QJsonValue &msgContent, TemplateInfoSender *tempSender) {
     QJsonObject main;
-    main[QStringLiteral("content")] = sessionArray;
+    // {"from": n} asks only for the points from index n on (the live update of the charts page):
+    // the whole session of a long workout is megabytes. The answer says "from" when it is a part
+    int from = msgContent.toObject().value(QStringLiteral("from")).toInt(-1);
+    if (from >= 0 && from <= sessionArray.size()) {
+        QJsonArray part;
+        for (int i = from; i < sessionArray.size(); i++)
+            part.append(sessionArray.at(i));
+        main[QStringLiteral("content")] = part;
+        main[QStringLiteral("from")] = from;
+    } else
+        main[QStringLiteral("content")] = sessionArray;
     main[QStringLiteral("msg")] = QStringLiteral("R_getsessionarray");
     QJsonDocument out(main);
     tempSender->send(out.toJson());
@@ -1691,7 +1701,7 @@ void TemplateInfoSenderBuilder::onDataReceived(const QByteArray &data) {
                     onAutoresistance(jsonObject[QStringLiteral("content")], sender);
                     return;
                 } else if (msg == QStringLiteral("getsessionarray")) {
-                    onGetSessionArray(sender);
+                    onGetSessionArray(jsonObject[QStringLiteral("content")], sender);
                     return;
                 } else if (msg == QStringLiteral("getpreviewsessionarray")) {
                     onGetPreviewSessionArray(sender);
