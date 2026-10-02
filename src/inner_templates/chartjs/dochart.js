@@ -1552,9 +1552,12 @@ function dochart_init() {
                 return msg.content;
             }
             return null;
-        }); // nothing is sent, so no timeout: it waits for the next push
+        });
         el.enqueue().then(function(w) {
             setLiveActive(!!(w && w.deviceId && w.deviceConnected && !w.devicePaused));
+        }).catch(function(err) {
+            // {msg: null} is still sent, so the element times out (5 s) when no push comes;
+            // the state stays as it was and the watch goes on: without this catch it stopped
         }).then(function() {
             setTimeout(watchWorkoutState, 500);
         });
