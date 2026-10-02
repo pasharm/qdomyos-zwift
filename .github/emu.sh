@@ -31,7 +31,7 @@ adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
 # T-060, T-066: a fake treadmill, so the home page has tiles (without a device it shows the search help)
-printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\nfakedevice_treadmill=true\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -168,12 +168,12 @@ shot 02-first-screen        # the wizard opens on the first run
 # T-060: with the fake treadmill the wizard does not open; its back keys would leave the app
 shot 04-home
 
-# T-066: the home list settles on the nearest whole row, or on the end of the list, wherever
-# the scroll stops; a flick settles where it stopped by itself. The dumps give the tile bounds
-# after the snap (rows line up with the top of the grid, or the last row with its bottom).
+# T-095: the Charts page updates itself while the workout runs (fake bike: the session grows
+# by a point a second), the period selector at the top right shows only then, and the page
+# opened by Stop draws once and keeps its selector hidden.
 wait_tiles() {
   local i
-  # The fake treadmill comes after the first search ends: wait for its tiles (at most 3 min)
+  # The fake bike comes after the first search ends: wait for its tiles (at most 3 min)
   for i in $(seq 1 18); do
     dump
     if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then
@@ -183,61 +183,92 @@ wait_tiles() {
   done
   echo "!! tiles NOT shown" >> $STEPLOG
 }
-drag_from_top() {
-  scroll_top; sleep 2
-  echo "[$1] drag up $2 px (slow)" >> $STEPLOG
-  adb shell input swipe 700 1800 700 $((1800 - $2)) 1500 || true
-  sleep 3
-  shot "h-$1-drag-$2"
+# The texts of the page (WebView nodes) with a digit or the selector, into steps.log
+page() {
+  dump
+  echo "page ($1):" >> $STEPLOG
+  [ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t, d = n.get("text") or "", n.get("content-desc") or ""
+    if re.search(r"[0-9]|Live|update|Off", t + d):
+        print("   ", n.get("class"), repr(t), repr(d), n.get("bounds"))
+' ui.xml | head -40 >> $STEPLOG
+  cp ui.xml dumps/page-$1.xml 2>/dev/null || true
 }
-flick_from_top() {
-  scroll_top; sleep 2
-  echo "[$1] flick up 700 px in 120 ms" >> $STEPLOG
-  adb shell input swipe 700 1900 700 1200 120 || true
-  sleep 5
-  shot "h-$1-flick"
-}
-# The app again with other settings (read at start): ui_tile_snap, ui_zoom
-restart_with() {
-  echo "== restart: $*" >> $STEPLOG
-  adb shell am force-stop $PKG || true
-  sleep 2
-  { printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\nfakedevice_treadmill=true\n' "$LOG_DEBUG" "$UI_MODERN"
-    for kv in "$@"; do echo "$kv"; done; } > qz.conf
-  adb push qz.conf /data/local/tmp/qz.conf
-  adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
-  adb shell am start -n $PKG/$PKG.CustomQtActivity
-  sleep 20
-  wait_tiles
+
+has() {
+  dump
+  if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
+    echo "check '$1' ($2): OK" >> $STEPLOG
+  else
+    echo "!! check '$1' ($2): NOT FOUND" >> $STEPLOG
+  fi
 }
 
 wait_tiles
-shot h-top
-for d in 300 600 900 1300; do drag_from_top on $d; done
-flick_from_top on
-# The end of the list: quick swipes up, then a slow pull back down
-for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 600 150 || true; done
+sleep 20                           # some seconds of the session before the page opens
+shot h-home
+open_menu
+shot m-menu
+tap_drawer 'Charts' 400 900
+sleep 10
+shot c-00
+page c-00
+has 'Live update.*' "selector shown while the workout runs"
+sleep 15
+shot c-15                            # the time axis longer than on c-00
+page c-15
+sleep 15
+shot c-30
+page c-30
+
+# The period: 1 s from the selector
+if tap_ui '(5 s|Live update.*)'; then
+  sleep 3
+  shot c-select-open
+  tap_ui '1 s' && echo "picked 1 s" >> $STEPLOG
+  sleep 3
+fi
+shot c-1s-a
 sleep 4
-shot h-on-end
-echo "[on] drag down 200 px from the end (slow)" >> $STEPLOG
-adb shell input swipe 700 1000 700 1200 1500 || true; sleep 3
-shot h-on-end-back-200
-echo "[on] drag down 350 px from there (slow)" >> $STEPLOG
-adb shell input swipe 700 1000 700 1350 1500 || true; sleep 3
-shot h-on-end-back-350
+shot c-1s-b
+page c-1s
 
-# Switched off: the list stays where it stopped
-restart_with ui_tile_snap=false
-shot h-off-top
-drag_from_top off 600
-flick_from_top off
+# A tooltip: it should stay over the next redraws
+tap 700 900 "power chart"
+sleep 1
+shot c-tip-0
+sleep 4
+shot c-tip-4
 
-# A short list: small tiles, so all of them or nearly all fit on the screen
-restart_with ui_zoom=50
-shot h-short-top
-drag_from_top short 150
-drag_from_top short 400
-scroll_top; sleep 2
+# Off: no redraws
+if tap_ui '(1 s|Live update.*)'; then sleep 3; tap_ui 'Off'; sleep 3; fi
+shot c-off-a
+sleep 15
+shot c-off-b                         # the same as c-off-a
+
+# Back home, Stop: the page of the end draws once, without the selector
+back "charts"
+sleep 4
+shot h-back
+tap_ui 'Stop' 1200 2300
+sleep 3
+shot h-stop-confirm
+tap_ui '(Yes|OK|Stop)' && echo "stop confirmed" >> $STEPLOG
+sleep 12
+shot e-end
+page e-end
+dump
+if [ -f ui.xml ] && python3 .github/uitap.py ui.xml 'Live update.*' > /dev/null; then
+  echo "!! check selector hidden after stop: SHOWN" >> $STEPLOG
+else
+  echo "check selector hidden after stop: OK" >> $STEPLOG
+fi
+sleep 15
+shot e-end-15                         # the same as e-end
+echo "savechart lines (pictures for the mail; one set from the end page):" >> $STEPLOG
+grep -c "savechart" full_logcat.txt >> $STEPLOG || true
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
@@ -264,3 +295,4 @@ echo "== timing"; grep -E "QZ-TIMING|QZ-THEME" full_logcat.txt || true
 grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
 echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
 grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
+echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
