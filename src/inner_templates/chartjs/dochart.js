@@ -52,14 +52,19 @@ try {
         liveRefreshSec = savedRefresh;
 } catch (e) {}
 
-function fillLiveRefreshSelect() {
-    var select = $('#live_refresh');
-    select.empty();
+// buttons, not a <select>: the native list of a select did not open in the app's web view
+function fillLiveRefreshButtons() {
+    var box = $('#live_refresh');
+    box.empty();
     LIVE_REFRESH_OPTIONS.forEach(function(sec) {
         var label = sec === 0 ? t('chart.liveRefreshOff', 'Off') : t('chart.secondsValue', '{value} s').replace('{value}', sec);
-        select.append($('<option>').val(sec).text(label));
+        var on = sec === liveRefreshSec;
+        box.append($('<button type="button">').attr('data-sec', sec).text(label).css({
+            'font-size': '12px', 'margin': '2px 0 2px 4px', 'padding': '3px 8px',
+            'border': '1px solid grey', 'border-radius': '4px',
+            'background-color': on ? 'white' : 'transparent', 'color': on ? '#1d2330' : 'grey'
+        }));
     });
-    select.val(liveRefreshSec);
 }
 
 // creates a chart on ctx; on a live refresh the existing chart gets the new data and options
@@ -1515,7 +1520,7 @@ function dochart_init() {
         clearTimeout(liveTimer);
         liveTimer = null;
         // not before the first load: it runs after getsettings and draws with the right zones
-        if (liveActive && liveRefreshSec > 0 && !liveLoading && lastSessionLength >= 0)
+        if (liveActive && liveRefreshSec > 0 && !liveLoading && lastSessionLength >= 0 && !document.hidden)
             liveTimer = setTimeout(load_workout_data, liveRefreshSec * 1000);
     }
 
@@ -1555,15 +1560,18 @@ function dochart_init() {
     }
     watchWorkoutState();
 
-    fillLiveRefreshSelect();
-    document.addEventListener('qz-translations-updated', fillLiveRefreshSelect);
-    $('#live_refresh').on('change', function() {
-        liveRefreshSec = parseInt($(this).val(), 10) || 0;
+    fillLiveRefreshButtons();
+    document.addEventListener('qz-translations-updated', fillLiveRefreshButtons);
+    $('#live_refresh').on('click', 'button', function() {
+        liveRefreshSec = parseInt($(this).attr('data-sec'), 10) || 0;
         try {
             localStorage.setItem(LIVE_REFRESH_KEY, String(liveRefreshSec));
         } catch (e) {}
+        fillLiveRefreshButtons();
         scheduleLiveRefresh();
     });
+    // a page kept out of sight (the app may hide it instead of closing) does not poll
+    document.addEventListener('visibilitychange', scheduleLiveRefresh);
 
     function load_workout_data() {
         liveLoading = true;
