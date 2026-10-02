@@ -64,6 +64,20 @@
     <!-- Modern look: sizes shared with the QML pages and the other web pages -->
     <link rel="stylesheet" href="qz-modern.css">
     <style>
+    /* the live update period; the --qz-* colours come from a themed page, the rest is the default */
+    #live_refresh button {
+        font-size: 12px;
+        margin: 2px 0 2px 4px;
+        padding: 3px 8px;
+        border: 1px solid var(--qz-outline, grey);
+        border-radius: 4px;
+        background-color: transparent;
+        color: var(--qz-muted, grey);
+    }
+    #live_refresh button.on {
+        background-color: var(--qz-text, white);
+        color: var(--qz-bg, #1d2330);
+    }
     canvas{
         -moz-user-select: none;
         -webkit-user-select: none;
@@ -131,7 +145,7 @@
 </head>
 
 <body style="background-color:#1d2330">
-    <div id="live_refresh_box" align="right" style='display: none; color: grey; font-size: 12px; font-weight:500; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'>
+    <div id="live_refresh_box" align="right" style='display: none; color: var(--qz-muted, grey); font-size: 12px; font-weight:500; font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif'>
         <label><span data-i18n="chart.liveRefresh">Live update</span>
         <span id="live_refresh"></span></label>
     </div>

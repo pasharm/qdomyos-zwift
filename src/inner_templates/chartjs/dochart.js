@@ -58,12 +58,8 @@ function fillLiveRefreshButtons() {
     box.empty();
     LIVE_REFRESH_OPTIONS.forEach(function(sec) {
         var label = sec === 0 ? t('chart.liveRefreshOff', 'Off') : t('chart.secondsValue', '{value} s').replace('{value}', sec);
-        var on = sec === liveRefreshSec;
-        box.append($('<button type="button">').attr('data-sec', sec).text(label).css({
-            'font-size': '12px', 'margin': '2px 0 2px 4px', 'padding': '3px 8px',
-            'border': '1px solid grey', 'border-radius': '4px',
-            'background-color': on ? 'white' : 'transparent', 'color': on ? '#1d2330' : 'grey'
-        }));
+        box.append($('<button type="button">').attr('data-sec', sec).text(label)
+            .toggleClass('on', sec === liveRefreshSec));
     });
 }
 
