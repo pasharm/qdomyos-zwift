@@ -555,7 +555,7 @@ function process_arr(arr) {
                         text: 'Watt'
                     },
                     min: 0,
-                    max: (watts_max > ftpZones[4] + 10 ? watts_max + 10 : ftpZones[4] + 10),
+                    max: Math.ceil(Math.max(watts_max * 1.2, ftpZones[0] + 10) / 10) * 10, // by the ride, not up to zone 6: low watts were a strip at the bottom
                     ticks: {
                         stepSize: 1,
                         autoSkip: false,
