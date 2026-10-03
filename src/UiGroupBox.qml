@@ -6,11 +6,14 @@ import QtQuick.Controls.Material.impl 2.12
 // GroupBox of the settings pages: the Qt 5.15 Material GroupBox, copied as is
 // (qtquickcontrols2 5.15, src/imports/controls/material/GroupBox.qml), so nothing changes
 // with the modern look off. Modern look: a filled card with rounded corners like the cards of
-// the tile page, the title inside it in the accent colour, no frame line.
+// the tile page, the title inside it in the accent colour, no frame line; framed - a thin
+// frame and no fill.
 T.GroupBox {
     id: control
 
     readonly property bool modern: window.ui.modern
+    // Modern look: a thin frame instead of the fill, as the settings and the tiles around it
+    property bool framed: false
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             contentWidth + leftPadding + rightPadding,
@@ -44,10 +47,10 @@ T.GroupBox {
         height: control.modern ? parent.height : parent.height - control.topPadding + control.bottomPadding
 
         radius: control.modern ? 16 : 2
-        color: control.modern ? window.ui.surface
+        color: control.modern ? (control.framed ? "transparent" : window.ui.surface)
                               : (control.Material.elevation > 0 ? control.Material.backgroundColor : "transparent")
-        border.color: control.Material.frameColor
-        border.width: control.modern ? 0 : 1
+        border.color: control.modern ? window.ui.outline : control.Material.frameColor
+        border.width: control.modern ? (control.framed ? 1 : 0) : 1
 
         layer.enabled: !control.modern && control.enabled && control.Material.elevation > 0
         layer.effect: ElevationEffect {

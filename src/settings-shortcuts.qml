@@ -102,10 +102,20 @@ ScrollView {
         spacing: 10
         anchors.fill: parent
         anchors.margins: 10
-        anchors.leftMargin: window.contentSideMargin
-        anchors.rightMargin: window.contentSideMargin
+        // Modern look: inside the frames, which run 10 further out
+        anchors.leftMargin: window.contentSideMargin + (window.ui.modern ? 10 : 0)
+        anchors.rightMargin: window.contentSideMargin + (window.ui.modern ? 10 : 0)
+
+        // Modern look: the switch and its description in a frame of their own; the title and the
+        // groups (framed by themselves) are left out
+        UiSettingFrames {
+            content: mainLayout
+            exclude: [shortcutsTitle, generalBox, metricsBox, targetBox, pelotonBox, presetBox]
+            Layout.preferredHeight: 0
+        }
 
         Label {
+            id: shortcutsTitle
             text: qsTr("Keyboard Shortcuts")
             // Modern look: a page title like the TTS page instead of the red caption
             font.pixelSize: window.ui.modern ? 22 : 24
@@ -188,7 +198,12 @@ ScrollView {
         }
 
         UiGroupBox {
+            id: generalBox
             title: qsTr("General Controls")
+            framed: true
+            // Out to the edges of the frames above it
+            Layout.leftMargin: window.ui.modern ? -10 : 0
+            Layout.rightMargin: window.ui.modern ? -10 : 0
             Layout.fillWidth: true
             ColumnLayout {
                 anchors.fill: parent
@@ -208,7 +223,12 @@ ScrollView {
         }
 
         UiGroupBox {
+            id: metricsBox
             title: qsTr("Main Metrics")
+            framed: true
+            // Out to the edges of the frames above it
+            Layout.leftMargin: window.ui.modern ? -10 : 0
+            Layout.rightMargin: window.ui.modern ? -10 : 0
             Layout.fillWidth: true
             ColumnLayout {
                 anchors.fill: parent
@@ -241,7 +261,12 @@ ScrollView {
         }
 
         UiGroupBox {
+            id: targetBox
             title: qsTr("Target Controls")
+            framed: true
+            // Out to the edges of the frames above it
+            Layout.leftMargin: window.ui.modern ? -10 : 0
+            Layout.rightMargin: window.ui.modern ? -10 : 0
             Layout.fillWidth: true
             ColumnLayout {
                 anchors.fill: parent
@@ -274,7 +299,12 @@ ScrollView {
         }
 
         UiGroupBox {
+            id: pelotonBox
             title: qsTr("Peloton & Others")
+            framed: true
+            // Out to the edges of the frames above it
+            Layout.leftMargin: window.ui.modern ? -10 : 0
+            Layout.rightMargin: window.ui.modern ? -10 : 0
             Layout.fillWidth: true
             ColumnLayout {
                 anchors.fill: parent
@@ -337,7 +367,12 @@ ScrollView {
         }
 
         UiGroupBox {
+            id: presetBox
             title: qsTr("Preset Resistance")
+            framed: true
+            // Out to the edges of the frames above it
+            Layout.leftMargin: window.ui.modern ? -10 : 0
+            Layout.rightMargin: window.ui.modern ? -10 : 0
             Layout.fillWidth: true
             RowLayout {
                 anchors.fill: parent
