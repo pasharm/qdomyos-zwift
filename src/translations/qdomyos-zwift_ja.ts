@@ -1257,6 +1257,31 @@ Would you like to do that now?</source>
         <source>Elevation</source>
         <translation>標高</translation>
     </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="200"/>
+        <source>{value} min</source>
+        <translation>{value} 分</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="201"/>
+        <source>Heart Rate Distribution</source>
+        <translation>心拍数の分布</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="202"/>
+        <source>Power Curve</source>
+        <translation>パワーカーブ</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="204"/>
+        <source>min/km</source>
+        <translation>分/km</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="205"/>
+        <source>min/mi</source>
+        <translation>分/mi</translation>
+    </message>
 </context>
 <context>
     <name>Wizard</name>

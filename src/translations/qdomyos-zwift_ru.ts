@@ -2837,6 +2837,21 @@ Do you want to update QZ settings?</source>
         <source>Elevation</source>
         <translation>Набор высоты</translation>
     </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="200"/>
+        <source>{value} min</source>
+        <translation>{value} мин</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="201"/>
+        <source>Heart Rate Distribution</source>
+        <translation>Распределение пульса</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="202"/>
+        <source>Power Curve</source>
+        <translation>Кривая мощности</translation>
+    </message>
 </context>
 <context>
     <name>Wizard</name>
