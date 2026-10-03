@@ -111,8 +111,10 @@ HomeForm {
 
         x: Math.round((parent.width - width) / 2)
         y: Math.round((parent.height - height) / 2)
-        width: 420
-        height: 340
+        // Modern: a card that fits a phone in portrait (420 is wider than most of them) and as
+        // tall as its content; classic: the fixed size as before
+        width: modern ? Math.min(parent.width - 48, 440) : 420
+        height: modern ? rpeFeelColumn.implicitHeight + 2 * 16 + topPadding + bottomPadding : 340
         modal: true
         focus: true
         palette.text: "white"
@@ -127,14 +129,17 @@ HomeForm {
         ]
 
         Column {
+            id: rpeFeelColumn
             anchors.fill: parent
             anchors.margins: 16
             spacing: 14
 
             Label {
                 text: qsTr("How was this workout?")
-                font.bold: true
-                font.pixelSize: 18
+                // Modern: the title of UiMessageDialog
+                font.weight: rpeFeelPopup.modern ? Font.DemiBold : Font.Bold
+                font.pixelSize: rpeFeelPopup.modern ? 20 : 18
+                color: rpeFeelPopup.modern ? window.ui.textMain : Material.foreground
                 width: parent.width
                 wrapMode: Text.WordWrap
             }
@@ -143,6 +148,7 @@ HomeForm {
                 text: qsTr("Perceived Exertion (RPE): ") + rpeFeelPopup.selectedRpe + " - " + rpeFeelPopup.rpeLabels[rpeFeelPopup.selectedRpe]
                 width: parent.width
                 wrapMode: Text.WordWrap
+                color: rpeFeelPopup.modern ? window.ui.textMain : Material.foreground
             }
 
             Slider {
@@ -159,9 +165,10 @@ HomeForm {
                 text: qsTr("How did you feel?")
                 width: parent.width
                 wrapMode: Text.WordWrap
+                color: rpeFeelPopup.modern ? window.ui.textMain : Material.foreground
             }
 
-            ComboBox {
+            UiComboBox {
                 id: feelCombo
                 width: parent.width
                 model: [qsTr("Very Bad"), qsTr("Bad"), qsTr("OK"), qsTr("Good"), qsTr("Very Good")]
@@ -173,8 +180,9 @@ HomeForm {
                 spacing: 12
                 anchors.horizontalCenter: parent.horizontalCenter
 
-                Button {
+                UiButton {
                     text: qsTr("Skip")
+                    flat: rpeFeelPopup.modern
                     onClicked: {
                         rpeFeelPopup.close();
                         rootItem.finalizeFitSave(-1, -1);
@@ -182,7 +190,7 @@ HomeForm {
                     }
                 }
 
-                Button {
+                UiButton {
                     text: qsTr("Save")
                     highlighted: true
                     onClicked: {
