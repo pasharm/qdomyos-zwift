@@ -1006,7 +1006,7 @@ ApplicationWindow {
     }
 
     // a FitShow bike sends its data in the Virtufit Etappe layout: ask before enabling the setting, no restart needed
-    MessageDialog {
+    UiMessageDialog {
         id: popupVirtufitLayoutQuestion
         text: qsTr("QZ has detected the data format of this bike. Enable \"Virtufit Etappe 2.0 Bike\"?")
         informativeText: qsTr("Without it QZ uses the default settings, and the data or the resistance may be off.")
