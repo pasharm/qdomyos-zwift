@@ -937,7 +937,7 @@ ApplicationWindow {
          parent: Overlay.overlay
          enabled: rootItem.licensePopupVisible
          onEnabledChanged: { if(rootItem.licensePopupVisible) popupLicense.open() }
-         onClosed: { Qt.openUrlExternally("https://www.patreon.com/bePatron?u=45290147"); Qt.callLater(Qt.quit); }
+         onClosed: { Qt.openUrlExternally("https://www.patreon.com/bePatron?u=45290147"); Qt.callLater(window.quitApp); }
 
          x: Math.round((parent.width - width) / 2)
          y: Math.round((parent.height - height) / 2)
@@ -971,7 +971,7 @@ ApplicationWindow {
         text: qsTr("Settings changed")
         informativeText: qsTr("In order to apply the changes you need to restart the app.\nDo you want to do it now?")
         buttons: (MessageDialog.Yes | MessageDialog.No)
-        onYesClicked: Qt.callLater(Qt.quit)
+        onYesClicked: Qt.callLater(window.quitApp)
         onNoClicked: this.visible = false;
         visible: false
     }
@@ -1028,7 +1028,7 @@ ApplicationWindow {
         text: ""
         informativeText: qsTr("Restart now?")
         buttons: (MessageDialog.Yes | MessageDialog.No)
-        onYesClicked: Qt.callLater(Qt.quit)
+        onYesClicked: Qt.callLater(window.quitApp)
         onNoClicked: this.visible = false;
         visible: false
     }
@@ -1039,7 +1039,7 @@ ApplicationWindow {
         text: qsTr("This FitShow device also reports bike data. Is it a bike?")
         informativeText: qsTr("Yes: QZ enables \"Fit Plus Bike\" and closes, open it again to connect to it as a bike.\nNo: QZ keeps it as a treadmill and won't ask again (a bike can still be set by hand: \"Fit Plus Bike\" in Fitplus Bike Options).")
         buttons: (MessageDialog.Yes | MessageDialog.No)
-        onYesClicked: { rootItem.fitshowBikeAnswer(true); Qt.callLater(Qt.quit); }
+        onYesClicked: { rootItem.fitshowBikeAnswer(true); Qt.callLater(window.quitApp); }
         onNoClicked: { rootItem.fitshowBikeAnswer(false); this.visible = false; }
         visible: false
     }
@@ -1480,6 +1480,37 @@ ApplicationWindow {
         onTriggered: window.warmUpSettings()
     }
 
+    // Quit, but not while the warm-up still compiles: on Android Qt.quit() in the middle of it
+    // froze the closing and the next start (T-109, the FS- bike question a few seconds after the
+    // first start). The compilation cannot be cancelled, so wait for it (2-3 s after an install),
+    // at most quitWaitTimer.interval
+    property bool quitting: false
+    function warmUpCompiling() {
+        return settingsWarmup.some(function (c) { return c.status === Component.Loading })
+    }
+    function quitApp() {
+        if (quitting)
+            return
+        quitting = true
+        if (!warmUpCompiling()) {
+            Qt.quit()
+            return
+        }
+        console.log("QZ-TIMING quit waits for the settings warm-up")
+        settingsWarmup.forEach(function (c) {
+            c.statusChanged.connect(function () {
+                if (!warmUpCompiling())
+                    Qt.quit()
+            })
+        })
+        quitWaitTimer.start()
+    }
+    Timer {
+        id: quitWaitTimer
+        interval: 10000
+        onTriggered: Qt.quit()
+    }
+
     // Drawer entries, shared by the classic and the modern drawer
     function drawerAction(key) {
         switch (key) {
@@ -1604,7 +1635,7 @@ ApplicationWindow {
             break
         case "quit":
             console.log("closing...")
-            Qt.callLater(Qt.quit)
+            Qt.callLater(window.quitApp)
             return
         case "strava":
             if (rootItem.isStravaLoggedIn()) {
