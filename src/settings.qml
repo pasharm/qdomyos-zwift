@@ -277,6 +277,14 @@ import QtQuick 2.12 as Quick212
                 return
             }
             var where = settingsIndex ? settingsIndex[entry.key] : null
+            // A setting made of others ("Specific Model": a picker over one switch per model) is
+            // not on the page by its own key: it stands where the settings it is made of are
+            if (!where) {
+                var persistent = settingsCatalog.settings || []
+                for (var v = 0; v < persistent.length && !where; v++)
+                    if (persistent[v].virtualParent === entry.key)
+                        where = settingsIndex[persistent[v].key] || null
+            }
             // TEMP-LOG: QZ-NAV - a search result tapped
             console.log("QZ-NAV search jump key=" + entry.key + " name=" + entry.name + " file=" + (where ? where.file : "none") + " chain=" + (where ? JSON.stringify(where.chain) : "none"))
             // A setting that is on no page (Garmin ANT+, Peloton Bike OCR...): the result is
