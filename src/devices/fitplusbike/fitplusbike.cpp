@@ -377,6 +377,26 @@ void fitplusbike::update() {
             }
         }
 
+        // The bike can ignore the start sent by btinit (the FS-495B40 does while it still releases the resistance
+        // after a quick reopen): it keeps reporting stopped and never runs. Send the start again every 5 s, but
+        // only for 30 s after the init and only while the bike has not run yet: no reconnection, no restart later.
+        if (!workoutEverRunning && workoutStatus == 0x00) {
+            qint64 nowMs = QDateTime::currentMSecsSinceEpoch();
+            if (nowMs - initDoneMs < 30000) {
+                if (nowMs - workoutStoppedSinceMs >= 5000 && nowMs - lastStartSentMs >= 5000) {
+                    lastStartSentMs = nowMs;
+                    workoutRestartRequest = true;
+                    qDebug() << QStringLiteral("the bike has not started the workout, sending the start again");
+                }
+            } else if (!unstartedWorkoutWarned) {
+                unstartedWorkoutWarned = true;
+                qDebug() << QStringLiteral("the bike did not start the workout");
+                if (homeform::singleton())
+                    homeform::singleton()->setToastRequested(
+                        tr("The bike keeps stopping the workout: turn the bike off and on again"));
+            }
+        }
+
         if (workoutRestartRequest) {
             workoutRestartRequest = false;
             uint8_t startWorkout[] = {0x02, 0x44, 0x02, 0x46, 0x03};
@@ -635,7 +655,7 @@ void fitplusbike::characteristicChanged(const QLowEnergyCharacteristic &characte
                             tr("The bike keeps stopping the workout: turn the bike off and on again"));
                 }
             }
-            workoutStatus = status;
+            noteWorkoutStatus(status, nowMs);
         }
 
         if (newValue.length() != 15 && newValue.length() != 13)
@@ -722,6 +742,10 @@ void fitplusbike::characteristicChanged(const QLowEnergyCharacteristic &characte
         }
 
     } else {
+
+        // FitShow status frames (02 42 00 42 03 stopped, 15-byte 02 42 02 running) for the start repeat in update()
+        if (newValue.length() >= 5 && (uint8_t)newValue.at(0) == 0x02 && (uint8_t)newValue.at(1) == 0x42)
+            noteWorkoutStatus((uint8_t)newValue.at(2), QDateTime::currentMSecsSinceEpoch());
 
         if (newValue.length() != 14) {
             // FitShow bikes with the Virtufit Etappe layout send 15-byte 02 42 02 frames that this branch drops:
@@ -830,11 +854,21 @@ double fitplusbike::bikeResistanceToPeloton(double resistance) {
            settings.value(QZSettings::peloton_offset, QZSettings::default_peloton_offset).toDouble();
 }
 
+void fitplusbike::noteWorkoutStatus(int status, qint64 nowMs) {
+    if (status == 0x02)
+        workoutEverRunning = true;
+    if (status == 0x00 && workoutStatus != 0x00)
+        workoutStoppedSinceMs = nowMs;
+    workoutStatus = status;
+}
+
 void fitplusbike::btinit() {
 
     // a new connection: the init below starts a new workout on the bike
     workoutStatus = -1;
     workoutRestarts = 0;
+    workoutEverRunning = false;
+    unstartedWorkoutWarned = false;
     workoutRestartRequest = false;
 
     QSettings settings;
@@ -920,6 +954,8 @@ void fitplusbike::btinit() {
     }
 
     initDone = true;
+    initDoneMs = QDateTime::currentMSecsSinceEpoch();
+    lastStartSentMs = initDoneMs;
 
     if (lastResistanceBeforeDisconnection != -1) {
         qDebug() << QStringLiteral("forcing resistance to ") + QString::number(lastResistanceBeforeDisconnection) +
