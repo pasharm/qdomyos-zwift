@@ -424,6 +424,12 @@ void fitplusbike::update() {
 
             requestStart = -1;
             appStopped = false;
+            // start in QZ after a stop from the console during a pause: the bike is still stopped
+            if (workoutEverRunning && workoutStatus == 0x00) {
+                workoutStoppedSinceMs = QDateTime::currentMSecsSinceEpoch();
+                lastStartSentMs = workoutStoppedSinceMs;
+                workoutRestartRequest = true;
+            }
             emit bikeStarted();
         }
         if (requestStop != -1) {
