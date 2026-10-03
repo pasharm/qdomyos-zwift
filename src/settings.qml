@@ -4621,6 +4621,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: bikeResistanceOffsetTextField
                             text: settings.bike_resistance_offset
+                            signed: true
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4660,6 +4661,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: bikePowerOffsetTextField
                             text: settings.bike_power_offset
+                            signed: true
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4983,6 +4985,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: gearsOffsetTextField
                             text: settings.gears_offset
+                            signed: true
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5659,6 +5662,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: echelonResistanceOffsetTextField
                                     text: settings.echelon_resistance_offset
+                                    signed: true
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6927,6 +6931,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: antspeedOffsetTextField
                             text: settings.ant_speed_offset
+                            signed: true
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -8108,6 +8113,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: pelotonOffsetTextField
                             text: settings.peloton_offset
+                            signed: true
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -10816,6 +10822,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: trainProgramRandomInclineMinTextField
                             text: settings.trainprogram_incline_min
+                            signed: true
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11148,6 +11155,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: treadmillInclinationMinTextField
                             text: settings.treadmill_incline_min
+                            signed: true
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13779,6 +13787,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: wattOffsetTextField
                             text: settings.watt_offset
+                            signed: true
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13896,6 +13905,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: speedOffsetTextField
                             text: settings.speed_offset
+                            signed: true
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13976,6 +13986,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: cadenceOffsetTextField
                             text: settings.cadence_offset
+                            signed: true
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14390,6 +14401,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: treadmillInclinationOffsetTextField
                             text: settings.zwift_inclination_offset
+                            signed: true
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14467,6 +14479,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: minInclinationTextField
                             text: settings.min_inclination
+                            signed: true
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15299,6 +15312,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: powerSensorSpeedInclinationCoeffATextField
                                     text: settings.power_sensor_speed_inclination_coeff_a
+                                    signed: true
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15320,6 +15334,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: powerSensorSpeedInclinationCoeffBTextField
                                     text: settings.power_sensor_speed_inclination_coeff_b
+                                    signed: true
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter

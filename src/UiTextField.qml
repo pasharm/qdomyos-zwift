@@ -37,8 +37,8 @@ T.TextField {
     verticalAlignment: TextInput.AlignVCenter
 
     // Modern look: a number field (digit keyboard hint) or a time field ("04:12:00") takes no
-    // letters, the OK button next to it saved them as they were. Only the characters of the
-    // formats in use pass: sign, decimal point or comma, ":" of times, ' and " of feet and
+    // letters, the OK button next to it saved them as they were. Only the format of the field
+    // passes: a number (the minus only for signed ones), ":" of times, ' and " of feet and
     // inches. A field with its own validator keeps it; the classic look has none, as before
     readonly property bool numericHint: (inputMethodHints & (Qt.ImhDigitsOnly | Qt.ImhFormattedNumbersOnly)) !== 0
     property bool timeShaped: false
@@ -52,12 +52,25 @@ T.TextField {
     // Modern look: a number fits in 88, the 120 of the text fields left the long labels
     // next to "75" or "35" wrapping
     readonly property bool narrow: modern && (numericHint || numberField) && !timeShaped && !ipAddress
-    Component.onCompleted: timeShaped = /^\d+:\d{2}(:\d{2})?$/.test(text)
+    // A number that can be below zero (offsets, the lowest incline): the minus passes only here
+    property bool signed: false
+    // Feet and inches ("5'10\"") keep the loose filter of number characters
+    property bool feetShaped: false
+    Component.onCompleted: {
+        timeShaped = /^\d+:\d{2}(:\d{2})?$/.test(text)
+        feetShaped = /['"]/.test(text)
+    }
+    // One number with one decimal point or comma: "170.5.5" can't be typed. "-", "." and an
+    // empty field are an unfinished number (acceptableInput false), the OK button of the row
+    // greys out on them (UiButton)
     validator: !modern ? null
              : ipAddress ? ipValidator
-             : numericHint || numberField ? numberValidator
-             : timeShaped ? timeValidator : null
-    RegExpValidator { id: numberValidator; regExp: /^-?[0-9.,:'"]*$/ }
+             : timeShaped ? timeValidator
+             : feetShaped && (numericHint || numberField) ? feetValidator
+             : numericHint || numberField ? (signed ? signedValidator : numberValidator) : null
+    RegExpValidator { id: numberValidator; regExp: /^(\d+([.,]\d*)?|[.,]\d+)$/ }
+    RegExpValidator { id: signedValidator; regExp: /^-?(\d+([.,]\d*)?|[.,]\d+)$/ }
+    RegExpValidator { id: feetValidator; regExp: /^[0-9.,'"]*$/ }
     RegExpValidator { id: timeValidator; regExp: /^[0-9:]*$/ }
     RegExpValidator { id: ipValidator; regExp: /^[0-9.]*$/ }
 
