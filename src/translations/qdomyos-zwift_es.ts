@@ -1282,6 +1282,21 @@ Would you like to do that now?</source>
         <source>min/mi</source>
         <translation>min/mi</translation>
     </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="197"/>
+        <source>Live update</source>
+        <translation>Actualización en vivo</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="198"/>
+        <source>Off</source>
+        <translation>Desactivado</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="199"/>
+        <source>{value} s</source>
+        <translation>{value} s</translation>
+    </message>
 </context>
 <context>
     <name>Wizard</name>

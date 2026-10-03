@@ -2852,6 +2852,21 @@ Do you want to update QZ settings?</source>
         <source>Power Curve</source>
         <translation>Крива потужності</translation>
     </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="197"/>
+        <source>Live update</source>
+        <translation>Оновлення</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="198"/>
+        <source>Off</source>
+        <translation>Вимк.</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="199"/>
+        <source>{value} s</source>
+        <translation>{value} с</translation>
+    </message>
 </context>
 <context>
     <name>Wizard</name>

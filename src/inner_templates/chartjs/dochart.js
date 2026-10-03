@@ -1564,7 +1564,7 @@ function dochart_init() {
         if (active === liveActive)
             return;
         liveActive = active;
-        $('#live_refresh_box').toggle(active);
+        $('#live_refresh_box').css('display', active ? 'flex' : 'none');
         if (!active) {
             clearTimeout(liveTimer);
             liveTimer = null;

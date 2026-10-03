@@ -1282,6 +1282,21 @@ Would you like to do that now?</source>
         <source>min/mi</source>
         <translation>分钟/英里</translation>
     </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="197"/>
+        <source>Live update</source>
+        <translation>实时更新</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="198"/>
+        <source>Off</source>
+        <translation>关</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="199"/>
+        <source>{value} s</source>
+        <translation>{value} 秒</translation>
+    </message>
 </context>
 <context>
     <name>Wizard</name>

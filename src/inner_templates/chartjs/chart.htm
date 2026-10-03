@@ -65,18 +65,41 @@
     <link rel="stylesheet" href="qz-modern.css">
     <style>
     /* the live update period; the --qz-* colours come from a themed page, the rest is the default */
+    /* Material 3 segmented button: one group, the selected segment tinted with a check mark */
+    #live_refresh_box {
+        align-items: center;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        gap: 4px 8px;
+        margin: 4px 0 8px;
+    }
+    #live_refresh {
+        display: inline-flex;
+    }
     #live_refresh button {
-        font-size: 12px;
-        margin: 2px 0 2px 4px;
-        padding: 3px 8px;
+        min-height: 40px;
+        min-width: 44px;
+        margin: 0 0 0 -1px;
+        padding: 0 10px;
+        font-size: 13px;
+        font-weight: 500;
         border: 1px solid var(--qz-outline, grey);
-        border-radius: 4px;
+        border-radius: 0;
         background-color: transparent;
-        color: var(--qz-muted, grey);
+        color: var(--qz-text, white);
+    }
+    #live_refresh button:first-child {
+        margin-left: 0;
+        border-radius: 20px 0 0 20px;
+    }
+    #live_refresh button:last-child {
+        border-radius: 0 20px 20px 0;
     }
     #live_refresh button.on {
-        background-color: var(--qz-text, white);
-        color: var(--qz-bg, #1d2330);
+        background-color: var(--qz-surface-high, #3a4256);
+    }
+    #live_refresh button.on::before {
+        content: "\2713\00a0";
     }
     canvas{
         -moz-user-select: none;
