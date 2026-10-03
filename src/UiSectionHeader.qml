@@ -9,7 +9,7 @@ Rectangle {
     property string title: ""
     property bool isOpen: false
     property bool nested: false
-    // 1 - a top-level section, 2 - a subsection (a filled card), 3 and deeper - a plain row
+    // 1 - a top-level section, 2 and deeper - a subsection (a filled card)
     property int depth: nested ? 2 : 1
     // "expand_more" turns over when the section opens; "chevron_right" opens a page
     property string chevron: "expand_more"
@@ -23,7 +23,7 @@ Rectangle {
     radius: nested ? 12 : 16
     color: headerArea.pressed ? window.ui.surfaceHighest
          : isOpen ? window.ui.surfaceHigh
-         : depth === 2 ? window.ui.surfaceHigh
+         : depth >= 2 ? window.ui.surfaceHigh
          : nested ? "transparent" : window.ui.surface
 
     Accessible.role: Accessible.Button
@@ -53,7 +53,7 @@ Rectangle {
         wrapMode: Text.WordWrap
         font.pixelSize: header.nested ? 15 : 16
         font.weight: Font.Medium
-        color: header.isOpen ? window.ui.accent : header.depth > 2 ? window.ui.textMuted : window.ui.textMain
+        color: header.isOpen ? window.ui.accent : window.ui.textMain
     }
 
     UiIcon {

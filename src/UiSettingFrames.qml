@@ -18,7 +18,7 @@ Item {
     property Item content: null
     // The header of the section: the top of its block
     property Item header: null
-    // 1 - a top-level section, 2 - inside it, and so on; deeper than two levels has no block
+    // 1 - a top-level section, 2 - inside it, and so on; deeper ones are drawn as the second
     property int depth: 1
     // Items of the column left without a frame (the title of a settings page)
     property var exclude: []
@@ -28,13 +28,12 @@ Item {
     readonly property int frameGap: 6
     readonly property int blockPad: 6
     // The margins of the holder in the column of the section: the content inside the block and
-    // inside the frames of its settings; a section deeper than two levels only indents
+    // inside the frames of its settings
     readonly property int insetLeft: !window.ui.modern ? 0
                                    : depth === 1 ? (header ? header.Layout.leftMargin : 0) + blockPad + framePadH
-                                   : depth === 2 ? blockPad + framePadH
-                                   : 2 * framePadH
-    readonly property int insetRight: window.ui.modern && depth > 2 ? framePadH : insetLeft
-    readonly property int insetTop: window.ui.modern && depth <= 2 ? blockPad : 0
+                                   : blockPad + framePadH
+    readonly property int insetRight: insetLeft
+    readonly property int insetTop: window.ui.modern ? blockPad : 0
     readonly property int insetBottom: insetTop
 
     property var itemFrames: []
@@ -157,7 +156,7 @@ Item {
     // The block of an open section: its header is the top of it
     UiFrame {
         readonly property Item holder: frames.parent
-        visible: window.ui.modern && frames.depth <= 2 && frames.header !== null && holder !== null
+        visible: window.ui.modern && frames.header !== null && holder !== null
         z: -2
         x: frames.header ? frames.header.x - holder.x - 1 : 0
         y: frames.header ? frames.header.y - holder.y - 1 : 0
