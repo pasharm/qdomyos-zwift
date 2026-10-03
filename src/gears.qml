@@ -835,7 +835,8 @@ ScrollView {
                                     contentItem: UiSpinInput {
                                         z: 2
                                         text: cranksetSpinBox.textFromValue(cranksetSpinBox.value, cranksetSpinBox.locale)
-                                        font: cranksetSpinBox.font
+                                        // Modern look: the 16 px of the +/- fields (UiSpinBox, the inclination table)
+                                        font: window.ui.modern ? Qt.font({ family: cranksetSpinBox.font.family, pixelSize: 16 }) : cranksetSpinBox.font
                                         color: window.ui.modern ? window.ui.textMain : "black"
                                         selectionColor: window.ui.modern ? window.ui.accent : "#21be2b"
                                         selectedTextColor: window.ui.modern ? window.ui.accentInk : "#ffffff"
@@ -939,7 +940,7 @@ ScrollView {
                                     contentItem: UiSpinInput {
                                         z: 2
                                         text: cogSpinBox.textFromValue(cogSpinBox.value, cogSpinBox.locale)
-                                        font: cogSpinBox.font
+                                        font: window.ui.modern ? Qt.font({ family: cogSpinBox.font.family, pixelSize: 16 }) : cogSpinBox.font
                                         color: window.ui.modern ? window.ui.textMain : "black"
                                         selectionColor: window.ui.modern ? window.ui.accent : "#21be2b"
                                         selectedTextColor: window.ui.modern ? window.ui.accentInk : "#ffffff"

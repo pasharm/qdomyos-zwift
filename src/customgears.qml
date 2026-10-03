@@ -327,6 +327,8 @@ ScrollView {
                                 Binding on topInset { when: window.ui.modern; value: 0; restoreMode: Binding.RestoreBindingOrValue }
                                 Binding on bottomInset { when: window.ui.modern; value: 0; restoreMode: Binding.RestoreBindingOrValue }
                                 Binding on verticalAlignment { when: window.ui.modern; value: Text.AlignVCenter; restoreMode: Binding.RestoreBindingOrValue }
+                                // The 16 px of the +/- fields (UiSpinBox, the inclination table)
+                                Binding on font.pixelSize { when: window.ui.modern; value: 16; restoreMode: Binding.RestoreBindingOrValue }
                                 background: Rectangle {
                                     color: window.ui.modern ? "transparent" : "white"
                                     border.color: "#cccccc"
