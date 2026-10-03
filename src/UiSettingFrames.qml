@@ -9,6 +9,8 @@ import QtQuick.Layouts 1.3
 // their own block. The block of the section itself (the header on top of it) is drawn here too.
 // Goes into the item that holds the content at its (0, 0) - the Loader of AccordionElement, the
 // box of StaticAccordionElement - which is laid out in the column of the section under its header.
+// On a settings page without sections (TTS, the inclination overrides) it is the first item of
+// the column itself, of no height: it stands at (0, 0) of the column as well.
 Item {
     id: frames
 
@@ -18,6 +20,8 @@ Item {
     property Item header: null
     // 1 - a top-level section, 2 - inside it, and so on; deeper than two levels has no block
     property int depth: 1
+    // Items of the column left without a frame (the title of a settings page)
+    property var exclude: []
 
     readonly property int framePadH: 10
     readonly property int framePadV: 8
@@ -37,8 +41,12 @@ Item {
     // The layout margins of the content as settings.qml set them, to add to and to give back
     property var baseMargins: []
 
+    // A section inside draws its own block; a switch section (AccordionCheckElement) only while
+    // it is on - switched off it is a switch row like the others
     function isSectionLike(c) {
-        return c.title !== undefined && (c.nested !== undefined || c.accordionContent !== undefined)
+        if (c.title === undefined || (c.nested === undefined && c.accordionContent === undefined))
+            return false
+        return c.linkedBoolSetting === undefined || c.isOpen
     }
     function isDescription(c) {
         return c.text !== undefined && c.wrapMode !== undefined && c.color !== undefined
@@ -76,7 +84,8 @@ Item {
             var b = baseOf(c)
             var want = { item: c, top: b.top, bottom: b.bottom, left: b.left, right: b.right }
             entries.push(want)
-            if (!window.ui.modern || !c.visible || (c.height <= 0 && c.implicitHeight <= 0))
+            if (!window.ui.modern || !c.visible || (c.height <= 0 && c.implicitHeight <= 0)
+                    || exclude.indexOf(c) >= 0)
                 continue
             if (isSectionLike(c)) {
                 // Out to the edges of the frames around it

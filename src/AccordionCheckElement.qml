@@ -21,6 +21,15 @@ ColumnLayout {
     spacing: 0
 
     readonly property bool modernCard: window.ui.modern && card
+    // How deep it is among the settings sections (as AccordionElement): switched on inside a
+    // section, it is framed as a subsection of it
+    readonly property int depth: {
+        var d = 1
+        for (var p = parent; p; p = p.parent)
+            if (p.isOpen !== undefined && p.title !== undefined && p.accordionContent !== undefined)
+                d++
+        return d
+    }
 
     function convertValue(val) {
         let tpval = typeof(val);
@@ -185,13 +194,36 @@ ColumnLayout {
                 color: window.ui.textMuted
             }
 
-            // This will get filled with the content
-            ColumnLayout {
-                id: contentPlaceholder
+            // This will get filled with the content. Held in a plain item: in a settings section
+            // the modern look lays the frames of its settings beside it (a column would lay them
+            // out as rows), the switch row on top of the block
+            Item {
+                id: contentBox
+                readonly property bool framed: window.ui.modern && !rootElement.modernCard
                 visible: rootElement.isOpen
-                Layout.fillWidth: true;
-                Layout.leftMargin: window.ui.modern && !rootElement.modernCard ? 12 : 0
-                Layout.rightMargin: window.ui.modern && !rootElement.modernCard ? 8 : 0
+                Layout.fillWidth: true
+                implicitHeight: contentPlaceholder.implicitHeight
+                Layout.leftMargin: framed ? settingFrames.insetLeft : 0
+                Layout.rightMargin: framed ? settingFrames.insetRight : 0
+                Layout.topMargin: framed ? settingFrames.insetTop : 0
+                Layout.bottomMargin: framed ? settingFrames.insetBottom : 0
+                // Under the switch row: the block frame starts behind it
+                z: -1
+
+                UiSettingFrames {
+                    id: settingFrames
+                    z: -1
+                    visible: contentBox.framed
+                    content: contentBox.framed && contentPlaceholder.children.length > 0
+                             ? contentPlaceholder.children[0] : null
+                    header: modernHeader
+                    depth: rootElement.depth
+                }
+
+                ColumnLayout {
+                    id: contentPlaceholder
+                    width: parent.width
+                }
             }
 
             // Classic look (and the modern look outside a card): the note after the element,
