@@ -1005,6 +1005,23 @@ ApplicationWindow {
         visible: false
     }
 
+    // a FitShow bike sends its data in the Virtufit Etappe layout: ask before enabling the setting, no restart needed
+    MessageDialog {
+        id: popupVirtufitLayoutQuestion
+        text: qsTr("QZ has detected the data format of this bike. Enable \"Virtufit Etappe 2.0 Bike\"?")
+        informativeText: qsTr("Without it QZ uses the default settings, and the data or the resistance may be off.")
+        buttons: (MessageDialog.Yes | MessageDialog.No)
+        onYesClicked: { rootItem.virtufitLayoutAnswer(true); this.visible = false; }
+        onNoClicked: { rootItem.virtufitLayoutAnswer(false); this.visible = false; }
+        visible: false
+    }
+
+    Connections {
+        target: rootItem
+        ignoreUnknownSignals: true
+        function onVirtufitLayoutQuestionRequested() { popupVirtufitLayoutQuestion.visible = true; }
+    }
+
     // a device changed a setting on its own (auto-detection): the message says what QZ found and why it must restart
     UiMessageDialog {
         id: popupRestartAppDetected

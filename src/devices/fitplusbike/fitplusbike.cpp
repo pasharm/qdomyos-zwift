@@ -292,6 +292,13 @@ void fitplusbike::forceResistance(resistance_t requestResistance) {
     }
 }
 
+// the answer to the Virtufit Etappe question: no restart is needed, every Virtufit branch reads the setting when it
+// runs, and initRequest makes update() call btinit() on its next tick, as after the first connection
+void fitplusbike::virtufitLayoutAnswered(bool enable) {
+    if (enable)
+        initRequest = true;
+}
+
 void fitplusbike::update() {
     if (m_control->state() == QLowEnergyController::UnconnectedState) {
         emit disconnected();
@@ -718,20 +725,21 @@ void fitplusbike::characteristicChanged(const QLowEnergyCharacteristic &characte
 
         if (newValue.length() != 14) {
             // FitShow bikes with the Virtufit Etappe layout send 15-byte 02 42 02 frames that this branch drops:
-            // switch the setting on and send the Virtufit init again. No restart is needed: every Virtufit branch
-            // reads the setting when it runs, and initRequest makes update() call btinit() on its next tick.
+            // ask whether to switch the setting on; on Yes virtufitLayoutAnswered() sends the Virtufit init again.
             // Not for the SX600 (its FFF1 frames land here when it reads data from FTMS) and not for a bike
-            // that already sent frames this branch understands.
+            // that already sent frames this branch understands. Asked once per device object; No turns it off for good.
             if (!virtufitLayoutDetected && !sportstech_sx600 && !validFrameSeen && newValue.length() == 15 &&
+                settings.value(QZSettings::virtufit_layout_question, QZSettings::default_virtufit_layout_question)
+                    .toBool() &&
                 (uint8_t)newValue.at(0) == 0x02 && (uint8_t)newValue.at(1) == 0x42 &&
                 (uint8_t)newValue.at(2) == 0x02) {
                 virtufitLayoutDetected = true;
-                settings.setValue(QZSettings::virtufit_etappe, true);
-                qDebug() << QStringLiteral("Virtufit Etappe data layout detected, setting enabled, init again");
-                initRequest = true;
-                if (homeform::singleton())
-                    homeform::singleton()->setToastRequested(
-                        QObject::tr("QZ has detected the data format of this bike and enabled \"Virtufit Etappe 2.0 Bike\" in the settings."));
+                qDebug() << QStringLiteral("Virtufit Etappe data layout detected, asking to enable the setting");
+                if (homeform::singleton()) {
+                    connect(homeform::singleton(), &homeform::virtufitLayoutAnswered, this,
+                            &fitplusbike::virtufitLayoutAnswered, Qt::UniqueConnection);
+                    homeform::singleton()->requestVirtufitLayoutQuestion();
+                }
             }
             return;
         }

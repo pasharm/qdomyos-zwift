@@ -609,6 +609,19 @@ class homeform : public QObject {
             settings.setValue(QZSettings::fitshow_bike_question, false);
         qDebug() << "fitshowBikeAnswer" << isBike;
     }
+    // a FitShow bike sends frames in the Virtufit Etappe layout: ask before switching the setting on
+    void requestVirtufitLayoutQuestion() { emit virtufitLayoutQuestionRequested(); }
+    // the answer: Yes enables the setting, and the bike sends its init again (no restart needed);
+    // No turns the question off for good
+    Q_INVOKABLE void virtufitLayoutAnswer(bool enable) {
+        QSettings settings;
+        if (enable)
+            settings.setValue(QZSettings::virtufit_etappe, true);
+        else
+            settings.setValue(QZSettings::virtufit_layout_question, false);
+        qDebug() << "virtufitLayoutAnswer" << enable;
+        emit virtufitLayoutAnswered(enable);
+    }
     void setStravaUploadRequested(bool value) {
         m_stravaUploadRequested = value;
     }
@@ -1316,6 +1329,8 @@ public:
     void toastRequestedChanged(QString value);
     void restartToApplyRequested(QString message);
     void fitshowBikeQuestionRequested();
+    void virtufitLayoutQuestionRequested();
+    void virtufitLayoutAnswered(bool enable);
     void stravaUploadRequestedChanged(bool value);
     void garminMfaRequestedChanged(bool value);
     void garminWorkoutPromptRequestedChanged(bool value);

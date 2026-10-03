@@ -862,6 +862,9 @@ class QZSettings {
 
     static const QString virtufit_etappe;
     static constexpr bool default_virtufit_etappe = false;
+    // asked when a FitShow bike sends Virtufit Etappe frames; No turns the question off (not on the settings page)
+    static const QString virtufit_layout_question;
+    static constexpr bool default_virtufit_layout_question = true;
 
     /**
      *@brief Ask whether an FS- device that exposes FTMS Indoor Bike Data is a bike. Switched off when the user answers No; not shown in the settings page.
