@@ -1525,6 +1525,7 @@ function drawPace(pace, maxEl, backgroundFill) {
                             return timeTick(value, this.max);
                         },
                         align: "end",
+                        stepSize: timeStep(maxEl),
                     },
                     max: maxEl,
                 },
