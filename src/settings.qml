@@ -4181,6 +4181,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiTextField {
                             id: specificGearValueField
+                            numberField: true
                             text: settings.gears_current_value_f
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
@@ -7195,6 +7196,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiTextField {
                             id: floatingWidthField
+                            numberField: true
                             text: settings.floating_width
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
@@ -7233,6 +7235,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiTextField {
                             id: floatingHeightField
+                            numberField: true
                             text: settings.floating_height
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
@@ -7271,6 +7274,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiTextField {
                             id: floatingTransparencyField
+                            numberField: true
                             text: settings.floating_transparency
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
@@ -7609,6 +7613,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiTextField {
                                     id: secondLineTextSizeField
+                                    numberField: true
                                     text: settings.theme_tile_secondline_textsize
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
@@ -8665,6 +8670,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiTextField {
                             id: zwiftPollTimeTextField
+                            numberField: true
                             text: settings.zwift_api_poll
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
@@ -10235,6 +10241,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiTextField {
                             id: pidHrRecoveryZoneLimitTextField
+                            numberField: true
                             text: settings.trainprogram_pid_hr_recovery_zone_limit
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
@@ -10270,6 +10277,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiTextField {
                             id: pidHrPushyZoneLimitTextField
+                            numberField: true
                             text: settings.trainprogram_pid_hr_pushy_zone_limit
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
@@ -13826,8 +13834,9 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Max Watt:")
                             Layout.fillWidth: true
                         }
-                        TextField {
+                        UiTextField {
                             id: wattMaxTextField
+                            numberField: true
                             text: settings.watt_max
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
@@ -13835,7 +13844,7 @@ import QtQuick 2.12 as Quick212
                             onAccepted: settings.watt_max = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
-                        Button {
+                        UiButton {
                             id: okWattMaxButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
