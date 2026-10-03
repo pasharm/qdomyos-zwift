@@ -251,6 +251,14 @@ if scroll_to 'Experimental Features' && tap_ui 'Experimental Features'; then
   adb shell input swipe 700 2000 700 900 400 || true; sleep 2
   shot dark-42-experimental-virtual-device
 fi
+# The tiles page: frames instead of filled cards, a tile that is on in the accent
+scroll_top
+if scroll_to 'Tiles Options' && tap_ui 'Tiles Options'; then
+  sleep 5
+  shot dark-45-tiles
+  back "tiles page"
+  sleep 3
+fi
 # The TTS page (a page of plain settings, no sections)
 scroll_top
 if scroll_to 'TTS \(Text to Speech\) Settings' && tap_ui 'TTS \(Text to Speech\) Settings'; then
