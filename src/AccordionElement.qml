@@ -48,6 +48,11 @@ ColumnLayout {
         return c.text !== undefined && c.wrapMode !== undefined && c.color !== undefined
             && Qt.colorEqual(c.color, window.ui.textMuted)
     }
+    // A label of its own, not a description: the name of the control below it
+    function isTitle(c) {
+        return c.text !== undefined && c.wrapMode !== undefined && c.checked === undefined && c.readOnly === undefined
+            && !isDescription(c)
+    }
     function baseOf(c) {
         for (var i = 0; i < baseMargins.length; i++)
             if (baseMargins[i].item === c)
@@ -85,10 +90,13 @@ ColumnLayout {
                 want.section = true
                 want.groupStart = true
                 cur = null
-            } else if (cur && isDescription(c)) {
+            } else if (cur && (isDescription(c) || cur.titleOnly)) {
+                // A description joins the setting above it; a lone title ("FTMS Treadmill:")
+                // takes the picker below it into its frame
                 cur.last = want
+                cur.titleOnly = false
             } else {
-                cur = { first: want, last: want }
+                cur = { first: want, last: want, titleOnly: isTitle(c) }
                 want.group = cur
                 want.groupStart = true
             }
@@ -124,11 +132,11 @@ ColumnLayout {
     Connections {
         target: contentLoader.item
         ignoreUnknownSignals: true
-        onImplicitHeightChanged: Qt.callLater(rootElement.regroup)
+        function onImplicitHeightChanged() { Qt.callLater(rootElement.regroup) }
     }
     Connections {
         target: window.ui
-        onModernChanged: Qt.callLater(rootElement.regroup)
+        function onModernChanged() { Qt.callLater(rootElement.regroup) }
     }
 
     spacing: 0
