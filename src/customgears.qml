@@ -160,12 +160,13 @@ ScrollView {
             border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
             radius: window.ui.modern ? 12 : 0
 
-            // Modern look: a narrow gear number, the offset field gets the room (as the Wahoo table)
+            // Two equal columns; the offset field is narrow inside its own (a field over two thirds of
+            // the row put the - and + far apart)
             Row {
                 anchors.fill: parent
 
                 Rectangle {
-                    width: parent.width * (window.ui.modern ? 0.24 : 1 / 2)
+                    width: parent.width / 2
                     height: parent.height
                     border.width: window.ui.modern ? 0 : 1
                     border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
@@ -185,7 +186,7 @@ ScrollView {
                 }
 
                 Rectangle {
-                    width: parent.width * (window.ui.modern ? 0.76 : 1 / 2)
+                    width: parent.width / 2
                     height: parent.height
                     border.width: window.ui.modern ? 0 : 1
                     border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
@@ -236,7 +237,7 @@ ScrollView {
                     anchors.fill: parent
 
                     Rectangle {
-                        width: parent.width * (window.ui.modern ? 0.24 : 1 / 2)
+                        width: parent.width / 2
                         height: parent.height
                         border.width: window.ui.modern ? 0 : 1
                         border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
@@ -251,7 +252,7 @@ ScrollView {
 
                     Rectangle {
                         id: offsetCell
-                        width: parent.width * (window.ui.modern ? 0.76 : 1 / 2)
+                        width: parent.width / 2
                         height: parent.height
                         border.width: window.ui.modern ? 0 : 1
                         border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
@@ -275,7 +276,7 @@ ScrollView {
                         RowLayout {
                             id: offsetRow
                             anchors.centerIn: parent
-                            width: parent.width * (window.ui.modern ? 0.88 : 0.92)
+                            width: window.ui.modern ? Math.min(parent.width * 0.88, 180) : parent.width * 0.92
                             height: window.ui.modern ? 36 : offsetControlHeight
                             spacing: window.ui.modern ? 0 : 4
 
