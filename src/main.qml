@@ -739,6 +739,7 @@ ApplicationWindow {
         focus: true
         closePolicy: Popup.NoAutoClose
         onOpened: refresh_bluetooth_devices_clicked()
+        readonly property bool modern: window.ui.modern
 
         Column {
             anchors.fill: parent
@@ -748,8 +749,10 @@ ApplicationWindow {
             Label {
                 width: parent.width
                 text: qsTr("Select Your Gym Device")
-                font.pixelSize: Qt.application.font.pixelSize + 10
-                font.bold: true
+                // Modern: the title of UiMessageDialog
+                font.pixelSize: popupGymMode.modern ? 20 : Qt.application.font.pixelSize + 10
+                font.weight: popupGymMode.modern ? Font.DemiBold : Font.Bold
+                color: popupGymMode.modern ? window.ui.textMain : Material.foreground
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.WordWrap
             }
@@ -759,6 +762,7 @@ ApplicationWindow {
                 text: qsTr("QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.")
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
+                color: popupGymMode.modern ? window.ui.textMain : Material.foreground
             }
 
             ValueComboBox {
@@ -785,11 +789,12 @@ ApplicationWindow {
                 text: qsTr("The list refreshes automatically every 10 seconds.")
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
-                color: Material.color(Material.Grey)
+                color: popupGymMode.modern ? window.ui.textMuted : Material.color(Material.Grey)
             }
 
-            Button {
+            UiButton {
                 anchors.horizontalCenter: parent.horizontalCenter
+                flat: popupGymMode.modern
                 text: qsTr("Skip")
                 onClicked: {
                     gymModePopupDismissed = true
