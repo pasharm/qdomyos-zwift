@@ -164,7 +164,9 @@ Item {
         width: frames.header ? frames.header.width + 2 : 0
         height: frames.header ? holder.y + holder.height + frames.insetBottom - frames.header.y + 2 : 0
         radius: frames.header ? frames.header.radius + 1 : 0
-        stroke: frames.depth === 1 ? window.ui.accent : window.ui.outline
+        // A subsection: the accent toned down - clearly a block of its own, still under the section
+        stroke: frames.depth === 1 ? window.ui.accent
+                : Qt.rgba(window.ui.accent.r, window.ui.accent.g, window.ui.accent.b, 0.4)
         strokeWidth: 1
     }
 
