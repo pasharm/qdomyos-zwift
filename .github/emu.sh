@@ -179,7 +179,26 @@ if best:
 }
 
 
-# T-105: thin frames around the settings and the block of an open section, shots only
+# T-122: RAM of the app with and without the settings warm-up. Three states, three samples
+# each, 5 s apart: idle on the home page (the warm-up has run, if the build has it), after
+# one visit of the settings, after a second visit. Full dumpsys output in dumps/meminfo-*.txt,
+# the TOTAL lines in steps.log; QZ-TIMING lines of logcat at the end.
+meminfo() {
+  local i
+  for i in 1 2 3; do
+    adb shell dumpsys meminfo $PKG > dumps/meminfo-$1-$i.txt 2>&1 || true
+    echo "MEM $1 #$i: $(grep -m1 -E '^ *TOTAL PSS:|^ *TOTAL ' dumps/meminfo-$1-$i.txt | tr -s ' ')" >> $STEPLOG
+    sleep 5
+  done
+}
+visit_settings() {
+  open_menu
+  tap_drawer 'Settings' 400 1400
+  sleep 12
+  shot $1
+  back "settings"
+  sleep 15
+}
 adb logcat -c || true
 adb logcat > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
@@ -191,106 +210,15 @@ if [ -f ui.xml ] && [ "$(python3 .github/uitap.py ui.xml --package)" = "$PKG" ];
 else
   back "health connect"
 fi
-sleep 30
+sleep 40
 if [ -f ui.xml ] && grep -q "Welcome to QZ" ui.xml; then tap $MENU "wizard back"; sleep 5; fi
 shot 04-home
-
-open_menu
-tap_drawer 'Settings' 400 1400
-sleep 12
-shot 10-root
-
-# One theme: a section with its settings, a subsection inside it, scrolled down a few times
-run_theme() {
-  local t="$1"
-  scroll_top
-  if scroll_to 'General Options' && tap_ui 'General Options'; then
-    sleep 4
-    shot "$t-20-general"
-    adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
-    shot "$t-21-general-scrolled"
-    scroll_top
-    tap_ui 'General Options'; sleep 3
-  fi
-  scroll_top
-  sleep 3
-  if scroll_to 'Treadmill Options' && tap_ui 'Treadmill Options'; then
-    sleep 4
-    shot "$t-30-treadmill"
-    adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-    shot "$t-31-treadmill-scrolled"
-    adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-    shot "$t-35-sticky"
-    tap 700 290 "sticky header"; sleep 2
-    shot "$t-36-after-sticky-tap"
-    if scroll_to 'Domyos Treadmill Options' && tap_ui 'Domyos Treadmill Options'; then
-      sleep 4
-      shot "$t-32-subsection-open"
-      adb shell input swipe 700 2000 700 1200 400 || true; sleep 2
-      shot "$t-33-subsection-scrolled"
-      tap_ui 'Domyos Treadmill Options'; sleep 3
-    fi
-    for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 900 300 || true; done
-    sleep 2
-    shot "$t-34-treadmill-end"
-    scroll_top
-    tap_ui 'Treadmill Options'; sleep 3
-  fi
-}
-run_theme light
-adb shell cmd uimode night yes || true
-sleep 6
-run_theme dark
-# The static section at the end (StaticAccordionElement): frames like the others
-scroll_top
-if scroll_to 'Experimental Features' && tap_ui 'Experimental Features'; then
-  sleep 4
-  shot dark-40-experimental
-  adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
-  shot dark-41-experimental-scrolled
-  adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-  shot dark-42-experimental-virtual-device
-fi
-# The tiles page: frames instead of filled cards, a tile that is on in the accent
-scroll_top
-if scroll_to 'Tiles Options' && tap_ui 'Tiles Options'; then
-  sleep 5
-  shot dark-45-tiles
-  back "tiles page"
-  sleep 3
-fi
-# The TTS page (a page of plain settings, no sections)
-scroll_top
-if scroll_to 'TTS \(Text to Speech\) Settings' && tap_ui 'TTS \(Text to Speech\) Settings'; then
-  sleep 4
-  shot dark-50-tts
-  back "tts page"
-  sleep 3
-fi
-
-adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
-shot screenshot
-kill $LOGCAT_PID 2>/dev/null || true
-wait $LOGCAT_PID 2>/dev/null || true
-# If the recording broke off (adb restarted), the dump of the end is better than nothing
-adb logcat -d > end_logcat.txt || true
-if [ "$(wc -l < full_logcat.txt)" -lt "$(wc -l < end_logcat.txt)" ]; then
-  echo "!! logcat recording shorter than the dump at the end: the dump is kept" >> $STEPLOG
-  mv end_logcat.txt full_logcat.txt
-else
-  rm -f end_logcat.txt
-fi
-# The debug logs the app wrote itself (Documents/QZ on Android 14+): none with the log off
-mkdir -p qz-logs
-adb shell 'ls -la /sdcard/Documents/QZ/ 2>&1' > qz-logs/listing.txt || true
-for f in $(adb shell 'ls /sdcard/Documents/QZ/ 2>/dev/null' | tr -d '\r' | grep '^debug-.*[.]log$'); do
-  adb pull "/sdcard/Documents/QZ/$f" "qz-logs/$f" > /dev/null 2>&1 || true
-done
-echo "== app debug logs"; cat qz-logs/listing.txt; ls -la qz-logs
-echo "== steps"; cat $STEPLOG
-echo "== timing"; grep -E "QZ-TIMING|QZ-THEME" full_logcat.txt || true
-# The dialogs are hidden (hide_error_dialogs above), so hangs are only here
-grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
-echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
-grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
-echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
+meminfo 1-idle
+visit_settings 05-settings
+shot 06-home-after
+meminfo 2-after-settings
+visit_settings 07-settings-again
+meminfo 3-after-second
+grep "QZ-TIMING" full_logcat.txt >> $STEPLOG || true
+grep -c "ANR in" full_logcat.txt >> $STEPLOG || true
+kill $LOGCAT_PID || true
