@@ -743,8 +743,9 @@ function process_arr(arr) {
         }
     };
 
-    // no heart rate sensor: no empty heart chart and no zeros under it
-    $('#heartBox').toggle(heart.some(function (p) { return p.y > 0; }));
+    // no heart rate sensor: no empty heart chart and no zeros under it. Height 0, not display: none, so the
+    // chart still renders and sends its image for the end of workout mail, which waits for all of them
+    $('#heartBox').css({ height: heart.some(function (p) { return p.y > 0; }) ? '' : '0', overflow: 'hidden' });
     ctx = document.getElementById('canvasHeart').getContext('2d');
     var heartChart = makeChart(ctx, config);
 
