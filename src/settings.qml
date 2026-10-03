@@ -277,6 +277,8 @@ import QtQuick 2.12 as Quick212
                 return
             }
             var where = settingsIndex ? settingsIndex[entry.key] : null
+            // TEMP-LOG: QZ-NAV - a search result tapped
+            console.log("QZ-NAV search jump key=" + entry.key + " name=" + entry.name + " file=" + (where ? where.file : "none") + " chain=" + (where ? JSON.stringify(where.chain) : "none"))
             // A setting that is on no page (Garmin ANT+, Peloton Bike OCR...): the result is
             // the only place to change it, the tap leaves the results as they are instead of
             // dropping them for the top of the settings
@@ -311,6 +313,7 @@ import QtQuick 2.12 as Quick212
                            typeof item.title === "string" &&
                            (item.title.indexOf(wanted) === 0 || item.title.indexOf(english) === 0)
                 })
+                console.log("QZ-NAV search chain[" + i + "] " + english + " -> " + (section ? "found open=" + section.isOpen + " visible=" + section.visible : "NOT FOUND"))
                 if (!section)
                     break
                 // A section that is a switched-off setting itself (Wahoo direct connect): opened
@@ -350,6 +353,7 @@ import QtQuick 2.12 as Quick212
             // Modern look: the fields of a switched-off section are not on the page yet
             if (window.ui.modern && switchedOff)
                 toast.show(qsTr("Turn on “%1” to change this setting").arg(window.ui.plainTitle(switchedOff.title)))
+            console.log("QZ-NAV search target=" + (target ? (target.text || target.title || target.toString()) : "none") + " container=" + (container.title || container.toString()) + " switchedOff=" + (switchedOff !== null))
             pendingReveal = { flickable: page.contentItem, target: target || container }
             revealTimer.restart()
         }
@@ -424,6 +428,7 @@ import QtQuick 2.12 as Quick212
             }
             var at = row.mapToItem(flickable.contentItem, 0, 0)
             flickable.contentY = Math.max(0, Math.min(at.y - 96, flickable.contentHeight - flickable.height))
+            console.log("QZ-NAV search reveal rowY=" + Math.round(at.y) + " contentY=" + Math.round(flickable.contentY) + " ch=" + Math.round(flickable.contentHeight) + " h=" + Math.round(flickable.height))
             // Nothing to light when not even a section was found: the whole page would glow
             if (target === flickable)
                 return
