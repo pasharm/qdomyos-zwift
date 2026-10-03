@@ -1103,6 +1103,7 @@ public:
     bool startFitFolderImport(bool allowPicker);
     void offerHistoryRecovery();
     void maybeOfferHistoryRecovery();
+    int historyWorkoutCount();
     QString m_historyDatabasePath;
     bool m_historyDatabaseIsNew = false;
     bool m_historyRecoveryChecked = false;
