@@ -11,8 +11,8 @@ ScrollView {
     contentHeight: chainringColumn.implicitHeight +
                    (window.ui.modern ? 2 * window.contentSideMargin : 0)
     focus: true
-    anchors.horizontalCenter: parent.horizontalCenter
-    anchors.fill: parent
+    // No anchors: the page is pushed on the StackView, which sizes it to fill and warned about
+    // conflicting anchors
     id: gearSettingsWindow
 
     visible: true
@@ -326,7 +326,13 @@ ScrollView {
     signal restoreDefaultWheelDiameter()
 
     ColumnLayout {
-        anchors.fill: parent
+        // Modern look: not tied to the bottom - the column height would come from the content
+        // height made from it (binding loop on contentHeight). The classic table fills the rest of
+        // the page and scrolls by itself, so the classic column still fills
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.bottom: window.ui.modern ? undefined : parent.bottom
         anchors.margins: window.ui.modern ? window.contentSideMargin : 20
         spacing: window.ui.modern ? 12 : 20
         id: chainringColumn

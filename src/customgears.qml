@@ -6,12 +6,12 @@ import Qt.labs.settings 1.0
 
 ScrollView {
     contentWidth: -1
-    // Modern look: with the column's top and bottom margins, not in its implicit height (the
-    // end of the page was cut off). The classic look keeps the plain height
-    contentHeight: customGearsColumn.implicitHeight + (window.ui.modern ? 20 : 0)
+    // The column with its top and bottom margins, which are not in its implicit height (the
+    // end of the page was cut off)
+    contentHeight: customGearsColumn.implicitHeight + 2 * customGearsColumn.anchors.topMargin
     focus: true
-    anchors.horizontalCenter: parent.horizontalCenter
-    anchors.fill: parent
+    // No anchors: the page is pushed on the StackView, which sizes it to fill and warned about
+    // conflicting anchors
     id: customGearSettingsWindow
     visible: true
     clip: true
@@ -108,8 +108,12 @@ ScrollView {
 
     ColumnLayout {
         id: customGearsColumn
-        anchors.fill: parent
-        anchors.margins: 10
+        // Top, left and right only: filling the content item too tied the column height to the
+        // content height made from it (binding loop on contentHeight)
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        anchors.topMargin: 10
         anchors.leftMargin: window.contentSideMargin
         anchors.rightMargin: window.contentSideMargin
         spacing: 10
@@ -296,6 +300,8 @@ ScrollView {
                                 MouseArea {
                                     id: minusArea
                                     anchors.fill: parent
+                                    Accessible.role: Accessible.Button
+                                    Accessible.name: "-"
                                     onClicked: offsetCell.stepOffset(-0.5)
                                 }
                             }
@@ -360,6 +366,8 @@ ScrollView {
                                 MouseArea {
                                     id: plusArea
                                     anchors.fill: parent
+                                    Accessible.role: Accessible.Button
+                                    Accessible.name: "+"
                                     onClicked: offsetCell.stepOffset(0.5)
                                 }
                             }
