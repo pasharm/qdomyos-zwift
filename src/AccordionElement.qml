@@ -171,8 +171,9 @@ ColumnLayout {
         }
         if (!stickyHeader)
             stickyHeader = stickyComponent.createObject(f)
-        stickyHeader.x = sectionHeader.mapToItem(f, 0, 0).x
-        stickyHeader.width = sectionHeader.width
+        // On the outline of the section block, which runs 1 px outside the real header
+        stickyHeader.x = sectionHeader.mapToItem(f, 0, 0).x - 1
+        stickyHeader.width = sectionHeader.width + 2
         stickyHeader.y = Math.min(0, bottom - stickyHeight)
         stickyHeader.visible = true
     }
