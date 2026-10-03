@@ -777,7 +777,9 @@ import QtQuick 2.12 as Quick212
         // control off the page on purpose. Garmin ANT+ moves the ANT channels to Garmin's private
         // network (ChannelService.java), switched on by chance it would cut the ANT+ sensors
         // off; its result was the only place left to change it, and a tap on it led nowhere
-        readonly property var searchHiddenSettings: ({ "ant_garmin": true })
+        // custom_inclination_resistance_table: the whole table as one text line; it is changed on its
+        // own page, which the search lists as a link
+        readonly property var searchHiddenSettings: ({ "ant_garmin": true, "custom_inclination_resistance_table": true })
 
         // The English titles and descriptions as written on gears.qml: translated through its
         // context (the texts are extracted there, not here)
