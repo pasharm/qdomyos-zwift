@@ -1,0 +1,174 @@
+import QtQuick 2.7
+import QtQuick.Layouts 1.3
+
+// Modern look: the frames of an open settings section, laid under its content.
+// A setting is not an item of its own in settings.qml but loose neighbours in the column of the
+// section (a switch, then its description), so the column is cut into groups - a control and the
+// descriptions after it - and each group gets the space around it by its layout margins and a
+// frame drawn by the geometry of its first and last item. Sections inside are left out: they draw
+// their own block. The block of the section itself (the header on top of it) is drawn here too.
+// Goes into the item that holds the content at its (0, 0) - the Loader of AccordionElement, the
+// box of StaticAccordionElement - which is laid out in the column of the section under its header.
+Item {
+    id: frames
+
+    // The column of the settings
+    property Item content: null
+    // The header of the section: the top of its block
+    property Item header: null
+    // 1 - a top-level section, 2 - inside it, and so on; deeper than two levels has no block
+    property int depth: 1
+
+    readonly property int framePadH: 10
+    readonly property int framePadV: 8
+    readonly property int frameGap: 6
+    readonly property int blockPad: 6
+    // The margins of the holder in the column of the section: the content inside the block and
+    // inside the frames of its settings; a section deeper than two levels only indents
+    readonly property int insetLeft: !window.ui.modern ? 0
+                                   : depth === 1 ? (header ? header.Layout.leftMargin : 0) + blockPad + framePadH
+                                   : depth === 2 ? blockPad + framePadH
+                                   : 2 * framePadH
+    readonly property int insetRight: window.ui.modern && depth > 2 ? framePadH : insetLeft
+    readonly property int insetTop: window.ui.modern && depth <= 2 ? blockPad : 0
+    readonly property int insetBottom: insetTop
+
+    property var itemFrames: []
+    // The layout margins of the content as settings.qml set them, to add to and to give back
+    property var baseMargins: []
+
+    function isSectionLike(c) {
+        return c.title !== undefined && (c.nested !== undefined || c.accordionContent !== undefined)
+    }
+    function isDescription(c) {
+        return c.text !== undefined && c.wrapMode !== undefined && c.color !== undefined
+            && Qt.colorEqual(c.color, window.ui.textMuted)
+    }
+    // A label of its own, not a description: the name of the control below it
+    function isTitle(c) {
+        return c.text !== undefined && c.wrapMode !== undefined && c.checked === undefined && c.readOnly === undefined
+            && !isDescription(c)
+    }
+    function baseOf(c) {
+        for (var i = 0; i < baseMargins.length; i++)
+            if (baseMargins[i].item === c)
+                return baseMargins[i]
+        var b = { item: c, top: c.Layout.topMargin, bottom: c.Layout.bottomMargin,
+                  left: c.Layout.leftMargin, right: c.Layout.rightMargin }
+        baseMargins.push(b)
+        return b
+    }
+    function setMargin(c, key, v) {
+        if (c.Layout[key] !== v)
+            c.Layout[key] = v
+    }
+    function regroup() {
+        if (!content) {
+            if (itemFrames.length)
+                itemFrames = []
+            return
+        }
+        var kids = content.children
+        var entries = []
+        var cur = null
+        for (var i = 0; i < kids.length; i++) {
+            var c = kids[i]
+            var b = baseOf(c)
+            var want = { item: c, top: b.top, bottom: b.bottom, left: b.left, right: b.right }
+            entries.push(want)
+            if (!window.ui.modern || !c.visible || (c.height <= 0 && c.implicitHeight <= 0))
+                continue
+            if (isSectionLike(c)) {
+                // Out to the edges of the frames around it
+                want.left = b.left - framePadH
+                want.right = b.right - framePadH
+                want.section = true
+                want.groupStart = true
+                cur = null
+            } else if (cur && (isDescription(c) || (cur.titleOnly && c.checked === undefined))) {
+                // A description joins the setting above it; a lone title ("FTMS Treadmill:")
+                // takes the picker below it into its frame, but not a switch: a warning line
+                // above a switch is a setting of its own
+                cur.last = want
+                cur.titleOnly = false
+            } else {
+                cur = { first: want, last: want, titleOnly: isTitle(c) }
+                want.group = cur
+                want.groupStart = true
+            }
+        }
+        var list = []
+        var seen = false
+        for (i = 0; i < entries.length; i++) {
+            var e = entries[i]
+            if (!e.groupStart)
+                continue
+            if (e.section) {
+                e.top += seen ? frameGap : 0
+            } else {
+                e.group.first.top += framePadV + (seen ? frameGap : 0)
+                e.group.last.bottom += framePadV
+                list.push({ first: e.group.first.item, last: e.group.last.item })
+            }
+            seen = true
+        }
+        for (i = 0; i < entries.length; i++) {
+            setMargin(entries[i].item, "topMargin", entries[i].top)
+            setMargin(entries[i].item, "bottomMargin", entries[i].bottom)
+            setMargin(entries[i].item, "leftMargin", entries[i].left)
+            setMargin(entries[i].item, "rightMargin", entries[i].right)
+        }
+        var same = list.length === itemFrames.length
+        for (i = 0; same && i < list.length; i++)
+            same = list[i].first === itemFrames[i].first && list[i].last === itemFrames[i].last
+        if (!same)
+            itemFrames = list
+    }
+
+    // A new content (a Loader loads it again on every opening): its margins as it comes
+    onContentChanged: {
+        baseMargins = []
+        regroup()
+    }
+    // A section opened again (StaticAccordionElement keeps its content while closed): the
+    // settings are visible again, the groups are made anew
+    onVisibleChanged: if (visible) Qt.callLater(frames.regroup)
+    Connections {
+        target: frames.content
+        ignoreUnknownSignals: true
+        function onImplicitHeightChanged() { Qt.callLater(frames.regroup) }
+    }
+    Connections {
+        target: window.ui
+        function onModernChanged() { Qt.callLater(frames.regroup) }
+    }
+
+    // The block of an open section: its header is the top of it
+    UiFrame {
+        readonly property Item holder: frames.parent
+        visible: window.ui.modern && frames.depth <= 2 && frames.header !== null && holder !== null
+        z: -2
+        x: frames.header ? frames.header.x - holder.x - 1 : 0
+        y: frames.header ? frames.header.y - holder.y - 1 : 0
+        width: frames.header ? frames.header.width + 2 : 0
+        height: frames.header ? holder.y + holder.height + frames.insetBottom - frames.header.y + 2 : 0
+        radius: frames.header ? frames.header.radius + 1 : 0
+        stroke: frames.depth === 1 ? window.ui.accent : window.ui.outline
+        strokeWidth: 1
+    }
+
+    // A frame for every setting
+    Repeater {
+        model: frames.itemFrames
+        UiFrame {
+            z: -1
+            x: -frames.framePadH
+            width: (frames.parent ? frames.parent.width : 0) + 2 * frames.framePadH
+            y: modelData.first.y - frames.framePadV
+            height: modelData.last.y + modelData.last.height - modelData.first.y + 2 * frames.framePadV
+            radius: 14
+            stroke: window.ui.outline
+            strokeWidth: 1
+        }
+    }
+}

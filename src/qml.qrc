@@ -17,6 +17,7 @@
         <file>UiIcons.js</file>
         <file>UiDrawerItem.qml</file>
         <file>UiSectionHeader.qml</file>
+        <file>UiSettingFrames.qml</file>
         <file>UiButton.qml</file>
         <file>UiComboBox.qml</file>
         <file>UiGroupBox.qml</file>
