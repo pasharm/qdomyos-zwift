@@ -45,6 +45,7 @@ class fitplusbike : public bike {
   private:
     resistance_t max_resistance = 24;
     void btinit();
+    void noteWorkoutStatus(int status, qint64 nowMs);
     void writeCharacteristic(uint8_t *data, uint8_t data_len, const QString &info, bool disable_log = false,
                              bool wait_for_response = false);
     void startDiscover();
@@ -90,6 +91,12 @@ class fitplusbike : public bike {
     qint64 workoutRunningSinceMs = 0;
     uint8_t workoutRestarts = 0;
     bool workoutRestartRequest = false;
+    // the start repeat while the bike has not run since the init (any mode with FitShow status frames)
+    bool workoutEverRunning = false;
+    bool unstartedWorkoutWarned = false;
+    qint64 workoutStoppedSinceMs = 0;
+    qint64 initDoneMs = 0;
+    qint64 lastStartSentMs = 0;
     resistance_t lastForcedResistance = -1;
 
 #ifdef Q_OS_IOS
