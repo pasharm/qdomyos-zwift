@@ -114,7 +114,8 @@ ColumnLayout {
             // The accent bar of the open header, on the outline like there
             Rectangle {
                 width: 4
-                height: parent.height - 16
+                // Within the straight part of the side: the short copy has little of it between the corners
+                height: Math.max(8, parent.height - 2 * parent.radius + 4)
                 anchors.verticalCenter: parent.verticalCenter
                 radius: 2
                 color: window.ui.accent
