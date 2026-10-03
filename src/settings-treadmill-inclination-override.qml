@@ -98,6 +98,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_ovveride_gain = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -122,6 +123,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_ovveride_offset = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -145,6 +147,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_0 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -167,6 +170,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_05 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -189,6 +193,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_10 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -211,6 +216,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_15 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -233,6 +239,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_20 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -255,6 +262,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_25 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -277,6 +285,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_30 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -299,6 +308,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_35 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -321,6 +331,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_40 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -343,6 +354,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_45 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -365,6 +377,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_50 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -387,6 +400,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_55 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -409,6 +423,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_60 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -431,6 +446,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_65 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -453,6 +469,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_70 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -475,6 +492,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_75 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -497,6 +515,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_80 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -519,6 +538,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_85 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -541,6 +561,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_90 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -563,6 +584,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_95 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -585,6 +607,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_100 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -607,6 +630,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_105 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -629,6 +653,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_110 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -651,6 +676,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_115 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -673,6 +699,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_120 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -695,6 +722,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_125 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -717,6 +745,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_130 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -739,6 +768,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_135 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -761,6 +791,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_140 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -783,6 +814,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_145 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
@@ -805,6 +837,7 @@ ScrollView {
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
+                signed: true
                 onAccepted: settings.treadmill_inclination_override_150 = text
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }

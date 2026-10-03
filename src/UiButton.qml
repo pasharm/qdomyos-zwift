@@ -15,6 +15,19 @@ T.Button {
     // Modern look: a destructive action (Delete) in the danger colour instead of the accent;
     // the classic look ignores it and keeps whatever Material.background the caller sets
     property bool danger: false
+    // Modern look: the OK button of a settings row greys out while the text field before it
+    // holds no acceptable value ("-", "12." of a number field cut short, an empty one): the
+    // click saved NaN without the "Setting saved!" toast. A caller's own enabled wins
+    property Item inputField: null
+    enabled: !(modern && inputField && !inputField.acceptableInput)
+    Component.onCompleted: {
+        if (!parent)
+            return
+        const siblings = parent.children
+        for (let i = 0; i < siblings.length && siblings[i] !== control; ++i)
+            if (siblings[i].acceptableInput !== undefined)
+                inputField = siblings[i]
+    }
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding)
