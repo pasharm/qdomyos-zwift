@@ -50,9 +50,9 @@ ColumnLayout {
             top = sectionHeader.mapToItem(f, 0, 0).y
             bottom = rootElement.mapToItem(f, 0, 0).y + rootElement.height
             // Until the very end of the section: the copy goes up with its last row
-            // Only once the copy covers what is left of the real header: earlier the bottom of
-            // the real header showed under the copy as a dark band
-            want = top + sectionHeader.height < stickyHeight && bottom > 0
+            // As soon as the real header starts going up: the copy covers what is left of it and
+            // shrinks with the scroll down to its compact height, so the change is gradual
+            want = top < 0 && bottom > 0
         }
         if (!want) {
             if (stickyHeader)
@@ -65,7 +65,9 @@ ColumnLayout {
         stickyHeader.x = sectionHeader.mapToItem(f, 0, 0).x - 1
         stickyHeader.width = sectionHeader.width + 2
         // At the end its bottom line lies on the bottom line of the block (1 px below the section)
-        stickyHeader.y = Math.min(0, bottom + 1 - stickyHeight)
+        var h = Math.max(stickyHeight, Math.min(sectionHeader.height, top + sectionHeader.height))
+        stickyHeader.height = h
+        stickyHeader.y = Math.min(0, bottom + 1 - h)
         stickyHeader.visible = true
     }
     function scrollToHeader() {
@@ -114,8 +116,9 @@ ColumnLayout {
             // The accent bar of the open header, on the outline like there
             Rectangle {
                 width: 4
-                // Within the straight part of the side: the short copy has little of it between the corners
-                height: Math.max(8, parent.height - 2 * parent.radius + 4)
+                // As long as on the real header at its height; shorter as the copy shrinks, so that
+                // at the compact height it stays within the straight part of the side
+                height: Math.min(parent.height - 24, 14 + 1.5 * (parent.height - rootElement.stickyHeight))
                 anchors.verticalCenter: parent.verticalCenter
                 radius: 2
                 color: window.ui.accent
@@ -129,9 +132,24 @@ ColumnLayout {
                 anchors.verticalCenter: parent.verticalCenter
                 text: window.ui.plainTitle(rootElement.title)
                 elide: Text.ElideRight
-                font.pixelSize: 15
+                // From the size of the real header down to the compact one as the copy shrinks
+                font.pixelSize: parent.height > rootElement.stickyHeight + 6 ? 16 : 15
                 font.weight: Font.Medium
                 color: window.ui.accent
+            }
+            // The chevron of the real header, fading out as the copy shrinks
+            UiIcon {
+                anchors.right: parent.right
+                anchors.rightMargin: 14
+                anchors.verticalCenter: parent.verticalCenter
+                width: 24
+                height: 24
+                name: "expand_more"
+                rotation: 180
+                color: window.ui.textMuted
+                opacity: Math.max(0, Math.min(1, (parent.height - rootElement.stickyHeight)
+                                                 / Math.max(1, sectionHeader.height - rootElement.stickyHeight)))
+                visible: opacity > 0
             }
             MouseArea {
                 anchors.fill: parent
