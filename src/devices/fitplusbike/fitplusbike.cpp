@@ -651,11 +651,12 @@ void fitplusbike::characteristicChanged(const QLowEnergyCharacteristic &characte
                 // Right after QZ reopens, the bike can stop the workout it has just started, then it acks the level
                 // commands without applying them: up to 3 restarts within 30 s of the start.
                 // A stop from the console later in the ride: the workout in QZ goes on, so the bike has to run too,
-                // or it ignores the levels. Only QZ stops the workout.
+                // or it ignores the levels. Only QZ stops the workout; while it is stopped or paused in QZ, the bike
+                // is left alone.
                 if (nowMs - workoutRunningSinceMs >= 30000 && !appStopped) {
                     workoutRestarts = 0;
                 }
-                if ((nowMs - workoutRunningSinceMs < 30000 || !appStopped) && workoutRestarts < 3) {
+                if (!appStopped && workoutRestarts < 3) {
                     workoutRestarts++;
                     workoutRestartRequest = true;
                     qDebug() << QStringLiteral("the bike stopped the workout, starting it again (attempt ") +
@@ -663,7 +664,7 @@ void fitplusbike::characteristicChanged(const QLowEnergyCharacteristic &characte
                 } else {
                     qDebug() << QStringLiteral("the bike stopped the workout");
                     // the restarts did not help: without a word QZ looks connected while the bike ignores the levels
-                    if (nowMs - workoutRunningSinceMs < 30000 && homeform::singleton())
+                    if (nowMs - workoutRunningSinceMs < 30000 && !appStopped && homeform::singleton())
                         homeform::singleton()->setToastRequested(
                             tr("The bike keeps stopping the workout: turn the bike off and on again"));
                 }
