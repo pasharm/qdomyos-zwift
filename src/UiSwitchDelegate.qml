@@ -32,9 +32,13 @@ T.SwitchDelegate {
         control: control
     }
 
+    // Room between the title and the switch. The settings pages set spacing: 0 on most
+    // switches, and a long title ran into the modern switch; the modern look keeps at least 16
+    readonly property real textGap: window.ui.modern ? Math.max(spacing, 16) : spacing
+
     contentItem: IconLabel {
-        leftPadding: !control.mirrored ? 0 : control.indicator.width + control.spacing
-        rightPadding: control.mirrored ? 0 : control.indicator.width + control.spacing
+        leftPadding: !control.mirrored ? 0 : control.indicator.width + control.textGap
+        rightPadding: control.mirrored ? 0 : control.indicator.width + control.textGap
 
         spacing: control.spacing
         mirrored: control.mirrored
