@@ -213,6 +213,7 @@ run_theme() {
     tap_ui 'General Options'; sleep 3
   fi
   scroll_top
+  sleep 3
   if scroll_to 'Treadmill Options' && tap_ui 'Treadmill Options'; then
     sleep 4
     shot "$t-30-treadmill"
