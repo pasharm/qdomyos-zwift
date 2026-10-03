@@ -6,10 +6,9 @@ import Qt.labs.settings 1.0
 
 ScrollView {
     contentWidth: -1
-    // The column's margins are not in its implicit height, which the ScrollView takes: in the
-    // modern look the end of the gear table was cut off. The classic look keeps the plain height
-    contentHeight: chainringColumn.implicitHeight +
-                   (window.ui.modern ? 2 * window.contentSideMargin : 0)
+    // The column with its margins, which are not in its implicit height (the end of the gear
+    // table was cut off)
+    contentHeight: chainringColumn.implicitHeight + 2 * chainringColumn.anchors.margins
     focus: true
     // No anchors: the page is pushed on the StackView, which sizes it to fill and warned about
     // conflicting anchors
@@ -326,13 +325,11 @@ ScrollView {
     signal restoreDefaultWheelDiameter()
 
     ColumnLayout {
-        // Modern look: not tied to the bottom - the column height would come from the content
-        // height made from it (binding loop on contentHeight). The classic table fills the rest of
-        // the page and scrolls by itself, so the classic column still fills
+        // Not tied to the bottom: the column height would come from the content height made from
+        // it (binding loop on contentHeight)
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.bottom: window.ui.modern ? undefined : parent.bottom
         anchors.margins: window.ui.modern ? window.contentSideMargin : 20
         spacing: window.ui.modern ? 12 : 20
         id: chainringColumn
@@ -626,13 +623,11 @@ ScrollView {
         UiGroupBox {
             title: qsTr("Virtual Gear Table")
             Layout.fillWidth: true
-            // Modern look: the table is as tall as its rows and the page scrolls as one; a list
-            // scrolling inside the scrolling page caught the finger half way down
-            Layout.fillHeight: !window.ui.modern
-            Layout.preferredHeight: window.ui.modern ? -1 : parent.height
+            // The table is as tall as its rows and the page scrolls as one: a list scrolling inside
+            // the scrolling page caught the finger half way down, and in the classic look, which
+            // gave the table the rest of the page, the rest was nothing and the rows were not shown
 
             ColumnLayout {
-                anchors.fill: window.ui.modern ? undefined : parent
                 width: parent.width
                 spacing: 10
 
@@ -750,11 +745,10 @@ ScrollView {
                 ListView {
                     id: gearTable
                     Layout.fillWidth: true
-                    Layout.fillHeight: !window.ui.modern
-                    Layout.preferredHeight: window.ui.modern ? contentHeight : -1
+                    Layout.preferredHeight: contentHeight
                     // The page margins are not in the implicit height: never squeeze the rows
-                    Layout.minimumHeight: window.ui.modern ? contentHeight : 0
-                    interactive: !window.ui.modern
+                    Layout.minimumHeight: contentHeight
+                    interactive: false
                     clip: true
                     // Modern look: rounded rows apart from each other
                     spacing: window.ui.modern ? 4 : 0
