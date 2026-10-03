@@ -33,7 +33,8 @@ Rectangle {
 
     Rectangle {
         visible: header.isOpen && !header.nested
-        x: 0
+        // On the outline of the section block (1 px outside the header): no gap between them
+        x: -1
         width: 4
         height: parent.height - 24
         anchors.verticalCenter: parent.verticalCenter
