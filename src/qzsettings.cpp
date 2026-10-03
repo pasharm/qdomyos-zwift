@@ -308,6 +308,7 @@ const QString QZSettings::snode_bike = QStringLiteral("snode_bike");
 const QString QZSettings::fitplus_bike = QStringLiteral("fitplus_bike");
 const QString QZSettings::virtufit_etappe = QStringLiteral("virtufit_etappe");
 const QString QZSettings::fitshow_bike_question = QStringLiteral("fitshow_bike_question");
+const QString QZSettings::virtufit_layout_question = QStringLiteral("virtufit_layout_question");
 const QString QZSettings::flywheel_filter = QStringLiteral("flywheel_filter");
 const QString QZSettings::flywheel_life_fitness_ic8 = QStringLiteral("flywheel_life_fitness_ic8");
 const QString QZSettings::life_fitness_ic5 = QStringLiteral("life_fitness_ic5");
@@ -1306,7 +1307,7 @@ const QString QZSettings::default_shortcut_stop = QStringLiteral("");
 const QString QZSettings::android_landscape_cutout_margin = QStringLiteral("android_landscape_cutout_margin");
 const QString QZSettings::android_landscape_cutout_prompt_shown = QStringLiteral("android_landscape_cutout_prompt_shown");
 
-const uint32_t allSettingsCount = 1013;
+const uint32_t allSettingsCount = 1014;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -2346,6 +2347,7 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::watt_max, QZSettings::default_watt_max},
     {QZSettings::android_landscape_cutout_margin, QZSettings::default_android_landscape_cutout_margin},
     {QZSettings::android_landscape_cutout_prompt_shown, QZSettings::default_android_landscape_cutout_prompt_shown},
+    {QZSettings::virtufit_layout_question, QZSettings::default_virtufit_layout_question},
 };
 
 void QZSettings::qDebugAllSettings(bool showDefaults) {

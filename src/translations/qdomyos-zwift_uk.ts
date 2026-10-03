@@ -1220,11 +1220,6 @@ Do you want to update QZ settings?</source>
         <translation>Ініціалізацію завершено, можна користуватися біговою доріжкою!</translation>
     </message>
     <message>
-        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="734"/>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings.</source>
-        <translation>QZ визначив формат даних цього велотренажера й увімкнув у налаштуваннях «Велотренажер Virtufit Etappe 2.0».</translation>
-    </message>
-    <message>
         <location filename="../devices/fitplusbike/fitplusbike.cpp" line="1021"/>
         <location filename="../devices/stagesbike/stagesbike.cpp" line="178"/>
         <location filename="../devices/tacxneo2/tacxneo2.cpp" line="39"/>
@@ -4663,6 +4658,16 @@ restart the app.</source>
 Do you want to do it now?</source>
         <translation>Щоб застосувати зміни, потрібно перезапустити застосунок.
 Перезапустити зараз?</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="778"/>
+        <source>QZ has detected the data format of this bike. Enable &quot;Virtufit Etappe 2.0 Bike&quot;?</source>
+        <translation>QZ визначив формат даних цього тренажера. Увімкнути «Велотренажер Virtufit Etappe 2.0»?</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="779"/>
+        <source>Without it QZ uses the default settings, and the data or the resistance may be off.</source>
+        <translation>Інакше QZ працює зі стандартними параметрами, і дані чи опір можуть бути неточними.</translation>
     </message>
     <message>
         <location filename="../main.qml" line="816"/>

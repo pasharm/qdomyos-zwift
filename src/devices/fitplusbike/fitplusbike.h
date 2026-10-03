@@ -113,6 +113,7 @@ class fitplusbike : public bike {
     void serviceDiscovered(const QBluetoothUuid &gatt);
     void serviceScanDone(void);
     void update();
+    void virtufitLayoutAnswered(bool enable);
     void error(QLowEnergyController::Error err);
     void errorService(QLowEnergyService::ServiceError);
 };
