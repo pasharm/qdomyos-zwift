@@ -142,6 +142,90 @@ ColumnLayout {
     spacing: 0
     Layout.fillWidth: true
 
+    // Modern look: an open top-level section keeps a short copy of its header at the top of the
+    // page while its content scrolls under it, so it stays clear which section this is. The copy
+    // lives on the flickable, not in its content, and goes up with the end of the section; a tap
+    // on it scrolls back to the real header.
+    readonly property int stickyHeight: 44
+    property Item stickyHeader: null
+    readonly property Item pageFlickable: {
+        for (var p = parent; p; p = p.parent)
+            if (p.contentY !== undefined && p.contentItem !== undefined && p.flickableDirection !== undefined)
+                return p
+        return null
+    }
+    function updateSticky() {
+        var f = pageFlickable
+        var want = f && window.ui.modern && depth === 1 && isOpen && visible
+        var top = 0, bottom = 0
+        if (want) {
+            top = sectionHeader.mapToItem(f, 0, 0).y
+            bottom = rootElement.mapToItem(f, 0, 0).y + rootElement.height
+            want = top < 0 && bottom > stickyHeight / 2
+        }
+        if (!want) {
+            if (stickyHeader)
+                stickyHeader.visible = false
+            return
+        }
+        if (!stickyHeader)
+            stickyHeader = stickyComponent.createObject(f)
+        stickyHeader.x = sectionHeader.mapToItem(f, 0, 0).x
+        stickyHeader.width = sectionHeader.width
+        stickyHeader.y = Math.min(0, bottom - stickyHeight)
+        stickyHeader.visible = true
+    }
+    function scrollToHeader() {
+        var f = pageFlickable
+        if (!f)
+            return
+        var at = sectionHeader.mapToItem(f.contentItem, 0, 0).y - sectionHeader.Layout.topMargin
+        f.contentY = Math.max(0, Math.min(at, f.contentHeight - f.height))
+    }
+    Connections {
+        target: rootElement.pageFlickable
+        enabled: rootElement.isOpen && rootElement.depth === 1
+        function onContentYChanged() { rootElement.updateSticky() }
+        function onHeightChanged() { rootElement.updateSticky() }
+    }
+    onHeightChanged: if (isOpen) updateSticky()
+    Component.onDestruction: if (stickyHeader) stickyHeader.destroy()
+
+    Component {
+        id: stickyComponent
+        UiFrame {
+            id: sticky
+            z: 10
+            height: rootElement.stickyHeight
+            radius: 12
+            fill: window.ui.surfaceHigh
+            stroke: window.ui.accent
+            strokeWidth: 1
+
+            Accessible.role: Accessible.Button
+            Accessible.name: rootElement.title
+            Accessible.onPressAction: rootElement.scrollToHeader()
+
+            Text {
+                anchors.left: parent.left
+                anchors.leftMargin: 18
+                anchors.right: parent.right
+                anchors.rightMargin: 14
+                anchors.verticalCenter: parent.verticalCenter
+                text: window.ui.plainTitle(rootElement.title)
+                elide: Text.ElideRight
+                font.pixelSize: 14.5
+                font.weight: Font.Medium
+                color: window.ui.accent
+            }
+            MouseArea {
+                anchors.fill: parent
+                cursorShape: Qt.PointingHandCursor
+                onClicked: rootElement.scrollToHeader()
+            }
+        }
+    }
+
     UiSectionHeader {
         id: sectionHeader
         visible: window.ui.modern
@@ -278,5 +362,6 @@ ColumnLayout {
         if (!isOpen) {
             contentLoader.visible = false
         }
+        updateSticky()
     }
 }
