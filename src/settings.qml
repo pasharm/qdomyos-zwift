@@ -553,56 +553,7 @@ import QtQuick 2.12 as Quick212
         Connections {
             target: settingsPane.contentItem
             function onMovementStarted() {
-                resultSnap.stop()
                 settingsPane.dropTextFocus()
-            }
-            function onMovementEnded() { settingsPane.snapToResult() }
-        }
-
-        NumberAnimation {
-            id: resultSnap
-            target: settingsPane.contentItem
-            property: "contentY"
-            duration: 180
-            easing.type: Easing.OutCubic
-        }
-
-        // Modern: a list of results stops with a whole card on top - the one mostly in view, or
-        // the next one. A card taller than the screen scrolls freely, the ends of the list stay
-        function snapToResult() {
-            if (!window.ui.modern || !settingsSearchResults.visible || searchResultsRepeater.count === 0)
-                return
-            var f = contentItem
-            var y = f.contentY
-            var maxY = f.contentHeight - f.height
-            if (y <= 0 || y >= maxY - 1)
-                return
-            // The search bar with the status line counts as the card before the first one
-            var tops = [0]
-            var last = null
-            for (var i = 0; i < searchResultsRepeater.count; ++i) {
-                var item = searchResultsRepeater.itemAt(i)
-                if (!item)
-                    continue
-                tops.push(item.mapToItem(f.contentItem, 0, 0).y)
-                last = item
-            }
-            if (!last)
-                return
-            tops.push(last.mapToItem(f.contentItem, 0, 0).y + last.height)
-            for (var k = 0; k + 1 < tops.length; ++k) {
-                if (y >= tops[k + 1])
-                    continue
-                var h = tops[k + 1] - tops[k]
-                if (h > f.height * 0.9)
-                    return
-                var to = Math.min(y - tops[k] < h / 2 ? tops[k] : tops[k + 1], maxY)
-                if (Math.abs(to - y) < 1)
-                    return
-                resultSnap.from = y
-                resultSnap.to = to
-                resultSnap.restart()
-                return
             }
         }
 
