@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQuick 2.12 as Quick212
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
@@ -25,6 +26,31 @@ ScrollView {
         if (typeof rootItem !== "undefined" && rootItem) {
             rootItem.setNativeShortcutCaptureSuspended(false)
         }
+    }
+
+    // A shortcut field keeps the focus (the cursor and the keyboard) until another control
+    // takes it; empty space of the page never does. A tap on it or the start of a scroll
+    // drops the focus, as on the settings page
+    function dropTextFocus() {
+        var item = window.activeFocusItem
+        if (item && item.cursorPosition !== undefined) {
+            // The page is a focus scope that already holds the focus: forcing it again
+            // changes nothing, so the field gives it up and the scope takes it back
+            item.focus = false
+            Qt.inputMethod.hide()
+        }
+    }
+
+    Connections {
+        target: settingsShortcutsPane.contentItem
+        function onMovementStarted() {
+            settingsShortcutsPane.dropTextFocus()
+        }
+    }
+
+    // QtQuick 2.7 of this file has no pointer handlers
+    Quick212.TapHandler {
+        onTapped: settingsShortcutsPane.dropTextFocus()
     }
 
     Settings {
@@ -178,7 +204,15 @@ ScrollView {
             }
 
             Keys.onPressed: (event) => {
-                if (event.key === Qt.Key_Backspace || event.key === Qt.Key_Delete) {
+                // Back, Escape and Enter leave the field instead of becoming a shortcut:
+                // accepting Back here kept the page open while a field had the focus
+                if (event.key === Qt.Key_Back || event.key === Qt.Key_Escape
+                        || event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
+                    settingsShortcutsPane.dropTextFocus()
+                    // Back goes on to the page, which closes it
+                    event.accepted = event.key !== Qt.Key_Back
+                    return
+                } else if (event.key === Qt.Key_Backspace || event.key === Qt.Key_Delete) {
                     settings[settingName] = ""
                     text = ""
                 } else if (event.text !== "") {
