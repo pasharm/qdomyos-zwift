@@ -241,6 +241,14 @@ run_theme light
 adb shell cmd uimode night yes || true
 sleep 6
 run_theme dark
+# The static section at the end (StaticAccordionElement): frames like the others
+scroll_top
+if scroll_to 'Experimental Features' && tap_ui 'Experimental Features'; then
+  sleep 4
+  shot dark-40-experimental
+  adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
+  shot dark-41-experimental-scrolled
+fi
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
