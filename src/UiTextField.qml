@@ -44,10 +44,18 @@ T.TextField {
     property bool timeShaped: false
     // An IP address field (set by the page): digits and points only
     property bool ipAddress: false
+    // A number field whose keyboard hint the page keeps commented out (the iOS number pad has
+    // no minus and no Done key). Modern look: the digit keyboard on Android only, number
+    // characters only, and the narrow width of the number fields
+    property bool numberField: false
+    inputMethodHints: modern && numberField && Qt.platform.os === "android" ? Qt.ImhFormattedNumbersOnly : Qt.ImhNone
+    // Modern look: a number fits in 88, the 120 of the text fields left the long labels
+    // next to "75" or "35" wrapping
+    readonly property bool narrow: modern && (numericHint || numberField) && !timeShaped && !ipAddress
     Component.onCompleted: timeShaped = /^\d+:\d{2}(:\d{2})?$/.test(text)
     validator: !modern ? null
              : ipAddress ? ipValidator
-             : numericHint ? numberValidator
+             : numericHint || numberField ? numberValidator
              : timeShaped ? timeValidator : null
     RegExpValidator { id: numberValidator; regExp: /^-?[0-9.,:'"]*$/ }
     RegExpValidator { id: timeValidator; regExp: /^[0-9:]*$/ }
@@ -181,7 +189,7 @@ T.TextField {
     }
 
     background: Item {
-        implicitWidth: 120
+        implicitWidth: control.narrow ? 88 : 120
         implicitHeight: control.modern ? 48 - 2 * control.modernInset : 0
 
         // Classic: the Material underline
