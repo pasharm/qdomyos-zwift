@@ -31,7 +31,7 @@ adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
 # T-060, T-066: a fake treadmill, so the home page has tiles (without a device it shows the search help)
-printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\nweight=-70\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -179,7 +179,9 @@ if best:
 }
 
 
-# T-105: thin frames around the settings and the block of an open section, shots only
+# T-126: a wrong value already saved (an update over an old version): weight -70 in qz.conf.
+# The field shows it, OK is grey; fixed to 70 OK is on and saves. Then "-" in Age is not
+# taken, a second point in Height is not taken, an emptied Age greys OK
 adb logcat -c || true
 adb logcat > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
@@ -200,88 +202,70 @@ tap_drawer 'Settings' 400 1400
 sleep 12
 shot 10-root
 
-# T-105: after a turn of the screen the page height stayed as it was - a section opened after
-# it was cut off at the bottom. Turn and back, open a long section, scroll to its very end
-echo "-- rotation test" >> $STEPLOG
-adb shell settings put system accelerometer_rotation 0 || true
-adb shell settings put system user_rotation 1 || true; sleep 5
-shot 11-rot-landscape
-adb shell settings put system user_rotation 0 || true; sleep 5
-if scroll_to 'Bike Options' && tap_ui 'Bike Options'; then
-  sleep 5
-  for i in $(seq 1 25); do adb shell input swipe 700 2000 700 600 200 || true; done
-  sleep 2
-  shot 12-rot-bike-end
-  scroll_top
-  tap_ui 'Bike Options'; sleep 3
-fi
-
-# One theme: a section with its settings, a subsection inside it, scrolled down a few times
-run_theme() {
-  local t="$1"
-  scroll_top
-  if scroll_to 'General Options' && tap_ui 'General Options'; then
-    sleep 4
-    shot "$t-20-general"
-    adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
-    shot "$t-21-general-scrolled"
-    scroll_top
-    tap_ui 'General Options'; sleep 3
-  fi
-  scroll_top
-  sleep 3
-  if scroll_to 'Treadmill Options' && tap_ui 'Treadmill Options'; then
-    sleep 4
-    shot "$t-30-treadmill"
-    adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-    shot "$t-31-treadmill-scrolled"
-    adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-    shot "$t-35-sticky"
-    tap 700 290 "sticky header"; sleep 2
-    shot "$t-36-after-sticky-tap"
-    if scroll_to 'Domyos Treadmill Options' && tap_ui 'Domyos Treadmill Options'; then
-      sleep 4
-      shot "$t-32-subsection-open"
-      adb shell input swipe 700 2000 700 1200 400 || true; sleep 2
-      shot "$t-33-subsection-scrolled"
-      tap_ui 'Domyos Treadmill Options'; sleep 3
-    fi
-    for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 900 300 || true; done
-    sleep 2
-    shot "$t-34-treadmill-end"
-    scroll_top
-    tap_ui 'Treadmill Options'; sleep 3
-  fi
+# The state of the OK button of a row: enabled="..." of the OK node nearest below/right of y
+ok_state() {
+  dump
+  [ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+want = sys.argv[2]
+field = None; oks = []
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+    if not m: continue
+    y = (int(m.group(2)) + int(m.group(4))) // 2
+    if t == want and field is None: field = y
+    if t == "OK": oks.append((y, n.get("enabled")))
+if field is None: print("field %r NOT FOUND" % want)
+else:
+    y, e = min(oks, key=lambda o: abs(o[0] - field)) if oks else (0, "no OK")
+    print("field %r at y=%d, OK at y=%d enabled=%s" % (want, field, y, e))
+' ui.xml "$1" >> $STEPLOG
 }
-run_theme light
-adb shell cmd uimode night yes || true
-sleep 6
-run_theme dark
-# The static section at the end (StaticAccordionElement): frames like the others
-scroll_top
-if scroll_to 'Experimental Features' && tap_ui 'Experimental Features'; then
+# Clear the focused field: cursor at the end on focus, then deletes
+clear_field() { for i in $(seq 1 12); do adb shell input keyevent KEYCODE_DEL || true; done; }
+
+if scroll_to 'General Options' && tap_ui 'General Options'; then
   sleep 4
-  shot dark-40-experimental
-  adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
-  shot dark-41-experimental-scrolled
-  adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-  shot dark-42-experimental-virtual-device
-fi
-# The tiles page: frames instead of filled cards, a tile that is on in the accent
-scroll_top
-if scroll_to 'Tiles Options' && tap_ui 'Tiles Options'; then
-  sleep 5
-  shot dark-45-tiles
-  back "tiles page"
-  sleep 3
-fi
-# The TTS page (a page of plain settings, no sections)
-scroll_top
-if scroll_to 'TTS \(Text to Speech\) Settings' && tap_ui 'TTS \(Text to Speech\) Settings'; then
-  sleep 4
-  shot dark-50-tts
-  back "tts page"
-  sleep 3
+  scroll_to '-70'
+  shot 20-weight-wrong
+  ok_state '-70'
+  if tap_node '-70'; then
+    sleep 2
+    clear_field
+    adb shell input text 70 || true
+    sleep 2
+    shot 21-weight-fixed
+    ok_state '70'
+    hide_keyboard
+    ok_state '70'
+  fi
+  # Age: "-" is not taken, an empty field greys OK
+  if scroll_to '35' && tap_node '35'; then
+    sleep 2
+    clear_field
+    sleep 1
+    shot 22-age-empty
+    ok_state ''
+    adb shell input text '-' || true
+    adb shell input text 40 || true
+    sleep 2
+    shot 23-age-minus-typed
+    ok_state '40'
+    ok_state '-40'
+    hide_keyboard
+  fi
+  # Height: 170.5.5 - the second point is not taken
+  if scroll_to '175' && tap_node '175'; then
+    sleep 2
+    clear_field
+    adb shell input text '170.5.5' || true
+    sleep 2
+    shot 24-height-points
+    ok_state '170.55'
+    ok_state '170.5'
+    hide_keyboard
+  fi
 fi
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
