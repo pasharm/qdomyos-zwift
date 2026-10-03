@@ -422,12 +422,14 @@ void fitplusbike::update() {
             // btinit();
 
             requestStart = -1;
+            appStopped = false;
             emit bikeStarted();
         }
         if (requestStop != -1) {
             qDebug() << QStringLiteral("stopping...");
             // writeCharacteristic(initDataF0C800B8, sizeof(initDataF0C800B8), "stop tape");
             requestStop = -1;
+            appStopped = true;
         }
     }
 }
@@ -640,9 +642,13 @@ void fitplusbike::characteristicChanged(const QLowEnergyCharacteristic &characte
                 workoutRunningSinceMs = nowMs;
             } else if (status == 0x00 && workoutStatus == 0x02 && initDone) {
                 // Right after QZ reopens, the bike can stop the workout it has just started, then it acks the level
-                // commands without applying them. Only within 30 s of the start, so a stop from the console later
-                // in the ride is left alone.
-                if (nowMs - workoutRunningSinceMs < 30000 && workoutRestarts < 3) {
+                // commands without applying them: up to 3 restarts within 30 s of the start.
+                // A stop from the console later in the ride: the workout in QZ goes on, so the bike has to run too,
+                // or it ignores the levels. Only QZ stops the workout.
+                if (nowMs - workoutRunningSinceMs >= 30000 && !appStopped) {
+                    workoutRestarts = 0;
+                }
+                if ((nowMs - workoutRunningSinceMs < 30000 || !appStopped) && workoutRestarts < 3) {
                     workoutRestarts++;
                     workoutRestartRequest = true;
                     qDebug() << QStringLiteral("the bike stopped the workout, starting it again (attempt ") +
