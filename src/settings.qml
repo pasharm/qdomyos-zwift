@@ -3386,12 +3386,15 @@ import QtQuick 2.12 as Quick212
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            validator: EmailValidator {}
+                            inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhNoAutoUppercase
                             onAccepted: settings.user_email = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
                         UiButton {
                             id: okEmailButton
                             text: qsTr("OK")
+                            enabled: emailTextField.acceptableInput
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.user_email = emailTextField.text; toast.show(qsTr("Setting saved!")); }
                         }
@@ -9046,11 +9049,14 @@ import QtQuick 2.12 as Quick212
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            validator: EmailValidator {}
+                            inputMethodHints: Qt.ImhEmailCharactersOnly | Qt.ImhNoAutoUppercase
                             onAccepted: settings.garmin_email = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
                         UiButton {
                             text: qsTr("OK")
+                            enabled: garminEmailTextField.acceptableInput
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: {
                                 rootItem.garmin_connect_logout();
