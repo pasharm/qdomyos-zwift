@@ -380,15 +380,16 @@ void fitplusbike::update() {
         // The bike can ignore the start sent by btinit (the FS-495B40 does while it still releases the resistance
         // after a quick reopen): it keeps reporting stopped and never runs. Send the start again every 5 s, but
         // only for 30 s after the init and only while the bike has not run yet: no reconnection, no restart later.
-        if (!workoutEverRunning && workoutStatus == 0x00) {
+        // The same for 30 s after a stop from the console (the restart below in characteristicChanged ignored).
+        if ((!workoutEverRunning || !appStopped) && workoutStatus == 0x00) {
             qint64 nowMs = QDateTime::currentMSecsSinceEpoch();
-            if (nowMs - initDoneMs < 30000) {
+            if (nowMs - qMax(initDoneMs, workoutStoppedSinceMs) < 30000) {
                 if (nowMs - workoutStoppedSinceMs >= 5000 && nowMs - lastStartSentMs >= 5000) {
                     lastStartSentMs = nowMs;
                     workoutRestartRequest = true;
                     qDebug() << QStringLiteral("the bike has not started the workout, sending the start again");
                 }
-            } else if (!unstartedWorkoutWarned) {
+            } else if (!unstartedWorkoutWarned && nowMs - workoutStoppedSinceMs < 60000) {
                 unstartedWorkoutWarned = true;
                 qDebug() << QStringLiteral("the bike did not start the workout");
                 if (homeform::singleton())
@@ -861,8 +862,10 @@ double fitplusbike::bikeResistanceToPeloton(double resistance) {
 }
 
 void fitplusbike::noteWorkoutStatus(int status, qint64 nowMs) {
-    if (status == 0x02)
+    if (status == 0x02) {
         workoutEverRunning = true;
+        unstartedWorkoutWarned = false;
+    }
     if (status == 0x00 && workoutStatus != 0x00)
         workoutStoppedSinceMs = nowMs;
     workoutStatus = status;
