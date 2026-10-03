@@ -256,8 +256,8 @@ Page {
 
             // Title with filter status - between the buttons, shrinking on narrow screens
             Column {
-                anchors.left: calendarButton.right
-                anchors.right: clearFilterButton.visible ? clearFilterButton.left : importButton.left
+                anchors.left: clearFilterButton.visible ? clearFilterButton.right : calendarButton.right
+                anchors.right: importButton.left
                 anchors.leftMargin: 8
                 anchors.rightMargin: 8
                 anchors.verticalCenter: parent.verticalCenter
@@ -354,16 +354,16 @@ Page {
             // Clear Filter Button - left of the import button
             Button {
                 id: clearFilterButton
-                anchors.right: importButton.left
+                // next to the calendar that set the filter; small, so the title keeps its room
+                anchors.left: calendarButton.right
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.rightMargin: 8
-                // square like the calendar and import buttons, so the centered title stays clear
-                width: 48
-                height: 48
+                anchors.leftMargin: 6
+                width: 32
+                height: 32
                 visible: workoutModel && workoutModel.isDateFiltered
 
                 background: Rectangle {
-                    radius: workoutHistoryPage.modern ? 24 : 8
+                    radius: 16
                     color: workoutHistoryPage.modern ? window.ui.alpha(window.ui.danger, clearFilterButton.pressed ? 0.28 : 0.16)
                                  : (clearFilterButton.pressed ? "#ff6666" : "#ff8888")
                     border.color: "#ff4444"
@@ -374,12 +374,12 @@ Page {
                     text: "×"
                     Accessible.name: qsTr("Clear Filter")
                     color: workoutHistoryPage.modern ? window.ui.danger : "white"
-                    font.pixelSize: 26
+                    font.pixelSize: 20
                     font.bold: true
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                 }
-                
+
                 onClicked: {
                     workoutModel.clearDateFilter()
                 }
