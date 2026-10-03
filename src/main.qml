@@ -1480,6 +1480,7 @@ ApplicationWindow {
             return
         }
         console.log("QZ-TIMING quit waits for the settings warm-up")
+        toast.show(qsTr("QZ is closing..."), quitWaitTimer.interval)
         settingsWarmup.forEach(function (c) {
             c.statusChanged.connect(function () {
                 if (!warmUpCompiling())
