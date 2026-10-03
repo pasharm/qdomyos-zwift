@@ -162,7 +162,8 @@ ColumnLayout {
         if (want) {
             top = sectionHeader.mapToItem(f, 0, 0).y
             bottom = rootElement.mapToItem(f, 0, 0).y + rootElement.height
-            want = top < 0 && bottom > stickyHeight / 2
+            // Until the very end of the section: the copy goes up with its last row
+            want = top < 0 && bottom > 0
         }
         if (!want) {
             if (stickyHeader)
