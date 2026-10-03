@@ -88,7 +88,13 @@ ColumnLayout {
         id: contentBox
         visible: rootElement.isOpen
         Layout.fillWidth: true
-        implicitHeight: contentPlaceholder.implicitHeight
+        // Set on a change, not bound: a binding made a loop with the layout of the column
+        implicitHeight: 0
+        Connections {
+            target: contentPlaceholder
+            function onImplicitHeightChanged() { contentBox.implicitHeight = contentPlaceholder.implicitHeight }
+        }
+        Component.onCompleted: implicitHeight = contentPlaceholder.implicitHeight
         // Modern look: inside the block of the section and inside the frames of its settings
         Layout.leftMargin: settingFrames.insetLeft
         Layout.rightMargin: settingFrames.insetRight

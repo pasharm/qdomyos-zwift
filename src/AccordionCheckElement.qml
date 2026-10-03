@@ -205,9 +205,16 @@ ColumnLayout {
                 readonly property bool framed: window.ui.modern && !rootElement.modernCard
                 visible: rootElement.isOpen
                 Layout.fillWidth: true
-                implicitHeight: contentPlaceholder.implicitHeight
-                Layout.leftMargin: framed ? settingFrames.insetLeft : 0
-                Layout.rightMargin: framed ? settingFrames.insetRight : 0
+                // Set on a change, not bound: a binding made a loop with the layout of the column
+                implicitHeight: 0
+                Connections {
+                    target: contentPlaceholder
+                    function onImplicitHeightChanged() { contentBox.implicitHeight = contentPlaceholder.implicitHeight }
+                }
+                Component.onCompleted: implicitHeight = contentPlaceholder.implicitHeight
+                // A tile card: its options under the title, clear of the right line of the frame
+                Layout.leftMargin: framed ? settingFrames.insetLeft : rootElement.modernCard ? 4 : 0
+                Layout.rightMargin: framed ? settingFrames.insetRight : rootElement.modernCard ? 10 : 0
                 Layout.topMargin: framed ? settingFrames.insetTop : 0
                 Layout.bottomMargin: framed ? settingFrames.insetBottom : 0
                 // Under the switch row: the block frame starts behind it
