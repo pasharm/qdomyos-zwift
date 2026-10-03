@@ -214,7 +214,7 @@ ColumnLayout {
                 anchors.verticalCenter: parent.verticalCenter
                 text: window.ui.plainTitle(rootElement.title)
                 elide: Text.ElideRight
-                font.pixelSize: 14.5
+                font.pixelSize: 15
                 font.weight: Font.Medium
                 color: window.ui.accent
             }
