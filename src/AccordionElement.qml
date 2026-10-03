@@ -208,6 +208,17 @@ ColumnLayout {
             Accessible.name: rootElement.title
             Accessible.onPressAction: rootElement.scrollToHeader()
 
+            // Under the copy: the page above it and its upper half in the page colour, so the
+            // side lines of the section block start at the middle of the copy, not above it
+            Rectangle {
+                z: -1
+                x: -3
+                y: -24
+                width: parent.width + 6
+                height: 24 + parent.height / 2
+                color: window.ui.bg
+            }
+
             Text {
                 anchors.left: parent.left
                 anchors.leftMargin: 18
