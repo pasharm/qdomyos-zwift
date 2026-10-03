@@ -37,6 +37,12 @@ import QtQuick 2.12 as Quick212
             function onHeightChanged() { console.log("QZ-NAV settings viewport " + Math.round(settingsPane.contentItem.width) + "x" + Math.round(settingsPane.contentItem.height) + " ch=" + Math.round(settingsPane.contentItem.contentHeight) + " y=" + Math.round(settingsPane.contentItem.contentY)) }
         }
         Component.onDestruction: console.log("QZ-NAV settings page destroyed")
+        // TEMP-LOG: QZ-NAV - is it the column that stops growing, or the page that stops
+        // following it (a second child in the content takes the page off the column height)
+        Connections {
+            target: column1
+            function onImplicitHeightChanged() { console.log("QZ-NAV column1 implicitHeight=" + Math.round(column1.implicitHeight) + " height=" + Math.round(column1.height) + " width=" + Math.round(column1.width) + " page ch=" + Math.round(settingsPane.contentItem.contentHeight) + " contentChildren=" + settingsPane.contentChildren.length + " flickChildren=" + settingsPane.contentItem.contentItem.children.length) }
+        }
 
         signal peloton_connect_clicked()
         signal intervalsicu_connect_clicked()
