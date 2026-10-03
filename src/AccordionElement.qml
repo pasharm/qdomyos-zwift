@@ -42,7 +42,7 @@ ColumnLayout {
     property var baseMargins: []
 
     function isSectionLike(c) {
-        return c.title !== undefined && c.nested !== undefined
+        return c.title !== undefined && (c.nested !== undefined || c.accordionContent !== undefined)
     }
     function isDescription(c) {
         return c.text !== undefined && c.wrapMode !== undefined && c.color !== undefined
@@ -90,9 +90,10 @@ ColumnLayout {
                 want.section = true
                 want.groupStart = true
                 cur = null
-            } else if (cur && (isDescription(c) || cur.titleOnly)) {
+            } else if (cur && (isDescription(c) || (cur.titleOnly && c.checked === undefined))) {
                 // A description joins the setting above it; a lone title ("FTMS Treadmill:")
-                // takes the picker below it into its frame
+                // takes the picker below it into its frame, but not a switch: a warning line
+                // above a switch is a setting of its own
                 cur.last = want
                 cur.titleOnly = false
             } else {
@@ -189,6 +190,7 @@ ColumnLayout {
         function onHeightChanged() { rootElement.updateSticky() }
     }
     onHeightChanged: if (isOpen) updateSticky()
+    onVisibleChanged: updateSticky()
     Component.onDestruction: if (stickyHeader) stickyHeader.destroy()
 
     Component {
@@ -361,6 +363,7 @@ ColumnLayout {
     onIsOpenChanged: {
         if (!isOpen) {
             contentLoader.visible = false
+            itemFrames = []
         }
         updateSticky()
     }
