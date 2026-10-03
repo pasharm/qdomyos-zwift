@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQml 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
@@ -315,14 +316,16 @@ ScrollView {
                                 selectedTextColor: window.ui.modern ? window.ui.accentInk : "white"
                                 selectionColor: window.ui.modern ? window.ui.accent : Material.accent
                                 horizontalAlignment: Text.AlignHCenter
-                                verticalAlignment: Text.AlignVCenter
                                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                                 // Modern look: no Material paddings and insets, they differ above
-                                // and below and the number sat high in the low field
-                                topPadding: window.ui.modern ? 0 : undefined
-                                bottomPadding: window.ui.modern ? 0 : undefined
-                                topInset: window.ui.modern ? 0 : undefined
-                                bottomInset: window.ui.modern ? 0 : undefined
+                                // and below and the number sat high in the low field. Bindings that
+                                // act only then: "undefined" in the classic look reset them to the Qt
+                                // defaults, not to the Material ones the classic field had
+                                Binding on topPadding { when: window.ui.modern; value: 0; restoreMode: Binding.RestoreBindingOrValue }
+                                Binding on bottomPadding { when: window.ui.modern; value: 0; restoreMode: Binding.RestoreBindingOrValue }
+                                Binding on topInset { when: window.ui.modern; value: 0; restoreMode: Binding.RestoreBindingOrValue }
+                                Binding on bottomInset { when: window.ui.modern; value: 0; restoreMode: Binding.RestoreBindingOrValue }
+                                Binding on verticalAlignment { when: window.ui.modern; value: Text.AlignVCenter; restoreMode: Binding.RestoreBindingOrValue }
                                 background: Rectangle {
                                     color: window.ui.modern ? "transparent" : "white"
                                     border.color: "#cccccc"
