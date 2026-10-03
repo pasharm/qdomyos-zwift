@@ -2651,6 +2651,11 @@ Você pode alterar isso depois em Configurações &gt; Opções Gerais de UI &gt
         <source>Profiles</source>
         <translation>Perfis</translation>
     </message>
+    <message>
+        <location filename="../profiles.qml" line="78"/>
+        <source>Delete</source>
+        <translation>Excluir</translation>
+    </message>
 </context>
 <context>
     <name>settings</name>

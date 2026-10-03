@@ -72,7 +72,11 @@ ColumnLayout {
         property string fileUrl
         title: qsTr("Delete profile")
         text: qsTr("Would you like to delete this profile?")
-        buttons: (MessageDialog.Yes | MessageDialog.No)
+        // modern look: Cancel / Delete in red, as the other questions that cannot be undone;
+        // the native dialog of the classic look keeps its Yes / No
+        buttons: modern ? (MessageDialog.Yes | MessageDialog.Cancel) : (MessageDialog.Yes | MessageDialog.No)
+        yesText: qsTr("Delete")
+        destructive: true
         onYesClicked: {
             deleteSettings(fileUrl)
         }

@@ -753,7 +753,11 @@ Page {
         property var swipeItem: null
         title: qsTr("Delete Workout")
         text: qsTr("Are you sure you want to delete '%1'?").arg(workoutTitle)
-        buttons: P.MessageDialog.Ok | P.MessageDialog.Cancel
+        // the positive button named after the action and in the danger colour, as in the
+        // other questions that cannot be undone (Stop on Home, Reset in the settings)
+        buttons: P.MessageDialog.Yes | P.MessageDialog.Cancel
+        yesText: qsTr("Delete")
+        destructive: true
         onAccepted: workoutModel.deleteWorkout(workoutId)
         // any way out (Cancel, the back key, a deleted row) closes the swiped row again
         onClosed: {

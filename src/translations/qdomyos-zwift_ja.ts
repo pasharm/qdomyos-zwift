@@ -2650,6 +2650,11 @@ You can change it later in Settings &gt; General UI Options &gt; Keep Content Cl
         <source>Profiles</source>
         <translation>プロフィール</translation>
     </message>
+    <message>
+        <location filename="../profiles.qml" line="78"/>
+        <source>Delete</source>
+        <translation>削除</translation>
+    </message>
 </context>
 <context>
     <name>settings</name>

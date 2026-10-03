@@ -5112,6 +5112,11 @@ You can change it later in Settings &gt; General UI Options &gt; Keep Content Cl
         <source>Active</source>
         <translation>Активний</translation>
     </message>
+    <message>
+        <location filename="../profiles.qml" line="78"/>
+        <source>Delete</source>
+        <translation>Видалити</translation>
+    </message>
 </context>
 <context>
     <name>settings</name>

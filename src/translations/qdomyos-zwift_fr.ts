@@ -2651,6 +2651,11 @@ Vous pourrez le modifier plus tard dans Paramètres &gt; Options générales &gt
         <source>Profiles</source>
         <translation>Profils</translation>
     </message>
+    <message>
+        <location filename="../profiles.qml" line="78"/>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
 </context>
 <context>
     <name>settings</name>

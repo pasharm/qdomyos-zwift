@@ -123,7 +123,11 @@ ColumnLayout {
         property url fileUrl: ""
         text: qsTr("Delete workout?")
         informativeText: qsTr("This cannot be undone.")
-        buttons: (MessageDialog.Yes | MessageDialog.No)
+        // modern look: Cancel / Delete in red, as the other questions that cannot be undone;
+        // the native dialog of the classic look keeps its Yes / No
+        buttons: modern ? (MessageDialog.Yes | MessageDialog.Cancel) : (MessageDialog.Yes | MessageDialog.No)
+        yesText: qsTr("Delete")
+        destructive: true
         onYesClicked: {
             if (rootItem.deleteTrainingProgramFile(fileUrl)) {
                 pendingWorkoutUrl = ""
