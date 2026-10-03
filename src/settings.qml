@@ -9159,8 +9159,10 @@ import QtQuick 2.12 as Quick212
 
                             Label {
                                 text: qsTr("Garmin MFA Required")
-                                font.pixelSize: 18
-                                font.bold: true
+                                // Modern: the title of UiMessageDialog (until the font scale, T-078)
+                                font.pixelSize: window.ui.modern ? 20 : 18
+                                font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
+                                color: window.ui.modern ? window.ui.textMain : Material.foreground
                                 Layout.fillWidth: true
                                 horizontalAlignment: Text.AlignHCenter
                             }
@@ -9168,6 +9170,8 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Garmin has sent a verification code to your email.\nPlease enter it below:")
                                 wrapMode: Text.WordWrap
+                                font.pixelSize: window.ui.modern ? 16 : Qt.application.font.pixelSize
+                                color: window.ui.modern ? window.ui.textMain : Material.foreground
                                 Layout.fillWidth: true
                                 horizontalAlignment: Text.AlignHCenter
                             }
@@ -9177,9 +9181,9 @@ import QtQuick 2.12 as Quick212
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
                                 horizontalAlignment: Text.AlignHCenter
-                                font.pixelSize: 12
-                                font.italic: true
-                                color: Material.color(Material.Grey)
+                                font.pixelSize: window.ui.modern ? 14 : 12
+                                font.italic: !window.ui.modern
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey)
                             }
 
                             UiTextField {
@@ -9187,8 +9191,9 @@ import QtQuick 2.12 as Quick212
                                 placeholderText: qsTr("Enter MFA code")
                                 horizontalAlignment: Text.AlignHCenter
                                 Layout.fillWidth: true
-                                Layout.preferredHeight: 40
-                                font.pixelSize: 16
+                                // Modern: the height and the font of UiTextField
+                                Layout.preferredHeight: window.ui.modern ? -1 : 40
+                                font.pixelSize: window.ui.modern ? Qt.application.font.pixelSize : 16
 
                                 onAccepted: {
                                     if (text.length > 0) {
@@ -9204,6 +9209,7 @@ import QtQuick 2.12 as Quick212
 
                                 UiButton {
                                     text: qsTr("Cancel")
+                                    flat: window.ui.modern
                                     Layout.fillWidth: true
                                     onClicked: {
                                         mfaCodeTextField.text = "";
@@ -9226,6 +9232,14 @@ import QtQuick 2.12 as Quick212
                         onVisibleChanged: {
                             if (visible) {
                                 mfaCodeTextField.forceActiveFocus();
+                            }
+                        }
+                        // Back closes the popup past Cancel: the request would stay set and
+                        // the next one would not open the popup again
+                        onClosed: {
+                            if (rootItem.garminMfaRequested) {
+                                mfaCodeTextField.text = "";
+                                rootItem.garminMfaRequested = false;
                             }
                         }
                     }

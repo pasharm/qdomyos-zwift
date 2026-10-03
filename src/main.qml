@@ -698,34 +698,10 @@ ApplicationWindow {
        }
     }
 
-    UiPopup {
+    UiInfoPopup {
         id: popupClassificaHelper
-         parent: Overlay.overlay
-
-       x: Math.round((parent.width - width) / 2)
-         y: Math.round((parent.height - height) / 2)
-         width: 380
-         height: 130
-         modal: true
-         focus: true
-         palette.text: "white"
-         onClosed: stackView.push("Classifica.qml");
-         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-         enter: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 0.0; to: 1.0 }
-         }
-         exit: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 1.0; to: 0.0 }
-         }
-         Column {
-             anchors.horizontalCenter: parent.horizontalCenter
-         Label {
-             anchors.horizontalCenter: parent.horizontalCenter
-             text: qsTr("QZ Classifica is a realtime viewer about the actual\neffort of every QZ users! If you want to join in,\nchoose a nickname in the general settings\nand enable the QZ Classifica setting in the\nexperimental settings section and\nrestart the app.")
-            }
-         }
+        onClosed: stackView.push("Classifica.qml");
+        text: qsTr("QZ Classifica is a realtime viewer about the actual\neffort of every QZ users! If you want to join in,\nchoose a nickname in the general settings\nand enable the QZ Classifica setting in the\nexperimental settings section and\nrestart the app.")
     }
 
     UiPopup {
@@ -812,18 +788,8 @@ ApplicationWindow {
         onTriggered: refresh_bluetooth_devices_clicked()
     }
 
-    UiPopup {
+    UiInfoPopup {
         id: popupWhatsOnZwiftHelper
-         parent: Overlay.overlay
-
-       x: Math.round((parent.width - width) / 2)
-         y: Math.round((parent.height - height) / 2)
-         width: 380
-         height: 130
-         modal: true
-         focus: true
-         palette.text: "white"
-         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
          onClosed: {
              stackView.push("WebEngineTest.qml")
              drawer.close()
@@ -832,22 +798,7 @@ ApplicationWindow {
                  stackView.pop();
               });
          }
-
-         enter: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 0.0; to: 1.0 }
-         }
-         exit: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 1.0; to: 0.0 }
-         }
-         Column {
-             anchors.horizontalCenter: parent.horizontalCenter
-         Label {
-             anchors.horizontalCenter: parent.horizontalCenter
-             text: qsTr("Browse the What's on Zwift workout library<br>and choose your workout. It will<br> be automatically loaded on QZ when you will<br>press the load button on the top!<br><br>QZ is not affiliated with Zwift<br>or https://whatsonzwift.com/ website.")
-            }
-         }
+        text: qsTr("Browse the What's on Zwift workout library<br>and choose your workout. It will<br> be automatically loaded on QZ when you will<br>press the load button on the top!<br><br>QZ is not affiliated with Zwift<br>or https://whatsonzwift.com/ website.")
     }
 
     UiNotice {
@@ -863,72 +814,28 @@ ApplicationWindow {
               : qsTr("Saved! Look in the app's private folder.")
     }
 
-    UiPopup {
+    UiInfoPopup {
         id: popupStravaConnected
-         parent: Overlay.overlay
          enabled: rootItem.generalPopupVisible
          onEnabledChanged: { if(rootItem.generalPopupVisible) popupStravaConnected.open() }
          onClosed: { rootItem.generalPopupVisible = false; }
-
-         x: Math.round((parent.width - width) / 2)
-         y: Math.round((parent.height - height) / 2)
-         width: 380
-         height: 120
-         modal: true
-         focus: true
-         palette.text: "white"
-         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-         enter: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 0.0; to: 1.0 }
-         }
-         exit: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 1.0; to: 0.0 }
-         }
-         Column {
-             anchors.horizontalCenter: parent.horizontalCenter
-         Label {
-             anchors.horizontalCenter: parent.horizontalCenter
-             width: 370
-             height: 120
-             text: qsTr("Your Strava account is now connected!<br><br>When you will save a FIT file it will<br>automatically uploaded to Strava!")
-            }
-         }
+        classicHeight: 120
+        classicLabelWidth: 370
+        classicLabelHeight: 120
+        title: qsTr("Strava")
+        text: qsTr("Your Strava account is now connected!<br><br>When you will save a FIT file it will<br>automatically uploaded to Strava!")
     }
 
-    UiPopup {
+    UiInfoPopup {
         id: popupPelotonConnected
-         parent: Overlay.overlay
          enabled: rootItem.pelotonPopupVisible
          onEnabledChanged: { if(rootItem.pelotonPopupVisible) popupPelotonConnected.open() }
          onClosed: { rootItem.pelotonPopupVisible = false; }
-
-         x: Math.round((parent.width - width) / 2)
-         y: Math.round((parent.height - height) / 2)
-         width: 380
-         height: 120
-         modal: true
-         focus: true
-         palette.text: "white"
-         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-         enter: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 0.0; to: 1.0 }
-         }
-         exit: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 1.0; to: 0.0 }
-         }
-         Column {
-             anchors.horizontalCenter: parent.horizontalCenter
-         Label {
-             anchors.horizontalCenter: parent.horizontalCenter
-             width: 370
-             height: 120
-             text: qsTr("Your Peloton account is now connected!<br><br>Restart the app to apply this change!")
-            }
-         }
+        classicHeight: 120
+        classicLabelWidth: 370
+        classicLabelHeight: 120
+        title: qsTr("Peloton")
+        text: qsTr("Your Peloton account is now connected!<br><br>Restart the app to apply this change!")
     }
 
     Timer {
@@ -937,38 +844,16 @@ ApplicationWindow {
         onTriggered: popupLicense.close();
     }
 
-    UiPopup {
+    UiInfoPopup {
         id: popupLicense
-         parent: Overlay.overlay
          enabled: rootItem.licensePopupVisible
          onEnabledChanged: { if(rootItem.licensePopupVisible) popupLicense.open() }
          onClosed: { Qt.openUrlExternally("https://www.patreon.com/bePatron?u=45290147"); Qt.callLater(window.quitApp); }
-
-         x: Math.round((parent.width - width) / 2)
-         y: Math.round((parent.height - height) / 2)
-         width: 580
-         height: 230
-         modal: true
-         focus: true
-         palette.text: "white"
-         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
-         enter: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 0.0; to: 1.0 }
-         }
-         exit: Transition
-         {
-             NumberAnimation { property: "opacity"; from: 1.0; to: 0.0 }
-         }
-         Column {
-             anchors.horizontalCenter: parent.horizontalCenter
-         Label {
-             anchors.horizontalCenter: parent.horizontalCenter
-             width: 570
-             height: 220
-             text: qsTr("Trial time expired!<br><br>Please join the QZ Patreon Membership to unlock the full license!<br>https://www.patreon.com/bePatron?u=45290147<br><br>Then add your patreon email in the email field in the general settings.<br>The App will now close.")
-            }
-         }
+        classicWidth: 580
+        classicHeight: 230
+        classicLabelWidth: 570
+        classicLabelHeight: 220
+        text: qsTr("Trial time expired!<br><br>Please join the QZ Patreon Membership to unlock the full license!<br>https://www.patreon.com/bePatron?u=45290147<br><br>Then add your patreon email in the email field in the general settings.<br>The App will now close.")
     }
 
     UiMessageDialog {
@@ -1085,6 +970,7 @@ ApplicationWindow {
         buttons: (MessageDialog.Yes | MessageDialog.No)
         onYesClicked: {strava_upload_file_prepare(); rootItem.stravaUploadRequested = false;}
         onNoClicked: {rootItem.stravaUploadRequested = false;}
+        backAnswersNo: true
         visible: rootItem.stravaUploadRequested
     }
 
@@ -1096,6 +982,7 @@ ApplicationWindow {
         buttons: (MessageDialog.Yes | MessageDialog.No)
         onYesClicked: { rootItem.garmin_start_downloaded_workout(); }
         onNoClicked: { rootItem.garmin_dismiss_downloaded_workout_prompt(); }
+        backAnswersNo: true
         visible: rootItem.garminWorkoutPromptRequested
     }
 
@@ -1105,6 +992,7 @@ ApplicationWindow {
         buttons: (MessageDialog.Yes | MessageDialog.No)
         onYesClicked: { rootItem.garmin_accept_ftp_update(); }
         onNoClicked: { rootItem.garmin_dismiss_ftp_update(); }
+        backAnswersNo: true
         visible: rootItem.garminFtpPromptRequested
     }
 
@@ -1129,6 +1017,7 @@ ApplicationWindow {
             });
         }
         onNoClicked: { rootItem.clipboard_dismiss_workout_prompt(); }
+        backAnswersNo: true
         visible: rootItem.clipboardWorkoutPromptRequested
     }
 
@@ -1138,6 +1027,7 @@ ApplicationWindow {
         buttons: (MessageDialog.Yes | MessageDialog.No)
         onYesClicked: rootItem.clipboard_delete_finished_workout()
         onNoClicked: rootItem.clipboard_keep_finished_workout()
+        backAnswersNo: true
         visible: rootItem.clipboardWorkoutDeletePromptRequested
     }
 
@@ -1147,6 +1037,7 @@ ApplicationWindow {
         buttons: (MessageDialog.Yes | MessageDialog.No)
         onYesClicked: { rootItem.echelon_switch_to_classic_bridge(); }
         onNoClicked: { rootItem.echelon_dismiss_bridge_switch_prompt(); }
+        backAnswersNo: true
         visible: rootItem.echelonBridgeSwitchPromptRequested
     }
 
@@ -1160,7 +1051,8 @@ ApplicationWindow {
         height: Math.min(window.height - 60, 420)
         x: Math.round((parent.width - width) / 2)
         y: Math.round((parent.height - height) / 2)
-        visible: rootItem.echelonEnablePromptRequested
+        // Modern look: the card below (echelonEnableDialog)
+        visible: rootItem.echelonEnablePromptRequested && !window.ui.modern
 
         background: Rectangle {
             radius: 8
@@ -1217,6 +1109,23 @@ ApplicationWindow {
                 }
             }
         }
+    }
+
+    // Modern look of echelonEnablePopup: the card of the other questions, the same texts.
+    // Classic look keeps the popup above (here the native dialog would replace it).
+    UiMessageDialog {
+        id: echelonEnableDialog
+        text: qsTr("Echelon Locked Bike")
+        informativeText:
+            qsTr("Your bike is locked by Echelon, but QZ can unlock it.\n\n") +
+            qsTr("Enable Virtual Echelon in the experimental settings and restart qz, then open the official Echelon app on a separate device and connect to the bike once.\n\n") +
+            qsTr("After initialization, return to QZ and everything will work normally.\n\n") +
+            qsTr("You have to repeat this for each session, would you like to enable the Virtual Echelon setting now for this?")
+        buttons: (MessageDialog.Yes | MessageDialog.No)
+        onYesClicked: rootItem.echelon_enable_virtual_bridge()
+        onNoClicked: rootItem.echelon_dismiss_enable_prompt()
+        backAnswersNo: true
+        visible: rootItem.echelonEnablePromptRequested && window.ui.modern
     }
 
     UiMessageDialog {

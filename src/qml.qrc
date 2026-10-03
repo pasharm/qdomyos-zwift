@@ -22,6 +22,7 @@
         <file>UiComboBox.qml</file>
         <file>UiGroupBox.qml</file>
         <file>UiMessageDialog.qml</file>
+        <file>UiInfoPopup.qml</file>
         <file>UiPopup.qml</file>
         <file>UiFrame.qml</file>
         <file>UiNotice.qml</file>

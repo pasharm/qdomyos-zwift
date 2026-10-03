@@ -20,6 +20,10 @@ Popup {
     property string yesText: ""
     property string noText: ""
     property bool destructive: false
+    // The question stands while a flag of the C++ side is set (visible: rootItem.xxxRequested),
+    // and only the answer clears it: the back key closes the card without one, the flag stays
+    // set and the next request would not open the card again. True: back answers No.
+    property bool backAnswersNo: false
 
     signal yesClicked()
     signal noClicked()
@@ -67,7 +71,12 @@ Popup {
     }
 
     onOpened: if (!modern) nativeDialog.open()
-    onClosed: if (nativeDialog.visible) nativeDialog.close()
+    onClosed: {
+        if (nativeDialog.visible)
+            nativeDialog.close()
+        if (backAnswersNo && !answered)
+            noClicked()
+    }
 
     P.MessageDialog {
         id: nativeDialog
