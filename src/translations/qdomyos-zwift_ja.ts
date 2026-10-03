@@ -2283,6 +2283,34 @@ The following questions will customize QZ for your equipment and goals.</source>
         <source>Error retrieving access token, %1 (%2)</source>
         <translation>アクセス トークンの取得に失敗しました、%1 (%2)</translation>
     </message>
+    <message>
+        <source>The workout file could not be opened.</source>
+        <translation>ワークアウトファイルを開けませんでした。</translation>
+    </message>
+    <message>
+        <source>The workout file could not be copied.</source>
+        <translation>ワークアウトファイルをコピーできませんでした。</translation>
+    </message>
+    <message>
+        <source>No workout files (.fit) found.</source>
+        <translation>ワークアウトファイル (.fit) が見つかりません。</translation>
+    </message>
+    <message>
+        <source>Workouts imported: %1.</source>
+        <translation>インポートしたワークアウト: %1。</translation>
+    </message>
+    <message>
+        <source>Already in the history: %1.</source>
+        <translation>履歴に登録済み: %1。</translation>
+    </message>
+    <message>
+        <source>Without workout data: %1.</source>
+        <translation>ワークアウトデータなし: %1。</translation>
+    </message>
+    <message>
+        <source>The workout history database could not be opened.</source>
+        <translation>ワークアウト履歴のデータベースを開けませんでした。</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
@@ -2541,6 +2569,20 @@ Do you want to start it now?</source>
         <location filename="../main.cpp" line="144"/>
         <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
         <translation>QDomyos-Zwift - フィットネス機器ブリッジ</translation>
+    </message>
+    <message>
+        <source>Workout History</source>
+        <translation>ワークアウト履歴</translation>
+    </message>
+    <message>
+        <source>Workouts of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>以前のインストールのワークアウトがQZフォルダーに残っている可能性があります。
+検索しますか？
+
+次の画面でQZフォルダーへのアクセスを許可してください。</translation>
     </message>
 </context>
 <context>
@@ -8952,6 +8994,33 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
         <location filename="../settings-tts.qml" line="678"/>
         <source>Max Watt/KG</source>
         <translation>最高パワーウェイトレシオ（W／kg）</translation>
+    </message>
+</context>
+<context>
+    <name>WorkoutsHistory</name>
+    <message>
+        <source>Import FIT File...</source>
+        <translation>FITファイルをインポート...</translation>
+    </message>
+    <message>
+        <source>Import from QZ Folder...</source>
+        <translation>QZフォルダーからインポート...</translation>
+    </message>
+    <message>
+        <source>Please choose a file</source>
+        <translation>ファイルを選択してください</translation>
+    </message>
+    <message>
+        <source>FIT files (*.fit *.FIT)</source>
+        <translation>FITファイル (*.fit *.FIT)</translation>
+    </message>
+    <message>
+        <source>All files (*)</source>
+        <translation>すべてのファイル (*)</translation>
+    </message>
+    <message>
+        <source>Importing workouts...</source>
+        <translation>ワークアウトをインポート中...</translation>
     </message>
 </context>
 </TS>
