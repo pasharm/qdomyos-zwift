@@ -178,7 +178,8 @@ if best:
   fi
 }
 
-# T-103: the settings of upstream PR #4948 (catalog renderer instead of the accordions), shots only
+
+# T-105: thin frames around the settings and the block of an open section, shots only
 adb logcat -c || true
 adb logcat > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
@@ -191,74 +192,50 @@ else
   back "health connect"
 fi
 sleep 30
-shot 02-first-screen
-# The first-run wizard, if it is there anyway: close it by the toolbar back arrow
 if [ -f ui.xml ] && grep -q "Welcome to QZ" ui.xml; then tap $MENU "wizard back"; sleep 5; fi
 shot 04-home
 
 open_menu
-shot 05-menu
 tap_drawer 'Settings' 400 1400
 sleep 12
 shot 10-root
-adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-shot 11-root-scrolled
-adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-shot 12-root-end
-scroll_top
 
-# A section, its subsection, back by the toolbar arrow and by the back key
-section() {
-  local rx="$1" name="$2"
+# One theme: a section with its settings, a subsection inside it, scrolled down a few times
+run_theme() {
+  local t="$1"
   scroll_top
-  scroll_to "$rx" || return 0
-  tap_ui "$rx" || return 0
-  sleep 4
-  shot "20-$name"
-  adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-  shot "21-$name-scrolled"
-  tap $MENU "toolbar back from $name"
-  sleep 4
+  if scroll_to 'General Options' && tap_ui 'General Options'; then
+    sleep 4
+    shot "$t-20-general"
+    adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
+    shot "$t-21-general-scrolled"
+    scroll_top
+    tap_ui 'General Options'; sleep 3
+  fi
+  scroll_top
+  if scroll_to 'Treadmill Options' && tap_ui 'Treadmill Options'; then
+    sleep 4
+    shot "$t-30-treadmill"
+    adb shell input swipe 700 2000 700 900 400 || true; sleep 2
+    shot "$t-31-treadmill-scrolled"
+    if scroll_to 'Domyos Treadmill Options' && tap_ui 'Domyos Treadmill Options'; then
+      sleep 4
+      shot "$t-32-subsection-open"
+      adb shell input swipe 700 2000 700 1200 400 || true; sleep 2
+      shot "$t-33-subsection-scrolled"
+      tap_ui 'Domyos Treadmill Options'; sleep 3
+    fi
+    for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 900 300 || true; done
+    sleep 2
+    shot "$t-34-treadmill-end"
+    scroll_top
+    tap_ui 'Treadmill Options'; sleep 3
+  fi
 }
-section 'General Options' general
-section 'Bike Options' bike
-section 'Heart Rate Options' heart
-section 'Tiles Options' tiles
-section 'Experimental Features' experimental
-
-# A subsection inside General Options (the first row with a chevron)
-scroll_top
-if scroll_to 'General Options' && tap_ui 'General Options'; then
-  sleep 4
-  tap_node '›' && sleep 4 && shot 30-subsection
-  back "system back from the subsection"
-  sleep 4
-  shot 31-after-system-back
-  tap $MENU "toolbar back"; sleep 4
-fi
-
-# Search
-scroll_top
-shot 40-before-search
-tap_ui '(Search settings|Search).*' 700 330
-sleep 2
-adb shell input text weight
-sleep 4
-hide_keyboard
-shot 41-search-weight
-adb shell input keyevent KEYCODE_MOVE_END || true
-for i in 1 2 3 4 5 6; do adb shell input keyevent KEYCODE_DEL || true; done
-adb shell input text ftp
-sleep 4
-hide_keyboard
-shot 42-search-ftp
-adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-shot 43-search-ftp-scrolled
-
-# Dark only in this PR; the night mode of the system for the record
+run_theme light
 adb shell cmd uimode night yes || true
-sleep 5
-shot 50-night
+sleep 6
+run_theme dark
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
