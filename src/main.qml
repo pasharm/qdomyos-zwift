@@ -1476,7 +1476,7 @@ ApplicationWindow {
     }
 
     Timer {
-        interval: 4000; running: true; repeat: false
+        interval: 4000; running: false; repeat: false // T-122 test: no warm-up
         onTriggered: window.warmUpSettings()
     }
 
@@ -1688,7 +1688,7 @@ ApplicationWindow {
         leftPadding: getLeftPadding()
         rightPadding: window.ui.modern ? 0 : getRightPadding()
         Accessible.ignored: !drawer.opened
-        onAboutToShow: window.warmUpSettings()
+        // onAboutToShow: window.warmUpSettings() // T-122 test: no warm-up
 
         // Modern: a sheet with rounded outer corners. The rectangle runs past the left edge,
         // so only the right-hand corners show
