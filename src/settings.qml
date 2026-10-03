@@ -2562,7 +2562,12 @@ import QtQuick 2.12 as Quick212
         ColumnLayout {
             id: column1
             spacing: 0
-            anchors.fill: parent
+            // Not tied to the bottom: the height of the column is the content height of the page, so
+            // fill made an anchor loop; on a turn of the screen Qt gave up on it and the height stayed
+            // as it was - a section opened after it could not be scrolled to its end
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
 
             // Modern: always on top of the page (the toolbar has no search button then), with a
             // clear button inside the field and the "Changed" filter next to it
