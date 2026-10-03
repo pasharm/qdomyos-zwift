@@ -16830,12 +16830,16 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Layout.topMargin: 8
                         Layout.bottomMargin: 12
+                        // Wraps instead of running under the swatches: inside the frames of the
+                        // section the row is narrower than the seven swatches and a long name
                         Label {
                             text: qsTr("Accent colour")
+                            wrapMode: Text.WordWrap
                             Layout.fillWidth: true
+                            Layout.minimumWidth: 60
                         }
                         Row {
-                            spacing: 8
+                            spacing: 6
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             Repeater {
                                 // "system" first, where Android offers the wallpaper colour (API 31+)
@@ -16843,9 +16847,9 @@ import QtQuick 2.12 as Quick212
                                        .concat(["violet", "blue", "teal", "green", "orange", "pink"])
                                 // UiFrame: a Rectangle.border ring breaks up on Android
                                 delegate: UiFrame {
-                                    width: 30
-                                    height: 30
-                                    radius: 15
+                                    width: 28
+                                    height: 28
+                                    radius: 14
                                     fill: window.ui.accentOf(modelData)
                                     strokeWidth: window.ui.accentName === modelData ? 3 : 0
                                     stroke: window.ui.textMain
