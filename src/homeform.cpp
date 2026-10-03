@@ -1389,10 +1389,9 @@ JNIEXPORT void JNICALL
 void homeform::setActivityDescription(QString desc) { activityDescription = desc; }
 
 void homeform::chartSaved(QString fileName) {
-    if (!stopped)
-        return;
-    // no mail to attach it to, or the mail is already gone
-    if (!workoutMailEnabled() || mailSent) {
+    // the file is already written: keep it only if it can still go into the workout mail
+    // (the charts page also saves them while riding, and stopped is false until the first Stop)
+    if (!stopped || !workoutMailEnabled() || mailSent) {
         QFile::remove(fileName);
         return;
     }
