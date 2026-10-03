@@ -202,6 +202,29 @@ Page {
                     Accessible.role: Accessible.Button
                     Accessible.name: qsTr("Calendar")
                 }
+
+                RoundButton {
+                    id: modernImportButton
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 48
+                    height: 48
+                    onClicked: importMenu.popup(modernImportButton, 0, modernImportButton.height)
+                    background: Rectangle {
+                        radius: 24
+                        color: modernImportButton.down ? window.ui.surfaceHighest : window.ui.surfaceHigh
+                    }
+                    contentItem: Item {
+                        UiIcon {
+                            anchors.centerIn: parent
+                            width: 22
+                            height: 22
+                            name: "download"
+                            color: window.ui.textMain
+                        }
+                    }
+                    Accessible.role: Accessible.Button
+                    Accessible.name: qsTr("Import FIT File...")
+                }
             }
         }
 
