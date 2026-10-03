@@ -71,6 +71,17 @@ function zoneLabel(number) {
     return t('chart.zoneNumber', 'zone {number}').replace('{number}', number);
 }
 
+// centered moving average over `window` points (one point a second): the raw cadence is a saw
+function smoothRow(row, window) {
+    let half = Math.floor(window / 2);
+    return row.map(function (p, i) {
+        let from = Math.max(0, i - half), to = Math.min(row.length - 1, i + half), sum = 0;
+        for (let j = from; j <= to; j++)
+            sum += row[j].y;
+        return { x: p.x, y: Math.round(sum / (to - from + 1)) };
+    });
+}
+
 function process_arr(arr) {
     let watts = [];
     let reqpower = [];
@@ -605,6 +616,8 @@ function process_arr(arr) {
         }
     };
 
+    // no heart rate sensor: no empty heart chart and no zeros under it
+    $('#heartBox').toggle(heart.some(function (p) { return p.y > 0; }));
     ctx = document.getElementById('canvasHeart').getContext('2d');
     var heartChart = qzChartTheme.create(ctx, config);
 
@@ -818,7 +831,7 @@ function process_arr(arr) {
                     borderColor: window.chartColors.blue,
                     label: t('workoutEditor.cadence', 'Cadence'),
                     //cubicInterpolationMode: 'monotone',
-                    data: cadence,
+                    data: smoothRow(cadence, 5),
                     fill: false,
                     pointRadius: 0,
                     borderWidth: 1,

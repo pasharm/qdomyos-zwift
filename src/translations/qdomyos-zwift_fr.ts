@@ -1257,6 +1257,31 @@ Voulez-vous le faire maintenant ?</translation>
         <source>Elevation</source>
         <translation>Élévation</translation>
     </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="200"/>
+        <source>{value} min</source>
+        <translation>{value} min</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="201"/>
+        <source>Heart Rate Distribution</source>
+        <translation>Répartition de la fréquence cardiaque</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="202"/>
+        <source>Power Curve</source>
+        <translation>Courbe de puissance</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="204"/>
+        <source>min/km</source>
+        <translation>min/km</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="205"/>
+        <source>min/mi</source>
+        <translation>min/mi</translation>
+    </message>
 </context>
 <context>
     <name>Wizard</name>
