@@ -2881,6 +2881,10 @@ import QtQuick 2.12 as Quick212
                                     text: visible ? settingsPane.searchFieldValue(entry) : ""
                                     horizontalAlignment: Text.AlignRight
                                     inputMethodHints: entry.type === "string" ? Qt.ImhNoPredictiveText : Qt.ImhFormattedNumbersOnly
+                                    // One field for every setting found: offsets and the lowest
+                                    // incline are negative; a pace is a time
+                                    signed: true
+                                    timeShaped: settingsPane.paceDistance(entry) > 0
                                     onAccepted: settingsPane.setSettingValue(entry, text)
                                     onActiveFocusChanged: if (this.focus) this.cursorPosition = this.text.length
                                 }

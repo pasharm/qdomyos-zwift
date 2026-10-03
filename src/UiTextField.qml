@@ -56,9 +56,13 @@ T.TextField {
     property bool signed: false
     // Feet and inches ("5'10\"") keep the loose filter of number characters
     property bool feetShaped: false
+    // Set only when the text shows it: a page may bind them itself (the search results field
+    // is created with no text), an assignment of false would break that binding
     Component.onCompleted: {
-        timeShaped = /^\d+:\d{2}(:\d{2})?$/.test(text)
-        feetShaped = /['"]/.test(text)
+        if (!timeShaped && /^\d+:\d{2}(:\d{2})?$/.test(text))
+            timeShaped = true
+        if (!feetShaped && /['"]/.test(text))
+            feetShaped = true
     }
     // One number with one decimal point or comma: "170.5.5" can't be typed. "-", "." and an
     // empty field are an unfinished number (acceptableInput false), the OK button of the row
