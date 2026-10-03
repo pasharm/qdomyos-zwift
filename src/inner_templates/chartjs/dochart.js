@@ -141,6 +141,25 @@ function smoothRow(row, window) {
     });
 }
 
+// time axis: m:ss in the first hour (h:mm showed 00:00 on every tick there), h:mm later; a round step,
+// at most 6 ticks
+function timeTick(value, max) {
+    if (value === 0)
+        return "";
+    let h = Math.floor(value / 3600), m = Math.floor(value % 3600 / 60), s = Math.floor(value % 60);
+    if (max < 3600)
+        return m + ":" + s.toString().padStart(2, "0");
+    return h.toString().padStart(2, "0") + ":" + m.toString().padStart(2, "0");
+}
+
+function timeStep(max) {
+    let steps = [10, 15, 30, 60, 120, 300, 600, 900, 1200, 1800, 3600];
+    for (let i = 0; i < steps.length; i++)
+        if (max / steps[i] <= 6)
+            return steps[i];
+    return 3600;
+}
+
 function process_arr(arr) {
     let watts = [];
     let reqpower = [];
@@ -521,10 +540,10 @@ function process_arr(arr) {
                     ticks: {
                         // Include a dollar sign in the ticks
                         callback: function(value, index, values) {
-                            return value !== 0 ? Math.floor(value / 3600).toString().padStart(2, "0") + ":" + Math.floor((value / 60) - (Math.floor(value / 3600) * 60)).toString().padStart(2, "0")  : "";
+                            return timeTick(value, this.max);
                         },
                         padding: -20,
-                        //stepSize: 300,
+                        stepSize: timeStep(maxEl),
                         align: "end",
                     },
                     max: maxEl,
@@ -708,10 +727,10 @@ function process_arr(arr) {
                     ticks: {
                         // Include a dollar sign in the ticks
                         callback: function(value, index, values) {
-                            return value !== 0 ? Math.floor(value / 3600).toString().padStart(2, "0") + ":" + Math.floor((value / 60) - (Math.floor(value / 3600) * 60)).toString().padStart(2, "0")  : "";
+                            return timeTick(value, this.max);
                         },
                         padding: -20,
-                        //stepSize: 300,
+                        stepSize: timeStep(maxEl),
                         align: "end",
                     },
                     max: maxEl,
@@ -833,10 +852,10 @@ function process_arr(arr) {
                     ticks: {
                         // Include a dollar sign in the ticks
                         callback: function(value, index, values) {
-                            return value !== 0 ? Math.floor(value / 3600).toString().padStart(2, "0") + ":" + Math.floor((value / 60) - (Math.floor(value / 3600) * 60)).toString().padStart(2, "0")  : "";
+                            return timeTick(value, this.max);
                         },
                         padding: -20,
-                        //stepSize: 300,
+                        stepSize: timeStep(maxEl),
                         align: "end",
                     },
                     max: maxEl,
@@ -950,10 +969,10 @@ function process_arr(arr) {
                     ticks: {
                         // Include a dollar sign in the ticks
                         callback: function(value, index, values) {
-                            return value !== 0 ? Math.floor(value / 3600).toString().padStart(2, "0") + ":" + Math.floor((value / 60) - (Math.floor(value / 3600) * 60)).toString().padStart(2, "0")  : "";
+                            return timeTick(value, this.max);
                         },
                         padding: -20,
-                        //stepSize: 300,
+                        stepSize: timeStep(maxEl),
                         align: "end",
                     },
                     max: maxEl,
@@ -1067,10 +1086,10 @@ function process_arr(arr) {
                     ticks: {
                         // Include a dollar sign in the ticks
                         callback: function(value, index, values) {
-                            return value !== 0 ? Math.floor(value / 3600).toString().padStart(2, "0") + ":" + Math.floor((value / 60) - (Math.floor(value / 3600) * 60)).toString().padStart(2, "0")  : "";
+                            return timeTick(value, this.max);
                         },
                         padding: -20,
-                        //stepSize: 300,
+                        stepSize: timeStep(maxEl),
                         align: "end",
                     },
                     max: maxEl,
@@ -1264,10 +1283,10 @@ function process_arr(arr) {
                     ticks: {
                         // Include a dollar sign in the ticks
                         callback: function(value, index, values) {
-                            return value !== 0 ? Math.floor(value / 3600).toString().padStart(2, "0") + ":" + Math.floor((value / 60) - (Math.floor(value / 3600) * 60)).toString().padStart(2, "0")  : "";
+                            return timeTick(value, this.max);
                         },
                         padding: -20,
-                        //stepSize: 300,
+                        stepSize: timeStep(maxEl),
                         align: "end",
                     },
                     max: maxEl,
@@ -1503,7 +1522,7 @@ function drawPace(pace, maxEl, backgroundFill) {
                     display: true,
                     ticks: {
                         callback: function(value, index, values) {
-                            return value !== 0 ? Math.floor(value / 3600).toString().padStart(2, "0") + ":" + Math.floor((value / 60) - (Math.floor(value / 3600) * 60)).toString().padStart(2, "0")  : "";
+                            return timeTick(value, this.max);
                         },
                         align: "end",
                     },
