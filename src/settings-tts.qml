@@ -67,6 +67,16 @@ ScrollView {
         id: column1
         spacing: 0
         anchors.fill: parent
+        // Modern look: a thin frame around every setting, as in the settings sections; the
+        // column moves in by the width of the frame padding, the page clips at its edge
+        anchors.leftMargin: window.ui.modern ? 10 : 0
+        anchors.rightMargin: window.ui.modern ? 10 : 0
+
+        UiSettingFrames {
+            content: column1
+            exclude: [ttsLabel]
+            Layout.preferredHeight: 0
+        }
 
         Label {
             Layout.preferredWidth: parent.width
