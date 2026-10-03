@@ -219,6 +219,10 @@ run_theme() {
     shot "$t-30-treadmill"
     adb shell input swipe 700 2000 700 900 400 || true; sleep 2
     shot "$t-31-treadmill-scrolled"
+    adb shell input swipe 700 2000 700 900 400 || true; sleep 2
+    shot "$t-35-sticky"
+    tap 700 290 "sticky header"; sleep 2
+    shot "$t-36-after-sticky-tap"
     if scroll_to 'Domyos Treadmill Options' && tap_ui 'Domyos Treadmill Options'; then
       sleep 4
       shot "$t-32-subsection-open"
