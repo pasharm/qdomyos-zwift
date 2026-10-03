@@ -730,7 +730,7 @@ function process_arr(arr) {
                         align: 'end',
                         z: 1,
                         callback: function(value, index, values) {
-                            return value !== 0 ? value  : "";
+                            return value !== 0 ? Math.round(value * 10) / 10 : ""; // 0.30000000000000004 on a tiny axis
                         },
                     }
                 }
@@ -830,7 +830,7 @@ function process_arr(arr) {
                         align: 'end',
                         z: 1,
                         callback: function(value, index, values) {
-                            return value !== 0 ? value  : "";
+                            return value !== 0 ? Math.round(value * 10) / 10 : ""; // 0.30000000000000004 on a tiny axis
                         },
                     }
                 }
@@ -933,7 +933,7 @@ function process_arr(arr) {
                         align: 'end',
                         z: 1,
                         callback: function(value, index, values) {
-                            return value !== 0 ? value  : "";
+                            return value !== 0 ? Math.round(value * 10) / 10 : ""; // 0.30000000000000004 on a tiny axis
                         },
                     }
                 }
@@ -1088,6 +1088,7 @@ function process_arr(arr) {
                         display: false,
                     },
                     min: 0,
+                    suggestedMax: 5, // standing still does not squash the axis to a few tenths
                     ticks: {
                         stepSize: 5,
                         autoSkip: false,
@@ -1096,7 +1097,7 @@ function process_arr(arr) {
                         align: 'end',
                         z: 1,
                         callback: function(value, index, values) {
-                            return value !== 0 ? value  : "";
+                            return value !== 0 ? Math.round(value * 10) / 10 : ""; // 0.30000000000000004 on a tiny axis
                         },
                     }
                 }
