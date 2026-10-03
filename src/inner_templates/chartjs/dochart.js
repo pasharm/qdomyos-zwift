@@ -999,6 +999,9 @@ function process_arr(arr) {
         }
     };
 
+    // a Peloton class only (instructor or Peloton targets): elsewhere it repeats the resistance in another scale;
+    // height 0 like the heart rate chart, its image still goes to the mail
+    $('#pelotonBox').css({ height: (instructorName || '').length > 0 || pelotonreqresistance.some(function (p) { return p.y > 0; }) ? '' : '0', overflow: 'hidden' });
     ctx = document.getElementById('canvasPelotonResistance').getContext('2d');
     var pelotonresistanceChart = makeChart(ctx, config);
 
