@@ -97,6 +97,8 @@ class fitplusbike : public bike {
     qint64 workoutStoppedSinceMs = 0;
     qint64 initDoneMs = 0;
     qint64 lastStartSentMs = 0;
+    // stop or pause pressed in QZ: the bike may stop then, a stop from its console is undone
+    bool appStopped = false;
     resistance_t lastForcedResistance = -1;
 
 #ifdef Q_OS_IOS
