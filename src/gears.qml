@@ -336,6 +336,7 @@ ScrollView {
 
         // Wahoo Options
         UiGroupBox {
+            framed: true
             title: qsTr("Wahoo Options")
             Layout.fillWidth: true
 
@@ -368,6 +369,7 @@ ScrollView {
 
         // Crankset Size
         UiGroupBox {
+            framed: true
             title: qsTr("Chainring Size")
             Layout.fillWidth: true
 
@@ -409,6 +411,7 @@ ScrollView {
 
         // Cog Size
         UiGroupBox {
+            framed: true
             title: qsTr("Cog Size")
             Layout.fillWidth: true
 
@@ -449,6 +452,7 @@ ScrollView {
 
         // Wheel Size
         UiGroupBox {
+            framed: true
             title: qsTr("Virtual Wheel Size")
             Layout.fillWidth: true
 
@@ -589,6 +593,7 @@ ScrollView {
         }
 
         UiGroupBox {
+            framed: true
         title: qsTr("Preset Gear Profiles")
         Layout.fillWidth: true
 
@@ -621,6 +626,7 @@ ScrollView {
 
         // Gear Table GroupBox
         UiGroupBox {
+            framed: true
             title: qsTr("Virtual Gear Table")
             Layout.fillWidth: true
             // The table is as tall as its rows and the page scrolls as one: a list scrolling inside
