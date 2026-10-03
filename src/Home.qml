@@ -262,7 +262,7 @@ HomeForm {
         text: qsTr("Restart the app")
         informativeText: qsTr("To apply the changes, you need to restart the app.\nWould you like to do that now?")
         buttons: (MessageDialog.Yes | MessageDialog.No)
-        onYesClicked: Qt.callLater(Qt.quit)
+        onYesClicked: Qt.callLater(window.quitApp)
         onNoClicked: this.visible = false;
         visible: locationServiceRequsted && !locationServicesOn
     }
