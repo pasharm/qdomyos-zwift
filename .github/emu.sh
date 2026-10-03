@@ -248,6 +248,16 @@ if scroll_to 'Experimental Features' && tap_ui 'Experimental Features'; then
   shot dark-40-experimental
   adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
   shot dark-41-experimental-scrolled
+  adb shell input swipe 700 2000 700 900 400 || true; sleep 2
+  shot dark-42-experimental-virtual-device
+fi
+# The TTS page (a page of plain settings, no sections)
+scroll_top
+if scroll_to 'TTS \(Text to Speech\) Settings' && tap_ui 'TTS \(Text to Speech\) Settings'; then
+  sleep 4
+  shot dark-50-tts
+  back "tts page"
+  sleep 3
 fi
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
