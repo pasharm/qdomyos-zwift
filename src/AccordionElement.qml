@@ -177,7 +177,8 @@ ColumnLayout {
         // On the outline of the section block, which runs 1 px outside the real header
         stickyHeader.x = sectionHeader.mapToItem(f, 0, 0).x - 1
         stickyHeader.width = sectionHeader.width + 2
-        stickyHeader.y = Math.min(0, bottom - stickyHeight)
+        // At the end its bottom line lies on the bottom line of the block (1 px below the section)
+        stickyHeader.y = Math.min(0, bottom + 1 - stickyHeight)
         stickyHeader.visible = true
     }
     function scrollToHeader() {
@@ -203,7 +204,8 @@ ColumnLayout {
             id: sticky
             z: 10
             height: rootElement.stickyHeight
-            radius: 12
+            // As the corners of the block it slides into at the end
+            radius: sectionHeader.radius + 1
             fill: window.ui.surfaceHigh
             stroke: window.ui.accent
             strokeWidth: 1
