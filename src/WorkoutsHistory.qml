@@ -208,7 +208,7 @@ Page {
                     anchors.verticalCenter: parent.verticalCenter
                     width: 48
                     height: 48
-                    onClicked: importMenu.popup(modernImportButton, 0, modernImportButton.height)
+                    onClicked: modernImportMenu.openUnder(modernImportButton)
                     background: Rectangle {
                         radius: 24
                         color: modernImportButton.down ? window.ui.surfaceHighest : window.ui.surfaceHigh
@@ -819,6 +819,59 @@ Page {
             // but Android hides them from the app until the folder is picked once
             text: qsTr("Import from QZ Folder...")
             onTriggered: rootItem.importFitFolder()
+        }
+    }
+
+    // Modern look: the same two items on a UiPopup card under the button, the pressed item
+    // a rounded block inset from the edges (as the UiComboBox list)
+    UiPopup {
+        id: modernImportMenu
+        padding: 8
+        modal: false
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+        function openUnder(item) {
+            var p = item.mapToItem(workoutHistoryPage, 0, item.height)
+            x = Math.max(8, Math.min(p.x + item.width - width, workoutHistoryPage.width - width - 8))
+            y = p.y + 4
+            open()
+        }
+
+        contentItem: Column {
+            width: 240
+            Repeater {
+                model: [
+                    { label: qsTr("Import FIT File..."), folder: false },
+                    { label: qsTr("Import from QZ Folder..."), folder: true }
+                ]
+                delegate: AbstractButton {
+                    id: modernImportItem
+                    width: 240
+                    height: 48
+                    background: Rectangle {
+                        radius: 10
+                        color: modernImportItem.down ? window.ui.surfaceHighest : "transparent"
+                    }
+                    contentItem: Text {
+                        leftPadding: 12
+                        rightPadding: 12
+                        text: modelData.label
+                        font.pixelSize: 16
+                        color: window.ui.textMain
+                        verticalAlignment: Text.AlignVCenter
+                        elide: Text.ElideRight
+                    }
+                    onClicked: {
+                        modernImportMenu.close()
+                        if (modelData.folder)
+                            rootItem.importFitFolder()
+                        else if (Qt.platform.os === "android")
+                            rootItem.openAndroidDocumentPicker("fit")
+                        else
+                            fitFileDialogLoader.active = true
+                    }
+                }
+            }
         }
     }
 
