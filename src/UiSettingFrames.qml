@@ -135,9 +135,11 @@ Item {
     }
 
     // A new content (a Loader loads it again on every opening): its margins as it comes
+    // On the next turn: the content is often set while the section is still being laid out, and
+    // margins changed in the middle of it made a binding loop on the height of the section
     onContentChanged: {
         baseMargins = []
-        regroup()
+        Qt.callLater(frames.regroup)
     }
     // A section opened again (StaticAccordionElement keeps its content while closed): the
     // settings are visible again, the groups are made anew
