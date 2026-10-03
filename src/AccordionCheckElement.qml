@@ -91,11 +91,14 @@ ColumnLayout {
         Layout.fillWidth: true
         implicitHeight: cardColumn.implicitHeight + cardColumn.anchors.topMargin + cardColumn.anchors.bottomMargin
 
-        Rectangle {
+        // A thin frame instead of a fill, as the settings in the sections; a tile that is on
+        // (shown on the main page) in the accent like an open section
+        UiFrame {
             visible: rootElement.modernCard
             anchors.fill: parent
             radius: 16
-            color: window.ui.surface
+            stroke: rootElement.isOpen ? window.ui.accent : window.ui.outline
+            strokeWidth: 1
         }
 
         ColumnLayout {
@@ -141,7 +144,7 @@ ColumnLayout {
                     anchors.verticalCenter: parent.verticalCenter
                     text: rootElement.title
                     wrapMode: Text.WordWrap
-                    color: window.ui.textMain
+                    color: rootElement.modernCard && rootElement.isOpen ? window.ui.accent : window.ui.textMain
                     font.weight: rootElement.modernCard ? Font.DemiBold : Font.Normal
                 }
 
