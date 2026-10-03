@@ -3014,6 +3014,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.ui_zoom = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -3102,6 +3103,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.weight = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -3139,6 +3141,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: !settings.miles_unit
                             onAccepted: {
                                 if (settings.miles_unit) {
                                     var parts = text.match(/(\d+)[\s''\u2018\u2019]*(\d+)/);
@@ -4273,6 +4276,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.rolling_resistance = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -4305,6 +4309,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.bike_weight = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -4343,6 +4348,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.crrGain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -4367,6 +4373,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.cwGain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -4723,6 +4730,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.bike_resistance_gain_f = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -4953,6 +4961,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.gears_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -5005,6 +5014,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.gears_offset = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -5543,6 +5553,7 @@ import QtQuick 2.12 as Quick212
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                                    numberField: true
                                     onAccepted: settings.schwinn_resistance_smooth = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
@@ -5588,6 +5599,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.fillHeight: false
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                 //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                                numberField: true
                                 onAccepted: settings.horizon_gr7_cadence_multiplier = text
                                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                             }
@@ -5652,6 +5664,7 @@ import QtQuick 2.12 as Quick212
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                                    numberField: true
                                     onAccepted: settings.echelon_resistance_gain = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
@@ -6242,6 +6255,7 @@ import QtQuick 2.12 as Quick212
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                                    numberField: true
                                     onAccepted: settings.proform_wheel_ratio = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
@@ -6982,6 +6996,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.ant_speed_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -8080,6 +8095,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.peloton_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -10185,6 +10201,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhDigitsOnly
+                            numberField: true
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
                         UiButton {
@@ -10208,6 +10225,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhDigitsOnly
+                            numberField: true
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
                         UiButton {
@@ -10770,6 +10788,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.trainprogram_speed_min = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -10795,6 +10814,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.trainprogram_speed_max = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -10820,6 +10840,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.trainprogram_incline_min = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -10845,6 +10866,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.trainprogram_incline_max = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -11111,6 +11133,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhDigitsOnly
+                            numberField: true
                             onAccepted: settings.treadmill_step_speed = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -11149,6 +11172,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhDigitsOnly
+                            numberField: true
                             onAccepted: settings.treadmill_incline_min = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -11185,6 +11209,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhDigitsOnly
+                            numberField: true
                             onAccepted: settings.treadmill_incline_max = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -11221,6 +11246,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhDigitsOnly
+                            numberField: true
                             onAccepted: settings.treadmill_speed_max = (settings.miles_unit?text * 1.60934:text)
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -11257,6 +11283,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhDigitsOnly
+                            numberField: true
                             onAccepted: settings.treadmill_speed_min = (settings.miles_unit?text * 1.60934:text)
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -13776,6 +13803,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhDigitsOnly
+                            numberField: true
                             onAccepted: settings.watt_offset = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -13815,6 +13843,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.watt_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -13890,6 +13919,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhDigitsOnly
+                            numberField: true
                             onAccepted: settings.speed_offset = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -13930,6 +13960,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.speed_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -14006,6 +14037,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.cadence_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -14420,6 +14452,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.zwift_inclination_gain = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -14457,6 +14490,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            numberField: true
                             onAccepted: settings.min_inclination = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -14494,6 +14528,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhDigitsOnly
+                            numberField: true
                             onAccepted: settings.treadmill_step_incline = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -14614,6 +14649,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhDigitsOnly
+                            numberField: true
                             onAccepted: settings.autolap_distance = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -14650,6 +14686,7 @@ import QtQuick 2.12 as Quick212
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             //inputMethodHints: Qt.ImhDigitsOnly
+                            numberField: true
                             onAccepted: settings.inclination_delay_seconds = text
                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                         }
@@ -15447,6 +15484,7 @@ import QtQuick 2.12 as Quick212
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                                            numberField: true
                                             onAccepted: settings.elite_rizer_gain = text
                                             onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                         }
@@ -17593,6 +17631,7 @@ import QtQuick 2.12 as Quick212
                                     inputMethodHints: Qt.ImhDigitsOnly
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                                    numberField: true
                                     onAccepted: settings.osc_port = text
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
