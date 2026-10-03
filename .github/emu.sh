@@ -200,6 +200,22 @@ tap_drawer 'Settings' 400 1400
 sleep 12
 shot 10-root
 
+# T-105: after a turn of the screen the page height stayed as it was - a section opened after
+# it was cut off at the bottom. Turn and back, open a long section, scroll to its very end
+echo "-- rotation test" >> $STEPLOG
+adb shell settings put system accelerometer_rotation 0 || true
+adb shell settings put system user_rotation 1 || true; sleep 5
+shot 11-rot-landscape
+adb shell settings put system user_rotation 0 || true; sleep 5
+if scroll_to 'Bike Options' && tap_ui 'Bike Options'; then
+  sleep 5
+  for i in $(seq 1 25); do adb shell input swipe 700 2000 700 600 200 || true; done
+  sleep 2
+  shot 12-rot-bike-end
+  scroll_top
+  tap_ui 'Bike Options'; sleep 3
+fi
+
 # One theme: a section with its settings, a subsection inside it, scrolled down a few times
 run_theme() {
   local t="$1"
