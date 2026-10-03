@@ -2293,6 +2293,11 @@ Le seguenti domande personalizzeranno QZ per la tua attrezzatura e i tuoi obiett
 <context>
     <name>main</name>
     <message>
+        <location filename="../main.qml" line="321"/>
+        <source>QZ is closing...</source>
+        <translation>QZ si sta chiudendo...</translation>
+    </message>
+    <message>
         <location filename="../main.qml" line="20"/>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>

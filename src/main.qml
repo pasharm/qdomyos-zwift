@@ -265,6 +265,74 @@ ApplicationWindow {
         id: toast
     }
 
+    // The first open of the settings after an install froze the app for a few seconds: the
+    // engine compiled about 1.3 MB of QML (settings.qml, settings-tiles.qml) right then, later
+    // opens read the disk cache. They are compiled ahead instead, off the GUI thread: a few
+    // seconds after start, or as soon as the drawer starts to open if that comes first. Only
+    // compiled, not created. The components are kept so the engine does not drop the compiled
+    // types; a push of the same file while the compilation runs picks it up rather than
+    // starting over.
+    property var settingsWarmup: []
+    function warmUpSettings() {
+        if (settingsWarmup.length > 0)
+            return
+        var started = Date.now()
+        var pages = ["settings.qml", "settings-tiles.qml"]
+        var components = []
+        pages.forEach(function (page) {
+            var component = Qt.createComponent(page, Component.Asynchronous)
+            var report = function () {
+                if (component.status === Component.Ready)
+                    console.log("QZ-TIMING warm-up " + page + " ready in " + (Date.now() - started) + " ms")
+                else if (component.status === Component.Error)
+                    console.warn("QZ-TIMING warm-up " + page + ": " + component.errorString())
+            }
+            if (component.status === Component.Loading)
+                component.statusChanged.connect(report)
+            else
+                report()
+            components.push(component)
+        })
+        settingsWarmup = components
+    }
+
+    Timer {
+        interval: 4000; running: true; repeat: false
+        onTriggered: window.warmUpSettings()
+    }
+
+    // Quit, but not while the warm-up still compiles: on Android Qt.quit() in the middle of it
+    // froze the closing and the next start (a question that restarts the app a few seconds
+    // after the first start). The compilation cannot be cancelled, so wait for it (2-3 s after
+    // an install), at most quitWaitTimer.interval
+    property bool quitting: false
+    function warmUpCompiling() {
+        return settingsWarmup.some(function (c) { return c.status === Component.Loading })
+    }
+    function quitApp() {
+        if (quitting)
+            return
+        quitting = true
+        if (!warmUpCompiling()) {
+            Qt.quit()
+            return
+        }
+        console.log("QZ-TIMING quit waits for the settings warm-up")
+        toast.show(qsTr("QZ is closing..."), quitWaitTimer.interval)
+        settingsWarmup.forEach(function (c) {
+            c.statusChanged.connect(function () {
+                if (!warmUpCompiling())
+                    Qt.quit()
+            })
+        })
+        quitWaitTimer.start()
+    }
+    Timer {
+        id: quitWaitTimer
+        interval: 10000
+        onTriggered: Qt.quit()
+    }
+
     property bool lapPromptVisible: false
     property string lapPromptText: ""
 
@@ -386,7 +454,7 @@ ApplicationWindow {
             if(backPressed){
                 timer.stop()
                 backPressed = false
-                Qt.callLater(Qt.quit)
+                Qt.callLater(window.quitApp)
             }
             else{
                 backPressed = true
@@ -735,7 +803,7 @@ ApplicationWindow {
          parent: Overlay.overlay
          enabled: rootItem.licensePopupVisible
          onEnabledChanged: { if(rootItem.licensePopupVisible) popupLicense.open() }
-         onClosed: { Qt.openUrlExternally("https://www.patreon.com/bePatron?u=45290147"); Qt.callLater(Qt.quit); }
+         onClosed: { Qt.openUrlExternally("https://www.patreon.com/bePatron?u=45290147"); Qt.callLater(window.quitApp); }
 
          x: Math.round((parent.width - width) / 2)
          y: Math.round((parent.height - height) / 2)
@@ -769,7 +837,7 @@ ApplicationWindow {
         text: qsTr("Settings changed")
         informativeText: qsTr("In order to apply the changes you need to restart the app.\nDo you want to do it now?")
         buttons: (MessageDialog.Yes | MessageDialog.No)
-        onYesClicked: Qt.callLater(Qt.quit)
+        onYesClicked: Qt.callLater(window.quitApp)
         onNoClicked: this.visible = false;
         visible: false
     }
@@ -780,7 +848,7 @@ ApplicationWindow {
         text: ""
         informativeText: qsTr("Restart now?")
         buttons: (MessageDialog.Yes | MessageDialog.No)
-        onYesClicked: Qt.callLater(Qt.quit)
+        onYesClicked: Qt.callLater(window.quitApp)
         onNoClicked: this.visible = false;
         visible: false
     }
@@ -1208,6 +1276,7 @@ ApplicationWindow {
         leftPadding: getLeftPadding()
         rightPadding: getRightPadding()
         Accessible.ignored: !drawer.opened
+        onAboutToShow: window.warmUpSettings()
 
         ScrollView {
             contentWidth: -1
@@ -1395,7 +1464,7 @@ ApplicationWindow {
                     visible: OS_VERSION === "Other" ? true : false
                     onClicked: {
                         console.log("closing...")
-                        Qt.callLater(Qt.quit)
+                        Qt.callLater(window.quitApp)
                     }
                 }
 
