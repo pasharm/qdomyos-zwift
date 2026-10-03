@@ -26,6 +26,17 @@ import QtQuick 2.12 as Quick212
         //anchors.bottom: footerSettings.top
         //anchors.bottomMargin: footerSettings.height + 10
         id: settingsPane
+        // TEMP-LOG: QZ-NAV - scrolling of settings, to find a page that stops scrolling
+        Connections {
+            target: settingsPane.contentItem
+            ignoreUnknownSignals: true
+            function onMovementStarted() { console.log("QZ-NAV settings move start y=" + Math.round(settingsPane.contentItem.contentY) + " h=" + Math.round(settingsPane.contentItem.height) + " ch=" + Math.round(settingsPane.contentItem.contentHeight) + " interactive=" + settingsPane.contentItem.interactive + " enabled=" + settingsPane.contentItem.enabled) }
+            function onMovementEnded() { console.log("QZ-NAV settings move end y=" + Math.round(settingsPane.contentItem.contentY)) }
+            function onDraggingChanged() { console.log("QZ-NAV settings dragging=" + settingsPane.contentItem.dragging + " y=" + Math.round(settingsPane.contentItem.contentY) + " ch=" + Math.round(settingsPane.contentItem.contentHeight) + " h=" + Math.round(settingsPane.contentItem.height) + " interactive=" + settingsPane.contentItem.interactive) }
+            function onContentHeightChanged() { console.log("QZ-NAV settings contentHeight=" + Math.round(settingsPane.contentItem.contentHeight) + " h=" + Math.round(settingsPane.contentItem.height)) }
+            function onHeightChanged() { console.log("QZ-NAV settings viewport " + Math.round(settingsPane.contentItem.width) + "x" + Math.round(settingsPane.contentItem.height) + " ch=" + Math.round(settingsPane.contentItem.contentHeight) + " y=" + Math.round(settingsPane.contentItem.contentY)) }
+        }
+        Component.onDestruction: console.log("QZ-NAV settings page destroyed")
 
         signal peloton_connect_clicked()
         signal intervalsicu_connect_clicked()

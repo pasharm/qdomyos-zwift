@@ -312,6 +312,16 @@ HomeForm {
     GridView {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
+        // TEMP-LOG: QZ-NAV - scrolling of home-grid, to find a page that stops scrolling
+        Connections {
+            target: gridView
+            ignoreUnknownSignals: true
+            function onMovementStarted() { console.log("QZ-NAV home-grid move start y=" + Math.round(gridView.contentY) + " h=" + Math.round(gridView.height) + " ch=" + Math.round(gridView.contentHeight) + " interactive=" + gridView.interactive + " enabled=" + gridView.enabled) }
+            function onMovementEnded() { console.log("QZ-NAV home-grid move end y=" + Math.round(gridView.contentY)) }
+            function onDraggingChanged() { console.log("QZ-NAV home-grid dragging=" + gridView.dragging + " y=" + Math.round(gridView.contentY) + " ch=" + Math.round(gridView.contentHeight) + " h=" + Math.round(gridView.height) + " interactive=" + gridView.interactive) }
+            function onContentHeightChanged() { console.log("QZ-NAV home-grid contentHeight=" + Math.round(gridView.contentHeight) + " h=" + Math.round(gridView.height)) }
+            function onHeightChanged() { console.log("QZ-NAV home-grid viewport " + Math.round(gridView.width) + "x" + Math.round(gridView.height) + " ch=" + Math.round(gridView.contentHeight) + " y=" + Math.round(gridView.contentY)) }
+        }
         anchors.bottom: parent.bottom
         // The tiles stretch to fill the row: the space left over by a whole number of columns
         // is shared between the columns, up to a quarter of the tile width, and what remains

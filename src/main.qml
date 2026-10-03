@@ -2088,6 +2088,8 @@ ApplicationWindow {
             focus: true
             // Only the tile grid scrolls the toolbar away; any other page gets it back
             onCurrentItemChanged: {
+                // TEMP-LOG: QZ-NAV - the page on top of the stack
+                console.log("QZ-NAV stack depth=" + depth + " current=" + (currentItem ? (currentItem.objectName || currentItem.toString()) + " " + Math.round(currentItem.width) + "x" + Math.round(currentItem.height) : "none") + " stack " + Math.round(width) + "x" + Math.round(height) + " screen " + Screen.width + "x" + Screen.height)
                 headerToolbar.scrolledAway = false
                 // A kept page just left the stack: the countdown to giving its memory back,
                 // a minute while riding

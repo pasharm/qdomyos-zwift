@@ -265,6 +265,7 @@ ColumnLayout {
 
     // Handle accordion closing
     onIsOpenChanged: {
+        console.log("QZ-NAV section \"" + title + "\" depth=" + depth + " open=" + isOpen)
         if (!isOpen) {
             contentLoader.visible = false
         }
