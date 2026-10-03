@@ -163,7 +163,9 @@ ColumnLayout {
             top = sectionHeader.mapToItem(f, 0, 0).y
             bottom = rootElement.mapToItem(f, 0, 0).y + rootElement.height
             // Until the very end of the section: the copy goes up with its last row
-            want = top < 0 && bottom > 0
+            // Only once the copy covers what is left of the real header: earlier the bottom of
+            // the real header showed under the copy as a dark band
+            want = top + sectionHeader.height < stickyHeight && bottom > 0
         }
         if (!want) {
             if (stickyHeader)
@@ -219,6 +221,14 @@ ColumnLayout {
                 width: parent.width + 6
                 height: 24 + parent.height / 2
                 color: window.ui.bg
+            }
+            // The accent bar of the open header, on the outline like there
+            Rectangle {
+                width: 4
+                height: parent.height - 16
+                anchors.verticalCenter: parent.verticalCenter
+                radius: 2
+                color: window.ui.accent
             }
 
             Text {
