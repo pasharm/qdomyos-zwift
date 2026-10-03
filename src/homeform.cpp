@@ -1060,6 +1060,8 @@ homeform::homeform(QQmlApplicationEngine *engine, bluetooth *bl) {
         }
     }
 
+    removeOldWorkoutImages();
+
     QDirIterator itFit(getWritableAppDir(), QStringList() << "*.fit", QDir::Files);
     qDebug() << itFit.path();
     QDir().mkdir(getWritableAppDir() + "fit");
@@ -1389,14 +1391,52 @@ void homeform::setActivityDescription(QString desc) { activityDescription = desc
 void homeform::chartSaved(QString fileName) {
     if (!stopped)
         return;
+    // no mail to attach it to, or the mail is already gone
+    if (!workoutMailEnabled() || mailSent) {
+        QFile::remove(fileName);
+        return;
+    }
     chartImagesFilenames.append(fileName);
     if (chartImagesFilenames.length() >= 9) {
         sendMail();
+        removeChartImages();
+    }
+}
+
+bool homeform::workoutMailEnabled() {
+    QSettings settings;
+    return !settings.value(QZSettings::user_email, QZSettings::default_user_email).toString().isEmpty();
+}
+
+void homeform::removeChartImages() {
+    if (!chartImagesFilenames.isEmpty()) {
         qDebug() << "removing chart images";
-        for (const QString &f : qAsConst(chartImagesFilenames)) {
-            QFile::remove(f);
+    }
+    for (const QString &f : qAsConst(chartImagesFilenames)) {
+        QFile::remove(f);
+    }
+    chartImagesFilenames.clear();
+}
+
+// Screenshots and charts of past workouts left behind by older versions (or by a mail that was never sent).
+// Only names written by QZ are matched: QDateTime::toString() with ':' -> '_' plus an optional _<chart> suffix, or
+// the <uuid>_mail.jpg copies; on macOS/Windows the
+// writable dir is Downloads / the current dir, so a plain *.jpg would hit the user's own files.
+void homeform::removeOldWorkoutImages() {
+    static const QRegularExpression qzImageName(QStringLiteral("^(\\S+ \\S+ +\\d{1,2} \\d\\d_\\d\\d_\\d\\d \\d{4}(_\\w+)?\\.(jpg|png)|[0-9a-f-]{36}_mail\\.jpg)$"),
+                                                QRegularExpression::CaseInsensitiveOption);
+    const QDateTime limit = QDateTime::currentDateTime().addDays(-1);
+    const QFileInfoList list =
+        QDir(getWritableAppDir())
+            .entryInfoList(QStringList() << QStringLiteral("*.jpg") << QStringLiteral("*.png"), QDir::Files);
+    int removed = 0;
+    for (const QFileInfo &f : list) {
+        if (qzImageName.match(f.fileName()).hasMatch() && f.lastModified() < limit && QFile::remove(f.filePath())) {
+            removed++;
         }
-        chartImagesFilenames.clear();
+    }
+    if (removed) {
+        qDebug() << "removed old workout images" << removed;
     }
 }
 
@@ -10926,6 +10966,8 @@ void homeform::sendMail() {
             chartImagesFilenamesForMail.append(tempChartImage);
         }
     }
+    // the mail thread owns the copies and removes them; the originals are not needed anymore
+    removeChartImages();
 
     for (const QString &f : qAsConst(chartImagesFilenamesForMail)) {
 

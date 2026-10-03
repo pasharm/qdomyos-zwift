@@ -240,6 +240,10 @@ class homeform : public QObject {
 
     QByteArray currentPelotonImage();
     Q_INVOKABLE void save_screenshot() {
+        // the images are only used as attachments of the workout mail
+        if (!workoutMailEnabled()) {
+            return;
+        }
 
         QString path = getWritableAppDir();
 
@@ -254,7 +258,7 @@ class homeform : public QObject {
     }
 
     Q_INVOKABLE void save_screenshot_chart(QQuickItem *item, QString filename) {
-        if (!stopped) {
+        if (!stopped || !workoutMailEnabled()) {
             return;
         }
 
@@ -266,6 +270,10 @@ class homeform : public QObject {
         QSharedPointer<const QQuickItemGrabResult> grabResult = item->grabToImage();
 
         connect(grabResult.data(), &QQuickItemGrabResult::ready, [=]() { // NOTE: clazy-connect-3arg-lambda
+            // the mail is already gone: nothing would attach or remove this image
+            if (mailSent) {
+                return;
+            }
             grabResult->saveToFile(filenameScreenshot);
             // chartImages.append(grabResult->image());
             chartImagesFilenames.append(filenameScreenshot);
@@ -1071,6 +1079,9 @@ public:
 
     QList<QString> chartImagesFilenames;
     bool mailSent = false;
+    bool workoutMailEnabled();
+    void removeChartImages();
+    void removeOldWorkoutImages();
 
     bool m_autoresistance = true;
     bool m_stopRequested = false;
