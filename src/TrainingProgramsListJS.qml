@@ -410,7 +410,8 @@ ColumnLayout {
 
                     UiButton {
                         text: qsTr("← Back")
-                        flat: window.ui.modern
+                        // Modern look: the toolbar arrow goes back to the list (main.qml)
+                        visible: !window.ui.modern
                         onClicked: stackView.pop()
                     }
 
