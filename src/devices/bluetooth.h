@@ -208,6 +208,7 @@ class bluetooth : public QObject, public SignalHandler {
     bool useDiscovery = false;
     QFile *debugCommsLog = nullptr;
     QBluetoothDeviceDiscoveryAgent *discoveryAgent = nullptr;
+    QBluetoothDeviceDiscoveryAgent *hrmDiscoveryAgent = nullptr;
     antbike *antBike = nullptr;
     android_antbike *android_antBike = nullptr;
     apexbike *apexBike = nullptr;
@@ -391,6 +392,8 @@ class bluetooth : public QObject, public SignalHandler {
     bool fitmetria_fanfit_isconnected(const QBluetoothDeviceInfo &device);
     bool gymModeEnabled() const;
     void handleControllerGearChange(bool increase, bool allowMyWhooshOverride);
+    void connectHeartRateBelt(const QBluetoothDeviceInfo &b);
+    void stopHeartRateBeltDiscovery();
 
     QTimer discoveryTimeout;
     bool discoveryFinishedHandled = false;
@@ -453,6 +456,7 @@ class bluetooth : public QObject, public SignalHandler {
     void zwiftRideRightOnOff(bool pressed);
   public slots:
     void restart();
+    void reconnectHeartRateBelt();
     void selectGymModeDevice(const QString &deviceName);
     void debug(const QString &string);
     void heartRate(uint8_t heart);

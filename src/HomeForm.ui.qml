@@ -69,7 +69,7 @@ Page {
                     // (with a device connected bluetoothSearchNow() does nothing)
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: rootItem.bluetoothSearchNow()
+                        onClicked: { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt(); }
                     }
                 }
             }
@@ -240,7 +240,7 @@ Page {
                         // (with a device connected bluetoothSearchNow() does nothing)
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: rootItem.bluetoothSearchNow()
+                            onClicked: { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt(); }
                         }
                     }
                     Image {

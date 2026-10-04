@@ -3715,7 +3715,7 @@ import QtQuick 2.12 as Quick212
                             id: okHeartBeltNameButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            onClicked: { settings.heart_rate_belt_name = stripRssi(heartBeltNameTextField.value); window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
+                            onClicked: { settings.heart_rate_belt_name = stripRssi(heartBeltNameTextField.value); rootItem.reconnectHeartRateBelt(); if (settings.heart_rate_belt_name === "Disabled") window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                         }
                     }
 

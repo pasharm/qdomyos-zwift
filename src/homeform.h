@@ -247,6 +247,11 @@ class homeform : public QObject {
     Q_INVOKABLE bool bluetoothSearchStopped();
     // Tap on the Bluetooth icon: search right away, or when Android allows it again (with a toast saying when)
     Q_INVOKABLE void bluetoothSearchNow();
+    Q_INVOKABLE void reconnectHeartRateBelt() {
+        if (bluetoothManager)
+            bluetoothManager->reconnectHeartRateBelt();
+    }
+
     Q_INVOKABLE void save_screenshot() {
 
         QString path = getWritableAppDir();
