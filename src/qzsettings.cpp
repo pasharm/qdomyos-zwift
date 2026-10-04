@@ -964,6 +964,7 @@ const QString QZSettings::proform_treadmill_1500_pro = QStringLiteral("proform_t
 const QString QZSettings::proform_505_cst_80_44 = QStringLiteral("proform_505_cst_80_44");
 const QString QZSettings::proform_trainer_8_0 = QStringLiteral("proform_trainer_8_0");
 const QString QZSettings::proform_trainer_8_0_pftl59721_int_0 = QStringLiteral("proform_trainer_8_0_pftl59721_int_0");
+const QString QZSettings::proform_trainer_8_0_pftl59721_0 = QStringLiteral("proform_trainer_8_0_pftl59721_0");
 const QString QZSettings::tile_biggears_swap = QStringLiteral("tile_biggears_swap");
 const QString QZSettings::treadmill_follow_wattage = QStringLiteral("treadmill_follow_wattage");
 const QString QZSettings::fit_file_garmin_device_training_effect = QStringLiteral("fit_file_garmin_device_training_effect");
@@ -1307,7 +1308,7 @@ const QString QZSettings::default_shortcut_stop = QStringLiteral("");
 const QString QZSettings::android_landscape_cutout_margin = QStringLiteral("android_landscape_cutout_margin");
 const QString QZSettings::android_landscape_cutout_prompt_shown = QStringLiteral("android_landscape_cutout_prompt_shown");
 
-const uint32_t allSettingsCount = 1014;
+const uint32_t allSettingsCount = 1015;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -2346,6 +2347,7 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::renpho_bike_knob_gears, QZSettings::default_renpho_bike_knob_gears},
     {QZSettings::watt_max, QZSettings::default_watt_max},
     {QZSettings::android_landscape_cutout_margin, QZSettings::default_android_landscape_cutout_margin},
+    {QZSettings::proform_trainer_8_0_pftl59721_0, QZSettings::default_proform_trainer_8_0_pftl59721_0},
     {QZSettings::android_landscape_cutout_prompt_shown, QZSettings::default_android_landscape_cutout_prompt_shown},
     {QZSettings::virtufit_layout_question, QZSettings::default_virtufit_layout_question},
 };
