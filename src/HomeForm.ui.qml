@@ -259,10 +259,11 @@ Page {
                             color: treadmill_connection.enabled ? "#00000000" : "#B0D3d3d3"
                         }
                         // No device yet: a tap searches right away instead of waiting for the next search;
-                        // with a device connected it restarts the DirCon (Wi-Fi) servers, see bluetoothSearchNow()
+                        // with a device connected it restarts the DirCon (Wi-Fi) servers, see bluetoothSearchNow(),
+                        // and looks for the chosen heart rate sensor again (reconnectHeartRateBelt())
                         MouseArea {
                             anchors.fill: parent
-                            onClicked: rootItem.bluetoothSearchNow()
+                            onClicked: { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt(); }
                         }
                     }
                     Image {

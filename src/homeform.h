@@ -254,6 +254,12 @@ class homeform : public QObject {
     // Tap on the Bluetooth icon: search right away, or when Android allows it again (with a toast saying when);
     // with the device already connected, restart the DirCon servers and mDNS instead (toast; nothing if DirCon is off)
     Q_INVOKABLE void bluetoothSearchNow();
+    // Heart rate sensor chosen in the settings or a tap on the Bluetooth icon: connect it without a restart
+    Q_INVOKABLE void reconnectHeartRateBelt() {
+        if (bluetoothManager)
+            bluetoothManager->reconnectHeartRateBelt();
+    }
+
     Q_INVOKABLE void save_screenshot() {
 
         QString path = getWritableAppDir();
