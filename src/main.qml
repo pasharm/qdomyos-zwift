@@ -755,6 +755,7 @@ ApplicationWindow {
         }
 
         Column {
+            id: gymModeColumn
             anchors.fill: parent
             anchors.margins: 18
             spacing: 14
@@ -770,18 +771,44 @@ ApplicationWindow {
                 wrapMode: Text.WordWrap
             }
 
-            Label {
-                width: parent.width
-                text: popupGymMode.bluetoothOff ? qsTranslate("homeform", "Bluetooth is off")
-                      : popupGymMode.devices.length === 0 ? qsTranslate("homeform", "Searching for the device...")
-                      : qsTr("QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.")
-                wrapMode: Text.WordWrap
-                horizontalAlignment: Text.AlignHCenter
-                color: popupGymMode.modern ? window.ui.textMain : Material.foreground
+            Row {
+                anchors.horizontalCenter: parent.horizontalCenter
+                spacing: 8
+
+                // Bluetooth is off: the warning sign of the home page, drawn because the app
+                // font has no warning sign
+                Rectangle {
+                    visible: popupGymMode.bluetoothOff
+                    anchors.verticalCenter: parent.verticalCenter
+                    width: 16
+                    height: 16
+                    radius: 8
+                    color: window.ui.danger
+                    Accessible.ignored: true
+                    Label {
+                        anchors.centerIn: parent
+                        text: "!"
+                        color: window.ui.dark ? "#000000" : "#FFFFFF"
+                        font.pixelSize: 12
+                        font.bold: true
+                    }
+                }
+
+                Label {
+                    width: Math.min(implicitWidth, gymModeColumn.width - (popupGymMode.bluetoothOff ? 24 : 0))
+                    text: popupGymMode.bluetoothOff ? qsTranslate("homeform", "Bluetooth is off")
+                          : popupGymMode.devices.length === 0 ? qsTranslate("homeform", "Searching for the device...")
+                          : qsTr("QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.")
+                    wrapMode: Text.WordWrap
+                    horizontalAlignment: Text.AlignHCenter
+                    color: popupGymMode.modern ? window.ui.textMain : Material.foreground
+                }
             }
 
             ValueComboBox {
                 id: gymModeDeviceComboBox
+                // Nothing to choose yet (Bluetooth off, nothing found): no empty box
+                visible: popupGymMode.devices.length > 0
                 width: parent.width
                 model: popupGymMode.devices
                 displayText: currentIndex >= 0 ? labelFor(currentValue) : qsTr("Select a device")
