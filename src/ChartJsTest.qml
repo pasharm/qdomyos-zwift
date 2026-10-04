@@ -69,11 +69,7 @@ ColumnLayout {
         // The native view lies over everything QML draws: it goes with the page when kept
         visible: column1.visible
         // Modern look: no Close button at the bottom (the back arrow of the toolbar does
-        // it), the page runs down to the edge like the other pages. Held sideways the page
-        // stack does not keep clear of the gesture bar (main.qml), so the page does
-        anchors.bottomMargin: window.ui.modern && (Screen.orientation === Qt.LandscapeOrientation ||
-                                                   Screen.orientation === Qt.InvertedLandscapeOrientation)
-                              ? window.getBottomPadding() : 0
+        // it), the page runs down to the edge like the other pages
         anchors.leftMargin: -column1.offScreen
         anchors.rightMargin: column1.offScreen
         onLoadingChanged: {
