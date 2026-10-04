@@ -1221,7 +1221,8 @@ ApplicationWindow {
         function show(i) {
             close()
             switch (i) {
-            case 0: rootItem.stravaUploadRequested = true; break
+            // setStravaUploadRequested does not notify: the C++ side emits by hand after it
+            case 0: rootItem.stravaUploadRequested = true; rootItem.stravaUploadRequestedChanged(true); break
             case 1: rootItem.generalPopupVisible = true; break
             case 2: rootItem.pelotonPopupVisible = true; break
             case 3: testLicenseCopy.open(); break
@@ -1278,7 +1279,8 @@ ApplicationWindow {
                         "Garmin FTP update",
                         "Clipboard workout found",
                         "Clipboard workout ended: delete?",
-                        "Garmin MFA code (opens Settings)"
+                        // the popup lives in the Garmin Options section, made when it opens
+                        "Garmin MFA code (opens Settings: expand Garmin Options)"
                     ]
                     UiButton {
                         width: testDialogsColumn.width
