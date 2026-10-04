@@ -1234,8 +1234,27 @@ ApplicationWindow {
             case 9: rootItem.garminFtpPromptRequested = true; break
             case 10: rootItem.clipboardWorkoutPromptRequested = true; break
             case 11: rootItem.clipboardWorkoutDeletePromptRequested = true; break
-            case 12: rootItem.garminMfaRequested = true; drawerAction("settings"); break
+            case 12:
+                rootItem.garminMfaRequested = true
+                drawerAction("settings")
+                // as a search result does: the Garmin Options opened and lit, the popup lives in it
+                var pane = findJumper(stackView.currentItem)
+                if (pane)
+                    pane.jumpToSetting({ key: "garmin_email", name: "Garmin Email" })
+                break
             }
+        }
+        function findJumper(item) {
+            if (!item)
+                return null
+            if (typeof item.jumpToSetting === "function")
+                return item
+            for (var c = 0; c < item.children.length; c++) {
+                var found = findJumper(item.children[c])
+                if (found)
+                    return found
+            }
+            return null
         }
 
         Flickable {
@@ -1280,7 +1299,7 @@ ApplicationWindow {
                         "Clipboard workout found",
                         "Clipboard workout ended: delete?",
                         // the popup lives in the Garmin Options section, made when it opens
-                        "Garmin MFA code (opens Settings: expand Garmin Options)"
+                        "Garmin MFA code (opens Settings at Garmin Options)"
                     ]
                     UiButton {
                         width: testDialogsColumn.width
