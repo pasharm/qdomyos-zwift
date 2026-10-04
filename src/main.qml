@@ -1207,7 +1207,7 @@ ApplicationWindow {
         text: popupLicense.text
     }
     UiInfoPopup { id: testClassificaCopy; text: popupClassificaHelper.text }
-    UiInfoPopup { id: testWhatsOnZwiftCopy; text: popupWhatsOnZwiftHelper.text }
+    UiInfoPopup { id: testWhatsOnZwiftCopy; links: false; text: popupWhatsOnZwiftHelper.text }
 
     UiPopup {
         id: testDialogsPopup
