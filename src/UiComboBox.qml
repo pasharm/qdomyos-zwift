@@ -142,10 +142,10 @@ T.ComboBox {
         width: control.width
         height: Math.min(contentItem.implicitHeight + topPadding + bottomPadding, control.Window.height - topMargin - bottomMargin)
         transformOrigin: Item.Top
-        // Modern: the window runs under the status and gesture bars (edge to edge), a long
-        // list pushed to the top hid its first item under the status bar
-        topMargin: 12 + (control.modern ? window.getTopPadding() : 0)
-        bottomMargin: 12 + (control.modern ? window.getBottomPadding() : 0)
+        // The window runs under the status and gesture bars (edge to edge) in both looks, a
+        // long list pushed to the top hid its first item under the status bar (#5236)
+        topMargin: 12 + window.getTopPadding()
+        bottomMargin: 12 + window.getBottomPadding()
 
         Material.theme: control.Material.theme
         Material.accent: control.Material.accent
