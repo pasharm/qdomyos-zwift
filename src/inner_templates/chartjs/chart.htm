@@ -65,7 +65,7 @@
     <link rel="stylesheet" href="qz-modern.css">
     <style>
     /* the live update period; the --qz-* colours come from a themed page, the rest is the default */
-    /* Material 3 segmented button: one group, the selected segment tinted with a check mark */
+    /* Material 3 segmented button: one group, the selected segment filled with the accent */
     #live_refresh_box {
         align-items: center;
         justify-content: flex-end;
@@ -96,10 +96,11 @@
         border-radius: 0 20px 20px 0;
     }
     #live_refresh button.on {
-        background-color: var(--qz-surface-high, #3a4256);
-    }
-    #live_refresh button.on::before {
-        content: "\2713\00a0";
+        position: relative;
+        background-color: var(--qz-accent, #9c7cf4);
+        border-color: var(--qz-accent, #9c7cf4);
+        color: var(--qz-bg, #1d2330);
+        font-weight: 700;
     }
     canvas{
         -moz-user-select: none;
