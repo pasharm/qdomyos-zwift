@@ -117,6 +117,7 @@ Popup {
         }
 
         Flickable {
+            id: bodyFlick
             width: parent.width
             height: Math.min(body.implicitHeight, root.parent.height * 0.55)
             visible: body.text.length > 0
@@ -133,6 +134,10 @@ Popup {
                 font.pixelSize: 16
                 lineHeight: 1.15
                 color: window.ui.textMuted
+            }
+            // A long text: the bar stays to show there is more below
+            ScrollIndicator.vertical: ScrollIndicator {
+                active: bodyFlick.contentHeight > bodyFlick.height
             }
         }
 

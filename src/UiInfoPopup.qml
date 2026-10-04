@@ -26,6 +26,13 @@ UiPopup {
                 .trim()
     }
 
+    // The card text as StyledText: the markup characters escaped, the addresses made links
+    function linkText(s) {
+        return flowText(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+                .replace(/(https?:[^ \n]+[^ \n.,!?])/g, '<a href="$1">$1</a>')
+                .replace(/\n/g, "<br>")
+    }
+
     parent: Overlay.overlay
     x: Math.round((parent.width - width) / 2)
     y: Math.round((parent.height - height) / 2)
@@ -77,6 +84,7 @@ UiPopup {
             }
 
             Flickable {
+                id: bodyFlick
                 width: parent.width
                 height: Math.min(body.implicitHeight, control.parent.height * 0.55)
                 contentHeight: body.implicitHeight
@@ -85,12 +93,18 @@ UiPopup {
                 Label {
                     id: body
                     width: parent.width
-                    text: control.flowText(control.text)
-                    textFormat: Text.PlainText
+                    text: control.linkText(control.text)
+                    textFormat: Text.StyledText
+                    linkColor: Material.accent
+                    onLinkActivated: Qt.openUrlExternally(link)
                     wrapMode: Text.Wrap
                     font.pixelSize: 16
                     lineHeight: 1.15
                     color: control.title.length > 0 ? window.ui.textMuted : window.ui.textMain
+                }
+                // A long text: the bar stays to show there is more below
+                ScrollIndicator.vertical: ScrollIndicator {
+                    active: bodyFlick.contentHeight > bodyFlick.height
                 }
             }
 
