@@ -16867,6 +16867,7 @@ import QtQuick 2.12 as Quick212
                             readonly property var options: [
                                 { value: "auto", label: qsTr("As on the phone") },
                                 { value: "dark", label: qsTr("Dark") },
+                                //: Colour theme: the light one (not "easy" as in the effort scale)
                                 { value: "light", label: qsTr("Light") }
                             ]
                             model: options

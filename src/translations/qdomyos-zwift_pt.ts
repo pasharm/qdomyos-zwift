@@ -5413,15 +5413,15 @@ Não: o QZ o mantém como esteira e não pergunta de novo (uma bicicleta ainda p
         <location filename="../settings.qml" line="16239"/>
         <location filename="../settings.qml" line="16670"/>
         <location filename="../settings.qml" line="16733"/>
-        <location filename="../settings.qml" line="17417"/>
-        <location filename="../settings.qml" line="17455"/>
-        <location filename="../settings.qml" line="17490"/>
-        <location filename="../settings.qml" line="17527"/>
-        <location filename="../settings.qml" line="17563"/>
-        <location filename="../settings.qml" line="17600"/>
-        <location filename="../settings.qml" line="17636"/>
-        <location filename="../settings.qml" line="17684"/>
-        <location filename="../settings.qml" line="17710"/>
+        <location filename="../settings.qml" line="17418"/>
+        <location filename="../settings.qml" line="17456"/>
+        <location filename="../settings.qml" line="17491"/>
+        <location filename="../settings.qml" line="17528"/>
+        <location filename="../settings.qml" line="17564"/>
+        <location filename="../settings.qml" line="17601"/>
+        <location filename="../settings.qml" line="17637"/>
+        <location filename="../settings.qml" line="17685"/>
+        <location filename="../settings.qml" line="17711"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -5631,15 +5631,15 @@ Não: o QZ o mantém como esteira e não pergunta de novo (uma bicicleta ainda p
         <location filename="../settings.qml" line="16241"/>
         <location filename="../settings.qml" line="16672"/>
         <location filename="../settings.qml" line="16735"/>
-        <location filename="../settings.qml" line="17419"/>
-        <location filename="../settings.qml" line="17457"/>
-        <location filename="../settings.qml" line="17492"/>
-        <location filename="../settings.qml" line="17529"/>
-        <location filename="../settings.qml" line="17565"/>
-        <location filename="../settings.qml" line="17602"/>
-        <location filename="../settings.qml" line="17638"/>
-        <location filename="../settings.qml" line="17686"/>
-        <location filename="../settings.qml" line="17712"/>
+        <location filename="../settings.qml" line="17420"/>
+        <location filename="../settings.qml" line="17458"/>
+        <location filename="../settings.qml" line="17493"/>
+        <location filename="../settings.qml" line="17530"/>
+        <location filename="../settings.qml" line="17566"/>
+        <location filename="../settings.qml" line="17603"/>
+        <location filename="../settings.qml" line="17639"/>
+        <location filename="../settings.qml" line="17687"/>
+        <location filename="../settings.qml" line="17713"/>
         <source>Setting saved!</source>
         <translation>Configuração salva!</translation>
     </message>
@@ -7770,7 +7770,7 @@ Não: o QZ o mantém como esteira e não pergunta de novo (uma bicicleta ainda p
     </message>
     <message>
         <location filename="../settings.qml" line="8556"/>
-        <location filename="../settings.qml" line="17550"/>
+        <location filename="../settings.qml" line="17551"/>
         <source>Username:</source>
         <translation>Nome de usuário:</translation>
     </message>
@@ -7781,7 +7781,7 @@ Não: o QZ o mantém como esteira e não pergunta de novo (uma bicicleta ainda p
     </message>
     <message>
         <location filename="../settings.qml" line="8594"/>
-        <location filename="../settings.qml" line="17586"/>
+        <location filename="../settings.qml" line="17587"/>
         <source>Password:</source>
         <translation>Senha:</translation>
     </message>
@@ -9768,397 +9768,398 @@ Padrão: A = -0.96, B = 1.33</translation>
         <translation>Recursos Experimentais</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16870"/>
+        <location filename="../settings.qml" line="16871"/>
         <source>Light</source>
+        <extracomment>Colour theme: the light one (not &quot;easy&quot; as in the effort scale)</extracomment>
         <translation>Claro</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16971"/>
+        <location filename="../settings.qml" line="16972"/>
         <source>Gym Mode</source>
         <translation>Modo Academia</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16985"/>
+        <location filename="../settings.qml" line="16986"/>
         <source>Useful in gyms with multiple similar machines. When enabled, QZ scans nearby equipment at startup and asks you which trainer to use before opening any Bluetooth connection.</source>
         <translation>Útil em academias com várias máquinas semelhantes. Ao ser ativado, o QZ procura equipamentos próximos ao iniciar e pergunta qual equipamento você quer usar antes de se conectar por Bluetooth.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16999"/>
+        <location filename="../settings.qml" line="17000"/>
         <source>Relaxed Bluetooth for mad devices</source>
         <translation>Bluetooth com conexão flexível para dispositivos com falhas</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17013"/>
+        <location filename="../settings.qml" line="17014"/>
         <source>Leave this setting off unless the Support staff asks you to turn it on during troubleshooting. Can improve the Android Bluetooth connection to Zwift. Default is off.</source>
         <translation>Mantenha esta configuração desligada, a menos que a equipe de Suporte peça para ativá-la durante a solução de problemas. Pode melhorar a conexão Bluetooth do Android com Zwift. Padrão é desligado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17027"/>
+        <location filename="../settings.qml" line="17028"/>
         <source>Bluetooth hangs after 30 m</source>
         <translation>Bluetooth trava após 30 min</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17041"/>
+        <location filename="../settings.qml" line="17042"/>
         <source>Same as “Relaxed Bluetooth for mad devices”. Leave off unless the Support staff asks you to turn it on. Default is off.</source>
         <translation>Igual a “Bluetooth com conexão flexível para dispositivos com falhas”. Mantenha desativado, a menos que o suporte peça para ativar. Padrão: desativado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17055"/>
+        <location filename="../settings.qml" line="17056"/>
         <source>Simulate Battery Service</source>
         <translation>Simular Serviço de Bateria</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17069"/>
+        <location filename="../settings.qml" line="17070"/>
         <source>Leave this off unless the Support staff asks you to turn it on. Enables a new Bluetooth service, indicating the battery level of your device. Default is off.</source>
         <translation>Manter desligado, a menos que a equipe de Suporte peça para ligar. Habilita um novo serviço Bluetooth, indicando o nível de bateria do seu dispositivo. Padrão é desligado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17098"/>
+        <location filename="../settings.qml" line="17099"/>
         <source>Enable Virtual Device</source>
         <translation>Ativar Dispositivo Virtual</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17104"/>
+        <location filename="../settings.qml" line="17105"/>
         <source>Virtual Device Bluetooth</source>
         <translation>Dispositivo Virtual Bluetooth</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17110"/>
+        <location filename="../settings.qml" line="17111"/>
         <source>Virtual Heart Only</source>
         <translation>Apenas frequência cardíaca virtual</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17124"/>
+        <location filename="../settings.qml" line="17125"/>
         <source>Forces QZ to communicate ONLY the Heart Rate metric to third-party apps. Default is off.</source>
         <translation>Força o QZ a comunicar SOMENTE a métrica Frequência Cardíaca para aplicativos de terceiros. Padrão é desativado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17138"/>
+        <location filename="../settings.qml" line="17139"/>
         <source>Virtual Echelon</source>
         <translation>Echelon virtual</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17152"/>
+        <location filename="../settings.qml" line="17153"/>
         <source>Enables QZ to communicate with the Echelon app. This setting can only be used with iOS running QZ and iOS running the Echelon app. Default is off.</source>
         <translation>Permite que o QZ se comunique com o aplicativo Echelon. Este ajuste só pode ser usado com iOS executando o QZ e iOS executando o aplicativo Echelon. Padrão é desativado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17166"/>
+        <location filename="../settings.qml" line="17167"/>
         <source>Virtual Rower</source>
         <translation>Remador Virtual</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17180"/>
+        <location filename="../settings.qml" line="17181"/>
         <source>Enables QZ to send a rower Bluetooth profile instead of a bike profile to third party apps that support rowing (examples: Kinomap and BitGym). This should be off for Zwift. Default is off.</source>
         <translation>Permite que o QZ envie um perfil Bluetooth de remo em vez de um perfil de bicicleta para aplicativos de terceiros que suportam remo (exemplos: Kinomap e BitGym). Deve estar desligado para Zwift. Padrão é desligado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17194"/>
+        <location filename="../settings.qml" line="17195"/>
         <source>Virtual Rower as PM5</source>
         <translation>Remador Virtual como PM5</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17209"/>
+        <location filename="../settings.qml" line="17210"/>
         <source>When enabled, the virtual rower will use the Concept2 PM5 protocol instead of FTMS. This provides compatibility with apps like Mywhoosh that only support PM5 rowers. Default is off.</source>
         <translation>Quando ativado, o remo virtual usará o protocolo Concept2 PM5 em vez de FTMS. Isso garante compatibilidade com aplicativos como Mywhoosh que suportam apenas remos PM5. Padrão é desligado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17224"/>
+        <location filename="../settings.qml" line="17225"/>
         <source>Force Virtual Treadmill</source>
         <translation>Forçar esteira virtual</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17238"/>
+        <location filename="../settings.qml" line="17239"/>
         <source>When enabled, forces QZ to impersonate a virtual treadmill regardless of the original device type. This allows any device (bike, rower, elliptical, etc.) to appear as a treadmill to third party apps. Default is off.</source>
         <translation>Quando ativado, força o QZ a simular uma esteira virtual, independentemente do tipo de dispositivo original. Isso permite que qualquer dispositivo (bicicleta, remo, elíptico, etc.) apareça como uma esteira para aplicativos de terceiros. Padrão é desativado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17252"/>
+        <location filename="../settings.qml" line="17253"/>
         <source>Zwift Force Resistance</source>
         <translation>Forçar resistência do Zwift</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17266"/>
+        <location filename="../settings.qml" line="17267"/>
         <source>Enables third-party apps to change the resistance of your equipment. Default is on.</source>
         <translation>Permite que aplicativos de terceiros alterem a resistência do seu equipamento. Padrão é ligado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17281"/>
+        <location filename="../settings.qml" line="17282"/>
         <source>Bike Power Sensor</source>
         <translation>Sensor de Potência da Bicicleta</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17295"/>
+        <location filename="../settings.qml" line="17296"/>
         <source>This changes the virtual Bluetooth bridge from the standard FMTS to the Power Sensor interface. Default is off.</source>
         <translation>Isso muda a conexão Bluetooth virtual de FTMS padrão para a interface do sensor de potência. Padrão: desativado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17309"/>
+        <location filename="../settings.qml" line="17310"/>
         <source>Virtual iFit</source>
         <translation>iFit virtual</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17323"/>
+        <location filename="../settings.qml" line="17324"/>
         <source>Enables a virtual Bluetooth bridge to the iFit App. This setting requires that at least one device be Android. For example, this setting does NOT work with QZ on iOS and iFit to iOS, but DOES work with QZ on iOS and iFit to Android. On Android remember to rename your device into I_EL into the android settings and reboot your device.</source>
         <translation>Cria uma conexão Bluetooth virtual com o aplicativo iFit. Pelo menos um dos dispositivos deve usar Android. Por exemplo, não funciona com QZ e iFit em dispositivos iOS, mas funciona com QZ em iOS e iFit em Android. No Android, renomeie o dispositivo para I_EL nas configurações e reinicie-o.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17336"/>
+        <location filename="../settings.qml" line="17337"/>
         <source>Virtual Tacx</source>
         <translation>Tacx virtual</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17350"/>
+        <location filename="../settings.qml" line="17351"/>
         <source>Enables a virtual bluetooth bridge to the Tacx App.</source>
         <translation>Ativa uma conexão Bluetooth virtual com o aplicativo Tacx.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17365"/>
+        <location filename="../settings.qml" line="17366"/>
         <source>Wahoo direct connect</source>
         <translation>Conexão direta Wahoo</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17373"/>
+        <location filename="../settings.qml" line="17374"/>
         <source>MyWhoosh Compatibility</source>
         <translation>Compatibilidade MyWhoosh</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17387"/>
+        <location filename="../settings.qml" line="17388"/>
         <source>Enables the compatibility of the Wahoo KICKR protocol to MyWhoosh app. Leave the MyWhoosh compatibility disabled in order to use Zwift.</source>
         <translation>Permite a compatibilidade do protocolo Wahoo KICKR com o aplicativo MyWhoosh. Desative a compatibilidade MyWhoosh para usar o Zwift.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17402"/>
+        <location filename="../settings.qml" line="17403"/>
         <source>ID:</source>
         <translation>ID:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17424"/>
+        <location filename="../settings.qml" line="17425"/>
         <source>If you have multiple QZ instances, you can change the id of the virtual wahoo device. Default: 0</source>
         <translation>Se houver mais de uma instância do QZ, você pode mudar o ID do dispositivo virtual Wahoo. Padrão: 0</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17440"/>
+        <location filename="../settings.qml" line="17441"/>
         <source>Server Port:</source>
         <translation>Porta do Servidor:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17467"/>
+        <location filename="../settings.qml" line="17468"/>
         <source>MQTT Settings</source>
         <translation>Configurações MQTT</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17477"/>
+        <location filename="../settings.qml" line="17478"/>
         <source>MQTT Host:</source>
         <translation>Host MQTT:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17497"/>
+        <location filename="../settings.qml" line="17498"/>
         <source>Enter the MQTT broker hostname or IP address</source>
         <translation>Insira o hostname do broker MQTT ou endereço IP</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17512"/>
+        <location filename="../settings.qml" line="17513"/>
         <source>MQTT Port:</source>
         <translation>Porta MQTT:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17534"/>
+        <location filename="../settings.qml" line="17535"/>
         <source>Enter the MQTT broker port (default: 1883)</source>
         <translation>Insira a porta do broker MQTT (padrão: 1883)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17570"/>
+        <location filename="../settings.qml" line="17571"/>
         <source>Enter the MQTT broker username (if required)</source>
         <translation>Insira o nome de usuário do broker MQTT (se necessário)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17607"/>
+        <location filename="../settings.qml" line="17608"/>
         <source>Enter the MQTT broker password (if required)</source>
         <translation>Insira a senha do broker MQTT (se necessário)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17623"/>
+        <location filename="../settings.qml" line="17624"/>
         <source>Device ID:</source>
         <translation>ID do Dispositivo:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17643"/>
+        <location filename="../settings.qml" line="17644"/>
         <source>Enter a unique device identifier for MQTT client</source>
         <translation>Insira um identificador de dispositivo único para o cliente MQTT</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17659"/>
+        <location filename="../settings.qml" line="17660"/>
         <source>OSC Settings</source>
         <translation>Configurações OSC</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17669"/>
+        <location filename="../settings.qml" line="17670"/>
         <source>OSC IP:</source>
         <translation>IP do OSC:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17693"/>
+        <location filename="../settings.qml" line="17694"/>
         <source>OSC Port:</source>
         <translation>Porta OSC:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17719"/>
+        <location filename="../settings.qml" line="17720"/>
         <source>Race Mode</source>
         <translation>Modo de Corrida</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17733"/>
+        <location filename="../settings.qml" line="17734"/>
         <source>By default QZ sends the info to Zwift or any other 3rd party apps with a 1000ms interval rate. Enabling the Race Mode setting will cause QZ to send them to 100ms (10hz). Of course the bottleneck will be always your bike/treadmill.</source>
         <translation>Por padrão, o QZ envia informações ao Zwift e a outros aplicativos a cada 1.000 ms. Ao ativar o modo de corrida, o intervalo passa a 100 ms (10 Hz). A velocidade de envio também depende da sua bicicleta ou esteira.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17747"/>
+        <location filename="../settings.qml" line="17748"/>
         <source>Run Cadence Sensor</source>
         <translation>Sensor de Cadência de Corrida</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17761"/>
+        <location filename="../settings.qml" line="17762"/>
         <source>Forces the virtual Bluetooth bridge to send only the cadence information instead of the full FTMS metrics. Default is off.</source>
         <translation>Faz com que a conexão Bluetooth virtual envie apenas a cadência, sem os dados FTMS completos. Padrão: desativado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17780"/>
+        <location filename="../settings.qml" line="17781"/>
         <source>Template Settings</source>
         <translation>Configurações do Modelo</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17827"/>
+        <location filename="../settings.qml" line="17828"/>
         <source>Android WakeLock</source>
         <translation>Android WakeLock</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17841"/>
+        <location filename="../settings.qml" line="17842"/>
         <source>Forces Android devices to remain awake while QZ is running. Default is on.</source>
         <translation>Força os dispositivos Android a permanecerem acordados enquanto o QZ estiver em execução. Padrão é ligado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17855"/>
+        <location filename="../settings.qml" line="17856"/>
         <source>iOS Peloton Workaround</source>
         <translation>Solução alternativa do Peloton no iOS</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17869"/>
+        <location filename="../settings.qml" line="17870"/>
         <source>This MUST be always ON on an iOS device. Turning it OFF will lead to unexpected crashes of QZ. Default is on.</source>
         <translation>Isto DEVE estar sempre LIGADO em um dispositivo iOS. Desligá-lo pode causar travamentos inesperados do QZ. O padrão é ligado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17882"/>
+        <location filename="../settings.qml" line="17883"/>
         <source>iOS Bluetooth Device Native</source>
         <translation>Dispositivo Bluetooth Nativo iOS</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17896"/>
+        <location filename="../settings.qml" line="17897"/>
         <source>If you are experiencing crash on iOS midride, try to turn this on. Default is off.</source>
         <translation>Se você estiver tendo travamentos no iOS durante o treino, tente ativar isso. O padrão é desligado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17910"/>
+        <location filename="../settings.qml" line="17911"/>
         <source>Fake Device</source>
         <translation>Dispositivo simulado</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17924"/>
+        <location filename="../settings.qml" line="17925"/>
         <source>Simulates QZ being connected to a bike. When this is turned on QZ will calculate KCal based on your heart rate. Examples of when to use this setting: ○ To capture Peloton class data for classes without connected equipment (e.g., a strength or yoga workout).. ○ To arrange tiles on the QZ dashboard without connecting to your equipment. ○ To use the QZ Apple Watch app without connecting to your equipment.</source>
         <translation>Simula a conexão do QZ a uma bicicleta. Quando ativado, o QZ calcula kcal com base na frequência cardíaca. Use, por exemplo, para: ○ Registrar dados de aulas Peloton sem equipamento conectado, como aulas de força ou ioga. ○ Organizar os blocos no painel do QZ sem conectar o equipamento. ○ Usar o aplicativo QZ para Apple Watch sem conectar o equipamento.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17938"/>
+        <location filename="../settings.qml" line="17939"/>
         <source>Fake Treadmill</source>
         <translation>Esteira simulada</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17952"/>
+        <location filename="../settings.qml" line="17953"/>
         <source>Same as Fake Device but instead of simulating a bike it simulates a treadmill.</source>
         <translation>Igual ao dispositivo simulado, mas simula uma esteira em vez de uma bicicleta.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17966"/>
+        <location filename="../settings.qml" line="17967"/>
         <source>Use Apple Watch Cadence for Fake Treadmill Speed</source>
         <translation>Usar a cadência do Apple Watch para calcular a velocidade da esteira simulada</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17980"/>
+        <location filename="../settings.qml" line="17981"/>
         <source>iOS only. For Fake Treadmill mode: when no physical treadmill is connected, derives Speed from Apple Watch step cadence using the Wheel Ratio under Accessories &gt; Cadence Sensor Options. The cycling default is far too high for running - try 0.04-0.15 depending on pace, from walking to running, and tune to taste. Useful with apps like Kinomap or Zwift. Default is off.</source>
         <translation>Apenas iOS. No modo de esteira simulada, se nenhuma esteira física estiver conectada, a velocidade é calculada com base na cadência de passos do Apple Watch e na relação da roda em Acessórios &gt; Opções do sensor de cadência. O valor padrão para ciclismo é alto demais para corrida; experimente de 0.04 a 0.15 conforme o ritmo, da caminhada à corrida, e ajuste como preferir. Útil com aplicativos como Kinomap ou Zwift. Padrão: desativado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17994"/>
+        <location filename="../settings.qml" line="17995"/>
         <source>Fake Elliptical</source>
         <translation>Elíptico simulado</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18008"/>
+        <location filename="../settings.qml" line="18009"/>
         <source>Same as Fake Device but instead of simulating a bike it simulates an elliptical.</source>
         <translation>Igual ao dispositivo simulado, mas simula um elíptico em vez de uma bicicleta.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18021"/>
+        <location filename="../settings.qml" line="18022"/>
         <source>Fake Rower</source>
         <translation>Remo simulado</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18035"/>
+        <location filename="../settings.qml" line="18036"/>
         <source>Same as Fake Device but instead of simulating a bike it simulates a rower.</source>
         <translation>Igual ao dispositivo simulado, mas simula um remo em vez de uma bicicleta.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18049"/>
+        <location filename="../settings.qml" line="18050"/>
         <source>iOS Heart Caching</source>
         <translation>Armazenamento temporário da frequência cardíaca no iOS</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18063"/>
+        <location filename="../settings.qml" line="18064"/>
         <source>Leave this on unless you have issues connecting your Bluetooth HRM to QZ. If turning this off does not solve the connection issue, open a support ticket on GitHub. Default is on.</source>
         <translation>Mantenha ativada, a menos que tenha problemas para conectar o monitor cardíaco Bluetooth ao QZ. Se desativá-la não resolver o problema, entre em contato com o suporte pelo GitHub. Padrão: ativado.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18077"/>
+        <location filename="../settings.qml" line="18078"/>
         <source>Android Notification</source>
         <translation>Notificação do Android</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18091"/>
+        <location filename="../settings.qml" line="18092"/>
         <source>Android Only: enable this to force Android to don&apos;t kill QZ when it&apos;s running on background</source>
         <translation>Apenas Android: ative isso para forçar o Android a não encerrar o QZ quando ele estiver em segundo plano</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18104"/>
+        <location filename="../settings.qml" line="18105"/>
         <source>Android Force Documents/QZ Folder</source>
         <translation>Forçar a pasta Documents/QZ no Android</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18118"/>
+        <location filename="../settings.qml" line="18119"/>
         <source>Android Only: force QZ to use the /Documents/QZ folder for debug log and fit files</source>
         <translation>Apenas Android: forçar o QZ a usar a pasta /Documents/QZ para logs de depuração e arquivos fit</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18132"/>
+        <location filename="../settings.qml" line="18133"/>
         <source>Debug Log</source>
         <translation>Log de Depuração</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18146"/>
+        <location filename="../settings.qml" line="18147"/>
         <source>Turn this on to save a debug log to your device for use when requesting help with a bug.</source>
         <translation>Ative isso para salvar um log de depuração no seu dispositivo para uso ao solicitar ajuda com um erro.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18166"/>
+        <location filename="../settings.qml" line="18167"/>
         <source>Clear History</source>
         <translation>Limpar Histórico</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18174"/>
+        <location filename="../settings.qml" line="18175"/>
         <source>Show Logs Folder</source>
         <translation>Mostrar pasta de logs</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18184"/>
+        <location filename="../settings.qml" line="18185"/>
         <source>Clears all the QZ logs, QZ .fit files and QZ images (these files are saved by QZ for every session) from your device while maintaining your saved Profiles and Settings.</source>
         <translation>Limpa todos os logs do QZ, arquivos .fit do QZ e imagens do QZ (estes arquivos são salvos pelo QZ para cada sessão) do seu dispositivo, mantendo seus Perfis e Configurações salvos.</translation>
     </message>
@@ -10281,12 +10282,12 @@ Padrão: A = -0.96, B = 1.33</translation>
         <translation>Quando os tiles da tela principal param de rolar, eles se alinham a uma linha inteira ou ao fim da lista, para que nenhum tile fique cortado ao meio.</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16891"/>
+        <location filename="../settings.qml" line="16892"/>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16897"/>
+        <location filename="../settings.qml" line="16898"/>
         <source>Graphite</source>
         <translation>Grafite</translation>
     </message>
@@ -10295,12 +10296,12 @@ Padrão: A = -0.96, B = 1.33</translation>
         <translation type="vanished">Preto (OLED)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16899"/>
+        <location filename="../settings.qml" line="16900"/>
         <source>Midnight blue</source>
         <translation>Azul-noite</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16923"/>
+        <location filename="../settings.qml" line="16924"/>
         <source>Accent colour</source>
         <translation>Cor de destaque</translation>
     </message>
@@ -10320,42 +10321,42 @@ Padrão: A = -0.96, B = 1.33</translation>
         <translation>Escuro</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16898"/>
+        <location filename="../settings.qml" line="16899"/>
         <source>Black / white</source>
         <translation>Preto / branco</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16945"/>
+        <location filename="../settings.qml" line="16946"/>
         <source>Wallpaper colour</source>
         <translation>Cor do papel de parede</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16945"/>
+        <location filename="../settings.qml" line="16946"/>
         <source>Violet</source>
         <translation>Violeta</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16945"/>
+        <location filename="../settings.qml" line="16946"/>
         <source>Blue</source>
         <translation>Azul</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16946"/>
+        <location filename="../settings.qml" line="16947"/>
         <source>Teal</source>
         <translation>Azul-petróleo</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16946"/>
+        <location filename="../settings.qml" line="16947"/>
         <source>Green</source>
         <translation>Verde</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16946"/>
+        <location filename="../settings.qml" line="16947"/>
         <source>Orange</source>
         <translation>Laranja</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16947"/>
+        <location filename="../settings.qml" line="16948"/>
         <source>Pink</source>
         <translation>Rosa</translation>
     </message>

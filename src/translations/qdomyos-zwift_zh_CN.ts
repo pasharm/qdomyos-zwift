@@ -5417,15 +5417,15 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <location filename="../settings.qml" line="16239"/>
         <location filename="../settings.qml" line="16670"/>
         <location filename="../settings.qml" line="16733"/>
-        <location filename="../settings.qml" line="17417"/>
-        <location filename="../settings.qml" line="17455"/>
-        <location filename="../settings.qml" line="17490"/>
-        <location filename="../settings.qml" line="17527"/>
-        <location filename="../settings.qml" line="17563"/>
-        <location filename="../settings.qml" line="17600"/>
-        <location filename="../settings.qml" line="17636"/>
-        <location filename="../settings.qml" line="17684"/>
-        <location filename="../settings.qml" line="17710"/>
+        <location filename="../settings.qml" line="17418"/>
+        <location filename="../settings.qml" line="17456"/>
+        <location filename="../settings.qml" line="17491"/>
+        <location filename="../settings.qml" line="17528"/>
+        <location filename="../settings.qml" line="17564"/>
+        <location filename="../settings.qml" line="17601"/>
+        <location filename="../settings.qml" line="17637"/>
+        <location filename="../settings.qml" line="17685"/>
+        <location filename="../settings.qml" line="17711"/>
         <source>OK</source>
         <translation>OK</translation>
     </message>
@@ -5635,15 +5635,15 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <location filename="../settings.qml" line="16241"/>
         <location filename="../settings.qml" line="16672"/>
         <location filename="../settings.qml" line="16735"/>
-        <location filename="../settings.qml" line="17419"/>
-        <location filename="../settings.qml" line="17457"/>
-        <location filename="../settings.qml" line="17492"/>
-        <location filename="../settings.qml" line="17529"/>
-        <location filename="../settings.qml" line="17565"/>
-        <location filename="../settings.qml" line="17602"/>
-        <location filename="../settings.qml" line="17638"/>
-        <location filename="../settings.qml" line="17686"/>
-        <location filename="../settings.qml" line="17712"/>
+        <location filename="../settings.qml" line="17420"/>
+        <location filename="../settings.qml" line="17458"/>
+        <location filename="../settings.qml" line="17493"/>
+        <location filename="../settings.qml" line="17530"/>
+        <location filename="../settings.qml" line="17566"/>
+        <location filename="../settings.qml" line="17603"/>
+        <location filename="../settings.qml" line="17639"/>
+        <location filename="../settings.qml" line="17687"/>
+        <location filename="../settings.qml" line="17713"/>
         <source>Setting saved!</source>
         <translation>已保存！</translation>
     </message>
@@ -7776,7 +7776,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     </message>
     <message>
         <location filename="../settings.qml" line="8556"/>
-        <location filename="../settings.qml" line="17550"/>
+        <location filename="../settings.qml" line="17551"/>
         <source>Username:</source>
         <translation>用户名:</translation>
     </message>
@@ -7787,7 +7787,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     </message>
     <message>
         <location filename="../settings.qml" line="8594"/>
-        <location filename="../settings.qml" line="17586"/>
+        <location filename="../settings.qml" line="17587"/>
         <source>Password:</source>
         <translation>密码:</translation>
     </message>
@@ -9794,397 +9794,398 @@ Default: A = -0.96, B = 1.33</source>
         <translation>实验性功能</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16870"/>
+        <location filename="../settings.qml" line="16871"/>
         <source>Light</source>
+        <extracomment>Colour theme: the light one (not &quot;easy&quot; as in the effort scale)</extracomment>
         <translation>浅色</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16971"/>
+        <location filename="../settings.qml" line="16972"/>
         <source>Gym Mode</source>
         <translation>健身模式</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16985"/>
+        <location filename="../settings.qml" line="16986"/>
         <source>Useful in gyms with multiple similar machines. When enabled, QZ scans nearby equipment at startup and asks you which trainer to use before opening any Bluetooth connection.</source>
         <translation>在有多台相似设备的健身房中使用时很有用。启用后，QZ 会在启动时扫描附近的设备，并在建立任何蓝牙连接之前询问您要使用哪个训练器。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16999"/>
+        <location filename="../settings.qml" line="17000"/>
         <source>Relaxed Bluetooth for mad devices</source>
         <translation>兼容问题设备的宽松蓝牙模式</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17013"/>
+        <location filename="../settings.qml" line="17014"/>
         <source>Leave this setting off unless the Support staff asks you to turn it on during troubleshooting. Can improve the Android Bluetooth connection to Zwift. Default is off.</source>
         <translation>除非支持人员在故障排除时要求您开启，否则请保持此设置关闭。这可以改善 Android 到 Zwift 的蓝牙连接。默认关闭。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17027"/>
+        <location filename="../settings.qml" line="17028"/>
         <source>Bluetooth hangs after 30 m</source>
         <translation>蓝牙在 30 分钟后卡住</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17041"/>
+        <location filename="../settings.qml" line="17042"/>
         <source>Same as “Relaxed Bluetooth for mad devices”. Leave off unless the Support staff asks you to turn it on. Default is off.</source>
         <translation>与“兼容问题设备的宽松蓝牙模式”相同。除非支持人员要求开启，否则保持关闭。默认关闭。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17055"/>
+        <location filename="../settings.qml" line="17056"/>
         <source>Simulate Battery Service</source>
         <translation>模拟电池服务</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17069"/>
+        <location filename="../settings.qml" line="17070"/>
         <source>Leave this off unless the Support staff asks you to turn it on. Enables a new Bluetooth service, indicating the battery level of your device. Default is off.</source>
         <translation>除非支持人员要求，否则请保持关闭。它会启用一个新的蓝牙服务，用于指示设备的电池电量。默认关闭。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17098"/>
+        <location filename="../settings.qml" line="17099"/>
         <source>Enable Virtual Device</source>
         <translation>启用虚拟设备</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17104"/>
+        <location filename="../settings.qml" line="17105"/>
         <source>Virtual Device Bluetooth</source>
         <translation>虚拟设备蓝牙</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17110"/>
+        <location filename="../settings.qml" line="17111"/>
         <source>Virtual Heart Only</source>
         <translation>仅虚拟心率</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17124"/>
+        <location filename="../settings.qml" line="17125"/>
         <source>Forces QZ to communicate ONLY the Heart Rate metric to third-party apps. Default is off.</source>
         <translation>强制 QZ 只将心率指标传输给第三方应用。默认关闭。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17138"/>
+        <location filename="../settings.qml" line="17139"/>
         <source>Virtual Echelon</source>
         <translation>虚拟 Echelon</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17152"/>
+        <location filename="../settings.qml" line="17153"/>
         <source>Enables QZ to communicate with the Echelon app. This setting can only be used with iOS running QZ and iOS running the Echelon app. Default is off.</source>
         <translation>允许 QZ 与 Echelon 应用通信。此设置仅适用于运行 QZ 和 Echelon 应用的 iOS 设备。默认关闭。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17166"/>
+        <location filename="../settings.qml" line="17167"/>
         <source>Virtual Rower</source>
         <translation>虚拟划船机</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17180"/>
+        <location filename="../settings.qml" line="17181"/>
         <source>Enables QZ to send a rower Bluetooth profile instead of a bike profile to third party apps that support rowing (examples: Kinomap and BitGym). This should be off for Zwift. Default is off.</source>
         <translation>启用 QZ 向支持划船的第三方应用发送划船器蓝牙配置文件，而不是自行车配置文件（示例：Kinomap 和 BitGym）。使用 Zwift 时应关闭此功能。默认关闭。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17194"/>
+        <location filename="../settings.qml" line="17195"/>
         <source>Virtual Rower as PM5</source>
         <translation>虚拟划船机（PM5 模式）</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17209"/>
+        <location filename="../settings.qml" line="17210"/>
         <source>When enabled, the virtual rower will use the Concept2 PM5 protocol instead of FTMS. This provides compatibility with apps like Mywhoosh that only support PM5 rowers. Default is off.</source>
         <translation>启用后，虚拟划船机将使用 Concept2 PM5 协议而非 FTMS。这可确保与仅支持 PM5 划船机的应用（如 Mywhoosh）兼容。默认关闭。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17224"/>
+        <location filename="../settings.qml" line="17225"/>
         <source>Force Virtual Treadmill</source>
         <translation>强制虚拟跑步机</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17238"/>
+        <location filename="../settings.qml" line="17239"/>
         <source>When enabled, forces QZ to impersonate a virtual treadmill regardless of the original device type. This allows any device (bike, rower, elliptical, etc.) to appear as a treadmill to third party apps. Default is off.</source>
         <translation>启用后，无论原始设备类型如何，都会强制 QZ 模拟虚拟跑步机。这允许任何设备（自行车、划船机、椭圆机等）对第三方应用显示为跑步机。默认关闭。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17252"/>
+        <location filename="../settings.qml" line="17253"/>
         <source>Zwift Force Resistance</source>
         <translation>Zwift 强制阻力</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17266"/>
+        <location filename="../settings.qml" line="17267"/>
         <source>Enables third-party apps to change the resistance of your equipment. Default is on.</source>
         <translation>允许第三方应用改变您的设备阻力。默认开启。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17281"/>
+        <location filename="../settings.qml" line="17282"/>
         <source>Bike Power Sensor</source>
         <translation>自行车功率传感器</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17295"/>
+        <location filename="../settings.qml" line="17296"/>
         <source>This changes the virtual Bluetooth bridge from the standard FMTS to the Power Sensor interface. Default is off.</source>
         <translation>这将把虚拟蓝牙桥接从标准的 FTMS 更改为功率传感器接口。默认关闭。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17309"/>
+        <location filename="../settings.qml" line="17310"/>
         <source>Virtual iFit</source>
         <translation>虚拟 iFit</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17323"/>
+        <location filename="../settings.qml" line="17324"/>
         <source>Enables a virtual Bluetooth bridge to the iFit App. This setting requires that at least one device be Android. For example, this setting does NOT work with QZ on iOS and iFit to iOS, but DOES work with QZ on iOS and iFit to Android. On Android remember to rename your device into I_EL into the android settings and reboot your device.</source>
         <translation>启用与 iFit 应用的虚拟蓝牙连接。此设置要求至少一台设备运行 Android。例如，QZ 和 iFit 都在 iOS 上时无法使用；QZ 在 iOS、iFit 在 Android 上时可以使用。在 Android 系统上，请记住在 Android 设置中将您的设备重命名为 I_EL，然后重启设备。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17336"/>
+        <location filename="../settings.qml" line="17337"/>
         <source>Virtual Tacx</source>
         <translation>虚拟 Tacx</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17350"/>
+        <location filename="../settings.qml" line="17351"/>
         <source>Enables a virtual bluetooth bridge to the Tacx App.</source>
         <translation>启用到 Tacx 应用的虚拟蓝牙桥接。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17365"/>
+        <location filename="../settings.qml" line="17366"/>
         <source>Wahoo direct connect</source>
         <translation>Wahoo 直连</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17373"/>
+        <location filename="../settings.qml" line="17374"/>
         <source>MyWhoosh Compatibility</source>
         <translation>MyWhoosh 兼容性</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17387"/>
+        <location filename="../settings.qml" line="17388"/>
         <source>Enables the compatibility of the Wahoo KICKR protocol to MyWhoosh app. Leave the MyWhoosh compatibility disabled in order to use Zwift.</source>
         <translation>启用 Wahoo KICKR 协议与 MyWhoosh 应用的兼容性。要使用 Zwift，请禁用 MyWhoosh 兼容性。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17402"/>
+        <location filename="../settings.qml" line="17403"/>
         <source>ID:</source>
         <translation>ID：</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17424"/>
+        <location filename="../settings.qml" line="17425"/>
         <source>If you have multiple QZ instances, you can change the id of the virtual wahoo device. Default: 0</source>
         <translation>如果您有多个 QZ 实例，您可以更改虚拟 wahoo 设备 ID。默认值：0</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17440"/>
+        <location filename="../settings.qml" line="17441"/>
         <source>Server Port:</source>
         <translation>服务器端口:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17467"/>
+        <location filename="../settings.qml" line="17468"/>
         <source>MQTT Settings</source>
         <translation>MQTT 设置</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17477"/>
+        <location filename="../settings.qml" line="17478"/>
         <source>MQTT Host:</source>
         <translation>MQTT 主机:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17497"/>
+        <location filename="../settings.qml" line="17498"/>
         <source>Enter the MQTT broker hostname or IP address</source>
         <translation>输入 MQTT 代理主机名或 IP 地址</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17512"/>
+        <location filename="../settings.qml" line="17513"/>
         <source>MQTT Port:</source>
         <translation>MQTT端口：</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17534"/>
+        <location filename="../settings.qml" line="17535"/>
         <source>Enter the MQTT broker port (default: 1883)</source>
         <translation>输入 MQTT 代理端口（默认：1883）</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17570"/>
+        <location filename="../settings.qml" line="17571"/>
         <source>Enter the MQTT broker username (if required)</source>
         <translation>输入 MQTT 代理用户名（如果需要）</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17607"/>
+        <location filename="../settings.qml" line="17608"/>
         <source>Enter the MQTT broker password (if required)</source>
         <translation>输入 MQTT 代理密码（如果需要）</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17623"/>
+        <location filename="../settings.qml" line="17624"/>
         <source>Device ID:</source>
         <translation>设备ID:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17643"/>
+        <location filename="../settings.qml" line="17644"/>
         <source>Enter a unique device identifier for MQTT client</source>
         <translation>输入唯一的设备标识符用于 MQTT 客户端</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17659"/>
+        <location filename="../settings.qml" line="17660"/>
         <source>OSC Settings</source>
         <translation>OSC 设置</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17669"/>
+        <location filename="../settings.qml" line="17670"/>
         <source>OSC IP:</source>
         <translation>OSC IP：</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17693"/>
+        <location filename="../settings.qml" line="17694"/>
         <source>OSC Port:</source>
         <translation>OSC端口:</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17719"/>
+        <location filename="../settings.qml" line="17720"/>
         <source>Race Mode</source>
         <translation>比赛模式</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17733"/>
+        <location filename="../settings.qml" line="17734"/>
         <source>By default QZ sends the info to Zwift or any other 3rd party apps with a 1000ms interval rate. Enabling the Race Mode setting will cause QZ to send them to 100ms (10hz). Of course the bottleneck will be always your bike/treadmill.</source>
         <translation>默认情况下，QZ 以 1000ms 的间隔将信息发送到 Zwift 或任何其他第三方应用。启用“比赛模式”设置后，QZ 会将发送间隔改为 100ms (10hz)。当然，瓶颈始终是您的自行车/跑步机。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17747"/>
+        <location filename="../settings.qml" line="17748"/>
         <source>Run Cadence Sensor</source>
         <translation>跑步踏频传感器</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17761"/>
+        <location filename="../settings.qml" line="17762"/>
         <source>Forces the virtual Bluetooth bridge to send only the cadence information instead of the full FTMS metrics. Default is off.</source>
         <translation>强制虚拟蓝牙桥接只发送踏频信息，而不是完整的 FTMS 指标。默认关闭。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17780"/>
+        <location filename="../settings.qml" line="17781"/>
         <source>Template Settings</source>
         <translation>模板设置</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17827"/>
+        <location filename="../settings.qml" line="17828"/>
         <source>Android WakeLock</source>
         <translation>Android 唤醒锁</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17841"/>
+        <location filename="../settings.qml" line="17842"/>
         <source>Forces Android devices to remain awake while QZ is running. Default is on.</source>
         <translation>在 QZ 运行时，强制 Android 设备保持唤醒。默认开启。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17855"/>
+        <location filename="../settings.qml" line="17856"/>
         <source>iOS Peloton Workaround</source>
         <translation>iOS Peloton 变通方法</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17869"/>
+        <location filename="../settings.qml" line="17870"/>
         <source>This MUST be always ON on an iOS device. Turning it OFF will lead to unexpected crashes of QZ. Default is on.</source>
         <translation>在 iOS 设备上，此项必须始终开启。关闭它会导致 QZ 意外崩溃。默认开启。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17882"/>
+        <location filename="../settings.qml" line="17883"/>
         <source>iOS Bluetooth Device Native</source>
         <translation>iOS 蓝牙设备 原生</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17896"/>
+        <location filename="../settings.qml" line="17897"/>
         <source>If you are experiencing crash on iOS midride, try to turn this on. Default is off.</source>
         <translation>如果在 iOS 设备上骑行过程中遇到崩溃，请尝试开启此功能。默认是关闭的。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17910"/>
+        <location filename="../settings.qml" line="17911"/>
         <source>Fake Device</source>
         <translation>模拟设备</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17924"/>
+        <location filename="../settings.qml" line="17925"/>
         <source>Simulates QZ being connected to a bike. When this is turned on QZ will calculate KCal based on your heart rate. Examples of when to use this setting: ○ To capture Peloton class data for classes without connected equipment (e.g., a strength or yoga workout).. ○ To arrange tiles on the QZ dashboard without connecting to your equipment. ○ To use the QZ Apple Watch app without connecting to your equipment.</source>
         <translation>模拟 QZ 连接到自行车的状态。开启此功能后，QZ 将根据您的心率计算 KCal。使用此设置的示例包括：○ 用于记录没有连接设备的 Peloton 课程数据（例如，力量或瑜伽锻炼）。○ 用于在不连接设备的情况下布置 QZ 控制面板上的卡片。○ 用于在不连接设备的情况下使用 QZ Apple Watch 应用。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17938"/>
+        <location filename="../settings.qml" line="17939"/>
         <source>Fake Treadmill</source>
         <translation>模拟跑步机</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17952"/>
+        <location filename="../settings.qml" line="17953"/>
         <source>Same as Fake Device but instead of simulating a bike it simulates a treadmill.</source>
         <translation>与模拟设备相同，但模拟的是跑步机而非自行车。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17966"/>
+        <location filename="../settings.qml" line="17967"/>
         <source>Use Apple Watch Cadence for Fake Treadmill Speed</source>
         <translation>使用 Apple Watch 的踏频模拟跑步机速度</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17980"/>
+        <location filename="../settings.qml" line="17981"/>
         <source>iOS only. For Fake Treadmill mode: when no physical treadmill is connected, derives Speed from Apple Watch step cadence using the Wheel Ratio under Accessories &gt; Cadence Sensor Options. The cycling default is far too high for running - try 0.04-0.15 depending on pace, from walking to running, and tune to taste. Useful with apps like Kinomap or Zwift. Default is off.</source>
         <translation>仅限 iOS。对于“模拟跑步机”模式：当未连接物理跑步机时，它会使用“配件”&gt;“踏频传感器选项”下的车轮比从 Apple Watch 的步频数据推导出速度。默认的骑行比率对于跑步来说太高了——请根据步速（从步行到跑步）尝试 0.04-0.15，并根据个人喜好进行调整。与 Kinomap 或 Zwift 等应用配合使用效果更佳。默认关闭。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="17994"/>
+        <location filename="../settings.qml" line="17995"/>
         <source>Fake Elliptical</source>
         <translation>模拟椭圆机</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18008"/>
+        <location filename="../settings.qml" line="18009"/>
         <source>Same as Fake Device but instead of simulating a bike it simulates an elliptical.</source>
         <translation>与模拟设备相同，但模拟的是椭圆机，而不是自行车。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18021"/>
+        <location filename="../settings.qml" line="18022"/>
         <source>Fake Rower</source>
         <translation>模拟划船机</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18035"/>
+        <location filename="../settings.qml" line="18036"/>
         <source>Same as Fake Device but instead of simulating a bike it simulates a rower.</source>
         <translation>与模拟设备相同，但模拟的是划船机，而不是自行车。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18049"/>
+        <location filename="../settings.qml" line="18050"/>
         <source>iOS Heart Caching</source>
         <translation>iOS 心率缓存</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18063"/>
+        <location filename="../settings.qml" line="18064"/>
         <source>Leave this on unless you have issues connecting your Bluetooth HRM to QZ. If turning this off does not solve the connection issue, open a support ticket on GitHub. Default is on.</source>
         <translation>除非您的蓝牙心率带连接 QZ 出现问题，否则请保持开启。如果关闭后仍无法解决连接问题，请在 GitHub 上提交支持工单。默认是开启的。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18077"/>
+        <location filename="../settings.qml" line="18078"/>
         <source>Android Notification</source>
         <translation>Android 通知</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18091"/>
+        <location filename="../settings.qml" line="18092"/>
         <source>Android Only: enable this to force Android to don&apos;t kill QZ when it&apos;s running on background</source>
         <translation>仅限 Android：启用此项可防止 QZ 在后台运行时被 Android 关闭</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18104"/>
+        <location filename="../settings.qml" line="18105"/>
         <source>Android Force Documents/QZ Folder</source>
         <translation>Android 强制使用 Documents/QZ 文件夹</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18118"/>
+        <location filename="../settings.qml" line="18119"/>
         <source>Android Only: force QZ to use the /Documents/QZ folder for debug log and fit files</source>
         <translation>仅限 Android：强制 QZ 使用 /Documents/QZ 文件夹用于调试日志和 fit 文件</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18132"/>
+        <location filename="../settings.qml" line="18133"/>
         <source>Debug Log</source>
         <translation>调试日志</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18146"/>
+        <location filename="../settings.qml" line="18147"/>
         <source>Turn this on to save a debug log to your device for use when requesting help with a bug.</source>
         <translation>开启此项，以便在报告错误时将调试日志保存到设备。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18166"/>
+        <location filename="../settings.qml" line="18167"/>
         <source>Clear History</source>
         <translation>清除历史记录</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18174"/>
+        <location filename="../settings.qml" line="18175"/>
         <source>Show Logs Folder</source>
         <translation>显示日志文件夹</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="18184"/>
+        <location filename="../settings.qml" line="18185"/>
         <source>Clears all the QZ logs, QZ .fit files and QZ images (these files are saved by QZ for every session) from your device while maintaining your saved Profiles and Settings.</source>
         <translation>清除设备上所有 QZ 日志、QZ .fit 文件和 QZ 图片（这些文件由 QZ 为每次会话保存），同时保留您的已保存的配置文件和设置。</translation>
     </message>
@@ -10313,12 +10314,12 @@ Default: A = -0.96, B = 1.33</source>
         <translation>主屏幕上的瓦片停止滚动时，会对齐到整行或列表末尾，不会有瓦片被截断一半。</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16891"/>
+        <location filename="../settings.qml" line="16892"/>
         <source>Theme</source>
         <translation>主题</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16897"/>
+        <location filename="../settings.qml" line="16898"/>
         <source>Graphite</source>
         <translation>石墨</translation>
     </message>
@@ -10327,12 +10328,12 @@ Default: A = -0.96, B = 1.33</source>
         <translation type="vanished">黑色 (OLED)</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16899"/>
+        <location filename="../settings.qml" line="16900"/>
         <source>Midnight blue</source>
         <translation>午夜蓝</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16923"/>
+        <location filename="../settings.qml" line="16924"/>
         <source>Accent colour</source>
         <translation>强调色</translation>
     </message>
@@ -10352,42 +10353,42 @@ Default: A = -0.96, B = 1.33</source>
         <translation>深色</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16898"/>
+        <location filename="../settings.qml" line="16899"/>
         <source>Black / white</source>
         <translation>黑 / 白</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16945"/>
+        <location filename="../settings.qml" line="16946"/>
         <source>Wallpaper colour</source>
         <translation>壁纸颜色</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16945"/>
+        <location filename="../settings.qml" line="16946"/>
         <source>Violet</source>
         <translation>紫色</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16945"/>
+        <location filename="../settings.qml" line="16946"/>
         <source>Blue</source>
         <translation>蓝色</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16946"/>
+        <location filename="../settings.qml" line="16947"/>
         <source>Teal</source>
         <translation>青色</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16946"/>
+        <location filename="../settings.qml" line="16947"/>
         <source>Green</source>
         <translation>绿色</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16946"/>
+        <location filename="../settings.qml" line="16947"/>
         <source>Orange</source>
         <translation>橙色</translation>
     </message>
     <message>
-        <location filename="../settings.qml" line="16947"/>
+        <location filename="../settings.qml" line="16948"/>
         <source>Pink</source>
         <translation>粉色</translation>
     </message>
