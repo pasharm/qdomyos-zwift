@@ -9184,6 +9184,8 @@ import QtQuick 2.12 as Quick212
 
                             Label {
                                 text: qsTr("Garmin MFA Required")
+                                // a long translation ("Потрібен код підтвердження Garmin") ran out of the card
+                                wrapMode: Text.WordWrap
                                 // Modern: the title of UiMessageDialog (until the font scale, T-078)
                                 font.pixelSize: window.ui.modern ? 20 : 18
                                 font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
