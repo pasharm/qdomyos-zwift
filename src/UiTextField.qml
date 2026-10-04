@@ -67,13 +67,22 @@ T.TextField {
     // One number with one decimal point or comma: "170.5.5" can't be typed. "-", "." and an
     // empty field are an unfinished number (acceptableInput false), the OK button of the row
     // greys out on them (UiButton)
+    // An integer setting (age, heart rate, watts) takes no decimal point at all: "35.7" was cut
+    // to 35 after OK. Others keep up to 2 decimals while typing (onTextEdited); a longer value
+    // already shown (pounds from kilograms) stays acceptable
+    property int decimals: 2
     validator: !modern ? null
              : ipAddress ? ipValidator
              : timeShaped ? timeValidator
              : feetShaped && (numericHint || numberField) ? feetValidator
-             : numericHint || numberField ? (signed ? signedValidator : numberValidator) : null
+             : numericHint || numberField
+               ? (decimals === 0 ? (signed ? signedIntValidator : intValidator)
+                                 : (signed ? signedValidator : numberValidator))
+               : null
     RegExpValidator { id: numberValidator; regExp: /^(\d+([.,]\d*)?|[.,]\d+)$/ }
     RegExpValidator { id: signedValidator; regExp: /^-?(\d+([.,]\d*)?|[.,]\d+)$/ }
+    RegExpValidator { id: intValidator; regExp: /^\d+$/ }
+    RegExpValidator { id: signedIntValidator; regExp: /^-?\d+$/ }
     RegExpValidator { id: feetValidator; regExp: /^[0-9.,'"]*$/ }
     RegExpValidator { id: timeValidator; regExp: /^[0-9:]*$/ }
     RegExpValidator { id: ipValidator; regExp: /^[0-9.]*$/ }
@@ -179,11 +188,18 @@ T.TextField {
         }
     }
     // A decimal comma (the keyboard of the phone's language) is read by parseFloat as the end
-    // of the number: "2,5" saved 2. Turned into a point while typing
+    // of the number: "2,5" saved 2. Turned into a point while typing. A third decimal typed is
+    // dropped (decimals)
     onTextEdited: {
-        if (modern && numericHint && text.indexOf(",") >= 0 && !/[:'"]/.test(text)) {
-            var pos = cursorPosition
-            text = text.replace(/,/g, ".")
+        if (!modern || !(numericHint || numberField) || /[:'"]/.test(text))
+            return
+        var t = text.replace(/,/g, ".")
+        var point = t.indexOf(".")
+        if (decimals > 0 && point >= 0 && t.length - point - 1 > decimals)
+            t = t.substring(0, point + 1 + decimals)
+        if (t !== text) {
+            var pos = Math.min(cursorPosition, t.length)
+            text = t
             cursorPosition = pos
         }
     }

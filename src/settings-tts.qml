@@ -117,6 +117,7 @@ ScrollView {
             UiTextField {
                 id: ttsSummarySecTextField
                 text: settings.tts_summary_sec
+                decimals: 0
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
