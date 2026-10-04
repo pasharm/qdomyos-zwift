@@ -729,8 +729,11 @@ ApplicationWindow {
         property bool bluetoothOff: false
         // Only the found trainers: "Disabled" and "Wifi" of the settings list mean nothing here
         readonly property var devices: {
-            var all = rootItem.bluetoothDevices
             var r = []
+            // rootItem appears after the window is built: until then, an empty list
+            if (typeof rootItem === "undefined" || !rootItem || !rootItem.bluetoothDevices)
+                return r
+            var all = rootItem.bluetoothDevices
             for (var i = 0; i < all.length; i++)
                 if (all[i] !== "Disabled" && all[i] !== "Wifi")
                     r.push(all[i])
