@@ -179,7 +179,8 @@ if best:
 }
 
 
-# T-105: thin frames around the settings and the block of an open section, shots only
+# T-161: the App Language list of the classic look must not hide its first item under the
+# status bar. The list is shot open; steps.log gets the top edge of every list item
 adb logcat -c || true
 adb logcat > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
@@ -200,95 +201,49 @@ tap_drawer 'Settings' 400 1400
 sleep 12
 shot 10-root
 
-# T-105: after a turn of the screen the page height stayed as it was - a section opened after
-# it was cut off at the bottom. Turn and back, open a long section, scroll to its very end
-echo "-- rotation test" >> $STEPLOG
-adb shell settings put system accelerometer_rotation 0 || true
-adb shell settings put system user_rotation 1 || true; sleep 5
-shot 11-rot-landscape
-adb shell settings put system user_rotation 0 || true; sleep 5
-if scroll_to 'Bike Options' && tap_ui 'Bike Options'; then
-  sleep 5
-  for i in $(seq 1 25); do adb shell input swipe 700 2000 700 600 200 || true; done
-  sleep 2
-  shot 12-rot-bike-end
-  scroll_top
-  tap_ui 'Bike Options'; sleep 3
-fi
-
-# One theme: a section with its settings, a subsection inside it, scrolled down a few times
-run_theme() {
+# items_top: text and top edge of every node whose text is one of the languages
+items_top() {
+  python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+names = ("Auto (System)", "English", "Italian", "German", "French", "Spanish")
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = n.get("text") or n.get("content-desc") or ""
+    if t in names:
+        print("   item", repr(t), n.get("bounds"))
+' ui.xml >> $STEPLOG 2>&1 || true
+}
+open_language() {
   local t="$1"
   scroll_top
   if scroll_to 'General Options' && tap_ui 'General Options'; then
     sleep 4
-    shot "$t-20-general"
-    adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
-    shot "$t-21-general-scrolled"
+    if scroll_to 'App Language:?'; then
+      shot "$t-20-language-row"
+      if tap_node 'Auto \(System\)'; then
+        sleep 3
+        shot "$t-21-language-list"
+        echo "-- list items, status bar: $(adb shell dumpsys window | grep -m1 -o 'statusBars.*frame=[^ ]*' || true)" >> $STEPLOG
+        items_top
+        back "close list"; sleep 2
+      fi
+    fi
     scroll_top
     tap_ui 'General Options'; sleep 3
   fi
-  scroll_top
-  sleep 3
-  if scroll_to 'Treadmill Options' && tap_ui 'Treadmill Options'; then
-    sleep 4
-    shot "$t-30-treadmill"
-    adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-    shot "$t-31-treadmill-scrolled"
-    adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-    shot "$t-35-sticky"
-    tap 700 290 "sticky header"; sleep 2
-    shot "$t-36-after-sticky-tap"
-    if scroll_to 'Domyos Treadmill Options' && tap_ui 'Domyos Treadmill Options'; then
-      sleep 4
-      shot "$t-32-subsection-open"
-      adb shell input swipe 700 2000 700 1200 400 || true; sleep 2
-      shot "$t-33-subsection-scrolled"
-      tap_ui 'Domyos Treadmill Options'; sleep 3
-    fi
-    for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 900 300 || true; done
-    sleep 2
-    shot "$t-34-treadmill-end"
-    scroll_top
-    tap_ui 'Treadmill Options'; sleep 3
-  fi
 }
-run_theme light
-adb shell cmd uimode night yes || true
+open_language light
+# Held sideways: the status bar stays on top, the list is short of room
+adb shell settings put system accelerometer_rotation 0 || true
+adb shell settings put system user_rotation 1 || true
 sleep 6
-run_theme dark
-# The static section at the end (StaticAccordionElement): frames like the others
-scroll_top
-if scroll_to 'Experimental Features' && tap_ui 'Experimental Features'; then
-  sleep 4
-  shot dark-40-experimental
-  adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
-  shot dark-41-experimental-scrolled
-  adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-  shot dark-42-experimental-virtual-device
-fi
-# The tiles page: frames instead of filled cards, a tile that is on in the accent
-scroll_top
-if scroll_to 'Tiles Options' && tap_ui 'Tiles Options'; then
-  sleep 5
-  shot dark-45-tiles
-  back "tiles page"
-  sleep 3
-fi
-# The TTS page (a page of plain settings, no sections)
-scroll_top
-if scroll_to 'TTS \(Text to Speech\) Settings' && tap_ui 'TTS \(Text to Speech\) Settings'; then
-  sleep 4
-  shot dark-50-tts
-  back "tts page"
-  sleep 3
-fi
+open_language land
+adb shell settings put system user_rotation 0 || true
+sleep 4
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
-# If the recording broke off (adb restarted), the dump of the end is better than nothing
 adb logcat -d > end_logcat.txt || true
 if [ "$(wc -l < full_logcat.txt)" -lt "$(wc -l < end_logcat.txt)" ]; then
   echo "!! logcat recording shorter than the dump at the end: the dump is kept" >> $STEPLOG
@@ -296,17 +251,7 @@ if [ "$(wc -l < full_logcat.txt)" -lt "$(wc -l < end_logcat.txt)" ]; then
 else
   rm -f end_logcat.txt
 fi
-# The debug logs the app wrote itself (Documents/QZ on Android 14+): none with the log off
-mkdir -p qz-logs
-adb shell 'ls -la /sdcard/Documents/QZ/ 2>&1' > qz-logs/listing.txt || true
-for f in $(adb shell 'ls /sdcard/Documents/QZ/ 2>/dev/null' | tr -d '\r' | grep '^debug-.*[.]log$'); do
-  adb pull "/sdcard/Documents/QZ/$f" "qz-logs/$f" > /dev/null 2>&1 || true
-done
-echo "== app debug logs"; cat qz-logs/listing.txt; ls -la qz-logs
 echo "== steps"; cat $STEPLOG
-echo "== timing"; grep -E "QZ-TIMING|QZ-THEME" full_logcat.txt || true
-# The dialogs are hidden (hide_error_dialogs above), so hangs are only here
 grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
 echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
 grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
-echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
