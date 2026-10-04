@@ -71,14 +71,17 @@ function zoneLabel(number) {
     return t('chart.zoneNumber', 'zone {number}').replace('{number}', number);
 }
 
-// centered moving average over `window` points (one point a second): the raw cadence is a saw
-function smoothRow(row, window) {
+// centered moving average over `window` points (one point a second) for the power, cadence and
+// speed lines, like the training services do: the raw values are a saw. Only the line is smoothed,
+// averages, maximums, zones and the power curve use the raw values
+function smoothRow(row, window, digits) {
     let half = Math.floor(window / 2);
     return row.map(function (p, i) {
         let from = Math.max(0, i - half), to = Math.min(row.length - 1, i + half), sum = 0;
         for (let j = from; j <= to; j++)
             sum += row[j].y;
-        return { x: p.x, y: Math.round(sum / (to - from + 1)) };
+        let k = Math.pow(10, digits || 0);
+        return { x: p.x, y: Math.round(sum / (to - from + 1) * k) / k };
     });
 }
 
@@ -310,7 +313,7 @@ function process_arr(arr) {
                 backgroundColor: window.chartColors.red,
                 borderColor: window.chartColors.red,
                 cubicInterpolationMode: 'monotone',
-                data: watts,
+                data: smoothRow(watts, 5),
                 fill: false,
                 pointRadius: 0,
                 borderWidth: 1,
@@ -853,7 +856,7 @@ function process_arr(arr) {
                     backgroundColor: window.chartColors.blue,
                     borderColor: window.chartColors.blue,
                     label: t('workoutEditor.cadence', 'Cadence'),
-                    //cubicInterpolationMode: 'monotone',
+                    cubicInterpolationMode: 'monotone',
                     data: smoothRow(cadence, 5),
                     fill: false,
                     pointRadius: 0,
@@ -1017,7 +1020,7 @@ function process_arr(arr) {
                     borderColor: window.chartColors.blue,
                     label: miles === 1 ? t('workoutEditor.speedKmh', 'Speed (km/h)') : t('workoutEditor.speedMph', 'Speed (mph)'),
                     cubicInterpolationMode: 'monotone',
-                    data: speed,
+                    data: smoothRow(speed, 5, 1),
                     fill: false,
                     pointRadius: 0,
                     borderWidth: 1,
