@@ -233,12 +233,13 @@ if scroll_to 'General Options' && tap_ui 'General Options'; then
   if tap_node '-70'; then
     sleep 2
     clear_field
-    adb shell input text 70 || true
+    # A third decimal is dropped: 70.555 -> 70.55
+    adb shell input text 70.555 || true
     sleep 2
     shot 21-weight-fixed
-    ok_state '70'
+    ok_state '70.55'
+    ok_state '70.555'
     hide_keyboard
-    ok_state '70'
   fi
   # Age: "-" is not taken, an empty field greys OK
   if scroll_to '35' && tap_node '35'; then
@@ -248,11 +249,13 @@ if scroll_to 'General Options' && tap_ui 'General Options'; then
     shot 22-age-empty
     ok_state ''
     adb shell input text '-' || true
-    adb shell input text 40 || true
+    # An integer setting: no decimal point, 40.5 -> 405
+    adb shell input text 40.5 || true
     sleep 2
     shot 23-age-minus-typed
-    ok_state '40'
-    ok_state '-40'
+    ok_state '405'
+    ok_state '40.5'
+    ok_state '-405'
     hide_keyboard
   fi
   # Height: 170.5.5 - the second point is not taken
