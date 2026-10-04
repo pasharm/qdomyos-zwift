@@ -81,7 +81,9 @@ Page {
                 onClicked: start.clicked()
                 background: Rectangle {
                     radius: height / 2
-                    color: rootItem.startColor === "red" ? window.ui.danger : window.ui.accent
+                    // Steady green while stopped/paused ("Start"), accent while running ("Pause");
+                    // the classic blinking startColor is not used here
+                    color: rootItem.startIcon.indexOf("pause") >= 0 ? window.ui.accent : window.ui.accentOf("green")
                     opacity: modernStart.down ? 0.8 : 1
                 }
                 contentItem: Item {
