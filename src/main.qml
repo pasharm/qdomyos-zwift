@@ -714,8 +714,45 @@ ApplicationWindow {
         modal: true
         focus: true
         closePolicy: Popup.NoAutoClose
-        onOpened: refresh_bluetooth_devices_clicked()
+        onOpened: {
+            secondsLeft = refreshSeconds
+            pollState()
+            if (!bluetoothOff)
+                refresh_bluetooth_devices_clicked()
+        }
         readonly property bool modern: window.ui.modern
+
+        // The search restarts every refreshSeconds; the hint counts down to it. With Bluetooth
+        // off the search does nothing, so the window says so instead of the countdown
+        readonly property int refreshSeconds: 10
+        property int secondsLeft: refreshSeconds
+        property bool bluetoothOff: false
+        // Only the found trainers: "Disabled" and "Wifi" of the settings list mean nothing here
+        readonly property var devices: {
+            var all = rootItem.bluetoothDevices
+            var r = []
+            for (var i = 0; i < all.length; i++)
+                if (all[i] !== "Disabled" && all[i] !== "Wifi")
+                    r.push(all[i])
+            return r
+        }
+        function pollState() {
+            bluetoothOff = rootItem.bluetoothSearchStatus() === qsTranslate("homeform", "Bluetooth is off")
+        }
+
+        Timer {
+            interval: 1000
+            repeat: true
+            running: popupGymMode.visible
+            onTriggered: {
+                popupGymMode.pollState()
+                if (--popupGymMode.secondsLeft > 0)
+                    return
+                popupGymMode.secondsLeft = popupGymMode.refreshSeconds
+                if (!popupGymMode.bluetoothOff)
+                    refresh_bluetooth_devices_clicked()
+            }
+        }
 
         Column {
             anchors.fill: parent
@@ -735,7 +772,9 @@ ApplicationWindow {
 
             Label {
                 width: parent.width
-                text: qsTr("QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.")
+                text: popupGymMode.bluetoothOff ? qsTranslate("homeform", "Bluetooth is off")
+                      : popupGymMode.devices.length === 0 ? qsTranslate("homeform", "Searching for the device...")
+                      : qsTr("QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.")
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
                 color: popupGymMode.modern ? window.ui.textMain : Material.foreground
@@ -744,15 +783,14 @@ ApplicationWindow {
             ValueComboBox {
                 id: gymModeDeviceComboBox
                 width: parent.width
-                model: rootItem.bluetoothDevices
-                labels: ({ "Disabled": qsTr("Disabled") })
+                model: popupGymMode.devices
                 displayText: currentIndex >= 0 ? labelFor(currentValue) : qsTr("Select a device")
                 currentIndex: -1
                 font.pixelSize: Qt.application.font.pixelSize + 8
 
                 onActivated: {
                     var selectedDevice = stripBluetoothDeviceName(currentValue)
-                    if (selectedDevice === "Disabled" || selectedDevice === "Wifi" || selectedDevice.length === 0) {
+                    if (selectedDevice.length === 0) {
                         return
                     }
                     popupGymMode.close()
@@ -762,7 +800,8 @@ ApplicationWindow {
 
             Label {
                 width: parent.width
-                text: qsTr("The list refreshes automatically every 10 seconds.")
+                visible: !popupGymMode.bluetoothOff
+                text: qsTranslate("homeform", "Next search in %1 s").arg(popupGymMode.secondsLeft)
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
                 color: popupGymMode.modern ? window.ui.textMuted : Material.color(Material.Grey)
@@ -778,14 +817,6 @@ ApplicationWindow {
                 }
             }
         }
-    }
-
-    Timer {
-        id: gymModeRefreshTimer
-        interval: 10000
-        repeat: true
-        running: popupGymMode.visible
-        onTriggered: refresh_bluetooth_devices_clicked()
     }
 
     UiInfoPopup {
