@@ -10,6 +10,13 @@
     </message>
 </context>
 <context>
+    <name>custominclinationresistance</name>
+    <message>
+        <source>Remove</source>
+        <translation>Remover</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <location filename="../Home.qml" line="45"/>
@@ -7094,6 +7101,14 @@ Padrão: A = -0.96, B = 1.33</translation>
         <location filename="../settings.qml" line="6212"/>
         <source>In landscape, keeps a margin on the camera side so the camera hole does not cover the content. Turn off to let the content extend under the camera cutout. Default is on.</source>
         <translation>Na horizontal, deixa uma margem do lado da câmera para que o recorte não cubra o conteúdo. Desative para o conteúdo se estender sob o recorte. Padrão é ligado.</translation>
+    </message>
+    <message>
+        <source>Max Watt:</source>
+        <translation>Potência máx. (W):</translation>
+    </message>
+    <message>
+        <source>Limits the watt output sent by QZ. Set to 0 to disable the limit. Default is 9999 W.</source>
+        <translation>Limita a potência enviada pelo QZ. Defina 0 para desativar o limite. Padrão: 9999 W.</translation>
     </message>
 </context>
 <context>

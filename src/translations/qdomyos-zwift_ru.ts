@@ -3712,6 +3712,10 @@ This may take a few moments on first startup.</source>
         <source>Reset Example</source>
         <translation>Сбросить к примеру</translation>
     </message>
+    <message>
+        <source>Remove</source>
+        <translation>Удалить</translation>
+    </message>
 </context>
 <context>
     <name>gears</name>
@@ -10368,6 +10372,14 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>QZ opens FS- devices as treadmills unless &quot;Fit Plus Bike&quot; is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off. Not shown in the settings page.</source>
         <translation>QZ открывает устройства FS- как беговые дорожки, если не включено «Fit Plus Bike». Когда устройство FS- передаёт и данные велотренажёра, QZ спрашивает, велотренажёр ли это; ответ «Нет» отключает этот вопрос. На странице настроек не показывается.</translation>
+    </message>
+    <message>
+        <source>Max Watt:</source>
+        <translation>Макс. мощность (Вт):</translation>
+    </message>
+    <message>
+        <source>Limits the watt output sent by QZ. Set to 0 to disable the limit. Default is 9999 W.</source>
+        <translation>Ограничивает мощность, которую передаёт QZ. 0 – без ограничения. По умолчанию 9999 Вт.</translation>
     </message>
 </context>
 <context>

@@ -10,6 +10,13 @@
     </message>
 </context>
 <context>
+    <name>custominclinationresistance</name>
+    <message>
+        <source>Remove</source>
+        <translation>削除</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <location filename="../Home.qml" line="45"/>
@@ -7119,6 +7126,14 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
         <location filename="../settings.qml" line="6212"/>
         <source>In landscape, keeps a margin on the camera side so the camera hole does not cover the content. Turn off to let the content extend under the camera cutout. Default is on.</source>
         <translation>横向きのとき、カメラ側に余白を空けて、切り欠きで内容が隠れないようにします。オフにすると内容が切り欠きの下まで広がります。既定はオンです。</translation>
+    </message>
+    <message>
+        <source>Max Watt:</source>
+        <translation>最大パワー (W):</translation>
+    </message>
+    <message>
+        <source>Limits the watt output sent by QZ. Set to 0 to disable the limit. Default is 9999 W.</source>
+        <translation>QZ が送信するパワーの上限です。0 で上限なし。既定値は 9999 W。</translation>
     </message>
 </context>
 <context>

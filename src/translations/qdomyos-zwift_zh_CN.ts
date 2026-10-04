@@ -10,6 +10,13 @@
     </message>
 </context>
 <context>
+    <name>custominclinationresistance</name>
+    <message>
+        <source>Remove</source>
+        <translation>删除</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <location filename="../Home.qml" line="45"/>
@@ -7109,6 +7116,14 @@ Default: A = -0.96, B = 1.33</source>
         <location filename="../settings.qml" line="6212"/>
         <source>In landscape, keeps a margin on the camera side so the camera hole does not cover the content. Turn off to let the content extend under the camera cutout. Default is on.</source>
         <translation>横屏时在摄像头一侧留出边距，以免挖孔遮挡内容。关闭后内容会延伸到挖孔下方。默认开启。</translation>
+    </message>
+    <message>
+        <source>Max Watt:</source>
+        <translation>最大功率 (W):</translation>
+    </message>
+    <message>
+        <source>Limits the watt output sent by QZ. Set to 0 to disable the limit. Default is 9999 W.</source>
+        <translation>限制 QZ 发送的功率。设为 0 表示不限制。默认 9999 W。</translation>
     </message>
 </context>
 <context>
