@@ -1188,6 +1188,106 @@ ApplicationWindow {
         visible: rootItem.echelonEnablePromptRequested && window.ui.modern
     }
 
+    // personal (T-137, test builds only, not for the upstream): the menu item "TEST: dialogs"
+    // opens the dialogs that need a device, an account or an expired trial. The flags of the
+    // C++ side are set by hand: their Yes finds no file, no device, no pending value and only
+    // shows a toast. The dialogs whose closing does something (the trial one opens Patreon and
+    // quits, the helpers push a page) are shown as copies without it.
+    UiInfoPopup {
+        id: testLicenseCopy
+        classicWidth: 580
+        classicHeight: 230
+        classicLabelWidth: 570
+        classicLabelHeight: 220
+        text: popupLicense.text
+    }
+    UiInfoPopup { id: testClassificaCopy; text: popupClassificaHelper.text }
+    UiInfoPopup { id: testWhatsOnZwiftCopy; text: popupWhatsOnZwiftHelper.text }
+
+    UiPopup {
+        id: testDialogsPopup
+        parent: Overlay.overlay
+        modal: true
+        focus: true
+        width: Math.min(parent.width - 32, 440)
+        height: Math.min(parent.height - 64, testDialogsColumn.implicitHeight + 32)
+        x: Math.round((parent.width - width) / 2)
+        y: Math.round((parent.height - height) / 2)
+        padding: 16
+
+        function show(i) {
+            close()
+            switch (i) {
+            case 0: rootItem.stravaUploadRequested = true; break
+            case 1: rootItem.generalPopupVisible = true; break
+            case 2: rootItem.pelotonPopupVisible = true; break
+            case 3: testLicenseCopy.open(); break
+            case 4: testClassificaCopy.open(); break
+            case 5: testWhatsOnZwiftCopy.open(); break
+            case 6: rootItem.echelonEnablePromptRequested = true; break
+            case 7: rootItem.echelonBridgeSwitchPromptRequested = true; break
+            case 8: rootItem.garminWorkoutPromptRequested = true; break
+            case 9: rootItem.garminFtpPromptRequested = true; break
+            case 10: rootItem.clipboardWorkoutPromptRequested = true; break
+            case 11: rootItem.clipboardWorkoutDeletePromptRequested = true; break
+            case 12: rootItem.garminMfaRequested = true; drawerAction("settings"); break
+            }
+        }
+
+        Flickable {
+            anchors.fill: parent
+            contentHeight: testDialogsColumn.implicitHeight
+            clip: true
+            boundsBehavior: Flickable.StopAtBounds
+
+            Column {
+                id: testDialogsColumn
+                width: parent.width
+                spacing: 6
+
+                Label {
+                    width: parent.width
+                    text: "TEST: dialogs (T-137)"
+                    font.pixelSize: 20
+                    font.weight: Font.DemiBold
+                    color: window.ui.modern ? window.ui.textMain : Material.foreground
+                    wrapMode: Text.WordWrap
+                }
+                Label {
+                    width: parent.width
+                    text: "Answer No / Back where you can: Yes finds nothing to do here and shows a toast."
+                    color: window.ui.modern ? window.ui.textMuted : Material.foreground
+                    wrapMode: Text.WordWrap
+                }
+
+                Repeater {
+                    // the order of testDialogsPopup.show()
+                    model: [
+                        "Strava: upload the workout?",
+                        "Strava: account connected",
+                        "Peloton: account connected",
+                        "Trial expired (copy, no quit)",
+                        "Classifica helper (copy)",
+                        "What's on Zwift helper (copy)",
+                        "Echelon Locked Bike",
+                        "Echelon Unlock (classic bridge)",
+                        "Garmin workout planned",
+                        "Garmin FTP update",
+                        "Clipboard workout found",
+                        "Clipboard workout ended: delete?",
+                        "Garmin MFA code (opens Settings)"
+                    ]
+                    UiButton {
+                        width: testDialogsColumn.width
+                        text: modelData
+                        flat: true
+                        onClicked: testDialogsPopup.show(index)
+                    }
+                }
+            }
+        }
+    }
+
     UiMessageDialog {
         id: stravaLogoutConfirm
         text: qsTr("Strava")
@@ -1749,6 +1849,12 @@ ApplicationWindow {
                     width: parent.width
                     onClicked: drawerAction("editor")
                 }
+                // personal (T-137): test builds only
+                ItemDelegate {
+                    text: "TEST: dialogs (T-137)"
+                    width: parent.width
+                    onClicked: { drawer.close(); testDialogsPopup.open() }
+                }
                 /*
                 ItemDelegate {
                     text: qsTr("What's On Zwift™")
@@ -2012,6 +2118,8 @@ ApplicationWindow {
                 UiDrawerItem { text: qsTr("Settings"); iconName: "settings"; onClicked: drawerAction("settings") }
                 UiDrawerItem { text: qsTr("Wizard"); iconName: "rocket_launch"; onClicked: drawerAction("wizard") }
                 UiDrawerItem { text: qsTr("Swag Bag"); iconName: "redeem"; onClicked: drawerAction("swagbag") }
+                // personal (T-137): test builds only
+                UiDrawerItem { text: "TEST: dialogs (T-137)"; iconName: "help"; onClicked: { drawer.close(); testDialogsPopup.open() } }
                 UiDrawerItem { text: qsTr("Help"); iconName: "help"; external: true; onClicked: drawerAction("help") }
                 UiDrawerItem { text: qsTr("Community"); iconName: "groups"; external: true; onClicked: drawerAction("community") }
                 UiDrawerItem { text: qsTr("Credits"); iconName: "info"; onClicked: drawerAction("credits") }
