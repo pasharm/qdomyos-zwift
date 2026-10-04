@@ -330,7 +330,7 @@ Would you like to do that now?</source>
     <message>
         <location filename="../Home.qml" line="95"/>
         <source>Stop</source>
-        <translation>Остановить</translation>
+        <translation>Стоп</translation>
     </message>
     <message>
         <location filename="../Home.qml" line="96"/>
