@@ -1804,6 +1804,14 @@ ApplicationWindow {
                 anchors.fill: parent
                 spacing: 3
 
+                // personal (T-137): test builds only. First in the menu: the last item sat
+                // under the system bar (emulator run 37201474009)
+                ItemDelegate {
+                    text: "TEST: dialogs (T-137)"
+                    width: parent.width
+                    onClicked: { drawer.close(); testDialogsPopup.open() }
+                }
+
                 ItemDelegate {
                     text: qsTr("Profile: ") + settings.profile_name
                     width: parent.width
@@ -1848,12 +1856,6 @@ ApplicationWindow {
                     text: qsTr("Workout Editor")
                     width: parent.width
                     onClicked: drawerAction("editor")
-                }
-                // personal (T-137): test builds only
-                ItemDelegate {
-                    text: "TEST: dialogs (T-137)"
-                    width: parent.width
-                    onClicked: { drawer.close(); testDialogsPopup.open() }
                 }
                 /*
                 ItemDelegate {
@@ -2103,6 +2105,10 @@ ApplicationWindow {
                     }
                 }
 
+                // personal (T-137): test builds only. First in the menu: the last item sat
+                // under the system bar (emulator run 37201474009)
+                UiDrawerItem { text: "TEST: dialogs (T-137)"; iconName: "help"; onClicked: { drawer.close(); testDialogsPopup.open() } }
+
                 Loader { sourceComponent: drawerSectionHeader; onLoaded: item.text = qsTr("Workout") }
                 UiDrawerItem { text: qsTr("Open Train Program"); iconName: "list_alt"; onClicked: drawerAction("trainprogram") }
                 UiDrawerItem { text: qsTr("Workout Editor"); iconName: "edit_note"; onClicked: drawerAction("editor") }
@@ -2118,8 +2124,6 @@ ApplicationWindow {
                 UiDrawerItem { text: qsTr("Settings"); iconName: "settings"; onClicked: drawerAction("settings") }
                 UiDrawerItem { text: qsTr("Wizard"); iconName: "rocket_launch"; onClicked: drawerAction("wizard") }
                 UiDrawerItem { text: qsTr("Swag Bag"); iconName: "redeem"; onClicked: drawerAction("swagbag") }
-                // personal (T-137): test builds only
-                UiDrawerItem { text: "TEST: dialogs (T-137)"; iconName: "help"; onClicked: { drawer.close(); testDialogsPopup.open() } }
                 UiDrawerItem { text: qsTr("Help"); iconName: "help"; external: true; onClicked: drawerAction("help") }
                 UiDrawerItem { text: qsTr("Community"); iconName: "groups"; external: true; onClicked: drawerAction("community") }
                 UiDrawerItem { text: qsTr("Credits"); iconName: "info"; onClicked: drawerAction("credits") }
