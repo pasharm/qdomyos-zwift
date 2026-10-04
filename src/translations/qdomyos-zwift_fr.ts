@@ -161,6 +161,26 @@ Voulez-vous le faire maintenant ?</translation>
         <source>This app should automatically connect to your bike/treadmill/rower. &lt;b&gt;If it doesn&apos;t, please check&lt;/b&gt;:&lt;br&gt;1) your Echelon/Domyos App MUST be closed while qdomyos-zwift is running;&lt;br&gt;2) both Bluetooth and Bluetooth permissions MUST be enabled&lt;br&gt;3) your bike/treadmill/rower should be turned on BEFORE starting this app&lt;br&gt;4) try to restart your device&lt;br&gt;&lt;br&gt;If your bike/treadmill disconnects every 30 seconds try to disable the &apos;virtual device&apos; setting on the left bar.&lt;br&gt;&lt;br&gt;In case of issues, please feel free to contact me at roberto.viola83@gmail.com.&lt;br&gt;&lt;br&gt;&lt;b&gt;Have a nice ride!&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZ specifically disclaims liability for&lt;br&gt;incidental or consequential damages and assumes&lt;br&gt;no responsibility or liability for any loss&lt;br&gt;or damage suffered by any person as a result of&lt;br&gt;the use or misuse of the app.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</source>
         <translation>Cette application devrait se connecter automatiquement à votre vélo/tapis de course/rameur. &lt;b&gt;Si ce n&apos;est pas le cas, veuillez vérifier&lt;/b&gt;:&lt;br&gt;1) Votre application Echelon/Domyos DOIT être fermée pendant que qdomyos-zwift est en cours d&apos;exécution;&lt;br&gt;2) Les autorisations Bluetooth et Bluetooth DOIVENT être activées&lt;br&gt;3) Votre vélo/tapis de course/rameur doit être allumé AVANT de démarrer cette application&lt;br&gt;4) Essayez de redémarrer votre appareil&lt;br&gt;&lt;br&gt;Si votre vélo/tapis de course se déconnecte toutes les 30 secondes, essayez de désactiver le paramètre &apos;appareil virtuel&apos; sur la barre de gauche.&lt;br&gt;&lt;br&gt;En cas de problème, n&apos;hésitez pas à me contacter à roberto.viola83@gmail.com.&lt;br&gt;&lt;br&gt;&lt;b&gt;Passez une bonne sortie !&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZ décline expressément toute responsabilité pour les dommages&lt;br&gt;accidentels ou indirects et n&apos;assume aucune responsabilité ni aucune garantie pour toute perte&lt;br&gt;ou dommage subi par toute personne du fait de&lt;br&gt;l&apos;utilisation ou de la mauvaise utilisation de l&apos;application.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</translation>
     </message>
+    <message>
+        <source>Equipment not found</source>
+        <translation>Appareil introuvable</translation>
+    </message>
+    <message>
+        <source>Turn on your bike, treadmill or rower, then tap the Bluetooth icon at the top to search again.</source>
+        <translation>Allumez votre vélo, tapis de course ou rameur, puis touchez l’icône Bluetooth en haut pour relancer la recherche.</translation>
+    </message>
+    <message>
+        <source>Looking for your equipment…</source>
+        <translation>Recherche de votre appareil…</translation>
+    </message>
+    <message>
+        <source>Turn on your bike, treadmill or rower: QZ connects to it automatically.</source>
+        <translation>Allumez votre vélo, tapis de course ou rameur : QZ s’y connecte automatiquement.</translation>
+    </message>
+    <message>
+        <source>Not connecting?</source>
+        <translation>Pas de connexion ?</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -429,6 +449,14 @@ Voulez-vous le faire maintenant ?</translation>
         <location filename="../SettingsList.qml" line="36"/>
         <source>Settings folder</source>
         <translation>Dossier des paramètres</translation>
+    </message>
+    <message>
+        <source>Tap a file to select it, then Load.</source>
+        <translation>Touchez un fichier pour le sélectionner, puis Charger.</translation>
+    </message>
+    <message>
+        <source>No saved settings</source>
+        <translation>Aucun paramètre enregistré</translation>
     </message>
 </context>
 <context>
@@ -1304,6 +1332,61 @@ Voulez-vous le faire maintenant ?</translation>
         <source>{value} s</source>
         <translation>{value} s</translation>
     </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="179"/>
+        <source>W</source>
+        <translation>W</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="180"/>
+        <source>kJ</source>
+        <translation>kJ</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="181"/>
+        <source>kcal</source>
+        <translation>kcal</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="182"/>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="183"/>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="184"/>
+        <source>rpm</source>
+        <translation>tr/min</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="185"/>
+        <source>bpm</source>
+        <translation>bpm</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="186"/>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="187"/>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="190"/>
+        <source>lvl</source>
+        <translation>niv.</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="191"/>
+        <source>spm</source>
+        <translation>cpm</translation>
+    </message>
 </context>
 <context>
     <name>Wizard</name>
@@ -1624,6 +1707,28 @@ Les questions suivantes personnaliseront QZ pour votre équipement et vos object
         <location filename="../Wizard.qml" line="1378"/>
         <source>Garmin watch</source>
         <translation>Garmin montre</translation>
+    </message>
+    <message>
+        <location filename="../Wizard.qml" line="1325"/>
+        <source>lbs</source>
+        <translation>lb</translation>
+    </message>
+    <message>
+        <location filename="../Wizard.qml" line="1325"/>
+        <source>kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <source>Your equipment, units and profile, step by step</source>
+        <translation>Votre appareil, vos unités et votre profil, étape par étape</translation>
+    </message>
+    <message>
+        <source>Pick a topic and go straight to its settings</source>
+        <translation>Choisissez un thème et accédez directement à ses paramètres</translation>
+    </message>
+    <message>
+        <source>Close the wizard</source>
+        <translation>Fermer l’assistant</translation>
     </message>
 </context>
 <context>
@@ -2354,6 +2459,159 @@ Les questions suivantes personnaliseront QZ pour votre équipement et vos object
         <source>The workout history database could not be opened.</source>
         <translation>Impossible d&apos;ouvrir la base de données de l&apos;historique des entraînements.</translation>
     </message>
+    <message>
+        <location filename="../homeform.cpp" line="1829"/>
+        <source>Bluetooth is off</source>
+        <translation>Bluetooth désactivé</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1829"/>
+        <source>Searching for the device...</source>
+        <translation>Recherche de l’appareil...</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1831"/>
+        <source>Search stopped, tap the Bluetooth icon</source>
+        <translation>Recherche arrêtée, touchez l’icône Bluetooth</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1834"/>
+        <source>Next search in %1 s</source>
+        <translation>Prochaine recherche dans %1 s</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1842"/>
+        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
+        <translation>Android autorise 5 recherches Bluetooth en 30 s, la prochaine commence dans %1 s</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="473"/>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="474"/>
+        <source>m</source>
+        <comment>unit: meters</comment>
+        <translation>m</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="475"/>
+        <source>Kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="476"/>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="478"/>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="479"/>
+        <source>ft</source>
+        <translation>ft</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="480"/>
+        <source>in</source>
+        <comment>unit: inches</comment>
+        <translation>in</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="484"/>
+        <source>Oz</source>
+        <translation>oz</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="662"/>
+        <source>HRV (ms)</source>
+        <translation>VFC (ms)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3488"/>
+        <source>Odometer (m)</source>
+        <translation>Odomètre (m)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3609"/>
+        <source>Pace (m/500m)</source>
+        <translation>Allure (m/500m)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3616"/>
+        <source>Avg Pace (m/500m)</source>
+        <translation>Allure moy. (m/500m)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3680"/>
+        <source>T.Pace(m/500m)</source>
+        <translation>Allure cible (m/500m)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="4703"/>
+        <source>%1 found</source>
+        <translation>%1 trouvé(s)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6086"/>
+        <source>offset </source>
+        <translation>décalage </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6332"/>
+        <location filename="../homeform.cpp" line="6339"/>
+        <source> /min</source>
+        <translation> /min</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6365"/>
+        <location filename="../homeform.cpp" line="6368"/>
+        <source> sec.</source>
+        <translation> s</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6597"/>
+        <source>Incl: </source>
+        <translation>Incl. : </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6603"/>
+        <location filename="../homeform.cpp" line="6927"/>
+        <location filename="../homeform.cpp" line="7080"/>
+        <source>%1%2W</source>
+        <translation>%1%2W</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6905"/>
+        <source>3s avg</source>
+        <translation>Moy. 3 s</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6908"/>
+        <source>5s avg</source>
+        <translation>Moy. 5 s</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6912"/>
+        <source>Gain: </source>
+        <translation>Gain : </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="7287"/>
+        <location filename="../homeform.cpp" line="7314"/>
+        <source>MIN: </source>
+        <translation>MIN : </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="7428"/>
+        <location filename="../homeform.cpp" line="7504"/>
+        <source>W </source>
+        <translation>W </translation>
+    </message>
 </context>
 <context>
     <name>main</name>
@@ -2648,6 +2906,58 @@ Voulez-vous les rechercher ?
 
 Dans la fenêtre suivante, autorisez l&apos;accès au dossier QZ.</translation>
     </message>
+    <message>
+        <location filename="../main.qml" line="1483"/>
+        <source>QZ is closing...</source>
+        <translation>QZ se ferme...</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="424"/>
+        <source>Press back again to exit</source>
+        <translation>Appuyez à nouveau sur Retour pour quitter</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the Files app.</source>
+        <translation>Enregistré ! Regardez dans l’app Fichiers.</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the app&apos;s private folder.</source>
+        <translation>Enregistré ! Regardez dans le dossier privé de l’app.</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="778"/>
+        <source>QZ has detected the data format of this bike. Enable &quot;Virtufit Etappe 2.0 Bike&quot;?</source>
+        <translation>QZ a détecté le format de données de ce vélo. Activer « Virtufit Etappe 2.0 Bike » ?</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="779"/>
+        <source>Without it QZ uses the default settings, and the data or the resistance may be off.</source>
+        <translation>Sans cela, QZ utilise les paramètres par défaut, et les données ou la résistance peuvent être faussées.</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="826"/>
+        <source>This FitShow device also reports bike data. Is it a bike?</source>
+        <translation>Cet appareil FitShow transmet aussi des données de vélo. Est-ce un vélo ?</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="827"/>
+        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
+No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
+        <translation>Oui : QZ active « Fit Plus Bike » et se ferme, rouvrez-le pour vous y connecter en tant que vélo.
+Non : QZ le garde comme tapis de course et ne redemandera plus (un vélo peut toujours être défini manuellement : « Fit Plus Bike » dans Fitplus Bike Options).</translation>
+    </message>
+    <message>
+        <source>Workout</source>
+        <translation>Entraînement</translation>
+    </message>
+    <message>
+        <source>App</source>
+        <translation>Application</translation>
+    </message>
+    <message>
+        <source>Services</source>
+        <translation>Services</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -2744,6 +3054,22 @@ Dans la fenêtre suivante, autorisez l&apos;accès au dossier QZ.</translation>
         <location filename="../profiles.qml" line="78"/>
         <source>Delete</source>
         <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>New profile</source>
+        <translation>Nouveau profil</translation>
+    </message>
+    <message>
+        <source>Saved profiles</source>
+        <translation>Profils enregistrés</translation>
+    </message>
+    <message>
+        <source>Tap a profile to select it, then Load. Long press to delete it.</source>
+        <translation>Touchez un profil pour le sélectionner, puis Charger. Appui long pour le supprimer.</translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation>Actif</translation>
     </message>
 </context>
 <context>
@@ -7118,6 +7444,198 @@ Par défaut : A = -0.96, B = 1.33</translation>
         <source>Limits the watt output sent by QZ. Set to 0 to disable the limit. Default is 9999 W.</source>
         <translation>Limite la puissance envoyée par QZ. 0 désactive la limite. Par défaut : 9999 W.</translation>
     </message>
+    <message>
+        <location filename="../settings.qml" line="312"/>
+        <source>Hidden on its page right now: change it here</source>
+        <translation>Masqué sur sa page pour l’instant : modifiez-le ici</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="317"/>
+        <source>Turn on “%1” to change this setting</source>
+        <translation>Activez « %1 » pour modifier ce paramètre</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2223"/>
+        <location filename="../settings.qml" line="3392"/>
+        <source>lbs</source>
+        <translation>lb</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2223"/>
+        <location filename="../settings.qml" line="3392"/>
+        <source>kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2260"/>
+        <source>ft/in</source>
+        <translation>ft/in</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2260"/>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="6931"/>
+        <location filename="../settings.qml" line="6965"/>
+        <location filename="../settings.qml" line="10233"/>
+        <location filename="../settings.qml" line="10269"/>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="6931"/>
+        <location filename="../settings.qml" line="6965"/>
+        <location filename="../settings.qml" line="10233"/>
+        <location filename="../settings.qml" line="10269"/>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="9651"/>
+        <source>5 km</source>
+        <translation>5 km</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="9651"/>
+        <source>10 km</source>
+        <translation>10 km</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="13582"/>
+        <source>Mi</source>
+        <translation>Mi</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="13582"/>
+        <source>KM</source>
+        <translation>KM</translation>
+    </message>
+    <message>
+        <source>Modern interface</source>
+        <translation>Interface moderne</translation>
+    </message>
+    <message>
+        <source>New look of the main screen, the side menu, the settings and the wizard. Turn it off to get the classic look back.</source>
+        <translation>Nouvel aspect de l’écran principal, du menu latéral, des paramètres et de l’assistant. Désactivez-le pour retrouver l’aspect classique.</translation>
+    </message>
+    <message>
+        <source>Snap tiles to rows</source>
+        <translation>Aligner les tuiles sur les rangées</translation>
+    </message>
+    <message>
+        <source>When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.</source>
+        <translation>Quand les tuiles de l’écran principal cessent de défiler, elles s’arrêtent sur une rangée entière ou sur la fin de la liste, afin qu’aucune tuile ne soit coupée en deux.</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation>Thème</translation>
+    </message>
+    <message>
+        <source>Graphite</source>
+        <translation>Graphite</translation>
+    </message>
+    <message>
+        <source>Black (OLED)</source>
+        <translation>Noir (OLED)</translation>
+    </message>
+    <message>
+        <source>Midnight blue</source>
+        <translation>Bleu nuit</translation>
+    </message>
+    <message>
+        <source>Accent colour</source>
+        <translation>Couleur d’accentuation</translation>
+    </message>
+    <message>
+        <source>Appearance</source>
+        <translation>Apparence</translation>
+    </message>
+    <message>
+        <source>As on the phone</source>
+        <translation>Comme sur le téléphone</translation>
+    </message>
+    <message>
+        <source>Dark</source>
+        <translation>Sombre</translation>
+    </message>
+    <message>
+        <source>Black / white</source>
+        <translation>Noir / blanc</translation>
+    </message>
+    <message>
+        <source>Wallpaper colour</source>
+        <translation>Couleur du fond d’écran</translation>
+    </message>
+    <message>
+        <source>Violet</source>
+        <translation>Violet</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation>Bleu</translation>
+    </message>
+    <message>
+        <source>Teal</source>
+        <translation>Sarcelle</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation>Vert</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation>Orange</translation>
+    </message>
+    <message>
+        <source>Pink</source>
+        <translation>Rose</translation>
+    </message>
+    <message>
+        <source>Changed</source>
+        <translation>Modifiés</translation>
+    </message>
+    <message>
+        <source>Changed settings</source>
+        <translation>Paramètres modifiés</translation>
+    </message>
+    <message>
+        <source>No changed settings</source>
+        <translation>Aucun paramètre modifié</translation>
+    </message>
+    <message>
+        <source>Reset section</source>
+        <translation>Réinitialiser la section</translation>
+    </message>
+    <message>
+        <source>Reset section?</source>
+        <translation>Réinitialiser la section ?</translation>
+    </message>
+    <message>
+        <source>%1 settings in “%2” go back to their default values.</source>
+        <translation>%1 paramètres de « %2 » reviennent à leurs valeurs par défaut.</translation>
+    </message>
+    <message>
+        <source>Setting reset</source>
+        <translation>Paramètre réinitialisé</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>%1 paramètres réinitialisés</translation>
+    </message>
+    <message>
+        <source>Add Up Quick Resistance Taps</source>
+        <translation>Cumuler les appuis rapides de résistance</translation>
+    </message>
+    <message>
+        <source>Bikes that report their resistance back take about a second to confirm a new level, so several quick taps on the resistance +/- buttons change it by only one. Enable this setting to add the taps up: 3 quick taps change the resistance by 3. Default is off.</source>
+        <translation>Les vélos qui renvoient leur résistance mettent environ une seconde à confirmer un nouveau niveau, donc plusieurs appuis rapides sur les boutons de résistance +/- ne la modifient que d’un cran. Activez ce paramètre pour cumuler les appuis : 3 appuis rapides modifient la résistance de 3. Désactivé par défaut.</translation>
+    </message>
+    <message>
+        <source>QZ opens FS- devices as treadmills unless &quot;Fit Plus Bike&quot; is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off. Not shown in the settings page.</source>
+        <translation>QZ ouvre les appareils FS- comme tapis de course sauf si « Fit Plus Bike » est activé. Quand un appareil FS- transmet aussi des données de vélo, QZ demande s’il s’agit d’un vélo ; répondre Non désactive cette question. Non affiché dans la page des paramètres.</translation>
+    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>
@@ -8594,6 +9112,24 @@ Par défaut : A = -0.96, B = 1.33</translation>
         <source>Shows Heart Rate Variability (HRV) from a compatible heart rate belt. Displays RMSSD value in milliseconds.</source>
         <translation>Affiche la variabilité de la fréquence cardiaque (VFC) à partir d&apos;une ceinture cardiaque compatible. Affiche la valeur RMSSD en millisecondes.</translation>
     </message>
+    <message>
+        <location filename="../settings-tiles.qml" line="3323"/>
+        <location filename="../settings-tiles.qml" line="3436"/>
+        <location filename="../settings-tiles.qml" line="3549"/>
+        <location filename="../settings-tiles.qml" line="3662"/>
+        <location filename="../settings-tiles.qml" line="3775"/>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <location filename="../settings-tiles.qml" line="3323"/>
+        <location filename="../settings-tiles.qml" line="3436"/>
+        <location filename="../settings-tiles.qml" line="3549"/>
+        <location filename="../settings-tiles.qml" line="3662"/>
+        <location filename="../settings-tiles.qml" line="3775"/>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
 </context>
 <context>
     <name>settings-treadmill-inclination-override</name>
@@ -9090,6 +9626,129 @@ Par défaut : A = -0.96, B = 1.33</translation>
     <message>
         <source>Importing workouts...</source>
         <translation>Importation des entraînements...</translation>
+    </message>
+    <message>
+        <location filename="../WorkoutsHistory.qml" line="421"/>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <location filename="../WorkoutsHistory.qml" line="421"/>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <location filename="../WorkoutsHistory.qml" line="431"/>
+        <location filename="../WorkoutsHistory.qml" line="432"/>
+        <source>kcal</source>
+        <translation>kcal</translation>
+    </message>
+    <message>
+        <source>Calendar</source>
+        <translation>Calendrier</translation>
+    </message>
+    <message>
+        <source>No workouts yet</source>
+        <translation>Aucun entraînement pour l’instant</translation>
+    </message>
+    <message>
+        <source>No workouts on this day</source>
+        <translation>Aucun entraînement ce jour-là</translation>
+    </message>
+    <message>
+        <source>Finished workouts appear here: open one to see its charts.</source>
+        <translation>Les entraînements terminés apparaissent ici : ouvrez-en un pour voir ses graphiques.</translation>
+    </message>
+    <message>
+        <source>Previous month</source>
+        <translation>Mois précédent</translation>
+    </message>
+    <message>
+        <source>Next month</source>
+        <translation>Mois suivant</translation>
+    </message>
+</context>
+<context>
+    <name>GPXList</name>
+    <message>
+        <source>Parent folder</source>
+        <translation>Dossier parent</translation>
+    </message>
+    <message>
+        <source>No GPX files here</source>
+        <translation>Aucun fichier GPX ici</translation>
+    </message>
+    <message>
+        <source>%1 km</source>
+        <translation>%1 km</translation>
+    </message>
+    <message>
+        <source>%1 m</source>
+        <translation>%1 m</translation>
+    </message>
+</context>
+<context>
+    <name>TrainingProgramsListJS</name>
+    <message>
+        <source>Parent folder</source>
+        <translation>Dossier parent</translation>
+    </message>
+    <message>
+        <source>No workouts here</source>
+        <translation>Aucun entraînement ici</translation>
+    </message>
+    <message>
+        <source>No workouts found</source>
+        <translation>Aucun entraînement trouvé</translation>
+    </message>
+</context>
+<context>
+    <name>fitplusbike</name>
+    <message>
+        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="628"/>
+        <source>The bike keeps stopping the workout: turn the bike off and on again</source>
+        <translation>Le vélo arrête sans cesse l’entraînement : éteignez puis rallumez le vélo</translation>
+    </message>
+</context>
+<context>
+    <name>UiSectionHeader</name>
+    <message>
+        <source>Expanded</source>
+        <translation>Déplié</translation>
+    </message>
+    <message>
+        <source>Collapsed</source>
+        <translation>Replié</translation>
+    </message>
+</context>
+<context>
+    <name>UiTextField</name>
+    <message>
+        <source>hours</source>
+        <translation>h</translation>
+    </message>
+    <message>
+        <source>min</source>
+        <translation>min</translation>
+    </message>
+    <message>
+        <source>sec</source>
+        <translation>s</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>Achat en cours...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>Achat réussi</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>Échec de l’achat</translation>
     </message>
 </context>
 </TS>

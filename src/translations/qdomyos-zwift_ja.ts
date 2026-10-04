@@ -161,6 +161,26 @@ Would you like to do that now?</source>
         <source>This app should automatically connect to your bike/treadmill/rower. &lt;b&gt;If it doesn't, please check&lt;/b&gt;:&lt;br&gt;1) your Echelon/Domyos App MUST be closed while qdomyos-zwift is running;&lt;br&gt;2) both Bluetooth and Bluetooth permissions MUST be enabled&lt;br&gt;3) your bike/treadmill/rower should be turned on BEFORE starting this app&lt;br&gt;4) try to restart your device&lt;br&gt;&lt;br&gt;If your bike/treadmill disconnects every 30 seconds try to disable the 'virtual device' setting on the left bar.&lt;br&gt;&lt;br&gt;In case of issues, please feel free to contact me at roberto.viola83@gmail.com.&lt;br&gt;&lt;br&gt;&lt;b&gt;Have a nice ride!&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZ specifically disclaims liability for&lt;br&gt;incidental or consequential damages and assumes&lt;br&gt;no responsibility or liability for any loss&lt;br&gt;or damage suffered by any person as a result of&lt;br&gt;the use or misuse of the app.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</source>
         <translation>このアプリは、お使いのバイク/トレッドミル/ローヤーに自動的に接続されるはずです。&lt;b&gt;接続されない場合は、以下を確認してください：&lt;/b&gt;&lt;br&gt;1) qdomyos-zwiftが実行されている間は、Echelon/Domyosアプリを閉じてください。&lt;br&gt;2) BluetoothとBluetoothの権限の両方が有効になっている必要があります&lt;br&gt;3) このアプリを起動する前に、バイク/トレッドミル/ローヤーの電源を入れてください&lt;br&gt;4) デバイスの再起動をお試しください&lt;br&gt;&lt;br&gt;バイク/トレッドミルが30秒ごとに切断される場合は、左側のバーにある「virtual device」設定を無効にしてみてください。&lt;br&gt;&lt;br&gt;問題が発生した場合は、お気軽に roberto.viola83@gmail.com までご連絡ください。&lt;br&gt;&lt;br&gt;&lt;b&gt;良いライドを！&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZは、付随的または結果的な損害について、また、本アプリの使用または誤使用の結果として、いかなる人によって被った損失または損害について、責任を負いません。&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</translation>
     </message>
+    <message>
+        <source>Equipment not found</source>
+        <translation>機器が見つかりません</translation>
+    </message>
+    <message>
+        <source>Turn on your bike, treadmill or rower, then tap the Bluetooth icon at the top to search again.</source>
+        <translation>バイク、トレッドミル、またはローイングマシンの電源を入れ、上部のBluetoothアイコンをタップして再検索してください。</translation>
+    </message>
+    <message>
+        <source>Looking for your equipment…</source>
+        <translation>機器を探しています…</translation>
+    </message>
+    <message>
+        <source>Turn on your bike, treadmill or rower: QZ connects to it automatically.</source>
+        <translation>バイク、トレッドミル、またはローイングマシンの電源を入れてください。QZが自動的に接続します。</translation>
+    </message>
+    <message>
+        <source>Not connecting?</source>
+        <translation>接続できませんか？</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -429,6 +449,14 @@ Would you like to do that now?</source>
         <location filename="../SettingsList.qml" line="36"/>
         <source>Settings folder</source>
         <translation>設定フォルダ</translation>
+    </message>
+    <message>
+        <source>Tap a file to select it, then Load.</source>
+        <translation>ファイルをタップして選択し、「読み込み」をタップしてください。</translation>
+    </message>
+    <message>
+        <source>No saved settings</source>
+        <translation>保存された設定はありません</translation>
     </message>
 </context>
 <context>
@@ -1304,6 +1332,61 @@ Would you like to do that now?</source>
         <source>{value} s</source>
         <translation>{value} 秒</translation>
     </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="179"/>
+        <source>W</source>
+        <translation>W</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="180"/>
+        <source>kJ</source>
+        <translation>kJ</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="181"/>
+        <source>kcal</source>
+        <translation>kcal</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="182"/>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="183"/>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="184"/>
+        <source>rpm</source>
+        <translation>rpm</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="185"/>
+        <source>bpm</source>
+        <translation>bpm</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="186"/>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="187"/>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="190"/>
+        <source>lvl</source>
+        <translation>lvl</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="191"/>
+        <source>spm</source>
+        <translation>spm</translation>
+    </message>
 </context>
 <context>
     <name>Wizard</name>
@@ -1624,6 +1707,28 @@ The following questions will customize QZ for your equipment and goals.</source>
         <location filename="../Wizard.qml" line="1378"/>
         <source>Garmin watch</source>
         <translation type="unfinished"/>
+    </message>
+    <message>
+        <location filename="../Wizard.qml" line="1325"/>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <location filename="../Wizard.qml" line="1325"/>
+        <source>kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <source>Your equipment, units and profile, step by step</source>
+        <translation>機器、単位、プロフィールを順番に設定</translation>
+    </message>
+    <message>
+        <source>Pick a topic and go straight to its settings</source>
+        <translation>トピックを選んで、その設定に直接移動</translation>
+    </message>
+    <message>
+        <source>Close the wizard</source>
+        <translation>ウィザードを閉じる</translation>
     </message>
 </context>
 <context>
@@ -1977,7 +2082,7 @@ The following questions will customize QZ for your equipment and goals.</source>
     </message>
     <message>
         <source>HRV (ms)</source>
-        <translation type="vanished">HRV（ms）</translation>
+        <translation>HRV (ms)</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="528"/>
@@ -2358,6 +2463,154 @@ The following questions will customize QZ for your equipment and goals.</source>
         <source>The workout history database could not be opened.</source>
         <translation>ワークアウト履歴のデータベースを開けませんでした。</translation>
     </message>
+    <message>
+        <location filename="../homeform.cpp" line="1829"/>
+        <source>Bluetooth is off</source>
+        <translation>Bluetoothがオフです</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1829"/>
+        <source>Searching for the device...</source>
+        <translation>機器を検索しています...</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1831"/>
+        <source>Search stopped, tap the Bluetooth icon</source>
+        <translation>検索を停止しました。Bluetoothアイコンをタップしてください</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1834"/>
+        <source>Next search in %1 s</source>
+        <translation>次の検索まで%1秒</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1842"/>
+        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
+        <translation>AndroidではBluetooth検索は30秒間に5回までです。次の検索は%1秒後に始まります</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="473"/>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="474"/>
+        <source>m</source>
+        <comment>unit: meters</comment>
+        <translation>m</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="475"/>
+        <source>Kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="476"/>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="478"/>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="479"/>
+        <source>ft</source>
+        <translation>ft</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="480"/>
+        <source>in</source>
+        <comment>unit: inches</comment>
+        <translation>in</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="484"/>
+        <source>Oz</source>
+        <translation>oz</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3488"/>
+        <source>Odometer (m)</source>
+        <translation>走行距離 (m)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3609"/>
+        <source>Pace (m/500m)</source>
+        <translation>ペース (m/500m)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3616"/>
+        <source>Avg Pace (m/500m)</source>
+        <translation>平均ペース (m/500m)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3680"/>
+        <source>T.Pace(m/500m)</source>
+        <translation>目標ペース(m/500m)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="4703"/>
+        <source>%1 found</source>
+        <translation>%1 件見つかりました</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6086"/>
+        <source>offset </source>
+        <translation>オフセット </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6332"/>
+        <location filename="../homeform.cpp" line="6339"/>
+        <source> /min</source>
+        <translation> /分</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6365"/>
+        <location filename="../homeform.cpp" line="6368"/>
+        <source> sec.</source>
+        <translation> 秒</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6597"/>
+        <source>Incl: </source>
+        <translation>傾斜: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6603"/>
+        <location filename="../homeform.cpp" line="6927"/>
+        <location filename="../homeform.cpp" line="7080"/>
+        <source>%1%2W</source>
+        <translation>%1%2W</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6905"/>
+        <source>3s avg</source>
+        <translation>3秒平均</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6908"/>
+        <source>5s avg</source>
+        <translation>5秒平均</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6912"/>
+        <source>Gain: </source>
+        <translation>ゲイン: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="7287"/>
+        <location filename="../homeform.cpp" line="7314"/>
+        <source>MIN: </source>
+        <translation>最小: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="7428"/>
+        <location filename="../homeform.cpp" line="7504"/>
+        <source>W </source>
+        <translation>W </translation>
+    </message>
 </context>
 <context>
     <name>main</name>
@@ -2647,6 +2900,58 @@ In the next window, allow access to the QZ folder.</source>
 
 次の画面でQZフォルダーへのアクセスを許可してください。</translation>
     </message>
+    <message>
+        <location filename="../main.qml" line="1483"/>
+        <source>QZ is closing...</source>
+        <translation>QZを終了しています...</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="424"/>
+        <source>Press back again to exit</source>
+        <translation>もう一度「戻る」を押すと終了します</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the Files app.</source>
+        <translation>保存しました！「ファイル」アプリで確認してください。</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the app&apos;s private folder.</source>
+        <translation>保存しました！アプリのプライベートフォルダーで確認してください。</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="778"/>
+        <source>QZ has detected the data format of this bike. Enable &quot;Virtufit Etappe 2.0 Bike&quot;?</source>
+        <translation>QZがこのバイクのデータ形式を検出しました。「Virtufit Etappe 2.0 Bike」を有効にしますか？</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="779"/>
+        <source>Without it QZ uses the default settings, and the data or the resistance may be off.</source>
+        <translation>有効にしない場合、QZは既定の設定を使用するため、データや負荷レベルが不正確になることがあります。</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="826"/>
+        <source>This FitShow device also reports bike data. Is it a bike?</source>
+        <translation>このFitShowデバイスはバイクのデータも送信しています。バイクですか？</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="827"/>
+        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
+No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
+        <translation>はい：QZは「Fit Plus Bike」を有効にして終了します。もう一度開くとバイクとして接続します。
+いいえ：QZはトレッドミルとして扱い、今後は確認しません（バイクは手動でも設定できます：Fitplus Bike Optionsの「Fit Plus Bike」）。</translation>
+    </message>
+    <message>
+        <source>Workout</source>
+        <translation>ワークアウト</translation>
+    </message>
+    <message>
+        <source>App</source>
+        <translation>アプリ</translation>
+    </message>
+    <message>
+        <source>Services</source>
+        <translation>サービス</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -2743,6 +3048,22 @@ In the next window, allow access to the QZ folder.</source>
         <location filename="../profiles.qml" line="78"/>
         <source>Delete</source>
         <translation>削除</translation>
+    </message>
+    <message>
+        <source>New profile</source>
+        <translation>新しいプロフィール</translation>
+    </message>
+    <message>
+        <source>Saved profiles</source>
+        <translation>保存されたプロフィール</translation>
+    </message>
+    <message>
+        <source>Tap a profile to select it, then Load. Long press to delete it.</source>
+        <translation>プロフィールをタップして選択し、「読み込み」をタップしてください。長押しで削除します。</translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation>使用中</translation>
     </message>
 </context>
 <context>
@@ -7135,6 +7456,198 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
         <source>Limits the watt output sent by QZ. Set to 0 to disable the limit. Default is 9999 W.</source>
         <translation>QZ が送信するパワーの上限です。0 で上限なし。既定値は 9999 W。</translation>
     </message>
+    <message>
+        <location filename="../settings.qml" line="312"/>
+        <source>Hidden on its page right now: change it here</source>
+        <translation>現在、元のページでは非表示です：ここで変更してください</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="317"/>
+        <source>Turn on “%1” to change this setting</source>
+        <translation>この設定を変更するには「%1」をオンにしてください</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2223"/>
+        <location filename="../settings.qml" line="3392"/>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2223"/>
+        <location filename="../settings.qml" line="3392"/>
+        <source>kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2260"/>
+        <source>ft/in</source>
+        <translation>ft/in</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2260"/>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="6931"/>
+        <location filename="../settings.qml" line="6965"/>
+        <location filename="../settings.qml" line="10233"/>
+        <location filename="../settings.qml" line="10269"/>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="6931"/>
+        <location filename="../settings.qml" line="6965"/>
+        <location filename="../settings.qml" line="10233"/>
+        <location filename="../settings.qml" line="10269"/>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="9651"/>
+        <source>5 km</source>
+        <translation>5 km</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="9651"/>
+        <source>10 km</source>
+        <translation>10 km</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="13582"/>
+        <source>Mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="13582"/>
+        <source>KM</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>Modern interface</source>
+        <translation>モダンインターフェース</translation>
+    </message>
+    <message>
+        <source>New look of the main screen, the side menu, the settings and the wizard. Turn it off to get the classic look back.</source>
+        <translation>メイン画面、サイドメニュー、設定、ウィザードの新しいデザインです。オフにすると従来のデザインに戻ります。</translation>
+    </message>
+    <message>
+        <source>Snap tiles to rows</source>
+        <translation>タイルを行に揃える</translation>
+    </message>
+    <message>
+        <source>When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.</source>
+        <translation>メイン画面のタイルのスクロールが止まると、行単位またはリストの末尾に揃い、タイルが途中で切れなくなります。</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation>テーマ</translation>
+    </message>
+    <message>
+        <source>Graphite</source>
+        <translation>グラファイト</translation>
+    </message>
+    <message>
+        <source>Black (OLED)</source>
+        <translation>ブラック (OLED)</translation>
+    </message>
+    <message>
+        <source>Midnight blue</source>
+        <translation>ミッドナイトブルー</translation>
+    </message>
+    <message>
+        <source>Accent colour</source>
+        <translation>アクセントカラー</translation>
+    </message>
+    <message>
+        <source>Appearance</source>
+        <translation>外観</translation>
+    </message>
+    <message>
+        <source>As on the phone</source>
+        <translation>端末の設定に合わせる</translation>
+    </message>
+    <message>
+        <source>Dark</source>
+        <translation>ダーク</translation>
+    </message>
+    <message>
+        <source>Black / white</source>
+        <translation>ブラック / ホワイト</translation>
+    </message>
+    <message>
+        <source>Wallpaper colour</source>
+        <translation>壁紙の色</translation>
+    </message>
+    <message>
+        <source>Violet</source>
+        <translation>バイオレット</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation>ブルー</translation>
+    </message>
+    <message>
+        <source>Teal</source>
+        <translation>ティール</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation>グリーン</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation>オレンジ</translation>
+    </message>
+    <message>
+        <source>Pink</source>
+        <translation>ピンク</translation>
+    </message>
+    <message>
+        <source>Changed</source>
+        <translation>変更済み</translation>
+    </message>
+    <message>
+        <source>Changed settings</source>
+        <translation>変更した設定</translation>
+    </message>
+    <message>
+        <source>No changed settings</source>
+        <translation>変更した設定はありません</translation>
+    </message>
+    <message>
+        <source>Reset section</source>
+        <translation>セクションをリセット</translation>
+    </message>
+    <message>
+        <source>Reset section?</source>
+        <translation>セクションをリセットしますか？</translation>
+    </message>
+    <message>
+        <source>%1 settings in “%2” go back to their default values.</source>
+        <translation>「%2」の%1個の設定が既定値に戻ります。</translation>
+    </message>
+    <message>
+        <source>Setting reset</source>
+        <translation>設定をリセットしました</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>%1個の設定をリセットしました</translation>
+    </message>
+    <message>
+        <source>Add Up Quick Resistance Taps</source>
+        <translation>負荷レベルのクイックタップを合算</translation>
+    </message>
+    <message>
+        <source>Bikes that report their resistance back take about a second to confirm a new level, so several quick taps on the resistance +/- buttons change it by only one. Enable this setting to add the taps up: 3 quick taps change the resistance by 3. Default is off.</source>
+        <translation>負荷レベルを返送するバイクは新しいレベルの確定に約1秒かかるため、負荷レベル +/- ボタンを素早く何度押しても1段階しか変わりません。この設定を有効にするとタップが合算され、3回素早くタップすると負荷レベルが3変わります。デフォルトはオフです。</translation>
+    </message>
+    <message>
+        <source>QZ opens FS- devices as treadmills unless &quot;Fit Plus Bike&quot; is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off. Not shown in the settings page.</source>
+        <translation>「Fit Plus Bike」がオンでない限り、QZはFS-デバイスをトレッドミルとして開きます。FS-デバイスがバイクのデータも送信する場合、QZはバイクかどうかを確認します。「いいえ」と答えるとこの確認はオフになります。設定ページには表示されません。</translation>
+    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>
@@ -8611,6 +9124,24 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
         <source>Shows Heart Rate Variability (HRV) from a compatible heart rate belt. Displays RMSSD value in milliseconds.</source>
         <translation>【説明文】 対応する心拍計チェストベルト等から受信した心拍変動 HRV の RMSSD値 をミリ秒単位で表示します。</translation>
     </message>
+    <message>
+        <location filename="../settings-tiles.qml" line="3323"/>
+        <location filename="../settings-tiles.qml" line="3436"/>
+        <location filename="../settings-tiles.qml" line="3549"/>
+        <location filename="../settings-tiles.qml" line="3662"/>
+        <location filename="../settings-tiles.qml" line="3775"/>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <location filename="../settings-tiles.qml" line="3323"/>
+        <location filename="../settings-tiles.qml" line="3436"/>
+        <location filename="../settings-tiles.qml" line="3549"/>
+        <location filename="../settings-tiles.qml" line="3662"/>
+        <location filename="../settings-tiles.qml" line="3775"/>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
 </context>
 <context>
     <name>settings-treadmill-inclination-override</name>
@@ -9107,6 +9638,129 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
     <message>
         <source>Importing workouts...</source>
         <translation>ワークアウトをインポート中...</translation>
+    </message>
+    <message>
+        <location filename="../WorkoutsHistory.qml" line="421"/>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <location filename="../WorkoutsHistory.qml" line="421"/>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <location filename="../WorkoutsHistory.qml" line="431"/>
+        <location filename="../WorkoutsHistory.qml" line="432"/>
+        <source>kcal</source>
+        <translation>kcal</translation>
+    </message>
+    <message>
+        <source>Calendar</source>
+        <translation>カレンダー</translation>
+    </message>
+    <message>
+        <source>No workouts yet</source>
+        <translation>まだワークアウトはありません</translation>
+    </message>
+    <message>
+        <source>No workouts on this day</source>
+        <translation>この日のワークアウトはありません</translation>
+    </message>
+    <message>
+        <source>Finished workouts appear here: open one to see its charts.</source>
+        <translation>完了したワークアウトがここに表示されます。開くとグラフを確認できます。</translation>
+    </message>
+    <message>
+        <source>Previous month</source>
+        <translation>前の月</translation>
+    </message>
+    <message>
+        <source>Next month</source>
+        <translation>次の月</translation>
+    </message>
+</context>
+<context>
+    <name>GPXList</name>
+    <message>
+        <source>Parent folder</source>
+        <translation>上のフォルダー</translation>
+    </message>
+    <message>
+        <source>No GPX files here</source>
+        <translation>ここにGPXファイルはありません</translation>
+    </message>
+    <message>
+        <source>%1 km</source>
+        <translation>%1 km</translation>
+    </message>
+    <message>
+        <source>%1 m</source>
+        <translation>%1 m</translation>
+    </message>
+</context>
+<context>
+    <name>TrainingProgramsListJS</name>
+    <message>
+        <source>Parent folder</source>
+        <translation>上のフォルダー</translation>
+    </message>
+    <message>
+        <source>No workouts here</source>
+        <translation>ここにワークアウトはありません</translation>
+    </message>
+    <message>
+        <source>No workouts found</source>
+        <translation>ワークアウトが見つかりません</translation>
+    </message>
+</context>
+<context>
+    <name>fitplusbike</name>
+    <message>
+        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="628"/>
+        <source>The bike keeps stopping the workout: turn the bike off and on again</source>
+        <translation>バイクがワークアウトを何度も停止します：バイクの電源を入れ直してください</translation>
+    </message>
+</context>
+<context>
+    <name>UiSectionHeader</name>
+    <message>
+        <source>Expanded</source>
+        <translation>展開</translation>
+    </message>
+    <message>
+        <source>Collapsed</source>
+        <translation>折りたたみ</translation>
+    </message>
+</context>
+<context>
+    <name>UiTextField</name>
+    <message>
+        <source>hours</source>
+        <translation>時間</translation>
+    </message>
+    <message>
+        <source>min</source>
+        <translation>分</translation>
+    </message>
+    <message>
+        <source>sec</source>
+        <translation>秒</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>購入処理中...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>購入が完了しました</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>購入に失敗しました</translation>
     </message>
 </context>
 </TS>

@@ -161,6 +161,26 @@ Would you like to do that now?</source>
         <source>This app should automatically connect to your bike/treadmill/rower. &lt;b&gt;If it doesn&apos;t, please check&lt;/b&gt;:&lt;br&gt;1) your Echelon/Domyos App MUST be closed while qdomyos-zwift is running;&lt;br&gt;2) both Bluetooth and Bluetooth permissions MUST be enabled&lt;br&gt;3) your bike/treadmill/rower should be turned on BEFORE starting this app&lt;br&gt;4) try to restart your device&lt;br&gt;&lt;br&gt;If your bike/treadmill disconnects every 30 seconds try to disable the &apos;virtual device&apos; setting on the left bar.&lt;br&gt;&lt;br&gt;In case of issues, please feel free to contact me at roberto.viola83@gmail.com.&lt;br&gt;&lt;br&gt;&lt;b&gt;Have a nice ride!&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZ specifically disclaims liability for&lt;br&gt;incidental or consequential damages and assumes&lt;br&gt;no responsibility or liability for any loss&lt;br&gt;or damage suffered by any person as a result of&lt;br&gt;the use or misuse of the app.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</source>
         <translation>此应用应自动连接到您的自行车/跑步机/划船机。&lt;b&gt;如果无法连接，请检查&lt;/b&gt;：&lt;br&gt;1) 在运行 qdomyos-zwift 时，您的 Echelon/Domyos App 必须关闭；&lt;br&gt;2) 蓝牙和蓝牙权限都必须启用&lt;br&gt;3) 在启动此应用之前，您的自行车/跑步机/划船机应处于开启状态&lt;br&gt;4) 尝试重启您的设备&lt;br&gt;&lt;br&gt;如果您的自行车/跑步机每隔 30 秒就断开连接，请尝试在左侧栏禁用“虚拟设备”设置。&lt;br&gt;&lt;br&gt;如果遇到任何问题，请随时通过 roberto.viola83@gmail.com 联系我。&lt;br&gt;&lt;br&gt;&lt;b&gt;祝您骑行愉快！&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZ 特此声明，对于因使用或误用本应用而导致的任何偶然或后果性损害，QZ 不承担任何责任或赔偿。&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</translation>
     </message>
+    <message>
+        <source>Equipment not found</source>
+        <translation>未找到设备</translation>
+    </message>
+    <message>
+        <source>Turn on your bike, treadmill or rower, then tap the Bluetooth icon at the top to search again.</source>
+        <translation>请打开您的单车、跑步机或划船机，然后点击顶部的蓝牙图标重新搜索。</translation>
+    </message>
+    <message>
+        <source>Looking for your equipment…</source>
+        <translation>正在查找您的设备…</translation>
+    </message>
+    <message>
+        <source>Turn on your bike, treadmill or rower: QZ connects to it automatically.</source>
+        <translation>请打开您的单车、跑步机或划船机：QZ 会自动连接。</translation>
+    </message>
+    <message>
+        <source>Not connecting?</source>
+        <translation>无法连接？</translation>
+    </message>
 </context>
 <context>
     <name>MainWindow</name>
@@ -429,6 +449,14 @@ Would you like to do that now?</source>
         <location filename="../SettingsList.qml" line="36"/>
         <source>Settings folder</source>
         <translation>设置文件夹</translation>
+    </message>
+    <message>
+        <source>Tap a file to select it, then Load.</source>
+        <translation>点击文件将其选中，然后点击“加载”。</translation>
+    </message>
+    <message>
+        <source>No saved settings</source>
+        <translation>没有已保存的设置</translation>
     </message>
 </context>
 <context>
@@ -1304,6 +1332,61 @@ Would you like to do that now?</source>
         <source>{value} s</source>
         <translation>{value} 秒</translation>
     </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="179"/>
+        <source>W</source>
+        <translation>W</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="180"/>
+        <source>kJ</source>
+        <translation>kJ</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="181"/>
+        <source>kcal</source>
+        <translation>kcal</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="182"/>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="183"/>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="184"/>
+        <source>rpm</source>
+        <translation>rpm</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="185"/>
+        <source>bpm</source>
+        <translation>bpm</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="186"/>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="187"/>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="190"/>
+        <source>lvl</source>
+        <translation>级</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="191"/>
+        <source>spm</source>
+        <translation>spm</translation>
+    </message>
 </context>
 <context>
     <name>Wizard</name>
@@ -1624,6 +1707,28 @@ The following questions will customize QZ for your equipment and goals.</source>
         <location filename="../Wizard.qml" line="1378"/>
         <source>Garmin watch</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../Wizard.qml" line="1325"/>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <location filename="../Wizard.qml" line="1325"/>
+        <source>kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <source>Your equipment, units and profile, step by step</source>
+        <translation>设备、单位和档案，逐步设置</translation>
+    </message>
+    <message>
+        <source>Pick a topic and go straight to its settings</source>
+        <translation>选择一个主题，直接进入其设置</translation>
+    </message>
+    <message>
+        <source>Close the wizard</source>
+        <translation>关闭向导</translation>
     </message>
 </context>
 <context>
@@ -1977,7 +2082,7 @@ The following questions will customize QZ for your equipment and goals.</source>
     </message>
     <message>
         <source>HRV (ms)</source>
-        <translation type="vanished">HRV (毫秒)</translation>
+        <translation>HRV (毫秒)</translation>
     </message>
     <message>
         <location filename="../homeform.cpp" line="528"/>
@@ -2362,6 +2467,154 @@ The following questions will customize QZ for your equipment and goals.</source>
         <source>The workout history database could not be opened.</source>
         <translation>无法打开训练历史数据库。</translation>
     </message>
+    <message>
+        <location filename="../homeform.cpp" line="1829"/>
+        <source>Bluetooth is off</source>
+        <translation>蓝牙已关闭</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1829"/>
+        <source>Searching for the device...</source>
+        <translation>正在搜索设备...</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1831"/>
+        <source>Search stopped, tap the Bluetooth icon</source>
+        <translation>搜索已停止，请点击蓝牙图标</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1834"/>
+        <source>Next search in %1 s</source>
+        <translation>%1 秒后再次搜索</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="1842"/>
+        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
+        <translation>Android 允许 30 秒内进行 5 次蓝牙搜索，下一次将在 %1 秒后开始</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="473"/>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="474"/>
+        <source>m</source>
+        <comment>unit: meters</comment>
+        <translation>m</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="475"/>
+        <source>Kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="476"/>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="478"/>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="479"/>
+        <source>ft</source>
+        <translation>ft</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="480"/>
+        <source>in</source>
+        <comment>unit: inches</comment>
+        <translation>in</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="484"/>
+        <source>Oz</source>
+        <translation>oz</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3488"/>
+        <source>Odometer (m)</source>
+        <translation>里程 (m)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3609"/>
+        <source>Pace (m/500m)</source>
+        <translation>配速 (m/500m)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3616"/>
+        <source>Avg Pace (m/500m)</source>
+        <translation>平均配速 (m/500m)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="3680"/>
+        <source>T.Pace(m/500m)</source>
+        <translation>目标配速(m/500m)</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="4703"/>
+        <source>%1 found</source>
+        <translation>找到 %1 个</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6086"/>
+        <source>offset </source>
+        <translation>偏移 </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6332"/>
+        <location filename="../homeform.cpp" line="6339"/>
+        <source> /min</source>
+        <translation> /分钟</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6365"/>
+        <location filename="../homeform.cpp" line="6368"/>
+        <source> sec.</source>
+        <translation> 秒</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6597"/>
+        <source>Incl: </source>
+        <translation>坡度: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6603"/>
+        <location filename="../homeform.cpp" line="6927"/>
+        <location filename="../homeform.cpp" line="7080"/>
+        <source>%1%2W</source>
+        <translation>%1%2W</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6905"/>
+        <source>3s avg</source>
+        <translation>3秒平均</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6908"/>
+        <source>5s avg</source>
+        <translation>5秒平均</translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="6912"/>
+        <source>Gain: </source>
+        <translation>增益: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="7287"/>
+        <location filename="../homeform.cpp" line="7314"/>
+        <source>MIN: </source>
+        <translation>最小: </translation>
+    </message>
+    <message>
+        <location filename="../homeform.cpp" line="7428"/>
+        <location filename="../homeform.cpp" line="7504"/>
+        <source>W </source>
+        <translation>W </translation>
+    </message>
 </context>
 <context>
     <name>main</name>
@@ -2651,6 +2904,58 @@ In the next window, allow access to the QZ folder.</source>
 
 请在下一个窗口中允许访问 QZ 文件夹。</translation>
     </message>
+    <message>
+        <location filename="../main.qml" line="1483"/>
+        <source>QZ is closing...</source>
+        <translation>QZ 正在关闭...</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="424"/>
+        <source>Press back again to exit</source>
+        <translation>再按一次返回键退出</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the Files app.</source>
+        <translation>已保存！请在“文件”应用中查看。</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the app&apos;s private folder.</source>
+        <translation>已保存！请在应用的私有文件夹中查看。</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="778"/>
+        <source>QZ has detected the data format of this bike. Enable &quot;Virtufit Etappe 2.0 Bike&quot;?</source>
+        <translation>QZ 已识别此单车的数据格式。要启用“Virtufit Etappe 2.0 Bike”吗？</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="779"/>
+        <source>Without it QZ uses the default settings, and the data or the resistance may be off.</source>
+        <translation>否则 QZ 将使用默认设置，数据或阻力可能不准确。</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="826"/>
+        <source>This FitShow device also reports bike data. Is it a bike?</source>
+        <translation>此 FitShow 设备也报告单车数据。它是单车吗？</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="827"/>
+        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
+No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
+        <translation>是：QZ 将启用“Fit Plus Bike”并关闭，请重新打开 QZ 以作为单车连接。
+否：QZ 将其保留为跑步机，且不再询问（仍可手动设置为单车：Fitplus Bike Options 中的“Fit Plus Bike”）。</translation>
+    </message>
+    <message>
+        <source>Workout</source>
+        <translation>训练</translation>
+    </message>
+    <message>
+        <source>App</source>
+        <translation>应用</translation>
+    </message>
+    <message>
+        <source>Services</source>
+        <translation>服务</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -2747,6 +3052,22 @@ In the next window, allow access to the QZ folder.</source>
         <location filename="../profiles.qml" line="78"/>
         <source>Delete</source>
         <translation>删除</translation>
+    </message>
+    <message>
+        <source>New profile</source>
+        <translation>新建档案</translation>
+    </message>
+    <message>
+        <source>Saved profiles</source>
+        <translation>已保存的档案</translation>
+    </message>
+    <message>
+        <source>Tap a profile to select it, then Load. Long press to delete it.</source>
+        <translation>点击档案将其选中，然后点击“加载”。长按可删除。</translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation>当前</translation>
     </message>
 </context>
 <context>
@@ -7125,6 +7446,198 @@ Default: A = -0.96, B = 1.33</source>
         <source>Limits the watt output sent by QZ. Set to 0 to disable the limit. Default is 9999 W.</source>
         <translation>限制 QZ 发送的功率。设为 0 表示不限制。默认 9999 W。</translation>
     </message>
+    <message>
+        <location filename="../settings.qml" line="312"/>
+        <source>Hidden on its page right now: change it here</source>
+        <translation>当前在其所在页面中隐藏：请在此处更改</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="317"/>
+        <source>Turn on “%1” to change this setting</source>
+        <translation>开启“%1”后才能更改此设置</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2223"/>
+        <location filename="../settings.qml" line="3392"/>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2223"/>
+        <location filename="../settings.qml" line="3392"/>
+        <source>kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2260"/>
+        <source>ft/in</source>
+        <translation>ft/in</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="2260"/>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="6931"/>
+        <location filename="../settings.qml" line="6965"/>
+        <location filename="../settings.qml" line="10233"/>
+        <location filename="../settings.qml" line="10269"/>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="6931"/>
+        <location filename="../settings.qml" line="6965"/>
+        <location filename="../settings.qml" line="10233"/>
+        <location filename="../settings.qml" line="10269"/>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="9651"/>
+        <source>5 km</source>
+        <translation>5 km</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="9651"/>
+        <source>10 km</source>
+        <translation>10 km</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="13582"/>
+        <source>Mi</source>
+        <translation>Mi</translation>
+    </message>
+    <message>
+        <location filename="../settings.qml" line="13582"/>
+        <source>KM</source>
+        <translation>KM</translation>
+    </message>
+    <message>
+        <source>Modern interface</source>
+        <translation>现代界面</translation>
+    </message>
+    <message>
+        <source>New look of the main screen, the side menu, the settings and the wizard. Turn it off to get the classic look back.</source>
+        <translation>主屏幕、侧边菜单、设置和向导的新外观。关闭后恢复经典外观。</translation>
+    </message>
+    <message>
+        <source>Snap tiles to rows</source>
+        <translation>瓦片按行对齐</translation>
+    </message>
+    <message>
+        <source>When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.</source>
+        <translation>主屏幕上的瓦片停止滚动时，会对齐到整行或列表末尾，不会有瓦片被截断一半。</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation>主题</translation>
+    </message>
+    <message>
+        <source>Graphite</source>
+        <translation>石墨</translation>
+    </message>
+    <message>
+        <source>Black (OLED)</source>
+        <translation>黑色 (OLED)</translation>
+    </message>
+    <message>
+        <source>Midnight blue</source>
+        <translation>午夜蓝</translation>
+    </message>
+    <message>
+        <source>Accent colour</source>
+        <translation>强调色</translation>
+    </message>
+    <message>
+        <source>Appearance</source>
+        <translation>外观</translation>
+    </message>
+    <message>
+        <source>As on the phone</source>
+        <translation>跟随系统</translation>
+    </message>
+    <message>
+        <source>Dark</source>
+        <translation>深色</translation>
+    </message>
+    <message>
+        <source>Black / white</source>
+        <translation>黑 / 白</translation>
+    </message>
+    <message>
+        <source>Wallpaper colour</source>
+        <translation>壁纸颜色</translation>
+    </message>
+    <message>
+        <source>Violet</source>
+        <translation>紫色</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation>蓝色</translation>
+    </message>
+    <message>
+        <source>Teal</source>
+        <translation>青色</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation>绿色</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation>橙色</translation>
+    </message>
+    <message>
+        <source>Pink</source>
+        <translation>粉色</translation>
+    </message>
+    <message>
+        <source>Changed</source>
+        <translation>已更改</translation>
+    </message>
+    <message>
+        <source>Changed settings</source>
+        <translation>已更改的设置</translation>
+    </message>
+    <message>
+        <source>No changed settings</source>
+        <translation>没有已更改的设置</translation>
+    </message>
+    <message>
+        <source>Reset section</source>
+        <translation>重置此部分</translation>
+    </message>
+    <message>
+        <source>Reset section?</source>
+        <translation>重置此部分？</translation>
+    </message>
+    <message>
+        <source>%1 settings in “%2” go back to their default values.</source>
+        <translation>“%2”中的 %1 项设置将恢复为默认值。</translation>
+    </message>
+    <message>
+        <source>Setting reset</source>
+        <translation>设置已重置</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>已重置 %1 项设置</translation>
+    </message>
+    <message>
+        <source>Add Up Quick Resistance Taps</source>
+        <translation>累加快速阻力点击</translation>
+    </message>
+    <message>
+        <source>Bikes that report their resistance back take about a second to confirm a new level, so several quick taps on the resistance +/- buttons change it by only one. Enable this setting to add the taps up: 3 quick taps change the resistance by 3. Default is off.</source>
+        <translation>会回报阻力的单车大约需要一秒来确认新级别，因此快速多次点击阻力 +/- 按钮只会改变一级。启用此设置可累加点击：快速点击 3 次将阻力改变 3 级。默认关闭。</translation>
+    </message>
+    <message>
+        <source>QZ opens FS- devices as treadmills unless &quot;Fit Plus Bike&quot; is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off. Not shown in the settings page.</source>
+        <translation>除非开启“Fit Plus Bike”，否则 QZ 会将 FS- 设备作为跑步机打开。当 FS- 设备也报告单车数据时，QZ 会询问它是否为单车；回答“否”将关闭此询问。不在设置页面中显示。</translation>
+    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>
@@ -8601,6 +9114,24 @@ Default: A = -0.96, B = 1.33</source>
         <source>Shows Heart Rate Variability (HRV) from a compatible heart rate belt. Displays RMSSD value in milliseconds.</source>
         <translation>显示来自兼容心率带的心率变异性 (HRV)。显示 RMSSD 值（毫秒）。</translation>
     </message>
+    <message>
+        <location filename="../settings-tiles.qml" line="3323"/>
+        <location filename="../settings-tiles.qml" line="3436"/>
+        <location filename="../settings-tiles.qml" line="3549"/>
+        <location filename="../settings-tiles.qml" line="3662"/>
+        <location filename="../settings-tiles.qml" line="3775"/>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <location filename="../settings-tiles.qml" line="3323"/>
+        <location filename="../settings-tiles.qml" line="3436"/>
+        <location filename="../settings-tiles.qml" line="3549"/>
+        <location filename="../settings-tiles.qml" line="3662"/>
+        <location filename="../settings-tiles.qml" line="3775"/>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
 </context>
 <context>
     <name>settings-treadmill-inclination-override</name>
@@ -9097,6 +9628,129 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>Importing workouts...</source>
         <translation>正在导入训练...</translation>
+    </message>
+    <message>
+        <location filename="../WorkoutsHistory.qml" line="421"/>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <location filename="../WorkoutsHistory.qml" line="421"/>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <location filename="../WorkoutsHistory.qml" line="431"/>
+        <location filename="../WorkoutsHistory.qml" line="432"/>
+        <source>kcal</source>
+        <translation>kcal</translation>
+    </message>
+    <message>
+        <source>Calendar</source>
+        <translation>日历</translation>
+    </message>
+    <message>
+        <source>No workouts yet</source>
+        <translation>还没有训练</translation>
+    </message>
+    <message>
+        <source>No workouts on this day</source>
+        <translation>这一天没有训练</translation>
+    </message>
+    <message>
+        <source>Finished workouts appear here: open one to see its charts.</source>
+        <translation>已完成的训练会显示在这里：打开任意一项即可查看图表。</translation>
+    </message>
+    <message>
+        <source>Previous month</source>
+        <translation>上个月</translation>
+    </message>
+    <message>
+        <source>Next month</source>
+        <translation>下个月</translation>
+    </message>
+</context>
+<context>
+    <name>GPXList</name>
+    <message>
+        <source>Parent folder</source>
+        <translation>上级文件夹</translation>
+    </message>
+    <message>
+        <source>No GPX files here</source>
+        <translation>此处没有 GPX 文件</translation>
+    </message>
+    <message>
+        <source>%1 km</source>
+        <translation>%1 公里</translation>
+    </message>
+    <message>
+        <source>%1 m</source>
+        <translation>%1 米</translation>
+    </message>
+</context>
+<context>
+    <name>TrainingProgramsListJS</name>
+    <message>
+        <source>Parent folder</source>
+        <translation>上级文件夹</translation>
+    </message>
+    <message>
+        <source>No workouts here</source>
+        <translation>此处没有训练</translation>
+    </message>
+    <message>
+        <source>No workouts found</source>
+        <translation>未找到训练</translation>
+    </message>
+</context>
+<context>
+    <name>fitplusbike</name>
+    <message>
+        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="628"/>
+        <source>The bike keeps stopping the workout: turn the bike off and on again</source>
+        <translation>单车不断停止训练：请关闭单车后重新打开</translation>
+    </message>
+</context>
+<context>
+    <name>UiSectionHeader</name>
+    <message>
+        <source>Expanded</source>
+        <translation>已展开</translation>
+    </message>
+    <message>
+        <source>Collapsed</source>
+        <translation>已折叠</translation>
+    </message>
+</context>
+<context>
+    <name>UiTextField</name>
+    <message>
+        <source>hours</source>
+        <translation>小时</translation>
+    </message>
+    <message>
+        <source>min</source>
+        <translation>分钟</translation>
+    </message>
+    <message>
+        <source>sec</source>
+        <translation>秒</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>正在购买...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>购买成功</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>购买失败</translation>
     </message>
 </context>
 </TS>
