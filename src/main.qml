@@ -780,22 +780,25 @@ ApplicationWindow {
                 Rectangle {
                     visible: popupGymMode.bluetoothOff
                     anchors.verticalCenter: parent.verticalCenter
-                    width: 16
-                    height: 16
-                    radius: 8
+                    width: 22
+                    height: 22
+                    radius: 11
                     color: window.ui.danger
                     Accessible.ignored: true
                     Label {
                         anchors.centerIn: parent
                         text: "!"
                         color: window.ui.dark ? "#000000" : "#FFFFFF"
-                        font.pixelSize: 12
+                        font.pixelSize: 16
                         font.bold: true
                     }
                 }
 
                 Label {
-                    width: Math.min(implicitWidth, gymModeColumn.width - (popupGymMode.bluetoothOff ? 24 : 0))
+                    width: Math.min(implicitWidth, gymModeColumn.width - (popupGymMode.bluetoothOff ? 30 : 0))
+                    // Bluetooth is off: the one thing to do here, so larger and bold
+                    font.pixelSize: popupGymMode.bluetoothOff ? Qt.application.font.pixelSize + 6 : Qt.application.font.pixelSize
+                    font.bold: popupGymMode.bluetoothOff
                     text: popupGymMode.bluetoothOff ? qsTranslate("homeform", "Bluetooth is off")
                           : popupGymMode.devices.length === 0 ? qsTranslate("homeform", "Searching for the device...")
                           : qsTr("QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.")
@@ -836,7 +839,6 @@ ApplicationWindow {
 
             UiButton {
                 anchors.horizontalCenter: parent.horizontalCenter
-                flat: popupGymMode.modern
                 text: qsTr("Skip")
                 onClicked: {
                     gymModePopupDismissed = true
