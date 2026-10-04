@@ -421,160 +421,216 @@ Desideri farlo ora?</translation>
 <context>
     <name>MainWindow</name>
     <message>
+        <location filename="../mainwindow.ui" line="14"/>
         <source>qDoymos-Zwift</source>
-        <translation type="vanished">qDoymos-Zwift</translation>
+        <translation>qDoymos-Zwift</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="31"/>
         <source>Connection Status</source>
-        <translation type="vanished">Stato della connessione</translation>
+        <translation>Stato della connessione</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="48"/>
         <source>Treadmill Connection Status</source>
-        <translation type="vanished">Stato di connessione al tapis roulant</translation>
+        <translation>Stato di connessione al tapis roulant</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="68"/>
         <source>Zwift Connection Status</source>
-        <translation type="vanished">Stato connessione Zwift</translation>
+        <translation>Stato connessione Zwift</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="85"/>
         <source>Chart</source>
-        <translation type="vanished">Grafico</translation>
+        <translation>Grafico</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="123"/>
         <source>Treadmill Status</source>
-        <translation type="vanished">Stato tapis roulant</translation>
+        <translation>Stato tapis roulant</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="169"/>
+        <location filename="../mainwindow.ui" line="273"/>
+        <location filename="../mainwindow.ui" line="619"/>
+        <location filename="../mainwindow.ui" line="779"/>
         <source>-</source>
-        <translation type="vanished">-</translation>
+        <translation>-</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="201"/>
+        <location filename="../mainwindow.ui" line="305"/>
+        <location filename="../mainwindow.ui" line="651"/>
+        <location filename="../mainwindow.ui" line="846"/>
         <source>+</source>
-        <translation type="vanished">+</translation>
+        <translation>+</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="208"/>
         <source>Speed:</source>
-        <translation type="vanished">Velocità:</translation>
+        <translation>Velocità:</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="227"/>
+        <location filename="../mainwindow.ui" line="331"/>
+        <location filename="../mainwindow.ui" line="409"/>
+        <location filename="../mainwindow.ui" line="518"/>
+        <location filename="../mainwindow.ui" line="557"/>
+        <location filename="../mainwindow.ui" line="600"/>
+        <location filename="../mainwindow.ui" line="665"/>
+        <location filename="../mainwindow.ui" line="710"/>
         <source>0</source>
-        <translation type="vanished">0</translation>
+        <translation>0</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="312"/>
         <source>Inclination (degrees):</source>
-        <translation type="vanished">Inclinazione (gradi):</translation>
+        <translation>Inclinazione (gradi):</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="390"/>
         <source>Heart rate (bpm)</source>
-        <translation type="vanished">Frequenza cardiaca (bpm)</translation>
+        <translation>Frequenza cardiaca (bpm)</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="475"/>
         <source>Odometer (km):</source>
-        <translation type="vanished">Contachilometri (km):</translation>
+        <translation>Contachilometri (km):</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="482"/>
+        <location filename="../mainwindow.ui" line="753"/>
+        <location filename="../mainwindow.ui" line="1008"/>
         <source>0.0</source>
-        <translation type="vanished">0.0</translation>
+        <translation>0.0</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="511"/>
         <source>Elevation Gain (meters):</source>
-        <translation type="vanished">Dislivello (metri):</translation>
+        <translation>Dislivello (metri):</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="550"/>
         <source>Calories (kcal):</source>
-        <translation type="vanished">Calorie (kcal):</translation>
+        <translation>Calorie (kcal):</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="593"/>
         <source>Cadence:</source>
-        <translation type="vanished">Cadenza:</translation>
+        <translation>Cadenza:</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="658"/>
         <source>Resistance:</source>
-        <translation type="vanished">Resistenza:</translation>
+        <translation>Resistenza:</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="678"/>
         <source>Watt:</source>
-        <translation type="vanished">Watt:</translation>
+        <translation>Watt:</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="746"/>
         <source>Pace (min/km):</source>
-        <translation type="vanished">Passo (min/km):</translation>
+        <translation>Passo (min/km):</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="869"/>
         <source>Train me!</source>
-        <translation type="vanished">Allenami!</translation>
+        <translation>Allenami!</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="899"/>
         <source>Durantion (s)</source>
-        <translation type="vanished">Durata (s)</translation>
+        <translation>Durata (s)</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="904"/>
         <source>Speed (km/h)</source>
-        <translation type="vanished">Velocità (km/h)</translation>
+        <translation>Velocità (km/h)</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="909"/>
         <source>Inclination (degrees)</source>
-        <translation type="vanished">Inclinazione (gradi)</translation>
+        <translation>Inclinazione (gradi)</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="914"/>
         <source>Force Speed</source>
-        <translation type="vanished">Forza la velocità</translation>
+        <translation>Forza la velocità</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="926"/>
         <source>Total Elapsed Time: </source>
-        <translation type="vanished">Tempo Trascorso: </translation>
+        <translation>Tempo Trascorso: </translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="933"/>
+        <location filename="../mainwindow.ui" line="956"/>
+        <location filename="../mainwindow.ui" line="979"/>
         <source>00:00:00</source>
-        <translation type="vanished">00:00:00</translation>
+        <translation>00:00:00</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="949"/>
         <source>Current Row Elapsed Time:</source>
-        <translation type="vanished">Tempo trascorso riga corrente:</translation>
+        <translation>Tempo trascorso riga corrente:</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="972"/>
         <source>Program Duration:</source>
-        <translation type="vanished">Durata del programma:</translation>
+        <translation>Durata del programma:</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1001"/>
         <source>Total Distance (km):</source>
-        <translation type="vanished">Distanza totale (km):</translation>
+        <translation>Distanza totale (km):</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1021"/>
         <source>Difficulty:</source>
-        <translation type="vanished">Difficoltà:</translation>
+        <translation>Difficoltà:</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1028"/>
         <source>50%</source>
-        <translation type="vanished">50%</translation>
+        <translation>50%</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1081"/>
         <source>Player Weight (kg):</source>
-        <translation type="vanished">Peso del giocatore (kg):</translation>
+        <translation>Peso del giocatore (kg):</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1088"/>
         <source>70.0</source>
-        <translation type="vanished">70.0</translation>
+        <translation>70.0</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1102"/>
         <source>&amp;Reset</source>
-        <translation type="vanished">&amp;Ripristina</translation>
+        <translation>&amp;Ripristina</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1109"/>
         <source>&amp;Load</source>
-        <translation type="vanished">&amp;Carica</translation>
+        <translation>&amp;Carica</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1116"/>
         <source>&amp;Save</source>
-        <translation type="vanished">&amp;Salva</translation>
+        <translation>&amp;Salva</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1134"/>
         <source>Start</source>
-        <translation type="vanished">Inizia</translation>
+        <translation>Inizia</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1159"/>
         <source>S&amp;top</source>
-        <translation type="vanished">S&amp;top</translation>
+        <translation>S&amp;top</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="349"/>
@@ -1189,6 +1245,184 @@ Vuoi aggiornare le impostazioni di QZ?</translation>
         <location filename="../trainprogram.cpp" line="1458"/>
         <source>Lap received. Continuing workout.</source>
         <translation>Giro ricevuto. L&apos;allenamento continua.</translation>
+    </message>
+    <message>
+        <location filename="../devices/coresensor/coresensor.cpp" line="62"/>
+        <location filename="../devices/heartratebelt/heartratebelt.cpp" line="247"/>
+        <location filename="../devices/moxy5sensor/moxy5sensor.cpp" line="169"/>
+        <location filename="../devices/wahookickrheadwind/wahookickrheadwind.cpp" line="325"/>
+        <source>%1 connected!</source>
+        <translation>%1 connesso!</translation>
+    </message>
+    <message>
+        <location filename="../devices/cscbike/cscbike.cpp" line="47"/>
+        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
+        <translation>Regolazione manuale della potenza in base alla resistenza attivata: ora la potenza segue il valore del riquadro Resistenza.</translation>
+    </message>
+    <message>
+        <location filename="../devices/cscbike/cscbike.cpp" line="49"/>
+        <location filename="../devices/ftmsbike/ftmsbike.cpp" line="288"/>
+        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
+        <translation>Tabella di potenza CSC personalizzata attivata: ora la potenza segue i punti resistenza/watt configurati.</translation>
+    </message>
+    <message>
+        <location filename="../devices/cscbike/cscbike.cpp" line="290"/>
+        <location filename="../devices/ftmsbike/ftmsbike.cpp" line="775"/>
+        <location filename="../devices/heartratebelt/heartratebelt.cpp" line="77"/>
+        <location filename="../devices/strydrunpowersensor/strydrunpowersensor.cpp" line="161"/>
+        <source>%1 Battery Level %2 %</source>
+        <translation>%1 Livello batteria %2 %</translation>
+    </message>
+    <message>
+        <location filename="../devices/domyosbike/domyosbike.cpp" line="762"/>
+        <location filename="../devices/solebike/solebike.cpp" line="530"/>
+        <source>FTMS bike found, restart the app to apply the change</source>
+        <translation>Trovata bici FTMS, riavvia l&apos;app per applicare la modifica</translation>
+    </message>
+    <message>
+        <location filename="../devices/domyoselliptical/domyoselliptical.cpp" line="572"/>
+        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
+        <translation>L&apos;ellittica Domyos è un dispositivo FTMS. Riavvia QZ per applicare la correzione, grazie.</translation>
+    </message>
+    <message>
+        <location filename="../devices/domyosrower/domyosrower.cpp" line="901"/>
+        <source>FTMS rower found, restart the app to apply the change</source>
+        <translation>Trovato vogatore FTMS, riavvia l&apos;app per applicare la modifica</translation>
+    </message>
+    <message>
+        <location filename="../devices/echelonconnectsport/echelonconnectsport.cpp" line="559"/>
+        <location filename="../devices/kineticinroadbike/kineticinroadbike.cpp" line="503"/>
+        <location filename="../devices/pitpatbike/pitpatbike.cpp" line="543"/>
+        <source>Bluetooth Service Error! Restart the bike!</source>
+        <translation>Errore del servizio Bluetooth! Riavvia la bici!</translation>
+    </message>
+    <message>
+        <location filename="../devices/echelonconnectsport/echelonconnectsport.cpp" line="632"/>
+        <location filename="../devices/fakebike/fakebike.cpp" line="189"/>
+        <source>Switching to classic Bluetooth bridge</source>
+        <translation>Passaggio al bridge Bluetooth classico</translation>
+    </message>
+    <message>
+        <location filename="../devices/echelonconnectsport/echelonconnectsport.cpp" line="672"/>
+        <source>Virtual Echelon enabled for this bike</source>
+        <translation>Echelon virtuale attivato per questa bici</translation>
+    </message>
+    <message>
+        <location filename="../devices/eslinkertreadmill/eslinkertreadmill.cpp" line="337"/>
+        <location filename="../devices/fitshowtreadmill/fitshowtreadmill.cpp" line="307"/>
+        <location filename="../devices/kingsmithr1protreadmill/kingsmithr1protreadmill.cpp" line="496"/>
+        <location filename="../devices/yesoulbike/yesoulbike.cpp" line="329"/>
+        <source>FTMS treadmill found, restart the app to apply the change</source>
+        <translation>Trovato tapis roulant FTMS, riavvia l&apos;app per applicare la modifica</translation>
+    </message>
+    <message>
+        <location filename="../devices/eslinkertreadmill/eslinkertreadmill.cpp" line="632"/>
+        <source>Init completed, you can use the treadmill now!</source>
+        <translation>Inizializzazione completata, ora puoi usare il tapis roulant!</translation>
+    </message>
+    <message>
+        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="1131"/>
+        <location filename="../devices/stagesbike/stagesbike.cpp" line="178"/>
+        <location filename="../devices/tacxneo2/tacxneo2.cpp" line="39"/>
+        <source>FTMS bike found, restart the app to apply the change!</source>
+        <translation>Trovata bici FTMS, riavvia l&apos;app per applicare la modifica!</translation>
+    </message>
+    <message>
+        <location filename="../devices/fitplusrower/fitplusrower.cpp" line="387"/>
+        <source>FTMS rower found, restart the app to apply the change!</source>
+        <translation>Trovato vogatore FTMS, riavvia l&apos;app per applicare la modifica!</translation>
+    </message>
+    <message>
+        <location filename="../devices/ftmsbike/ftmsbike.cpp" line="1820"/>
+        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>La bici Domyos si presenta come FTMS ma non lo è. Riavvia QZ per applicare la correzione, grazie.</translation>
+    </message>
+    <message>
+        <location filename="../devices/ftmsbike/ftmsbike.cpp" line="1824"/>
+        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
+        <translation>Trovato vogatore PM5. Riavvia QZ per applicare la correzione, grazie.</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="214"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="307"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="397"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="487"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="577"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="667"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="757"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="847"/>
+        <source>Treadmill initialization in progress...%1%</source>
+        <translation>Inizializzazione del tapis roulant in corso...%1%</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="299"/>
+        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
+        <translation>Attiva l&apos;impostazione &apos;Forzare l&apos;uso di FTMS&apos; in Impostazioni-&gt;Opzioni tapis roulant-&gt;Opzioni Tapis Roulant Horizon e riavvia l&apos;app</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="877"/>
+        <source>Treadmill initialization completed!</source>
+        <translation>Inizializzazione del tapis roulant completata!</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="2370"/>
+        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Il tapis roulant Domyos si presenta come FTMS ma non lo è. Riavvia QZ per applicare la correzione, grazie.</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="2565"/>
+        <source>Treadmill ready</source>
+        <translation>Tapis roulant pronto</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="2729"/>
+        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
+        <translation>Rilevato dispositivo T01_. Se vedi valori di inclinazione strani, attiva &apos;IConcept FTMS Tapis Roulant&apos; nelle impostazioni Opzioni tapis roulant.</translation>
+    </message>
+    <message>
+        <location filename="../devices/moxy5sensor/moxy5sensor.cpp" line="76"/>
+        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
+        <translation>SmO2 attuale: %1% SmO2 precedente: %2% THb: %3 g/dL</translation>
+    </message>
+    <message>
+        <location filename="../devices/nordictrackelliptical/nordictrackelliptical.cpp" line="685"/>
+        <source>SE7i init completed!</source>
+        <translation>Inizializzazione SE7i completata!</translation>
+    </message>
+    <message>
+        <location filename="../devices/proformtreadmill/proformtreadmill.cpp" line="179"/>
+        <source>Starting treadmill before applying requested speed %1</source>
+        <translation>Avvio del tapis roulant prima di applicare la velocità richiesta %1</translation>
+    </message>
+    <message>
+        <location filename="../devices/proformtreadmill/proformtreadmill.cpp" line="191"/>
+        <source>Applying cached speed request %1</source>
+        <translation>Applicazione della richiesta di velocità in sospeso %1</translation>
+    </message>
+    <message>
+        <location filename="../devices/skandikawiribike/skandikawiribike.cpp" line="411"/>
+        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
+        <translation>nessun servizio trovato, contattami a roberto.viola83@gmail.com!</translation>
+    </message>
+    <message>
+        <location filename="../devices/wahookickrsnapbike/wahookickrsnapbike.cpp" line="896"/>
+        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
+        <translation>Trovato dispositivo Zwift Hub, riavvia l&apos;app per usare i rapporti virtuali!</translation>
+    </message>
+    <message>
+        <location filename="../zwift-api/zwift_client_auth.h" line="107"/>
+        <source>Zwift Login OK!</source>
+        <translation>Accesso a Zwift riuscito!</translation>
+    </message>
+    <message>
+        <location filename="../zwift-api/zwift_client_auth.h" line="110"/>
+        <source>Zwift Auth Failed!</source>
+        <translation>Autenticazione Zwift non riuscita!</translation>
+    </message>
+    <message>
+        <location filename="../zwift_play/zwiftclickremote.cpp" line="47"/>
+        <source>Zwift device: UPGRADE THE FIRMWARE!</source>
+        <translation>Dispositivo Zwift: AGGIORNA IL FIRMWARE!</translation>
     </message>
 </context>
 <context>
@@ -3536,36 +3770,44 @@ Al primo avvio potrebbe richiedere qualche istante.</translation>
 <context>
     <name>charts</name>
     <message>
+        <location filename="../charts.ui" line="14"/>
         <source>Charts</source>
-        <translation type="vanished">Grafici</translation>
+        <translation>Grafici</translation>
     </message>
     <message>
+        <location filename="../charts.ui" line="59"/>
         <source>Speed</source>
-        <translation type="vanished">Velocità</translation>
+        <translation>Velocità</translation>
     </message>
     <message>
+        <location filename="../charts.ui" line="83"/>
         <source>Inclination</source>
-        <translation type="vanished">Inclinazione</translation>
+        <translation>Inclinazione</translation>
     </message>
     <message>
+        <location filename="../charts.ui" line="107"/>
         <source>Watt</source>
-        <translation type="vanished">Watt</translation>
+        <translation>Watt</translation>
     </message>
     <message>
+        <location filename="../charts.ui" line="131"/>
         <source>Resistance</source>
-        <translation type="vanished">Resistenza</translation>
+        <translation>Resistenza</translation>
     </message>
     <message>
+        <location filename="../charts.ui" line="152"/>
         <source>Heart</source>
-        <translation type="vanished">Cuore</translation>
+        <translation>Cuore</translation>
     </message>
     <message>
+        <location filename="../charts.ui" line="176"/>
         <source>Pace</source>
-        <translation type="vanished">Ritmo</translation>
+        <translation>Ritmo</translation>
     </message>
     <message>
+        <location filename="../charts.ui" line="202"/>
         <source>Value on Chart</source>
-        <translation type="vanished">Valore sul grafico</translation>
+        <translation>Valore sul grafico</translation>
     </message>
 </context>
 <context>
@@ -3639,8 +3881,10 @@ Al primo avvio potrebbe richiedere qualche istante.</translation>
 <context>
     <name>fitplusbike</name>
     <message>
+        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="397"/>
+        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="669"/>
         <source>The bike keeps stopping the workout: turn the bike off and on again</source>
-        <translation type="vanished">La bici continua a interrompere l&apos;allenamento: spegnila e riaccendila</translation>
+        <translation>La bici continua a interrompere l&apos;allenamento: spegnila e riaccendila</translation>
     </message>
 </context>
 <context>

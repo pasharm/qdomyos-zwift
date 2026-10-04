@@ -421,160 +421,216 @@ Would you like to do that now?</source>
 <context>
     <name>MainWindow</name>
     <message>
+        <location filename="../mainwindow.ui" line="14"/>
         <source>qDoymos-Zwift</source>
-        <translation type="vanished">qDoymos-Zwift</translation>
+        <translation>qDoymos-Zwift</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="31"/>
         <source>Connection Status</source>
-        <translation type="vanished">连接状态</translation>
+        <translation>连接状态</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="48"/>
         <source>Treadmill Connection Status</source>
-        <translation type="vanished">跑步机连接状态</translation>
+        <translation>跑步机连接状态</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="68"/>
         <source>Zwift Connection Status</source>
-        <translation type="vanished">Zwift 连接状态</translation>
+        <translation>Zwift 连接状态</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="85"/>
         <source>Chart</source>
-        <translation type="vanished">图表</translation>
+        <translation>图表</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="123"/>
         <source>Treadmill Status</source>
-        <translation type="vanished">跑步机状态</translation>
+        <translation>跑步机状态</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="169"/>
+        <location filename="../mainwindow.ui" line="273"/>
+        <location filename="../mainwindow.ui" line="619"/>
+        <location filename="../mainwindow.ui" line="779"/>
         <source>-</source>
-        <translation type="vanished">-</translation>
+        <translation>-</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="201"/>
+        <location filename="../mainwindow.ui" line="305"/>
+        <location filename="../mainwindow.ui" line="651"/>
+        <location filename="../mainwindow.ui" line="846"/>
         <source>+</source>
-        <translation type="vanished">+</translation>
+        <translation>+</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="208"/>
         <source>Speed:</source>
-        <translation type="vanished">速度:</translation>
+        <translation>速度:</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="227"/>
+        <location filename="../mainwindow.ui" line="331"/>
+        <location filename="../mainwindow.ui" line="409"/>
+        <location filename="../mainwindow.ui" line="518"/>
+        <location filename="../mainwindow.ui" line="557"/>
+        <location filename="../mainwindow.ui" line="600"/>
+        <location filename="../mainwindow.ui" line="665"/>
+        <location filename="../mainwindow.ui" line="710"/>
         <source>0</source>
-        <translation type="vanished">0</translation>
+        <translation>0</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="312"/>
         <source>Inclination (degrees):</source>
-        <translation type="vanished">坡度（度）：</translation>
+        <translation>坡度（度）：</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="390"/>
         <source>Heart rate (bpm)</source>
-        <translation type="vanished">心率 (bpm)</translation>
+        <translation>心率 (bpm)</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="475"/>
         <source>Odometer (km):</source>
-        <translation type="vanished">里程表 (km):</translation>
+        <translation>里程表 (km):</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="482"/>
+        <location filename="../mainwindow.ui" line="753"/>
+        <location filename="../mainwindow.ui" line="1008"/>
         <source>0.0</source>
-        <translation type="vanished">0.0</translation>
+        <translation>0.0</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="511"/>
         <source>Elevation Gain (meters):</source>
-        <translation type="vanished">爬升高度 (米):</translation>
+        <translation>爬升高度 (米):</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="550"/>
         <source>Calories (kcal):</source>
-        <translation type="vanished">卡路里 (kcal):</translation>
+        <translation>卡路里 (kcal):</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="593"/>
         <source>Cadence:</source>
-        <translation type="vanished">踏频：</translation>
+        <translation>踏频：</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="658"/>
         <source>Resistance:</source>
-        <translation type="vanished">阻力:</translation>
+        <translation>阻力:</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="678"/>
         <source>Watt:</source>
-        <translation type="vanished">功率：</translation>
+        <translation>功率：</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="746"/>
         <source>Pace (min/km):</source>
-        <translation type="vanished">配速 (min/km):</translation>
+        <translation>配速 (min/km):</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="869"/>
         <source>Train me!</source>
-        <translation type="vanished">开始训练！</translation>
+        <translation>开始训练！</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="899"/>
         <source>Durantion (s)</source>
-        <translation type="vanished">时长 (s)</translation>
+        <translation>时长 (s)</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="904"/>
         <source>Speed (km/h)</source>
-        <translation type="vanished">速度 (km/h)</translation>
+        <translation>速度 (km/h)</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="909"/>
         <source>Inclination (degrees)</source>
-        <translation type="vanished">坡度（度）</translation>
+        <translation>坡度（度）</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="914"/>
         <source>Force Speed</source>
-        <translation type="vanished">强制速度</translation>
+        <translation>强制速度</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="926"/>
         <source>Total Elapsed Time: </source>
-        <translation type="vanished">总耗时: </translation>
+        <translation>总耗时: </translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="933"/>
+        <location filename="../mainwindow.ui" line="956"/>
+        <location filename="../mainwindow.ui" line="979"/>
         <source>00:00:00</source>
-        <translation type="vanished">00:00:00</translation>
+        <translation>00:00:00</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="949"/>
         <source>Current Row Elapsed Time:</source>
-        <translation type="vanished">当前区段用时：</translation>
+        <translation>当前区段用时：</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="972"/>
         <source>Program Duration:</source>
-        <translation type="vanished">计划时长：</translation>
+        <translation>计划时长：</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1001"/>
         <source>Total Distance (km):</source>
-        <translation type="vanished">总距离 (km):</translation>
+        <translation>总距离 (km):</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1021"/>
         <source>Difficulty:</source>
-        <translation type="vanished">难度:</translation>
+        <translation>难度:</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1028"/>
         <source>50%</source>
-        <translation type="vanished">50%</translation>
+        <translation>50%</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1081"/>
         <source>Player Weight (kg):</source>
-        <translation type="vanished">体重 (kg):</translation>
+        <translation>体重 (kg):</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1088"/>
         <source>70.0</source>
-        <translation type="vanished">70.0</translation>
+        <translation>70.0</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1102"/>
         <source>&amp;Reset</source>
-        <translation type="vanished">重置(&amp;R)</translation>
+        <translation>重置(&amp;R)</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1109"/>
         <source>&amp;Load</source>
-        <translation type="vanished">加载(&amp;L)</translation>
+        <translation>加载(&amp;L)</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1116"/>
         <source>&amp;Save</source>
-        <translation type="vanished">保存(&amp;S)</translation>
+        <translation>保存(&amp;S)</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1134"/>
         <source>Start</source>
-        <translation type="vanished">开始</translation>
+        <translation>开始</translation>
     </message>
     <message>
+        <location filename="../mainwindow.ui" line="1159"/>
         <source>S&amp;top</source>
-        <translation type="vanished">停止(&amp;T)</translation>
+        <translation>停止(&amp;T)</translation>
     </message>
     <message>
         <location filename="../mainwindow.cpp" line="349"/>
@@ -1189,6 +1245,184 @@ Do you want to update QZ settings?</source>
         <location filename="../trainprogram.cpp" line="1458"/>
         <source>Lap received. Continuing workout.</source>
         <translation>已收到计圈。继续训练。</translation>
+    </message>
+    <message>
+        <location filename="../devices/coresensor/coresensor.cpp" line="62"/>
+        <location filename="../devices/heartratebelt/heartratebelt.cpp" line="247"/>
+        <location filename="../devices/moxy5sensor/moxy5sensor.cpp" line="169"/>
+        <location filename="../devices/wahookickrheadwind/wahookickrheadwind.cpp" line="325"/>
+        <source>%1 connected!</source>
+        <translation>%1 已连接！</translation>
+    </message>
+    <message>
+        <location filename="../devices/cscbike/cscbike.cpp" line="47"/>
+        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
+        <translation>已启用按阻力手动调整功率：功率现在随“阻力”卡片的值变化。</translation>
+    </message>
+    <message>
+        <location filename="../devices/cscbike/cscbike.cpp" line="49"/>
+        <location filename="../devices/ftmsbike/ftmsbike.cpp" line="288"/>
+        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
+        <translation>已启用自定义 CSC 功率表：功率现在按设定的阻力/瓦特点计算。</translation>
+    </message>
+    <message>
+        <location filename="../devices/cscbike/cscbike.cpp" line="290"/>
+        <location filename="../devices/ftmsbike/ftmsbike.cpp" line="775"/>
+        <location filename="../devices/heartratebelt/heartratebelt.cpp" line="77"/>
+        <location filename="../devices/strydrunpowersensor/strydrunpowersensor.cpp" line="161"/>
+        <source>%1 Battery Level %2 %</source>
+        <translation>%1 电池电量 %2 %</translation>
+    </message>
+    <message>
+        <location filename="../devices/domyosbike/domyosbike.cpp" line="762"/>
+        <location filename="../devices/solebike/solebike.cpp" line="530"/>
+        <source>FTMS bike found, restart the app to apply the change</source>
+        <translation>发现 FTMS 自行车，请重启应用以应用更改</translation>
+    </message>
+    <message>
+        <location filename="../devices/domyoselliptical/domyoselliptical.cpp" line="572"/>
+        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos 椭圆机使用 FTMS。请重启 QZ 以应用修复，谢谢。</translation>
+    </message>
+    <message>
+        <location filename="../devices/domyosrower/domyosrower.cpp" line="901"/>
+        <source>FTMS rower found, restart the app to apply the change</source>
+        <translation>发现 FTMS 划船机，请重启应用以应用更改</translation>
+    </message>
+    <message>
+        <location filename="../devices/echelonconnectsport/echelonconnectsport.cpp" line="559"/>
+        <location filename="../devices/kineticinroadbike/kineticinroadbike.cpp" line="503"/>
+        <location filename="../devices/pitpatbike/pitpatbike.cpp" line="543"/>
+        <source>Bluetooth Service Error! Restart the bike!</source>
+        <translation>蓝牙服务错误！请重启自行车！</translation>
+    </message>
+    <message>
+        <location filename="../devices/echelonconnectsport/echelonconnectsport.cpp" line="632"/>
+        <location filename="../devices/fakebike/fakebike.cpp" line="189"/>
+        <source>Switching to classic Bluetooth bridge</source>
+        <translation>正在切换到经典蓝牙连接</translation>
+    </message>
+    <message>
+        <location filename="../devices/echelonconnectsport/echelonconnectsport.cpp" line="672"/>
+        <source>Virtual Echelon enabled for this bike</source>
+        <translation>已为此自行车启用虚拟 Echelon</translation>
+    </message>
+    <message>
+        <location filename="../devices/eslinkertreadmill/eslinkertreadmill.cpp" line="337"/>
+        <location filename="../devices/fitshowtreadmill/fitshowtreadmill.cpp" line="307"/>
+        <location filename="../devices/kingsmithr1protreadmill/kingsmithr1protreadmill.cpp" line="496"/>
+        <location filename="../devices/yesoulbike/yesoulbike.cpp" line="329"/>
+        <source>FTMS treadmill found, restart the app to apply the change</source>
+        <translation>发现 FTMS 跑步机，请重启应用以应用更改</translation>
+    </message>
+    <message>
+        <location filename="../devices/eslinkertreadmill/eslinkertreadmill.cpp" line="632"/>
+        <source>Init completed, you can use the treadmill now!</source>
+        <translation>初始化完成，现在可以使用跑步机了！</translation>
+    </message>
+    <message>
+        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="1131"/>
+        <location filename="../devices/stagesbike/stagesbike.cpp" line="178"/>
+        <location filename="../devices/tacxneo2/tacxneo2.cpp" line="39"/>
+        <source>FTMS bike found, restart the app to apply the change!</source>
+        <translation>发现 FTMS 自行车，请重启应用以应用更改！</translation>
+    </message>
+    <message>
+        <location filename="../devices/fitplusrower/fitplusrower.cpp" line="387"/>
+        <source>FTMS rower found, restart the app to apply the change!</source>
+        <translation>发现 FTMS 划船机，请重启应用以应用更改！</translation>
+    </message>
+    <message>
+        <location filename="../devices/ftmsbike/ftmsbike.cpp" line="1820"/>
+        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos 自行车自称 FTMS，但实际不是。请重启 QZ 以应用修复，谢谢。</translation>
+    </message>
+    <message>
+        <location filename="../devices/ftmsbike/ftmsbike.cpp" line="1824"/>
+        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
+        <translation>发现 PM5 划船机。请重启 QZ 以应用修复，谢谢。</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="214"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="307"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="397"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="487"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="577"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="667"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="757"/>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="847"/>
+        <source>Treadmill initialization in progress...%1%</source>
+        <translation>跑步机正在初始化...%1%</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="299"/>
+        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
+        <translation>请在“设置-&gt;跑步机选项-&gt;Horizon 跑步机选项”中启用“强制使用 FTMS”设置，然后重启应用</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="877"/>
+        <source>Treadmill initialization completed!</source>
+        <translation>跑步机初始化完成！</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="2370"/>
+        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos 跑步机自称 FTMS，但实际不是。请重启 QZ 以应用修复，谢谢。</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="2565"/>
+        <source>Treadmill ready</source>
+        <translation>跑步机已就绪</translation>
+    </message>
+    <message>
+        <location filename="../devices/horizontreadmill/horizontreadmill.cpp" line="2729"/>
+        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
+        <translation>检测到 T01_ 设备。如果坡度值异常，请在“跑步机选项”设置中启用“IConcept FTMS 跑步机”。</translation>
+    </message>
+    <message>
+        <location filename="../devices/moxy5sensor/moxy5sensor.cpp" line="76"/>
+        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
+        <translation>当前 SmO2：%1% 上次 SmO2：%2% THb：%3 g/dL</translation>
+    </message>
+    <message>
+        <location filename="../devices/nordictrackelliptical/nordictrackelliptical.cpp" line="685"/>
+        <source>SE7i init completed!</source>
+        <translation>SE7i 初始化完成！</translation>
+    </message>
+    <message>
+        <location filename="../devices/proformtreadmill/proformtreadmill.cpp" line="179"/>
+        <source>Starting treadmill before applying requested speed %1</source>
+        <translation>先启动跑步机，再应用请求的速度 %1</translation>
+    </message>
+    <message>
+        <location filename="../devices/proformtreadmill/proformtreadmill.cpp" line="191"/>
+        <source>Applying cached speed request %1</source>
+        <translation>正在应用缓存的速度请求 %1</translation>
+    </message>
+    <message>
+        <location filename="../devices/skandikawiribike/skandikawiribike.cpp" line="411"/>
+        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
+        <translation>未找到服务，请联系 roberto.viola83@gmail.com！</translation>
+    </message>
+    <message>
+        <location filename="../devices/wahookickrsnapbike/wahookickrsnapbike.cpp" line="896"/>
+        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
+        <translation>发现 Zwift Hub 设备，请重启应用以使用虚拟换挡！</translation>
+    </message>
+    <message>
+        <location filename="../zwift-api/zwift_client_auth.h" line="107"/>
+        <source>Zwift Login OK!</source>
+        <translation>Zwift 登录成功！</translation>
+    </message>
+    <message>
+        <location filename="../zwift-api/zwift_client_auth.h" line="110"/>
+        <source>Zwift Auth Failed!</source>
+        <translation>Zwift 授权失败！</translation>
+    </message>
+    <message>
+        <location filename="../zwift_play/zwiftclickremote.cpp" line="47"/>
+        <source>Zwift device: UPGRADE THE FIRMWARE!</source>
+        <translation>Zwift 设备：请升级固件！</translation>
     </message>
 </context>
 <context>
@@ -3536,36 +3770,44 @@ This may take a few moments on first startup.</source>
 <context>
     <name>charts</name>
     <message>
+        <location filename="../charts.ui" line="14"/>
         <source>Charts</source>
-        <translation type="vanished">图表</translation>
+        <translation>图表</translation>
     </message>
     <message>
+        <location filename="../charts.ui" line="59"/>
         <source>Speed</source>
-        <translation type="vanished">速度</translation>
+        <translation>速度</translation>
     </message>
     <message>
+        <location filename="../charts.ui" line="83"/>
         <source>Inclination</source>
-        <translation type="vanished">坡度</translation>
+        <translation>坡度</translation>
     </message>
     <message>
+        <location filename="../charts.ui" line="107"/>
         <source>Watt</source>
-        <translation type="vanished">功率</translation>
+        <translation>功率</translation>
     </message>
     <message>
+        <location filename="../charts.ui" line="131"/>
         <source>Resistance</source>
-        <translation type="vanished">阻力</translation>
+        <translation>阻力</translation>
     </message>
     <message>
+        <location filename="../charts.ui" line="152"/>
         <source>Heart</source>
-        <translation type="vanished">心率</translation>
+        <translation>心率</translation>
     </message>
     <message>
+        <location filename="../charts.ui" line="176"/>
         <source>Pace</source>
-        <translation type="vanished">配速</translation>
+        <translation>配速</translation>
     </message>
     <message>
+        <location filename="../charts.ui" line="202"/>
         <source>Value on Chart</source>
-        <translation type="vanished">图表值</translation>
+        <translation>图表值</translation>
     </message>
 </context>
 <context>
@@ -3639,8 +3881,10 @@ This may take a few moments on first startup.</source>
 <context>
     <name>fitplusbike</name>
     <message>
+        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="397"/>
+        <location filename="../devices/fitplusbike/fitplusbike.cpp" line="669"/>
         <source>The bike keeps stopping the workout: turn the bike off and on again</source>
-        <translation type="vanished">单车不断停止训练：请关闭单车后重新打开</translation>
+        <translation>单车不断停止训练：请关闭单车后重新打开</translation>
     </message>
 </context>
 <context>
