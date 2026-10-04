@@ -853,6 +853,8 @@ ApplicationWindow {
 
     UiInfoPopup {
         id: popupWhatsOnZwiftHelper
+        // the address is only named: "not affiliated with ... website"
+        links: false
          onClosed: {
              stackView.push("WebEngineTest.qml")
              drawer.close()

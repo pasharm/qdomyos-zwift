@@ -16,6 +16,9 @@ UiPopup {
     property int classicHeight: 130
     property int classicLabelWidth: 0
     property int classicLabelHeight: 0
+    // Modern look: the addresses in the text open the browser. Off where the address is only
+    // named ("not affiliated with https://whatsonzwift.com/")
+    property bool links: true
 
     // The texts break their lines by hand (\n, <br>) for the fixed classic width: in the card
     // the single breaks become spaces and only the empty lines between paragraphs stay
@@ -28,9 +31,10 @@ UiPopup {
 
     // The card text as StyledText: the markup characters escaped, the addresses made links
     function linkText(s) {
-        return flowText(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
-                .replace(/(https?:[^ \n]+[^ \n.,!?])/g, '<a href="$1">$1</a>')
-                .replace(/\n/g, "<br>")
+        var t = flowText(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        if (links)
+            t = t.replace(/(https?:[^ \n]+[^ \n.,!?])/g, '<a href="$1">$1</a>')
+        return t.replace(/\n/g, "<br>")
     }
 
     parent: Overlay.overlay
