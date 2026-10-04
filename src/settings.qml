@@ -2884,6 +2884,7 @@ import QtQuick 2.12 as Quick212
                                     // One field for every setting found: offsets and the lowest
                                     // incline are negative; a pace is a time
                                     signed: true
+                                    decimals: entry.type === "integer" ? 0 : 2
                                     timeShaped: settingsPane.paceDistance(entry) > 0
                                     onAccepted: settingsPane.setSettingValue(entry, text)
                                     onActiveFocusChanged: if (this.focus) this.cursorPosition = this.text.length
@@ -3187,6 +3188,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: ageTextField
                             text: settings.age
+                            decimals: 0
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3938,6 +3940,7 @@ import QtQuick 2.12 as Quick212
                                         UiTextField {
                                             id: heartRateRestingValueTextField
                                             text: settings.heart_rate_resting
+                                            decimals: 0
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4639,6 +4642,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: bikeResistanceOffsetTextField
                             text: settings.bike_resistance_offset
+                            decimals: 0
                             signed: true
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
@@ -4679,6 +4683,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: bikePowerOffsetTextField
                             text: settings.bike_power_offset
+                            decimals: 0
                             signed: true
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
@@ -4913,6 +4918,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: bikeResistanceStartTextField
                             text: settings.bike_resistance_start
+                            decimals: 0
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5110,6 +5116,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: automaticVirtualShiftingGearUpCadenceTextField
                                     text: settings.automatic_virtual_shifting_gear_up_cadence
+                                    decimals: 0
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5160,6 +5167,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: automaticVirtualShiftingGearDownCadenceTextField
                                     text: settings.automatic_virtual_shifting_gear_down_cadence
+                                    decimals: 0
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5220,6 +5228,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: automaticVirtualShiftingClimbGearUpCadenceTextField
                                     text: settings.automatic_virtual_shifting_climb_gear_up_cadence
+                                    decimals: 0
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5270,6 +5279,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: automaticVirtualShiftingClimbGearDownCadenceTextField
                                     text: settings.automatic_virtual_shifting_climb_gear_down_cadence
+                                    decimals: 0
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5330,6 +5340,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: automaticVirtualShiftingSprintGearUpCadenceTextField
                                     text: settings.automatic_virtual_shifting_sprint_gear_up_cadence
+                                    decimals: 0
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5380,6 +5391,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: automaticVirtualShiftingSprintGearDownCadenceTextField
                                     text: settings.automatic_virtual_shifting_sprint_gear_down_cadence
+                                    decimals: 0
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5543,6 +5555,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: scwhinnResistanceSmoothTextField
                                     text: settings.schwinn_resistance_smooth
+                                    decimals: 0
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6052,6 +6065,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: flywheelBikeFilterTextField
                                     text: settings.flywheel_filter
+                                    decimals: 0
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6829,6 +6843,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: antBikeDeviceNumberTextField
                                     text: settings.ant_bike_device_number
+                                    decimals: 0
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7041,6 +7056,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: antHeartDeviceNumberTextField
                             text: settings.ant_heart_device_number
+                            decimals: 0
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7242,6 +7258,7 @@ import QtQuick 2.12 as Quick212
                             id: floatingWidthField
                             numberField: true
                             text: settings.floating_width
+                            decimals: 0
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7281,6 +7298,7 @@ import QtQuick 2.12 as Quick212
                             id: floatingHeightField
                             numberField: true
                             text: settings.floating_height
+                            decimals: 0
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7320,6 +7338,7 @@ import QtQuick 2.12 as Quick212
                             id: floatingTransparencyField
                             numberField: true
                             text: settings.floating_transparency
+                            decimals: 0
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7659,6 +7678,7 @@ import QtQuick 2.12 as Quick212
                                     id: secondLineTextSizeField
                                     numberField: true
                                     text: settings.theme_tile_secondline_textsize
+                                    decimals: 0
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -8717,6 +8737,7 @@ import QtQuick 2.12 as Quick212
                             id: zwiftPollTimeTextField
                             numberField: true
                             text: settings.zwift_api_poll
+                            decimals: 0
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -10213,6 +10234,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: treadmillPidHRminTextField
                             text: settings.treadmill_pid_heart_min
+                            decimals: 0
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -10237,6 +10259,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: treadmillPidHRmaxTextField
                             text: settings.treadmill_pid_heart_max
+                            decimals: 0
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -10703,6 +10726,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: pidHeartZoneErgModeWattStepTextField
                             text: settings.pid_heart_zone_erg_mode_watt_step.toString()
+                            decimals: 0
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -10752,6 +10776,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: trainProgramRandomDurationTextField
                             text: settings.trainprogram_total
+                            decimals: 0
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12312,6 +12337,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: pollDeviceTimeTextField
                                     text: settings.poll_device_time
+                                    decimals: 0
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16625,6 +16651,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
 																		id: zwiftDevPollTimeTextField
                                     text: settings.poll_device_time
+                                    decimals: 0
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16740,6 +16767,7 @@ import QtQuick 2.12 as Quick212
                         UiTextField {
                             id: videoWindowTextField
                             text: settings.video_playback_window_s
+                            decimals: 0
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -17370,6 +17398,7 @@ import QtQuick 2.12 as Quick212
                                         UiTextField {
                                             id: dirconIdTextField
                                             text: settings.dircon_id
+                                            decimals: 0
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -17407,6 +17436,7 @@ import QtQuick 2.12 as Quick212
                                         UiTextField {
                                             id: dirconServerPortTextField
                                             text: settings.dircon_server_base_port
+                                            decimals: 0
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -17478,6 +17508,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: mqttPortTextField
                                     text: settings.mqtt_port
+                                    decimals: 0
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -17658,6 +17689,7 @@ import QtQuick 2.12 as Quick212
                                 UiTextField {
                                     id: oscPortTextField
                                     text: settings.osc_port
+                                    decimals: 0
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     inputMethodHints: Qt.ImhDigitsOnly
