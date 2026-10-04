@@ -179,10 +179,9 @@ if best:
 }
 
 
-# T-137: main.qml, settings.qml and UiMessageDialog after the dialog changes (UiInfoPopup,
-# backAnswersNo, one onClosed). The changed dialogs themselves need a device, an account or
-# an expired trial: here the pages that hold them must load without QML errors, and the
-# Stop question (a UiMessageDialog) must still close by the back key and by its answer
+# T-137: main.qml, settings.qml and UiMessageDialog after the dialog changes. Every dialog
+# of the task through the personal menu item "TEST: dialogs": open, shot, back key; the
+# Strava question twice (the back key must not stop it from coming back). Light, then dark.
 adb logcat -c || true
 adb logcat > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
@@ -198,36 +197,45 @@ sleep 30
 if [ -f ui.xml ] && grep -q "Welcome to QZ" ui.xml; then tap $MENU "wizard back"; sleep 5; fi
 shot 04-home
 
-# Settings first, on a fresh home page: settings.qml holds the Garmin MFA popup
-open_menu
-tap_drawer 'Settings' 400 1400
-sleep 12
-shot 05-settings
-scroll_to 'Garmin.*' && shot 06-garmin
-back "settings"
-sleep 4
-shot 07-home-again
+# test_dialog <shot> <regex of the button>: the menu item, the button, a shot, the back key
+test_dialog() {
+  open_menu
+  if ! tap_drawer 'TEST: dialogs.*'; then back "menu"; sleep 2; return 1; fi
+  sleep 3
+  scroll_to "$2" || true
+  if ! tap_ui "$2"; then back "test popup"; sleep 2; return 1; fi
+  sleep 4
+  shot "$1"
+  back "$1"
+  sleep 3
+}
 
-tap_ui 'Start' 720 2244
-sleep 8
-shot 08-started
-tap_ui 'Stop' 1200 2300
-sleep 3
-shot 09-stop-question
-back "stop question"
-sleep 3
-shot 10-after-back
-tap_ui 'Stop' 1200 2300
-sleep 3
-shot 11-stop-question-again
-# The answer: Yes of the native dialog (classic), else Stop of the card - the label "Stop"
-# is also the button of the home page, so the card button by its place (run 37163875028)
-if ! tap_node '(Yes|OK)'; then tap 1158 1476 "card Stop"; fi
-sleep 12
-shot 12-stopped
+run_all() {
+  local p="$1"
+  test_dialog ${p}01-strava-upload 'Strava: upload.*'
+  test_dialog ${p}02-strava-upload-again 'Strava: upload.*'
+  test_dialog ${p}03-strava-connected 'Strava: account.*'
+  test_dialog ${p}04-peloton-connected 'Peloton.*'
+  test_dialog ${p}05-trial 'Trial.*'
+  test_dialog ${p}06-classifica 'Classifica.*'
+  test_dialog ${p}07-whatsonzwift 'What.s on Zwift.*'
+  test_dialog ${p}08-echelon-locked 'Echelon Locked.*'
+  test_dialog ${p}09-echelon-unlock 'Echelon Unlock.*'
+  test_dialog ${p}10-garmin-workout 'Garmin workout.*'
+  test_dialog ${p}11-garmin-ftp 'Garmin FTP.*'
+  test_dialog ${p}12-clipboard-found 'Clipboard workout found'
+  test_dialog ${p}13-clipboard-delete 'Clipboard workout ended.*'
+  test_dialog ${p}14-garmin-mfa 'Garmin MFA.*'
+  # the MFA one opened the settings page: back home
+  back "settings"
+  sleep 4
+  shot ${p}15-home
+}
+
+run_all l
 adb shell cmd uimode night yes || true
-sleep 5
-shot 13-dark
+sleep 6
+run_all d
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
