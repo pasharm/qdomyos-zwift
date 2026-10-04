@@ -1320,6 +1320,8 @@ function process_arr(arr) {
         }
     };
 
+    // a bike that sends no speed: an empty chart with a lone 0–5 scale; hidden by height (not display) like the heart box
+    $('#speedBox').css({ height: speed.some(function (p) { return p.y > 0; }) || inclination.some(function (p) { return !!p.y; }) ? '' : '0', overflow: 'hidden' });
     ctx = document.getElementById('canvasSpeedInclination').getContext('2d');
     var speedInclinationChart = makeChart(ctx, config);
 
