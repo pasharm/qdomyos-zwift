@@ -198,39 +198,36 @@ sleep 30
 if [ -f ui.xml ] && grep -q "Welcome to QZ" ui.xml; then tap $MENU "wizard back"; sleep 5; fi
 shot 04-home
 
-tap_ui 'Start' 720 2244
-sleep 8
-shot 05-started
-tap_ui 'Stop' 1200 2300
-sleep 3
-shot 06-stop-question
-back "stop question"
-sleep 3
-shot 07-after-back
-if [ -f ui.xml ] && grep -q "Stop the workout\|stop the workout" ui.xml; then
-  echo "!! stop question still shown after the back key" >> $STEPLOG
-fi
-tap_ui 'Stop' 1200 2300
-sleep 3
-shot 08-stop-question-again
-tap_node '(Yes|OK)' || tap_ui 'Stop' && echo "stop confirmed" >> $STEPLOG
-sleep 12
-shot 09-stopped
-
+# Settings first, on a fresh home page: settings.qml holds the Garmin MFA popup
 open_menu
 tap_drawer 'Settings' 400 1400
 sleep 12
-shot 10-settings
-scroll_to 'Garmin.*' && shot 11-garmin
-if tap_ui 'Garmin.*'; then sleep 5; shot 12-garmin-open; fi
+shot 05-settings
+scroll_to 'Garmin.*' && shot 06-garmin
+back "settings"
+sleep 4
+shot 07-home-again
+
+tap_ui 'Start' 720 2244
+sleep 8
+shot 08-started
+tap_ui 'Stop' 1200 2300
+sleep 3
+shot 09-stop-question
+back "stop question"
+sleep 3
+shot 10-after-back
+tap_ui 'Stop' 1200 2300
+sleep 3
+shot 11-stop-question-again
+# The answer: Yes of the native dialog (classic), else Stop of the card - the label "Stop"
+# is also the button of the home page, so the card button by its place (run 37163875028)
+if ! tap_node '(Yes|OK)'; then tap 1158 1476 "card Stop"; fi
+sleep 12
+shot 12-stopped
 adb shell cmd uimode night yes || true
 sleep 5
-shot 13-garmin-dark
-back "settings"
-sleep 3
-back "settings root"
-sleep 3
-shot 14-home-dark
+shot 13-dark
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
