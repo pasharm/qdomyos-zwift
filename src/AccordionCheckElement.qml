@@ -89,7 +89,21 @@ ColumnLayout {
     Item {
         id: cardItem
         Layout.fillWidth: true
-        implicitHeight: cardColumn.implicitHeight + cardColumn.anchors.topMargin + cardColumn.anchors.bottomMargin
+        // Set on a change, not bound: a binding made a loop with the layout of the section
+        // around it (as the content of StaticAccordionElement)
+        implicitHeight: 0
+        function updateHeight() {
+            implicitHeight = cardColumn.implicitHeight + cardColumn.anchors.topMargin + cardColumn.anchors.bottomMargin
+        }
+        Connections {
+            target: cardColumn
+            function onImplicitHeightChanged() { cardItem.updateHeight() }
+        }
+        Connections {
+            target: rootElement
+            function onModernCardChanged() { cardItem.updateHeight() }
+        }
+        Component.onCompleted: updateHeight()
 
         // A thin frame instead of a fill, as the settings in the sections; a tile that is on
         // (shown on the main page) in the accent like an open section
