@@ -33,6 +33,13 @@ ComboBox {
     popup.height: Math.min(count * Material.menuItemHeight + popup.topPadding + popup.bottomPadding,
                            control.Window.height - popup.topMargin - popup.bottomMargin)
 
+    // The stock list grows from 0.9 to its full size as it opens, and Qt places it while it is
+    // still scaled down: a long list was fitted to the window at 90% of its height, then grew
+    // past the bottom edge and jumped up a moment later. The list only fades in now.
+    popup.enter: Transition {
+        NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; easing.type: Easing.OutCubic; duration: 150 }
+    }
+
     // The stock list is as wide as the field, and long labels ("Auto (system language)",
     // "Portuguese (Brazil)" in some languages) were cut off
     popup.width: Math.min(Math.max(control.width, widestItem + 32 + popup.leftPadding + popup.rightPadding),
