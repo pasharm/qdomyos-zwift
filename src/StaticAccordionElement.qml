@@ -26,6 +26,13 @@ ColumnLayout {
 
     Layout.fillWidth: true;
 
+    // Modern look: a short copy of the header at the top of the page while the open section
+    // scrolls under it (as AccordionElement)
+    UiStickyHeader {
+        section: rootElement
+        header: sectionHeader
+    }
+
     UiSectionHeader {
         id: sectionHeader
         visible: window.ui.modern
