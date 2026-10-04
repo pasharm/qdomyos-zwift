@@ -35,9 +35,15 @@ ComboBox {
 
     // The stock list grows from 0.9 to its full size as it opens, and Qt places it while it is
     // still scaled down: a long list was fitted to the window at 90% of its height, then grew
-    // past the bottom edge and jumped up a moment later. The list only fades in now.
+    // past the bottom edge and jumped up a moment later. The list only fades in and out now;
+    // the scale is reset as well, since Qt 5.15 does not always restore it after the stock
+    // shrinking exit (a list opened again stayed at 90%).
     popup.enter: Transition {
+        PropertyAction { property: "scale"; value: 1.0 }
         NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; easing.type: Easing.OutCubic; duration: 150 }
+    }
+    popup.exit: Transition {
+        NumberAnimation { property: "opacity"; to: 0.0; easing.type: Easing.OutCubic; duration: 150 }
     }
 
     // The stock list is as wide as the field, and long labels ("Auto (system language)",
