@@ -9,7 +9,8 @@ ScrollView {
     contentWidth: -1
     // The page height from the column itself, as on the settings page: after a turn of the screen
     // ScrollView stopped following the height of its only child on a phone
-    contentHeight: tilesColumn.implicitHeight
+    // Modern look: a little air after the last tile, as on the settings page
+    contentHeight: tilesColumn.implicitHeight + (window.ui.modern ? 12 : 0)
     leftPadding: window.contentSideMargin
     rightPadding: window.contentSideMargin
     focus: true

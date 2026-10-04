@@ -16,7 +16,8 @@ import QtQuick 2.12 as Quick212
         // The page height from the column itself: ScrollView takes it from its only child on its
         // own, but on a phone it stopped following after a turn of the screen - the column grew
         // to 7254 while the page stayed 1310, a section opened after it could not be scrolled
-        contentHeight: column1.implicitHeight
+        // Modern look: a little air after the last section, so it does not touch the screen edge
+        contentHeight: column1.implicitHeight + (window.ui.modern ? 12 : 0)
         focus: true
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.fill: parent

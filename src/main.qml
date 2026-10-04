@@ -1268,6 +1268,10 @@ ApplicationWindow {
         // While the height animates the page moves under the finger; Home.qml ignores that movement
         property bool animating: headerHeightAnimation.running
         topPadding: getTopPadding()
+        // Clear of the side system bar and the cutout held sideways, as the page stack: with
+        // button navigation the bar on the right covered the rightmost button
+        leftPadding: getLeftPadding()
+        rightPadding: getRightPadding()
 
         ToolButton {
             id: toolButton
