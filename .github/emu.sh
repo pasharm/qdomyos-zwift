@@ -179,9 +179,49 @@ if best:
 }
 
 
-# T-126: a wrong value already saved (an update over an old version): weight -70 in qz.conf.
-# The field shows it, OK is grey; fixed to 70 OK is on and saves. Then "-" in Age is not
-# taken, a second point in Height is not taken, an emptied Age greys OK
+# T-128: what the classic look saves today for a wrong number. A row is found by its label,
+# the field is tapped at the field column, the text replaced, OK tapped, then the value in
+# qDomyos-Zwift.conf is logged ("conf key = ...") next to what the field shows afterwards
+row_xy() {
+  dump
+  [ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+want = sys.argv[2]
+ly = None; oks = []
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+    if not m: continue
+    x = (int(m.group(1)) + int(m.group(3))) // 2
+    y = (int(m.group(2)) + int(m.group(4))) // 2
+    if ly is None and re.fullmatch(want, t): ly = y
+    if t.upper() == "OK": oks.append((x, y))
+if ly is not None:
+    ox, oy = min(oks, key=lambda o: abs(o[1] - ly)) if oks else (1200, ly)
+    print(ox - 300, oy, ox, oy)
+' ui.xml "$1"
+}
+CONF="files/.config/Roberto Viola/qDomyos-Zwift.conf"
+conf_get() { adb shell "run-as $PKG cat '$CONF'" 2>/dev/null | tr -d '\r' | grep "^$1=" | head -1; }
+try_value() {
+  local label="$1" key="$2" value="$3" shotname="$4" xy fx fy ox oy
+  scroll_to "$label" || return 0
+  xy=$(row_xy "$label")
+  if [ -z "$xy" ]; then echo "!! row '$label' NOT FOUND" >> $STEPLOG; return 0; fi
+  read fx fy ox oy <<< "$xy"
+  echo "-- $key: type '$value' (field $fx $fy, OK $ox $oy)" >> $STEPLOG
+  adb shell input tap $fx $fy || true; sleep 2
+  adb shell input keyevent KEYCODE_MOVE_END || true
+  for i in $(seq 1 14); do adb shell input keyevent KEYCODE_DEL || true; done
+  [ -n "$value" ] && adb shell input text "$value"
+  sleep 1
+  shot "$shotname-typed"
+  hide_keyboard
+  adb shell input tap $ox $oy || true; sleep 3
+  shot "$shotname-ok"
+  echo "   after OK: conf $(conf_get $key)" >> $STEPLOG
+}
+
 adb logcat -c || true
 adb logcat > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
@@ -195,80 +235,22 @@ else
 fi
 sleep 30
 if [ -f ui.xml ] && grep -q "Welcome to QZ" ui.xml; then tap $MENU "wizard back"; sleep 5; fi
-shot 04-home
-
 open_menu
 tap_drawer 'Settings' 400 1400
 sleep 12
-shot 10-root
-
-# The state of the OK button of a row: enabled="..." of the OK node nearest below/right of y
-ok_state() {
-  dump
-  [ -f ui.xml ] && python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-want = sys.argv[2]
-field = None; oks = []
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
-    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
-    if not m: continue
-    y = (int(m.group(2)) + int(m.group(4))) // 2
-    if t == want and field is None: field = y
-    if t == "OK": oks.append((y, n.get("enabled")))
-if field is None: print("field %r NOT FOUND" % want)
-else:
-    y, e = min(oks, key=lambda o: abs(o[0] - field)) if oks else (0, "no OK")
-    print("field %r at y=%d, OK at y=%d enabled=%s" % (want, field, y, e))
-' ui.xml "$1" >> $STEPLOG
-}
-# Clear the focused field: cursor at the end on focus, then deletes
-clear_field() { for i in $(seq 1 12); do adb shell input keyevent KEYCODE_DEL || true; done; }
+echo "start: conf $(conf_get weight) / $(conf_get age) / $(conf_get heart_rate_resting)" >> $STEPLOG
 
 if scroll_to 'General Options' && tap_ui 'General Options'; then
   sleep 4
-  scroll_to '-70'
-  shot 20-weight-wrong
-  ok_state '-70'
-  if tap_node '-70'; then
-    sleep 2
-    clear_field
-    # A third decimal is dropped: 70.555 -> 70.55
-    adb shell input text 70.555 || true
-    sleep 2
-    shot 21-weight-fixed
-    ok_state '70.55'
-    ok_state '70.555'
-    hide_keyboard
-  fi
-  # Age: "-" is not taken, an empty field greys OK
-  if scroll_to '35' && tap_node '35'; then
-    sleep 2
-    clear_field
-    sleep 1
-    shot 22-age-empty
-    ok_state ''
-    adb shell input text '-' || true
-    # An integer setting: no decimal point, 40.5 -> 405
-    adb shell input text 40.5 || true
-    sleep 2
-    shot 23-age-minus-typed
-    ok_state '405'
-    ok_state '40.5'
-    ok_state '-405'
-    hide_keyboard
-  fi
-  # Height: 170.5.5 - the second point is not taken
-  if scroll_to '175' && tap_node '175'; then
-    sleep 2
-    clear_field
-    adb shell input text '170.5.5' || true
-    sleep 2
-    shot 24-height-points
-    ok_state '170.55'
-    ok_state '170.5'
-    hide_keyboard
-  fi
+  try_value 'Player Weight.*' weight '72,5' 20-weight-comma
+  try_value 'Player Weight.*' weight '170.5.5' 21-weight-points
+  try_value 'Player Weight.*' weight '-' 22-weight-minus
+  try_value 'Player Weight.*' weight '7a' 23-weight-letter
+  try_value 'Player Weight.*' weight '' 24-weight-empty
+  try_value 'Player Weight.*' weight '-80' 25-weight-negative
+  try_value 'Player Age.*' age '35.7' 30-age-fraction
+  try_value 'Player Age.*' age '-5' 31-age-negative
+  try_value 'Player Age.*' age '4,5' 32-age-comma
 fi
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
