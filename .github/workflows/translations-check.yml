@@ -1,0 +1,29 @@
+# Fork only (personal): new UI strings must be translated in every started language.
+name: translations-check
+
+on:
+  push:
+    paths:
+      - 'src/**.qml'
+      - 'src/**.cpp'
+      - 'src/**.h'
+      - 'src/translations/**.ts'
+      - '.github/scripts/check_translations.py'
+      - '.github/workflows/translations-check.yml'
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          filter: blob:none
+      - name: Fetch upstream master
+        run: |
+          git remote add upstream https://github.com/cagnulein/qdomyos-zwift.git
+          git fetch --filter=blob:none upstream master
+      - name: Check translations
+        run: python3 .github/scripts/check_translations.py upstream/master
