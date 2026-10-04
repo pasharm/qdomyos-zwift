@@ -31,7 +31,7 @@ adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
 # T-060, T-066: a fake treadmill, so the home page has tiles (without a device it shows the search help)
-printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\nweight=-70\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\nheart_rate_belt_name=Forerunner\nweight=-70\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -197,48 +197,17 @@ sleep 30
 if [ -f ui.xml ] && grep -q "Welcome to QZ" ui.xml; then tap $MENU "wizard back"; sleep 5; fi
 shot 04-home
 
-# test_dialog <shot> <regex of the button>: the menu item, the button, a shot, the back key
-test_dialog() {
-  open_menu
-  if ! tap_drawer 'TEST: dialogs.*'; then back "menu"; sleep 2; return 1; fi
-  sleep 3
-  scroll_to "$2" || true
-  if ! tap_ui "$2"; then back "test popup"; sleep 2; return 1; fi
-  sleep 4
-  shot "$1"
-  back "$1"
-  sleep 3
-}
-
-run_all() {
-  local p="$1"
-  test_dialog ${p}01-strava-upload 'Strava: upload.*'
-  test_dialog ${p}02-strava-upload-again 'Strava: upload.*'
-  test_dialog ${p}03-strava-connected 'Strava: account.*'
-  test_dialog ${p}04-peloton-connected 'Peloton.*'
-  test_dialog ${p}05-trial 'Trial.*'
-  test_dialog ${p}06-classifica 'Classifica.*'
-  test_dialog ${p}07-whatsonzwift 'What.s on Zwift.*'
-  test_dialog ${p}08-echelon-locked 'Echelon Locked.*'
-  test_dialog ${p}09-echelon-unlock 'Echelon Unlock.*'
-  test_dialog ${p}10-garmin-workout 'Garmin workout.*'
-  test_dialog ${p}11-garmin-ftp 'Garmin FTP.*'
-  test_dialog ${p}12-clipboard-found 'Clipboard workout found'
-  test_dialog ${p}13-clipboard-delete 'Clipboard workout ended.*'
-  test_dialog ${p}14-garmin-mfa 'Garmin MFA.*'
-  # the MFA one opened the settings page: back home
-  back "settings"
-  sleep 4
-  shot ${p}15-home
-}
-
-run_all l
-adb shell cmd uimode night yes || true
-sleep 6
-run_all d
-
-adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
-shot screenshot
+# T-147: a tap on the Bluetooth icon looks for the chosen heart rate sensor (Forerunner, absent here):
+# "Searching for Forerunner (HR sensor)..." at once, "... not found ..." after about 30 s, no crash
+tap_ui 'Bluetooth connection' 60 260
+sleep 2
+shot 05-hr-searching
+sleep 40
+shot 06-hr-not-found
+tap_ui 'Bluetooth connection' 60 260
+sleep 2
+shot 07-hr-searching-again
+echo "== T-147"; grep -E "reconnectHeartRateBelt|HR sensor" full_logcat.txt | tail -n 20 || true
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
 # If the recording broke off (adb restarted), the dump of the end is better than nothing
