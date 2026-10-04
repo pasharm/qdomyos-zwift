@@ -220,9 +220,12 @@ open_language() {
     if scroll_to 'App Language:?'; then
       shot "$t-20-language-row"
       if tap_node 'Auto \(System\)'; then
-        # T-162: a raw frame right after the tap (no dump before it), the list must not grow later
-        adb shell screencap -p /sdcard/$t-21a-list-early.png || true
-        adb pull /sdcard/$t-21a-list-early.png || true
+        # T-162: a burst of raw frames right after the tap (no dumps), to see the list move
+        for k in 0 1 2 3 4 5 6 7 8 9; do
+          adb shell screencap -p /sdcard/$t-21a-burst-$k.png || true
+          echo "burst $k $(date +%s.%N)" >> $STEPLOG
+        done
+        for k in 0 1 2 3 4 5 6 7 8 9; do adb pull /sdcard/$t-21a-burst-$k.png || true; done
         sleep 3
         shot "$t-21-language-list"
         echo "-- list items, status bar: $(adb shell dumpsys window | grep -m1 -o 'statusBars.*frame=[^ ]*' || true)" >> $STEPLOG
