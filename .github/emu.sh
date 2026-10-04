@@ -205,7 +205,7 @@ shot 10-root
 items_top() {
   python3 -c '
 import re, sys, xml.etree.ElementTree as ET
-names = ("Auto (System)", "English", "Italian", "German", "French", "Spanish")
+names = ("Auto (System)", "English", "Italian", "Portuguese (Brazil)", "Chinese (Simplified)", "Chinese (Traditional)")
 for n in ET.parse(sys.argv[1]).getroot().iter("node"):
     t = n.get("text") or n.get("content-desc") or ""
     if t in names:
@@ -220,6 +220,9 @@ open_language() {
     if scroll_to 'App Language:?'; then
       shot "$t-20-language-row"
       if tap_node 'Auto \(System\)'; then
+        # T-162: a raw frame right after the tap (no dump before it), the list must not grow later
+        adb shell screencap -p /sdcard/$t-21a-list-early.png || true
+        adb pull /sdcard/$t-21a-list-early.png || true
         sleep 3
         shot "$t-21-language-list"
         echo "-- list items, status bar: $(adb shell dumpsys window | grep -m1 -o 'statusBars.*frame=[^ ]*' || true)" >> $STEPLOG
