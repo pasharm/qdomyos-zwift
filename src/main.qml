@@ -941,10 +941,29 @@ ApplicationWindow {
         (AndroidStatusBar.leftInset > Math.max(AndroidStatusBar.systemBarLeftInset, AndroidStatusBar.waterfallLeftInset) ||
          AndroidStatusBar.rightInset > Math.max(AndroidStatusBar.systemBarRightInset, AndroidStatusBar.waterfallRightInset))
 
+    // true when a visible native WebView is inside `item`: it is drawn above every QML popup, so a
+    // dialog opened over that page cannot be seen or answered
+    function pageHasWebView(item) {
+        if (!item || !item.visible)
+            return false
+        if (String(item).indexOf("QQuickWebView") === 0)
+            return true
+        for (var i = 0; i < item.children.length; i++)
+            if (pageHasWebView(item.children[i]))
+                return true
+        return false
+    }
+
     Timer {
         interval: 5000
+        repeat: true
         running: window.landscapeCutoutPromptDue
         onTriggered: {
+            // over a web page (charts, editor, history) wait until the user leaves it
+            if (window.pageHasWebView(stackView.currentItem)) {
+                console.log("landscape cutout prompt: waiting, the page shows a WebView")
+                return
+            }
             settings.android_landscape_cutout_prompt_shown = true
             popupLandscapeCutout.visible = true
         }
