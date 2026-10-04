@@ -618,6 +618,19 @@ html.modern .program-bar {
     border-radius: var(--qz-radius-card, 16px);
 }
 
+/* Program list on its own full-width row, the three buttons share the row below */
+html.modern .program-bar select {
+    flex: 1 0 100%;
+    min-width: 0;
+}
+
+html.modern .program-bar button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
 html.modern .interval-panel {
     min-width: 0;
 }

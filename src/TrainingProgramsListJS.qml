@@ -466,22 +466,36 @@ ColumnLayout {
 
                 // WebView con grafico
                 // Preview data is now loaded via WebSocket, no runJavaScript needed
-                WebView {
-                    id: previewWebView
+                Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    url: "http://localhost:" + settings.value("template_inner_QZWS_port") + "/workoutpreview/preview.html" + window.ui.webThemeFragment()
-                    // Modern look: the theme reaches the page in the URL fragment; a later
-                    // change only moves the fragment (no reload), so it also goes through
-                    // runJavaScript
-                    property bool pageLoaded: false
-                    readonly property var pageTheme: window.ui.webTheme
-                    onPageThemeChanged: if (pageLoaded && pageTheme) runJavaScript(window.ui.webThemeScript())
-                    onLoadingChanged: {
-                        if (loadRequest.status === WebView.LoadSucceededStatus) {
-                            pageLoaded = true
-                            if (pageTheme)
-                                runJavaScript(window.ui.webThemeScript())
+
+                    // The native view is white until the page is loaded: kept hidden till then,
+                    // as in WorkoutEditor.qml. It is also drawn above every QML item, so it
+                    // hides while the delete question is open, or the question stays under it
+                    BusyIndicator {
+                        anchors.centerIn: parent
+                        visible: !previewWebView.pageLoaded
+                        running: visible
+                    }
+
+                    WebView {
+                        id: previewWebView
+                        anchors.fill: parent
+                        visible: pageLoaded && !deleteDialog.visible
+                        url: "http://localhost:" + settings.value("template_inner_QZWS_port") + "/workoutpreview/preview.html" + window.ui.webThemeFragment()
+                        // Modern look: the theme reaches the page in the URL fragment; a later
+                        // change only moves the fragment (no reload), so it also goes through
+                        // runJavaScript
+                        property bool pageLoaded: false
+                        readonly property var pageTheme: window.ui.webTheme
+                        onPageThemeChanged: if (pageLoaded && pageTheme) runJavaScript(window.ui.webThemeScript())
+                        onLoadingChanged: {
+                            if (loadRequest.status === WebView.LoadSucceededStatus) {
+                                pageLoaded = true
+                                if (pageTheme)
+                                    runJavaScript(window.ui.webThemeScript())
+                            }
                         }
                     }
                 }
