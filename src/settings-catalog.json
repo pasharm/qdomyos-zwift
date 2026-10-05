@@ -8659,7 +8659,7 @@
     {
       "key": "autolap_distance",
       "name": "AutoLap on Distance",
-      "description": "You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).",
+      "description": null,
       "parent": "Advanced Settings",
       "type": "number",
       "qmlType": "real",
@@ -11619,7 +11619,7 @@
     {
       "key": "fit_file_garmin_device_training_effect_device",
       "name": "Garmin device for FIT file",
-      "description": "Garmin device UNIT ID",
+      "description": null,
       "parent": "Garmin Options",
       "type": "integer",
       "qmlType": "int",
@@ -12821,7 +12821,7 @@
     {
       "key": "garmin_domain",
       "name": "Garmin Server",
-      "description": "Enter your Garmin Connect credentials to enable automatic upload. Your password is stored locally and securely.",
+      "description": null,
       "parent": "Garmin Options",
       "type": "string",
       "qmlType": "string",
@@ -15394,7 +15394,7 @@
     {
       "key": "mywhoosh_link_right_power",
       "name": "Right Power",
-      "description": "Note: Left and Right paddles are fixed to Steer Left/Right and cannot be configured",
+      "description": null,
       "parent": "OpenBikeControl",
       "type": "integer",
       "qmlType": "int",
