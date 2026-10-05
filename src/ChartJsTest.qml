@@ -38,8 +38,9 @@ ColumnLayout {
         sendMailFallback.restart()
     }
 
-    function loadAgain() {
-        if (window.ui.modern) {
+    // turned: after a turn of the screen, in both looks (see WORKAROUND below)
+    function loadAgain(turned) {
+        if (window.ui.modern || turned) {
             // Opened again before the last load showed: that poll and the rest of that
             // safety net are for the old page, both start over with the new load
             revealTimer.stop()
@@ -55,7 +56,9 @@ ColumnLayout {
     // blank below a straight line (up is fine); a page loaded in the new orientation is fine.
     // Seen on a OnePlus 12 in both looks; to see it: open the charts upright,
     // turn the phone, scroll down. So the page is loaded anew after a turn, drawn at once
-    // ("still") and scrolled back to the same share of its height
+    // ("still") and scrolled back to the same share of its height. The view is moved off the
+    // screen and back meanwhile, in the classic look too: a new load alone left the classic
+    // look as broken as before, the modern one (which moves it anyway) was fine
     readonly property bool landscape: width > height
     property bool loadedLandscape: false
     // Share of the page scrolled before the new load, -1 when there is nothing to restore
@@ -86,7 +89,7 @@ ColumnLayout {
                 // Turned again during the last load: that page is new, its scroll says nothing
                 if (column1.restoreScroll < 0)
                     column1.restoreScroll = share > 0 ? share : -1
-                column1.loadAgain()
+                column1.loadAgain(true)
             })
         }
     }
