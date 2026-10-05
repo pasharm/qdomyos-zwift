@@ -229,20 +229,20 @@ adb shell settings put system user_rotation 0 || true
 # A: opened upright, turned while open (the failing case)
 open_charts
 shot 10-portrait
-flings 11-portrait-down 700 2000 700 700
+flings 11-portrait-down 700 2000 700
 scroll_top
 adb shell settings put system user_rotation 1 || true
 sleep 8
 shot 20-turned
-flings 21-turned-down 1280 1200 1280 350
-flings 22-turned-up 1280 350 1280 1200
+flings 21-turned-down 1280 1200 350
+flings 22-turned-up 1280 350 1200
 back "leave charts"
 sleep 4
 
 # B: opened in landscape (fine on the phone)
 open_charts
 shot 30-landscape
-flings 31-landscape-down 1280 1200 1280 350
+flings 31-landscape-down 1280 1200 350
 
 back "leave charts"
 adb shell settings put system user_rotation 0 || true
