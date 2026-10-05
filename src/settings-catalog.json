@@ -9956,7 +9956,7 @@
     },
     {
       "key": "trainprogram_pid_hr_recovery_zone_limit",
-      "name": "PID Recovery Zone Lower Limit",
+      "name": "PID Recovery Zone Lower Limit (%)",
       "description": "Lower HR boundary (% of max HR) that defines the bottom of Zone 1 for 'Pushy' mode. Below this percentage the treadmill is at the bottom of the recovery area. Default: 60.",
       "parent": "Training Program Options",
       "type": "number",
