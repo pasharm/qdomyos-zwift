@@ -543,7 +543,7 @@
     {
       "key": "zwift_erg_filter_down",
       "name": "Zwift ERG Watt Down Filter",
-      "description": null,
+      "description": "See above. Default is 10.",
       "parent": "Bike Options",
       "type": "number",
       "qmlType": "real",
@@ -1743,7 +1743,7 @@
     {
       "key": "tile_datetime_order",
       "name": "order index",
-      "description": null,
+      "description": "Displays the current time.",
       "parent": "tile_datetime_enabled",
       "type": "integer",
       "qmlType": "int",
@@ -1836,7 +1836,7 @@
     {
       "key": "tile_target_cadence_order",
       "name": "order index",
-      "description": null,
+      "description": "Displays target cadence.",
       "parent": "tile_target_cadence_enabled",
       "type": "integer",
       "qmlType": "int",
@@ -6541,7 +6541,7 @@
     },
     {
       "key": "tile_preset_resistance_1_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_resistance_1_enabled",
       "type": "string",
@@ -6555,7 +6555,7 @@
     },
     {
       "key": "tile_preset_resistance_2_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_resistance_2_enabled",
       "type": "string",
@@ -6569,7 +6569,7 @@
     },
     {
       "key": "tile_preset_resistance_3_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_resistance_3_enabled",
       "type": "string",
@@ -6583,7 +6583,7 @@
     },
     {
       "key": "tile_preset_resistance_4_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_resistance_4_enabled",
       "type": "string",
@@ -6597,7 +6597,7 @@
     },
     {
       "key": "tile_preset_resistance_5_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_resistance_5_enabled",
       "type": "string",
@@ -6611,7 +6611,7 @@
     },
     {
       "key": "tile_preset_speed_1_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_speed_1_enabled",
       "type": "string",
@@ -6625,7 +6625,7 @@
     },
     {
       "key": "tile_preset_speed_2_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_speed_2_enabled",
       "type": "string",
@@ -6639,7 +6639,7 @@
     },
     {
       "key": "tile_preset_speed_3_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_speed_3_enabled",
       "type": "string",
@@ -6653,7 +6653,7 @@
     },
     {
       "key": "tile_preset_speed_4_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_speed_4_enabled",
       "type": "string",
@@ -6667,7 +6667,7 @@
     },
     {
       "key": "tile_preset_speed_5_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_speed_5_enabled",
       "type": "string",
@@ -6681,7 +6681,7 @@
     },
     {
       "key": "tile_preset_inclination_1_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_inclination_1_enabled",
       "type": "string",
@@ -6695,7 +6695,7 @@
     },
     {
       "key": "tile_preset_inclination_2_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_inclination_2_enabled",
       "type": "string",
@@ -6709,7 +6709,7 @@
     },
     {
       "key": "tile_preset_inclination_3_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_inclination_3_enabled",
       "type": "string",
@@ -6723,7 +6723,7 @@
     },
     {
       "key": "tile_preset_inclination_4_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_inclination_4_enabled",
       "type": "string",
@@ -6737,7 +6737,7 @@
     },
     {
       "key": "tile_preset_inclination_5_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_inclination_5_enabled",
       "type": "string",
@@ -8659,7 +8659,7 @@
     {
       "key": "autolap_distance",
       "name": "AutoLap on Distance",
-      "description": null,
+      "description": "You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).",
       "parent": "Advanced Settings",
       "type": "number",
       "qmlType": "real",
@@ -10530,7 +10530,7 @@
     },
     {
       "key": "tile_preset_powerzone_1_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_powerzone_1_enabled",
       "type": "string",
@@ -10603,7 +10603,7 @@
     },
     {
       "key": "tile_preset_powerzone_2_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_powerzone_2_enabled",
       "type": "string",
@@ -10676,7 +10676,7 @@
     },
     {
       "key": "tile_preset_powerzone_3_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_powerzone_3_enabled",
       "type": "string",
@@ -10749,7 +10749,7 @@
     },
     {
       "key": "tile_preset_powerzone_4_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_powerzone_4_enabled",
       "type": "string",
@@ -10822,7 +10822,7 @@
     },
     {
       "key": "tile_preset_powerzone_5_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_powerzone_5_enabled",
       "type": "string",
@@ -10895,7 +10895,7 @@
     },
     {
       "key": "tile_preset_powerzone_6_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": null,
       "parent": "tile_preset_powerzone_6_enabled",
       "type": "string",
@@ -10968,7 +10968,7 @@
     },
     {
       "key": "tile_preset_powerzone_7_color",
-      "name": "Please choose a color",
+      "name": "color",
       "description": "Power zone presets allow quick access to specific training zones with customizable labels and values.",
       "parent": "tile_preset_powerzone_7_enabled",
       "type": "string",
@@ -11618,8 +11618,8 @@
     },
     {
       "key": "fit_file_garmin_device_training_effect_device",
-      "name": "Fit File Garmin Device Training Effect Device",
-      "description": null,
+      "name": "Garmin device for FIT file",
+      "description": "Garmin device UNIT ID",
       "parent": "Garmin Options",
       "type": "integer",
       "qmlType": "int",
@@ -12262,7 +12262,7 @@
     {
       "key": "height",
       "name": "Player Height",
-      "description": "Invalid format! Use feet'inches (e.g., 6'2\")",
+      "description": "Enter your height for more accurate BMR and active calories calculation. Use centimeters for metric or feet'inches\" format (e.g., 5'10\") for imperial units.",
       "parent": "General Options",
       "type": "number",
       "qmlType": "real",
@@ -12821,7 +12821,7 @@
     {
       "key": "garmin_domain",
       "name": "Garmin Server",
-      "description": null,
+      "description": "Enter your Garmin Connect credentials to enable automatic upload. Your password is stored locally and securely.",
       "parent": "Garmin Options",
       "type": "string",
       "qmlType": "string",
@@ -14955,7 +14955,7 @@
     },
     {
       "key": "mywhoosh_link_left_down",
-      "name": "Left Controller Down",
+      "name": "Left Down",
       "description": null,
       "parent": "OpenBikeControl",
       "type": "integer",
@@ -15008,7 +15008,7 @@
     },
     {
       "key": "mywhoosh_link_left_left",
-      "name": "Left Controller Left",
+      "name": "Left Left",
       "description": null,
       "parent": "OpenBikeControl",
       "type": "integer",
@@ -15061,7 +15061,7 @@
     },
     {
       "key": "mywhoosh_link_left_power",
-      "name": "Left Controller Power",
+      "name": "Left Power",
       "description": null,
       "parent": "OpenBikeControl",
       "type": "integer",
@@ -15114,7 +15114,7 @@
     },
     {
       "key": "mywhoosh_link_left_right",
-      "name": "Left Controller Right",
+      "name": "Left Right",
       "description": null,
       "parent": "OpenBikeControl",
       "type": "integer",
@@ -15167,7 +15167,7 @@
     },
     {
       "key": "mywhoosh_link_left_shoulder",
-      "name": "Left Controller Shoulder",
+      "name": "Left Shoulder",
       "description": null,
       "parent": "OpenBikeControl",
       "type": "integer",
@@ -15220,7 +15220,7 @@
     },
     {
       "key": "mywhoosh_link_left_up",
-      "name": "Left Controller Up",
+      "name": "Left Up",
       "description": null,
       "parent": "OpenBikeControl",
       "type": "integer",
@@ -15287,7 +15287,7 @@
     },
     {
       "key": "mywhoosh_link_right_a",
-      "name": "Right Controller A",
+      "name": "Right A",
       "description": null,
       "parent": "OpenBikeControl",
       "type": "integer",
@@ -15340,7 +15340,7 @@
     },
     {
       "key": "mywhoosh_link_right_b",
-      "name": "Right Controller B",
+      "name": "Right B",
       "description": null,
       "parent": "OpenBikeControl",
       "type": "integer",
@@ -15393,8 +15393,8 @@
     },
     {
       "key": "mywhoosh_link_right_power",
-      "name": "Right Controller Power",
-      "description": null,
+      "name": "Right Power",
+      "description": "Note: Left and Right paddles are fixed to Steer Left/Right and cannot be configured",
       "parent": "OpenBikeControl",
       "type": "integer",
       "qmlType": "int",
@@ -15446,7 +15446,7 @@
     },
     {
       "key": "mywhoosh_link_right_shoulder",
-      "name": "Right Controller Shoulder",
+      "name": "Right Shoulder",
       "description": null,
       "parent": "OpenBikeControl",
       "type": "integer",
@@ -15499,7 +15499,7 @@
     },
     {
       "key": "mywhoosh_link_right_y",
-      "name": "Right Controller Y",
+      "name": "Right Y",
       "description": null,
       "parent": "OpenBikeControl",
       "type": "integer",
@@ -15552,7 +15552,7 @@
     },
     {
       "key": "mywhoosh_link_right_z",
-      "name": "Right Controller Z",
+      "name": "Right Z",
       "description": null,
       "parent": "OpenBikeControl",
       "type": "integer",
@@ -15647,7 +15647,7 @@
     },
     {
       "key": "zwiftplay_gear_lb",
-      "name": "Left Button Gear Action",
+      "name": "Power Up (LB)",
       "description": null,
       "parent": "Zwift Play Options",
       "type": "integer",
@@ -15672,7 +15672,7 @@
     },
     {
       "key": "zwiftplay_gear_ls1",
-      "name": "Left Shift 1 Gear Action",
+      "name": "Left Shifter Up (LS1)",
       "description": null,
       "parent": "Zwift Play Options",
       "type": "integer",
@@ -15697,7 +15697,7 @@
     },
     {
       "key": "zwiftplay_gear_ls2",
-      "name": "Left Shift 2 Gear Action",
+      "name": "Left Shifter Down (LS2)",
       "description": null,
       "parent": "Zwift Play Options",
       "type": "integer",
@@ -15722,7 +15722,7 @@
     },
     {
       "key": "zwiftplay_gear_paddle_left",
-      "name": "Left Paddle Gear Action",
+      "name": "Left Paddle (ZL)",
       "description": null,
       "parent": "Zwift Play Options",
       "type": "integer",
@@ -15747,7 +15747,7 @@
     },
     {
       "key": "zwiftplay_gear_paddle_right",
-      "name": "Right Paddle Gear Action",
+      "name": "Right Paddle (ZR)",
       "description": null,
       "parent": "Zwift Play Options",
       "type": "integer",
@@ -15772,7 +15772,7 @@
     },
     {
       "key": "zwiftplay_gear_rb",
-      "name": "Right Button Gear Action",
+      "name": "Ride On (RB)",
       "description": null,
       "parent": "Zwift Play Options",
       "type": "integer",
@@ -15797,7 +15797,7 @@
     },
     {
       "key": "zwiftplay_gear_rs1",
-      "name": "Right Shift 1 Gear Action",
+      "name": "Right Shifter Up (RS1)",
       "description": null,
       "parent": "Zwift Play Options",
       "type": "integer",
@@ -15822,7 +15822,7 @@
     },
     {
       "key": "zwiftplay_gear_rs2",
-      "name": "Right Shift 2 Gear Action",
+      "name": "Right Shifter Down (RS2)",
       "description": null,
       "parent": "Zwift Play Options",
       "type": "integer",
