@@ -31,6 +31,8 @@ ColumnLayout {
     // and the alt text of the picture for a moment before the charts came
     function reopen() {
         headerToolbar.visible = true
+        // Opened anew: at the top, not at a scroll left over from a turn
+        restoreScroll = -1
         if (pageLoaded)
             loadAgain()
         sendMailFallback.restart()
@@ -44,6 +46,7 @@ ColumnLayout {
             pageShown = false
             revealSafety.restart()
         }
+        restoreSafety.restart()
         webView.url = pageUrl("?still=" + Date.now())
     }
 
@@ -59,6 +62,14 @@ ColumnLayout {
     property real restoreScroll: -1
     onLandscapeChanged: turnReload.restart()
 
+    // Charts that never came (no session data): no late jump to the old scroll, and the poll
+    // of the classic look stops
+    Timer {
+        id: restoreSafety
+        interval: 8000
+        onTriggered: column1.restoreScroll = -1
+    }
+
     // A turn comes as several size changes: one load once they have settled
     Timer {
         id: turnReload
@@ -69,7 +80,12 @@ ColumnLayout {
             webView.runJavaScript("(function () { var e = document.documentElement;" +
                                   " var m = e.scrollHeight - window.innerHeight;" +
                                   " return m > 0 ? window.scrollY / m : 0; })()", function (share) {
-                column1.restoreScroll = share > 0 ? share : -1
+                // Left the page meanwhile: reopen() loads it anew anyway
+                if (!column1.visible)
+                    return
+                // Turned again during the last load: that page is new, its scroll says nothing
+                if (column1.restoreScroll < 0)
+                    column1.restoreScroll = share > 0 ? share : -1
                 column1.loadAgain()
             })
         }
