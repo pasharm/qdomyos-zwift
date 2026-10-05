@@ -47,6 +47,7 @@ ColumnLayout {
             pageShown = false
             revealSafety.restart()
         }
+        turnHidden = false
         restoreSafety.restart()
         webView.url = pageUrl("?still=" + Date.now())
     }
@@ -63,7 +64,17 @@ ColumnLayout {
     property bool loadedLandscape: false
     // Share of the page scrolled before the new load, -1 when there is nothing to restore
     property real restoreScroll: -1
-    onLandscapeChanged: turnReload.restart()
+    // Hidden by a turn and not yet handed to a new load
+    property bool turnHidden: false
+    onLandscapeChanged: {
+        // Off the screen at once: for the 300 ms below the old page showed stretched to the new
+        // size and then vanished, a flash
+        if (pageLoaded && visible && pageShown && landscape !== loadedLandscape) {
+            turnHidden = true
+            pageShown = false
+        }
+        turnReload.restart()
+    }
 
     // Charts that never came (no session data): no late jump to the old scroll, and the poll
     // of the classic look stops
@@ -78,11 +89,18 @@ ColumnLayout {
         id: turnReload
         interval: 300
         onTriggered: {
-            if (!column1.pageLoaded || !column1.visible || column1.landscape === column1.loadedLandscape)
+            if (!column1.pageLoaded || !column1.visible || column1.landscape === column1.loadedLandscape) {
+                // Turned back before it settled: the page is as it was, shown again
+                if (column1.turnHidden) {
+                    column1.turnHidden = false
+                    column1.pageShown = true
+                }
                 return
+            }
             webView.runJavaScript("(function () { var e = document.documentElement;" +
                                   " var m = e.scrollHeight - window.innerHeight;" +
                                   " return m > 0 ? window.scrollY / m : 0; })()", function (share) {
+                column1.turnHidden = false
                 // Left the page meanwhile: reopen() loads it anew anyway
                 if (!column1.visible)
                     return
