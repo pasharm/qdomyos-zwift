@@ -179,8 +179,9 @@ if best:
 }
 
 
-# T-161: the App Language list of the classic look must not hide its first item under the
-# status bar. The list is shot open; steps.log gets the top edge of every list item
+# T-163: the charts page turned to landscape while open. On the phone the page then scrolls down
+# without momentum and stays blank below a straight line; up is fine. Raw frames right after
+# every fling (burst, no dumps) catch the blank part before the WebView catches up
 adb logcat -c || true
 adb logcat > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
@@ -196,53 +197,54 @@ sleep 30
 if [ -f ui.xml ] && grep -q "Welcome to QZ" ui.xml; then tap $MENU "wizard back"; sleep 5; fi
 shot 04-home
 
-open_menu
-tap_drawer 'Settings' 400 1400
-sleep 12
-shot 10-root
+# burst <name>: raw frames as fast as screencap goes, pulled afterwards
+burst() {
+  local k
+  for k in 0 1 2 3 4 5; do
+    adb shell screencap -p /sdcard/$1-$k.png || true
+    echo "burst $1-$k $(date +%s.%N)" >> $STEPLOG
+  done
+  for k in 0 1 2 3 4 5; do adb pull /sdcard/$1-$k.png > /dev/null 2>&1 || true; done
+}
+# flings <prefix> <x> <y_from> <y_to>: four quick swipes, a burst after each and a shot when settled
+flings() {
+  local i
+  for i in 1 2 3 4; do
+    echo "fling $1 $i: $2 $3 -> $2 $4" >> $STEPLOG
+    adb shell input swipe $2 $3 $2 $4 120 || true
+    burst "$1-$i"
+    sleep 3
+    shot "$1-$i-settled"
+  done
+}
+open_charts() {
+  open_menu
+  tap_drawer 'Charts' 400 1400
+  sleep 20
+}
 
-# items_top: text and top edge of every node whose text is one of the languages
-items_top() {
-  python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-names = ("Auto (System)", "English", "Italian", "Portuguese (Brazil)", "Chinese (Simplified)", "Chinese (Traditional)")
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = n.get("text") or n.get("content-desc") or ""
-    if t in names:
-        print("   item", repr(t), n.get("bounds"))
-' ui.xml >> $STEPLOG 2>&1 || true
-}
-open_language() {
-  local t="$1"
-  scroll_top
-  if scroll_to 'General Options' && tap_ui 'General Options'; then
-    sleep 4
-    if scroll_to 'App Language:?'; then
-      shot "$t-20-language-row"
-      if tap_node 'Auto \(System\)'; then
-        # T-162: a burst of raw frames right after the tap (no dumps), to see the list move
-        for k in 0 1 2 3 4 5 6 7 8 9; do
-          adb shell screencap -p /sdcard/$t-21a-burst-$k.png || true
-          echo "burst $k $(date +%s.%N)" >> $STEPLOG
-        done
-        for k in 0 1 2 3 4 5 6 7 8 9; do adb pull /sdcard/$t-21a-burst-$k.png || true; done
-        sleep 3
-        shot "$t-21-language-list"
-        echo "-- list items, status bar: $(adb shell dumpsys window | grep -m1 -o 'statusBars.*frame=[^ ]*' || true)" >> $STEPLOG
-        items_top
-        back "close list"; sleep 2
-      fi
-    fi
-    scroll_top
-    tap_ui 'General Options'; sleep 3
-  fi
-}
-open_language light
-# Held sideways: the status bar stays on top, the list is short of room
 adb shell settings put system accelerometer_rotation 0 || true
+adb shell settings put system user_rotation 0 || true
+
+# A: opened upright, turned while open (the failing case)
+open_charts
+shot 10-portrait
+flings 11-portrait-down 700 2000 700 700
+scroll_top
 adb shell settings put system user_rotation 1 || true
-sleep 6
-open_language land
+sleep 8
+shot 20-turned
+flings 21-turned-down 1280 1200 1280 350
+flings 22-turned-up 1280 350 1280 1200
+back "leave charts"
+sleep 4
+
+# B: opened in landscape (fine on the phone)
+open_charts
+shot 30-landscape
+flings 31-landscape-down 1280 1200 1280 350
+
+back "leave charts"
 adb shell settings put system user_rotation 0 || true
 sleep 4
 
