@@ -2925,7 +2925,7 @@ import QtQuick 2.12 as Quick212
                                     elide: Text.ElideRight
                                 }
                                 delegate: ItemDelegate {
-                                    width: searchSettingComboBox.width
+                                    width: ListView.view.width
                                     text: searchSettingComboBox.labelFor(modelData)
                                     contentItem: Label {
                                         text: searchSettingComboBox.labelFor(modelData)
@@ -2962,7 +2962,7 @@ import QtQuick 2.12 as Quick212
                                     elide: Text.ElideRight
                                 }
                                 delegate: ItemDelegate {
-                                    width: searchVirtualComboBox.width
+                                    width: ListView.view.width
                                     text: modelData
                                     contentItem: Label {
                                         text: modelData

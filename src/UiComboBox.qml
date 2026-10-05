@@ -23,6 +23,26 @@ T.ComboBox {
         return itemLabels && itemLabels.hasOwnProperty(v) ? itemLabels[v] : v
     }
 
+    // Width of the widest item, measured when the list opens (#5236)
+    property real widestItem: 0
+
+    TextMetrics {
+        id: itemMetrics
+        font: control.font
+    }
+
+    Connections {
+        target: control.popup
+        function onAboutToShow() {
+            var widest = 0
+            for (var i = 0; i < control.count; ++i) {
+                itemMetrics.text = control.labelFor(control.textAt(i))
+                widest = Math.max(widest, itemMetrics.advanceWidth)
+            }
+            control.widestItem = Math.ceil(widest)
+        }
+    }
+
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
@@ -139,13 +159,20 @@ T.ComboBox {
 
     popup: T.Popup {
         y: control.editable ? control.height - 5 : 0
-        width: control.width
-        height: Math.min(contentItem.implicitHeight + topPadding + bottomPadding, control.Window.height - topMargin - bottomMargin)
+        // As wide as the longest item (long labels were cut off), not narrower than the field
+        // and kept inside the window; the height from the item count, the ListView builds its
+        // items lazily (#5236)
+        width: Math.min(Math.max(control.width, control.widestItem + 32 + leftPadding + rightPadding),
+                        control.Window.width - leftMargin - rightMargin)
+        height: Math.min(control.count * control.Material.menuItemHeight + topPadding + bottomPadding,
+                         control.Window.height - topMargin - bottomMargin)
         transformOrigin: Item.Top
         // The window runs under the status and gesture bars (edge to edge) in both looks, a
         // long list pushed to the top hid its first item under the status bar (#5236)
         topMargin: 12 + window.getTopPadding()
         bottomMargin: 12 + window.getBottomPadding()
+        leftMargin: 12
+        rightMargin: 12
 
         Material.theme: control.Material.theme
         Material.accent: control.Material.accent
@@ -157,17 +184,17 @@ T.ComboBox {
         bottomPadding: control.modern ? 8 : 0
 
         enter: Transition {
-            // grow_fade_in. The end values are given (as in Qt 6): Qt 5.15 restores opacity and
-            // scale after the exit to what they were when it began, and a list closed during
-            // its own opening kept a part of them - opened again, it stayed invisible and took
-            // the next tap on an item nobody could see (the second tap on a combo did nothing)
-            NumberAnimation { property: "scale"; from: 0.9; to: 1.0; easing.type: Easing.OutQuint; duration: 220 }
+            // Fade in only, no grow from 0.9: Qt 5.15 places the list while it is still scaled
+            // down, a long list was fitted to the window at 90% of its height, grew past the
+            // bottom edge and jumped up a moment later (#5236). The end values are given (as in
+            // Qt 6): Qt 5.15 restores opacity and scale after the exit to what they were when it
+            // began, and a list closed during its own opening kept a part of them - opened
+            // again, it stayed invisible and took the next tap on an item nobody could see
+            PropertyAction { property: "scale"; value: 1.0 }
             NumberAnimation { property: "opacity"; from: 0.0; to: 1.0; easing.type: Easing.OutCubic; duration: 150 }
         }
 
         exit: Transition {
-            // shrink_fade_out
-            NumberAnimation { property: "scale"; to: 0.9; easing.type: Easing.OutQuint; duration: 220 }
             NumberAnimation { property: "opacity"; to: 0.0; easing.type: Easing.OutCubic; duration: 150 }
         }
 
