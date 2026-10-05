@@ -2489,6 +2489,7 @@ import QtQuick 2.12 as Quick212
             property real watt_max: 9999
             property bool proform_trainer_8_0_pftl59721_0: false
             property bool android_landscape_cutout_prompt_shown: false
+            property bool pafers_rower: false
             property bool fitshow_bike_question: true
             property bool resistance_buttons_accumulate: false
             // The look of the modern interface: main.qml keeps the same keys and applies them at
@@ -11910,7 +11911,7 @@ import QtQuick 2.12 as Quick212
                                 checked: settings.pafers_treadmill
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                onClicked: { settings.pafers_treadmill = checked; window.settings_restart_to_apply = true; }
+                                onClicked: { settings.pafers_treadmill = checked; if (checked) settings.pafers_rower = false; window.settings_restart_to_apply = true; }
                             }
                             IndicatorOnlySwitch {
                                 id: bhIboxsterPlusDelegate
@@ -11924,7 +11925,21 @@ import QtQuick 2.12 as Quick212
                                 checked: settings.pafers_treadmill_bh_iboxster_plus
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                onClicked: { settings.pafers_treadmill_bh_iboxster_plus = checked; window.settings_restart_to_apply = true; }
+                                onClicked: { settings.pafers_treadmill_bh_iboxster_plus = checked; if (checked) settings.pafers_rower = false; window.settings_restart_to_apply = true; }
+                            }
+                            IndicatorOnlySwitch {
+                                id: pafersRowerDelegate
+                                text: qsTr("Pafers Rower")
+                                spacing: 0
+                                bottomPadding: 0
+                                topPadding: 0
+                                rightPadding: 0
+                                leftPadding: 0
+                                clip: false
+                                checked: settings.pafers_rower
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                Layout.fillWidth: true
+                                onClicked: { settings.pafers_rower = checked; if (checked) { settings.pafers_treadmill = false; settings.pafers_treadmill_bh_iboxster_plus = false; } window.settings_restart_to_apply = true; }
                             }
                         }
                     }
