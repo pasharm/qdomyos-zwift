@@ -72,6 +72,7 @@ ScrollView {
         Label {
             Layout.preferredWidth: parent.width
             id: ttsLabel
+            //: Section title: table that replaces each incline value the treadmill receives with a user-defined value. Avoid the technical word "override".
             text: qsTr("Treadmill Inclination Overrides")
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
@@ -137,6 +138,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 0%:")
                 Layout.fillWidth: true
             }
@@ -160,6 +162,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 0.5%:")
                 Layout.fillWidth: true
             }
@@ -183,6 +186,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 1.0%:")
                 Layout.fillWidth: true
             }
@@ -206,6 +210,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 1.5%:")
                 Layout.fillWidth: true
             }
@@ -229,6 +234,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 2.0%:")
                 Layout.fillWidth: true
             }
@@ -252,6 +258,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 2.5%:")
                 Layout.fillWidth: true
             }
@@ -275,6 +282,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 3.0%:")
                 Layout.fillWidth: true
             }
@@ -298,6 +306,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 3.5%:")
                 Layout.fillWidth: true
             }
@@ -321,6 +330,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 4.0%:")
                 Layout.fillWidth: true
             }
@@ -344,6 +354,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 4.5%:")
                 Layout.fillWidth: true
             }
@@ -367,6 +378,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 5.0%:")
                 Layout.fillWidth: true
             }
@@ -390,6 +402,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 5.5%:")
                 Layout.fillWidth: true
             }
@@ -413,6 +426,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 6.0%:")
                 Layout.fillWidth: true
             }
@@ -436,6 +450,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 6.5%:")
                 Layout.fillWidth: true
             }
@@ -459,6 +474,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 7.0%:")
                 Layout.fillWidth: true
             }
@@ -482,6 +498,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 7.5%:")
                 Layout.fillWidth: true
             }
@@ -505,6 +522,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 8.0%:")
                 Layout.fillWidth: true
             }
@@ -528,6 +546,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 8.5%:")
                 Layout.fillWidth: true
             }
@@ -551,6 +570,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 9.0%:")
                 Layout.fillWidth: true
             }
@@ -574,6 +594,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 9.5%:")
                 Layout.fillWidth: true
             }
@@ -597,6 +618,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 10.0%:")
                 Layout.fillWidth: true
             }
@@ -620,6 +642,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 10.5%:")
                 Layout.fillWidth: true
             }
@@ -643,6 +666,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 11.0%:")
                 Layout.fillWidth: true
             }
@@ -666,6 +690,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 11.5%:")
                 Layout.fillWidth: true
             }
@@ -689,6 +714,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 12.0%:")
                 Layout.fillWidth: true
             }
@@ -712,6 +738,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 12.5%:")
                 Layout.fillWidth: true
             }
@@ -735,6 +762,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 13.0%:")
                 Layout.fillWidth: true
             }
@@ -758,6 +786,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 13.5%:")
                 Layout.fillWidth: true
             }
@@ -781,6 +810,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 14.0%:")
                 Layout.fillWidth: true
             }
@@ -804,6 +834,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 14.5%:")
                 Layout.fillWidth: true
             }
@@ -827,6 +858,7 @@ ScrollView {
         RowLayout {
             spacing: 10
             Label {
+                //: Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.
                 text: qsTr("Override 15.0%:")
                 Layout.fillWidth: true
             }

@@ -6162,6 +6162,7 @@ import QtQuick 2.12 as Quick212
                                 onClicked: settings.domyosbike_notfmts = checked
                             }
                             IndicatorOnlySwitch {
+                                //: Domyos bike switch: QZ sends its own calories and distance values to the bike console display.
                                 text: qsTr("Fix Calories/Km to Console")
                                 spacing: 0
                                 bottomPadding: 0
@@ -11399,6 +11400,7 @@ import QtQuick 2.12 as Quick212
                     }
 
                     NewPageElement {
+                        //: Section title: table that replaces each incline value the treadmill receives with a user-defined value. Avoid the technical word "override".
                         title: qsTr("Inclination Overrides")
                         indicatRectColor: Material.color(Material.Grey)
                         textColor: Material.color(Material.Grey)
@@ -17298,7 +17300,7 @@ import QtQuick 2.12 as Quick212
                                     }
 
                                     Label {
-                                        text: qsTr("This changes the virtual Bluetooth bridge from the standard FMTS to the Power Sensor interface. Default is off.")
+                                        text: qsTr("This changes the virtual Bluetooth bridge from the standard FTMS to the Power Sensor interface. Default is off.")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
                                         font.pixelSize: Qt.application.font.pixelSize - 2
