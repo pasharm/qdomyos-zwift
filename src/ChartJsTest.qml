@@ -31,17 +31,48 @@ ColumnLayout {
     // and the alt text of the picture for a moment before the charts came
     function reopen() {
         headerToolbar.visible = true
-        if (pageLoaded) {
-            if (window.ui.modern) {
-                // Opened again before the last load showed: that poll and the rest of that
-                // safety net are for the old page, both start over with the new load
-                revealTimer.stop()
-                pageShown = false
-                revealSafety.restart()
-            }
-            webView.url = pageUrl("?still=" + Date.now())
-        }
+        if (pageLoaded)
+            loadAgain()
         sendMailFallback.restart()
+    }
+
+    function loadAgain() {
+        if (window.ui.modern) {
+            // Opened again before the last load showed: that poll and the rest of that
+            // safety net are for the old page, both start over with the new load
+            revealTimer.stop()
+            pageShown = false
+            revealSafety.restart()
+        }
+        webView.url = pageUrl("?still=" + Date.now())
+    }
+
+    // WORKAROUND: the Android WebView of Qt does not recover from a turn of the screen while the
+    // page is shown. Scrolled down afterwards, it moves without momentum and leaves the page
+    // blank below a straight line (up is fine); a page loaded in the new orientation is fine.
+    // Seen on a OnePlus 12 in both looks; to see it: open the charts upright,
+    // turn the phone, scroll down. So the page is loaded anew after a turn, drawn at once
+    // ("still") and scrolled back to the same share of its height
+    readonly property bool landscape: width > height
+    property bool loadedLandscape: false
+    // Share of the page scrolled before the new load, -1 when there is nothing to restore
+    property real restoreScroll: -1
+    onLandscapeChanged: turnReload.restart()
+
+    // A turn comes as several size changes: one load once they have settled
+    Timer {
+        id: turnReload
+        interval: 300
+        onTriggered: {
+            if (!column1.pageLoaded || !column1.visible || column1.landscape === column1.loadedLandscape)
+                return
+            webView.runJavaScript("(function () { var e = document.documentElement;" +
+                                  " var m = e.scrollHeight - window.innerHeight;" +
+                                  " return m > 0 ? window.scrollY / m : 0; })()", function (share) {
+                column1.restoreScroll = share > 0 ? share : -1
+                column1.loadAgain()
+            })
+        }
     }
 
     function pageUrl(query) {
@@ -52,6 +83,7 @@ ColumnLayout {
     // (and the mail timer stopped: a page destroyed before its 10 s sent nothing)
     StackView.onRemoved: {
         sendMailFallback.stop()
+        turnReload.stop()
         column1.visible = false
     }
 
@@ -79,6 +111,9 @@ ColumnLayout {
             }
             if (loadRequest.status === WebView.LoadSucceededStatus) {
                 column1.pageLoaded = true
+                // The orientation the page was laid out for (a turn during the load changes it
+                // too: the page follows the size until it has drawn)
+                column1.loadedLandscape = column1.landscape
                 revealTimer.start()
                 // A theme change during the load only moved the fragment: apply the current one
                 if (column1.pageTheme)
@@ -93,15 +128,23 @@ ColumnLayout {
         id: revealTimer
         interval: 100; repeat: true
         onTriggered: {
-            if (column1.pageShown) {
+            // The classic look shows the page at once: the poll runs there only to restore the scroll
+            if (column1.pageShown && column1.restoreScroll < 0) {
                 stop()
                 return
             }
             webView.runJavaScript("(function () { var i = document.querySelector('.workout_image');" +
                                   " return typeof Chart !== 'undefined' && Object.keys(Chart.instances).length > 0 &&" +
                                   " (!i || i.complete); })()", function (drawn) {
-                if (drawn)
-                    column1.pageShown = true
+                if (!drawn)
+                    return
+                if (column1.restoreScroll >= 0) {
+                    webView.runJavaScript("(function (s) { var e = document.documentElement;" +
+                                          " window.scrollTo(0, s * Math.max(0, e.scrollHeight - window.innerHeight)); })(" +
+                                          column1.restoreScroll + ")")
+                    column1.restoreScroll = -1
+                }
+                column1.pageShown = true
             })
         }
     }
