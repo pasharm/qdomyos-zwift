@@ -401,7 +401,10 @@ class bluetooth : public QObject, public SignalHandler {
     QTimer rescanTimer;
     qint64 nextRescanMs = 0;
     bool rescanStopped = false;
+    // Android 7.0 and later ignore the scan starts after the 5th one in this window
+    static constexpr qint64 scanStartWindowMs = 30000;
     QList<qint64> scanStartsMs;
+    void pruneScanStarts(qint64 now);
     // Android: while Bluetooth is off, asks the adapter every 2 s whether it is on again
     QTimer bluetoothOffPoll;
 
