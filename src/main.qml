@@ -1962,7 +1962,7 @@ ApplicationWindow {
                             width: 8
                             height: 8
                             radius: 4
-                            color: (typeof rootItem !== "undefined" && rootItem && rootItem.device) ? "#7EDC8A" : window.ui.textMuted
+                            color: (typeof rootItem !== "undefined" && rootItem && rootItem.device) ? window.ui.ok : window.ui.textMuted
                         }
                         Label {
                             width: parent.width - 14
