@@ -168,9 +168,8 @@ shot 02-first-screen        # the wizard opens on the first run
 # T-060: with the fake treadmill the wizard does not open; its back keys would leave the app
 shot 04-home
 
-# T-095: the Charts page updates itself while the workout runs (fake bike: the session grows
-# by a point a second), the period selector at the top right shows only then, and the page
-# opened by Stop draws once and keeps its selector hidden.
+
+
 wait_tiles() {
   local i
   # The fake bike comes after the first search ends: wait for its tiles (at most 3 min)
@@ -238,70 +237,70 @@ has() {
   fi
 }
 
+# T-171, T-172: the same screens on the build before and after the theme tokens, in the light
+# and the dark theme. The shots of the two runs are compared pixel by pixel: only the
+# "connected" dot of the drawer may differ (T-171), and in the light theme only.
+go_home() {
+  local i
+  for i in 1 2 3; do
+    dump
+    [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml && return 0
+    back "to home"
+    sleep 2
+  done
+}
+visit() {   # visit <drawer label> <shot> [seconds]
+  go_home
+  open_menu
+  if tap_drawer "$1"; then
+    sleep ${3:-8}
+    shot "$2"
+  else
+    echo "!! drawer '$1' NOT FOUND" >> $STEPLOG
+  fi
+}
+round() {   # round <suffix>
+  local s="$1"
+  go_home
+  sleep 5
+  shot h-home-$s
+  open_menu
+  shot m-menu-$s
+  back "menu"
+  sleep 2
+  visit 'Wizard' w-wizard-$s
+  visit 'Workouts History' hi-history-$s 12
+  visit 'Open Train Program' tp-programs-$s
+  visit 'Open GPX' gpx-$s
+  visit 'Credits' cr-credits-$s
+  # Settings > Wahoo Options: the gear table (gears.qml)
+  go_home
+  open_menu
+  if tap_drawer 'Settings'; then
+    sleep 8
+    if scroll_to 'Wahoo Options'; then
+      tap_ui 'Wahoo Options'
+      sleep 4
+      shot st-wahoo-$s
+    fi
+  fi
+  # The stop question: the scrim of the dialog
+  go_home
+  tap_ui 'Stop' 1200 2300
+  sleep 3
+  shot sq-stop-question-$s
+  tap_node '(No|Cancel)' || back "stop question"
+  sleep 2
+}
+
 wait_tiles
-sleep 20                           # some seconds of the session before the page opens
-shot h-home
-open_menu
-shot m-menu
-tap_drawer 'Charts' 400 900
 sleep 10
-shot c-00
-page c-00
-has 'Live update.*' "selector shown while the workout runs"
-sleep 15
-shot c-15                            # the time axis longer than on c-00
-page c-15
-sleep 15
-shot c-30
-page c-30
-
-# The period: the buttons at the top right
-tap_node '1 s' && echo "picked 1 s" >> $STEPLOG
-sleep 3
-shot c-1s-a
-sleep 4
-shot c-1s-b
-page c-1s
-
-# A tooltip: it should stay over the next redraws
-tap 700 900 "power chart"
-sleep 1
-shot c-tip-0
-sleep 4
-shot c-tip-4
-
-# Off: no redraws
-tap_node 'Off' && echo "picked Off" >> $STEPLOG
-sleep 3
-shot c-off-a
-sleep 15
-shot c-off-b                         # the same as c-off-a
-
-# 1 s again, then home: the page left behind (kept hidden in the modern look) must not poll
-tap_node '1 s' && echo "picked 1 s again" >> $STEPLOG
-sleep 3
-adb shell log -t T095 "mark charts-left" || true
-back "charts"
-sleep 20
-adb shell log -t T095 "mark home-20s" || true
-shot h-back
-tap_ui 'Stop' 1200 2300
-sleep 3
-shot h-stop-confirm
-tap_node '(Yes|OK|Stop)' && echo "stop confirmed" >> $STEPLOG
-sleep 12
-shot e-end
-page e-end
-dump
-if [ -f ui.xml ] && python3 .github/uitap.py ui.xml 'Live update.*' > /dev/null; then
-  echo "!! check selector hidden after stop: SHOWN" >> $STEPLOG
-else
-  echo "check selector hidden after stop: OK" >> $STEPLOG
-fi
-sleep 15
-shot e-end-15                         # the same as e-end
-echo "savechart lines (pictures for the mail; one set from the end page):" >> $STEPLOG
-grep -c "savechart" full_logcat.txt >> $STEPLOG || true
+adb shell cmd uimode night no || true
+sleep 5
+round light
+adb shell cmd uimode night yes || true
+sleep 8
+round dark
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
@@ -329,7 +328,3 @@ grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
 echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
 grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
 echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
-echo "== polling while the charts page was left (between the marks; 0 expected)"
-awk '/T095.*mark charts-left/{f=1;next} /T095.*mark home-20s/{f=0} f && /WS >> \{"msg":"getsessionarray"\}/' full_logcat.txt | tee -a $STEPLOG | wc -l
-echo "== requests of the charts page: whole / parts (\"from\")"
-echo "whole: $(grep -c 'WS >> {"msg":"getsessionarray"}' full_logcat.txt) parts: $(grep -c 'WS >> {"msg":"getsessionarray","content":{"from"' full_logcat.txt)" | tee -a $STEPLOG
