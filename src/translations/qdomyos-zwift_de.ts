@@ -2928,6 +2928,21 @@ Möchten Sie die QZ-Einstellungen aktualisieren?</translation>
         <translation>min/mi</translation>
     </message>
     <message>
+        <location filename="../webtranslation.cpp" line="210"/>
+        <source>Full screen</source>
+        <translation>Vollbild</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="211"/>
+        <source>Exit full screen</source>
+        <translation>Vollbild beenden</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="212"/>
+        <source>Swipe left or right to switch charts</source>
+        <translation>Zum Wechseln der Diagramme nach links oder rechts wischen</translation>
+    </message>
+    <message>
         <location filename="../webtranslation.cpp" line="201"/>
         <source>Live update</source>
         <translation>Live-Aktualisierung</translation>

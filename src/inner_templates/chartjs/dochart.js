@@ -77,15 +77,20 @@ function makeChart(ctx, config) {
         if (config.data.labels)
             old.data.labels = config.data.labels;
         qzChartTheme.restyle(old, config); // the new options in the app theme, like create()
+        qzChartFullscreen.prepare(ctx.canvas, config.options); // spread: the big look on them
         old.options = config.options;
         old.update('none');
+        qzChartFullscreen.chartChanged();
         return old;
     }
     if (old)
         old.destroy();
     if (liveRefresh)
         config.options.animation = false;
-    return qzChartTheme.create(ctx, config);
+    qzChartFullscreen.prepare(ctx.canvas, config.options);
+    var chart = qzChartTheme.create(ctx, config);
+    qzChartFullscreen.chartChanged(); // its full screen button
+    return chart;
 }
 
 function t(key, fallback) {

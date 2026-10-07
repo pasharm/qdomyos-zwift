@@ -2717,6 +2717,21 @@ Do you want to update QZ settings?</source>
         <translation>мин/милю</translation>
     </message>
     <message>
+        <location filename="../webtranslation.cpp" line="210"/>
+        <source>Full screen</source>
+        <translation>На весь экран</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="211"/>
+        <source>Exit full screen</source>
+        <translation>Свернуть</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="212"/>
+        <source>Swipe left or right to switch charts</source>
+        <translation>Листайте влево или вправо, чтобы переключать графики</translation>
+    </message>
+    <message>
         <location filename="../webtranslation.cpp" line="194"/>
         <source>lvl</source>
         <translation>ур.</translation>

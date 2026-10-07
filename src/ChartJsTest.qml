@@ -22,6 +22,17 @@ ColumnLayout {
     // laid out for a wrong width and opened zoomed in
     property bool pageShown: !window.ui.modern
     readonly property real offScreen: pageShown ? 0 : Screen.width + Screen.height
+    // A chart spread over the page (chartfullscreen.js): the page tells it in its title
+    readonly property bool chartFullscreen: webView.title.indexOf("#fullscreen") >= 0
+
+    // Back (the key or the arrow of the toolbar, main.qml navigateBack) closes the spread
+    // chart first instead of the page
+    function handleBack() {
+        if (!chartFullscreen)
+            return false
+        webView.runJavaScript("window.qzChartFullscreen && window.qzChartFullscreen.exit()")
+        return true
+    }
 
     // Modern look: the page is kept (main.qml) and opened again: the charts of the workout so
     // far are drawn anew, and the mail goes as on a fresh open. Drawn at once ("still" in the
