@@ -191,7 +191,7 @@ page() {
 import re, sys, xml.etree.ElementTree as ET
 for n in ET.parse(sys.argv[1]).getroot().iter("node"):
     t, d = n.get("text") or "", n.get("content-desc") or ""
-    if re.search(r"[0-9]|Live|update|Off", t + d):
+    if re.search(r"[0-9]|Live|update|Off|screen|Swipe", t + d):
         print("   ", n.get("class"), repr(t), repr(d), n.get("bounds"))
 ' ui.xml | head -40 >> $STEPLOG
   cp ui.xml dumps/page-$1.xml 2>/dev/null || true
@@ -244,62 +244,72 @@ shot h-home
 open_menu
 shot m-menu
 tap_drawer 'Charts' 400 900
-sleep 10
+sleep 12
 shot c-00
 page c-00
-has 'Live update.*' "selector shown while the workout runs"
-sleep 15
-shot c-15                            # the time axis longer than on c-00
-page c-15
-sleep 15
-shot c-30
-page c-30
+has 'Full screen' "full screen buttons on the cards"
 
-# The period: the buttons at the top right
-tap_node '1 s' && echo "picked 1 s" >> $STEPLOG
-sleep 3
-shot c-1s-a
+# T-153: a chart spread over the screen, swipes between the charts, back closes the spread
+tap_node 'Full screen' && echo "spread a chart" >> $STEPLOG
+sleep 2
+shot f-01-spread                     # the chart over the whole page, the swipe hint at the bottom
+page f-01
+has 'Exit full screen' "the button turned into Exit"
 sleep 4
-shot c-1s-b
-page c-1s
+shot f-02-hint-gone
+adb shell input swipe 1200 1500 200 1500 250 || true
+echo "swipe left" >> $STEPLOG
+sleep 2
+shot f-03-next                       # the next chart, the counter one up
+page f-03
+adb shell input swipe 1200 1500 200 1500 250 || true
+sleep 2
+shot f-04-next2
+adb shell input swipe 200 1500 1200 1500 250 || true
+echo "swipe right" >> $STEPLOG
+sleep 2
+shot f-05-back-one
+page f-05
+sleep 8
+shot f-06-live                       # still spread after live redraws (time axis longer)
+page f-06
 
-# A tooltip: it should stay over the next redraws
-tap 700 900 "power chart"
-sleep 1
-shot c-tip-0
+# turned to landscape while spread
+adb shell settings put system accelerometer_rotation 0 || true
+adb shell settings put system user_rotation 1 || true
 sleep 4
-shot c-tip-4
+shot f-07-landscape
+page f-07
+adb shell settings put system user_rotation 0 || true
+sleep 4
+shot f-08-portrait
 
-# Off: no redraws
-tap_node 'Off' && echo "picked Off" >> $STEPLOG
-sleep 3
-shot c-off-a
-sleep 15
-shot c-off-b                         # the same as c-off-a
-
-# 1 s again, then home: the page left behind (kept hidden in the modern look) must not poll
-tap_node '1 s' && echo "picked 1 s again" >> $STEPLOG
-sleep 3
-adb shell log -t T095 "mark charts-left" || true
-back "charts"
-sleep 20
-adb shell log -t T095 "mark home-20s" || true
-shot h-back
-tap_ui 'Stop' 1200 2300
-sleep 3
-shot h-stop-confirm
-tap_node '(Yes|OK|Stop)' && echo "stop confirmed" >> $STEPLOG
-sleep 12
-shot e-end
-page e-end
+# the back key closes the spread chart, not the page
+back "spread chart"
+sleep 2
+shot f-09-after-back
+page f-09
+has 'Full screen' "the page with its cards again"
 dump
-if [ -f ui.xml ] && python3 .github/uitap.py ui.xml 'Live update.*' > /dev/null; then
-  echo "!! check selector hidden after stop: SHOWN" >> $STEPLOG
+if [ -f ui.xml ] && python3 .github/uitap.py ui.xml 'Exit full screen' > /dev/null; then
+  echo "!! check spread closed by back: STILL SPREAD" >> $STEPLOG
 else
-  echo "check selector hidden after stop: OK" >> $STEPLOG
+  echo "check spread closed by back: OK" >> $STEPLOG
 fi
-sleep 15
-shot e-end-15                         # the same as e-end
+
+# the back arrow of the toolbar does the same
+tap_node 'Full screen' && echo "spread again" >> $STEPLOG
+sleep 2
+tap $MENU "toolbar back arrow"
+sleep 2
+shot f-10-after-arrow
+page f-10
+has 'Full screen' "the page with its cards after the arrow"
+
+# a second back leaves the page as before
+back "charts"
+sleep 5
+shot h-back
 echo "savechart lines (pictures for the mail; one set from the end page):" >> $STEPLOG
 grep -c "savechart" full_logcat.txt >> $STEPLOG || true
 
