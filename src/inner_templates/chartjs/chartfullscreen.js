@@ -142,7 +142,7 @@
                 return;
             setPath(options, ['scales', id, 'ticks', 'font', 'size'], tick);
             // zone names drawn inside the chart (a negative padding in px) grow with the font
-            var padding = scale.ticks.padding;
+            var padding = scale.ticks && scale.ticks.padding; // raw options: ticks may be missing
             if (typeof padding === 'number' && padding < 0)
                 setPath(options, ['scales', id, 'ticks', 'padding'], Math.round(padding * tick / BASE_FONT_PX));
             if (scale.title && scale.title.display)

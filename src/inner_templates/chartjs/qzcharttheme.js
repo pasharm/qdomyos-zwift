@@ -195,6 +195,7 @@
             apply(config, list, chart.$qzPalette);
             chart.$qzPatches = list;
             fullscreen('prepare', chart.canvas, config.options); // a spread chart stays big
+            fullscreen('chartChanged'); // a card shown by the new data counts in "i / n"
         },
 
         // The fill of the canvas: dochart.js draws it under each chart
