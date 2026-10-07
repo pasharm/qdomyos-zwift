@@ -466,8 +466,16 @@ ColumnLayout {
                 // WebView con grafico
                 // Preview data is now loaded via WebSocket, no runJavaScript needed
                 Item {
+                    id: previewBox
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+
+                    // A turn of the screen: the view goes off the screen and back (WebViewTurnFix.qml)
+                    WebViewTurnFix {
+                        id: previewTurnFix
+                        area: previewBox
+                        active: previewWebView.visible
+                    }
 
                     // The native view is white until the page is loaded: kept hidden till then,
                     // as in WorkoutEditor.qml. It is also drawn above every QML item, so it
@@ -481,6 +489,8 @@ ColumnLayout {
                     WebView {
                         id: previewWebView
                         anchors.fill: parent
+                        anchors.leftMargin: -previewTurnFix.shift
+                        anchors.rightMargin: previewTurnFix.shift
                         visible: pageLoaded && !deleteDialog.visible
                         url: "http://localhost:" + settings.value("template_inner_QZWS_port") + "/workoutpreview/preview.html" + window.ui.webThemeFragment()
                         // Modern look: the theme reaches the page in the URL fragment; a later
