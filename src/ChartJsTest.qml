@@ -24,6 +24,9 @@ ColumnLayout {
     readonly property real offScreen: pageShown ? 0 : Screen.width + Screen.height
     // A chart spread over the page (chartfullscreen.js): the page tells it in its title
     property bool chartFullscreen: false
+    // The spread chart takes the app header's room too: back is the key or the collapse button
+    // of the chart then, the arrow of the toolbar goes with the header
+    onChartFullscreenChanged: headerToolbar.visible = !chartFullscreen
 
     // Back (the key; in the modern look also the arrow of the toolbar, main.qml navigateBack)
     // closes the spread chart first instead of the page. Cleared at once: a second back
@@ -104,6 +107,7 @@ ColumnLayout {
     // A kept page is taken off the stack, not destroyed: hidden until pushed again
     // (and the mail timer stopped: a page destroyed before its 10 s sent nothing)
     StackView.onRemoved: {
+        handleBack() // a spread chart closed, the header back for the next page
         sendMailFallback.stop()
         turnShow.stop()
         turnHidden = false
