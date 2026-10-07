@@ -167,12 +167,37 @@
         }
     }
 
+    // The charts of dochart.js ask for their tooltip the Chart.js 2 way (plugins.tooltips: mode
+    // index, no intersect), which Chart.js 3 ignores: a held finger showed the values only right
+    // on a point, and the lines draw none. The same the Chart.js 3 way, the time of the point in
+    // the title of a line chart (its x axis counts seconds) and in the bars of a distribution
+    function touchTooltip(config) {
+        var options = config.options;
+        var old = options && options.plugins && options.plugins.tooltips;
+        if (!old || options.interaction)
+            return;
+        options.interaction = { mode: old.mode, intersect: old.intersect };
+        var tooltip = options.plugins.tooltip = options.plugins.tooltip || {};
+        var callbacks = tooltip.callbacks = tooltip.callbacks || {};
+        if (config.type === 'line' && !callbacks.title)
+            callbacks.title = function (items) { return items.length ? clock(items[0].parsed.x) : ''; };
+        else if (config.type === 'bar' && !callbacks.label)
+            callbacks.label = function (item) { return clock(item.parsed.y); };
+    }
+
+    function clock(seconds) {
+        var s = Math.round(seconds), h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60);
+        function two(n) { return (n < 10 ? '0' : '') + n; }
+        return (h ? h + ':' + two(m) : m) + ':' + two(s % 60);
+    }
+
     function rootOf(chart) {
         return { options: chart.config.options, data: chart.config.data };
     }
 
     window.qzChartTheme = {
         create: function (ctx, config) {
+            touchTooltip(config);
             var list = patches(config);
             var pal = palette();
             apply(config, list, pal);
@@ -191,6 +216,7 @@
         // dochart.js): the new options get the chart's palette and become its patches, so
         // refresh() and withLight() keep working on them
         restyle: function (chart, config) {
+            touchTooltip(config);
             var list = patches(config);
             apply(config, list, chart.$qzPalette);
             chart.$qzPatches = list;

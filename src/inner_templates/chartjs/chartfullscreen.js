@@ -150,6 +150,9 @@
         });
         setPath(options, ['plugins', 'title', 'font', 'size'], Math.round(tick * 1.2));
         setPath(options, ['plugins', 'legend', 'labels', 'font', 'size'], tick);
+        // the values under a held finger, readable as the axes
+        setPath(options, ['plugins', 'tooltip', 'titleFont', 'size'], tick);
+        setPath(options, ['plugins', 'tooltip', 'bodyFont', 'size'], tick);
     }
 
     // the button sits in the title row: a taller row keeps it off the top label of the y axis
