@@ -315,6 +315,37 @@ has 'Full screen' "the page with its cards after the collapse button"
 back "charts"
 sleep 5
 shot h-back
+
+# T-184: the pages with a web view take a turn of the screen (WebViewTurnFix.qml): opened
+# upright, turned to landscape and back. The emulator does not show the blank band itself;
+# this checks that the pages open and turn without QML errors and come back on the screen
+turn_page() {
+  adb shell settings put system accelerometer_rotation 0 || true
+  adb shell settings put system user_rotation 1 || true
+  sleep 4
+  shot $1-landscape
+  adb shell settings put system user_rotation 0 || true
+  sleep 4
+  shot $1-portrait
+}
+open_menu
+tap_drawer 'Workout Editor' 400 1300
+sleep 10
+shot e-00
+turn_page e
+back "editor"
+sleep 3
+open_menu
+tap_drawer 'Open Train Program' 400 1200
+sleep 8
+shot p-00
+turn_page p
+back "programs"
+sleep 3
+echo "turn fix QML errors:" >> $STEPLOG
+grep -c -E "WebViewTurnFix|WorkoutEditor.qml:[0-9]+|TrainingProgramsListJS.qml:[0-9]+|PreviewChart.qml:[0-9]+" full_logcat.txt >> $STEPLOG || true
+grep -E "WebViewTurnFix|WorkoutEditor.qml:[0-9]+|TrainingProgramsListJS.qml:[0-9]+|PreviewChart.qml:[0-9]+" full_logcat.txt | head -20 >> $STEPLOG || true
+
 echo "savechart lines (pictures for the mail; one set from the end page):" >> $STEPLOG
 grep -c "savechart" full_logcat.txt >> $STEPLOG || true
 
