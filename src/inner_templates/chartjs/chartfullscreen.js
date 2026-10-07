@@ -3,7 +3,7 @@
 // button, the back key (ChartJsTest.qml, handleBack) or the back arrow bring the page back.
 // A CSS overlay, not the Fullscreen API: that one does not work in the app's web view.
 // The app learns the state from the page title (WebView.title): FS_TITLE while spread.
-// Plain ES5 like the other scripts of the page: the web view of Android 5.1 runs it.
+// Plain ES5, the syntax of dochartlive.js: the web view of Android 5.1 runs it.
 (function () {
     var FS_TITLE = 'Line Chart #fullscreen';
     var ICON_EXPAND = 'M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z';
@@ -13,6 +13,7 @@
     var TOAST_MS = 3000;
     var BUTTON_ROW_PX = 36; // the height of the button (chart.htm, .qz-fs-button)
     var BASE_FONT_PX = 12;  // Chart.js default font size, the one the page's charts use
+    var FIRST_ANIMATION_MS = 1500; // Chart.js animates a new chart for 1000 ms
 
     var normalTitle = document.title;
     var current = null;     // the spread card
@@ -77,8 +78,13 @@
             button.className = 'qz-fs-button';
             // not in the summary picture of the workout mail (html2canvas)
             button.setAttribute('data-html2canvas-ignore', 'true');
+            // not while the chart first grows: the end of that animation saves its picture for
+            // the mail (animation.onComplete), and a spread chart would go there big
+            var readyAt = Date.now() + FIRST_ANIMATION_MS;
             button.addEventListener('click', function (e) {
                 e.stopPropagation();
+                if (Date.now() < readyAt)
+                    return;
                 if (current === card)
                     exit();
                 else
@@ -159,8 +165,9 @@
     function redraw(chart) {
         if (!chart)
             return;
-        chart.resize();
+        // update first: resize() sizes by the options resolved at the last update
         chart.update('none');
+        chart.resize();
     }
 
     function showToast(text) {

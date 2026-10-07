@@ -23,13 +23,15 @@ ColumnLayout {
     property bool pageShown: !window.ui.modern
     readonly property real offScreen: pageShown ? 0 : Screen.width + Screen.height
     // A chart spread over the page (chartfullscreen.js): the page tells it in its title
-    readonly property bool chartFullscreen: webView.title.indexOf("#fullscreen") >= 0
+    property bool chartFullscreen: false
 
-    // Back (the key or the arrow of the toolbar, main.qml navigateBack) closes the spread
-    // chart first instead of the page
+    // Back (the key; in the modern look also the arrow of the toolbar, main.qml navigateBack)
+    // closes the spread chart first instead of the page. Cleared at once: a second back
+    // before the new title comes leaves the page as usual
     function handleBack() {
         if (!chartFullscreen)
             return false
+        chartFullscreen = false
         webView.runJavaScript("window.qzChartFullscreen && window.qzChartFullscreen.exit()")
         return true
     }
@@ -83,6 +85,7 @@ ColumnLayout {
         // it), the page runs down to the edge like the other pages
         anchors.leftMargin: -column1.offScreen
         anchors.rightMargin: column1.offScreen
+        onTitleChanged: column1.chartFullscreen = title.indexOf("#fullscreen") >= 0
         onLoadingChanged: {
             if (loadRequest.errorString) {
                 console.error(loadRequest.errorString);
