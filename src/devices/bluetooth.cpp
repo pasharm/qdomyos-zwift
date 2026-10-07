@@ -400,6 +400,12 @@ void bluetooth::finished() {
 
 bool bluetooth::isSearching() const { return discoveryAgent && discoveryAgent->isActive(); }
 
+// Drops the scan starts that have left the window the Android limit counts
+void bluetooth::pruneScanStarts(qint64 now) {
+    while (!scanStartsMs.isEmpty() && now - scanStartsMs.first() > scanStartWindowMs)
+        scanStartsMs.removeFirst();
+}
+
 int bluetooth::searchNow() {
     if (!useDiscovery || !discoveryAgent || device())
         return 0;
@@ -411,12 +417,11 @@ int bluetooth::searchNow() {
     if (discoveryAgent->isActive())
         return 0;
 
-    while (!scanStartsMs.isEmpty() && now - scanStartsMs.first() > 30000)
-        scanStartsMs.removeFirst();
+    pruneScanStarts(now);
     // Android 7.0 and later ignore the 6th scan start in 30 s. 4 leaves room for an automatic search.
     // Instead of a search that would find nothing, the next one is due when a start leaves the 30 s window.
     if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::AndroidNougat && scanStartsMs.size() >= 4) {
-        const qint64 waitMs = 30000 - (now - scanStartsMs.at(scanStartsMs.size() - 4)) + 500;
+        const qint64 waitMs = scanStartWindowMs - (now - scanStartsMs.at(scanStartsMs.size() - 4)) + 500;
         nextRescanMs = now + waitMs;
         rescanTimer.start(int(waitMs));
         debug(QStringLiteral("BTLE scanning on request postponed by the Android limit"));
@@ -439,8 +444,7 @@ void bluetooth::startDiscovery() {
     // A start while scanning does nothing, so it is not counted.
     if (discoveryAgent && !discoveryAgent->isActive()) {
         const qint64 now = QDateTime::currentMSecsSinceEpoch();
-        while (!scanStartsMs.isEmpty() && now - scanStartsMs.first() > 30000)
-            scanStartsMs.removeFirst();
+        pruneScanStarts(now);
         scanStartsMs.append(now);
     }
 
