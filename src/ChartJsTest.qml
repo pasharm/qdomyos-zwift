@@ -24,9 +24,10 @@ ColumnLayout {
     readonly property real offScreen: pageShown ? 0 : Screen.width + Screen.height
     // A chart spread over the page (chartfullscreen.js): the page tells it in its title
     property bool chartFullscreen: false
-    // The spread chart takes the app header's room too: back is the key or the collapse button
-    // of the chart then, the arrow of the toolbar goes with the header
-    onChartFullscreenChanged: headerToolbar.visible = !chartFullscreen
+    // The spread chart takes the app header's room too: the header folds to the status bar
+    // inset as on the scrolled home page (hidden, it left the page under the status bar).
+    // Back is the key or the collapse button of the chart then, the toolbar arrow folds away
+    onChartFullscreenChanged: headerToolbar.scrolledAway = chartFullscreen
 
     // Back (the key; in the modern look also the arrow of the toolbar, main.qml navigateBack)
     // closes the spread chart first instead of the page. Cleared at once: a second back
