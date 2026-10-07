@@ -20,13 +20,30 @@ T.Button {
     // click saved NaN without the "Setting saved!" toast. A caller's own enabled wins
     property Item inputField: null
     enabled: !(modern && inputField && !inputField.acceptableInput)
+    // Modern look: the OK button right after a drop-down list saves as soon as an item is picked,
+    // as in the system settings, and is hidden. False keeps the button: a list whose OK asks
+    // for a restart, or a button that is not a save (Skip, Restore Default)
+    property bool applyOnSelect: true
+    property Item comboField: null
+    visible: !(modern && applyOnSelect && comboField)
+    // After the list's own onActivated (it sets displayText, which the OK handler reads)
+    function applySelection() {
+        if (control.modern && control.applyOnSelect)
+            control.clicked()
+    }
     Component.onCompleted: {
         if (!parent)
             return
         const siblings = parent.children
-        for (let i = 0; i < siblings.length && siblings[i] !== control; ++i)
+        let i = 0
+        for (; i < siblings.length && siblings[i] !== control; ++i)
             if (siblings[i].acceptableInput !== undefined)
                 inputField = siblings[i]
+        const before = i > 0 ? siblings[i - 1] : null
+        if (before && before.activated !== undefined && before.popup !== undefined) {
+            comboField = before
+            before.activated.connect(function () { Qt.callLater(control.applySelection) })
+        }
     }
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,

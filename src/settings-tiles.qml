@@ -431,11 +431,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = speedOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_speed_order = speedOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okSpeedOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -466,11 +464,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = inclinationOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_inclination_order = inclinationOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okinclinationOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -531,11 +527,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = cadenceOrderTextField.currentValue
-                            if (window.ui.modern) { settings.tile_cadence_order = cadenceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                          }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okcadenceOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -567,11 +561,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = elevationOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_elevation_order = elevationOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okelevationOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -602,11 +594,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = negativeInclinationOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_negative_inclination_order = negativeInclinationOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_negative_inclination_order = negativeInclinationOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -637,11 +627,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = caloriesOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_calories_order = caloriesOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okcaloriesOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -673,11 +661,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = odometerOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_odometer_order = odometerOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okodometerOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -725,11 +711,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = paceOrderTextField.currentValue
-                            if (window.ui.modern) { settings.tile_pace_order = paceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                          }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okpaceOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -761,11 +745,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = avgpaceOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_avg_pace_order = avgpaceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okavgpaceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -798,11 +780,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = gradeAdjustedPaceOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_grade_adjusted_pace_order = gradeAdjustedPaceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okgradeAdjustedPaceOrderButton
                     text: "OK"
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -848,11 +828,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = resistanceOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_resistance_order = resistanceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okresistanceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -900,11 +878,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = wattOrderTextField.currentValue
-                            if (window.ui.modern) { settings.tile_watt_order = wattOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                          }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okwattOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -937,11 +913,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = weightLossOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_weight_loss_order = weightLossOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okweightLossOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -974,11 +948,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = avgwattOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_avgwatt_order = avgwattOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okavgwattOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1010,11 +982,9 @@ ScrollView {
 						  Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
 						  onActivated: {
 						      displayText = avgwattLapOrderTextField.currentValue
-						      if (window.ui.modern) { settings.tile_avg_watt_lap_order = avgwattLapOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
 								}
 							}
 					 UiButton {
-					     visible: !window.ui.modern
 					     id: okavgwattLapOrderButton
 						  text: qsTr("OK")
 						  Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1046,11 +1016,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = ftpOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_ftp_order = ftpOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okftpOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1110,11 +1078,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = heartrateOrderTextField.currentValue
-                            if (window.ui.modern) { settings.tile_heart_order = heartrateOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                          }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okheartrateOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1147,11 +1113,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = fanOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_fan_order = fanOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okfanOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1183,11 +1147,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = joulsOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_jouls_order = joulsOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okjoulsOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1219,11 +1181,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = elapsedOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_elapsed_order = elapsedOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okelapsedOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1255,11 +1215,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = movingTimeOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_moving_time_order = movingTimeOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okmovingTimeOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1291,11 +1249,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = pelotonOffsetOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_peloton_offset_order = pelotonOffsetOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okpelotonOffsetOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1327,11 +1283,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = pelotonRemainingOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_peloton_remaining_order = pelotonRemainingOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okPelotonRemainingOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1363,11 +1317,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = pelotonDifficultyOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_peloton_difficulty_order = pelotonDifficultyOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okpelotonDifficultyOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1398,11 +1350,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = lapElapsedOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_lapelapsed_order = lapElapsedOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: oklapElapsedOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1449,11 +1399,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = peloton_resistanceOrderTextField.currentValue
-                            if (window.ui.modern) { settings.tile_peloton_resistance_order = peloton_resistanceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                          }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okpeloton_resistanceOrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1486,11 +1434,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_resistanceOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_target_resistance_order = target_resistanceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: oktarget_resistanceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1523,11 +1469,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_peloton_resistanceOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_target_peloton_resistance_order = target_peloton_resistanceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: oktarget_peloton_resistanceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1559,11 +1503,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_cadenceOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_target_cadence_order = target_cadenceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: oktarget_cadenceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1595,11 +1537,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_powerOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_target_power_order = target_powerOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: oktarget_powerOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1632,11 +1572,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_zoneOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_target_zone_order = target_zoneOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: oktarget_zoneOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1667,11 +1605,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_speedOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_target_speed_order = target_speedOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: oktarget_speedOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1702,11 +1638,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_paceOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_target_pace_order = target_paceOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: oktarget_paceOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1737,11 +1671,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = target_inclineOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_target_incline_order = target_inclineOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: oktarget_inclineOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1772,11 +1704,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = watt_kgOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_watt_kg_order = watt_kgOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okwatt_kgOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1808,11 +1738,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = gearsOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_gears_order = gearsOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okgearsOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1843,11 +1771,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = biggearsOrderTextField.currentValue
-                            if (window.ui.modern) { settings.tile_biggears_order = biggearsOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                          }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_biggears_order = biggearsOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -1893,11 +1819,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = remainingTimeTrainingProgramRowOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_remainingtimetrainprogramrow_order = remainingTimeTrainingProgramRowOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okremainingTimeTrainingProgramRowOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1930,11 +1854,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = nextRowsTrainingProgramOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_nextrowstrainprogram_order = nextRowsTrainingProgramOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: oknextRowsTrainingProgramOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -1966,11 +1888,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = metsOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_mets_order = metsOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okmetsOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2001,11 +1921,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = targetmetsOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_targetmets_order = targetmetsOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: oktargetmetsOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2037,11 +1955,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = datetimeOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_datetime_order = datetimeOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okdatetimeOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2073,11 +1989,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = strokes_countOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_strokes_count_order = strokes_countOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okstrokes_countOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2109,11 +2023,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = strokes_lengthOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_strokes_length_order = strokes_lengthOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okstrokes_lengthOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2145,11 +2057,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = steeringAngleOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_steering_angle_order = steeringAngleOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: oksteeringAngleOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2181,11 +2091,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = pidHROrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_pid_hr_order = pidHROrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okpidHROrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2217,11 +2125,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = extInclineOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_ext_incline_order = extInclineOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okextInclineOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2253,11 +2159,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = strideLengthOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_instantaneous_stride_length_order = strideLengthOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okStrideLengthOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2289,11 +2193,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = groundContactOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_ground_contact_order = groundContactOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okGroundContactOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2325,11 +2227,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = verticalOscillationOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_vertical_oscillation_order = verticalOscillationOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okVerticalOscillationOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2360,11 +2260,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = pacelast500mOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_pace_last500m_order = pacelast500mOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okPacelast500mOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2395,11 +2293,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = stepCountOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_step_count_order = stepCountOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okStepCountOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2430,11 +2326,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = ergModeOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_erg_mode_order = ergModeOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okErgModeOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2463,11 +2357,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = rssOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_rss_order = rssOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_rss_order = rssOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -2498,11 +2390,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetResistance1TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_resistance_1_order = presetResistance1TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetResistance1OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2610,11 +2500,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetResistance2TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_resistance_2_order = presetResistance2TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetResistance2OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2722,11 +2610,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetResistance3TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_resistance_3_order = presetResistance3TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetResistance3OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2834,11 +2720,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetResistance4TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_resistance_4_order = presetResistance4TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetResistance4OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -2946,11 +2830,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetResistance5TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_resistance_5_order = presetResistance5TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetResistance5OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3058,11 +2940,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetSpeed1TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_speed_1_order = presetSpeed1TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetSpeed1OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3174,11 +3054,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetSpeed2TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_speed_2_order = presetSpeed2TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetSpeed2OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3290,11 +3168,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetSpeed3TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_speed_3_order = presetSpeed3TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetSpeed3OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3406,11 +3282,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetSpeed4TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_speed_4_order = presetSpeed4TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetSpeed4OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3522,11 +3396,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetSpeed5TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_speed_5_order = presetSpeed5TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetSpeed5OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3638,11 +3510,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetInclination1TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_inclination_1_order = presetInclination1TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetInclination1OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3750,11 +3620,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetInclination2TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_inclination_2_order = presetInclination2TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetInclination2OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3862,11 +3730,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetInclination3TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_inclination_3_order = presetInclination3TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetInclination3OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3974,11 +3840,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetInclination4TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_inclination_4_order = presetInclination4TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetInclination4OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4086,11 +3950,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetInclination5TextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_inclination_5_order = presetInclination5TextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         id: okPresetInclination5OrderButton
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4197,11 +4059,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetPowerZone1OrderTextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_powerzone_1_order = presetPowerZone1OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_1_order = presetPowerZone1OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4301,11 +4161,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetPowerZone2OrderTextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_powerzone_2_order = presetPowerZone2OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_2_order = presetPowerZone2OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4405,11 +4263,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetPowerZone3OrderTextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_powerzone_3_order = presetPowerZone3OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_3_order = presetPowerZone3OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4509,11 +4365,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetPowerZone4OrderTextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_powerzone_4_order = presetPowerZone4OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_4_order = presetPowerZone4OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4613,11 +4467,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetPowerZone5OrderTextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_powerzone_5_order = presetPowerZone5OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_5_order = presetPowerZone5OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4717,11 +4569,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetPowerZone6OrderTextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_powerzone_6_order = presetPowerZone6OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_6_order = presetPowerZone6OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4822,11 +4672,9 @@ ScrollView {
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onActivated: {
                             displayText = presetPowerZone7OrderTextField.currentValue
-                            if (window.ui.modern) { settings.tile_preset_powerzone_7_order = presetPowerZone7OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                         }
                     }
                     UiButton {
-                        visible: !window.ui.modern
                         text: qsTr("OK")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: {settings.tile_preset_powerzone_7_order = presetPowerZone7OrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -4927,11 +4775,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = hrTimeInZone1OrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_hr_time_in_zone_1_order = hrTimeInZone1OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okHrTimeInZone1OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4963,11 +4809,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = hrTimeInZone2OrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_hr_time_in_zone_2_order = hrTimeInZone2OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okHrTimeInZone2OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4999,11 +4843,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = hrTimeInZone3OrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_hr_time_in_zone_3_order = hrTimeInZone3OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okHrTimeInZone3OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5035,11 +4877,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = hrTimeInZone4OrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_hr_time_in_zone_4_order = hrTimeInZone4OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okHrTimeInZone4OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5071,11 +4911,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = hrTimeInZone5OrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_hr_time_in_zone_5_order = hrTimeInZone5OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okHrTimeInZone5OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5136,11 +4974,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = coretemperatureOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_coretemperature_order = coretemperatureOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okcoretemperatureOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5172,11 +5008,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = heatTimeInZone1OrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_heat_time_in_zone_1_order = heatTimeInZone1OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okHeatTimeInZone1OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5208,11 +5042,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = heatTimeInZone2OrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_heat_time_in_zone_2_order = heatTimeInZone2OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okHeatTimeInZone2OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5244,11 +5076,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = heatTimeInZone3OrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_heat_time_in_zone_3_order = heatTimeInZone3OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okHeatTimeInZone3OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5280,11 +5110,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = heatTimeInZone4OrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_heat_time_in_zone_4_order = heatTimeInZone4OrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okHeatTimeInZone4OrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5315,11 +5143,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = autoVirtualShiftingCruiseOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_auto_virtual_shifting_cruise_order = autoVirtualShiftingCruiseOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_auto_virtual_shifting_cruise_order = autoVirtualShiftingCruiseOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -5349,11 +5175,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = autoVirtualShiftingClimbOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_auto_virtual_shifting_climb_order = autoVirtualShiftingClimbOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_auto_virtual_shifting_climb_order = autoVirtualShiftingClimbOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -5383,11 +5207,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = autoVirtualShiftingSprintOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_auto_virtual_shifting_sprint_order = autoVirtualShiftingSprintOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_auto_virtual_shifting_sprint_order = autoVirtualShiftingSprintOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -5417,11 +5239,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = powerAvgOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_power_avg_order = powerAvgOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onClicked: {settings.tile_power_avg_order = powerAvgOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
@@ -5452,11 +5272,9 @@ ScrollView {
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                     onActivated: {
                         displayText = hrvOrderTextField.currentValue
-                        if (window.ui.modern) { settings.tile_hrv_order = hrvOrderTextField.displayText; toast.show(qsTr("Setting saved!")) }
                      }
                 }
                 UiButton {
-                    visible: !window.ui.modern
                     id: okhrvOrderButton
                     text: qsTr("OK")
                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter

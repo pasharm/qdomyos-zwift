@@ -3064,6 +3064,7 @@ import QtQuick 2.12 as Quick212
                             }
                         }
                         UiButton {
+                            applyOnSelect: false
                             id: okAppLanguageButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3715,6 +3716,7 @@ import QtQuick 2.12 as Quick212
 
                         }
                         UiButton {
+                            applyOnSelect: false
                             id: okHeartBeltNameButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5462,6 +5464,7 @@ import QtQuick 2.12 as Quick212
 
                         }
                         UiButton {
+                            applyOnSelect: false
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ftms_bike = stripRssi(ftmsBikeTextField.value); window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
@@ -6630,6 +6633,7 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
                             UiButton {
+                                applyOnSelect: false
                                 id: okKettlerUsbBaudrateButton
                                 text: qsTr("OK")
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11471,6 +11475,7 @@ import QtQuick 2.12 as Quick212
 
                         }
                         UiButton {
+                            applyOnSelect: false
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ftms_treadmill = stripRssi(ftmsTreadmillTextField.value); window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
@@ -13348,6 +13353,7 @@ import QtQuick 2.12 as Quick212
 
                         }
                         UiButton {
+                            applyOnSelect: false
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ftms_rower = stripRssi(ftmsRowerTextField.value); window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
@@ -13563,6 +13569,7 @@ import QtQuick 2.12 as Quick212
 
                         }
                         UiButton {
+                            applyOnSelect: false
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ftms_elliptical = stripRssi(ftmsEllipticalTextField.value); window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
@@ -13810,6 +13817,7 @@ import QtQuick 2.12 as Quick212
 
                         }
                         UiButton {
+                            applyOnSelect: false
                             id: okFilterDeviceButton
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14900,6 +14908,7 @@ import QtQuick 2.12 as Quick212
 
                                 }
                                 UiButton {
+                                    applyOnSelect: false
                                     id: okCadenceSensorNameButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15470,6 +15479,7 @@ import QtQuick 2.12 as Quick212
 
                                 }
                                 UiButton {
+                                    applyOnSelect: false
                                     id: okPowerSensorNameButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15539,6 +15549,7 @@ import QtQuick 2.12 as Quick212
 
                                         }
                                         UiButton {
+                                            applyOnSelect: false
                                             id: okEliteRizerNameButton
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15612,6 +15623,7 @@ import QtQuick 2.12 as Quick212
 
                                         }
                                         UiButton {
+                                            applyOnSelect: false
                                             id: okEliteSterzoSmartNameButton
                                             text: qsTr("OK")
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15662,6 +15674,7 @@ import QtQuick 2.12 as Quick212
 
                                 }
                                 UiButton {
+                                    applyOnSelect: false
                                     id: okFTMSAccessoryNameButton
                                     text: qsTr("OK")
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter

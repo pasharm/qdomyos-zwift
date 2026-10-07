@@ -566,6 +566,7 @@ ScrollView {
 
                 // Restore Default Wheel Diameter Button
                 UiButton {
+                    applyOnSelect: false
                     text: qsTr("Restore Default Setting to the Trainer")
                     Layout.fillWidth: true
                     Layout.preferredHeight: 50
