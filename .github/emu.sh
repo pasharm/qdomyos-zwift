@@ -293,14 +293,100 @@ round() {   # round <suffix>
   sleep 2
 }
 
+# T-173: a drop-down list saves as soon as an item is picked, its OK button is hidden (modern);
+# OK stays for the lists that ask for a restart; the classic look keeps OK everywhere.
+# The saved value is read back from the settings file of the app (run-as), not from the toast.
+CONF="files/.config/Roberto Viola/qDomyos-Zwift.conf"
+conf_val() {   # conf_val <key> <note>
+  echo "conf $1 ($2): $(adb shell "run-as $PKG cat '$CONF'" | tr -d '\r' | grep "^$1=" || echo '<none>')" >> $STEPLOG
+}
+# Taps the control to the right of the label (the list of the same row)
+tap_right_of() {
+  local rx="$1" xy=""
+  dump
+  [ -f ui.xml ] && xy=$(python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    if re.fullmatch(sys.argv[2], t, re.I):
+        m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+        if m:
+            x1, y1, x2, y2 = map(int, m.groups())
+            if y2 > y1 and y1 > 200:
+                print(min(x2 + 150, 1350), (y1 + y2) // 2); break
+' ui.xml "$rx")
+  if [ -n "$xy" ]; then
+    echo "tap right of '$rx' at $xy" >> $STEPLOG
+    adb shell input tap $xy || true
+  else
+    echo "!! right of '$rx' NOT FOUND" >> $STEPLOG
+    return 1
+  fi
+}
+row_has_ok() {   # logs whether an OK button is on the row of the label
+  dump
+  [ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+nodes = list(ET.parse(sys.argv[1]).getroot().iter("node"))
+def b(n):
+    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+    return tuple(map(int, m.groups())) if m else None
+row = None
+for n in nodes:
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    if re.fullmatch(sys.argv[2], t, re.I) and b(n) and b(n)[1] > 200:
+        row = b(n); break
+if not row:
+    print("row NOT FOUND"); sys.exit()
+ok = [n for n in nodes if re.fullmatch("OK", (n.get("text") or "") or (n.get("content-desc") or ""), re.I)
+      and b(n) and abs((b(n)[1] + b(n)[3]) // 2 - (row[1] + row[3]) // 2) < 80]
+print("OK button on the row: %s" % ("YES" if ok else "no"))
+' ui.xml "$1" | sed "s/^/row '$1': /" >> $STEPLOG
+}
+open_settings() {
+  go_home
+  open_menu
+  tap_drawer 'Settings'
+  sleep 8
+}
+
 wait_tiles
-sleep 10
-adb shell cmd uimode night no || true
 sleep 5
-round light
-adb shell cmd uimode night yes || true
-sleep 8
-round dark
+
+# 1. Tiles: Speed > order index
+open_settings
+scroll_to 'Tiles Options' && tap_ui 'Tiles Options'
+sleep 6
+shot t1-tiles
+scroll_to 'order index:'
+row_has_ok 'order index:'
+conf_val tile_speed_order "before"
+shot t2-speed-row
+tap_right_of 'order index:' && sleep 2 && shot t3-speed-list && tap_node '3' && sleep 1 && shot t4-picked
+sleep 2
+conf_val tile_speed_order "after the pick, no OK tapped (modern: 3, classic: unchanged)"
+
+# 2. Settings: General Options > Gender
+open_settings
+scroll_to 'General Options' && tap_ui 'General Options'
+sleep 3
+scroll_to 'Gender:'
+row_has_ok 'Gender:'
+conf_val sex "before"
+tap_right_of 'Gender:' && sleep 2 && shot g1-gender-list && tap_node 'Female' && sleep 1 && shot g2-picked
+sleep 2
+conf_val sex "after the pick, no OK tapped (modern: Female, classic: unchanged)"
+
+# 3. Settings: Heart Rate Options > Heart Belt Name keeps OK (asks for a restart)
+open_settings
+scroll_to 'Heart Rate Options' && tap_ui 'Heart Rate Options'
+sleep 3
+scroll_to 'Heart Belt Name:'
+row_has_ok 'Heart Belt Name:'
+shot hb-heart-belt-row
+go_home
+
+
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
