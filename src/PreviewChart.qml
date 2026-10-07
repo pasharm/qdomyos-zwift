@@ -25,7 +25,7 @@ ColumnLayout {
     // A chart spread over the page (chartjs/chartfullscreen.js): the page tells it in its title
     property bool chartFullscreen: false
     // The spread chart takes the app header's room too, as on the charts page
-    onChartFullscreenChanged: headerToolbar.visible = !chartFullscreen
+    onChartFullscreenChanged: headerToolbar.scrolledAway = chartFullscreen
     // Left with a spread chart (a start from the web page pops it): the header for the next page
     StackView.onRemoved: handleBack()
 
