@@ -29,6 +29,43 @@ ColumnLayout {
     // Left with a spread chart (a start from the web page pops it): the header for the next page
     StackView.onRemoved: handleBack()
 
+    // WORKAROUND: the Android WebView of Qt does not recover from a turn of the screen while the
+    // page is shown: turned from upright to landscape, the page got an empty band at the bottom
+    // and scrolled down into it, the spread chart too (OnePlus 12). The same as on the charts
+    // page and done the same way (ChartJsTest.qml, PR #5265): the native view goes off the
+    // screen at the turn and comes back once the size has settled. Kept as a copy until #5265
+    // is in: ChartJsTest.qml stays as the PR has it, then both can share one component
+    readonly property bool landscape: width > height
+    readonly property bool screenLandscape: Screen.width > Screen.height
+    // Moved off by a turn, back once the size settles
+    property bool turnHidden: false
+    onLandscapeChanged: turnStart()
+    onScreenLandscapeChanged: turnStart()
+    onWidthChanged: if (turnHidden) turnShow.restart()
+    onHeightChanged: if (turnHidden) turnShow.restart()
+
+    function turnStart() {
+        if (turnHidden) {
+            turnShow.restart()
+            return
+        }
+        // Not loaded or not shown yet: the load shows the page when it has drawn
+        if (!pageLoaded || !visible || !pageShown)
+            return
+        turnHidden = true
+        pageShown = false
+        turnShow.restart()
+    }
+
+    Timer {
+        id: turnShow
+        interval: 300
+        onTriggered: {
+            column1.turnHidden = false
+            column1.pageShown = true
+        }
+    }
+
     // Back (the key; in the modern look also the arrow of the toolbar, main.qml navigateBack)
     // closes the spread chart first instead of the page, as on the charts page (ChartJsTest.qml)
     function handleBack() {
@@ -84,7 +121,8 @@ ColumnLayout {
 
     BusyIndicator {
         anchors.centerIn: parent
-        running: !column1.pageShown
+        // Not for a turn: nothing loads, the view is only off the screen for a moment
+        running: !column1.pageShown && !column1.turnHidden
         visible: running
     }
 
