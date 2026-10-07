@@ -1650,8 +1650,8 @@ Möchten Sie die QZ-Einstellungen aktualisieren?</translation>
     </message>
     <message>
         <location filename="../TrainingProgramsList.qml" line="76"/>
-        <source>Training programs (*.xml *.zwo)</source>
-        <translation>Trainingsprogramme (*.xml *.zwo)</translation>
+        <source>Training programs (*.xml *.zwo *.mrc *.erg *.json)</source>
+        <translation>Trainingsprogramme (*.xml *.zwo *.mrc *.erg *.json)</translation>
     </message>
     <message>
         <location filename="../TrainingProgramsList.qml" line="76"/>
@@ -1688,8 +1688,8 @@ Möchten Sie die QZ-Einstellungen aktualisieren?</translation>
     </message>
     <message>
         <location filename="../TrainingProgramsListJS.qml" line="98"/>
-        <source>Training programs (*.xml *.zwo)</source>
-        <translation>Trainingsprogramme (*.xml *.zwo)</translation>
+        <source>Training programs (*.xml *.zwo *.mrc *.erg *.json)</source>
+        <translation>Trainingsprogramme (*.xml *.zwo *.mrc *.erg *.json)</translation>
     </message>
     <message>
         <location filename="../TrainingProgramsListJS.qml" line="98"/>
