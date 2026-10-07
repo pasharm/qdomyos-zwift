@@ -554,8 +554,8 @@ Page {
             delegate: SwipeDelegate {
                 id: swipeDelegate
                 width: parent.width
-                // Modern look: 4 px less, the thinner margins below keep the card itself as high
-                height: workoutHistoryPage.modern ? 131 : 135
+                // Modern look: three lines (the calories join the stats), the card is 92 px high
+                height: workoutHistoryPage.modern ? 104 : 135
 
                 Component.onCompleted: {
                     console.log("Delegate data:", JSON.stringify({
@@ -626,6 +626,7 @@ Page {
 
                     // Action buttons - positioned absolutely in bottom-right
                     Row {
+                        id: actionRow
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
                         anchors.margins: 12
@@ -633,15 +634,15 @@ Page {
                         
                         // Peloton URL button
                         Button {
-                            width: 40
-                            height: 45
+                            width: workoutHistoryPage.modern ? 36 : 40
+                            height: workoutHistoryPage.modern ? 36 : 45
                             visible: workoutModel && workoutModel.getWorkoutSource(model.id) === "PELOTON" && 
                                     workoutModel.getPelotonUrl(model.id) !== ""
                             
                             background: Rectangle {
                                 color: workoutHistoryPage.modern ? (parent.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest)
                                              : (parent.pressed ? "#ff8855" : "#ff6b35")
-                                radius: workoutHistoryPage.modern ? 20 : 6
+                                radius: workoutHistoryPage.modern ? 18 : 6
                                 border.color: "#cc5529"
                                 border.width: workoutHistoryPage.modern ? 0 : 1
                             }
@@ -663,14 +664,14 @@ Page {
                         
                         // Training Program button
                         Button {
-                            width: 40
-                            height: 45
+                            width: workoutHistoryPage.modern ? 36 : 40
+                            height: workoutHistoryPage.modern ? 36 : 45
                             visible: workoutModel && workoutModel.hasTrainingProgram(model.id)
                             
                             background: Rectangle {
                                 color: workoutHistoryPage.modern ? (parent.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest)
                                              : (parent.pressed ? "#1976d2" : "#2196f3")
-                                radius: workoutHistoryPage.modern ? 20 : 6
+                                radius: workoutHistoryPage.modern ? 18 : 6
                                 border.color: "#1565c0"
                                 border.width: workoutHistoryPage.modern ? 0 : 1
                             }
@@ -806,8 +807,25 @@ Page {
                                 color: window.ui.inkMuted("#666666")
                             }
 
+                            // Modern look: one stats line, the calories included; it stops short
+                            // of the action buttons in the bottom-right corner when they are shown
+                            Text {
+                                visible: workoutHistoryPage.modern
+                                Layout.fillWidth: true
+                                Layout.rightMargin: actionRow.width > 0 ? actionRow.width + 8 : 0
+                                elide: Text.ElideRight
+                                text: {
+                                    var useMiles = settings && settings.miles_unit
+                                    var displayDistance = useMiles ? (distance / 1.60934) : distance
+                                    return duration + " · " + displayDistance.toFixed(2) + " " + (useMiles ? qsTr("mi") : qsTr("km"))
+                                           + " · " + Math.round(calories) + " " + qsTr("kcal")
+                                }
+                                color: window.ui.textMain
+                            }
+
                             // Stats row
                             RowLayout {
+                                visible: !workoutHistoryPage.modern
                                 spacing: 16
 
                                 Text {
@@ -826,6 +844,7 @@ Page {
                             }
 
                             RowLayout {
+                                visible: !workoutHistoryPage.modern
                                 spacing: 16
 
                                 Text {
