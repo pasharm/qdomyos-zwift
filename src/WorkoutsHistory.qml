@@ -164,7 +164,12 @@ Page {
                                 text: {
                                     if (!modernHeader.filtered)
                                         return ""
-                                    var d = workoutModel.filteredDate
+                                    // Qt 5 hands a QDate over as midnight UTC: read west of
+                                    // Greenwich, that is the day before
+                                    var d0 = workoutModel.filteredDate
+                                    var d = d0.getUTCHours() === 0 && d0.getUTCMinutes() === 0
+                                            ? new Date(d0.getUTCFullYear(), d0.getUTCMonth(), d0.getUTCDate())
+                                            : d0
                                     var f = d.getFullYear() === new Date().getFullYear() ? "ddd, d MMM" : "ddd, d MMM yyyy"
                                     return d.toLocaleDateString(Qt.locale(), f)
                                 }
