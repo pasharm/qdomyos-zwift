@@ -1,6 +1,8 @@
-// Full screen charts (chart.htm): a button in the top-left corner of every chart card spreads the
-// card over the whole page; there the shown charts go one after another with a swipe, and the
-// button, the back key (ChartJsTest.qml, handleBack) or the back arrow bring the page back.
+// Full screen charts (chartjs/chart.htm and the workout history, previewchart/chart.htm, with
+// chartfullscreen.css): a button in the top-left corner of every chart card spreads the card over
+// the whole page; there the shown charts go one after another with a swipe, and the button, the
+// back key (ChartJsTest.qml, PreviewChart.qml: handleBack) or the back arrow bring the page back.
+// The charts come through qzcharttheme.js (create, restyle), which calls prepare/chartChanged.
 // A CSS overlay, not the Fullscreen API: that one does not work in the app's web view.
 // The app learns the state from the page title (WebView.title): FS_TITLE while spread.
 // Plain ES5, the syntax of dochartlive.js: the web view of Android 5.1 runs it.
@@ -11,7 +13,7 @@
     var SWIPE_MIN_PX = 60;
     var SWIPE_MAX_MS = 800;
     var TOAST_MS = 3000;
-    var BUTTON_ROW_PX = 36; // the height of the button (chart.htm, .qz-fs-button)
+    var BUTTON_ROW_PX = 36; // the height of the button (chartfullscreen.css)
     var BASE_FONT_PX = 12;  // Chart.js default font size, the one the page's charts use
     var FIRST_ANIMATION_MS = 1500; // Chart.js animates a new chart for 1000 ms
 
@@ -292,7 +294,7 @@
     });
 
     window.qzChartFullscreen = {
-        // dochart.js before it makes or refreshes the chart of a canvas: a live refresh brings
+        // qzcharttheme.js before it makes or refreshes the chart of a canvas: a live refresh brings
         // new options, the spread chart gets the big look on them before it is drawn (the old
         // options are dropped with what was saved of them)
         prepare: function (canvas, options) {
@@ -310,7 +312,7 @@
             if (current)
                 updateCounter();
         },
-        // the app's back (ChartJsTest.qml): true when it closed the full screen
+        // the app's back (ChartJsTest.qml, PreviewChart.qml): true when it closed the full screen
         exit: function () {
             var was = !!current;
             exit();

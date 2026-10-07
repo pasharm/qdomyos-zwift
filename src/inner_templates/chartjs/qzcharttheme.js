@@ -159,6 +159,14 @@
         });
     }
 
+    // Full screen charts (chartfullscreen.js), on the pages that load it: every chart made or
+    // redrawn here gets its button and, while spread, the big look
+    function fullscreen(hook, a, b) {
+        if (window.qzChartFullscreen) {
+            window.qzChartFullscreen[hook](a, b);
+        }
+    }
+
     function rootOf(chart) {
         return { options: chart.config.options, data: chart.config.data };
     }
@@ -168,12 +176,14 @@
             var list = patches(config);
             var pal = palette();
             apply(config, list, pal);
+            fullscreen('prepare', ctx.canvas, config.options);
             var chart = new Chart(ctx, config);
             chart.$qzPatches = list;
             chart.$qzPalette = pal;
             // Pages that recreate their chart (workout preview) drop the destroyed ones here
             charts = charts.filter(function (c) { return !!c.canvas; });
             charts.push(chart);
+            fullscreen('chartChanged'); // the full screen button of its card
             return chart;
         },
 
@@ -184,6 +194,7 @@
             var list = patches(config);
             apply(config, list, chart.$qzPalette);
             chart.$qzPatches = list;
+            fullscreen('prepare', chart.canvas, config.options); // a spread chart stays big
         },
 
         // The fill of the canvas: dochart.js draws it under each chart

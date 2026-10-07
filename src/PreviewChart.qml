@@ -22,6 +22,18 @@ ColumnLayout {
     // laid out for a wrong width and opened zoomed in
     property bool pageShown: !window.ui.modern
     readonly property real offScreen: pageShown ? 0 : Screen.width + Screen.height
+    // A chart spread over the page (chartjs/chartfullscreen.js): the page tells it in its title
+    property bool chartFullscreen: false
+
+    // Back (the key; in the modern look also the arrow of the toolbar, main.qml navigateBack)
+    // closes the spread chart first instead of the page, as on the charts page (ChartJsTest.qml)
+    function handleBack() {
+        if (!chartFullscreen)
+            return false
+        chartFullscreen = false
+        webView.runJavaScript("window.qzChartFullscreen && window.qzChartFullscreen.exit()")
+        return true
+    }
 
     onPageThemeChanged: {
         if (pageLoaded && pageTheme)
@@ -38,6 +50,7 @@ ColumnLayout {
         // it), the page runs down to the edge like the other pages
         anchors.leftMargin: -column1.offScreen
         anchors.rightMargin: column1.offScreen
+        onTitleChanged: column1.chartFullscreen = title.indexOf("#fullscreen") >= 0
         onLoadingChanged: {
             if (loadRequest.errorString) {
                 console.error(loadRequest.errorString);
