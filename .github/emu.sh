@@ -255,6 +255,9 @@ sleep 2
 shot f-01-spread                     # the chart over the whole page, the swipe hint at the bottom
 page f-01
 has 'Exit full screen' "the button turned into Exit"
+# the app header hides while spread: the button sits right under the status bar, not under the
+# toolbar (its place on the cards page is logged by c-00 above)
+echo "spread button at $(python3 .github/uitap.py ui.xml 'Exit full screen')" >> $STEPLOG
 sleep 4
 shot f-02-hint-gone
 adb shell input swipe 1200 1500 200 1500 250 || true
@@ -297,14 +300,16 @@ else
   echo "check spread closed by back: OK" >> $STEPLOG
 fi
 
-# the back arrow of the toolbar does the same
+echo "first card button at $(python3 .github/uitap.py ui.xml '^Full screen$')" >> $STEPLOG
+
+# the collapse button of the spread chart does the same (the toolbar arrow hides with the header)
 tap_node 'Full screen' && echo "spread again" >> $STEPLOG
 sleep 2
-tap $MENU "toolbar back arrow"
+tap_node 'Exit full screen' && echo "collapse button" >> $STEPLOG
 sleep 2
-shot f-10-after-arrow
+shot f-10-after-collapse
 page f-10
-has 'Full screen' "the page with its cards after the arrow"
+has 'Full screen' "the page with its cards after the collapse button"
 
 # a second back leaves the page as before
 back "charts"
