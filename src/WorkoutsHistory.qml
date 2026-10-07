@@ -97,16 +97,17 @@ Page {
         spacing: 10
 
         // Modern header: the title on the left, the streak (or the date filter) under it as a
-        // small chip, the calendar and "Clear Filter" on the right. The streak used to be a
-        // big orange banner at the bottom, the loudest thing on the page even at zero days.
+        // small chip, the calendar and import on the right. The streak used to be a big orange
+        // banner at the bottom, the loudest thing on the page even at zero days. The filter
+        // chip clears the filter itself: a "Clear Filter" button beside the round ones cut the
+        // title down to a few letters on a phone
         Item {
             id: modernHeader
             visible: workoutHistoryPage.modern
             Layout.fillWidth: true
             Layout.leftMargin: Math.max(16, window.contentSideMargin)
             Layout.rightMargin: Math.max(16, window.contentSideMargin)
-            Layout.topMargin: 8
-            implicitHeight: Math.max(56, modernTitleColumn.implicitHeight)
+            implicitHeight: Math.max(modernHeaderButtons.implicitHeight, modernTitleColumn.implicitHeight)
 
             readonly property int streak: workoutModel ? workoutModel.currentStreak : 0
             readonly property bool filtered: workoutModel ? workoutModel.isDateFiltered : false
@@ -128,20 +129,70 @@ Page {
                     elide: Text.ElideRight
                 }
 
-                Text {
-                    width: parent.width
+                AbstractButton {
+                    id: filterChip
                     visible: modernHeader.filtered
-                    text: modernHeader.filtered ? qsTr("Filtered: %1").arg(workoutModel.filteredDate.toLocaleDateString()) : ""
-                    font.pixelSize: 13
-                    color: window.ui.textMuted
-                    elide: Text.ElideRight
+                    // From the text's implicit width, not the row's: the row's width follows the
+                    // elided text, and measuring by it would loop
+                    width: Math.min(implicitWidth, parent.width)
+                    implicitWidth: 24 + 2 * 18 + 2 * filterChipRow.spacing + filterChipText.implicitWidth
+                    height: 32
+                    onClicked: workoutModel.clearDateFilter()
+                    background: Rectangle {
+                        radius: 16
+                        color: window.ui.alpha(window.ui.accent, filterChip.down ? 0.28 : 0.16)
+                    }
+                    contentItem: Item {
+                        Row {
+                            id: filterChipRow
+                            anchors.verticalCenter: parent.verticalCenter
+                            x: 12
+                            spacing: 6
+                            UiIcon {
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: 18
+                                height: 18
+                                name: "calendar_month"
+                                color: window.ui.accent
+                            }
+                            Text {
+                                id: filterChipText
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: Math.max(0, Math.min(implicitWidth, filterChip.width - (filterChip.implicitWidth - implicitWidth)))
+                                // "пн, 5 жовт.", the year only when it is not this one: the month
+                                // as a word reads the same in every language, 5.10 does not
+                                text: {
+                                    if (!modernHeader.filtered)
+                                        return ""
+                                    var d = workoutModel.filteredDate
+                                    var f = d.getFullYear() === new Date().getFullYear() ? "ddd, d MMM" : "ddd, d MMM yyyy"
+                                    return d.toLocaleDateString(Qt.locale(), f)
+                                }
+                                font.pixelSize: 13
+                                font.weight: Font.DemiBold
+                                color: window.ui.accent
+                                elide: Text.ElideRight
+                            }
+                            UiIcon {
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: 18
+                                height: 18
+                                name: "close"
+                                color: window.ui.accent
+                            }
+                        }
+                    }
+                    Accessible.role: Accessible.Button
+                    Accessible.name: qsTr("Clear Filter")
                 }
 
                 Rectangle {
                     visible: !modernHeader.filtered && modernHeader.streak > 0
-                    width: streakChipRow.implicitWidth + 20
-                    height: 28
-                    radius: 14
+                    // The height of the filter chip in the same place: switching between them
+                    // keeps the header still
+                    width: streakChipRow.implicitWidth + 24
+                    height: 32
+                    radius: 16
                     color: window.ui.alpha(window.ui.accent, 0.16)
 
                     Row {
@@ -170,60 +221,43 @@ Page {
                 id: modernHeaderButtons
                 anchors.right: parent.right
                 anchors.verticalCenter: parent.verticalCenter
-                spacing: 8
+                // Icon buttons as elsewhere in the modern look (the parent folder button of the
+                // GPX and workout lists): UiButton 48 wide, its pill 36 high inside 48 to touch
+                spacing: 4
 
                 UiButton {
-                    visible: modernHeader.filtered
                     anchors.verticalCenter: parent.verticalCenter
-                    text: qsTr("Clear Filter")
-                    danger: true
-                    onClicked: workoutModel.clearDateFilter()
-                }
-
-                RoundButton {
-                    id: modernCalendarButton
-                    anchors.verticalCenter: parent.verticalCenter
-                    width: 48
-                    height: 48
+                    implicitWidth: 48
+                    leftPadding: 0
+                    rightPadding: 0
                     onClicked: calendarPopup.open()
-                    background: Rectangle {
-                        radius: 24
-                        color: modernCalendarButton.down ? window.ui.surfaceHighest : window.ui.surfaceHigh
-                    }
-                    contentItem: Item {
-                        UiIcon {
-                            anchors.centerIn: parent
-                            width: 22
-                            height: 22
-                            name: "calendar_month"
-                            color: window.ui.textMain
-                        }
-                    }
-                    Accessible.role: Accessible.Button
                     Accessible.name: qsTr("Calendar")
+                    UiIcon {
+                        anchors.centerIn: parent
+                        width: 22
+                        height: 22
+                        name: "calendar_month"
+                        color: window.ui.textMain
+                    }
                 }
 
-                RoundButton {
+                UiButton {
                     id: modernImportButton
                     anchors.verticalCenter: parent.verticalCenter
-                    width: 48
-                    height: 48
+                    implicitWidth: 48
+                    leftPadding: 0
+                    rightPadding: 0
                     onClicked: modernImportMenu.openUnder(modernImportButton)
-                    background: Rectangle {
-                        radius: 24
-                        color: modernImportButton.down ? window.ui.surfaceHighest : window.ui.surfaceHigh
-                    }
-                    contentItem: Item {
-                        UiIcon {
-                            anchors.centerIn: parent
-                            width: 22
-                            height: 22
-                            name: "download"
-                            color: window.ui.textMain
-                        }
-                    }
-                    Accessible.role: Accessible.Button
                     Accessible.name: qsTr("Import FIT File...")
+                    // The icon of loading settings from a file in the toolbar: both take a file
+                    // from the phone
+                    UiIcon {
+                        anchors.centerIn: parent
+                        width: 22
+                        height: 22
+                        name: "upload_file"
+                        color: window.ui.textMain
+                    }
                 }
             }
         }
