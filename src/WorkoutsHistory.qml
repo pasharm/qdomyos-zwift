@@ -495,7 +495,8 @@ Page {
             Layout.fillHeight: true
             Layout.bottomMargin: streakBanner.visible ? streakBanner.height + 10 : 10
             model: workoutModel
-            spacing: 8
+            // Modern look: the gap between cards is only the card's own margins (2 x 6 = 12 px)
+            spacing: workoutHistoryPage.modern ? 0 : 8
             clip: true
 
             // Modern look: an empty list says so, instead of a blank page
@@ -553,7 +554,8 @@ Page {
             delegate: SwipeDelegate {
                 id: swipeDelegate
                 width: parent.width
-                height: 135
+                // Modern look: 4 px less, the thinner margins below keep the card itself as high
+                height: workoutHistoryPage.modern ? 131 : 135
 
                 Component.onCompleted: {
                     console.log("Delegate data:", JSON.stringify({
@@ -607,7 +609,7 @@ Page {
                 // Card-like container
                 Rectangle {
                     anchors.fill: parent
-                    anchors.margins: 8
+                    anchors.margins: workoutHistoryPage.modern ? 6 : 8
                     anchors.leftMargin: window.contentSideMargin
                     anchors.rightMargin: window.contentSideMargin
                     radius: workoutHistoryPage.modern ? 16 : 10
