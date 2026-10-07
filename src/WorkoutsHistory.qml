@@ -107,7 +107,10 @@ Page {
             Layout.fillWidth: true
             Layout.leftMargin: Math.max(16, window.contentSideMargin)
             Layout.rightMargin: Math.max(16, window.contentSideMargin)
-            implicitHeight: Math.max(modernHeaderButtons.implicitHeight, modernTitleColumn.implicitHeight)
+            // The title and the buttons share the top line, the chip goes under it: centred in
+            // the whole header, the buttons slid down when the chip came and up when it left
+            implicitHeight: Math.max(modernHeaderButtons.implicitHeight,
+                                     modernTitleColumn.anchors.topMargin + modernTitleColumn.implicitHeight)
 
             readonly property int streak: workoutModel ? workoutModel.currentStreak : 0
             readonly property bool filtered: workoutModel ? workoutModel.isDateFiltered : false
@@ -117,10 +120,12 @@ Page {
                 anchors.left: parent.left
                 anchors.right: modernHeaderButtons.left
                 anchors.rightMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.top: parent.top
+                anchors.topMargin: Math.max(0, (modernHeaderButtons.implicitHeight - modernTitleText.implicitHeight) / 2)
                 spacing: 6
 
                 Text {
+                    id: modernTitleText
                     width: parent.width
                     text: qsTr("Workout History")
                     font.pixelSize: 22
@@ -225,7 +230,7 @@ Page {
             Row {
                 id: modernHeaderButtons
                 anchors.right: parent.right
-                anchors.verticalCenter: parent.verticalCenter
+                anchors.top: parent.top
                 // Icon buttons as elsewhere in the modern look (the parent folder button of the
                 // GPX and workout lists): UiButton 48 wide, its pill 36 high inside 48 to touch
                 spacing: 4
