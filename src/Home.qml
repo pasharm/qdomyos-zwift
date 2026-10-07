@@ -139,7 +139,7 @@ HomeForm {
                 // Modern: the title of UiMessageDialog
                 font.weight: rpeFeelPopup.modern ? Font.DemiBold : Font.Bold
                 font.pixelSize: rpeFeelPopup.modern ? 20 : 18
-                color: rpeFeelPopup.modern ? window.ui.textMain : Material.foreground
+                color: window.ui.ink(Material.foreground)
                 width: parent.width
                 wrapMode: Text.WordWrap
             }
@@ -148,7 +148,7 @@ HomeForm {
                 text: qsTr("Perceived Exertion (RPE): ") + rpeFeelPopup.selectedRpe + " - " + rpeFeelPopup.rpeLabels[rpeFeelPopup.selectedRpe]
                 width: parent.width
                 wrapMode: Text.WordWrap
-                color: rpeFeelPopup.modern ? window.ui.textMain : Material.foreground
+                color: window.ui.ink(Material.foreground)
             }
 
             Slider {
@@ -165,7 +165,7 @@ HomeForm {
                 text: qsTr("How did you feel?")
                 width: parent.width
                 wrapMode: Text.WordWrap
-                color: rpeFeelPopup.modern ? window.ui.textMain : Material.foreground
+                color: window.ui.ink(Material.foreground)
             }
 
             UiComboBox {
@@ -508,7 +508,7 @@ HomeForm {
                     id: modernCard
                     width: modernTile.width - 2 * modernTile.zoom
                     height: 123 * modernTile.zoom
-                    radius: 16 * modernTile.zoom
+                    radius: window.ui.radius * modernTile.zoom
                     fill: window.ui.surface
                     stroke: window.ui.alpha(window.ui.textMain, 0.06)
                     strokeWidth: 1
@@ -690,7 +690,7 @@ HomeForm {
                     height: 123 * modernTile.zoom
                     onClicked: largeButton_clicked(objectName)
                     background: Rectangle {
-                        radius: 16 * modernTile.zoom
+                        radius: window.ui.radius * modernTile.zoom
                         color: largeButtonColor
                         opacity: modernLargeButton.down ? 0.75 : 1
                     }

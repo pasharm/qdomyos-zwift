@@ -66,7 +66,7 @@ Popup {
 
     // Material dims with a light veil in the dark theme; the card darkens the page instead
     Overlay.modal: Rectangle {
-        color: Qt.rgba(0, 0, 0, window.ui.dark ? 0.6 : 0.4)
+        color: window.ui.scrim
         Behavior on opacity { NumberAnimation { duration: 150 } }
     }
 

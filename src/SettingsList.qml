@@ -11,7 +11,6 @@ ColumnLayout {
 
     // Modern look: a page title, a hint and the saved settings as cards (like the profile
     // list); a tap selects a file, a second tap or Load loads it
-    readonly property int modernMargin: Math.max(16, window.contentSideMargin)
 
     Connections {
         target: rootItem
@@ -51,8 +50,8 @@ ColumnLayout {
         visible: window.ui.modern
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Layout.leftMargin: settingsListPage.modernMargin
-        Layout.rightMargin: settingsListPage.modernMargin
+        Layout.leftMargin: window.ui.pageMargin
+        Layout.rightMargin: window.ui.pageMargin
         spacing: 8
 
         Label {
@@ -106,7 +105,7 @@ ColumnLayout {
                 readonly property bool selected: ListView.isCurrentItem
                 width: ListView.view.width
                 height: 60
-                radius: 16
+                radius: window.ui.radius
                 fill: selected ? window.ui.alpha(window.ui.accent, 0.14)
                                : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
                 strokeWidth: selected ? 1 : 0
@@ -258,10 +257,10 @@ ColumnLayout {
     UiButton {
         id: searchButton
         height: window.ui.modern ? implicitHeight : 50
-        width: window.ui.modern ? parent.width - 2 * settingsListPage.modernMargin : parent.width
+        width: window.ui.modern ? parent.width - 2 * window.ui.pageMargin : parent.width
         Layout.fillWidth: window.ui.modern
-        Layout.leftMargin: window.ui.modern ? settingsListPage.modernMargin : 0
-        Layout.rightMargin: window.ui.modern ? settingsListPage.modernMargin : 0
+        Layout.leftMargin: window.ui.modern ? window.ui.pageMargin : 0
+        Layout.rightMargin: window.ui.modern ? window.ui.pageMargin : 0
         Layout.bottomMargin: window.ui.modern ? 8 : 0
         text: qsTr("Other folders")
         Layout.alignment: Qt.AlignCenter | Qt.AlignVCenter

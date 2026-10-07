@@ -20,7 +20,6 @@ ColumnLayout {
     // Modern look: the list on top and the map below on a phone held upright, side by side
     // otherwise (the classic look is always side by side)
     readonly property bool sideBySide: !window.ui.modern || width > height
-    readonly property int modernMargin: Math.max(16, window.contentSideMargin)
 
     // Case-insensitive name filter shared by the classic and the modern filter field
     function applyFilter(text) {
@@ -114,8 +113,8 @@ ColumnLayout {
             spacing: 8
             Layout.fillWidth: true
             Layout.preferredWidth: 100
-            Layout.leftMargin: gpxPage.modernMargin
-            Layout.rightMargin: gpxPage.sideBySide ? 4 : gpxPage.modernMargin
+            Layout.leftMargin: window.ui.pageMargin
+            Layout.rightMargin: gpxPage.sideBySide ? 4 : window.ui.pageMargin
             Layout.topMargin: 8
 
             UiTextField {
@@ -163,8 +162,8 @@ ColumnLayout {
             Layout.fillHeight: gpxPage.sideBySide
             Layout.preferredWidth: 100
             Layout.preferredHeight: gpxPage.sideBySide ? -1 : gpxPage.height * 0.4
-            Layout.leftMargin: gpxPage.modernMargin
-            Layout.rightMargin: gpxPage.sideBySide ? 4 : gpxPage.modernMargin
+            Layout.leftMargin: window.ui.pageMargin
+            Layout.rightMargin: gpxPage.sideBySide ? 4 : window.ui.pageMargin
             clip: true
             spacing: 8
             boundsBehavior: Flickable.StopAtBounds
@@ -190,7 +189,7 @@ ColumnLayout {
                 readonly property bool folder: folderModel.isFolder(index)
                 width: ListView.view.width
                 height: 60
-                radius: 16
+                radius: window.ui.radius
                 fill: selected && !folder ? window.ui.alpha(window.ui.accent, 0.14)
                                           : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
                 strokeWidth: selected && !folder ? 1 : 0
@@ -400,8 +399,8 @@ ColumnLayout {
             // would only be a grey stripe next to the map
             ScrollBar.vertical.policy: window.ui.modern ? ScrollBar.AlwaysOff : ScrollBar.AlwaysOn
             // Padding, not a margin: the content moves in, the scroll bar stays at the edge
-            rightPadding: window.ui.modern && !gpxPage.sideBySide ? gpxPage.modernMargin : window.contentSideMargin
-            leftPadding: window.ui.modern && !gpxPage.sideBySide ? gpxPage.modernMargin : 0
+            rightPadding: window.ui.modern && !gpxPage.sideBySide ? window.ui.pageMargin : window.contentSideMargin
+            leftPadding: window.ui.modern && !gpxPage.sideBySide ? window.ui.pageMargin : 0
             Layout.row: window.ui.modern && !gpxPage.sideBySide ? 2 : 0
             Layout.column: gpxPage.sideBySide ? 1 : 0
             Layout.rowSpan: window.ui.modern && gpxPage.sideBySide ? 3 : 1
@@ -427,7 +426,7 @@ ColumnLayout {
                     height: row.chips ? routeChips.height + 8 : implicitHeight
                     text: rootItem.previewWorkoutDescription
                     font.pixelSize: window.ui.modern ? 14 : 16
-                    color: window.ui.modern ? window.ui.textMuted : window.ui.ink("white")
+                    color: window.ui.inkMuted("white")
                     bottomPadding: window.ui.modern ? 8 : 0
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignHCenter
@@ -536,8 +535,8 @@ ColumnLayout {
             Layout.column: 0
             Layout.fillWidth: true
             Layout.preferredWidth: 100
-            Layout.leftMargin: gpxPage.modernMargin
-            Layout.rightMargin: gpxPage.sideBySide ? 4 : gpxPage.modernMargin
+            Layout.leftMargin: window.ui.pageMargin
+            Layout.rightMargin: gpxPage.sideBySide ? 4 : window.ui.pageMargin
             Layout.bottomMargin: 8
             text: qsTr("Other folders")
             onClicked: gpxPage.openOtherFolders()

@@ -138,7 +138,7 @@ ScrollView {
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
             font.pixelSize: Qt.application.font.pixelSize - 2
-            color: window.ui.modern ? window.ui.textMuted : Material.accent
+            color: window.ui.inkMuted(Material.accent)
         }
 
         UiButton {
@@ -181,7 +181,7 @@ ScrollView {
                         minimumPixelSize: 9
                         text: qsTr("Gear")
                         font.bold: true
-                        color: window.ui.modern ? window.ui.textMain : "black"
+                        color: window.ui.ink("black")
                     }
                 }
 
@@ -200,7 +200,7 @@ ScrollView {
                         minimumPixelSize: 9
                         text: qsTr("Offset")
                         font.bold: true
-                        color: window.ui.modern ? window.ui.textMain : "black"
+                        color: window.ui.ink("black")
                     }
                 }
             }
@@ -246,7 +246,7 @@ ScrollView {
                         Text {
                             anchors.centerIn: parent
                             text: gear
-                            color: window.ui.modern ? window.ui.textMain : "black"
+                            color: window.ui.ink("black")
                         }
                     }
 
@@ -313,7 +313,7 @@ ScrollView {
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
                                 text: offset
-                                color: window.ui.modern ? window.ui.textMain : "black"
+                                color: window.ui.ink("black")
                                 selectedTextColor: window.ui.modern ? window.ui.accentInk : "white"
                                 selectionColor: window.ui.modern ? window.ui.accent : Material.accent
                                 horizontalAlignment: Text.AlignHCenter

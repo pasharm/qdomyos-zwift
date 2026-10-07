@@ -391,7 +391,7 @@ Page {
                 Label {
                     anchors.centerIn: parent
                     text: "!"
-                    color: window.ui.dark ? "#000000" : "#FFFFFF"
+                    color: window.ui.dangerInk
                     font.pixelSize: 12
                     font.bold: true
                 }
@@ -483,7 +483,7 @@ Page {
                 Rectangle {
                     width: parent.width
                     height: helpColumn.height + 32
-                    radius: 16
+                    radius: window.ui.radius
                     color: window.ui.surface
 
                     // [checks, rest]

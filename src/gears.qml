@@ -362,7 +362,7 @@ ScrollView {
                     Layout.fillWidth: true
                     Layout.maximumWidth: chainringColumn.width - 20
                     font.pixelSize: Qt.application.font.pixelSize - 2
-                    color: window.ui.modern ? window.ui.textMuted : Material.accent
+                    color: window.ui.inkMuted(Material.accent)
                 }
             }
         }
@@ -379,7 +379,7 @@ ScrollView {
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                     Layout.maximumWidth: chainringColumn.width - 20
-                    color: window.ui.modern ? window.ui.textMuted : Material.foreground
+                    color: window.ui.inkMuted(Material.foreground)
                 }
 
                 SpinBox {
@@ -421,7 +421,7 @@ ScrollView {
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                     Layout.maximumWidth: chainringColumn.width - 20
-                    color: window.ui.modern ? window.ui.textMuted : Material.foreground
+                    color: window.ui.inkMuted(Material.foreground)
                 }
                 SpinBox {
                     visible: !window.ui.modern
@@ -580,7 +580,7 @@ ScrollView {
                     contentItem: Text {
                         text: parent.text
                         font: parent.font
-                        color: window.ui.modern ? window.ui.textMain : "white"
+                        color: window.ui.ink("white")
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
@@ -701,7 +701,7 @@ ScrollView {
                                 minimumPixelSize: 9
                                 text: qsTr("Gear")
                                 font.bold: true
-                                color: window.ui.modern ? window.ui.textMain : "black"
+                                color: window.ui.ink("black")
                             }
                         }
 
@@ -721,7 +721,7 @@ ScrollView {
                                 minimumPixelSize: 9
                                 text: qsTr("Chainring")
                                 font.bold: true
-                                color: window.ui.modern ? window.ui.textMain : "black"
+                                color: window.ui.ink("black")
                             }
                         }
 
@@ -741,7 +741,7 @@ ScrollView {
                                 minimumPixelSize: 9
                                 text: qsTr("Rear Cog")
                                 font.bold: true
-                                color: window.ui.modern ? window.ui.textMain : "black"
+                                color: window.ui.ink("black")
                             }
                         }
                     }
@@ -806,7 +806,7 @@ ScrollView {
                                 Text {
                                     anchors.centerIn: parent
                                     text: gear
-                                    color: window.ui.modern ? window.ui.textMain : "black"
+                                    color: window.ui.ink("black")
                                 }
                             }
 
@@ -843,7 +843,7 @@ ScrollView {
                                         text: cranksetSpinBox.textFromValue(cranksetSpinBox.value, cranksetSpinBox.locale)
                                         // Modern look: the 16 px of the +/- fields (UiSpinBox, the inclination table)
                                         font: window.ui.modern ? Qt.font({ family: cranksetSpinBox.font.family, pixelSize: 16 }) : cranksetSpinBox.font
-                                        color: window.ui.modern ? window.ui.textMain : "black"
+                                        color: window.ui.ink("black")
                                         selectionColor: window.ui.modern ? window.ui.accent : "#21be2b"
                                         selectedTextColor: window.ui.modern ? window.ui.accentInk : "#ffffff"
                                         horizontalAlignment: Qt.AlignHCenter
@@ -862,7 +862,7 @@ ScrollView {
                                         Text {
                                             visible: !window.ui.modern
                                             text: "+"
-                                            color: window.ui.modern ? window.ui.textMain : "black"
+                                            color: window.ui.ink("black")
                                             anchors.centerIn: parent
                                             font.pixelSize: window.ui.modern ? 18 : 12
                                         }
@@ -893,7 +893,7 @@ ScrollView {
                                         Text {
                                             visible: !window.ui.modern
                                             text: "-"
-                                            color: window.ui.modern ? window.ui.textMain : "black"
+                                            color: window.ui.ink("black")
                                             anchors.centerIn: parent
                                             font.pixelSize: window.ui.modern ? 18 : 12
                                         }
@@ -947,7 +947,7 @@ ScrollView {
                                         z: 2
                                         text: cogSpinBox.textFromValue(cogSpinBox.value, cogSpinBox.locale)
                                         font: window.ui.modern ? Qt.font({ family: cogSpinBox.font.family, pixelSize: 16 }) : cogSpinBox.font
-                                        color: window.ui.modern ? window.ui.textMain : "black"
+                                        color: window.ui.ink("black")
                                         selectionColor: window.ui.modern ? window.ui.accent : "#21be2b"
                                         selectedTextColor: window.ui.modern ? window.ui.accentInk : "#ffffff"
                                         horizontalAlignment: Qt.AlignHCenter
@@ -966,7 +966,7 @@ ScrollView {
                                         Text {
                                             visible: !window.ui.modern
                                             text: "+"
-                                            color: window.ui.modern ? window.ui.textMain : "black"
+                                            color: window.ui.ink("black")
                                             anchors.centerIn: parent
                                             font.pixelSize: window.ui.modern ? 18 : 12
                                         }
@@ -997,7 +997,7 @@ ScrollView {
                                         Text {
                                             visible: !window.ui.modern
                                             text: "-"
-                                            color: window.ui.modern ? window.ui.textMain : "black"
+                                            color: window.ui.ink("black")
                                             anchors.centerIn: parent
                                             font.pixelSize: window.ui.modern ? 18 : 12
                                         }

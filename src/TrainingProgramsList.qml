@@ -296,7 +296,7 @@ ColumnLayout {
                     text: rootItem.previewWorkoutTags
                     font.pixelSize: 10
                     wrapMode: Text.WordWrap
-                    color: window.ui.modern ? window.ui.textMuted : "white"
+                    color: window.ui.inkMuted("white")
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.horizontalCenter: parent.horizontalCenter

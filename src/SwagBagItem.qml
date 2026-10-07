@@ -77,7 +77,7 @@ Rectangle {
         anchors.topMargin: storeItem.pad
         anchors.leftMargin: storeItem.pad
         anchors.rightMargin: storeItem.pad
-        color: window.ui.modern ? window.ui.textMain : "black"
+        color: window.ui.ink("black")
     }
 
     Text {
@@ -90,7 +90,7 @@ Rectangle {
         anchors.rightMargin: storeItem.pad
         anchors.topMargin: window.ui.modern ? 4 : 0
         wrapMode: Text.WordWrap
-        color: window.ui.modern ? window.ui.textMuted : "black"
+        color: window.ui.inkMuted("black")
     }
 
     Text {
@@ -135,7 +135,7 @@ Rectangle {
             anchors.right: spinBox.left
             anchors.leftMargin: storeItem.pad
             verticalAlignment: Text.AlignVCenter
-            color: window.ui.modern ? window.ui.textMain : "black"
+            color: window.ui.ink("black")
         }
         BusyIndicator {
             id: spinBox

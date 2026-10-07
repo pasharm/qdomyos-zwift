@@ -56,12 +56,11 @@ import org.cagnulein.qdomyoszwift 1.0
 Item {
     // Modern look: side margins like the other pages, a readable text size instead of the
     // poster-size one, the product as a card and a pill button
-    readonly property int modernMargin: Math.max(16, window.contentSideMargin)
 
     Text {
         padding: 5
         id: description
-        width: window.ui.modern ? parent.width - 2 * parent.modernMargin : parent.width
+        width: window.ui.modern ? parent.width - 2 * window.ui.pageMargin : parent.width
         anchors.horizontalCenter: parent.horizontalCenter
         color: window.ui.ink("white")
         font.pointSize: window.ui.modern ? 15 : 22
@@ -77,8 +76,8 @@ Item {
         //anchors.bottom: restoreButton.top
         anchors.right: parent.right
         anchors.left: parent.left
-        anchors.leftMargin: window.ui.modern ? parent.modernMargin : 0
-        anchors.rightMargin: window.ui.modern ? parent.modernMargin : 0
+        anchors.leftMargin: window.ui.modern ? window.ui.pageMargin : 0
+        anchors.rightMargin: window.ui.modern ? window.ui.pageMargin : 0
         id: itemSwagBag
 
         SwagBagItem {
@@ -93,10 +92,10 @@ Item {
         }
         padding: 5
         id: appleDescription
-        width: window.ui.modern ? parent.width - 2 * parent.modernMargin : parent.width
+        width: window.ui.modern ? parent.width - 2 * window.ui.pageMargin : parent.width
         topPadding: window.ui.modern ? 16 : 5
         linkColor: window.ui.modern ? window.ui.accent : "blue"
-        color: window.ui.modern ? window.ui.textMuted : "white"
+        color: window.ui.inkMuted("white")
         font.pointSize: window.ui.modern ? 11 : 8
         wrapMode: TextArea.Wrap
         text: qsTr("<html><style type='text/css'></style>Swag bag feature:<br>• an auto-renewable subscription<br>• 1 month ($1.99)<br>• Your subscription will be charged to your iTunes account at confirmation of purchase and will automatically renew (at the duration selected) unless auto-renew is turned off at least 24 hours before the end of the current period.<br>• Current subscription may not be cancelled during the active subscription period; however, you can manage your subscription and/or turn off auto-renewal by visiting your iTunes Account Settings after purchase.<br>• Privacy policy: <a href='https://robertoviola.cloud/privacy-policy-qdomyos-zwift/'>https://robertoviola.cloud/privacy-policy-qdomyos-zwift/</a><br>• Licensed Application end user license agreement: <a href='https://www.apple.com/legal/internet-services/itunes/dev/stdeula/'>https://www.apple.com/legal/internet-services/itunes/dev/stdeula/</a><br></html>")

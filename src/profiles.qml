@@ -148,13 +148,12 @@ ColumnLayout {
     // Modern look: a card with the name and the save buttons, the profiles as a list of
     // cards (tap selects, Load or a second tap loads, long press deletes). Same model and
     // dialogs as the classic layout below, which is hidden.
-    readonly property int modernMargin: Math.max(16, window.contentSideMargin)
 
     Rectangle {
         visible: window.ui.modern
         Layout.fillWidth: true
-        Layout.leftMargin: modernMargin
-        Layout.rightMargin: modernMargin
+        Layout.leftMargin: window.ui.pageMargin
+        Layout.rightMargin: window.ui.pageMargin
         Layout.topMargin: 12
         implicitHeight: modernNameColumn.implicitHeight + 32
         radius: 20
@@ -207,8 +206,8 @@ ColumnLayout {
     Label {
         visible: window.ui.modern
         Layout.fillWidth: true
-        Layout.leftMargin: modernMargin + 4
-        Layout.rightMargin: modernMargin
+        Layout.leftMargin: window.ui.pageMargin + 4
+        Layout.rightMargin: window.ui.pageMargin
         Layout.topMargin: 12
         text: qsTr("Saved profiles")
         color: window.ui.textMain
@@ -218,8 +217,8 @@ ColumnLayout {
     Label {
         visible: window.ui.modern
         Layout.fillWidth: true
-        Layout.leftMargin: modernMargin + 4
-        Layout.rightMargin: modernMargin
+        Layout.leftMargin: window.ui.pageMargin + 4
+        Layout.rightMargin: window.ui.pageMargin
         text: qsTr("Tap a profile to select it, then Load. Long press to delete it.")
         color: window.ui.textMuted
         font.pixelSize: 13
@@ -231,8 +230,8 @@ ColumnLayout {
         visible: window.ui.modern
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Layout.leftMargin: modernMargin
-        Layout.rightMargin: modernMargin
+        Layout.leftMargin: window.ui.pageMargin
+        Layout.rightMargin: window.ui.pageMargin
         Layout.topMargin: 4
         clip: true
         spacing: 8
@@ -248,7 +247,7 @@ ColumnLayout {
             readonly property bool active: profileName === settings.profile_name
             width: ListView.view.width
             height: 64
-            radius: 16
+            radius: window.ui.radius
             fill: selected ? window.ui.alpha(window.ui.accent, 0.14)
                            : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
             strokeWidth: selected ? 1 : 0
@@ -325,8 +324,8 @@ ColumnLayout {
     UiButton {
         visible: window.ui.modern
         Layout.fillWidth: true
-        Layout.leftMargin: modernMargin
-        Layout.rightMargin: modernMargin
+        Layout.leftMargin: window.ui.pageMargin
+        Layout.rightMargin: window.ui.pageMargin
         Layout.bottomMargin: 8
         text: qsTr("Other folders")
         onClicked: {

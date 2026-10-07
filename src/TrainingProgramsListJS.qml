@@ -27,7 +27,6 @@ ColumnLayout {
 
     // Modern look: a filled search field, the workouts as cards, pill buttons and the
     // preview page in the app theme; the classic look keeps its list and buttons
-    readonly property int modernMargin: Math.max(16, window.contentSideMargin)
 
     Connections {
         target: rootItem
@@ -158,8 +157,8 @@ ColumnLayout {
                     Layout.fillWidth: true
                     Layout.topMargin: window.ui.modern ? 8 : 0
                     spacing: window.ui.modern ? 8 : 5
-                    leftPadding: window.ui.modern ? modernMargin : 0
-                    rightPadding: window.ui.modern ? modernMargin : 0
+                    leftPadding: window.ui.modern ? window.ui.pageMargin : 0
+                    rightPadding: window.ui.modern ? window.ui.pageMargin : 0
 
                     Text {
                         visible: !window.ui.modern
@@ -237,8 +236,8 @@ ColumnLayout {
                 ListView {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    Layout.leftMargin: window.ui.modern ? modernMargin : 0
-                    Layout.rightMargin: window.ui.modern ? modernMargin : 0
+                    Layout.leftMargin: window.ui.modern ? window.ui.pageMargin : 0
+                    Layout.rightMargin: window.ui.modern ? window.ui.pageMargin : 0
                     spacing: window.ui.modern ? 8 : 0
                     clip: window.ui.modern
                     ScrollBar.vertical: ScrollBar {}
@@ -268,7 +267,7 @@ ColumnLayout {
                         property string itemRelativePath: isSearching ? model.relativePath : ""
 
                         background: Rectangle {
-                            radius: window.ui.modern ? 16 : 0
+                            radius: window.ui.modern ? window.ui.radius : 0
                             color: window.ui.modern ? (workoutDelegate.pressed ? window.ui.surfaceHigh : window.ui.surface)
                                          : (ListView.isCurrentItem ? Material.color(Material.Green, Material.Shade800) : Material.backgroundColor)
                         }
@@ -324,7 +323,7 @@ ColumnLayout {
                                 Text {
                                     Layout.fillWidth: true
                                     text: itemRelativePath
-                                    color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey)
+                                    color: window.ui.inkMuted(Material.color(Material.Grey))
                                     font.pixelSize: 12
                                     elide: Text.ElideMiddle
                                     visible: isSearching && itemRelativePath !== ""
@@ -377,8 +376,8 @@ ColumnLayout {
 
                 UiButton {
                     Layout.fillWidth: true
-                    Layout.leftMargin: window.ui.modern ? modernMargin : 0
-                    Layout.rightMargin: window.ui.modern ? modernMargin : 0
+                    Layout.leftMargin: window.ui.modern ? window.ui.pageMargin : 0
+                    Layout.rightMargin: window.ui.modern ? window.ui.pageMargin : 0
                     Layout.bottomMargin: window.ui.modern ? 8 : 0
                     height: 50
                     text: qsTr("Other folders")
@@ -404,8 +403,8 @@ ColumnLayout {
                 RowLayout {
                     Layout.fillWidth: true
                     Layout.margins: 5
-                    Layout.leftMargin: window.ui.modern ? modernMargin - 8 : 5
-                    Layout.rightMargin: window.ui.modern ? modernMargin : 5
+                    Layout.leftMargin: window.ui.modern ? window.ui.pageMargin - 8 : 5
+                    Layout.rightMargin: window.ui.modern ? window.ui.pageMargin : 5
                     spacing: window.ui.modern ? 8 : 10
 
                     UiButton {
@@ -460,7 +459,7 @@ ColumnLayout {
                     text: rootItem.previewWorkoutTags
                     font.pixelSize: 12
                     wrapMode: Text.WordWrap
-                    color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey, Material.Shade400)
+                    color: window.ui.inkMuted(Material.color(Material.Grey, Material.Shade400))
                     horizontalAlignment: Text.AlignHCenter
                 }
 

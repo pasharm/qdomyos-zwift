@@ -28,7 +28,7 @@ Item {
             id: date
             text: rootItem.workoutStartDate
             font.pixelSize: 16
-            color: window.ui.modern ? window.ui.textMain : "white"
+            color: window.ui.ink("white")
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             anchors.horizontalCenter: parent.horizontalCenter
@@ -49,7 +49,7 @@ Item {
             id: instructor
             text: rootItem.instructorName
             font.pixelSize: 18
-            color: window.ui.modern ? window.ui.textMain : "white"
+            color: window.ui.ink("white")
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             anchors.horizontalCenter: parent.horizontalCenter

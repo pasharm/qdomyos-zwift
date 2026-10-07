@@ -364,7 +364,13 @@ ApplicationWindow {
         readonly property color accentInk: dark ? "#12101A" : "#FFFFFF"
         readonly property color danger: dark ? "#FF8A80" : "#C62828"
         readonly property color ok: dark ? "#7EDC8A" : "#2E7D32"
+        // Mark drawn on a danger-coloured badge ("!")
+        readonly property color dangerInk: dark ? "#000000" : "#FFFFFF"
+        // Dimming behind a modal popup
+        readonly property color scrim: Qt.rgba(0, 0, 0, dark ? 0.6 : 0.4)
         readonly property int radius: 16
+        // Side margin of the list pages: at least 16, more where the screen cutout needs it
+        readonly property int pageMargin: Math.max(16, window.contentSideMargin)
 
         readonly property string themeName: settings.ui_theme
         readonly property string accentName: settings.ui_accent
@@ -383,6 +389,8 @@ ApplicationWindow {
         // Text that the classic look paints in a fixed colour (mostly white) on the page
         // background: the theme text colour in the modern look, the old colour otherwise
         function ink(classic) { return modern ? textMain : classic }
+        // ...and the same for secondary text
+        function inkMuted(classic) { return modern ? textMuted : classic }
         // Zone colours of the tiles are made for a dark page: darker ones on a light page
         function zoneInk(c) { return dark ? c : Qt.darker(c, 1.7) }
 
@@ -769,7 +777,7 @@ ApplicationWindow {
                 // Modern: the title of UiMessageDialog
                 font.pixelSize: popupGymMode.modern ? 20 : Qt.application.font.pixelSize + 10
                 font.weight: popupGymMode.modern ? Font.DemiBold : Font.Bold
-                color: popupGymMode.modern ? window.ui.textMain : Material.foreground
+                color: window.ui.ink(Material.foreground)
                 horizontalAlignment: Text.AlignHCenter
                 wrapMode: Text.WordWrap
             }
@@ -791,7 +799,7 @@ ApplicationWindow {
                     Label {
                         anchors.centerIn: parent
                         text: "!"
-                        color: window.ui.dark ? "#000000" : "#FFFFFF"
+                        color: window.ui.dangerInk
                         font.pixelSize: 16
                         font.bold: true
                     }
@@ -807,7 +815,7 @@ ApplicationWindow {
                           : qsTr("QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.")
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignHCenter
-                    color: popupGymMode.modern ? window.ui.textMain : Material.foreground
+                    color: window.ui.ink(Material.foreground)
                 }
             }
 
@@ -837,7 +845,7 @@ ApplicationWindow {
                 text: qsTranslate("homeform", "Next search in %1 s").arg(popupGymMode.secondsLeft)
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
-                color: popupGymMode.modern ? window.ui.textMuted : Material.color(Material.Grey)
+                color: window.ui.inkMuted(Material.color(Material.Grey))
             }
 
             UiButton {
@@ -1459,7 +1467,7 @@ ApplicationWindow {
             text: stackView.currentItem.title
             font.pixelSize: window.ui.modern ? 18 : Qt.application.font.pixelSize
             font.weight: window.ui.modern ? Font.DemiBold : Font.Normal
-            color: window.ui.modern ? window.ui.textMain : Material.foreground
+            color: window.ui.ink(Material.foreground)
             // Fixed position, like the buttons: centred in the full bar, it moved on its own when the bar collapsed
             anchors.horizontalCenter: parent.horizontalCenter
             y: (headerToolbar.contentHeight - height) / 2

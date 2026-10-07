@@ -12,7 +12,6 @@ ScrollView {
     anchors.horizontalCenter: parent.horizontalCenter
     anchors.fill: parent
 
-    readonly property int modernMargin: Math.max(16, window.contentSideMargin)
     readonly property var developers: ["ben75020", "d3m3vilurr", "lifof", "p3g4asus", "Roberto Viola"]
 
     Label {
@@ -30,8 +29,8 @@ ScrollView {
     ColumnLayout {
         id: modernCredits
         visible: window.ui.modern
-        x: creditsPage.modernMargin
-        width: creditsPage.availableWidth - 2 * creditsPage.modernMargin
+        x: window.ui.pageMargin
+        width: creditsPage.availableWidth - 2 * window.ui.pageMargin
         spacing: 12
 
         Label {

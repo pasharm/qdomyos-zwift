@@ -291,7 +291,7 @@ Page {
                     text: qsTr("Workout History")
                     font.pixelSize: workoutHistoryPage.modern ? 22 : 24
                     font.weight: workoutHistoryPage.modern ? Font.DemiBold : Font.Bold
-                    color: workoutHistoryPage.modern ? window.ui.textMain : "black"
+                    color: window.ui.ink("black")
                     fontSizeMode: Text.HorizontalFit
                     minimumPixelSize: 14
                     elide: Text.ElideRight
@@ -303,7 +303,7 @@ Page {
                     text: workoutModel && workoutModel.isDateFiltered ?
                           qsTr("Filtered: %1").arg(workoutModel.filteredDate.toLocaleDateString()) : ""
                     font.pixelSize: 12
-                    color: workoutHistoryPage.modern ? window.ui.textMuted : "#666666"
+                    color: window.ui.inkMuted("#666666")
                     elide: Text.ElideRight
                     visible: workoutModel && workoutModel.isDateFiltered
                 }
@@ -440,7 +440,7 @@ Page {
             text: qsTr("Processing workout files...\nThis may take a few moments on first startup.")
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
-            color: workoutHistoryPage.modern ? window.ui.textMuted : "#666666"
+            color: window.ui.inkMuted("#666666")
             font.pixelSize: 16
         }
 
@@ -708,7 +708,7 @@ Page {
                                     text: title
                                     font.bold: true
                                     font.pixelSize: 18
-                                    color: workoutHistoryPage.modern ? window.ui.textMain : "black"
+                                    color: window.ui.ink("black")
                                     anchors.verticalCenter: parent.verticalCenter
                                     
                                     // Auto-scroll animation for long titles.
@@ -757,7 +757,7 @@ Page {
 
                             Text {
                                 text: date
-                                color: workoutHistoryPage.modern ? window.ui.textMuted : "#666666"
+                                color: window.ui.inkMuted("#666666")
                             }
 
                             // Stats row
@@ -766,7 +766,7 @@ Page {
 
                                 Text {
                                     text: (workoutHistoryPage.modern ? "" : "⏱ ") + duration
-                                    color: workoutHistoryPage.modern ? window.ui.textMain : "black"
+                                    color: window.ui.ink("black")
                                 }
 
                                 Text {
@@ -775,7 +775,7 @@ Page {
                                         var displayDistance = useMiles ? (distance / 1.60934) : distance
                                         return (workoutHistoryPage.modern ? "" : "📏 ") + displayDistance.toFixed(2) + " " + (useMiles ? qsTr("mi") : qsTr("km"))
                                     }
-                                    color: workoutHistoryPage.modern ? window.ui.textMain : "black"
+                                    color: window.ui.ink("black")
                                 }
                             }
 
@@ -788,7 +788,7 @@ Page {
                                           wrapEmoji("🔥") + " " + Math.round(calories) + " " + qsTr("kcal") :
                                           "🔥 " + Math.round(calories) + " " + qsTr("kcal")
                                     textFormat: Qt.platform.os === "android" && !workoutHistoryPage.modern ? Text.RichText : Text.PlainText
-                                    color: workoutHistoryPage.modern ? window.ui.textMuted : "black"
+                                    color: window.ui.inkMuted("black")
                                 }
                             }
                         }
@@ -1339,7 +1339,7 @@ Page {
                           : calendar.selectedDate.toLocaleDateString(Qt.locale(), "MMMM yyyy")
                     font.pixelSize: 18
                     font.bold: true
-                    color: workoutHistoryPage.modern ? window.ui.textMain : "black"
+                    color: window.ui.ink("black")
                     horizontalAlignment: Text.AlignHCenter
                 }
                 
@@ -1397,7 +1397,7 @@ Page {
                         font.bold: true
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
-                        color: workoutHistoryPage.modern ? window.ui.textMuted : "#666666"
+                        color: window.ui.inkMuted("#666666")
                     }
                 }
                 

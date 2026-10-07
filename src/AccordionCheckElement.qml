@@ -110,7 +110,7 @@ ColumnLayout {
         UiFrame {
             visible: rootElement.modernCard
             anchors.fill: parent
-            radius: 16
+            radius: window.ui.radius
             stroke: rootElement.isOpen ? window.ui.accent : window.ui.outline
             strokeWidth: 1
         }

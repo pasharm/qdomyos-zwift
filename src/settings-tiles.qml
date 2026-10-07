@@ -5110,7 +5110,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Orange)
+            color: window.ui.inkMuted(Material.color(Material.Orange))
         }
 
         AccordionCheckElement {

@@ -2706,7 +2706,7 @@ import QtQuick 2.12 as Quick212
                           filteredSettings.length === 0 ? qsTr("No settings found") :
                           qsTr("Search results") + " (" + filteredSettings.length + ")"
                     // A status line, not an error: plain muted text in the modern look
-                    color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Red)
+                    color: window.ui.inkMuted(Material.color(Material.Red))
                     font.bold: true
                     Layout.fillWidth: true
                 }
@@ -2780,7 +2780,7 @@ import QtQuick 2.12 as Quick212
                                                     : "transparent"
                             border.color: Material.color(Material.Grey)
                             border.width: window.ui.modern ? 0 : 1
-                            radius: window.ui.modern ? 16 : 2
+                            radius: window.ui.modern ? window.ui.radius : 2
                         }
 
                         // Modern: a tap on the card (not on its controls) opens the setting itself
@@ -2921,7 +2921,7 @@ import QtQuick 2.12 as Quick212
                                     rightPadding: 36
                                     text: searchSettingComboBox.displayText
                                     font: searchSettingComboBox.font
-                                    color: window.ui.modern ? window.ui.textMain : searchSettingComboBox.palette.text
+                                    color: window.ui.ink(searchSettingComboBox.palette.text)
                                     verticalAlignment: Text.AlignVCenter
                                     elide: Text.ElideRight
                                 }
@@ -2931,7 +2931,7 @@ import QtQuick 2.12 as Quick212
                                     contentItem: Label {
                                         text: searchSettingComboBox.labelFor(modelData)
                                         font: searchSettingComboBox.font
-                                        color: window.ui.modern ? window.ui.textMain : searchSettingComboBox.palette.text
+                                        color: window.ui.ink(searchSettingComboBox.palette.text)
                                         verticalAlignment: Text.AlignVCenter
                                         elide: Text.ElideRight
                                     }
@@ -2958,7 +2958,7 @@ import QtQuick 2.12 as Quick212
                                     rightPadding: 36
                                     text: searchVirtualComboBox.displayText
                                     font: searchVirtualComboBox.font
-                                    color: window.ui.modern ? window.ui.textMain : searchVirtualComboBox.palette.text
+                                    color: window.ui.ink(searchVirtualComboBox.palette.text)
                                     verticalAlignment: Text.AlignVCenter
                                     elide: Text.ElideRight
                                 }
@@ -2968,7 +2968,7 @@ import QtQuick 2.12 as Quick212
                                     contentItem: Label {
                                         text: modelData
                                         font: searchVirtualComboBox.font
-                                        color: window.ui.modern ? window.ui.textMain : searchVirtualComboBox.palette.text
+                                        color: window.ui.ink(searchVirtualComboBox.palette.text)
                                         verticalAlignment: Text.AlignVCenter
                                         elide: Text.ElideRight
                                     }
@@ -4633,7 +4633,7 @@ import QtQuick 2.12 as Quick212
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
                                 Layout.topMargin: 10
-                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Orange)
+                                color: window.ui.inkMuted(Material.color(Material.Orange))
                             }
                         }
                     }
@@ -9193,7 +9193,7 @@ import QtQuick 2.12 as Quick212
                                 // Modern: the title of UiMessageDialog (until the font scale, T-078)
                                 font.pixelSize: window.ui.modern ? 20 : 18
                                 font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
-                                color: window.ui.modern ? window.ui.textMain : Material.foreground
+                                color: window.ui.ink(Material.foreground)
                                 Layout.fillWidth: true
                                 horizontalAlignment: Text.AlignHCenter
                             }
@@ -9202,7 +9202,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Garmin has sent a verification code to your email.\nPlease enter it below:")
                                 wrapMode: Text.WordWrap
                                 font.pixelSize: window.ui.modern ? 16 : Qt.application.font.pixelSize
-                                color: window.ui.modern ? window.ui.textMain : Material.foreground
+                                color: window.ui.ink(Material.foreground)
                                 Layout.fillWidth: true
                                 horizontalAlignment: Text.AlignHCenter
                             }
@@ -9214,7 +9214,7 @@ import QtQuick 2.12 as Quick212
                                 horizontalAlignment: Text.AlignHCenter
                                 font.pixelSize: window.ui.modern ? 14 : 12
                                 font.italic: !window.ui.modern
-                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey)
+                                color: window.ui.inkMuted(Material.color(Material.Grey))
                             }
 
                             UiTextField {

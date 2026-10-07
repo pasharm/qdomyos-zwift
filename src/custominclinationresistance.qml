@@ -280,7 +280,7 @@ ScrollView {
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
             font.pixelSize: Qt.application.font.pixelSize - 2
-            color: window.ui.modern ? window.ui.textMuted : Material.accent
+            color: window.ui.inkMuted(Material.accent)
         }
 
         // Modern look: the column titles over the fields, no grid
@@ -328,7 +328,7 @@ ScrollView {
                         anchors.centerIn: parent
                         text: qsTr("Inclination (%)")
                         font.bold: true
-                        color: window.ui.modern ? window.ui.textMain : "black"
+                        color: window.ui.ink("black")
                     }
                 }
 
@@ -343,7 +343,7 @@ ScrollView {
                         anchors.centerIn: parent
                         text: qsTr("Resistance")
                         font.bold: true
-                        color: window.ui.modern ? window.ui.textMain : "black"
+                        color: window.ui.ink("black")
                     }
                 }
 
@@ -457,7 +457,7 @@ ScrollView {
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
                                 text: formatNumber(inclination)
-                                color: window.ui.modern ? window.ui.textMain : "black"
+                                color: window.ui.ink("black")
                                 selectedTextColor: window.ui.modern ? window.ui.accentInk : "white"
                                 selectionColor: Material.accent
                                 horizontalAlignment: Text.AlignHCenter
@@ -512,7 +512,7 @@ ScrollView {
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
                                 text: formatNumber(resistance)
-                                color: window.ui.modern ? window.ui.textMain : "black"
+                                color: window.ui.ink("black")
                                 selectedTextColor: window.ui.modern ? window.ui.accentInk : "white"
                                 selectionColor: Material.accent
                                 horizontalAlignment: Text.AlignHCenter
