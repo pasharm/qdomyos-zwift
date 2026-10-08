@@ -1268,6 +1268,13 @@
             console.log('[saveWorkflow] Refreshing program list...');
             return refreshProgramList().then(() => {
                 console.log('[saveWorkflow] Program list refreshed. programFiles:', Object.keys(state.programFiles));
+                // A name differing only in case replaced the old file, which keeps its spelling
+                // on a case-insensitive storage: pick the file as the list names it
+                const listed = Object.keys(state.programFiles).find(name => name.toLowerCase() === state.lastSaved.toLowerCase());
+                if (listed) {
+                    state.lastSaved = listed;
+                    payload.name = listed.replace(/\.xml$/i, '');
+                }
                 selectors.programSelect.value = state.lastSaved;
                 if (startAfter) {
                     console.log('[saveWorkflow] startAfter is true, checking for file:', payload.name);
