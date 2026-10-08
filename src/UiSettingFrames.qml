@@ -33,7 +33,10 @@ Item {
                                    : depth === 1 ? (header ? header.Layout.leftMargin : 0) + blockPad + framePadH
                                    : blockPad + framePadH
     readonly property int insetRight: insetLeft
-    readonly property int insetTop: window.ui.modern ? blockPad : 0
+    // The content is one control, not a column of settings (a section of a single "Enable support"
+    // switch): it gets one frame around itself, and the room for it is left by the holder margins
+    readonly property bool single: content !== null && (content.checked !== undefined || content.text !== undefined)
+    readonly property int insetTop: !window.ui.modern ? 0 : blockPad + (single ? framePadV : 0)
     readonly property int insetBottom: insetTop
 
     property var itemFrames: []
@@ -73,6 +76,12 @@ Item {
         if (!content) {
             if (itemFrames.length)
                 itemFrames = []
+            return
+        }
+        if (single) {
+            var one = window.ui.modern ? [{ first: content, last: content }] : []
+            if (one.length !== itemFrames.length || (one.length && itemFrames[0].first !== content))
+                itemFrames = one
             return
         }
         var kids = content.children
