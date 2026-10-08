@@ -18121,7 +18121,8 @@ import QtQuick 2.12 as Quick212
                         checked: settings.android_notification
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        onClicked: { settings.android_notification = checked; window.settings_restart_to_apply = true; }
+                        // applied at once (the service starts or stops), no restart needed
+                        onClicked: { settings.android_notification = checked; rootItem.android_notification_apply(checked); }
                     }
 
                     Label {
