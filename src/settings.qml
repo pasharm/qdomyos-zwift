@@ -2501,6 +2501,7 @@ import QtQuick 2.12 as Quick212
             property string ui_theme_mode: "auto"
             property bool ui_tile_snap: true
             property bool virtufit_layout_question: true
+            property bool android_notification_prompt_disabled: false
         }
 
 
