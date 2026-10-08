@@ -341,7 +341,8 @@ sleep 8
 shot p-00
 turn_page p
 # T-186: the preview of a program - the chart fills the view upright and sideways, no gap above it
-tap_ui 'Easy intervals' && sleep 6
+tap_ui 'Easy intervals' 486 582   # the cards are not in the accessibility tree: the first card's place
+sleep 6
 shot pv-00
 turn_page pv
 back "program preview"
