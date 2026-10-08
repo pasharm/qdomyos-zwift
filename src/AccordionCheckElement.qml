@@ -106,12 +106,14 @@ ColumnLayout {
         Component.onCompleted: updateHeight()
 
         // A thin frame instead of a fill, as the settings in the sections; a tile that is on
-        // (shown on the main page) is told by the accent title and the switch, not the frame
+        // (shown on the main page) in the toned-down accent of a subsection: still marked, not as
+        // bright as an open section
         UiFrame {
             visible: rootElement.modernCard
             anchors.fill: parent
             radius: window.ui.radius
-            stroke: window.ui.outline
+            stroke: rootElement.isOpen ? Qt.rgba(window.ui.accent.r, window.ui.accent.g, window.ui.accent.b, 0.4)
+                                       : window.ui.outline
             strokeWidth: 1
         }
 
