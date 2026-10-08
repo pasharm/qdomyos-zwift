@@ -238,7 +238,6 @@
         selectors.refreshPrograms = document.getElementById('refreshPrograms');
         selectors.statusDuration = document.getElementById('statusDuration');
         selectors.statusIntervals = document.getElementById('statusIntervals');
-        selectors.statusMessage = document.getElementById('statusMessage');
         selectors.offlineBanner = document.getElementById('offlineBanner');
 
         // Initialize custom dialog system for iOS WebView compatibility
@@ -1233,21 +1232,43 @@
             return;
         }
         console.log('[saveWorkflow] Payload name:', payload.name);
+        // Another workout under this name would be overwritten without a word: ask first. The
+        // workout open in the editor (loaded or saved here) is saved over without asking
+        const target = (payload.name + '.xml').toLowerCase();
+        const taken = Object.keys(state.programFiles).some(name => name.toLowerCase() === target);
+        const own = (state.lastSaved || '').toLowerCase() === target;
+        const asked = taken && !own
+            ? dialog.show(t('common.confirm', 'Confirm'),
+                          t('workoutEditor.replaceExisting', 'A workout named {name} already exists. Replace it?').replace('{name}', payload.name),
+                          { showCancel: true, confirmLabel: t('workoutEditor.replace', 'Replace') })
+            : Promise.resolve(true);
+        asked.then(ok => {
+            if (ok) {
+                saveProgram(payload, startAfter);
+            }
+        });
+    }
+
+    function saveProgram(payload, startAfter) {
         setWorking(true);
         sendMessage('savetrainingprogram', payload, 'R_savetrainingprogram').then(content => {
             console.log('[saveWorkflow] Save response:', content);
-            if (!content) {
+            // The app answers a failed write too, with no rows written
+            if (!content || !(content.list > 0)) {
                 announce(t('workoutEditor.saveFailed', 'Save failed'), true);
                 return;
             }
-            state.lastSaved = payload.name;
+            // The name the file got (the app replaces spaces and characters a file name cannot
+            // hold); the list names the files with their extension
+            payload.name = content.name || payload.name;
+            state.lastSaved = payload.name + '.xml';
             selectors.name.value = payload.name;
             announce(t('workoutEditor.savedName', 'Saved {name}').replace('{name}', payload.name));
 
             console.log('[saveWorkflow] Refreshing program list...');
             return refreshProgramList().then(() => {
                 console.log('[saveWorkflow] Program list refreshed. programFiles:', Object.keys(state.programFiles));
-                selectors.programSelect.value = payload.name;
+                selectors.programSelect.value = state.lastSaved;
                 if (startAfter) {
                     console.log('[saveWorkflow] startAfter is true, checking for file:', payload.name);
 
@@ -1665,16 +1686,24 @@
         }
     }
 
+    // Messages as the app's toast (Toast.qml) over the bottom of the page: the status line
+    // under the chart was out of sight on a phone until scrolled to
     function announce(message, error) {
-        selectors.statusMessage.textContent = message || '';
-        selectors.statusMessage.classList.toggle('error', !!error);
-        if (message) {
-            clearTimeout(announce.timer);
-            announce.timer = setTimeout(() => {
-                selectors.statusMessage.textContent = '';
-                selectors.statusMessage.classList.remove('error');
-            }, 5000);
+        if (!message) {
+            return;
         }
+        let toast = document.getElementById('editorToast');
+        if (!toast) {
+            toast = document.createElement('div');
+            toast.id = 'editorToast';
+            toast.setAttribute('role', 'status');
+            document.body.appendChild(toast);
+        }
+        toast.textContent = message;
+        toast.classList.toggle('error', !!error);
+        toast.classList.add('on');
+        clearTimeout(announce.timer);
+        announce.timer = setTimeout(() => toast.classList.remove('on'), error ? 5000 : 3000);
     }
 
     function setWorking(active) {

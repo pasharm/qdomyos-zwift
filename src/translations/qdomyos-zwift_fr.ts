@@ -2943,6 +2943,16 @@ Voulez-vous mettre à jour les paramètres de QZ ?</translation>
         <translation>Balayez vers la gauche ou la droite pour changer de graphique</translation>
     </message>
     <message>
+        <location filename="../webtranslation.cpp" line="213"/>
+        <source>A workout named {name} already exists. Replace it?</source>
+        <translation>Un entraînement nommé {name} existe déjà. Le remplacer ?</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="214"/>
+        <source>Replace</source>
+        <translation>Remplacer</translation>
+    </message>
+    <message>
         <location filename="../webtranslation.cpp" line="201"/>
         <source>Live update</source>
         <translation>Mise à jour en direct</translation>

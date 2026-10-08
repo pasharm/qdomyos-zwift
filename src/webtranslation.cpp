@@ -210,6 +210,8 @@ const WebTranslationEntry entries[] = {
     {"chart.fullScreen", QT_TRANSLATE_NOOP("WebTranslations", "Full screen")},
     {"chart.exitFullScreen", QT_TRANSLATE_NOOP("WebTranslations", "Exit full screen")},
     {"chart.swipeHint", QT_TRANSLATE_NOOP("WebTranslations", "Swipe left or right to switch charts")},
+    {"workoutEditor.replaceExisting", QT_TRANSLATE_NOOP("WebTranslations", "A workout named {name} already exists. Replace it?")},
+    {"workoutEditor.replace", QT_TRANSLATE_NOOP("WebTranslations", "Replace")},
     {"floating.pelotonWorkoutProgress", QT_TRANSLATE_NOOP("WebTranslations", "Peloton Workout in progress!")},
     {"floating.followResistanceQuestion", QT_TRANSLATE_NOOP("WebTranslations", "Do you want to follow the resistance?")},
     {"floating.avg", QT_TRANSLATE_NOOP("WebTranslations", "AVG")},

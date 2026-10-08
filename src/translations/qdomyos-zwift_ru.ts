@@ -2732,6 +2732,16 @@ Do you want to update QZ settings?</source>
         <translation>Листайте влево или вправо, чтобы переключать графики</translation>
     </message>
     <message>
+        <location filename="../webtranslation.cpp" line="213"/>
+        <source>A workout named {name} already exists. Replace it?</source>
+        <translation>Тренировка с именем {name} уже есть. Заменить её?</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="214"/>
+        <source>Replace</source>
+        <translation>Заменить</translation>
+    </message>
+    <message>
         <location filename="../webtranslation.cpp" line="194"/>
         <source>lvl</source>
         <translation>ур.</translation>

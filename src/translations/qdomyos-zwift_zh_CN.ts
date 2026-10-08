@@ -2943,6 +2943,16 @@ Do you want to update QZ settings?</source>
         <translation>左右滑动切换图表</translation>
     </message>
     <message>
+        <location filename="../webtranslation.cpp" line="213"/>
+        <source>A workout named {name} already exists. Replace it?</source>
+        <translation>已存在名为 {name} 的训练。要替换吗?</translation>
+    </message>
+    <message>
+        <location filename="../webtranslation.cpp" line="214"/>
+        <source>Replace</source>
+        <translation>替换</translation>
+    </message>
+    <message>
         <location filename="../webtranslation.cpp" line="201"/>
         <source>Live update</source>
         <translation>实时更新</translation>

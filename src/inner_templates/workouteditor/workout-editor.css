@@ -351,6 +351,41 @@ button.small {
     color: var(--danger-color);
 }
 
+/* Messages as the app's toast (Toast.qml): a bar across the bottom 10 px from the edges,
+   the inverse of the theme, 0.9 opaque, fading in and out in 0.3 s. The QML toast itself
+   would lie under the web view */
+#editorToast {
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    z-index: 9000;
+    padding: 5px;
+    border-radius: 10px;
+    background-color: #222222;
+    color: white;
+    font: 14px Roboto, "Segoe UI", sans-serif;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+}
+
+html.modern #editorToast {
+    border-radius: 14px;
+    background-color: #E4E6EB;
+    color: #1A1C20;
+}
+
+html.modern.light #editorToast {
+    background-color: #2B2F36;
+    color: #F1F2F4;
+}
+
+#editorToast.on {
+    opacity: 0.9;
+}
+
 .program-bar {
     background: var(--panel-color);
     border-radius: 12px;
