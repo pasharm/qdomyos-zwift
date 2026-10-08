@@ -78,7 +78,7 @@ ColumnLayout {
         isSearching = true
 
         // Call C++ FileSearcher for fast recursive search
-        var results = fileSearcher.searchRecursively(folderUrl, filter, ["*.xml", "*.zwo", "*.mrc", "*.erg", "*.json"])
+        var results = fileSearcher.searchRecursively(folderUrl, filter, ["*.xml", "*.zwo", "*.mrc", "*.erg", "*.json", "*.xsr"])
 
         // Populate search results model
         for (var i = 0; i < results.length; i++) {
@@ -94,7 +94,7 @@ ColumnLayout {
                 id: fileDialog
                 title: qsTr("Please choose a file")
                 folder: shortcuts.home
-                nameFilters: [qsTr("Training programs (*.xml *.zwo *.mrc *.erg *.json)"), qsTr("All files (*)")]
+                nameFilters: [qsTr("Training programs (*.xml *.zwo *.mrc *.erg *.json *.xsr)"), qsTr("All files (*)")]
                 visible: true
                 onAccepted: {
                     var chosenFile = fileDialog.fileUrl || fileDialog.file || (fileDialog.fileUrls && fileDialog.fileUrls.length > 0 ? fileDialog.fileUrls[0] : "")
@@ -245,7 +245,7 @@ ColumnLayout {
 
                     FolderListModel {
                         id: folderModel
-                        nameFilters: ["*.xml", "*.zwo", "*.mrc", "*.erg", "*.json"]
+                        nameFilters: ["*.xml", "*.zwo", "*.mrc", "*.erg", "*.json", "*.xsr"]
                         folder: "file://" + rootItem.getWritableAppDir() + 'training'
                         showDotAndDotDot: false
                         showDirs: true
