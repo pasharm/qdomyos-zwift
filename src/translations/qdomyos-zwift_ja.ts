@@ -1424,6 +1424,11 @@ QZの設定を更新しますか?</translation>
         <source>Zwift device: UPGRADE THE FIRMWARE!</source>
         <translation>Zwiftデバイス: ファームウェアを更新してください!</translation>
     </message>
+    <message>
+        <location filename="../homeform.cpp" line="10727"/>
+        <source>Android notification enabled</source>
+        <translation>Androidバックグラウンド通知保持を有効にしました</translation>
+    </message>
 </context>
 <context>
     <name>QPlatformTheme</name>
@@ -5346,6 +5351,40 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <location filename="../main.qml" line="2050"/>
         <source>Services</source>
         <translation>サービス</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1232"/>
+        <source>Connection lost in the background</source>
+        <translation>バックグラウンドで接続が切れました</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1248"/>
+        <source>Android cut QZ&apos;s network while it was in the background, so the app connected to QZ over Wi-Fi (Zwift, for example) lost it.
+
+</source>
+        <translation>QZ がバックグラウンドにある間に Android がネットワークを遮断したため、Wi-Fi で QZ に接続していたアプリ（Zwift など）の接続が切れました。
+
+</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1249"/>
+        <source>The Android notification keeps QZ running in the background. Enable it now? The workout keeps going, no restart needed.</source>
+        <translation>Androidバックグラウンド通知保持を使うと、QZ はバックグラウンドでも動作し続けます。今すぐ有効にしますか？トレーニングは中断されず、再起動も不要です。</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1261"/>
+        <source>Enable</source>
+        <translation>有効にする</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1266"/>
+        <source>Not now</source>
+        <translation>後で</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1271"/>
+        <source>Don&apos;t ask again</source>
+        <translation>今後表示しない</translation>
     </message>
 </context>
 <context>

@@ -1424,6 +1424,11 @@ Do you want to update QZ settings?</source>
         <source>Zwift device: UPGRADE THE FIRMWARE!</source>
         <translation>Zwift 设备：请升级固件！</translation>
     </message>
+    <message>
+        <location filename="../homeform.cpp" line="10727"/>
+        <source>Android notification enabled</source>
+        <translation>已启用 Android 通知</translation>
+    </message>
 </context>
 <context>
     <name>QPlatformTheme</name>
@@ -5350,6 +5355,40 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <location filename="../main.qml" line="2050"/>
         <source>Services</source>
         <translation>服务</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1232"/>
+        <source>Connection lost in the background</source>
+        <translation>后台连接已断开</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1248"/>
+        <source>Android cut QZ&apos;s network while it was in the background, so the app connected to QZ over Wi-Fi (Zwift, for example) lost it.
+
+</source>
+        <translation>QZ 在后台时 Android 切断了它的网络，因此通过 Wi-Fi 连接到 QZ 的应用（例如 Zwift）断开了连接。
+
+</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1249"/>
+        <source>The Android notification keeps QZ running in the background. Enable it now? The workout keeps going, no restart needed.</source>
+        <translation>Android 通知可让 QZ 在后台保持运行。现在启用吗？训练会继续进行，无需重启。</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1261"/>
+        <source>Enable</source>
+        <translation>启用</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1266"/>
+        <source>Not now</source>
+        <translation>以后再说</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1271"/>
+        <source>Don&apos;t ask again</source>
+        <translation>不再询问</translation>
     </message>
 </context>
 <context>

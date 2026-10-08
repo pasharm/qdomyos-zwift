@@ -1424,6 +1424,11 @@ Vuoi aggiornare le impostazioni di QZ?</translation>
         <source>Zwift device: UPGRADE THE FIRMWARE!</source>
         <translation>Dispositivo Zwift: AGGIORNA IL FIRMWARE!</translation>
     </message>
+    <message>
+        <location filename="../homeform.cpp" line="10727"/>
+        <source>Android notification enabled</source>
+        <translation>Notifica Android attivata</translation>
+    </message>
 </context>
 <context>
     <name>QPlatformTheme</name>
@@ -5346,6 +5351,40 @@ No: QZ lo mantiene come tapis roulant e non lo chiederà più (la bici si può c
         <location filename="../main.qml" line="2050"/>
         <source>Services</source>
         <translation>Servizi</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1232"/>
+        <source>Connection lost in the background</source>
+        <translation>Connessione persa in background</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1248"/>
+        <source>Android cut QZ&apos;s network while it was in the background, so the app connected to QZ over Wi-Fi (Zwift, for example) lost it.
+
+</source>
+        <translation>Android ha interrotto la rete di QZ mentre era in background, quindi l&apos;app collegata a QZ tramite Wi-Fi (ad esempio Zwift) ha perso la connessione.
+
+</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1249"/>
+        <source>The Android notification keeps QZ running in the background. Enable it now? The workout keeps going, no restart needed.</source>
+        <translation>La notifica Android mantiene QZ attivo in background. Attivarla ora? L&apos;allenamento continua, non serve riavviare.</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1261"/>
+        <source>Enable</source>
+        <translation>Abilita</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1266"/>
+        <source>Not now</source>
+        <translation>Non ora</translation>
+    </message>
+    <message>
+        <location filename="../main.qml" line="1271"/>
+        <source>Don&apos;t ask again</source>
+        <translation>Non chiedere più</translation>
     </message>
 </context>
 <context>
