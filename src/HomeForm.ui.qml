@@ -65,8 +65,8 @@ Page {
                     Accessible.role: Accessible.Indicator
                     Accessible.name: qsTr("Bluetooth connection")
                     Accessible.description: rootItem.device ? qsTr("Device connected") : qsTr("Device not connected")
-                    // No device yet: a tap searches right away instead of waiting for the next search
-                    // (with a device connected bluetoothSearchNow() does nothing)
+                    // No device yet: a tap searches right away instead of waiting for the next search;
+                    // with a device connected it restarts the DirCon (Wi-Fi) servers, see bluetoothSearchNow()
                     MouseArea {
                         anchors.fill: parent
                         onClicked: rootItem.bluetoothSearchNow()
@@ -236,8 +236,8 @@ Page {
                             source: treadmill_connection
                             color: treadmill_connection.enabled ? "#00000000" : "#B0D3d3d3"
                         }
-                        // No device yet: a tap searches right away instead of waiting for the next search
-                        // (with a device connected bluetoothSearchNow() does nothing)
+                        // No device yet: a tap searches right away instead of waiting for the next search;
+                        // with a device connected it restarts the DirCon (Wi-Fi) servers, see bluetoothSearchNow()
                         MouseArea {
                             anchors.fill: parent
                             onClicked: rootItem.bluetoothSearchNow()

@@ -1,4 +1,5 @@
 #include "homeform.h"
+#include "devices/dircon/dirconprocessor.h"
 #include "devices/echelonconnectsport/echelonconnectsport.h"
 #include "devices/fakebike/fakebike.h"
 #ifdef Q_OS_IOS
@@ -1943,8 +1944,15 @@ bool homeform::bluetoothSearchStopped() {
 }
 
 void homeform::bluetoothSearchNow() {
-    if (!bluetoothManager || bluetoothManager->device())
+    if (!bluetoothManager)
         return;
+    if (bluetoothManager->device()) {
+        // The device is there: the tap restarts the Wi-Fi bridge instead, by hand, for when the app
+        // on the other end (Zwift on a PC) can't reconnect after Android cut QZ's network
+        if (DirconProcessor::restartAll() > 0)
+            setToastRequested(tr("Wi-Fi connection (DirCon) restarted"));
+        return;
+    }
     const int waitSec = bluetoothManager->searchNow();
     if (waitSec > 0)
         setToastRequested(tr("Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s").arg(waitSec));

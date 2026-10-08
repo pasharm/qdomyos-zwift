@@ -246,7 +246,8 @@ class homeform : public QObject {
     Q_INVOKABLE QString bluetoothSearchStatus();
     // The search has given up and waits for a tap on the Bluetooth icon; false once connected
     Q_INVOKABLE bool bluetoothSearchStopped();
-    // Tap on the Bluetooth icon: search right away, or when Android allows it again (with a toast saying when)
+    // Tap on the Bluetooth icon: search right away, or when Android allows it again (with a toast saying when);
+    // with the device already connected, restart the DirCon servers and mDNS instead (toast; nothing if DirCon is off)
     Q_INVOKABLE void bluetoothSearchNow();
     Q_INVOKABLE void save_screenshot() {
 

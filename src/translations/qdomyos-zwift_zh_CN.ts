@@ -4861,6 +4861,11 @@ This may take a few moments on first startup.</source>
         <source>W </source>
         <translation>W </translation>
     </message>
+    <message>
+        <location filename="../homeform.cpp" line="1953"/>
+        <source>Wi-Fi connection (DirCon) restarted</source>
+        <translation>已重启 Wi-Fi 连接（DirCon）</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

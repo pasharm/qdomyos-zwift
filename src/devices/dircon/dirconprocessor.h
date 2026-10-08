@@ -95,6 +95,7 @@ class DirconProcessor : public QObject {
     // processor, not only the one whose client fell: the listening sockets of the others (an HRM
     // nobody was connected to) are gone as well. Bumped by the loss, compared on resume.
     static int networkLostGeneration;
+    static QList<DirconProcessor *> instances;
     int handledNetworkLostGeneration = 0;
     int restartAttempts = 0;
     bool initServer();
@@ -109,6 +110,9 @@ class DirconProcessor : public QObject {
                              quint16 serv_port, const QString &serv_sn, const QString &mac, QObject *parent = nullptr);
     bool sendCharacteristicNotification(quint16 uuid, const QByteArray &data);
     bool init();
+    // Rebuild the server and the mDNS announcement of every DirCon device (a tap on the Bluetooth
+    // icon with the device connected). Returns how many there are: 0 means DirCon is off.
+    static int restartAll();
   private slots:
     void tcpDataAvailable();
     void tcpDisconnected();

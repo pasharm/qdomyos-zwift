@@ -9,6 +9,15 @@
 #include <QTimer>
 
 int DirconProcessor::networkLostGeneration = 0;
+QList<DirconProcessor *> DirconProcessor::instances;
+
+int DirconProcessor::restartAll() {
+    for (DirconProcessor *processor : instances) {
+        processor->restartAttempts = 0;
+        processor->restartServer();
+    }
+    return instances.size();
+}
 
 DirconProcessor::DirconProcessor(const QList<DirconProcessorService *> &my_services, const QString &serv_name,
                                  quint16 serv_port, const QString &serv_sn, const QString &my_mac, QObject *parent)
@@ -18,6 +27,7 @@ DirconProcessor::DirconProcessor(const QList<DirconProcessorService *> &my_servi
     QSettings settings;
     rouvy_compatibility = settings.value(QZSettings::rouvy_compatibility, QZSettings::default_rouvy_compatibility).toBool();
     foreach (DirconProcessorService *my_service, my_services) { my_service->setParent(this); }
+    instances.append(this);
     handledNetworkLostGeneration = networkLostGeneration; // a loss before this processor isn't its
     if (QGuiApplication *guiApp = qobject_cast<QGuiApplication *>(QCoreApplication::instance())) {
         connect(guiApp, &QGuiApplication::applicationStateChanged, this, &DirconProcessor::applicationStateChanged);
@@ -25,6 +35,7 @@ DirconProcessor::DirconProcessor(const QList<DirconProcessorService *> &my_servi
 }
 
 DirconProcessor::~DirconProcessor() {
+    instances.removeAll(this);
     // The three mDNS objects are all children of this processor, and QObject destroys
     // children in the order they were added - which initAdvertising() makes server,
     // hostname, provider. That is exactly backwards: ~ProviderPrivate() sends the goodbye

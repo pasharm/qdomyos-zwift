@@ -4857,6 +4857,11 @@ Isso pode levar alguns instantes na primeira inicialização.</translation>
         <source>W </source>
         <translation>W </translation>
     </message>
+    <message>
+        <location filename="../homeform.cpp" line="1953"/>
+        <source>Wi-Fi connection (DirCon) restarted</source>
+        <translation>Conexão Wi-Fi (DirCon) reiniciada</translation>
+    </message>
 </context>
 <context>
     <name>main</name>

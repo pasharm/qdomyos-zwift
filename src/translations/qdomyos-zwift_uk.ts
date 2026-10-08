@@ -4845,6 +4845,11 @@ This may take a few moments on first startup.</source>
         <source>The workout history database could not be opened.</source>
         <translation>Не вдалося відкрити базу історії тренувань.</translation>
     </message>
+    <message>
+        <location filename="../homeform.cpp" line="1953"/>
+        <source>Wi-Fi connection (DirCon) restarted</source>
+        <translation>Зв’язок через Wi-Fi (DirCon) перезапущено</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
