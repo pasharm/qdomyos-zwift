@@ -238,123 +238,32 @@ has() {
   fi
 }
 
-wait_tiles
-sleep 20                           # some seconds of the session before the page opens
-shot h-home
+# T-192: the frames of the settings - a section of one switch (Hammer Racer) inside its block,
+# the cards of the tile options with the muted frame
 open_menu
-shot m-menu
-tap_drawer 'Charts' 400 900
-sleep 12
-shot c-00
-page c-00
-has 'Full screen' "full screen buttons on the cards"
-
-# T-153: a chart spread over the screen, swipes between the charts, back closes the spread
-tap_node 'Full screen' && echo "spread a chart" >> $STEPLOG
-sleep 2
-shot f-01-spread                     # the chart over the whole page, the swipe hint at the bottom
-page f-01
-has 'Exit full screen' "the button turned into Exit"
-# the app header hides while spread: the button sits right under the status bar, not under the
-# toolbar (its place on the cards page is logged by c-00 above)
-echo "spread button at $(python3 .github/uitap.py ui.xml 'Exit full screen')" >> $STEPLOG
-sleep 4
-shot f-02-hint-gone
-adb shell input swipe 1200 1500 200 1500 250 || true
-echo "swipe left" >> $STEPLOG
-sleep 2
-shot f-03-next                       # the next chart, the counter one up
-page f-03
-adb shell input swipe 1200 1500 200 1500 250 || true
-sleep 2
-shot f-04-next2
-adb shell input swipe 200 1500 1200 1500 250 || true
-echo "swipe right" >> $STEPLOG
-sleep 2
-shot f-05-back-one
-page f-05
+shot s-menu
+tap_drawer '^Settings$' 400 900
 sleep 8
-shot f-06-live                       # still spread after live redraws (time axis longer)
-page f-06
-
-# turned to landscape while spread
-adb shell settings put system accelerometer_rotation 0 || true
-adb shell settings put system user_rotation 1 || true
+shot s-00
+scroll_to '^Bike Options$' && tap_ui '^Bike Options$' 700 1000
 sleep 4
-shot f-07-landscape
-page f-07
-adb shell settings put system user_rotation 0 || true
-sleep 4
-shot f-08-portrait
-
-# the back key closes the spread chart, not the page
-back "spread chart"
-sleep 2
-shot f-09-after-back
-page f-09
-has 'Full screen' "the page with its cards again"
-dump
-if [ -f ui.xml ] && python3 .github/uitap.py ui.xml 'Exit full screen' > /dev/null; then
-  echo "!! check spread closed by back: STILL SPREAD" >> $STEPLOG
-else
-  echo "check spread closed by back: OK" >> $STEPLOG
-fi
-
-echo "first card button at $(python3 .github/uitap.py ui.xml '^Full screen$')" >> $STEPLOG
-
-# the collapse button of the spread chart does the same (the toolbar arrow hides with the header)
-tap_node 'Full screen' && echo "spread again" >> $STEPLOG
-sleep 2
-tap_node 'Exit full screen' && echo "collapse button" >> $STEPLOG
-sleep 2
-shot f-10-after-collapse
-page f-10
-has 'Full screen' "the page with its cards after the collapse button"
-
-# a second back leaves the page as before
-back "charts"
-sleep 5
-shot h-back
-
-# T-184: the pages with a web view take a turn of the screen (WebViewTurnFix.qml): opened
-# upright, turned to landscape and back. The emulator does not show the blank band itself;
-# this checks that the pages open and turn without QML errors and come back on the screen
-turn_page() {
-  adb shell settings put system accelerometer_rotation 0 || true
-  adb shell settings put system user_rotation 1 || true
-  sleep 4
-  shot $1-landscape
-  adb shell settings put system user_rotation 0 || true
-  sleep 4
-  shot $1-portrait
-}
-open_menu
-tap_drawer 'Workout Editor' 400 1300
-sleep 10
-shot e-00
-turn_page e
-back "editor"
+scroll_to 'Hammer Racer Bike Options' && tap_ui 'Hammer Racer Bike Options' 700 1000
 sleep 3
-open_menu
-tap_drawer 'Open Train Program' 400 1200
+scroll_to 'Saris/Cycleops Hammer trainer Options' && tap_ui 'Saris/Cycleops Hammer trainer Options' 700 1000
+sleep 3
+scroll_to 'Hammer Racer Bike Options'
+shot s-hammer
+adb shell input swipe 700 1800 700 1300 400 || true
+sleep 1
+shot s-hammer-2
+scroll_top
+scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' 700 1000
 sleep 8
-shot p-00
-turn_page p
-# T-186: the preview of a program - the chart fills the view upright and sideways, no gap above it
-tap_ui 'Easy intervals' 486 582   # the cards are not in the accessibility tree: the first card's place
-sleep 6
-shot pv-00
-turn_page pv
-back "program preview"
-sleep 2
-back "programs"
-sleep 3
-echo "turn fix QML errors:" >> $STEPLOG
-grep -c -E "WebViewTurnFix|WorkoutEditor.qml:[0-9]+|TrainingProgramsListJS.qml:[0-9]+|PreviewChart.qml:[0-9]+" full_logcat.txt >> $STEPLOG || true
-grep -E "WebViewTurnFix|WorkoutEditor.qml:[0-9]+|TrainingProgramsListJS.qml:[0-9]+|PreviewChart.qml:[0-9]+" full_logcat.txt | head -20 >> $STEPLOG || true
+shot t-00
+adb shell input swipe 700 2000 700 1000 400 || true
+sleep 1
+shot t-01
 
-echo "savechart lines (pictures for the mail; one set from the end page):" >> $STEPLOG
-grep -c "savechart" full_logcat.txt >> $STEPLOG || true
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
