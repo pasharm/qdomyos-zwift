@@ -340,6 +340,12 @@ tap_drawer 'Open Train Program' 400 1200
 sleep 8
 shot p-00
 turn_page p
+# T-186: the preview of a program - the chart fills the view upright and sideways, no gap above it
+tap_ui 'Easy intervals' && sleep 6
+shot pv-00
+turn_page pv
+back "program preview"
+sleep 2
 back "programs"
 sleep 3
 echo "turn fix QML errors:" >> $STEPLOG
