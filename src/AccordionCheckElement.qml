@@ -106,12 +106,12 @@ ColumnLayout {
         Component.onCompleted: updateHeight()
 
         // A thin frame instead of a fill, as the settings in the sections; a tile that is on
-        // (shown on the main page) in the accent like an open section
+        // (shown on the main page) is told by the accent title and the switch, not the frame
         UiFrame {
             visible: rootElement.modernCard
             anchors.fill: parent
             radius: window.ui.radius
-            stroke: rootElement.isOpen ? window.ui.accent : window.ui.outline
+            stroke: window.ui.outline
             strokeWidth: 1
         }
 
