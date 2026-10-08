@@ -53,9 +53,12 @@
             padding: 10px;
         }
 
+        /* The chart fills the view (the body padding off): a fixed 400px did not fit the view
+           held sideways - the time axis was cut and the page scrolled - and left a gap upright */
         #chart-container {
             width: 100%;
-            height: 400px;
+            height: calc(100vh - 20px);
+            min-height: 200px;
             background: white;
             border-radius: 8px;
             padding: 10px;
@@ -76,6 +79,7 @@
         }
 
         html.modern #chart-container {
+            height: calc(100vh - 16px);
             border-radius: 20px;
             padding: 12px;
         }
@@ -202,6 +206,13 @@
                             borderColor: '#3b82f6',
                             borderWidth: 1,
                             callbacks: {
+                                // the time of the point as on the axis (m:ss), not seconds
+                                title: function(items) {
+                                    const value = items.length ? items[0].parsed.x : 0;
+                                    const minutes = Math.floor(value / 60);
+                                    const seconds = Math.floor(value % 60);
+                                    return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+                                },
                                 label: function(context) {
                                     let label = context.dataset.label || '';
                                     if (label) {

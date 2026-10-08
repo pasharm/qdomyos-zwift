@@ -445,6 +445,8 @@ ColumnLayout {
                     Layout.fillWidth: true
                     Layout.margins: 10
                     text: rootItem.previewWorkoutDescription
+                    // An empty line kept its height and margins: a gap above the chart
+                    visible: text !== ""
                     font.pixelSize: window.ui.modern ? 16 : 14
                     font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
                     color: window.ui.ink("white")
@@ -457,6 +459,7 @@ ColumnLayout {
                     Layout.leftMargin: 10
                     Layout.rightMargin: 10
                     text: rootItem.previewWorkoutTags
+                    visible: text !== ""
                     font.pixelSize: 12
                     wrapMode: Text.WordWrap
                     color: window.ui.inkMuted(Material.color(Material.Grey, Material.Shade400))
