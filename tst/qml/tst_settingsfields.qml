@@ -231,7 +231,7 @@ TestCase {
     }
 
     function test_classic_unchanged() {
-        var f = make(numberField)
+        var f = make(numberField, { text: "5" })
         verify(!f.narrow)
         compare(f.bottomPadding, 16)
         compare(f.bottomInset, 0)
