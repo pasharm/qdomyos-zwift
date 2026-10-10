@@ -11,6 +11,31 @@ TestCase {
     height: 200
     when: windowShown
 
+    // feat/modern-ui: the fields are built on UiTextField, which reads the look from
+    // window.ui of main.qml
+    QtObject {
+        id: window
+        property QtObject ui: QtObject {
+            property bool modern: false
+            property color bg: "white"
+            property color textMain: "black"
+            property color textMuted: "gray"
+            property color accent: "violet"
+            property color danger: "red"
+            property color surfaceHighest: "lightgray"
+            property color surfaceHigh: "lightgray"
+            property color outline: "gray"
+            property color scrim: "black"
+            property color accentInk: "white"
+            property bool dark: false
+            function alpha(c, a) { return Qt.rgba(c.r, c.g, c.b, a) }
+        }
+    }
+
+    function cleanup() {
+        window.ui.modern = false
+    }
+
     Component { id: numberField; SettingsNumberField { width: 300 } }
     Component { id: formatField; SettingsFormatField { width: 300 } }
 
@@ -177,5 +202,40 @@ TestCase {
         i.text = "5"
         verify(!i.valid)
         compare(i.errorText, "Enter the height as feet'inches, e.g. 5'10\"")
+    }
+
+    // ---- feat/modern-ui: the same checks drawn by UiTextField ----
+
+    function test_modern_number() {
+        window.ui.modern = true
+        var f = make(numberField, { minimum: 1 })
+        verify(f.narrow)
+        compare(type(f, "72,5"), "72,5")
+        compare(f.value, 72.5)
+        verify(f.valid)
+        verify(!f.invalid)
+        f.text = "0"
+        verify(!f.valid)
+        verify(f.invalid)                    // the red ring
+        compare(f.errorText, "Minimum: 1")
+        verify(f.bottomInset > f.modernInset) // room for the reason under the field
+    }
+
+    function test_modern_time_is_picked() {
+        window.ui.modern = true
+        var f = make(formatField, { format: "time", text: "00:07:30" })
+        verify(f.timeShaped)
+        verify(f.readOnly)                   // the wheel picker writes it
+        verify(!f.narrow)
+        verify(f.valid)
+    }
+
+    function test_classic_unchanged() {
+        var f = make(numberField)
+        verify(!f.narrow)
+        compare(f.bottomPadding, 16)
+        compare(f.bottomInset, 0)
+        f.text = "-"
+        compare(f.bottomPadding, 16 + f.reasonRoom)
     }
 }
