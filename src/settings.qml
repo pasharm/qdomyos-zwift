@@ -2505,6 +2505,7 @@ import QtQuick 2.12 as Quick212
             property bool proform_treadmill_305_cst: false
             property bool fitshow_bike_question: true
             property bool resistance_buttons_accumulate: false
+            property bool virtufit_layout_question: true
             // The look of the modern interface: main.qml keeps the same keys and applies them at
             // once. Declared here for the settings catalog; the page and the search read them
             // through window.ui and write both copies (setUiOption)
@@ -2513,7 +2514,6 @@ import QtQuick 2.12 as Quick212
             property string ui_accent: "violet"
             property string ui_theme_mode: "auto"
             property bool ui_tile_snap: true
-            property bool virtufit_layout_question: true
         }
 
 
@@ -7279,6 +7279,169 @@ import QtQuick 2.12 as Quick212
                 //anchors.topMargin: 10
                 accordionContent: ColumnLayout {
                     spacing: 0
+                    // Look of the app: modern or classic, theme and accent colour
+                    IndicatorOnlySwitch {
+                        text: qsTr("Modern interface")
+                        spacing: 0
+                        bottomPadding: 0
+                        topPadding: 0
+                        rightPadding: 0
+                        leftPadding: 0
+                        clip: false
+                        checked: window.ui.modern
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        onClicked: settingsPane.setUiOption("ui_modern", checked)
+                    }
+                    Label {
+                        text: qsTr("New look of the main screen, the side menu, the settings and the wizard. Turn it off to get the classic look back.")
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
+                        font.pixelSize: Qt.application.font.pixelSize - 2
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                    }
+
+                    IndicatorOnlySwitch {
+                        text: qsTr("Snap tiles to rows")
+                        spacing: 0
+                        bottomPadding: 0
+                        topPadding: 0
+                        rightPadding: 0
+                        leftPadding: 0
+                        clip: false
+                        checked: window.ui.tileSnap
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        Layout.topMargin: 8
+                        onClicked: settingsPane.setUiOption("ui_tile_snap", checked)
+                    }
+                    Label {
+                        text: qsTr("When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.")
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
+                        font.pixelSize: Qt.application.font.pixelSize - 2
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                    }
+
+                    RowLayout {
+                        visible: window.ui.modern
+                        spacing: 10
+                        Layout.topMargin: 8
+                        Label {
+                            text: qsTr("Appearance")
+                            Layout.fillWidth: true
+                        }
+                        UiComboBox {
+                            id: uiThemeModeCombo
+                            readonly property var options: [
+                                { value: "auto", label: qsTr("As on the phone") },
+                                { value: "dark", label: qsTr("Dark") },
+                                //: Colour theme: the light one (not "easy" as in the effort scale)
+                                { value: "light", label: qsTr("Light") }
+                            ]
+                            model: options
+                            textRole: "label"
+                            Layout.preferredWidth: 190
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            currentIndex: {
+                                for (var i = 0; i < options.length; i++)
+                                    if (options[i].value === window.ui.themeMode)
+                                        return i
+                                return 0
+                            }
+                            onActivated: settingsPane.setUiOption("ui_theme_mode", options[index].value)
+                        }
+                    }
+
+                    RowLayout {
+                        visible: window.ui.modern
+                        spacing: 10
+                        Layout.topMargin: 8
+                        Label {
+                            text: qsTr("Theme")
+                            Layout.fillWidth: true
+                        }
+                        UiComboBox {
+                            id: uiThemeCombo
+                            readonly property var options: [
+                                { value: "graphite", label: qsTr("Graphite") },
+                                { value: "oled", label: qsTr("Black / white") },
+                                { value: "midnight", label: qsTr("Midnight blue") }
+                            ]
+                            model: options
+                            textRole: "label"
+                            Layout.preferredWidth: 190
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            currentIndex: {
+                                for (var i = 0; i < options.length; i++)
+                                    if (options[i].value === window.ui.themeName)
+                                        return i
+                                return 0
+                            }
+                            onActivated: settingsPane.setUiOption("ui_theme", options[index].value)
+                        }
+                    }
+
+                    RowLayout {
+                        visible: window.ui.modern
+                        spacing: 10
+                        Layout.topMargin: 8
+                        Layout.bottomMargin: 12
+                        // Wraps instead of running under the swatches: inside the frames of the
+                        // section the row is narrower than the seven swatches and a long name
+                        Label {
+                            text: qsTr("Accent colour")
+                            wrapMode: Text.WordWrap
+                            Layout.fillWidth: true
+                            Layout.minimumWidth: 60
+                        }
+                        Row {
+                            spacing: 6
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            Repeater {
+                                // "system" first, where Android offers the wallpaper colour (API 31+)
+                                model: (window.ui.systemAccentAvailable ? ["system"] : [])
+                                       .concat(["violet", "blue", "teal", "green", "orange", "pink"])
+                                // UiFrame: a Rectangle.border ring breaks up on Android
+                                delegate: UiFrame {
+                                    width: 28
+                                    height: 28
+                                    radius: 14
+                                    fill: window.ui.accentOf(modelData)
+                                    strokeWidth: window.ui.accentName === modelData ? 3 : 0
+                                    stroke: window.ui.textMain
+                                    Accessible.role: Accessible.RadioButton
+                                    // The same names as in settings-catalog.json (ui_accent): the search shows them
+                                    Accessible.name: ({ system: qsTr("Wallpaper colour"), violet: qsTr("Violet"), blue: qsTr("Blue"),
+                                                        teal: qsTr("Teal"), green: qsTr("Green"), orange: qsTr("Orange"),
+                                                        pink: qsTr("Pink") })[modelData] || modelData
+                                    Accessible.checked: window.ui.accentName === modelData
+                                    // The wallpaper colour is marked, so it does not pass for one
+                                    // more fixed colour
+                                    UiIcon {
+                                        visible: modelData === "system"
+                                        anchors.centerIn: parent
+                                        width: 18
+                                        height: 18
+                                        name: "palette"
+                                        color: window.ui.accentInk
+                                    }
+                                    MouseArea {
+                                        anchors.fill: parent
+                                        anchors.margins: -4
+                                        onClicked: settingsPane.setUiOption("ui_accent", modelData)
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     IndicatorOnlySwitch {
                         id: topBarEnabledDelegate
                         text: qsTr("Top Bar Enabled")
@@ -17060,169 +17223,6 @@ import QtQuick 2.12 as Quick212
                 //anchors.topMargin: 10
                 accordionContent: ColumnLayout {
                     spacing: 0
-                    // Look of the app (fork only): modern or classic, theme and accent colour
-                    IndicatorOnlySwitch {
-                        text: qsTr("Modern interface")
-                        spacing: 0
-                        bottomPadding: 0
-                        topPadding: 0
-                        rightPadding: 0
-                        leftPadding: 0
-                        clip: false
-                        checked: window.ui.modern
-                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                        Layout.fillWidth: true
-                        onClicked: settingsPane.setUiOption("ui_modern", checked)
-                    }
-                    Label {
-                        text: qsTr("New look of the main screen, the side menu, the settings and the wizard. Turn it off to get the classic look back.")
-                        font.bold: !window.ui.modern
-                        font.italic: !window.ui.modern
-                        font.pixelSize: Qt.application.font.pixelSize - 2
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-                    }
-
-                    IndicatorOnlySwitch {
-                        text: qsTr("Snap tiles to rows")
-                        spacing: 0
-                        bottomPadding: 0
-                        topPadding: 0
-                        rightPadding: 0
-                        leftPadding: 0
-                        clip: false
-                        checked: window.ui.tileSnap
-                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                        Layout.fillWidth: true
-                        Layout.topMargin: 8
-                        onClicked: settingsPane.setUiOption("ui_tile_snap", checked)
-                    }
-                    Label {
-                        text: qsTr("When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.")
-                        font.bold: !window.ui.modern
-                        font.italic: !window.ui.modern
-                        font.pixelSize: Qt.application.font.pixelSize - 2
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-                    }
-
-                    RowLayout {
-                        visible: window.ui.modern
-                        spacing: 10
-                        Layout.topMargin: 8
-                        Label {
-                            text: qsTr("Appearance")
-                            Layout.fillWidth: true
-                        }
-                        UiComboBox {
-                            id: uiThemeModeCombo
-                            readonly property var options: [
-                                { value: "auto", label: qsTr("As on the phone") },
-                                { value: "dark", label: qsTr("Dark") },
-                                //: Colour theme: the light one (not "easy" as in the effort scale)
-                                { value: "light", label: qsTr("Light") }
-                            ]
-                            model: options
-                            textRole: "label"
-                            Layout.preferredWidth: 190
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            currentIndex: {
-                                for (var i = 0; i < options.length; i++)
-                                    if (options[i].value === window.ui.themeMode)
-                                        return i
-                                return 0
-                            }
-                            onActivated: settingsPane.setUiOption("ui_theme_mode", options[index].value)
-                        }
-                    }
-
-                    RowLayout {
-                        visible: window.ui.modern
-                        spacing: 10
-                        Layout.topMargin: 8
-                        Label {
-                            text: qsTr("Theme")
-                            Layout.fillWidth: true
-                        }
-                        UiComboBox {
-                            id: uiThemeCombo
-                            readonly property var options: [
-                                { value: "graphite", label: qsTr("Graphite") },
-                                { value: "oled", label: qsTr("Black / white") },
-                                { value: "midnight", label: qsTr("Midnight blue") }
-                            ]
-                            model: options
-                            textRole: "label"
-                            Layout.preferredWidth: 190
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            currentIndex: {
-                                for (var i = 0; i < options.length; i++)
-                                    if (options[i].value === window.ui.themeName)
-                                        return i
-                                return 0
-                            }
-                            onActivated: settingsPane.setUiOption("ui_theme", options[index].value)
-                        }
-                    }
-
-                    RowLayout {
-                        visible: window.ui.modern
-                        spacing: 10
-                        Layout.topMargin: 8
-                        Layout.bottomMargin: 12
-                        // Wraps instead of running under the swatches: inside the frames of the
-                        // section the row is narrower than the seven swatches and a long name
-                        Label {
-                            text: qsTr("Accent colour")
-                            wrapMode: Text.WordWrap
-                            Layout.fillWidth: true
-                            Layout.minimumWidth: 60
-                        }
-                        Row {
-                            spacing: 6
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            Repeater {
-                                // "system" first, where Android offers the wallpaper colour (API 31+)
-                                model: (window.ui.systemAccentAvailable ? ["system"] : [])
-                                       .concat(["violet", "blue", "teal", "green", "orange", "pink"])
-                                // UiFrame: a Rectangle.border ring breaks up on Android
-                                delegate: UiFrame {
-                                    width: 28
-                                    height: 28
-                                    radius: 14
-                                    fill: window.ui.accentOf(modelData)
-                                    strokeWidth: window.ui.accentName === modelData ? 3 : 0
-                                    stroke: window.ui.textMain
-                                    Accessible.role: Accessible.RadioButton
-                                    // The same names as in settings-catalog.json (ui_accent): the search shows them
-                                    Accessible.name: ({ system: qsTr("Wallpaper colour"), violet: qsTr("Violet"), blue: qsTr("Blue"),
-                                                        teal: qsTr("Teal"), green: qsTr("Green"), orange: qsTr("Orange"),
-                                                        pink: qsTr("Pink") })[modelData] || modelData
-                                    Accessible.checked: window.ui.accentName === modelData
-                                    // The wallpaper colour is marked, so it does not pass for one
-                                    // more fixed colour
-                                    UiIcon {
-                                        visible: modelData === "system"
-                                        anchors.centerIn: parent
-                                        width: 18
-                                        height: 18
-                                        name: "palette"
-                                        color: window.ui.accentInk
-                                    }
-                                    MouseArea {
-                                        anchors.fill: parent
-                                        anchors.margins: -4
-                                        onClicked: settingsPane.setUiOption("ui_accent", modelData)
-                                    }
-                                }
-                            }
-                        }
-                    }
-
                     IndicatorOnlySwitch {
                         id: gymModeDelegate
                         text: qsTr("Gym Mode")

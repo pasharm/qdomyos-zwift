@@ -260,15 +260,15 @@ ApplicationWindow {
         property string shortcut_start_stop: ""
         property string shortcut_stop: ""
         property bool android_landscape_cutout_margin: true
+        property bool android_landscape_cutout_prompt_shown: false
         property bool ui_modern: true
         property string ui_theme: "graphite"
         property string ui_accent: "violet"
         property string ui_theme_mode: "auto"
         property bool ui_tile_snap: true
-        property bool android_landscape_cutout_prompt_shown: false
     }
 
-    // Modern look (fork only), switched in Settings > General Options. Pages read the palette
+    // Modern look, switched in Settings > General UI Options. Pages read the palette
     // through window.ui; with ui.modern off every page keeps its classic look.
     readonly property QtObject ui: QtObject {
         readonly property bool modern: settings.ui_modern
