@@ -308,9 +308,29 @@ shot d-toast
 sleep 3
 has "$RESULTS" "a hidden setting leaves the results"
 
-# Out of the settings with the toolbar arrow when no result was opened
-back "close the keyboard or leave"
+# T-157, modern look: the search bar scrolled off the top - a search button in the toolbar
+# brings it back. Classic: the button is there all the time, as before
+hide_keyboard
+for i in $(seq 1 20); do adb shell input keyevent KEYCODE_DEL || true; done
+hide_keyboard
 sleep 2
+shot f-top
+has_quiet 'Search settings' && echo "search bar or button on the top: OK" >> $STEPLOG
+adb shell input swipe 700 2000 700 600 300 || true
+sleep 1
+adb shell input swipe 700 2000 700 600 300 || true
+sleep 2
+shot f-scrolled
+has 'Search settings' "search button in the toolbar after scrolling"
+tap_ui 'Search settings'
+sleep 2
+shot f-back-to-bar
+if adb shell dumpsys input_method | grep -q "mInputShown=true"; then
+  echo "check keyboard shown after the search button: OK" >> $STEPLOG
+else
+  echo "!! check keyboard shown after the search button: NOT SHOWN" >> $STEPLOG
+fi
+hide_keyboard
 shot e-end
 
 
