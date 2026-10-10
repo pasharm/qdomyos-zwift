@@ -2490,6 +2490,9 @@ import QtQuick 2.12 as Quick212
             property bool proform_trainer_8_0_pftl59721_0: false
             property bool android_landscape_cutout_prompt_shown: false
             property bool pafers_rower: false
+            property bool android_notification_prompt_disabled: false
+            property bool android_notification_v2: true
+            property bool nordictrack_gx_le: false
             property bool fitshow_bike_question: true
             property bool resistance_buttons_accumulate: false
             // The look of the modern interface: main.qml keeps the same keys and applies them at
@@ -2501,8 +2504,6 @@ import QtQuick 2.12 as Quick212
             property string ui_theme_mode: "auto"
             property bool ui_tile_snap: true
             property bool virtufit_layout_question: true
-            property bool android_notification_prompt_disabled: false
-            property bool android_notification_v2: true
         }
 
 
@@ -6322,7 +6323,8 @@ import QtQuick 2.12 as Quick212
                                     "Proform CSX210",
                                     "Nordictrack GX 4.5 Pro",
                                     "Proform 325 CSX PFEX439210 INT.0",
-                                    "NordicTrack VR21"
+                                    "NordicTrack VR21",
+                                    "NordicTrack GX LE"
                                 ]
 
                                 // Initialize when the accordion content becomes visible
@@ -6361,7 +6363,8 @@ import QtQuick 2.12 as Quick212
                                                     settings.proform_csx210 ? 19 : 
                                                     settings.nordictrack_gx_4_5_pro ? 20 :
                                                     settings.proform_bike_325_csx_PFEX439210INT_0 ? 21 : 
-                                                    settings.nordictrack_vr21 ? 22 : 0;
+                                                    settings.nordictrack_vr21 ? 22 :
+                                                    settings.nordictrack_gx_le ? 23 : 0;
 
                                     console.log("bikeModelComboBox selected model: " + selectedModel);
                                     if (selectedModel >= 0) {
@@ -6398,6 +6401,7 @@ import QtQuick 2.12 as Quick212
                                     settings.nordictrack_vr21 = false;
                                     settings.proform_bike_325_csx_PFEX439210INT_0 = false;
                                     settings.nordictrack_gx_4_5_pro = false;
+                                    settings.nordictrack_gx_le = false;
 
                                     // Set corresponding setting for selected model
                                     switch (currentIndex) {
@@ -6423,6 +6427,7 @@ import QtQuick 2.12 as Quick212
                                         case 20: settings.nordictrack_gx_4_5_pro = true; break;
                                         case 21: settings.proform_bike_325_csx_PFEX439210INT_0 = true; break;
                                         case 22: settings.nordictrack_vr21 = true; break;
+                                        case 23: settings.nordictrack_gx_le = true; break;
                                     }
 
                                     window.settings_restart_to_apply = true;

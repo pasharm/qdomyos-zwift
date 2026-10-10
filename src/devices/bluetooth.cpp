@@ -1549,7 +1549,8 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                 if (this->discoveryAgent && !this->discoveryAgent->isActive())
                     emit searchingStop();
                 this->signalBluetoothDeviceConnected(bhFitnessElliptical);
-            } else if ((b.name().toUpper().startsWith(QStringLiteral("E95S")) ||
+            } else if ((b.name().toUpper().startsWith(QStringLiteral("XE88")) ||
+                        b.name().toUpper().startsWith(QStringLiteral("E95S")) ||
                         (b.name().toUpper().startsWith(QStringLiteral("E25")) && !deviceHasService(b, QBluetoothUuid((quint16)0x1826))) ||
                         (b.name().toUpper().startsWith(QStringLiteral("E35")) && !deviceHasService(b, QBluetoothUuid((quint16)0x1826))) ||
                         b.name().toUpper().startsWith(QStringLiteral("E55")) ||
@@ -1856,6 +1857,7 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                         b.name().toUpper().startsWith(QStringLiteral("T118_")) ||
                         b.name().toUpper().startsWith(QStringLiteral("TM4500")) ||
                         b.name().toUpper().startsWith(QStringLiteral("TM6500")) ||
+                        b.name().toUpper().startsWith(QStringLiteral("TM55-")) || // LifeSmart TM55
                         b.name().toUpper().startsWith(QStringLiteral("RUNN ")) ||
                         b.name().toUpper().startsWith(QStringLiteral("YS_T")) ||
                         b.name().toUpper().startsWith(QStringLiteral("YPOO-MINI PRO-")) ||
@@ -2884,7 +2886,10 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                 // SLOT(inclinationChanged(double)));
                 crossRope->deviceDiscovered(b);
                 this->signalBluetoothDeviceConnected(crossRope);
-            } else if (b.name().toUpper().startsWith(QStringLiteral("NAUTILUS T")) && !nautilusTreadmill && filter) {
+            } else if ((b.name().toUpper().startsWith(QStringLiteral("NAUTILUS T")) ||
+                        b.name().toUpper().startsWith(QStringLiteral("SCHWINN T")) ||
+                        b.name().toUpper().startsWith(QStringLiteral("SCHWINN 570T"))) &&
+                       !nautilusTreadmill && filter) {
                 this->setLastBluetoothDevice(b);
                 this->stopDiscovery();
                 nautilusTreadmill = new nautilustreadmill(this->pollDeviceTime, noConsole, noHeartService);
