@@ -3386,7 +3386,7 @@ class QZSettings {
     // The modern look of the interface (main.qml window.ui), off by default: with it off every page
     // keeps its classic look. The theme, the accent and the theme mode apply to the modern look only
     static const QString ui_modern;
-    static constexpr bool default_ui_modern = false;
+    static constexpr bool default_ui_modern = true;
 
     static const QString ui_theme;
     static const QString default_ui_theme;
@@ -3399,7 +3399,7 @@ class QZSettings {
 
     // The tiles of the main page settle on a whole row when the scrolling stops
     static const QString ui_tile_snap;
-    static constexpr bool default_ui_tile_snap = false;
+    static constexpr bool default_ui_tile_snap = true;
 
     /**
      * @brief Write the QSettings values using the constants from this namespace.
