@@ -191,6 +191,10 @@ bluetooth::bluetooth(bool logs, const QString &deviceName, bool noWriteResistanc
                     debug(QStringLiteral("BTLE scanning error ") + QString::number(error) + QStringLiteral(" ") +
                           discoveryAgent->errorString());
                     if (error == QBluetoothDeviceDiscoveryAgent::PoweredOffError) {
+                        // Qt drops this start before it reaches Android: it is not one of the 5 per 30 s,
+                        // or searchNow() would postpone the scan when Bluetooth is switched on
+                        if (!scanStartsMs.isEmpty())
+                            scanStartsMs.removeLast();
                         if (!bluetoothOffPoll.isActive())
                             bluetoothOffPoll.start();
                         finished();
@@ -205,9 +209,7 @@ bluetooth::bluetooth(bool logs, const QString &deviceName, bool noWriteResistanc
             if (device() || !discoveryAgent || discoveryAgent->isActive())
                 return;
             debug(QStringLiteral("BTLE scanning, Bluetooth switched on"));
-            rescanCount = 0;
-            rescanStartedMs = 0;
-            this->startDiscovery();
+            searchNow();
         };
         QBluetoothLocalDevice *localDevice = new QBluetoothLocalDevice(this);
         connect(localDevice, &QBluetoothLocalDevice::hostModeStateChanged, this,
