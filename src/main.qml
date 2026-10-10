@@ -1,6 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.12
+import QtQuick.Controls.Material.impl 2.12 as MaterialImpl
+import QtQml 2.15 as Qml
 import QtQuick.Dialogs 1.0
 import QtGraphicalEffects 1.12
 import Qt.labs.settings 1.0
@@ -1574,7 +1576,9 @@ ApplicationWindow {
             // Modern look: the tiles are on the home page only, so is their lock; while the
             // equipment is being searched (rootItem.labelHelp) there are no tiles yet
             visible: window.ui.modern ? stackView.depth === 1 && typeof rootItem !== "undefined" && !rootItem.labelHelp : !toolButtonSaveSettings.visible
-            width: visible ? implicitWidth : 0
+            // Modern look: hidden, it leaves no gap. The classic bar keeps the gap: the chart,
+            // maps and video buttons are anchored to it and stay where they always were
+            width: window.ui.modern && !visible ? 0 : implicitWidth
         }
 
         ToolButton {
@@ -1591,8 +1595,9 @@ ApplicationWindow {
 
         Label {
             text: stackView.currentItem.title
-            font.pixelSize: window.ui.modern ? 18 : Qt.application.font.pixelSize
-            font.weight: window.ui.modern ? Font.DemiBold : Font.Normal
+            // Modern look only: the classic title keeps the font of the Material style
+            Qml.Binding on font.pixelSize { when: window.ui.modern; value: 18; restoreMode: Qml.Binding.RestoreBindingOrValue }
+            Qml.Binding on font.weight { when: window.ui.modern; value: Font.DemiBold; restoreMode: Qml.Binding.RestoreBindingOrValue }
             color: window.ui.ink(Material.foreground)
             // Fixed position, like the buttons: centred in the full bar, it moved on its own when the bar collapsed
             anchors.horizontalCenter: parent.horizontalCenter
@@ -1846,13 +1851,19 @@ ApplicationWindow {
         onAboutToShow: window.warmUpSettings()
 
         // Modern: a sheet with rounded outer corners. The rectangle runs past the left edge,
-        // so only the right-hand corners show
+        // so only the right-hand corners show. Classic: the shadow of the Material drawer
+        // (its own background, Drawer.qml of Qt 5.15), lost when the background was replaced
         background: Rectangle {
             color: window.ui.modern ? window.ui.surface : Material.dialogColor
             radius: window.ui.modern ? 20 : 0
             x: window.ui.modern ? -radius : 0
             width: parent.width + (window.ui.modern ? radius : 0)
             height: parent.height
+            layer.enabled: !window.ui.modern && drawer.position > 0
+            layer.effect: MaterialImpl.ElevationEffect {
+                elevation: drawer.Material.elevation
+                fullHeight: true
+            }
         }
 
         ScrollView {
