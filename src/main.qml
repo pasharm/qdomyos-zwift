@@ -739,10 +739,6 @@ ApplicationWindow {
         // The trainer marked in the list: Next connects to it. The list is sorted by signal and
         // rebuilt on every search result, so a tap only marks and the name is kept apart
         property string pickedDevice: ""
-        // The device list opens over the buttons: the release of the tap on a list item reached
-        // Skip or Next under it and closed the window. Clicks right after the list closed are ignored
-        property double listClosedMs: 0
-        function justPicked() { return Date.now() - listClosedMs < 500 }
         // Only the found trainers: "Disabled" and "Wifi" of the settings list mean nothing here
         readonly property var devices: {
             var r = []
@@ -843,14 +839,8 @@ ApplicationWindow {
                     var picked = index >= 0 && index < popupGymMode.devices.length ? popupGymMode.devices[index] : ""
                     var selectedDevice = stripBluetoothDeviceName(picked)
                     console.log("gym mode: picked '" + picked + "' -> '" + selectedDevice + "'")
-                    popupGymMode.listClosedMs = Date.now()
                     if (selectedDevice.length > 0)
                         popupGymMode.pickedDevice = selectedDevice
-                }
-
-                Connections {
-                    target: gymModeDeviceComboBox.popup
-                    function onClosed() { popupGymMode.listClosedMs = Date.now() }
                 }
             }
 
@@ -872,9 +862,6 @@ ApplicationWindow {
                     anchors.left: parent.left
                     text: qsTr("Skip")
                     onClicked: {
-                        console.log("gym mode: Skip" + (popupGymMode.justPicked() ? " ignored, the list just closed" : ""))
-                        if (popupGymMode.justPicked())
-                            return
                         gymModePopupDismissed = true
                         popupGymMode.close()
                     }
@@ -887,9 +874,6 @@ ApplicationWindow {
                     enabled: popupGymMode.pickedDevice !== ""
                     text: qsTranslate("Wizard", "Next")
                     onClicked: {
-                        console.log("gym mode: Next" + (popupGymMode.justPicked() ? " ignored, the list just closed" : ""))
-                        if (popupGymMode.justPicked())
-                            return
                         var device = popupGymMode.pickedDevice
                         popupGymMode.close()
                         rootItem.selectGymModeDevice(device)
