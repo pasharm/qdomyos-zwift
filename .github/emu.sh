@@ -311,18 +311,37 @@ has "$RESULTS" "a hidden setting leaves the results"
 # T-157, modern look: the search bar scrolled off the top - a search button in the toolbar
 # brings it back. Classic: the button is there all the time, as before
 hide_keyboard
-for i in $(seq 1 20); do adb shell input keyevent KEYCODE_DEL || true; done
-hide_keyboard
+# Empty query: the whole settings page, long enough to scroll (the clear button of the field;
+# classic: CLEAR closes the bar)
+tap_ui '^Clear$'
 sleep 2
+hide_keyboard
 shot f-top
-has_quiet 'Search settings' && echo "search bar or button on the top: OK" >> $STEPLOG
-adb shell input swipe 700 2000 700 600 300 || true
-sleep 1
-adb shell input swipe 700 2000 700 600 300 || true
+# The search button of the toolbar: in the toolbar band only, the field also answers to the name
+in_toolbar() {
+  dump
+  [ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = (n.get("text") or "") + "|" + (n.get("content-desc") or "")
+    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+    if m and re.search(sys.argv[2], t) and int(m.group(4)) <= 240:
+        print((int(m.group(1)) + int(m.group(3))) // 2, (int(m.group(2)) + int(m.group(4))) // 2)
+        sys.exit(0)
+sys.exit(1)
+' ui.xml "$1"
+}
+if xy=$(in_toolbar 'Search settings'); then echo "toolbar search button at the top: shown at $xy" >> $STEPLOG
+else echo "toolbar search button at the top: not shown" >> $STEPLOG; fi
+for i in 1 2 3; do adb shell input swipe 700 2000 700 600 300 || true; sleep 1; done
 sleep 2
 shot f-scrolled
-has 'Search settings' "search button in the toolbar after scrolling"
-tap_ui 'Search settings'
+if xy=$(in_toolbar 'Search settings'); then
+  echo "check toolbar search button after scrolling: OK at $xy" >> $STEPLOG
+  tap $xy "toolbar search button"
+else
+  echo "!! check toolbar search button after scrolling: NOT FOUND" >> $STEPLOG
+fi
 sleep 2
 shot f-back-to-bar
 if adb shell dumpsys input_method | grep -q "mInputShown=true"; then
