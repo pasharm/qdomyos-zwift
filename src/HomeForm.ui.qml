@@ -24,6 +24,8 @@ Page {
     property string searchStatus: ""
     // The search has stopped: the empty state says so instead of "Looking for your equipment"
     property bool searchStopped: false
+    // Gym mode: the trainer picked in the window, set by Home.qml until it is connected
+    property string connectingDevice: ""
 
     Settings {
 	     id: settings
@@ -371,7 +373,7 @@ Page {
             // Over the empty state only the time to the next search ("Next search in 12 s"): its
             // heading says the rest ("Looking for your equipment"). The line has its own place
             // under the buttons, so it comes and goes without moving the page
-            readonly property bool countdown: !page.searchStopped && page.searchStatus !== ""
+            readonly property bool countdown: !page.searchStopped && page.searchStatus !== "" && page.connectingDevice === ""
                                               && page.searchStatus !== qsTranslate("homeform", "Searching for the device...")
             visible: window.ui.modern && !page.deviceLineHidden && page.modernInfoShown && (!modernEmpty.visible || countdown)
             anchors.horizontalCenter: parent.horizontalCenter
@@ -455,7 +457,8 @@ Page {
                 Label {
                     width: parent.width
                     topPadding: 4
-                    text: page.searchStopped ? qsTranslate("HomeForm.ui", "Equipment not found") : qsTranslate("HomeForm.ui", "Looking for your equipment…")
+                    text: page.connectingDevice !== "" ? qsTranslate("homeform", "Connecting to %1...").arg(page.connectingDevice)
+                          : page.searchStopped ? qsTranslate("HomeForm.ui", "Equipment not found") : qsTranslate("HomeForm.ui", "Looking for your equipment…")
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
                     color: window.ui.textMain
@@ -465,6 +468,8 @@ Page {
 
                 Label {
                     width: parent.width
+                    // Connecting to the picked trainer: nothing to turn on, the heading says it all
+                    visible: page.connectingDevice === ""
                     text: page.searchStopped ? qsTranslate("HomeForm.ui", "Turn on your bike, treadmill or rower, then tap the Bluetooth icon at the top to search again.")
                                              : qsTranslate("HomeForm.ui", "Turn on your bike, treadmill or rower: QZ connects to it automatically.")
                     horizontalAlignment: Text.AlignHCenter

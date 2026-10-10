@@ -217,6 +217,7 @@ HomeForm {
         onTriggered: {
             searchStatus = rootItem.bluetoothSearchStatus()
             searchStopped = rootItem.bluetoothSearchStopped()
+            connectingDevice = rootItem.gymModeConnectingDevice()
         }
     }
 

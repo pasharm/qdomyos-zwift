@@ -244,6 +244,8 @@ class homeform : public QObject {
     QByteArray currentPelotonImage();
     // Status line of the search for the equipment on the home page; empty once it is connected
     Q_INVOKABLE QString bluetoothSearchStatus();
+    // Gym mode: the trainer picked in the window while it is not connected yet, else empty
+    Q_INVOKABLE QString gymModeConnectingDevice();
     // The search has given up and waits for a tap on the Bluetooth icon; false once connected
     Q_INVOKABLE bool bluetoothSearchStopped();
     // Tap on the Bluetooth icon: search right away, or when Android allows it again (with a toast saying when);

@@ -1920,6 +1920,12 @@ void homeform::refresh_bluetooth_devices_clicked() {
     bluetoothManager->restart();
 }
 
+QString homeform::gymModeConnectingDevice() {
+    if (!bluetoothManager || bluetoothManager->device())
+        return QString();
+    return bluetoothManager->gymModeDevice();
+}
+
 QString homeform::bluetoothSearchStatus() {
     if (!bluetoothManager || bluetoothManager->device())
         return QString();
