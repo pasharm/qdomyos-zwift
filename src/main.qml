@@ -723,6 +723,7 @@ ApplicationWindow {
         focus: true
         closePolicy: Popup.NoAutoClose
         onOpened: {
+            pickedDevice = ""
             secondsLeft = refreshSeconds
             pollState()
             if (!bluetoothOff)
@@ -735,6 +736,9 @@ ApplicationWindow {
         readonly property int refreshSeconds: 10
         property int secondsLeft: refreshSeconds
         property bool bluetoothOff: false
+        // The trainer marked in the list: Next connects to it. The list is sorted by signal and
+        // rebuilt on every search result, so a tap only marks and the name is kept apart
+        property string pickedDevice: ""
         // Only the found trainers: "Disabled" and "Wifi" of the settings list mean nothing here
         readonly property var devices: {
             var r = []
@@ -825,7 +829,7 @@ ApplicationWindow {
                 visible: popupGymMode.devices.length > 0
                 width: parent.width
                 model: popupGymMode.devices
-                displayText: currentIndex >= 0 ? labelFor(currentValue) : qsTr("Select a device")
+                displayText: popupGymMode.pickedDevice !== "" ? popupGymMode.pickedDevice : qsTr("Select a device")
                 currentIndex: -1
                 font.pixelSize: Qt.application.font.pixelSize + 8
 
@@ -835,11 +839,8 @@ ApplicationWindow {
                     var picked = index >= 0 && index < popupGymMode.devices.length ? popupGymMode.devices[index] : ""
                     var selectedDevice = stripBluetoothDeviceName(picked)
                     console.log("gym mode: picked '" + picked + "' -> '" + selectedDevice + "'")
-                    if (selectedDevice.length === 0) {
-                        return
-                    }
-                    popupGymMode.close()
-                    rootItem.selectGymModeDevice(selectedDevice)
+                    if (selectedDevice.length > 0)
+                        popupGymMode.pickedDevice = selectedDevice
                 }
             }
 
@@ -852,12 +853,31 @@ ApplicationWindow {
                 color: window.ui.inkMuted(Material.color(Material.Grey))
             }
 
-            UiButton {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Skip")
-                onClicked: {
-                    gymModePopupDismissed = true
-                    popupGymMode.close()
+            // Skip on the left, Next on the right: Next stays grey until a trainer is marked
+            Item {
+                width: parent.width
+                height: gymModeNextButton.implicitHeight
+
+                UiButton {
+                    anchors.left: parent.left
+                    text: qsTr("Skip")
+                    onClicked: {
+                        gymModePopupDismissed = true
+                        popupGymMode.close()
+                    }
+                }
+
+                UiButton {
+                    id: gymModeNextButton
+                    anchors.right: parent.right
+                    highlighted: true
+                    enabled: popupGymMode.pickedDevice !== ""
+                    text: qsTranslate("Wizard", "Next")
+                    onClicked: {
+                        var device = popupGymMode.pickedDevice
+                        popupGymMode.close()
+                        rootItem.selectGymModeDevice(device)
+                    }
                 }
             }
         }
