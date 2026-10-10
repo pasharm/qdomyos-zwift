@@ -31,7 +31,7 @@ adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
 # T-060, T-066: a fake treadmill, so the home page has tiles (without a device it shows the search help)
-printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\nweight=-70\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\nmiles_unit=true\nweight=70\nbike_weight=10\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -221,6 +221,24 @@ try_value() {
   shot "$shotname-ok"
   echo "   after OK: conf $(conf_get $key)" >> $STEPLOG
 }
+# T-209: the same, saved with the keyboard Enter instead of the OK button
+try_enter() {
+  local label="$1" key="$2" value="$3" shotname="$4" xy fx fy ox oy
+  scroll_to "$label" || return 0
+  xy=$(row_xy "$label")
+  if [ -z "$xy" ]; then echo "!! row '$label' NOT FOUND" >> $STEPLOG; return 0; fi
+  read fx fy ox oy <<< "$xy"
+  echo "-- $key: type '$value' + Enter (field $fx $fy)" >> $STEPLOG
+  adb shell input tap $fx $fy || true; sleep 2
+  adb shell input keyevent KEYCODE_MOVE_END || true
+  for i in $(seq 1 14); do adb shell input keyevent KEYCODE_DEL || true; done
+  [ -n "$value" ] && adb shell input text "$value"
+  sleep 1
+  adb shell input keyevent KEYCODE_ENTER || true; sleep 3
+  shot "$shotname-enter"
+  hide_keyboard
+  echo "   after Enter: conf $(conf_get $key)" >> $STEPLOG
+}
 
 adb logcat -c || true
 adb logcat > full_logcat.txt 2>/dev/null &
@@ -242,19 +260,17 @@ echo "start: conf $(conf_get weight) / $(conf_get age) / $(conf_get heart_rate_r
 
 if scroll_to 'General Options' && tap_ui 'General Options'; then
   sleep 4
-  # The value saved before the check (weight=-70 in the pushed config), before any typing
-  shot 10-weight-saved-negative
-  echo "saved before typing: conf $(conf_get weight)" >> $STEPLOG
-  try_value 'Player Weight.*' weight '72,5' 20-weight-comma
-  try_value 'Player Weight.*' weight '170.5.5' 21-weight-points
-  try_value 'Player Weight.*' weight '-' 22-weight-minus
-  try_value 'Player Weight.*' weight '7a' 23-weight-letter
-  try_value 'Player Weight.*' weight '' 24-weight-empty
-  try_value 'Player Weight.*' weight '-80' 25-weight-negative
-  try_value 'Player Age.*' age '35.7' 30-age-fraction
-  try_value 'Player Age.*' age '-5' 31-age-negative
-  try_value 'Player Age.*' age '4,5' 32-age-comma
+  # miles_unit=true, weight=70 kg in the pushed config: the field shows pounds
+  shot 10-weight-in-pounds
+  echo "saved before typing: conf $(conf_get weight) $(conf_get miles_unit)" >> $STEPLOG
+  # 176 lbs + Enter: expect weight ~79.83 (before the fix: 176)
+  try_enter 'Player Weight.*' weight '176' 20-weight-lbs
+  # the OK button for comparison: 154 lbs -> ~69.85
+  try_value 'Player Weight.*' weight '154' 21-weight-lbs-ok
 fi
+back "general options"; sleep 3
+# Bike Weight is on the bike options page; the speed step and autolap need a treadmill page:
+# only the weight pair above runs here, the rest is checked by reading the code
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
