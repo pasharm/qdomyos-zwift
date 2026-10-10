@@ -242,6 +242,9 @@ echo "start: conf $(conf_get weight) / $(conf_get age) / $(conf_get heart_rate_r
 
 if scroll_to 'General Options' && tap_ui 'General Options'; then
   sleep 4
+  # The value saved before the check (weight=-70 in the pushed config), before any typing
+  shot 10-weight-saved-negative
+  echo "saved before typing: conf $(conf_get weight)" >> $STEPLOG
   try_value 'Player Weight.*' weight '72,5' 20-weight-comma
   try_value 'Player Weight.*' weight '170.5.5' 21-weight-points
   try_value 'Player Weight.*' weight '-' 22-weight-minus
