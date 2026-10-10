@@ -325,7 +325,8 @@ import re, sys, xml.etree.ElementTree as ET
 for n in ET.parse(sys.argv[1]).getroot().iter("node"):
     t = (n.get("text") or "") + "|" + (n.get("content-desc") or "")
     m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
-    if m and re.search(sys.argv[2], t) and int(m.group(4)) <= 240:
+    # Not the nodes of zero size: the off-screen parts of the page are all at [0,0][0,0]
+    if m and re.search(sys.argv[2], t) and 0 < int(m.group(4)) <= 240 and int(m.group(3)) > 0:
         print((int(m.group(1)) + int(m.group(3))) // 2, (int(m.group(2)) + int(m.group(4))) // 2)
         sys.exit(0)
 sys.exit(1)
