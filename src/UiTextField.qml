@@ -36,56 +36,24 @@ T.TextField {
     placeholderTextColor: modern ? window.ui.textMuted : Material.hintTextColor
     verticalAlignment: TextInput.AlignVCenter
 
-    // Modern look: a number field (digit keyboard hint) or a time field ("04:12:00") takes no
-    // letters, the OK button next to it saved them as they were. Only the format of the field
-    // passes: a number (the minus only for signed ones), ":" of times, ' and " of feet and
-    // inches. A field with its own validator keeps it; the classic look has none, as before
-    readonly property bool numericHint: (inputMethodHints & (Qt.ImhDigitsOnly | Qt.ImhFormattedNumbersOnly)) !== 0
-    property bool timeShaped: false
-    // An IP address field (set by the page): digits and points only
-    property bool ipAddress: false
-    // A number field whose keyboard hint the page keeps commented out (the iOS number pad has
-    // no minus and no Done key). Modern look: the digit keyboard on Android only, number
-    // characters only, and the narrow width of the number fields
+    // What a value may be – a number, a time, an address – is checked by SettingsNumberField and
+    // SettingsFormatField (both looks), built on this field; here only how the modern look
+    // shows them.
+    // A number field (set by SettingsNumberField): modern look – the narrow width, a number
+    // fits in 88, the 120 of the text fields left the long labels next to "75" or "35" wrapping
     property bool numberField: false
-    inputMethodHints: modern && numberField && Qt.platform.os === "android" ? Qt.ImhFormattedNumbersOnly : Qt.ImhNone
-    // Modern look: a number fits in 88, the 120 of the text fields left the long labels
-    // next to "75" or "35" wrapping
-    readonly property bool narrow: modern && (numericHint || numberField) && !timeShaped && !ipAddress
-    // A number that can be below zero (offsets, the lowest incline): the minus passes only here
-    property bool signed: false
-    // Feet and inches ("5'10\"") keep the loose filter of number characters
-    property bool feetShaped: false
-    // Set only when the text shows it: a page may bind them itself (the search results field
-    // is created with no text), an assignment of false would break that binding
+    readonly property bool narrow: modern && numberField && !timeShaped
+    // The value is not valid (set by SettingsNumberField / SettingsFormatField): modern look –
+    // a red ring around the field; the classic look draws its red line itself
+    property bool invalid: false
+    // A time field ("04:12:00"); set only when the text shows it: a page may bind it itself (the
+    // search results field is created with no text), an assignment of false would break that
+    // binding
+    property bool timeShaped: false
     Component.onCompleted: {
         if (!timeShaped && /^\d+:\d{2}(:\d{2})?$/.test(text))
             timeShaped = true
-        if (!feetShaped && /['"]/.test(text))
-            feetShaped = true
     }
-    // One number with one decimal point or comma: "170.5.5" can't be typed. "-", "." and an
-    // empty field are an unfinished number (acceptableInput false), the OK button of the row
-    // greys out on them (UiButton)
-    // An integer setting (age, heart rate, watts) takes no decimal point at all: "35.7" was cut
-    // to 35 after OK. Others keep up to 2 decimals while typing (onTextEdited); a longer value
-    // already shown (pounds from kilograms) stays acceptable
-    property int decimals: 2
-    validator: !modern ? null
-             : ipAddress ? ipValidator
-             : timeShaped ? timeValidator
-             : feetShaped && (numericHint || numberField) ? feetValidator
-             : numericHint || numberField
-               ? (decimals === 0 ? (signed ? signedIntValidator : intValidator)
-                                 : (signed ? signedValidator : numberValidator))
-               : null
-    RegExpValidator { id: numberValidator; regExp: /^(\d+([.,]\d*)?|[.,]\d+)$/ }
-    RegExpValidator { id: signedValidator; regExp: /^-?(\d+([.,]\d*)?|[.,]\d+)$/ }
-    RegExpValidator { id: intValidator; regExp: /^\d+$/ }
-    RegExpValidator { id: signedIntValidator; regExp: /^-?\d+$/ }
-    RegExpValidator { id: feetValidator; regExp: /^[0-9.,'"]*$/ }
-    RegExpValidator { id: timeValidator; regExp: /^[0-9:]*$/ }
-    RegExpValidator { id: ipValidator; regExp: /^[0-9.]*$/ }
 
     // Modern look: a time field ("00:32:00", the paces) is picked on wheels instead of typed:
     // the text keyboard had no digits row and the digit one no colon, and a bare "320" was
@@ -187,23 +155,6 @@ T.TextField {
             opacity: 1.0 - Math.abs(Tumbler.displacement) / (Tumbler.tumbler ? Tumbler.tumbler.visibleItemCount / 2 : 3)
         }
     }
-    // A decimal comma (the keyboard of the phone's language) is read by parseFloat as the end
-    // of the number: "2,5" saved 2. Turned into a point while typing. A third decimal typed is
-    // dropped (decimals)
-    onTextEdited: {
-        if (!modern || !(numericHint || numberField) || /[:'"]/.test(text))
-            return
-        var t = text.replace(/,/g, ".")
-        var point = t.indexOf(".")
-        if (decimals > 0 && point >= 0 && t.length - point - 1 > decimals)
-            t = t.substring(0, point + 1 + decimals)
-        if (t !== text) {
-            var pos = Math.min(cursorPosition, t.length)
-            text = t
-            cursorPosition = pos
-        }
-    }
-
     cursorDelegate: CursorDelegate { }
 
     PlaceholderText {
@@ -235,14 +186,15 @@ T.TextField {
                                        : (control.hovered ? control.Material.primaryTextColor : control.Material.hintTextColor)
         }
 
-        // Modern: a filled rounded field, the accent ring while it has the focus
+        // Modern: a filled rounded field, the accent ring while it has the focus, a red one
+        // while the value is not valid
         UiFrame {
             visible: control.modern
             anchors.fill: parent
             radius: 12
             fill: window.ui.surfaceHighest
-            stroke: window.ui.accent
-            strokeWidth: control.activeFocus ? 2 : 0
+            stroke: control.invalid ? window.ui.danger : window.ui.accent
+            strokeWidth: control.activeFocus || control.invalid ? 2 : 0
             opacity: control.enabled ? 1 : 0.5
         }
     }

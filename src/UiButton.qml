@@ -15,11 +15,6 @@ T.Button {
     // Modern look: a destructive action (Delete) in the danger colour instead of the accent;
     // the classic look ignores it and keeps whatever Material.background the caller sets
     property bool danger: false
-    // Modern look: the OK button of a settings row greys out while the text field before it
-    // holds no acceptable value ("-", "12." of a number field cut short, an empty one): the
-    // click saved NaN without the "Setting saved!" toast. A caller's own enabled wins
-    property Item inputField: null
-    enabled: !(modern && inputField && !inputField.acceptableInput)
     // Modern look: the OK button right after a drop-down list saves as soon as an item is picked,
     // as in the system settings, and is hidden. False keeps the button: a list whose OK asks
     // for a restart, or a button that is not a save (Skip, Restore Default)
@@ -36,9 +31,8 @@ T.Button {
             return
         const siblings = parent.children
         let i = 0
-        for (; i < siblings.length && siblings[i] !== control; ++i)
-            if (siblings[i].acceptableInput !== undefined)
-                inputField = siblings[i]
+        while (i < siblings.length && siblings[i] !== control)
+            ++i
         const before = i > 0 ? siblings[i - 1] : null
         if (before && before.activated !== undefined && before.popup !== undefined) {
             comboField = before

@@ -13,8 +13,12 @@ import QtQuick.Controls.Material 2.0
 //   centimetres (a height converted from feet keeps its long fraction) or feet'inches (5'10")
 // Characters that cannot belong to the format cannot be typed; an incomplete value shows a red
 // line and the expected format under the field, nothing is changed by itself
-TextField {
+// feat/modern-ui: built on UiTextField, so the modern look draws it (filled field, a red
+// ring instead of the red line); the classic look is the same as on master
+UiTextField {
     id: field
+
+    invalid: !valid
 
     property string format: "time"
 
@@ -37,12 +41,16 @@ TextField {
     }
     // Full keyboard on purpose: a number keyboard of Android may have no ':' and allow a single '.'
 
-    // Room for the reason under the line while the value is not valid
-    bottomPadding: valid ? 16 : 16 + reason.implicitHeight
+    // Room for the reason under the line (classic) or under the field (modern) while the
+    // value is not valid
+    readonly property real reasonRoom: valid ? 0 : reason.implicitHeight
+    bottomPadding: (modern ? 12 : 16) + reasonRoom
+    bottomInset: modernInset + reasonRoom
 
     Rectangle {
-        // Over the underline of the Material TextField (same place, see its background)
-        visible: !field.valid
+        // Over the underline of the Material TextField (same place, see its background);
+        // the modern look has the red ring of UiTextField instead
+        visible: !field.valid && !field.modern
         x: field.leftPadding
         width: field.width - field.leftPadding - field.rightPadding
         height: 2
@@ -59,6 +67,6 @@ TextField {
         wrapMode: Text.WordWrap
         horizontalAlignment: field.horizontalAlignment
         font.pixelSize: Qt.application.font.pixelSize - 3
-        color: Material.color(Material.Red)
+        color: field.modern ? window.ui.danger : Material.color(Material.Red)
     }
 }
