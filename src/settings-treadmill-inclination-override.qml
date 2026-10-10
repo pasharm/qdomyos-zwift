@@ -92,21 +92,22 @@ ScrollView {
                 wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverrideGainTextField
+                signed: true
                 text: settings.treadmill_inclination_ovveride_gain
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_ovveride_gain = text
+                onAccepted: settings.treadmill_inclination_ovveride_gain = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverrideGainTextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_ovveride_gain = treadmillOverrideGainTextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_ovveride_gain = treadmillOverrideGainTextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
 
@@ -117,21 +118,22 @@ ScrollView {
                 wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverrideOffsetTextField
+                signed: true
                 text: settings.treadmill_inclination_ovveride_offset
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_ovveride_offset = text
+                onAccepted: settings.treadmill_inclination_ovveride_offset = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverrideOffsetTextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_ovveride_offset = treadmillOverrideOffsetTextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_ovveride_offset = treadmillOverrideOffsetTextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
 
@@ -142,21 +144,22 @@ ScrollView {
                 text: qsTr("Override 0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride0TextField
+                signed: true
                 text: settings.treadmill_inclination_override_0
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_0 = text
+                onAccepted: settings.treadmill_inclination_override_0 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride0TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_0 = treadmillOverride0TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_0 = treadmillOverride0TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -166,21 +169,22 @@ ScrollView {
                 text: qsTr("Override 0.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride05TextField
+                signed: true
                 text: settings.treadmill_inclination_override_05
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_05 = text
+                onAccepted: settings.treadmill_inclination_override_05 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride05TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_05 = treadmillOverride05TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_05 = treadmillOverride05TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -190,21 +194,22 @@ ScrollView {
                 text: qsTr("Override 1.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride10TextField
+                signed: true
                 text: settings.treadmill_inclination_override_10
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_10 = text
+                onAccepted: settings.treadmill_inclination_override_10 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride10TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_10 = treadmillOverride10TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_10 = treadmillOverride10TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -214,21 +219,22 @@ ScrollView {
                 text: qsTr("Override 1.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride15TextField
+                signed: true
                 text: settings.treadmill_inclination_override_15
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_15 = text
+                onAccepted: settings.treadmill_inclination_override_15 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride15TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_15 = treadmillOverride15TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_15 = treadmillOverride15TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -238,21 +244,22 @@ ScrollView {
                 text: qsTr("Override 2.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride20TextField
+                signed: true
                 text: settings.treadmill_inclination_override_20
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_20 = text
+                onAccepted: settings.treadmill_inclination_override_20 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride20TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_20 = treadmillOverride20TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_20 = treadmillOverride20TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -262,21 +269,22 @@ ScrollView {
                 text: qsTr("Override 2.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride25TextField
+                signed: true
                 text: settings.treadmill_inclination_override_25
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_25 = text
+                onAccepted: settings.treadmill_inclination_override_25 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride25TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_25 = treadmillOverride25TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_25 = treadmillOverride25TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -286,21 +294,22 @@ ScrollView {
                 text: qsTr("Override 3.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride30TextField
+                signed: true
                 text: settings.treadmill_inclination_override_30
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_30 = text
+                onAccepted: settings.treadmill_inclination_override_30 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride30TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_30 = treadmillOverride30TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_30 = treadmillOverride30TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -310,21 +319,22 @@ ScrollView {
                 text: qsTr("Override 3.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride35TextField
+                signed: true
                 text: settings.treadmill_inclination_override_35
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_35 = text
+                onAccepted: settings.treadmill_inclination_override_35 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride35TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_35 = treadmillOverride35TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_35 = treadmillOverride35TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -334,21 +344,22 @@ ScrollView {
                 text: qsTr("Override 4.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride40TextField
+                signed: true
                 text: settings.treadmill_inclination_override_40
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_40 = text
+                onAccepted: settings.treadmill_inclination_override_40 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride40TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_40 = treadmillOverride40TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_40 = treadmillOverride40TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -358,21 +369,22 @@ ScrollView {
                 text: qsTr("Override 4.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride45TextField
+                signed: true
                 text: settings.treadmill_inclination_override_45
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_45 = text
+                onAccepted: settings.treadmill_inclination_override_45 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride45TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_45 = treadmillOverride45TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_45 = treadmillOverride45TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -382,21 +394,22 @@ ScrollView {
                 text: qsTr("Override 5.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride50TextField
+                signed: true
                 text: settings.treadmill_inclination_override_50
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_50 = text
+                onAccepted: settings.treadmill_inclination_override_50 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride50TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_50 = treadmillOverride50TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_50 = treadmillOverride50TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -406,21 +419,22 @@ ScrollView {
                 text: qsTr("Override 5.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride55TextField
+                signed: true
                 text: settings.treadmill_inclination_override_55
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_55 = text
+                onAccepted: settings.treadmill_inclination_override_55 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride55TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_55 = treadmillOverride55TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_55 = treadmillOverride55TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -430,21 +444,22 @@ ScrollView {
                 text: qsTr("Override 6.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride60TextField
+                signed: true
                 text: settings.treadmill_inclination_override_60
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_60 = text
+                onAccepted: settings.treadmill_inclination_override_60 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride60TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_60 = treadmillOverride60TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_60 = treadmillOverride60TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -454,21 +469,22 @@ ScrollView {
                 text: qsTr("Override 6.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride65TextField
+                signed: true
                 text: settings.treadmill_inclination_override_65
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_65 = text
+                onAccepted: settings.treadmill_inclination_override_65 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride65TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_65 = treadmillOverride65TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_65 = treadmillOverride65TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -478,21 +494,22 @@ ScrollView {
                 text: qsTr("Override 7.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride70TextField
+                signed: true
                 text: settings.treadmill_inclination_override_70
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_70 = text
+                onAccepted: settings.treadmill_inclination_override_70 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride70TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_70 = treadmillOverride70TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_70 = treadmillOverride70TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -502,21 +519,22 @@ ScrollView {
                 text: qsTr("Override 7.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride75TextField
+                signed: true
                 text: settings.treadmill_inclination_override_75
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_75 = text
+                onAccepted: settings.treadmill_inclination_override_75 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride75TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_75 = treadmillOverride75TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_75 = treadmillOverride75TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -526,21 +544,22 @@ ScrollView {
                 text: qsTr("Override 8.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride80TextField
+                signed: true
                 text: settings.treadmill_inclination_override_80
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_80 = text
+                onAccepted: settings.treadmill_inclination_override_80 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride80TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_80 = treadmillOverride80TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_80 = treadmillOverride80TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -550,21 +569,22 @@ ScrollView {
                 text: qsTr("Override 8.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride85TextField
+                signed: true
                 text: settings.treadmill_inclination_override_85
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_85 = text
+                onAccepted: settings.treadmill_inclination_override_85 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride85TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_85 = treadmillOverride85TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_85 = treadmillOverride85TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -574,21 +594,22 @@ ScrollView {
                 text: qsTr("Override 9.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride90TextField
+                signed: true
                 text: settings.treadmill_inclination_override_90
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_90 = text
+                onAccepted: settings.treadmill_inclination_override_90 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride90TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_90 = treadmillOverride90TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_90 = treadmillOverride90TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -598,21 +619,22 @@ ScrollView {
                 text: qsTr("Override 9.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride95TextField
+                signed: true
                 text: settings.treadmill_inclination_override_95
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_95 = text
+                onAccepted: settings.treadmill_inclination_override_95 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride95TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_95 = treadmillOverride95TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_95 = treadmillOverride95TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -622,21 +644,22 @@ ScrollView {
                 text: qsTr("Override 10.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride100TextField
+                signed: true
                 text: settings.treadmill_inclination_override_100
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_100 = text
+                onAccepted: settings.treadmill_inclination_override_100 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride100TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_100 = treadmillOverride100TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_100 = treadmillOverride100TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -646,21 +669,22 @@ ScrollView {
                 text: qsTr("Override 10.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride105TextField
+                signed: true
                 text: settings.treadmill_inclination_override_105
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_105 = text
+                onAccepted: settings.treadmill_inclination_override_105 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride105TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_105 = treadmillOverride105TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_105 = treadmillOverride105TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -670,21 +694,22 @@ ScrollView {
                 text: qsTr("Override 11.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride110TextField
+                signed: true
                 text: settings.treadmill_inclination_override_110
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_110 = text
+                onAccepted: settings.treadmill_inclination_override_110 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride110TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_110 = treadmillOverride110TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_110 = treadmillOverride110TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -694,21 +719,22 @@ ScrollView {
                 text: qsTr("Override 11.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride115TextField
+                signed: true
                 text: settings.treadmill_inclination_override_115
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_115 = text
+                onAccepted: settings.treadmill_inclination_override_115 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride115TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_115 = treadmillOverride115TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_115 = treadmillOverride115TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -718,21 +744,22 @@ ScrollView {
                 text: qsTr("Override 12.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride120TextField
+                signed: true
                 text: settings.treadmill_inclination_override_120
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_120 = text
+                onAccepted: settings.treadmill_inclination_override_120 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride120TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_120 = treadmillOverride120TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_120 = treadmillOverride120TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -742,21 +769,22 @@ ScrollView {
                 text: qsTr("Override 12.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride125TextField
+                signed: true
                 text: settings.treadmill_inclination_override_125
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_125 = text
+                onAccepted: settings.treadmill_inclination_override_125 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride125TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_125 = treadmillOverride125TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_125 = treadmillOverride125TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -766,21 +794,22 @@ ScrollView {
                 text: qsTr("Override 13.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride130TextField
+                signed: true
                 text: settings.treadmill_inclination_override_130
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_130 = text
+                onAccepted: settings.treadmill_inclination_override_130 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride130TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_130 = treadmillOverride130TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_130 = treadmillOverride130TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -790,21 +819,22 @@ ScrollView {
                 text: qsTr("Override 13.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride135TextField
+                signed: true
                 text: settings.treadmill_inclination_override_135
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_135 = text
+                onAccepted: settings.treadmill_inclination_override_135 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride135TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_135 = treadmillOverride135TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_135 = treadmillOverride135TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -814,21 +844,22 @@ ScrollView {
                 text: qsTr("Override 14.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride140TextField
+                signed: true
                 text: settings.treadmill_inclination_override_140
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_140 = text
+                onAccepted: settings.treadmill_inclination_override_140 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride140TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_140 = treadmillOverride140TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_140 = treadmillOverride140TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -838,21 +869,22 @@ ScrollView {
                 text: qsTr("Override 14.5%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride145TextField
+                signed: true
                 text: settings.treadmill_inclination_override_145
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_145 = text
+                onAccepted: settings.treadmill_inclination_override_145 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride145TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_145 = treadmillOverride145TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_145 = treadmillOverride145TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
         RowLayout {
@@ -862,21 +894,22 @@ ScrollView {
                 text: qsTr("Override 15.0%:")
                 Layout.fillWidth: true
             }
-            UiTextField {
+            SettingsNumberField {
                 id: treadmillOverride150TextField
+                signed: true
                 text: settings.treadmill_inclination_override_150
                 horizontalAlignment: Text.AlignRight
                 Layout.fillHeight: false
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                 inputMethodHints: Qt.ImhFormattedNumbersOnly
-                signed: true
-                onAccepted: settings.treadmill_inclination_override_150 = text
+                onAccepted: settings.treadmill_inclination_override_150 = value
                 onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
             }
             UiButton {
                 text: qsTr("OK")
+                enabled: treadmillOverride150TextField.valid
                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                onClicked: {settings.treadmill_inclination_override_150 = treadmillOverride150TextField.text; toast.show(qsTr("Setting saved!")); }
+                onClicked: {settings.treadmill_inclination_override_150 = treadmillOverride150TextField.value; toast.show(qsTr("Setting saved!")); }
             }
         }
     }

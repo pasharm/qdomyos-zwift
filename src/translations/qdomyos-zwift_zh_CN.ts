@@ -1524,6 +1524,29 @@ Do you want to update QZ settings?</source>
     </message>
 </context>
 <context>
+    <name>SettingsFormatField</name>
+    <message>
+        <source>Enter the height in centimetres</source>
+        <translation>请以厘米为单位输入身高</translation>
+    </message>
+    <message>
+        <source>Enter the height as feet&apos;inches, e.g. 5&apos;10&quot;</source>
+        <translation>请按 英尺&apos;英寸 输入身高，例如 5&apos;10&quot;</translation>
+    </message>
+    <message>
+        <source>Enter an IP address or a host name, e.g. 192.168.1.10</source>
+        <translation>请输入 IP 地址或主机名，例如 192.168.1.10</translation>
+    </message>
+    <message>
+        <source>Enter an IP address, e.g. 192.168.1.10</source>
+        <translation>请输入 IP 地址，例如 192.168.1.10</translation>
+    </message>
+    <message>
+        <source>Enter the time as hh:mm:ss</source>
+        <translation>请按 hh:mm:ss 格式输入时间</translation>
+    </message>
+</context>
+<context>
     <name>SettingsList</name>
     <message>
         <location filename="../SettingsList.qml" line="30"/>
@@ -1573,6 +1596,33 @@ Do you want to update QZ settings?</source>
         <location filename="../SwagBagItem.qml" line="156"/>
         <source>Purchase Failed</source>
         <translation>购买失败</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsNumberField</name>
+    <message>
+        <source>The value cannot be negative</source>
+        <translation>值不能为负数</translation>
+    </message>
+    <message>
+        <source>Enter a whole number</source>
+        <translation>请输入整数</translation>
+    </message>
+    <message>
+        <source>Enter a number</source>
+        <translation>请输入数字</translation>
+    </message>
+    <message>
+        <source>Allowed range: %1 to %2</source>
+        <translation>允许范围：%1 至 %2</translation>
+    </message>
+    <message>
+        <source>Minimum: %1</source>
+        <translation>最小值：%1</translation>
+    </message>
+    <message>
+        <source>Maximum: %1</source>
+        <translation>最大值：%1</translation>
     </message>
 </context>
 <context>
