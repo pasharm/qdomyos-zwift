@@ -3142,6 +3142,7 @@ import QtQuick 2.12 as Quick212
                         SettingsFormatField {
                             id: heightTextField
                             format: settings.miles_unit ? "heightFtIn" : "heightCm"
+                            numberField: !settings.miles_unit
                             text: settings.miles_unit ? Math.floor(settings.height / 30.48) + "'" + Math.round((settings.height % 30.48) / 2.54) + '"' : settings.height
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false

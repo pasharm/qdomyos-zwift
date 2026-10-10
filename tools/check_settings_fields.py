@@ -14,7 +14,7 @@ Usage: python3 tools/check_settings_fields.py   (from the repository root)
 import re
 import sys
 
-PAGES = ["src/settings.qml", "src/settings-treadmill-inclination-override.qml"]
+PAGES = ["src/settings.qml", "src/settings-treadmill-inclination-override.qml", "src/settings-tts.qml"]
 
 # The same rules as SettingsFormatField.qml (time is checked only when the text is the setting itself)
 FORMATS = {
