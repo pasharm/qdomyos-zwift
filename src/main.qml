@@ -830,7 +830,11 @@ ApplicationWindow {
                 font.pixelSize: Qt.application.font.pixelSize + 8
 
                 onActivated: {
-                    var selectedDevice = stripBluetoothDeviceName(currentValue)
+                    // The name straight from the list: the list is rebuilt on every search
+                    // result, so currentValue may already point at the new copy
+                    var picked = index >= 0 && index < popupGymMode.devices.length ? popupGymMode.devices[index] : ""
+                    var selectedDevice = stripBluetoothDeviceName(picked)
+                    console.log("gym mode: picked '" + picked + "' -> '" + selectedDevice + "'")
                     if (selectedDevice.length === 0) {
                         return
                     }
