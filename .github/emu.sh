@@ -238,31 +238,80 @@ has() {
   fi
 }
 
-# T-192: the frames of the settings - a section of one switch (Hammer Racer) inside its block,
-# the cards of the tile options with the muted frame
+# T-210: a search result opens its setting in both looks - its page, scrolled to it and lit;
+# back (the key and the arrow of the toolbar) lands on the same results
+RESULTS='^(Search results|Changed settings).*'
+search_for() {
+  # Classic look: the search bar opens with the toolbar button; modern: it is on the page
+  if [ "$UI_MODERN" = "false" ] && ! has_quiet 'Search settings'; then
+    tap_ui '🔍|Search settings'
+    sleep 2
+  fi
+  tap_ui 'Search settings' 700 330
+  sleep 1
+  # Whatever the field holds from the last query
+  for i in $(seq 1 20); do adb shell input keyevent KEYCODE_DEL || true; done
+  adb shell input text "$1" || true
+  sleep 3
+  hide_keyboard
+}
+has_quiet() {
+  dump
+  [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null
+}
 open_menu
 shot s-menu
 tap_drawer '^Settings$' 400 900
 sleep 8
 shot s-00
-scroll_to '^Bike Options$' && tap_ui '^Bike Options$' 700 1000
+
+# A setting on this page, back with the key
+search_for 'bike%sweight'
+shot a-results
+has "$RESULTS" "results of bike weight"
+tap_ui '^Bike Weight$'
+sleep 3
+shot a-jump
+has '^Bike Weight.*' "the setting on its page"
+back "to the results"
+sleep 3
+shot a-back
+has "$RESULTS" "back key lands on the results"
+
+# The same with the arrow of the toolbar
+tap_ui '^Bike Weight$'
+sleep 3
+shot b-jump
+tap $MENU "toolbar back arrow"
+sleep 3
+shot b-back
+has "$RESULTS" "toolbar arrow lands on the results"
+
+# A page among the results, back from it
+search_for 'tiles%soptions'
+shot c-results
+tap_ui '^Tiles Options$'
+sleep 6
+shot c-page
+back "from the tiles page"
 sleep 4
-scroll_to 'Hammer Racer Bike Options' && tap_ui 'Hammer Racer Bike Options' 700 1000
-sleep 3
-scroll_to 'Saris/Cycleops Hammer trainer Options' && tap_ui 'Saris/Cycleops Hammer trainer Options' 700 1000
-sleep 3
-scroll_to 'Hammer Racer Bike Options'
-shot s-hammer
-adb shell input swipe 700 1800 700 1300 400 || true
+shot c-back
+has "$RESULTS" "back from a page lands on the results"
+
+# A setting its page hides now ("Use kg for weight" shows only with miles on): a toast, the
+# results stay
+search_for 'use%skg'
+shot d-results
+tap_ui '^Use kg for weight$'
 sleep 1
-shot s-hammer-2
-scroll_top
-scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' 700 1000
-sleep 8
-shot t-00
-adb shell input swipe 700 2000 700 1000 400 || true
-sleep 1
-shot t-01
+shot d-toast
+sleep 3
+has "$RESULTS" "a hidden setting leaves the results"
+
+# Out of the settings with the toolbar arrow when no result was opened
+back "close the keyboard or leave"
+sleep 2
+shot e-end
 
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
