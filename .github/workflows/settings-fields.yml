@@ -1,6 +1,8 @@
 name: Settings fields
 
 on:
+  push:
+    branches: [test/t128-modern-tests]
   pull_request:
     paths:
       - 'src/settings.qml'
