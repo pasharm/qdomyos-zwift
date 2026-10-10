@@ -4703,6 +4703,11 @@ Isso pode levar alguns instantes na primeira inicialização.</translation>
         <translation>Procurando o dispositivo...</translation>
     </message>
     <message>
+        <location filename="../homeform.cpp" line="1930"/>
+        <source>Connecting to %1...</source>
+        <translation>Conectando a %1…</translation>
+    </message>
+    <message>
         <location filename="../homeform.cpp" line="1921"/>
         <source>Search stopped, tap the Bluetooth icon</source>
         <translation>Pesquisa parada, toque no ícone Bluetooth</translation>

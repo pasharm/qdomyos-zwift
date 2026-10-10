@@ -4703,6 +4703,11 @@ Cela peut prendre quelques instants au premier démarrage.</translation>
         <translation>Recherche de l’appareil...</translation>
     </message>
     <message>
+        <location filename="../homeform.cpp" line="1930"/>
+        <source>Connecting to %1...</source>
+        <translation>Connexion à %1…</translation>
+    </message>
+    <message>
         <location filename="../homeform.cpp" line="1921"/>
         <source>Search stopped, tap the Bluetooth icon</source>
         <translation>Recherche arrêtée, touchez l’icône Bluetooth</translation>

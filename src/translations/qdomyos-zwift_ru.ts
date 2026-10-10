@@ -4041,6 +4041,11 @@ This may take a few moments on first startup.</source>
         <translation>Поиск тренажёра…</translation>
     </message>
     <message>
+        <location filename="../homeform.cpp" line="1930"/>
+        <source>Connecting to %1...</source>
+        <translation>Подключение к %1…</translation>
+    </message>
+    <message>
         <location filename="../homeform.cpp" line="1921"/>
         <source>Search stopped, tap the Bluetooth icon</source>
         <translation>Поиск остановлен, нажмите значок Bluetooth</translation>

@@ -4708,6 +4708,11 @@ This may take a few moments on first startup.</source>
         <translation>機器を検索しています...</translation>
     </message>
     <message>
+        <location filename="../homeform.cpp" line="1930"/>
+        <source>Connecting to %1...</source>
+        <translation>%1 に接続中…</translation>
+    </message>
+    <message>
         <location filename="../homeform.cpp" line="1921"/>
         <source>Search stopped, tap the Bluetooth icon</source>
         <translation>検索を停止しました。Bluetoothアイコンをタップしてください</translation>
