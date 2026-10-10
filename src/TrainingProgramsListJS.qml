@@ -373,11 +373,29 @@ ColumnLayout {
 
                 // WebView con grafico
                 // Preview data is now loaded via WebSocket, no runJavaScript needed
-                WebView {
-                    id: previewWebView
+                Item {
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    url: "http://localhost:" + settings.value("template_inner_QZWS_port") + "/workoutpreview/preview.html"
+
+                    // The native view is white until the page is loaded: kept hidden till then,
+                    // as in WorkoutEditor.qml
+                    BusyIndicator {
+                        anchors.centerIn: parent
+                        visible: !previewWebView.pageLoaded
+                        running: visible
+                    }
+
+                    WebView {
+                        id: previewWebView
+                        anchors.fill: parent
+                        visible: pageLoaded
+                        property bool pageLoaded: false
+                        url: "http://localhost:" + settings.value("template_inner_QZWS_port") + "/workoutpreview/preview.html"
+                        onLoadingChanged: {
+                            if (loadRequest.status === WebView.LoadSucceededStatus)
+                                pageLoaded = true
+                        }
+                    }
                 }
             }
         }
