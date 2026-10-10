@@ -2500,11 +2500,11 @@ import QtQuick 2.12 as Quick212
             // The look of the modern interface: main.qml keeps the same keys and applies them at
             // once. Declared here for the settings catalog; the page and the search read them
             // through window.ui and write both copies (setUiOption)
-            property bool ui_modern: true
+            property bool ui_modern: false
             property string ui_theme: "graphite"
             property string ui_accent: "violet"
             property string ui_theme_mode: "auto"
-            property bool ui_tile_snap: true
+            property bool ui_tile_snap: false
             property bool virtufit_layout_question: true
         }
 

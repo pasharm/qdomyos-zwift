@@ -3383,6 +3383,24 @@ class QZSettings {
     static const QString android_notification_v2;
     static constexpr bool default_android_notification_v2 = true;
 
+    // The modern look of the interface (main.qml window.ui), off by default: with it off every page
+    // keeps its classic look. The theme, the accent and the theme mode apply to the modern look only
+    static const QString ui_modern;
+    static constexpr bool default_ui_modern = false;
+
+    static const QString ui_theme;
+    static const QString default_ui_theme;
+
+    static const QString ui_accent;
+    static const QString default_ui_accent;
+
+    static const QString ui_theme_mode;
+    static const QString default_ui_theme_mode;
+
+    // The tiles of the main page settle on a whole row when the scrolling stops
+    static const QString ui_tile_snap;
+    static constexpr bool default_ui_tile_snap = false;
+
     /**
      * @brief Write the QSettings values using the constants from this namespace.
      * @param showDefaults Optionally indicates if the default should be shown with the key.

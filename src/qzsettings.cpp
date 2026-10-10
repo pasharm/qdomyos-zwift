@@ -1312,8 +1312,16 @@ const QString QZSettings::android_landscape_cutout_margin = QStringLiteral("andr
 const QString QZSettings::android_landscape_cutout_prompt_shown = QStringLiteral("android_landscape_cutout_prompt_shown");
 const QString QZSettings::android_notification_prompt_disabled = QStringLiteral("android_notification_prompt_disabled");
 const QString QZSettings::android_notification_v2 = QStringLiteral("android_notification_v2");
+const QString QZSettings::ui_modern = QStringLiteral("ui_modern");
+const QString QZSettings::ui_theme = QStringLiteral("ui_theme");
+const QString QZSettings::default_ui_theme = QStringLiteral("graphite");
+const QString QZSettings::ui_accent = QStringLiteral("ui_accent");
+const QString QZSettings::default_ui_accent = QStringLiteral("violet");
+const QString QZSettings::ui_theme_mode = QStringLiteral("ui_theme_mode");
+const QString QZSettings::default_ui_theme_mode = QStringLiteral("auto");
+const QString QZSettings::ui_tile_snap = QStringLiteral("ui_tile_snap");
 
-const uint32_t allSettingsCount = 1020;
+const uint32_t allSettingsCount = 1025;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -2360,6 +2368,11 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::virtufit_layout_question, QZSettings::default_virtufit_layout_question},
     {QZSettings::android_notification_prompt_disabled, QZSettings::default_android_notification_prompt_disabled},
     {QZSettings::android_notification_v2, QZSettings::default_android_notification_v2},
+    {QZSettings::ui_modern, QZSettings::default_ui_modern},
+    {QZSettings::ui_theme, QZSettings::default_ui_theme},
+    {QZSettings::ui_accent, QZSettings::default_ui_accent},
+    {QZSettings::ui_theme_mode, QZSettings::default_ui_theme_mode},
+    {QZSettings::ui_tile_snap, QZSettings::default_ui_tile_snap},
 };
 
 void QZSettings::qDebugAllSettings(bool showDefaults) {
