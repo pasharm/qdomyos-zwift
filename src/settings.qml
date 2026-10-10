@@ -970,7 +970,8 @@ import QtQuick 2.12 as Quick212
             } else if (entry.type === "integer") {
                 settings[entry.key] = parseInt(value)
             } else if (entry.type === "number") {
-                settings[entry.key] = parseFloat(value)
+                // A decimal comma (the keyboard of the phone's language): parseFloat stops at it
+                settings[entry.key] = parseFloat(String(value).replace(",", "."))
             } else {
                 settings[entry.key] = value
             }
@@ -2892,17 +2893,25 @@ import QtQuick 2.12 as Quick212
                                     text: visible ? settingsPane.searchFieldValue(entry) : ""
                                     horizontalAlignment: Text.AlignRight
                                     inputMethodHints: entry.type === "string" ? Qt.ImhNoPredictiveText : Qt.ImhFormattedNumbersOnly
-                                    // One field for every setting found: offsets and the lowest
-                                    // incline are negative; a pace is a time
-                                    signed: true
-                                    decimals: entry.type === "integer" ? 0 : 2
+                                    // One field for every setting found, so its own rule by the type
+                                    // of the setting (the page uses SettingsNumberField for these):
+                                    // a pace is a time; a number may be negative (offsets, the
+                                    // lowest incline), a decimal comma counts as a point
                                     timeShaped: settingsPane.paceDistance(entry) > 0
+                                    validator: entry.type === "string" ? null
+                                             : timeShaped ? searchTimeValidator
+                                             : entry.type === "integer" ? searchIntValidator
+                                             : searchNumberValidator
+                                    RegExpValidator { id: searchTimeValidator; regExp: /^\d{1,2}:[0-5]?\d:[0-5]?\d$/ }
+                                    RegExpValidator { id: searchIntValidator; regExp: /^-?\d+$/ }
+                                    RegExpValidator { id: searchNumberValidator; regExp: /^-?(\d+([.,]\d*)?|[.,]\d+)$/ }
                                     onAccepted: settingsPane.setSettingValue(entry, text)
                                     onActiveFocusChanged: if (this.focus) this.cursorPosition = this.text.length
                                 }
 
                                 UiButton {
                                     text: qsTr("OK")
+                                    enabled: searchSettingTextField.acceptableInput
                                     onClicked: settingsPane.setSettingValue(entry, searchSettingTextField.text)
                                 }
                             }
