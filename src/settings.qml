@@ -3114,7 +3114,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             id: labelWeight
-                            text: qsTr("Player Weight") + "(" + ((settings.miles_unit && !settings.weight_kg_unit)?qsTr("lbs"):qsTr("kg")) + ")"
+                            text: qsTr("Player Weight") + " (" + ((settings.miles_unit && !settings.weight_kg_unit)?qsTr("lbs"):qsTr("kg")) + ")"
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -3153,7 +3153,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             id: labelHeight
-                            text: qsTr("Player Height") + "(" + (settings.miles_unit?qsTr("ft/in"):qsTr("cm")) + ")"
+                            text: qsTr("Player Height") + " (" + (settings.miles_unit?qsTr("ft/in"):qsTr("cm")) + ")"
                             Layout.fillWidth: true
                         }
                         SettingsFormatField {
@@ -11617,7 +11617,7 @@ import QtQuick 2.12 as Quick212
                     RowLayout {
                         spacing: 10
                         Label {
-                            text: qsTr("Max. Speed:") + "(" + (settings.miles_unit?qsTr("mph"):qsTr("km/h")) + ")"
+                            text: qsTr("Max. Speed:") + " (" + (settings.miles_unit?qsTr("mph"):qsTr("km/h")) + ")"
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11654,7 +11654,7 @@ import QtQuick 2.12 as Quick212
                     RowLayout {
                         spacing: 10
                         Label {
-                            text: qsTr("Min. Speed:") + "(" + (settings.miles_unit?qsTr("mph"):qsTr("km/h")) + ")"
+                            text: qsTr("Min. Speed:") + " (" + (settings.miles_unit?qsTr("mph"):qsTr("km/h")) + ")"
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
