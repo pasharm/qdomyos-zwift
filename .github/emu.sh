@@ -1,18 +1,14 @@
 #!/bin/bash
-# Test only: start an already built APK on the emulator with log_debug on, so the Qt
-# warnings (QML errors among them) reach logcat, then keep logcat and screenshots.
-# The emulator starts in the day mode of the system: with the appearance on "auto" the
-# first screens are the light theme, the last ones the dark theme after "night yes".
+# Test only (T-199, PR #4645 VoiceOver): what a screen reader gets from the classic look.
+# Every shot keeps the uiautomator dump (dumps/<shot>.xml) - the accessibility tree TalkBack
+# reads - and .github/a11y.py lists the controls without a name at the end (a11y.txt).
+# Run once with the build of master and once with the branch of #4645 to compare.
 #
-# UI_MODERN (workflow input "modern"): false runs the same steps in the classic look, for a
-# before/after comparison. The two looks place their controls differently, so the steps
-# find a control by its text or accessible name in a uiautomator dump (tap_ui, .github/
-# uitap.py) and use fixed coordinates only when the dump has no such control. steps.log
-# says which way every tap went; dumps/<shot>.xml is the control tree behind every shot.
+# Phase 1: the first run without a device opens the setup wizard - its first screens.
+# Phase 2: a fake treadmill (tiles on the home page): home, side menu, the back key with the
+# menu open (#4645 puts drawerInputBlocker over the page), settings, a section, the editor.
 PKG=org.cagnulen.qdomyoszwift
-UI_MODERN=${UI_MODERN:-true}
-# LOG_DEBUG (workflow input "log_debug"): false runs with the debug log off, to see that the app
-# works without it and writes no log file. QML errors do not reach logcat then.
+UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
 STEPLOG=steps.log
 : > $STEPLOG
@@ -24,18 +20,16 @@ for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOO
 done
 adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
 adb shell cmd uimode night no || true
-# The launcher of the emulator image hangs on the slow CI machine and its "isn't responding"
-# dialog came back before every step, however often Wait was tapped: the classic run
-# 36505671077 got the dialog on nearly every shot. No error dialogs at all for the run; an
-# ANR still reaches logcat and the end of steps.log ("ANR in")
 adb shell settings put global hide_error_dialogs 1 || true
 
-# T-060, T-066: a fake treadmill, so the home page has tiles (without a device it shows the search help)
-printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
-adb push qz.conf /data/local/tmp/qz.conf
-adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
-adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
-adb shell "run-as $PKG ls -la 'files/.config/Roberto Viola'" || true
+# put_conf <extra lines>: the settings file of the app before a start
+put_conf() {
+  printf '[General]\nlog_debug=%s\nui_modern=%s\n%b' "$LOG_DEBUG" "$UI_MODERN" "$1" > qz.conf
+  adb push qz.conf /data/local/tmp/qz.conf
+  adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
+  adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
+}
+put_conf ""
 
 # The control tree of the screen into ui.xml (empty when uiautomator gives up, for instance
 # while something animates without pause)
@@ -148,150 +142,108 @@ LOCK="1187 168"        # tile lock on the home page
 open_menu() { tap $MENU "menu"; sleep 3; adb shell input swipe 500 700 500 2300 300 || true; sleep 2; }
 
 adb logcat -c || true
-# Recorded from the start: a dump at the end (logcat -d) has lost the first lines of the app by
-# then - the main buffer wraps in a long run, so the version line and the settings dump of
-# main() were missing in the runs of the modern look
 adb logcat > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
-adb shell am start -n $PKG/$PKG.CustomQtActivity
-sleep 20
-shot 01-healthconnect
-# Only while that screen is on top: once it had closed by itself and the back key closed
-# the first-run wizard instead
-if [ -f ui.xml ] && [ "$(python3 .github/uitap.py ui.xml --package)" = "$PKG" ]; then
-  echo "health connect screen not shown: no back key" >> $STEPLOG
-else
-  back "health connect"
-fi
-sleep 30
-shot 02-first-screen        # the wizard opens on the first run
-# T-060: with the fake treadmill the wizard does not open; its back keys would leave the app
-shot 04-home
 
-# T-095: the Charts page updates itself while the workout runs (fake bike: the session grows
-# by a point a second), the period selector at the top right shows only then, and the page
-# opened by Stop draws once and keeps its selector hidden.
-wait_tiles() {
-  local i
-  # The fake bike comes after the first search ends: wait for its tiles (at most 3 min)
-  for i in $(seq 1 18); do
-    dump
-    if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then
-      echo "tiles shown after $i looks" >> $STEPLOG; return 0
-    fi
-    sleep 10
-  done
-  echo "!! tiles NOT shown" >> $STEPLOG
-}
-# The texts of the page (WebView nodes) with a digit or the selector, into steps.log
-page() {
+# start_app: launch and close the Health Connect screen the first start may show
+start_app() {
+  adb shell am start -n $PKG/$PKG.CustomQtActivity
+  sleep 20
   dump
-  echo "page ($1):" >> $STEPLOG
-  [ -f ui.xml ] && python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t, d = n.get("text") or "", n.get("content-desc") or ""
-    if re.search(r"[0-9]|Live|update|Off|screen|Swipe", t + d):
-        print("   ", n.get("class"), repr(t), repr(d), n.get("bounds"))
-' ui.xml | head -40 >> $STEPLOG
-  cp ui.xml dumps/page-$1.xml 2>/dev/null || true
-}
-
-# Taps the node matching rx that is the lowest on the screen, or of class cls when given:
-# the Stop of the confirmation lies under the Stop button, the select under its label
-tap_node() {
-  local rx="$1" cls="$2" xy=""
-  dump
-  [ -f ui.xml ] && xy=$(python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-rx, cls = sys.argv[2], sys.argv[3]
-best = None
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
-    if not re.fullmatch(rx, t, re.I) or (cls and n.get("class") != cls):
-        continue
-    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
-    if not m:
-        continue
-    x1, y1, x2, y2 = map(int, m.groups())
-    if x2 <= x1 or y2 <= y1:
-        continue
-    if best is None or y1 > best[1]:
-        best = ((x1 + x2) // 2, y1, (y1 + y2) // 2)
-if best:
-    print(best[0], best[2])
-' ui.xml "$rx" "$cls")
-  if [ -n "$xy" ]; then
-    echo "tap node '$rx' ${cls:+($cls) }at $xy" >> $STEPLOG
-    adb shell input tap $xy || true
-  else
-    echo "!! tap node '$rx' ${cls:+($cls) }NOT FOUND" >> $STEPLOG
-    return 1
+  if [ -f ui.xml ] && [ "$(python3 .github/uitap.py ui.xml --package)" != "$PKG" ]; then
+    back "health connect"
   fi
+  sleep 15
 }
-has() {
+# app_on_top <what>: the app still on top (the back key may have left it)
+app_on_top() {
   dump
-  if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
-    echo "check '$1' ($2): OK" >> $STEPLOG
-  else
-    echo "!! check '$1' ($2): NOT FOUND" >> $STEPLOG
-  fi
+  local p=""
+  [ -f ui.xml ] && p=$(python3 .github/uitap.py ui.xml --package)
+  if [ "$p" = "$PKG" ]; then echo "check app on top ($1): OK" >> $STEPLOG
+  else echo "!! check app on top ($1): NOT - '$p'" >> $STEPLOG; fi
 }
 
-# T-192: the frames of the settings - a section of one switch (Hammer Racer) inside its block,
-# the cards of the tile options with the muted frame
+# Phase 1: the setup wizard
+start_app
+shot w-01-welcome
+tap_ui 'Start' 720 2244; sleep 4
+shot w-02-step1
+tap_ui 'First-time setup' 720 620; sleep 4
+shot w-03-step2
+if ! tap_ui 'Next'; then scroll_to 'Next' && tap_ui 'Next'; fi
+sleep 4
+shot w-04-step3
+
+# Phase 2: a fake treadmill, so the wizard stays closed and the home page has tiles
+adb shell am force-stop $PKG
+put_conf "applewatch_fakedevice=true\n"
+start_app
+i=0
+while [ $i -lt 18 ]; do
+  dump
+  if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then echo "tiles after $i looks" >> $STEPLOG; break; fi
+  i=$((i + 1)); sleep 10
+done
+shot h-01-home
+
 open_menu
-shot s-menu
+shot m-01-menu
+# #4645: drawerInputBlocker (z 9999) over the page while the menu is open - the back key must
+# close the menu and keep the app (the author asked about the back gesture)
+back "menu open"
+sleep 3
+shot m-02-after-back
+app_on_top "back with the menu open"
+if [ -f ui.xml ] && python3 .github/uitap.py ui.xml '^Settings$' > /dev/null; then
+  echo "!! menu still open after back (Settings visible)" >> $STEPLOG
+fi
+
+open_menu
 tap_drawer '^Settings$' 400 900
 sleep 8
-shot s-00
+shot s-01-settings
+adb shell input swipe 700 2000 700 1000 400 || true; sleep 1
+shot s-02-settings-down
+scroll_top
+scroll_to '^General Options$' && tap_ui '^General Options$' 700 1000
+sleep 4
+shot s-03-general
+adb shell input swipe 700 2000 700 1200 400 || true; sleep 1
+shot s-04-general-down
+scroll_top
 scroll_to '^Bike Options$' && tap_ui '^Bike Options$' 700 1000
 sleep 4
-scroll_to 'Hammer Racer Bike Options' && tap_ui 'Hammer Racer Bike Options' 700 1000
-sleep 3
-scroll_to 'Saris/Cycleops Hammer trainer Options' && tap_ui 'Saris/Cycleops Hammer trainer Options' 700 1000
-sleep 3
-scroll_to 'Hammer Racer Bike Options'
-shot s-hammer
-adb shell input swipe 700 1800 700 1300 400 || true
-sleep 1
-shot s-hammer-2
-scroll_top
-scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' 700 1000
-sleep 8
-shot t-00
-adb shell input swipe 700 2000 700 1000 400 || true
-sleep 1
-shot t-01
+shot s-05-bike
+back "settings"
+sleep 4
+app_on_top "back from settings"
+shot s-06-after-back
+
+open_menu
+tap_drawer 'Workout Editor' 400 1300
+sleep 15
+shot e-01-editor
+adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
+shot e-02-editor-down
+back "editor"
+sleep 4
+app_on_top "back from the editor"
 
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
-# If the recording broke off (adb restarted), the dump of the end is better than nothing
 adb logcat -d > end_logcat.txt || true
 if [ "$(wc -l < full_logcat.txt)" -lt "$(wc -l < end_logcat.txt)" ]; then
-  echo "!! logcat recording shorter than the dump at the end: the dump is kept" >> $STEPLOG
   mv end_logcat.txt full_logcat.txt
 else
   rm -f end_logcat.txt
 fi
-# The debug logs the app wrote itself (Documents/QZ on Android 14+): none with the log off
-mkdir -p qz-logs
-adb shell 'ls -la /sdcard/Documents/QZ/ 2>&1' > qz-logs/listing.txt || true
-for f in $(adb shell 'ls /sdcard/Documents/QZ/ 2>/dev/null' | tr -d '\r' | grep '^debug-.*[.]log$'); do
-  adb pull "/sdcard/Documents/QZ/$f" "qz-logs/$f" > /dev/null 2>&1 || true
-done
-echo "== app debug logs"; cat qz-logs/listing.txt; ls -la qz-logs
-echo "== steps"; cat $STEPLOG
-echo "== timing"; grep -E "QZ-TIMING|QZ-THEME" full_logcat.txt || true
-# The dialogs are hidden (hide_error_dialogs above), so hangs are only here
 grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
-echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
-grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
+python3 .github/a11y.py dumps > a11y.txt || true
+echo "== steps"; cat $STEPLOG
+echo "== a11y summary"; sed -n '/^== summary/,$p' a11y.txt
+echo "== QML warnings"; grep -iE "qrc:|\.qml:[0-9]+" full_logcat.txt | grep -iE "warning|error|ReferenceError|TypeError" | sort | uniq -c | sort -nr | head -60 || true
 echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
-echo "== polling while the charts page was left (between the marks; 0 expected)"
-awk '/T095.*mark charts-left/{f=1;next} /T095.*mark home-20s/{f=0} f && /WS >> \{"msg":"getsessionarray"\}/' full_logcat.txt | tee -a $STEPLOG | wc -l
-echo "== requests of the charts page: whole / parts (\"from\")"
-echo "whole: $(grep -c 'WS >> {"msg":"getsessionarray"}' full_logcat.txt) parts: $(grep -c 'WS >> {"msg":"getsessionarray","content":{"from"' full_logcat.txt)" | tee -a $STEPLOG

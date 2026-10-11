@@ -11,7 +11,7 @@ on:
       modern:
         description: ui_modern for the run (false = the classic look, for comparison)
         required: false
-        default: 'true'
+        default: 'false'
       log_debug:
         description: log_debug for the run (false = the debug log off)
         required: false
@@ -70,6 +70,7 @@ jobs:
             process_list.txt
             full_logcat.txt
             steps.log
+            a11y.txt
             dumps/
             qz-logs/
           if-no-files-found: warn
