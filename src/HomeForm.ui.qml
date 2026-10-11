@@ -360,6 +360,8 @@ Page {
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
+                // the search status may have two lines ("<device> found" and the countdown)
+                horizontalAlignment: Text.AlignHCenter
                 text: page.searchStatus !== "" ? page.searchStatus : rootItem.info
                 visible: !window.ui.modern && !page.deviceLineHidden
                 color: Material.foreground
@@ -371,9 +373,9 @@ Page {
         Row {
             id: modernInfo
             // Over the empty state only the last device found and the time to the next search
-            // ("HRM-Pro found", "Next search in 12 s"): its heading says the rest ("Looking for
-            // your equipment"). The line has its own place
-            // under the buttons, so it comes and goes without moving the page
+            // ("HRM-Pro found" and "Next search in 12 s" under it): its heading says the rest
+            // ("Looking for your equipment"). The line has its own place under the buttons, so
+            // it comes and goes without moving the page
             readonly property bool countdown: !page.searchStopped && page.searchStatus !== "" && page.connectingDevice === ""
                                               && page.searchStatus !== qsTranslate("homeform", "Searching for the device...")
             visible: window.ui.modern && !page.deviceLineHidden && page.modernInfoShown && (!modernEmpty.visible || countdown)
@@ -417,6 +419,7 @@ Page {
                 // "Connecting..." is the untranslated start value of homeform::m_info: before the
                 // first search it means the same as the search status
                 text: page.searchStatus !== "" ? page.searchStatus : (rootItem.info === "Connecting..." ? qsTranslate("homeform", "Searching for the device...") : rootItem.info)
+                horizontalAlignment: Text.AlignHCenter
                 color: modernInfo.bluetoothOff ? window.ui.danger : window.ui.textMuted
                 font.pixelSize: 13
             }

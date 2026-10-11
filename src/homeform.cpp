@@ -1961,10 +1961,11 @@ QString homeform::bluetoothSearchStatus() {
     // the timer may fire a little late: the search is about to start
     if (left <= 0)
         return scanning;
-    const qint64 leftSec = (left + 999) / 1000;
+    const QString countdown = tr("Next search in %1 s").arg((left + 999) / 1000);
+    // the device name may be long: the countdown goes to a second line
     if (lastFoundDevice.isEmpty())
-        return tr("Next search in %1 s").arg(leftSec);
-    return tr("%1 found · next search in %2 s").arg(lastFoundDevice).arg(leftSec);
+        return countdown;
+    return tr("%1 found").arg(lastFoundDevice) + QStringLiteral("\n") + countdown;
 }
 
 bool homeform::bluetoothSearchStopped() {

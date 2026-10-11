@@ -3167,10 +3167,6 @@ This may take a few moments on first startup.</source>
         <translation>Следующий поиск через %1 с</translation>
     </message>
     <message>
-        <source>%1 found · next search in %2 s</source>
-        <translation>Найдено: %1 · следующий поиск через %2 с</translation>
-    </message>
-    <message>
         <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
         <translation>Android разрешает 5 поисков Bluetooth за 30 с, следующий начнётся через %1 с</translation>
     </message>
