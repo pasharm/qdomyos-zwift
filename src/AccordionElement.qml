@@ -51,11 +51,6 @@ ColumnLayout {
     // Open or close the section: a tap on the header, or the press action of a screen reader
     function toggle() {
         isOpen = !isOpen
-        if (isOpen) {
-            indicatImg.source = "qrc:/icons/arrow-expand-vertical.png"
-        } else {
-            indicatImg.source = "qrc:/icons/arrow-collapse-vertical.png"
-        }
     }
 
     Rectangle {
@@ -92,7 +87,8 @@ ColumnLayout {
             anchors.rightMargin: 20
             width: 30; height: 30
             id: indicatImg
-            source: "qrc:/icons/arrow-collapse-vertical.png"
+            // Bound to isOpen: a section opened from code (a search result) shows the right arrow
+            source: rootElement.isOpen ? "qrc:/icons/arrow-expand-vertical.png" : "qrc:/icons/arrow-collapse-vertical.png"
         }
 
         MouseArea {

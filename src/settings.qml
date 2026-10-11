@@ -76,6 +76,10 @@ import QtQuick 2.12 as Quick212
         property var pendingReveal: null
         // The search (text and "Changed") a result was opened from: back returns to it
         property var searchReturn: null
+        // Modern look: the search bar has scrolled off the top - the toolbar shows its search
+        // button then, which brings the bar back (main.qml)
+        readonly property bool searchBarScrolledAway: window.ui.modern && contentItem !== null &&
+            contentItem.contentY > settingsSearchBar.y + settingsSearchBar.height
         // A result tapped before the index was built: opened once the index arrives
         property var pendingJump: null
         // The glow of the last jump: gone at once when back returns to the results
@@ -268,12 +272,13 @@ import QtQuick 2.12 as Quick212
                 .map(normalizedLabel)
         }
 
-        // A page among the results ("Wahoo Options"). Modern look: back from it lands on the
-        // results, as from a setting
+        // A page among the results ("Wahoo Options"): back from it lands on the results, as
+        // from a setting
         function openPageResult(entry) {
-            if (window.ui.modern)
-                searchReturn = { query: settingsSearchTextField.text, changedOnly: changedOnly,
-                                 results: filteredSettings, scroll: contentItem.contentY, viaPush: true }
+            searchReturn = { query: settingsSearchTextField.text, changedOnly: changedOnly,
+                             results: filteredSettings, scroll: contentItem.contentY, viaPush: true }
+            // Or the search field takes the focus back with the keyboard on the way back
+            dropTextFocus()
             stackView.push(entry.target)
         }
 
@@ -306,8 +311,8 @@ import QtQuick 2.12 as Quick212
             var page = settingsPane
             var context = "settings"
             // The results and their scroll as they were: back shows them without searching again
-            searchReturn = window.ui.modern ? { query: settingsSearchTextField.text, changedOnly: changedOnly,
-                                                results: filteredSettings, scroll: contentItem.contentY } : null
+            searchReturn = { query: settingsSearchTextField.text, changedOnly: changedOnly,
+                             results: filteredSettings, scroll: contentItem.contentY }
             if (where && where.file !== "settings.qml") {
                 if (searchReturn)
                     searchReturn.viaPush = true
@@ -356,10 +361,10 @@ import QtQuick 2.12 as Quick212
             var target = switchedOff ? switchedOff : findItem(container, function (item) {
                 return item.visible && named(item)
             })
-            // Modern look: a setting its page hides with the current values ("Use kg for weight"
-            // shows only with miles on) - the whole section was lit instead. Back to the results,
-            // the sections opened on the way closed again: the result has the control itself
-            if (window.ui.modern && !target && searchReturn && findItem(container, named)) {
+            // A setting its page hides with the current values ("Use kg for weight" shows only
+            // with miles on) - the whole section was lit instead. Back to the results, the
+            // sections opened on the way closed again: the result has the control itself
+            if (!target && searchReturn && findItem(container, named)) {
                 for (var k = 0; k < opened.length; k++)
                     opened[k].isOpen = false
                 if (searchReturn.viaPush)
@@ -369,8 +374,8 @@ import QtQuick 2.12 as Quick212
                 toast.show(qsTr("Hidden on its page right now: change it here"))
                 return
             }
-            // Modern look: the fields of a switched-off section are not on the page yet
-            if (window.ui.modern && switchedOff)
+            // The fields of a switched-off section are not on the page yet
+            if (switchedOff)
                 toast.show(qsTr("Turn on “%1” to change this setting").arg(window.ui.plainTitle(switchedOff.title)))
             console.log("QZ-NAV search target=" + (target ? (target.text || target.title || target.toString()) : "none") + " container=" + (container.title || container.toString()) + " switchedOff=" + (switchedOff !== null))
             pendingReveal = { flickable: page.contentItem, target: target || container }
@@ -392,6 +397,8 @@ import QtQuick 2.12 as Quick212
             var back = searchReturn
             searchReturn = null
             changedOnly = back.changedOnly
+            // Classic look: the search bar may have been closed with its button meanwhile
+            settingsSearchVisible = true
             restoringSearch = true
             settingsSearchTextField.text = back.query
             restoringSearch = false
@@ -609,6 +616,8 @@ import QtQuick 2.12 as Quick212
         }
 
         function hideSettingsSearch() {
+            // Classic look: the search closed is done with, back no longer brings its results up
+            searchReturn = null
             settingsSearchDebounceTimer.stop()
             settingsSearchTextField.text = ""
             settingsSearchVisible = false
@@ -661,8 +670,7 @@ import QtQuick 2.12 as Quick212
         }
 
         function loadSettingsCatalog() {
-            if (window.ui.modern)
-                loadSettingsIndex()
+            loadSettingsIndex()
             if (settingsCatalogLoaded || settingsCatalogLoading)
                 return
 
@@ -756,8 +764,8 @@ import QtQuick 2.12 as Quick212
         readonly property var translationContexts: [
             "settings", "settings-tiles", "settings-tts",
             "settings-shortcuts", "settings-treadmill-inclination-override",
-            "custominclinationresistance", "homeform"
-        ].concat(window.ui.modern ? ["gears"] : [])
+            "custominclinationresistance", "homeform", "gears"
+        ]
 
         // Modern look: settings the catalog lists but no page shows - the author took their
         // control off the page on purpose. Garmin ANT+ moves the ANT channels to Garmin's private
@@ -2595,8 +2603,9 @@ import QtQuick 2.12 as Quick212
             anchors.left: parent.left
             anchors.right: parent.right
 
-            // Modern: always on top of the page (the toolbar has no search button then), with a
-            // clear button inside the field and the "Changed" filter next to it
+            // Modern: always on top of the page (the toolbar shows a search button only once it
+            // has scrolled away), with a clear button inside the field and the "Changed" filter
+            // next to it
             RowLayout {
                 id: settingsSearchBar
                 visible: settingsSearchVisible || window.ui.modern
@@ -2782,18 +2791,17 @@ import QtQuick 2.12 as Quick212
                             anchors.fill: parent
                             anchors.topMargin: searchResultFrame.headerHeight
                             color: window.ui.modern ? (resultArea.pressed ? window.ui.surfaceHighest : window.ui.surfaceHigh)
-                                                    : "transparent"
+                                                    : (resultArea.pressed ? Qt.rgba(0.5, 0.5, 0.5, 0.2) : "transparent")
                             border.color: Material.color(Material.Grey)
                             border.width: window.ui.modern ? 0 : 1
                             radius: window.ui.modern ? window.ui.radius : 2
                         }
 
-                        // Modern: a tap on the card (not on its controls) opens the setting itself
+                        // A tap on the card (not on its controls) opens the setting itself
                         MouseArea {
                             id: resultArea
                             anchors.fill: parent
                             anchors.topMargin: searchResultFrame.headerHeight
-                            enabled: window.ui.modern
                             onClicked: entry.catalogKind === "page" ? settingsPane.openPageResult(entry)
                                                                     : settingsPane.jumpToSetting(entry)
                         }
@@ -2925,7 +2933,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.maximumHeight: visible ? implicitHeight : 0
                                 model: visible ? settingsPane.optionValues(entry) : []
                                 currentIndex: visible ? settingsPane.optionIndex(entry) : 0
-                                itemLabels: window.ui.modern && visible ? settingsPane.optionLabels(entry) : null
+                                itemLabels: visible ? settingsPane.optionLabels(entry) : null
                                 displayText: labelFor(visible && settingsPane.isBluetoothDeviceSetting(entry)
                                                       ? settingsPane.settingValue(entry)
                                                       : currentText)

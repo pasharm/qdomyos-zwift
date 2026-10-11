@@ -1405,8 +1405,9 @@ ApplicationWindow {
                 if (stackView.depth > 1) {
                     // Modern look: the arrow goes back one step inside the page as the back
                     // gesture does (settings search results, wizard, workout preview), so
-                    // those pages need no back button of their own
-                    navigateBack(window.ui.modern)
+                    // those pages need no back button of their own. Classic look: only back to
+                    // the settings search results, the other pages keep their own back buttons
+                    navigateBack(window.ui.modern || !!(stackView.currentItem && stackView.currentItem.searchReturn))
                 } else {
                     drawer.open()
                 }
@@ -1480,10 +1481,21 @@ ApplicationWindow {
                     stackView.currentItem.showSettingsSearch()
             }
             anchors.right: toolButtonLoadSettings.left
-            // Modern look: the settings keep their search field on the page itself
-            visible: headerToolbar.settingsPageActive && !window.ui.modern
+            // Modern look: the settings keep their search field on the page itself; the button
+            // shows once that field has scrolled off the top and brings it back. It fades and
+            // grows in, and out the same way, instead of popping up under the finger
+            readonly property bool shown: headerToolbar.settingsPageActive &&
+                (!window.ui.modern || stackView.currentItem.searchBarScrolledAway === true)
+            // Fading out only on the settings: leaving them it goes at once, not over the next page
+            visible: shown || (opacity > 0 && headerToolbar.settingsPageActive)
+            enabled: shown
+            opacity: shown ? 1 : 0
+            scale: shown ? 1 : 0.6
+            Behavior on opacity { enabled: window.ui.modern; NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
+            Behavior on scale { enabled: window.ui.modern; NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
             ToolTip.visible: hovered
             ToolTip.text: qsTr("Search settings")
+            Accessible.name: qsTr("Search settings")
         }
 
         ToolButton {
