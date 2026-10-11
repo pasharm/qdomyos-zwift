@@ -1,12 +1,11 @@
 #!/bin/bash
-# Test only (T-199, PR #4645 VoiceOver): what a screen reader gets from the classic look.
+# Test only (T-199, T-214): what a screen reader gets from the classic look.
 # Every shot keeps the uiautomator dump (dumps/<shot>.xml) - the accessibility tree TalkBack
 # reads - and .github/a11y.py lists the controls without a name at the end (a11y.txt).
-# Run once with the build of master and once with the branch of #4645 to compare.
+# Run once with the build of master and once with the branch to compare.
 #
-# Phase 1: the first run without a device opens the setup wizard - its first screens.
-# Phase 2: a fake treadmill (tiles on the home page): home, side menu, the back key with the
-# menu open (#4645 puts drawerInputBlocker over the page), settings, a section, the editor.
+# T-214: a fake treadmill, then Settings > Tiles Options, Bike Options > Wahoo Options (gears),
+# Treadmill Options > Inclination Overrides, and the side menu > Workouts History.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -141,6 +140,7 @@ MENU="84 168"          # menu on the home page, back arrow elsewhere
 LOCK="1187 168"        # tile lock on the home page
 open_menu() { tap $MENU "menu"; sleep 3; adb shell input swipe 500 700 500 2300 300 || true; sleep 2; }
 
+
 adb logcat -c || true
 adb logcat > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
@@ -155,87 +155,57 @@ start_app() {
   fi
   sleep 15
 }
-# app_on_top <what>: the app still on top (the back key may have left it)
-app_on_top() {
-  dump
-  local p=""
-  [ -f ui.xml ] && p=$(python3 .github/uitap.py ui.xml --package)
-  if [ "$p" = "$PKG" ]; then echo "check app on top ($1): OK" >> $STEPLOG
-  else echo "!! check app on top ($1): NOT - '$p'" >> $STEPLOG; fi
+# open_settings: from anywhere back to home, then the menu and Settings
+open_settings() {
+  open_menu
+  tap_drawer '^Settings$' 400 900
+  sleep 8
 }
 
-# Phase 1: the setup wizard
-start_app
-shot w-01-welcome
-tap_ui 'Start' 720 2244; sleep 4
-shot w-02-step1
-tap_ui 'First-time setup' 720 620; sleep 4
-shot w-03-step2
-if ! tap_ui 'Next'; then scroll_to 'Next' && tap_ui 'Next'; fi
-sleep 4
-shot w-04-step3
-
-# Phase 2: a fake treadmill, so the wizard stays closed and the home page has tiles
-adb shell am force-stop $PKG
+# T-214: the pages outside #4645 - tile settings, inclination overrides, gears, history.
+# A fake treadmill, so the wizard stays closed
 put_conf "applewatch_fakedevice=true\n"
 start_app
-i=0
-while [ $i -lt 18 ]; do
-  dump
-  if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then echo "tiles after $i looks" >> $STEPLOG; break; fi
-  i=$((i + 1)); sleep 10
-done
 shot h-01-home
 
-open_menu
-shot m-01-menu
-# The page under the open menu must be out of the tree: Stop there would end the workout
-if [ -f dumps/m-01-menu.xml ] && grep -qE 'content-desc="(Pause|Stop|Lap|Start|(Increase|Decrease) [^"]*)"' dumps/m-01-menu.xml; then
-  echo "!! check page under the open menu: STILL in the tree - $(grep -oE 'content-desc="(Pause|Stop|Lap|Start|(Increase|Decrease) [^"]*)"' dumps/m-01-menu.xml | head -4 | tr '\n' ' ')" >> $STEPLOG
-else
-  echo "check page under the open menu: hidden OK" >> $STEPLOG
-fi
-# #4645: drawerInputBlocker (z 9999) over the page while the menu is open - the back key must
-# close the menu and keep the app (the author asked about the back gesture)
-back "menu open"
-sleep 3
-shot m-02-after-back
-app_on_top "back with the menu open"
-if [ -f ui.xml ] && python3 .github/uitap.py ui.xml '^Settings$' > /dev/null; then
-  echo "!! menu still open after back (Settings visible)" >> $STEPLOG
-fi
-
-open_menu
-tap_drawer '^Settings$' 400 900
+open_settings
+scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' 700 1000
 sleep 8
-shot s-01-settings
-adb shell input swipe 700 2000 700 1000 400 || true; sleep 1
-shot s-02-settings-down
-scroll_top
-scroll_to '^General Options$' && tap_ui '^General Options$' 700 1000
-sleep 4
-shot s-03-general
-adb shell input swipe 700 2000 700 1200 400 || true; sleep 1
-shot s-04-general-down
+shot t-01-tiles
+tap_ui '^Speed$' && sleep 3
+shot t-02-speed-open
+adb shell input swipe 700 2000 700 900 400 || true; sleep 1
+shot t-03-tiles-down
+back "tiles"; sleep 4
+
 scroll_top
 scroll_to '^Bike Options$' && tap_ui '^Bike Options$' 700 1000
 sleep 4
-shot s-05-bike
-back "settings"
+scroll_to 'Wahoo Options' && tap_ui 'Wahoo Options' 700 1000
+sleep 8
+shot g-01-gears
+adb shell input swipe 700 2000 700 900 400 || true; sleep 1
+shot g-02-gears-down
+adb shell input swipe 700 2000 700 900 400 || true; sleep 1
+shot g-03-gears-table
+back "gears"; sleep 4
+
+scroll_top
+scroll_to '^Treadmill Options$' && tap_ui '^Treadmill Options$' 700 1000
 sleep 4
-app_on_top "back from settings"
-shot s-06-after-back
+scroll_to 'Inclination Overrides' && tap_ui 'Inclination Overrides' 700 1000
+sleep 8
+shot i-01-overrides
+adb shell input swipe 700 2000 700 900 400 || true; sleep 1
+shot i-02-overrides-down
+back "overrides"; sleep 4
+back "settings"; sleep 4
 
 open_menu
-tap_drawer 'Workout Editor' 400 1300
-sleep 15
-shot e-01-editor
-adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
-shot e-02-editor-down
-back "editor"
-sleep 4
-app_on_top "back from the editor"
-
+tap_drawer 'Workouts History' 400 1500
+sleep 10
+shot w-01-history
+back "history"; sleep 4
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
