@@ -193,6 +193,9 @@ open_menu
 tap_drawer 'Workouts History' 400 1500
 sleep 10
 shot w-01-history
+tap_ui 'Filter by date' 150 330 && sleep 3
+shot w-02-calendar
+back "calendar"; sleep 3
 back "history"; sleep 4
 
 # the gears page last: the back key there may only drop the focus of a field
