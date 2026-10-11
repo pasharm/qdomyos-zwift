@@ -1489,9 +1489,31 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonSettingsSearch
-            text: window.ui.modern ? "" : "\uD83D\uDD0D"
+            Accessible.name: qsTr("Search settings")
+            // A drawn magnifier instead of the emoji: the emoji is blank on devices without a
+            // glyph for it. Painted once, again only when the colour changes
+            Canvas {
+                id: settingsSearchIcon
+                property color color: toolButtonSettingsSearch.Material.foreground
+                visible: !window.ui.modern
+                anchors.centerIn: parent
+                // Drawn at the pixel density of the screen and scaled down, so it stays sharp
+                width: 24 * Screen.devicePixelRatio
+                height: 24 * Screen.devicePixelRatio
+                scale: 1 / Screen.devicePixelRatio
+                onColorChanged: requestPaint()
+                onPaint: {
+                    var ctx = getContext("2d")
+                    ctx.reset()
+                    // Material Symbols "search", viewBox 0 -960 960 960
+                    ctx.scale(width / 960, height / 960)
+                    ctx.translate(0, 960)
+                    ctx.path = "M380-320q-109 0-184.5-75.5T120-580q0-109 75.5-184.5T380-840q109 0 184.5 75.5T640-580q0 44-14 83t-38 69l224 224q11 11 11 28t-11 28q-11 11-28 11t-28-11L532-372q-30 24-69 38t-83 14Zm0-80q75 0 127.5-52.5T560-580q0-75-52.5-127.5T380-760q-75 0-127.5 52.5T200-580q0 75 52.5 127.5T380-400Z"
+                    ctx.fillStyle = color
+                    ctx.fill()
+                }
+            }
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "search"; color: window.ui.textMain; visible: window.ui.modern }
-            font.pixelSize: Qt.application.font.pixelSize * 1.25
             onClicked: {
                 if (headerToolbar.settingsPageActive)
                     stackView.currentItem.showSettingsSearch()
@@ -1511,7 +1533,6 @@ ApplicationWindow {
             Behavior on scale { enabled: window.ui.modern; NumberAnimation { duration: 150; easing.type: Easing.OutCubic } }
             ToolTip.visible: hovered
             ToolTip.text: qsTr("Search settings")
-            Accessible.name: qsTr("Search settings")
         }
 
         ToolButton {
