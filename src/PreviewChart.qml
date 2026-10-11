@@ -58,9 +58,10 @@ ColumnLayout {
         id: webView
         anchors.fill: parent
         // Modern look: no Close button at the bottom (the back arrow of the toolbar does
-        // it), the page runs down to the edge like the other pages
-        anchors.leftMargin: -column1.offScreen
-        anchors.rightMargin: column1.offScreen
+        // it), the page runs down to the edge like the other pages.
+        // Off the screen until the first paint (offScreen) and for a moment after a turn (turnFix)
+        anchors.leftMargin: -(column1.offScreen + turnFix.shift)
+        anchors.rightMargin: column1.offScreen + turnFix.shift
         onTitleChanged: column1.chartFullscreen = title.indexOf("#fullscreen") >= 0
         onLoadingChanged: {
             if (loadRequest.errorString) {
@@ -92,7 +93,8 @@ ColumnLayout {
     BusyIndicator {
         anchors.centerIn: parent
         // Not for a turn: nothing loads, the view is only off the screen for a moment
-        running: !column1.pageShown && !column1.turnHidden
+        // (turnFix moves it by its own shift, pageShown stays true)
+        running: !column1.pageShown
         visible: running
     }
 
