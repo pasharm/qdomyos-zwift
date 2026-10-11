@@ -144,11 +144,6 @@ ApplicationWindow {
     property var keptWorkoutEditor: null
     property var keptCharts: null
 
-    // rootItem comes from homeform, created only after this file is loaded (main.cpp): for about
-    // a second the bindings on it fail and keep their defaults - every header button shown in a
-    // squashed bar, both looks of the empty home page at once. The header and the page wait for it
-    readonly property bool rootReady: typeof rootItem !== "undefined" && rootItem !== null
-
     // The kept pages hold a web view each (tens of MB): given back 3 minutes after they are
     // closed, 1 minute while riding (the equipment moving: the ride needs the memory more).
     // The equipment connecting would not do: it connects once, when the app opens
@@ -189,6 +184,11 @@ ApplicationWindow {
             keptWorkoutEditor.closeRequested()
     }
     property bool gymModePopupDismissed: false
+
+    // rootItem comes from homeform, created only after this file is loaded (main.cpp): for about
+    // a second the bindings on it fail and keep their defaults - every header button shown in a
+    // squashed bar. The header and the page wait for it
+    readonly property bool rootReady: typeof rootItem !== "undefined" && rootItem !== null
 
     Settings {
         id: settings
