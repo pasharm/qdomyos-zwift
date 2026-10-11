@@ -360,8 +360,10 @@ Page {
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
-                // the search status may have two lines ("<device> found" and the countdown)
+                // the search status may have two lines ("<device> found" and the countdown): the line
+                // grows upwards, so they are set closer to keep the first one off the buttons
                 horizontalAlignment: Text.AlignHCenter
+                lineHeight: text.indexOf("\n") >= 0 ? 0.8 : 1
                 text: page.searchStatus !== "" ? page.searchStatus : rootItem.info
                 visible: !window.ui.modern && !page.deviceLineHidden
                 color: Material.foreground
@@ -420,6 +422,8 @@ Page {
                 // first search it means the same as the search status
                 text: page.searchStatus !== "" ? page.searchStatus : (rootItem.info === "Connecting..." ? qsTranslate("homeform", "Searching for the device...") : rootItem.info)
                 horizontalAlignment: Text.AlignHCenter
+                // two lines ("<device> found" and the countdown) grow upwards: closer, off the buttons
+                lineHeight: text.indexOf("\n") >= 0 ? 0.8 : 1
                 color: modernInfo.bluetoothOff ? window.ui.danger : window.ui.textMuted
                 font.pixelSize: 13
             }
