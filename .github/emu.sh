@@ -179,18 +179,6 @@ shot t-03-tiles-down
 back "tiles"; sleep 4
 
 scroll_top
-scroll_to '^Bike Options$' && tap_ui '^Bike Options$' 700 1000
-sleep 4
-scroll_to 'Wahoo Options' && tap_ui 'Wahoo Options' 700 1000
-sleep 8
-shot g-01-gears
-adb shell input swipe 700 2000 700 900 400 || true; sleep 1
-shot g-02-gears-down
-adb shell input swipe 700 2000 700 900 400 || true; sleep 1
-shot g-03-gears-table
-back "gears"; sleep 4
-
-scroll_top
 scroll_to '^Treadmill Options$' && tap_ui '^Treadmill Options$' 700 1000
 sleep 4
 scroll_to 'Inclination Overrides' && tap_ui 'Inclination Overrides' 700 1000
@@ -206,6 +194,20 @@ tap_drawer 'Workouts History' 400 1500
 sleep 10
 shot w-01-history
 back "history"; sleep 4
+
+# the gears page last: the back key there may only drop the focus of a field
+open_settings
+scroll_to '^Bike Options$' && tap_ui '^Bike Options$' 700 1000
+sleep 4
+scroll_to 'Wahoo Options' && tap_ui 'Wahoo Options' 700 1000
+sleep 8
+shot g-01-gears
+adb shell input swipe 700 2000 700 900 400 || true; sleep 1
+shot g-02-gears-down
+adb shell input swipe 700 2000 700 900 400 || true; sleep 1
+shot g-03-gears-table
+back "gears"; sleep 4
+
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
