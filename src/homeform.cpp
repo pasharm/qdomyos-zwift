@@ -1948,8 +1948,11 @@ QString homeform::bluetoothSearchStatus() {
     // Gym mode: the trainer is picked, QZ looks for it and connects - say which one
     if (!bluetoothManager->gymModeDevice().isEmpty())
         return tr("Connecting to %1...").arg(bluetoothManager->gymModeDevice());
+    // while scanning, the last device found shows that QZ is finding something (useful for troubleshooting)
+    const QString scanning = lastFoundDevice.isEmpty() ? tr("Searching for the device...")
+                                                       : tr("%1 found").arg(lastFoundDevice);
     if (bluetoothManager->isSearching())
-        return tr("Searching for the device...");
+        return scanning;
     if (bluetoothManager->searchStopped())
         return tr("Search stopped, tap the Bluetooth icon");
     if (!bluetoothManager->nextSearchMs())
@@ -1957,8 +1960,11 @@ QString homeform::bluetoothSearchStatus() {
     const qint64 left = bluetoothManager->nextSearchMs() - QDateTime::currentMSecsSinceEpoch();
     // the timer may fire a little late: the search is about to start
     if (left <= 0)
-        return tr("Searching for the device...");
-    return tr("Next search in %1 s").arg((left + 999) / 1000);
+        return scanning;
+    const qint64 leftSec = (left + 999) / 1000;
+    if (lastFoundDevice.isEmpty())
+        return tr("Next search in %1 s").arg(leftSec);
+    return tr("%1 found · next search in %2 s").arg(lastFoundDevice).arg(leftSec);
 }
 
 bool homeform::bluetoothSearchStopped() {
@@ -4843,6 +4849,7 @@ void homeform::deviceFound(const QString &name) {
         return;
     }
 
+    lastFoundDevice = name;
     emit bluetoothDevicesChanged(bluetoothDevices());
 
     if (m_labelHelp == false) {

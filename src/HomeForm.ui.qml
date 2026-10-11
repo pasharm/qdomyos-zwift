@@ -370,8 +370,9 @@ Page {
         // Modern status line: signal bars and the device status on one line
         Row {
             id: modernInfo
-            // Over the empty state only the time to the next search ("Next search in 12 s"): its
-            // heading says the rest ("Looking for your equipment"). The line has its own place
+            // Over the empty state only the last device found and the time to the next search
+            // ("HRM-Pro found", "Next search in 12 s"): its heading says the rest ("Looking for
+            // your equipment"). The line has its own place
             // under the buttons, so it comes and goes without moving the page
             readonly property bool countdown: !page.searchStopped && page.searchStatus !== "" && page.connectingDevice === ""
                                               && page.searchStatus !== qsTranslate("homeform", "Searching for the device...")

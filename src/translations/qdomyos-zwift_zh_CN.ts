@@ -3687,6 +3687,10 @@ This may take a few moments on first startup.</source>
         <translation>%1 秒后再次搜索</translation>
     </message>
     <message>
+        <source>%1 found · next search in %2 s</source>
+        <translation>已找到 %1 · %2 秒后再次搜索</translation>
+    </message>
+    <message>
         <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
         <translation>Android 允许 30 秒内进行 5 次蓝牙搜索，下一次将在 %1 秒后开始</translation>
     </message>
@@ -3750,7 +3754,7 @@ This may take a few moments on first startup.</source>
     </message>
     <message>
         <source>%1 found</source>
-        <translation>找到 %1 个</translation>
+        <translation>已找到 %1</translation>
     </message>
     <message>
         <source>offset </source>

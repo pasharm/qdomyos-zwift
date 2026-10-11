@@ -242,7 +242,8 @@ class homeform : public QObject {
     QQmlApplicationEngine *getEngine() { return engine; }
 
     QByteArray currentPelotonImage();
-    // Status line of the search for the equipment on the home page; empty once it is connected
+    // Status line of the search for the equipment on the home page, with the last device found;
+    // empty once it is connected
     Q_INVOKABLE QString bluetoothSearchStatus();
     // Gym mode: the trainer picked in the window while it is not connected yet, else empty
     Q_INVOKABLE QString gymModeConnectingDevice();
@@ -1060,6 +1061,8 @@ public:
     int m_topBarHeight = 120;
     QString m_info = QStringLiteral("Connecting...");
     bool m_labelHelp = true;
+    // last device found by the Bluetooth search, shown by bluetoothSearchStatus() until the equipment is connected
+    QString lastFoundDevice;
     bool m_generalPopupVisible = false;
     bool m_pelotonPopupVisible = false;
     bool m_LicensePopupVisible = false;
