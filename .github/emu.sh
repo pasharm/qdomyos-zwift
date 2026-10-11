@@ -195,7 +195,11 @@ sleep 10
 shot w-01-history
 tap_ui 'Filter by date' 150 330 && sleep 3
 shot w-02-calendar
-back "calendar"; sleep 3
+# a day sets the date filter and closes the calendar: the clear filter button must show up
+tap_ui ' 15, 20' 700 1400 && sleep 3
+shot w-02b-filtered
+tap_ui '^Clear Filter$' 260 330 && sleep 3
+shot w-02c-cleared
 tap_ui 'Import workouts' 1290 330 && sleep 3
 shot w-03-import
 back "import menu"; sleep 3
