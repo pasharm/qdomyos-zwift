@@ -189,6 +189,12 @@ shot h-01-home
 
 open_menu
 shot m-01-menu
+# The page under the open menu must be out of the tree: Stop there would end the workout
+if [ -f dumps/m-01-menu.xml ] && grep -qE 'content-desc="(Pause|Stop|Lap|Start|(Increase|Decrease) [^"]*)"' dumps/m-01-menu.xml; then
+  echo "!! check page under the open menu: STILL in the tree - $(grep -oE 'content-desc="(Pause|Stop|Lap|Start|(Increase|Decrease) [^"]*)"' dumps/m-01-menu.xml | head -4 | tr '\n' ' ')" >> $STEPLOG
+else
+  echo "check page under the open menu: hidden OK" >> $STEPLOG
+fi
 # #4645: drawerInputBlocker (z 9999) over the page while the menu is open - the back key must
 # close the menu and keep the app (the author asked about the back gesture)
 back "menu open"
