@@ -3120,7 +3120,8 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: weightTextField
                             minimum: 1
-                            text: ((settings.miles_unit && !settings.weight_kg_unit)?settings.weight * 2.20462:settings.weight)
+                            // 2 decimals as the field takes: 78 kg is 171.96035999999998 lbs unrounded
+                            text: Number(((settings.miles_unit && !settings.weight_kg_unit)?settings.weight * 2.20462:settings.weight).toFixed(2))
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4369,7 +4370,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: bikeweightTextField
-                            text: ((settings.miles_unit && !settings.weight_kg_unit)?settings.bike_weight * 2.20462:settings.bike_weight)
+                            text: Number(((settings.miles_unit && !settings.weight_kg_unit)?settings.bike_weight * 2.20462:settings.bike_weight).toFixed(2))
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
