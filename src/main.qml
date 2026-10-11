@@ -144,6 +144,11 @@ ApplicationWindow {
     property var keptWorkoutEditor: null
     property var keptCharts: null
 
+    // rootItem comes from homeform, created only after this file is loaded (main.cpp): for about
+    // a second the bindings on it fail and keep their defaults - every header button shown in a
+    // squashed bar, both looks of the empty home page at once. The header and the page wait for it
+    readonly property bool rootReady: typeof rootItem !== "undefined" && rootItem !== null
+
     // The kept pages hold a web view each (tens of MB): given back 3 minutes after they are
     // closed, 1 minute while riding (the equipment moving: the ride needs the memory more).
     // The equipment connecting would not do: it connects once, when the app opens
@@ -1371,6 +1376,8 @@ ApplicationWindow {
         Material.primary: window.ui.modern ? window.ui.bg : settings.theme_status_bar_background_color
         Material.elevation: window.ui.modern ? 0 : 4
         id: headerToolbar
+        // Opacity, not visible: some pages set headerToolbar.visible themselves
+        opacity: window.rootReady ? 1 : 0
         property bool settingsPageActive: stackView.currentItem && typeof stackView.currentItem.showSettingsSearch === "function"
         // Modern look: load and save belong to the settings page itself. The pages opened from
         // it (the settings files of the load button among them) kept both, and load could open
@@ -2243,6 +2250,7 @@ ApplicationWindow {
     Item {
         anchors.fill: parent
         Accessible.ignored: true
+        opacity: window.rootReady ? 1 : 0
 
         StackView {
             id: stackView
