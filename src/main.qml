@@ -1395,7 +1395,14 @@ ApplicationWindow {
         property bool scrolledAway: false
         height: scrolledAway ? topPadding : implicitHeight
         clip: height < implicitHeight   // keeps the Material shadow when fully shown
-        Behavior on height { NumberAnimation { id: headerHeightAnimation; duration: 150; easing.type: Easing.OutQuad } }
+        Behavior on height {
+            enabled: headerToolbar.heightSettled
+            NumberAnimation { id: headerHeightAnimation; duration: 150; easing.type: Easing.OutQuad }
+        }
+        // On start the toolbar gets its real height only once rootItem is there (rootReady), and
+        // the animation slid it in from the top for half a second. Animated from a moment later
+        property bool heightSettled: false
+        Timer { interval: 500; running: window.rootReady; onTriggered: headerToolbar.heightSettled = true }
         // While the height animates the page moves under the finger; Home.qml ignores that movement
         property bool animating: headerHeightAnimation.running
         topPadding: getTopPadding()
