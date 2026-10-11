@@ -36,11 +36,36 @@ Page {
     // a pending offer to recover the workouts of a previous install is made here
     Component.onCompleted: rootItem.historyPageOpened()
 
-    // Helper function to wrap text with emoji font only on Android
+    // Helper function to wrap text with emoji font only on Android. Android shows an emoji
+    // only with the downloaded font, so until it is there the emoji is left out
     function wrapEmoji(emoji) {
-        return Qt.platform.os === "android" ? 
-            '<font face="' + fontManager.emojiFontFamily + '">' + emoji + '</font>' : 
-            emoji;
+        if (Qt.platform.os !== "android")
+            return emoji;
+        if (!fontManager || fontManager.emojiFontFamily === "Arial")
+            return "";
+        // A trailing space stays out of the emoji font: its space is a wide one
+        var space = "";
+        if (emoji.slice(-1) === " ") {
+            space = " ";
+            emoji = emoji.slice(0, -1);
+        }
+        return '<font face="' + fontManager.emojiFontFamily + '">' + emoji + '</font>' + space;
+    }
+
+    // Sport type to ShapeIcon name, drawn instead of the emoji on Android
+    function getSportIconName(sport) {
+        switch(parseInt(sport)) {
+            case 1:  // FIT_SPORT_RUNNING
+                return "directions_run";
+            case 11: // FIT_SPORT_WALKING
+                return "directions_walk";
+            case 2:  // FIT_SPORT_CYCLING
+                return "pedal_bike";
+            case 15: // FIT_SPORT_ROWING
+                return "rowing";
+            default:
+                return "fitness_center";
+        }
     }
 
     // Sport type to icon mapping (using FIT_SPORT values)
@@ -305,15 +330,25 @@ Page {
                     color: window.ui.textMain
                 }
 
-                contentItem: Text {
+                contentItem: Item {
                     visible: !workoutHistoryPage.modern
-                    text: Qt.platform.os === "android" ?
-                          wrapEmoji("📅") :
-                          "📅"
-                    textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
-                    font.pixelSize: 26
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
+                    Text {
+                        anchors.fill: parent
+                        visible: Qt.platform.os !== "android"
+                        text: "📅"
+                        font.pixelSize: 26
+                        horizontalAlignment: Text.AlignHCenter
+                        verticalAlignment: Text.AlignVCenter
+                    }
+
+                    // Android shows an emoji only with a downloaded font, so the icon is drawn
+                    ShapeIcon {
+                        anchors.centerIn: parent
+                        visible: Qt.platform.os === "android"
+                        name: "calendar_month"
+                        size: 26
+                        color: "#444444"
+                    }
                 }
                 
                 onClicked: {
@@ -370,48 +405,22 @@ Page {
                 }
 
                 contentItem: Item {
-                    // Android draws emoji only with the downloaded emoji font; until it is
-                    // there (or when the download failed) the icon is drawn as a shape
-                    readonly property bool emojiFontMissing: Qt.platform.os === "android" &&
-                        (!fontManager || fontManager.emojiFontFamily === "Arial")
-
                     Text {
                         anchors.fill: parent
-                        visible: !parent.emojiFontMissing
-                        text: Qt.platform.os === "android" ?
-                              wrapEmoji("📥") :
-                              "📥"
-                        textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
+                        visible: Qt.platform.os !== "android"
+                        text: "📥"
                         font.pixelSize: 26
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
 
-                    // tray with a down arrow
-                    Canvas {
+                    // Android shows an emoji only with a downloaded font, so the icon is drawn
+                    ShapeIcon {
                         anchors.centerIn: parent
-                        width: 26
-                        height: 26
-                        visible: parent.emojiFontMissing
-                        onPaint: {
-                            var ctx = getContext("2d")
-                            ctx.reset()
-                            ctx.strokeStyle = "#444444"
-                            ctx.lineWidth = 2.5
-                            ctx.lineCap = "round"
-                            ctx.lineJoin = "round"
-                            ctx.beginPath()
-                            ctx.moveTo(13, 3)
-                            ctx.lineTo(13, 16)
-                            ctx.moveTo(8, 11)
-                            ctx.lineTo(13, 16)
-                            ctx.lineTo(18, 11)
-                            ctx.moveTo(3, 15)
-                            ctx.lineTo(3, 23)
-                            ctx.lineTo(23, 23)
-                            ctx.lineTo(23, 15)
-                            ctx.stroke()
-                        }
+                        visible: Qt.platform.os === "android"
+                        name: "download"
+                        size: 26
+                        color: "#444444"
                     }
                 }
 
@@ -579,12 +588,18 @@ Page {
                         anchors.right: parent.right
                         anchors.verticalCenter: parent.verticalCenter
                         anchors.rightMargin: 20
+                        spacing: 4
+
+                        ShapeIcon {
+                            visible: Qt.platform.os === "android"
+                            name: "delete"
+                            size: 18
+                            color: "white"
+                            anchors.verticalCenter: parent.verticalCenter
+                        }
 
                         Text {
-                            text: Qt.platform.os === "android" ? 
-                                  wrapEmoji("🗑️") + " " + qsTr("Delete") : 
-                                  "🗑️ " + qsTr("Delete")
-                            textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
+                            text: Qt.platform.os === "android" ? qsTr("Delete") : "🗑️ " + qsTr("Delete")
                             color: "white"
                             font.pixelSize: 16
                             anchors.verticalCenter: parent.verticalCenter
@@ -647,14 +662,22 @@ Page {
                                 border.width: workoutHistoryPage.modern ? 0 : 1
                             }
                             
-                            contentItem: Text {
-                                text: Qt.platform.os === "android" ? 
-                                      wrapEmoji("🌐") : 
-                                      "🌐"
-                                textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
-                                font.pixelSize: 16
-                                color: "white"
-                                anchors.centerIn: parent
+                            contentItem: Item {
+                                Text {
+                                    visible: Qt.platform.os !== "android"
+                                    text: "🌐"
+                                    font.pixelSize: 16
+                                    color: "white"
+                                    anchors.centerIn: parent
+                                }
+
+                                ShapeIcon {
+                                    visible: Qt.platform.os === "android"
+                                    name: "language"
+                                    size: 20
+                                    color: workoutHistoryPage.modern ? window.ui.textMain : "white"
+                                    anchors.centerIn: parent
+                                }
                             }
                             
                             onClicked: {
@@ -676,14 +699,22 @@ Page {
                                 border.width: workoutHistoryPage.modern ? 0 : 1
                             }
                             
-                            contentItem: Text {
-                                text: Qt.platform.os === "android" ? 
-                                      wrapEmoji("📋") : 
-                                      "📋"
-                                textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
-                                font.pixelSize: 16
-                                color: "white"
-                                anchors.centerIn: parent
+                            contentItem: Item {
+                                Text {
+                                    visible: Qt.platform.os !== "android"
+                                    text: "📋"
+                                    font.pixelSize: 16
+                                    color: "white"
+                                    anchors.centerIn: parent
+                                }
+
+                                ShapeIcon {
+                                    visible: Qt.platform.os === "android"
+                                    name: "list_alt"
+                                    size: 20
+                                    color: workoutHistoryPage.modern ? window.ui.textMain : "white"
+                                    anchors.centerIn: parent
+                                }
                             }
                             
                             onClicked: {
@@ -728,12 +759,17 @@ Page {
                                 }
                             }
                             Text {
-                                visible: !workoutHistoryPage.modern
-                                text: Qt.platform.os === "android" ?
-                                      wrapEmoji(getSportIcon(sport)) :
-                                      getSportIcon(sport)
-                                textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
+                                visible: !workoutHistoryPage.modern && Qt.platform.os !== "android"
+                                text: getSportIcon(sport)
                                 font.pixelSize: 32
+                            }
+
+                            // Android shows an emoji only with a downloaded font, so the icon is drawn
+                            ShapeIcon {
+                                visible: !workoutHistoryPage.modern && Qt.platform.os === "android"
+                                name: getSportIconName(sport)
+                                size: 32
+                                color: "#444444"
                             }
                         }
 
@@ -829,7 +865,8 @@ Page {
                                 spacing: 16
 
                                 Text {
-                                    text: (workoutHistoryPage.modern ? "" : "⏱ ") + duration
+                                    text: (workoutHistoryPage.modern ? "" : wrapEmoji("⏱ ")) + duration
+                                    textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
                                     color: window.ui.ink("black")
                                 }
 
@@ -837,8 +874,9 @@ Page {
                                     text: {
                                         var useMiles = settings && settings.miles_unit
                                         var displayDistance = useMiles ? (distance / 1.60934) : distance
-                                        return (workoutHistoryPage.modern ? "" : "📏 ") + displayDistance.toFixed(2) + " " + (useMiles ? qsTr("mi") : qsTr("km"))
+                                        return (workoutHistoryPage.modern ? "" : wrapEmoji("📏 ")) + displayDistance.toFixed(2) + " " + (useMiles ? qsTr("mi") : qsTr("km"))
                                     }
+                                    textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
                                     color: window.ui.ink("black")
                                 }
                             }
@@ -850,7 +888,7 @@ Page {
                                 Text {
                                     text: workoutHistoryPage.modern ? Math.round(calories) + " " + qsTr("kcal") :
                                           Qt.platform.os === "android" ?
-                                          wrapEmoji("🔥") + " " + Math.round(calories) + " " + qsTr("kcal") :
+                                          wrapEmoji("🔥 ") + Math.round(calories) + " " + qsTr("kcal") :
                                           "🔥 " + Math.round(calories) + " " + qsTr("kcal")
                                     textFormat: Qt.platform.os === "android" && !workoutHistoryPage.modern ? Text.RichText : Text.PlainText
                                     color: window.ui.inkMuted("black")
@@ -1113,9 +1151,9 @@ Page {
                 Layout.preferredWidth: 300
                 Layout.preferredHeight: 120
                 text: Qt.platform.os === "android" ? 
-                      wrapEmoji("🔥") + " " + 
-                      wrapEmoji(trainingProgramDialog.isSuccess ? '✅' : '❌') + 
-                      " " + trainingProgramDialog.message : 
+                      wrapEmoji("🔥 ") +
+                      wrapEmoji(trainingProgramDialog.isSuccess ? '✅ ' : '❌ ') +
+                      trainingProgramDialog.message :
                       "🔥 " + (trainingProgramDialog.isSuccess ? '✅ ' : '❌ ') + trainingProgramDialog.message
                 textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
                 wrapMode: Text.WordWrap
