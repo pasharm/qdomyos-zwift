@@ -5678,8 +5678,8 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>应用语言:</translation>
     </message>
     <message>
-        <source>Choose Auto to follow your device language, or pick a specific language for QZ. Restart required.</source>
-        <translation>选择自动以匹配设备语言，或为 QZ 选择特定语言。需要重启。</translation>
+        <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
+        <translation>选择自动以匹配设备语言，或为 QZ 选择特定语言。</translation>
     </message>
     <message>
         <source>Invalid format! Use feet&apos;inches (e.g., 6&apos;2&quot;)</source>

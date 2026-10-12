@@ -5670,8 +5670,8 @@ Não: o QZ o mantém como esteira e não pergunta de novo (uma bicicleta ainda p
         <translation>Idioma do Aplicativo:</translation>
     </message>
     <message>
-        <source>Choose Auto to follow your device language, or pick a specific language for QZ. Restart required.</source>
-        <translation>Escolha Automático para seguir o idioma do seu dispositivo, ou selecione um idioma específico para QZ. É necessário reiniciar.</translation>
+        <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
+        <translation>Escolha Automático para seguir o idioma do seu dispositivo, ou selecione um idioma específico para QZ.</translation>
     </message>
     <message>
         <source>Invalid format! Use feet&apos;inches (e.g., 6&apos;2&quot;)</source>
