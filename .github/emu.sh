@@ -218,6 +218,18 @@ adb shell input swipe 700 2000 700 900 400 || true; sleep 1
 shot g-03-gears-table
 back "gears"; sleep 4
 
+# The import menu with the app in Ukrainian: on a Ukrainian phone TalkBack read its items
+# as unlabeled, while the English tree above has their names
+adb shell am force-stop $PKG || true
+put_conf "applewatch_fakedevice=true\napp_language=uk\n"
+start_app
+open_menu
+tap_drawer 'Історія тренувань' 400 1500
+sleep 10
+tap_ui 'Імпортувати тренування' 1290 330 && sleep 3
+shot u-01-import-uk
+back "import menu"; sleep 3
+
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
