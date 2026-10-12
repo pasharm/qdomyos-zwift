@@ -71,6 +71,13 @@ shot() {
   [ -f ui.xml ] || dump
   [ -f ui.xml ] && cp ui.xml dumps/$1.xml
 }
+# snap name: the frame alone, at once - a dump waits for the screen to settle, so after it a
+# toast has already faded
+snap() {
+  echo "-- snap $1" >> $STEPLOG
+  adb shell screencap -p /sdcard/$1.png || true
+  adb pull /sdcard/$1.png || true
+}
 # tap_ui 'regex' [x y]: the control whose whole text or accessible name matches, else the
 # fallback coordinates; without them the step is skipped (return 1)
 tap_ui() {
@@ -206,7 +213,7 @@ switch_language() {
   tap_row "$1" '^OK$' || return 1
   echo "OK pressed at $(date +%T.%N)" >> $STEPLOG
   sleep 1
-  shot "$4-c-after-1s"
+  snap "$4-c-after-1s"
   sleep 4
   shot "$4-d-after-5s"
 }
@@ -233,10 +240,27 @@ scroll_to '^Загальні параметри$' && tap_ui '^Загальні �
 sleep 4
 switch_language '^Мова застосунку:$' '^Українська$' '^Англійська$' d
 
+# Control: the toast of an ordinary setting, to tell a missing toast after a language change
+# from a frame that misses toasts altogether
+sleep 3
+rm -f ui.xml
+tap_row '^UI Zoom:$' '^OK$'
+sleep 1
+snap d-e-zoom-toast
+
 # Miles: the tile titles follow once back on the home page, without a restart
-scroll_to '^Use Miles unit in UI$' && tap_ui '^Use Miles unit in UI$' 300 1000
+# The switch node spans the whole row and its label does not toggle: tap the right end
+if scroll_to '^Use Miles unit in UI$'; then
+  xy=$(python3 .github/uitap.py ui.xml '^Use Miles unit in UI$')
+  if [ -n "$xy" ]; then
+    echo "tap switch 'Use Miles unit in UI' at 1330 ${xy#* }" >> $STEPLOG
+    adb shell input tap 1330 "${xy#* }" || true
+  fi
+  rm -f ui.xml
+fi
 sleep 1
 shot e-01-miles-on
+grep -o 'content-desc="Use Miles unit in UI" checkable="true" checked="[a-z]*"' ui.xml >> $STEPLOG || true
 back "settings"; sleep 5
 shot e-02-home-miles
 
