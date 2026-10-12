@@ -763,6 +763,9 @@ public:
     }
 
     Q_INVOKABLE void sortTiles();
+    // Applies the app language at once, without a restart: "auto", "en" or a translation code
+    Q_INVOKABLE void setAppLanguage(const QString &language);
+    static void loadAppTranslation(const QString &language);
     Q_INVOKABLE void moveTile(QString name, int newIndex, int oldIndex);
     DataObject *tileFromName(QString name);
 
@@ -1016,6 +1019,7 @@ public:
 
   private:
     static homeform *m_singleton;
+    void setTileNames();
     TemplateInfoSenderBuilder *userTemplateManager = nullptr;
     TemplateInfoSenderBuilder *innerTemplateManager = nullptr;
     QList<QObject *> dataList;
