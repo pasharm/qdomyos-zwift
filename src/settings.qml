@@ -423,6 +423,55 @@ import AndroidStatusBar 1.0
             scrollTimer.start()
         }
 
+        // The sections of a page in page order, open or not: a new page opens the same ones
+        function sectionStates(item, states) {
+            var kids = item ? item.children : []
+            for (var i = 0; i < kids.length; i++) {
+                if (kids[i].isOpen !== undefined && kids[i].accordionContent !== undefined)
+                    states.push(kids[i].isOpen)
+                sectionStates(kids[i], states)
+            }
+            return states
+        }
+
+        function openSections(item, states, at) {
+            var kids = item ? item.children : []
+            for (var i = 0; i < kids.length; i++) {
+                if (kids[i].isOpen !== undefined && kids[i].accordionContent !== undefined) {
+                    if (at < states.length && kids[i].isOpen !== states[at])
+                        kids[i].isOpen = states[at]
+                    at++
+                }
+                at = openSections(kids[i], states, at)
+            }
+            return at
+        }
+
+        // The language changes at once. The page is made again: the texts it built once (search
+        // names, lists of choices) come in the new language. It opens on the same sections, at
+        // the language row.
+        function applyAppLanguage(language) {
+            var states = sectionStates(contentItem, [])
+            var snapshot = initialProfileSettingsSnapshot
+            var restartToApply = window.settings_restart_to_apply
+            // Settings writes a change only after a delay: the new page would read the old language
+            settings.setValue("app_language", language)
+            rootItem.setAppLanguage(language)
+            var page = stackView.replace("settings.qml", {}, StackView.Immediate)
+            // Set by the new page when it is made: what was changed before still counts
+            page.initialProfileSettingsSnapshot = snapshot
+            window.settings_restart_to_apply = restartToApply
+            page.showAppLanguage(states)
+        }
+
+        function showAppLanguage(states) {
+            openSections(contentItem, states, 0)
+            var label = qsTr("App Language:")
+            pendingReveal = { flickable: contentItem,
+                              target: findItem(contentItem, function (item) { return item.text === label }) }
+            revealTimer.restart()
+        }
+
         function profileSettingsSnapshot() {
             var values = []
             for (var key in settings) {
@@ -739,7 +788,10 @@ import AndroidStatusBar 1.0
             // Settings writes it only a moment later
             settings.setValue(entry.key, settings[entry.key])
 
-            window.settings_restart_to_apply = true
+            if (entry.key === "app_language")
+                applyAppLanguage(value)
+            else
+                window.settings_restart_to_apply = true
             toast.show(qsTr("Setting saved!"))
         }
 
@@ -2691,13 +2743,13 @@ import AndroidStatusBar 1.0
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: {
                                 settings.app_language = appLanguageOptions[appLanguageCombo.currentIndex].value
-                                window.settings_restart_to_apply = true
+                                settingsPane.applyAppLanguage(settings.app_language)
                                 toast.show(qsTr("Setting saved!"))
                             }
                         }
                     }
                     Label {
-                        text: qsTr("Choose Auto to follow your device language, or pick a specific language for QZ. Restart required.")
+                        text: qsTr("Choose Auto to follow your device language, or pick a specific language for QZ.")
                         font.bold: true
                         font.italic: true
                         font.pixelSize: Qt.application.font.pixelSize - 2
@@ -8824,7 +8876,9 @@ import AndroidStatusBar 1.0
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             model: [qsTr("Global (garmin.com)"), qsTr("China (garmin.cn)")]
                             currentIndex: settings.garmin_domain === "garmin.cn" ? 1 : 0
-                            onCurrentIndexChanged: {
+                            // Only a choice of the user: a change of language rebuilds the list and
+                            // moves it to the first item, which must not log out and switch servers
+                            onActivated: {
                                 var newDomain = currentIndex === 1 ? "garmin.cn" : "garmin.com";
                                 if (newDomain !== settings.garmin_domain) {
                                     rootItem.garmin_connect_logout();
