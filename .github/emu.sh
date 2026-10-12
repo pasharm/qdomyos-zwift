@@ -182,10 +182,11 @@ pick() {
       tap_ui "$1"
       return 0
     fi
+    # In the middle of the list (x 718-1218 on the Nexus 6): a swipe outside closes it
     if [ $i -le 6 ]; then
-      adb shell input swipe 700 1800 700 1200 300 || true
+      adb shell input swipe 968 1800 968 1200 300 || true
     else
-      adb shell input swipe 700 1200 700 1800 300 || true
+      adb shell input swipe 968 1200 968 1800 300 || true
     fi
     sleep 1
   done
