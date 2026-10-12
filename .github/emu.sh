@@ -1,11 +1,7 @@
 #!/bin/bash
-# Test only (T-199, T-214): what a screen reader gets from the classic look.
-# Every shot keeps the uiautomator dump (dumps/<shot>.xml) - the accessibility tree TalkBack
-# reads - and .github/a11y.py lists the controls without a name at the end (a11y.txt).
-# Run once with the build of master and once with the branch to compare.
-#
-# T-214: a fake treadmill, then Settings > Tiles Options, Bike Options > Wahoo Options (gears),
-# Treadmill Options > Inclination Overrides, and the side menu > Workouts History.
+# Test only (T-196): the app language changes at once on OK, without a restart.
+# English -> Ukrainian -> English in Settings > General Options > App Language, the home tiles
+# after each, then the miles switch and a restart. Shots and dumps (dumps/<shot>.xml) of each step.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -162,73 +158,91 @@ open_settings() {
   sleep 8
 }
 
-# T-214: the pages outside #4645 - tile settings, inclination overrides, gears, history.
-# A fake treadmill, so the wizard stays closed
-put_conf "applewatch_fakedevice=true\n"
+# tap_row 'anchor' 'target': the control in the row of the anchor (the OK of one setting on a
+# page with many OK buttons)
+tap_row() {
+  local xy=""
+  ensure_app
+  [ -f ui.xml ] || dump
+  [ -f ui.xml ] && xy=$(python3 .github/uirow.py ui.xml "$1" "$2")
+  if [ -n "$xy" ]; then
+    echo "tap '$2' in the row of '$1' at $xy" >> $STEPLOG
+    adb shell input tap $xy || true
+  else
+    echo "tap '$2' in the row of '$1': NOT FOUND" >> $STEPLOG
+    return 1
+  fi
+}
+# pick 'regex': an item of the open combo list, looked for up the list, then down
+pick() {
+  local i
+  for i in $(seq 1 16); do
+    dump
+    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
+      tap_ui "$1"
+      return 0
+    fi
+    if [ $i -le 6 ]; then
+      adb shell input swipe 700 1800 700 1200 300 || true
+    else
+      adb shell input swipe 700 1200 700 1800 300 || true
+    fi
+    sleep 1
+  done
+  echo "pick '$1': NOT FOUND" >> $STEPLOG
+  back "combo list"
+  return 1
+}
+# switch_language 'row label' 'current' 'wanted' prefix: the App Language combo, then its OK
+switch_language() {
+  scroll_to "$1" || return 1
+  shot "$4-a-before"
+  tap_row "$1" "$2" || return 1
+  sleep 2
+  shot "$4-b-list"
+  pick "$3" || return 1
+  sleep 2
+  tap_row "$1" '^OK$' || return 1
+  echo "OK pressed at $(date +%T.%N)" >> $STEPLOG
+  sleep 1
+  shot "$4-c-after-1s"
+  sleep 4
+  shot "$4-d-after-5s"
+}
+
+# T-196: the language changes at once on OK, without a restart. A fake treadmill, so the
+# wizard stays closed and the home page has tiles; English at the start
+put_conf "applewatch_fakedevice=true\napp_language=en\n"
 start_app
-shot h-01-home
+shot a-01-home-en
 
 open_settings
-scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' 700 1000
-sleep 8
-shot t-01-tiles
-tap_ui '^Speed$' && sleep 3
-shot t-02-speed-open
-adb shell input swipe 700 2000 700 900 400 || true; sleep 1
-shot t-03-tiles-down
-back "tiles"; sleep 4
-
-scroll_top
-scroll_to '^Treadmill Options$' && tap_ui '^Treadmill Options$' 700 1000
+scroll_to '^General Options$' && tap_ui '^General Options$' 700 1000
 sleep 4
-scroll_to 'Inclination Overrides' && tap_ui 'Inclination Overrides' 700 1000
-sleep 8
-shot i-01-overrides
-adb shell input swipe 700 2000 700 900 400 || true; sleep 1
-shot i-02-overrides-down
-back "overrides"; sleep 4
-back "settings"; sleep 4
+switch_language '^App Language:$' '^English$' '^Ukrainian$' b
+# Back home: no restart question, the tiles in Ukrainian
+back "settings"; sleep 5
+shot c-01-home-uk
 
+# English again, from the Ukrainian page
 open_menu
-tap_drawer 'Workouts History' 400 1500
-sleep 10
-shot w-01-history
-tap_ui 'Filter by date' 150 330 && sleep 3
-shot w-02-calendar
-# a day sets the date filter and closes the calendar: the clear filter button must show up
-tap_ui ' 15, 20' 700 1400 && sleep 3
-shot w-02b-filtered
-tap_ui '^Clear Filter$' 260 330 && sleep 3
-shot w-02c-cleared
-tap_ui 'Import workouts' 1290 330 && sleep 3
-shot w-03-import
-back "import menu"; sleep 3
-back "history"; sleep 4
-
-# the gears page last: the back key there may only drop the focus of a field
-open_settings
-scroll_to '^Bike Options$' && tap_ui '^Bike Options$' 700 1000
-sleep 4
-scroll_to 'Wahoo Options' && tap_ui 'Wahoo Options' 700 1000
+tap_drawer '^(Settings|Налаштування)$' 400 900
 sleep 8
-shot g-01-gears
-adb shell input swipe 700 2000 700 900 400 || true; sleep 1
-shot g-02-gears-down
-adb shell input swipe 700 2000 700 900 400 || true; sleep 1
-shot g-03-gears-table
-back "gears"; sleep 4
+scroll_to '^Загальні параметри$' && tap_ui '^Загальні параметри$' 700 1000
+sleep 4
+switch_language '^Мова застосунку:$' '^Українська$' '^Англійська$' d
 
-# The import menu with the app in Ukrainian: on a Ukrainian phone TalkBack read its items
-# as unlabeled, while the English tree above has their names
+# Miles: the tile titles follow once back on the home page, without a restart
+scroll_to '^Use Miles unit in UI$' && tap_ui '^Use Miles unit in UI$' 300 1000
+sleep 1
+shot e-01-miles-on
+back "settings"; sleep 5
+shot e-02-home-miles
+
+# The language and the miles stay after a restart
 adb shell am force-stop $PKG || true
-put_conf "applewatch_fakedevice=true\napp_language=uk\n"
 start_app
-open_menu
-tap_drawer 'Історія тренувань' 400 1500
-sleep 10
-tap_ui 'Імпортувати тренування' 1290 330 && sleep 3
-shot u-01-import-uk
-back "import menu"; sleep 3
+shot f-01-restart
 
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
