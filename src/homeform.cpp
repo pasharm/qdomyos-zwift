@@ -2277,15 +2277,13 @@ void homeform::loadAppTranslation(const QString &language) {
 
 void homeform::setAppLanguage(const QString &language) {
     loadAppTranslation(language);
-    // qsTr() bindings in QML follow by themselves; texts made once in C++ are set again here
+    // qsTr() bindings in QML follow by themselves; the tile titles are set again in sortTiles()
     engine->retranslate();
-    setTileNames();
-    // A device renames some tiles (rowers, jump ropes) and the tile list holds the names
     sortTiles();
 }
 
-// The tile titles, in the current language and units: set when the tiles are made and again when
-// the language changes. A device can rename some of them afterwards (sortTiles).
+// The tile titles, in the current language and units: set when the tiles are made and again in
+// sortTiles() (back from the settings, a change of language). A device renames some of them there.
 void homeform::setTileNames() {
     QSettings settings;
     bool miles = settings.value(QZSettings::miles_unit, QZSettings::default_miles_unit).toBool();
@@ -2370,6 +2368,9 @@ void homeform::sortTiles() {
     QSettings settings;
     bool pelotoncadence =
         settings.value(QZSettings::bike_cadence_sensor, QZSettings::default_bike_cadence_sensor).toBool();
+
+    // Language and units may have changed in the settings; a device renames some tiles below
+    setTileNames();
 
     if (!bluetoothManager || !bluetoothManager->device())
         return;
