@@ -457,14 +457,17 @@ import AndroidStatusBar 1.0
             // Settings writes a change only after a delay: the new page would read the old language
             settings.setValue("app_language", language)
             rootItem.setAppLanguage(language)
+            // The context of this page goes with the replace: its names (window, toast) no longer
+            // resolve after it, so the new page does the rest
             var page = stackView.replace("settings.qml", {}, StackView.Immediate)
-            // Set by the new page when it is made: what was changed before still counts
-            page.initialProfileSettingsSnapshot = snapshot
-            window.settings_restart_to_apply = restartToApply
-            page.showAppLanguage(states)
+            page.showAppLanguage(states, snapshot, restartToApply)
         }
 
-        function showAppLanguage(states) {
+        function showAppLanguage(states, snapshot, restartToApply) {
+            // Set by this page when it was made: what was changed before still counts
+            initialProfileSettingsSnapshot = snapshot
+            window.settings_restart_to_apply = restartToApply
+            toast.show(qsTr("Setting saved!"))
             openSections(contentItem, states, 0)
             var label = qsTr("App Language:")
             pendingReveal = { flickable: contentItem,
@@ -788,10 +791,12 @@ import AndroidStatusBar 1.0
             // Settings writes it only a moment later
             settings.setValue(entry.key, settings[entry.key])
 
-            if (entry.key === "app_language")
+            // The page is made again: nothing of it may run after (applyAppLanguage)
+            if (entry.key === "app_language") {
                 applyAppLanguage(value)
-            else
-                window.settings_restart_to_apply = true
+                return
+            }
+            window.settings_restart_to_apply = true
             toast.show(qsTr("Setting saved!"))
         }
 
@@ -2743,8 +2748,8 @@ import AndroidStatusBar 1.0
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: {
                                 settings.app_language = appLanguageOptions[appLanguageCombo.currentIndex].value
+                                // Last: the page is made again, the new one shows the toast
                                 settingsPane.applyAppLanguage(settings.app_language)
-                                toast.show(qsTr("Setting saved!"))
                             }
                         }
                     }
