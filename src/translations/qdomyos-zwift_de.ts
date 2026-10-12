@@ -2291,6 +2291,10 @@ Möchten Sie die QZ-Einstellungen aktualisieren?</translation>
         <translation>Höhenmeter</translation>
     </message>
     <message>
+        <source>Enter a number</source>
+        <translation>Zahl eingeben</translation>
+    </message>
+    <message>
         <source>{value} min</source>
         <translation>{value} Min.</translation>
     </message>
@@ -2385,6 +2389,34 @@ Möchten Sie die QZ-Einstellungen aktualisieren?</translation>
     <message>
         <source>spm</source>
         <translation>spm</translation>
+    </message>
+    <message>
+        <source>Allowed range: {min} to {max}</source>
+        <translation>Erlaubt: {min} bis {max}</translation>
+    </message>
+    <message>
+        <source>Minimum: {min}</source>
+        <translation>Minimum: {min}</translation>
+    </message>
+    <message>
+        <source>Maximum: {max}</source>
+        <translation>Maximum: {max}</translation>
+    </message>
+    <message>
+        <source>Enter the duration as hh:mm:ss</source>
+        <translation>Dauer als hh:mm:ss eingeben</translation>
+    </message>
+    <message>
+        <source>The duration must be longer than 0</source>
+        <translation>Die Dauer muss größer als 0 sein</translation>
+    </message>
+    <message>
+        <source>Enter the pace as mm:ss, at least 1:00</source>
+        <translation>Pace als mm:ss eingeben, mindestens 1:00</translation>
+    </message>
+    <message>
+        <source>Interval {number}, {field}: {error}</source>
+        <translation>Intervall {number}, {field}: {error}</translation>
     </message>
 </context>
 <context>

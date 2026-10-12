@@ -12289,20 +12289,6 @@ import QtQuick 2.12 as Quick212
                                 Layout.fillWidth: true
                                 onClicked: { settings.pafers_treadmill_bh_iboxster_plus = checked; if (checked) settings.pafers_rower = false; window.settings_restart_to_apply = true; }
                             }
-                            IndicatorOnlySwitch {
-                                id: pafersRowerDelegate
-                                text: qsTr("Pafers Rower")
-                                spacing: 0
-                                bottomPadding: 0
-                                topPadding: 0
-                                rightPadding: 0
-                                leftPadding: 0
-                                clip: false
-                                checked: settings.pafers_rower
-                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                                Layout.fillWidth: true
-                                onClicked: { settings.pafers_rower = checked; if (checked) { settings.pafers_treadmill = false; settings.pafers_treadmill_bh_iboxster_plus = false; } window.settings_restart_to_apply = true; }
-                            }
                         }
                     }
 
@@ -13757,6 +13743,21 @@ import QtQuick 2.12 as Quick212
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
                         onClicked: { settings.waterrower_usb = checked; window.settings_restart_to_apply = true; }
+                    }
+
+                    IndicatorOnlySwitch {
+                        id: pafersRowerDelegate
+                        text: qsTr("Pafers Rower")
+                        spacing: 0
+                        bottomPadding: 0
+                        topPadding: 0
+                        rightPadding: 0
+                        leftPadding: 0
+                        clip: false
+                        checked: settings.pafers_rower
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        onClicked: { settings.pafers_rower = checked; if (checked) { settings.pafers_treadmill = false; settings.pafers_treadmill_bh_iboxster_plus = false; } window.settings_restart_to_apply = true; }
                     }
 
                     AccordionElement {
