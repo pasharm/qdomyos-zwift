@@ -3517,7 +3517,9 @@ import QtQuick 2.12 as Quick212
                         checked: settings.miles_unit
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        onClicked: settings.miles_unit = checked
+                        // Written at once, not after the delay of Settings: back on the home page
+                        // the tile titles are read with the new units
+                        onClicked: { settings.miles_unit = checked; settings.setValue("miles_unit", checked) }
                     }
 
                     Label {
@@ -3545,7 +3547,7 @@ import QtQuick 2.12 as Quick212
                         checked: settings.weight_kg_unit
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        onClicked: settings.weight_kg_unit = checked
+                        onClicked: { settings.weight_kg_unit = checked; settings.setValue("weight_kg_unit", checked) }
                         visible: settings.miles_unit
                     }
 
