@@ -11,6 +11,7 @@
         <file>Home.qml</file>
         <file>settings.qml</file>
         <file>settings-catalog.json</file>
+        <file>settings-index-worker.js</file>
         <file>AccordionElement.qml</file>
         <file>AccordionCheckElement.qml</file>
         <file>icons/arrow-collapse-vertical.png</file>
@@ -91,6 +92,7 @@
         <file>gpx/St Andrews to Pittenweem.gpx</file>
         <file>GPXList.qml</file>
         <file>WorkoutsHistory.qml</file>
+        <file>ShapeIcon.qml</file>
         <file>WorkoutTypeTag.qml</file>
         <file>inner_templates/previewchart/ajax-loader.gif</file>
         <file>inner_templates/previewchart/chart.htm</file>
