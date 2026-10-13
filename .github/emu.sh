@@ -147,6 +147,58 @@ MENU="84 168"          # menu on the home page, back arrow elsewhere
 LOCK="1187 168"        # tile lock on the home page
 open_menu() { tap $MENU "menu"; sleep 3; adb shell input swipe 500 700 500 2300 300 || true; sleep 2; }
 
+adb logcat -c || true
+# Recorded from the start: a dump at the end (logcat -d) has lost the first lines of the app by
+# then - the main buffer wraps in a long run, so the version line and the settings dump of
+# main() were missing in the runs of the modern look
+adb logcat > full_logcat.txt 2>/dev/null &
+LOGCAT_PID=$!
+adb shell am start -n $PKG/$PKG.CustomQtActivity
+sleep 20
+shot 01-healthconnect
+# Only while that screen is on top: once it had closed by itself and the back key closed
+# the first-run wizard instead
+if [ -f ui.xml ] && [ "$(python3 .github/uitap.py ui.xml --package)" = "$PKG" ]; then
+  echo "health connect screen not shown: no back key" >> $STEPLOG
+else
+  back "health connect"
+fi
+sleep 30
+shot 02-first-screen        # the wizard opens on the first run
+# T-060: with the fake treadmill the wizard does not open; its back keys would leave the app
+shot 04-home
+
+# T-095: the Charts page updates itself while the workout runs (fake bike: the session grows
+# by a point a second), the period selector at the top right shows only then, and the page
+# opened by Stop draws once and keeps its selector hidden.
+wait_tiles() {
+  local i
+  # The fake bike comes after the first search ends: wait for its tiles (at most 3 min)
+  for i in $(seq 1 18); do
+    dump
+    if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then
+      echo "tiles shown after $i looks" >> $STEPLOG; return 0
+    fi
+    sleep 10
+  done
+  echo "!! tiles NOT shown" >> $STEPLOG
+}
+# The texts of the page (WebView nodes) with a digit or the selector, into steps.log
+page() {
+  dump
+  echo "page ($1):" >> $STEPLOG
+  [ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t, d = n.get("text") or "", n.get("content-desc") or ""
+    if re.search(r"[0-9]|Live|update|Off", t + d):
+        print("   ", n.get("class"), repr(t), repr(d), n.get("bounds"))
+' ui.xml | head -40 >> $STEPLOG
+  cp ui.xml dumps/page-$1.xml 2>/dev/null || true
+}
+
+# Taps the node matching rx that is the lowest on the screen, or of class cls when given:
+# the Stop of the confirmation lies under the Stop button, the select under its label
 tap_node() {
   local rx="$1" cls="$2" xy=""
   dump
@@ -177,112 +229,53 @@ if best:
     return 1
   fi
 }
-
-
-# T-105: thin frames around the settings and the block of an open section, shots only
-adb logcat -c || true
-adb logcat > full_logcat.txt 2>/dev/null &
-LOGCAT_PID=$!
-adb shell am start -n $PKG/$PKG.CustomQtActivity
-sleep 20
-shot 01-healthconnect
-if [ -f ui.xml ] && [ "$(python3 .github/uitap.py ui.xml --package)" = "$PKG" ]; then
-  echo "health connect screen not shown: no back key" >> $STEPLOG
-else
-  back "health connect"
-fi
-sleep 30
-if [ -f ui.xml ] && grep -q "Welcome to QZ" ui.xml; then tap $MENU "wizard back"; sleep 5; fi
-shot 04-home
-
-open_menu
-tap_drawer 'Settings' 400 1400
-sleep 12
-shot 10-root
-
-# T-105: after a turn of the screen the page height stayed as it was - a section opened after
-# it was cut off at the bottom. Turn and back, open a long section, scroll to its very end
-echo "-- rotation test" >> $STEPLOG
-adb shell settings put system accelerometer_rotation 0 || true
-adb shell settings put system user_rotation 1 || true; sleep 5
-shot 11-rot-landscape
-adb shell settings put system user_rotation 0 || true; sleep 5
-if scroll_to 'Bike Options' && tap_ui 'Bike Options'; then
-  sleep 5
-  for i in $(seq 1 25); do adb shell input swipe 700 2000 700 600 200 || true; done
-  sleep 2
-  shot 12-rot-bike-end
-  scroll_top
-  tap_ui 'Bike Options'; sleep 3
-fi
-
-# One theme: a section with its settings, a subsection inside it, scrolled down a few times
-run_theme() {
-  local t="$1"
-  scroll_top
-  if scroll_to 'General Options' && tap_ui 'General Options'; then
-    sleep 4
-    shot "$t-20-general"
-    adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
-    shot "$t-21-general-scrolled"
-    scroll_top
-    tap_ui 'General Options'; sleep 3
-  fi
-  scroll_top
-  sleep 3
-  if scroll_to 'Treadmill Options' && tap_ui 'Treadmill Options'; then
-    sleep 4
-    shot "$t-30-treadmill"
-    adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-    shot "$t-31-treadmill-scrolled"
-    adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-    shot "$t-35-sticky"
-    tap 700 290 "sticky header"; sleep 2
-    shot "$t-36-after-sticky-tap"
-    if scroll_to 'Domyos Treadmill Options' && tap_ui 'Domyos Treadmill Options'; then
-      sleep 4
-      shot "$t-32-subsection-open"
-      adb shell input swipe 700 2000 700 1200 400 || true; sleep 2
-      shot "$t-33-subsection-scrolled"
-      tap_ui 'Domyos Treadmill Options'; sleep 3
-    fi
-    for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 900 300 || true; done
-    sleep 2
-    shot "$t-34-treadmill-end"
-    scroll_top
-    tap_ui 'Treadmill Options'; sleep 3
+has() {
+  dump
+  if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
+    echo "check '$1' ($2): OK" >> $STEPLOG
+  else
+    echo "!! check '$1' ($2): NOT FOUND" >> $STEPLOG
   fi
 }
-run_theme light
-adb shell cmd uimode night yes || true
-sleep 6
-run_theme dark
-# The static section at the end (StaticAccordionElement): frames like the others
-scroll_top
-if scroll_to 'Experimental Features' && tap_ui 'Experimental Features'; then
+
+wait_tiles
+sleep 10
+shot h-home
+open_menu
+shot m-menu
+tap_drawer 'Charts' 400 900
+sleep 10
+shot c-portrait-0
+page c-portrait-0
+
+# T-163: the redraw after a turn (CustomQtActivity). The test build tries a different way on
+# each turn to landscape (0 none, 1 clip, 2 pause/resume, 3 translation) and logs
+# "turn test: <way> <w>x<h>". The emulator draws in software and does not show the bug: this
+# run checks that every way runs, nothing crashes and the page is drawn after each turn.
+adb shell settings put system accelerometer_rotation 0 || true
+for i in 1 2 3 4; do
+  adb shell log -t T163 "mark turn-$i landscape" || true
+  adb shell settings put system user_rotation 1 || true
+  sleep 1
+  shot c-land-$i-1s
   sleep 4
-  shot dark-40-experimental
-  adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
-  shot dark-41-experimental-scrolled
-  adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-  shot dark-42-experimental-virtual-device
-fi
-# The tiles page: frames instead of filled cards, a tile that is on in the accent
-scroll_top
-if scroll_to 'Tiles Options' && tap_ui 'Tiles Options'; then
+  shot c-land-$i-5s
+  adb shell input swipe 1800 1100 1800 400 400 || true
+  sleep 2
+  shot c-land-$i-scrolled
+  adb shell log -t T163 "mark turn-$i portrait" || true
+  adb shell settings put system user_rotation 0 || true
   sleep 5
-  shot dark-45-tiles
-  back "tiles page"
-  sleep 3
-fi
-# The TTS page (a page of plain settings, no sections)
-scroll_top
-if scroll_to 'TTS \(Text to Speech\) Settings' && tap_ui 'TTS \(Text to Speech\) Settings'; then
-  sleep 4
-  shot dark-50-tts
-  back "tts page"
-  sleep 3
-fi
+  shot c-port-$i
+done
+echo "turn test lines (one or more per turn, both ways):" >> $STEPLOG
+grep -E "turn test:|T163.*mark" full_logcat.txt | sed 's/^/   /' >> $STEPLOG || true
+echo "crashes of the app (0 expected): $(grep -cE 'FATAL EXCEPTION|AndroidRuntime: Process: org.cagnulen' full_logcat.txt)" >> $STEPLOG
+grep -A20 'FATAL EXCEPTION' full_logcat.txt | head -60 >> $STEPLOG || true
+back "charts"
+sleep 5
+shot h-back
+
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
