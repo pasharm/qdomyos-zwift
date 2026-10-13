@@ -180,6 +180,9 @@ public class CustomQtActivity extends QtActivity {
             lastScreenWidthDp = newConfig.screenWidthDp;
             lastScreenHeightDp = newConfig.screenHeightDp;
             lastScreenResizeTime = SystemClock.uptimeMillis();
+            if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                turnTestVariant++;
+            }
         }
     }
 
@@ -212,14 +215,37 @@ public class CustomQtActivity extends QtActivity {
         }
     }
 
+    // TEST ONLY: each turn to landscape tries the next way, shown in a toast
+    private static final String[] TURN_TEST_NAMES = {"0 none", "1 clip", "2 pause/resume", "3 translation"};
+    private int turnTestVariant = -1;
+
+    private void afterTwoFrames(final View view, final Runnable action) {
+        view.postOnAnimation(() -> view.postOnAnimation(() -> view.postOnAnimation(action)));
+    }
+
     private void redrawWebView(final WebView webView) {
         if (!webView.isAttachedToWindow()) {
             return;
         }
-        // Set outside a frame: the next two frames draw nothing, the third draws the view
-        webView.setClipBounds(new Rect());
-        webView.postOnAnimation(() -> webView.postOnAnimation(() -> webView.postOnAnimation(
-                () -> webView.setClipBounds(null))));
+        int variant = Math.max(0, turnTestVariant) % TURN_TEST_NAMES.length;
+        Log.d(TAG, "turn test: " + TURN_TEST_NAMES[variant] + " " + webView.getWidth() + "x" + webView.getHeight());
+        android.widget.Toast.makeText(this, "WebView: " + TURN_TEST_NAMES[variant], android.widget.Toast.LENGTH_SHORT).show();
+        switch (variant) {
+            case 1:
+                webView.setClipBounds(new Rect());
+                afterTwoFrames(webView, () -> webView.setClipBounds(null));
+                break;
+            case 2:
+                webView.onPause();
+                afterTwoFrames(webView, webView::onResume);
+                break;
+            case 3:
+                webView.setTranslationX(webView.getWidth() + webView.getHeight());
+                afterTwoFrames(webView, () -> webView.setTranslationX(0f));
+                break;
+            default:
+                break;
+        }
     }
 
     @Override
