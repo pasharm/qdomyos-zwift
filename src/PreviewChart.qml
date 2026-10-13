@@ -29,13 +29,6 @@ ColumnLayout {
     // Left with a spread chart (a start from the web page pops it): the header for the next page
     StackView.onRemoved: handleBack()
 
-    // A turn of the screen: the view goes off the screen and back (WebViewTurnFix.qml)
-    WebViewTurnFix {
-        id: turnFix
-        area: column1
-        active: column1.pageLoaded && column1.visible && column1.pageShown
-    }
-
     // Back (the key; in the modern look also the arrow of the toolbar, main.qml navigateBack)
     // closes the spread chart first instead of the page, as on the charts page (ChartJsTest.qml)
     function handleBack() {
@@ -58,10 +51,9 @@ ColumnLayout {
         id: webView
         anchors.fill: parent
         // Modern look: no Close button at the bottom (the back arrow of the toolbar does
-        // it), the page runs down to the edge like the other pages.
-        // Off the screen until the first paint (offScreen) and for a moment after a turn (turnFix)
-        anchors.leftMargin: -(column1.offScreen + turnFix.shift)
-        anchors.rightMargin: column1.offScreen + turnFix.shift
+        // it), the page runs down to the edge like the other pages
+        anchors.leftMargin: -column1.offScreen
+        anchors.rightMargin: column1.offScreen
         onTitleChanged: column1.chartFullscreen = title.indexOf("#fullscreen") >= 0
         onLoadingChanged: {
             if (loadRequest.errorString) {
@@ -92,8 +84,6 @@ ColumnLayout {
 
     BusyIndicator {
         anchors.centerIn: parent
-        // Not for a turn: nothing loads, the view is only off the screen for a moment
-        // (turnFix moves it by its own shift, pageShown stays true)
         running: !column1.pageShown
         visible: running
     }

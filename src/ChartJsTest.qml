@@ -48,8 +48,6 @@ ColumnLayout {
     // and the alt text of the picture for a moment before the charts came
     function reopen() {
         headerToolbar.visible = true
-        turnShow.stop()
-        turnHidden = false
         if (pageLoaded) {
             if (window.ui.modern) {
                 // Opened again before the last load showed: that poll and the rest of that
@@ -63,44 +61,6 @@ ColumnLayout {
         sendMailFallback.restart()
     }
 
-    // WORKAROUND: the Android WebView of Qt does not recover from a turn of the screen while the
-    // page is shown. Scrolled down afterwards, it moves without momentum and leaves the page
-    // blank below a straight line (up is fine). Seen on a OnePlus 12 in both looks; to see it:
-    // open the charts upright, turn the phone, scroll down. Moving the native view off the
-    // screen and back once the turn has settled brings it round, the page stays as it is.
-    // Off at the turn of the screen: the page changes its size in steps after it, and a page
-    // shown stretched to those steps flashed
-    readonly property bool landscape: width > height
-    readonly property bool screenLandscape: Screen.width > Screen.height
-    // Moved off by a turn, back once the size settles
-    property bool turnHidden: false
-    onLandscapeChanged: turnStart()
-    onScreenLandscapeChanged: turnStart()
-    onWidthChanged: if (turnHidden) turnShow.restart()
-    onHeightChanged: if (turnHidden) turnShow.restart()
-
-    function turnStart() {
-        if (turnHidden) {
-            turnShow.restart()
-            return
-        }
-        // Not loaded or not shown yet: the load shows the page when it has drawn
-        if (!pageLoaded || !visible || !pageShown)
-            return
-        turnHidden = true
-        pageShown = false
-        turnShow.restart()
-    }
-
-    Timer {
-        id: turnShow
-        interval: 300
-        onTriggered: {
-            column1.turnHidden = false
-            column1.pageShown = true
-        }
-    }
-
     function pageUrl(query) {
         return "http://localhost:" + settings.value("template_inner_QZWS_port") + "/chartjs/chart.htm" +
                query + window.ui.webThemeFragment()
@@ -110,8 +70,6 @@ ColumnLayout {
     StackView.onRemoved: {
         handleBack() // a spread chart closed, the header back for the next page
         sendMailFallback.stop()
-        turnShow.stop()
-        turnHidden = false
         column1.visible = false
     }
 
@@ -176,8 +134,7 @@ ColumnLayout {
 
     BusyIndicator {
         anchors.centerIn: parent
-        // Not for a turn: nothing loads, the view is only off the screen for a moment
-        running: !column1.pageShown && !column1.turnHidden
+        running: !column1.pageShown
         visible: running
     }
 

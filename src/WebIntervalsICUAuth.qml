@@ -14,15 +14,8 @@ Item {
     width: parent.width
     visible: true
 
-    // A turn of the screen: the view goes off the screen and back (WebViewTurnFix.qml)
-    WebViewTurnFix {
-        id: turnFix
-    }
-
     WebView {
         anchors.fill: parent
-        anchors.leftMargin: -turnFix.shift
-        anchors.rightMargin: turnFix.shift
         height: parent.height
         width: parent.width
         visible: !rootItem.generalPopupVisible
