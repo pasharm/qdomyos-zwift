@@ -179,7 +179,8 @@ if best:
 }
 
 
-# T-105: thin frames around the settings and the block of an open section, shots only
+# T-108, T-202: the three table pages of Bike Options (custom gears, inclination to resistance,
+# Wahoo), then Reset All Gears on the Wahoo page
 adb logcat -c || true
 adb logcat > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
@@ -200,90 +201,116 @@ tap_drawer 'Settings' 400 1400
 sleep 12
 shot 10-root
 
-# T-105: after a turn of the screen the page height stayed as it was - a section opened after
-# it was cut off at the bottom. Turn and back, open a long section, scroll to its very end
-echo "-- rotation test" >> $STEPLOG
-adb shell settings put system accelerometer_rotation 0 || true
-adb shell settings put system user_rotation 1 || true; sleep 5
-shot 11-rot-landscape
-adb shell settings put system user_rotation 0 || true; sleep 5
-if scroll_to 'Bike Options' && tap_ui 'Bike Options'; then
-  sleep 5
-  for i in $(seq 1 25); do adb shell input swipe 700 2000 700 600 200 || true; done
-  sleep 2
-  shot 12-rot-bike-end
-  scroll_top
-  tap_ui 'Bike Options'; sleep 3
-fi
+# scroll_far 'regex': as scroll_to, up to 40 swipes (the link is deep inside Bike Options)
+scroll_far() {
+  local i
+  for i in $(seq 1 40); do
+    dump
+    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
+      echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
+      return 0
+    fi
+    adb shell input swipe 700 2000 700 1100 400 || true
+    sleep 1
+  done
+  echo "!! scroll to '$1': NOT FOUND" >> $STEPLOG
+  return 1
+}
 
-# One theme: a section with its settings, a subsection inside it, scrolled down a few times
+# open_page 'link' name: open a page of Bike Options, shoot the top, a step down and the end
+open_page() {
+  local t="$1" name="$2"
+  # From the top of the open section each time: back from a page may leave it anywhere
+  scroll_top
+  scroll_far "$3" || return 1
+  # The link may sit at the very bottom, under the navigation bar (the classic run tapped the
+  # bar): a short swipe brings it up, then a fresh dump for its new place.
+  # Only when it is that low: lifting a link that was already high put it under the toolbar
+  local y
+  y=$(python3 .github/uitap.py ui.xml "$3" | cut -d" " -f2)
+  if [ -n "$y" ] && [ "$y" -gt 2100 ]; then
+    adb shell input swipe 700 1800 700 1200 400 || true; sleep 2
+    rm -f ui.xml
+  fi
+  if tap_ui "$3"; then
+    sleep 6
+    shot "$t-$name-1-top"
+    adb shell input swipe 700 2000 700 1400 400 || true; sleep 2
+    shot "$t-$name-2-scrolled"
+    for i in 1 2 3 4 5 6 7 8; do adb shell input swipe 700 2000 700 900 300 || true; done
+    sleep 2
+    shot "$t-$name-3-end"
+    back "page"; sleep 4
+  fi
+}
+# One theme: the three table pages, then Bike Options closed again
 run_theme() {
   local t="$1"
   scroll_top
-  if scroll_to 'General Options' && tap_ui 'General Options'; then
+  if scroll_to 'Bike Options' && tap_ui 'Bike Options'; then
     sleep 4
-    shot "$t-20-general"
-    adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
-    shot "$t-21-general-scrolled"
+    open_page "$t" gears 'Custom Gear Table'
+    open_page "$t" incl 'Custom Inclination to Resistance Table'
+    open_page "$t" wahoo 'Wahoo Options'
     scroll_top
-    tap_ui 'General Options'; sleep 3
-  fi
-  scroll_top
-  sleep 3
-  if scroll_to 'Treadmill Options' && tap_ui 'Treadmill Options'; then
-    sleep 4
-    shot "$t-30-treadmill"
-    adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-    shot "$t-31-treadmill-scrolled"
-    adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-    shot "$t-35-sticky"
-    tap 700 290 "sticky header"; sleep 2
-    shot "$t-36-after-sticky-tap"
-    if scroll_to 'Domyos Treadmill Options' && tap_ui 'Domyos Treadmill Options'; then
-      sleep 4
-      shot "$t-32-subsection-open"
-      adb shell input swipe 700 2000 700 1200 400 || true; sleep 2
-      shot "$t-33-subsection-scrolled"
-      tap_ui 'Domyos Treadmill Options'; sleep 3
-    fi
-    for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 900 300 || true; done
-    sleep 2
-    shot "$t-34-treadmill-end"
-    scroll_top
-    tap_ui 'Treadmill Options'; sleep 3
+    tap_ui 'Bike Options'; sleep 3
   fi
 }
 run_theme light
+
+# T-202: Reset All Gears on the Wahoo page. Add Gear makes a 13th gear (saved), Reset All Gears
+# must bring the 12 default gears back in the table and in the settings: the page is opened
+# again to see what was saved. Upstream master kept the 13th gear in both
+open_wahoo() {
+  scroll_top
+  scroll_far 'Wahoo Options' || return 1
+  local y
+  y=$(python3 .github/uitap.py ui.xml 'Wahoo Options' | cut -d" " -f2)
+  if [ -n "$y" ] && [ "$y" -gt 2100 ]; then
+    adb shell input swipe 700 1800 700 1200 400 || true; sleep 2
+    rm -f ui.xml
+  fi
+  tap_ui 'Wahoo Options' && sleep 6
+}
+page_end() {
+  for i in 1 2 3 4 5 6 7 8; do adb shell input swipe 700 2000 700 900 300 || true; done
+  sleep 2
+}
+reset_check() {
+  scroll_top
+  scroll_to 'Bike Options' && tap_ui 'Bike Options' || return 1
+  sleep 4
+  open_wahoo || return 1
+  scroll_to 'Add Gear' && tap_ui 'Add Gear'; sleep 2
+  page_end
+  shot reset-1-added
+  scroll_top
+  scroll_to 'Reset All Gears' && tap_ui 'Reset All Gears'; sleep 2
+  page_end
+  shot reset-2-after-reset
+  back "page"; sleep 4
+  open_wahoo || return 1
+  page_end
+  shot reset-3-reopened
+  back "page"; sleep 4
+  scroll_top
+  tap_ui 'Bike Options'; sleep 3
+}
+reset_check
+
+# The search for the inclination table: the page as a link, no text field of the table string
+scroll_top
+tap_ui '(Search settings|Search).*' 700 330
+sleep 2
+adb shell input text Custom%sInclination
+sleep 4
+hide_keyboard
+shot light-40-search-inclination
+adb shell input keyevent KEYCODE_BACK || true
+sleep 3
 adb shell cmd uimode night yes || true
 sleep 6
 run_theme dark
-# The static section at the end (StaticAccordionElement): frames like the others
-scroll_top
-if scroll_to 'Experimental Features' && tap_ui 'Experimental Features'; then
-  sleep 4
-  shot dark-40-experimental
-  adb shell input swipe 700 2000 700 1000 400 || true; sleep 2
-  shot dark-41-experimental-scrolled
-  adb shell input swipe 700 2000 700 900 400 || true; sleep 2
-  shot dark-42-experimental-virtual-device
-fi
-# The tiles page: frames instead of filled cards, a tile that is on in the accent
-scroll_top
-if scroll_to 'Tiles Options' && tap_ui 'Tiles Options'; then
-  sleep 5
-  shot dark-45-tiles
-  back "tiles page"
-  sleep 3
-fi
-# The TTS page (a page of plain settings, no sections)
-scroll_top
-if scroll_to 'TTS \(Text to Speech\) Settings' && tap_ui 'TTS \(Text to Speech\) Settings'; then
-  sleep 4
-  shot dark-50-tts
-  back "tts page"
-  sleep 3
-fi
-
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
 kill $LOGCAT_PID 2>/dev/null || true
