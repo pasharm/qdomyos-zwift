@@ -1,11 +1,14 @@
 package org.cagnulen.qdomyoszwift;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.SparseArray;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -14,11 +17,15 @@ import android.view.TextureView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
+import android.webkit.WebView;
 import android.window.OnBackInvokedCallback;
 import android.window.OnBackInvokedDispatcher;
 import android.view.WindowManager;
 import android.view.DisplayCutout;
 import android.graphics.Insets;
+import java.util.Collections;
+import java.util.Set;
+import java.util.WeakHashMap;
 import org.qtproject.qt5.android.bindings.QtActivity;
 
 public class CustomQtActivity extends QtActivity {
@@ -151,6 +158,70 @@ public class CustomQtActivity extends QtActivity {
         return 0;
     }
 
+    // WORKAROUND: a native WebView of Qt WebView, resized while it is shown (the screen
+    // turned, mostly), keeps drawing only the area it had before: turned from upright to
+    // landscape it leaves an empty band at the bottom, or the page scrolls without momentum
+    // and stays blank below a straight line (OnePlus 12, Android 16: workout history, workout
+    // editor, the Strava sign-in page). Reloading the page does not help; taking the view off
+    // the screen for a moment does. Qt only sets new layout params on the view, so once the
+    // size has settled the view is clipped to nothing for two frames and then drawn again:
+    // no reload, no move, the page keeps its scroll position.
+    private static final long WEBVIEW_RESIZE_WINDOW_MS = 2000;
+    private static final long WEBVIEW_RESIZE_SETTLE_MS = 100;
+    private final Set<WebView> watchedWebViews = Collections.newSetFromMap(new WeakHashMap<WebView, Boolean>());
+    private int lastScreenWidthDp = 0;
+    private int lastScreenHeightDp = 0;
+    private long lastScreenResizeTime = 0;
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        if (newConfig.screenWidthDp != lastScreenWidthDp || newConfig.screenHeightDp != lastScreenHeightDp) {
+            lastScreenWidthDp = newConfig.screenWidthDp;
+            lastScreenHeightDp = newConfig.screenHeightDp;
+            lastScreenResizeTime = SystemClock.uptimeMillis();
+        }
+    }
+
+    // Qt adds a WebView to its layout when the page shows it, so new ones are picked up
+    // on every layout pass
+    private void watchWebViews(View view) {
+        if (view instanceof WebView) {
+            final WebView webView = (WebView) view;
+            if (!watchedWebViews.add(webView)) {
+                return;
+            }
+            final Runnable redraw = () -> redrawWebView(webView);
+            webView.addOnLayoutChangeListener((v, l, t, r, b, oldL, oldT, oldR, oldB) -> {
+                boolean resized = (r - l) != (oldR - oldL) || (b - t) != (oldB - oldT);
+                boolean screenResized = SystemClock.uptimeMillis() - lastScreenResizeTime < WEBVIEW_RESIZE_WINDOW_MS;
+                if (!resized || !screenResized || r <= l || b <= t) {
+                    return;
+                }
+                // Qt may resize the view in more than one step: once they stop
+                v.removeCallbacks(redraw);
+                v.postDelayed(redraw, WEBVIEW_RESIZE_SETTLE_MS);
+            });
+            return;
+        }
+        if (view instanceof ViewGroup) {
+            ViewGroup group = (ViewGroup) view;
+            for (int i = 0; i < group.getChildCount(); i++) {
+                watchWebViews(group.getChildAt(i));
+            }
+        }
+    }
+
+    private void redrawWebView(final WebView webView) {
+        if (!webView.isAttachedToWindow()) {
+            return;
+        }
+        // Set outside a frame: the next two frames draw nothing, the third draws the view
+        webView.setClipBounds(new Rect());
+        webView.postOnAnimation(() -> webView.postOnAnimation(() -> webView.postOnAnimation(
+                () -> webView.setClipBounds(null))));
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -173,6 +244,11 @@ public class CustomQtActivity extends QtActivity {
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
         }
+
+        lastScreenWidthDp = getResources().getConfiguration().screenWidthDp;
+        lastScreenHeightDp = getResources().getConfiguration().screenHeightDp;
+        getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(
+                () -> watchWebViews(getWindow().getDecorView()));
 
         // This is the core of the new solution. We set a listener on the main view.
         // The OS will call this listener whenever the insets change (e.g., on rotation).
