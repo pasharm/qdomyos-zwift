@@ -1,7 +1,7 @@
 #!/bin/bash
-# Test only (T-196): the app language changes at once on OK, without a restart.
-# English -> Ukrainian -> English in Settings > General Options > App Language, the home tiles
-# after each, then the miles switch and a restart. Shots and dumps (dumps/<shot>.xml) of each step.
+# Test only (T-078): the system font size of Android against the font sizes of the modern look.
+# The same screens at font_scale 1.0, 1.3 and 2.0; shots, dumps and the text sizes of the
+# Qt style cache (style.json) for each.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -201,73 +201,122 @@ pick() {
   back "combo list"
   return 1
 }
-# switch_language 'row label' 'current' 'wanted' prefix: the App Language combo, then its OK
-switch_language() {
-  scroll_to "$1" || return 1
-  shot "$4-a-before"
-  tap_row "$1" "$2" || return 1
-  sleep 2
-  shot "$4-b-list"
-  pick "$3" || return 1
-  sleep 2
-  tap_row "$1" '^OK$' || return 1
-  echo "OK pressed at $(date +%T.%N)" >> $STEPLOG
-  sleep 1
-  snap "$4-c-after-1s"
-  sleep 4
-  shot "$4-d-after-5s"
+
+# Taps the node matching rx that is the lowest on the screen, or of class cls when given:
+# the Stop of the confirmation lies under the Stop button, the select under its label
+tap_node() {
+  local rx="$1" cls="$2" xy=""
+  dump
+  [ -f ui.xml ] && xy=$(python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+rx, cls = sys.argv[2], sys.argv[3]
+best = None
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    if not re.fullmatch(rx, t, re.I) or (cls and n.get("class") != cls):
+        continue
+    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+    if not m:
+        continue
+    x1, y1, x2, y2 = map(int, m.groups())
+    if x2 <= x1 or y2 <= y1:
+        continue
+    if best is None or y1 > best[1]:
+        best = ((x1 + x2) // 2, y1, (y1 + y2) // 2)
+if best:
+    print(best[0], best[2])
+' ui.xml "$rx" "$cls")
+  if [ -n "$xy" ]; then
+    echo "tap node '$rx' ${cls:+($cls) }at $xy" >> $STEPLOG
+    adb shell input tap $xy || true
+  else
+    echo "!! tap node '$rx' ${cls:+($cls) }NOT FOUND" >> $STEPLOG
+    return 1
+  fi
 }
 
-# T-196: the language changes at once on OK, without a restart. A fake treadmill, so the
-# wizard stays closed and the home page has tiles; English at the start
-put_conf "applewatch_fakedevice=true\napp_language=en\n"
-start_app
-shot a-01-home-en
+wait_tiles() {
+  local i
+  # The fake device comes after the first search ends: wait for its tiles (at most 3 min)
+  for i in $(seq 1 18); do
+    dump
+    if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then
+      echo "tiles shown after $i looks" >> $STEPLOG; return 0
+    fi
+    sleep 10
+  done
+  echo "!! tiles NOT shown" >> $STEPLOG
+}
 
-open_settings
-scroll_to '^General Options$' && tap_ui '^General Options$' 700 1000
-sleep 4
-switch_language '^App Language:$' '^English$' '^Ukrainian$' b
-# Back home: no restart question, the tiles in Ukrainian
-back "settings"; sleep 5
-shot c-01-home-uk
+# The text sizes Qt took from the Android theme: Qt 5 extracts the style once per density into
+# qt-reserved-files/android-style/<dpi>/style.json and keeps it. Logged for every phase
+style_sizes() {
+  echo "== style.json ($1), font_scale=$(adb shell settings get system font_scale)" >> $STEPLOG
+  adb shell "run-as $PKG ls -l qt-reserved-files/android-style/" >> $STEPLOG 2>&1 || true
+  adb shell "run-as $PKG sh -c 'cat qt-reserved-files/android-style/*/style.json'" > style-$1.json 2>/dev/null || true
+  grep -o '"TextAppearance_textSize": *[0-9.]*' style-$1.json | sort | uniq -c | sort -nr | head -8 >> $STEPLOG || true
+}
 
-# English again, from the Ukrainian page
-open_menu
-tap_drawer '^(Settings|Налаштування)$' 400 900
-sleep 8
-scroll_to '^Загальні параметри$' && tap_ui '^Загальні параметри$' 700 1000
-sleep 4
-switch_language '^Мова застосунку:$' '^Українська$' '^Англійська$' d
-
-# Control: the toast of an ordinary setting, to tell a missing toast after a language change
-# from a frame that misses toasts altogether
-sleep 3
-rm -f ui.xml
-tap_row '^UI Zoom:$' '^OK$'
-sleep 1
-snap d-e-zoom-toast
-
-# Miles: the tile titles follow once back on the home page, without a restart
-# The switch node spans the whole row and its label does not toggle: tap the right end
-if scroll_to '^Use Miles unit in UI$'; then
-  xy=$(python3 .github/uitap.py ui.xml '^Use Miles unit in UI$')
-  if [ -n "$xy" ]; then
-    echo "tap switch 'Use Miles unit in UI' at 1330 ${xy#* }" >> $STEPLOG
-    adb shell input tap 1330 "${xy#* }" || true
+# One round of the same screens: home, the stop question (UiMessageDialog), the drawer
+# (UiDrawerItem), Settings (UiSectionHeader), General Options (UiSpinBox, UiTextField)
+round() {
+  local s="$1"
+  wait_tiles
+  sleep 5
+  shot $s-01-home
+  tap_ui '^Stop$' 1200 2300
+  sleep 3
+  shot $s-02-stop-question
+  tap_node '(No|Cancel)' || back "stop question"
+  sleep 2
+  open_menu
+  shot $s-03-drawer
+  tap_drawer '^Settings$' 400 900
+  sleep 8
+  shot $s-04-settings
+  if scroll_to '^General Options$'; then
+    tap_ui '^General Options$' 700 1000
+    sleep 4
+    shot $s-05-general
+    adb shell input swipe 700 2000 700 1300 400 || true
+    sleep 2
+    shot $s-06-general-2
   fi
-  rm -f ui.xml
-fi
-sleep 1
-shot e-01-miles-on
-grep -o 'content-desc="Use Miles unit in UI" checkable="true" checked="[a-z]*"' ui.xml >> $STEPLOG || true
-back "settings"; sleep 5
-shot e-02-home-miles
+  if scroll_to '^UI Zoom:$'; then
+    shot $s-07-zoom
+  fi
+}
 
-# The language and the miles stay after a restart
-adb shell am force-stop $PKG || true
+# T-078: does the system font size of Android reach the app? The same APK, the same screens
+# at font_scale 1.0, then 1.3 after a restart, then 1.3 and 2.0 with the style cache of Qt
+# removed (as after a fresh install with the bigger font already set)
+put_conf "applewatch_fakedevice=true\nconfirm_stop_workout=true\napp_language=en\n"
+adb shell settings put system font_scale 1.0 || true
 start_app
-shot f-01-restart
+style_sizes s10
+round s10
+
+adb shell am force-stop $PKG || true
+adb shell settings put system font_scale 1.3 || true
+sleep 3
+start_app
+style_sizes s13
+round s13
+
+adb shell am force-stop $PKG || true
+adb shell "run-as $PKG rm -r qt-reserved-files/android-style" || true
+start_app
+style_sizes s13c
+round s13c
+
+adb shell am force-stop $PKG || true
+adb shell settings put system font_scale 2.0 || true
+adb shell "run-as $PKG rm -r qt-reserved-files/android-style" || true
+sleep 3
+start_app
+style_sizes s20c
+round s20c
+adb shell settings put system font_scale 1.0 || true
 
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true

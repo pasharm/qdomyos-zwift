@@ -72,5 +72,6 @@ jobs:
             steps.log
             a11y.txt
             dumps/
+            style-*.json
             qz-logs/
           if-no-files-found: warn
