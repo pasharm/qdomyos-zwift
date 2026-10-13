@@ -3004,6 +3004,26 @@ Esto puede tardar un poco en el primer inicio.</translation>
         <source>Next month</source>
         <translation>Mes siguiente</translation>
     </message>
+    <message>
+        <source>Filter by date</source>
+        <translation>Filtrar por fecha</translation>
+    </message>
+    <message>
+        <source>Import workouts</source>
+        <translation>Importar entrenamientos</translation>
+    </message>
+    <message>
+        <source>Load training program</source>
+        <translation>Cargar programa de entrenamiento</translation>
+    </message>
+    <message>
+        <source>Open on Peloton</source>
+        <translation>Abrir en Peloton</translation>
+    </message>
+    <message>
+        <source>has a workout</source>
+        <translation>hay un entrenamiento</translation>
+    </message>
 </context>
 <context>
     <name>charts</name>

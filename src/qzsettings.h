@@ -2340,6 +2340,9 @@ class QZSettings {
 
     static const QString stryd_speed_instead_treadmill;
     static constexpr bool default_stryd_speed_instead_treadmill = false;
+
+    static const QString treadmill_runn_closed_loop;
+    static constexpr bool default_treadmill_runn_closed_loop = false;
     static const QString inclination_delay_seconds;
     static constexpr float default_inclination_delay_seconds = 0.0;
 
@@ -2483,7 +2486,10 @@ class QZSettings {
     static const QString default_peloton_code;
     
     static const QString proform_carbon_tl_PFTL59720;
-    static constexpr bool default_proform_carbon_tl_PFTL59720 = false;    
+    static constexpr bool default_proform_carbon_tl_PFTL59720 = false;
+
+    static const QString freemotion_t10_9b_hci;
+    static constexpr bool default_freemotion_t10_9b_hci = false;
 
     static const QString proform_treadmill_sport_70;
     static constexpr bool default_proform_treadmill_sport_70 = false;
