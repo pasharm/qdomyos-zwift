@@ -38,18 +38,19 @@ list_training() {
     >> $STEPLOG || true
 }
 
-# --- the "previous install": foreign files before the APK is installed ---
-zwo() {
-  printf '<?xml version="1.0" ?>\n<workout_file>\n    <author>T195 emulator</author>\n    <name>%s</name>\n    <description>Left by a previous install (the shell)</description>\n    <sportType>bike</sportType>\n    <workout>\n        <SteadyState Duration="300" Power="0.55" pace="0"/>\n        <SteadyState Duration="60" Power="1.2" pace="0"/>\n        <SteadyState Duration="300" Power="0.6" pace="0"/>\n    </workout>\n</workout_file>\n' "$1"
-}
-zwo "Tabata with sweet spot (previous install)" > t195-tabata.zwo
-zwo "T195 custom (previous install)" > t195-custom.zwo
-adb push t195-tabata.zwo /data/local/tmp/t195-tabata.zwo > /dev/null || true
-adb push t195-custom.zwo /data/local/tmp/t195-custom.zwo > /dev/null || true
-adb shell "mkdir -p '$TRAIN'" || true
-adb shell "cp /data/local/tmp/t195-tabata.zwo '$TRAIN/$TABATA'" || true
-adb shell "cp /data/local/tmp/t195-custom.zwo '$TRAIN/$CUSTOM'" || true
-echo "== training folder, before install (shell)" >> $STEPLOG
+# --- the "previous install": the user's case, install, start, uninstall ---
+# The shell may not create .zwo files in Documents on API 35 (run 38485502334: "cp: Operation
+# not permitted"), so the previous install itself leaves them: on its first start QZ copies the
+# bundled programs into Documents/QZ/training, and after the uninstall they stay there,
+# owned by an app that no longer exists
+adb install apk-debug/android-debug.apk
+adb shell monkey -p $PKG -c android.intent.category.LAUNCHER 1 > /dev/null 2>&1 || true
+sleep 30
+adb shell am force-stop $PKG || true
+echo "== training folder, previous install (shell)" >> $STEPLOG
+adb shell "ls -la '$TRAIN/' 2>&1" >> $STEPLOG || true
+adb uninstall $PKG || true
+echo "== training folder, after the uninstall (shell)" >> $STEPLOG
 adb shell "ls -la '$TRAIN/' 2>&1" >> $STEPLOG || true
 if adb shell "ls '$TRAIN/'" | tr -d '\r' | grep -qF "$TABATA"; then
   echo "foreign file in place: $TABATA" >> $STEPLOG
