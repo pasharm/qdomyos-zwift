@@ -44,8 +44,17 @@ list_training() {
 # bundled programs into Documents/QZ/training, and after the uninstall they stay there,
 # owned by an app that no longer exists
 adb install apk-debug/android-debug.apk
-adb shell monkey -p $PKG -c android.intent.category.LAUNCHER 1 > /dev/null 2>&1 || true
-sleep 30
+# started like the main start below; run 38486301638 waited 30 s after "monkey" and found no
+# training folder at all, so wait for the bundled program itself, up to 120 s
+adb shell am start -n $PKG/.CustomQtActivity >> $STEPLOG 2>&1 || true
+for i in $(seq 1 40); do
+  if adb shell "ls '$TRAIN/'" 2>/dev/null | tr -d '\r' | grep -qF "$TABATA"; then
+    echo "previous install: bundled programs in place after $((i * 3)) s" >> $STEPLOG
+    break
+  fi
+  sleep 3
+done
+sleep 3
 adb shell am force-stop $PKG || true
 echo "== training folder, previous install (shell)" >> $STEPLOG
 adb shell "ls -la '$TRAIN/' 2>&1" >> $STEPLOG || true
