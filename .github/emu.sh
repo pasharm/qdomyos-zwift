@@ -1,33 +1,72 @@
 #!/bin/bash
 # Test only: start an already built APK on the emulator with log_debug on, so the Qt
 # warnings (QML errors among them) reach logcat, then keep logcat and screenshots.
-# The emulator starts in the day mode of the system: with the appearance on "auto" the
-# first screens are the light theme, the last ones the dark theme after "night yes".
 #
-# UI_MODERN (workflow input "modern"): false runs the same steps in the classic look, for a
-# before/after comparison. The two looks place their controls differently, so the steps
-# find a control by its text or accessible name in a uiautomator dump (tap_ui, .github/
-# uitap.py) and use fixed coordinates only when the dump has no such control. steps.log
-# says which way every tap went; dumps/<shot>.xml is the control tree behind every shot.
+# UI_MODERN (workflow input "modern"): false runs the classic look. The steps find a control
+# by its text or accessible name in a uiautomator dump (tap_ui, .github/uitap.py) and use
+# fixed coordinates only when the dump has no such control. steps.log says which way every
+# tap went; dumps/<shot>.xml is the control tree behind every shot.
+#
+# T-195: training programs of a previous install. On Android 14+ the work folder of QZ is
+# Documents/QZ, and a file another owner left there (a previous install) is foreign to the
+# app: missing from the folder list, exists() by its name, cannot be opened or removed. Here
+# the shell plays the previous install: it puts two .zwo files into Documents/QZ/training
+# before the APK is installed. The list of training programs must ask whether to look for
+# them, open the folder picker on Yes, copy them back as the app's own and say how many.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
-# LOG_DEBUG (workflow input "log_debug"): false runs with the debug log off, to see that the app
-# works without it and writes no log file. QML errors do not reach logcat then.
+# LOG_DEBUG (workflow input "log_debug"): false runs with the debug log off. QML errors do
+# not reach logcat then.
 LOG_DEBUG=${LOG_DEBUG:-true}
 STEPLOG=steps.log
 : > $STEPLOG
 mkdir -p dumps
+TRAIN=/sdcard/Documents/QZ/training
+TABATA="Tabata with sweet spot.zwo"     # a bundled program (:/zwo/), the app looks for it
+CUSTOM="T195 custom.zwo"                # a program the user imported once
+# The lines of the fix in logcat (Java Log.d and qDebug with log_debug on)
+T195_RX="training folder: file of a previous install|handleTrainingFolderResult|training programs restored|deleteTreeDocument|restoreTrainingFiles|openTrainingFolderPicker|takePersistableUriPermission|importContentToAppDir|trainingProgramsPageOpened|Training programs restored"
+
+# list_training <when>: the folder as the shell sees it and as the app sees it (run-as runs
+# with the uid of the app, so the storage rules of the app apply)
+list_training() {
+  echo "== training folder, $1 (shell)" >> $STEPLOG
+  adb shell "ls -la '$TRAIN/' 2>&1" >> $STEPLOG || true
+  echo "== training folder, $1 (app uid)" >> $STEPLOG
+  adb shell "run-as $PKG ls -la '$TRAIN/' 2>&1" >> $STEPLOG || true
+  adb shell "run-as $PKG sh -c \"head -c 60 '$TRAIN/$TABATA'; echo; head -c 60 '$TRAIN/$CUSTOM'; echo\" 2>&1" \
+    >> $STEPLOG || true
+}
+
+# --- the "previous install": foreign files before the APK is installed ---
+zwo() {
+  printf '<?xml version="1.0" ?>\n<workout_file>\n    <author>T195 emulator</author>\n    <name>%s</name>\n    <description>Left by a previous install (the shell)</description>\n    <sportType>bike</sportType>\n    <workout>\n        <SteadyState Duration="300" Power="0.55" pace="0"/>\n        <SteadyState Duration="60" Power="1.2" pace="0"/>\n        <SteadyState Duration="300" Power="0.6" pace="0"/>\n    </workout>\n</workout_file>\n' "$1"
+}
+zwo "Tabata with sweet spot (previous install)" > t195-tabata.zwo
+zwo "T195 custom (previous install)" > t195-custom.zwo
+adb push t195-tabata.zwo /data/local/tmp/t195-tabata.zwo > /dev/null || true
+adb push t195-custom.zwo /data/local/tmp/t195-custom.zwo > /dev/null || true
+adb shell "mkdir -p '$TRAIN'" || true
+adb shell "cp /data/local/tmp/t195-tabata.zwo '$TRAIN/$TABATA'" || true
+adb shell "cp /data/local/tmp/t195-custom.zwo '$TRAIN/$CUSTOM'" || true
+echo "== training folder, before install (shell)" >> $STEPLOG
+adb shell "ls -la '$TRAIN/' 2>&1" >> $STEPLOG || true
+if adb shell "ls '$TRAIN/'" | tr -d '\r' | grep -qF "$TABATA"; then
+  echo "foreign file in place: $TABATA" >> $STEPLOG
+else
+  echo "!! foreign file NOT in place: $TABATA" >> $STEPLOG
+fi
 
 adb install apk-debug/android-debug.apk
 for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
   adb shell pm grant $PKG android.permission.$p || true
 done
-adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
+# No MANAGE_EXTERNAL_STORAGE here (other runs allow it): with "all files access" the app reads
+# the foreign files and the case of a reinstall is gone
+echo "appops MANAGE_EXTERNAL_STORAGE: $(adb shell appops get $PKG MANAGE_EXTERNAL_STORAGE 2>&1 | tr -d '\r')" >> $STEPLOG
 adb shell cmd uimode night no || true
-# The launcher of the emulator image hangs on the slow CI machine and its "isn't responding"
-# dialog came back before every step, however often Wait was tapped: the classic run
-# 36505671077 got the dialog on nearly every shot. No error dialogs at all for the run; an
-# ANR still reaches logcat and the end of steps.log ("ANR in")
+# The launcher of the emulator image hangs on the slow CI machine: no error dialogs at all
+# for the run; an ANR still reaches logcat and the end of steps.log ("ANR in")
 adb shell settings put global hide_error_dialogs 1 || true
 
 # The control tree of the screen into ui.xml (empty when uiautomator gives up, for instance
@@ -38,11 +77,18 @@ dump() {
   adb pull /sdcard/ui.xml ui.xml > /dev/null 2>&1 || true
 }
 # The emulator itself may put a window over the app: "Pixel Launcher isn't responding", or
-# the Health Connect screen left over when the back key went to such a dialog. They made a
-# whole run useless once. Clear them before every step: Wait on a "not responding" dialog,
+# the Health Connect screen. Clear them before every step: Wait on a "not responding" dialog,
 # the back key on anything else that is not the app. Logged in steps.log.
+# FOREIGN_OK=1: a window of another app is expected (the folder picker of DocumentsUI) and
+# stays; only the dump is taken.
+FOREIGN_OK=
 ensure_app() {
   local i pkg xy
+  if [ -n "$FOREIGN_OK" ]; then
+    dump
+    [ -f ui.xml ] && echo "   window on top: $(python3 .github/uitap.py ui.xml --package)" >> $STEPLOG
+    return 0
+  fi
   for i in 1 2 3; do
     dump
     [ -f ui.xml ] || return 0
@@ -65,10 +111,9 @@ ensure_app() {
   # The last dump showed the window that was then closed: not the screen any more
   rm -f ui.xml
 }
-# ensure_app leaves ui.xml of the app on top: the callers take it instead of a second dump
-# of the same screen (a dump costs about 2 s, half of all dumps of a run were such repeats)
+# ensure_app leaves ui.xml of the screen on top: the callers take it instead of a second dump
 shot() {
-  if [ "$1" = "01-healthconnect" ]; then rm -f ui.xml; else ensure_app; fi
+  ensure_app
   echo "-- shot $1" >> $STEPLOG
   adb shell screencap -p /sdcard/$1.png || true
   adb pull /sdcard/$1.png || true
@@ -93,6 +138,22 @@ tap_ui() {
     return 1
   fi
 }
+# tap_wait 'regex' <tries>: tap_ui without fallback, looking again every 3 s (a native dialog
+# or the picker may take a moment to show)
+tap_wait() {
+  local i
+  for i in $(seq 1 "$2"); do
+    rm -f ui.xml
+    ensure_app
+    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
+      tap_ui "$1"
+      return 0
+    fi
+    sleep 3
+  done
+  echo "tap '$1': NOT FOUND after $2 looks, skipped" >> $STEPLOG
+  return 1
+}
 # The same for a drawer entry that may be below the fold: one swipe up and a second look
 tap_drawer() {
   local rx="$1" xy=""
@@ -104,42 +165,11 @@ tap_drawer() {
   fi
   tap_ui "$@"
 }
-# scroll_to 'regex': swipe the page up until the control shows (at most 12 swipes)
-scroll_to() {
-  local i
-  for i in $(seq 1 12); do
-    dump
-    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
-      echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
-      return 0
-    fi
-    adb shell input swipe 700 2000 700 1300 400 || true
-    sleep 1
-  done
-  echo "scroll to '$1': NOT FOUND" >> $STEPLOG
-  return 1
-}
-# The top of a page: a few quick swipes down
-scroll_top() {
-  local i
-  for i in 1 2 3 4 5; do adb shell input swipe 700 800 700 2200 150 || true; done
-  sleep 1
-}
-# The back key closes the keyboard, but only while it is shown: otherwise it leaves the page
-hide_keyboard() {
-  if adb shell dumpsys input_method | grep -q "mInputShown=true"; then
-    back "keyboard"
-    sleep 1
-  fi
-}
 tap() { ensure_app; echo "tap $1 $2 ($3)" >> $STEPLOG; adb shell input tap $1 $2 || true; }
 back() { echo "back ($1)" >> $STEPLOG; adb shell input keyevent KEYCODE_BACK || true; }
-# Toolbar buttons are icons without text: the same place in both looks (Nexus 6: 1440x2560
-# px, 3.5 px per dp)
+# Toolbar buttons are icons without text (Nexus 6: 1440x2560 px, 3.5 px per dp)
 MENU="84 168"          # menu on the home page, back arrow elsewhere
-LOCK="1187 168"        # tile lock on the home page
 open_menu() { tap $MENU "menu"; sleep 3; adb shell input swipe 500 700 500 2300 300 || true; sleep 2; }
-
 
 # put_conf <extra lines>: the settings file of the app before a start
 put_conf() {
@@ -163,46 +193,77 @@ start_app() {
   fi
   sleep 15
 }
-# The fake treadmill comes after the first search ends: wait for its tiles (at most 3 min)
-wait_tiles() {
-  local i
-  for i in $(seq 1 18); do
-    dump
-    if [ -f ui.xml ] && grep -qE 'content-desc="(Speed|Скорость|Швидкість)' ui.xml; then
-      echo "tiles shown after $i looks" >> $STEPLOG; return 0
-    fi
-    sleep 10
-  done
-  echo "!! tiles NOT shown" >> $STEPLOG
+# question <shot>: is the question of the restore on the screen? A native dialog has its text
+# in the dump; a QML one does not, then only the shot tells
+question() {
+  if [ -f dumps/$1.xml ] && grep -q "Training Programs\|previous installation" dumps/$1.xml; then
+    echo "question on $1: YES (in the dump)" >> $STEPLOG
+  else
+    echo "question on $1: not in the dump (see $1.png)" >> $STEPLOG
+  fi
 }
-
-# T-116: the mail after the workout in the app language. The test build logs every line of
-# the mail text ("T116-MAIL"; a test-only commit, not in the PR), because the fork has no SMTP
-# secrets and the mail itself is never sent. One run per language: a fake treadmill, a minute
-# of workout, Stop without confirmation, the end page saves the charts and calls sendMail().
-run_lang() {
-  local lang="$1"
-  adb shell am force-stop $PKG || true
-  sleep 3
-  put_conf "app_language=$lang\nuser_email=t116@example.com\nconfirm_stop_workout=false\napplewatch_fakedevice=true\n"
-  adb shell log -t T116 "mark start $lang" || true
-  start_app
-  wait_tiles
-  sleep 60                           # a minute of the session: non-zero time, zone 1 of HR
-  shot $lang-01-home
-  tap_ui '^(Stop|Стоп)$' 1200 2300
-  sleep 40                           # the end page draws and saves its nine charts
-  shot $lang-02-end
-  adb shell log -t T116 "mark end $lang" || true
-  echo "mail lines ($lang): $(grep -c 'T116-MAIL' full_logcat.txt)" >> $STEPLOG
+# open_list <shot>: from home the menu and Open Train Program, then a shot
+open_list() {
+  open_menu
+  tap_drawer '^Open Train Program$' || echo "!! Open Train Program not found in the drawer" >> $STEPLOG
+  sleep 8
+  shot $1
+  question $1
 }
+mark() { echo "== $1" >> $STEPLOG; adb shell log -t T195 "mark $1" || true; }
 
-run_lang uk
-run_lang ru
-run_lang en
+# The wizard of the first start stays closed with a last device name (homeform::firstRun())
+put_conf "bluetooth_lastdevice_name=T195\n"
+mark "first start"
+start_app
+shot 01-home
+list_training "after the first start"
 
-# The mail text of every run, to read without the screenshots
-awk '/T116.*mark start/{sub(/.*mark start /,""); print "== mail " $0; next} /T116-MAIL/{sub(/.*T116-MAIL ?/,""); print "   " $0}' full_logcat.txt > mail_texts.txt || true
+# 1. The list: the question "Training Programs" with Yes and No
+mark "open the list"
+open_list 02-question
+
+# 2. Yes: the folder picker of the system, started on Documents/QZ
+mark "yes"
+tap_wait '^&?Yes$' 4 || echo "!! no Yes button in the dump: the dialog may be a QML one" >> $STEPLOG
+sleep 6
+FOREIGN_OK=1
+shot 03-picker
+tap_wait '^Use this folder$' 5
+sleep 4
+shot 04-allow
+tap_wait '^Allow$' 4
+FOREIGN_OK=
+mark "allowed"
+
+# 3. The restore runs in the background: the toast and the list
+sleep 2
+shot 05-after-2s
+sleep 3
+shot 06-after-5s
+sleep 8
+shot 07-after-13s
+list_training "after the restore"
+
+# 4. Leave the list and open it again: no question any more (one attempt per run, and the
+# files are the app's own now)
+mark "reopen"
+back "list"
+sleep 4
+shot 08-home
+open_list 09-reopen
+
+# 5. A new start of the app: the list without the question, the restored programs in it
+mark "restart"
+back "list"
+sleep 3
+adb shell am force-stop $PKG || true
+sleep 3
+start_app
+open_list 10-restart-list
+list_training "after the restart"
+# The restored Tabata: its preview (the name in the file says "previous install")
+tap_ui '^Tabata with sweet spot(\.zwo)?$' && { sleep 6; shot 11-tabata-preview; }
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
@@ -216,19 +277,19 @@ if [ "$(wc -l < full_logcat.txt)" -lt "$(wc -l < end_logcat.txt)" ]; then
 else
   rm -f end_logcat.txt
 fi
-# The debug logs the app wrote itself (Documents/QZ on Android 14+): none with the log off
+# The lines of the fix, with the marks of the steps between them
+grep -E "T195|$T195_RX" full_logcat.txt > t195_logcat.txt || true
+echo "== logcat of the fix" >> $STEPLOG
+cat t195_logcat.txt >> $STEPLOG
+# The debug logs the app wrote itself (Documents/QZ on Android 14+)
 mkdir -p qz-logs
 adb shell 'ls -la /sdcard/Documents/QZ/ 2>&1' > qz-logs/listing.txt || true
 for f in $(adb shell 'ls /sdcard/Documents/QZ/ 2>/dev/null' | tr -d '\r' | grep '^debug-.*[.]log$'); do
   adb pull "/sdcard/Documents/QZ/$f" "qz-logs/$f" > /dev/null 2>&1 || true
 done
-echo "== app debug logs"; cat qz-logs/listing.txt; ls -la qz-logs
-echo "== steps"; cat $STEPLOG
-echo "== timing"; grep -E "QZ-TIMING|QZ-THEME" full_logcat.txt || true
 # The dialogs are hidden (hide_error_dialogs above), so hangs are only here
 grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
+echo "== app debug logs"; cat qz-logs/listing.txt; ls -la qz-logs
+echo "== steps"; cat $STEPLOG
 echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
 grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
-echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
-cat mail_texts.txt >> $STEPLOG
-echo "== mail texts"; cat mail_texts.txt

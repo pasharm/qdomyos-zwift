@@ -1,5 +1,8 @@
 # test branch: run an APK that was already built on one emulator and keep logcat and
 # screenshots (no build). The source run id is below.
+# T-195: training programs of a previous install on Android 14+ (Documents/QZ is the work
+# folder only from API 34 on, so the emulator stays at 35). Build: run 38483010060,
+# test/training-import-foreign-file, c7bfe8ac2, classic look.
 name: CI
 
 on:
@@ -7,11 +10,12 @@ on:
     inputs:
       source:
         description: run id of the build to test
-        required: true
+        required: false
+        default: '38483010060'
       modern:
         description: ui_modern for the run (false = the classic look, for comparison)
         required: false
-        default: 'true'
+        default: 'false'
       log_debug:
         description: log_debug for the run (false = the debug log off)
         required: false
@@ -70,6 +74,7 @@ jobs:
             process_list.txt
             full_logcat.txt
             steps.log
+            t195_logcat.txt
             dumps/
             qz-logs/
           if-no-files-found: warn
