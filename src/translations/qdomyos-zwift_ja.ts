@@ -8114,6 +8114,14 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
         <translation>アクセントカラー</translation>
     </message>
     <message>
+        <source>Text size</source>
+        <translation>文字サイズ</translation>
+    </message>
+    <message>
+        <source>%1%</source>
+        <translation>%1%</translation>
+    </message>
+    <message>
         <source>Appearance</source>
         <translation>外観</translation>
     </message>

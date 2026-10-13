@@ -38,7 +38,7 @@ T.SpinBox {
     contentItem: UiSpinInput {
         text: control.displayText
 
-        font: control.modern ? Qt.font({ family: control.font.family, pixelSize: 16 }) : control.font
+        font: control.modern ? window.ui.fontOf(control.font, window.ui.fontBody) : control.font
         color: control.modern ? window.ui.textMain
                               : (enabled ? control.Material.foreground : control.Material.hintTextColor)
         selectionColor: control.modern ? window.ui.accent : control.Material.textSelectionColor

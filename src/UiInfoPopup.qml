@@ -82,7 +82,7 @@ UiPopup {
                 visible: control.title.length > 0
                 text: control.title
                 wrapMode: Text.WordWrap
-                font.pixelSize: 20
+                font.pixelSize: window.ui.fontTitle
                 font.weight: Font.DemiBold
                 color: window.ui.textMain
             }
@@ -102,7 +102,7 @@ UiPopup {
                     linkColor: Material.accent
                     onLinkActivated: Qt.openUrlExternally(link)
                     wrapMode: Text.Wrap
-                    font.pixelSize: 16
+                    font.pixelSize: window.ui.fontBody
                     lineHeight: 1.15
                     color: control.title.length > 0 ? window.ui.textMuted : window.ui.textMain
                 }

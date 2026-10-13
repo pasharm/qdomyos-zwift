@@ -15,6 +15,9 @@ T.ComboBox {
     id: control
 
     readonly property bool modern: window.ui.modern
+    // The Material combo size (16) from the type scale: the window font would make it 14.
+    // A plain binding, not Binding: a size set on an instance must still win
+    font.pixelSize: modern ? window.ui.fontBody : 16
 
     // Shown text for a raw value: ValueComboBox puts its translated labels here; values
     // missing from the map are shown unchanged
@@ -158,6 +161,9 @@ T.ComboBox {
     }
 
     popup: T.Popup {
+        // The list takes its font from the window, not from the combo (Qt 5.15): the Material
+        // menu size (16) from the type scale
+        font.pixelSize: control.modern ? window.ui.fontBody : 16
         y: control.editable ? control.height - 5 : 0
         // As wide as the longest item (long labels were cut off), not narrower than the field
         // and kept inside the window; the height from the item count, the ListView builds its

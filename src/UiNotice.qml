@@ -56,7 +56,7 @@ UiPopup {
             text: control.text
             wrapMode: control.snackbar ? Text.WordWrap : Text.NoWrap
             color: control.snackbar ? window.ui.bg : Material.foreground
-            font.pixelSize: control.snackbar ? 15 : control.font.pixelSize
+            font.pixelSize: control.snackbar ? window.ui.fontLabel : control.font.pixelSize
         }
     }
 }

@@ -8041,6 +8041,14 @@ Default: A = -0.96, B = 1.33</source>
         <translation>Акцентный цвет</translation>
     </message>
     <message>
+        <source>Text size</source>
+        <translation>Размер текста</translation>
+    </message>
+    <message>
+        <source>%1%</source>
+        <translation>%1%</translation>
+    </message>
+    <message>
         <source>Appearance</source>
         <translation>Оформление</translation>
     </message>

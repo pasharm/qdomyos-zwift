@@ -137,7 +137,7 @@ ScrollView {
             text: qsTr("Each gear uses the offset below instead of the raw gear value. QZ applies it automatically to resistance, inclination, or slope depending on the trainer path. Default is linear.")
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
-            font.pixelSize: Qt.application.font.pixelSize - 2
+            font.pixelSize: window.ui.fontHint
             color: window.ui.inkMuted(Material.accent)
         }
 
@@ -328,7 +328,7 @@ ScrollView {
                                 Binding on bottomInset { when: window.ui.modern; value: 0; restoreMode: Binding.RestoreBindingOrValue }
                                 Binding on verticalAlignment { when: window.ui.modern; value: Text.AlignVCenter; restoreMode: Binding.RestoreBindingOrValue }
                                 // The 16 px of the +/- fields (UiSpinBox, the inclination table)
-                                Binding on font.pixelSize { when: window.ui.modern; value: 16; restoreMode: Binding.RestoreBindingOrValue }
+                                Binding on font.pixelSize { when: window.ui.modern; value: window.ui.fontBody; restoreMode: Binding.RestoreBindingOrValue }
                                 background: Rectangle {
                                     color: window.ui.modern ? "transparent" : "white"
                                     border.color: "#cccccc"

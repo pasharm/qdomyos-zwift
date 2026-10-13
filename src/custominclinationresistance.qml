@@ -61,7 +61,7 @@ ScrollView {
             anchors.right: stepperPlus.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            font.pixelSize: 16
+            font.pixelSize: window.ui.fontBody
             color: window.ui.textMain
             selectionColor: window.ui.accent
             selectedTextColor: window.ui.accentInk
@@ -279,7 +279,7 @@ ScrollView {
             text: qsTr("Set the resistance QZ should target at each incline. QZ interpolates automatically between points and uses the nearest endpoint outside the configured range. Changes are saved automatically.")
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
-            font.pixelSize: Qt.application.font.pixelSize - 2
+            font.pixelSize: window.ui.fontHint
             color: window.ui.inkMuted(Material.accent)
         }
 

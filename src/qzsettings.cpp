@@ -1324,6 +1324,7 @@ const QString QZSettings::default_ui_accent = QStringLiteral("violet");
 const QString QZSettings::ui_theme_mode = QStringLiteral("ui_theme_mode");
 const QString QZSettings::default_ui_theme_mode = QStringLiteral("auto");
 const QString QZSettings::ui_tile_snap = QStringLiteral("ui_tile_snap");
+const QString QZSettings::ui_text_scale = QStringLiteral("ui_text_scale");
 
 const uint32_t allSettingsCount = 1028;
 
@@ -2380,6 +2381,7 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::ui_accent, QZSettings::default_ui_accent},
     {QZSettings::ui_theme_mode, QZSettings::default_ui_theme_mode},
     {QZSettings::ui_tile_snap, QZSettings::default_ui_tile_snap},
+    {QZSettings::ui_text_scale, QZSettings::default_ui_text_scale},
 };
 
 void QZSettings::qDebugAllSettings(bool showDefaults) {

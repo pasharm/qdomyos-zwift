@@ -8094,6 +8094,14 @@ Par défaut : A = -0.96, B = 1.33</translation>
         <translation>Couleur d’accentuation</translation>
     </message>
     <message>
+        <source>Text size</source>
+        <translation>Taille du texte</translation>
+    </message>
+    <message>
+        <source>%1%</source>
+        <translation>%1 %</translation>
+    </message>
+    <message>
         <source>Appearance</source>
         <translation>Apparence</translation>
     </message>

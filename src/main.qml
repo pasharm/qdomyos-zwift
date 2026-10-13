@@ -21,6 +21,16 @@ ApplicationWindow {
 	 objectName: "stack"
     title: Qt.platform.os === "ios" ? "" : qsTr("qDomyos-Zwift")
 
+    // Modern look: the text size of the controls (labels, buttons, lists) from the type scale;
+    // the controls take it from the window. Classic: the Material size as before
+    // Leaving the modern look resets the window font: a restored value would stay set and turn
+    // the fields, lists and menus of the classic look from 16 into 14 until a restart
+    Qml.Binding on font.pixelSize { when: window.ui.modern; value: window.ui.fontBase; restoreMode: Qml.Binding.RestoreNone }
+    Connections {
+        target: window.ui
+        function onModernChanged() { if (!window.ui.modern) window.font = undefined }
+    }
+
     // Force update on orientation change
     property int currentOrientation: Screen.orientation
     onCurrentOrientationChanged: {
@@ -273,6 +283,7 @@ ApplicationWindow {
         property string ui_accent: "violet"
         property string ui_theme_mode: "auto"
         property bool ui_tile_snap: true
+        property int ui_text_scale: 100
     }
 
     // Modern look, switched in Settings > General UI Options. Pages read the palette
@@ -376,6 +387,29 @@ ApplicationWindow {
         // Dimming behind a modal popup
         readonly property color scrim: Qt.rgba(0, 0, 0, dark ? 0.6 : 0.4)
         readonly property int radius: 16
+
+        // Type scale (T-078): the role sizes at 100 %, times the text size the user picked in
+        // Settings > General UI Options (85-150 %). Pages and Ui* components take a role, not
+        // a number, so the text of the modern look grows as one. Always 1 in the classic look: a
+        // size picked in the modern look must not follow the user back into the classic one
+        readonly property real textScale: modern ? Math.max(0.85, Math.min(1.5, settings.ui_text_scale / 100)) : 1
+        function fontPx(base) { return Math.round(base * textScale) }
+        // The font f with another size (and weight): Qt.font() alone keeps nothing but what it is given
+        function fontOf(f, px, weight) {
+            return Qt.font({ family: f.family, pixelSize: px, weight: weight === undefined ? f.weight : weight,
+                             italic: f.italic, capitalization: f.capitalization, letterSpacing: f.letterSpacing,
+                             hintingPreference: f.hintingPreference })
+        }
+        readonly property int fontHeadline: fontPx(22)     // page titles
+        readonly property int fontTitle: fontPx(20)        // dialog titles, empty states
+        readonly property int fontTitleSmall: fontPx(18)   // toolbar title
+        readonly property int fontBody: fontPx(16)         // dialog text, list titles, fields
+        readonly property int fontLabel: fontPx(15)        // drawer entries, group titles
+        readonly property int fontBase: fontPx(14)         // the Material default: labels, buttons
+        readonly property int fontCaption: fontPx(13)      // secondary lines, chips, captions
+        // Hints under the settings: the app font less 2, as in the classic look
+        readonly property int fontHint: fontPx(Qt.application.font.pixelSize - 2)
+
         // Side margin of the list pages: at least 16, more where the screen cutout needs it
         readonly property int pageMargin: Math.max(16, window.contentSideMargin)
 
@@ -786,7 +820,7 @@ ApplicationWindow {
                 width: parent.width
                 text: qsTr("Select Your Gym Device")
                 // Modern: the title of UiMessageDialog
-                font.pixelSize: popupGymMode.modern ? 20 : Qt.application.font.pixelSize + 10
+                font.pixelSize: popupGymMode.modern ? window.ui.fontTitle : Qt.application.font.pixelSize + 10
                 font.weight: popupGymMode.modern ? Font.DemiBold : Font.Bold
                 color: window.ui.ink(Material.foreground)
                 horizontalAlignment: Text.AlignHCenter
@@ -1631,7 +1665,7 @@ ApplicationWindow {
         Label {
             text: stackView.currentItem.title
             // Modern look only: the classic title keeps the font of the Material style
-            Qml.Binding on font.pixelSize { when: window.ui.modern; value: 18; restoreMode: Qml.Binding.RestoreBindingOrValue }
+            Qml.Binding on font.pixelSize { when: window.ui.modern; value: window.ui.fontTitleSmall; restoreMode: Qml.Binding.RestoreBindingOrValue }
             Qml.Binding on font.weight { when: window.ui.modern; value: Font.DemiBold; restoreMode: Qml.Binding.RestoreBindingOrValue }
             color: window.ui.ink(Material.foreground)
             // Fixed position, like the buttons: centred in the full bar, it moved on its own when the bar collapsed
@@ -2107,7 +2141,8 @@ ApplicationWindow {
 
                 Item {
                     width: parent.width
-                    height: 132
+                    // 132 at 100 %: the chip and the header move down as the text grows
+                    height: profileChip.y + profileChip.height + 14
 
                     Image {
                         id: drawerLogo
@@ -2127,7 +2162,7 @@ ApplicationWindow {
                         anchors.rightMargin: 16
                         y: drawerLogo.y + 1
                         text: "QZ Fitness"
-                        font.pixelSize: 20
+                        font.pixelSize: window.ui.fontTitle
                         font.weight: Font.DemiBold
                         color: window.ui.textMain
                     }
@@ -2148,7 +2183,7 @@ ApplicationWindow {
                             width: parent.width - 14
                             // "Connecting..." - the untranslated start value of homeform::m_info, see HomeForm.ui.qml
                             text: (typeof rootItem !== "undefined" && rootItem) ? (rootItem.info === "Connecting..." ? qsTranslate("homeform", "Searching for the device...") : rootItem.info) : ""
-                            font.pixelSize: 13
+                            font.pixelSize: window.ui.fontCaption
                             color: window.ui.textMuted
                             elide: Text.ElideRight
                         }
@@ -2156,11 +2191,14 @@ ApplicationWindow {
 
                     // Profile chip
                     Rectangle {
+                        id: profileChip
                         x: 24
-                        y: 82
-                        height: 36
+                        // 82 and 36 at 100 %, lower and taller as the text grows: from the sizes, not
+                        // from the labels, which are taller in a CJK fallback font
+                        y: 82 + Math.round(1.2 * (window.ui.fontTitle - 20 + window.ui.fontCaption - 13))
+                        height: Math.max(36, Math.round(window.ui.fontLabel * 1.2) + 16)
                         width: Math.min(parent.width - 48, profileChipRow.implicitWidth + 28)
-                        radius: 18
+                        radius: height / 2
                         color: profileChipArea.pressed ? window.ui.alpha(window.ui.accent, 0.28) : window.ui.alpha(window.ui.accent, 0.16)
                         Row {
                             id: profileChipRow
@@ -2178,7 +2216,7 @@ ApplicationWindow {
                                 anchors.verticalCenter: parent.verticalCenter
                                 width: Math.min(implicitWidth, drawer.width - 110)
                                 text: qsTr("Profile: ") + settings.profile_name
-                                font.pixelSize: 14
+                                font.pixelSize: window.ui.fontLabel
                                 font.weight: Font.Medium
                                 color: window.ui.textMain
                                 elide: Text.ElideRight
@@ -2198,7 +2236,7 @@ ApplicationWindow {
                         leftPadding: 28
                         topPadding: 14
                         bottomPadding: 6
-                        font.pixelSize: 13
+                        font.pixelSize: window.ui.fontCaption
                         font.weight: Font.DemiBold
                         font.letterSpacing: 0.4
                         color: window.ui.accent
@@ -2269,7 +2307,7 @@ ApplicationWindow {
                     leftPadding: 28
                     topPadding: 16
                     text: "version 2.22.0"
-                    font.pixelSize: 12
+                    font.pixelSize: window.ui.fontCaption
                     color: window.ui.textMuted
                 }
             }

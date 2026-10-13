@@ -58,7 +58,7 @@ ColumnLayout {
             Layout.fillWidth: true
             text: qsTr("Settings folder")
             color: window.ui.textMain
-            font.pixelSize: 22
+            font.pixelSize: window.ui.fontHeadline
             font.weight: Font.DemiBold
             topPadding: 12
         }
@@ -148,7 +148,7 @@ ColumnLayout {
                     anchors.verticalCenter: parent.verticalCenter
                     text: fileName.substring(0, fileName.length-4)
                     color: settingsCard.selected ? window.ui.accent : window.ui.textMain
-                    font.pixelSize: 16
+                    font.pixelSize: window.ui.fontBody
                     font.weight: Font.DemiBold
                     elide: Text.ElideRight
                 }

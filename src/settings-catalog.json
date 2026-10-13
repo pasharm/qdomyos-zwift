@@ -16231,6 +16231,35 @@
       "defaultExpression": "true",
       "options": null,
       "restartRequired": false
+    },
+    {
+      "key": "ui_text_scale",
+      "name": "Text size",
+      "description": null,
+      "parent": "General UI Options",
+      "type": "integer",
+      "qmlType": "int",
+      "control": "select",
+      "visible": true,
+      "defaultValue": 100,
+      "defaultExpression": "100",
+      "options": {
+        "values": [
+          85,
+          100,
+          115,
+          130,
+          150
+        ],
+        "labels": [
+          "85%",
+          "100%",
+          "115%",
+          "130%",
+          "150%"
+        ]
+      },
+      "restartRequired": false
     }
   ],
   "legacyHierarchy": {

@@ -144,7 +144,7 @@ ScrollView {
             id: shortcutsTitle
             text: qsTr("Keyboard Shortcuts")
             // Modern look: a page title like the TTS page instead of the red caption
-            font.pixelSize: window.ui.modern ? 22 : 24
+            font.pixelSize: window.ui.modern ? window.ui.fontHeadline : 24
             font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
             color: window.ui.ink(Material.color(Material.Red))
             // The layout margin is 10: 2 more puts the title 12 from the top, as on Tiles and TTS
@@ -162,7 +162,7 @@ ScrollView {
         Label {
             text: qsTr("Click on a field and press a key to assign a shortcut. Press Backspace to clear. Preset fields follow the same left-to-right order as the preset buttons.")
             font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
+            font.pixelSize: window.ui.fontHint
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
             color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)

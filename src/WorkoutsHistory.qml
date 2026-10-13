@@ -153,7 +153,7 @@ Page {
                     id: modernTitleText
                     width: parent.width
                     text: qsTr("Workout History")
-                    font.pixelSize: 22
+                    font.pixelSize: window.ui.fontHeadline
                     font.weight: Font.DemiBold
                     color: window.ui.textMain
                     elide: Text.ElideRight
@@ -203,7 +203,7 @@ Page {
                                     var f = d.getFullYear() === new Date().getFullYear() ? "ddd, d MMM" : "ddd, d MMM yyyy"
                                     return d.toLocaleDateString(Qt.locale(), f)
                                 }
-                                font.pixelSize: 13
+                                font.pixelSize: window.ui.fontCaption
                                 font.weight: Font.DemiBold
                                 color: window.ui.accent
                                 elide: Text.ElideRight
@@ -244,7 +244,7 @@ Page {
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             text: (modernHeader.streak !== 1 ? qsTr("%1 days streak") : qsTr("%1 day streak")).arg(modernHeader.streak)
-                            font.pixelSize: 13
+                            font.pixelSize: window.ui.fontCaption
                             font.weight: Font.DemiBold
                             color: window.ui.accent
                         }
@@ -541,7 +541,7 @@ Page {
                                                                       : qsTr("No workouts yet")
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 20
+                    font.pixelSize: window.ui.fontTitle
                     font.weight: Font.DemiBold
                     color: window.ui.textMain
                 }
@@ -551,7 +551,7 @@ Page {
                     text: qsTr("Finished workouts appear here: open one to see its charts.")
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
-                    font.pixelSize: 15
+                    font.pixelSize: window.ui.fontLabel
                     color: window.ui.textMuted
                 }
             }
@@ -1001,7 +1001,7 @@ Page {
                         leftPadding: 12
                         rightPadding: 12
                         text: modelData.label
-                        font.pixelSize: 16
+                        font.pixelSize: window.ui.fontBody
                         color: window.ui.textMain
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
@@ -1043,6 +1043,8 @@ Page {
         // MenuItem): it is read, but a double tap does nothing without the handler
         // The name is set as well: the one Qt takes from the text was empty for TalkBack on a phone
         id: uploadMenu
+        // Material menu size (16) from the type scale: the menu takes its font from the window
+        font.pixelSize: window.ui.modern ? window.ui.fontBody : 16
         // Modal, as the calendar: otherwise a screen reader touching an item got the workout
         // row under the menu; no dim, so it looks as before
         modal: true

@@ -134,7 +134,7 @@ HomeForm {
                 text: qsTr("How was this workout?")
                 // Modern: the title of UiMessageDialog
                 font.weight: rpeFeelPopup.modern ? Font.DemiBold : Font.Bold
-                font.pixelSize: rpeFeelPopup.modern ? 20 : 18
+                font.pixelSize: rpeFeelPopup.modern ? window.ui.fontTitle : 18
                 color: window.ui.ink(Material.foreground)
                 width: parent.width
                 wrapMode: Text.WordWrap

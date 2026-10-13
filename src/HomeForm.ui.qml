@@ -104,7 +104,7 @@ Page {
                             anchors.verticalCenter: parent.verticalCenter
                             text: rootItem.startText
                             color: window.ui.accentInk
-                            font.pixelSize: 16
+                            font.pixelSize: window.ui.fontBody
                             font.weight: Font.DemiBold
                             visible: text !== ""
                         }
@@ -143,7 +143,7 @@ Page {
                             anchors.verticalCenter: parent.verticalCenter
                             text: rootItem.stopText
                             color: window.ui.textMain
-                            font.pixelSize: 16
+                            font.pixelSize: window.ui.fontBody
                             font.weight: Font.DemiBold
                             visible: text !== ""
                         }
@@ -399,7 +399,7 @@ Page {
                     anchors.centerIn: parent
                     text: "!"
                     color: window.ui.dangerInk
-                    font.pixelSize: 12
+                    font.pixelSize: window.ui.modern ? window.ui.fontCaption : 12
                     font.bold: true
                 }
             }
@@ -425,7 +425,7 @@ Page {
                 // two lines ("<device> found" and the countdown) grow upwards: closer, off the buttons
                 lineHeight: text.indexOf("\n") >= 0 ? 0.8 : 1
                 color: modernInfo.bluetoothOff ? window.ui.danger : window.ui.textMuted
-                font.pixelSize: 13
+                font.pixelSize: window.ui.fontCaption
             }
         }
 
@@ -472,7 +472,7 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
                     color: window.ui.textMain
-                    font.pixelSize: 20
+                    font.pixelSize: window.ui.fontTitle
                     font.weight: Font.DemiBold
                 }
 
@@ -485,7 +485,7 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     wrapMode: Text.WordWrap
                     color: window.ui.textMuted
-                    font.pixelSize: 15
+                    font.pixelSize: window.ui.fontLabel
                 }
 
                 Item { width: 1; height: 8 }
@@ -544,7 +544,7 @@ Page {
                                 anchors.verticalCenter: parent.verticalCenter
                                 text: qsTr("Not connecting?")
                                 color: window.ui.textMain
-                                font.pixelSize: 15
+                                font.pixelSize: window.ui.fontLabel
                                 font.weight: Font.Medium
                             }
                         }
@@ -555,7 +555,7 @@ Page {
                             textFormat: Text.StyledText
                             wrapMode: Text.WordWrap
                             color: window.ui.textMuted
-                            font.pixelSize: 13
+                            font.pixelSize: window.ui.fontCaption
                             lineHeight: 1.1
                         }
 
@@ -568,7 +568,7 @@ Page {
                             wrapMode: Text.WordWrap
                             color: window.ui.textMuted
                             opacity: 0.75
-                            font.pixelSize: 11
+                            font.pixelSize: window.ui.modern ? window.ui.fontCaption : 11
                             lineHeight: 1.1
                         }
                     }

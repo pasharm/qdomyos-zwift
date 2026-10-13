@@ -207,7 +207,7 @@ ColumnLayout {
                 Layout.rightMargin: 8
                 Layout.bottomMargin: 4
                 text: rootElement.description
-                font.pixelSize: Qt.application.font.pixelSize - 2
+                font.pixelSize: window.ui.fontHint
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 color: window.ui.textMuted

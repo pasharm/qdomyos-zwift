@@ -3409,6 +3409,10 @@ class QZSettings {
     static const QString ui_tile_snap;
     static constexpr bool default_ui_tile_snap = true;
 
+    // Size of the text of the modern look, in percent (85-150)
+    static const QString ui_text_scale;
+    static constexpr int default_ui_text_scale = 100;
+
     /**
      * @brief Write the QSettings values using the constants from this namespace.
      * @param showDefaults Optionally indicates if the default should be shown with the key.

@@ -37,7 +37,7 @@ ScrollView {
             Layout.fillWidth: true
             text: qsTr("Credits")
             color: window.ui.textMain
-            font.pixelSize: 22
+            font.pixelSize: window.ui.fontHeadline
             font.weight: Font.DemiBold
             topPadding: 12
         }
@@ -81,7 +81,7 @@ ScrollView {
                                 anchors.centerIn: parent
                                 text: modelData.charAt(0).toUpperCase()
                                 color: window.ui.accent
-                                font.pixelSize: 18
+                                font.pixelSize: window.ui.fontTitleSmall
                                 font.weight: Font.DemiBold
                             }
                         }
@@ -92,7 +92,7 @@ ScrollView {
                             anchors.verticalCenter: parent.verticalCenter
                             text: modelData
                             color: window.ui.textMain
-                            font.pixelSize: 16
+                            font.pixelSize: window.ui.fontBody
                             elide: Text.ElideRight
                         }
                     }

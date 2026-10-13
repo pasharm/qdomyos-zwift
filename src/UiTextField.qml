@@ -13,6 +13,9 @@ T.TextField {
     id: control
 
     readonly property bool modern: window.ui.modern
+    // The Material field size (16) from the type scale: the window font would make it 14.
+    // A plain binding, not Binding: a size set on an instance must still win
+    font.pixelSize: modern ? window.ui.fontBody : 16
     readonly property int modernInset: modern ? 6 : 0
 
     implicitWidth: implicitBackgroundWidth + leftInset + rightInset
@@ -105,23 +108,23 @@ T.TextField {
                 Row {
                     spacing: 4
                     Label { text: qsTr("hours"); width: 64; horizontalAlignment: Text.AlignHCenter
-                            font.pixelSize: 12; color: window.ui.textMuted }
+                            font.pixelSize: window.ui.fontCaption; color: window.ui.textMuted }
                     Item { width: timeColon.width; height: 1 }
                     Label { text: qsTr("min"); width: 64; horizontalAlignment: Text.AlignHCenter
-                            font.pixelSize: 12; color: window.ui.textMuted }
+                            font.pixelSize: window.ui.fontCaption; color: window.ui.textMuted }
                     Item { width: timeColon.width; height: 1; visible: timePicker.withSeconds }
                     Label { text: qsTr("sec"); width: 64; horizontalAlignment: Text.AlignHCenter
-                            font.pixelSize: 12; color: window.ui.textMuted; visible: timePicker.withSeconds }
+                            font.pixelSize: window.ui.fontCaption; color: window.ui.textMuted; visible: timePicker.withSeconds }
                 }
                 Row {
                     spacing: 4
                     height: 200
                     Tumbler { id: hours; model: 100; visibleItemCount: 5; width: 64; height: 200
                               delegate: timeDigit }
-                    Label { id: timeColon; text: ":"; font.pixelSize: 24; anchors.verticalCenter: parent.verticalCenter }
+                    Label { id: timeColon; text: ":"; font.pixelSize: window.ui.fontPx(24); anchors.verticalCenter: parent.verticalCenter }
                     Tumbler { id: minutes; model: 60; visibleItemCount: 5; width: 64; height: 200
                               delegate: timeDigit }
-                    Label { text: ":"; font.pixelSize: 24; visible: timePicker.withSeconds
+                    Label { text: ":"; font.pixelSize: window.ui.fontPx(24); visible: timePicker.withSeconds
                             anchors.verticalCenter: parent.verticalCenter }
                     Tumbler { id: seconds; model: 60; visibleItemCount: 5; width: 64; height: 200
                               visible: timePicker.withSeconds; delegate: timeDigit }
@@ -148,7 +151,7 @@ T.TextField {
         id: timeDigit
         Label {
             text: index < 10 ? "0" + index : index
-            font.pixelSize: 22
+            font.pixelSize: window.ui.fontHeadline
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             color: Tumbler.tumbler && Tumbler.tumbler.currentIndex === index ? window.ui.accent : window.ui.textMain

@@ -51,7 +51,7 @@ Rectangle {
         anchors.verticalCenter: parent.verticalCenter
         text: window.ui.plainTitle(header.title)
         wrapMode: Text.WordWrap
-        font.pixelSize: header.nested ? 15 : 16
+        font.pixelSize: header.nested ? window.ui.fontLabel : window.ui.fontBody
         font.weight: Font.Medium
         color: header.isOpen ? window.ui.accent : window.ui.textMain
     }

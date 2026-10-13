@@ -33,7 +33,7 @@ T.GroupBox {
         width: control.availableWidth
 
         text: control.title
-        font: control.modern ? Qt.font({ family: control.font.family, pixelSize: 15, weight: Font.DemiBold })
+        font: control.modern ? window.ui.fontOf(control.font, window.ui.fontLabel, Font.DemiBold)
                              : control.font
         color: control.modern ? window.ui.accent
                               : (control.enabled ? control.Material.foreground : control.Material.hintTextColor)

@@ -168,13 +168,13 @@ ColumnLayout {
             Label {
                 text: qsTr("Profile name")
                 color: window.ui.textMuted
-                font.pixelSize: 13
+                font.pixelSize: window.ui.fontCaption
             }
             UiTextField {
                 id: modernNameField
                 Layout.fillWidth: true
                 text: settings.profile_name
-                font.pixelSize: 18
+                font.pixelSize: window.ui.fontTitleSmall
                 onAccepted: settings.profile_name = text
                 onActiveFocusChanged: if (activeFocus) cursorPosition = text.length
             }
@@ -211,7 +211,7 @@ ColumnLayout {
         Layout.topMargin: 12
         text: qsTr("Saved profiles")
         color: window.ui.textMain
-        font.pixelSize: 16
+        font.pixelSize: window.ui.fontBody
         font.weight: Font.DemiBold
     }
     Label {
@@ -221,7 +221,7 @@ ColumnLayout {
         Layout.rightMargin: window.ui.pageMargin
         text: qsTr("Tap a profile to select it, then Load. Long press to delete it.")
         color: window.ui.textMuted
-        font.pixelSize: 13
+        font.pixelSize: window.ui.fontCaption
         wrapMode: Text.WordWrap
     }
 
@@ -296,7 +296,7 @@ ColumnLayout {
                     width: parent.width
                     text: profileCard.profileName
                     color: profileCard.selected ? window.ui.accent : window.ui.textMain
-                    font.pixelSize: 16
+                    font.pixelSize: window.ui.fontBody
                     font.weight: Font.DemiBold
                     elide: Text.ElideRight
                 }
@@ -304,7 +304,7 @@ ColumnLayout {
                     visible: profileCard.active
                     text: qsTr("Active")
                     color: window.ui.textMuted
-                    font.pixelSize: 12
+                    font.pixelSize: window.ui.modern ? window.ui.fontCaption : 12
                 }
             }
 

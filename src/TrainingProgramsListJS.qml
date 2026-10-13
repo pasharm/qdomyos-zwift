@@ -315,7 +315,7 @@ ColumnLayout {
                                     color: window.ui.modern ? window.ui.textMain
                                          : isItemFolder ? Material.color(Material.Orange)
                                          : (workoutDelegate.ListView.isCurrentItem ? "white" : window.ui.ink("white"))
-                                    font.pixelSize: 16
+                                    font.pixelSize: window.ui.fontBody
                                     font.weight: window.ui.modern ? Font.DemiBold : Font.Normal
                                     elide: Text.ElideRight
                                 }
@@ -447,7 +447,7 @@ ColumnLayout {
                     text: rootItem.previewWorkoutDescription
                     // An empty line kept its height and margins: a gap above the chart
                     visible: text !== ""
-                    font.pixelSize: window.ui.modern ? 16 : 14
+                    font.pixelSize: window.ui.modern ? window.ui.fontBody : 14
                     font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
                     color: window.ui.ink("white")
                     wrapMode: Text.WordWrap

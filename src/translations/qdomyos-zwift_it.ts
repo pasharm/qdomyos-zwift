@@ -8082,6 +8082,14 @@ Predefinito: A = -0.96, B = 1.33</translation>
         <translation>Colore di accento</translation>
     </message>
     <message>
+        <source>Text size</source>
+        <translation>Dimensione del testo</translation>
+    </message>
+    <message>
+        <source>%1%</source>
+        <translation>%1%</translation>
+    </message>
+    <message>
         <source>Appearance</source>
         <translation>Aspetto</translation>
     </message>

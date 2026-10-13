@@ -131,7 +131,7 @@ Page {
                      id: plainText
                      anchors.fill: parent
                      visible: !parent.rich
-                     font.pixelSize: window.ui.modern ? 17 : 20
+                     font.pixelSize: window.ui.modern ? window.ui.fontTitleSmall : 20
                      font.weight: window.ui.modern ? Font.Medium : Font.Normal
                      text: wizardButton.text
                      color: !window.ui.modern ? wizardButton.textColor
@@ -170,7 +170,7 @@ Page {
                          Text {
                              width: parent.width
                              text: wizardButton.text
-                             font.pixelSize: 17
+                             font.pixelSize: window.ui.modern ? window.ui.fontTitleSmall : 17
                              font.weight: Font.Medium
                              color: window.ui.textMain
                              wrapMode: Text.WordWrap
@@ -179,7 +179,7 @@ Page {
                              width: parent.width
                              visible: wizardButton.subtitle !== ""
                              text: wizardButton.subtitle
-                             font.pixelSize: 14
+                             font.pixelSize: window.ui.modern ? window.ui.fontLabel : 14
                              color: window.ui.textMuted
                              wrapMode: Text.WordWrap
                          }
@@ -239,7 +239,7 @@ Page {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("QZ is designed to maximize your workout experience on a range of fitness equipment, including indoor bikes, treadmills, ellipticals, and rower. By connecting seamlessly with your devices, QZ provides realtime data, personalized workout plans, and interactive elements to keep you motivated.\n\nThe following questions will customize QZ for your equipment and goals.")
-                        font.pixelSize: window.ui.modern ? 16 : 20
+                        font.pixelSize: window.ui.modern ? window.ui.fontBody : 20
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
                         width: stackViewLocal.width * 0.8
@@ -423,7 +423,7 @@ Page {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("QZ allows you to connect to both of them, even simultaneously if you want!")
-                        font.pixelSize: window.ui.modern ? 16 : 20
+                        font.pixelSize: window.ui.modern ? window.ui.fontBody : 20
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
                         width: stackViewLocal.width * 0.8
@@ -506,7 +506,7 @@ Page {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Click the button below to connect your Peloton account")
-                        font.pixelSize: window.ui.modern ? 16 : 20
+                        font.pixelSize: window.ui.modern ? window.ui.fontBody : 20
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
                         width: stackViewLocal.width * 0.8
@@ -589,7 +589,7 @@ Page {
 
                     Text {
                         text: qsTr("Typically, Peloton coaches call out a range for target incline, resistance and/or speed. Use this setting to choose the difficulty of the target QZ communicates. Difficulty level can be set to lower, upper or average")
-                        font.pixelSize: window.ui.modern ? 16 : 20
+                        font.pixelSize: window.ui.modern ? window.ui.fontBody : 20
                         wrapMode: Text.WordWrap
                         width: stackViewLocal.width * 0.8
                         horizontalAlignment: Text.AlignHCenter
@@ -678,7 +678,7 @@ Page {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("What resistance level feels like a flat road on your bike?")
-                        font.pixelSize: window.ui.modern ? 16 : 20
+                        font.pixelSize: window.ui.modern ? window.ui.fontBody : 20
                         wrapMode: Text.WordWrap
                         width: stackViewLocal.width * 0.8
                         horizontalAlignment: Text.AlignHCenter
@@ -759,7 +759,7 @@ Page {
                         text: qsTr("Here you will see custom configurations based on your previous choices.")
                         wrapMode: Text.WordWrap
                         width: parent.width * 0.8
-                        font.pixelSize: window.ui.modern ? 16 : 20
+                        font.pixelSize: window.ui.modern ? window.ui.fontBody : 20
                         horizontalAlignment: Text.AlignHCenter
                         color: window.ui.inkMuted("white")
                     }
@@ -1416,7 +1416,7 @@ Page {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Select your preferred unit system")
-                        font.pixelSize: window.ui.modern ? 16 : 20
+                        font.pixelSize: window.ui.modern ? window.ui.fontBody : 20
                         color: window.ui.inkMuted("white")
                     }
 
@@ -1488,7 +1488,7 @@ Page {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Weight (%1)").arg((settings.miles_unit && !settings.weight_kg_unit) ? qsTr("lbs") : qsTr("kg"))
-                        font.pixelSize: window.ui.modern ? 16 : 20
+                        font.pixelSize: window.ui.modern ? window.ui.fontBody : 20
                         color: window.ui.inkMuted("white")
                     }
 
@@ -1529,7 +1529,7 @@ Page {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Age")
-                        font.pixelSize: window.ui.modern ? 16 : 20
+                        font.pixelSize: window.ui.modern ? window.ui.fontBody : 20
                         color: window.ui.inkMuted("white")
                     }
 
@@ -1548,7 +1548,7 @@ Page {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Gender")
-                        font.pixelSize: window.ui.modern ? 16 : 20
+                        font.pixelSize: window.ui.modern ? window.ui.fontBody : 20
                         color: window.ui.inkMuted("white")
                     }
 
@@ -1621,7 +1621,7 @@ Page {
                     Text {
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Choose your heart rate belt or select a smartwatch option:")
-                        font.pixelSize: window.ui.modern ? 16 : 20
+                        font.pixelSize: window.ui.modern ? window.ui.fontBody : 20
                         color: window.ui.inkMuted("white")
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
@@ -1658,7 +1658,7 @@ Page {
                         Layout.fillWidth: true
                         Layout.alignment: Qt.AlignHCenter
                         text: qsTr("Or select a smartwatch option:")
-                        font.pixelSize: window.ui.modern ? 16 : 20
+                        font.pixelSize: window.ui.modern ? window.ui.fontBody : 20
                         color: window.ui.inkMuted("white")
                         Layout.topMargin: 20
                     }

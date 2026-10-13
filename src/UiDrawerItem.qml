@@ -8,7 +8,9 @@ ItemDelegate {
     property bool external: false
 
     width: parent ? parent.width : implicitWidth
-    height: 48
+    // 48 at 100 %, more as the text grows: from the size, not from the label, which is taller
+    // in a CJK fallback font
+    height: Math.max(48, Math.round(window.ui.fontLabel * 1.2) + 30)
     leftPadding: 28
     rightPadding: 24
     focusPolicy: Qt.NoFocus
@@ -56,7 +58,7 @@ ItemDelegate {
             anchors.right: externalIcon.visible ? externalIcon.left : parent.right
             anchors.verticalCenter: parent.verticalCenter
             text: control.text
-            font.pixelSize: 15
+            font.pixelSize: window.ui.fontLabel
             font.weight: Font.Medium
             color: window.ui.textMain
             elide: Text.ElideRight

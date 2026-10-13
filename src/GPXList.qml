@@ -232,7 +232,7 @@ ColumnLayout {
                     anchors.verticalCenter: parent.verticalCenter
                     text: gpxCard.folder ? fileName : fileName.substring(0, fileName.length-4)
                     color: gpxCard.selected && !gpxCard.folder ? window.ui.accent : window.ui.textMain
-                    font.pixelSize: 16
+                    font.pixelSize: window.ui.fontBody
                     font.weight: Font.DemiBold
                     elide: Text.ElideRight
                 }
@@ -425,7 +425,7 @@ ColumnLayout {
                     // Modern look: the text gives way to the chips below, laid over it
                     height: row.chips ? routeChips.height + 8 : implicitHeight
                     text: rootItem.previewWorkoutDescription
-                    font.pixelSize: window.ui.modern ? 14 : 16
+                    font.pixelSize: window.ui.modern ? window.ui.fontLabel : 16
                     color: window.ui.inkMuted("white")
                     bottomPadding: window.ui.modern ? 8 : 0
                     wrapMode: Text.WordWrap
@@ -465,7 +465,7 @@ ColumnLayout {
                                         anchors.verticalCenter: parent.verticalCenter
                                         text: modelData.text
                                         color: window.ui.textMain
-                                        font.pixelSize: 14
+                                        font.pixelSize: window.ui.modern ? window.ui.fontLabel : 14
                                         font.weight: Font.DemiBold
                                     }
                                 }

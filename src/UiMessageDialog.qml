@@ -111,7 +111,7 @@ Popup {
             visible: text.length > 0
             text: root.title.length > 0 ? root.title : root.text
             wrapMode: Text.WordWrap
-            font.pixelSize: 20
+            font.pixelSize: window.ui.fontTitle
             font.weight: Font.DemiBold
             color: window.ui.textMain
         }
@@ -131,7 +131,7 @@ Popup {
                       ? root.text + (root.informativeText.length > 0 ? "\n\n" + root.informativeText : "")
                       : root.informativeText
                 wrapMode: Text.WordWrap
-                font.pixelSize: 16
+                font.pixelSize: window.ui.fontBody
                 lineHeight: 1.15
                 color: window.ui.textMuted
             }

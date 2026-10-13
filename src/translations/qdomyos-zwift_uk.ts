@@ -8041,6 +8041,14 @@ Default: A = -0.96, B = 1.33</source>
         <translation>Акцентний колір</translation>
     </message>
     <message>
+        <source>Text size</source>
+        <translation>Розмір тексту</translation>
+    </message>
+    <message>
+        <source>%1%</source>
+        <translation>%1%</translation>
+    </message>
+    <message>
         <source>Appearance</source>
         <translation>Оформлення</translation>
     </message>

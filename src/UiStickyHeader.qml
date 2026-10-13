@@ -120,7 +120,7 @@ Item {
                 text: window.ui.plainTitle(sticky.section.title)
                 elide: Text.ElideRight
                 // From the size of the real header down to the compact one as the copy shrinks
-                font.pixelSize: parent.height > sticky.compactHeight + 6 ? 16 : 15
+                font.pixelSize: parent.height > sticky.compactHeight + 6 ? window.ui.fontBody : window.ui.fontLabel
                 font.weight: Font.Medium
                 color: window.ui.accent
             }

@@ -393,7 +393,7 @@ ScrollView {
             text: qsTr("Tiles Options")
             wrapMode: Text.WordWrap
             color: window.ui.textMain
-            font.pixelSize: 22
+            font.pixelSize: window.ui.fontHeadline
             font.weight: Font.DemiBold
             topPadding: 12
             bottomPadding: 8
@@ -504,7 +504,7 @@ ScrollView {
                     text: qsTr("Bike pedal cadence changes color to indicate how your cadence compares to the cadence called out in Peloton classes. The tile displays the following colors: white if there is no target cadence in the program, red if your cadence is lower than the target, green if your cadence matches the target, and orange if your cadence is higher than the target.")
                     font.bold: !window.ui.modern
                     font.italic: !window.ui.modern
-                    font.pixelSize: Qt.application.font.pixelSize - 2
+                    font.pixelSize: window.ui.fontHint
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -806,7 +806,7 @@ ScrollView {
             text: qsTr("Flat-equivalent pace computed from treadmill incline using the Minetti cost model.")
             font.bold: !window.ui.modern
             font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
+            font.pixelSize: window.ui.fontHint
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
@@ -1069,7 +1069,7 @@ ScrollView {
                     text: qsTr("When enabled, displays heart rate as percentage of maximum heart rate (%FC Max) instead of BPM. AVG and MAX values will also show percentages.")
                     font.bold: !window.ui.modern
                     font.italic: !window.ui.modern
-                    font.pixelSize: Qt.application.font.pixelSize - 2
+                    font.pixelSize: window.ui.fontHint
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
                     verticalAlignment: Text.AlignVCenter
@@ -5088,7 +5088,7 @@ ScrollView {
             text: qsTr("When enabled, each zone shows only the time spent in that specific zone. When disabled (default), each zone shows cumulative time spent in that zone or higher.")
             font.bold: !window.ui.modern
             font.italic: !window.ui.modern
-            font.pixelSize: Qt.application.font.pixelSize - 2
+            font.pixelSize: window.ui.fontHint
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
