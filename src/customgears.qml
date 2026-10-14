@@ -145,7 +145,7 @@ ScrollView {
             wrapsText: true
             text: qsTr("Reset to Linear Defaults")
             Layout.fillWidth: true
-            Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 20) : 40
+            Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 24) : 40
             onClicked: {
                 gearRows = defaultGearRows()
                 updateGearListModel()

@@ -78,7 +78,7 @@ Item {
                 id: connectedText
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: window.ui.modern ? popupPelotonConnectedWeb.availableWidth : 370
-                height: window.ui.modern ? implicitHeight : 120
+                height: window.ui.modern ? undefined : 120
                 wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                 text: qsTr("Your Peloton account is now connected!")
             }

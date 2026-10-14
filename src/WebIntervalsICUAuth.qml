@@ -53,7 +53,7 @@ Item {
                 id: connectedText
                 anchors.horizontalCenter: parent.horizontalCenter
                 width: window.ui.modern ? popupIntervalsICUConnectedWeb.availableWidth : 370
-                height: window.ui.modern ? implicitHeight : 120
+                height: window.ui.modern ? undefined : 120
                 wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                 text: qsTr("Your Intervals.icu account is now connected!<br><br>When you will press STOP on QZ a file<br>will be automatically uploaded to Intervals.icu!")
             }
