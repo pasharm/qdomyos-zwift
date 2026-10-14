@@ -1326,7 +1326,7 @@ const QString QZSettings::default_ui_theme_mode = QStringLiteral("auto");
 const QString QZSettings::ui_tile_snap = QStringLiteral("ui_tile_snap");
 const QString QZSettings::ui_text_scale = QStringLiteral("ui_text_scale");
 
-const uint32_t allSettingsCount = 1028;
+const uint32_t allSettingsCount = 1029;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
