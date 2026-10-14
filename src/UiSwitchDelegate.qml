@@ -18,10 +18,12 @@ T.SwitchDelegate {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding,
-                             window.ui.modern && wrapsTitle ? titleProbe.height + topPadding + bottomPadding : 0)
+                             window.ui.modern && wrapsTitle ? titleProbe.height + titleGap + topPadding + bottomPadding : 0)
 
     // The title wraps in two lines (set by IndicatorOnlySwitch); here it stays one line, elided
     property bool wrapsTitle: false
+    // A title in two lines fills the row: a little room so it does not touch the hint below
+    readonly property real titleGap: titleProbe.lineCount > 1 ? window.ui.fontPx(8) : 0
 
     // Modern look: the height of the wrapped title. IconLabel reports the height of one line:
     // at a large text size the second line ran into the hint under the switch
