@@ -17,6 +17,37 @@ STEPLOG=steps.log
 : > $STEPLOG
 mkdir -p dumps
 
+wait_boot() {
+  local i
+  adb wait-for-device
+  for i in $(seq 1 90); do
+    [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = 1 ] && break
+    sleep 2
+  done
+  sleep 10
+}
+# Google's TalkBack APK (the version a user has) is signed by another key than the image's own
+# TalkBack, so it does not install over it: it replaces the system APK instead (the emulator
+# runs with -writable-system for such a run), and the package manager takes it at boot.
+if [ -f tb/talkback.apk ] && ! adb install -r tb/talkback.apk >> $STEPLOG 2>&1; then
+  echo "== talkback: replacing the image's own APK" >> $STEPLOG
+  adb root >> $STEPLOG 2>&1 || true
+  wait_boot
+  if adb remount 2>&1 | tee -a $STEPLOG | grep -qi reboot; then
+    adb reboot
+    wait_boot
+    adb root >> $STEPLOG 2>&1 || true
+    wait_boot
+    adb remount >> $STEPLOG 2>&1 || true
+  fi
+  adb push tb/talkback.apk /product/app/talkback/talkback.apk >> $STEPLOG 2>&1 || true
+  adb shell rm -rf /product/app/talkback/oat >> $STEPLOG 2>&1 || true
+  adb reboot
+  wait_boot
+  echo "talkback after the swap: $(adb shell dumpsys package com.google.android.marvin.talkback | grep -m1 versionName)" >> $STEPLOG
+  adb shell cmd uimode night no || true
+fi
+
 adb install apk-debug/android-debug.apk
 for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
   adb shell pm grant $PKG android.permission.$p || true

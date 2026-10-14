@@ -71,6 +71,8 @@ jobs:
           arch: x86_64
           profile: Nexus 6
           disable-animations: true
+          # a ready Google TalkBack replaces the image's own (another signature): system writable
+          emulator-options: ${{ inputs.talkback != '' && inputs.talkback != 'stock' && '-no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim -writable-system' || '-no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim' }}
           script: bash .github/emu.sh
 
       - name: Upload evidence
