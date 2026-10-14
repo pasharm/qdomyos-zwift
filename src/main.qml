@@ -2,7 +2,6 @@ import QtQuick 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.12
 import QtQuick.Controls.Material.impl 2.12 as MaterialImpl
-import QtQml 2.15 as Qml
 import QtQuick.Dialogs 1.0
 import QtGraphicalEffects 1.12
 import Qt.labs.settings 1.0
@@ -429,7 +428,15 @@ ApplicationWindow {
         }
         // The settings page has its own Settings object, which the window's does not hear
         // about until a restart: it writes through here, so the look changes at once
-        function setOption(key, value) { settings[key] = value }
+        function setOption(key, value) {
+            // Leaving the modern look: the window font goes first. A binding on one font
+            // attribute that follows the look (font.weight of UiButton) writes the whole font
+            // back, and in Qt 5 that keeps the size an explicit window font gave it - the
+            // buttons stayed at the scaled size until a restart
+            if (key === "ui_modern" && !value)
+                window.font = undefined
+            settings[key] = value
+        }
         // ...and reads through here (the settings search): its own copy is stale after setOption
         function option(key) { return settings[key] }
         // Text that the classic look paints in a fixed colour (mostly white) on the page
@@ -1668,10 +1675,21 @@ ApplicationWindow {
         }
 
         Label {
+            id: toolbarTitle
             text: stackView.currentItem.title
-            // Modern look only: the classic title keeps the font of the Material style
-            Qml.Binding on font.pixelSize { when: window.ui.modern; value: window.ui.fontTitleSmall; restoreMode: Qml.Binding.RestoreBindingOrValue }
-            Qml.Binding on font.weight { when: window.ui.modern; value: Font.DemiBold; restoreMode: Qml.Binding.RestoreBindingOrValue }
+            // Modern look only: the classic title keeps the font of the Material style. Set as a
+            // whole font with just these two attributes, so the rest is inherited; not Binding:
+            // its restored value was the size at start-up, the scaled one after a text size
+            function applyLook() {
+                font = window.ui.modern ? Qt.font({ pixelSize: window.ui.fontTitleSmall, weight: Font.DemiBold })
+                                        : Qt.font({})
+            }
+            Connections {
+                target: window.ui
+                function onModernChanged() { toolbarTitle.applyLook() }
+                function onFontTitleSmallChanged() { toolbarTitle.applyLook() }
+            }
+            Component.onCompleted: applyLook()
             color: window.ui.ink(Material.foreground)
             // Fixed position, like the buttons: centred in the full bar, it moved on its own when the bar collapsed
             anchors.horizontalCenter: parent.horizontalCenter

@@ -7853,6 +7853,10 @@ import QtQuick 2.12 as Quick212
                     UiButton {
                         text: qsTr("Open Floating on a Browser")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                        // Modern look: no wider than the section. A button keeps its text on one
+                        // line, and at a large text size a long translation made the whole section
+                        // wider than its card
+                        Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
                         onClicked: openFloatingWindowBrowser();
                     }
 
