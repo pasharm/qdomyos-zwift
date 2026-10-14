@@ -268,14 +268,16 @@ for n in ET.parse(sys.argv[1]).getroot().iter("node"):
         print("   ", repr(t), n.get("bounds"))
 ' ui.xml | head -60 >> $STEPLOG
 }
+# The toolbar button is named "Search settings" too: the bar is open when Changed shows
 open_search() {
-  if ! has_quiet 'Search settings'; then
+  if ! has_quiet '^Changed$'; then
     tap_ui '🔍|Search settings'
     sleep 2
   fi
 }
 type_query() {
-  tap_ui 'Search settings' 700 330
+  # The field of the bar, not the toolbar button of the same name (y below the toolbar)
+  tap 470 338 "search field"
   sleep 1
   for i in $(seq 1 20); do adb shell input keyevent KEYCODE_DEL || true; done
   [ -n "$1" ] && adb shell input text "$1"
