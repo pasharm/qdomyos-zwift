@@ -1687,6 +1687,23 @@ ApplicationWindow {
             // Fixed position, like the buttons: centred in the full bar, it moved on its own when the bar collapsed
             anchors.horizontalCenter: parent.horizontalCenter
             y: (headerToolbar.contentHeight - height) / 2
+            // Modern look: no wider than the room between the nearest shown buttons, centred; a
+            // large text size ran the title into the search button
+            width: window.ui.modern ? Math.min(implicitWidth, titleRoom) : implicitWidth
+            elide: window.ui.modern ? Text.ElideRight : Text.ElideNone
+            readonly property real titleRoom: {
+                var c = parent.width / 2, room = c
+                var left = [toolButton, toolButtonFloating]
+                var right = [toolButtonSettingsSearch, toolButtonLoadSettings, toolButtonSaveSettings, toolButtonMaps,
+                             toolButtonVideo, toolButtonChart, toolButtonLockTiles, toolButtonAutoResistance]
+                for (var i = 0; i < left.length; i++)
+                    if (left[i].visible && left[i].opacity > 0 && left[i].width > 0)
+                        room = Math.min(room, c - (left[i].x + left[i].width))
+                for (var j = 0; j < right.length; j++)
+                    if (right[j].visible && right[j].opacity > 0 && right[j].width > 0)
+                        room = Math.min(room, right[j].x - c)
+                return Math.max(0, 2 * (room - 4))
+            }
         }
     }
 
