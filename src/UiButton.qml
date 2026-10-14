@@ -73,15 +73,11 @@ T.Button {
                              : control.down ? 8 : 2
     Material.background: flat ? "transparent" : undefined
 
-    contentItem: IconLabel {
-        spacing: control.spacing
-        mirrored: control.mirrored
-        display: control.display
-
-        icon: control.icon
-        text: control.text
-        font: control.labelFont
-        color: control.modern
+    // Modern look: the label wraps on words instead of eliding, and the button grows to the
+    // lines – for a long label in a narrow button at a large text size. Text only: the icon
+    // is dropped. The classic look keeps the one-line IconLabel
+    property bool wrapsText: false
+    readonly property color labelColor: control.modern
                ? (!control.enabled ? window.ui.textMuted
                   : control.danger ? window.ui.danger
                   : control.highlighted && !control.flat ? window.ui.accentInk
@@ -89,6 +85,35 @@ T.Button {
                : (!control.enabled ? control.Material.hintTextColor :
                   control.flat && control.highlighted ? control.Material.accentColor :
                   control.highlighted ? control.Material.primaryHighlightedTextColor : control.Material.foreground)
+
+    contentItem: Loader {
+        sourceComponent: control.modern && control.wrapsText ? wrappedLabel : iconLabel
+    }
+
+    Component {
+        id: wrappedLabel
+        Text {
+            text: control.text
+            font: control.labelFont
+            color: control.labelColor
+            wrapMode: Text.WordWrap
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+        }
+    }
+
+    Component {
+        id: iconLabel
+        IconLabel {
+            spacing: control.spacing
+            mirrored: control.mirrored
+            display: control.display
+
+            icon: control.icon
+            text: control.text
+            font: control.labelFont
+            color: control.labelColor
+        }
     }
 
     background: Rectangle {

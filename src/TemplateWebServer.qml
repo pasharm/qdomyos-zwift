@@ -36,6 +36,7 @@ ColumnLayout {
             id: labelWebServerPort
             text: qsTr("%1 Port:").arg(rootElement.templateId)
             Layout.fillWidth: true
+            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
         }
         function doSavePort(text) {
             let port = parseInt(text);

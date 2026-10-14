@@ -652,16 +652,18 @@ ScrollView {
                     rowSpacing: window.ui.modern ? 8 : 10
 
                     UiButton {
+                        wrapsText: true
                         text: qsTr("Add Gear")
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 40
+                        Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 20) : 40
                         onClicked: addNewGear()
                     }
 
                     UiButton {
+                        wrapsText: true
                         text: qsTr("Clear Selected Gear and Following")
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 40
+                        Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 20) : 40
                         onClicked: {
                             if (gearTable.currentRow >= 0) {
                                 clearGearsFromIndex(gearTable.currentRow)
@@ -670,9 +672,10 @@ ScrollView {
                     }
 
                     UiButton {
+                        wrapsText: true
                         text: qsTr("Reset All Gears")
                         Layout.fillWidth: true
-                        Layout.preferredHeight: 40
+                        Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 20) : 40
                         onClicked: initializeGearRows()
                     }
                 }

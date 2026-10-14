@@ -2858,6 +2858,7 @@ import QtQuick 2.12 as Quick212
                     color: window.ui.inkMuted(Material.color(Material.Red))
                     font.bold: true
                     Layout.fillWidth: true
+                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                 }
 
                 Repeater {
@@ -3882,6 +3883,7 @@ import QtQuick 2.12 as Quick212
                         // Modern look: apart from the description above it, the name of a picker below
                         topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                     }
                     RowLayout {
                         spacing: 10
@@ -3922,7 +3924,9 @@ import QtQuick 2.12 as Quick212
 
                     UiButton {
                         id: refreshHeartBeltNameButton
+                        wrapsText: true
                         text: qsTr("Refresh Devices List")
+                        Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: refresh_bluetooth_devices_clicked();
                     }
@@ -4702,6 +4706,7 @@ import QtQuick 2.12 as Quick212
                                 font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 2)
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             }
 
                             RowLayout {
@@ -4788,6 +4793,7 @@ import QtQuick 2.12 as Quick212
                                 font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 2)
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             }
 
                             RowLayout {
@@ -5367,6 +5373,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.fillWidth: true
                                 color: Material.color(Material.Grey)
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             }
 
                             RowLayout {
@@ -5487,6 +5494,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.fillWidth: true
                                 color: Material.color(Material.Grey)
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             }
 
                             RowLayout {
@@ -5607,6 +5615,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.fillWidth: true
                                 color: Material.color(Material.Grey)
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             }
 
                             RowLayout {
@@ -5726,6 +5735,7 @@ import QtQuick 2.12 as Quick212
                         // Modern look: apart from the description above it, the name of a picker below
                         topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                     }
                     RowLayout {
                         spacing: 10
@@ -6578,6 +6588,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Specific Model:")
                                 Layout.fillWidth: true
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             }
 
                             UiComboBox {
@@ -7925,6 +7936,7 @@ import QtQuick 2.12 as Quick212
                     }
 
                     UiButton {
+                        wrapsText: true
                         text: qsTr("Open Floating on a Browser")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         // Modern look: no wider than the section. A button keeps its text on one
@@ -10599,6 +10611,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Garmin device UNIT ID")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                     }
 
                     RowLayout {
@@ -12118,6 +12131,7 @@ import QtQuick 2.12 as Quick212
                         // Modern look: apart from the description above it, the name of a picker below
                         topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                     }
                     RowLayout {
                         spacing: 10
@@ -12180,6 +12194,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.topMargin: window.ui.modern ? 8 : 0
                                 text: qsTr("Specific Model:")
                                 Layout.fillWidth: true
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             }
 
                             UiComboBox {
@@ -14007,6 +14022,7 @@ import QtQuick 2.12 as Quick212
                         // Modern look: apart from the description above it, the name of a picker below
                         topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                     }
                     RowLayout {
                         spacing: 10
@@ -14032,7 +14048,9 @@ import QtQuick 2.12 as Quick212
                     }                   
 
                     UiButton {
+                        wrapsText: true
                         text: qsTr("Refresh Devices List")
+                        Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: refresh_bluetooth_devices_clicked();
                     }
@@ -14240,6 +14258,7 @@ import QtQuick 2.12 as Quick212
                         // Modern look: apart from the description above it, the name of a picker below
                         topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                     }
                     RowLayout {
                         spacing: 10
@@ -14265,7 +14284,9 @@ import QtQuick 2.12 as Quick212
                     }
 
                     UiButton {
+                        wrapsText: true
                         text: qsTr("Refresh Devices List")
+                        Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: refresh_bluetooth_devices_clicked();
                     }
@@ -14490,6 +14511,7 @@ import QtQuick 2.12 as Quick212
                         id: labelFilterDevice
                         text: qsTr("Manual Device:")
                         Layout.fillWidth: true
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                     }
                     RowLayout {
                         spacing: 10
@@ -14517,7 +14539,9 @@ import QtQuick 2.12 as Quick212
 
                     UiButton {
                         id: refreshFilterDeviceButton
+                        wrapsText: true
                         text: qsTr("Refresh Devices List")
+                        Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: refresh_bluetooth_devices_clicked();
                     }
@@ -15593,6 +15617,7 @@ import QtQuick 2.12 as Quick212
                                 // Modern look: apart from the description above it, the name of a picker below
                                 topPadding: window.ui.modern ? 16 : 0
                                 Layout.fillWidth: true
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             }
                             RowLayout {
                                 spacing: 10
@@ -15620,7 +15645,9 @@ import QtQuick 2.12 as Quick212
 
                             UiButton {
                                 id: refreshCadenceSensorNameButton
+                                wrapsText: true
                                 text: qsTr("Refresh Devices List")
+                                Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                 onClicked: refresh_bluetooth_devices_clicked();
                             }
@@ -16024,6 +16051,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Power sensor speed correction threshold (%):")
                                 Layout.fillWidth: true
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             }
                             RowLayout {
                                 spacing: 10
@@ -16142,6 +16170,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Power Sensor Speed/Incline Coefficient A:")
                                 Layout.fillWidth: true
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             }
                             RowLayout {
                                 spacing: 10
@@ -16165,6 +16194,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Power Sensor Speed/Incline Coefficient B:")
                                 Layout.fillWidth: true
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             }
                             RowLayout {
                                 spacing: 10
@@ -16204,6 +16234,7 @@ import QtQuick 2.12 as Quick212
                                 // Modern look: apart from the description above it, the name of a picker below
                                 topPadding: window.ui.modern ? 16 : 0
                                 Layout.fillWidth: true
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             }
                             RowLayout {
                                 spacing: 10
@@ -16231,7 +16262,9 @@ import QtQuick 2.12 as Quick212
 
                             UiButton {
                                 id: refreshPowerSensorNameButton
+                                wrapsText: true
                                 text: qsTr("Refresh Devices List")
+                                Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                 onClicked: refresh_bluetooth_devices_clicked();
                             }
@@ -16301,7 +16334,9 @@ import QtQuick 2.12 as Quick212
 
                                     UiButton {
                                         id: refreshEliteRizerNameButton
+                                        wrapsText: true
                                         text: qsTr("Refresh Devices List")
+                                        Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
                                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                         onClicked: refresh_bluetooth_devices_clicked();
                                     }
@@ -16375,7 +16410,9 @@ import QtQuick 2.12 as Quick212
 
                                     UiButton {
                                         id: refreshEliteSterzoSmartNameButton
+                                        wrapsText: true
                                         text: qsTr("Refresh Devices List")
+                                        Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
                                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                         onClicked: refresh_bluetooth_devices_clicked();
                                     }
@@ -16399,6 +16436,7 @@ import QtQuick 2.12 as Quick212
                                 // Modern look: apart from the description above it, the name of a picker below
                                 topPadding: window.ui.modern ? 16 : 0
                                 Layout.fillWidth: true
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             }
                             RowLayout {
                                 spacing: 10
@@ -16426,7 +16464,9 @@ import QtQuick 2.12 as Quick212
 
                             UiButton {
                                 id: refreshFTMSAccessoryNameButton
+                                wrapsText: true
                                 text: qsTr("Refresh Devices List")
+                                Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                 onClicked: refresh_bluetooth_devices_clicked();
                             }                                                        
@@ -17344,6 +17384,7 @@ import QtQuick 2.12 as Quick212
                                 font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 2)
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
+                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             }
 
                             Label {

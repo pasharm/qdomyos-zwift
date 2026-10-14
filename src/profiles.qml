@@ -213,6 +213,7 @@ ColumnLayout {
         color: window.ui.textMain
         font.pixelSize: window.ui.fontBody
         font.weight: Font.DemiBold
+        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
     }
     Label {
         visible: window.ui.modern
@@ -346,6 +347,7 @@ ColumnLayout {
             id: labelProfileName
             text: qsTr("Profile name")
             Layout.fillWidth: true
+            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
         }
         UiTextField {
             id: profileNameTextField

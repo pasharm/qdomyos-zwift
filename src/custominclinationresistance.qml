@@ -296,6 +296,7 @@ ScrollView {
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
+                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
             }
             Label {
                 text: qsTr("Resistance")
@@ -303,6 +304,7 @@ ScrollView {
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
+                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
             }
             Item { Layout.preferredWidth: 44 }
         }
@@ -566,16 +568,18 @@ ScrollView {
             Layout.fillWidth: true
 
             UiButton {
+                wrapsText: true
                 text: qsTr("Add Point")
                 Layout.fillWidth: true
-                Layout.preferredHeight: 40
+                Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 20) : 40
                 onClicked: addPoint()
             }
 
             UiButton {
+                wrapsText: true
                 text: qsTr("Reset Example")
                 Layout.fillWidth: true
-                Layout.preferredHeight: 40
+                Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 20) : 40
                 onClicked: {
                     setPoints(defaultPoints())
                     savePoints()

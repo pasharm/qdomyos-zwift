@@ -104,6 +104,7 @@ Item {
 
     UiButton {
         id: restoreButton
+        wrapsText: true
         anchors.bottom: parent.bottom
         anchors.bottomMargin: window.ui.modern ? 16 : 0
         anchors.horizontalCenter: parent.horizontalCenter
