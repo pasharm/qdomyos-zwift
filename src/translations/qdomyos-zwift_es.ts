@@ -8086,8 +8086,8 @@ Predeterminado: A = -0.96, B = 1.33</translation>
         <translation>Tamaño del texto</translation>
     </message>
     <message>
-        <source>Size of the text of the modern interface, in percent, from 85 to 150. The default is 100.</source>
-        <translation>Tamaño del texto de la interfaz moderna, en porcentaje, de 85 a 150. El valor predeterminado es 100.</translation>
+        <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
+        <translation>Tamaño del texto de la interfaz moderna, en porcentaje, de 80 a 170. El valor predeterminado es 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

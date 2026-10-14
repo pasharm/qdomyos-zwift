@@ -8118,8 +8118,8 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
         <translation>文字サイズ</translation>
     </message>
     <message>
-        <source>Size of the text of the modern interface, in percent, from 85 to 150. The default is 100.</source>
-        <translation>モダンインターフェースの文字サイズ（パーセント、85～150）。既定値は 100 です。</translation>
+        <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
+        <translation>モダンインターフェースの文字サイズ（パーセント、80～170）。既定値は 100 です。</translation>
     </message>
     <message>
         <source>Appearance</source>

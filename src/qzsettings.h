@@ -3409,7 +3409,7 @@ class QZSettings {
     static const QString ui_tile_snap;
     static constexpr bool default_ui_tile_snap = true;
 
-    // Size of the text of the modern look, in percent (85-150)
+    // Size of the text of the modern look, in percent (80-170)
     static const QString ui_text_scale;
     static constexpr int default_ui_text_scale = 100;
 

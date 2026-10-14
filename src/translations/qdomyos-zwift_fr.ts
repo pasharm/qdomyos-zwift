@@ -8098,8 +8098,8 @@ Par défaut : A = -0.96, B = 1.33</translation>
         <translation>Taille du texte</translation>
     </message>
     <message>
-        <source>Size of the text of the modern interface, in percent, from 85 to 150. The default is 100.</source>
-        <translation>Taille du texte de l&apos;interface moderne, en pourcentage, de 85 à 150. La valeur par défaut est 100.</translation>
+        <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
+        <translation>Taille du texte de l&apos;interface moderne, en pourcentage, de 80 à 170. La valeur par défaut est 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

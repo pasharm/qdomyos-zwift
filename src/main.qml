@@ -392,10 +392,10 @@ ApplicationWindow {
         readonly property int radius: 16
 
         // Type scale (T-078): the role sizes at 100 %, times the text size the user picked in
-        // Settings > General UI Options (85-150 %). Pages and Ui* components take a role, not
+        // Settings > General UI Options (80-170 %). Pages and Ui* components take a role, not
         // a number, so the text of the modern look grows as one. Always 1 in the classic look: a
         // size picked in the modern look must not follow the user back into the classic one
-        readonly property real textScale: modern ? Math.max(0.85, Math.min(1.5, settings.ui_text_scale / 100)) : 1
+        readonly property real textScale: modern ? Math.max(0.8, Math.min(1.7, settings.ui_text_scale / 100)) : 1
         function fontPx(base) { return Math.round(base * textScale) }
         // The font f with another size (and weight): Qt.font() alone keeps nothing but what it is given
         function fontOf(f, px, weight) {

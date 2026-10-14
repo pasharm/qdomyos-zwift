@@ -8110,8 +8110,8 @@ Default: A = -0.96, B = 1.33</source>
         <translation>文字大小</translation>
     </message>
     <message>
-        <source>Size of the text of the modern interface, in percent, from 85 to 150. The default is 100.</source>
-        <translation>现代界面的文字大小（百分比，85～150）。默认值为 100。</translation>
+        <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
+        <translation>现代界面的文字大小（百分比，80～170）。默认值为 100。</translation>
     </message>
     <message>
         <source>Appearance</source>

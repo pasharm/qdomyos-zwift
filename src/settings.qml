@@ -7542,8 +7542,8 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: uiTextScaleField
                             decimals: 0
-                            minimum: 85
-                            maximum: 150
+                            minimum: 80
+                            maximum: 170
                             text: settings.ui_text_scale
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
@@ -7560,7 +7560,7 @@ import QtQuick 2.12 as Quick212
                     }
                     Label {
                         visible: window.ui.modern
-                        text: qsTr("Size of the text of the modern interface, in percent, from 85 to 150. The default is 100.")
+                        text: qsTr("Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.")
                         font.pixelSize: window.ui.fontHint
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
