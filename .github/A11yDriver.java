@@ -16,6 +16,8 @@ public class A11yDriver {
     private static UiAutomation automation;
 
     public static void main(String[] args) throws Exception {
+        // AccessibilityInteractionClient makes a Handler on the main looper, which app_process lacks
+        Looper.prepareMainLooper();
         HandlerThread thread = new HandlerThread("A11yDriver");
         thread.start();
         Class<?> connectionInterface = Class.forName("android.app.IUiAutomationConnection");
