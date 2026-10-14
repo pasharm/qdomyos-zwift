@@ -8111,15 +8111,15 @@ Predeterminado: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Changed</source>
-        <translation>Modificadas</translation>
+        <translation>Modificados</translation>
     </message>
     <message>
         <source>Changed settings</source>
-        <translation>Configuración modificada</translation>
+        <translation>Ajustes modificados</translation>
     </message>
     <message>
         <source>No changed settings</source>
-        <translation>Ninguna configuración modificada</translation>
+        <translation>No hay ajustes modificados</translation>
     </message>
     <message>
         <source>Reset section</source>
