@@ -1,17 +1,16 @@
 #!/bin/bash
-# Test only (T-222): does the app tell a screen reader that its tree changed?
-# Qt 5.15.0 sends no accessibility events, so TalkBack keeps a stale cache of the tree. The
-# branch makes CustomQtActivity send TYPE_WINDOW_CONTENT_CHANGED (CONTENT_CHANGE_TYPE_SUBTREE)
-# 400 ms and 1.5 s after a touch is released and after back. "uiautomator events" keeps an
-# accessibility connection open (so the app sees accessibility on, as with TalkBack) and prints
-# every event; each phase below gets its own file and the summary counts the events of the app.
-# Run once with the build of the branch and once with a build without the change.
+# Test only (T-222): what the app does with the accessibility actions TalkBack sends.
+# The emulator image has no TalkBack, so .github/A11yDriver.java (built below, run through
+# app_process with the UiAutomation connection uiautomator uses) sends them instead: accessibility
+# focus on a cell below the screen (the page should scroll to it), scroll forward / backward on
+# the value fields (TalkBack's swipe up / down on a seek bar), click on the switch and the buttons
+# (TalkBack's double tap). Then the page is opened again to see what was saved.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
 STEPLOG=steps.log
 : > $STEPLOG
-mkdir -p dumps events
+mkdir -p dumps
 
 adb install apk-debug/android-debug.apk
 for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
@@ -116,31 +115,64 @@ WAHOO=$(find_ui 'Wahoo Options')
 echo "Wahoo Options at '$WAHOO'" >> $STEPLOG
 shot s-01-settings
 
-# Control: accessibility on, nothing touched - no event of the app expected
-events_start 0-idle
-events_stop
+# The driver: compiled here against the SDK the emulator action installed
+SDK=${ANDROID_SDK_ROOT:-$ANDROID_HOME}
+JAR=$SDK/platforms/android-35/android.jar
+BT=$(ls -d $SDK/build-tools/*/ | sort -V | tail -n 1)
+mkdir -p drv
+if javac -source 8 -target 8 -bootclasspath $JAR -d drv .github/A11yDriver.java >> $STEPLOG 2>&1 \
+    && ${BT}d8 --lib $JAR --output a11y.jar drv/*.class >> $STEPLOG 2>&1; then
+  adb push a11y.jar /data/local/tmp/a11y.jar > /dev/null
+  echo "driver built" >> $STEPLOG
+else
+  echo "driver NOT built" >> $STEPLOG
+fi
+# drv <name> step...: one connection, all its steps, output in drv/<name>.txt
+drv() {
+  local name=$1 args="" a
+  shift
+  for a in "$@"; do args="$args '$a'"; done
+  echo "== drv $name:$args" >> $STEPLOG
+  timeout 90 adb shell "CLASSPATH=/data/local/tmp/a11y.jar app_process / A11yDriver$args" > drv/$name.txt 2>&1 || true
+  cat drv/$name.txt >> $STEPLOG
+  sleep 2
+}
+conf() {
+  echo "== conf $1" >> $STEPLOG
+  adb shell "run-as $PKG cat 'files/.config/Roberto Viola/qDomyos-Zwift.conf'" | grep -E "^(gear_|wahoo_)" >> $STEPLOG || true
+}
 
-# The gears page opened by a tap (TalkBack ends a double tap with such a tap)
-events_start 1-open-gears
 echo "tap $WAHOO (Wahoo Options)" >> $STEPLOG
 adb shell input tap ${WAHOO:-700 1000} || true
-events_stop
+sleep 6
 shot g-01-gears
+conf before
+drv list list
 
-# A scroll of the page (TalkBack passes a two finger drag on as a one finger one)
-events_start 2-scroll
-adb shell input swipe 700 2000 700 900 400 || true
-sleep 1
-adb shell input swipe 700 2000 700 900 400 || true
-events_stop
-shot g-02-gears-table
+# TalkBack moves its focus to a cell below the screen: the page should scroll to it
+drv focus-low 'find:Gear 12, Rear Cog' 'focus:Gear 12, Rear Cog' 'sleep:1500' 'find:Gear 12, Rear Cog'
+shot g-02-focus-gear12
 
-# Back to the settings page
-events_start 3-back
-echo "back (gears)" >> $STEPLOG
+# Swipe up / down on a seek bar = scroll forward / backward
+drv values 'fwd:Gear 12, Rear Cog' 'fwd:Gear 12, Rear Cog' 'back:Gear 11, Chainring' 'focus:Cog Size:' 'fwd:Cog Size:' 'back:Chainring Size:'
+shot g-03-values
+
+# Double tap = click on the focused node
+drv switch 'focus:Without Wheel' 'click:Without Wheel'
+drv buttons 'focus:Restore Default' 'click:Restore Default' 'focus:Add Gear' 'click:Add Gear' 'sleep:1000' 'find:Gear 13'
+shot g-04-clicked
+conf after
+
+# Saved: leave the page, open it again
 adb shell input keyevent KEYCODE_BACK || true
-events_stop
-shot s-02-settings-again
+sleep 4
+dump
+WAHOO2=$(find_ui 'Wahoo Options')
+echo "Wahoo Options again at '$WAHOO2'" >> $STEPLOG
+adb shell input tap ${WAHOO2:-$WAHOO} || true
+sleep 6
+drv reopened 'find:Without Wheel' 'find:Chainring Size:' 'find:Cog Size:' 'find:Gear 11, Chainring' 'find:Gear 12, Rear Cog' 'find:Gear 13'
+shot g-05-reopened
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 kill $LOGCAT_PID 2>/dev/null || true
@@ -154,13 +186,6 @@ fi
 grep -E "ANR in|FATAL EXCEPTION" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
 
 echo "== steps"; cat $STEPLOG
-echo "== events of the app per phase: content changed (subtree) / all"
-for f in events/*.txt; do
-  total=$(grep -c "PackageName: $PKG" "$f" || true)
-  sub=$(grep "PackageName: $PKG" "$f" | grep "TYPE_WINDOW_CONTENT_CHANGED" | grep -c "CONTENT_CHANGE_TYPE_SUBTREE" || true)
-  echo "$(basename "$f" .txt): $sub / $total"
-done
-echo "== the first lines of each phase"
-for f in events/*.txt; do echo "-- $f"; head -c 3000 "$f"; echo; done
+echo "== driver"; for f in drv/*.txt; do echo "-- $f"; cat "$f"; done
 echo "== CustomQtActivity and Java errors"; grep -E "CustomQtActivity|AndroidRuntime|FATAL" full_logcat.txt | tail -n 40 || true
 echo "== QML warnings"; grep -iE "qrc:|\.qml:[0-9]+" full_logcat.txt | grep -iE "warning|error|ReferenceError|TypeError" | sort | uniq -c | sort -nr | head -40 || true

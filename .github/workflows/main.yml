@@ -72,6 +72,6 @@ jobs:
             steps.log
             a11y.txt
             dumps/
-            events/
+            drv/
             qz-logs/
           if-no-files-found: warn
