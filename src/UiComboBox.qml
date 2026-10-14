@@ -27,6 +27,24 @@ ComboBox {
     popup.leftMargin: 12
     popup.rightMargin: 12
 
+    // Modal, as the menus of the workout history: otherwise a screen reader touching an item
+    // got the row under the list; no dim, so it looks as before
+    popup.modal: true
+    popup.dim: false
+
+    // Same as the Material style's default delegate, with a name and a press action for a
+    // screen reader: the name Qt takes from the text was empty for TalkBack on a phone, and
+    // the items of the list could be neither touched nor activated
+    delegate: MenuItem {
+        width: ListView.view.width
+        text: control.textRole ? (Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]) : modelData
+        Accessible.name: text
+        Accessible.onPressAction: clicked()
+        Material.foreground: control.currentIndex === index ? ListView.view.contentItem.Material.accent : ListView.view.contentItem.Material.foreground
+        highlighted: control.highlightedIndex === index
+        hoverEnabled: control.hoverEnabled
+    }
+
     // The stock list takes its height from the ListView, which creates its items only as
     // they come into view: a long list opened short over its field and a moment later grew
     // up to the top. All items have the same height, so the full height is known at once.
