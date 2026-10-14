@@ -4670,7 +4670,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Left Controller Buttons")
                                 font.bold: true
-                                font.pixelSize: Qt.application.font.pixelSize + 2
+                                font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 2)
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
                             }
@@ -4751,7 +4751,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Right Controller Buttons")
                                 font.bold: true
-                                font.pixelSize: Qt.application.font.pixelSize + 2
+                                font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 2)
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
                             }
@@ -5318,7 +5318,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Cruise Profile Settings")
                                 font.bold: true
-                                font.pixelSize: Qt.application.font.pixelSize + 1
+                                font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 1)
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
                                 color: Material.color(Material.Grey)
@@ -5438,7 +5438,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Climb Profile Settings")
                                 font.bold: true
-                                font.pixelSize: Qt.application.font.pixelSize + 1
+                                font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 1)
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
                                 color: Material.color(Material.Grey)
@@ -5558,7 +5558,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Sprint Profile Settings")
                                 font.bold: true
-                                font.pixelSize: Qt.application.font.pixelSize + 1
+                                font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 1)
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
                                 color: Material.color(Material.Grey)
@@ -9731,7 +9731,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.fillWidth: true
                                 // Modern: the height and the font of UiTextField
                                 Layout.preferredHeight: window.ui.modern ? -1 : 40
-                                font.pixelSize: window.ui.modern ? Qt.application.font.pixelSize : 16
+                                font.pixelSize: window.ui.modern ? window.ui.fontBase : 16
 
                                 onAccepted: {
                                     if (text.length > 0) {
@@ -17225,7 +17225,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Gear Controls")
                                 font.bold: true
-                                font.pixelSize: Qt.application.font.pixelSize + 2
+                                font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 2)
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
                             }

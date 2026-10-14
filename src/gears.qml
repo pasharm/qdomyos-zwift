@@ -362,7 +362,7 @@ ScrollView {
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                     Layout.maximumWidth: chainringColumn.width - 20
-                    font.pixelSize: Qt.application.font.pixelSize - 2
+                    font.pixelSize: window.ui.fontHint
                     color: window.ui.inkMuted(Material.accent)
                 }
             }
@@ -570,7 +570,9 @@ ScrollView {
                     applyOnSelect: false
                     text: qsTr("Restore Default Setting to the Trainer")
                     Layout.fillWidth: true
-                    Layout.preferredHeight: 50
+                    // Modern look: a long label at a large text size takes two lines, not the
+                    // width of the page
+                    Layout.preferredHeight: window.ui.modern ? Math.max(50, contentItem.implicitHeight + 16) : 50
                     font.bold: true
                     background: Rectangle {
                         // Modern look: the tonal pill of the other buttons, the bright purple
@@ -583,6 +585,7 @@ ScrollView {
                         text: parent.text
                         font: parent.labelFont
                         color: window.ui.ink("white")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }

@@ -866,7 +866,7 @@ ApplicationWindow {
                 Label {
                     width: Math.min(implicitWidth, gymModeColumn.width - (popupGymMode.bluetoothOff ? 30 : 0))
                     // Bluetooth is off: the one thing to do here, so larger and bold
-                    font.pixelSize: popupGymMode.bluetoothOff ? Qt.application.font.pixelSize + 6 : Qt.application.font.pixelSize
+                    font.pixelSize: window.ui.fontPx(popupGymMode.bluetoothOff ? Qt.application.font.pixelSize + 6 : Qt.application.font.pixelSize)
                     font.bold: popupGymMode.bluetoothOff
                     text: popupGymMode.bluetoothOff ? qsTranslate("homeform", "Bluetooth is off")
                           : popupGymMode.devices.length === 0 ? qsTranslate("homeform", "Searching for the device...")
@@ -885,7 +885,7 @@ ApplicationWindow {
                 model: popupGymMode.devices
                 displayText: popupGymMode.pickedDevice !== "" ? popupGymMode.pickedDevice : qsTr("Select a device")
                 currentIndex: -1
-                font.pixelSize: Qt.application.font.pixelSize + 8
+                font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 8)
 
                 onActivated: {
                     // The name straight from the list: the list is rebuilt on every search

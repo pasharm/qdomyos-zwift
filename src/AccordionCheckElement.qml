@@ -262,7 +262,7 @@ ColumnLayout {
                 text: rootElement.description
                 font.bold: !window.ui.modern
                 font.italic: !window.ui.modern
-                font.pixelSize: Qt.application.font.pixelSize - 2
+                font.pixelSize: window.ui.fontHint
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 verticalAlignment: Text.AlignVCenter
