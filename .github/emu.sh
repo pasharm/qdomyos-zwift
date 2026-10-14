@@ -38,39 +38,14 @@ list_training() {
     >> $STEPLOG || true
 }
 
-# --- the "previous install": the user's case, install, start, uninstall ---
-# The shell may not create .zwo files in Documents on API 35 (run 38485502334: "cp: Operation
-# not permitted"), so the previous install itself leaves them: on its first start QZ copies the
-# bundled programs into Documents/QZ/training, and after the uninstall they stay there,
-# owned by an app that no longer exists
-adb install apk-debug/android-debug.apk
-# started like the main start below; run 38486301638 waited 30 s after "monkey" and found no
-# training folder at all, so wait for the bundled program itself, up to 120 s
-adb shell am start -n $PKG/.CustomQtActivity >> $STEPLOG 2>&1 || true
-for i in $(seq 1 40); do
-  if adb shell "ls '$TRAIN/'" 2>/dev/null | tr -d '\r' | grep -qF "$TABATA"; then
-    echo "previous install: bundled programs in place after $((i * 3)) s" >> $STEPLOG
-    break
-  fi
-  sleep 3
-done
-sleep 3
-adb shell am force-stop $PKG || true
-echo "== training folder, previous install (shell)" >> $STEPLOG
-adb shell "ls -la '$TRAIN/' 2>&1" >> $STEPLOG || true
-adb uninstall $PKG || true
-echo "== training folder, after the uninstall (shell)" >> $STEPLOG
-adb shell "ls -la '$TRAIN/' 2>&1" >> $STEPLOG || true
-if adb shell "ls '$TRAIN/'" | tr -d '\r' | grep -qF "$TABATA"; then
-  echo "foreign file in place: $TABATA" >> $STEPLOG
-else
-  echo "!! foreign file NOT in place: $TABATA" >> $STEPLOG
-fi
-
-adb install apk-debug/android-debug.apk
-for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
-  adb shell pm grant $PKG android.permission.$p || true
-done
+# install_app: the APK and the runtime permissions it asks for at start
+install_app() {
+  adb install apk-debug/android-debug.apk
+  for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
+    adb shell pm grant $PKG android.permission.$p || true
+  done
+}
+install_app
 # No MANAGE_EXTERNAL_STORAGE here (other runs allow it): with "all files access" the app reads
 # the foreign files and the case of a reinstall is gone
 echo "appops MANAGE_EXTERNAL_STORAGE: $(adb shell appops get $PKG MANAGE_EXTERNAL_STORAGE 2>&1 | tr -d '\r')" >> $STEPLOG
@@ -228,6 +203,26 @@ mark "first start"
 start_app
 shot 01-home
 list_training "after the first start"
+
+# The "previous install" is this first start: it copied the bundled programs into
+# Documents/QZ/training. After the uninstall they stay there, owned by an app that no longer
+# exists, as on the phone after "uninstall and install again". A start without the permissions
+# and the settings file (runs 38486301638, 38487127169) never got that far.
+mark "reinstall"
+adb shell am force-stop $PKG || true
+adb uninstall $PKG || true
+echo "== training folder, after the uninstall (shell)" >> $STEPLOG
+adb shell "ls -la '$TRAIN/' 2>&1" >> $STEPLOG || true
+if adb shell "ls '$TRAIN/'" | tr -d '\r' | grep -qF "$TABATA"; then
+  echo "foreign file in place: $TABATA" >> $STEPLOG
+else
+  echo "!! foreign file NOT in place: $TABATA" >> $STEPLOG
+fi
+install_app
+put_conf "bluetooth_lastdevice_name=T195\n"
+start_app
+shot 01b-home-reinstalled
+list_training "after the reinstall"
 
 # 1. The list: the question "Training Programs" with Yes and No
 mark "open the list"
