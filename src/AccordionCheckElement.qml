@@ -154,7 +154,10 @@ ColumnLayout {
                     // settings.qml (search): a result named as the title lights the element
                     objectName: "accordionTitle"
                     anchors.left: parent.left
-                    anchors.leftMargin: 4
+                    // Open, the element is a block out to the edges of the setting frames: the
+                    // title as far in as the text of a setting in its frame. Closed, it is a
+                    // setting in a frame itself: no room of its own, as the other switches
+                    anchors.leftMargin: rootElement.modernCard ? 4 : rootElement.isOpen ? settingFrames.framePadH : 0
                     anchors.right: modernSwitch.left
                     anchors.rightMargin: 8
                     anchors.verticalCenter: parent.verticalCenter
@@ -170,7 +173,7 @@ ColumnLayout {
                 UiSwitch {
                     id: modernSwitch
                     anchors.right: parent.right
-                    anchors.rightMargin: 0
+                    anchors.rightMargin: !rootElement.modernCard && rootElement.isOpen ? settingFrames.framePadH : 0
                     anchors.verticalCenter: parent.verticalCenter
                     checked: rootElement.isOpen
                     onClicked: rootElement.toggle(checked)

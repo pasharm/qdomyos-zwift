@@ -1688,8 +1688,11 @@ ApplicationWindow {
             anchors.horizontalCenter: parent.horizontalCenter
             y: (headerToolbar.contentHeight - height) / 2
             // Modern look: no wider than the room between the nearest shown buttons, centred; a
-            // large text size ran the title into the search button
+            // large text size ran the title into the search button. A title that does not fit
+            // takes a smaller font down to 14 px of the text size, and only then an ellipsis
             width: window.ui.modern ? Math.min(implicitWidth, titleRoom) : implicitWidth
+            fontSizeMode: window.ui.modern ? Text.HorizontalFit : Text.FixedSize
+            minimumPixelSize: window.ui.fontPx(14)
             elide: window.ui.modern ? Text.ElideRight : Text.ElideNone
             readonly property real titleRoom: {
                 var c = parent.width / 2, room = c
