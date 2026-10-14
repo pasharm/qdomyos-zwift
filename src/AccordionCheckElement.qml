@@ -65,6 +65,16 @@ ColumnLayout {
         id: indicatCbx
         text: rootElement.title
         checked: rootElement.isOpen
+        // TalkBack: Qt 5.15 gives a SwitchDelegate no action, so the swipe passed over the
+        // switch of every section and a tap was not a turn; the press action turns it and
+        // saves it as a tap does
+        Accessible.name: text
+        Accessible.checkable: true
+        Accessible.checked: checked
+        Accessible.onPressAction: {
+            checked = !checked
+            clicked()
+        }
         onClicked: {
             rootElement.isOpen = checked;
             if (typeof(settings[rootElement.linkedBoolSetting])=="undefined") {

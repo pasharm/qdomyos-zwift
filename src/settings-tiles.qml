@@ -482,6 +482,15 @@ ScrollView {
                 SwitchDelegate {
                     id: cadenceColorEnabled
                     text: qsTr("Enable Cadence color")
+                    // TalkBack: Qt 5.15 gives a SwitchDelegate no action, so the swipe passed over it and
+                    // a tap was not a turn; the press action turns it and saves it as a tap does
+                    Accessible.name: text
+                    Accessible.checkable: true
+                    Accessible.checked: checked
+                    Accessible.onPressAction: {
+                        checked = !checked
+                        clicked()
+                    }
                     spacing: 0
                     bottomPadding: 0
                     topPadding: 0
@@ -727,6 +736,14 @@ ScrollView {
                 SwitchDelegate {
                     id: paceColorEnabled
                     text: qsTr("Enable Pace color")
+                    // TalkBack: a stop of its own and a turn, as the switch above
+                    Accessible.name: text
+                    Accessible.checkable: true
+                    Accessible.checked: checked
+                    Accessible.onPressAction: {
+                        checked = !checked
+                        clicked()
+                    }
                     spacing: 0
                     bottomPadding: 0
                     topPadding: 0
@@ -915,6 +932,14 @@ ScrollView {
                 SwitchDelegate {
                     id: wattColorEnabled
                     text: qsTr("Enable Watt color")
+                    // TalkBack: a stop of its own and a turn, as the switch above
+                    Accessible.name: text
+                    Accessible.checkable: true
+                    Accessible.checked: checked
+                    Accessible.onPressAction: {
+                        checked = !checked
+                        clicked()
+                    }
                     spacing: 0
                     bottomPadding: 0
                     topPadding: 0
@@ -1151,6 +1176,14 @@ ScrollView {
                 SwitchDelegate {
                     id: heartShowAsPercentSwitch
                     text: qsTr("Show as %FC Max")
+                    // TalkBack: a stop of its own and a turn, as the switch above
+                    Accessible.name: text
+                    Accessible.checkable: true
+                    Accessible.checked: checked
+                    Accessible.onPressAction: {
+                        checked = !checked
+                        clicked()
+                    }
                     spacing: 0
                     bottomPadding: 0
                     topPadding: 0
@@ -1556,6 +1589,14 @@ ScrollView {
                 SwitchDelegate {
                     id: pelotonResistanceColorEnabled
                     text: qsTr("Enable Peloton Resistance color")
+                    // TalkBack: a stop of its own and a turn, as the switch above
+                    Accessible.name: text
+                    Accessible.checkable: true
+                    Accessible.checked: checked
+                    Accessible.onPressAction: {
+                        checked = !checked
+                        clicked()
+                    }
                     spacing: 0
                     bottomPadding: 0
                     topPadding: 0
@@ -2062,6 +2103,14 @@ ScrollView {
                 }
                 SwitchDelegate {
                     text: qsTr("Swap Buttons")
+                    // TalkBack: a stop of its own and a turn, as the switch above
+                    Accessible.name: text
+                    Accessible.checkable: true
+                    Accessible.checked: checked
+                    Accessible.onPressAction: {
+                        checked = !checked
+                        clicked()
+                    }
                     spacing: 0
                     bottomPadding: 0
                     topPadding: 0
