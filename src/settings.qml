@@ -3161,6 +3161,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelUiZoom
                             text: qsTr("UI Zoom:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -3201,6 +3202,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelAppLanguage
                             text: qsTr("App Language:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -3252,6 +3254,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelWeight
                             text: qsTr("Player Weight") + " (" + ((settings.miles_unit && !settings.weight_kg_unit)?qsTr("lbs"):qsTr("kg")) + ")"
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -3292,6 +3295,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelHeight
                             text: qsTr("Player Height") + " (" + (settings.miles_unit?qsTr("ft/in"):qsTr("cm")) + ")"
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsFormatField {
@@ -3354,6 +3358,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelAge
                             text: qsTr("Player Age:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -3396,6 +3401,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelSex
                             text: qsTr("Gender:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         ValueComboBox {
@@ -3437,6 +3443,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelFTP
                             text: qsTr("FTP value:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -3518,6 +3525,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelNickname
                             text: qsTr("Nickname:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -3555,6 +3563,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelEmail
                             text: qsTr("Email:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -3931,6 +3940,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelheartRateZone1Ratio
                                     text: qsTr("Zone 1 %:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -3958,6 +3968,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelheartRateZone2Ratio
                                     text: qsTr("Zone 2 %:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -3985,6 +3996,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelheartRateZone3Ratio
                                     text: qsTr("Zone 3 %:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -4012,6 +4024,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelheartRateZone4Ratio
                                     text: qsTr("Zone 4 %:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -4088,6 +4101,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelHeartRateMaxOverrideValue
                                             text: qsTr("Max Heart Rate")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -4129,6 +4143,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelHeartRateRestingValue
                                             text: qsTr("Resting Heart Rate")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -4181,6 +4196,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelPowerFromHeartPWR1
                                             text: qsTr("Session 1 Watt:")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -4209,6 +4225,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelPowerFromHeartHR1
                                             text: qsTr("Session 1 HR:")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -4237,6 +4254,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelPowerFromHeartPWR2
                                             text: qsTr("Session 2 Watt:")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -4265,6 +4283,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelPowerFromHeartHR2
                                             text: qsTr("Session 2 HR:")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -4428,6 +4447,7 @@ import QtQuick 2.12 as Quick212
 
                         Label {
                             text: qsTr("Gear Value:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -4505,6 +4525,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelBikeWeight
                             text: qsTr("Bike Weight (%1)").arg((settings.miles_unit && !settings.weight_kg_unit) ? qsTr("lbs") : qsTr("kg"))
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -4544,6 +4565,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelCRRGain
                             text: qsTr("Rolling Res. Gain")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -4569,6 +4591,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelCWGain
                             text: qsTr("Wind Res. Gain")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -4678,6 +4701,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Up:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4690,6 +4714,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Down:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4702,6 +4727,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Left:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4714,6 +4740,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Right:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4726,6 +4753,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Shoulder:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4759,6 +4787,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right Y:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4771,6 +4800,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right A:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4783,6 +4813,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right B:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4795,6 +4826,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right Z:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4807,6 +4839,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right Shoulder:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -5053,6 +5086,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelZwiftErgResistanceDown
                             text: qsTr("Min. Resistance:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -5092,6 +5126,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelZwiftErgResistanceUp
                             text: qsTr("Max. Resistance:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -5171,6 +5206,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Gears Gain:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -5224,6 +5260,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Gears Offset:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -5301,6 +5338,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Profile:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -5880,6 +5918,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelEchelonWattTable
                                     text: qsTr("Watt Profile:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -6308,6 +6347,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelflywheelBikeFilter
                                     text: qsTr("Samples Filter:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -6372,6 +6412,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelDomyosBikeCadenceFilter
                                     text: qsTr("Cadence Filter:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -6506,6 +6547,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelproformBikeWheelRatio
                                     text: qsTr("Wheel Ratio:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -6690,6 +6732,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("TDF1 IP:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsFormatField {
@@ -6716,6 +6759,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelproformTDF4IP
                                     text: qsTr("TDF4 IP:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsFormatField {
@@ -6962,6 +7006,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelm3iBikeId
                                     text: qsTr("Bike ID:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -7475,6 +7520,7 @@ import QtQuick 2.12 as Quick212
                         Layout.topMargin: 8
                         Label {
                             text: qsTr("Appearance")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -7505,6 +7551,7 @@ import QtQuick 2.12 as Quick212
                         Layout.topMargin: 8
                         Label {
                             text: qsTr("Theme")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -7536,6 +7583,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             //: Size of all the text of the modern interface, in percent
                             text: qsTr("Text size")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         // A number like UI Zoom, any whole percent of the range
@@ -7885,6 +7933,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelChartDisplayMode
                             text: qsTr("Chart Display Mode:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -8002,6 +8051,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Background Color:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -8084,6 +8134,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Tiles Shadow Color:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -8192,6 +8243,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPelotonUsername
                             text: qsTr("Username:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -8230,6 +8282,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPelotonPassword
                             text: qsTr("Password:") + ((rootItem.pelotonLogin===-1 || Qt.platform.os === "android")?"":(rootItem.pelotonLogin===1?"\u2705":"\u274c"))
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                             // Android has no reliable emoji font for the login result, so it is drawn
                             ShapeIcon {
@@ -8294,6 +8347,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPelotonDifficulty
                             text: qsTr("Difficulty:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         ValueComboBox {
@@ -8333,6 +8387,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Treadmill Level:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -8446,6 +8501,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Running Min Speed:") + " (" + (settings.miles_unit ? qsTr("mph") : qsTr("km/h")) + ")"
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -8559,6 +8615,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPZPPassword
                             text: qsTr("PZP Password:") + ((rootItem.pzpLogin===-1 || Qt.platform.os === "android")?"":(rootItem.pzpLogin===1?"\u2705":"\u274c"))
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                             // Android has no reliable emoji font for the login result, so it is drawn
                             ShapeIcon {
@@ -8840,6 +8897,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelpelotonDateOnStrava
                             text: qsTr("Date on Strava:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         ValueComboBox {
@@ -8879,6 +8937,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Date Format:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -9052,6 +9111,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Username:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -9090,6 +9150,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelZwiftPassword
                             text: qsTr("Password:") + ((rootItem.zwiftLogin===-1 || Qt.platform.os === "android")?"":(rootItem.zwiftLogin===1?"\u2705":"\u274c"))
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                             // Android has no reliable emoji font for the login result, so it is drawn
                             ShapeIcon {
@@ -9243,6 +9304,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Poll Time:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -9595,6 +9657,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Garmin Email:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -9624,6 +9687,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Garmin Password:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -9651,6 +9715,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Garmin Server:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -10715,6 +10780,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTreadmillPidHR
                             text: qsTr("PID on Heart Zone:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         ValueComboBox {
@@ -10742,6 +10808,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTreadmillPidHRControl
                             text: qsTr("PID HR actuator:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         ValueComboBox {
@@ -11253,6 +11320,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTreadmillPaceDefault
                             text: qsTr("Default Pace:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         ValueComboBox {
@@ -11373,6 +11441,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomPeriod
                             text: qsTr("Period (seconds):")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11400,6 +11469,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomSpeedMin
                             text: qsTr("Speed min.:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11426,6 +11496,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomSpeedMax
                             text: qsTr("Speed max.:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11452,6 +11523,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomInclineMin
                             text: qsTr("Incline min.:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11479,6 +11551,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomInclineMax
                             text: qsTr("Incline max.:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11505,6 +11578,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomResistanceMin
                             text: qsTr("Resistance min.:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11748,6 +11822,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTreadmillStepSpeed
                             text: qsTr("Speed Step:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11787,6 +11862,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Min. Inclination:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11827,6 +11903,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Max. Inclination:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11866,6 +11943,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Max. Speed:") + " (" + (settings.miles_unit?qsTr("mph"):qsTr("km/h")) + ")"
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11903,6 +11981,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Min. Speed:") + " (" + (settings.miles_unit?qsTr("mph"):qsTr("km/h")) + ")"
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11941,6 +12020,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelStepGain
                             text: qsTr("Step Count Gain:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -12412,6 +12492,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelproformtreadmillip
                                     text: qsTr("Proform IP:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsFormatField {
@@ -13159,6 +13240,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelfitshowTreadmillUserId
                                     text: qsTr("User ID:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -13334,6 +13416,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelhorizonTreadmillProfile1
                                     text: qsTr("User 1:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -13357,6 +13440,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelhorizonTreadmillProfile2
                                     text: qsTr("User 2:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -13380,6 +13464,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelhorizonTreadmillProfile3
                                     text: qsTr("User 3:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -13403,6 +13488,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelhorizonTreadmillProfile4
                                     text: qsTr("User 4:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -13426,6 +13512,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelhorizonTreadmillProfile5
                                     text: qsTr("User 5:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -14279,6 +14366,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Companion IP:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsFormatField {
@@ -14470,6 +14558,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelwattOffset
                             text: qsTr("Watt Offset:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -14550,6 +14639,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelwattMax
                             text: qsTr("Max Watt:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -14588,6 +14678,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelspeedOffset
                             text: qsTr("Speed Offset")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -14669,6 +14760,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelcadenceOffset
                             text: qsTr("Cadence Offset")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -14709,6 +14801,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelcadenceGain
                             text: qsTr("Cadence Gain:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -14755,6 +14848,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Strava Upload:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         ValueComboBox {
@@ -14781,6 +14875,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelStravaSuffix
                             text: qsTr("Suffix activity:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiTextField {
@@ -15164,6 +15259,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Minimum Inclination:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -15203,6 +15299,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelInclinationStep
                             text: qsTr("Inclination Step:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -15361,6 +15458,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Inclination Delay:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -15536,6 +15634,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelCadenceSpeedRatio
                                     text: qsTr("Wheel Ratio:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -15653,6 +15752,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Watt 1:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -15702,6 +15802,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Watt 2:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -16341,6 +16442,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelSS2KShiftStep
                                     text: qsTr("Shift Step")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -16366,6 +16468,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelSS2KMaxResistance
                                     text: qsTr("Max Resistance")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -16391,6 +16494,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelSS2KMinResistance
                                     text: qsTr("Min Resistance")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -16658,6 +16762,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelFitmetriaFanFitMode
                                     text: qsTr("Mode:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 ValueComboBox {
@@ -16764,6 +16869,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Mode:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 ValueComboBox {
@@ -16865,6 +16971,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Mode:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 ValueComboBox {
@@ -17298,6 +17405,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Paddle (ZL):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -17323,6 +17431,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Power Up (LB):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -17335,6 +17444,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Ride On (RB):")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -17412,6 +17522,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelMapsType
                             text: qsTr("Maps Type:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -17467,6 +17578,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelVideoWindow
                             text: qsTr("Window Time (sec.):")
+                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -17937,6 +18049,7 @@ import QtQuick 2.12 as Quick212
                                         spacing: 10
                                         Label {
                                             text: qsTr("ID:")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -17976,6 +18089,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelDirconServerPort
                                             text: qsTr("Server Port:")
+                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -18016,6 +18130,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("MQTT Host:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -18051,6 +18166,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("MQTT Port:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -18092,6 +18208,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Username:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -18128,6 +18245,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Password:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -18165,6 +18283,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Device ID:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 UiTextField {
@@ -18211,6 +18330,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("OSC IP:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsFormatField {
@@ -18236,6 +18356,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("OSC Port:")
+                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {

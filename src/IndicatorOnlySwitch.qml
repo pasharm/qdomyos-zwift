@@ -7,6 +7,7 @@ import QtQuick.Dialogs 1.0
 
 UiSwitchDelegate {
     id: root
+    wrapsTitle: true
 
     // Preserve Material styling while making translated setting titles responsive.
     function configureTextItem(item) {

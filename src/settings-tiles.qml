@@ -518,6 +518,7 @@ ScrollView {
                     Label {
                         id: labelcadenceOrder
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -707,6 +708,7 @@ ScrollView {
                     Label {
                         id: labelpaceOrder
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -878,6 +880,7 @@ ScrollView {
                     Label {
                         id: labelwattOrder
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -1083,6 +1086,7 @@ ScrollView {
                     Label {
                         id: labelheartrateOrder
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -1412,6 +1416,7 @@ ScrollView {
                     Label {
                         id: labelpeloton_resistanceOrder
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -1795,6 +1800,7 @@ ScrollView {
                     spacing: 10
                     Label {
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -2432,6 +2438,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance1Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -2457,6 +2464,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance1Value
                         text: qsTr("value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -2479,6 +2487,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance1Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -2546,6 +2555,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance2Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -2571,6 +2581,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance2Value
                         text: qsTr("value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -2593,6 +2604,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance2Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -2660,6 +2672,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance3Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -2685,6 +2698,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance3Value
                         text: qsTr("value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -2707,6 +2721,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance3Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -2774,6 +2789,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance4Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -2799,6 +2815,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance4Value
                         text: qsTr("value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -2821,6 +2838,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance4Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -2888,6 +2906,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance5Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -2913,6 +2932,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance5Value
                         text: qsTr("value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -2935,6 +2955,7 @@ ScrollView {
                     Label {
                         id: labelPresetResistance5Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3002,6 +3023,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed1Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -3027,6 +3049,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed1Value
                         text: qsTr("value:") + " (" + (settings.miles_unit ? qsTr("mph") : qsTr("km/h")) + ")"
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3053,6 +3076,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed1Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3120,6 +3144,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed2Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -3145,6 +3170,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed2Value
                         text: qsTr("value:") + " (" + (settings.miles_unit ? qsTr("mph") : qsTr("km/h")) + ")"
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3171,6 +3197,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed2Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3238,6 +3265,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed3Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -3263,6 +3291,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed3Value
                         text: qsTr("value:") + " (" + (settings.miles_unit ? qsTr("mph") : qsTr("km/h")) + ")"
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3289,6 +3318,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed3Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3356,6 +3386,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed4Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -3381,6 +3412,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed4Value
                         text: qsTr("value:") + " (" + (settings.miles_unit ? qsTr("mph") : qsTr("km/h")) + ")"
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3407,6 +3439,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed4Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3474,6 +3507,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed5Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -3499,6 +3533,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed5Value
                         text: qsTr("value:") + " (" + (settings.miles_unit ? qsTr("mph") : qsTr("km/h")) + ")"
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3525,6 +3560,7 @@ ScrollView {
                     Label {
                         id: labelPresetSpeed5Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3592,6 +3628,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination1Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -3617,6 +3654,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination1Value
                         text: qsTr("value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3639,6 +3677,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination1Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3706,6 +3745,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination2Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -3731,6 +3771,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination2Value
                         text: qsTr("value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3753,6 +3794,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination2Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3820,6 +3862,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination3Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -3845,6 +3888,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination3Value
                         text: qsTr("value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3867,6 +3911,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination3Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3934,6 +3979,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination4Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -3959,6 +4005,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination4Value
                         text: qsTr("value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -3981,6 +4028,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination4Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4048,6 +4096,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination5Order
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -4073,6 +4122,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination5Value
                         text: qsTr("value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4095,6 +4145,7 @@ ScrollView {
                     Label {
                         id: labelPresetInclination5Label
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4161,6 +4212,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -4184,6 +4236,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("zone value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4204,6 +4257,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4224,6 +4278,7 @@ ScrollView {
                     Label {
                         id: labelPresetPowerzone1Color
                         text: qsTr("color:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4267,6 +4322,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -4290,6 +4346,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("zone value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4310,6 +4367,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4330,6 +4388,7 @@ ScrollView {
                     Label {
                         id: labelPresetPowerzone2Color
                         text: qsTr("color:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4373,6 +4432,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -4396,6 +4456,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("zone value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4416,6 +4477,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4436,6 +4498,7 @@ ScrollView {
                     Label {
                         id: labelPresetPowerzone3Color
                         text: qsTr("color:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4479,6 +4542,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -4502,6 +4566,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("zone value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4522,6 +4587,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4542,6 +4608,7 @@ ScrollView {
                     Label {
                         id: labelPresetPowerzone4Color
                         text: qsTr("color:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4585,6 +4652,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -4608,6 +4676,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("zone value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4628,6 +4697,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4648,6 +4718,7 @@ ScrollView {
                     Label {
                         id: labelPresetPowerzone5Color
                         text: qsTr("color:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4691,6 +4762,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -4714,6 +4786,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("zone value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4734,6 +4807,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4754,6 +4828,7 @@ ScrollView {
                     Label {
                         id: labelPresetPowerzone6Color
                         text: qsTr("color:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4798,6 +4873,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("order index:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: window.ui.modern ? Text.AlignLeft : Text.AlignRight
                     }
@@ -4821,6 +4897,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("zone value:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4841,6 +4918,7 @@ ScrollView {
                 RowLayout {
                     Label {
                         text: qsTr("label:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4861,6 +4939,7 @@ ScrollView {
                     Label {
                         id: labelPresetPowerzone7Color
                         text: qsTr("color:")
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }

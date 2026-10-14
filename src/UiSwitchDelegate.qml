@@ -17,7 +17,23 @@ T.SwitchDelegate {
                             implicitContentWidth + leftPadding + rightPadding)
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding,
-                             implicitIndicatorHeight + topPadding + bottomPadding)
+                             implicitIndicatorHeight + topPadding + bottomPadding,
+                             window.ui.modern && wrapsTitle ? titleProbe.height + topPadding + bottomPadding : 0)
+
+    // The title wraps in two lines (set by IndicatorOnlySwitch); here it stays one line, elided
+    property bool wrapsTitle: false
+
+    // Modern look: the height of the wrapped title. IconLabel reports the height of one line:
+    // at a large text size the second line ran into the hint under the switch
+    Text {
+        id: titleProbe
+        visible: false
+        width: Math.max(0, control.availableWidth - control.indicator.width - control.textGap)
+        text: control.text
+        font: control.font
+        wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+        maximumLineCount: 2
+    }
 
     padding: 16
     verticalPadding: Material.switchDelegateVerticalPadding
