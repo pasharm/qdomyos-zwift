@@ -58,6 +58,7 @@ adb shell settings put global hide_error_dialogs 1 || true
 # while something animates without pause)
 dump() {
   rm -f ui.xml
+  adb shell rm -f /sdcard/ui.xml > /dev/null 2>&1 || true
   timeout 25 adb shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 || true
   adb pull /sdcard/ui.xml ui.xml > /dev/null 2>&1 || true
 }
@@ -234,7 +235,10 @@ tap_wait '^&?Yes$' 4 || echo "!! no Yes button in the dump: the dialog may be a 
 sleep 6
 FOREIGN_OK=1
 shot 03-picker
-tap_wait '^Use this folder$' 5
+if ! tap_wait '^Use this folder$' 5; then
+  echo "tap USE THIS FOLDER at 720 2391 (03-picker.png of run 38488133337)" >> $STEPLOG
+  adb shell input tap 720 2391 || true
+fi
 sleep 4
 shot 04-allow
 tap_wait '^Allow$' 4
