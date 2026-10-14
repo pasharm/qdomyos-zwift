@@ -1,6 +1,7 @@
 // Test only (T-222): send the app the accessibility actions TalkBack sends, without TalkBack
-// (the emulator image has none). Runs through app_process as the shell, with the UiAutomation
-// connection uiautomator uses, so only one may run at a time and no dump meanwhile.
+// (or with it on, see --keep; the image has Google TalkBack 15). Runs through app_process as
+// the shell, with the UiAutomation connection uiautomator uses, so only one may run at a time
+// and no dump meanwhile.
 //
 //   CLASSPATH=/data/local/tmp/a11y.jar app_process / A11yDriver [--keep] step [step ...]
 //   step: list | sleep:<ms> | find:<desc> | focus:<desc> | click:<desc> | fwd:<desc> | back:<desc>

@@ -2,6 +2,8 @@
 # app meets the real screen reader there. Two changes for a run without a person: the log level
 # is VERBOSE by default (every spoken text lands in logcat as "Speaking fragment text=..."), and
 # the first-run tutorial is off (it would open over the app).
+# With apk_url it builds nothing: it takes that APK (Google's own TalkBack of the version a user
+# has, which installs over the image's TalkBack only with Google's signature) and checks sha256.
 name: TalkBack
 
 on:
@@ -15,12 +17,34 @@ on:
         description: google/talkback commit
         required: false
         default: '229212f'
+      apk_url:
+        description: a ready TalkBack APK instead of the build
+        required: false
+        default: ''
+      apk_sha256:
+        description: sha256 of that APK
+        required: false
+        default: ''
 
 jobs:
   talkback:
     runs-on: ubuntu-latest
     steps:
+      - name: Take the ready APK
+        if: inputs.apk_url != ''
+        env:
+          APK_URL: ${{ inputs.apk_url }}
+          APK_SHA256: ${{ inputs.apk_sha256 }}
+        run: |
+          curl -sSL -o talkback.apk "$APK_URL"
+          ls -l talkback.apk
+          echo "$APK_SHA256  talkback.apk" | sha256sum -c -
+          BT=$(ls -d $ANDROID_HOME/build-tools/*/ | sort -V | tail -n 1)
+          ${BT}aapt2 dump badging talkback.apk | head -n 2
+          ${BT}apksigner verify --print-certs talkback.apk | head -n 6
+
       - name: Checkout TalkBack
+        if: inputs.apk_url == ''
         uses: actions/checkout@v4
         with:
           repository: google/talkback
@@ -28,6 +52,7 @@ jobs:
           path: talkback
 
       - name: Pin the commit and patch for the test
+        if: inputs.apk_url == ''
         working-directory: talkback
         run: |
           git checkout ${{ inputs.ref || '229212f' }}
@@ -37,17 +62,20 @@ jobs:
           grep -n -A1 'public boolean shouldShowTutorial' talkback/src/main/java/com/google/android/accessibility/talkback/TalkBackService.java
 
       - name: Setup Java
+        if: inputs.apk_url == ''
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
       - name: Setup Gradle
+        if: inputs.apk_url == ''
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.13'
 
       - name: Build
+        if: inputs.apk_url == ''
         working-directory: talkback
         run: |
           echo "sdk.dir=$ANDROID_HOME" > local.properties

@@ -1,6 +1,6 @@
 #!/bin/bash
 # Test only (T-222): what the app does with the accessibility actions TalkBack sends.
-# The emulator image has no TalkBack, so .github/A11yDriver.java (built below, run through
+# Without TALKBACK (below) TalkBack is off, so .github/A11yDriver.java (built below, run through
 # app_process with the UiAutomation connection uiautomator uses) sends them instead: accessibility
 # focus on a cell below the screen (the page should scroll to it), scroll forward / backward on
 # the value fields (TalkBack's swipe up / down on a seek bar), click on the switch and the buttons
@@ -138,7 +138,7 @@ drv() {
   shift
   for a in "$@"; do args="$args '$a'"; done
   echo "== drv $name:$args" >> $STEPLOG
-  timeout 90 adb shell "CLASSPATH=/data/local/tmp/a11y.jar app_process / A11yDriver$args" > drv/$name.txt 2>&1 || true
+  timeout 200 adb shell "CLASSPATH=/data/local/tmp/a11y.jar app_process / A11yDriver$args" > drv/$name.txt 2>&1 || true
   cat drv/$name.txt >> $STEPLOG
   sleep 2
 }
@@ -157,8 +157,9 @@ drv list list
 talkback_run() {
   local tbpkg=com.google.android.marvin.talkback
   if [ -f tb/talkback.apk ]; then
-    tbpkg=com.android.talkback
+    # our build is com.android.talkback; Google's APK replaces the image's own (same signature)
     adb install -r tb/talkback.apk >> $STEPLOG 2>&1 || true
+    if adb shell pm list packages com.android.talkback | grep -q talkback; then tbpkg=com.android.talkback; fi
   fi
   echo "== talkback $tbpkg $(adb shell dumpsys package $tbpkg | grep -m1 versionName)" >> $STEPLOG
   # its preferences, before it starts: VERBOSE log (a build of ours; Google's own strips it),
@@ -199,19 +200,19 @@ talkback_run() {
   tshot() { echo "-- shot $1" >> $STEPLOG; adb shell screencap -p /sdcard/$1.png >> $STEPLOG 2>&1 || true; adb pull /sdcard/$1.png >> $STEPLOG 2>&1 || true; }
   tshot t-00-on
   # Swipe right from the top: every stop and what is said (titles, Restore button)
-  drv t-walk --keep 'mark:walk' 'focused' swipe:right swipe:right swipe:right swipe:right swipe:right \
-    swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right
+  drv t-walk --keep 'mark:walk' 'focused' swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right
   tshot t-01-walk
+  # The table, on from where the walk stopped: more cells, a value up and down
+  drv t-table --keep 'mark:table' swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right 'swipe:up' 'swipe:down' 'swipe:right' 'swipe:up'
+  tshot t-04-table
   # Touch exploration: the Restore button and a group title, then double tap on the button
-  drv t-touch --keep 'mark:touch' 'touch:Restore Default' 'touch:Chainring Size' 'touch:Restore Default' 'dtap'
+  # (focus: first only brings the node on screen, then a finger touches it)
+  drv t-touch --keep 'mark:touch' 'focus:Restore Default' 'sleep:1500' 'touch:Restore Default' 'touch:Chainring Size' 'touch:Restore Default' 'dtap'
   tshot t-02-touch
   # A value by touch, then by swipe navigation (that is when TalkBack switches to adjusting)
-  drv t-seek --keep 'mark:seek-touch' 'touch:Cog Size:' 'swipe:up' 'swipe:up' 'find:Cog Size:' \
+  drv t-seek --keep 'mark:seek-touch' 'focus:Cog Size:' 'sleep:1500' 'touch:Cog Size:' 'swipe:up' 'swipe:up' 'find:Cog Size:' \
     'mark:seek-nav' 'swipe:left' 'swipe:right' 'swipe:up' 'swipe:down' 'swipe:down' 'find:Cog Size:'
   tshot t-03-seek
-  # A table cell
-  drv t-table --keep 'mark:table' 'touch:Gear 1, Rear Cog' 'swipe:up' 'find:Gear 1, Rear Cog' 'swipe:right' 'swipe:up' 'find:Gear 2, Chainring'
-  tshot t-04-table
   mkdir -p drv/shots
   adb pull /data/local/tmp/tbshots/. drv/shots >> $STEPLOG 2>&1 || true
   conf talkback
