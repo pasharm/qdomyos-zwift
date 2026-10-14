@@ -40,12 +40,28 @@ Page {
         id: topBar
         visible: !window.lockTiles
 
+        // The two lines of the search status (modernInfo) at the text size, for the place of the
+        // modern controls above them
+        Text {
+            id: statusProbe
+            visible: false
+            text: "A\nA"
+            lineHeight: 0.8
+            font.pixelSize: window.ui.fontCaption
+        }
+
         // Modern controls. They forward to the classic buttons below, which Home.qml listens to
         Row {
             id: modernRow
             visible: window.ui.modern
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: row.verticalCenter
+            // A large text size: the two lines of the search status under the buttons did not fit
+            // in the room below them and ran into them. The buttons go up by what is missing -
+            // by the two lines of the text size, not by the status shown, so they do not jump
+            // when it comes and goes
+            anchors.verticalCenterOffset: -Math.max(0, statusProbe.height + 4
+                                                       - ((row.height - height) / 2 - row1.anchors.bottomMargin))
             spacing: 8
 
             Item {
