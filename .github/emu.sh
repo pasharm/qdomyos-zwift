@@ -154,23 +154,19 @@ drv focus-low 'find:Gear 12, Rear Cog' 'focus:Gear 12, Rear Cog' 'sleep:1500' 'f
 shot g-02-focus-gear12
 
 # Swipe up / down on a seek bar = scroll forward / backward
-drv values 'fwd:Gear 12, Rear Cog' 'fwd:Gear 12, Rear Cog' 'back:Gear 11, Chainring' 'focus:Cog Size:' 'fwd:Cog Size:' 'back:Chainring Size:'
+drv values 'focus:Gear 12, Rear Cog' 'fwd:Gear 12, Rear Cog' 'fwd:Gear 12, Rear Cog' 'find:Gear 12, Rear Cog' 'back:Gear 11, Chainring' 'focus:Cog Size:' 'fwd:Cog Size:' 'back:Chainring Size:'
 shot g-03-values
 
 # Double tap = click on the focused node
 drv switch 'focus:Without Wheel' 'click:Without Wheel'
-drv buttons 'focus:Restore Default' 'click:Restore Default' 'focus:Add Gear' 'click:Add Gear' 'sleep:1000' 'find:Gear 13'
+drv buttons 'focus:Restore Default' 'click:Restore Default' 'focus:Add Gear' 'click:Add Gear' 'sleep:1000' 'find:Gear 13' 'focus:Chainring Size' 'find:Chainring Size'
 shot g-04-clicked
 conf after
 
-# Saved: leave the page, open it again
+# Saved: leave the page, open it again with TalkBack's double tap on the settings entry
 adb shell input keyevent KEYCODE_BACK || true
 sleep 4
-dump
-WAHOO2=$(find_ui 'Wahoo Options')
-echo "Wahoo Options again at '$WAHOO2'" >> $STEPLOG
-adb shell input tap ${WAHOO2:-$WAHOO} || true
-sleep 6
+drv open-by-click 'focus:Wahoo Options' 'click:Wahoo Options' 'sleep:3000' 'find:Virtual Gear Table'
 drv reopened 'find:Without Wheel' 'find:Chainring Size:' 'find:Cog Size:' 'find:Gear 11, Chainring' 'find:Gear 12, Rear Cog' 'find:Gear 13'
 shot g-05-reopened
 
