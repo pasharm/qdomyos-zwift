@@ -161,7 +161,8 @@ talkback_run() {
     adb install -r tb/talkback.apk >> $STEPLOG 2>&1 || true
   fi
   echo "== talkback $tbpkg $(adb shell dumpsys package $tbpkg | grep -m1 versionName)" >> $STEPLOG
-  # its preferences, before it starts: VERBOSE log, no first-run tutorial
+  # its preferences, before it starts: VERBOSE log (a build of ours; Google's own strips it),
+  # speech shown on screen for the driver, no first-run tutorial
   adb shell am force-stop $tbpkg || true
   adb root >> $STEPLOG 2>&1 || true
   adb wait-for-device
@@ -169,16 +170,21 @@ talkback_run() {
   # adbd restarted as root: the logcat above has stopped, a new one from here on
   adb logcat > tb_logcat.txt 2>/dev/null &
   TB_LOGCAT_PID=$!
-  local dir=/data/user_de/0/$tbpkg
+  local dir
   printf '%s\n' "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>" '<map>' \
     '    <string name="pref_log_level">2</string>' \
+    '    <boolean name="pref_tts_overlay" value="true" />' \
     '    <boolean name="first_time_user" value="false" />' \
     '    <boolean name="pref_has_performed_restore_key" value="true" />' '</map>' > tbprefs.xml
   adb push tbprefs.xml /data/local/tmp/tbprefs.xml > /dev/null
+  # both storages: the device protected one TalkBack's code reads, and the usual one
+  for dir in /data/user_de/0/$tbpkg /data/data/$tbpkg; do
   adb shell "mkdir -p $dir/shared_prefs && cp /data/local/tmp/tbprefs.xml $dir/shared_prefs/${tbpkg}_preferences.xml \
     && chown -R \$(stat -c %u:%g $dir) $dir/shared_prefs && chmod 771 $dir/shared_prefs \
     && chmod 660 $dir/shared_prefs/${tbpkg}_preferences.xml && restorecon -R $dir/shared_prefs" >> $STEPLOG 2>&1 || true
   adb shell ls -lZ $dir/shared_prefs >> $STEPLOG 2>&1 || true
+  done
+  adb shell "rm -rf /data/local/tmp/tbshots; mkdir -p /data/local/tmp/tbshots"
   adb shell settings put secure enabled_accessibility_services $tbpkg/com.google.android.marvin.talkback.TalkBackService >> $STEPLOG 2>&1
   adb shell settings put secure accessibility_enabled 1 >> $STEPLOG 2>&1
   adb shell settings put secure touch_exploration_enabled 1 >> $STEPLOG 2>&1
@@ -206,6 +212,8 @@ talkback_run() {
   # A table cell
   drv t-table --keep 'mark:table' 'touch:Gear 1, Rear Cog' 'swipe:up' 'find:Gear 1, Rear Cog' 'swipe:right' 'swipe:up' 'find:Gear 2, Chainring'
   tshot t-04-table
+  mkdir -p drv/shots
+  adb pull /data/local/tmp/tbshots/. drv/shots >> $STEPLOG 2>&1 || true
   conf talkback
 }
 

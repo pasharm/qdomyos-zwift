@@ -7,7 +7,9 @@
 //         | swipe:right|left|up|down | dtap | touch:<desc> | focused | mark:<text>
 // <desc> is the start of a content description; the first node in tree order that matches is used.
 // --keep: connect without switching the other accessibility services off, for a run with the
-// real TalkBack; then the gesture steps go to its touch explorer, as a finger would.
+// real TalkBack; then the gesture steps go to its touch explorer, as a finger would, and after
+// each gesture the text of TalkBack's speech overlay (its "display speech output") is printed
+// as "said:", with a screenshot in /data/local/tmp/tbshots.
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.SystemClock;
@@ -15,7 +17,13 @@ import android.util.Log;
 import android.view.InputDevice;
 import android.view.InputEvent;
 import android.view.MotionEvent;
+import android.accessibilityservice.AccessibilityServiceInfo;
 import android.app.UiAutomation;
+import android.graphics.Bitmap;
+import android.view.accessibility.AccessibilityWindowInfo;
+import java.io.FileOutputStream;
+import java.util.LinkedHashSet;
+import java.util.List;
 import android.graphics.Rect;
 import android.view.accessibility.AccessibilityNodeInfo;
 import java.lang.reflect.Constructor;
@@ -39,6 +47,10 @@ public class A11yDriver {
             // UiAutomation.FLAG_DONT_SUPPRESS_ACCESSIBILITY_SERVICES
             UiAutomation.class.getMethod("connect", int.class).invoke(automation, 1);
             first = 1;
+            AccessibilityServiceInfo info = automation.getServiceInfo();
+            info.flags |= AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS
+                    | AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS;
+            automation.setServiceInfo(info);
         } else {
             UiAutomation.class.getMethod("connect").invoke(automation);
         }
@@ -71,7 +83,7 @@ public class A11yDriver {
             int dx = arg.equals("right") ? 1 : arg.equals("left") ? -1 : 0;
             int dy = arg.equals("down") ? 1 : arg.equals("up") ? -1 : 0;
             stroke(720 - dx * 350, 1300 - dy * 350, 720 + dx * 350, 1300 + dy * 350, 200);
-            Thread.sleep(2500);
+            listen(step, 2500);
             printFocused(step);
             return;
         }
@@ -80,7 +92,7 @@ public class A11yDriver {
             stroke(720, 1300, 720, 1300, 50);
             Thread.sleep(80);
             stroke(720, 1300, 720, 1300, 50);
-            Thread.sleep(2500);
+            listen(step, 2500);
             printFocused(step);
             return;
         }
@@ -113,7 +125,7 @@ public class A11yDriver {
             System.out.println(step + ": at " + bounds.centerX() + "," + bounds.centerY() + " " + describe(node));
             // a finger that rests: touch exploration, not a tap
             stroke(bounds.centerX(), bounds.centerY(), bounds.centerX() + 4, bounds.centerY() + 4, 600);
-            Thread.sleep(2500);
+            listen(step, 2500);
             printFocused(step);
             return;
         }
@@ -136,6 +148,61 @@ public class A11yDriver {
         AccessibilityNodeInfo after = find(automation.getRootInActiveWindow(), arg);
         System.out.println(step + ": returned " + result + ", after "
                 + (after == null ? "NOT FOUND by the same start" : describe(after)));
+    }
+
+    // What TalkBack shows of its speech during ms, and a screenshot 400 ms in
+    private static void listen(String step, long ms) throws Exception {
+        LinkedHashSet<String> said = new LinkedHashSet<>();
+        long start = SystemClock.uptimeMillis();
+        boolean shot = false;
+        while (SystemClock.uptimeMillis() - start < ms) {
+            if (!shot && SystemClock.uptimeMillis() - start >= 400) {
+                shot = true;
+                screenshot(step);
+            }
+            List<AccessibilityWindowInfo> windows = automation.getWindows();
+            for (AccessibilityWindowInfo window : windows) {
+                AccessibilityNodeInfo root = window.getRoot();
+                if (root != null && root.getPackageName() != null
+                        && root.getPackageName().toString().contains("talkback")) {
+                    texts(root, said);
+                }
+            }
+            Thread.sleep(80);
+        }
+        System.out.println(step + ": said " + said);
+        Log.i("A11yDriver", step + ": said " + said);
+    }
+
+    private static void texts(AccessibilityNodeInfo node, LinkedHashSet<String> out) {
+        if (node == null) {
+            return;
+        }
+        if (node.getText() != null && node.getText().length() > 0) {
+            out.add(node.getText().toString());
+        }
+        if (node.getContentDescription() != null && node.getContentDescription().length() > 0) {
+            out.add(node.getContentDescription().toString());
+        }
+        for (int i = 0; i < node.getChildCount(); i++) {
+            texts(node.getChild(i), out);
+        }
+    }
+
+    private static void screenshot(String step) {
+        try {
+            Bitmap bitmap = automation.takeScreenshot();
+            if (bitmap == null) {
+                return;
+            }
+            String name = String.format("/data/local/tmp/tbshots/%d-%s.png", SystemClock.uptimeMillis(),
+                    step.replaceAll("[^A-Za-z0-9]+", "_"));
+            FileOutputStream out = new FileOutputStream(name);
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.close();
+        } catch (Exception e) {
+            System.out.println("screenshot: " + e);
+        }
     }
 
     private static void printFocused(String step) {
