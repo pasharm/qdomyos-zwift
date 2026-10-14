@@ -1677,19 +1677,12 @@ ApplicationWindow {
         Label {
             id: toolbarTitle
             text: stackView.currentItem.title
-            // Modern look only: the classic title keeps the font of the Material style. Set as a
-            // whole font with just these two attributes, so the rest is inherited; not Binding:
-            // its restored value was the size at start-up, the scaled one after a text size
-            function applyLook() {
-                font = window.ui.modern ? Qt.font({ pixelSize: window.ui.fontTitleSmall, weight: Font.DemiBold })
-                                        : Qt.font({})
-            }
-            Connections {
-                target: window.ui
-                function onModernChanged() { toolbarTitle.applyLook() }
-                function onFontTitleSmallChanged() { toolbarTitle.applyLook() }
-            }
-            Component.onCompleted: applyLook()
+            // Modern look only: the classic title keeps the font of the Material style. A whole
+            // font with just these two attributes, so the rest is inherited, and an empty one in
+            // the classic look; not Binding: its restored value was the size at start-up, the
+            // scaled one after a text size
+            font: window.ui.modern ? Qt.font({ pixelSize: window.ui.fontTitleSmall, weight: Font.DemiBold })
+                                   : Qt.font({})
             color: window.ui.ink(Material.foreground)
             // Fixed position, like the buttons: centred in the full bar, it moved on its own when the bar collapsed
             anchors.horizontalCenter: parent.horizontalCenter
