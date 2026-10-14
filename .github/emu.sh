@@ -180,6 +180,12 @@ sleep 8
 shot t-01-tiles
 tap_ui '^Speed$' && sleep 3
 shot t-02-speed-open
+# T-245: the list of a combo box - its items need a name and a press action for TalkBack
+if tap_ui 'Cadence, order index: .*'; then
+  sleep 3
+  shot t-02b-order-list
+  adb shell input keyevent 4 || true; sleep 2
+fi
 adb shell input swipe 700 2000 700 900 400 || true; sleep 1
 shot t-03-tiles-down
 back "tiles"; sleep 4
