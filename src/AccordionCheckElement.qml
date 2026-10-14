@@ -162,6 +162,9 @@ ColumnLayout {
                     wrapMode: Text.WordWrap
                     color: rootElement.modernCard && rootElement.isOpen ? window.ui.accent : window.ui.textMain
                     font.weight: rootElement.modernCard ? Font.DemiBold : Font.Normal
+                    // The size as well: in Qt 5 a write of the weight alone keeps the size the
+                    // label inherits at that moment, and a change of the text size missed it
+                    font.pixelSize: window.ui.fontBase
                 }
 
                 UiSwitch {

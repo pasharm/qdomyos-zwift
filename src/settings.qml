@@ -2842,6 +2842,9 @@ import QtQuick 2.12 as Quick212
                 Layout.preferredWidth: Math.max(1, column1.width)
 
                 Label {
+                    // The size with the weight: in Qt 5 a write of the weight alone keeps the size
+                    // the label inherits at that moment (the app font in the classic look)
+                    font.pixelSize: window.ui.fontBase
                     text: settingsCatalogLoading ? qsTr("Loading settings...") :
                           settingsSearchPending ? qsTr("Searching...") :
                           changedOnly && filteredSettings.length > 0 ?
@@ -2900,6 +2903,7 @@ import QtQuick 2.12 as Quick212
                             anchors.topMargin: 4
                             spacing: 8
                             Label {
+                                font.pixelSize: window.ui.fontBase
                                 text: window.ui.plainTitle(searchResultFrame.section)
                                 color: window.ui.accent
                                 font.weight: Font.DemiBold
@@ -2958,6 +2962,7 @@ import QtQuick 2.12 as Quick212
                                     spacing: 2
 
                                     Label {
+                                        font.pixelSize: window.ui.fontBase
                                         readonly property string title: entry._translatedName || entry.name || entry.key
                                         // Modern look: a capital first letter - the fields of a
                                         // tile preset are "value:" and "label:" on their page
