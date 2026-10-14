@@ -167,6 +167,14 @@ conf after
 adb shell input keyevent KEYCODE_BACK || true
 sleep 4
 drv open-by-click 'focus:Wahoo Options' 'click:Wahoo Options' 'sleep:3000' 'find:Virtual Gear Table'
+# Qt answers false for an entry that is not a button; TalkBack then taps the middle of the node
+if ! grep -q "find:Virtual Gear Table: '" drv/open-by-click.txt; then
+  dump
+  WAHOO2=$(find_ui 'Wahoo Options')
+  echo "TalkBack's own tap after false: $WAHOO2" >> $STEPLOG
+  adb shell input tap ${WAHOO2:-$WAHOO} || true
+  sleep 6
+fi
 drv reopened 'find:Without Wheel' 'find:Chainring Size:' 'find:Cog Size:' 'find:Gear 11, Chainring' 'find:Gear 12, Rear Cog' 'find:Gear 13'
 shot g-05-reopened
 
