@@ -170,6 +170,12 @@ drv open-by-click 'focus:Wahoo Options' 'click:Wahoo Options' 'sleep:3000' 'find
 drv reopened 'find:Without Wheel' 'find:Chainring Size:' 'find:Cog Size:' 'find:Gear 11, Chainring' 'find:Gear 12, Rear Cog' 'find:Gear 13'
 shot g-05-reopened
 
+# A switch of the settings page (IndicatorOnlySwitch, as on every settings page)
+adb shell input keyevent KEYCODE_BACK || true
+sleep 4
+drv settings-switch 'focus:Restore Gears on Startup' 'click:Restore Gears on Startup' 'sleep:1000' 'find:Restore Gears on Startup'
+shot s-03-settings-switch
+
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
