@@ -1035,8 +1035,16 @@ import QtQuick 2.12 as Quick212
             settingsSearchPending = false
         }
 
+        // From the store as well: a value changed on the voice or tiles page, opened over this
+        // one, is not in this page's copy until the settings are opened again. The copy stays the
+        // fallback of a key not written yet, and keeps the bindings of the cards on its property
         function settingValue(entry) {
-            var value = isUiOption(entry.key) ? window.ui.option(entry.key) : settings[entry.key]
+            if (isUiOption(entry.key))
+                return window.ui.option(entry.key)
+            var copy = settings[entry.key]
+            var value = storedValue(entry.key, entry.type, copy === undefined ? entry.defaultValue : copy)
+            if ((entry.type === "integer" || entry.type === "number") && value !== null && value !== "")
+                return Number(value)
             return value === undefined ? entry.defaultValue : value
         }
 
@@ -1080,6 +1088,9 @@ import QtQuick 2.12 as Quick212
             } else {
                 settings[entry.key] = value
             }
+            // Straight into the store too: the card reads it back (settingValue), and the page's
+            // Settings writes it only a moment later
+            settings.setValue(entry.key, settings[entry.key])
 
             // The page is made again: nothing of it may run after (applyAppLanguage)
             if (entry.key === "app_language") {
