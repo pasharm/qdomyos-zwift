@@ -17,7 +17,7 @@ on:
         required: false
         default: 'true'
       talkback:
-        description: run id of the TalkBack workflow (empty = no TalkBack, the driver's actions)
+        description: TalkBack - stock (the image's Google TalkBack) or a run id of the TalkBack workflow; empty = no TalkBack, the driver's actions
         required: false
         default: ''
 
@@ -45,7 +45,7 @@ jobs:
           github-token: ${{ github.token }}
 
       - name: Download TalkBack
-        if: inputs.talkback != ''
+        if: inputs.talkback != '' && inputs.talkback != 'stock'
         uses: actions/download-artifact@v4
         with:
           name: talkback-apk
@@ -64,6 +64,7 @@ jobs:
         env:
           UI_MODERN: ${{ inputs.modern }}
           LOG_DEBUG: ${{ inputs.log_debug }}
+          TALKBACK: ${{ inputs.talkback }}
         with:
           api-level: 35
           target: google_apis
@@ -85,6 +86,7 @@ jobs:
             steps.log
             a11y.txt
             tb-speech.txt
+            tb_logcat.txt
             dumps/
             drv/
             qz-logs/

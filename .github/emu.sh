@@ -5,9 +5,11 @@
 # focus on a cell below the screen (the page should scroll to it), scroll forward / backward on
 # the value fields (TalkBack's swipe up / down on a seek bar), click on the switch and the buttons
 # (TalkBack's double tap). Then the page is opened again to see what was saved.
-# With tb/talkback.apk (workflow TalkBack, input talkback of main.yml) the real TalkBack runs
-# instead: the driver connects without switching it off and gives it finger gestures; what it
-# says is in tb-speech.txt (its log is VERBOSE in that build).
+# With TALKBACK (input talkback of main.yml) the real TalkBack runs instead: "stock" is the
+# Google TalkBack of the image (the one phones have), a run id is a build of the TalkBack
+# workflow in tb/talkback.apk. Its log level is set to VERBOSE, so what it says is in
+# tb-speech.txt; the driver connects without switching it off and gives it finger gestures.
+TALKBACK=${TALKBACK:-}
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -153,12 +155,42 @@ conf before
 drv list list
 
 talkback_run() {
-  adb install -r tb/talkback.apk >> $STEPLOG 2>&1 || true
-  adb shell settings put secure enabled_accessibility_services com.android.talkback/com.google.android.marvin.talkback.TalkBackService
-  adb shell settings put secure accessibility_enabled 1
+  local tbpkg=com.google.android.marvin.talkback
+  if [ -f tb/talkback.apk ]; then
+    tbpkg=com.android.talkback
+    adb install -r tb/talkback.apk >> $STEPLOG 2>&1 || true
+  fi
+  echo "== talkback $tbpkg $(adb shell dumpsys package $tbpkg | grep -m1 versionName)" >> $STEPLOG
+  # its preferences, before it starts: VERBOSE log, no first-run tutorial
+  adb shell am force-stop $tbpkg || true
+  adb root >> $STEPLOG 2>&1 || true
+  adb wait-for-device
+  sleep 3
+  # adbd restarted as root: the logcat above has stopped, a new one from here on
+  adb logcat > tb_logcat.txt 2>/dev/null &
+  TB_LOGCAT_PID=$!
+  local dir=/data/user_de/0/$tbpkg
+  printf '%s\n' "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>" '<map>' \
+    '    <string name="pref_log_level">2</string>' \
+    '    <boolean name="first_time_user" value="false" />' \
+    '    <boolean name="pref_has_performed_restore_key" value="true" />' '</map>' > tbprefs.xml
+  adb push tbprefs.xml /data/local/tmp/tbprefs.xml > /dev/null
+  adb shell "mkdir -p $dir/shared_prefs && cp /data/local/tmp/tbprefs.xml $dir/shared_prefs/${tbpkg}_preferences.xml \
+    && chown -R \$(stat -c %u:%g $dir) $dir/shared_prefs && chmod 771 $dir/shared_prefs \
+    && chmod 660 $dir/shared_prefs/${tbpkg}_preferences.xml && restorecon -R $dir/shared_prefs" >> $STEPLOG 2>&1 || true
+  adb shell ls -lZ $dir/shared_prefs >> $STEPLOG 2>&1 || true
+  adb shell settings put secure enabled_accessibility_services $tbpkg/com.google.android.marvin.talkback.TalkBackService >> $STEPLOG 2>&1
+  adb shell settings put secure accessibility_enabled 1 >> $STEPLOG 2>&1
+  adb shell settings put secure touch_exploration_enabled 1 >> $STEPLOG 2>&1
   sleep 15
+  echo "enabled: $(adb shell settings get secure enabled_accessibility_services)" >> $STEPLOG
+  adb shell dumpsys accessibility | grep -iE "touch|Bound services|Enabled services|installed" | head -n 12 >> $STEPLOG || true
+  # the tutorial if it still opened, and the app in front again
+  adb shell dumpsys activity activities | grep -m3 -E "topResumedActivity|ResumedActivity" >> $STEPLOG || true
+  adb shell am start -n $PKG/$PKG.CustomQtActivity >> $STEPLOG 2>&1 || true
+  sleep 5
   # no uiautomator from here on: it would switch TalkBack off; screenshots only
-  tshot() { echo "-- shot $1" >> $STEPLOG; adb shell screencap -p /sdcard/$1.png || true; adb pull /sdcard/$1.png > /dev/null 2>&1 || true; }
+  tshot() { echo "-- shot $1" >> $STEPLOG; adb shell screencap -p /sdcard/$1.png >> $STEPLOG 2>&1 || true; adb pull /sdcard/$1.png >> $STEPLOG 2>&1 || true; }
   tshot t-00-on
   # Swipe right from the top: every stop and what is said (titles, Restore button)
   drv t-walk --keep 'mark:walk' 'focused' swipe:right swipe:right swipe:right swipe:right swipe:right \
@@ -177,7 +209,7 @@ talkback_run() {
   conf talkback
 }
 
-if [ -f tb/talkback.apk ]; then
+if [ -n "$TALKBACK" ]; then
   talkback_run
 else
 # TalkBack moves its focus to a cell below the screen: the page should scroll to it
@@ -226,8 +258,10 @@ else
   rm -f end_logcat.txt
 fi
 grep -E "ANR in|FATAL EXCEPTION" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
-if [ -f tb/talkback.apk ]; then
-  grep -E "Speaking fragment|A11yDriver|viewAccessibilityFocused|newItemFocused|FocusActionInfo|SelectorController|ensureAccessibilityFocusOnScreen" full_logcat.txt > tb-speech.txt || true
+if [ -n "$TALKBACK" ]; then
+  kill $TB_LOGCAT_PID 2>/dev/null || true
+  wait $TB_LOGCAT_PID 2>/dev/null || true
+  grep -E "Speaking fragment|A11yDriver|viewAccessibilityFocused|newItemFocused|FocusActionInfo|SelectorController|ensureAccessibilityFocusOnScreen" tb_logcat.txt > tb-speech.txt || true
 fi
 
 echo "== steps"; cat $STEPLOG
