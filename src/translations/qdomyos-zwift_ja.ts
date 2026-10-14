@@ -1674,6 +1674,10 @@ QZの設定を更新しますか?</translation>
         <translation>最高速度</translation>
     </message>
     <message>
+        <source>Max Incline</source>
+        <translation>最大傾斜</translation>
+    </message>
+    <message>
         <source>Max Resistance</source>
         <translation>最高負荷</translation>
     </message>
@@ -3843,6 +3847,146 @@ This may take a few moments on first startup.</source>
     <message>
         <source>Wi-Fi connection (DirCon) restarted</source>
         <translation>Wi-Fi 接続（DirCon）を再起動しました</translation>
+    </message>
+    <message>
+        <source>Great workout!</source>
+        <translation>お疲れさまでした！</translation>
+    </message>
+    <message>
+        <source>Average Speed: %1</source>
+        <translation>平均速度: %1</translation>
+    </message>
+    <message>
+        <source>Max Speed: %1</source>
+        <translation>最高速度: %1</translation>
+    </message>
+    <message>
+        <source>Calories burned: %1</source>
+        <translation>消費カロリー: %1</translation>
+    </message>
+    <message>
+        <source>Distance: %1</source>
+        <translation>距離: %1</translation>
+    </message>
+    <message>
+        <source>Elevation Gain (%1): %2</source>
+        <translation>獲得標高 (%1): %2</translation>
+    </message>
+    <message>
+        <source>Average Watt: %1</source>
+        <translation>平均パワー: %1</translation>
+    </message>
+    <message>
+        <source>Max Watt: %1</source>
+        <translation>最大パワー: %1</translation>
+    </message>
+    <message>
+        <source>Average Watt/Kg: %1</source>
+        <translation>平均パワーウェイトレシオ (W/kg): %1</translation>
+    </message>
+    <message>
+        <source>Max Watt/Kg: %1</source>
+        <translation>最大パワーウェイトレシオ (W/kg): %1</translation>
+    </message>
+    <message>
+        <source>Average Heart Rate: %1</source>
+        <translation>平均心拍数: %1</translation>
+    </message>
+    <message>
+        <source>Max Heart Rate: %1</source>
+        <translation>最大心拍数: %1</translation>
+    </message>
+    <message>
+        <source>Heart Rate Z%1: %2</source>
+        <translation>心拍ゾーン%1の滞在時間: %2</translation>
+    </message>
+    <message>
+        <source>Total Output: %1</source>
+        <translation>総仕事量 (kJ): %1</translation>
+    </message>
+    <message>
+        <source>Elapsed Time: %1</source>
+        <translation>経過時間: %1</translation>
+    </message>
+    <message>
+        <source>Moving Time: %1</source>
+        <translation>移動時間: %1</translation>
+    </message>
+    <message>
+        <source>Weight Loss (%1): %2</source>
+        <translation>減量 (%1): %2</translation>
+    </message>
+    <message>
+        <source>Estimated VO2Max: %1</source>
+        <translation>推定VO2Max: %1</translation>
+    </message>
+    <message>
+        <source>Running Stress Score: %1</source>
+        <translation>ランニング・ストレス・スコア: %1</translation>
+    </message>
+    <message>
+        <source>5 Seconds Power: %1W %2W/Kg</source>
+        <translation>5秒パワー: %1 W、%2 W/kg</translation>
+    </message>
+    <message>
+        <source>1 Minute Power: %1W %2W/Kg</source>
+        <translation>1分パワー: %1 W、%2 W/kg</translation>
+    </message>
+    <message>
+        <source>5 Minutes Power: %1W %2W/Kg</source>
+        <translation>5分パワー: %1 W、%2 W/kg</translation>
+    </message>
+    <message>
+        <source>Estimated FTP: %1W</source>
+        <translation>推定FTP: %1 W</translation>
+    </message>
+    <message>
+        <source>FTP IMPROVED +%1W!</source>
+        <translation>FTPが+%1 W向上しました！</translation>
+    </message>
+    <message>
+        <source>Average Cadence: %1</source>
+        <translation>平均ケイデンス: %1</translation>
+    </message>
+    <message>
+        <source>Max Cadence: %1</source>
+        <translation>最高ケイデンス: %1</translation>
+    </message>
+    <message>
+        <source>Average Resistance: %1</source>
+        <translation>平均負荷: %1</translation>
+    </message>
+    <message>
+        <source>Max Resistance: %1</source>
+        <translation>最高負荷: %1</translation>
+    </message>
+    <message>
+        <source>Average Peloton Resistance: %1</source>
+        <translation>平均Peloton換算負荷: %1</translation>
+    </message>
+    <message>
+        <source>Max Peloton Resistance: %1</source>
+        <translation>最高Peloton換算負荷: %1</translation>
+    </message>
+    <message>
+        <source>Average Pace: %1</source>
+        <translation>平均ペース: %1</translation>
+    </message>
+    <message>
+        <source>Max Pace: %1</source>
+        <translation>最高ペース: %1</translation>
+    </message>
+    <message>
+        <source>Average Strokes Length: %1</source>
+        <translation>平均ストローク長: %1</translation>
+    </message>
+    <message>
+        <source>meters</source>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>feet</source>
+        <translation>ft</translation>
     </message>
 </context>
 <context>
@@ -6173,7 +6317,7 @@ Please enter it below:</source>
     </message>
     <message>
         <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. Turn on, set a target heart rate (HR) zone in which to train and click OK. For example, enter 2 to train in HR zone 2 and the treadmill will auto adjust the speed (or resistance on a bike) to maintain your heart rate in zone 2. QZ gradually increases or decreases your speed (or bike resistance) in small increments every 40 seconds to reach and maintain your target HR zone. During a workout, you can display and use the ‘+’ and ‘-’ button on the PID HR Zone tile to change the target HR zone.</source>
-        <translation>QZは、選択した心拍ゾーン内に留まるよう、トレッドミルまたはバイクを制御します。この設定をオンにし、トレーニングする目標の心拍数(HR)ゾーンを設定し、OKをクリックしてください。例として、2を入力すると、トレッドミルがゾーン2の心拍数を維持するために速度（またはバイクの負荷）を自動調整します。QZは、目標HRゾーンに到達し維持するために、40秒ごとに速度（またはバイクの負荷）を小さな増分で徐々に増加または減少させます。ワークアウト中、「目標心拍ゾーン」タイルにある「+」と「-」ボタンを使用して、目標HRゾーンを表示および変更できます。</translation>
+        <translation type="vanished">QZは、選択した心拍ゾーン内に留まるよう、トレッドミルまたはバイクを制御します。この設定をオンにし、トレーニングする目標の心拍数(HR)ゾーンを設定し、OKをクリックしてください。例として、2を入力すると、トレッドミルがゾーン2の心拍数を維持するために速度（またはバイクの負荷）を自動調整します。QZは、目標HRゾーンに到達し維持するために、40秒ごとに速度（またはバイクの負荷）を小さな増分で徐々に増加または減少させます。ワークアウト中、「目標心拍ゾーン」タイルにある「+」と「-」ボタンを使用して、目標HRゾーンを表示および変更できます。</translation>
     </message>
     <message>
         <source>PID on HR min:</source>
@@ -6483,10 +6627,6 @@ Please enter it below:</source>
     <message>
         <source>Pafers Treadmill</source>
         <translation>Pafers トレッドミル</translation>
-    </message>
-    <message>
-        <source>Pafers Rower</source>
-        <translation>Pafers ローイングマシン</translation>
     </message>
     <message>
         <source>GEM Module Options</source>
@@ -8044,6 +8184,18 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
     <message>
         <source>QZ opens FS- devices as treadmills unless &quot;Fit Plus Bike&quot; is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off. Not shown in the settings page.</source>
         <translation>「Fit Plus Bike」がオンでない限り、QZはFS-デバイスをトレッドミルとして開きます。FS-デバイスがバイクのデータも送信する場合、QZはバイクかどうかを確認します。「いいえ」と答えるとこの確認はオフになります。設定ページには表示されません。</translation>
+    </message>
+    <message>
+        <source>PID HR actuator:</source>
+        <translation>心拍数の維持で調整する項目：</translation>
+    </message>
+    <message>
+        <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. The global PID HR actuator setting selects speed or inclination for treadmills; a workout interval can override it in the Workout Editor. The PID HR tile changes only the target HR zone.</source>
+        <translation>QZは、選択した心拍ゾーン内に留まるよう、トレッドミルまたはバイクを制御します。全体設定「心拍数の維持で調整する項目」で、トレッドミルの速度または傾斜を選びます。ワークアウトの各インターバルでは、ワークアウトエディターでこの設定を上書きできます。「目標心拍ゾーン」タイルで変更できるのは目標心拍ゾーンだけです。</translation>
+    </message>
+    <message>
+        <source>Pafers Rower</source>
+        <translation>Pafers ローイングマシン</translation>
     </message>
 </context>
 <context>

@@ -1674,6 +1674,10 @@ Voulez-vous mettre à jour les paramètres de QZ ?</translation>
         <translation>Vitesse max</translation>
     </message>
     <message>
+        <source>Max Incline</source>
+        <translation>Pente max</translation>
+    </message>
+    <message>
         <source>Max Resistance</source>
         <translation>Résistance maximale</translation>
     </message>
@@ -3844,6 +3848,146 @@ Cela peut prendre quelques instants au premier démarrage.</translation>
         <source>Wi-Fi connection (DirCon) restarted</source>
         <translation>Connexion Wi-Fi (DirCon) redémarrée</translation>
     </message>
+    <message>
+        <source>Great workout!</source>
+        <translation>Excellent entraînement !</translation>
+    </message>
+    <message>
+        <source>Average Speed: %1</source>
+        <translation>Vitesse moyenne : %1</translation>
+    </message>
+    <message>
+        <source>Max Speed: %1</source>
+        <translation>Vitesse maximale : %1</translation>
+    </message>
+    <message>
+        <source>Calories burned: %1</source>
+        <translation>Calories brûlées : %1</translation>
+    </message>
+    <message>
+        <source>Distance: %1</source>
+        <translation>Distance : %1</translation>
+    </message>
+    <message>
+        <source>Elevation Gain (%1): %2</source>
+        <translation>Dénivelé positif (%1) : %2</translation>
+    </message>
+    <message>
+        <source>Average Watt: %1</source>
+        <translation>Puissance moyenne : %1</translation>
+    </message>
+    <message>
+        <source>Max Watt: %1</source>
+        <translation>Puissance maximale : %1</translation>
+    </message>
+    <message>
+        <source>Average Watt/Kg: %1</source>
+        <translation>Puissance moyenne (W/kg) : %1</translation>
+    </message>
+    <message>
+        <source>Max Watt/Kg: %1</source>
+        <translation>Puissance maximale (W/kg) : %1</translation>
+    </message>
+    <message>
+        <source>Average Heart Rate: %1</source>
+        <translation>Fréquence cardiaque moyenne : %1</translation>
+    </message>
+    <message>
+        <source>Max Heart Rate: %1</source>
+        <translation>Fréquence cardiaque maximale : %1</translation>
+    </message>
+    <message>
+        <source>Heart Rate Z%1: %2</source>
+        <translation>Temps en zone de FC %1 : %2</translation>
+    </message>
+    <message>
+        <source>Total Output: %1</source>
+        <translation>Travail total (kJ) : %1</translation>
+    </message>
+    <message>
+        <source>Elapsed Time: %1</source>
+        <translation>Temps écoulé : %1</translation>
+    </message>
+    <message>
+        <source>Moving Time: %1</source>
+        <translation>Temps de déplacement : %1</translation>
+    </message>
+    <message>
+        <source>Weight Loss (%1): %2</source>
+        <translation>Perte de poids (%1) : %2</translation>
+    </message>
+    <message>
+        <source>Estimated VO2Max: %1</source>
+        <translation>VO2Max estimée : %1</translation>
+    </message>
+    <message>
+        <source>Running Stress Score: %1</source>
+        <translation>Score de stress de course : %1</translation>
+    </message>
+    <message>
+        <source>5 Seconds Power: %1W %2W/Kg</source>
+        <translation>Puissance sur 5 secondes : %1 W, %2 W/kg</translation>
+    </message>
+    <message>
+        <source>1 Minute Power: %1W %2W/Kg</source>
+        <translation>Puissance sur 1 minute : %1 W, %2 W/kg</translation>
+    </message>
+    <message>
+        <source>5 Minutes Power: %1W %2W/Kg</source>
+        <translation>Puissance sur 5 minutes : %1 W, %2 W/kg</translation>
+    </message>
+    <message>
+        <source>Estimated FTP: %1W</source>
+        <translation>FTP estimée : %1 W</translation>
+    </message>
+    <message>
+        <source>FTP IMPROVED +%1W!</source>
+        <translation>FTP AMÉLIORÉE : +%1 W !</translation>
+    </message>
+    <message>
+        <source>Average Cadence: %1</source>
+        <translation>Cadence moyenne : %1</translation>
+    </message>
+    <message>
+        <source>Max Cadence: %1</source>
+        <translation>Cadence maximale : %1</translation>
+    </message>
+    <message>
+        <source>Average Resistance: %1</source>
+        <translation>Résistance moyenne : %1</translation>
+    </message>
+    <message>
+        <source>Max Resistance: %1</source>
+        <translation>Résistance maximale : %1</translation>
+    </message>
+    <message>
+        <source>Average Peloton Resistance: %1</source>
+        <translation>Résistance Peloton moyenne : %1</translation>
+    </message>
+    <message>
+        <source>Max Peloton Resistance: %1</source>
+        <translation>Résistance Peloton maximale : %1</translation>
+    </message>
+    <message>
+        <source>Average Pace: %1</source>
+        <translation>Allure moyenne : %1</translation>
+    </message>
+    <message>
+        <source>Max Pace: %1</source>
+        <translation>Allure maximale : %1</translation>
+    </message>
+    <message>
+        <source>Average Strokes Length: %1</source>
+        <translation>Longueur moyenne des coups de rame : %1</translation>
+    </message>
+    <message>
+        <source>meters</source>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>feet</source>
+        <translation>ft</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
@@ -5462,10 +5606,6 @@ Non : QZ le garde comme tapis de course et ne redemandera plus (un vélo peut to
         <translation>Augmente la résistance affichée par QZ dans la tuile Résistance Peloton. Si la conversion calculée par QZ de l&apos;échelle de résistance de votre vélo à celle de Peloton vous semble trop faible, le nombre que vous entrez ici sera ajouté à la résistance calculée sans augmenter votre effort ni votre résistance réelle. (Exemple : Si QZ affiche une résistance Peloton de 30 et que vous entrez 5, QZ affichera 35.)</translation>
     </message>
     <message>
-        <source>Pafers Rower</source>
-        <translation>Rameur Pafers</translation>
-    </message>
-    <message>
         <source>This changes the virtual Bluetooth bridge from the standard FTMS to the Power Sensor interface. Default is off.</source>
         <translation>Cela modifie l&apos;appareil Bluetooth virtuel du standard FTMS à l&apos;interface du capteur de puissance. Par défaut, désactivé.</translation>
     </message>
@@ -6161,7 +6301,7 @@ Veuillez le saisir ci-dessous :</translation>
     </message>
     <message>
         <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. Turn on, set a target heart rate (HR) zone in which to train and click OK. For example, enter 2 to train in HR zone 2 and the treadmill will auto adjust the speed (or resistance on a bike) to maintain your heart rate in zone 2. QZ gradually increases or decreases your speed (or bike resistance) in small increments every 40 seconds to reach and maintain your target HR zone. During a workout, you can display and use the ‘+’ and ‘-’ button on the PID HR Zone tile to change the target HR zone.</source>
-        <translation>QZ contrôle votre tapis roulant ou votre vélo pour vous maintenir dans une Zone de fréquence cardiaque choisie. Activez l&apos;option, définissez une zone de fréquence cardiaque cible pour l&apos;entraînement et cliquez sur OK. Par exemple, entrez 2 pour s&apos;entraîner dans la zone de FC 2 et le tapis roulant ajustera automatiquement la vitesse (ou la résistance sur un vélo) pour maintenir votre fréquence cardiaque dans la zone 2. QZ augmente ou diminue progressivement votre vitesse (ou la résistance du vélo) par petits incréments toutes les 40 secondes pour atteindre et maintenir votre zone de FC cible. Pendant l&apos;entraînement, vous pouvez afficher et utiliser les boutons ‘+’ et ‘-’ sur la tuile de maintien de la zone de FC pour changer la zone de FC cible.</translation>
+        <translation type="vanished">QZ contrôle votre tapis roulant ou votre vélo pour vous maintenir dans une Zone de fréquence cardiaque choisie. Activez l&apos;option, définissez une zone de fréquence cardiaque cible pour l&apos;entraînement et cliquez sur OK. Par exemple, entrez 2 pour s&apos;entraîner dans la zone de FC 2 et le tapis roulant ajustera automatiquement la vitesse (ou la résistance sur un vélo) pour maintenir votre fréquence cardiaque dans la zone 2. QZ augmente ou diminue progressivement votre vitesse (ou la résistance du vélo) par petits incréments toutes les 40 secondes pour atteindre et maintenir votre zone de FC cible. Pendant l&apos;entraînement, vous pouvez afficher et utiliser les boutons ‘+’ et ‘-’ sur la tuile de maintien de la zone de FC pour changer la zone de FC cible.</translation>
     </message>
     <message>
         <source>PID on HR min:</source>
@@ -8024,6 +8164,18 @@ Par défaut : A = -0.96, B = 1.33</translation>
     <message>
         <source>QZ opens FS- devices as treadmills unless &quot;Fit Plus Bike&quot; is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off. Not shown in the settings page.</source>
         <translation>QZ ouvre les appareils FS- comme tapis de course sauf si « Fit Plus Bike » est activé. Quand un appareil FS- transmet aussi des données de vélo, QZ demande s’il s’agit d’un vélo ; répondre Non désactive cette question. Non affiché dans la page des paramètres.</translation>
+    </message>
+    <message>
+        <source>PID HR actuator:</source>
+        <translation>Maintien de la FC – agir sur :</translation>
+    </message>
+    <message>
+        <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. The global PID HR actuator setting selects speed or inclination for treadmills; a workout interval can override it in the Workout Editor. The PID HR tile changes only the target HR zone.</source>
+        <translation>QZ contrôle votre tapis roulant ou votre vélo pour vous maintenir dans une zone de fréquence cardiaque choisie. Le réglage général « Maintien de la FC – agir sur » choisit la vitesse ou l&apos;inclinaison pour les tapis ; un intervalle d&apos;entraînement peut le remplacer dans l&apos;Éditeur d&apos;entraînement. La tuile « Zone de maintien de la FC » ne change que la zone de FC cible.</translation>
+    </message>
+    <message>
+        <source>Pafers Rower</source>
+        <translation>Rameur Pafers</translation>
     </message>
 </context>
 <context>

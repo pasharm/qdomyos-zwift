@@ -1674,6 +1674,10 @@ Do you want to update QZ settings?</source>
         <translation>最高速度</translation>
     </message>
     <message>
+        <source>Max Incline</source>
+        <translation>最大坡度</translation>
+    </message>
+    <message>
         <source>Max Resistance</source>
         <translation>最大阻力</translation>
     </message>
@@ -3848,6 +3852,146 @@ This may take a few moments on first startup.</source>
         <source>Wi-Fi connection (DirCon) restarted</source>
         <translation>已重启 Wi-Fi 连接（DirCon）</translation>
     </message>
+    <message>
+        <source>Great workout!</source>
+        <translation>训练很棒！</translation>
+    </message>
+    <message>
+        <source>Average Speed: %1</source>
+        <translation>平均速度：%1</translation>
+    </message>
+    <message>
+        <source>Max Speed: %1</source>
+        <translation>最高速度：%1</translation>
+    </message>
+    <message>
+        <source>Calories burned: %1</source>
+        <translation>消耗卡路里：%1</translation>
+    </message>
+    <message>
+        <source>Distance: %1</source>
+        <translation>距离：%1</translation>
+    </message>
+    <message>
+        <source>Elevation Gain (%1): %2</source>
+        <translation>爬升高度（%1）：%2</translation>
+    </message>
+    <message>
+        <source>Average Watt: %1</source>
+        <translation>平均功率：%1</translation>
+    </message>
+    <message>
+        <source>Max Watt: %1</source>
+        <translation>最大功率：%1</translation>
+    </message>
+    <message>
+        <source>Average Watt/Kg: %1</source>
+        <translation>平均功率体重比（W/kg）：%1</translation>
+    </message>
+    <message>
+        <source>Max Watt/Kg: %1</source>
+        <translation>最大功率体重比（W/kg）：%1</translation>
+    </message>
+    <message>
+        <source>Average Heart Rate: %1</source>
+        <translation>平均心率：%1</translation>
+    </message>
+    <message>
+        <source>Max Heart Rate: %1</source>
+        <translation>最大心率：%1</translation>
+    </message>
+    <message>
+        <source>Heart Rate Z%1: %2</source>
+        <translation>心率区间 %1 时长：%2</translation>
+    </message>
+    <message>
+        <source>Total Output: %1</source>
+        <translation>总功（kJ）：%1</translation>
+    </message>
+    <message>
+        <source>Elapsed Time: %1</source>
+        <translation>已用时间：%1</translation>
+    </message>
+    <message>
+        <source>Moving Time: %1</source>
+        <translation>运动时间：%1</translation>
+    </message>
+    <message>
+        <source>Weight Loss (%1): %2</source>
+        <translation>减重（%1）：%2</translation>
+    </message>
+    <message>
+        <source>Estimated VO2Max: %1</source>
+        <translation>预估 VO2Max：%1</translation>
+    </message>
+    <message>
+        <source>Running Stress Score: %1</source>
+        <translation>跑步压力评分：%1</translation>
+    </message>
+    <message>
+        <source>5 Seconds Power: %1W %2W/Kg</source>
+        <translation>5 秒功率：%1 W，%2 W/kg</translation>
+    </message>
+    <message>
+        <source>1 Minute Power: %1W %2W/Kg</source>
+        <translation>1 分钟功率：%1 W，%2 W/kg</translation>
+    </message>
+    <message>
+        <source>5 Minutes Power: %1W %2W/Kg</source>
+        <translation>5 分钟功率：%1 W，%2 W/kg</translation>
+    </message>
+    <message>
+        <source>Estimated FTP: %1W</source>
+        <translation>预估 FTP：%1 W</translation>
+    </message>
+    <message>
+        <source>FTP IMPROVED +%1W!</source>
+        <translation>FTP 提升 +%1 W！</translation>
+    </message>
+    <message>
+        <source>Average Cadence: %1</source>
+        <translation>平均踏频：%1</translation>
+    </message>
+    <message>
+        <source>Max Cadence: %1</source>
+        <translation>最大踏频：%1</translation>
+    </message>
+    <message>
+        <source>Average Resistance: %1</source>
+        <translation>平均阻力：%1</translation>
+    </message>
+    <message>
+        <source>Max Resistance: %1</source>
+        <translation>最大阻力：%1</translation>
+    </message>
+    <message>
+        <source>Average Peloton Resistance: %1</source>
+        <translation>平均 Peloton 阻力：%1</translation>
+    </message>
+    <message>
+        <source>Max Peloton Resistance: %1</source>
+        <translation>最大 Peloton 阻力：%1</translation>
+    </message>
+    <message>
+        <source>Average Pace: %1</source>
+        <translation>平均配速：%1</translation>
+    </message>
+    <message>
+        <source>Max Pace: %1</source>
+        <translation>最快配速：%1</translation>
+    </message>
+    <message>
+        <source>Average Strokes Length: %1</source>
+        <translation>平均划桨长度：%1</translation>
+    </message>
+    <message>
+        <source>meters</source>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>feet</source>
+        <translation>ft</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
@@ -5522,10 +5666,6 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>增加 QZ 在 Peloton 阻力卡片中显示的阻力。如果 QZ 计算的从您的自行车阻力刻度到 Peloton 的转换值过低，您在此处输入的数字将加到计算出的阻力上，而不会增加您的努力程度或实际阻力。（示例：如果 QZ 显示 Peloton 阻力为 30，您输入 5，QZ 将显示 35。）</translation>
     </message>
     <message>
-        <source>Pafers Rower</source>
-        <translation>Pafers 划船机</translation>
-    </message>
-    <message>
         <source>This changes the virtual Bluetooth bridge from the standard FTMS to the Power Sensor interface. Default is off.</source>
         <translation>这将把虚拟蓝牙桥接从标准的 FTMS 更改为功率传感器接口。默认关闭。</translation>
     </message>
@@ -6165,7 +6305,7 @@ Please enter it below:</source>
     </message>
     <message>
         <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. Turn on, set a target heart rate (HR) zone in which to train and click OK. For example, enter 2 to train in HR zone 2 and the treadmill will auto adjust the speed (or resistance on a bike) to maintain your heart rate in zone 2. QZ gradually increases or decreases your speed (or bike resistance) in small increments every 40 seconds to reach and maintain your target HR zone. During a workout, you can display and use the ‘+’ and ‘-’ button on the PID HR Zone tile to change the target HR zone.</source>
-        <translation>QZ 控制您的跑步机或自行车，帮助您保持在设定的心率区间内。请开启此项，设置目标心率区间，然后点击确定。例如，输入 2 即可在心率区间 2 训练，跑步机将自动调整速度（或自行车阻力），以使您的心率保持在区间 2。QZ 会每 40 秒以小增量逐渐增加或减少您的速度（或自行车阻力），从而达到并维持目标心率区间。在锻炼过程中，您可以使用“保持心率区间”卡片上的“+”和“-”按钮更改目标心率区间。</translation>
+        <translation type="vanished">QZ 控制您的跑步机或自行车，帮助您保持在设定的心率区间内。请开启此项，设置目标心率区间，然后点击确定。例如，输入 2 即可在心率区间 2 训练，跑步机将自动调整速度（或自行车阻力），以使您的心率保持在区间 2。QZ 会每 40 秒以小增量逐渐增加或减少您的速度（或自行车阻力），从而达到并维持目标心率区间。在锻炼过程中，您可以使用“保持心率区间”卡片上的“+”和“-”按钮更改目标心率区间。</translation>
     </message>
     <message>
         <source>PID on HR min:</source>
@@ -8040,6 +8180,18 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>QZ opens FS- devices as treadmills unless &quot;Fit Plus Bike&quot; is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off. Not shown in the settings page.</source>
         <translation>除非开启“Fit Plus Bike”，否则 QZ 会将 FS- 设备作为跑步机打开。当 FS- 设备也报告单车数据时，QZ 会询问它是否为单车；回答“否”将关闭此询问。不在设置页面中显示。</translation>
+    </message>
+    <message>
+        <source>PID HR actuator:</source>
+        <translation>保持心率区间调节项：</translation>
+    </message>
+    <message>
+        <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. The global PID HR actuator setting selects speed or inclination for treadmills; a workout interval can override it in the Workout Editor. The PID HR tile changes only the target HR zone.</source>
+        <translation>QZ 控制您的跑步机或自行车，帮助您保持在设定的心率区间内。全局设置“保持心率区间调节项”为跑步机选择速度或坡度；训练中的单个间歇可以在训练编辑器中覆盖此设置。“保持心率区间”卡片只更改目标心率区间。</translation>
+    </message>
+    <message>
+        <source>Pafers Rower</source>
+        <translation>Pafers 划船机</translation>
     </message>
 </context>
 <context>

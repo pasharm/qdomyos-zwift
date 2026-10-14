@@ -1674,6 +1674,10 @@ Vuoi aggiornare le impostazioni di QZ?</translation>
         <translation>Velocità massima</translation>
     </message>
     <message>
+        <source>Max Incline</source>
+        <translation>Pendenza massima</translation>
+    </message>
+    <message>
         <source>Max Resistance</source>
         <translation>Resistenza massima</translation>
     </message>
@@ -3844,6 +3848,146 @@ Al primo avvio potrebbe richiedere qualche istante.</translation>
         <source>Wi-Fi connection (DirCon) restarted</source>
         <translation>Connessione Wi-Fi (DirCon) riavviata</translation>
     </message>
+    <message>
+        <source>Great workout!</source>
+        <translation>Ottimo allenamento!</translation>
+    </message>
+    <message>
+        <source>Average Speed: %1</source>
+        <translation>Velocità media: %1</translation>
+    </message>
+    <message>
+        <source>Max Speed: %1</source>
+        <translation>Velocità massima: %1</translation>
+    </message>
+    <message>
+        <source>Calories burned: %1</source>
+        <translation>Calorie bruciate: %1</translation>
+    </message>
+    <message>
+        <source>Distance: %1</source>
+        <translation>Distanza: %1</translation>
+    </message>
+    <message>
+        <source>Elevation Gain (%1): %2</source>
+        <translation>Dislivello accumulato (%1): %2</translation>
+    </message>
+    <message>
+        <source>Average Watt: %1</source>
+        <translation>Potenza media: %1</translation>
+    </message>
+    <message>
+        <source>Max Watt: %1</source>
+        <translation>Potenza massima: %1</translation>
+    </message>
+    <message>
+        <source>Average Watt/Kg: %1</source>
+        <translation>Potenza media (W/kg): %1</translation>
+    </message>
+    <message>
+        <source>Max Watt/Kg: %1</source>
+        <translation>Potenza massima (W/kg): %1</translation>
+    </message>
+    <message>
+        <source>Average Heart Rate: %1</source>
+        <translation>Frequenza cardiaca media: %1</translation>
+    </message>
+    <message>
+        <source>Max Heart Rate: %1</source>
+        <translation>Frequenza cardiaca massima: %1</translation>
+    </message>
+    <message>
+        <source>Heart Rate Z%1: %2</source>
+        <translation>Tempo in zona FC %1: %2</translation>
+    </message>
+    <message>
+        <source>Total Output: %1</source>
+        <translation>Lavoro totale (kJ): %1</translation>
+    </message>
+    <message>
+        <source>Elapsed Time: %1</source>
+        <translation>Tempo trascorso: %1</translation>
+    </message>
+    <message>
+        <source>Moving Time: %1</source>
+        <translation>Tempo di movimento: %1</translation>
+    </message>
+    <message>
+        <source>Weight Loss (%1): %2</source>
+        <translation>Perdita di peso (%1): %2</translation>
+    </message>
+    <message>
+        <source>Estimated VO2Max: %1</source>
+        <translation>VO2Max stimato: %1</translation>
+    </message>
+    <message>
+        <source>Running Stress Score: %1</source>
+        <translation>Punteggio di stress della corsa: %1</translation>
+    </message>
+    <message>
+        <source>5 Seconds Power: %1W %2W/Kg</source>
+        <translation>Potenza su 5 secondi: %1 W, %2 W/kg</translation>
+    </message>
+    <message>
+        <source>1 Minute Power: %1W %2W/Kg</source>
+        <translation>Potenza su 1 minuto: %1 W, %2 W/kg</translation>
+    </message>
+    <message>
+        <source>5 Minutes Power: %1W %2W/Kg</source>
+        <translation>Potenza su 5 minuti: %1 W, %2 W/kg</translation>
+    </message>
+    <message>
+        <source>Estimated FTP: %1W</source>
+        <translation>FTP stimato: %1 W</translation>
+    </message>
+    <message>
+        <source>FTP IMPROVED +%1W!</source>
+        <translation>FTP MIGLIORATO: +%1 W!</translation>
+    </message>
+    <message>
+        <source>Average Cadence: %1</source>
+        <translation>Cadenza media: %1</translation>
+    </message>
+    <message>
+        <source>Max Cadence: %1</source>
+        <translation>Cadenza massima: %1</translation>
+    </message>
+    <message>
+        <source>Average Resistance: %1</source>
+        <translation>Resistenza media: %1</translation>
+    </message>
+    <message>
+        <source>Max Resistance: %1</source>
+        <translation>Resistenza massima: %1</translation>
+    </message>
+    <message>
+        <source>Average Peloton Resistance: %1</source>
+        <translation>Resistenza Peloton media: %1</translation>
+    </message>
+    <message>
+        <source>Max Peloton Resistance: %1</source>
+        <translation>Resistenza Peloton massima: %1</translation>
+    </message>
+    <message>
+        <source>Average Pace: %1</source>
+        <translation>Ritmo medio: %1</translation>
+    </message>
+    <message>
+        <source>Max Pace: %1</source>
+        <translation>Ritmo massimo: %1</translation>
+    </message>
+    <message>
+        <source>Average Strokes Length: %1</source>
+        <translation>Lunghezza media della vogata: %1</translation>
+    </message>
+    <message>
+        <source>meters</source>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>feet</source>
+        <translation>ft</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
@@ -5195,7 +5339,7 @@ No: QZ lo mantiene come tapis roulant e non lo chiederà più (la bici si può c
     </message>
     <message>
         <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. Turn on, set a target heart rate (HR) zone in which to train and click OK. For example, enter 2 to train in HR zone 2 and the treadmill will auto adjust the speed (or resistance on a bike) to maintain your heart rate in zone 2. QZ gradually increases or decreases your speed (or bike resistance) in small increments every 40 seconds to reach and maintain your target HR zone. During a workout, you can display and use the ‘+’ and ‘-’ button on the PID HR Zone tile to change the target HR zone.</source>
-        <translation>QZ controlla il tuo tapis roulant o la tua bici per mantenere la tua frequenza cardiaca all&apos;interno di una Zona FC scelta. Accendi, imposta una zona di frequenza cardiaca target (FC) per allenarti e clicca OK. Ad esempio, inserisci 2 per allenarti nella zona FC 2 e il tapis roulant regolerà automaticamente la velocità (o la resistenza su una bici) per mantenere la tua frequenza cardiaca nella zona 2. QZ aumenta o diminuisce gradualmente la tua velocità (o la resistenza della bici) in piccoli incrementi ogni 40 secondi per raggiungere e mantenere la tua zona FC target. Durante l&apos;allenamento, puoi visualizzare e usare i pulsanti ‘+’ e ‘-’ sulla piastrella Zona FC PID per cambiare la zona FC target.</translation>
+        <translation type="vanished">QZ controlla il tuo tapis roulant o la tua bici per mantenere la tua frequenza cardiaca all&apos;interno di una Zona FC scelta. Accendi, imposta una zona di frequenza cardiaca target (FC) per allenarti e clicca OK. Ad esempio, inserisci 2 per allenarti nella zona FC 2 e il tapis roulant regolerà automaticamente la velocità (o la resistenza su una bici) per mantenere la tua frequenza cardiaca nella zona 2. QZ aumenta o diminuisce gradualmente la tua velocità (o la resistenza della bici) in piccoli incrementi ogni 40 secondi per raggiungere e mantenere la tua zona FC target. Durante l&apos;allenamento, puoi visualizzare e usare i pulsanti ‘+’ e ‘-’ sulla piastrella Zona FC PID per cambiare la zona FC target.</translation>
     </message>
     <message>
         <source>PID on HR min:</source>
@@ -6699,6 +6843,14 @@ NOTE IMPORTANTI:
     <message>
         <source>Test Garmin Login</source>
         <translation>Test Accesso Garmin</translation>
+    </message>
+    <message>
+        <source>PID HR actuator:</source>
+        <translation>PID FC – attuatore:</translation>
+    </message>
+    <message>
+        <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. The global PID HR actuator setting selects speed or inclination for treadmills; a workout interval can override it in the Workout Editor. The PID HR tile changes only the target HR zone.</source>
+        <translation>QZ controlla il tuo tapis roulant o la tua bici per mantenerti in una zona FC scelta. L&apos;impostazione generale &quot;PID FC – attuatore&quot; sceglie velocità o inclinazione per i tapis roulant; un intervallo dell&apos;allenamento può sostituirla nell&apos;Editor di allenamento. La piastrella &quot;PID Zona FC&quot; cambia solo la zona FC target.</translation>
     </message>
     <message>
         <source>PID &apos;Pushy&apos;</source>

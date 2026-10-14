@@ -245,6 +245,8 @@ const QString QZSettings::peloton_gain = QStringLiteral("peloton_gain");
 const QString QZSettings::peloton_offset = QStringLiteral("peloton_offset");
 const QString QZSettings::treadmill_pid_heart_zone = QStringLiteral("treadmill_pid_heart_zone");
 const QString QZSettings::default_treadmill_pid_heart_zone = QStringLiteral("Disabled");
+const QString QZSettings::treadmill_pid_heart_control = QStringLiteral("treadmill_pid_heart_control");
+const QString QZSettings::default_treadmill_pid_heart_control = QStringLiteral("Speed");
 const QString QZSettings::pacef_1mile = QStringLiteral("pacef_1mile");
 const QString QZSettings::pacef_5km = QStringLiteral("pacef_5km");
 const QString QZSettings::pacef_10km = QStringLiteral("pacef_10km");
@@ -1323,7 +1325,7 @@ const QString QZSettings::ui_theme_mode = QStringLiteral("ui_theme_mode");
 const QString QZSettings::default_ui_theme_mode = QStringLiteral("auto");
 const QString QZSettings::ui_tile_snap = QStringLiteral("ui_tile_snap");
 
-const uint32_t allSettingsCount = 1027;
+const uint32_t allSettingsCount = 1028;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -1506,6 +1508,7 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::peloton_gain, QZSettings::default_peloton_gain},
     {QZSettings::peloton_offset, QZSettings::default_peloton_offset},
     {QZSettings::treadmill_pid_heart_zone, QZSettings::default_treadmill_pid_heart_zone},
+    {QZSettings::treadmill_pid_heart_control, QZSettings::default_treadmill_pid_heart_control},
     {QZSettings::pacef_1mile, QZSettings::default_pacef_1mile},
     {QZSettings::pacef_5km, QZSettings::default_pacef_5km},
     {QZSettings::pacef_10km, QZSettings::default_pacef_10km},

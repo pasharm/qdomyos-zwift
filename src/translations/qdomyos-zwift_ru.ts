@@ -1674,6 +1674,10 @@ Do you want to update QZ settings?</source>
         <translation>Макс. скорость</translation>
     </message>
     <message>
+        <source>Max Incline</source>
+        <translation>Макс. наклон</translation>
+    </message>
+    <message>
         <source>Max Resistance</source>
         <translation>Макс. сопротивление</translation>
     </message>
@@ -3831,6 +3835,146 @@ This may take a few moments on first startup.</source>
     <message>
         <source>Wi-Fi connection (DirCon) restarted</source>
         <translation>Связь по Wi-Fi (DirCon) перезапущена</translation>
+    </message>
+    <message>
+        <source>Great workout!</source>
+        <translation>Отличная тренировка!</translation>
+    </message>
+    <message>
+        <source>Average Speed: %1</source>
+        <translation>Средняя скорость: %1</translation>
+    </message>
+    <message>
+        <source>Max Speed: %1</source>
+        <translation>Максимальная скорость: %1</translation>
+    </message>
+    <message>
+        <source>Calories burned: %1</source>
+        <translation>Сожжено калорий: %1</translation>
+    </message>
+    <message>
+        <source>Distance: %1</source>
+        <translation>Дистанция: %1</translation>
+    </message>
+    <message>
+        <source>Elevation Gain (%1): %2</source>
+        <translation>Набор высоты (%1): %2</translation>
+    </message>
+    <message>
+        <source>Average Watt: %1</source>
+        <translation>Средняя мощность: %1</translation>
+    </message>
+    <message>
+        <source>Max Watt: %1</source>
+        <translation>Максимальная мощность: %1</translation>
+    </message>
+    <message>
+        <source>Average Watt/Kg: %1</source>
+        <translation>Средняя мощность (Вт/кг): %1</translation>
+    </message>
+    <message>
+        <source>Max Watt/Kg: %1</source>
+        <translation>Максимальная мощность (Вт/кг): %1</translation>
+    </message>
+    <message>
+        <source>Average Heart Rate: %1</source>
+        <translation>Средний пульс: %1</translation>
+    </message>
+    <message>
+        <source>Max Heart Rate: %1</source>
+        <translation>Максимальный пульс: %1</translation>
+    </message>
+    <message>
+        <source>Heart Rate Z%1: %2</source>
+        <translation>Время в пульсовой зоне %1: %2</translation>
+    </message>
+    <message>
+        <source>Total Output: %1</source>
+        <translation>Суммарная работа (кДж): %1</translation>
+    </message>
+    <message>
+        <source>Elapsed Time: %1</source>
+        <translation>Общее время: %1</translation>
+    </message>
+    <message>
+        <source>Moving Time: %1</source>
+        <translation>Время в движении: %1</translation>
+    </message>
+    <message>
+        <source>Weight Loss (%1): %2</source>
+        <translation>Потеря веса (%1): %2</translation>
+    </message>
+    <message>
+        <source>Estimated VO2Max: %1</source>
+        <translation>Расчётный VO2Max: %1</translation>
+    </message>
+    <message>
+        <source>Running Stress Score: %1</source>
+        <translation>Индекс беговой нагрузки: %1</translation>
+    </message>
+    <message>
+        <source>5 Seconds Power: %1W %2W/Kg</source>
+        <translation>Мощность за 5 секунд: %1 Вт, %2 Вт/кг</translation>
+    </message>
+    <message>
+        <source>1 Minute Power: %1W %2W/Kg</source>
+        <translation>Мощность за 1 минуту: %1 Вт, %2 Вт/кг</translation>
+    </message>
+    <message>
+        <source>5 Minutes Power: %1W %2W/Kg</source>
+        <translation>Мощность за 5 минут: %1 Вт, %2 Вт/кг</translation>
+    </message>
+    <message>
+        <source>Estimated FTP: %1W</source>
+        <translation>Расчётный FTP: %1 Вт</translation>
+    </message>
+    <message>
+        <source>FTP IMPROVED +%1W!</source>
+        <translation>FTP ВЫРОС: +%1 Вт!</translation>
+    </message>
+    <message>
+        <source>Average Cadence: %1</source>
+        <translation>Средний каденс: %1</translation>
+    </message>
+    <message>
+        <source>Max Cadence: %1</source>
+        <translation>Максимальный каденс: %1</translation>
+    </message>
+    <message>
+        <source>Average Resistance: %1</source>
+        <translation>Среднее сопротивление: %1</translation>
+    </message>
+    <message>
+        <source>Max Resistance: %1</source>
+        <translation>Максимальное сопротивление: %1</translation>
+    </message>
+    <message>
+        <source>Average Peloton Resistance: %1</source>
+        <translation>Среднее сопротивление Peloton: %1</translation>
+    </message>
+    <message>
+        <source>Max Peloton Resistance: %1</source>
+        <translation>Максимальное сопротивление Peloton: %1</translation>
+    </message>
+    <message>
+        <source>Average Pace: %1</source>
+        <translation>Средний темп: %1</translation>
+    </message>
+    <message>
+        <source>Max Pace: %1</source>
+        <translation>Максимальный темп: %1</translation>
+    </message>
+    <message>
+        <source>Average Strokes Length: %1</source>
+        <translation>Средняя длина гребка: %1</translation>
+    </message>
+    <message>
+        <source>meters</source>
+        <translation>м</translation>
+    </message>
+    <message>
+        <source>feet</source>
+        <translation>фут</translation>
     </message>
 </context>
 <context>
@@ -6173,7 +6317,7 @@ Please enter it below:</source>
     </message>
     <message>
         <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. Turn on, set a target heart rate (HR) zone in which to train and click OK. For example, enter 2 to train in HR zone 2 and the treadmill will auto adjust the speed (or resistance on a bike) to maintain your heart rate in zone 2. QZ gradually increases or decreases your speed (or bike resistance) in small increments every 40 seconds to reach and maintain your target HR zone. During a workout, you can display and use the ‘+’ and ‘-’ button on the PID HR Zone tile to change the target HR zone.</source>
-        <translation>QZ управляет беговой дорожкой или велотренажёром, чтобы удерживать вас в выбранной пульсовой зоне. Включите, задайте целевую пульсовую зону для тренировки и нажмите OK. Например, введите 2, чтобы тренироваться во 2-й пульсовой зоне, – дорожка будет автоматически менять скорость (на велотренажёре – сопротивление), удерживая пульс в зоне 2. QZ постепенно, небольшими шагами каждые 40 секунд, повышает или понижает скорость (или сопротивление велотренажёра), чтобы выйти в целевую пульсовую зону и удерживаться в ней. Во время тренировки можно вывести плитку «Целевая пульсовая зона» и менять целевую зону её кнопками «+» и «-».</translation>
+        <translation type="vanished">QZ управляет беговой дорожкой или велотренажёром, чтобы удерживать вас в выбранной пульсовой зоне. Включите, задайте целевую пульсовую зону для тренировки и нажмите OK. Например, введите 2, чтобы тренироваться во 2-й пульсовой зоне, – дорожка будет автоматически менять скорость (на велотренажёре – сопротивление), удерживая пульс в зоне 2. QZ постепенно, небольшими шагами каждые 40 секунд, повышает или понижает скорость (или сопротивление велотренажёра), чтобы выйти в целевую пульсовую зону и удерживаться в ней. Во время тренировки можно вывести плитку «Целевая пульсовая зона» и менять целевую зону её кнопками «+» и «-».</translation>
     </message>
     <message>
         <source>PID on HR min:</source>
@@ -6491,10 +6635,6 @@ Please enter it below:</source>
     <message>
         <source>Pafers Treadmill</source>
         <translation>Беговая дорожка Pafers</translation>
-    </message>
-    <message>
-        <source>Pafers Rower</source>
-        <translation>Гребной тренажёр Pafers</translation>
     </message>
     <message>
         <source>GEM Module Options</source>
@@ -7988,6 +8128,18 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>Limits the watt output sent by QZ. Set to 0 to disable the limit. Default is 9999 W.</source>
         <translation>Ограничивает мощность, которую передаёт QZ. 0 – без ограничения. По умолчанию 9999 Вт.</translation>
+    </message>
+    <message>
+        <source>PID HR actuator:</source>
+        <translation>Удержание пульса меняет:</translation>
+    </message>
+    <message>
+        <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. The global PID HR actuator setting selects speed or inclination for treadmills; a workout interval can override it in the Workout Editor. The PID HR tile changes only the target HR zone.</source>
+        <translation>QZ управляет беговой дорожкой или велотренажёром, чтобы удерживать вас в выбранной пульсовой зоне. Общая настройка «Удержание пульса меняет» выбирает для дорожек скорость или наклон; отдельный интервал тренировки может переопределить её в редакторе тренировок. Плитка «Целевая пульсовая зона» меняет только целевую пульсовую зону.</translation>
+    </message>
+    <message>
+        <source>Pafers Rower</source>
+        <translation>Гребной тренажёр Pafers</translation>
     </message>
 </context>
 <context>
