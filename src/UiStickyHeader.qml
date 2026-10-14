@@ -18,6 +18,8 @@ Item {
 
     visible: false
     readonly property int compactHeight: 44
+    // The rows fade out under the copy instead of being cut through a line of text by its edge
+    readonly property int fadeHeight: Math.round(16 * window.ui.textScale)
     property Item copy: null
     readonly property Item pageFlickable: {
         for (var p = section ? section.parent : null; p; p = p.parent)
@@ -51,6 +53,9 @@ Item {
         var h = Math.max(compactHeight, Math.min(header.height, top + header.height))
         copy.height = h
         copy.y = Math.min(0, bottom + 1 - h)
+        // The fade under the copy only while the section goes on below it: at the end it would
+        // lie on the header of the next section
+        copy.fadeShown = bottom + 1 - h > fadeHeight
         copy.visible = true
     }
     function scrollToHeader() {
@@ -85,6 +90,7 @@ Item {
             fill: window.ui.surfaceHigh
             stroke: window.ui.accent
             strokeWidth: 1
+            property bool fadeShown: false
 
             Accessible.role: Accessible.Button
             Accessible.name: sticky.section.title
@@ -99,6 +105,22 @@ Item {
                 width: parent.width + 6
                 height: 24 + parent.height / 2
                 color: window.ui.bg
+            }
+            // Under the lower half of the copy (its round corners) and below it: the rows fade
+            // out in the page colour, inside the side lines of the section block
+            Rectangle {
+                id: copyFade
+                z: -1
+                visible: parent.fadeShown
+                x: 2
+                y: parent.height / 2
+                width: parent.width - 4
+                height: parent.height / 2 + sticky.fadeHeight
+                gradient: Gradient {
+                    GradientStop { position: 0; color: window.ui.bg }
+                    GradientStop { position: (copyFade.height - sticky.fadeHeight) / Math.max(1, copyFade.height); color: window.ui.bg }
+                    GradientStop { position: 1; color: window.ui.alpha(window.ui.bg, 0) }
+                }
             }
             // The accent bar of the open header, on the outline like there
             Rectangle {
