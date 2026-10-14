@@ -337,7 +337,7 @@ Page {
                         anchors.fill: parent
                         visible: Qt.platform.os !== "android"
                         text: "📅"
-                        font.pixelSize: 26
+                        font.pixelSize: window.ui.fontPx(26)
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
@@ -380,7 +380,7 @@ Page {
                 contentItem: Text {
                     text: "×"
                     color: workoutHistoryPage.modern ? window.ui.danger : "white"
-                    font.pixelSize: 20
+                    font.pixelSize: window.ui.fontPx(20)
                     font.bold: true
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -416,7 +416,7 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     text: workoutModel && workoutModel.isDateFiltered ?
                           qsTr("Filtered: %1").arg(workoutModel.filteredDate.toLocaleDateString()) : ""
-                    font.pixelSize: 12
+                    font.pixelSize: window.ui.fontPx(12)
                     color: window.ui.inkMuted("#666666")
                     elide: Text.ElideRight
                     visible: workoutModel && workoutModel.isDateFiltered
@@ -445,7 +445,7 @@ Page {
                         anchors.fill: parent
                         visible: Qt.platform.os !== "android"
                         text: "📥"
-                        font.pixelSize: 26
+                        font.pixelSize: window.ui.fontPx(26)
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
@@ -483,7 +483,7 @@ Page {
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
             color: "#666666"
-            font.pixelSize: 16
+            font.pixelSize: window.ui.fontPx(16)
         }
 
         // Database processing message
@@ -496,7 +496,7 @@ Page {
             wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
             color: window.ui.inkMuted("#666666")
-            font.pixelSize: 16
+            font.pixelSize: window.ui.fontPx(16)
         }
 
         // Workout List
@@ -609,7 +609,7 @@ Page {
                         Text {
                             text: Qt.platform.os === "android" ? qsTr("Delete") : "🗑️ " + qsTr("Delete")
                             color: "white"
-                            font.pixelSize: 16
+                            font.pixelSize: window.ui.fontPx(16)
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
@@ -675,7 +675,7 @@ Page {
                                 Text {
                                     visible: Qt.platform.os !== "android"
                                     text: "🌐"
-                                    font.pixelSize: 16
+                                    font.pixelSize: window.ui.fontPx(16)
                                     color: "white"
                                     anchors.centerIn: parent
                                 }
@@ -713,7 +713,7 @@ Page {
                                 Text {
                                     visible: Qt.platform.os !== "android"
                                     text: "📋"
-                                    font.pixelSize: 16
+                                    font.pixelSize: window.ui.fontPx(16)
                                     color: "white"
                                     anchors.centerIn: parent
                                 }
@@ -771,7 +771,7 @@ Page {
                             Text {
                                 visible: !workoutHistoryPage.modern && Qt.platform.os !== "android"
                                 text: getSportIcon(sport)
-                                font.pixelSize: 32
+                                font.pixelSize: window.ui.fontPx(32)
                             }
 
                             // Android shows an emoji only with a downloaded font, so the icon is drawn
@@ -800,7 +800,7 @@ Page {
                                     id: titleText
                                     text: title
                                     font.bold: true
-                                    font.pixelSize: 18
+                                    font.pixelSize: window.ui.fontPx(18)
                                     color: window.ui.ink("black")
                                     anchors.verticalCenter: parent.verticalCenter
                                     
@@ -849,6 +849,8 @@ Page {
                             }
 
                             Text {
+                                // The text size of the modern look: a plain Text does not inherit the window font
+                                Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                                 text: date
                                 color: window.ui.inkMuted("#666666")
                             }
@@ -856,6 +858,7 @@ Page {
                             // Modern look: one stats line, the calories included; it stops short
                             // of the action buttons in the bottom-right corner when they are shown
                             Text {
+                                Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                                 visible: workoutHistoryPage.modern
                                 Layout.fillWidth: true
                                 Layout.rightMargin: actionRow.width > 0 ? actionRow.width + 8 : 0
@@ -1104,6 +1107,7 @@ Page {
         y: (parent.height - height) / 2
 
         Text {
+            Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
             text: qsTr("Are you sure you want to delete '%1'?").arg(confirmDialog.workoutTitle)
         }
 
@@ -1174,7 +1178,7 @@ Page {
                 anchors.centerIn: parent
                 text: trainingProgramDialog.title
                 color: "white"
-                font.pixelSize: 18
+                font.pixelSize: window.ui.fontPx(18)
                 font.bold: true
             }
         }
@@ -1194,7 +1198,7 @@ Page {
                 textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: 14
+                font.pixelSize: window.ui.fontPx(14)
             }
         }
     }
@@ -1312,7 +1316,7 @@ Page {
                 // Current streak count
                 Text {
                     text: workoutModel ? (workoutModel.currentStreak !== 1 ? qsTr("%1 days streak") : qsTr("%1 day streak")).arg(workoutModel.currentStreak) : ""
-                    font.pixelSize: 18
+                    font.pixelSize: window.ui.fontPx(18)
                     font.bold: true
                     color: "white"
                     visible: workoutModel
@@ -1366,7 +1370,7 @@ Page {
             Text {
                 Layout.alignment: Qt.AlignHCenter
                 text: workoutModel ? workoutModel.streakMessage : ""
-                font.pixelSize: 14
+                font.pixelSize: window.ui.fontPx(14)
                 font.italic: true
                 color: "white"
                 visible: workoutModel && workoutModel.streakMessage !== ""
@@ -1377,7 +1381,7 @@ Page {
             Text {
                 Layout.alignment: Qt.AlignHCenter
                 text: workoutModel ? (workoutModel.longestStreak !== 1 ? qsTr("Personal best: %1 days") : qsTr("Personal best: %1 day")).arg(workoutModel.longestStreak) : ""
-                font.pixelSize: 12
+                font.pixelSize: window.ui.fontPx(12)
                 color: "white"
                 visible: workoutModel && workoutModel.longestStreak > workoutModel.currentStreak && workoutModel.longestStreak > 0
                 opacity: 0.7
@@ -1476,7 +1480,7 @@ Page {
                     text: workoutHistoryPage.modern
                           ? workoutHistoryPage.monthTitle(calendar.selectedDate)
                           : calendar.selectedDate.toLocaleDateString(Qt.locale(), "MMMM yyyy")
-                    font.pixelSize: 18
+                    font.pixelSize: window.ui.fontPx(18)
                     font.bold: true
                     color: window.ui.ink("black")
                     horizontalAlignment: Text.AlignHCenter
@@ -1530,6 +1534,7 @@ Page {
                     model: workoutHistoryPage.modern ? workoutHistoryPage.weekDayNames()
                          : [qsTr("Sun"), qsTr("Mon"), qsTr("Tue"), qsTr("Wed"), qsTr("Thu"), qsTr("Fri"), qsTr("Sat")]
                     Text {
+                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         Layout.fillWidth: true
                         Layout.preferredHeight: 30
                         text: modelData
@@ -1612,7 +1617,7 @@ Page {
                                 color: workoutHistoryPage.modern ? (isCurrentMonth ? window.ui.textMain : window.ui.textMuted)
                                                                  : (isCurrentMonth ? "black" : "#cccccc")
                                 opacity: workoutHistoryPage.modern && !isCurrentMonth ? 0.6 : 1
-                                font.pixelSize: 14
+                                font.pixelSize: window.ui.fontPx(14)
                                 font.weight: workoutHistoryPage.modern && (hasWorkout || isToday) ? Font.DemiBold : Font.Normal
                             }
                             

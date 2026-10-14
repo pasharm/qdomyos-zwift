@@ -325,6 +325,8 @@ ScrollView {
                     color: "transparent"
 
                     Text {
+                        // The text size of the modern look: a plain Text does not inherit the window font
+                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         anchors.centerIn: parent
                         text: qsTr("Inclination (%)")
                         font.bold: true
@@ -340,6 +342,7 @@ ScrollView {
                     color: "transparent"
 
                     Text {
+                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         anchors.centerIn: parent
                         text: qsTr("Resistance")
                         font.bold: true

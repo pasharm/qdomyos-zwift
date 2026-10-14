@@ -58,6 +58,8 @@ Rectangle {
 
     Text {
         id: message
+        // The text size of the modern look: a plain Text does not inherit the window font
+        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
         color: window.ui.modern ? (window.ui.dark ? "#1A1C20" : "#F1F2F4") : "white"
         wrapMode: Text.Wrap
         horizontalAlignment: Text.AlignHCenter

@@ -173,6 +173,8 @@ ScrollView {
                     color: "transparent"
 
                     Text {
+                        // The text size of the modern look: a plain Text does not inherit the window font
+                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         anchors.centerIn: parent
                         // Modern look: one line inside its column, smaller if it does not fit
                         width: window.ui.modern ? parent.width - 8 : implicitWidth
@@ -193,6 +195,7 @@ ScrollView {
                     color: "transparent"
 
                     Text {
+                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         anchors.centerIn: parent
                         width: window.ui.modern ? parent.width - 8 : implicitWidth
                         horizontalAlignment: Text.AlignHCenter
@@ -244,6 +247,7 @@ ScrollView {
                         color: "transparent"
 
                         Text {
+                            Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                             anchors.centerIn: parent
                             text: gear
                             color: window.ui.ink("black")

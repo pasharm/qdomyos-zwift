@@ -281,7 +281,7 @@ ColumnLayout {
                     id: date
                     width: parent.width
                     text: rootItem.previewWorkoutDescription
-                    font.pixelSize: 14
+                    font.pixelSize: window.ui.fontPx(14)
                     color: window.ui.ink("white")
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignHCenter
@@ -294,7 +294,7 @@ ColumnLayout {
                     id: description
                     width: parent.width
                     text: rootItem.previewWorkoutTags
-                    font.pixelSize: 10
+                    font.pixelSize: window.ui.fontPx(10)
                     wrapMode: Text.WordWrap
                     color: window.ui.inkMuted("white")
                     horizontalAlignment: Text.AlignHCenter
@@ -316,7 +316,7 @@ ColumnLayout {
                         height: 400
                         width: parent.width
                         title: qsTr("Power")
-                        titleFont.pixelSize: 20
+                        titleFont.pixelSize: window.ui.fontPx(20)
 
                         DateTimeAxis {
                             id: valueAxisX
@@ -327,7 +327,7 @@ ColumnLayout {
                             //labelsVisible: false
                             gridVisible: false
                             //lineVisible: false
-                            labelsFont.pixelSize: 10
+                            labelsFont.pixelSize: window.ui.fontPx(10)
                         }
 
                         ValueAxis {
@@ -340,7 +340,7 @@ ColumnLayout {
                             //labelsVisible: false
                             //gridVisible: false
                             //lineVisible: false
-                            labelsFont.pixelSize: 10
+                            labelsFont.pixelSize: window.ui.fontPx(10)
                         }
 
                         LineSeries {

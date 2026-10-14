@@ -695,6 +695,8 @@ ScrollView {
                             color: "transparent"
 
                             Text {
+                                // The text size of the modern look: a plain Text does not inherit the window font
+                                Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                                 anchors.centerIn: parent
                                 // Modern look: one line inside its column, smaller if it does not fit
                                 width: window.ui.modern ? parent.width - 8 : implicitWidth
@@ -715,6 +717,7 @@ ScrollView {
                             color: "transparent"
 
                             Text {
+                                Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                                 anchors.centerIn: parent
                                 // Modern look: one line inside its column, smaller if it does not fit
                                 width: window.ui.modern ? parent.width - 8 : implicitWidth
@@ -735,6 +738,7 @@ ScrollView {
                             color: "transparent"
 
                             Text {
+                                Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                                 anchors.centerIn: parent
                                 // Modern look: one line inside its column, smaller if it does not fit
                                 width: window.ui.modern ? parent.width - 8 : implicitWidth
@@ -806,6 +810,7 @@ ScrollView {
                                 color: "transparent"
 
                                 Text {
+                                    Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                                     anchors.centerIn: parent
                                     text: gear
                                     color: window.ui.ink("black")
@@ -846,7 +851,7 @@ ScrollView {
                                         z: 2
                                         text: cranksetSpinBox.textFromValue(cranksetSpinBox.value, cranksetSpinBox.locale)
                                         // Modern look: the 16 px of the +/- fields (UiSpinBox, the inclination table)
-                                        font: window.ui.modern ? Qt.font({ family: cranksetSpinBox.font.family, pixelSize: 16 }) : cranksetSpinBox.font
+                                        font: window.ui.modern ? Qt.font({ family: cranksetSpinBox.font.family, pixelSize: window.ui.fontBody }) : cranksetSpinBox.font
                                         color: window.ui.ink("black")
                                         selectionColor: window.ui.modern ? window.ui.accent : "#21be2b"
                                         selectedTextColor: window.ui.modern ? window.ui.accentInk : "#ffffff"
@@ -952,7 +957,7 @@ ScrollView {
                                     contentItem: UiSpinInput {
                                         z: 2
                                         text: cogSpinBox.textFromValue(cogSpinBox.value, cogSpinBox.locale)
-                                        font: window.ui.modern ? Qt.font({ family: cogSpinBox.font.family, pixelSize: 16 }) : cogSpinBox.font
+                                        font: window.ui.modern ? Qt.font({ family: cogSpinBox.font.family, pixelSize: window.ui.fontBody }) : cogSpinBox.font
                                         color: window.ui.ink("black")
                                         selectionColor: window.ui.modern ? window.ui.accent : "#21be2b"
                                         selectedTextColor: window.ui.modern ? window.ui.accentInk : "#ffffff"

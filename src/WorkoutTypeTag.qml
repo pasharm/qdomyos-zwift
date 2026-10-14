@@ -33,7 +33,7 @@ Rectangle {
         anchors.centerIn: parent
         text: workoutSource.toUpperCase()
         color: "white"
-        font.pixelSize: 10
+        font.pixelSize: window.ui.fontPx(10)
         font.bold: true
         font.family: "Arial"
     }

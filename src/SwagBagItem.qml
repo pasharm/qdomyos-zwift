@@ -68,6 +68,8 @@ Rectangle {
     height: titleText.contentHeight + descriptionText.contentHeight +  2 + 2 * pad
     // ![0]
     Text {
+        // The text size of the modern look: a plain Text does not inherit the window font
+        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
         id: titleText
         text: product.title
         font.bold: true
@@ -81,6 +83,7 @@ Rectangle {
     }
 
     Text {
+        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
         id: descriptionText
         text: product.description
         anchors.right: priceText.left
@@ -94,6 +97,7 @@ Rectangle {
     }
 
     Text {
+        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
         id: priceText
         text: product.price
         anchors.right: parent.right
@@ -128,6 +132,7 @@ Rectangle {
         color: window.ui.modern ? window.ui.surfaceHigh : "white"
         radius: parent.radius
         Text {
+            Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
             id: statusText
             anchors.top: parent.top
             anchors.bottom: parent.bottom

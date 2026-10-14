@@ -17887,7 +17887,7 @@ import QtQuick 2.12 as Quick212
                                         text: qsTr("Enables a virtual bluetooth bridge to the Tacx App.")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
-                                        font.pixelSize: 9
+                                        font.pixelSize: window.ui.fontPx(9)
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter

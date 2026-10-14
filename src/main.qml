@@ -583,7 +583,7 @@ ApplicationWindow {
             text: window.lapPromptText
             color: "white"
             font.bold: true
-            font.pixelSize: 26
+            font.pixelSize: window.ui.fontPx(26)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             wrapMode: Text.WordWrap
@@ -858,7 +858,7 @@ ApplicationWindow {
                         anchors.centerIn: parent
                         text: "!"
                         color: window.ui.dangerInk
-                        font.pixelSize: 16
+                        font.pixelSize: window.ui.fontPx(16)
                         font.bold: true
                     }
                 }
@@ -1240,7 +1240,7 @@ ApplicationWindow {
                 width: parent.width
                 text: qsTr("Echelon Locked Bike")
                 font.bold: true
-                font.pixelSize: 20
+                font.pixelSize: window.ui.fontPx(20)
                 wrapMode: Text.WordWrap
             }
 
@@ -1309,7 +1309,7 @@ ApplicationWindow {
                 width: parent.width
                 text: qsTr("Connection lost in the background")
                 font.bold: true
-                font.pixelSize: 20
+                font.pixelSize: window.ui.fontPx(20)
                 wrapMode: Text.WordWrap
             }
 

@@ -284,7 +284,7 @@ ColumnLayout {
                                 id: fileIcon
                                 visible: !window.ui.modern
                                 text: isItemFolder ? "📁" : "📄"
-                                font.pixelSize: 24
+                                font.pixelSize: window.ui.fontPx(24)
                             }
 
                             Rectangle {
@@ -324,7 +324,7 @@ ColumnLayout {
                                     Layout.fillWidth: true
                                     text: itemRelativePath
                                     color: window.ui.inkMuted(Material.color(Material.Grey))
-                                    font.pixelSize: 12
+                                    font.pixelSize: window.ui.fontPx(12)
                                     elide: Text.ElideMiddle
                                     visible: isSearching && itemRelativePath !== ""
                                 }
@@ -332,7 +332,7 @@ ColumnLayout {
 
                             Text {
                                 text: "›"
-                                font.pixelSize: 24
+                                font.pixelSize: window.ui.fontPx(24)
                                 color: Material.color(Material.Grey)
                                 visible: !window.ui.modern && !ListView.isCurrentItem
                             }
@@ -460,7 +460,7 @@ ColumnLayout {
                     Layout.rightMargin: 10
                     text: rootItem.previewWorkoutTags
                     visible: text !== ""
-                    font.pixelSize: 12
+                    font.pixelSize: window.ui.fontPx(12)
                     wrapMode: Text.WordWrap
                     color: window.ui.inkMuted(Material.color(Material.Grey, Material.Shade400))
                     horizontalAlignment: Text.AlignHCenter
