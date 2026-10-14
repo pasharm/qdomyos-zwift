@@ -7538,19 +7538,34 @@ import QtQuick 2.12 as Quick212
                             text: qsTr("Text size")
                             Layout.fillWidth: true
                         }
-                        UiComboBox {
-                            id: uiTextScaleCombo
-                            readonly property var options: [85, 100, 115, 130, 150]
-                            //: A text size in percent: %1 is the number
-                            model: options.map(function (v) { return qsTr("%1%").arg(v) })
-                            Layout.preferredWidth: 190
+                        // A number like UI Zoom, any whole percent of the range
+                        SettingsNumberField {
+                            id: uiTextScaleField
+                            decimals: 0
+                            minimum: 85
+                            maximum: 150
+                            text: settings.ui_text_scale
+                            horizontalAlignment: Text.AlignRight
+                            Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            currentIndex: {
-                                var i = options.indexOf(Math.round(window.ui.textScale * 100))
-                                return i >= 0 ? i : 1
-                            }
-                            onActivated: settingsPane.setUiOption("ui_text_scale", options[index])
+                            onAccepted: if (valid) settingsPane.setUiOption("ui_text_scale", Math.round(value))
+                            onActiveFocusChanged: if (this.focus) this.cursorPosition = this.text.length
                         }
+                        UiButton {
+                            text: qsTr("OK")
+                            enabled: uiTextScaleField.valid
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            onClicked: { settingsPane.setUiOption("ui_text_scale", Math.round(uiTextScaleField.value)); toast.show(qsTr("Setting saved!")); }
+                        }
+                    }
+                    Label {
+                        visible: window.ui.modern
+                        text: qsTr("Size of the text of the modern interface, in percent, from 85 to 150. The default is 100.")
+                        font.pixelSize: window.ui.fontHint
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        Layout.fillWidth: true
+                        color: window.ui.textMuted
                     }
 
                     RowLayout {

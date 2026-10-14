@@ -8082,8 +8082,8 @@ Padrão: A = -0.96, B = 1.33</translation>
         <translation>Tamanho do texto</translation>
     </message>
     <message>
-        <source>%1%</source>
-        <translation>%1%</translation>
+        <source>Size of the text of the modern interface, in percent, from 85 to 150. The default is 100.</source>
+        <translation>Tamanho do texto da interface moderna, em percentagem, de 85 a 150. O padrão é 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

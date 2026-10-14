@@ -8078,8 +8078,8 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Textgröße</translation>
     </message>
     <message>
-        <source>%1%</source>
-        <translation>%1 %</translation>
+        <source>Size of the text of the modern interface, in percent, from 85 to 150. The default is 100.</source>
+        <translation>Textgröße der modernen Oberfläche in Prozent, von 85 bis 150. Standard ist 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

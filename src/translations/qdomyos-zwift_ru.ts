@@ -8045,8 +8045,8 @@ Default: A = -0.96, B = 1.33</source>
         <translation>Размер текста</translation>
     </message>
     <message>
-        <source>%1%</source>
-        <translation>%1%</translation>
+        <source>Size of the text of the modern interface, in percent, from 85 to 150. The default is 100.</source>
+        <translation>Размер текста нового интерфейса в процентах, от 85 до 150. По умолчанию – 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

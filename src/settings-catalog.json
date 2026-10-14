@@ -16235,30 +16235,15 @@
     {
       "key": "ui_text_scale",
       "name": "Text size",
-      "description": null,
+      "description": "Size of the text of the modern interface, in percent, from 85 to 150. The default is 100.",
       "parent": "General UI Options",
       "type": "integer",
       "qmlType": "int",
-      "control": "select",
+      "control": "text",
       "visible": true,
       "defaultValue": 100,
       "defaultExpression": "100",
-      "options": {
-        "values": [
-          85,
-          100,
-          115,
-          130,
-          150
-        ],
-        "labels": [
-          "85%",
-          "100%",
-          "115%",
-          "130%",
-          "150%"
-        ]
-      },
+      "options": null,
       "restartRequired": false
     }
   ],
