@@ -1693,6 +1693,8 @@ ApplicationWindow {
             width: window.ui.modern ? Math.min(implicitWidth, titleRoom) : implicitWidth
             fontSizeMode: window.ui.modern ? Text.HorizontalFit : Text.FixedSize
             minimumPixelSize: window.ui.fontPx(14)
+            // The line keeps the height of the full size: a smaller font in its middle, not at its top
+            verticalAlignment: window.ui.modern ? Text.AlignVCenter : Text.AlignTop
             elide: window.ui.modern ? Text.ElideRight : Text.ElideNone
             readonly property real titleRoom: {
                 var c = parent.width / 2, room = c
