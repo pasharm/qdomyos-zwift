@@ -26,6 +26,24 @@ wait_boot() {
   done
   sleep 10
 }
+# PHONE=uk: the user's phone as far as an emulator goes – Ukrainian system locale (the app and
+# TalkBack speak Ukrainian) and the OnePlus 12 screen, 1440x3168; the labels below follow it.
+PHONE=${PHONE:-}
+L_SETTINGS='^Settings$'; L_BIKE='^Bike Options$'; L_WAHOO='Wahoo Options'
+L_RESTORE='Restore Default'; L_CHAINRING='Chainring Size'; L_COG='Cog Size:'
+if [ "$PHONE" = uk ]; then
+  L_SETTINGS='^Налаштування$'; L_BIKE='^Параметри велотренажера$'; L_WAHOO='Параметри Wahoo'
+  L_RESTORE='Відновити типові'; L_CHAINRING='Розмір передньої зірки'; L_COG='Розмір задньої зірки:'
+  echo "== phone uk: locale and screen" >> $STEPLOG
+  adb root >> $STEPLOG 2>&1 || true
+  wait_boot
+  adb shell setprop persist.sys.locale uk-UA
+  adb reboot
+  wait_boot
+  adb shell wm size 1440x3168
+  echo "locale $(adb shell getprop persist.sys.locale), $(adb shell wm size | tail -n 1), $(adb shell wm density | tail -n 1)" >> $STEPLOG
+fi
+
 # Google's TalkBack APK (the version a user has) is signed by another key than the image's own
 # TalkBack, so it does not install over it: it replaces the system APK instead (the emulator
 # runs with -writable-system for such a run), and the package manager takes it at boot.
@@ -142,12 +160,12 @@ sleep 15
 shot h-01-home
 
 open_menu
-tap_drawer '^Settings$' 400 900
+tap_drawer "$L_SETTINGS" 400 900
 sleep 8
-scroll_to '^Bike Options$' && tap_ui '^Bike Options$' 700 1000
+scroll_to "$L_BIKE" && tap_ui "$L_BIKE" 700 1000
 sleep 4
-scroll_to 'Wahoo Options'
-WAHOO=$(find_ui 'Wahoo Options')
+scroll_to "$L_WAHOO"
+WAHOO=$(find_ui "$L_WAHOO")
 echo "Wahoo Options at '$WAHOO'" >> $STEPLOG
 shot s-01-settings
 
@@ -238,11 +256,11 @@ talkback_run() {
   tshot t-04-table
   # Touch exploration: the Restore button and a group title, then double tap on the button
   # (focus: first only brings the node on screen, then a finger touches it)
-  drv t-touch --keep 'mark:touch' 'focus:Restore Default' 'sleep:1500' 'touch:Restore Default' 'touch:Chainring Size' 'touch:Restore Default' 'dtap'
+  drv t-touch --keep 'mark:touch' "focus:$L_RESTORE" 'sleep:1500' "touch:$L_RESTORE" "touch:$L_CHAINRING" "touch:$L_RESTORE" 'dtap'
   tshot t-02-touch
   # A value by touch, then by swipe navigation (that is when TalkBack switches to adjusting)
-  drv t-seek --keep 'mark:seek-touch' 'focus:Cog Size:' 'sleep:1500' 'touch:Cog Size:' 'swipe:up' 'swipe:up' 'find:Cog Size:' \
-    'mark:seek-nav' 'swipe:left' 'swipe:right' 'swipe:up' 'swipe:down' 'swipe:down' 'find:Cog Size:'
+  drv t-seek --keep 'mark:seek-touch' "focus:$L_COG" 'sleep:1500' "touch:$L_COG" 'swipe:up' 'swipe:up' "find:$L_COG" \
+    'mark:seek-nav' 'swipe:left' 'swipe:right' 'swipe:up' 'swipe:down' 'swipe:down' "find:$L_COG"
   tshot t-03-seek
   mkdir -p drv/shots
   adb pull /data/local/tmp/tbshots/. drv/shots >> $STEPLOG 2>&1 || true

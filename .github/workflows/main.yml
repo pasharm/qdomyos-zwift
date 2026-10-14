@@ -16,6 +16,10 @@ on:
         description: log_debug for the run (false = the debug log off)
         required: false
         default: 'true'
+      phone:
+        description: uk = the user's phone - Ukrainian locale, OnePlus 12 screen (empty = English, Nexus 6)
+        required: false
+        default: ''
       talkback:
         description: TalkBack - stock (the image's Google TalkBack) or a run id of the TalkBack workflow; empty = no TalkBack, the driver's actions
         required: false
@@ -65,6 +69,7 @@ jobs:
           UI_MODERN: ${{ inputs.modern }}
           LOG_DEBUG: ${{ inputs.log_debug }}
           TALKBACK: ${{ inputs.talkback }}
+          PHONE: ${{ inputs.phone }}
         with:
           api-level: 35
           target: google_apis
