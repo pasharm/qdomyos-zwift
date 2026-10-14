@@ -31,7 +31,8 @@ adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
 # T-060, T-066: a fake treadmill, so the home page has tiles (without a device it shows the search help)
-printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+# T-240: four settings changed from their default, a password, a MyWhoosh state key and a value equal to its default
+printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\nweight=80\npzp_password=secret\nmywhoosh_link_camera_value=3\nbike_weight=0\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -238,121 +239,122 @@ has() {
   fi
 }
 
-# T-210: a search result opens its setting in both looks - its page, scrolled to it and lit;
-# back (the key and the arrow of the toolbar) lands on the same results
-RESULTS='^(Search results|Changed settings).*'
-search_for() {
-  # Classic look: the search bar opens with the toolbar button; modern: it is on the page
-  if [ "$UI_MODERN" = "false" ] && ! has_quiet 'Search settings'; then
-    tap_ui '🔍|Search settings'
-    sleep 2
-  fi
-  tap_ui 'Search settings' 700 330
-  sleep 1
-  # Whatever the field holds from the last query
-  for i in $(seq 1 20); do adb shell input keyevent KEYCODE_DEL || true; done
-  adb shell input text "$1" || true
-  sleep 3
-  hide_keyboard
-}
+# T-240: "Changed" in the search bar lists the settings that differ from their default.
+# qz.conf above changes Debug Log, Confirm Stop Workout, Fake Device and Player Weight; it also
+# writes a password (pzp_password), a MyWhoosh state key and a value equal to its default
+# (bike_weight=0) - none of them may be listed. Expected: "Changed settings (4)".
+CHANGED='^Changed settings.*'
 has_quiet() {
   dump
   [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null
 }
+not_has() {
+  dump
+  if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
+    echo "!! check no '$1' ($2): SHOWN" >> $STEPLOG
+  else
+    echo "check no '$1' ($2): OK" >> $STEPLOG
+  fi
+}
+# The headers and card titles of the results, into steps.log
+results() {
+  dump
+  echo "results ($1):" >> $STEPLOG
+  [ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    if t and n.get("bounds") != "[0,0][0,0]":
+        print("   ", repr(t), n.get("bounds"))
+' ui.xml | head -60 >> $STEPLOG
+}
+open_search() {
+  if ! has_quiet 'Search settings'; then
+    tap_ui '🔍|Search settings'
+    sleep 2
+  fi
+}
+type_query() {
+  tap_ui 'Search settings' 700 330
+  sleep 1
+  for i in $(seq 1 20); do adb shell input keyevent KEYCODE_DEL || true; done
+  [ -n "$1" ] && adb shell input text "$1"
+  sleep 3
+  hide_keyboard
+}
+
 open_menu
 shot s-menu
 tap_drawer '^Settings$' 400 900
 sleep 8
 shot s-00
-
-# A setting on this page, back with the key
-search_for 'bike%sweight'
-shot a-results
-has "$RESULTS" "results of bike weight"
-tap_ui '^Bike Weight$'
-sleep 3
-shot a-jump
-has '^Bike Weight.*' "the setting on its page"
-back "to the results"
-sleep 3
-shot a-back
-has "$RESULTS" "back key lands on the results"
-
-# The same with the arrow of the toolbar
-tap_ui '^Bike Weight$'
-sleep 3
-shot b-jump
-tap $MENU "toolbar back arrow"
-sleep 3
-shot b-back
-has "$RESULTS" "toolbar arrow lands on the results"
-
-# A page among the results, back from it
-search_for 'tiles%soptions'
-shot c-results
-tap_ui '^Tiles Options$'
-sleep 6
-shot c-page
-back "from the tiles page"
-sleep 4
-shot c-back
-has "$RESULTS" "back from a page lands on the results"
-
-# A setting its page hides now ("Use kg for weight" shows only with miles on): a toast, the
-# results stay
-search_for 'use%skg'
-shot d-results
-tap_ui '^Use kg for weight$'
-sleep 1
-shot d-toast
-sleep 3
-has "$RESULTS" "a hidden setting leaves the results"
-
-# T-157, modern look: the search bar scrolled off the top - a search button in the toolbar
-# brings it back. Classic: the button is there all the time, as before
+open_search
 hide_keyboard
-# Empty query: the whole settings page, long enough to scroll (the clear button of the field;
-# classic: CLEAR closes the bar)
+shot g-bar
+has '^Changed$' "the Changed button in the search bar"
+
+# The whole list
+tap_ui '^Changed$'
+sleep 4
+shot g-changed
+results "changed, no text"
+has "$CHANGED" "changed settings header"
+has '^Changed settings \(4\)$' "four changed settings"
+for name in 'Debug Log' 'Confirm Stop Workout' 'Fake Device' 'Player Weight'; do
+  has "^$name\$" "listed: $name"
+done
+not_has '^PZP Password$' "a password is never listed"
+not_has '^Camera Action$' "MyWhoosh state is not listed"
+not_has '^Bike Weight$' "a value equal to its default is not listed"
+
+# The text narrows the list
+type_query 'weight'
+sleep 2
+shot g-narrowed
+results "changed + weight"
+has '^Changed settings \(1\)$' "the text narrows the list to one"
+has '^Player Weight$' "Player Weight left"
+
+# A result opens its setting, back returns to the same list
+tap_ui '^Player Weight$'
+sleep 3
+shot g-jump
+back "to the changed list"
+sleep 3
+shot g-back
+has '^Changed settings \(1\)$' "back lands on the changed list"
+
+# Text cleared while Changed is on: the whole list at once (no debounce)
+type_query ''
+sleep 1
+shot g-cleared
+has '^Changed settings \(4\)$' "text cleared: the whole list again"
+
+# Changed off with a text: the plain search
+type_query 'weight'
+tap_ui '^Changed$'
+sleep 4
+shot g-off
+results "changed off + weight"
+has '^Search results.*' "plain search results again"
+has '^Bike Weight$' "plain search lists Bike Weight again"
+
+# Changed off and no text: the results are gone, the settings page is back
+type_query ''
+sleep 2
+shot g-off-empty
+not_has '^Search results.*|^Changed settings.*' "no results without text and filter"
+
+# Clear closes the bar and turns the filter off: opened again, it is off
+tap_ui '^Changed$'
+sleep 3
 tap_ui '^Clear$'
 sleep 2
+open_search
 hide_keyboard
-shot f-top
-# The search button of the toolbar: in the toolbar band only, the field also answers to the name
-in_toolbar() {
-  dump
-  [ -f ui.xml ] && python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") + "|" + (n.get("content-desc") or "")
-    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
-    # Not the nodes of zero size: the off-screen parts of the page are all at [0,0][0,0]
-    if m and re.search(sys.argv[2], t) and 0 < int(m.group(4)) <= 240 and int(m.group(3)) > 0:
-        print((int(m.group(1)) + int(m.group(3))) // 2, (int(m.group(2)) + int(m.group(4))) // 2)
-        sys.exit(0)
-sys.exit(1)
-' ui.xml "$1"
-}
-if xy=$(in_toolbar 'Search settings'); then echo "toolbar search button at the top: shown at $xy" >> $STEPLOG
-else echo "toolbar search button at the top: not shown" >> $STEPLOG; fi
-for i in 1 2 3; do adb shell input swipe 700 2000 700 600 300 || true; sleep 1; done
-sleep 2
-shot f-scrolled
-if xy=$(in_toolbar 'Search settings'); then
-  echo "check toolbar search button after scrolling: OK at $xy" >> $STEPLOG
-  tap $xy "toolbar search button"
-else
-  echo "!! check toolbar search button after scrolling: NOT FOUND" >> $STEPLOG
-fi
-sleep 2
-shot f-back-to-bar
-if adb shell dumpsys input_method | grep -q "mInputShown=true"; then
-  echo "check keyboard shown after the search button: OK" >> $STEPLOG
-else
-  echo "!! check keyboard shown after the search button: NOT SHOWN" >> $STEPLOG
-fi
-hide_keyboard
+shot g-reopen
+not_has "$CHANGED" "the filter is off after Clear"
 shot e-end
-
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
