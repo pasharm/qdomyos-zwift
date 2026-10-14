@@ -1,0 +1,63 @@
+# Test only (T-222): build TalkBack from google/talkback for the emulator run of main.yml, so the
+# app meets the real screen reader there. Two changes for a run without a person: the log level
+# is VERBOSE by default (every spoken text lands in logcat as "Speaking fragment text=..."), and
+# the first-run tutorial is off (it would open over the app).
+name: TalkBack
+
+on:
+  # a workflow that the default branch lacks cannot be dispatched: a push of this file runs it
+  push:
+    branches: [test/t222-emu]
+    paths: ['.github/workflows/talkback.yml']
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: google/talkback commit
+        required: false
+        default: '229212f'
+
+jobs:
+  talkback:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout TalkBack
+        uses: actions/checkout@v4
+        with:
+          repository: google/talkback
+          fetch-depth: 0
+          path: talkback
+
+      - name: Pin the commit and patch for the test
+        working-directory: talkback
+        run: |
+          git checkout ${{ inputs.ref || '229212f' }}
+          sed -i 's|<string name="pref_log_level_default" translatable="false">6</string>|<string name="pref_log_level_default" translatable="false">2</string>|' talkback/src/main/res/values/donottranslate.xml
+          grep -n 'pref_log_level_default' talkback/src/main/res/values/donottranslate.xml
+          sed -i 's|  public boolean shouldShowTutorial() {|  public boolean shouldShowTutorial() {\n    if (true) return false;|' talkback/src/main/java/com/google/android/accessibility/talkback/TalkBackService.java
+          grep -n -A1 'public boolean shouldShowTutorial' talkback/src/main/java/com/google/android/accessibility/talkback/TalkBackService.java
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.13'
+
+      - name: Build
+        working-directory: talkback
+        run: |
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
+          gradle --no-daemon assembleDebug
+          find . -name '*.apk'
+          cp $(find . -name '*.apk' -path '*debug*' | head -n 1) ../talkback.apk
+
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: talkback-apk
+          path: talkback.apk
+          if-no-files-found: error

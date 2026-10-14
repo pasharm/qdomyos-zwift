@@ -5,6 +5,9 @@
 # focus on a cell below the screen (the page should scroll to it), scroll forward / backward on
 # the value fields (TalkBack's swipe up / down on a seek bar), click on the switch and the buttons
 # (TalkBack's double tap). Then the page is opened again to see what was saved.
+# With tb/talkback.apk (workflow TalkBack, input talkback of main.yml) the real TalkBack runs
+# instead: the driver connects without switching it off and gives it finger gestures; what it
+# says is in tb-speech.txt (its log is VERBOSE in that build).
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -149,6 +152,34 @@ shot g-01-gears
 conf before
 drv list list
 
+talkback_run() {
+  adb install -r tb/talkback.apk >> $STEPLOG 2>&1 || true
+  adb shell settings put secure enabled_accessibility_services com.android.talkback/com.google.android.marvin.talkback.TalkBackService
+  adb shell settings put secure accessibility_enabled 1
+  sleep 15
+  # no uiautomator from here on: it would switch TalkBack off; screenshots only
+  tshot() { echo "-- shot $1" >> $STEPLOG; adb shell screencap -p /sdcard/$1.png || true; adb pull /sdcard/$1.png > /dev/null 2>&1 || true; }
+  tshot t-00-on
+  # Swipe right from the top: every stop and what is said (titles, Restore button)
+  drv t-walk --keep 'mark:walk' 'focused' swipe:right swipe:right swipe:right swipe:right swipe:right \
+    swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right
+  tshot t-01-walk
+  # Touch exploration: the Restore button and a group title, then double tap on the button
+  drv t-touch --keep 'mark:touch' 'touch:Restore Default' 'touch:Chainring Size' 'touch:Restore Default' 'dtap'
+  tshot t-02-touch
+  # A value by touch, then by swipe navigation (that is when TalkBack switches to adjusting)
+  drv t-seek --keep 'mark:seek-touch' 'touch:Cog Size:' 'swipe:up' 'swipe:up' 'find:Cog Size:' \
+    'mark:seek-nav' 'swipe:left' 'swipe:right' 'swipe:up' 'swipe:down' 'swipe:down' 'find:Cog Size:'
+  tshot t-03-seek
+  # A table cell
+  drv t-table --keep 'mark:table' 'touch:Gear 1, Rear Cog' 'swipe:up' 'find:Gear 1, Rear Cog' 'swipe:right' 'swipe:up' 'find:Gear 2, Chainring'
+  tshot t-04-table
+  conf talkback
+}
+
+if [ -f tb/talkback.apk ]; then
+  talkback_run
+else
 # TalkBack moves its focus to a cell below the screen: the page should scroll to it
 drv focus-low 'find:Gear 12, Rear Cog' 'focus:Gear 12, Rear Cog' 'sleep:1500' 'find:Gear 12, Rear Cog'
 shot g-02-focus-gear12
@@ -183,6 +214,7 @@ adb shell input keyevent KEYCODE_BACK || true
 sleep 4
 drv settings-switch 'focus:Restore Gears on Startup' 'click:Restore Gears on Startup' 'sleep:1000' 'find:Restore Gears on Startup'
 shot s-03-settings-switch
+fi
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 kill $LOGCAT_PID 2>/dev/null || true
@@ -194,6 +226,9 @@ else
   rm -f end_logcat.txt
 fi
 grep -E "ANR in|FATAL EXCEPTION" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
+if [ -f tb/talkback.apk ]; then
+  grep -E "Speaking fragment|A11yDriver|viewAccessibilityFocused|newItemFocused|FocusActionInfo|SelectorController|ensureAccessibilityFocusOnScreen" full_logcat.txt > tb-speech.txt || true
+fi
 
 echo "== steps"; cat $STEPLOG
 echo "== driver"; for f in drv/*.txt; do echo "-- $f"; cat "$f"; done
