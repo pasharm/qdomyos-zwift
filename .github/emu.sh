@@ -154,6 +154,12 @@ start_app() {
     back "health connect"
   fi
   sleep 15
+  # Home asks to turn on Bluetooth and Location (both off in the emulator): "No" keeps the
+  # page under it; the answer holds until the next start
+  dump
+  if [ -f ui.xml ] && grep -q "Permissions Required\|Потрібні дозволи" ui.xml; then
+    tap_ui '^(No|Ні)$' && sleep 3
+  fi
 }
 # open_settings: from anywhere back to home, then the menu and Settings
 open_settings() {
