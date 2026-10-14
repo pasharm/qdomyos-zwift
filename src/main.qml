@@ -21,15 +21,19 @@ ApplicationWindow {
 	 objectName: "stack"
     title: Qt.platform.os === "ios" ? "" : qsTr("qDomyos-Zwift")
 
-    // Modern look: the text size of the controls (labels, buttons, lists) from the type scale;
-    // the controls take it from the window. Classic: the Material size as before
-    // Leaving the modern look resets the window font: a restored value would stay set and turn
-    // the fields, lists and menus of the classic look from 16 into 14 until a restart
-    Qml.Binding on font.pixelSize { when: window.ui.modern; value: window.ui.fontBase; restoreMode: Qml.Binding.RestoreNone }
-    Connections {
-        target: window.ui
-        function onModernChanged() { if (!window.ui.modern) window.font = undefined }
+    // The labels, fields, buttons, lists and menus inherit the app font from the window. The
+    // modern look sets the window font only for a text size other than 100 %, and resets it
+    // otherwise: an explicit window font left after leaving the modern look (or set at start-up,
+    // before the settings file is read: ui_modern defaults to true) would change the classic look
+    readonly property int scaledFontPx: ui.modern && ui.textScale !== 1 ? ui.fontBase : 0
+    function applyTextScale() {
+        if (scaledFontPx > 0)
+            font.pixelSize = scaledFontPx
+        else
+            font = undefined
     }
+    onScaledFontPxChanged: applyTextScale()
+    Component.onCompleted: applyTextScale()
 
     // Force update on orientation change
     property int currentOrientation: Screen.orientation
@@ -405,7 +409,8 @@ ApplicationWindow {
         readonly property int fontTitleSmall: fontPx(18)   // toolbar title
         readonly property int fontBody: fontPx(16)         // dialog text, list titles, fields
         readonly property int fontLabel: fontPx(15)        // drawer entries, group titles
-        readonly property int fontBase: fontPx(14)         // the Material default: labels, buttons
+        // The app font (12 on the emulator, not the Material 14): labels, fields, buttons, lists
+        readonly property int fontBase: fontPx(Qt.application.font.pixelSize)
         readonly property int fontCaption: fontPx(13)      // secondary lines, chips, captions
         // Hints under the settings: the app font less 2, as in the classic look
         readonly property int fontHint: fontPx(Qt.application.font.pixelSize - 2)

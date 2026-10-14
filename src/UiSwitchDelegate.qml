@@ -12,9 +12,6 @@ import QtQuick.Controls.Material.impl 2.12
 T.SwitchDelegate {
     id: control
 
-    // The Material list size (16) from the type scale: the window font would make it 14.
-    // A plain binding, not Binding: a size set on an instance must still win
-    font.pixelSize: window.ui.modern ? window.ui.fontBody : 16
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
                             implicitContentWidth + leftPadding + rightPadding)

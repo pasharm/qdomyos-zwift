@@ -13,9 +13,6 @@ T.TextField {
     id: control
 
     readonly property bool modern: window.ui.modern
-    // The Material field size (16) from the type scale: the window font would make it 14.
-    // A plain binding, not Binding: a size set on an instance must still win
-    font.pixelSize: modern ? window.ui.fontBody : 16
     readonly property int modernInset: modern ? 6 : 0
 
     implicitWidth: implicitBackgroundWidth + leftInset + rightInset

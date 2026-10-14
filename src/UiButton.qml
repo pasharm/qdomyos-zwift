@@ -54,8 +54,6 @@ T.Button {
     // Classic: the Material button font (Medium, all caps)
     font.capitalization: modern ? Font.MixedCase : Font.AllUppercase
     font.weight: modern ? Font.DemiBold : Font.Medium
-    // Modern: the type scale (15 at 100 %); classic: the Material button size
-    font.pixelSize: modern ? window.ui.fontLabel : 14
 
     icon.width: 24
     icon.height: 24

@@ -1043,8 +1043,6 @@ Page {
         // MenuItem): it is read, but a double tap does nothing without the handler
         // The name is set as well: the one Qt takes from the text was empty for TalkBack on a phone
         id: uploadMenu
-        // Material menu size (16) from the type scale: the menu takes its font from the window
-        font.pixelSize: window.ui.modern ? window.ui.fontBody : 16
         // Modal, as the calendar: otherwise a screen reader touching an item got the workout
         // row under the menu; no dim, so it looks as before
         modal: true
