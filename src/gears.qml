@@ -581,7 +581,7 @@ ScrollView {
                     }
                     contentItem: Text {
                         text: parent.text
-                        font: parent.font
+                        font: parent.labelFont
                         color: window.ui.ink("white")
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
