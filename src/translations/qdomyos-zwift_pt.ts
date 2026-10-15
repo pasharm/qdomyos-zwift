@@ -5822,6 +5822,18 @@ Não: o QZ o mantém como esteira e não pergunta de novo (uma bicicleta ainda p
         <translation>Resultados de pesquisa</translation>
     </message>
     <message>
+        <source>Changed</source>
+        <translation>Alteradas</translation>
+    </message>
+    <message>
+        <source>No changed settings</source>
+        <translation>Nenhuma configuração alterada</translation>
+    </message>
+    <message>
+        <source>Changed settings</source>
+        <translation>Configurações alteradas</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
@@ -8108,18 +8120,6 @@ Padrão: A = -0.96, B = 1.33</translation>
     <message>
         <source>Pink</source>
         <translation>Rosa</translation>
-    </message>
-    <message>
-        <source>Changed</source>
-        <translation>Alteradas</translation>
-    </message>
-    <message>
-        <source>Changed settings</source>
-        <translation>Configurações alteradas</translation>
-    </message>
-    <message>
-        <source>No changed settings</source>
-        <translation>Nenhuma configuração alterada</translation>
     </message>
     <message>
         <source>Reset section</source>

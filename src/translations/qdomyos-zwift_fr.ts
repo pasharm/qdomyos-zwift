@@ -5774,6 +5774,18 @@ Non : QZ le garde comme tapis de course et ne redemandera plus (un vélo peut to
         <translation>Résultats de recherche</translation>
     </message>
     <message>
+        <source>Changed</source>
+        <translation>Modifiés</translation>
+    </message>
+    <message>
+        <source>No changed settings</source>
+        <translation>Aucun paramètre modifié</translation>
+    </message>
+    <message>
+        <source>Changed settings</source>
+        <translation>Paramètres modifiés</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>Ouvrir</translation>
     </message>
@@ -8124,18 +8136,6 @@ Par défaut : A = -0.96, B = 1.33</translation>
     <message>
         <source>Pink</source>
         <translation>Rose</translation>
-    </message>
-    <message>
-        <source>Changed</source>
-        <translation>Modifiés</translation>
-    </message>
-    <message>
-        <source>Changed settings</source>
-        <translation>Paramètres modifiés</translation>
-    </message>
-    <message>
-        <source>No changed settings</source>
-        <translation>Aucun paramètre modifié</translation>
     </message>
     <message>
         <source>Reset section</source>

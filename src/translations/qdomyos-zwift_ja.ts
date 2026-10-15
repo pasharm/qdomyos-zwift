@@ -5810,6 +5810,18 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>検索結果</translation>
     </message>
     <message>
+        <source>Changed</source>
+        <translation>変更済み</translation>
+    </message>
+    <message>
+        <source>No changed settings</source>
+        <translation>変更した設定はありません</translation>
+    </message>
+    <message>
+        <source>Changed settings</source>
+        <translation>変更した設定</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>開く</translation>
     </message>
@@ -8144,18 +8156,6 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
     <message>
         <source>Pink</source>
         <translation>ピンク</translation>
-    </message>
-    <message>
-        <source>Changed</source>
-        <translation>変更済み</translation>
-    </message>
-    <message>
-        <source>Changed settings</source>
-        <translation>変更した設定</translation>
-    </message>
-    <message>
-        <source>No changed settings</source>
-        <translation>変更した設定はありません</translation>
     </message>
     <message>
         <source>Reset section</source>

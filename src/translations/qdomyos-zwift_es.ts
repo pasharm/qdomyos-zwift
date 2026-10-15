@@ -5826,6 +5826,18 @@ No: QZ lo mantiene como cinta de correr y no volverá a preguntar (la bicicleta 
         <translation>Resultados de búsqueda</translation>
     </message>
     <message>
+        <source>Changed</source>
+        <translation>Modificados</translation>
+    </message>
+    <message>
+        <source>No changed settings</source>
+        <translation>No hay ajustes modificados</translation>
+    </message>
+    <message>
+        <source>Changed settings</source>
+        <translation>Ajustes modificados</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>Abrir</translation>
     </message>
@@ -8112,18 +8124,6 @@ Predeterminado: A = -0.96, B = 1.33</translation>
     <message>
         <source>Pink</source>
         <translation>Rosa</translation>
-    </message>
-    <message>
-        <source>Changed</source>
-        <translation>Modificados</translation>
-    </message>
-    <message>
-        <source>Changed settings</source>
-        <translation>Ajustes modificados</translation>
-    </message>
-    <message>
-        <source>No changed settings</source>
-        <translation>No hay ajustes modificados</translation>
     </message>
     <message>
         <source>Reset section</source>

@@ -4669,6 +4669,18 @@ In the next window, allow access to the QZ folder.</source>
         <translation>Результати пошуку</translation>
     </message>
     <message>
+        <source>Changed</source>
+        <translation>Змінені</translation>
+    </message>
+    <message>
+        <source>No changed settings</source>
+        <translation>Усі налаштування типові</translation>
+    </message>
+    <message>
+        <source>Changed settings</source>
+        <translation>Змінені налаштування</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>Відкрити</translation>
     </message>
@@ -8076,18 +8088,6 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>Pink</source>
         <translation>Рожевий</translation>
-    </message>
-    <message>
-        <source>Changed</source>
-        <translation>Змінені</translation>
-    </message>
-    <message>
-        <source>Changed settings</source>
-        <translation>Змінені налаштування</translation>
-    </message>
-    <message>
-        <source>No changed settings</source>
-        <translation>Усі налаштування типові</translation>
     </message>
     <message>
         <source>Reset</source>

@@ -5830,6 +5830,18 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>搜索结果</translation>
     </message>
     <message>
+        <source>Changed</source>
+        <translation>已更改</translation>
+    </message>
+    <message>
+        <source>No changed settings</source>
+        <translation>没有已更改的设置</translation>
+    </message>
+    <message>
+        <source>Changed settings</source>
+        <translation>已更改的设置</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>打开</translation>
     </message>
@@ -8136,18 +8148,6 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>Pink</source>
         <translation>粉色</translation>
-    </message>
-    <message>
-        <source>Changed</source>
-        <translation>已更改</translation>
-    </message>
-    <message>
-        <source>Changed settings</source>
-        <translation>已更改的设置</translation>
-    </message>
-    <message>
-        <source>No changed settings</source>
-        <translation>没有已更改的设置</translation>
     </message>
     <message>
         <source>Reset section</source>

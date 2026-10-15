@@ -6769,6 +6769,18 @@ NOTE IMPORTANTI:
         <translation>Risultati di ricerca</translation>
     </message>
     <message>
+        <source>Changed</source>
+        <translation>Modificate</translation>
+    </message>
+    <message>
+        <source>No changed settings</source>
+        <translation>Nessuna impostazione modificata</translation>
+    </message>
+    <message>
+        <source>Changed settings</source>
+        <translation>Impostazioni modificate</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>Apri</translation>
     </message>
@@ -8112,18 +8124,6 @@ Predefinito: A = -0.96, B = 1.33</translation>
     <message>
         <source>Pink</source>
         <translation>Rosa</translation>
-    </message>
-    <message>
-        <source>Changed</source>
-        <translation>Modificate</translation>
-    </message>
-    <message>
-        <source>Changed settings</source>
-        <translation>Impostazioni modificate</translation>
-    </message>
-    <message>
-        <source>No changed settings</source>
-        <translation>Nessuna impostazione modificata</translation>
     </message>
     <message>
         <source>Reset section</source>

@@ -5782,6 +5782,18 @@ Nein: QZ behandelt es weiter als Laufband und fragt nicht erneut (ein Fahrrad l�
         <translation>Suchergebnisse</translation>
     </message>
     <message>
+        <source>Changed</source>
+        <translation>Geändert</translation>
+    </message>
+    <message>
+        <source>No changed settings</source>
+        <translation>Keine geänderten Einstellungen</translation>
+    </message>
+    <message>
+        <source>Changed settings</source>
+        <translation>Geänderte Einstellungen</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>Öffnen</translation>
     </message>
@@ -8104,18 +8116,6 @@ Standard: A = -0.96, B = 1.33</translation>
     <message>
         <source>Pink</source>
         <translation>Rosa</translation>
-    </message>
-    <message>
-        <source>Changed</source>
-        <translation>Geändert</translation>
-    </message>
-    <message>
-        <source>Changed settings</source>
-        <translation>Geänderte Einstellungen</translation>
-    </message>
-    <message>
-        <source>No changed settings</source>
-        <translation>Keine geänderten Einstellungen</translation>
     </message>
     <message>
         <source>Reset section</source>

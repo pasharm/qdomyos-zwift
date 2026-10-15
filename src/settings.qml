@@ -55,6 +55,8 @@ import QtQuick 2.12 as Quick212
 
         property var settingsCatalog: ({ "settings": [], "virtualSettings": [], "pages": [] })
         property var searchableSettings: []
+        // The default of every setting by its key, for the switches a virtual setting is made of
+        property var settingDefaults: ({})
         property var filteredSettings: []
         property bool settingsCatalogLoaded: false
         property bool settingsCatalogLoading: false
@@ -62,14 +64,14 @@ import QtQuick 2.12 as Quick212
         property bool settingsSearchVisible: false
         property bool settingsSearchActive: false
         property bool settingsSearchPending: false
+        // The results list only the settings that differ from their default; the text, if any,
+        // narrows that list
+        property bool changedOnly: false
         property string initialProfileSettingsSnapshot: ""
 
         // Modern look: the search field stays on top of the page, a result opens the setting
         // itself, and "Changed" lists the settings that differ from their defaults. Where every
         // setting lives (page and sections) comes from the page sources: settings-index-worker.js
-        property bool changedOnly: false
-        // The default of every setting by its key, for the switches a virtual setting is made of
-        property var settingDefaults: ({})
         property var settingsIndex: null
         property bool settingsIndexLoading: false
         readonly property var settingsIndexPages: ["settings.qml", "settings-tiles.qml", "settings-tts.qml",
@@ -358,8 +360,13 @@ import QtQuick 2.12 as Quick212
                 page = stackView.currentItem
                 context = where.file.replace(/\.qml$/, "")
             }
+            // The filter is kept in searchReturn: back brings it up with its results
             changedOnly = false
             settingsSearchTextField.text = ""
+            // With the filter on and no text the line above changes nothing: the results are
+            // closed here, or the page under them stays hidden and the setting is not found
+            settingsSearchActive = false
+            settingsSearchPending = false
             dropTextFocus()
 
             var chain = where ? where.chain : []
@@ -434,13 +441,13 @@ import QtQuick 2.12 as Quick212
             activeGlow = null
             var back = searchReturn
             searchReturn = null
-            changedOnly = back.changedOnly
             // Classic look: the search bar may have been closed with its button meanwhile
             settingsSearchVisible = true
             restoringSearch = true
             settingsSearchTextField.text = back.query
             restoringSearch = false
-            settingsSearchActive = back.query.trim().length > 0
+            changedOnly = back.changedOnly
+            settingsSearchActive = back.query.trim().length > 0 || back.changedOnly
             settingsSearchPending = false
             filteredSettings = back.results
             // "Changed" may differ now (the setting just opened was edited): that list is rebuilt
@@ -1033,6 +1040,18 @@ import QtQuick 2.12 as Quick212
             }
             filteredSettings = results
             settingsSearchPending = false
+        }
+
+        function setChangedOnly(on) {
+            changedOnly = on
+            // A new list of one's own: back no longer returns to the previous one
+            searchReturn = null
+            settingsSearchDebounceTimer.stop()
+            settingsSearchActive = on || settingsSearchTextField.text.trim().length > 0
+            settingsSearchPending = settingsSearchActive
+            filteredSettings = []
+            loadSettingsCatalog()
+            updateFilteredSettings()
         }
 
         // From the store as well: a value changed on the voice or tiles page, opened over this
@@ -2743,15 +2762,16 @@ import QtQuick 2.12 as Quick212
                     onTextChanged: {
                         if (settingsPane.restoringSearch)
                             return
-                        settingsPane.settingsSearchActive = text.trim().length > 0
+                        settingsPane.settingsSearchActive = text.trim().length > 0 || settingsPane.changedOnly
                         settingsSearchDebounceTimer.stop()
-                        if (settingsPane.settingsSearchActive) {
+                        if (text.trim().length === 0 && settingsPane.changedOnly) {
+                            // The text cleared: the whole list of changed settings at once
+                            settingsPane.updateFilteredSettings()
+                        } else if (settingsPane.settingsSearchActive) {
                             settingsPane.filteredSettings = []
                             settingsPane.settingsSearchPending = true
                             settingsPane.loadSettingsCatalog()
                             settingsSearchDebounceTimer.restart()
-                        } else if (settingsPane.changedOnly) {
-                            settingsPane.updateFilteredSettings()
                         } else {
                             settingsPane.filteredSettings = []
                             settingsPane.settingsSearchPending = false
@@ -2791,18 +2811,7 @@ import QtQuick 2.12 as Quick212
                 UiButton {
                     text: qsTr("Changed")
                     highlighted: settingsPane.changedOnly
-                    onClicked: {
-                        settingsPane.searchReturn = null
-                        settingsPane.changedOnly = !settingsPane.changedOnly
-                        if (settingsPane.changedOnly) {
-                            settingsPane.loadSettingsCatalog()
-                            settingsPane.updateFilteredSettings()
-                        } else if (!settingsPane.settingsSearchActive) {
-                            settingsPane.filteredSettings = []
-                        } else {
-                            settingsPane.updateFilteredSettings()
-                        }
-                    }
+                    onClicked: settingsPane.setChangedOnly(!settingsPane.changedOnly)
                 }
 
                 UiButton {
