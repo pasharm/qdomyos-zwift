@@ -127,8 +127,11 @@ int WorkoutModel::longestStreak() const {
     return m_longestStreak;
 }
 
-// Made when it is read, not stored: it follows a change of the app language
+// Made when it is read, not stored: it follows a change of the app language.
+// No workouts at all (the longest streak is at least 1 otherwise): no line, as before
 QString WorkoutModel::streakMessage() const {
+    if (m_longestStreak == 0)
+        return QString();
     return getStreakMessage(m_currentStreak);
 }
 

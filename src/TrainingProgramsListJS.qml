@@ -505,6 +505,8 @@ ColumnLayout {
                         Connections {
                             target: rootItem
                             function onAppLanguageChanged() {
+                                // hidden again until loaded, as at the first load
+                                previewWebView.pageLoaded = false
                                 previewWebView.reload()
                             }
                         }
