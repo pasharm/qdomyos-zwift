@@ -285,121 +285,108 @@ type_query() {
   hide_keyboard
 }
 
+# T-249 (#5129, iPhone Duo): on Android the pages and the toasts must stay clear of the bottom
+# gesture bar in both orientations (3340dbf54), the settings page must scroll to its end after a
+# turn with a section open (#5227), and the bottom buttons of the GPX and program lists must
+# stay in place. The same steps run on the PR build and on master for a comparison.
+
+# Landscape (1) or portrait (0), with the sensor off
+rot() {
+  echo "rotation $1" >> $STEPLOG
+  adb shell settings put system accelerometer_rotation 0 || true
+  adb shell settings put system user_rotation $1 || true
+  sleep 6
+}
+# The lowest control of the app against the screen and the frame of the navigation bar
+bottom() {
+  dump
+  echo "bottom ($1):" >> $STEPLOG
+  [ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+pkg = sys.argv[2]
+screen, low = None, None
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+    if not m:
+        continue
+    x1, y1, x2, y2 = map(int, m.groups())
+    if screen is None:
+        screen = (x2, y2)
+    if n.get("package") != pkg or x2 <= x1 or y2 <= y1:
+        continue
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    if t and (low is None or y2 > low[0]):
+        low = (y2, t[:40], n.get("bounds"))
+print("    screen", screen, "lowest app control", low)
+' ui.xml $PKG >> $STEPLOG
+  adb shell dumpsys window | grep -iE "^ *Window #.*NavigationBar|navigationBarFrame|mStableInsets|InsetsSource.*navigationBars" | head -6 | sed 's/^/    /' >> $STEPLOG || true
+}
+# The back key on the home page shows "Press back again to exit" for 2 s: the shot right after
+# it, without a dump in between (a dump takes about 2 s)
+toast_shot() {
+  back "toast $1"
+  sleep 0.7
+  adb shell screencap -p /sdcard/$1.png || true
+  adb pull /sdcard/$1.png || true
+  sleep 4
+}
+
+# Gesture navigation: the bar stays at the bottom when the phone is held sideways
+adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural >> $STEPLOG 2>&1 || true
+sleep 5
+echo "navigation_mode=$(adb shell settings get secure navigation_mode | tr -d '\r') (2 = gestures)" >> $STEPLOG
+
+wait_tiles
+shot h-port
+bottom h-port
+toast_shot t-port
+rot 1
+wait_tiles
+shot h-land
+bottom h-land
+toast_shot t-land
+rot 0
+
+# Settings: a section open, then a turn, then to the end of the page
 open_menu
-shot s-menu
 tap_drawer '^Settings$' 400 900
 sleep 8
-shot s-00
-open_search
-hide_keyboard
-shot g-bar
-has '^Changed$' "the Changed button in the search bar"
-
-# The whole list
-tap_ui '^Changed$'
+tap_ui '^General Options$'
+sleep 3
+shot s-open
+rot 1
+shot s-land
+for i in $(seq 1 45); do adb shell input swipe 1280 1150 1280 300 120 || true; done
+sleep 3
+shot s-land-end
+results "settings, landscape, after 45 swipes"
+bottom s-land-end
+rot 0
+for i in $(seq 1 10); do adb shell input swipe 700 2100 700 600 120 || true; done
+sleep 3
+shot s-port-end
+results "settings, portrait again, at the end"
+back "settings"
 sleep 4
-shot g-changed
-results "changed, no text"
-has "$CHANGED" "changed settings header"
-has '^Changed settings \(4\)$' "four changed settings"
-for name in 'Debug Log' 'Confirm Stop Workout' 'Fake Device' 'Player Weight'; do
-  has "^$name\$" "listed: $name"
-done
-not_has '^PZP Password$' "a password is never listed"
-not_has '^Camera Action$' "MyWhoosh state is not listed"
-not_has '^Bike Weight$' "a value equal to its default is not listed"
 
-# The text narrows the list
-type_query 'weight'
-sleep 2
-shot g-narrowed
-results "changed + weight"
-has '^Changed settings \(1\)$' "the text narrows the list to one"
-has '^Player Weight$' "Player Weight left"
-
-# A result opens its setting, back returns to the same list
-tap_ui '^Player Weight$'
-sleep 3
-shot g-jump
-back "to the changed list"
-sleep 3
-shot g-back
-has '^Changed settings \(1\)$' "back lands on the changed list"
-
-# Text cleared while Changed is on: the whole list at once (no debounce)
-type_query ''
-sleep 1
-shot g-cleared
-has '^Changed settings \(4\)$' "text cleared: the whole list again"
-
-# T-248: a setting put back to its default after a jump from the list leaves it on the way back
-# (master before the fix brought the saved list back: still four)
-tap_ui '^Fake Device$'
-sleep 3
-shot g248-jump
-not_has "$CHANGED" "the jump left the results"
-# The switch itself on its page: back to its default (off). The row is one node: its middle,
-# right after the jump (glow, scroll), did not toggle it - the right end, where the switch is
-sleep 3
-dump
-xy=$([ -f ui.xml ] && python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
-    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
-    if t == "Fake Device" and n.get("checkable") == "true" and m:
-        x1, y1, x2, y2 = map(int, m.groups())
-        print(x2 - 70, (y1 + y2) // 2)
-        break
-' ui.xml)
-if [ -n "$xy" ]; then
-  echo "tap switch 'Fake Device' at $xy" >> $STEPLOG
-  adb shell input tap $xy || true
-else
-  echo "!! tap switch 'Fake Device' NOT FOUND" >> $STEPLOG
-fi
-sleep 2
-shot g248-off
-[ -f ui.xml ] && python3 -c '
-import sys, xml.etree.ElementTree as ET
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
-    if t == "Fake Device" and n.get("checkable") == "true":
-        print(("check" if n.get("checked") == "false" else "!! check") + " Fake Device switched off: checked=" + str(n.get("checked")))
-        break
-' ui.xml >> $STEPLOG
-back "to the changed list"
-sleep 3
-shot g248-back
-results "back after Fake Device off"
-has '^Changed settings \(3\)$' "the list is rebuilt: three left"
-not_has '^Fake Device$' "Fake Device left the list"
-
-# Changed off with a text: the plain search
-type_query 'weight'
-tap_ui '^Changed$'
+# The bottom buttons of the GPX and program lists (anchors added inside their ColumnLayout)
+open_menu
+tap_drawer '^Open GPX$'
+sleep 6
+shot gpx
+bottom gpx
+back "gpx"
 sleep 4
-shot g-off
-results "changed off + weight"
-has '^Search results.*' "plain search results again"
-has '^Bike Weight$' "plain search lists Bike Weight again"
-
-# Changed off and no text: the results are gone, the settings page is back
-type_query ''
-sleep 2
-shot g-off-empty
-not_has '^Search results.*|^Changed settings.*' "no results without text and filter"
-
-# Clear closes the bar and turns the filter off: opened again, it is off
-tap_ui '^Changed$'
-sleep 3
-tap_ui '^Clear$'
-sleep 2
-open_search
-hide_keyboard
-shot g-reopen
-not_has "$CHANGED" "the filter is off after Clear"
+open_menu
+tap_drawer '^Open Train Program$'
+sleep 6
+shot prog
+bottom prog
+back "programs"
+sleep 4
 shot e-end
+echo "== layout anchors warnings" >> $STEPLOG
+grep -i "anchors on an item that is managed by a layout" full_logcat.txt | sed 's/^/!! /' | head -20 >> $STEPLOG || true
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
