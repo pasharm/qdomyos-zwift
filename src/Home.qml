@@ -21,13 +21,9 @@ HomeForm {
         // The search for the equipment ("Next search in 12 s") is not in the drawer
         if (searchStatus !== "")
             return true
-        var info = typeof rootItem !== "undefined" && rootItem ? rootItem.info : ""
-        if (!info)
+        if (typeof rootItem === "undefined" || !rootItem || !rootItem.info)
             return false
-        var found = qsTranslate("homeform", "%1 found").split("%1")
-        return !(found.length === 2 && info.indexOf(found[0]) === 0
-                 && info.length >= found[0].length + found[1].length
-                 && info.lastIndexOf(found[1]) === info.length - found[1].length)
+        return !rootItem.infoDeviceFound
     }
     background: Rectangle {
         anchors.fill: parent

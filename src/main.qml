@@ -2202,10 +2202,12 @@ ApplicationWindow {
                         font.weight: Font.DemiBold
                         font.letterSpacing: 0.4
                         color: window.ui.accent
+                        // a binding, not set once: it follows a change of the app language
+                        text: parent ? parent.title : ""
                     }
                 }
 
-                Loader { sourceComponent: drawerSectionHeader; onLoaded: item.text = qsTr("Workout") }
+                Loader { property string title: qsTr("Workout"); sourceComponent: drawerSectionHeader }
                 UiDrawerItem { text: qsTr("Open Train Program"); iconName: "list_alt"; onClicked: drawerAction("trainprogram") }
                 UiDrawerItem { text: qsTr("Workout Editor"); iconName: "edit_note"; onClicked: drawerAction("editor") }
                 UiDrawerItem { text: qsTr("Open GPX"); iconName: "route"; onClicked: drawerAction("opengpx") }
@@ -2216,7 +2218,7 @@ ApplicationWindow {
 
                 Rectangle { x: 28; width: parent.width - 56; height: 1; color: window.ui.outline; opacity: 0.6 }
 
-                Loader { sourceComponent: drawerSectionHeader; onLoaded: item.text = qsTr("App") }
+                Loader { property string title: qsTr("App"); sourceComponent: drawerSectionHeader }
                 UiDrawerItem { text: qsTr("Settings"); iconName: "settings"; onClicked: drawerAction("settings") }
                 UiDrawerItem { text: qsTr("Wizard"); iconName: "rocket_launch"; onClicked: drawerAction("wizard") }
                 UiDrawerItem { text: qsTr("Swag Bag"); iconName: "redeem"; onClicked: drawerAction("swagbag") }
@@ -2227,7 +2229,7 @@ ApplicationWindow {
 
                 Rectangle { x: 28; width: parent.width - 56; height: 1; color: window.ui.outline; opacity: 0.6 }
 
-                Loader { sourceComponent: drawerSectionHeader; onLoaded: item.text = qsTr("Services") }
+                Loader { property string title: qsTr("Services"); sourceComponent: drawerSectionHeader }
 
                 Grid {
                     x: 16
