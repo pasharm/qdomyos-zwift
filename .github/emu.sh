@@ -1,7 +1,8 @@
 #!/bin/bash
-# Test only (T-196): the app language changes at once on OK, without a restart.
-# English -> Ukrainian -> English in Settings > General Options > App Language, the home tiles
-# after each, then the miles switch and a restart. Shots and dumps (dumps/<shot>.xml) of each step.
+# Test only (T-196): after a language change without a restart nothing stays in the old language.
+# English: the drawer, the workout editor (kept alive under the pages in the modern look) and the
+# history with its streak line; then Ukrainian in Settings > General Options > App Language and
+# the same pages again. Shots and dumps (dumps/<shot>.xml) of each step.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -218,56 +219,50 @@ switch_language() {
   shot "$4-d-after-5s"
 }
 
-# T-196: the language changes at once on OK, without a restart. A fake treadmill, so the
-# wizard stays closed and the home page has tiles; English at the start
+# T-196: a fake treadmill, so the wizard stays closed and the home page has tiles; English at
+# the start
 put_conf "applewatch_fakedevice=true\napp_language=en\n"
 start_app
 shot a-01-home-en
 
+# The drawer: section headers "Workout", "App", "Services" and the info line in its header
+open_menu
+shot a-02-drawer-en
+# The workout editor: left with back, the modern look keeps it alive for a few minutes - the
+# language change below reaches it while it is off the stack
+tap_drawer '^Workout Editor$' 400 900
+sleep 12
+shot a-03-editor-en
+back "editor"; sleep 3
+# The history: the streak line ("Let's create a streak!" with no workouts)
+open_menu
+tap_drawer '^Workouts History$' 400 900
+sleep 6
+shot a-04-history-en
+back "history"; sleep 3
+
+echo "language change at $(date +%T)" >> $STEPLOG
 open_settings
 scroll_to '^General Options$' && tap_ui '^General Options$' 700 1000
 sleep 4
 switch_language '^App Language:$' '^English$' '^Ukrainian$' b
-# Back home: no restart question, the tiles in Ukrainian
 back "settings"; sleep 5
 shot c-01-home-uk
 
-# English again, from the Ukrainian page
+# The same pages in Ukrainian: headers "Тренування", "Застосунок", "Сервіси"
 open_menu
-tap_drawer '^(Settings|Налаштування)$' 400 900
-sleep 8
-scroll_to '^Загальні параметри$' && tap_ui '^Загальні параметри$' 700 1000
-sleep 4
-switch_language '^Мова застосунку:$' '^Українська$' '^Англійська$' d
-
-# Control: the toast of an ordinary setting, to tell a missing toast after a language change
-# from a frame that misses toasts altogether
-sleep 3
-rm -f ui.xml
-tap_row '^UI Zoom:$' '^OK$'
-sleep 1
-snap d-e-zoom-toast
-
-# Miles: the tile titles follow once back on the home page, without a restart
-# The switch node spans the whole row and its label does not toggle: tap the right end
-if scroll_to '^Use Miles unit in UI$'; then
-  xy=$(python3 .github/uitap.py ui.xml '^Use Miles unit in UI$')
-  if [ -n "$xy" ]; then
-    echo "tap switch 'Use Miles unit in UI' at 1330 ${xy#* }" >> $STEPLOG
-    adb shell input tap 1330 "${xy#* }" || true
-  fi
-  rm -f ui.xml
-fi
-sleep 1
-shot e-01-miles-on
-grep -o 'content-desc="Use Miles unit in UI" checkable="true" checked="[a-z]*"' ui.xml >> $STEPLOG || true
-back "settings"; sleep 5
-shot e-02-home-miles
-
-# The language and the miles stay after a restart
-adb shell am force-stop $PKG || true
-start_app
-shot f-01-restart
+shot c-02-drawer-uk
+tap_drawer '^(Редактор тренувань|Workout Editor)$' 400 900
+sleep 6
+echo "editor reopened at $(date +%T)" >> $STEPLOG
+shot c-03-editor-uk
+back "editor"; sleep 3
+# "Почніть серію!"
+open_menu
+tap_drawer '^(Історія тренувань|Workouts History)$' 400 900
+sleep 6
+shot c-04-history-uk
+back "history"; sleep 3
 
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
