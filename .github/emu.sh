@@ -331,17 +331,22 @@ toast_shot() {
   sleep 4
 }
 
-# Gesture navigation: the bar stays at the bottom when the phone is held sideways
-adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural >> $STEPLOG 2>&1 || true
-sleep 5
+# Gesture navigation: the bar stays at the bottom when the phone is held sideways. The image
+# has it already; switching the overlay while the app runs recreates the activity, and Qt 5
+# draws a black window after that (runs 38745904492, 38745922635) - so only when it is not on
+if [ "$(adb shell settings get secure navigation_mode | tr -d '\r')" != "2" ]; then
+  adb shell cmd overlay enable com.android.internal.systemui.navbar.gestural >> $STEPLOG 2>&1 || true
+  sleep 5
+fi
 echo "navigation_mode=$(adb shell settings get secure navigation_mode | tr -d '\r') (2 = gestures)" >> $STEPLOG
 
-wait_tiles
+# The classic tiles have no content-desc: wait_tiles would wait its 3 min for nothing
+sleep 5
 shot h-port
 bottom h-port
 toast_shot t-port
 rot 1
-wait_tiles
+sleep 4
 shot h-land
 bottom h-land
 toast_shot t-land
