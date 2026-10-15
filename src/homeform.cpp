@@ -2353,6 +2353,8 @@ void homeform::setAppLanguage(const QString &language) {
     // qsTr() bindings in QML follow by themselves; the tile titles are set again in sortTiles()
     engine->retranslate();
     sortTiles();
+    // the web pages took their texts when they were loaded: the open ones ask for them again
+    emit appLanguageChanged();
 }
 
 // The tile titles, in the current language and units: set when the tiles are made and again in
