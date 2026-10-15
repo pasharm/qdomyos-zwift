@@ -181,6 +181,9 @@ ScrollView {
                         width: window.ui.modern ? parent.width - 8 : implicitWidth
                         horizontalAlignment: Text.AlignHCenter
                         fontSizeMode: window.ui.modern ? Text.HorizontalFit : Text.FixedSize
+                        // A shrunk text keeps the height of the full size: it fills the cell and stays in the middle
+                        height: window.ui.modern ? parent.height : implicitHeight
+                        verticalAlignment: Text.AlignVCenter
                         minimumPixelSize: 9
                         text: qsTr("Gear")
                         font.bold: true
@@ -201,6 +204,9 @@ ScrollView {
                         width: window.ui.modern ? parent.width - 8 : implicitWidth
                         horizontalAlignment: Text.AlignHCenter
                         fontSizeMode: window.ui.modern ? Text.HorizontalFit : Text.FixedSize
+                        // A shrunk text keeps the height of the full size: it fills the cell and stays in the middle
+                        height: window.ui.modern ? parent.height : implicitHeight
+                        verticalAlignment: Text.AlignVCenter
                         minimumPixelSize: 9
                         text: qsTr("Offset")
                         font.bold: true

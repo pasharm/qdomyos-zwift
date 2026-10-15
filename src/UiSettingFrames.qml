@@ -59,6 +59,19 @@ Item {
         return c.text !== undefined && c.wrapMode !== undefined && c.checked === undefined && c.readOnly === undefined
             && !isDescription(c)
     }
+    // A UiButton on its own in the column
+    function isButton(c) {
+        return c.applyOnSelect !== undefined && c.clicked !== undefined
+    }
+    // A drop-down list, or a row with one in it
+    function hasPicker(c) {
+        if (c.popup !== undefined && c.activated !== undefined)
+            return true
+        for (var i = 0; i < c.children.length; i++)
+            if (c.children[i].popup !== undefined && c.children[i].activated !== undefined)
+                return true
+        return false
+    }
     function baseOf(c) {
         for (var i = 0; i < baseMargins.length; i++)
             if (baseMargins[i].item === c)
@@ -102,10 +115,12 @@ Item {
                 want.section = true
                 want.groupStart = true
                 cur = null
-            } else if (cur && (isDescription(c) || (cur.titleOnly && c.checked === undefined))) {
+            } else if (cur && (isDescription(c) || (cur.titleOnly && c.checked === undefined)
+                               || (isButton(c) && hasPicker(cur.last.item)))) {
                 // A description joins the setting above it; a lone title ("FTMS Treadmill:")
                 // takes the picker below it into its frame, but not a switch: a warning line
-                // above a switch is a setting of its own
+                // above a switch is a setting of its own. A button right under a picker
+                // ("Refresh Devices List") belongs to that picker
                 cur.last = want
                 cur.titleOnly = false
             } else {

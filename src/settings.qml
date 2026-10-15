@@ -14695,15 +14695,15 @@ import QtQuick 2.12 as Quick212
 
                     Label {
                         text: qsTr("Limits the watt output sent by QZ. Set to 0 to disable the limit. Default is 9999 W.")
-                        font.bold: true
-                        font.italic: true
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     RowLayout {
@@ -16037,15 +16037,15 @@ import QtQuick 2.12 as Quick212
 
                             Label {
                                 text: qsTr("Experimental: gradually correct QZ-controlled treadmill speed using Runn/Stryd feedback, when the driver provides independent machine speed measurements. Requires 'Use speed from the power sensor'. Disabled by default.")
-                                font.bold: true
-                                font.italic: true
+                                font.bold: !window.ui.modern
+                                font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: Material.color(Material.Lime)
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
                             Label {
