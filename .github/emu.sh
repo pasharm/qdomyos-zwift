@@ -332,6 +332,23 @@ sleep 1
 shot g-cleared
 has '^Changed settings \(4\)$' "text cleared: the whole list again"
 
+# T-248: a setting put back to its default after a jump from the list leaves it on the way back
+# (master before the fix brought the saved list back: still four)
+tap_ui '^Fake Device$'
+sleep 3
+shot g248-jump
+not_has "$CHANGED" "the jump left the results"
+# The switch itself on its page: back to its default (off)
+tap_ui '^Fake Device$'
+sleep 2
+shot g248-off
+back "to the changed list"
+sleep 3
+shot g248-back
+results "back after Fake Device off"
+has '^Changed settings \(3\)$' "the list is rebuilt: three left"
+not_has '^Fake Device$' "Fake Device left the list"
+
 # Changed off with a text: the plain search
 type_query 'weight'
 tap_ui '^Changed$'
