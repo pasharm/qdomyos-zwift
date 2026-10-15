@@ -138,6 +138,14 @@ ColumnLayout {
         visible: running
     }
 
+    // a new app language: the page asks for its texts again (no reload, it may be saving the charts)
+    Connections {
+        target: rootItem
+        function onAppLanguageChanged() {
+            webView.runJavaScript("window.qzRequestTranslations && window.qzRequestTranslations()")
+        }
+    }
+
     Timer {
         id: chartJscheckStartFromWeb
         // Not while the kept page is off the stack: its pop would close another page

@@ -499,6 +499,15 @@ ColumnLayout {
                                     runJavaScript(window.ui.webThemeScript())
                             }
                         }
+
+                        // a new app language: the page takes its texts when loaded and asks the server
+                        // for the program itself, so a reload loses nothing
+                        Connections {
+                            target: rootItem
+                            function onAppLanguageChanged() {
+                                previewWebView.reload()
+                            }
+                        }
                     }
                 }
             }

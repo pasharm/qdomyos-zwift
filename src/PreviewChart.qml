@@ -70,6 +70,14 @@ ColumnLayout {
         }
     }
 
+    // a new app language: the page asks for its texts again
+    Connections {
+        target: rootItem
+        function onAppLanguageChanged() {
+            webView.runJavaScript("window.qzRequestTranslations && window.qzRequestTranslations()")
+        }
+    }
+
     Timer {
         id: revealTimer
         interval: 150; repeat: false

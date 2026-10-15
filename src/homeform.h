@@ -1378,6 +1378,8 @@ public:
     void changeOfdevice();
     void changeOflap();
     void androidDocumentPicked(QString kind, QUrl localUrl);
+    // setAppLanguage() applied a new language
+    void appLanguageChanged();
     // a new history database was started and the workouts of a previous install may be
     // hidden in the QZ folder: QML asks whether to look for them (importFitFolder())
     void historyRecoveryOfferRequested();

@@ -65,6 +65,14 @@ ColumnLayout {
         visible: running
     }
 
+    // a new app language: the page asks for its texts again
+    Connections {
+        target: rootItem
+        function onAppLanguageChanged() {
+            webView.runJavaScript("window.qzRequestTranslations && window.qzRequestTranslations()")
+        }
+    }
+
     // Modern look: no Close button (nothing listens to popupclose; the back arrow of the
     // toolbar closes the page), the map runs down to the edge
     Button {
