@@ -2808,9 +2808,12 @@ import QtQuick 2.12 as Quick212
                     }
                 }
 
+                // Classic look: a toggle as in master; modern look: the filled pill when on
                 UiButton {
                     text: qsTr("Changed")
-                    highlighted: settingsPane.changedOnly
+                    checkable: !window.ui.modern
+                    checked: settingsPane.changedOnly
+                    highlighted: window.ui.modern && settingsPane.changedOnly
                     onClicked: settingsPane.setChangedOnly(!settingsPane.changedOnly)
                 }
 
