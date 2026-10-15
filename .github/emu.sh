@@ -338,10 +338,36 @@ tap_ui '^Fake Device$'
 sleep 3
 shot g248-jump
 not_has "$CHANGED" "the jump left the results"
-# The switch itself on its page: back to its default (off)
-tap_ui '^Fake Device$'
+# The switch itself on its page: back to its default (off). The row is one node: its middle,
+# right after the jump (glow, scroll), did not toggle it - the right end, where the switch is
+sleep 3
+dump
+xy=$([ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+    if t == "Fake Device" and n.get("checkable") == "true" and m:
+        x1, y1, x2, y2 = map(int, m.groups())
+        print(x2 - 70, (y1 + y2) // 2)
+        break
+' ui.xml)
+if [ -n "$xy" ]; then
+  echo "tap switch 'Fake Device' at $xy" >> $STEPLOG
+  adb shell input tap $xy || true
+else
+  echo "!! tap switch 'Fake Device' NOT FOUND" >> $STEPLOG
+fi
 sleep 2
 shot g248-off
+[ -f ui.xml ] && python3 -c '
+import sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    if t == "Fake Device" and n.get("checkable") == "true":
+        print(("check" if n.get("checked") == "false" else "!! check") + " Fake Device switched off: checked=" + str(n.get("checked")))
+        break
+' ui.xml >> $STEPLOG
 back "to the changed list"
 sleep 3
 shot g248-back
