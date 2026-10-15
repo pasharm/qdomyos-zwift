@@ -39,7 +39,13 @@
 
 #ifdef Q_OS_ANDROID
 #include "keepawakehelper.h"
+#include <QAccessible>
+#include <QAndroidJniObject>
+#include <QKeyEvent>
+#include <QPointer>
+#include <QQuickItem>
 #include <QtAndroid>
+#include <jni.h>
 #endif
 
 #ifdef Q_OS_MACOS
@@ -556,6 +562,92 @@ void myMessageOutput(QtMsgType type, const QMessageLogContext &context, const QS
     }
     (*QT_DEFAULT_MESSAGE_HANDLER)(type, context, msg);
 }
+
+#ifdef Q_OS_ANDROID
+// Android scrolls its own lists to the item TalkBack moves to, Qt 5.15 does not: TalkBack would
+// stop on an item below the screen, draw its frame there and miss it with a double tap. Each
+// Flickable around the item (a ScrollView, a ListView in it) is scrolled just enough to show it.
+static bool scrollItemIntoView(QQuickItem *item) {
+    bool scrolled = false;
+    for (QQuickItem *flickable = item->parentItem(); flickable; flickable = flickable->parentItem()) {
+        if (!flickable->inherits("QQuickFlickable") || !flickable->property("interactive").toBool())
+            continue;
+        const QRectF rect = item->mapRectToItem(flickable, QRectF(0, 0, item->width(), item->height()));
+        const qreal height = flickable->height();
+        // as Android's ScrollView: an item that already covers the whole view stays where it is,
+        // one taller than the view is shown from its top
+        qreal delta = 0;
+        if (rect.top() < 0 && rect.bottom() <= height)
+            delta = rect.top();
+        else if (rect.top() > 0 && rect.bottom() > height)
+            delta = qMin(rect.bottom() - height, rect.top());
+        if (delta == 0)
+            continue;
+        const qreal contentY = flickable->property("contentY").toReal();
+        const qreal originY = flickable->property("originY").toReal();
+        const qreal top = originY - flickable->property("topMargin").toReal();
+        const qreal bottom = originY + flickable->property("contentHeight").toReal() +
+                             flickable->property("bottomMargin").toReal() - height;
+        const qreal target = qMax(top, qMin(contentY + delta, bottom));
+        if (target != contentY) {
+            flickable->setProperty("contentY", target);
+            scrolled = true;
+        }
+    }
+    return scrolled;
+}
+
+// CustomQtActivity: TalkBack put its focus on this accessible object (Android UI thread)
+extern "C" JNIEXPORT void JNICALL
+Java_org_cagnulen_qdomyoszwift_CustomQtActivity_nativeScrollToAccessibleObject(JNIEnv *env, jclass clazz, jint id) {
+    Q_UNUSED(env)
+    Q_UNUSED(clazz)
+    if (!QCoreApplication::instance())
+        return;
+    QMetaObject::invokeMethod(
+        QCoreApplication::instance(),
+        [id] {
+            QAccessibleInterface *iface = QAccessible::accessibleInterface(QAccessible::Id(id));
+            QQuickItem *item = iface && iface->isValid() ? qobject_cast<QQuickItem *>(iface->object()) : nullptr;
+            if (item && item->isVisible() && scrollItemIntoView(item))
+                QAndroidJniObject::callStaticMethod<void>("org/cagnulen/qdomyoszwift/CustomQtActivity",
+                                                          "accessibilityTreeChanged", "()V");
+        },
+        Qt::QueuedConnection);
+}
+
+// CustomQtActivity: TalkBack's double tap on this accessible object (Android UI thread). Qt 5.15
+// does nothing for a button there (QQuickAbstractButton has no accessible press yet) and answers
+// false, after which TalkBack taps the middle of the node: that misses the indicator of a switch
+// with a MouseArea over it (IndicatorOnlySwitch) and may hit something else on a moved page. A
+// button gets the space key a keyboard presses it with instead (nextCheckState() with exclusive
+// groups, clicked(), its Action), on the Qt thread, and true is answered. For anything else false
+// is answered and Qt's own press runs, as before. The object is looked at on this thread, as Qt's
+// own accessibility calls of 5.15 do.
+extern "C" JNIEXPORT jboolean JNICALL
+Java_org_cagnulen_qdomyoszwift_CustomQtActivity_nativeAccessibleClick(JNIEnv *env, jclass clazz, jint id) {
+    Q_UNUSED(env)
+    Q_UNUSED(clazz)
+    if (!QCoreApplication::instance())
+        return false;
+    QAccessibleInterface *iface = QAccessible::accessibleInterface(QAccessible::Id(id));
+    if (!iface || !iface->isValid() || !iface->object() || !iface->object()->inherits("QQuickAbstractButton"))
+        return false;
+    QPointer<QObject> button = iface->object();
+    QMetaObject::invokeMethod(
+        QCoreApplication::instance(),
+        [button] {
+            if (!button || !button->property("enabled").toBool())
+                return;
+            QKeyEvent press(QEvent::KeyPress, Qt::Key_Space, Qt::NoModifier, QStringLiteral(" "));
+            QKeyEvent release(QEvent::KeyRelease, Qt::Key_Space, Qt::NoModifier, QStringLiteral(" "));
+            QCoreApplication::sendEvent(button, &press);
+            QCoreApplication::sendEvent(button, &release);
+        },
+        Qt::QueuedConnection);
+    return true;
+}
+#endif
 
 int main(int argc, char *argv[]) {
 #ifdef Q_OS_WIN32

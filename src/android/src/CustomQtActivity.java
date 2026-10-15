@@ -20,13 +20,16 @@ import android.view.ViewParent;
 import android.view.WindowInsets;
 import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityManager;
+import android.view.accessibility.AccessibilityNodeInfo;
 import android.view.accessibility.AccessibilityNodeProvider;
+import android.view.ViewTreeObserver;
 import android.window.OnBackInvokedCallback;
 import android.window.OnBackInvokedDispatcher;
 import android.view.WindowManager;
 import android.view.DisplayCutout;
 import android.graphics.Insets;
 import org.qtproject.qt5.android.bindings.QtActivity;
+import java.util.List;
 
 public class CustomQtActivity extends QtActivity {
     private static final String TAG = "CustomQtActivity";
@@ -49,6 +52,10 @@ public class CustomQtActivity extends QtActivity {
     private static native void nativeOnDocumentPicked(int requestCode, int resultCode, String localPath);
     // a workout import starts copying: the history page shows that it is running
     private static native void nativeOnFitImportStarted();
+    // TalkBack put its focus on this accessible object: scroll it into view
+    private static native void nativeScrollToAccessibleObject(int id);
+    // TalkBack's double tap on this accessible object: true when it is a button Qt presses
+    private static native boolean nativeAccessibleClick(int id);
 
     private void dispatchOAuthCallback(Intent intent) {
         if (intent == null) {
@@ -187,11 +194,7 @@ public class CustomQtActivity extends QtActivity {
         if (!accessibilityEnabled()) {
             return;
         }
-        View view = qtAccessibilityView;
-        if (view == null || !view.isAttachedToWindow() || view.getAccessibilityNodeProvider() == null) {
-            view = findQtAccessibilityView(getWindow().getDecorView());
-            qtAccessibilityView = view;
-        }
+        View view = qtAccessibilityView();
         ViewParent parent = view != null ? view.getParent() : null;
         if (parent == null) {
             return;
@@ -202,12 +205,168 @@ public class CustomQtActivity extends QtActivity {
         parent.requestSendAccessibilityEvent(view, event);
     }
 
+    // Qt's accessibility view, with its node provider wrapped in ScrollToFocusProvider. Qt sets
+    // its own delegate again whenever accessibility is turned back on, so this is checked anew.
+    private View qtAccessibilityView() {
+        View view = qtAccessibilityView;
+        if (view == null || !view.isAttachedToWindow() || view.getAccessibilityNodeProvider() == null) {
+            view = findQtAccessibilityView(getWindow().getDecorView());
+            qtAccessibilityView = view;
+        }
+        if (view != null) {
+            AccessibilityNodeProvider provider = view.getAccessibilityNodeProvider();
+            if (!(provider instanceof ScrollToFocusProvider)) {
+                final ScrollToFocusProvider wrapped = new ScrollToFocusProvider(provider, view);
+                view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
+                    @Override
+                    public AccessibilityNodeProvider getAccessibilityNodeProvider(View host) {
+                        return wrapped;
+                    }
+                });
+            }
+        }
+        return view;
+    }
+
+    // Android scrolls its own lists to the item TalkBack moves to, Qt 5.15 does not: TalkBack
+    // stops on an item below the screen, its frame is drawn off screen and a double tap misses it.
+    // On such a focus Qt is asked to scroll the item into view (nativeScrollToAccessibleObject),
+    // and once it did, accessibilityTreeChanged() lets TalkBack read the new positions.
+    // A double tap on a button is pressed by nativeAccessibleClick (Qt 5.15 does nothing for a
+    // button and answers false, after which TalkBack taps the middle of the node). TalkBack gets
+    // true, a clicked event (it reads a new switch state from it) and a tree refresh for what the
+    // press opened or added. Anything else goes to Qt, as before.
+    // A value control of Qt (a spin box, a slider: an item with scroll actions and no children)
+    // is a View to TalkBack, which lets only a seek bar change its value with a swipe up or down;
+    // it is called one, the swipe sends the scroll actions Qt handles, and the new name, which
+    // ends with the value, is announced, as Qt 5.15 sends nothing. The rest goes to Qt unchanged.
+    private static final class ScrollToFocusProvider extends AccessibilityNodeProvider {
+        private static final long VALUE_ANNOUNCE_DELAY_MS = 150;
+        private final AccessibilityNodeProvider qt;
+        private final View host;
+
+        ScrollToFocusProvider(AccessibilityNodeProvider qt, View host) {
+            this.qt = qt;
+            this.host = host;
+        }
+
+        @Override
+        public AccessibilityNodeInfo createAccessibilityNodeInfo(int virtualViewId) {
+            AccessibilityNodeInfo node = qt.createAccessibilityNodeInfo(virtualViewId);
+            if (node != null && virtualViewId != View.NO_ID && node.isScrollable() && node.getChildCount() == 0) {
+                node.setClassName("android.widget.SeekBar");
+            }
+            return node;
+        }
+
+        @Override
+        public List<AccessibilityNodeInfo> findAccessibilityNodeInfosByText(String text, int virtualViewId) {
+            return qt.findAccessibilityNodeInfosByText(text, virtualViewId);
+        }
+
+        @Override
+        public AccessibilityNodeInfo findFocus(int focus) {
+            return qt.findFocus(focus);
+        }
+
+        @Override
+        public boolean performAction(int virtualViewId, int action, Bundle arguments) {
+            if (action == AccessibilityNodeInfo.ACTION_CLICK && virtualViewId != View.NO_ID) {
+                boolean pressed;
+                try {
+                    pressed = nativeAccessibleClick(virtualViewId);
+                } catch (UnsatisfiedLinkError e) {
+                    pressed = false;
+                }
+                if (pressed) {
+                    afterClick(virtualViewId);
+                    return true;
+                }
+            }
+            boolean handled = qt.performAction(virtualViewId, action, arguments);
+            if (action == AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS && virtualViewId != View.NO_ID) {
+                try {
+                    nativeScrollToAccessibleObject(virtualViewId);
+                } catch (UnsatisfiedLinkError ignored) {
+                    // Qt not loaded yet: nothing on screen to scroll
+                }
+            }
+            if (handled && virtualViewId != View.NO_ID && (action == AccessibilityNodeInfo.ACTION_SCROLL_FORWARD
+                    || action == AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD)) {
+                announceValue(virtualViewId);
+            }
+            return handled;
+        }
+
+        private void afterClick(final int virtualViewId) {
+            host.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    ViewParent parent = host.getParent();
+                    AccessibilityNodeInfo node = qt.createAccessibilityNodeInfo(virtualViewId);
+                    // a press that closed the page leaves Qt an empty node for the id
+                    if (node != null && parent != null && (node.isClickable() || node.isCheckable())) {
+                        AccessibilityEvent event = AccessibilityEvent.obtain(AccessibilityEvent.TYPE_VIEW_CLICKED);
+                        event.setSource(host, virtualViewId);
+                        event.setPackageName(host.getContext().getPackageName());
+                        event.setClassName(node.getClassName());
+                        event.setContentDescription(node.getContentDescription());
+                        event.setChecked(node.isChecked());
+                        event.setEnabled(node.isEnabled());
+                        parent.requestSendAccessibilityEvent(host, event);
+                    }
+                    if (node != null) {
+                        node.recycle();
+                    }
+                    accessibilityTreeChanged();
+                }
+            }, VALUE_ANNOUNCE_DELAY_MS);
+        }
+
+        private void announceValue(final int virtualViewId) {
+            host.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    AccessibilityNodeInfo node = qt.createAccessibilityNodeInfo(virtualViewId);
+                    if (node == null) {
+                        return;
+                    }
+                    CharSequence name = node.getContentDescription();
+                    if (name == null || name.length() == 0) {
+                        name = node.getText();
+                    }
+                    node.recycle();
+                    if (name != null && name.length() > 0) {
+                        host.announceForAccessibility(name);
+                    }
+                }
+            }, VALUE_ANNOUNCE_DELAY_MS);
+        }
+    }
+
+    private static volatile CustomQtActivity accessibilityActivity = null;
+
+    // Called by Qt from its own thread after it scrolled to the focused item, and after a press
+    public static void accessibilityTreeChanged() {
+        final CustomQtActivity activity = accessibilityActivity;
+        if (activity == null) {
+            return;
+        }
+        activity.accessibilityHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                activity.sendAccessibilityTreeChanged();
+            }
+        });
+    }
+
     // The plain View that Qt adds over its surface while accessibility is on: the one whose node
     // provider is Qt's. Only plain Views are asked, so a WebView does not start its own provider.
     private static View findQtAccessibilityView(View view) {
         if (view.getClass() == View.class) {
             AccessibilityNodeProvider provider = view.getAccessibilityNodeProvider();
-            if (provider != null && provider.getClass().getName().startsWith("org.qtproject.")) {
+            if (provider instanceof ScrollToFocusProvider
+                    || (provider != null && provider.getClass().getName().startsWith("org.qtproject."))) {
                 return view;
             }
         }
@@ -250,6 +409,18 @@ public class CustomQtActivity extends QtActivity {
         AgeSignalsHelper.requestAgeSignals(this);
         HealthConnectHelper.initialize(this);
         registerBackCallback();
+
+        // Wrap Qt's accessibility view as soon as Qt adds it, before TalkBack moves over it
+        accessibilityActivity = this;
+        getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(
+                new ViewTreeObserver.OnGlobalLayoutListener() {
+                    @Override
+                    public void onGlobalLayout() {
+                        if (accessibilityEnabled()) {
+                            qtAccessibilityView();
+                        }
+                    }
+                });
 
         // Make the window truly edge-to-edge so the app renders into ALL screen areas
         // including the display cutout (punch-hole/notch) on all 4 rotation variants.
