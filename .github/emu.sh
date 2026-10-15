@@ -1,7 +1,7 @@
 #!/bin/bash
 # Test only (T-196): after a language change without a restart nothing stays in the old language.
 # English: the drawer, the workout editor (kept alive under the pages in the modern look) and the
-# history with its streak line; then Ukrainian in Settings > General Options > App Language and
+# history; then Ukrainian in Settings > General Options > App Language and
 # the same pages again. Shots and dumps (dumps/<shot>.xml) of each step.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
@@ -234,7 +234,7 @@ tap_drawer '^Workout Editor$' 400 900
 sleep 12
 shot a-03-editor-en
 back "editor"; sleep 3
-# The history: the streak line ("Let's create a streak!" with no workouts)
+# The history (no workouts in the emulator, so no streak line: only that the page opens)
 open_menu
 tap_drawer '^Workouts History$' 400 900
 sleep 6
@@ -257,7 +257,6 @@ sleep 6
 echo "editor reopened at $(date +%T)" >> $STEPLOG
 shot c-03-editor-uk
 back "editor"; sleep 3
-# "Почніть серію!"
 open_menu
 tap_drawer '^(Історія тренувань|Workouts History)$' 400 900
 sleep 6
