@@ -12,6 +12,11 @@ import QtQuick.Controls.Material 2.0
 // - `minimum` / `maximum` when set: out of range is not valid
 // - not valid: a red line and the reason under the field, also for a value already saved
 //   before this check existed; nothing is changed or reset by itself
+// - `savedText`: the row binds the saved setting here instead of `text`; the field shows it
+//   and shows it again whenever the setting changes (after OK too). `dirty` - the number in
+//   the field is not the saved one ("75.0" for a saved 75 is not), the OK button of the row
+//   is enabled by `valid && dirty`: a grey OK means there is nothing to save. A field without
+//   `savedText` is never dirty
 // The rule is a regular expression, not IntValidator/DoubleValidator: those follow the
 // locale of the phone (comma or point), the very thing that broke the decimal input
 // feat/modern-ui: built on UiTextField, so the modern look draws it (filled field, a red
@@ -26,8 +31,12 @@ UiTextField {
     property int decimals: 2
     property var minimum: undefined
     property var maximum: undefined
+    property var savedText: undefined
 
     readonly property real value: Number(text.replace(",", "."))
+    readonly property bool dirty: savedText !== undefined
+        && (valid ? value !== Number(String(savedText).replace(",", "."))
+                  : text !== String(savedText))
     readonly property bool inRange: (minimum === undefined || value >= minimum)
                                     && (maximum === undefined || value <= maximum)
     readonly property bool valid: acceptableInput && inRange
@@ -55,6 +64,9 @@ UiTextField {
     readonly property real reasonRoom: valid ? 0 : reason.implicitHeight
     bottomPadding: (modern ? 12 : 16) + reasonRoom
     bottomInset: modernInset + reasonRoom
+
+    onSavedTextChanged: if (savedText !== undefined) text = savedText
+    Component.onCompleted: if (savedText !== undefined) text = savedText
 
     onTextEdited: {
         if (decimals <= 0)

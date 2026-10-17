@@ -3168,7 +3168,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: uiZoomTextField
                             minimum: 10
-                            text: settings.ui_zoom
+                            savedText: settings.ui_zoom
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3179,7 +3179,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okUiZoomButton
                             text: qsTr("OK")
-                            enabled: uiZoomTextField.valid
+                            enabled: uiZoomTextField.valid && uiZoomTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ui_zoom = uiZoomTextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                         }
@@ -3229,6 +3229,9 @@ import QtQuick 2.12 as Quick212
                             applyOnSelect: false
                             id: okAppLanguageButton
                             text: qsTr("OK")
+                            // Grey while the saved language is chosen, as the OK of the fields
+                            enabled: appLanguageCombo.currentIndex >= 0
+                                     && appLanguageOptions[appLanguageCombo.currentIndex].value !== settings.app_language
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: {
                                 settings.app_language = appLanguageOptions[appLanguageCombo.currentIndex].value
@@ -3262,7 +3265,7 @@ import QtQuick 2.12 as Quick212
                             id: weightTextField
                             minimum: 1
                             // 2 decimals as the field takes: 78 kg is 171.96035999999998 lbs unrounded
-                            text: Number(((settings.miles_unit && !settings.weight_kg_unit)?settings.weight * 2.20462:settings.weight).toFixed(2))
+                            savedText: Number(((settings.miles_unit && !settings.weight_kg_unit)?settings.weight * 2.20462:settings.weight).toFixed(2))
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3273,7 +3276,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okWeightButton
                             text: qsTr("OK")
-                            enabled: weightTextField.valid
+                            enabled: weightTextField.valid && weightTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.weight = ((settings.miles_unit && !settings.weight_kg_unit)?weightTextField.value / 2.20462:weightTextField.value); toast.show(qsTr("Setting saved!")); }
                         }
@@ -3303,7 +3306,7 @@ import QtQuick 2.12 as Quick212
                             id: heightTextField
                             format: settings.miles_unit ? "heightFtIn" : "heightCm"
                             numberField: !settings.miles_unit
-                            text: settings.miles_unit ? Math.floor(settings.height / 30.48) + "'" + Math.round((settings.height % 30.48) / 2.54) + '"' : settings.height
+                            savedText: settings.miles_unit ? Math.floor(settings.height / 30.48) + "'" + Math.round((settings.height % 30.48) / 2.54) + '"' : settings.height
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3323,7 +3326,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okHeightButton
                             text: qsTr("OK")
-                            enabled: heightTextField.valid
+                            enabled: heightTextField.valid && heightTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: {
                                 if (settings.miles_unit) {
@@ -3367,7 +3370,7 @@ import QtQuick 2.12 as Quick212
                             decimals: 0
                             minimum: 1
                             maximum: 120
-                            text: settings.age
+                            savedText: settings.age
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3378,7 +3381,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okAgeButton
                             text: qsTr("OK")
-                            enabled: ageTextField.valid
+                            enabled: ageTextField.valid && ageTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.age = ageTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -3451,7 +3454,7 @@ import QtQuick 2.12 as Quick212
                             id: ftpTextField
                             minimum: 1
                             maximum: 2000
-                            text: settings.ftp
+                            savedText: settings.ftp
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3462,7 +3465,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okFTPButton
                             text: qsTr("OK")
-                            enabled: ftpTextField.valid
+                            enabled: ftpTextField.valid && ftpTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ftp = ftpTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -3492,7 +3495,7 @@ import QtQuick 2.12 as Quick212
                             id: ftpRunTextField
                             minimum: 1
                             maximum: 2000
-                            text: settings.ftp_run
+                            savedText: settings.ftp_run
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3502,7 +3505,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: ftpRunTextField.valid
+                            enabled: ftpRunTextField.valid && ftpRunTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ftp_run = ftpRunTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -3950,7 +3953,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsNumberField {
                                     id: heartRateZone1TextField
                                     maximum: 100
-                                    text: settings.heart_rate_zone1
+                                    savedText: settings.heart_rate_zone1
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3961,7 +3964,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okHeartRateZone1Button
                                     text: qsTr("OK")
-                                    enabled: heartRateZone1TextField.valid
+                                    enabled: heartRateZone1TextField.valid && heartRateZone1TextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.heart_rate_zone1 = heartRateZone1TextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -3978,7 +3981,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsNumberField {
                                     id: heartRateZone2TextField
                                     maximum: 100
-                                    text: settings.heart_rate_zone2
+                                    savedText: settings.heart_rate_zone2
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -3989,7 +3992,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okHeartRateZone2Button
                                     text: qsTr("OK")
-                                    enabled: heartRateZone2TextField.valid
+                                    enabled: heartRateZone2TextField.valid && heartRateZone2TextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.heart_rate_zone2 = heartRateZone2TextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -4006,7 +4009,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsNumberField {
                                     id: heartRateZone3TextField
                                     maximum: 100
-                                    text: settings.heart_rate_zone3
+                                    savedText: settings.heart_rate_zone3
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4017,7 +4020,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okHeartRateZone3Button
                                     text: qsTr("OK")
-                                    enabled: heartRateZone3TextField.valid
+                                    enabled: heartRateZone3TextField.valid && heartRateZone3TextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.heart_rate_zone3 = heartRateZone3TextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -4034,7 +4037,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsNumberField {
                                     id: heartRateZone4TextField
                                     maximum: 100
-                                    text: settings.heart_rate_zone4
+                                    savedText: settings.heart_rate_zone4
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4045,7 +4048,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okHeartRateZone4Button
                                     text: qsTr("OK")
-                                    enabled: heartRateZone4TextField.valid
+                                    enabled: heartRateZone4TextField.valid && heartRateZone4TextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.heart_rate_zone4 = heartRateZone4TextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -4112,7 +4115,7 @@ import QtQuick 2.12 as Quick212
                                             id: heartRateMaxOverrideValueTextField
                                             minimum: 100
                                             maximum: 250
-                                            text: settings.heart_max_override_value
+                                            savedText: settings.heart_max_override_value
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4123,7 +4126,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okHeartRateMaxOverrideValue
                                             text: qsTr("OK")
-                                            enabled: heartRateMaxOverrideValueTextField.valid
+                                            enabled: heartRateMaxOverrideValueTextField.valid && heartRateMaxOverrideValueTextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.heart_max_override_value = heartRateMaxOverrideValueTextField.value; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -4155,7 +4158,7 @@ import QtQuick 2.12 as Quick212
                                             decimals: 0
                                             minimum: 20
                                             maximum: 200
-                                            text: settings.heart_rate_resting
+                                            savedText: settings.heart_rate_resting
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4166,7 +4169,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okHeartRateRestingValue
                                             text: qsTr("OK")
-                                            enabled: heartRateRestingValueTextField.valid
+                                            enabled: heartRateRestingValueTextField.valid && heartRateRestingValueTextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.heart_rate_resting = heartRateRestingValueTextField.value; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -4207,7 +4210,7 @@ import QtQuick 2.12 as Quick212
                                             id: powerFromHeartPWR1TextField
                                             minimum: 1
                                             maximum: 2000
-                                            text: settings.power_hr_pwr1
+                                            savedText: settings.power_hr_pwr1
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4218,7 +4221,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okPowerFromHeartPWR1
                                             text: qsTr("OK")
-                                            enabled: powerFromHeartPWR1TextField.valid
+                                            enabled: powerFromHeartPWR1TextField.valid && powerFromHeartPWR1TextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.power_hr_pwr1 = powerFromHeartPWR1TextField.value; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -4236,7 +4239,7 @@ import QtQuick 2.12 as Quick212
                                             id: powerFromHeartHR1TextField
                                             minimum: 30
                                             maximum: 250
-                                            text: settings.power_hr_hr1
+                                            savedText: settings.power_hr_hr1
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4247,7 +4250,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okPowerFromHeartHR1
                                             text: qsTr("OK")
-                                            enabled: powerFromHeartHR1TextField.valid
+                                            enabled: powerFromHeartHR1TextField.valid && powerFromHeartHR1TextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.power_hr_hr1 = powerFromHeartHR1TextField.value; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -4265,7 +4268,7 @@ import QtQuick 2.12 as Quick212
                                             id: powerFromHeartPWR2TextField
                                             minimum: 1
                                             maximum: 2000
-                                            text: settings.power_hr_pwr2
+                                            savedText: settings.power_hr_pwr2
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4276,7 +4279,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okPowerFromHeartPWR2
                                             text: qsTr("OK")
-                                            enabled: powerFromHeartPWR2TextField.valid
+                                            enabled: powerFromHeartPWR2TextField.valid && powerFromHeartPWR2TextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.power_hr_pwr2 = powerFromHeartPWR2TextField.value; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -4294,7 +4297,7 @@ import QtQuick 2.12 as Quick212
                                             id: powerFromHeartHR2TextField
                                             minimum: 30
                                             maximum: 250
-                                            text: settings.power_hr_hr2
+                                            savedText: settings.power_hr_hr2
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4305,7 +4308,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okPowerFromHeartHR2
                                             text: qsTr("OK")
-                                            enabled: powerFromHeartHR2TextField.valid
+                                            enabled: powerFromHeartHR2TextField.valid && powerFromHeartHR2TextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.power_hr_hr2 = powerFromHeartHR2TextField.value; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -4459,7 +4462,7 @@ import QtQuick 2.12 as Quick212
                             minimum: -9999
                             maximum: 9999
                             signed: true
-                            text: settings.gears_current_value_f
+                            savedText: settings.gears_current_value_f
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4470,7 +4473,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             text: qsTr("OK")
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            enabled: gearsRestoreValueDelegate.checked && specificGearValueField.valid
+                            enabled: gearsRestoreValueDelegate.checked && specificGearValueField.valid && specificGearValueField.dirty
                             onClicked: {
                                 settings.gears_current_value_f = specificGearValueField.value
                                 toast.show(qsTr("Setting saved!"))
@@ -4500,7 +4503,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: rollingreistanceTextField
-                            text: settings.rolling_resistance
+                            savedText: settings.rolling_resistance
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4511,7 +4514,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okRollingResistanceButton
                             text: qsTr("OK")
-                            enabled: rollingreistanceTextField.valid
+                            enabled: rollingreistanceTextField.valid && rollingreistanceTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.rolling_resistance = rollingreistanceTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -4534,7 +4537,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: bikeweightTextField
-                            text: Number(((settings.miles_unit && !settings.weight_kg_unit)?settings.bike_weight * 2.20462:settings.bike_weight).toFixed(2))
+                            savedText: Number(((settings.miles_unit && !settings.weight_kg_unit)?settings.bike_weight * 2.20462:settings.bike_weight).toFixed(2))
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4545,7 +4548,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okBikeWeightButton
                             text: qsTr("OK")
-                            enabled: bikeweightTextField.valid
+                            enabled: bikeweightTextField.valid && bikeweightTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.bike_weight = ((settings.miles_unit && !settings.weight_kg_unit)?bikeweightTextField.value / 2.20462:bikeweightTextField.value); toast.show(qsTr("Setting saved!")); }
                         }
@@ -4574,7 +4577,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: crrGainTextField
-                            text: settings.crrGain
+                            savedText: settings.crrGain
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4585,7 +4588,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okCRRGainButton
                             text: qsTr("OK")
-                            enabled: crrGainTextField.valid
+                            enabled: crrGainTextField.valid && crrGainTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.crrGain = crrGainTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -4600,7 +4603,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: cwGainTextField
-                            text: settings.cwGain
+                            savedText: settings.cwGain
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4611,7 +4614,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okCWGainButton
                             text: qsTr("OK")
-                            enabled: cwGainTextField.valid
+                            enabled: cwGainTextField.valid && cwGainTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.cwGain = cwGainTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -4901,7 +4904,7 @@ import QtQuick 2.12 as Quick212
                             maximum: 100
                             signed: true
                             decimals: 0
-                            text: settings.bike_resistance_offset
+                            savedText: settings.bike_resistance_offset
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4912,7 +4915,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okBikeResistanceOffsetButton
                             text: qsTr("OK")
-                            enabled: bikeResistanceOffsetTextField.valid
+                            enabled: bikeResistanceOffsetTextField.valid && bikeResistanceOffsetTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.bike_resistance_offset = bikeResistanceOffsetTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -4943,7 +4946,7 @@ import QtQuick 2.12 as Quick212
                             id: bikePowerOffsetTextField
                             signed: true
                             decimals: 0
-                            text: settings.bike_power_offset
+                            savedText: settings.bike_power_offset
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4954,7 +4957,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okBikePowerOffsetButton
                             text: qsTr("OK")
-                            enabled: bikePowerOffsetTextField.valid
+                            enabled: bikePowerOffsetTextField.valid && bikePowerOffsetTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.bike_power_offset = bikePowerOffsetTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -4983,7 +4986,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: bikeResistanceGainTextField
-                            text: settings.bike_resistance_gain_f
+                            savedText: settings.bike_resistance_gain_f
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -4994,7 +4997,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okBikeResistanceGainButton
                             text: qsTr("OK")
-                            enabled: bikeResistanceGainTextField.valid
+                            enabled: bikeResistanceGainTextField.valid && bikeResistanceGainTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.bike_resistance_gain_f = bikeResistanceGainTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -5023,7 +5026,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: zwiftErgFilterTextField
-                            text: settings.zwift_erg_filter
+                            savedText: settings.zwift_erg_filter
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5034,7 +5037,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okzwiftErgFilterButton
                             text: qsTr("OK")
-                            enabled: zwiftErgFilterTextField.valid
+                            enabled: zwiftErgFilterTextField.valid && zwiftErgFilterTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.zwift_erg_filter = zwiftErgFilterTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -5063,7 +5066,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: zwiftErgDownFilterTextField
-                            text: settings.zwift_erg_filter_down
+                            savedText: settings.zwift_erg_filter_down
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5074,7 +5077,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okzwiftErgDownFilterButton
                             text: qsTr("OK")
-                            enabled: zwiftErgDownFilterTextField.valid
+                            enabled: zwiftErgDownFilterTextField.valid && zwiftErgDownFilterTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.zwift_erg_filter_down = zwiftErgDownFilterTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -5103,7 +5106,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: zwiftErgResistanceDownTextField
-                            text: settings.zwift_erg_resistance_down
+                            savedText: settings.zwift_erg_resistance_down
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5114,7 +5117,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okzwiftErgResistanceDownButton
                             text: qsTr("OK")
-                            enabled: zwiftErgResistanceDownTextField.valid
+                            enabled: zwiftErgResistanceDownTextField.valid && zwiftErgResistanceDownTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.zwift_erg_resistance_down = zwiftErgResistanceDownTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -5143,7 +5146,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: zwiftErgResistanceUpTextField
-                            text: settings.zwift_erg_resistance_up
+                            savedText: settings.zwift_erg_resistance_up
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5154,7 +5157,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okzwiftErgResistanceUpButton
                             text: qsTr("OK")
-                            enabled: zwiftErgResistanceUpTextField.valid
+                            enabled: zwiftErgResistanceUpTextField.valid && zwiftErgResistanceUpTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.zwift_erg_resistance_up = zwiftErgResistanceUpTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -5184,7 +5187,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: bikeResistanceStartTextField
                             decimals: 0
-                            text: settings.bike_resistance_start
+                            savedText: settings.bike_resistance_start
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5195,7 +5198,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okBikeResistanceStartButton
                             text: qsTr("OK")
-                            enabled: bikeResistanceStartTextField.valid
+                            enabled: bikeResistanceStartTextField.valid && bikeResistanceStartTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.bike_resistance_start = bikeResistanceStartTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -5223,7 +5226,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: gearsGainTextField
-                            text: settings.gears_gain
+                            savedText: settings.gears_gain
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5233,7 +5236,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: gearsGainTextField.valid
+                            enabled: gearsGainTextField.valid && gearsGainTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.gears_gain = gearsGainTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -5278,7 +5281,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: gearsOffsetTextField
                             signed: true
-                            text: settings.gears_offset
+                            savedText: settings.gears_offset
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5288,7 +5291,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: gearsOffsetTextField.valid
+                            enabled: gearsOffsetTextField.valid && gearsOffsetTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.gears_offset = gearsOffsetTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -5389,7 +5392,7 @@ import QtQuick 2.12 as Quick212
                                     minimum: 0
                                     maximum: 250
                                     decimals: 0
-                                    text: settings.automatic_virtual_shifting_gear_up_cadence
+                                    savedText: settings.automatic_virtual_shifting_gear_up_cadence
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5399,7 +5402,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: automaticVirtualShiftingGearUpCadenceTextField.valid
+                                    enabled: automaticVirtualShiftingGearUpCadenceTextField.valid && automaticVirtualShiftingGearUpCadenceTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_gear_up_cadence = automaticVirtualShiftingGearUpCadenceTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -5415,7 +5418,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: automaticVirtualShiftingGearUpTimeTextField
-                                    text: settings.automatic_virtual_shifting_gear_up_time
+                                    savedText: settings.automatic_virtual_shifting_gear_up_time
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5425,7 +5428,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: automaticVirtualShiftingGearUpTimeTextField.valid
+                                    enabled: automaticVirtualShiftingGearUpTimeTextField.valid && automaticVirtualShiftingGearUpTimeTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_gear_up_time = automaticVirtualShiftingGearUpTimeTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -5444,7 +5447,7 @@ import QtQuick 2.12 as Quick212
                                     minimum: 0
                                     maximum: 250
                                     decimals: 0
-                                    text: settings.automatic_virtual_shifting_gear_down_cadence
+                                    savedText: settings.automatic_virtual_shifting_gear_down_cadence
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5454,7 +5457,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: automaticVirtualShiftingGearDownCadenceTextField.valid
+                                    enabled: automaticVirtualShiftingGearDownCadenceTextField.valid && automaticVirtualShiftingGearDownCadenceTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_gear_down_cadence = automaticVirtualShiftingGearDownCadenceTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -5470,7 +5473,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: automaticVirtualShiftingGearDownTimeTextField
-                                    text: settings.automatic_virtual_shifting_gear_down_time
+                                    savedText: settings.automatic_virtual_shifting_gear_down_time
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5480,7 +5483,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: automaticVirtualShiftingGearDownTimeTextField.valid
+                                    enabled: automaticVirtualShiftingGearDownTimeTextField.valid && automaticVirtualShiftingGearDownTimeTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_gear_down_time = automaticVirtualShiftingGearDownTimeTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -5510,7 +5513,7 @@ import QtQuick 2.12 as Quick212
                                     minimum: 0
                                     maximum: 250
                                     decimals: 0
-                                    text: settings.automatic_virtual_shifting_climb_gear_up_cadence
+                                    savedText: settings.automatic_virtual_shifting_climb_gear_up_cadence
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5520,7 +5523,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: automaticVirtualShiftingClimbGearUpCadenceTextField.valid
+                                    enabled: automaticVirtualShiftingClimbGearUpCadenceTextField.valid && automaticVirtualShiftingClimbGearUpCadenceTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_climb_gear_up_cadence = automaticVirtualShiftingClimbGearUpCadenceTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -5536,7 +5539,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: automaticVirtualShiftingClimbGearUpTimeTextField
-                                    text: settings.automatic_virtual_shifting_climb_gear_up_time
+                                    savedText: settings.automatic_virtual_shifting_climb_gear_up_time
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5546,7 +5549,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: automaticVirtualShiftingClimbGearUpTimeTextField.valid
+                                    enabled: automaticVirtualShiftingClimbGearUpTimeTextField.valid && automaticVirtualShiftingClimbGearUpTimeTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_climb_gear_up_time = automaticVirtualShiftingClimbGearUpTimeTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -5565,7 +5568,7 @@ import QtQuick 2.12 as Quick212
                                     minimum: 0
                                     maximum: 250
                                     decimals: 0
-                                    text: settings.automatic_virtual_shifting_climb_gear_down_cadence
+                                    savedText: settings.automatic_virtual_shifting_climb_gear_down_cadence
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5575,7 +5578,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: automaticVirtualShiftingClimbGearDownCadenceTextField.valid
+                                    enabled: automaticVirtualShiftingClimbGearDownCadenceTextField.valid && automaticVirtualShiftingClimbGearDownCadenceTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_climb_gear_down_cadence = automaticVirtualShiftingClimbGearDownCadenceTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -5591,7 +5594,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: automaticVirtualShiftingClimbGearDownTimeTextField
-                                    text: settings.automatic_virtual_shifting_climb_gear_down_time
+                                    savedText: settings.automatic_virtual_shifting_climb_gear_down_time
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5601,7 +5604,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: automaticVirtualShiftingClimbGearDownTimeTextField.valid
+                                    enabled: automaticVirtualShiftingClimbGearDownTimeTextField.valid && automaticVirtualShiftingClimbGearDownTimeTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_climb_gear_down_time = automaticVirtualShiftingClimbGearDownTimeTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -5631,7 +5634,7 @@ import QtQuick 2.12 as Quick212
                                     minimum: 0
                                     maximum: 250
                                     decimals: 0
-                                    text: settings.automatic_virtual_shifting_sprint_gear_up_cadence
+                                    savedText: settings.automatic_virtual_shifting_sprint_gear_up_cadence
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5641,7 +5644,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: automaticVirtualShiftingSprintGearUpCadenceTextField.valid
+                                    enabled: automaticVirtualShiftingSprintGearUpCadenceTextField.valid && automaticVirtualShiftingSprintGearUpCadenceTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_sprint_gear_up_cadence = automaticVirtualShiftingSprintGearUpCadenceTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -5657,7 +5660,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: automaticVirtualShiftingSprintGearUpTimeTextField
-                                    text: settings.automatic_virtual_shifting_sprint_gear_up_time
+                                    savedText: settings.automatic_virtual_shifting_sprint_gear_up_time
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5667,7 +5670,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: automaticVirtualShiftingSprintGearUpTimeTextField.valid
+                                    enabled: automaticVirtualShiftingSprintGearUpTimeTextField.valid && automaticVirtualShiftingSprintGearUpTimeTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_sprint_gear_up_time = automaticVirtualShiftingSprintGearUpTimeTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -5686,7 +5689,7 @@ import QtQuick 2.12 as Quick212
                                     minimum: 0
                                     maximum: 250
                                     decimals: 0
-                                    text: settings.automatic_virtual_shifting_sprint_gear_down_cadence
+                                    savedText: settings.automatic_virtual_shifting_sprint_gear_down_cadence
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5696,7 +5699,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: automaticVirtualShiftingSprintGearDownCadenceTextField.valid
+                                    enabled: automaticVirtualShiftingSprintGearDownCadenceTextField.valid && automaticVirtualShiftingSprintGearDownCadenceTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_sprint_gear_down_cadence = automaticVirtualShiftingSprintGearDownCadenceTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -5712,7 +5715,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: automaticVirtualShiftingSprintGearDownTimeTextField
-                                    text: settings.automatic_virtual_shifting_sprint_gear_down_time
+                                    savedText: settings.automatic_virtual_shifting_sprint_gear_down_time
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5722,7 +5725,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: automaticVirtualShiftingSprintGearDownTimeTextField.valid
+                                    enabled: automaticVirtualShiftingSprintGearDownTimeTextField.valid && automaticVirtualShiftingSprintGearDownTimeTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.automatic_virtual_shifting_sprint_gear_down_time = automaticVirtualShiftingSprintGearDownTimeTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -5854,7 +5857,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsNumberField {
                                     id: scwhinnResistanceSmoothTextField
                                     decimals: 0
-                                    text: settings.schwinn_resistance_smooth
+                                    savedText: settings.schwinn_resistance_smooth
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5865,7 +5868,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okschwinnResistanceSmoothButton
                                     text: qsTr("OK")
-                                    enabled: scwhinnResistanceSmoothTextField.valid
+                                    enabled: scwhinnResistanceSmoothTextField.valid && scwhinnResistanceSmoothTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.schwinn_resistance_smooth = scwhinnResistanceSmoothTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -5900,7 +5903,7 @@ import QtQuick 2.12 as Quick212
                             }
                             SettingsNumberField {
                                 id: horizonGr7CadenceMultiplierTextField
-                                text: settings.horizon_gr7_cadence_multiplier
+                                savedText: settings.horizon_gr7_cadence_multiplier
                                 horizontalAlignment: Text.AlignRight
                                 Layout.fillHeight: false
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5911,7 +5914,7 @@ import QtQuick 2.12 as Quick212
                             UiButton {
                                 id: okhorizonGr7CadenceMultiplierButton
                                 text: qsTr("OK")
-                                enabled: horizonGr7CadenceMultiplierTextField.valid
+                                enabled: horizonGr7CadenceMultiplierTextField.valid && horizonGr7CadenceMultiplierTextField.dirty
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                 onClicked: { settings.horizon_gr7_cadence_multiplier = horizonGr7CadenceMultiplierTextField.value; toast.show(qsTr("Setting saved!")); }
                             }
@@ -5966,7 +5969,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: echelonResistanceGainTextField
-                                    text: settings.echelon_resistance_gain
+                                    savedText: settings.echelon_resistance_gain
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -5977,7 +5980,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okechelonResistanceGainButton
                                     text: qsTr("OK")
-                                    enabled: echelonResistanceGainTextField.valid
+                                    enabled: echelonResistanceGainTextField.valid && echelonResistanceGainTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.echelon_resistance_gain = echelonResistanceGainTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -5995,7 +5998,7 @@ import QtQuick 2.12 as Quick212
                                     minimum: -100
                                     maximum: 100
                                     signed: true
-                                    text: settings.echelon_resistance_offset
+                                    savedText: settings.echelon_resistance_offset
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6006,7 +6009,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okechelonResistanceOffsetButton
                                     text: qsTr("OK")
-                                    enabled: echelonResistanceOffsetTextField.valid
+                                    enabled: echelonResistanceOffsetTextField.valid && echelonResistanceOffsetTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.echelon_resistance_offset = echelonResistanceOffsetTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -6369,7 +6372,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsNumberField {
                                     id: flywheelBikeFilterTextField
                                     decimals: 0
-                                    text: settings.flywheel_filter
+                                    savedText: settings.flywheel_filter
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6380,7 +6383,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okflywheelBikeFilterButton
                                     text: qsTr("OK")
-                                    enabled: flywheelBikeFilterTextField.valid
+                                    enabled: flywheelBikeFilterTextField.valid && flywheelBikeFilterTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.flywheel_filter = flywheelBikeFilterTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -6433,7 +6436,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: domyosBikeCadenceFilterTextField
-                                    text: settings.domyos_bike_cadence_filter
+                                    savedText: settings.domyos_bike_cadence_filter
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6444,7 +6447,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okDomyosBikeCadenceFilter
                                     text: qsTr("OK")
-                                    enabled: domyosBikeCadenceFilterTextField.valid
+                                    enabled: domyosBikeCadenceFilterTextField.valid && domyosBikeCadenceFilterTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.domyos_bike_cadence_filter = domyosBikeCadenceFilterTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -6568,7 +6571,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: proformBikeWheelRatioTextField
-                                    text: settings.proform_wheel_ratio
+                                    savedText: settings.proform_wheel_ratio
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6579,7 +6582,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okproformBikeWheelRatioButton
                                     text: qsTr("OK")
-                                    enabled: proformBikeWheelRatioTextField.valid
+                                    enabled: proformBikeWheelRatioTextField.valid && proformBikeWheelRatioTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.proform_wheel_ratio = proformBikeWheelRatioTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -6755,7 +6758,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsFormatField {
                                     id: proformTDF1IPTextField
                                     format: "host"
-                                    text: settings.proformtdf1ip
+                                    savedText: settings.proformtdf1ip
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6765,7 +6768,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: proformTDF1IPTextField.valid
+                                    enabled: proformTDF1IPTextField.valid && proformTDF1IPTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.proformtdf1ip = proformTDF1IPTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -6782,7 +6785,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsFormatField {
                                     id: proformTDF4IPTextField
                                     format: "host"
-                                    text: settings.proformtdf4ip
+                                    savedText: settings.proformtdf4ip
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6793,7 +6796,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okproformTDF4IPButton
                                     text: qsTr("OK")
-                                    enabled: proformTDF4IPTextField.valid
+                                    enabled: proformTDF4IPTextField.valid && proformTDF4IPTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.proformtdf4ip = proformTDF4IPTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -6809,7 +6812,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsFormatField {
                                     id: proformTDFCompanionIPTextField
                                     format: "host"
-                                    text: settings.tdf_10_ip
+                                    savedText: settings.tdf_10_ip
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -6820,7 +6823,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okproformTDFCompanionIPButton
                                     text: qsTr("OK")
-                                    enabled: proformTDFCompanionIPTextField.valid
+                                    enabled: proformTDFCompanionIPTextField.valid && proformTDFCompanionIPTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.tdf_10_ip = proformTDFCompanionIPTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -7029,7 +7032,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsNumberField {
                                     id: m3iBikeIdTextField
                                     decimals: 0
-                                    text: settings.m3i_bike_id
+                                    savedText: settings.m3i_bike_id
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7040,7 +7043,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okm3iBikeIdButton
                                     text: qsTr("OK")
-                                    enabled: m3iBikeIdTextField.valid
+                                    enabled: m3iBikeIdTextField.valid && m3iBikeIdTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.m3i_bike_id = m3iBikeIdTextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -7057,7 +7060,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsNumberField {
                                     id: m3iBikeSpeedBuffsizeTextField
                                     decimals: 0
-                                    text: settings.m3i_bike_speed_buffsize
+                                    savedText: settings.m3i_bike_speed_buffsize
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7068,7 +7071,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okm3iBikeSpeedBuffsizeButton
                                     text: qsTr("OK")
-                                    enabled: m3iBikeSpeedBuffsizeTextField.valid
+                                    enabled: m3iBikeSpeedBuffsizeTextField.valid && m3iBikeSpeedBuffsizeTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.m3i_bike_speed_buffsize = m3iBikeSpeedBuffsizeTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -7170,7 +7173,7 @@ import QtQuick 2.12 as Quick212
                                     minimum: 0
                                     maximum: 65535
                                     decimals: 0
-                                    text: settings.ant_bike_device_number
+                                    savedText: settings.ant_bike_device_number
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7181,7 +7184,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okAntBikeDeviceNumberButton
                                     text: qsTr("OK")
-                                    enabled: antBikeDeviceNumberTextField.valid
+                                    enabled: antBikeDeviceNumberTextField.valid && antBikeDeviceNumberTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.ant_bike_device_number = antBikeDeviceNumberTextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -7292,7 +7295,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: antspeedOffsetTextField
                             signed: true
-                            text: settings.ant_speed_offset
+                            savedText: settings.ant_speed_offset
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7302,7 +7305,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: antspeedOffsetTextField.valid
+                            enabled: antspeedOffsetTextField.valid && antspeedOffsetTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ant_speed_offset = antspeedOffsetTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -7331,7 +7334,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: antspeedGainTextField
-                            text: settings.ant_speed_gain
+                            savedText: settings.ant_speed_gain
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7341,7 +7344,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: antspeedGainTextField.valid
+                            enabled: antspeedGainTextField.valid && antspeedGainTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ant_speed_gain = antspeedGainTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -7387,7 +7390,7 @@ import QtQuick 2.12 as Quick212
                             minimum: 0
                             maximum: 65535
                             decimals: 0
-                            text: settings.ant_heart_device_number
+                            savedText: settings.ant_heart_device_number
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7398,7 +7401,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okAntHeartDeviceNumberButton
                             text: qsTr("OK")
-                            enabled: antHeartDeviceNumberTextField.valid
+                            enabled: antHeartDeviceNumberTextField.valid && antHeartDeviceNumberTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ant_heart_device_number = antHeartDeviceNumberTextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                         }
@@ -7609,7 +7612,7 @@ import QtQuick 2.12 as Quick212
                             decimals: 0
                             minimum: 80
                             maximum: 170
-                            text: settings.ui_text_scale
+                            savedText: settings.ui_text_scale
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7618,7 +7621,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: uiTextScaleField.valid
+                            enabled: uiTextScaleField.valid && uiTextScaleField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settingsPane.setUiOption("ui_text_scale", Math.round(uiTextScaleField.value)); toast.show(qsTr("Setting saved!")); }
                         }
@@ -7796,7 +7799,7 @@ import QtQuick 2.12 as Quick212
                             id: floatingWidthField
                             minimum: 1
                             decimals: 0
-                            text: settings.floating_width
+                            savedText: settings.floating_width
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7806,7 +7809,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okFloatingWidthButton
                             text: qsTr("OK")
-                            enabled: floatingWidthField.valid
+                            enabled: floatingWidthField.valid && floatingWidthField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.floating_width = floatingWidthField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -7837,7 +7840,7 @@ import QtQuick 2.12 as Quick212
                             id: floatingHeightField
                             minimum: 1
                             decimals: 0
-                            text: settings.floating_height
+                            savedText: settings.floating_height
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7847,7 +7850,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okFloatingHeightButton
                             text: qsTr("OK")
-                            enabled: floatingHeightField.valid
+                            enabled: floatingHeightField.valid && floatingHeightField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.floating_height = floatingHeightField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -7878,7 +7881,7 @@ import QtQuick 2.12 as Quick212
                             id: floatingTransparencyField
                             decimals: 0
                             maximum: 100
-                            text: settings.floating_transparency
+                            savedText: settings.floating_transparency
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7888,7 +7891,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okFloatingTransparencyButton
                             text: qsTr("OK")
-                            enabled: floatingTransparencyField.valid
+                            enabled: floatingTransparencyField.valid && floatingTransparencyField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.floating_transparency = floatingTransparencyField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -8228,7 +8231,7 @@ import QtQuick 2.12 as Quick212
                                     minimum: 1
                                     maximum: 100
                                     decimals: 0
-                                    text: settings.theme_tile_secondline_textsize
+                                    savedText: settings.theme_tile_secondline_textsize
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -8237,7 +8240,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: secondLineTextSizeField.valid
+                                    enabled: secondLineTextSizeField.valid && secondLineTextSizeField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.theme_tile_secondline_textsize = secondLineTextSizeField.value; window.settings_restart_to_apply = true;  toast.show(qsTr("Setting saved!")); }
                                 }
@@ -8488,7 +8491,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: pelotonTreadmillWalkingMinSpeedTextField
-                            text: (settings.miles_unit ? settings.peloton_treadmill_walking_min_speed * 0.621371 : settings.peloton_treadmill_walking_min_speed).toFixed(1)
+                            savedText: (settings.miles_unit ? settings.peloton_treadmill_walking_min_speed * 0.621371 : settings.peloton_treadmill_walking_min_speed).toFixed(1)
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -8496,7 +8499,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: pelotonTreadmillWalkingMinSpeedTextField.valid
+                            enabled: pelotonTreadmillWalkingMinSpeedTextField.valid && pelotonTreadmillWalkingMinSpeedTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.peloton_treadmill_walking_min_speed = (settings.miles_unit ? pelotonTreadmillWalkingMinSpeedTextField.value / 0.621371 : pelotonTreadmillWalkingMinSpeedTextField.value); toast.show(qsTr("Setting saved!")); }
                         }
@@ -8524,7 +8527,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: pelotonTreadmillRunningMinSpeedTextField
-                            text: (settings.miles_unit ? settings.peloton_treadmill_running_min_speed * 0.621371 : settings.peloton_treadmill_running_min_speed).toFixed(1)
+                            savedText: (settings.miles_unit ? settings.peloton_treadmill_running_min_speed * 0.621371 : settings.peloton_treadmill_running_min_speed).toFixed(1)
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -8532,7 +8535,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: pelotonTreadmillRunningMinSpeedTextField.valid
+                            enabled: pelotonTreadmillRunningMinSpeedTextField.valid && pelotonTreadmillRunningMinSpeedTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.peloton_treadmill_running_min_speed = (settings.miles_unit ? pelotonTreadmillRunningMinSpeedTextField.value / 0.621371 : pelotonTreadmillRunningMinSpeedTextField.value); toast.show(qsTr("Setting saved!")); }
                         }
@@ -8687,7 +8690,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: pelotonGainTextField
-                            text: settings.peloton_gain
+                            savedText: settings.peloton_gain
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -8698,7 +8701,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okPelotonGainButton
                             text: qsTr("OK")
-                            enabled: pelotonGainTextField.valid
+                            enabled: pelotonGainTextField.valid && pelotonGainTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.peloton_gain = pelotonGainTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -8728,7 +8731,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: pelotonOffsetTextField
                             signed: true
-                            text: settings.peloton_offset
+                            savedText: settings.peloton_offset
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -8739,7 +8742,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okPelotonOffsetButton
                             text: qsTr("OK")
-                            enabled: pelotonOffsetTextField.valid
+                            enabled: pelotonOffsetTextField.valid && pelotonOffsetTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.peloton_offset = pelotonOffsetTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -9329,7 +9332,7 @@ import QtQuick 2.12 as Quick212
                             id: zwiftPollTimeTextField
                             minimum: 1
                             decimals: 0
-                            text: settings.zwift_api_poll
+                            savedText: settings.zwift_api_poll
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -9338,7 +9341,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: zwiftPollTimeTextField.valid
+                            enabled: zwiftPollTimeTextField.valid && zwiftPollTimeTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.zwift_api_poll = zwiftPollTimeTextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                         }
@@ -10874,7 +10877,7 @@ import QtQuick 2.12 as Quick212
                             minimum: 0
                             maximum: 250
                             decimals: 0
-                            text: settings.treadmill_pid_heart_min
+                            savedText: settings.treadmill_pid_heart_min
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -10883,7 +10886,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: treadmillPidHRminTextField.valid
+                            enabled: treadmillPidHRminTextField.valid && treadmillPidHRminTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.treadmill_pid_heart_min = treadmillPidHRminTextField.value ; toast.show(qsTr("Setting saved!")); }
                         }
@@ -10901,7 +10904,7 @@ import QtQuick 2.12 as Quick212
                             minimum: 0
                             maximum: 250
                             decimals: 0
-                            text: settings.treadmill_pid_heart_max
+                            savedText: settings.treadmill_pid_heart_max
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -10910,7 +10913,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: treadmillPidHRmaxTextField.valid
+                            enabled: treadmillPidHRmaxTextField.valid && treadmillPidHRmaxTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.treadmill_pid_heart_max = treadmillPidHRmaxTextField.value ; toast.show(qsTr("Setting saved!")); }
                         }
@@ -10966,7 +10969,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: pidHrRecoveryZoneLimitTextField
                             maximum: 100
-                            text: settings.trainprogram_pid_hr_recovery_zone_limit
+                            savedText: settings.trainprogram_pid_hr_recovery_zone_limit
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -10974,7 +10977,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: pidHrRecoveryZoneLimitTextField.valid
+                            enabled: pidHrRecoveryZoneLimitTextField.valid && pidHrRecoveryZoneLimitTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_pid_hr_recovery_zone_limit = pidHrRecoveryZoneLimitTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11002,7 +11005,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: pidHrPushyZoneLimitTextField
-                            text: settings.trainprogram_pid_hr_pushy_zone_limit
+                            savedText: settings.trainprogram_pid_hr_pushy_zone_limit
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11010,7 +11013,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: pidHrPushyZoneLimitTextField.valid
+                            enabled: pidHrPushyZoneLimitTextField.valid && pidHrPushyZoneLimitTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_pid_hr_pushy_zone_limit = pidHrPushyZoneLimitTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11067,7 +11070,7 @@ import QtQuick 2.12 as Quick212
                         SettingsFormatField {
                             id: trainProgramPace1mileTextField
                             format: "time"
-                            text: (paddingZeros(formatLimitDecimals((settings.pacef_1mile * 1.60934) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_1mile * 1.60934) / 60) % 60,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals((((settings.pacef_1mile * 1.60934) % 60)),0).toString(), 2))
+                            savedText: (paddingZeros(formatLimitDecimals((settings.pacef_1mile * 1.60934) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_1mile * 1.60934) / 60) % 60,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals((((settings.pacef_1mile * 1.60934) % 60)),0).toString(), 2))
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11077,7 +11080,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramPace1Mile
                             text: qsTr("OK")
-                            enabled: trainProgramPace1mileTextField.valid
+                            enabled: trainProgramPace1mileTextField.valid && trainProgramPace1mileTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.pacef_1mile = (((parseInt(trainProgramPace1mileTextField.text.split(":")[0]) * 3600) + (parseInt(trainProgramPace1mileTextField.text.split(":")[1]) * 60) + parseInt(trainProgramPace1mileTextField.text.split(":")[2]))) / 1.60934; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11107,7 +11110,7 @@ import QtQuick 2.12 as Quick212
                         SettingsFormatField {
                             id: trainProgramPace5kmTextField
                             format: "time"
-                            text: (paddingZeros(formatLimitDecimals((settings.pacef_5km * 5) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_5km * 5) / 60) % 60,0).toString(), 2) + ":" + paddingZeros((formatLimitDecimals(((settings.pacef_5km * 5) % 60),0)).toString(), 2))
+                            savedText: (paddingZeros(formatLimitDecimals((settings.pacef_5km * 5) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_5km * 5) / 60) % 60,0).toString(), 2) + ":" + paddingZeros((formatLimitDecimals(((settings.pacef_5km * 5) % 60),0)).toString(), 2))
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11117,7 +11120,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramPace5km
                             text: qsTr("OK")
-                            enabled: trainProgramPace5kmTextField.valid
+                            enabled: trainProgramPace5kmTextField.valid && trainProgramPace5kmTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.pacef_5km = (((parseInt(trainProgramPace5kmTextField.text.split(":")[0]) * 3600) + (parseInt(trainProgramPace5kmTextField.text.split(":")[1]) * 60) + parseInt(trainProgramPace5kmTextField.text.split(":")[2]))) / 5; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11147,7 +11150,7 @@ import QtQuick 2.12 as Quick212
                         SettingsFormatField {
                             id: trainProgramPace10kmTextField
                             format: "time"
-                            text: (paddingZeros(formatLimitDecimals((settings.pacef_10km * 10) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_10km * 10) / 60) % 60,0).toString(), 2) + ":" + paddingZeros((formatLimitDecimals(((settings.pacef_10km * 10) % 60),0)).toString(), 2))
+                            savedText: (paddingZeros(formatLimitDecimals((settings.pacef_10km * 10) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_10km * 10) / 60) % 60,0).toString(), 2) + ":" + paddingZeros((formatLimitDecimals(((settings.pacef_10km * 10) % 60),0)).toString(), 2))
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11157,7 +11160,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramPace10KM
                             text: qsTr("OK")
-                            enabled: trainProgramPace10kmTextField.valid
+                            enabled: trainProgramPace10kmTextField.valid && trainProgramPace10kmTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.pacef_10km = (((parseInt(trainProgramPace10kmTextField.text.split(":")[0]) * 3600) + (parseInt(trainProgramPace10kmTextField.text.split(":")[1]) * 60) + parseInt(trainProgramPace10kmTextField.text.split(":")[2]))) / 10; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11187,7 +11190,7 @@ import QtQuick 2.12 as Quick212
                         SettingsFormatField {
                             id: trainProgramPaceHalfMarathonTextField
                             format: "time"
-                            text: (paddingZeros(formatLimitDecimals((settings.pacef_halfmarathon * 21) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_halfmarathon * 21) / 60) % 60,0).toString(), 2) + ":" + paddingZeros((formatLimitDecimals(((settings.pacef_halfmarathon * 21) % 60),0)).toString(), 2))
+                            savedText: (paddingZeros(formatLimitDecimals((settings.pacef_halfmarathon * 21) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_halfmarathon * 21) / 60) % 60,0).toString(), 2) + ":" + paddingZeros((formatLimitDecimals(((settings.pacef_halfmarathon * 21) % 60),0)).toString(), 2))
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11197,7 +11200,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramPaceHalfMarathon
                             text: qsTr("OK")
-                            enabled: trainProgramPaceHalfMarathonTextField.valid
+                            enabled: trainProgramPaceHalfMarathonTextField.valid && trainProgramPaceHalfMarathonTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.pacef_halfmarathon = (((parseInt(trainProgramPaceHalfMarathonTextField.text.split(":")[0]) * 3600) + (parseInt(trainProgramPaceHalfMarathonTextField.text.split(":")[1]) * 60) + parseInt(trainProgramPaceHalfMarathonTextField.text.split(":")[2]))) / 21; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11227,7 +11230,7 @@ import QtQuick 2.12 as Quick212
                         SettingsFormatField {
                             id: trainProgramPaceMarathonTextField
                             format: "time"
-                            text: (paddingZeros(formatLimitDecimals((settings.pacef_marathon * 42) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_marathon * 42) / 60) % 60,0).toString(), 2) + ":" + paddingZeros((formatLimitDecimals(((settings.pacef_marathon * 42) % 60),0)).toString(), 2))
+                            savedText: (paddingZeros(formatLimitDecimals((settings.pacef_marathon * 42) / 3600,0).toString(), 2) + ":" + paddingZeros(formatLimitDecimals(((settings.pacef_marathon * 42) / 60) % 60,0).toString(), 2) + ":" + paddingZeros((formatLimitDecimals(((settings.pacef_marathon * 42) % 60),0)).toString(), 2))
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11237,7 +11240,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramPaceMarathon
                             text: qsTr("OK")
-                            enabled: trainProgramPaceMarathonTextField.valid
+                            enabled: trainProgramPaceMarathonTextField.valid && trainProgramPaceMarathonTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.pacef_marathon = (((parseInt(trainProgramPaceMarathonTextField.text.split(":")[0]) * 3600) + (parseInt(trainProgramPaceMarathonTextField.text.split(":")[1]) * 60) + parseInt(trainProgramPaceMarathonTextField.text.split(":")[2]))) / 42; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11267,7 +11270,7 @@ import QtQuick 2.12 as Quick212
                         SettingsFormatField {
                             id: trainProgramWarmupSpeedTextField
                             format: "time"
-                            text: paceSecondsToTime(settings.trainprogram_warmup_speed)
+                            savedText: paceSecondsToTime(settings.trainprogram_warmup_speed)
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11276,7 +11279,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramWarmupSpeed
                             text: qsTr("OK")
-                            enabled: trainProgramWarmupSpeedTextField.valid
+                            enabled: trainProgramWarmupSpeedTextField.valid && trainProgramWarmupSpeedTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_warmup_speed = timeToPaceSeconds(trainProgramWarmupSpeedTextField.text); toast.show(qsTr("Setting saved!")); }
                         }
@@ -11293,7 +11296,7 @@ import QtQuick 2.12 as Quick212
                         SettingsFormatField {
                             id: trainProgramCooldownSpeedTextField
                             format: "time"
-                            text: paceSecondsToTime(settings.trainprogram_cooldown_speed)
+                            savedText: paceSecondsToTime(settings.trainprogram_cooldown_speed)
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11302,7 +11305,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramCooldownSpeed
                             text: qsTr("OK")
-                            enabled: trainProgramCooldownSpeedTextField.valid
+                            enabled: trainProgramCooldownSpeedTextField.valid && trainProgramCooldownSpeedTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_cooldown_speed = timeToPaceSeconds(trainProgramCooldownSpeedTextField.text); toast.show(qsTr("Setting saved!")); }
                         }
@@ -11319,7 +11322,7 @@ import QtQuick 2.12 as Quick212
                         SettingsFormatField {
                             id: trainProgramRestSpeedTextField
                             format: "time"
-                            text: paceSecondsToTime(settings.trainprogram_rest_speed)
+                            savedText: paceSecondsToTime(settings.trainprogram_rest_speed)
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11328,7 +11331,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramRestSpeed
                             text: qsTr("OK")
-                            enabled: trainProgramRestSpeedTextField.valid
+                            enabled: trainProgramRestSpeedTextField.valid && trainProgramRestSpeedTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_rest_speed = timeToPaceSeconds(trainProgramRestSpeedTextField.text); toast.show(qsTr("Setting saved!")); }
                         }
@@ -11386,7 +11389,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: pidHeartZoneErgModeWattStepTextField
                             decimals: 0
-                            text: settings.pid_heart_zone_erg_mode_watt_step.toString()
+                            savedText: settings.pid_heart_zone_erg_mode_watt_step.toString()
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11396,7 +11399,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okPidHeartZoneErgModeWattStep
                             text: qsTr("OK")
-                            enabled: pidHeartZoneErgModeWattStepTextField.valid
+                            enabled: pidHeartZoneErgModeWattStepTextField.valid && pidHeartZoneErgModeWattStepTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.pid_heart_zone_erg_mode_watt_step = parseInt(pidHeartZoneErgModeWattStepTextField.value); toast.show(qsTr("Setting saved!")); }
                         }
@@ -11441,7 +11444,7 @@ import QtQuick 2.12 as Quick212
                             id: trainProgramRandomDurationTextField
                             minimum: 1
                             decimals: 0
-                            text: settings.trainprogram_total
+                            savedText: settings.trainprogram_total
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11452,7 +11455,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramRandomDuration
                             text: qsTr("OK")
-                            enabled: trainProgramRandomDurationTextField.valid
+                            enabled: trainProgramRandomDurationTextField.valid && trainProgramRandomDurationTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_total = trainProgramRandomDurationTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11469,7 +11472,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: trainProgramRandomPeriodTextField
                             minimum: 1
-                            text: settings.trainprogram_period_seconds
+                            savedText: settings.trainprogram_period_seconds
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11480,7 +11483,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramRandomPeriod
                             text: qsTr("OK")
-                            enabled: trainProgramRandomPeriodTextField.valid
+                            enabled: trainProgramRandomPeriodTextField.valid && trainProgramRandomPeriodTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_period_seconds = trainProgramRandomPeriodTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11496,7 +11499,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: trainProgramRandomSpeedMinTextField
-                            text: settings.trainprogram_speed_min
+                            savedText: settings.trainprogram_speed_min
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11507,7 +11510,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramRandomSpeedMin
                             text: qsTr("OK")
-                            enabled: trainProgramRandomSpeedMinTextField.valid
+                            enabled: trainProgramRandomSpeedMinTextField.valid && trainProgramRandomSpeedMinTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_speed_min = trainProgramRandomSpeedMinTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11523,7 +11526,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: trainProgramRandomSpeedMaxTextField
-                            text: settings.trainprogram_speed_max
+                            savedText: settings.trainprogram_speed_max
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11534,7 +11537,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramRandomSpeedMax
                             text: qsTr("OK")
-                            enabled: trainProgramRandomSpeedMaxTextField.valid
+                            enabled: trainProgramRandomSpeedMaxTextField.valid && trainProgramRandomSpeedMaxTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_speed_max = trainProgramRandomSpeedMaxTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11551,7 +11554,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: trainProgramRandomInclineMinTextField
                             signed: true
-                            text: settings.trainprogram_incline_min
+                            savedText: settings.trainprogram_incline_min
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11562,7 +11565,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramRandomInclineMin
                             text: qsTr("OK")
-                            enabled: trainProgramRandomInclineMinTextField.valid
+                            enabled: trainProgramRandomInclineMinTextField.valid && trainProgramRandomInclineMinTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_incline_min = trainProgramRandomInclineMinTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11578,7 +11581,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: trainProgramRandomInclineMaxTextField
-                            text: settings.trainprogram_incline_max
+                            savedText: settings.trainprogram_incline_max
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11589,7 +11592,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramRandomInclineMax
                             text: qsTr("OK")
-                            enabled: trainProgramRandomInclineMaxTextField.valid
+                            enabled: trainProgramRandomInclineMaxTextField.valid && trainProgramRandomInclineMaxTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_incline_max = trainProgramRandomInclineMaxTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11605,7 +11608,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: trainProgramRandomResistanceMinTextField
-                            text: settings.trainprogram_resistance_min
+                            savedText: settings.trainprogram_resistance_min
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11616,7 +11619,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramRandomResistanceMin
                             text: qsTr("OK")
-                            enabled: trainProgramRandomResistanceMinTextField.valid
+                            enabled: trainProgramRandomResistanceMinTextField.valid && trainProgramRandomResistanceMinTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_resistance_min = trainProgramRandomResistanceMinTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11632,7 +11635,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: trainProgramRandomResistanceMaxTextField
-                            text: settings.trainprogram_resistance_max
+                            savedText: settings.trainprogram_resistance_max
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11643,7 +11646,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTrainProgramRandomResistanceMax
                             text: qsTr("OK")
-                            enabled: trainProgramRandomResistanceMaxTextField.valid
+                            enabled: trainProgramRandomResistanceMaxTextField.valid && trainProgramRandomResistanceMaxTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.trainprogram_resistance_max = trainProgramRandomResistanceMaxTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11849,7 +11852,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: treadmillSpeedStepTextField
-                            text: (settings.miles_unit?settings.treadmill_step_speed * 0.621371:settings.treadmill_step_speed).toFixed(1)
+                            savedText: (settings.miles_unit?settings.treadmill_step_speed * 0.621371:settings.treadmill_step_speed).toFixed(1)
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11860,7 +11863,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTreadmillSpeedStepButton
                             text: qsTr("OK")
-                            enabled: treadmillSpeedStepTextField.valid
+                            enabled: treadmillSpeedStepTextField.valid && treadmillSpeedStepTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.treadmill_step_speed = (settings.miles_unit?treadmillSpeedStepTextField.value * 1.60934:treadmillSpeedStepTextField.value); toast.show(qsTr("Setting saved!")); }
                         }
@@ -11892,7 +11895,7 @@ import QtQuick 2.12 as Quick212
                             minimum: -100
                             maximum: 100
                             signed: true
-                            text: settings.treadmill_incline_min
+                            savedText: settings.treadmill_incline_min
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11902,7 +11905,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: treadmillInclinationMinTextField.valid
+                            enabled: treadmillInclinationMinTextField.valid && treadmillInclinationMinTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.treadmill_incline_min = treadmillInclinationMinTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11932,7 +11935,7 @@ import QtQuick 2.12 as Quick212
                             id: treadmillInclinationMaxTextField
                             minimum: -100
                             maximum: 100
-                            text: settings.treadmill_incline_max
+                            savedText: settings.treadmill_incline_max
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11942,7 +11945,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: treadmillInclinationMaxTextField.valid
+                            enabled: treadmillInclinationMaxTextField.valid && treadmillInclinationMaxTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.treadmill_incline_max = treadmillInclinationMaxTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -11970,7 +11973,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: treadmillSpeedMaxTextField
-                            text: (settings.miles_unit?settings.treadmill_speed_max * 0.621371:settings.treadmill_speed_max).toFixed(1)
+                            savedText: (settings.miles_unit?settings.treadmill_speed_max * 0.621371:settings.treadmill_speed_max).toFixed(1)
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -11980,7 +11983,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: treadmillSpeedMaxTextField.valid
+                            enabled: treadmillSpeedMaxTextField.valid && treadmillSpeedMaxTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.treadmill_speed_max = (settings.miles_unit?treadmillSpeedMaxTextField.value * 1.60934:treadmillSpeedMaxTextField.value); toast.show(qsTr("Setting saved!")); }
                         }
@@ -12008,7 +12011,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: treadmillSpeedMinTextField
-                            text: (settings.miles_unit?settings.treadmill_speed_min * 0.621371:settings.treadmill_speed_min).toFixed(1)
+                            savedText: (settings.miles_unit?settings.treadmill_speed_min * 0.621371:settings.treadmill_speed_min).toFixed(1)
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12018,7 +12021,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: treadmillSpeedMinTextField.valid
+                            enabled: treadmillSpeedMinTextField.valid && treadmillSpeedMinTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.treadmill_speed_min = (settings.miles_unit?treadmillSpeedMinTextField.value * 1.60934:treadmillSpeedMinTextField.value); toast.show(qsTr("Setting saved!")); }
                         }
@@ -12047,7 +12050,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: stepGainTextField
-                            text: settings.step_gain
+                            savedText: settings.step_gain
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12058,7 +12061,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okStepGainButton
                             text: qsTr("OK")
-                            enabled: stepGainTextField.valid
+                            enabled: stepGainTextField.valid && stepGainTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.step_gain = stepGainTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -12522,7 +12525,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsFormatField {
                                     id: proformtreadmillIPTextField
                                     format: "host"
-                                    text: settings.proformtreadmillip
+                                    savedText: settings.proformtreadmillip
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12533,7 +12536,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okproformtreadmillIPButton
                                     text: qsTr("OK")
-                                    enabled: proformtreadmillIPTextField.valid
+                                    enabled: proformtreadmillIPTextField.valid && proformtreadmillIPTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.proformtreadmillip = proformtreadmillIPTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -12549,7 +12552,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsFormatField {
                                     id: nordictrack2950IPTextField
                                     format: "host"
-                                    text: settings.nordictrack_2950_ip
+                                    savedText: settings.nordictrack_2950_ip
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12560,7 +12563,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: oknordictrack2950IPButton
                                     text: qsTr("OK")
-                                    enabled: nordictrack2950IPTextField.valid
+                                    enabled: nordictrack2950IPTextField.valid && nordictrack2950IPTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.nordictrack_2950_ip = nordictrack2950IPTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -12946,7 +12949,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: domyosTreadmillButton5KmhTimeTextField
-                                    text: settings.domyos_treadmill_button_5kmh
+                                    savedText: settings.domyos_treadmill_button_5kmh
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12956,7 +12959,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: domyosTreadmillButton5KmhTimeTextField.valid
+                                    enabled: domyosTreadmillButton5KmhTimeTextField.valid && domyosTreadmillButton5KmhTimeTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.domyos_treadmill_button_5kmh = domyosTreadmillButton5KmhTimeTextField.value; toast.show(qsTr("Setting saved!")); window.settings_restart_to_apply = true;}
                                 }
@@ -12971,7 +12974,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: domyosTreadmillButton10KmhTimeTextField
-                                    text: settings.domyos_treadmill_button_10kmh
+                                    savedText: settings.domyos_treadmill_button_10kmh
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -12981,7 +12984,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: domyosTreadmillButton10KmhTimeTextField.valid
+                                    enabled: domyosTreadmillButton10KmhTimeTextField.valid && domyosTreadmillButton10KmhTimeTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.domyos_treadmill_button_10kmh = domyosTreadmillButton10KmhTimeTextField.value; toast.show(qsTr("Setting saved!")); window.settings_restart_to_apply = true;}
                                 }
@@ -12996,7 +12999,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: domyosTreadmillButton16KmhTimeTextField
-                                    text: settings.domyos_treadmill_button_16kmh
+                                    savedText: settings.domyos_treadmill_button_16kmh
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13006,7 +13009,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: domyosTreadmillButton16KmhTimeTextField.valid
+                                    enabled: domyosTreadmillButton16KmhTimeTextField.valid && domyosTreadmillButton16KmhTimeTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.domyos_treadmill_button_16kmh = domyosTreadmillButton16KmhTimeTextField.value; toast.show(qsTr("Setting saved!")); window.settings_restart_to_apply = true;}
                                 }
@@ -13021,7 +13024,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: domyosTreadmillButton22KmhTimeTextField
-                                    text: settings.domyos_treadmill_button_22kmh
+                                    savedText: settings.domyos_treadmill_button_22kmh
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13031,7 +13034,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: domyosTreadmillButton22KmhTimeTextField.valid
+                                    enabled: domyosTreadmillButton22KmhTimeTextField.valid && domyosTreadmillButton22KmhTimeTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.domyos_treadmill_button_22kmh = domyosTreadmillButton22KmhTimeTextField.value; toast.show(qsTr("Setting saved!")); window.settings_restart_to_apply = true;}
                                 }
@@ -13048,7 +13051,7 @@ import QtQuick 2.12 as Quick212
                                     id: pollDeviceTimeTextField
                                     minimum: 1
                                     decimals: 0
-                                    text: settings.poll_device_time
+                                    savedText: settings.poll_device_time
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13058,7 +13061,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: pollDeviceTimeTextField.valid
+                                    enabled: pollDeviceTimeTextField.valid && pollDeviceTimeTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.poll_device_time = pollDeviceTimeTextField.value; toast.show(qsTr("Setting saved!")); window.settings_restart_to_apply = true;}
                                 }
@@ -13270,7 +13273,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsNumberField {
                                     id: fitshowTreadmillUserIdTextField
                                     decimals: 0
-                                    text: settings.fitshow_user_id
+                                    savedText: settings.fitshow_user_id
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -13281,7 +13284,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okfitshowTreadmillUserIdButton
                                     text: qsTr("OK")
-                                    enabled: fitshowTreadmillUserIdTextField.valid
+                                    enabled: fitshowTreadmillUserIdTextField.valid && fitshowTreadmillUserIdTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.fitshow_user_id = fitshowTreadmillUserIdTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -14146,7 +14149,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsFormatField {
                                     id: proformRowerIPTextField
                                     format: "host"
-                                    text: settings.proform_rower_ip
+                                    savedText: settings.proform_rower_ip
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14155,7 +14158,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: proformRowerIPTextField.valid
+                                    enabled: proformRowerIPTextField.valid && proformRowerIPTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.proform_rower_ip = proformRowerIPTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -14190,7 +14193,7 @@ import QtQuick 2.12 as Quick212
                             }
                             SettingsNumberField {
                                 id: domyosEllipticalSpeedRatioTextField
-                                text: settings.domyos_elliptical_speed_ratio
+                                savedText: settings.domyos_elliptical_speed_ratio
                                 horizontalAlignment: Text.AlignRight
                                 Layout.fillHeight: false
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14201,7 +14204,7 @@ import QtQuick 2.12 as Quick212
                             UiButton {
                                 id: okDomyosEllipticalRatioButton
                                 text: qsTr("OK")
-                                enabled: domyosEllipticalSpeedRatioTextField.valid
+                                enabled: domyosEllipticalSpeedRatioTextField.valid && domyosEllipticalSpeedRatioTextField.dirty
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                 onClicked: { settings.domyos_elliptical_speed_ratio = domyosEllipticalSpeedRatioTextField.value; toast.show(qsTr("Setting saved!")); }
                             }
@@ -14402,7 +14405,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsFormatField {
                                     id: proformEllipticalCompanionIPTextField
                                     format: "host"
-                                    text: settings.proform_elliptical_ip
+                                    savedText: settings.proform_elliptical_ip
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14412,7 +14415,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: proformEllipticalCompanionIPTextField.valid
+                                    enabled: proformEllipticalCompanionIPTextField.valid && proformEllipticalCompanionIPTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.proform_elliptical_ip = proformEllipticalCompanionIPTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -14597,7 +14600,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: wattOffsetTextField
                             signed: true
-                            text: settings.watt_offset
+                            savedText: settings.watt_offset
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14608,7 +14611,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okwattOffsetButton
                             text: qsTr("OK")
-                            enabled: wattOffsetTextField.valid
+                            enabled: wattOffsetTextField.valid && wattOffsetTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.watt_offset = wattOffsetTextField.value; settings.treadmillDataPoints = ""; settings.ergDataPoints = ""; toast.show(qsTr("Setting saved!")); }
                         }
@@ -14637,7 +14640,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: wattGainTextField
-                            text: settings.watt_gain
+                            savedText: settings.watt_gain
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14648,7 +14651,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okWattGainButton
                             text: qsTr("OK")
-                            enabled: wattGainTextField.valid
+                            enabled: wattGainTextField.valid && wattGainTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.watt_gain = wattGainTextField.value; settings.treadmillDataPoints = ""; settings.ergDataPoints = ""; toast.show(qsTr("Setting saved!")); }
                         }
@@ -14677,7 +14680,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: wattMaxTextField
-                            text: settings.watt_max
+                            savedText: settings.watt_max
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14687,7 +14690,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okWattMaxButton
                             text: qsTr("OK")
-                            enabled: wattMaxTextField.valid
+                            enabled: wattMaxTextField.valid && wattMaxTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.watt_max = wattMaxTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -14717,7 +14720,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: speedOffsetTextField
                             signed: true
-                            text: settings.speed_offset
+                            savedText: settings.speed_offset
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14728,7 +14731,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okspeedOffsetButton
                             text: qsTr("OK")
-                            enabled: speedOffsetTextField.valid
+                            enabled: speedOffsetTextField.valid && speedOffsetTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.speed_offset = speedOffsetTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -14758,7 +14761,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: speedGainTextField
-                            text: settings.speed_gain
+                            savedText: settings.speed_gain
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14769,7 +14772,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okSpeedGainButton
                             text: qsTr("OK")
-                            enabled: speedGainTextField.valid
+                            enabled: speedGainTextField.valid && speedGainTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.speed_gain = speedGainTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -14799,7 +14802,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: cadenceOffsetTextField
                             signed: true
-                            text: settings.cadence_offset
+                            savedText: settings.cadence_offset
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14810,7 +14813,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okcadenceOffsetButton
                             text: qsTr("OK")
-                            enabled: cadenceOffsetTextField.valid
+                            enabled: cadenceOffsetTextField.valid && cadenceOffsetTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.cadence_offset = cadenceOffsetTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -14839,7 +14842,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: cadenceGainTextField
-                            text: settings.cadence_gain
+                            savedText: settings.cadence_gain
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -14850,7 +14853,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okCadenceGainButton
                             text: qsTr("OK")
-                            enabled: cadenceGainTextField.valid
+                            enabled: cadenceGainTextField.valid && cadenceGainTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.cadence_gain = cadenceGainTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -15218,7 +15221,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: treadmillInclinationOffsetTextField
                             signed: true
-                            text: settings.zwift_inclination_offset
+                            savedText: settings.zwift_inclination_offset
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15229,7 +15232,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTreadmillInclinationOffsetButton
                             text: qsTr("OK")
-                            enabled: treadmillInclinationOffsetTextField.valid
+                            enabled: treadmillInclinationOffsetTextField.valid && treadmillInclinationOffsetTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.zwift_inclination_offset = treadmillInclinationOffsetTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -15258,7 +15261,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: treadmillInclinationGainTextField
-                            text: settings.zwift_inclination_gain
+                            savedText: settings.zwift_inclination_gain
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15269,7 +15272,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okTreadmillInclinationGainButton
                             text: qsTr("OK")
-                            enabled: treadmillInclinationGainTextField.valid
+                            enabled: treadmillInclinationGainTextField.valid && treadmillInclinationGainTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.zwift_inclination_gain = treadmillInclinationGainTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -15298,7 +15301,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: minInclinationTextField
                             signed: true
-                            text: settings.min_inclination
+                            savedText: settings.min_inclination
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15308,7 +15311,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: minInclinationTextField.valid
+                            enabled: minInclinationTextField.valid && minInclinationTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.min_inclination = minInclinationTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -15337,7 +15340,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: inclinationStepTextField
-                            text: settings.treadmill_step_incline
+                            savedText: settings.treadmill_step_incline
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15348,7 +15351,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okInclinationStepButton
                             text: qsTr("OK")
-                            enabled: inclinationStepTextField.valid
+                            enabled: inclinationStepTextField.valid && inclinationStepTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.treadmill_step_incline = inclinationStepTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -15458,7 +15461,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: autoLapOnDistanceTextField
-                            text: (settings.miles_unit?settings.autolap_distance * 0.621371:settings.autolap_distance).toFixed(1)
+                            savedText: (settings.miles_unit?settings.autolap_distance * 0.621371:settings.autolap_distance).toFixed(1)
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15468,7 +15471,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: autoLapOnDistanceTextField.valid
+                            enabled: autoLapOnDistanceTextField.valid && autoLapOnDistanceTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.autolap_distance = (settings.miles_unit?autoLapOnDistanceTextField.value * 1.60934:autoLapOnDistanceTextField.value); toast.show(qsTr("Setting saved!")); }
                         }
@@ -15496,7 +15499,7 @@ import QtQuick 2.12 as Quick212
                         }
                         SettingsNumberField {
                             id: treadmillInclinationDelayTextField
-                            text: settings.inclination_delay_seconds
+                            savedText: settings.inclination_delay_seconds
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15506,7 +15509,7 @@ import QtQuick 2.12 as Quick212
                         }
                         UiButton {
                             text: qsTr("OK")
-                            enabled: treadmillInclinationDelayTextField.valid
+                            enabled: treadmillInclinationDelayTextField.valid && treadmillInclinationDelayTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.inclination_delay_seconds = treadmillInclinationDelayTextField.value; toast.show(qsTr("Setting saved!")); }
                         }
@@ -15675,7 +15678,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: cadenceSpeedRatioTextField
-                                    text: settings.cadence_sensor_speed_ratio
+                                    savedText: settings.cadence_sensor_speed_ratio
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15686,7 +15689,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okCadenceSpeedRatio
                                     text: qsTr("OK")
-                                    enabled: cadenceSpeedRatioTextField.valid
+                                    enabled: cadenceSpeedRatioTextField.valid && cadenceSpeedRatioTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.cadence_sensor_speed_ratio = cadenceSpeedRatioTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -15768,7 +15771,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: cscBikeCustomResistanceLevel1TextField
-                                    text: settings.cscbike_custom_resistance_level_1
+                                    savedText: settings.cscbike_custom_resistance_level_1
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15778,7 +15781,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: cscBikeCustomResistanceLevel1TextField.valid
+                                    enabled: cscBikeCustomResistanceLevel1TextField.valid && cscBikeCustomResistanceLevel1TextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.cscbike_custom_resistance_level_1 = cscBikeCustomResistanceLevel1TextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -15793,7 +15796,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: cscBikeCustomWatt1TextField
-                                    text: settings.cscbike_custom_watt_1
+                                    savedText: settings.cscbike_custom_watt_1
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15803,7 +15806,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: cscBikeCustomWatt1TextField.valid
+                                    enabled: cscBikeCustomWatt1TextField.valid && cscBikeCustomWatt1TextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.cscbike_custom_watt_1 = cscBikeCustomWatt1TextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -15818,7 +15821,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: cscBikeCustomResistanceLevel2TextField
-                                    text: settings.cscbike_custom_resistance_level_2
+                                    savedText: settings.cscbike_custom_resistance_level_2
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15828,7 +15831,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: cscBikeCustomResistanceLevel2TextField.valid
+                                    enabled: cscBikeCustomResistanceLevel2TextField.valid && cscBikeCustomResistanceLevel2TextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.cscbike_custom_resistance_level_2 = cscBikeCustomResistanceLevel2TextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -15843,7 +15846,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: cscBikeCustomWatt2TextField
-                                    text: settings.cscbike_custom_watt_2
+                                    savedText: settings.cscbike_custom_watt_2
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -15853,7 +15856,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: cscBikeCustomWatt2TextField.valid
+                                    enabled: cscBikeCustomWatt2TextField.valid && cscBikeCustomWatt2TextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.cscbike_custom_watt_2 = cscBikeCustomWatt2TextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -16059,7 +16062,7 @@ import QtQuick 2.12 as Quick212
                                     id: powerSensorSpeedCorrectionThresholdTextField
                                     minimum: 0
                                     maximum: 100
-                                    text: settings.power_sensor_speed_correction_threshold
+                                    savedText: settings.power_sensor_speed_correction_threshold
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16067,7 +16070,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: powerSensorSpeedCorrectionThresholdTextField.valid
+                                    enabled: powerSensorSpeedCorrectionThresholdTextField.valid && powerSensorSpeedCorrectionThresholdTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.power_sensor_speed_correction_threshold = powerSensorSpeedCorrectionThresholdTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -16177,7 +16180,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsNumberField {
                                     id: powerSensorSpeedInclinationCoeffATextField
                                     signed: true
-                                    text: settings.power_sensor_speed_inclination_coeff_a
+                                    savedText: settings.power_sensor_speed_inclination_coeff_a
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16185,7 +16188,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: powerSensorSpeedInclinationCoeffATextField.valid
+                                    enabled: powerSensorSpeedInclinationCoeffATextField.valid && powerSensorSpeedInclinationCoeffATextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.power_sensor_speed_inclination_coeff_a = powerSensorSpeedInclinationCoeffATextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -16201,7 +16204,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsNumberField {
                                     id: powerSensorSpeedInclinationCoeffBTextField
                                     signed: true
-                                    text: settings.power_sensor_speed_inclination_coeff_b
+                                    savedText: settings.power_sensor_speed_inclination_coeff_b
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16209,7 +16212,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: powerSensorSpeedInclinationCoeffBTextField.valid
+                                    enabled: powerSensorSpeedInclinationCoeffBTextField.valid && powerSensorSpeedInclinationCoeffBTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.power_sensor_speed_inclination_coeff_b = powerSensorSpeedInclinationCoeffBTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -16350,7 +16353,7 @@ import QtQuick 2.12 as Quick212
                                         }
                                         SettingsNumberField {
                                             id: eliteRizerGainTextField
-                                            text: settings.elite_rizer_gain
+                                            savedText: settings.elite_rizer_gain
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16361,7 +16364,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okEliteRizerGainButton
                                             text: qsTr("OK")
-                                            enabled: eliteRizerGainTextField.valid
+                                            enabled: eliteRizerGainTextField.valid && eliteRizerGainTextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.elite_rizer_gain = eliteRizerGainTextField.value; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -16496,7 +16499,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: ss2kShiftStepTextField
-                                    text: settings.ss2k_shift_step
+                                    savedText: settings.ss2k_shift_step
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16507,7 +16510,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okSS2kShiftStep
                                     text: qsTr("OK")
-                                    enabled: ss2kShiftStepTextField.valid
+                                    enabled: ss2kShiftStepTextField.valid && ss2kShiftStepTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.ss2k_shift_step = ss2kShiftStepTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -16522,7 +16525,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: ss2kMaxResistanceTextField
-                                    text: settings.ss2k_max_resistance
+                                    savedText: settings.ss2k_max_resistance
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16533,7 +16536,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okSS2kMaxResistance
                                     text: qsTr("OK")
-                                    enabled: ss2kMaxResistanceTextField.valid
+                                    enabled: ss2kMaxResistanceTextField.valid && ss2kMaxResistanceTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.ss2k_max_resistance = ss2kMaxResistanceTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -16548,7 +16551,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 SettingsNumberField {
                                     id: ss2kMinResistanceTextField
-                                    text: settings.ss2k_min_resistance
+                                    savedText: settings.ss2k_min_resistance
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16559,7 +16562,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okSS2kMinResistance
                                     text: qsTr("OK")
-                                    enabled: ss2kMinResistanceTextField.valid
+                                    enabled: ss2kMinResistanceTextField.valid && ss2kMinResistanceTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.ss2k_min_resistance = ss2kMinResistanceTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -16583,7 +16586,7 @@ import QtQuick 2.12 as Quick212
                                         }
                                         SettingsNumberField {
                                             id: ss2kResistanceSample1TextField
-                                            text: settings.ss2k_resistance_sample_1
+                                            savedText: settings.ss2k_resistance_sample_1
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16594,7 +16597,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okSS2kResistanceSample1
                                             text: qsTr("OK")
-                                            enabled: ss2kResistanceSample1TextField.valid
+                                            enabled: ss2kResistanceSample1TextField.valid && ss2kResistanceSample1TextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.ss2k_resistance_sample_1 = ss2kResistanceSample1TextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -16608,7 +16611,7 @@ import QtQuick 2.12 as Quick212
                                         }
                                         SettingsNumberField {
                                             id: ss2kShiftStepSample1TextField
-                                            text: settings.ss2k_shift_step_sample_1
+                                            savedText: settings.ss2k_shift_step_sample_1
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16619,7 +16622,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okSS2kShiftStepSample1
                                             text: qsTr("OK")
-                                            enabled: ss2kShiftStepSample1TextField.valid
+                                            enabled: ss2kShiftStepSample1TextField.valid && ss2kShiftStepSample1TextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.ss2k_shift_step_sample_1 = ss2kShiftStepSample1TextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -16634,7 +16637,7 @@ import QtQuick 2.12 as Quick212
                                         }
                                         SettingsNumberField {
                                             id: ss2kResistanceSample2TextField
-                                            text: settings.ss2k_resistance_sample_2
+                                            savedText: settings.ss2k_resistance_sample_2
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16645,7 +16648,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okSS2kResistanceSample2
                                             text: qsTr("OK")
-                                            enabled: ss2kResistanceSample2TextField.valid
+                                            enabled: ss2kResistanceSample2TextField.valid && ss2kResistanceSample2TextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.ss2k_resistance_sample_2 = ss2kResistanceSample2TextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -16659,7 +16662,7 @@ import QtQuick 2.12 as Quick212
                                         }
                                         SettingsNumberField {
                                             id: ss2kShiftStepSample2TextField
-                                            text: settings.ss2k_shift_step_sample_2
+                                            savedText: settings.ss2k_shift_step_sample_2
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16670,7 +16673,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okSS2kShiftStepSample2
                                             text: qsTr("OK")
-                                            enabled: ss2kShiftStepSample2TextField.valid
+                                            enabled: ss2kShiftStepSample2TextField.valid && ss2kShiftStepSample2TextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.ss2k_shift_step_sample_2 = ss2kShiftStepSample2TextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -16685,7 +16688,7 @@ import QtQuick 2.12 as Quick212
                                         }
                                         SettingsNumberField {
                                             id: ss2kResistanceSample3TextField
-                                            text: settings.ss2k_resistance_sample_3
+                                            savedText: settings.ss2k_resistance_sample_3
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16696,7 +16699,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okSS2kResistanceSample3
                                             text: qsTr("OK")
-                                            enabled: ss2kResistanceSample3TextField.valid
+                                            enabled: ss2kResistanceSample3TextField.valid && ss2kResistanceSample3TextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.ss2k_resistance_sample_3 = ss2kResistanceSample3TextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -16710,7 +16713,7 @@ import QtQuick 2.12 as Quick212
                                         }
                                         SettingsNumberField {
                                             id: ss2kShiftStepSample3TextField
-                                            text: settings.ss2k_shift_step_sample_3
+                                            savedText: settings.ss2k_shift_step_sample_3
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16721,7 +16724,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okSS2kShiftStepSample3
                                             text: qsTr("OK")
-                                            enabled: ss2kShiftStepSample3TextField.valid
+                                            enabled: ss2kShiftStepSample3TextField.valid && ss2kShiftStepSample3TextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.ss2k_shift_step_sample_3 = ss2kShiftStepSample3TextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -16736,7 +16739,7 @@ import QtQuick 2.12 as Quick212
                                         }
                                         SettingsNumberField {
                                             id: ss2kResistanceSample4TextField
-                                            text: settings.ss2k_resistance_sample_4
+                                            savedText: settings.ss2k_resistance_sample_4
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16747,7 +16750,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okSS2kResistanceSample4
                                             text: qsTr("OK")
-                                            enabled: ss2kResistanceSample4TextField.valid
+                                            enabled: ss2kResistanceSample4TextField.valid && ss2kResistanceSample4TextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.ss2k_resistance_sample_4 = ss2kResistanceSample4TextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -16761,7 +16764,7 @@ import QtQuick 2.12 as Quick212
                                         }
                                         SettingsNumberField {
                                             id: ss2kShiftStepSample4TextField
-                                            text: settings.ss2k_shift_step_sample_4
+                                            savedText: settings.ss2k_shift_step_sample_4
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16772,7 +16775,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okSS2kShiftStepSample4
                                             text: qsTr("OK")
-                                            enabled: ss2kShiftStepSample4TextField.valid
+                                            enabled: ss2kShiftStepSample4TextField.valid && ss2kShiftStepSample4TextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.ss2k_shift_step_sample_4 = ss2kShiftStepSample4TextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -16845,7 +16848,7 @@ import QtQuick 2.12 as Quick212
                                     id: fitmetriaFanFitMinTextField
                                     minimum: 0
                                     maximum: 100
-                                    text: settings.fitmetria_fanfit_min
+                                    savedText: settings.fitmetria_fanfit_min
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16856,7 +16859,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okFitmetriaFanFitMin
                                     text: qsTr("OK")
-                                    enabled: fitmetriaFanFitMinTextField.valid
+                                    enabled: fitmetriaFanFitMinTextField.valid && fitmetriaFanFitMinTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.fitmetria_fanfit_min = fitmetriaFanFitMinTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -16873,7 +16876,7 @@ import QtQuick 2.12 as Quick212
                                     id: fitmetriaFanFitMaxTextField
                                     minimum: 0
                                     maximum: 100
-                                    text: settings.fitmetria_fanfit_max
+                                    savedText: settings.fitmetria_fanfit_max
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16884,7 +16887,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     id: okFitmetriaFanFitMax
                                     text: qsTr("OK")
-                                    enabled: fitmetriaFanFitMaxTextField.valid
+                                    enabled: fitmetriaFanFitMaxTextField.valid && fitmetriaFanFitMaxTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.fitmetria_fanfit_max = fitmetriaFanFitMaxTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -16950,7 +16953,7 @@ import QtQuick 2.12 as Quick212
                                     id: headWindMinTextField
                                     minimum: 0
                                     maximum: 100
-                                    text: settings.fitmetria_fanfit_min
+                                    savedText: settings.fitmetria_fanfit_min
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16960,7 +16963,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: headWindMinTextField.valid
+                                    enabled: headWindMinTextField.valid && headWindMinTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.fitmetria_fanfit_min = headWindMinTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -16976,7 +16979,7 @@ import QtQuick 2.12 as Quick212
                                     id: headWindMaxTextField
                                     minimum: 0
                                     maximum: 100
-                                    text: settings.fitmetria_fanfit_max
+                                    savedText: settings.fitmetria_fanfit_max
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -16986,7 +16989,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: headWindMaxTextField.valid
+                                    enabled: headWindMaxTextField.valid && headWindMaxTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.fitmetria_fanfit_max = headWindMaxTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -17052,7 +17055,7 @@ import QtQuick 2.12 as Quick212
                                     id: eliteAriaMinTextField
                                     minimum: 0
                                     maximum: 100
-                                    text: settings.fitmetria_fanfit_min
+                                    savedText: settings.fitmetria_fanfit_min
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -17062,7 +17065,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: eliteAriaMinTextField.valid
+                                    enabled: eliteAriaMinTextField.valid && eliteAriaMinTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.fitmetria_fanfit_min = eliteAriaMinTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -17078,7 +17081,7 @@ import QtQuick 2.12 as Quick212
                                     id: eliteAriaMaxTextField
                                     minimum: 0
                                     maximum: 100
-                                    text: settings.fitmetria_fanfit_max
+                                    savedText: settings.fitmetria_fanfit_max
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -17088,7 +17091,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: eliteAriaMaxTextField.valid
+                                    enabled: eliteAriaMaxTextField.valid && eliteAriaMaxTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.fitmetria_fanfit_max = eliteAriaMaxTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -17515,7 +17518,7 @@ import QtQuick 2.12 as Quick212
 																		id: zwiftDevPollTimeTextField
 																		minimum: 1
 																		decimals: 0
-                                    text: settings.poll_device_time
+                                    savedText: settings.poll_device_time
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -17525,7 +17528,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: zwiftDevPollTimeTextField.valid
+                                    enabled: zwiftDevPollTimeTextField.valid && zwiftDevPollTimeTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.poll_device_time = zwiftDevPollTimeTextField.value; toast.show(qsTr("Setting saved!")); window.settings_restart_to_apply = true;}
                                 }
@@ -17634,7 +17637,7 @@ import QtQuick 2.12 as Quick212
                         SettingsNumberField {
                             id: videoWindowTextField
                             decimals: 0
-                            text: settings.video_playback_window_s
+                            savedText: settings.video_playback_window_s
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -17645,7 +17648,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okVideoWindow
                             text: qsTr("OK")
-                            enabled: videoWindowTextField.valid
+                            enabled: videoWindowTextField.valid && videoWindowTextField.dirty
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: settings.video_playback_window_s = videoWindowTextField.value
                         }
@@ -18105,7 +18108,7 @@ import QtQuick 2.12 as Quick212
                                         SettingsNumberField {
                                             id: dirconIdTextField
                                             decimals: 0
-                                            text: settings.dircon_id
+                                            savedText: settings.dircon_id
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -18115,7 +18118,7 @@ import QtQuick 2.12 as Quick212
                                         }
                                         UiButton {
                                             text: qsTr("OK")
-                                            enabled: dirconIdTextField.valid
+                                            enabled: dirconIdTextField.valid && dirconIdTextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.dircon_id = dirconIdTextField.value; toast.show(qsTr("Setting saved!")); window.settings_restart_to_apply = true; }
                                         }
@@ -18147,7 +18150,7 @@ import QtQuick 2.12 as Quick212
                                             minimum: 1
                                             maximum: 65535
                                             decimals: 0
-                                            text: settings.dircon_server_base_port
+                                            savedText: settings.dircon_server_base_port
                                             horizontalAlignment: Text.AlignRight
                                             Layout.fillHeight: false
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -18157,7 +18160,7 @@ import QtQuick 2.12 as Quick212
                                         UiButton {
                                             id: okDirconServerPort
                                             text: qsTr("OK")
-                                            enabled: dirconServerPortTextField.valid
+                                            enabled: dirconServerPortTextField.valid && dirconServerPortTextField.dirty
                                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                             onClicked: { settings.dircon_server_base_port = dirconServerPortTextField.value; toast.show(qsTr("Setting saved!")); }
                                         }
@@ -18224,7 +18227,7 @@ import QtQuick 2.12 as Quick212
                                     minimum: 1
                                     maximum: 65535
                                     decimals: 0
-                                    text: settings.mqtt_port
+                                    savedText: settings.mqtt_port
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -18234,7 +18237,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: mqttPortTextField.valid
+                                    enabled: mqttPortTextField.valid && mqttPortTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.mqtt_port = mqttPortTextField.value; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -18386,7 +18389,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsFormatField {
                                     id: oscIPTextField
                                     format: "ip"
-                                    text: settings.osc_ip
+                                    savedText: settings.osc_ip
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -18396,7 +18399,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: oscIPTextField.valid
+                                    enabled: oscIPTextField.valid && oscIPTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.osc_ip = oscIPTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
@@ -18414,7 +18417,7 @@ import QtQuick 2.12 as Quick212
                                     minimum: 1
                                     maximum: 65535
                                     decimals: 0
-                                    text: settings.osc_port
+                                    savedText: settings.osc_port
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     inputMethodHints: Qt.ImhDigitsOnly
@@ -18425,7 +18428,7 @@ import QtQuick 2.12 as Quick212
                                 }
                                 UiButton {
                                     text: qsTr("OK")
-                                    enabled: oscPortTextField.valid
+                                    enabled: oscPortTextField.valid && oscPortTextField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onClicked: { settings.osc_port = oscPortTextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
