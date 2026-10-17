@@ -21,6 +21,11 @@ T.Button {
     property bool applyOnSelect: true
     property Item comboField: null
     visible: !(modern && applyOnSelect && comboField)
+    // The OK button right after a SettingsNumberField / SettingsFormatField: enabled only while
+    // the field holds a change (T-252). Modern look: then filled with the accent – the change waits
+    // for this tap; grey, its label is fainter than of other disabled buttons
+    property Item savedField: null
+    readonly property bool savePending: modern && savedField !== null && enabled
     // After the list's own onActivated (it sets displayText, which the OK handler reads)
     function applySelection() {
         if (control.modern && control.applyOnSelect)
@@ -38,6 +43,8 @@ T.Button {
             comboField = before
             before.activated.connect(function () { Qt.callLater(control.applySelection) })
         }
+        if (before && before.dirty !== undefined && before.savedText !== undefined)
+            savedField = before
     }
 
     implicitWidth: Math.max(implicitBackgroundWidth + leftInset + rightInset,
@@ -78,7 +85,9 @@ T.Button {
     // is dropped. The classic look keeps the one-line IconLabel
     property bool wrapsText: false
     readonly property color labelColor: control.modern
-               ? (!control.enabled ? window.ui.textMuted
+               ? (!control.enabled ? (control.savedField ? window.ui.alpha(window.ui.textMuted, 0.55)
+                                                         : window.ui.textMuted)
+                  : control.savePending ? window.ui.accentInk
                   : control.danger ? window.ui.danger
                   : control.highlighted && !control.flat ? window.ui.accentInk
                   : control.flat ? window.ui.accent : window.ui.textMain)
@@ -124,6 +133,7 @@ T.Button {
         color: control.modern
                ? (control.flat ? "transparent"
                   : !control.enabled ? window.ui.alpha(window.ui.textMain, 0.08)
+                  : control.savePending ? window.ui.accent
                   : control.danger ? window.ui.alpha(window.ui.danger, 0.16)
                   : control.highlighted ? window.ui.accent : window.ui.surfaceHighest)
                : (!control.enabled ? control.Material.buttonDisabledColor :

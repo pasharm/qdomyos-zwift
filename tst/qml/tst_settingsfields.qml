@@ -29,6 +29,7 @@ TestCase {
             property color accentInk: "white"
             property bool dark: false
             function alpha(c, a) { return Qt.rgba(c.r, c.g, c.b, a) }
+            function fontPx(px) { return px }
         }
     }
 
@@ -318,6 +319,40 @@ TestCase {
         verify(f.timeShaped)
         verify(f.readOnly)
         verify(!f.dirty)
+    }
+
+    // A row of the settings page: the field, then its OK
+    Component {
+        id: fieldRow
+        Row {
+            property alias field: rowField
+            property alias ok: rowOk
+            SettingsNumberField { id: rowField; width: 200; savedText: 75 }
+            UiButton { id: rowOk; text: "OK"; enabled: rowField.valid && rowField.dirty }
+        }
+    }
+
+    function test_modern_ok_accent_while_changed() {
+        window.ui.modern = true
+        var r = createTemporaryObject(fieldRow, testCase)
+        verify(r)
+        compare(r.ok.savedField, r.field)
+        verify(!r.ok.enabled)
+        verify(!r.ok.savePending)
+        compare(r.ok.labelColor.a.toFixed(2), "0.55")   // fainter grey label
+        r.field.text = "80"
+        verify(r.ok.enabled)
+        verify(r.ok.savePending)
+        compare(String(r.ok.labelColor), String(window.ui.accentInk))
+        r.field.savedText = 80                          // OK saved it
+        verify(!r.ok.savePending)
+    }
+
+    function test_classic_ok_not_accent() {
+        var r = createTemporaryObject(fieldRow, testCase)
+        r.field.text = "80"
+        verify(r.ok.enabled)
+        verify(!r.ok.savePending)
     }
 
     function test_classic_unchanged() {
