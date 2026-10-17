@@ -6669,10 +6669,10 @@ import QtQuick 2.12 as Quick212
                                     initialized = true;
                                 }
 
-                                onCurrentIndexChanged: {
+                                onActivated: {
                                     if (!initialized) return;
 
-                                    console.log("bikeModelComboBox onCurrentIndexChanged " + currentIndex);
+                                    console.log("bikeModelComboBox onActivated " + currentIndex);
 
                                     // Reset all settings first
                                     settings.proform_tour_de_france_clc = false;
@@ -12363,10 +12363,10 @@ import QtQuick 2.12 as Quick212
                                     initialized = true;
                                 }
 
-                                onCurrentIndexChanged: {
+                                onActivated: {
                                     if (!initialized) return;
 
-                                    console.log("treadmillModelComboBox onCurrentIndexChanged " + currentIndex);
+                                    console.log("treadmillModelComboBox onActivated " + currentIndex);
 
                                     // Reset all settings
                                     settings.norditrack_s25_treadmill = false;
