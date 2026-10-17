@@ -120,7 +120,7 @@ ScrollView {
         Label {
             text: qsTr("Click on a field and press a key to assign a shortcut. Press Backspace to clear. Preset fields follow the same left-to-right order as the preset buttons.")
             font.italic: true
-            font.pixelSize: Qt.application.font.pixelSize - 2
+            font.pixelSize: window.fontHint
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
             color: Material.color(Material.Lime)

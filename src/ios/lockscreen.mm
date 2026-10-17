@@ -819,4 +819,11 @@ void lockscreen::clearWebViewCache() {
         [cookieStorage deleteCookie:cookie];
     }
 }
+
+double lockscreen::systemFontScale() {
+    // Body text is 17 pt at the default Dynamic Type size
+    const CGFloat body = 17.0;
+    const CGFloat scaled = [[UIFontMetrics defaultMetrics] scaledValueForValue:body];
+    return scaled > 0 ? scaled / body : 1.0;
+}
 #endif
