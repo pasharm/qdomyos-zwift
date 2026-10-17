@@ -33,6 +33,8 @@ import java.util.List;
 
 public class CustomQtActivity extends QtActivity {
     private static final String TAG = "CustomQtActivity";
+    // TEST-ONLY (T-222): what TalkBack does on the page, for `adb logcat -s QzA11y`
+    private static final String A11Y_TAG = "QzA11y";
     private static final int DOCUMENT_PICKER_PROFILE_REQUEST_CODE = 4101;
     private static final int DOCUMENT_PICKER_TRAINING_REQUEST_CODE = 4102;
     private static final int DOCUMENT_PICKER_GPX_REQUEST_CODE = 4103;
@@ -165,6 +167,33 @@ public class CustomQtActivity extends QtActivity {
     };
     private View qtAccessibilityView = null;
 
+    // TEST-ONLY (T-222): where TalkBack's touch exploration lands
+    @Override
+    public boolean dispatchGenericMotionEvent(MotionEvent event) {
+        int action = event.getActionMasked();
+        if (action == MotionEvent.ACTION_HOVER_ENTER || action == MotionEvent.ACTION_HOVER_EXIT) {
+            String hit = "";
+            View view = qtAccessibilityView;
+            if (action == MotionEvent.ACTION_HOVER_ENTER && view != null) {
+                int[] at = new int[2];
+                view.getLocationOnScreen(at);
+                try {
+                    java.lang.reflect.Method hitTest = Class.forName(
+                            "org.qtproject.qt5.android.accessibility.QtNativeAccessibility")
+                            .getDeclaredMethod("hitTest", float.class, float.class);
+                    hitTest.setAccessible(true);
+                    hit = " view@" + at[0] + "," + at[1] + " qt hit id="
+                            + hitTest.invoke(null, event.getRawX() - at[0], event.getRawY() - at[1]);
+                } catch (Exception e) {
+                    hit = " hitTest failed " + e;
+                }
+            }
+            Log.d(A11Y_TAG, (action == MotionEvent.ACTION_HOVER_ENTER ? "hover enter " : "hover exit ")
+                    + (int) event.getRawX() + "," + (int) event.getRawY() + hit);
+        }
+        return super.dispatchGenericMotionEvent(event);
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         boolean handled = super.dispatchTouchEvent(event);
@@ -271,6 +300,84 @@ public class CustomQtActivity extends QtActivity {
 
         @Override
         public boolean performAction(int virtualViewId, int action, Bundle arguments) {
+            boolean handled = performActionLogged(virtualViewId, action, arguments);
+            // TEST-ONLY (T-222)
+            Log.d(A11Y_TAG, actionName(action) + " id=" + virtualViewId + " -> " + handled + " | "
+                    + describe(virtualViewId));
+            if (virtualViewId == View.NO_ID && action == AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS) {
+                dumpTree();
+            }
+            return handled;
+        }
+
+        // TEST-ONLY (T-222): the node as TalkBack gets it, with its place on screen
+        private String describe(int virtualViewId) {
+            AccessibilityNodeInfo node = createAccessibilityNodeInfo(virtualViewId);
+            if (node == null) {
+                return "null";
+            }
+            android.graphics.Rect r = new android.graphics.Rect();
+            node.getBoundsInScreen(r);
+            String s = node.getClassName() + " desc=\"" + node.getContentDescription() + "\" text=\""
+                    + node.getText() + "\" screen=" + r.toShortString()
+                    + (node.isVisibleToUser() ? "" : " INVISIBLE")
+                    + (node.isClickable() ? " clickable" : "") + (node.isScrollable() ? " scrollable" : "")
+                    + (node.isFocusable() ? " focusable" : "") + (node.isCheckable() ? " checkable" : "")
+                    + " children=" + node.getChildCount();
+            node.recycle();
+            return s;
+        }
+
+        private long lastDump = 0;
+
+        // TEST-ONLY (T-222): the whole tree once TalkBack's focus falls on the window itself
+        private void dumpTree() {
+            long now = android.os.SystemClock.uptimeMillis();
+            if (now - lastDump < 5000) {
+                return;
+            }
+            lastDump = now;
+            try {
+                java.lang.reflect.Method children = Class.forName(
+                        "org.qtproject.qt5.android.accessibility.QtNativeAccessibility")
+                        .getDeclaredMethod("childIdListForAccessibleObject", int.class);
+                children.setAccessible(true);
+                Log.d(A11Y_TAG, "tree begin");
+                dumpChildren(children, -1, 0);
+                Log.d(A11Y_TAG, "tree end");
+            } catch (Exception e) {
+                Log.d(A11Y_TAG, "tree failed " + e);
+            }
+        }
+
+        private void dumpChildren(java.lang.reflect.Method children, int id, int depth) throws Exception {
+            int[] ids = (int[]) children.invoke(null, id);
+            if (ids == null || depth > 40) {
+                return;
+            }
+            StringBuilder indent = new StringBuilder();
+            for (int i = 0; i < depth; i++) indent.append("  ");
+            for (int child : ids) {
+                Log.d(A11Y_TAG, "tree " + indent + child + " " + describe(child));
+                dumpChildren(children, child, depth + 1);
+            }
+        }
+
+        private static String actionName(int action) {
+            switch (action) {
+                case AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS: return "FOCUS";
+                case AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS: return "CLEAR_FOCUS";
+                case AccessibilityNodeInfo.ACTION_CLICK: return "CLICK";
+                case AccessibilityNodeInfo.ACTION_LONG_CLICK: return "LONG_CLICK";
+                case AccessibilityNodeInfo.ACTION_SCROLL_FORWARD: return "SCROLL_FORWARD";
+                case AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD: return "SCROLL_BACKWARD";
+                case AccessibilityNodeInfo.ACTION_FOCUS: return "INPUT_FOCUS";
+                case AccessibilityNodeInfo.ACTION_SELECT: return "SELECT";
+                default: return "ACTION_" + action;
+            }
+        }
+
+        private boolean performActionLogged(int virtualViewId, int action, Bundle arguments) {
             if (action == AccessibilityNodeInfo.ACTION_CLICK && virtualViewId != View.NO_ID) {
                 boolean pressed;
                 try {
