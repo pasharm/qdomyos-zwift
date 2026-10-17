@@ -348,6 +348,21 @@ TestCase {
         verify(!r.ok.savePending)
     }
 
+    function test_modern_gated_ok_after_list() {
+        // App Language: an OK after a list that its row enables only on a change
+        window.ui.modern = true
+        var b = createTemporaryObject(gatedOk, testCase)
+        verify(b)
+        verify(!b.savePending)
+        compare(b.labelColor.a.toFixed(2), "0.55")
+        b.enabled = true
+        verify(b.savePending)
+    }
+    Component {
+        id: gatedOk
+        UiButton { text: "OK"; applyOnSelect: false; saveGated: true; enabled: false }
+    }
+
     function test_classic_ok_not_accent() {
         var r = createTemporaryObject(fieldRow, testCase)
         r.field.text = "80"

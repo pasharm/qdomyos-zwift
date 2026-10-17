@@ -25,7 +25,10 @@ T.Button {
     // the field holds a change (T-252). Modern look: then filled with the accent – the change waits
     // for this tap; grey, its label is fainter than of other disabled buttons
     property Item savedField: null
-    readonly property bool savePending: modern && savedField !== null && enabled
+    // The same for an OK whose row enables it only on a change itself (App Language after its list)
+    property bool saveGated: false
+    readonly property bool gated: savedField !== null || saveGated
+    readonly property bool savePending: modern && gated && enabled
     // After the list's own onActivated (it sets displayText, which the OK handler reads)
     function applySelection() {
         if (control.modern && control.applyOnSelect)
@@ -85,7 +88,7 @@ T.Button {
     // is dropped. The classic look keeps the one-line IconLabel
     property bool wrapsText: false
     readonly property color labelColor: control.modern
-               ? (!control.enabled ? (control.savedField ? window.ui.alpha(window.ui.textMuted, 0.55)
+               ? (!control.enabled ? (control.gated ? window.ui.alpha(window.ui.textMuted, 0.55)
                                                          : window.ui.textMuted)
                   : control.savePending ? window.ui.accentInk
                   : control.danger ? window.ui.danger

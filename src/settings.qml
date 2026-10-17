@@ -3235,6 +3235,7 @@ import QtQuick 2.12 as Quick212
                             id: okAppLanguageButton
                             text: qsTr("OK")
                             // Grey while the saved language is chosen, as the OK of the fields
+                            saveGated: true
                             enabled: appLanguageCombo.currentIndex >= 0
                                      && appLanguageOptions[appLanguageCombo.currentIndex].value !== settings.app_language
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
