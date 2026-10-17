@@ -2279,6 +2279,8 @@ import AndroidStatusBar 1.0
             return (parseInt(pieces[0]) * 3600) + (parseInt(pieces[1]) * 60) + parseInt(pieces[2])
         }
 
+        // Only the languages with a translation: an empty one leaves the app in English.
+        // A language translated later is added here (src/translations/README.md).
         property var appLanguageOptions: [
             { label: qsTr("Auto (System)"), value: "auto" },
             { label: qsTr("English"), value: "en" },
@@ -2287,31 +2289,10 @@ import AndroidStatusBar 1.0
             { label: qsTr("French"), value: "fr" },
             { label: qsTr("Spanish"), value: "es" },
             { label: qsTr("Portuguese"), value: "pt" },
-            { label: qsTr("Portuguese (Brazil)"), value: "pt_BR" },
             { label: qsTr("Russian"), value: "ru" },
             { label: qsTr("Chinese (Simplified)"), value: "zh_CN" },
-            { label: qsTr("Chinese (Traditional)"), value: "zh_TW" },
             { label: qsTr("Japanese"), value: "ja" },
-            { label: qsTr("Korean"), value: "ko" },
-            { label: qsTr("Arabic"), value: "ar" },
-            { label: "Hindi", value: "hi" },
-            { label: qsTr("Turkish"), value: "tr" },
-            { label: qsTr("Vietnamese"), value: "vi" },
-            { label: qsTr("Polish"), value: "pl" },
-            { label: qsTr("Ukrainian"), value: "uk" },
-            { label: qsTr("Dutch"), value: "nl" },
-            { label: qsTr("Thai"), value: "th" },
-            { label: qsTr("Indonesian"), value: "id" },
-            { label: qsTr("Romanian"), value: "ro" },
-            { label: qsTr("Czech"), value: "cs" },
-            { label: qsTr("Greek"), value: "el" },
-            { label: qsTr("Swedish"), value: "sv" },
-            { label: qsTr("Hungarian"), value: "hu" },
-            { label: qsTr("Finnish"), value: "fi" },
-            { label: qsTr("Norwegian"), value: "no" },
-            { label: qsTr("Danish"), value: "da" },
-            { label: qsTr("Hebrew"), value: "he" },
-            { label: qsTr("Catalan"), value: "ca" }
+            { label: qsTr("Ukrainian"), value: "uk" }
         ]
         Timer {
             id: settingsSearchDebounceTimer

@@ -1,8 +1,10 @@
 # QDomyos-Zwift Translations
 
-This folder contains translation files for 30 languages.
+This folder contains translation files for 30 languages: 9 are translated, the others are empty and wait for a translator.
 
-## Supported Languages
+## Translated Languages
+
+These are the languages offered in Settings → General Options → App Language.
 
 | Language | File | Locale Code |
 |----------|------|-------------|
@@ -11,18 +13,25 @@ This folder contains translation files for 30 languages.
 | French | qdomyos-zwift_fr.ts | fr |
 | Spanish | qdomyos-zwift_es.ts | es |
 | Portuguese | qdomyos-zwift_pt.ts | pt |
-| Portuguese (Brazil) | qdomyos-zwift_pt_BR.ts | pt_BR |
 | Russian | qdomyos-zwift_ru.ts | ru |
 | Chinese (Simplified) | qdomyos-zwift_zh_CN.ts | zh_CN |
-| Chinese (Traditional) | qdomyos-zwift_zh_TW.ts | zh_TW |
 | Japanese | qdomyos-zwift_ja.ts | ja |
+| Ukrainian | qdomyos-zwift_uk.ts | uk |
+
+## Languages Waiting for a Translation
+
+These files are empty, so the language is not offered in the app yet.
+
+| Language | File | Locale Code |
+|----------|------|-------------|
+| Portuguese (Brazil) | qdomyos-zwift_pt_BR.ts | pt_BR |
+| Chinese (Traditional) | qdomyos-zwift_zh_TW.ts | zh_TW |
 | Korean | qdomyos-zwift_ko.ts | ko |
 | Arabic | qdomyos-zwift_ar.ts | ar |
 | Hindi | qdomyos-zwift_hi.ts | hi |
 | Turkish | qdomyos-zwift_tr.ts | tr |
 | Vietnamese | qdomyos-zwift_vi.ts | vi |
 | Polish | qdomyos-zwift_pl.ts | pl |
-| Ukrainian | qdomyos-zwift_uk.ts | uk |
 | Dutch | qdomyos-zwift_nl.ts | nl |
 | Thai | qdomyos-zwift_th.ts | th |
 | Indonesian | qdomyos-zwift_id.ts | id |
@@ -128,6 +137,8 @@ See setup guide: `docs/60_translation_platforms.md`
    git commit -m "i18n: Add German translations for main UI"
    ```
 4. Create a Pull Request on GitHub
+
+When a new language is translated, add it to `appLanguageOptions` in `src/settings.qml` and to the `app_language` options in `src/settings-catalog.json`, and move it to the translated table above.
 
 ## Automatic Updates
 
