@@ -1704,9 +1704,13 @@ ApplicationWindow {
                 for (var i = 0; i < left.length; i++)
                     if (left[i].visible && left[i].opacity > 0 && left[i].width > 0)
                         room = Math.min(room, c - (left[i].x + left[i].width))
-                for (var j = 0; j < right.length; j++)
-                    if (right[j].visible && right[j].opacity > 0 && right[j].width > 0)
+                // The search of the settings comes and goes with the scroll: its place is kept on the
+                // settings page all the time, or the title grew and shrank with it
+                for (var j = 0; j < right.length; j++) {
+                    var held = right[j] === toolButtonSettingsSearch && headerToolbar.settingsPageActive
+                    if ((held || (right[j].visible && right[j].opacity > 0)) && right[j].width > 0)
                         room = Math.min(room, right[j].x - c)
+                }
                 return Math.max(0, 2 * (room - 4))
             }
         }
