@@ -194,51 +194,6 @@ public class CustomQtActivity extends QtActivity {
         return super.dispatchGenericMotionEvent(event);
     }
 
-    // Qt 5.15 turns its accessibility on when Android reports it enabled. When that report comes
-    // before Qt's platform integration exists (a fast phone with an accessibility service already
-    // on at launch), Qt logs "Could not activate platform accessibility" and stays off: Qt Quick
-    // Controls then give no role or name, so buttons drop out of TalkBack's tree, a group box has
-    // no title and a spin box takes no focus. The report is repeated once Qt has a window.
-    private static final long ACCESSIBILITY_ACTIVATE_POLL_MS = 500;
-    private static final int ACCESSIBILITY_ACTIVATE_TRIES = 60;
-    private int accessibilityActivateTries = 0;
-    private final Runnable qtAccessibilityActivation = new Runnable() {
-        @Override
-        public void run() {
-            if (!accessibilityEnabled()) {
-                return;
-            }
-            if (activateQtAccessibility()) {
-                return;
-            }
-            accessibilityActivateTries++;
-            if (accessibilityActivateTries < ACCESSIBILITY_ACTIVATE_TRIES) {
-                accessibilityHandler.postDelayed(this, ACCESSIBILITY_ACTIVATE_POLL_MS);
-            }
-        }
-    };
-
-    // true once Qt has an accessible window and was told accessibility is on
-    private static boolean activateQtAccessibility() {
-        try {
-            Class<?> qt = Class.forName("org.qtproject.qt5.android.accessibility.QtNativeAccessibility");
-            java.lang.reflect.Method children = qt.getDeclaredMethod("childIdListForAccessibleObject", int.class);
-            children.setAccessible(true);
-            int[] ids = (int[]) children.invoke(null, -1);
-            if (ids == null || ids.length == 0) {
-                return false;
-            }
-            java.lang.reflect.Method setActive = qt.getDeclaredMethod("setActive", boolean.class);
-            setActive.setAccessible(true);
-            setActive.invoke(null, true);
-            Log.d(TAG, "Qt accessibility activated");
-            return true;
-        } catch (Throwable e) {
-            // Qt not loaded yet
-            return false;
-        }
-    }
-
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
         boolean handled = super.dispatchTouchEvent(event);
@@ -564,9 +519,6 @@ public class CustomQtActivity extends QtActivity {
 
         // Wrap Qt's accessibility view as soon as Qt adds it, before TalkBack moves over it
         accessibilityActivity = this;
-        if (accessibilityEnabled()) {
-            accessibilityHandler.postDelayed(qtAccessibilityActivation, ACCESSIBILITY_ACTIVATE_POLL_MS);
-        }
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalLayoutListener(
                 new ViewTreeObserver.OnGlobalLayoutListener() {
                     @Override
