@@ -507,7 +507,8 @@ import QtQuick 2.12 as Quick212
             // On the flickable, not in its content: a ScrollView takes the content height from
             // the only child of the content, a second child would zero it and throw the page to
             // the top. So the highlight follows the scroll itself.
-            activeGlow = settingHighlight.createObject(flickable, { flickable: flickable, row: row })
+            activeGlow = settingHighlight.createObject(flickable, { flickable: flickable, row: row,
+                                                                    lit: reveal.lit !== false })
         }
 
         Timer {
@@ -524,6 +525,9 @@ import QtQuick 2.12 as Quick212
                 property Item flickable
                 property Item row
                 property int ticks: 0
+                // false: only the scroll to the row, without the glow (back on the language row
+                // after the language changed - nothing was searched)
+                property bool lit: true
                 radius: 12
                 // The sections above are still opening (their height animates) when the row is
                 // first measured: the row moves after it, so the glow and the scroll follow it
@@ -602,7 +606,7 @@ import QtQuick 2.12 as Quick212
                 }
                 Component.onCompleted: follow()
                 Timer { interval: 40; repeat: true; running: true; onTriggered: glow.follow() }
-                color: window.ui.alpha(window.ui.accent, 0.22)
+                color: lit ? window.ui.alpha(window.ui.accent, 0.22) : "transparent"
                 SequentialAnimation {
                     running: true
                     PauseAnimation { duration: 1200 }
@@ -725,7 +729,8 @@ import QtQuick 2.12 as Quick212
             toast.show(qsTr("Setting saved!"))
             openSections(contentItem, states, 0)
             var label = qsTr("App Language:")
-            pendingReveal = { flickable: contentItem,
+            // Scrolled to, not lit: the glow is for a setting opened from the search
+            pendingReveal = { flickable: contentItem, lit: false,
                               target: findItem(contentItem, function (item) { return item.text === label }) }
             revealTimer.restart()
         }
