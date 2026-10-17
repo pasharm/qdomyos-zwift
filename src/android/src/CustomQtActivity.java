@@ -1,5 +1,6 @@
 package org.cagnulen.qdomyoszwift;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -346,13 +347,6 @@ public class CustomQtActivity extends QtActivity {
 
     private static volatile CustomQtActivity accessibilityActivity = null;
 
-    // Called by Qt from its own thread at start: whether Android has accessibility on (main.cpp
-    // turns Qt's accessibility on again when Qt lost that report)
-    public static boolean accessibilityOn() {
-        CustomQtActivity activity = accessibilityActivity;
-        return activity != null && activity.accessibilityEnabled();
-    }
-
     // Called by Qt from its own thread after it scrolled to the focused item, and after a press
     public static void accessibilityTreeChanged() {
         final CustomQtActivity activity = accessibilityActivity;
@@ -406,6 +400,13 @@ public class CustomQtActivity extends QtActivity {
             }
         }
         return 0;
+    }
+
+    // Called by Qt from its own thread at start: whether Android has accessibility on (main.cpp
+    // turns Qt's accessibility on again when Qt lost that report)
+    public static boolean accessibilityOn(Context context) {
+        AccessibilityManager manager = (AccessibilityManager) context.getSystemService(ACCESSIBILITY_SERVICE);
+        return manager != null && manager.isEnabled();
     }
 
     @Override
