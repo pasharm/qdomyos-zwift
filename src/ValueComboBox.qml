@@ -18,4 +18,11 @@ UiComboBox {
 
     displayText: labelFor(value)
     onActivated: value = currentValue
+
+    // savedText (see UiComboBox) is the raw saved value: shown through `value`, compared raw
+    dirty: savedText !== undefined && value !== String(savedText)
+    function showSaved() {
+        if (savedText !== undefined)
+            value = savedText
+    }
 }
