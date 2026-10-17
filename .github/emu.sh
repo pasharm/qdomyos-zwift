@@ -1,8 +1,8 @@
 #!/bin/bash
-# Test only (T-196): after a language change without a restart nothing stays in the old language.
-# English: the drawer, the workout editor (kept alive under the pages in the modern look) and the
-# history; then Ukrainian in Settings > General Options > App Language and
-# the same pages again. Shots and dumps (dumps/<shot>.xml) of each step.
+# Test only (T-196, #5373 review): a language change keeps the ProForm/NordicTrack model flags.
+# Models set in qz.conf, both "Specific Model" lists opened (initialized), the bike one changed by
+# a tap (the handler must still write the flags), then English -> Ukrainian in General Options.
+# The model flags of qz.conf and the combo log lines go to steps.log after each step.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -219,49 +219,59 @@ switch_language() {
   shot "$4-d-after-5s"
 }
 
-# T-196: a fake treadmill, so the wizard stays closed and the home page has tiles; English at
-# the start
-put_conf "applewatch_fakedevice=true\napp_language=en\n"
+# models_state 'label': the model flags in the settings file and the combo log lines so far
+models_state() {
+  sleep 5
+  echo "== flags ($1):" >> $STEPLOG
+  adb shell "run-as $PKG cat 'files/.config/Roberto Viola/qDomyos-Zwift.conf'" |
+    grep -E '^(app_language|proform_studio|proform_tdf_10|nordictrack_x22i)=' | tr -d '\r' |
+    sed 's/^/   /' >> $STEPLOG || true
+  echo "== combo log ($1):" >> $STEPLOG
+  adb logcat -d | grep -E 'ModelComboBox' | sed 's/^/   /' >> $STEPLOG || true
+}
+
+# A fake treadmill, so the wizard stays closed; English at the start; the bike model "Proform
+# Studio Bike" (index 2) and the treadmill model "NordicTrack X22i" (index 4)
+put_conf "applewatch_fakedevice=true\napp_language=en\nproform_studio=true\nnordictrack_x22i=true\n"
 start_app
 shot a-01-home-en
-
-# The drawer: section headers "Workout", "App", "Services" and the info line in its header
-open_menu
-shot a-02-drawer-en
-# The workout editor: left with back, the modern look keeps it alive for a few minutes - the
-# language change below reaches it while it is off the stack
-tap_drawer '^Workout Editor$' 400 900
-sleep 12
-shot a-03-editor-en
-back "editor"; sleep 3
-# The history (no workouts in the emulator, so no streak line: only that the page opens)
-open_menu
-tap_drawer '^Workouts History$' 400 900
-sleep 6
-shot a-04-history-en
-back "history"; sleep 3
-
-echo "language change at $(date +%T)" >> $STEPLOG
 open_settings
+models_state "start"
+
+# The bike list: open its section (initializeModel), then pick another model by a tap
+scroll_to '^Bike Options$' && tap_ui '^Bike Options$'
+sleep 3
+scroll_to '^Proform/Norditrack Options$' && tap_ui '^Proform/Norditrack Options$'
+sleep 3
+scroll_to '^Specific Model:$'
+shot b-01-bike-open
+models_state "bike section open"
+tap_row '^Specific Model:$' '^Proform Studio Bike$' && sleep 2 && shot b-02-bike-list &&
+  pick '^Proform TDF 1\.0$'
+sleep 2
+shot b-03-bike-picked
+models_state "bike model picked by a tap: proform_tdf_10 expected"
+
+# The treadmill list: open its section only
+scroll_top
+scroll_to '^Treadmill Options$' && tap_ui '^Treadmill Options$'
+sleep 3
+scroll_to '^Proform/Nordictrack Options$' && tap_ui '^Proform/Nordictrack Options$'
+sleep 3
+scroll_to '^Specific Model:$'
+shot b-04-treadmill-open
+models_state "treadmill section open"
+
+# The language change with both lists initialized
+scroll_top
+echo "language change at $(date +%T)" >> $STEPLOG
 scroll_to '^General Options$' && tap_ui '^General Options$' 700 1000
 sleep 4
-switch_language '^App Language:$' '^English$' '^Ukrainian$' b
+switch_language '^App Language:$' '^English$' '^Ukrainian$' c
+models_state "after the language change"
 back "settings"; sleep 5
-shot c-01-home-uk
-
-# The same pages in Ukrainian: headers "Тренування", "Застосунок", "Сервіси"
-open_menu
-shot c-02-drawer-uk
-tap_drawer '^(Редактор тренувань|Workout Editor)$' 400 900
-sleep 6
-echo "editor reopened at $(date +%T)" >> $STEPLOG
-shot c-03-editor-uk
-back "editor"; sleep 3
-open_menu
-tap_drawer '^(Історія тренувань|Workouts History)$' 400 900
-sleep 6
-shot c-04-history-uk
-back "history"; sleep 3
+shot d-01-home-uk
+models_state "after leaving the settings"
 
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
