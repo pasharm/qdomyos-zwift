@@ -108,16 +108,25 @@ tap_drawer() {
   fi
   tap_ui "$@"
 }
-# scroll_to 'regex': swipe the page up until the control shows (at most 12 swipes)
+# scroll_to 'regex' [swipes] [up]: swipe the page until the control shows in the middle of the
+# screen (y 300-2100: at the bottom edge its row is there, the control itself not yet); at most
+# 12 swipes by default; "up" swipes towards the top of the page
 scroll_to() {
-  local i
-  for i in $(seq 1 12); do
+  local i xy y
+  for i in $(seq 1 ${2:-12}); do
     dump
-    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
-      echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
+    xy=""
+    [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$1")
+    y=${xy#* }
+    if [ -n "$xy" ] && [ "$y" -ge 300 ] && [ "$y" -le 2100 ]; then
+      echo "scroll to '$1': found after $((i - 1)) swipes at $xy" >> $STEPLOG
       return 0
     fi
-    adb shell input swipe 700 2000 700 1300 400 || true
+    if [ "$3" = "up" ]; then
+      adb shell input swipe 700 1300 700 2000 400 || true
+    else
+      adb shell input swipe 700 2000 700 1300 400 || true
+    fi
     sleep 1
   done
   echo "scroll to '$1': NOT FOUND" >> $STEPLOG
@@ -238,34 +247,33 @@ shot a-01-home-en
 open_settings
 models_state "start"
 
-# The bike list: open its section (initializeModel), then pick another model by a tap
-scroll_to '^Bike Options$' && tap_ui '^Bike Options$'
+# The treadmill list first (lower on the page, so the open bike section is not in the way):
+# open its section only (initializeModel)
+scroll_to '^Treadmill Options$' 40 && tap_ui '^Treadmill Options$'
 sleep 3
-scroll_to '^Proform/Norditrack Options$' && tap_ui '^Proform/Norditrack Options$'
+scroll_to '^Proform/Nordictrack Options$' 40 && tap_ui '^Proform/Nordictrack Options$'
 sleep 3
-scroll_to '^Specific Model:$'
-shot b-01-bike-open
-models_state "bike section open"
-tap_row '^Specific Model:$' '^Proform Studio Bike$' && sleep 2 && shot b-02-bike-list &&
-  pick '^Proform TDF 1\.0$'
-sleep 2
-shot b-03-bike-picked
-models_state "bike model picked by a tap: proform_tdf_10 expected"
-
-# The treadmill list: open its section only
-scroll_top
-scroll_to '^Treadmill Options$' && tap_ui '^Treadmill Options$'
-sleep 3
-scroll_to '^Proform/Nordictrack Options$' && tap_ui '^Proform/Nordictrack Options$'
-sleep 3
-scroll_to '^Specific Model:$'
-shot b-04-treadmill-open
+scroll_to '^NordicTrack X22i$'
+shot b-01-treadmill-open
 models_state "treadmill section open"
 
+# The bike list, above: open its section, then pick another model by a tap
+scroll_to '^Bike Options$' 80 up && tap_ui '^Bike Options$'
+sleep 3
+scroll_to '^Proform/Norditrack Options$' 40 && tap_ui '^Proform/Norditrack Options$'
+sleep 3
+scroll_to '^Proform Studio Bike$'
+shot b-02-bike-open
+models_state "bike section open"
+tap_row '^Specific Model:$' '^Proform Studio Bike$' && sleep 2 && shot b-03-bike-list &&
+  pick '^Proform TDF 1\.0$'
+sleep 2
+shot b-04-bike-picked
+models_state "bike model picked by a tap: proform_tdf_10 expected"
+
 # The language change with both lists initialized
-scroll_top
 echo "language change at $(date +%T)" >> $STEPLOG
-scroll_to '^General Options$' && tap_ui '^General Options$' 700 1000
+scroll_to '^General Options$' 120 up && tap_ui '^General Options$' 700 1000
 sleep 4
 switch_language '^App Language:$' '^English$' '^Ukrainian$' c
 models_state "after the language change"
