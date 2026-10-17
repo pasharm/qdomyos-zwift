@@ -1,7 +1,9 @@
 #!/bin/bash
-# Test only (T-078): the system font size of Android against the font sizes of the modern look.
-# The same screens at font_scale 1.0, 1.3 and 2.0; shots, dumps and the text sizes of the
-# Qt style cache (style.json) for each.
+# Test only (T-262): the classic look with the text size that follows the system (Android
+# font_scale) or the own "Text size" setting. The reference APK (apk-base, master with the tile
+# size rename) is shot first at font_scale 1.0; then the tested APK (apk-debug) at 1.0, after a
+# change to 1.3 while in the background (no restart), at 2.0 (capped at 150 %) and with the
+# switch off at 170 %.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -9,11 +11,17 @@ STEPLOG=steps.log
 : > $STEPLOG
 mkdir -p dumps
 
-adb install apk-debug/android-debug.apk
-for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
-  adb shell pm grant $PKG android.permission.$p || true
-done
-adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
+# install_apk <apk>: a fresh install with the permissions granted
+install_apk() {
+  adb uninstall $PKG > /dev/null 2>&1 || true
+  adb install "$1"
+  for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
+    adb shell pm grant $PKG android.permission.$p || true
+  done
+  adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
+  echo "== installed $1" >> $STEPLOG
+}
+install_apk apk-base/android-debug.apk
 adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
@@ -248,17 +256,8 @@ wait_tiles() {
   echo "!! tiles NOT shown" >> $STEPLOG
 }
 
-# The text sizes Qt took from the Android theme: Qt 5 extracts the style once per density into
-# qt-reserved-files/android-style/<dpi>/style.json and keeps it. Logged for every phase
-style_sizes() {
-  echo "== style.json ($1), font_scale=$(adb shell settings get system font_scale)" >> $STEPLOG
-  adb shell "run-as $PKG ls -l qt-reserved-files/android-style/" >> $STEPLOG 2>&1 || true
-  adb shell "run-as $PKG sh -c 'cat qt-reserved-files/android-style/*/style.json'" > style-$1.json 2>/dev/null || true
-  grep -o '"TextAppearance_textSize": *[0-9.]*' style-$1.json | sort | uniq -c | sort -nr | head -8 >> $STEPLOG || true
-}
-
-# One round of the same screens: home, the stop question (UiMessageDialog), the drawer
-# (UiDrawerItem), Settings (UiSectionHeader), General Options (UiSpinBox, UiTextField)
+# One round of the same screens: home, the stop question, the drawer, Settings, General
+# Options (top) and General UI Options (the text size block, then one swipe further)
 round() {
   local s="$1"
   wait_tiles
@@ -278,46 +277,64 @@ round() {
     tap_ui '^General Options$' 700 1000
     sleep 4
     shot $s-05-general
+    tap_ui '^General Options$' 700 1000
+    sleep 3
+  fi
+  if scroll_to '^General UI Options$'; then
+    tap_ui '^General UI Options$' 700 1000
+    sleep 4
+    shot $s-06-ui-options
     adb shell input swipe 700 2000 700 1300 400 || true
     sleep 2
-    shot $s-06-general-2
-  fi
-  if scroll_to '^UI Zoom:$'; then
-    shot $s-07-zoom
+    shot $s-07-ui-options-2
   fi
 }
 
-# T-078: does the system font size of Android reach the app? The same APK, the same screens
-# at font_scale 1.0, then 1.3 after a restart, then 1.3 and 2.0 with the style cache of Qt
-# removed (as after a fresh install with the bigger font already set)
-put_conf "applewatch_fakedevice=true\nconfirm_stop_workout=true\napp_language=en\n"
-adb shell settings put system font_scale 1.0 || true
-start_app
-style_sizes s10
-round s10
+# start_fresh <font_scale> <extra conf>: stop, settings file, system font size, start
+start_fresh() {
+  adb shell am force-stop $PKG || true
+  put_conf "applewatch_fakedevice=true\nconfirm_stop_workout=true\napp_language=en\n$2"
+  adb shell settings put system font_scale $1 || true
+  echo "== start: font_scale=$(adb shell settings get system font_scale) conf: $2" >> $STEPLOG
+  sleep 3
+  start_app
+}
 
-adb shell am force-stop $PKG || true
+# 1. Reference: master with the tile size rename, font_scale 1.0
+start_fresh 1.0 ""
+round b10
+
+# 2. The tested APK, the same settings file, font_scale 1.0: the switch on by default
+install_apk apk-debug/android-debug.apk
+start_fresh 1.0 ""
+round a10
+
+# 3. font_scale 1.3 while QZ is in the background: back in the foreground the text is bigger
+#    without a restart (the page left open on General UI Options)
+adb shell input keyevent KEYCODE_HOME || true
+sleep 3
 adb shell settings put system font_scale 1.3 || true
+echo "== font_scale=$(adb shell settings get system font_scale) in the background" >> $STEPLOG
 sleep 3
-start_app
-style_sizes s13
-round s13
-
-adb shell am force-stop $PKG || true
-adb shell "run-as $PKG rm -r qt-reserved-files/android-style" || true
-start_app
-style_sizes s13c
-round s13c
-
-adb shell am force-stop $PKG || true
-adb shell settings put system font_scale 2.0 || true
-adb shell "run-as $PKG rm -r qt-reserved-files/android-style" || true
+adb shell am start -n $PKG/$PKG.CustomQtActivity || true
+sleep 8
+shot a13live-06-ui-options
+back "settings page"
 sleep 3
-start_app
-style_sizes s20c
-round s20c
+shot a13live-01-home
+
+# 4. font_scale 2.0 after a restart: capped at 150 %
+start_fresh 2.0 ""
+round a20
+
+# 5. The switch off, Text size 170 %, font_scale 2.0 left on: the own size wins
+start_fresh 2.0 "ui_text_scale_system=false\nui_text_scale=170\n"
+round m170
+
+# 6. The switch off, Text size 100 %: as the reference again
+start_fresh 1.0 "ui_text_scale_system=false\nui_text_scale=100\n"
+round m100
 adb shell settings put system font_scale 1.0 || true
-
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot

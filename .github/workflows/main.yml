@@ -16,6 +16,9 @@ on:
         description: log_debug for the run (false = the debug log off)
         required: false
         default: 'true'
+      baseline:
+        description: run id of the build to shoot first, as the reference (T-262)
+        required: true
 
 jobs:
   emulator-logcat:
@@ -38,6 +41,14 @@ jobs:
           name: fdroid-android-trial
           path: apk-debug
           run-id: ${{ inputs.source }}
+          github-token: ${{ github.token }}
+
+      - name: Download the reference APK
+        uses: actions/download-artifact@v4
+        with:
+          name: fdroid-android-trial
+          path: apk-base
+          run-id: ${{ inputs.baseline }}
           github-token: ${{ github.token }}
 
       - name: Setup Java for Android Emulator
