@@ -20,9 +20,10 @@ T.SwitchDelegate {
                              implicitIndicatorHeight + topPadding + bottomPadding,
                              window.ui.modern && wrapsTitle ? titleProbe.height + titleGap + topPadding + bottomPadding : 0)
 
-    // The title wraps in two lines (set by IndicatorOnlySwitch); here it stays one line, elided
+    // The title wraps (set by IndicatorOnlySwitch: two lines in the classic look, all of it in
+    // the modern one); here it stays one line, elided
     property bool wrapsTitle: false
-    // A title in two lines fills the row: a little room so it does not touch the hint below
+    // A title in two lines or more fills the row: a little room so it does not touch the hint below
     readonly property real titleGap: titleProbe.lineCount > 1 ? window.ui.fontPx(8) : 0
 
     // Modern look: the height of the wrapped title. IconLabel reports the height of one line:
@@ -34,7 +35,8 @@ T.SwitchDelegate {
         text: control.text
         font: control.font
         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-        maximumLineCount: 2
+        // As many lines as the title (IndicatorOnlySwitch lifts its limit in the modern look)
+        maximumLineCount: 100
     }
 
     padding: 16

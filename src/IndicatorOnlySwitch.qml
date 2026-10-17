@@ -16,7 +16,9 @@ UiSwitchDelegate {
 
         if (item.wrapMode !== undefined && item.maximumLineCount !== undefined) {
             item.wrapMode = Text.WrapAtWordBoundaryOrAnywhere
-            item.maximumLineCount = 2
+            // Modern look: the whole title, on as many lines as it takes (the ellipsis hid the
+            // end of a long translation at a large text size); classic: two lines, as it was
+            item.maximumLineCount = Qt.binding(function () { return window.ui.modern ? 100 : 2 })
             if (item.elide !== undefined)
                 item.elide = Text.ElideRight
             return true
