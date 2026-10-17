@@ -21,9 +21,10 @@ T.Button {
     property bool applyOnSelect: true
     property Item comboField: null
     visible: !(modern && applyOnSelect && comboField)
-    // The OK button right after a SettingsNumberField / SettingsFormatField: enabled only while
-    // the field holds a change (T-252). Modern look: then filled with the accent – the change waits
-    // for this tap; grey, its label is fainter than of other disabled buttons
+    // The OK button right after a settings field or list that knows its saved value (savedText or
+    // savedIndex): enabled only while the field holds a change (T-252). Modern look: then filled
+    // with the accent – the change waits for this tap; grey, its label is fainter than of other
+    // disabled buttons
     property Item savedField: null
     // The same for an OK whose row enables it only on a change itself (App Language after its list)
     property bool saveGated: false
@@ -46,7 +47,8 @@ T.Button {
             comboField = before
             before.activated.connect(function () { Qt.callLater(control.applySelection) })
         }
-        if (before && before.dirty !== undefined && before.savedText !== undefined)
+        if (before && before.dirty !== undefined
+                && (before.savedText !== undefined || before.savedIndex !== undefined))
             savedField = before
     }
 

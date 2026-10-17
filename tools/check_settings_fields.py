@@ -9,7 +9,9 @@ The fields only check the typed value; the row around them has to use it. For ev
 - Enter (`onAccepted`) writes `value`, and only `if (valid)` when the field has a range;
 - the default value of the setting it shows passes the field's own rule (sign, decimals, range,
   format), so a fresh install never shows a red field.
-And no number setting (real/int/double) is left in a plain TextField.
+And no number setting (real/int/double) is left in a plain TextField or a SettingsTextField. A
+SettingsTextField (free text) shows the setting by `savedText:` too, and the OK button of its row
+is enabled by `<id>.dirty`.
 
 Usage: python3 tools/check_settings_fields.py   (from the repository root)
 """
@@ -18,7 +20,7 @@ import sys
 PAGES = ["src/settings.qml", "src/settings-treadmill-inclination-override.qml", "src/settings-tts.qml"]
 
 # UiTextField and UiButton: the field and the button of the modern look
-FIELDS = ["SettingsNumberField", "SettingsFormatField", "TextField", "UiTextField"]
+FIELDS = ["SettingsNumberField", "SettingsFormatField", "SettingsTextField", "TextField", "UiTextField"]
 BUTTONS = ["Button", "UiButton"]
 NUMBER_TYPES = {"real", "int", "double"}
 PROPERTY_TYPES = NUMBER_TYPES | {"string", "bool"}
@@ -291,6 +293,25 @@ def writes_text(code):
     return False
 
 
+def check_text_field(path, lines, i, end, fid, get):
+    """A SettingsTextField shows the setting by savedText: and enables its OK button by dirty."""
+    if not fid:
+        error(path, i + 1, "SettingsTextField without an id")
+        return
+    if get("text") is not None:
+        error(path, i + 1, "%s: shows the setting by text:, use savedText: (the OK button "
+              "is enabled by dirty)" % fid)
+    for j in range(end + 1, min(end + 40, len(lines))):
+        if opens(lines[j], FIELDS):
+            break
+        if opens(lines[j], BUTTONS):
+            button = lines[j + 1:block_end(lines, j)]
+            enabled = next((x for x in button if after_key(x, "enabled") is not None), "")
+            if find_word(enabled, fid + ".dirty") < 0:
+                error(path, j + 1, "%s: OK button not enabled by %s.dirty" % (fid, fid))
+            break
+
+
 def check_page(path):
     text = open(path, encoding="utf-8").read()
     lines = text.split("\n")
@@ -328,9 +349,11 @@ def check_page(path):
                               % (fid, "; ".join(actions(accepted, fid)), "; ".join(actions(clicked, fid))))
                     break
 
-        if kind == "TextField":
+        if kind in ("TextField", "SettingsTextField"):
             if types & NUMBER_TYPES:
-                error(path, i + 1, "number setting %s in a plain TextField" % ", ".join(keys))
+                error(path, i + 1, "number setting %s in a %s" % (", ".join(keys), kind))
+            if kind == "SettingsTextField":
+                check_text_field(path, lines, i, end, fid, get)
             continue
         count += 1
         if not fid:
