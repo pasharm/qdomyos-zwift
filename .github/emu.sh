@@ -116,10 +116,10 @@ tap_drawer() {
   fi
   tap_ui "$@"
 }
-# scroll_to 'regex': swipe the page up until the control shows (at most 12 swipes)
+# scroll_to 'regex' [max]: swipe the page up until the control shows (at most 12 swipes, or max)
 scroll_to() {
   local i
-  for i in $(seq 1 12); do
+  for i in $(seq 1 ${2:-12}); do
     dump
     if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
       echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
@@ -345,7 +345,8 @@ round_uk() {
   open_menu
   tap_drawer '^Налаштування$' 400 900
   sleep 8
-  if scroll_to '^Експериментальні функції$'; then
+  # near the end of the settings list: at 1.35 more than 12 swipes down
+  if scroll_to '^Експериментальні функції$' 30; then
     tap_ui '^Експериментальні функції$' 700 1000
     sleep 4
     if scroll_to '^М.який режим Bluetooth.*'; then
@@ -368,7 +369,15 @@ round_pages() {
     sleep 3
   fi
   open_menu
-  tap_drawer '^Workouts History$' 400 900 && { sleep 6; shot $s-40-history; back "history"; sleep 3; }
+  # A new history database (a fresh install of a current master) first asks to look for the
+  # workouts of a previous install: No, then the page
+  if tap_drawer '^Workouts History$' 400 900; then
+    sleep 6
+    tap_ui '^No$' && sleep 3
+    shot $s-40-history
+    back "history"
+    sleep 3
+  fi
   open_menu
   tap_drawer '^Open Train Program$' 400 900 && { sleep 6; shot $s-41-programs; back "programs"; sleep 3; }
   open_menu
