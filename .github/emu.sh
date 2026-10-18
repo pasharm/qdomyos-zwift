@@ -379,8 +379,8 @@ round_uk() {
   tap_drawer '^Налаштування$' 400 900
   sleep 8
   # The Experimental header (StaticAccordionElement) has no accessible name: it is the one right
-  # under "Video", near the end of the list
-  if scroll_to '^Video.*' 30 && tap_below '^Video.*' 90; then
+  # under "Maps" (uk "Карти"; "Video" between them is commented out), near the end of the list
+  if scroll_to '^(Карти|Maps.*)$' 30 && tap_below '^(Карти|Maps.*)$' 90; then
     sleep 4
     if scroll_to '^М.який режим Bluetooth.*'; then
       shot $s-30-relaxed
