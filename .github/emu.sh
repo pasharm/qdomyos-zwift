@@ -1,9 +1,9 @@
 #!/bin/bash
 # Test only (T-262): the classic look with the text size that follows the system (Android
 # font_scale) or the own "Text size" setting. The reference APK (apk-base, master with the tile
-# size rename) is shot first at font_scale 1.0; then the tested APK (apk-debug) at 1.0, after a
-# change to 1.3 while in the background (no restart), at 2.0 (capped at 150 %) and with the
-# switch off at 170 %.
+# size rename) is shot first at font_scale 1.0; then the tested APK (apk-debug) at 1.0, in
+# Ukrainian at font_scale 1.35 and with the switch off at 170 % (the ANT+ section and General UI
+# Options, where the phone showed overlaps), and with the switch off at 100 %.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -248,7 +248,7 @@ wait_tiles() {
   # The fake device comes after the first search ends: wait for its tiles (at most 3 min)
   for i in $(seq 1 18); do
     dump
-    if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then
+    if [ -f ui.xml ] && grep -qE 'content-desc="(Speed|Швидк)' ui.xml; then
       echo "tiles shown after $i looks" >> $STEPLOG; return 0
     fi
     sleep 10
@@ -290,10 +290,47 @@ round() {
   fi
 }
 
-# start_fresh <font_scale> <extra conf>: stop, settings file, system font size, start
+# Ukrainian, the language of the overlaps found on the phone: the ANT+ section and all of General
+# UI Options (the floating window rows are at its end), one frame per swipe
+round_uk() {
+  local s="$1" i
+  wait_tiles
+  sleep 5
+  shot $s-01-home
+  open_menu
+  shot $s-03-drawer
+  tap_drawer '^Налаштування$' 400 900
+  sleep 8
+  shot $s-04-settings
+  if scroll_to '^Параметри ANT\+.*'; then
+    tap_ui '^Параметри ANT\+.*' 700 1000
+    sleep 4
+    shot $s-10-ant-1
+    adb shell input swipe 700 2000 700 1100 400 || true
+    sleep 2
+    shot $s-11-ant-2
+  fi
+  back "settings page"
+  sleep 3
+  open_menu
+  tap_drawer '^Налаштування$' 400 900
+  sleep 8
+  if scroll_to '^Загальні параметри інтерфейсу$'; then
+    tap_ui '^Загальні параметри інтерфейсу$' 700 1000
+    sleep 4
+    shot $s-20-ui-1
+    for i in 2 3 4 5 6 7 8 9; do
+      adb shell input swipe 700 2000 700 1100 400 || true
+      sleep 2
+      shot $s-2$i-ui-$i
+    done
+  fi
+}
+
+# start_fresh <font_scale> <extra conf> [language]: stop, settings file, system font size, start
 start_fresh() {
   adb shell am force-stop $PKG || true
-  put_conf "applewatch_fakedevice=true\nconfirm_stop_workout=true\napp_language=en\n$2"
+  put_conf "applewatch_fakedevice=true\nconfirm_stop_workout=true\napp_language=${3:-en}\n$2"
   adb shell settings put system font_scale $1 || true
   echo "== start: font_scale=$(adb shell settings get system font_scale) conf: $2" >> $STEPLOG
   sleep 3
@@ -309,29 +346,17 @@ install_apk apk-debug/android-debug.apk
 start_fresh 1.0 ""
 round a10
 
-# 3. font_scale 1.3 while QZ is in the background: back in the foreground the text is bigger
-#    without a restart (the page left open on General UI Options)
-adb shell input keyevent KEYCODE_HOME || true
-sleep 3
-adb shell settings put system font_scale 1.3 || true
-echo "== font_scale=$(adb shell settings get system font_scale) in the background" >> $STEPLOG
-sleep 3
-adb shell am start -n $PKG/$PKG.CustomQtActivity || true
-sleep 8
-shot a13live-06-ui-options
-back "settings page"
-sleep 3
-shot a13live-01-home
+# (The change in the background and the cap at 2.0 were checked in runs 39063115898/39071761467)
 
-# 4. font_scale 2.0 after a restart: capped at 150 %
-start_fresh 2.0 ""
-round a20
+# 3. Ukrainian, font_scale 1.35 - the largest of the OnePlus 12 the overlaps were seen on
+start_fresh 1.35 "" uk
+round_uk u135
 
-# 5. The switch off, Text size 170 %, font_scale 2.0 left on: the own size wins
-start_fresh 2.0 "ui_text_scale_system=false\nui_text_scale=170\n"
-round m170
+# 4. Ukrainian, the switch off, Text size 170 %
+start_fresh 1.0 "ui_text_scale_system=false\nui_text_scale=170\n" uk
+round_uk u170
 
-# 6. The switch off, Text size 100 %: as the reference again
+# 5. The switch off, Text size 100 %: as the reference again
 start_fresh 1.0 "ui_text_scale_system=false\nui_text_scale=100\n"
 round m100
 adb shell settings put system font_scale 1.0 || true
