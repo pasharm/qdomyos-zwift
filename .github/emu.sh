@@ -170,7 +170,7 @@ start_app() {
 # open_settings: from anywhere back to home, then the menu and Settings
 open_settings() {
   open_menu
-  tap_drawer '^Settings$' 400 900
+  tap_drawer '^(Settings|Налаштування)$' 400 900
   sleep 8
 }
 
@@ -400,6 +400,10 @@ start_set() {
   local fs="$1" lang="$2" kv
   shift 2
   start_fresh $fs "" $lang
+  sleep 5
+  # The settings page writes all its keys (a file without them loses the last keys once more on the
+  # first opening, 39156975887: the switch shown on at 170 %)
+  open_settings
   sleep 5
   adb shell am force-stop $PKG || true
   for kv in "$@"; do
