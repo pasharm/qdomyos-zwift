@@ -319,11 +319,40 @@ round_uk() {
     tap_ui '^Загальні параметри інтерфейсу$' 700 1000
     sleep 4
     shot $s-20-ui-1
+    # The switch off: a wrong value in Text size shows the red reason under the field
+    if [ "$s" = u170 ] && tap_row '^Розмір тексту:$' '^170$'; then
+      sleep 2
+      adb shell input keyevent KEYCODE_MOVE_END || true
+      for i in 1 2 3; do adb shell input keyevent KEYCODE_DEL || true; done
+      adb shell input text 5 || true
+      sleep 2
+      snap $s-21-invalid
+      adb shell input keyevent KEYCODE_DEL || true
+      adb shell input text 170 || true
+      hide_keyboard
+      sleep 2
+    fi
     for i in 2 3 4 5 6 7 8 9; do
       adb shell input swipe 700 2000 700 1100 400 || true
       sleep 2
       shot $s-2$i-ui-$i
     done
+  fi
+  # Experimental: "Relaxed Bluetooth for mad devices", a switch title in two lines over its hint
+  back "settings page"
+  sleep 3
+  open_menu
+  tap_drawer '^Налаштування$' 400 900
+  sleep 8
+  if scroll_to '^Експериментальні функції$'; then
+    tap_ui '^Експериментальні функції$' 700 1000
+    sleep 4
+    if scroll_to '^М.який режим Bluetooth.*'; then
+      shot $s-30-relaxed
+      adb shell input swipe 700 1600 700 1100 400 || true
+      sleep 2
+      shot $s-31-relaxed-2
+    fi
   fi
 }
 
