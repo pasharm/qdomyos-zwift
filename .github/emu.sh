@@ -327,6 +327,24 @@ round_uk() {
   fi
 }
 
+# start_set <font_scale> <language> <key=value> ...: the switch and the size set the way the app
+# stores them. A minimal settings file is not enough: Qt.labs.settings, finding a key missing, writes
+# all properties not read yet with their defaults, so the two text size keys (the last ones) were
+# overwritten with 100/true half a second after the start, and the settings page read those. The
+# first start writes the full file; the keys are then changed in it and the app started again
+start_set() {
+  local fs="$1" lang="$2" kv
+  shift 2
+  start_fresh $fs "" $lang
+  sleep 5
+  adb shell am force-stop $PKG || true
+  for kv in "$@"; do
+    adb shell "run-as $PKG sed -i 's/^${kv%%=*}=.*/$kv/' 'files/.config/Roberto Viola/qDomyos-Zwift.conf'" || true
+  done
+  echo "== set: $* -> $(adb shell "run-as $PKG grep -E '^ui_text_scale' 'files/.config/Roberto Viola/qDomyos-Zwift.conf'" | tr '\r\n' '  ')" >> $STEPLOG
+  start_app
+}
+
 # start_fresh <font_scale> <extra conf> [language]: stop, settings file, system font size, start
 start_fresh() {
   adb shell am force-stop $PKG || true
@@ -353,11 +371,11 @@ start_fresh 1.35 "" uk
 round_uk u135
 
 # 4. Ukrainian, the switch off, Text size 170 %
-start_fresh 1.0 "ui_text_scale_system=false\nui_text_scale=170\n" uk
+start_set 1.0 uk ui_text_scale_system=false ui_text_scale=170
 round_uk u170
 
 # 5. The switch off, Text size 100 %: as the reference again
-start_fresh 1.0 "ui_text_scale_system=false\nui_text_scale=100\n"
+start_set 1.0 en ui_text_scale_system=false ui_text_scale=100
 round m100
 adb shell settings put system font_scale 1.0 || true
 
