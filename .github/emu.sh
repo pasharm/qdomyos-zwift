@@ -151,7 +151,8 @@ for n in ET.parse(sys.argv[1]).getroot().iter("node"):
             print(m.group(4)); break
 ' ui.xml "$1")
     if [ -z "$b" ]; then echo "tap below '$1': NOT FOUND" >> $STEPLOG; return 1; fi
-    if [ $((b + $2)) -lt 2200 ]; then
+    # the content ends at 2474 px (above the navigation bar)
+    if [ $((b + $2)) -lt 2440 ]; then
       echo "tap below '$1' (bottom $b) at 700 $((b + $2))" >> $STEPLOG
       adb shell input tap 700 $((b + $2)) || true
       return 0
@@ -159,7 +160,8 @@ for n in ET.parse(sys.argv[1]).getroot().iter("node"):
     adb shell input swipe 700 1800 700 1100 400 || true
     sleep 2
   done
-  echo "tap below '$1': stays at the bottom" >> $STEPLOG
+  echo "tap below '$1': stays at the bottom ($b)" >> $STEPLOG
+  snap below-fail-$(date +%s)
   return 1
 }
 # The top of a page: a few quick swipes down
@@ -380,7 +382,7 @@ round_uk() {
   sleep 8
   # The Experimental header (StaticAccordionElement) has no accessible name: it is the one right
   # under "Maps" (uk "Карти"; "Video" between them is commented out), near the end of the list
-  if scroll_to '^(Карти|Maps.*)$' 30 && tap_below '^(Карти|Maps.*)$' 90; then
+  if scroll_to '^(Карти|Maps.*)$' 30 && tap_below '^(Карти|Maps.*)$' 60; then
     sleep 4
     if scroll_to '^М.який режим Bluetooth.*'; then
       shot $s-30-relaxed
