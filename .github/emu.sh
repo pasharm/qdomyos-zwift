@@ -131,6 +131,33 @@ scroll_to() {
   echo "scroll to '$1': NOT FOUND" >> $STEPLOG
   return 1
 }
+# tap_below 'regex' dy: dy px under the bottom of the control - for a header with no accessible name
+# (StaticAccordionElement) right under a named one; near the screen bottom one short swipe first
+tap_below() {
+  local i b
+  for i in 1 2; do
+    dump
+    b=$([ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+rx = re.compile(sys.argv[2], re.I)
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    if any(l and rx.fullmatch(l.strip()) for l in (n.get("text") or "", n.get("content-desc") or "")):
+        m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+        if m:
+            print(m.group(4)); break
+' ui.xml "$1")
+    if [ -z "$b" ]; then echo "tap below '$1': NOT FOUND" >> $STEPLOG; return 1; fi
+    if [ $((b + $2)) -lt 2200 ]; then
+      echo "tap below '$1' (bottom $b) at 700 $((b + $2))" >> $STEPLOG
+      adb shell input tap 700 $((b + $2)) || true
+      return 0
+    fi
+    adb shell input swipe 700 1800 700 1100 400 || true
+    sleep 2
+  done
+  echo "tap below '$1': stays at the bottom" >> $STEPLOG
+  return 1
+}
 # The top of a page: a few quick swipes down
 scroll_top() {
   local i
@@ -345,9 +372,9 @@ round_uk() {
   open_menu
   tap_drawer '^Налаштування$' 400 900
   sleep 8
-  # near the end of the settings list: at 1.35 more than 12 swipes down
-  if scroll_to '^Експериментальні функції$' 30; then
-    tap_ui '^Експериментальні функції$' 700 1000
+  # The Experimental header (StaticAccordionElement) has no accessible name: it is the one right
+  # under "Video", near the end of the list
+  if scroll_to '^Video.*' 30 && tap_below '^Video.*' 90; then
     sleep 4
     if scroll_to '^М.який режим Bluetooth.*'; then
       shot $s-30-relaxed
@@ -386,7 +413,8 @@ round_pages() {
   if tap_drawer '^Wizard$'; then
     sleep 5
     shot $s-43-wizard
-    tap_ui '^Start$' && { sleep 3; shot $s-44-wizard-help; }
+    # with a bigger text the Start button is under the welcome text
+    scroll_to '^Start$' 4 && tap_ui '^Start$' && { sleep 3; shot $s-44-wizard-help; }
     tap_ui '^First-time setup$' && { sleep 3; shot $s-45-wizard-device; }
   fi
 }
