@@ -15,6 +15,10 @@ mkdir -p dumps
 # install_apk <apk>: a fresh install with the permissions granted
 install_apk() {
   adb uninstall $PKG > /dev/null 2>&1 || true
+  # Android 14+: the app folder is Documents/QZ, shared storage. Files the previous install wrote
+  # there stay and are hidden from the new one (another app now): the training programs were
+  # not copied again and the list was empty (39159163281). The emulator is thrown away after the run
+  adb shell rm -rf /sdcard/Documents/QZ || true
   adb install "$1"
   for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
     adb shell pm grant $PKG android.permission.$p || true
