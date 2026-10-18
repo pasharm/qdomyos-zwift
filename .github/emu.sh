@@ -352,6 +352,8 @@ round_uk() {
     sleep 4
     shot $s-20-ui-1
     # The switch off: a wrong value in Text size shows the red reason under the field
+    # the field up first: the keyboard covers the lower half, and the reason is under the field
+    [ "$s" = u170 ] && { adb shell input swipe 700 1800 700 1000 400 || true; sleep 2; }
     if [ "$s" = u170 ] && tap_row '^Розмір тексту:$' '^170$'; then
       sleep 2
       adb shell input keyevent KEYCODE_MOVE_END || true
