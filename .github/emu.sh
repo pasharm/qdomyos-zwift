@@ -3,7 +3,8 @@
 # font_scale) or the own "Text size" setting. The reference APK (apk-base, master with the tile
 # size rename) is shot first at font_scale 1.0; then the tested APK (apk-debug) at 1.0, in
 # Ukrainian at font_scale 1.35 and with the switch off at 170 % (the ANT+ section and General UI
-# Options, where the phone showed overlaps), and with the switch off at 100 %.
+# Options, where the phone showed overlaps), and with the switch off at 100 %. The separate pages
+# (history, programs, profiles, wizard) at 1.0 in both APKs and with the switch off at 170 %.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -356,6 +357,31 @@ round_uk() {
   fi
 }
 
+# The separate pages, from the drawer: workout history, the program list, profiles, the wizard
+# (last: its own pages are a stack inside the page)
+round_pages() {
+  local s="$1"
+  # after a round the settings page is open; "home": started from the home page, where the back
+  # key would leave the app
+  if [ "$2" != home ]; then
+    back "settings page"
+    sleep 3
+  fi
+  open_menu
+  tap_drawer '^Workouts History$' 400 900 && { sleep 6; shot $s-40-history; back "history"; sleep 3; }
+  open_menu
+  tap_drawer '^Open Train Program$' 400 900 && { sleep 6; shot $s-41-programs; back "programs"; sleep 3; }
+  open_menu
+  tap_drawer '^Profile: .*' 400 900 && { sleep 5; shot $s-42-profiles; back "profiles"; sleep 3; }
+  open_menu
+  if tap_drawer '^Wizard$'; then
+    sleep 5
+    shot $s-43-wizard
+    tap_ui '^Start$' && { sleep 3; shot $s-44-wizard-help; }
+    tap_ui '^First-time setup$' && { sleep 3; shot $s-45-wizard-device; }
+  fi
+}
+
 # start_set <font_scale> <language> <key=value> ...: the switch and the size set the way the app
 # stores them. A minimal settings file is not enough: Qt.labs.settings, finding a key missing, writes
 # all properties not read yet with their defaults, so the two text size keys (the last ones) were
@@ -387,11 +413,13 @@ start_fresh() {
 # 1. Reference: master with the tile size rename, font_scale 1.0
 start_fresh 1.0 ""
 round b10
+round_pages b10
 
 # 2. The tested APK, the same settings file, font_scale 1.0: the switch on by default
 install_apk apk-debug/android-debug.apk
 start_fresh 1.0 ""
 round a10
+round_pages a10
 
 # (The change in the background and the cap at 2.0 were checked in runs 39063115898/39071761467)
 
@@ -406,6 +434,11 @@ round_uk u170
 # 5. The switch off, Text size 100 %: as the reference again
 start_set 1.0 en ui_text_scale_system=false ui_text_scale=100
 round m100
+
+# 6. The separate pages, the switch off, Text size 170 %
+start_set 1.0 en ui_text_scale_system=false ui_text_scale=170
+wait_tiles
+round_pages p170 home
 adb shell settings put system font_scale 1.0 || true
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
