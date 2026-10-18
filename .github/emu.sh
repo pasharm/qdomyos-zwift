@@ -374,17 +374,40 @@ round_uk() {
       shot $s-2$i-ui-$i
     done
   fi
-  # Experimental: "Relaxed Bluetooth for mad devices", a switch title in two lines over its hint
   back "settings page"
   sleep 3
-  open_menu
-  tap_drawer '^Налаштування$' 400 900
-  sleep 8
+  relaxed_frames $s
+}
+
+# goto_settings: the menu and Settings, looked for by label up to three times (after the text field
+# of u170 the first back did not lead where expected and the menu tap missed, 39169043116)
+goto_settings() {
+  local i
+  for i in 1 2 3; do
+    open_menu
+    dump
+    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml '^(Settings|Налаштування)$' > /dev/null; then
+      tap_ui '^(Settings|Налаштування)$'
+      sleep 8
+      return 0
+    fi
+    echo "goto settings: no Settings in the drawer, try $i" >> $STEPLOG
+    snap goto-settings-fail-$i
+    back "no drawer"
+    sleep 3
+  done
+  return 1
+}
+
+# Experimental: "Relaxed Bluetooth for mad devices", a switch title in two lines over its hint
+relaxed_frames() {
+  local s="$1"
+  goto_settings || return 1
   # The Experimental header (StaticAccordionElement) has no accessible name: it is the one right
   # under "Maps" (uk "Карти"; "Video" between them is commented out), near the end of the list
   if scroll_to '^(Карти|Maps.*)$' 30 && tap_below '^(Карти|Maps.*)$' 60; then
     sleep 4
-    if scroll_to '^М.який режим Bluetooth.*'; then
+    if scroll_to '^(М.який режим Bluetooth|Relaxed Bluetooth).*'; then
       shot $s-30-relaxed
       adb shell input swipe 700 1600 700 1100 400 || true
       sleep 2
@@ -459,6 +482,17 @@ start_fresh() {
   start_app
 }
 
+if [ "${SCENARIO:-full}" = relaxed ]; then
+# Only the switch title in two lines (a debug build logs its sizes): 135 % of the system, 170 % of
+# the app
+install_apk apk-debug/android-debug.apk
+start_fresh 1.35 "" uk
+wait_tiles
+relaxed_frames u135
+start_set 1.0 uk ui_text_scale_system=false ui_text_scale=170
+wait_tiles
+relaxed_frames u170
+else
 # 1. Reference: master with the tile size rename, font_scale 1.0
 start_fresh 1.0 ""
 round b10
@@ -488,6 +522,7 @@ round m100
 start_set 1.0 en ui_text_scale_system=false ui_text_scale=170
 wait_tiles
 round_pages p170 home
+fi
 adb shell settings put system font_scale 1.0 || true
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
