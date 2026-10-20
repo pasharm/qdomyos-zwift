@@ -64,7 +64,20 @@ run_case() {
     rec=$!
   fi
   adb shell am start -n $PKG/$PKG.CustomQtActivity
-  sleep 80
+  # The first starts open the Health Connect permission screen over the app, and Qt suspends the
+  # app behind it (run 39510421044: no T246 line in the cases ru and uk). Back closes it.
+  local i top
+  for i in 1 2 3 4; do
+    sleep 6
+    top=$(adb shell dumpsys activity activities | grep -m1 -E "mResumedActivity|topResumedActivity")
+    echo "top after $((i * 6)) s: $top" >> $STEPLOG
+    if ! echo "$top" | grep -q "$PKG/.CustomQtActivity\|$PKG/$PKG.CustomQtActivity"; then
+      adb shell input keyevent KEYCODE_BACK || true
+      sleep 2
+      adb shell am start -n $PKG/$PKG.CustomQtActivity || true
+    fi
+  done
+  sleep 60
   [ -n "$rec" ] && { kill $rec 2>/dev/null; wait $rec 2>/dev/null; }
   adb shell screencap -p /sdcard/$name.png || true
   adb pull /sdcard/$name.png || true
@@ -76,7 +89,7 @@ run_case() {
   done
   # Where the probe wrote, in case Documents/QZ is not the dir of the app here
   adb shell "run-as $PKG find . -name '*.wav'" >> t246-$name/listing.txt 2>&1 || true
-  grep -E "T246|TextToSpeech|QtTextToSpeech|TTS|UtteranceProgress|GoogleTTS" logcat-$name.txt > t246-$name/lines.txt || true
+  grep -E "T246|tts language|TextToSpeech|QtTextToSpeech|TTS|UtteranceProgress|GoogleTTS" logcat-$name.txt > t246-$name/lines.txt || true
   echo "T246 lines: $(grep -c T246 logcat-$name.txt), wav: $(ls t246-$name/*.wav 2>/dev/null | wc -l)" >> $STEPLOG
   [ -f audio-$name.wav ] && echo "audio-$name.wav: $(stat -c %s audio-$name.wav) bytes" >> $STEPLOG
   cat logcat-$name.txt >> full_logcat.txt
@@ -108,5 +121,5 @@ for f in $(adb shell 'ls /sdcard/Documents/QZ/ 2>/dev/null' | tr -d '\r' | grep 
   adb pull "/sdcard/Documents/QZ/$f" "qz-logs/$f" > /dev/null 2>&1 || true
 done
 echo "== steps"; cat $STEPLOG
-for d in t246-*; do echo "== $d"; grep -E "T246" $d/lines.txt | cut -c1-400; done
+for d in t246-*; do echo "== $d"; grep -E "T246|tts language" $d/lines.txt | cut -c1-400; done
 echo "== TextToSpeech framework"; grep -hE " TextToSpeech|QtTextToSpeech" t246-*/lines.txt | cut -c1-300 | head -n 80
