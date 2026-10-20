@@ -916,9 +916,10 @@ import QtQuick 2.12 as Quick212
                 // Try without colon
                 var plain = qsTranslate(contexts[i], name)
                 if (plain !== name) return plain
-                // A label with its unit filled in on the page: "Bike Weight (%1)"
+                // A label with its unit filled in on the page: "Bike Weight (%1)". The unit is
+                // added back by searchTitle()
                 var withUnit = qsTranslate(contexts[i], name + " (%1)")
-                if (withUnit !== name + " (%1)") return withUnit.replace(/\s*\(%1\)$/, "").trim()
+                if (withUnit !== name + " (%1)") return withUnit.replace("(%1)", "").trim()
             }
             return name
         }
@@ -1073,30 +1074,7 @@ import QtQuick 2.12 as Quick212
             return value === undefined ? entry.defaultValue : value
         }
 
-        // Modern look: the paces are stored as seconds per km, their own page shows the time of
-        // the whole distance ("00:25:00" for 5 km). The search shows and takes the same time
-        function paceDistance(entry) {
-            var d = { pacef_1mile: 1.60934, pacef_5km: 5, pacef_10km: 10, pacef_halfmarathon: 21, pacef_marathon: 42 }
-            return window.ui.modern && d[entry.key] ? d[entry.key] : 0
-        }
-
-        function searchFieldValue(entry) {
-            var d = paceDistance(entry)
-            if (!d)
-                return settingValue(entry)
-            var t = Math.round(settingValue(entry) * d)
-            var pad = function (n) { return n < 10 ? "0" + n : "" + n }
-            return pad(Math.floor(t / 3600)) + ":" + pad(Math.floor(t / 60) % 60) + ":" + pad(t % 60)
-        }
-
         function setSettingValue(entry, value) {
-            var d = paceDistance(entry)
-            if (d && String(value).indexOf(":") >= 0) {
-                var p = String(value).split(":").map(function (v) { return parseInt(v, 10) || 0 })
-                while (p.length < 3)
-                    p.unshift(0)
-                value = (p[0] * 3600 + p[1] * 60 + p[2]) / d
-            }
             if (isUiOption(entry.key)) {
                 // Applied at once, like the switch on the page: no restart question
                 setUiOption(entry.key, entry.type === "boolean" ? !!value : value)
@@ -1124,6 +1102,179 @@ import QtQuick 2.12 as Quick212
             }
             window.settings_restart_to_apply = true
             toast.show(qsTr("Setting saved!"))
+        }
+
+        // Settings whose own page shows them in other units than they are kept in. The search
+        // shows and takes them the same way, with the factors of the page:
+        // - the paces of a distance: kept as seconds per km, shown as the time of the whole
+        //   distance ("00:25:00" for 5 km at 300)
+        // - the warmup, cooldown and rest paces: seconds per km, shown as hh:mm:ss
+        // - with "Use Miles unit in UI": the weights in pounds (unless "Weight in kg"), the height
+        //   in feet'inches, the speeds in mph, the autolap distance in miles. The factor back
+        //   to the kept unit is the one of the page (1.60934 on some, 1 / 0.621371 on others)
+        readonly property var searchPaceDistances: ({ pacef_1mile: 1.60934, pacef_5km: 5, pacef_10km: 10,
+                                                     pacef_halfmarathon: 21, pacef_marathon: 42 })
+        readonly property var searchPaceKeys: ["trainprogram_warmup_speed", "trainprogram_cooldown_speed",
+                                               "trainprogram_rest_speed"]
+        readonly property var searchMileFactors: ({
+            treadmill_speed_max: 1.60934, treadmill_speed_min: 1.60934, treadmill_step_speed: 1.60934,
+            autolap_distance: 1.60934,
+            peloton_treadmill_walking_min_speed: 1 / 0.621371, peloton_treadmill_running_min_speed: 1 / 0.621371,
+            tile_preset_speed_1_value: 1 / 0.621371, tile_preset_speed_2_value: 1 / 0.621371,
+            tile_preset_speed_3_value: 1 / 0.621371, tile_preset_speed_4_value: 1 / 0.621371,
+            tile_preset_speed_5_value: 1 / 0.621371
+        })
+
+        // "distance", "pace", "weight", "height", "miles", or "" for a value shown as it is kept
+        function searchValueKind(entry) {
+            if (searchPaceDistances[entry.key])
+                return "distance"
+            if (searchPaceKeys.indexOf(entry.key) >= 0)
+                return "pace"
+            if (entry.key === "weight" || entry.key === "bike_weight")
+                return "weight"
+            if (entry.key === "height")
+                return "height"
+            if (searchMileFactors[entry.key])
+                return "miles"
+            return ""
+        }
+
+        function searchInPounds() {
+            return settings.miles_unit && !settings.weight_kg_unit
+        }
+
+        // The unit the page writes next to the name of the setting, "" when it writes none
+        function searchUnit(entry) {
+            var kind = searchValueKind(entry)
+            if (kind === "weight")
+                return searchInPounds() ? qsTr("lbs") : qsTr("kg")
+            if (kind === "height")
+                return settings.miles_unit ? qsTr("ft/in") : qsTr("cm")
+            if (kind === "miles" && entry.key === "autolap_distance")
+                return settings.miles_unit ? qsTr("Mi") : qsTr("KM")
+            if (kind === "miles")
+                return settings.miles_unit ? qsTr("mph") : qsTr("km/h")
+            return ""
+        }
+
+        function searchTitle(entry) {
+            var name = entry._translatedName || entry.name || entry.key
+            var unit = entry.catalogKind === "setting" ? searchUnit(entry) : ""
+            return unit.length > 0 ? name + " (" + unit + ")" : name
+        }
+
+        function searchTimeText(seconds) {
+            var t = Math.round(seconds)
+            var pad = function (n) { return n < 10 ? "0" + n : "" + n }
+            return pad(Math.floor(t / 3600)) + ":" + pad(Math.floor(t / 60) % 60) + ":" + pad(t % 60)
+        }
+
+        // hh:mm:ss as the pace fields take it, NaN for anything else
+        function searchTimeSeconds(text) {
+            var parts = text.trim().split(":")
+            if (parts.length !== 3)
+                return NaN
+            var seconds = 0
+            for (var i = 0; i < parts.length; i++) {
+                if (parts[i].length === 0 || parts[i].length > 2)
+                    return NaN
+                for (var c = 0; c < parts[i].length; c++) {
+                    if (parts[i][c] < "0" || parts[i][c] > "9")
+                        return NaN
+                }
+                var n = parseInt(parts[i], 10)
+                if (i > 0 && n > 59)
+                    return NaN
+                seconds = seconds * 60 + n
+            }
+            return seconds
+        }
+
+        // feet'inches as the height field takes it (5'10", the quotes may be typographic), in cm;
+        // NaN when there are not two numbers
+        function searchFeetInchesCm(text) {
+            var numbers = []
+            var digits = ""
+            for (var i = 0; i <= text.length; i++) {
+                var c = text.charAt(i)
+                if (c >= "0" && c <= "9") {
+                    digits += c
+                } else if (digits.length > 0) {
+                    numbers.push(parseInt(digits, 10))
+                    digits = ""
+                }
+            }
+            return numbers.length === 2 ? numbers[0] * 30.48 + numbers[1] * 2.54 : NaN
+        }
+
+        // The text of the value field of a search result: the value as its page shows it
+        function searchFieldValue(entry) {
+            var value = settingValue(entry)
+            if (entry.type !== "integer" && entry.type !== "number")
+                return value
+            var kind = searchValueKind(entry)
+            if (kind === "distance")
+                return searchTimeText(value * searchPaceDistances[entry.key])
+            if (kind === "pace")
+                return searchTimeText(value)
+            if (kind === "weight")
+                return String(Number((searchInPounds() ? value * 2.20462 : value).toFixed(2)))
+            if (kind === "height" && settings.miles_unit)
+                return Math.floor(value / 30.48) + "'" + Math.round((value % 30.48) / 2.54) + '"'
+            if (kind === "miles") {
+                var shown = (settings.miles_unit ? value * 0.621371 : value).toFixed(1)
+                // The tiles page drops a trailing ".0" of its speed presets
+                return entry.key.indexOf("tile_preset_speed_") === 0 ? String(Number(shown)) : shown
+            }
+            // A real written as a float by the C++ side reads back as 0.33000001...
+            return String(Math.round(value * 1000000) / 1000000)
+        }
+
+        // The value field of a search result written back: converted to the kept unit as its
+        // page does it. Not saved, with the reason in a toast, when it is not a value of the
+        // setting (parseFloat made 0 of the time "00:25:00" and 2 of "2,5")
+        function setSearchFieldValue(entry, text) {
+            if (entry.type !== "integer" && entry.type !== "number") {
+                setSettingValue(entry, text)
+                return
+            }
+            var kind = searchValueKind(entry)
+            var value
+            if (kind === "distance" || kind === "pace") {
+                value = searchTimeSeconds(text)
+                if (isNaN(value)) {
+                    toast.show(qsTranslate("SettingsFormatField", "Enter the time as hh:mm:ss"))
+                    return
+                }
+                setSettingValue(entry, kind === "distance" ? value / searchPaceDistances[entry.key] : value)
+                return
+            }
+            if (kind === "height" && settings.miles_unit) {
+                value = searchFeetInchesCm(text)
+                if (isNaN(value)) {
+                    toast.show(qsTranslate("SettingsFormatField", "Enter the height as feet'inches, e.g. 5'10\""))
+                    return
+                }
+                setSettingValue(entry, value)
+                return
+            }
+            // A decimal comma (the keyboard of the phone's language) counts as a point
+            var trimmed = text.trim()
+            value = Number(trimmed.replace(",", "."))
+            if (trimmed.length === 0 || isNaN(value)) {
+                toast.show(qsTranslate("SettingsNumberField", "Enter a number"))
+                return
+            }
+            if (kind === "weight" && searchInPounds())
+                value = value / 2.20462
+            else if (kind === "miles" && settings.miles_unit)
+                value = value * searchMileFactors[entry.key]
+            if (entry.type === "integer" && Math.round(value) !== value) {
+                toast.show(qsTranslate("SettingsNumberField", "Enter a whole number"))
+                return
+            }
+            setSettingValue(entry, value)
         }
 
         function optionValues(entry) {
@@ -2729,8 +2880,8 @@ import QtQuick 2.12 as Quick212
         ]
         Timer {
             id: settingsSearchDebounceTimer
-            // Modern: results while typing; 1.5 s felt like the search did not react
-            interval: window.ui.modern ? 300 : 1500
+            // The results while typing: after 1.5 s the search looked like it did not react
+            interval: 300
             repeat: false
             onTriggered: settingsPane.updateFilteredSettings()
         }
@@ -2775,7 +2926,8 @@ import QtQuick 2.12 as Quick212
                             // The text cleared: the whole list of changed settings at once
                             settingsPane.updateFilteredSettings()
                         } else if (settingsPane.settingsSearchActive) {
-                            settingsPane.filteredSettings = []
+                            // The results of the previous text stay until the new ones are
+                            // there: the list no longer blinks away on every key
                             settingsPane.settingsSearchPending = true
                             settingsPane.loadSettingsCatalog()
                             settingsSearchDebounceTimer.restart()
@@ -2969,7 +3121,7 @@ import QtQuick 2.12 as Quick212
 
                                     Label {
                                         font.pixelSize: window.ui.fontBase
-                                        readonly property string title: entry._translatedName || entry.name || entry.key
+                                        readonly property string title: settingsPane.searchTitle(entry)
                                         // Modern look: a capital first letter - the fields of a
                                         // tile preset are "value:" and "label:" on their page
                                         readonly property string plain: window.ui.plainTitle(title)
@@ -3043,27 +3195,33 @@ import QtQuick 2.12 as Quick212
                                     Layout.minimumWidth: 0
                                     text: visible ? settingsPane.searchFieldValue(entry) : ""
                                     horizontalAlignment: Text.AlignRight
-                                    inputMethodHints: entry.type === "string" ? Qt.ImhNoPredictiveText : Qt.ImhFormattedNumbersOnly
+                                    // A time and feet'inches on the full keyboard, as on their page:
+                                    // the number keyboard of Android may have no ':' or '
+                                    readonly property string kind: settingsPane.searchValueKind(entry)
+                                    readonly property bool feetInches: kind === "height" && settings.miles_unit
+                                    inputMethodHints: entry.type === "string" || timeShaped || feetInches
+                                                      ? Qt.ImhNoPredictiveText : Qt.ImhFormattedNumbersOnly
                                     // One field for every setting found, so its own rule by the type
                                     // of the setting (the page uses SettingsNumberField for these):
                                     // a pace is a time; a number may be negative (offsets, the
-                                    // lowest incline), a decimal comma counts as a point
-                                    timeShaped: settingsPane.paceDistance(entry) > 0
-                                    validator: entry.type === "string" ? null
+                                    // lowest incline), a decimal comma counts as a point. Feet'inches
+                                    // are checked by setSearchFieldValue()
+                                    timeShaped: kind === "distance" || kind === "pace"
+                                    validator: entry.type === "string" || feetInches ? null
                                              : timeShaped ? searchTimeValidator
                                              : entry.type === "integer" ? searchIntValidator
                                              : searchNumberValidator
                                     RegExpValidator { id: searchTimeValidator; regExp: /^\d{1,2}:[0-5]?\d:[0-5]?\d$/ }
                                     RegExpValidator { id: searchIntValidator; regExp: /^-?\d+$/ }
                                     RegExpValidator { id: searchNumberValidator; regExp: /^-?(\d+([.,]\d*)?|[.,]\d+)$/ }
-                                    onAccepted: settingsPane.setSettingValue(entry, text)
+                                    onAccepted: settingsPane.setSearchFieldValue(entry, text)
                                     onActiveFocusChanged: if (this.focus) this.cursorPosition = this.text.length
                                 }
 
                                 UiButton {
                                     text: qsTr("OK")
                                     enabled: searchSettingTextField.acceptableInput
-                                    onClicked: settingsPane.setSettingValue(entry, searchSettingTextField.text)
+                                    onClicked: settingsPane.setSearchFieldValue(entry, searchSettingTextField.text)
                                 }
                             }
 
