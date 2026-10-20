@@ -18,7 +18,9 @@
 # Not findings: the Android containers around Qt's view (FrameLayout, ViewGroup, View) and
 # nodes of zero size (the hidden field of a WebView).
 # --json writes the findings for a later run; --compare lists what is new against such a file
-# (a run of master against a run of the branch). Exit code 1 if there are findings.
+# (a run of master against a run of the branch). A finding without a name is known only by its
+# bounds, and those move with the scroll position: it is new only if its screen has more findings
+# of the rule than the same screen of the older run. Exit code 1 if there are findings.
 # GITHUB_STEP_SUMMARY, when set, gets a table of the screens.
 # No regular expressions, to read easily (rule 5 of AGENTS.md upstream).
 import json
@@ -86,6 +88,7 @@ def main(argv):
     # is the same finding
     seen = {}
     where_at = {}
+    per_dump = {}
     for dump in sorted(os.listdir(folder)):
         if not dump.endswith(".xml"):
             continue
@@ -102,6 +105,7 @@ def main(argv):
                and is_app_item(n) and area(n.get("bounds") or "") > 0]
         named = [n for n in nodes if name_of(n)]
         counts = {r: sum(1 for f in found if f[0] == r) for r in ("unnamed", "field", "no-action")}
+        per_dump[dump[:-4]] = counts
         print(f"== {dump}: nodes {len(nodes)}, with a name {len(named)}, actionable {len(act)}, "
               f"unnamed {counts['unnamed']}, fields without a name {counts['field']}, named without action {counts['no-action']}")
         for rule, name, cls, bounds in found:
@@ -135,15 +139,26 @@ def main(argv):
     new = None
     if "--compare" in opts:
         with open(opts["--compare"], encoding="utf-8") as f:
-            old = {(x["rule"], x["key"]) for x in json.load(f)["findings"]}
-        new = sorted(k for k in seen if k not in old)
+            data = json.load(f)
+        old = {(x["rule"], x["key"]) for x in data["findings"]}
+        old_counts = data.get("per_dump")
+
+        def is_new(key):
+            if key in old:
+                return False
+            if key[1] != where_at[key] or old_counts is None:
+                return True
+            # known by bounds only: new if a screen has more of the rule than before
+            return any(per_dump[d][key[0]] > old_counts.get(d, {}).get(key[0], 0) for d in seen[key])
+        new = sorted(k for k in seen if is_new(k))
         print(f"== new against {opts['--compare']}: {len(new)}")
         for key in new:
             print(line(key))
     if "--json" in opts:
         with open(opts["--json"], "w", encoding="utf-8") as f:
             json.dump({"findings": [{"rule": k[0], "key": k[1], "bounds": where_at[k], "dumps": d}
-                                    for k, d in sorted(seen.items())]}, f, ensure_ascii=False, indent=1)
+                                    for k, d in sorted(seen.items())],
+                       "per_dump": per_dump}, f, ensure_ascii=False, indent=1)
 
     print("== summary")
     for row in summary:
