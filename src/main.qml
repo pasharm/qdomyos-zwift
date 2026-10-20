@@ -390,8 +390,8 @@ ApplicationWindow {
         // a scroll stops; off, they stay where the scroll left them
         readonly property bool tileSnap: settings.ui_tile_snap
 
-        // Appearance: "auto" follows the night mode of the phone, "dark" and "light" are fixed.
-        // The classic look is always dark.
+        // Appearance: "auto" follows the night mode of the phone (dark on Android before 10, which
+        // has no dark theme), "dark" and "light" are fixed. The classic look is always dark.
         readonly property string themeMode: settings.ui_theme_mode
         property bool systemDark: AndroidStatusBar.systemDarkMode()
         readonly property bool dark: !modern || themeMode === "dark" || (themeMode !== "light" && systemDark)
