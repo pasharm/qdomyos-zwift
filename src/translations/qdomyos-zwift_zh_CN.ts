@@ -3687,6 +3687,16 @@ This may take a few moments on first startup.</source>
         <translation>速度已更改为</translation>
     </message>
     <message>
+        <source>Start pressed</source>
+        <extracomment>Text-to-speech: spoken when the workout is started or resumed with the Start button.</extracomment>
+        <translation>已按下开始</translation>
+    </message>
+    <message>
+        <source>Stop pressed</source>
+        <extracomment>Text-to-speech: spoken when the workout is stopped with the Stop button.</extracomment>
+        <translation>已按下停止</translation>
+    </message>
+    <message>
         <source>JSON parser error</source>
         <translation>JSON 解析错误</translation>
     </message>

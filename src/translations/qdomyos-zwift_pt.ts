@@ -3671,6 +3671,16 @@ Isso pode levar alguns instantes na primeira inicialização.</translation>
         <translation>velocidade alterada para</translation>
     </message>
     <message>
+        <source>Start pressed</source>
+        <extracomment>Text-to-speech: spoken when the workout is started or resumed with the Start button.</extracomment>
+        <translation>Iniciar pressionado</translation>
+    </message>
+    <message>
+        <source>Stop pressed</source>
+        <extracomment>Text-to-speech: spoken when the workout is stopped with the Stop button.</extracomment>
+        <translation>Parar pressionado</translation>
+    </message>
+    <message>
         <source>JSON parser error</source>
         <translation>Erro no analisador JSON</translation>
     </message>

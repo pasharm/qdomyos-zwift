@@ -3671,6 +3671,16 @@ Al primo avvio potrebbe richiedere qualche istante.</translation>
         <translation>velocità cambiata in</translation>
     </message>
     <message>
+        <source>Start pressed</source>
+        <extracomment>Text-to-speech: spoken when the workout is started or resumed with the Start button.</extracomment>
+        <translation>Premuto Inizia</translation>
+    </message>
+    <message>
+        <source>Stop pressed</source>
+        <extracomment>Text-to-speech: spoken when the workout is stopped with the Stop button.</extracomment>
+        <translation>Premuto Stop</translation>
+    </message>
+    <message>
         <source>JSON parser error</source>
         <translation>Errore parser JSON</translation>
     </message>

@@ -3671,6 +3671,16 @@ Cela peut prendre quelques instants au premier démarrage.</translation>
         <translation>vitesse réglée sur</translation>
     </message>
     <message>
+        <source>Start pressed</source>
+        <extracomment>Text-to-speech: spoken when the workout is started or resumed with the Start button.</extracomment>
+        <translation>Démarrer appuyé</translation>
+    </message>
+    <message>
+        <source>Stop pressed</source>
+        <extracomment>Text-to-speech: spoken when the workout is stopped with the Stop button.</extracomment>
+        <translation>Arrêter appuyé</translation>
+    </message>
+    <message>
         <source>JSON parser error</source>
         <translation>Erreur d&apos;analyse JSON</translation>
     </message>
