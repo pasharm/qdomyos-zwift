@@ -9,6 +9,6 @@ from PIL import Image
 img = Image.open(sys.argv[1]).convert("L")
 w, h = img.size
 body = img.crop((0, int(h * 0.06), w, int(h * 0.92))).resize((w // 8, h // 8))
-pixels = list(body.getdata())
+pixels = body.tobytes()
 luma = sum(pixels) / len(pixels)
 print("luma=%d %s" % (luma, "dark" if luma < 110 else "light"))
