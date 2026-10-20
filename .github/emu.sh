@@ -31,8 +31,9 @@ adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
 # T-060, T-066: a fake treadmill, so the home page has tiles (without a device it shows the search help)
-# T-240: four settings changed from their default, a password, a MyWhoosh state key and a value equal to its default
-printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\nweight=80\npzp_password=secret\nmywhoosh_link_camera_value=3\nbike_weight=0\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+# T-119: values of every kind the results show as text - a real number, an integer, a list of
+# strings, a list of numbers with labels, a password, a MyWhoosh state key (hidden from the results)
+printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\nweight=80.5\nftp=250\nstrava_upload_mode=Request\nzwiftplay_gear_lb=1\nfloatingwindow_type=1\npzp_password=secret\nmywhoosh_link_camera_value=3\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -285,6 +286,53 @@ type_query() {
   hide_keyboard
 }
 
+# T-119: in the modern look a search result shows its value as text and has no editor of its
+# own (no switch, no field with OK, no list); a tap opens the setting on its page. The classic
+# look keeps the editors of master: the same steps there are the comparison.
+# The value is a Label of its own: in the dump a node whose content-desc is the value.
+# Editors in the dump: a switch is a checkable node, the field has OK, a page has Open.
+editors() {
+  dump
+  [ -f ui.xml ] && python3 -c '
+import sys, xml.etree.ElementTree as ET
+sw = ok = op = 0
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    if n.get("bounds") == "[0,0][0,0]":
+        continue
+    sw += n.get("checkable") == "true"
+    ok += t == "OK"
+    op += t == "Open"
+print(sw, ok, op)
+' ui.xml
+}
+# check_editors <what>: none in the modern look, master's in the classic one (logged only)
+check_editors() {
+  local e
+  e=$(editors)
+  if [ "$UI_MODERN" = "true" ]; then
+    if [ "$e" = "0 0 0" ]; then
+      echo "check no editors in the results ($1): OK" >> $STEPLOG
+    else
+      echo "!! check no editors in the results ($1): switches/OK/Open = $e" >> $STEPLOG
+    fi
+  else
+    echo "classic editors ($1): switches/OK/Open = $e" >> $STEPLOG
+  fi
+}
+# value_is 'Title' 'value regex': in the modern look the card shows that value
+value_is() {
+  [ "$UI_MODERN" = "true" ] || return 0
+  has "^$2\$" "$1 shows $2"
+}
+# query 'text' shot: a new search (spaces as %s for adb), its results into steps.log
+query() {
+  type_query "$1"
+  sleep 2
+  shot "q-$2"
+  results "$1"
+}
+
 open_menu
 shot s-menu
 tap_drawer '^Settings$' 400 900
@@ -292,55 +340,83 @@ sleep 8
 shot s-00
 open_search
 hide_keyboard
-shot g-bar
-has '^Changed$' "the Changed button in the search bar"
+shot q-bar
 
-# The whole list
-tap_ui '^Changed$'
+query 'weight' weight
+has '^Search results.*' "results for weight"
+check_editors "weight"
+value_is 'Player Weight' '80\.5'
+value_is 'Use kg for weight' 'Off'
+
+query 'ftp%svalue' ftp
+value_is 'FTP value' '250'
+
+query 'debug%slog' debug
+value_is 'Debug Log' 'On'
+check_editors "debug log"
+
+query 'strava%supload' strava
+value_is 'Strava Upload' 'Request'
+
+query 'power%sup' powerup
+value_is 'Power Up (LB)' 'Gear Up'
+
+query 'floating%swindow%stype' floating
+value_is 'Floating Window Type' 'Horizontal'
+
+query 'theme' theme
+value_is 'Theme' 'Graphite'
+check_editors "theme"
+
+query 'specific%smodel' model
+value_is 'Specific Model' 'Other'
+check_editors "specific model"
+
+query '5%skm%space' pace
+value_is '5 km pace' '00:25:00'
+
+# A Bluetooth device and a password: no value at all
+query 'heart%sbelt' belt
+[ "$UI_MODERN" = "true" ] && not_has '^Disabled$' "heart belt shows no value"
+query 'password' password
+not_has '^secret$' "a password is never shown"
+[ "$UI_MODERN" = "true" ] && not_has '^username$' "a password default is not shown"
+
+# Hidden from the modern results: on no settings page
+query 'camera' camera
+[ "$UI_MODERN" = "true" ] && not_has '^Camera Action$' "MyWhoosh camera is not listed"
+query 'peloton%sbike%socr' ocr
+[ "$UI_MODERN" = "true" ] && not_has '^Peloton Bike OCR$' "Peloton Bike OCR is not listed"
+
+# A page among the results: a chevron instead of Open
+query 'wahoo' wahoo
+has '^Wahoo Options$' "Wahoo Options page listed"
+check_editors "wahoo"
+tap_ui '^Wahoo Options$'
 sleep 4
-shot g-changed
-results "changed, no text"
-has "$CHANGED" "changed settings header"
-has '^Changed settings \(4\)$' "four changed settings"
-for name in 'Debug Log' 'Confirm Stop Workout' 'Fake Device' 'Player Weight'; do
-  has "^$name\$" "listed: $name"
-done
-not_has '^PZP Password$' "a password is never listed"
-not_has '^Camera Action$' "MyWhoosh state is not listed"
-not_has '^Bike Weight$' "a value equal to its default is not listed"
-
-# The text narrows the list
-type_query 'weight'
-sleep 2
-shot g-narrowed
-results "changed + weight"
-has '^Changed settings \(1\)$' "the text narrows the list to one"
-has '^Player Weight$' "Player Weight left"
-
-# A result opens its setting, back returns to the same list
-tap_ui '^Player Weight$'
+shot q-wahoo-page
+back "to the results"
 sleep 3
-shot g-jump
-back "to the changed list"
-sleep 3
-shot g-back
-has '^Changed settings \(1\)$' "back lands on the changed list"
+shot q-wahoo-back
+has '^Wahoo Options$' "back from the page lands on the results"
 
-# Text cleared while Changed is on: the whole list at once (no debounce)
-type_query ''
+# A setting its page hides with the current values (kg only with miles on): back to the results
+# with a toast that no longer says "change it here"
+query 'use%skg' kg
+tap_ui '^Use kg for weight$'
 sleep 1
-shot g-cleared
-has '^Changed settings \(4\)$' "text cleared: the whole list again"
+shot q-kg-toast
+results "after the tap on a hidden setting"
+has '^Hidden on its page.*' "the hidden-setting toast"
+[ "$UI_MODERN" = "true" ] && not_has '.*change it here.*' "the toast does not say change it here"
+sleep 3
 
-# T-248: a setting put back to its default after a jump from the list leaves it on the way back
-# (master before the fix brought the saved list back: still four)
+# The value is read again on the way back: Fake Device on, switched off on its page, back
+query 'fake%sdevice' fake
+value_is 'Fake Device' 'On'
 tap_ui '^Fake Device$'
-sleep 3
-shot g248-jump
-not_has "$CHANGED" "the jump left the results"
-# The switch itself on its page: back to its default (off). The row is one node: its middle,
-# right after the jump (glow, scroll), did not toggle it - the right end, where the switch is
-sleep 3
+sleep 6
+shot q-fake-page
 dump
 xy=$([ -f ui.xml ] && python3 -c '
 import re, sys, xml.etree.ElementTree as ET
@@ -359,46 +435,27 @@ else
   echo "!! tap switch 'Fake Device' NOT FOUND" >> $STEPLOG
 fi
 sleep 2
-shot g248-off
-[ -f ui.xml ] && python3 -c '
-import sys, xml.etree.ElementTree as ET
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
-    if t == "Fake Device" and n.get("checkable") == "true":
-        print(("check" if n.get("checked") == "false" else "!! check") + " Fake Device switched off: checked=" + str(n.get("checked")))
-        break
-' ui.xml >> $STEPLOG
-back "to the changed list"
+shot q-fake-off
+back "to the results"
 sleep 3
-shot g248-back
+shot q-fake-back
 results "back after Fake Device off"
-has '^Changed settings \(3\)$' "the list is rebuilt: three left"
-not_has '^Fake Device$' "Fake Device left the list"
+has '^Fake Device$' "back lands on the results"
+value_is 'Fake Device' 'Off'
+[ "$UI_MODERN" = "true" ] && not_has '^On$' "Fake Device no longer On"
 
-# Changed off with a text: the plain search
-type_query 'weight'
+# Changed: the reset stays, the values the same text
+type_query ''
 tap_ui '^Changed$'
 sleep 4
-shot g-off
-results "changed off + weight"
-has '^Search results.*' "plain search results again"
-has '^Bike Weight$' "plain search lists Bike Weight again"
-
-# Changed off and no text: the results are gone, the settings page is back
-type_query ''
-sleep 2
-shot g-off-empty
-not_has '^Search results.*|^Changed settings.*' "no results without text and filter"
-
-# Clear closes the bar and turns the filter off: opened again, it is off
+shot q-changed
+results "changed"
+has '^Changed settings.*' "changed list"
+has '^Reset$' "a Reset button on the changed cards"
+value_is 'Player Weight' '80\.5'
+value_is 'Strava Upload' 'Request'
 tap_ui '^Changed$'
-sleep 3
-tap_ui '^Clear$'
 sleep 2
-open_search
-hide_keyboard
-shot g-reopen
-not_has "$CHANGED" "the filter is off after Clear"
 shot e-end
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
