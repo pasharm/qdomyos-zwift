@@ -30,9 +30,8 @@ adb shell cmd uimode night no || true
 # ANR still reaches logcat and the end of steps.log ("ANR in")
 adb shell settings put global hide_error_dialogs 1 || true
 
-# T-060, T-066: a fake treadmill, so the home page has tiles (without a device it shows the search help)
-# T-240: four settings changed from their default, a password, a MyWhoosh state key and a value equal to its default
-printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\nweight=80\npzp_password=secret\nmywhoosh_link_camera_value=3\nbike_weight=0\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+# T-060, T-066: a fake treadmill, so the home page has tiles and no first-run wizard
+printf '[General]\nlog_debug=%s\nui_modern=%s\napplewatch_fakedevice=true\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -239,166 +238,284 @@ has() {
   fi
 }
 
-# T-240: "Changed" in the search bar lists the settings that differ from their default.
-# qz.conf above changes Debug Log, Confirm Stop Workout, Fake Device and Player Weight; it also
-# writes a password (pzp_password), a MyWhoosh state key and a value equal to its default
-# (bike_weight=0) - none of them may be listed. Expected: "Changed settings (4)".
-CHANGED='^Changed settings.*'
-has_quiet() {
-  dump
-  [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null
+# T-244: a value changed on a page opened over the settings page (voice, tiles, shortcuts)
+# went back to the old one with the next change on the settings page: Qt.labs.settings writes
+# every property of the page's copy when one of them changes. The store is read with run-as;
+# master (before the fix) fails the checks marked "T-244", the fix passes all of them.
+CONF="files/.config/Roberto Viola/qDomyos-Zwift.conf"
+conf_line() {
+  adb shell "run-as $PKG cat '$CONF'" 2>/dev/null | tr -d '\r' | grep "^$1=" | head -1
 }
-not_has() {
-  dump
-  if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
-    echo "!! check no '$1' ($2): SHOWN" >> $STEPLOG
+# expect key value "why": the line key=value in the store
+expect() {
+  local got
+  got=$(conf_line "$1")
+  if [ "$got" = "$1=$2" ]; then
+    echo "check $1=$2 ($3): OK" >> $STEPLOG
   else
-    echo "check no '$1' ($2): OK" >> $STEPLOG
+    echo "!! check $1=$2 ($3): got '${got:-absent}'" >> $STEPLOG
   fi
 }
-# The headers and card titles of the results, into steps.log
-results() {
+# The switch of a row by its label: the row is one node, its switch at the right end
+switch_xy() {
   dump
-  echo "results ($1):" >> $STEPLOG
   [ -f ui.xml ] && python3 -c '
 import re, sys, xml.etree.ElementTree as ET
 for n in ET.parse(sys.argv[1]).getroot().iter("node"):
     t = (n.get("text") or "") or (n.get("content-desc") or "")
-    if t and n.get("bounds") != "[0,0][0,0]":
-        print("   ", repr(t), n.get("bounds"))
-' ui.xml | head -60 >> $STEPLOG
-}
-# The toolbar button is named "Search settings" too: the bar is open when Changed shows
-open_search() {
-  if ! has_quiet '^Changed$'; then
-    tap_ui '🔍|Search settings'
-    sleep 2
-  fi
-}
-type_query() {
-  # The field of the bar, not the toolbar button of the same name (y below the toolbar)
-  tap 470 338 "search field"
-  sleep 1
-  for i in $(seq 1 20); do adb shell input keyevent KEYCODE_DEL || true; done
-  [ -n "$1" ] && adb shell input text "$1"
-  sleep 3
-  hide_keyboard
-}
-
-open_menu
-shot s-menu
-tap_drawer '^Settings$' 400 900
-sleep 8
-shot s-00
-open_search
-hide_keyboard
-shot g-bar
-has '^Changed$' "the Changed button in the search bar"
-
-# The whole list
-tap_ui '^Changed$'
-sleep 4
-shot g-changed
-results "changed, no text"
-has "$CHANGED" "changed settings header"
-has '^Changed settings \(4\)$' "four changed settings"
-for name in 'Debug Log' 'Confirm Stop Workout' 'Fake Device' 'Player Weight'; do
-  has "^$name\$" "listed: $name"
-done
-not_has '^PZP Password$' "a password is never listed"
-not_has '^Camera Action$' "MyWhoosh state is not listed"
-not_has '^Bike Weight$' "a value equal to its default is not listed"
-
-# The text narrows the list
-type_query 'weight'
-sleep 2
-shot g-narrowed
-results "changed + weight"
-has '^Changed settings \(1\)$' "the text narrows the list to one"
-has '^Player Weight$' "Player Weight left"
-
-# A result opens its setting, back returns to the same list
-tap_ui '^Player Weight$'
-sleep 3
-shot g-jump
-back "to the changed list"
-sleep 3
-shot g-back
-has '^Changed settings \(1\)$' "back lands on the changed list"
-
-# Text cleared while Changed is on: the whole list at once (no debounce)
-type_query ''
-sleep 1
-shot g-cleared
-has '^Changed settings \(4\)$' "text cleared: the whole list again"
-
-# T-248: a setting put back to its default after a jump from the list leaves it on the way back
-# (master before the fix brought the saved list back: still four)
-tap_ui '^Fake Device$'
-sleep 3
-shot g248-jump
-not_has "$CHANGED" "the jump left the results"
-# The switch itself on its page: back to its default (off). The row is one node: its middle,
-# right after the jump (glow, scroll), did not toggle it - the right end, where the switch is
-sleep 3
-dump
-xy=$([ -f ui.xml ] && python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
     m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
-    if t == "Fake Device" and n.get("checkable") == "true" and m:
+    if t == sys.argv[2] and n.get("checkable") == "true" and m:
         x1, y1, x2, y2 = map(int, m.groups())
-        print(x2 - 70, (y1 + y2) // 2)
-        break
-' ui.xml)
-if [ -n "$xy" ]; then
-  echo "tap switch 'Fake Device' at $xy" >> $STEPLOG
-  adb shell input tap $xy || true
-else
-  echo "!! tap switch 'Fake Device' NOT FOUND" >> $STEPLOG
-fi
-sleep 2
-shot g248-off
-[ -f ui.xml ] && python3 -c '
+        if x2 > x1 and y2 > y1:
+            print(x2 - 70, (y1 + y2) // 2)
+            break
+' ui.xml "$1"
+}
+switch_state() {
+  dump
+  [ -f ui.xml ] && python3 -c '
 import sys, xml.etree.ElementTree as ET
 for n in ET.parse(sys.argv[1]).getroot().iter("node"):
     t = (n.get("text") or "") or (n.get("content-desc") or "")
-    if t == "Fake Device" and n.get("checkable") == "true":
-        print(("check" if n.get("checked") == "false" else "!! check") + " Fake Device switched off: checked=" + str(n.get("checked")))
+    if t == sys.argv[2] and n.get("checkable") == "true" and n.get("bounds") != "[0,0][0,0]":
+        print(n.get("checked"))
         break
-' ui.xml >> $STEPLOG
-back "to the changed list"
-sleep 3
-shot g248-back
-results "back after Fake Device off"
-has '^Changed settings \(3\)$' "the list is rebuilt: three left"
-not_has '^Fake Device$' "Fake Device left the list"
+' ui.xml "$1"
+}
+# toggle 'label' [fast]: tap the switch; "fast" sends the back key in the same adb call, right
+# after the tap - the page is closed while its Settings has not written yet (it writes 500 ms
+# after a change, or when it is deleted)
+toggle() {
+  local xy before
+  scroll_to "^$1\$" > /dev/null || true
+  xy=$(switch_xy "$1")
+  if [ -z "$xy" ]; then
+    echo "!! toggle '$1': NOT FOUND" >> $STEPLOG
+    return 1
+  fi
+  before=$(switch_state "$1")
+  if [ "$2" = "fast" ]; then
+    echo "toggle '$1' at $xy (was checked=$before) + back at once" >> $STEPLOG
+    adb shell "input tap $xy; input keyevent KEYCODE_BACK" || true
+  else
+    echo "toggle '$1' at $xy (was checked=$before)" >> $STEPLOG
+    adb shell input tap $xy || true
+    sleep 2
+    echo "   now checked=$(switch_state "$1")" >> $STEPLOG
+  fi
+}
+# The number field of the row with the label: its text into steps.log, or a new value + OK
+field_xy() {
+  dump
+  [ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+nodes = list(ET.parse(sys.argv[1]).getroot().iter("node"))
+def box(n):
+    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+    return tuple(map(int, m.groups())) if m else None
+label = None
+for n in nodes:
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    if t == sys.argv[2] and box(n) and box(n)[3] > box(n)[1]:
+        label = box(n)
+        break
+if label:
+    cy = (label[1] + label[3]) // 2
+    for n in nodes:
+        b = box(n)
+        if b and n.get("class") == "android.widget.EditText" and b[1] <= cy <= b[3]:
+            print((b[0] + b[2]) // 2, cy, n.get("text") or "")
+            break
+' ui.xml "$1"
+}
+set_field() {
+  local found xy
+  scroll_to "^$1\$" > /dev/null || true
+  found=$(field_xy "$1")
+  if [ -z "$found" ]; then
+    echo "!! field '$1': NOT FOUND" >> $STEPLOG
+    return 1
+  fi
+  xy=$(echo "$found" | cut -d' ' -f1,2)
+  echo "field '$1' at $xy had '$(echo "$found" | cut -d' ' -f3-)', typing $2" >> $STEPLOG
+  adb shell input tap $xy || true
+  sleep 1
+  adb shell input keyevent KEYCODE_MOVE_END || true
+  for i in 1 2 3 4 5 6; do adb shell input keyevent KEYCODE_DEL || true; done
+  adb shell input text "$2"
+  sleep 1
+  hide_keyboard
+}
+field_text() {
+  local found
+  found=$(field_xy "$1")
+  echo "$found" | cut -d' ' -f3-
+}
+# The OK of the row of a label (the button lies on the same line)
+tap_ok_of() {
+  local xy
+  dump
+  xy=$([ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+nodes = list(ET.parse(sys.argv[1]).getroot().iter("node"))
+def box(n):
+    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+    return tuple(map(int, m.groups())) if m else None
+label = None
+for n in nodes:
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    if t == sys.argv[2] and box(n) and box(n)[3] > box(n)[1]:
+        label = box(n)
+        break
+if label:
+    cy = (label[1] + label[3]) // 2
+    for n in nodes:
+        t = (n.get("text") or "") or (n.get("content-desc") or "")
+        b = box(n)
+        if t == "OK" and b and b[1] <= cy <= b[3]:
+            print((b[0] + b[2]) // 2, cy)
+            break
+' ui.xml "$1")
+  if [ -n "$xy" ]; then
+    echo "tap OK of '$1' at $xy" >> $STEPLOG
+    adb shell input tap $xy || true
+  else
+    echo "!! OK of '$1': NOT FOUND" >> $STEPLOG
+  fi
+}
+# A longer scroll than scroll_to: the voice page entry is near the end of the settings page
+scroll_far() {
+  local i
+  for i in $(seq 1 40); do
+    dump
+    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
+      echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
+      return 0
+    fi
+    adb shell input swipe 700 2100 700 700 300 || true
+    sleep 1
+  done
+  echo "!! scroll to '$1': NOT FOUND" >> $STEPLOG
+  return 1
+}
+TTS='^TTS \(Text to Speech\) Settings.*'
+SUMMARY='Summary Each Seconds:'
+open_settings() {
+  open_menu
+  tap_drawer '^Settings$' 400 900
+  sleep 8
+}
+open_tts() {
+  scroll_top
+  scroll_far "$TTS"
+  tap_ui "$TTS"
+  sleep 4
+}
+has_quiet() {
+  dump
+  [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null
+}
+# A switch of the settings page itself, in General Options (opened when closed: its first row
+# UI Zoom shows under the header)
+page_toggle() {
+  scroll_top
+  if ! has_quiet '^UI Zoom:$'; then
+    tap_ui '^General Options$'
+    sleep 2
+  fi
+  toggle 'Pause when App Starts'
+}
+mark() { adb shell log -t T244 "mark $1" || true; echo "== $1" >> $STEPLOG; }
 
-# Changed off with a text: the plain search
-type_query 'weight'
-tap_ui '^Changed$'
+open_settings
+shot a-settings
+sleep 3
+expect tts_summary_sec 120 "opening the settings wrote every key of the copy"
+
+# 1. The case of the task: voice page, summary 150 and a switch, back, a switch on the settings page
+mark voice
+open_tts
+shot b-voice
+set_field "$SUMMARY" 150
+tap_ok_of "$SUMMARY"
+sleep 1
+toggle 'Actual Speed'
+sleep 2
+shot b-voice-set
+expect tts_summary_sec 150 "the voice page wrote 150"
+expect tts_act_speed true "the voice page wrote its switch"
+back "to the settings page"
 sleep 4
-shot g-off
-results "changed off + weight"
-has '^Search results.*' "plain search results again"
-has '^Bike Weight$' "plain search lists Bike Weight again"
-
-# Changed off and no text: the results are gone, the settings page is back
-type_query ''
-sleep 2
-shot g-off-empty
-not_has '^Search results.*|^Changed settings.*' "no results without text and filter"
-
-# Clear closes the bar and turns the filter off: opened again, it is off
-tap_ui '^Changed$'
+shot b-back
+page_toggle
 sleep 3
-tap_ui '^Clear$'
+shot c-page-toggle
+expect pause_on_start true "the switch of the settings page written"
+expect tts_summary_sec 150 "T-244: 150 kept after a change on the settings page (master: 120)"
+expect tts_act_speed true "T-244: voice switch kept after a change on the settings page (master: false)"
+
+# 2. Out and in again: the voice page shows 150
+back "to home"
+sleep 4
+open_settings
+open_tts
+shot d-voice-again
+echo "summary field now: '$(field_text "$SUMMARY")'" >> $STEPLOG
+has '^150$' "T-244: the voice page shows 150 after the settings were opened again"
+
+# 3. Back at once after the change: the voice page is deleted with its write still pending
+mark fast-back
+toggle 'Actual Speed' fast
+sleep 4
+shot e-fast-back
+page_toggle
+sleep 3
+shot e-page-toggle
+expect tts_act_speed false "T-244: switch of a page closed at once kept (written when it was deleted)"
+expect pause_on_start false "the settings page switch back off"
+
+# 4. Tiles: a tile switched on, back, a change on the settings page
+mark tiles
+scroll_top
+scroll_far '^Tiles Options$'
+tap_ui '^Tiles Options$'
+sleep 5
+shot f-tiles
+toggle 'Weight loss'
 sleep 2
-open_search
-hide_keyboard
-shot g-reopen
-not_has "$CHANGED" "the filter is off after Clear"
+expect tile_weight_loss_enabled true "the tiles page wrote the tile"
+# 5. Shortcuts over the tiles page: switched on, back to the tiles, a tile changed there
+scroll_top
+tap_ui '^Keyboard Shortcuts.*'
+sleep 4
+shot g-shortcuts
+toggle 'Enable Keyboard Shortcuts'
+sleep 2
+expect shortcuts_enabled true "the shortcuts page wrote its switch"
+back "to the tiles page"
+sleep 4
+toggle 'Weight loss'
+sleep 3
+shot g-tiles-again
+expect tile_weight_loss_enabled false "the tiles page wrote the tile off"
+expect shortcuts_enabled true "T-244: shortcuts kept after a change on the tiles page (master: false)"
+back "to the settings page"
+sleep 4
+page_toggle
+sleep 3
+shot h-page-toggle
+expect pause_on_start true "the settings page switch on again"
+expect shortcuts_enabled true "T-244: shortcuts kept after a change on the settings page (master: false)"
+expect tile_weight_loss_enabled false "tile still off"
+
+# 6. main.qml keeps a copy of the shortcuts too: home, then out and in again - still on
+back "to home"
+sleep 5
+shot i-home
+expect shortcuts_enabled true "shortcuts still on at home"
+expect tts_summary_sec 150 "150 still in the store at the end"
+echo "== reload log" >> $STEPLOG
+grep -E "T244-RELOAD|read again from the store" full_logcat.txt | sed 's/^/   /' | tail -n 40 >> $STEPLOG || true
 shot e-end
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
