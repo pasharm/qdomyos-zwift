@@ -3,6 +3,8 @@
 # Every shot keeps the uiautomator dump (dumps/<shot>.xml) - the accessibility tree TalkBack
 # reads - and .github/a11y.py lists the controls without a name at the end (a11y.txt).
 # Run once with the build of master and once with the branch of #4645 to compare.
+# T-232: a11y.py lists each finding once (unnamed, field, no-action), writes a11y.json and,
+# with the input compare = an earlier run of this workflow, the findings new against it.
 #
 # Phase 1: the first run without a device opens the setup wizard - its first screens.
 # Phase 2: a fake treadmill (tiles on the home page): home, side menu, the back key with the
@@ -248,8 +250,13 @@ else
   rm -f end_logcat.txt
 fi
 grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
-python3 .github/a11y.py dumps > a11y.txt || true
+# T-232: findings once per run, a11y.json for a later comparison, and against the baseline run
+# (input compare of main.yml) the new ones
+COMPARE=""
+[ -f a11y-baseline/a11y.json ] && COMPARE="--compare a11y-baseline/a11y.json"
+python3 .github/a11y.py dumps --json a11y.json $COMPARE > a11y.txt || true
 echo "== steps"; cat $STEPLOG
+echo "== a11y findings"; sed -n '/^== findings/,/^== summary/p' a11y.txt | grep -v '^== summary'
 echo "== a11y summary"; sed -n '/^== summary/,$p' a11y.txt
 echo "== QML warnings"; grep -iE "qrc:|\.qml:[0-9]+" full_logcat.txt | grep -iE "warning|error|ReferenceError|TypeError" | sort | uniq -c | sort -nr | head -60 || true
 echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
