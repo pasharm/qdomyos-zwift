@@ -459,10 +459,19 @@ import QtQuick 2.12 as Quick212
             changedOnly = back.changedOnly
             settingsSearchActive = back.query.trim().length > 0 || back.changedOnly
             settingsSearchPending = false
+            // Modern look: the cards show the values as text, read when a card is made. The
+            // Repeater keeps its cards when it gets the same list again (a page result keeps its
+            // query on the way out) or an equal one ("Changed" rebuilt), and a value changed on the
+            // page stayed the old one
+            if (window.ui.modern)
+                filteredSettings = []
             filteredSettings = back.results || []
             // "Changed" may differ now (the setting just opened was edited): that list is rebuilt
-            if (changedOnly || !back.results)
+            if (changedOnly || !back.results) {
+                if (window.ui.modern)
+                    filteredSettings = []
                 updateFilteredSettings()
+            }
             // After the list is laid out again
             contentItem.contentY = 0
             Qt.callLater(function () {
@@ -1370,7 +1379,9 @@ import QtQuick 2.12 as Quick212
                     return ""
                 if (entry.type === "boolean")
                     return value ? qsTr("On") : qsTr("Off")
-                var values = optionValues(entry)
+                // The whole list of the catalog where it has one: optionValues() leaves the
+                // wallpaper colour out below Android 12, and the labels would shift by one
+                var values = entry.options && entry.options.values ? entry.options.values : optionValues(entry)
                 if (values.length > 0) {
                     // By the place in the list: the labels of a list of numbers (the buttons of
                     // MyWhoosh Link, 0 = "Disabled") are not keyed by the value
@@ -3164,8 +3175,8 @@ import QtQuick 2.12 as Quick212
                                                                entry.description.length > 0
                         readonly property bool editorBelow: !window.ui.modern && (entry.catalogKind === "virtual" ||
                                                             (entry.catalogKind === "setting" && entry.type !== "boolean"))
-                        // Read again when the results come back from the setting's page: the
-                        // delegates are made anew (restoreSearch sets the list again)
+                        // Read when the card is made: coming back from the setting's page, the
+                        // cards are made anew (restoreSearch empties the list first)
                         readonly property string valueText: window.ui.modern ? settingsPane.searchValueText(entry) : ""
                         readonly property bool valueOn: entry.type === "boolean" && valueText.length > 0 &&
                                                         !!settingsPane.settingValue(entry)
@@ -3223,7 +3234,8 @@ import QtQuick 2.12 as Quick212
 
                         // A tap on the card (not on its controls) opens the setting itself.
                         // Modern look: the whole card is the one way to change it, a button for
-                        // the screen reader too, its value read after the name
+                        // the screen reader too. The value goes into the name, as on the home
+                        // tiles: Qt 5.15 on Android reads the description only without a name
                         MouseArea {
                             id: resultArea
                             anchors.fill: parent
@@ -3231,8 +3243,8 @@ import QtQuick 2.12 as Quick212
                             onClicked: searchResultFrame.open()
                             Accessible.ignored: !window.ui.modern
                             Accessible.role: Accessible.Button
-                            Accessible.name: window.ui.plainTitle(searchResultFrame.titleText)
-                            Accessible.description: searchResultFrame.valueText
+                            Accessible.name: window.ui.plainTitle(searchResultFrame.titleText) +
+                                             (searchResultFrame.valueText.length > 0 ? ": " + searchResultFrame.valueText : "")
                             Accessible.onPressAction: searchResultFrame.open()
                         }
 
