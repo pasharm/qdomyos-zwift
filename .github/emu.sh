@@ -289,6 +289,13 @@ toggle() {
   local xy before
   scroll_to "^$1\$" > /dev/null || true
   xy=$(switch_xy "$1")
+  # A row at the very bottom lies over the gesture bar: the tap went to the system there (the
+  # modern run 39512929183 did not switch the tile). Pull it up first
+  if [ -n "$xy" ] && [ "${xy#* }" -gt 2100 ]; then
+    adb shell input swipe 700 1900 700 1300 400 || true
+    sleep 2
+    xy=$(switch_xy "$1")
+  fi
   if [ -z "$xy" ]; then
     echo "!! toggle '$1': NOT FOUND" >> $STEPLOG
     return 1
