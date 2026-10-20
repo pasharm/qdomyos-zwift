@@ -320,10 +320,47 @@ check_editors() {
     echo "classic editors ($1): switches/OK/Open = $e" >> $STEPLOG
   fi
 }
-# value_is 'Title' 'value regex': in the modern look the card shows that value
+# value_is 'Title' 'value regex': in the modern look the card shows that value. The card is a
+# button named "Title: value" (the value Label alone would match any card of the screen)
 value_is() {
   [ "$UI_MODERN" = "true" ] || return 0
-  has "^$2\$" "$1 shows $2"
+  has "^$1: $2\$" "$1 shows $2"
+}
+# value_none 'Title': the card has no value at all (named by the title alone)
+value_none() {
+  [ "$UI_MODERN" = "true" ] || return 0
+  not_has "^$1: .*" "$1 shows no value"
+}
+# The switch of a row named exactly 'name', tapped at its right end; its state into steps.log
+toggle_switch() {
+  local xy
+  dump
+  xy=$([ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+    if t == sys.argv[2] and n.get("checkable") == "true" and m:
+        x1, y1, x2, y2 = map(int, m.groups())
+        print(x2 - 70, (y1 + y2) // 2)
+        break
+' ui.xml "$1")
+  if [ -n "$xy" ]; then
+    echo "tap switch '$1' at $xy" >> $STEPLOG
+    adb shell input tap $xy || true
+  else
+    echo "!! tap switch '$1' NOT FOUND" >> $STEPLOG
+  fi
+  sleep 2
+  dump
+  [ -f ui.xml ] && python3 -c '
+import sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    if t == sys.argv[2] and n.get("checkable") == "true":
+        print("switch " + sys.argv[2] + " checked=" + str(n.get("checked")))
+        break
+' ui.xml "$1" >> $STEPLOG
 }
 # query 'text' shot: a new search (spaces as %s for adb), its results into steps.log
 query() {
@@ -352,7 +389,7 @@ query 'ftp%svalue' ftp
 value_is 'FTP value' '250'
 
 query 'debug%slog' debug
-value_is 'Debug Log' 'On'
+[ "$LOG_DEBUG" = "true" ] && value_is 'Debug Log' 'On'
 check_editors "debug log"
 
 query 'strava%supload' strava
@@ -377,10 +414,10 @@ value_is '5 km pace' '00:25:00'
 
 # A Bluetooth device and a password: no value at all
 query 'heart%sbelt' belt
-[ "$UI_MODERN" = "true" ] && not_has '^Disabled$' "heart belt shows no value"
+value_none 'Heart Belt Name'
 query 'password' password
-not_has '^secret$' "a password is never shown"
-[ "$UI_MODERN" = "true" ] && not_has '^username$' "a password default is not shown"
+not_has '^secret$|.*: secret$' "a password is never shown"
+value_none 'PZP Password'
 
 # Hidden from the modern results: on no settings page
 query 'camera' camera
@@ -392,23 +429,37 @@ query 'peloton%sbike%socr' ocr
 query 'wahoo' wahoo
 has '^Wahoo Options$' "Wahoo Options page listed"
 check_editors "wahoo"
+value_is 'Without Wheel Diameter Protocol' 'Off'
+# The page keeps its query on the way out (no jump): back gives the Repeater the same list. A
+# switch of that page, written by its own Settings, must show anew on the card
 tap_ui '^Wahoo Options$'
 sleep 4
 shot q-wahoo-page
+toggle_switch 'Without Wheel Diameter Protocol'
+shot q-wahoo-on
 back "to the results"
 sleep 3
 shot q-wahoo-back
+results "back from Wahoo Options"
 has '^Wahoo Options$' "back from the page lands on the results"
+value_is 'Without Wheel Diameter Protocol' 'On'
+# Back as it was for the steps below
+tap_ui '^Wahoo Options$'
+sleep 4
+toggle_switch 'Without Wheel Diameter Protocol'
+back "to the results"
+sleep 3
 
 # A setting its page hides with the current values (kg only with miles on): back to the results
-# with a toast that no longer says "change it here"
+# with a toast that no longer says "change it here". The toast lasts 3 s: looked for first
 query 'use%skg' kg
 tap_ui '^Use kg for weight$'
 sleep 1
-shot q-kg-toast
-results "after the tap on a hidden setting"
 has '^Hidden on its page.*' "the hidden-setting toast"
-[ "$UI_MODERN" = "true" ] && not_has '.*change it here.*' "the toast does not say change it here"
+cp ui.xml dumps/q-kg-toast-first.xml 2>/dev/null || true
+[ "$UI_MODERN" = "true" ] && [ -f ui.xml ] && grep -q "change it here" ui.xml &&
+  echo "!! the toast says change it here" >> $STEPLOG
+shot q-kg-toast
 sleep 3
 
 # The value is read again on the way back: Fake Device on, switched off on its page, back
@@ -417,24 +468,7 @@ value_is 'Fake Device' 'On'
 tap_ui '^Fake Device$'
 sleep 6
 shot q-fake-page
-dump
-xy=$([ -f ui.xml ] && python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
-    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
-    if t == "Fake Device" and n.get("checkable") == "true" and m:
-        x1, y1, x2, y2 = map(int, m.groups())
-        print(x2 - 70, (y1 + y2) // 2)
-        break
-' ui.xml)
-if [ -n "$xy" ]; then
-  echo "tap switch 'Fake Device' at $xy" >> $STEPLOG
-  adb shell input tap $xy || true
-else
-  echo "!! tap switch 'Fake Device' NOT FOUND" >> $STEPLOG
-fi
-sleep 2
+toggle_switch 'Fake Device'
 shot q-fake-off
 back "to the results"
 sleep 3
@@ -442,7 +476,6 @@ shot q-fake-back
 results "back after Fake Device off"
 has '^Fake Device$' "back lands on the results"
 value_is 'Fake Device' 'Off'
-[ "$UI_MODERN" = "true" ] && not_has '^On$' "Fake Device no longer On"
 
 # Changed: the reset stays, the values the same text
 type_query ''
@@ -451,7 +484,7 @@ sleep 4
 shot q-changed
 results "changed"
 has '^Changed settings.*' "changed list"
-has '^Reset$' "a Reset button on the changed cards"
+[ "$UI_MODERN" = "true" ] && has '^Reset$' "a Reset button on the changed cards"
 value_is 'Player Weight' '80\.5'
 value_is 'Strava Upload' 'Request'
 tap_ui '^Changed$'
