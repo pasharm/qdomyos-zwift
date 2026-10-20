@@ -223,11 +223,22 @@ except ValueError: print(0)' "$v" "$3")
 # search 'text' name: the search of the settings with this text; a frame 1 s after the last key,
 # then the screen with the keyboard closed
 search() {
-  local q="${1// /%s}"
-  tap_ui '^Clear$' > /dev/null 2>&1 && sleep 1
-  rm -f ui.xml
-  tap_ui '^Search settings$' 935 168
+  local q="${1// /%s}" i
+  if [ "$UI_MODERN" = "true" ]; then
+    # Modern: the search field is the top row of the page (the toolbar button shows only once it
+    # has scrolled away); the page back to its top first
+    for i in 1 2 3; do adb shell input swipe 700 800 700 2200 150 || true; done
+    sleep 1
+    tap 600 330 "search field"
+  else
+    # Classic: the toolbar button shows the search bar and puts the focus in its field
+    rm -f ui.xml
+    tap_ui '^Search settings$' 1018 168
+  fi
   sleep 2
+  # The text of the previous search out
+  adb shell input keyevent KEYCODE_MOVE_END || true
+  for i in $(seq 1 20); do adb shell input keyevent KEYCODE_DEL || true; done
   adb shell input text "$q" || true
   sleep 1
   snap $TAG-$2-1s
@@ -262,8 +273,16 @@ type_value() {
 round_km() {
   search "5 km pace" pace
   check_field "5 km pace shown" '5 km pace.*' "00:25:00"
-  type_value '^(00:25:00|300)$' "00:24:30" pace-typed
-  check_conf "5 km pace 00:24:30 kept" pacef_5km 294
+  # Modern: a time field is picked on wheels, not typed (UiTextField): the frame of the wheels only
+  if [ "$UI_MODERN" = "true" ] && tap_ui '^00:25:00$'; then
+    sleep 2
+    snap $TAG-pace-wheels
+    back "wheels"
+    sleep 2
+  else
+    type_value '^(00:25:00|300)$' "00:24:30" pace-typed
+    check_conf "5 km pace 00:24:30 kept" pacef_5km 294
+  fi
   search "warmup speed" warmup
   check_field "warmup pace shown" 'Warmup Speed.*' "00:07:00"
   search "player weight" weight
