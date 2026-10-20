@@ -146,8 +146,8 @@ def main(argv):
                                     for k, d in sorted(seen.items())]}, f, ensure_ascii=False, indent=1)
 
     print("== summary")
-    for line in summary:
-        print(line)
+    for row in summary:
+        print(row)
     total = {r: sum(1 for k in seen if k[0] == r) for r in ("unnamed", "field", "no-action")}
     print(f"distinct: unnamed {total['unnamed']}, fields without a name {total['field']}, named without action {total['no-action']}"
           + (f", new {len(new)}" if new is not None else ""))

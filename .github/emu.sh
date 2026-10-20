@@ -253,7 +253,8 @@ grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
 # T-232: findings once per run, a11y.json for a later comparison, and against the baseline run
 # (input compare of main.yml) the new ones
 COMPARE=""
-[ -f a11y-baseline/a11y.json ] && COMPARE="--compare a11y-baseline/a11y.json"
+if [ -f a11y-baseline/a11y.json ]; then COMPARE="--compare a11y-baseline/a11y.json"
+elif [ -d a11y-baseline ]; then echo "!! compare: the run has no a11y.json (made before T-232), no comparison" >> $STEPLOG; fi
 python3 .github/a11y.py dumps --json a11y.json $COMPARE > a11y.txt || true
 echo "== steps"; cat $STEPLOG
 echo "== a11y findings"; sed -n '/^== findings/,/^== summary/p' a11y.txt | grep -v '^== summary'
