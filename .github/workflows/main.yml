@@ -43,6 +43,7 @@ jobs:
           pactl load-module module-null-sink sink_name=qzsink
           pactl set-default-sink qzsink
           pactl info
+          echo "PULSE_SERVER=unix:$(pactl info | grep 'Server String' | cut -d' ' -f3)" >> $GITHUB_ENV
 
       - name: Download APK from the build run
         uses: actions/download-artifact@v4
@@ -63,6 +64,8 @@ jobs:
         env:
           SCENARIO: ${{ inputs.scenario }}
           AUDIO: ${{ matrix.audio }}
+          # run 39510421044 recorded silence: the emulator did not pick PulseAudio by itself
+          QEMU_AUDIO_DRV: ${{ matrix.audio == 'pa' && 'pa' || 'none' }}
         with:
           api-level: 35
           target: google_apis
