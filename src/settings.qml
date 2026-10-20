@@ -465,12 +465,24 @@ import QtQuick 2.12 as Quick212
         // this page is forgotten once another page opens over it, or coming back from that
         // page would bring the old search up
         StackView.onActivated: {
+            settingsCopyReloadTimer.restart()
             if (searchReturn && searchReturn.viaPush)
                 restoreSearch()
         }
         StackView.onDeactivated: {
             if (searchReturn && !searchReturn.viaPush)
                 searchReturn = null
+        }
+
+        // The voice, tiles, gears... pages write through Settings objects of their own: the
+        // values they changed are read again into this page's copy, or its next write would put
+        // the old ones back (window.reloadSettingsCopy). Not at once: the page closed over this
+        // one is deleted only after its transition, and writes what is still pending then
+        property var settingsCopyKnown
+        Timer {
+            id: settingsCopyReloadTimer
+            interval: 100
+            onTriggered: settingsPane.settingsCopyKnown = window.reloadSettingsCopy(settings, settingsPane.settingsCopyKnown)
         }
 
         function revealPending() {

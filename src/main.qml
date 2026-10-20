@@ -110,6 +110,70 @@ ApplicationWindow {
         return deviceName.replace(/ \(\d+%\)$/, "")
     }
 
+    // A value from the store as the type of the copy's property: the store gives booleans and
+    // numbers back as strings on Android. undefined when it cannot be one
+    function settingFromStore(stored, type) {
+        if (type === "boolean") {
+            if (stored === true || stored === "true")
+                return true
+            if (stored === false || stored === "false")
+                return false
+            return undefined
+        }
+        if (type === "number") {
+            if (typeof stored === "number")
+                return stored
+            if (typeof stored !== "string" || stored.trim().length === 0)
+                return undefined
+            var number = Number(stored)
+            return isNaN(number) ? undefined : number
+        }
+        if (typeof stored === "string")
+            return stored
+        if (typeof stored === "number" || typeof stored === "boolean")
+            return String(stored)
+        return undefined
+    }
+
+    function sameSetting(a, b) {
+        // A real written as a float by the C++ side reads back as 0.33000001...
+        if (typeof a === "number" && typeof b === "number")
+            return Math.abs(a - b) <= 0.000001 * Math.max(1, Math.abs(a))
+        return a === b
+    }
+
+    // A Settings object writes all its properties to the store when any one of them changes
+    // (Qt.labs.settings), so a copy read before another page changed a key writes the old value
+    // back: a voice or tiles setting was lost with the next change on the settings page.
+    // Brings such keys from the store into the copy. known is what the copy held after the
+    // last call (undefined the first time): a key the copy changed itself since then is kept,
+    // its own write is still on the way. Returns the next known
+    function reloadSettingsCopy(copy, known) {
+        var next = {}
+        var reloaded = []
+        for (var key in copy) {
+            var value = copy[key]
+            var type = typeof value
+            if (type !== "boolean" && type !== "number" && type !== "string")
+                continue
+            var stored = settingFromStore(copy.value(key), type)
+            if (stored === undefined || sameSetting(stored, value)) {
+                next[key] = value
+                continue
+            }
+            if (known !== undefined && known.hasOwnProperty(key) && !sameSetting(known[key], value)) {
+                next[key] = known[key]
+                continue
+            }
+            copy[key] = stored
+            next[key] = copy[key]
+            reloaded.push(key)
+        }
+        if (reloaded.length > 0)
+            console.log("settings read again from the store: " + reloaded.join(", "))
+        return next
+    }
+
     function maybeOpenGymModePopup() {
         if (typeof rootItem === "undefined" || !rootItem) {
             return
@@ -202,6 +266,16 @@ ApplicationWindow {
     // a second the bindings on it fail and keep their defaults - every header button shown in a
     // squashed bar. The header and the page wait for it
     readonly property bool rootReady: typeof rootItem !== "undefined" && rootItem !== null
+
+    // This window's Settings shares keys with the pages (shortcuts, the camera cutout): read
+    // them again after a page was closed. Not at once: the closed page is deleted only after
+    // its transition, and its Settings writes what is still pending then
+    property var settingsCopyKnown
+    Timer {
+        id: settingsCopyReloadTimer
+        interval: 100
+        onTriggered: window.settingsCopyKnown = reloadSettingsCopy(settings, window.settingsCopyKnown)
+    }
 
     Settings {
         id: settings
@@ -2373,6 +2447,7 @@ ApplicationWindow {
             anchors.rightMargin: getRightPadding()
             anchors.leftMargin: getLeftPadding()
             focus: true
+            onBusyChanged: if (!busy) settingsCopyReloadTimer.restart()
             // Only the tile grid scrolls the toolbar away; any other page gets it back
             onCurrentItemChanged: {
                 // TEMP-LOG: QZ-NAV - the page on top of the stack
