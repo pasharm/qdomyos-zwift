@@ -17,12 +17,8 @@ on:
         required: false
         default: 'true'
       baseline:
-        description: run id of the build to shoot first, as the reference (T-262)
+        description: run id of the build to shoot first, as the reference (T-255 - without the fix)
         required: true
-      scenario:
-        description: full = all rounds, relaxed = only the switch "Relaxed Bluetooth" at 135 and 170 %
-        required: false
-        default: 'full'
 
 jobs:
   emulator-logcat:
@@ -66,7 +62,6 @@ jobs:
         env:
           UI_MODERN: ${{ inputs.modern }}
           LOG_DEBUG: ${{ inputs.log_debug }}
-          SCENARIO: ${{ inputs.scenario }}
         with:
           api-level: 35
           target: google_apis
