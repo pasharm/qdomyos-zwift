@@ -28,7 +28,7 @@ ScrollView {
     StackView.onActivated: settingsCopyReloadTimer.restart()
     Timer {
         id: settingsCopyReloadTimer
-        interval: 100
+        interval: settingsTilesPane.settingsCopyKnown === undefined ? 1000 : 100
         onTriggered: settingsTilesPane.settingsCopyKnown = window.reloadSettingsCopy(settings, settingsTilesPane.settingsCopyKnown)
     }
 

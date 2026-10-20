@@ -477,11 +477,13 @@ import QtQuick 2.12 as Quick212
         // The voice, tiles, gears... pages write through Settings objects of their own: the
         // values they changed are read again into this page's copy, or its next write would put
         // the old ones back (window.reloadSettingsCopy). Not at once: the page closed over this
-        // one is deleted only after its transition, and writes what is still pending then
+        // one is deleted only after its transition, and writes what is still pending then. The
+        // first time a second after the page opened: after the write its Settings makes 500 ms
+        // after loading
         property var settingsCopyKnown
         Timer {
             id: settingsCopyReloadTimer
-            interval: 100
+            interval: settingsPane.settingsCopyKnown === undefined ? 1000 : 100
             onTriggered: settingsPane.settingsCopyKnown = window.reloadSettingsCopy(settings, settingsPane.settingsCopyKnown)
         }
 
