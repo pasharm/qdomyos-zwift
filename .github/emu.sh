@@ -6,6 +6,7 @@
 # Ukrainian and the default voice. Each case below is one start of the app:
 #   ru     - app in Russian, the system (and the default voice of the engine) in English
 #   uk     - the same in Ukrainian
+#   pl     - Polish, an empty translation: English texts, English voice expected
 #   sys-ru - the system in Russian too (root, zygote restart), app in Russian
 # AUDIO=pa: the sound of the emulator goes to a PulseAudio null sink, recorded per case into
 # audio-<case>.wav - what the app itself said.
@@ -98,6 +99,8 @@ run_case() {
 run_case ru ru
 if [ "$SCENARIO" = "full" ]; then
   run_case uk uk
+  # pl: the translation is empty, the texts are English - the voice must stay English
+  run_case pl pl
   # The system in Russian: the default voice of the engine follows it
   adb root || true
   sleep 5
