@@ -1179,8 +1179,6 @@ homeform::homeform(QQmlApplicationEngine *engine, bluetooth *bl) {
             });
     fitProcessor->processDirectory(getWritableAppDir() + "fit");
 
-    m_speech.setLocale(QLocale::English);
-
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     QBluetoothDeviceInfo b;
     deviceConnected(b);
@@ -2230,8 +2228,37 @@ void homeform::onToastRequested(QString message) {
 
     // Use TTS if enabled
     if (settings.value(QZSettings::tts_enabled, QZSettings::default_tts_enabled).toBool()) {
-        m_speech.say(message);
+        speak(message);
     }
+}
+
+// The spoken texts are translated, so they are spoken with a voice of the language of the loaded
+// translation: each translation names its language in the string below, and without a translation
+// (or with an empty one) it stays "en". The voice is chosen once the engine is ready - on Android it
+// binds after the constructor and a language set before that is dropped - and again when the
+// translation changes. English when the engine has no voice for the language.
+void homeform::speak(const QString &text) {
+    //: Text-to-speech: not a word to translate - the code of the language of this translation, such as "de", "pt_BR" or "zh_CN". The voice that reads the translated texts aloud is chosen by it.
+    QString language = tr("en", "TTS voice language").trimmed();
+
+    if (language != m_speechLanguage && m_speech.state() == QTextToSpeech::Ready) {
+        m_speechLanguage = language;
+        QLocale locale(language);
+        // setLocale() emits localeChanged only when the engine took the language
+        bool taken = false;
+        if (locale.language() != QLocale::English && locale.language() != QLocale::C) {
+            QMetaObject::Connection c =
+                connect(&m_speech, &QTextToSpeech::localeChanged, this, [&taken]() { taken = true; });
+            m_speech.setLocale(locale);
+            disconnect(c);
+        }
+        if (!taken) {
+            m_speech.setLocale(QLocale::English);
+        }
+        qDebug() << "tts language" << language << "voice of the language" << taken << "voice"
+                 << m_speech.voice().name();
+    }
+    m_speech.say(text);
 }
 
 void homeform::onTrainingProgramIntervalTransition() {
@@ -5979,7 +6006,8 @@ void homeform::Start_inner(bool send_event_to_device) {
     m_overridePower = false;
 
     if (settings.value(QZSettings::tts_enabled, QZSettings::default_tts_enabled).toBool())
-        m_speech.say("Start pressed");
+        //: Text-to-speech: spoken when the workout is started or resumed with the Start button.
+        speak(tr("Start pressed"));
 
     if (!paused && !stopped) {
         paused = true;
@@ -6145,7 +6173,8 @@ void homeform::Stop() {
 #endif
 
     if (settings.value(QZSettings::tts_enabled, QZSettings::default_tts_enabled).toBool())
-        m_speech.say("Stop pressed");
+        //: Text-to-speech: spoken when the workout is stopped with the Stop button.
+        speak(tr("Stop pressed"));
 
     if (bluetoothManager->device()) {
         bluetoothManager->device()->stop(false);
@@ -8752,7 +8781,7 @@ void homeform::update() {
                                      QString::number(bluetoothManager->device()->wattKg().max(), 'f', 1));
 
                         qDebug() << "tts" << s;
-                        m_speech.say(s);
+                        speak(s);
                     } else if (bluetoothManager->device()->deviceType() == TREADMILL &&
                                bluetoothManager->device()->currentSpeed().value() != tts_speed_played &&
                                settings.value(QZSettings::tts_act_speed, QZSettings::default_tts_act_speed).toBool()) {
@@ -8767,7 +8796,7 @@ void homeform::update() {
                                                            'f', 1)) +
                                  (description ? tr(" miles per hour") : ""));
                         qDebug() << "tts" << s;
-                        m_speech.say(s);
+                        speak(s);
                     }
                 }
             }

@@ -3543,6 +3543,22 @@ This may take a few moments on first startup.</source>
         <translation>швидкість змінено на </translation>
     </message>
     <message>
+        <source>Start pressed</source>
+        <extracomment>Text-to-speech: spoken when the workout is started or resumed with the Start button.</extracomment>
+        <translation>Натиснуто кнопку Старт</translation>
+    </message>
+    <message>
+        <source>Stop pressed</source>
+        <extracomment>Text-to-speech: spoken when the workout is stopped with the Stop button.</extracomment>
+        <translation>Натиснуто кнопку Стоп</translation>
+    </message>
+    <message>
+        <source>en</source>
+        <comment>TTS voice language</comment>
+        <extracomment>Text-to-speech: not a word to translate - the code of the language of this translation, such as &quot;de&quot;, &quot;pt_BR&quot; or &quot;zh_CN&quot;. The voice that reads the translated texts aloud is chosen by it.</extracomment>
+        <translation>uk</translation>
+    </message>
+    <message>
         <source>JSON parser error</source>
         <translation>Помилка розбору JSON</translation>
     </message>

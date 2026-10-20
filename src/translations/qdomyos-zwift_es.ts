@@ -3509,6 +3509,22 @@ Esto puede tardar un poco en el primer inicio.</translation>
         <translation>velocidad cambiada a</translation>
     </message>
     <message>
+        <source>Start pressed</source>
+        <extracomment>Text-to-speech: spoken when the workout is started or resumed with the Start button.</extracomment>
+        <translation>Se pulsó Empezar</translation>
+    </message>
+    <message>
+        <source>Stop pressed</source>
+        <extracomment>Text-to-speech: spoken when the workout is stopped with the Stop button.</extracomment>
+        <translation>Se pulsó Detener</translation>
+    </message>
+    <message>
+        <source>en</source>
+        <comment>TTS voice language</comment>
+        <extracomment>Text-to-speech: not a word to translate - the code of the language of this translation, such as &quot;de&quot;, &quot;pt_BR&quot; or &quot;zh_CN&quot;. The voice that reads the translated texts aloud is chosen by it.</extracomment>
+        <translation>es</translation>
+    </message>
+    <message>
         <source>JSON parser error</source>
         <translation>Error de análisis JSON</translation>
     </message>
