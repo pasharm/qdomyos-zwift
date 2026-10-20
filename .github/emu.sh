@@ -1,23 +1,28 @@
 #!/bin/bash
-# Test only (T-262): the classic look with the text size that follows the system (Android
-# font_scale) or the own "Text size" setting. The reference APK (apk-base, master with the tile
-# size rename) is shot first at font_scale 1.0; then the tested APK (apk-debug) at 1.0, in
-# Ukrainian at font_scale 1.35 and with the switch off at 170 % (the ANT+ section and General UI
-# Options, where the phone showed overlaps), and with the switch off at 100 %. The separate pages
-# (history, programs, profiles, wizard) at 1.0 in both APKs and with the switch off at 170 %.
+# Test only (T-211): the values in the settings search as their page shows them. The reference
+# APK (apk-base, master) first, then the tested APK (apk-debug), each with the miles off and on:
+# - "5 km pace" shown as 00:25:00 (not 300), 00:24:30 typed there kept as 294 s/km
+# - "Warmup Speed (pace)" shown as 00:07:00 (not 420)
+# - "Player Weight (kg)": 72,5 typed there kept as 72.5 (not 72)
+# - the miles on: "Bike Weight (lbs)" 22 for 9.979044 kg, 25 typed there kept as 11.34 kg;
+#   the height 5'9" for 175 cm, 5'10 typed there kept as 177.8 cm; "Max. Speed (mph)" 62.1
+#   for 100 km/h, 10 typed there kept as 16.09 km/h
+# - the results 1 s after the last key (300 ms instead of 1.5 s)
+# Every check goes to checks.txt as PASS/FAIL with what the screen and the settings file had.
 PKG=org.cagnulen.qdomyoszwift
+CONF="files/.config/Roberto Viola/qDomyos-Zwift.conf"
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
 STEPLOG=steps.log
+CHECKS=checks.txt
 : > $STEPLOG
+: > $CHECKS
 mkdir -p dumps
 
 # install_apk <apk>: a fresh install with the permissions granted
 install_apk() {
   adb uninstall $PKG > /dev/null 2>&1 || true
-  # Android 14+: the app folder is Documents/QZ, shared storage. Files the previous install wrote
-  # there stay and are hidden from the new one (another app now): the training programs were
-  # not copied again and the list was empty (39159163281). The emulator is thrown away after the run
+  # Android 14+: files of the previous install in Documents/QZ are hidden from the new one
   adb shell rm -rf /sdcard/Documents/QZ || true
   adb install "$1"
   for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
@@ -26,7 +31,6 @@ install_apk() {
   adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
   echo "== installed $1" >> $STEPLOG
 }
-install_apk apk-base/android-debug.apk
 adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
@@ -35,21 +39,15 @@ put_conf() {
   printf '[General]\nlog_debug=%s\nui_modern=%s\n%b' "$LOG_DEBUG" "$UI_MODERN" "$1" > qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
-  adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
+  adb shell "run-as $PKG cp /data/local/tmp/qz.conf '$CONF'"
 }
-put_conf ""
 
-# The control tree of the screen into ui.xml (empty when uiautomator gives up, for instance
-# while something animates without pause)
 dump() {
   rm -f ui.xml
   timeout 25 adb shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 || true
   adb pull /sdcard/ui.xml ui.xml > /dev/null 2>&1 || true
 }
-# The emulator itself may put a window over the app: "Pixel Launcher isn't responding", or
-# the Health Connect screen left over when the back key went to such a dialog. They made a
-# whole run useless once. Clear them before every step: Wait on a "not responding" dialog,
-# the back key on anything else that is not the app. Logged in steps.log.
+# Windows of other apps over this one (a launcher not responding, Health Connect): closed
 ensure_app() {
   local i pkg xy
   for i in 1 2 3; do
@@ -57,7 +55,6 @@ ensure_app() {
     [ -f ui.xml ] || return 0
     pkg=$(python3 .github/uitap.py ui.xml --package)
     [ -z "$pkg" ] || [ "$pkg" = "$PKG" ] && return 0
-    # Somebody else hanging (the launcher) is closed, the app itself is waited for
     if grep -q "t responding" ui.xml && ! grep -q "QZ\|qdomyos" ui.xml &&
        xy=$(python3 .github/uitap.py ui.xml 'Close app'); then
       echo "!! $pkg: another app not responding, Close app at $xy" >> $STEPLOG
@@ -71,28 +68,24 @@ ensure_app() {
     fi
     sleep 3
   done
-  # The last dump showed the window that was then closed: not the screen any more
   rm -f ui.xml
 }
-# ensure_app leaves ui.xml of the app on top: the callers take it instead of a second dump
-# of the same screen (a dump costs about 2 s, half of all dumps of a run were such repeats)
+# shot name: frame and dump (dumps/<name>.xml); ui.xml stays the dump of this screen
 shot() {
-  if [ "$1" = "01-healthconnect" ]; then rm -f ui.xml; else ensure_app; fi
+  ensure_app
   echo "-- shot $1" >> $STEPLOG
   adb shell screencap -p /sdcard/$1.png || true
   adb pull /sdcard/$1.png || true
   [ -f ui.xml ] || dump
   [ -f ui.xml ] && cp ui.xml dumps/$1.xml
 }
-# snap name: the frame alone, at once - a dump waits for the screen to settle, so after it a
-# toast has already faded
+# snap name: the frame alone, at once (a toast, the list right after typing)
 snap() {
   echo "-- snap $1" >> $STEPLOG
   adb shell screencap -p /sdcard/$1.png || true
   adb pull /sdcard/$1.png || true
 }
-# tap_ui 'regex' [x y]: the control whose whole text or accessible name matches, else the
-# fallback coordinates; without them the step is skipped (return 1)
+# tap_ui 'regex' [x y]: the control whose whole label matches, else the coordinates, else skipped
 tap_ui() {
   local rx="$1" fx="$2" fy="$3" xy=""
   ensure_app
@@ -109,106 +102,7 @@ tap_ui() {
     return 1
   fi
 }
-# The same for a drawer entry that may be below the fold: one swipe up and a second look
-tap_drawer() {
-  local rx="$1" xy=""
-  dump
-  [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$rx")
-  if [ -z "$xy" ]; then
-    adb shell input swipe 500 2200 500 900 400 || true
-    sleep 2
-  fi
-  tap_ui "$@"
-}
-# scroll_to 'regex' [max]: swipe the page up until the control shows (at most 12 swipes, or max)
-scroll_to() {
-  local i
-  for i in $(seq 1 ${2:-12}); do
-    dump
-    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
-      echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
-      return 0
-    fi
-    adb shell input swipe 700 2000 700 1300 400 || true
-    sleep 1
-  done
-  echo "scroll to '$1': NOT FOUND" >> $STEPLOG
-  return 1
-}
-# tap_below 'regex' dy: dy px under the bottom of the control - for a header with no accessible name
-# (StaticAccordionElement) right under a named one; near the screen bottom one short swipe first
-tap_below() {
-  local i b
-  for i in 1 2; do
-    dump
-    b=$([ -f ui.xml ] && python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-rx = re.compile(sys.argv[2], re.I)
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    if any(l and rx.fullmatch(l.strip()) for l in (n.get("text") or "", n.get("content-desc") or "")):
-        m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
-        if m:
-            print(m.group(4)); break
-' ui.xml "$1")
-    if [ -z "$b" ]; then echo "tap below '$1': NOT FOUND" >> $STEPLOG; return 1; fi
-    # the content ends at 2474 px (above the navigation bar)
-    if [ $((b + $2)) -lt 2440 ]; then
-      echo "tap below '$1' (bottom $b) at 700 $((b + $2))" >> $STEPLOG
-      adb shell input tap 700 $((b + $2)) || true
-      return 0
-    fi
-    adb shell input swipe 700 1800 700 1100 400 || true
-    sleep 2
-  done
-  echo "tap below '$1': stays at the bottom ($b)" >> $STEPLOG
-  snap below-fail-$(date +%s)
-  return 1
-}
-# The top of a page: a few quick swipes down
-scroll_top() {
-  local i
-  for i in 1 2 3 4 5; do adb shell input swipe 700 800 700 2200 150 || true; done
-  sleep 1
-}
-# The back key closes the keyboard, but only while it is shown: otherwise it leaves the page
-hide_keyboard() {
-  if adb shell dumpsys input_method | grep -q "mInputShown=true"; then
-    back "keyboard"
-    sleep 1
-  fi
-}
-tap() { ensure_app; echo "tap $1 $2 ($3)" >> $STEPLOG; adb shell input tap $1 $2 || true; }
-back() { echo "back ($1)" >> $STEPLOG; adb shell input keyevent KEYCODE_BACK || true; }
-# Toolbar buttons are icons without text: the same place in both looks (Nexus 6: 1440x2560
-# px, 3.5 px per dp)
-MENU="84 168"          # menu on the home page, back arrow elsewhere
-LOCK="1187 168"        # tile lock on the home page
-open_menu() { tap $MENU "menu"; sleep 3; adb shell input swipe 500 700 500 2300 300 || true; sleep 2; }
-
-
-adb logcat -c || true
-adb logcat > full_logcat.txt 2>/dev/null &
-LOGCAT_PID=$!
-
-# start_app: launch and close the Health Connect screen the first start may show
-start_app() {
-  adb shell am start -n $PKG/$PKG.CustomQtActivity
-  sleep 20
-  dump
-  if [ -f ui.xml ] && [ "$(python3 .github/uitap.py ui.xml --package)" != "$PKG" ]; then
-    back "health connect"
-  fi
-  sleep 15
-}
-# open_settings: from anywhere back to home, then the menu and Settings
-open_settings() {
-  open_menu
-  tap_drawer '^(Settings|Налаштування)$' 400 900
-  sleep 8
-}
-
-# tap_row 'anchor' 'target': the control in the row of the anchor (the OK of one setting on a
-# page with many OK buttons)
+# tap_row 'anchor' 'target': the control in the row of the anchor (the OK of one field)
 tap_row() {
   local xy=""
   ensure_app
@@ -222,172 +116,48 @@ tap_row() {
     return 1
   fi
 }
-# pick 'regex': an item of the open combo list, looked for up the list, then down
-pick() {
-  local i
-  for i in $(seq 1 16); do
-    dump
-    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
-      tap_ui "$1"
-      return 0
-    fi
-    # In the middle of the list (x 718-1218 on the Nexus 6): a swipe outside closes it
-    if [ $i -le 6 ]; then
-      adb shell input swipe 968 1800 968 1200 300 || true
-    else
-      adb shell input swipe 968 1200 968 1800 300 || true
-    fi
+tap() { ensure_app; echo "tap $1 $2 ($3)" >> $STEPLOG; adb shell input tap $1 $2 || true; }
+back() { echo "back ($1)" >> $STEPLOG; adb shell input keyevent KEYCODE_BACK || true; }
+hide_keyboard() {
+  if adb shell dumpsys input_method | grep -q "mInputShown=true"; then
+    back "keyboard"
     sleep 1
-  done
-  echo "pick '$1': NOT FOUND" >> $STEPLOG
-  back "combo list"
-  return 1
+  fi
 }
-
-# Taps the node matching rx that is the lowest on the screen, or of class cls when given:
-# the Stop of the confirmation lies under the Stop button, the select under its label
-tap_node() {
-  local rx="$1" cls="$2" xy=""
+MENU="84 168"
+open_menu() { tap $MENU "menu"; sleep 3; adb shell input swipe 500 700 500 2300 300 || true; sleep 2; }
+tap_drawer() {
+  local rx="$1" xy=""
   dump
-  [ -f ui.xml ] && xy=$(python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-rx, cls = sys.argv[2], sys.argv[3]
-best = None
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
-    if not re.fullmatch(rx, t, re.I) or (cls and n.get("class") != cls):
-        continue
-    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
-    if not m:
-        continue
-    x1, y1, x2, y2 = map(int, m.groups())
-    if x2 <= x1 or y2 <= y1:
-        continue
-    if best is None or y1 > best[1]:
-        best = ((x1 + x2) // 2, y1, (y1 + y2) // 2)
-if best:
-    print(best[0], best[2])
-' ui.xml "$rx" "$cls")
-  if [ -n "$xy" ]; then
-    echo "tap node '$rx' ${cls:+($cls) }at $xy" >> $STEPLOG
-    adb shell input tap $xy || true
-  else
-    echo "!! tap node '$rx' ${cls:+($cls) }NOT FOUND" >> $STEPLOG
-    return 1
-  fi
-}
-
-wait_tiles() {
-  local i
-  # The fake device comes after the first search ends: wait for its tiles (at most 3 min)
-  for i in $(seq 1 18); do
-    dump
-    if [ -f ui.xml ] && grep -qE 'content-desc="(Speed|Швидк)' ui.xml; then
-      echo "tiles shown after $i looks" >> $STEPLOG; return 0
-    fi
-    sleep 10
-  done
-  echo "!! tiles NOT shown" >> $STEPLOG
-}
-
-# One round of the same screens: home, the stop question, the drawer, Settings, General
-# Options (top) and General UI Options (the text size block, then one swipe further)
-round() {
-  local s="$1"
-  wait_tiles
-  sleep 5
-  shot $s-01-home
-  tap_ui '^Stop$' 1200 2300
-  sleep 3
-  shot $s-02-stop-question
-  tap_node '(No|Cancel)' || back "stop question"
-  sleep 2
-  open_menu
-  shot $s-03-drawer
-  tap_drawer '^Settings$' 400 900
-  sleep 8
-  shot $s-04-settings
-  if scroll_to '^General Options$'; then
-    tap_ui '^General Options$' 700 1000
-    sleep 4
-    shot $s-05-general
-    tap_ui '^General Options$' 700 1000
-    sleep 3
-  fi
-  if scroll_to '^General UI Options$'; then
-    tap_ui '^General UI Options$' 700 1000
-    sleep 4
-    shot $s-06-ui-options
-    adb shell input swipe 700 2000 700 1300 400 || true
+  [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$rx")
+  if [ -z "$xy" ]; then
+    adb shell input swipe 500 2200 500 900 400 || true
     sleep 2
-    shot $s-07-ui-options-2
   fi
+  tap_ui "$@"
 }
 
-# Ukrainian, the language of the overlaps found on the phone: the ANT+ section and all of General
-# UI Options (the floating window rows are at its end), one frame per swipe
-round_uk() {
-  local s="$1" i
-  wait_tiles
-  sleep 5
-  shot $s-01-home
-  open_menu
-  shot $s-03-drawer
-  tap_drawer '^Налаштування$' 400 900
-  sleep 8
-  shot $s-04-settings
-  if scroll_to '^Параметри ANT\+.*'; then
-    tap_ui '^Параметри ANT\+.*' 700 1000
-    sleep 4
-    shot $s-10-ant-1
-    adb shell input swipe 700 2000 700 1100 400 || true
-    sleep 2
-    shot $s-11-ant-2
-  fi
-  back "settings page"
-  sleep 3
-  open_menu
-  tap_drawer '^Налаштування$' 400 900
-  sleep 8
-  if scroll_to '^Загальні параметри інтерфейсу$'; then
-    tap_ui '^Загальні параметри інтерфейсу$' 700 1000
-    sleep 4
-    shot $s-20-ui-1
-    # The switch off: a wrong value in Text size shows the red reason under the field
-    # the field up first: the keyboard covers the lower half, and the reason is under the field
-    [ "$s" = u170 ] && { adb shell input swipe 700 1800 700 1000 400 || true; sleep 2; }
-    if [ "$s" = u170 ] && tap_row '^Розмір тексту:$' '^170$'; then
-      sleep 2
-      adb shell input keyevent KEYCODE_MOVE_END || true
-      for i in 1 2 3; do adb shell input keyevent KEYCODE_DEL || true; done
-      adb shell input text 5 || true
-      sleep 2
-      snap $s-21-invalid
-      adb shell input keyevent KEYCODE_DEL || true
-      adb shell input text 170 || true
-      hide_keyboard
-      sleep 2
-    fi
-    for i in 2 3 4 5 6 7 8 9; do
-      adb shell input swipe 700 2000 700 1100 400 || true
-      sleep 2
-      shot $s-2$i-ui-$i
-    done
-  fi
-  back "settings page"
-  sleep 3
-  relaxed_frames $s
-}
+adb logcat -c || true
+adb logcat > full_logcat.txt 2>/dev/null &
+LOGCAT_PID=$!
 
-# goto_settings: the menu and Settings, looked for by label up to three times (after the text field
-# of u170 the first back did not lead where expected and the menu tap missed, 39169043116)
+start_app() {
+  adb shell am start -n $PKG/$PKG.CustomQtActivity
+  sleep 20
+  dump
+  if [ -f ui.xml ] && [ "$(python3 .github/uitap.py ui.xml --package)" != "$PKG" ]; then
+    back "health connect"
+  fi
+  sleep 15
+}
+# goto_settings: the menu and Settings, looked for by label up to three times
 goto_settings() {
   local i
   for i in 1 2 3; do
     open_menu
     dump
-    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml '^(Settings|Налаштування)$' > /dev/null; then
-      tap_ui '^(Settings|Налаштування)$'
+    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml '^Settings$' > /dev/null; then
+      tap_ui '^Settings$'
       sleep 8
       return 0
     fi
@@ -398,132 +168,136 @@ goto_settings() {
   done
   return 1
 }
-
-# Experimental: "Relaxed Bluetooth for mad devices", a switch title in two lines over its hint
-relaxed_frames() {
-  local s="$1"
-  goto_settings || return 1
-  # The Experimental header (StaticAccordionElement) has no accessible name: it is the one right
-  # under "Maps" (uk "Карти"; "Video" between them is commented out), near the end of the list
-  if scroll_to '^(Карти|Maps.*)$' 30 && tap_below '^(Карти|Maps.*)$' 60; then
-    sleep 4
-    if scroll_to '^(М.який режим Bluetooth|Relaxed Bluetooth).*'; then
-      shot $s-30-relaxed
-      adb shell input swipe 700 1600 700 1100 400 || true
-      sleep 2
-      shot $s-31-relaxed-2
-    fi
-  fi
-}
-
-# The separate pages, from the drawer: workout history, the program list, profiles, the wizard
-# (last: its own pages are a stack inside the page)
-round_pages() {
-  local s="$1"
-  # after a round the settings page is open; "home": started from the home page, where the back
-  # key would leave the app
-  if [ "$2" != home ]; then
-    back "settings page"
-    sleep 3
-  fi
-  open_menu
-  # A new history database (a fresh install of a current master) first asks to look for the
-  # workouts of a previous install: No, then the page
-  if tap_drawer '^Workouts History$' 400 900; then
-    sleep 6
-    tap_ui '^No$' && sleep 3
-    shot $s-40-history
-    back "history"
-    sleep 3
-  fi
-  open_menu
-  tap_drawer '^Open Train Program$' 400 900 && { sleep 6; shot $s-41-programs; back "programs"; sleep 3; }
-  open_menu
-  tap_drawer '^Profile: .*' 400 900 && { sleep 5; shot $s-42-profiles; back "profiles"; sleep 3; }
-  open_menu
-  if tap_drawer '^Wizard$'; then
-    sleep 5
-    shot $s-43-wizard
-    # with a bigger text the Start button is under the welcome text
-    scroll_to '^Start$' 4 && tap_ui '^Start$' && { sleep 3; shot $s-44-wizard-help; }
-    tap_ui '^First-time setup$' && { sleep 3; shot $s-45-wizard-device; }
-  fi
-}
-
-# start_set <font_scale> <language> <key=value> ...: the switch and the size set the way the app
-# stores them. A minimal settings file is not enough: Qt.labs.settings, finding a key missing, writes
-# all properties not read yet with their defaults, so the two text size keys (the last ones) were
-# overwritten with 100/true half a second after the start, and the settings page read those. The
-# first start writes the full file; the keys are then changed in it and the app started again
-start_set() {
-  local fs="$1" lang="$2" kv
-  shift 2
-  start_fresh $fs "" $lang
-  sleep 5
-  # The settings page writes all its keys (a file without them loses the last keys once more on the
-  # first opening, 39156975887: the switch shown on at 170 %)
-  open_settings
-  sleep 5
-  adb shell am force-stop $PKG || true
-  for kv in "$@"; do
-    adb shell "run-as $PKG sed -i 's/^${kv%%=*}=.*/$kv/' 'files/.config/Roberto Viola/qDomyos-Zwift.conf'" || true
-  done
-  echo "== set: $* -> $(adb shell "run-as $PKG grep -E '^ui_text_scale' 'files/.config/Roberto Viola/qDomyos-Zwift.conf'" | tr '\r\n' '  ')" >> $STEPLOG
-  start_app
-}
-
-# start_fresh <font_scale> <extra conf> [language]: stop, settings file, system font size, start
+# start_fresh <extra conf>: stop, settings file, start
 start_fresh() {
   adb shell am force-stop $PKG || true
-  put_conf "applewatch_fakedevice=true\nconfirm_stop_workout=true\napp_language=${3:-en}\n$2"
-  adb shell settings put system font_scale $1 || true
-  echo "== start: font_scale=$(adb shell settings get system font_scale) conf: $2" >> $STEPLOG
+  put_conf "applewatch_fakedevice=true\napp_language=en\n$1"
+  echo "== start: conf: $1" >> $STEPLOG
   sleep 3
   start_app
 }
+# start_set <key=value> ...: the keys changed in the full settings file the app wrote (a minimal
+# file loses keys: Qt.labs.settings writes the defaults of all keys it did not read)
+start_set() {
+  local kv
+  start_fresh ""
+  sleep 5
+  goto_settings
+  sleep 5
+  adb shell am force-stop $PKG || true
+  for kv in "$@"; do
+    adb shell "run-as $PKG sed -i 's/^${kv%%=*}=.*/$kv/' '$CONF'" || true
+  done
+  echo "== set: $*" >> $STEPLOG
+  start_app
+}
 
-if [ "${SCENARIO:-full}" = relaxed ]; then
-# Only the switch title in two lines (a debug build logs its sizes): 135 % of the system, 170 % of
-# the app
-install_apk apk-debug/android-debug.apk
-start_fresh 1.35 "" uk
-wait_tiles
-relaxed_frames u135
-start_set 1.0 uk ui_text_scale_system=false ui_text_scale=170
-wait_tiles
-relaxed_frames u170
-else
-# 1. Reference: master with the tile size rename, font_scale 1.0
-start_fresh 1.0 ""
-round b10
-round_pages b10
+# conf_value key: the value the settings file keeps
+conf_value() {
+  adb shell "run-as $PKG cat '$CONF'" | tr -d '\r' | grep "^$1=" | head -1 | cut -d= -f2-
+}
+# check name ok detail: one line of checks.txt
+check() {
+  local verdict=FAIL
+  [ "$2" = 1 ] && verdict=PASS
+  echo "$verdict $TAG $1: $3" >> $CHECKS
+}
+# check_field name 'title regex' 'expected value': the dump of the screen has the title and the
+# expected value among the labels right after it
+check_field() {
+  local after ok=0
+  after=$([ -f ui.xml ] && python3 .github/uicheck.py ui.xml "$2" 6 | tr '\n' '|')
+  printf '%s' "$after" | tr '|' '\n' | grep -qxF -- "$3" && ok=1
+  check "$1" $ok "want '$3' after '$2', screen: ${after:-title NOT FOUND}"
+}
+# check_conf name key expected: the settings file keeps the expected number (0.01 off at most)
+check_conf() {
+  local v ok
+  v=$(conf_value $2)
+  ok=$(python3 -c 'import sys
+try: print(1 if abs(float(sys.argv[1]) - float(sys.argv[2])) < 0.01 else 0)
+except ValueError: print(0)' "$v" "$3")
+  check "$1" $ok "want $2=$3, file: $2=${v:-(none)}"
+}
 
-# 2. The tested APK, the same settings file, font_scale 1.0: the switch on by default
-install_apk apk-debug/android-debug.apk
-start_fresh 1.0 ""
-round a10
-round_pages a10
+# search 'text' name: the search of the settings with this text; a frame 1 s after the last key,
+# then the screen with the keyboard closed
+search() {
+  local q="${1// /%s}"
+  tap_ui '^Clear$' > /dev/null 2>&1 && sleep 1
+  rm -f ui.xml
+  tap_ui '^Search settings$' 935 168
+  sleep 2
+  adb shell input text "$q" || true
+  sleep 1
+  snap $TAG-$2-1s
+  sleep 3
+  hide_keyboard
+  sleep 1
+  shot $TAG-$2
+}
+# type_value 'field regex' 'text' name: the value field (found by its current text) cleared, the
+# text typed and OK in its row; the frame with the toast
+type_value() {
+  if ! tap_ui "$1"; then
+    check "$3 typed" 0 "field '$1' NOT FOUND"
+    return 1
+  fi
+  sleep 2
+  adb shell input keyevent KEYCODE_MOVE_END || true
+  for i in $(seq 1 14); do adb shell input keyevent KEYCODE_DEL || true; done
+  adb shell "input text \"$2\"" || true
+  sleep 1
+  hide_keyboard
+  sleep 1
+  local typed="${2//%s/ }"
+  rm -f ui.xml
+  tap_row "^$(printf '%s' "$typed" | sed 's/[.^$*+?()|\\]/\\&/g')$" '^OK$'
+  sleep 1
+  snap $TAG-$3-toast
+  sleep 4
+}
 
-# (The change in the background and the cap at 2.0 were checked in runs 39063115898/39071761467)
+# One round in the classic look with the miles off
+round_km() {
+  search "5 km pace" pace
+  check_field "5 km pace shown" '5 km pace.*' "00:25:00"
+  type_value '^(00:25:00|300)$' "00:24:30" pace-typed
+  check_conf "5 km pace 00:24:30 kept" pacef_5km 294
+  search "warmup speed" warmup
+  check_field "warmup pace shown" 'Warmup Speed.*' "00:07:00"
+  search "player weight" weight
+  check_field "weight title" 'Player Weight \(kg\)' "75"
+  type_value '^75$' "72,5" weight-typed
+  check_conf "weight 72,5 kept" weight 72.5
+}
+# One round with the miles on, the bike weight 9.979044 kg (22 lbs)
+round_miles() {
+  search "bike weight" bike
+  check_field "bike weight in lbs" 'Bike Weight \(lbs\)' "22"
+  type_value '^(22|9\.979044)$' "25" bike-typed
+  check_conf "bike weight 25 lbs kept" bike_weight 11.3398
+  search "player height" height
+  check_field "height in ft/in" 'Player Height \(ft/in\)' "5'9\""
+  type_value "^(5'9\"|175)$" "5'10" height-typed
+  check_conf "height 5'10 kept" height 177.8
+  search "max. speed" speed
+  check_field "max speed in mph" 'Max\. Speed \(mph\)' "62.1"
+  type_value '^(62\.1|100(\.0)?)$' "10" speed-typed
+  check_conf "max speed 10 mph kept" treadmill_speed_max 16.0934
+}
 
-# 3. Ukrainian, font_scale 1.35 - the largest of the OnePlus 12 the overlaps were seen on
-start_fresh 1.35 "" uk
-round_uk u135
-
-# 4. Ukrainian, the switch off, Text size 170 %
-start_set 1.0 uk ui_text_scale_system=false ui_text_scale=170
-round_uk u170
-
-# 5. The switch off, Text size 100 %: as the reference again
-start_set 1.0 en ui_text_scale_system=false ui_text_scale=100
-round m100
-
-# 6. The separate pages, the switch off, Text size 170 %
-start_set 1.0 en ui_text_scale_system=false ui_text_scale=170
-wait_tiles
-round_pages p170 home
-fi
-adb shell settings put system font_scale 1.0 || true
+for apk in apk-base apk-debug; do
+  TAG=${apk#apk-}
+  install_apk $apk/android-debug.apk
+  start_fresh ""
+  goto_settings
+  shot $TAG-00-settings
+  round_km
+  start_set miles_unit=true bike_weight=9.979044
+  goto_settings
+  round_miles
+done
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
@@ -536,8 +310,6 @@ else
   rm -f end_logcat.txt
 fi
 grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
-python3 .github/a11y.py dumps > a11y.txt || true
+echo "== checks"; cat $CHECKS
 echo "== steps"; cat $STEPLOG
-echo "== a11y summary"; sed -n '/^== summary/,$p' a11y.txt
 echo "== QML warnings"; grep -iE "qrc:|\.qml:[0-9]+" full_logcat.txt | grep -iE "warning|error|ReferenceError|TypeError" | sort | uniq -c | sort -nr | head -60 || true
-echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
