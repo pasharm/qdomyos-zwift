@@ -278,6 +278,9 @@ open_search() {
 }
 type_query() {
   # The field of the bar, not the toolbar button of the same name (y below the toolbar)
+  # Modern look: the bar scrolls away with the results (after find_card it was off the top and
+  # the tap opened a result instead)
+  scroll_top
   tap 470 338 "search field"
   sleep 1
   # The tap puts the cursor where it lands, the deletes take only what is before it (T-119:
@@ -489,7 +492,8 @@ back "to the results"
 sleep 3
 shot q-wahoo-back
 results "back from Wahoo Options"
-has '^Search results.*' "back from the page lands on the results"
+# The results come back at their scroll: the header may be off the top, the cards are there
+has '^Wahoo Options$|^Search results.*' "back from the page lands on the results"
 [ "$UI_MODERN" = "true" ] && find_card '^Without Wheel Diameter Protocol: On$' "the Wahoo switch shows On after the page"
 shot q-wahoo-on-card
 
