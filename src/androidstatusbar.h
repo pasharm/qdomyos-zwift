@@ -41,7 +41,8 @@ public:
     int apiLevel() const;
     // Night mode of the system (Configuration.uiMode). Read on demand: QML asks again when
     // the app comes back to the foreground and every 2 s while it is on screen.
-    // Not Android: true (the app is dark by default).
+    // Android before 10 (API 29, no dark theme in the system) and not Android: true (the app is
+    // dark by default).
     Q_INVOKABLE bool systemDarkMode() const;
     // Accent of the dynamic palette that Android 12+ (API 31) builds from the wallpaper, as
     // "#rrggbb": the Material 3 primary for a dark page (dark = true) or a light one. Empty

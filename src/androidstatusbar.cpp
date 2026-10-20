@@ -42,6 +42,11 @@ int AndroidStatusBar::apiLevel() const
 bool AndroidStatusBar::systemDarkMode() const
 {
 #ifdef Q_OS_ANDROID
+    // The dark theme of the system came with Android 10 (API 29). Before it the night bit is
+    // "not night" on phones and gym consoles alike, and following it would turn the page light,
+    // while the look these users know is the dark classic one.
+    if (apiLevel() < 29)
+        return true;
     QAndroidJniObject context = QtAndroid::androidContext();
     if (!context.isValid())
         return true;
