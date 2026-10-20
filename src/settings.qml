@@ -1379,9 +1379,11 @@ import QtQuick 2.12 as Quick212
                     return ""
                 if (entry.type === "boolean")
                     return value ? qsTr("On") : qsTr("Off")
-                // The whole list of the catalog where it has one: optionValues() leaves the
-                // wallpaper colour out below Android 12, and the labels would shift by one
-                var values = entry.options && entry.options.values ? entry.options.values : optionValues(entry)
+                // The whole list of the catalog: optionValues() leaves the wallpaper colour out
+                // below Android 12, and the labels would shift by one. A list made at run time
+                // (rootItem.metrics) has no labels, its value is shown as it is - and reading it
+                // here bound every card to a property without a change signal (a warning a card)
+                var values = entry.options && entry.options.values ? entry.options.values : []
                 if (values.length > 0) {
                     // By the place in the list: the labels of a list of numbers (the buttons of
                     // MyWhoosh Link, 0 = "Disabled") are not keyed by the value
