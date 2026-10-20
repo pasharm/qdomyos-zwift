@@ -280,7 +280,13 @@ if open_tile_size 120; then
   if scroll_to '^UI Themes$' 20; then
     tap_ui '^UI Themes$'
     sleep 3
-    scroll_to '^Tiles Icons$' 4 && tap_ui '^Tiles Icons$'
+    # IndicatorOnlySwitch toggles only on its indicator at the right end of the row
+    if scroll_to '^Tiles Icons$' 4 && xy=$(python3 .github/uiright.py ui.xml '^Tiles Icons$'); then
+      echo "tap 'Tiles Icons' switch at $xy" >> $STEPLOG
+      adb shell input tap $xy || true
+    else
+      echo "!! Tiles Icons switch NOT FOUND" >> $STEPLOG
+    fi
     sleep 1
     shot a-05-themes
   fi
