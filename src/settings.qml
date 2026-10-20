@@ -313,11 +313,19 @@ import QtQuick 2.12 as Quick212
                 .map(normalizedLabel)
         }
 
+        function currentSearch(viaPush) {
+            // A result tapped before the results of the last key were there: the list on screen
+            // is of the text before it, so the way back works the results out again
+            var due = settingsSearchDebounceTimer.running
+            settingsSearchDebounceTimer.stop()
+            return { query: settingsSearchTextField.text, changedOnly: changedOnly,
+                     results: due ? null : filteredSettings, scroll: contentItem.contentY, viaPush: viaPush }
+        }
+
         // A page among the results ("Wahoo Options"): back from it lands on the results, as
         // from a setting
         function openPageResult(entry) {
-            searchReturn = { query: settingsSearchTextField.text, changedOnly: changedOnly,
-                             results: filteredSettings, scroll: contentItem.contentY, viaPush: true }
+            searchReturn = currentSearch(true)
             // Or the search field takes the focus back with the keyboard on the way back
             dropTextFocus()
             stackView.push(entry.target)
@@ -352,8 +360,7 @@ import QtQuick 2.12 as Quick212
             var page = settingsPane
             var context = "settings"
             // The results and their scroll as they were: back shows them without searching again
-            searchReturn = { query: settingsSearchTextField.text, changedOnly: changedOnly,
-                             results: filteredSettings, scroll: contentItem.contentY }
+            searchReturn = currentSearch(false)
             if (where && where.file !== "settings.qml") {
                 if (searchReturn)
                     searchReturn.viaPush = true
@@ -450,9 +457,9 @@ import QtQuick 2.12 as Quick212
             changedOnly = back.changedOnly
             settingsSearchActive = back.query.trim().length > 0 || back.changedOnly
             settingsSearchPending = false
-            filteredSettings = back.results
+            filteredSettings = back.results || []
             // "Changed" may differ now (the setting just opened was edited): that list is rebuilt
-            if (changedOnly)
+            if (changedOnly || !back.results)
                 updateFilteredSettings()
             // After the list is laid out again
             contentItem.contentY = 0
@@ -916,10 +923,15 @@ import QtQuick 2.12 as Quick212
                 // Try without colon
                 var plain = qsTranslate(contexts[i], name)
                 if (plain !== name) return plain
-                // A label with its unit filled in on the page: "Bike Weight (%1)". The unit is
-                // added back by searchTitle()
+                // A label with its unit filled in on the page: "Bike Weight (%1)", cut before the
+                // bracket of the unit, a full-width one in Japanese and Chinese. The unit is added
+                // back by searchTitle()
                 var withUnit = qsTranslate(contexts[i], name + " (%1)")
-                if (withUnit !== name + " (%1)") return withUnit.replace("(%1)", "").trim()
+                if (withUnit !== name + " (%1)") {
+                    var unitAt = withUnit.indexOf("%1")
+                    var bracket = Math.max(withUnit.lastIndexOf("(", unitAt), withUnit.lastIndexOf("（", unitAt))
+                    return (bracket >= 0 ? withUnit.substring(0, bracket) : withUnit.replace("%1", "")).trim()
+                }
             }
             return name
         }
@@ -1170,6 +1182,17 @@ import QtQuick 2.12 as Quick212
             return pad(Math.floor(t / 3600)) + ":" + pad(Math.floor(t / 60) % 60) + ":" + pad(t % 60)
         }
 
+        // One to two digits and nothing else
+        function searchIsTwoDigits(text) {
+            if (text.length === 0 || text.length > 2)
+                return false
+            for (var c = 0; c < text.length; c++) {
+                if (text[c] < "0" || text[c] > "9")
+                    return false
+            }
+            return true
+        }
+
         // hh:mm:ss as the pace fields take it, NaN for anything else
         function searchTimeSeconds(text) {
             var parts = text.trim().split(":")
@@ -1177,12 +1200,8 @@ import QtQuick 2.12 as Quick212
                 return NaN
             var seconds = 0
             for (var i = 0; i < parts.length; i++) {
-                if (parts[i].length === 0 || parts[i].length > 2)
+                if (!searchIsTwoDigits(parts[i]))
                     return NaN
-                for (var c = 0; c < parts[i].length; c++) {
-                    if (parts[i][c] < "0" || parts[i][c] > "9")
-                        return NaN
-                }
                 var n = parseInt(parts[i], 10)
                 if (i > 0 && n > 59)
                     return NaN
@@ -1192,20 +1211,22 @@ import QtQuick 2.12 as Quick212
         }
 
         // feet'inches as the height field takes it (5'10", the quotes may be typographic), in cm;
-        // NaN when there are not two numbers
+        // NaN for anything else ("5.9" is not 5'9")
         function searchFeetInchesCm(text) {
-            var numbers = []
-            var digits = ""
-            for (var i = 0; i <= text.length; i++) {
-                var c = text.charAt(i)
-                if (c >= "0" && c <= "9") {
-                    digits += c
-                } else if (digits.length > 0) {
-                    numbers.push(parseInt(digits, 10))
-                    digits = ""
-                }
+            var feetMark = -1
+            for (var i = 0; i < text.length && feetMark < 0; i++) {
+                if ("'‘’".indexOf(text.charAt(i)) >= 0)
+                    feetMark = i
             }
-            return numbers.length === 2 ? numbers[0] * 30.48 + numbers[1] * 2.54 : NaN
+            if (feetMark < 0)
+                return NaN
+            var feet = text.substring(0, feetMark).trim()
+            var inches = text.substring(feetMark + 1).trim()
+            if (inches.length > 0 && "\"“”".indexOf(inches.charAt(inches.length - 1)) >= 0)
+                inches = inches.substring(0, inches.length - 1).trim()
+            if (!searchIsTwoDigits(feet) || !searchIsTwoDigits(inches))
+                return NaN
+            return parseInt(feet, 10) * 30.48 + parseInt(inches, 10) * 2.54
         }
 
         // The text of the value field of a search result: the value as its page shows it
@@ -1262,7 +1283,7 @@ import QtQuick 2.12 as Quick212
             // A decimal comma (the keyboard of the phone's language) counts as a point
             var trimmed = text.trim()
             value = Number(trimmed.replace(",", "."))
-            if (trimmed.length === 0 || isNaN(value)) {
+            if (trimmed.length === 0 || !isFinite(value)) {
                 toast.show(qsTranslate("SettingsNumberField", "Enter a number"))
                 return
             }
@@ -1270,7 +1291,8 @@ import QtQuick 2.12 as Quick212
                 value = value / 2.20462
             else if (kind === "miles" && settings.miles_unit)
                 value = value * searchMileFactors[entry.key]
-            if (entry.type === "integer" && Math.round(value) !== value) {
+            // parseInt of setSettingValue reads 1e21 as 1
+            if (entry.type === "integer" && (Math.round(value) !== value || Math.abs(value) > 2147483647)) {
                 toast.show(qsTranslate("SettingsNumberField", "Enter a whole number"))
                 return
             }
