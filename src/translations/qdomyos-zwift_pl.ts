@@ -4525,6 +4525,14 @@ W następnym oknie zezwól na dostęp do folderu QZ.</translation>
         <translation>Obecnie ukryte na swojej stronie: zmień tutaj</translation>
     </message>
     <message>
+        <source>On</source>
+        <translation>Wł.</translation>
+    </message>
+    <message>
+        <source>Hidden on its page with the current settings</source>
+        <translation>Ukryte na swojej stronie przy obecnych ustawieniach</translation>
+    </message>
+    <message>
         <source>Turn on “%1” to change this setting</source>
         <translation>Włącz „%1”, aby zmienić to ustawienie</translation>
     </message>
