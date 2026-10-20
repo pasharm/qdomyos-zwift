@@ -2286,40 +2286,31 @@ void homeform::onToastRequested(QString message) {
     }
 }
 
-// The spoken texts are translated, so they are spoken with a voice of the app language: "auto"
-// follows the system, as the translation does. The voice is chosen once the engine is ready - on
-// Android it binds after the constructor and a language set before that is dropped - and again
-// after a change of the app language. English when no translation is loaded for the language or
-// the engine has no voice for it.
+// The spoken texts are translated, so they are spoken with a voice of the language of the loaded
+// translation: each translation names its language in the string below, and without a translation
+// (or with an empty one) it stays "en". The voice is chosen once the engine is ready - on Android it
+// binds after the constructor and a language set before that is dropped - and again when the
+// translation changes. English when the engine has no voice for the language.
 void homeform::speak(const QString &text) {
-    QSettings settings;
-    QString language =
-        settings.value(QZSettings::app_language, QZSettings::default_app_language).toString().trimmed();
-    if (language.isEmpty() || language.compare(QStringLiteral("auto"), Qt::CaseInsensitive) == 0) {
-        language = QLocale::system().name();
-    }
-    language.replace(QLatin1Char('-'), QLatin1Char('_'));
+    //: Text-to-speech: not a word to translate - the code of the language of this translation, such as "de", "pt_BR" or "zh_CN". The voice that reads the translated texts aloud is chosen by it.
+    QString language = tr("en", "TTS voice language").trimmed();
 
     if (language != m_speechLanguage && m_speech.state() == QTextToSpeech::Ready) {
         m_speechLanguage = language;
-        // the same files the translation is loaded from in main.cpp: the locale, then the language alone
-        const QString qm = QStringLiteral(":/translations/translations/qdomyos-zwift_%1.qm");
-        bool translated = !language.startsWith(QStringLiteral("en"), Qt::CaseInsensitive) &&
-                          (QFile::exists(qm.arg(language)) ||
-                           QFile::exists(qm.arg(language.section(QLatin1Char('_'), 0, 0))));
+        QLocale locale(language);
         // setLocale() emits localeChanged only when the engine took the language
         bool taken = false;
-        if (translated) {
+        if (locale.language() != QLocale::English && locale.language() != QLocale::C) {
             QMetaObject::Connection c =
                 connect(&m_speech, &QTextToSpeech::localeChanged, this, [&taken]() { taken = true; });
-            m_speech.setLocale(QLocale(language));
+            m_speech.setLocale(locale);
             disconnect(c);
         }
         if (!taken) {
             m_speech.setLocale(QLocale::English);
         }
-        qDebug() << "tts language" << language << "translated" << translated << "voice of the language" << taken
-                 << "voice" << m_speech.voice().name();
+        qDebug() << "tts language" << language << "voice of the language" << taken << "voice"
+                 << m_speech.voice().name();
     }
     m_speech.say(text);
 }

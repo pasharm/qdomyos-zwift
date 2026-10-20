@@ -1242,7 +1242,7 @@ public:
 
     void speak(const QString &text);
     QTextToSpeech m_speech;
-    QString m_speechLanguage; // the app language the voice was chosen for, empty = not yet
+    QString m_speechLanguage; // the language of the translation the voice was chosen for, empty = not yet
     int tts_summary_count = 0;
 
 #if defined(Q_OS_WIN) || (defined(Q_OS_MAC) && !defined(Q_OS_IOS)) || (defined(Q_OS_ANDROID) && defined(LICENSE))

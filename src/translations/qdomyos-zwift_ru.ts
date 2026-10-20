@@ -3799,6 +3799,12 @@ This may take a few moments on first startup.</source>
         <translation>Нажата кнопка Стоп</translation>
     </message>
     <message>
+        <source>en</source>
+        <comment>TTS voice language</comment>
+        <extracomment>Text-to-speech: not a word to translate - the code of the language of this translation, such as &quot;de&quot;, &quot;pt_BR&quot; or &quot;zh_CN&quot;. The voice that reads the translated texts aloud is chosen by it.</extracomment>
+        <translation>ru</translation>
+    </message>
+    <message>
         <source>JSON parser error</source>
         <translation>Ошибка разбора JSON</translation>
     </message>
