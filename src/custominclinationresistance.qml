@@ -74,6 +74,7 @@ ScrollView {
 
     Settings {
         id: settings
+        Component.onCompleted: window.retakeSettingsSnapshot(settings)
         property bool custom_inclination_resistance_table_enabled: false
         property string custom_inclination_resistance_table: defaultInclinationResistanceTable
     }

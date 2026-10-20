@@ -21,6 +21,7 @@ ScrollView {
     // Properties
     Settings {
         id: settings
+        Component.onCompleted: window.retakeSettingsSnapshot(settings)
         property string gear_configuration: "1|38|44|true\n2|38|38|true\n3|38|32|true\n4|38|28|true\n5|38|24|true\n6|38|21|true\n7|38|19|true\n8|38|17|true\n9|38|15|true\n10|38|13|true\n11|38|11|true\n12|38|10|true"
         property int gear_crankset_size: 42
         property int gear_cog_size: 14

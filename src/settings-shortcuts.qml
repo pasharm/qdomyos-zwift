@@ -55,6 +55,7 @@ ScrollView {
 
     Settings {
         id: settings
+        Component.onCompleted: window.retakeSettingsSnapshot(settings)
         property bool shortcuts_enabled: false
         property string shortcut_speed_plus: ""
         property string shortcut_speed_minus: ""

@@ -28,7 +28,7 @@ ScrollView {
     StackView.onActivated: settingsCopyReloadTimer.restart()
     Timer {
         id: settingsCopyReloadTimer
-        interval: settingsTilesPane.settingsCopyKnown === undefined ? 1000 : 100
+        interval: 100
         onTriggered: settingsTilesPane.settingsCopyKnown = window.reloadSettingsCopy(settings, settingsTilesPane.settingsCopyKnown)
     }
 
@@ -46,6 +46,7 @@ ScrollView {
 
     Settings {
         id: settings
+        Component.onCompleted: window.retakeSettingsSnapshot(settings)
         property bool miles_unit: false
         property bool tile_speed_enabled: true
         property int  tile_speed_order: 0

@@ -477,13 +477,11 @@ import QtQuick 2.12 as Quick212
         // The voice, tiles, gears... pages write through Settings objects of their own: the
         // values they changed are read again into this page's copy, or its next write would put
         // the old ones back (window.reloadSettingsCopy). Not at once: the page closed over this
-        // one is deleted only after its transition, and writes what is still pending then. The
-        // first time a second after the page opened: after the write its Settings makes 500 ms
-        // after loading
+        // one is deleted only after its transition, and writes what is still pending then
         property var settingsCopyKnown
         Timer {
             id: settingsCopyReloadTimer
-            interval: settingsPane.settingsCopyKnown === undefined ? 1000 : 100
+            interval: 100
             onTriggered: settingsPane.settingsCopyKnown = window.reloadSettingsCopy(settings, settingsPane.settingsCopyKnown)
         }
 
@@ -1230,6 +1228,7 @@ import QtQuick 2.12 as Quick212
         // always add a property at the end of the file to avoid corruption of the settings when loading old versions
         Settings {
             id: settings
+            Component.onCompleted: window.retakeSettingsSnapshot(settings)
             property real ui_zoom: 100.0
             property bool bike_heartrate_service: false
             property int bike_resistance_offset: 4

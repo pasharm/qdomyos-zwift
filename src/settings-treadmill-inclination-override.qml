@@ -17,6 +17,7 @@ ScrollView {
 
     Settings {
         id: settings
+        Component.onCompleted: window.retakeSettingsSnapshot(settings)
         property double treadmill_inclination_override_0: 0.0
         property double treadmill_inclination_override_05: 0.5
         property double treadmill_inclination_override_10: 1.0

@@ -17,6 +17,7 @@ ScrollView {
 
     Settings {
         id: settings
+        Component.onCompleted: window.retakeSettingsSnapshot(settings)
         property bool tts_enabled: false
         property int tts_summary_sec: 120
         property bool tts_act_speed: false
