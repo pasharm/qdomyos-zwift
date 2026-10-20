@@ -1189,6 +1189,61 @@ homeform::homeform(QQmlApplicationEngine *engine, bluetooth *bl) {
 
     m_speech.setLocale(QLocale::English);
 
+    // T-246 test only: what the speech engine has after the English locale above, and what it
+    // says. 20 s after the start a sample of the summary in the app language, as QZ says it now;
+    // 40 s after the start the English locale once more (the engine is bound by then) and the same
+    // text again. The Java probe writes the same texts to WAV files with each voice.
+    {
+        auto t246Log = [this](const QString &when) {
+            QStringList locales;
+            for (const QLocale &l : m_speech.availableLocales())
+                locales << l.name();
+            QStringList voices;
+            for (const QVoice &v : m_speech.availableVoices())
+                voices << v.name();
+            qDebug() << "T246" << when << "engines" << QTextToSpeech::availableEngines() << "state"
+                     << m_speech.state() << "locale" << m_speech.locale().name() << "voice" << m_speech.voice().name()
+                     << "locales" << locales.size() << locales.mid(0, 60) << "voices" << voices.size()
+                     << voices.mid(0, 30) << "system" << QLocale::system().name() << "default" << QLocale().name();
+        };
+        t246Log(QStringLiteral("ctor"));
+        // locale() of Qt 5.15.0 on Android is not usable (three-letter codes become "C"): the
+        // name of the voice tells the language
+        connect(&m_speech, &QTextToSpeech::stateChanged, this, [this, t246Log](QTextToSpeech::State st) {
+            qDebug() << "T246 stateChanged" << st;
+            t246Log(QStringLiteral("stateChanged"));
+        });
+        connect(&m_speech, &QTextToSpeech::localeChanged, this,
+                [](const QLocale &l) { qDebug() << "T246 localeChanged" << l.name(); });
+        QString t246Text = tr(", speed ") + QStringLiteral("10.0") + tr(" kilometers per hour") + tr(", watt ") +
+                           QStringLiteral("150") + tr(", heart rate ") + QStringLiteral("120");
+        QTimer::singleShot(20000, this, [this, t246Log, t246Text]() {
+            t246Log(QStringLiteral("20s"));
+            QSettings s;
+            bool on = s.value(QZSettings::tts_enabled, QZSettings::default_tts_enabled).toBool();
+            qDebug() << "T246 say as now" << on << t246Text;
+            if (on)
+                m_speech.say(t246Text);
+#ifdef Q_OS_ANDROID
+            QAndroidJniObject::callStaticMethod<void>(
+                "org/cagnulen/qdomyoszwift/TtsProbe", "run",
+                "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V",
+                QtAndroid::androidContext().object(),
+                QAndroidJniObject::fromString(getWritableAppDir() + QStringLiteral("t246")).object<jstring>(),
+                QAndroidJniObject::fromString(t246Text).object<jstring>());
+#endif
+        });
+        QTimer::singleShot(40000, this, [this, t246Log, t246Text]() {
+            m_speech.setLocale(QLocale::English);
+            t246Log(QStringLiteral("40s after setLocale again"));
+            QSettings s;
+            bool on = s.value(QZSettings::tts_enabled, QZSettings::default_tts_enabled).toBool();
+            qDebug() << "T246 say English again" << on << t246Text;
+            if (on)
+                m_speech.say(t246Text);
+        });
+    }
+
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     QBluetoothDeviceInfo b;
     deviceConnected(b);
