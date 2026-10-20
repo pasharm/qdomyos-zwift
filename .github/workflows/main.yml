@@ -1,5 +1,5 @@
-# test branch: run an APK that was already built on one emulator and keep logcat and
-# screenshots (no build). The source run id is below.
+# test branch: run an APK that was already built on one emulator and keep logcat, the sound of
+# the emulator and the WAV files of the speech probe (T-246, no build). The source run id is below.
 name: CI
 
 on:
@@ -8,25 +8,20 @@ on:
       source:
         description: run id of the build to test
         required: true
-      modern:
-        description: ui_modern for the run (false = the classic look, for comparison)
-        required: false
-        default: 'false'
-      log_debug:
-        description: log_debug for the run (false = the debug log off)
-        required: false
-        default: 'true'
-      baseline:
-        description: run id of the build to shoot first, as the reference (T-262)
-        required: true
       scenario:
-        description: full = all rounds, relaxed = only the switch "Relaxed Bluetooth" at 135 and 170 %
+        description: full = app ru, app uk, then system ru; short = app ru only
         required: false
         default: 'full'
 
 jobs:
-  emulator-logcat:
+  emulator-tts:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # pa = the sound of the emulator into a PulseAudio null sink, recorded per case;
+        # none = the usual run without sound, in case the emulator does not boot with it
+        audio: [pa, none]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -39,20 +34,22 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
+      - name: PulseAudio null sink
+        if: matrix.audio == 'pa'
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq pulseaudio pulseaudio-utils
+          pulseaudio -D --exit-idle-time=-1 --system=false
+          pactl load-module module-null-sink sink_name=qzsink
+          pactl set-default-sink qzsink
+          pactl info
+
       - name: Download APK from the build run
         uses: actions/download-artifact@v4
         with:
           name: fdroid-android-trial
           path: apk-debug
           run-id: ${{ inputs.source }}
-          github-token: ${{ github.token }}
-
-      - name: Download the reference APK
-        uses: actions/download-artifact@v4
-        with:
-          name: fdroid-android-trial
-          path: apk-base
-          run-id: ${{ inputs.baseline }}
           github-token: ${{ github.token }}
 
       - name: Setup Java for Android Emulator
@@ -64,30 +61,28 @@ jobs:
       - name: Start the app and record logcat
         uses: ReactiveCircus/android-emulator-runner@v2
         env:
-          UI_MODERN: ${{ inputs.modern }}
-          LOG_DEBUG: ${{ inputs.log_debug }}
           SCENARIO: ${{ inputs.scenario }}
+          AUDIO: ${{ matrix.audio }}
         with:
           api-level: 35
           target: google_apis
           arch: x86_64
           profile: Nexus 6
           disable-animations: true
+          emulator-options: ${{ matrix.audio == 'pa' && '-no-window -gpu swiftshader_indirect -no-snapshot -no-boot-anim' || '-no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim' }}
           script: bash .github/emu.sh
 
       - name: Upload evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.source }}-${{ inputs.modern }}${{ inputs.log_debug == 'false' && '-nolog' || '' }}
+          name: emulator-tts-${{ inputs.source }}-${{ matrix.audio }}
           path: |
-            screenshot.png
             *.png
             process_list.txt
             full_logcat.txt
             steps.log
-            a11y.txt
-            dumps/
-            style-*.json
+            t246-*/
+            audio-*.wav
             qz-logs/
           if-no-files-found: warn
