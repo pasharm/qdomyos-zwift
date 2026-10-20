@@ -280,7 +280,10 @@ type_query() {
   # The field of the bar, not the toolbar button of the same name (y below the toolbar)
   tap 470 338 "search field"
   sleep 1
-  for i in $(seq 1 20); do adb shell input keyevent KEYCODE_DEL || true; done
+  # The tap puts the cursor where it lands, the deletes take only what is before it (T-119:
+  # "theme" became "themew type"): to the end first
+  adb shell input keyevent KEYCODE_MOVE_END || true
+  for i in $(seq 1 30); do adb shell input keyevent KEYCODE_DEL || true; done
   [ -n "$1" ] && adb shell input text "$1"
   sleep 3
   hide_keyboard
@@ -454,7 +457,9 @@ sleep 3
 # with a toast that no longer says "change it here". The toast lasts 3 s: looked for first
 query 'use%skg' kg
 tap_ui '^Use kg for weight$'
-sleep 1
+# A screen capture takes about a second, a dump two: the picture first
+adb shell screencap -p /sdcard/q-kg-toast-fast.png || true
+adb pull /sdcard/q-kg-toast-fast.png || true
 has '^Hidden on its page.*' "the hidden-setting toast"
 cp ui.xml dumps/q-kg-toast-first.xml 2>/dev/null || true
 [ "$UI_MODERN" = "true" ] && [ -f ui.xml ] && grep -q "change it here" ui.xml &&
