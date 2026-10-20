@@ -3161,7 +3161,8 @@ import QtQuick 2.12 as Quick212
                         readonly property string valueText: window.ui.modern ? settingsPane.searchValueText(entry) : ""
                         readonly property bool valueOn: entry.type === "boolean" && valueText.length > 0 &&
                                                         !!settingsPane.settingValue(entry)
-                        readonly property string titleText: entry._translatedName || entry.name || entry.key
+                        // With the unit of its page, as the title of the card: "Bike Weight (lbs)"
+                        readonly property string titleText: settingsPane.searchTitle(entry)
                         readonly property bool controlAtBottom: controlOnTop && !hasDescription && !editorBelow
                         readonly property real topPad: window.ui.modern ? (controlOnTop ? 6 : 12) : 4
                         readonly property real bottomPad: window.ui.modern ? (controlAtBottom ? 6 : 12) : 4
