@@ -334,6 +334,46 @@ value_none() {
   [ "$UI_MODERN" = "true" ] || return 0
   not_has "^$1: .*" "$1 shows no value"
 }
+# card_xy 'name regex': the centre of the result card (the button from the card's left edge, not
+# a label inside it - a path label "Wahoo Options" is in every card of that page) on the screen
+card_xy() {
+  dump
+  [ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+    if m and re.fullmatch(sys.argv[2], t):
+        x1, y1, x2, y2 = map(int, m.groups())
+        if x1 < 60 and x2 > x1 and y2 > y1 and y1 > 470:
+            print((x1 + x2) // 2, (y1 + y2) // 2)
+            break
+' ui.xml "$1"
+}
+# find_card 'name regex' [what]: scrolls the results from the top until that card shows (12 swipes
+# at most); logged as a check
+find_card() {
+  local i xy
+  scroll_top
+  for i in $(seq 1 12); do
+    xy=$(card_xy "$1")
+    if [ -n "$xy" ]; then
+      echo "check card '$1' ($2): OK after $((i - 1)) swipes" >> $STEPLOG
+      return 0
+    fi
+    adb shell input swipe 700 2000 700 1300 400 || true
+    sleep 1
+  done
+  echo "!! check card '$1' ($2): NOT FOUND" >> $STEPLOG
+  return 1
+}
+tap_card() {
+  local xy
+  find_card "$1" "$2" || return 1
+  xy=$(card_xy "$1")
+  echo "tap card '$1' at $xy" >> $STEPLOG
+  adb shell input tap $xy || true
+}
 # The switch of a row named exactly 'name', tapped at its right end; its state into steps.log
 toggle_switch() {
   local xy
@@ -399,7 +439,7 @@ query 'strava%supload' strava
 value_is 'Strava Upload' 'Request'
 
 query 'power%sup' powerup
-value_is 'Power Up (LB)' 'Gear Up'
+value_is 'Power Up \(LB\)' 'Gear Up'
 
 query 'floating%swindow%stype' floating
 value_is 'Floating Window Type' 'Horizontal'
@@ -413,7 +453,7 @@ value_is 'Specific Model' 'Other'
 check_editors "specific model"
 
 query '5%skm%space' pace
-value_is '5 km pace' '00:25:00'
+value_is '5 km pace \(total time\)' '00:25:00'
 
 # A Bluetooth device and a password: no value at all
 query 'heart%sbelt' belt
@@ -432,10 +472,15 @@ query 'peloton%sbike%socr' ocr
 query 'wahoo' wahoo
 has '^Wahoo Options$' "Wahoo Options page listed"
 check_editors "wahoo"
-value_is 'Without Wheel Diameter Protocol' 'Off'
-# The page keeps its query on the way out (no jump): back gives the Repeater the same list. A
-# switch of that page, written by its own Settings, must show anew on the card
-tap_ui '^Wahoo Options$'
+[ "$UI_MODERN" = "true" ] && find_card '^Without Wheel Diameter Protocol: Off$' "the Wahoo switch shows Off"
+# The page card itself (catalogKind page): it keeps the query on the way out (no jump), and back
+# gave the Repeater the same list. A switch of that page, written by its own Settings, must show
+# anew on its card. The classic look has the Open button there instead
+if [ "$UI_MODERN" = "true" ]; then
+  tap_card '^Wahoo Options$' "the page card"
+else
+  tap_ui '^Open$'
+fi
 sleep 4
 shot q-wahoo-page
 toggle_switch 'Without Wheel Diameter Protocol'
@@ -444,22 +489,21 @@ back "to the results"
 sleep 3
 shot q-wahoo-back
 results "back from Wahoo Options"
-has '^Wahoo Options$' "back from the page lands on the results"
-value_is 'Without Wheel Diameter Protocol' 'On'
-# Back as it was for the steps below
-tap_ui '^Wahoo Options$'
-sleep 4
-toggle_switch 'Without Wheel Diameter Protocol'
-back "to the results"
-sleep 3
+has '^Search results.*' "back from the page lands on the results"
+[ "$UI_MODERN" = "true" ] && find_card '^Without Wheel Diameter Protocol: On$' "the Wahoo switch shows On after the page"
+shot q-wahoo-on-card
 
 # A setting its page hides with the current values (kg only with miles on): back to the results
 # with a toast that no longer says "change it here". The toast lasts 3 s: looked for first
 query 'use%skg' kg
 tap_ui '^Use kg for weight$'
-# A screen capture takes about a second, a dump two: the picture first
-adb shell screencap -p /sdcard/q-kg-toast-fast.png || true
-adb pull /sdcard/q-kg-toast-fast.png || true
+# A screen capture takes about a second, a dump two: the pictures first. The toast fades in after
+# the jump has run (right after the tap it was not there yet) and lasts 3 s
+sleep 1
+adb shell screencap -p /sdcard/q-kg-toast-1s.png || true
+adb shell screencap -p /sdcard/q-kg-toast-2s.png || true
+adb pull /sdcard/q-kg-toast-1s.png || true
+adb pull /sdcard/q-kg-toast-2s.png || true
 has '^Hidden on its page.*' "the hidden-setting toast"
 cp ui.xml dumps/q-kg-toast-first.xml 2>/dev/null || true
 [ "$UI_MODERN" = "true" ] && [ -f ui.xml ] && grep -q "change it here" ui.xml &&
