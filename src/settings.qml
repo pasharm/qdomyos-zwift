@@ -424,7 +424,9 @@ import QtQuick 2.12 as Quick212
                     stackView.pop()
                 else
                     restoreSearch()
-                toast.show(qsTr("Hidden on its page right now: change it here"))
+                // Modern look: the result shows the value only, it cannot be changed there
+                toast.show(window.ui.modern ? qsTr("Hidden on its page with the current settings")
+                                            : qsTr("Hidden on its page right now: change it here"))
                 return
             }
             // The fields of a switched-off section are not on the page yet
@@ -901,7 +903,12 @@ import QtQuick 2.12 as Quick212
         // off; its result was the only place left to change it, and a tap on it led nowhere
         // custom_inclination_resistance_table: the whole table as one text line; it is changed on its
         // own page, which the search lists as a link
-        readonly property var searchHiddenSettings: ({ "ant_garmin": true, "custom_inclination_resistance_table": true })
+        // The results only show a value (searchValueText), so a setting with no place on a page
+        // could not be changed from them either: Peloton Bike OCR (its switch is commented out on
+        // the page), the camera and emote of MyWhoosh Link (QZ cycles them with a button itself)
+        readonly property var searchHiddenSettings: ({ "ant_garmin": true, "custom_inclination_resistance_table": true,
+                                                       "peloton_bike_ocr": true, "mywhoosh_link_camera_value": true,
+                                                       "mywhoosh_link_emote_value": true })
 
         // The English titles and descriptions as written on gears.qml: translated through its
         // context (the texts are extracted there, not here)
@@ -1345,6 +1352,58 @@ import QtQuick 2.12 as Quick212
                 if (typeof values[i] === "string")
                     labels[values[i]] = qsTranslate("settings", names[i] || values[i])
             return labels
+        }
+
+        // Modern look: the value of a result as text, read only. It is changed on its own page,
+        // where its rules are (the range, the settings it depends on, the restart question); a
+        // second editor here would have to repeat them all. Empty when the value cannot be told
+        // for sure - a Bluetooth device, a stored value that is not one of the list, a secret,
+        // a type not known here: then the result shows no value rather than a wrong one
+        function searchValueText(entry) {
+            try {
+                if (entry.catalogKind === "virtual") {
+                    var picked = entry.options ? entry.options[virtualSelectedIndex(entry)] : null
+                    return picked && picked.label ? qsTranslate("settings", picked.label) : ""
+                }
+                if (entry.catalogKind !== "setting" && entry.catalogKind !== "link")
+                    return ""
+                if (isPrivateSetting(entry) || isBluetoothDeviceSetting(entry))
+                    return ""
+                var value = settingValue(entry)
+                if (value === undefined || value === null)
+                    return ""
+                if (entry.type === "boolean")
+                    return value ? qsTr("On") : qsTr("Off")
+                var values = optionValues(entry)
+                if (values.length > 0) {
+                    // By the place in the list: the labels of a list of numbers (the buttons of
+                    // MyWhoosh Link, 0 = "Disabled") are not keyed by the value
+                    var names = entry.options.labels || []
+                    for (var i = 0; i < values.length; i++) {
+                        if (String(values[i]) !== String(value))
+                            continue
+                        if (names[i])
+                            return qsTranslate("settings", names[i])
+                        var labels = optionLabels(entry)
+                        return labels.hasOwnProperty(value) ? labels[value] : String(value)
+                    }
+                    return ""
+                }
+                if (entry.type === "integer" || entry.type === "number") {
+                    var shown = searchFieldValue(entry)
+                    // A real written as a float by the C++ side reads back as 0.33000001
+                    if (typeof shown !== "number")
+                        return String(shown)
+                    if (!isFinite(shown))
+                        return ""
+                    return String(shown % 1 === 0 ? shown : parseFloat(shown.toPrecision(7)))
+                }
+                if (entry.type === "string")
+                    return String(value)
+            } catch (e) {
+                console.log("settings search: no value for " + entry.key + ": " + e)
+            }
+            return ""
         }
 
         function isBluetoothDeviceSetting(entry) {
@@ -3077,12 +3136,19 @@ import QtQuick 2.12 as Quick212
                         // sits in its middle, and 12 on top of that looked like a gap: 6 there. At
                         // the bottom only when that row is also the last one; a field or list at the
                         // bottom keeps 12, its own inset matches the gap above the title then
-                        readonly property bool controlOnTop: window.ui.modern && (settingsPane.changedOnly ||
-                            entry.catalogKind === "page" || (entry.catalogKind === "setting" && entry.type === "boolean"))
+                        // Modern look: no editor in the result, only its value as text and the
+                        // chevron; the 48 px button in the title row is the reset of "Changed"
+                        readonly property bool controlOnTop: window.ui.modern && settingsPane.changedOnly
                         readonly property bool hasDescription: entry.description !== null && entry.description !== undefined &&
                                                                entry.description.length > 0
-                        readonly property bool editorBelow: entry.catalogKind === "virtual" ||
-                                                            (entry.catalogKind === "setting" && entry.type !== "boolean")
+                        readonly property bool editorBelow: !window.ui.modern && (entry.catalogKind === "virtual" ||
+                                                            (entry.catalogKind === "setting" && entry.type !== "boolean"))
+                        // Read again when the results come back from the setting's page: the
+                        // delegates are made anew (restoreSearch sets the list again)
+                        readonly property string valueText: window.ui.modern ? settingsPane.searchValueText(entry) : ""
+                        readonly property bool valueOn: entry.type === "boolean" && valueText.length > 0 &&
+                                                        !!settingsPane.settingValue(entry)
+                        readonly property string titleText: entry._translatedName || entry.name || entry.key
                         readonly property bool controlAtBottom: controlOnTop && !hasDescription && !editorBelow
                         readonly property real topPad: window.ui.modern ? (controlOnTop ? 6 : 12) : 4
                         readonly property real bottomPad: window.ui.modern ? (controlAtBottom ? 6 : 12) : 4
@@ -3127,13 +3193,26 @@ import QtQuick 2.12 as Quick212
                             radius: window.ui.modern ? window.ui.radius : 2
                         }
 
-                        // A tap on the card (not on its controls) opens the setting itself
+                        function open() {
+                            if (entry.catalogKind === "page")
+                                settingsPane.openPageResult(entry)
+                            else
+                                settingsPane.jumpToSetting(entry)
+                        }
+
+                        // A tap on the card (not on its controls) opens the setting itself.
+                        // Modern look: the whole card is the one way to change it, a button for
+                        // the screen reader too, its value read after the name
                         MouseArea {
                             id: resultArea
                             anchors.fill: parent
                             anchors.topMargin: searchResultFrame.headerHeight
-                            onClicked: entry.catalogKind === "page" ? settingsPane.openPageResult(entry)
-                                                                    : settingsPane.jumpToSetting(entry)
+                            onClicked: searchResultFrame.open()
+                            Accessible.ignored: !window.ui.modern
+                            Accessible.role: Accessible.Button
+                            Accessible.name: window.ui.plainTitle(searchResultFrame.titleText)
+                            Accessible.description: searchResultFrame.valueText
+                            Accessible.onPressAction: searchResultFrame.open()
                         }
 
                         ColumnLayout {
@@ -3182,14 +3261,38 @@ import QtQuick 2.12 as Quick212
                                     }
                                 }
 
+                                // Modern look: the value as text ("On" in the accent), as wide as
+                                // 42 % of the card at most, cut at the end; nothing when unknown
+                                Label {
+                                    visible: searchResultFrame.valueText.length > 0
+                                    text: searchResultFrame.valueText
+                                    color: searchResultFrame.valueOn ? window.ui.accent : window.ui.textMuted
+                                    font.pixelSize: window.ui.fontCaption
+                                    horizontalAlignment: Text.AlignRight
+                                    elide: Text.ElideRight
+                                    maximumLineCount: 1
+                                    textFormat: Text.PlainText
+                                    Layout.alignment: Qt.AlignVCenter
+                                    Layout.maximumWidth: Math.max(0, searchResultFrame.width * 0.42)
+                                }
+
+                                UiIcon {
+                                    visible: window.ui.modern && !settingsPane.changedOnly
+                                    Layout.preferredWidth: 22
+                                    Layout.preferredHeight: 22
+                                    Layout.alignment: Qt.AlignVCenter
+                                    name: "chevron_right"
+                                    color: window.ui.textMuted
+                                }
+
                                 UiSwitch {
-                                    visible: entry.catalogKind === "setting" && entry.type === "boolean"
+                                    visible: !window.ui.modern && entry.catalogKind === "setting" && entry.type === "boolean"
                                     checked: visible ? settingsPane.settingValue(entry) : false
                                     onClicked: settingsPane.setSettingValue(entry, checked)
                                 }
 
                                 UiButton {
-                                    visible: entry.catalogKind === "page"
+                                    visible: !window.ui.modern && entry.catalogKind === "page"
                                     text: qsTr("Open")
                                     onClicked: settingsPane.openPageResult(entry)
                                 }
@@ -3217,8 +3320,11 @@ import QtQuick 2.12 as Quick212
                                 Layout.minimumWidth: 0
                             }
 
+                            // Classic look: the editors of master. Modern look: none, the value
+                            // is shown above and changed on its page
                             RowLayout {
-                                visible: entry.catalogKind === "setting" && entry.type !== "boolean" && settingsPane.optionValues(entry).length === 0
+                                visible: !window.ui.modern && entry.catalogKind === "setting" && entry.type !== "boolean" &&
+                                         settingsPane.optionValues(entry).length === 0
                                 Layout.fillWidth: true
                                 Layout.minimumWidth: 0
                                 Layout.preferredHeight: visible ? implicitHeight : 0
@@ -3263,7 +3369,7 @@ import QtQuick 2.12 as Quick212
 
                             UiComboBox {
                                 id: searchSettingComboBox
-                                visible: entry.catalogKind === "setting" && settingsPane.optionValues(entry).length > 0
+                                visible: !window.ui.modern && entry.catalogKind === "setting" && settingsPane.optionValues(entry).length > 0
                                 Layout.fillWidth: true
                                 Layout.minimumWidth: 0
                                 Layout.preferredHeight: visible ? implicitHeight : 0
@@ -3304,7 +3410,7 @@ import QtQuick 2.12 as Quick212
 
                             UiComboBox {
                                 id: searchVirtualComboBox
-                                visible: entry.catalogKind === "virtual"
+                                visible: !window.ui.modern && entry.catalogKind === "virtual"
                                 Layout.fillWidth: true
                                 Layout.minimumWidth: 0
                                 Layout.preferredHeight: visible ? implicitHeight : 0

@@ -4513,6 +4513,14 @@ In the next window, allow access to the QZ folder.</source>
         <translation>Сейчас скрыта на своей странице – меняйте её здесь</translation>
     </message>
     <message>
+        <source>On</source>
+        <translation>Вкл.</translation>
+    </message>
+    <message>
+        <source>Hidden on its page with the current settings</source>
+        <translation>Скрыта на своей странице при текущих настройках</translation>
+    </message>
+    <message>
         <source>Turn on “%1” to change this setting</source>
         <translation>Включите «%1», чтобы изменить эту настройку</translation>
     </message>
