@@ -548,6 +548,10 @@ import AndroidStatusBar 1.0
                 // Try without colon
                 var plain = qsTranslate(contexts[i], name)
                 if (plain !== name) return plain
+                // A label with its unit filled in on the page: "Bike Weight (%1)". The unit is
+                // added back by searchTitle()
+                var withUnit = qsTranslate(contexts[i], name + " (%1)")
+                if (withUnit !== name + " (%1)") return withUnit.replace("(%1)", "").trim()
             }
             return name
         }
@@ -741,6 +745,179 @@ import AndroidStatusBar 1.0
 
             window.settings_restart_to_apply = true
             toast.show(qsTr("Setting saved!"))
+        }
+
+        // Settings whose own page shows them in other units than they are kept in. The search
+        // shows and takes them the same way, with the factors of the page:
+        // - the paces of a distance: kept as seconds per km, shown as the time of the whole
+        //   distance ("00:25:00" for 5 km at 300)
+        // - the warmup, cooldown and rest paces: seconds per km, shown as hh:mm:ss
+        // - with "Use Miles unit in UI": the weights in pounds (unless "Weight in kg"), the height
+        //   in feet'inches, the speeds in mph, the autolap distance in miles. The factor back
+        //   to the kept unit is the one of the page (1.60934 on some, 1 / 0.621371 on others)
+        readonly property var searchPaceDistances: ({ pacef_1mile: 1.60934, pacef_5km: 5, pacef_10km: 10,
+                                                     pacef_halfmarathon: 21, pacef_marathon: 42 })
+        readonly property var searchPaceKeys: ["trainprogram_warmup_speed", "trainprogram_cooldown_speed",
+                                               "trainprogram_rest_speed"]
+        readonly property var searchMileFactors: ({
+            treadmill_speed_max: 1.60934, treadmill_speed_min: 1.60934, treadmill_step_speed: 1.60934,
+            autolap_distance: 1.60934,
+            peloton_treadmill_walking_min_speed: 1 / 0.621371, peloton_treadmill_running_min_speed: 1 / 0.621371,
+            tile_preset_speed_1_value: 1 / 0.621371, tile_preset_speed_2_value: 1 / 0.621371,
+            tile_preset_speed_3_value: 1 / 0.621371, tile_preset_speed_4_value: 1 / 0.621371,
+            tile_preset_speed_5_value: 1 / 0.621371
+        })
+
+        // "distance", "pace", "weight", "height", "miles", or "" for a value shown as it is kept
+        function searchValueKind(entry) {
+            if (searchPaceDistances[entry.key])
+                return "distance"
+            if (searchPaceKeys.indexOf(entry.key) >= 0)
+                return "pace"
+            if (entry.key === "weight" || entry.key === "bike_weight")
+                return "weight"
+            if (entry.key === "height")
+                return "height"
+            if (searchMileFactors[entry.key])
+                return "miles"
+            return ""
+        }
+
+        function searchInPounds() {
+            return settings.miles_unit && !settings.weight_kg_unit
+        }
+
+        // The unit the page writes next to the name of the setting, "" when it writes none
+        function searchUnit(entry) {
+            var kind = searchValueKind(entry)
+            if (kind === "weight")
+                return searchInPounds() ? qsTr("lbs") : qsTr("kg")
+            if (kind === "height")
+                return settings.miles_unit ? qsTr("ft/in") : qsTr("cm")
+            if (kind === "miles" && entry.key === "autolap_distance")
+                return settings.miles_unit ? qsTr("Mi") : qsTr("KM")
+            if (kind === "miles")
+                return settings.miles_unit ? qsTr("mph") : qsTr("km/h")
+            return ""
+        }
+
+        function searchTitle(entry) {
+            var name = entry._translatedName || entry.name || entry.key
+            var unit = entry.catalogKind === "setting" ? searchUnit(entry) : ""
+            return unit.length > 0 ? name + " (" + unit + ")" : name
+        }
+
+        function searchTimeText(seconds) {
+            var t = Math.round(seconds)
+            var pad = function (n) { return n < 10 ? "0" + n : "" + n }
+            return pad(Math.floor(t / 3600)) + ":" + pad(Math.floor(t / 60) % 60) + ":" + pad(t % 60)
+        }
+
+        // hh:mm:ss as the pace fields take it, NaN for anything else
+        function searchTimeSeconds(text) {
+            var parts = text.trim().split(":")
+            if (parts.length !== 3)
+                return NaN
+            var seconds = 0
+            for (var i = 0; i < parts.length; i++) {
+                if (parts[i].length === 0 || parts[i].length > 2)
+                    return NaN
+                for (var c = 0; c < parts[i].length; c++) {
+                    if (parts[i][c] < "0" || parts[i][c] > "9")
+                        return NaN
+                }
+                var n = parseInt(parts[i], 10)
+                if (i > 0 && n > 59)
+                    return NaN
+                seconds = seconds * 60 + n
+            }
+            return seconds
+        }
+
+        // feet'inches as the height field takes it (5'10", the quotes may be typographic), in cm;
+        // NaN when there are not two numbers
+        function searchFeetInchesCm(text) {
+            var numbers = []
+            var digits = ""
+            for (var i = 0; i <= text.length; i++) {
+                var c = text.charAt(i)
+                if (c >= "0" && c <= "9") {
+                    digits += c
+                } else if (digits.length > 0) {
+                    numbers.push(parseInt(digits, 10))
+                    digits = ""
+                }
+            }
+            return numbers.length === 2 ? numbers[0] * 30.48 + numbers[1] * 2.54 : NaN
+        }
+
+        // The text of the value field of a search result: the value as its page shows it
+        function searchFieldValue(entry) {
+            var value = settingValue(entry)
+            if (entry.type !== "integer" && entry.type !== "number")
+                return value
+            var kind = searchValueKind(entry)
+            if (kind === "distance")
+                return searchTimeText(value * searchPaceDistances[entry.key])
+            if (kind === "pace")
+                return searchTimeText(value)
+            if (kind === "weight")
+                return String(Number((searchInPounds() ? value * 2.20462 : value).toFixed(2)))
+            if (kind === "height" && settings.miles_unit)
+                return Math.floor(value / 30.48) + "'" + Math.round((value % 30.48) / 2.54) + '"'
+            if (kind === "miles") {
+                var shown = (settings.miles_unit ? value * 0.621371 : value).toFixed(1)
+                // The tiles page drops a trailing ".0" of its speed presets
+                return entry.key.indexOf("tile_preset_speed_") === 0 ? String(Number(shown)) : shown
+            }
+            // A real written as a float by the C++ side reads back as 0.33000001...
+            return String(Math.round(value * 1000000) / 1000000)
+        }
+
+        // The value field of a search result written back: converted to the kept unit as its
+        // page does it. Not saved, with the reason in a toast, when it is not a value of the
+        // setting (parseFloat made 0 of the time "00:25:00" and 2 of "2,5")
+        function setSearchFieldValue(entry, text) {
+            if (entry.type !== "integer" && entry.type !== "number") {
+                setSettingValue(entry, text)
+                return
+            }
+            var kind = searchValueKind(entry)
+            var value
+            if (kind === "distance" || kind === "pace") {
+                value = searchTimeSeconds(text)
+                if (isNaN(value)) {
+                    toast.show(qsTranslate("SettingsFormatField", "Enter the time as hh:mm:ss"))
+                    return
+                }
+                setSettingValue(entry, kind === "distance" ? value / searchPaceDistances[entry.key] : value)
+                return
+            }
+            if (kind === "height" && settings.miles_unit) {
+                value = searchFeetInchesCm(text)
+                if (isNaN(value)) {
+                    toast.show(qsTranslate("SettingsFormatField", "Enter the height as feet'inches, e.g. 5'10\""))
+                    return
+                }
+                setSettingValue(entry, value)
+                return
+            }
+            // A decimal comma (the keyboard of the phone's language) counts as a point
+            var trimmed = text.trim()
+            value = Number(trimmed.replace(",", "."))
+            if (trimmed.length === 0 || isNaN(value)) {
+                toast.show(qsTranslate("SettingsNumberField", "Enter a number"))
+                return
+            }
+            if (kind === "weight" && searchInPounds())
+                value = value / 2.20462
+            else if (kind === "miles" && settings.miles_unit)
+                value = value * searchMileFactors[entry.key]
+            if (entry.type === "integer" && Math.round(value) !== value) {
+                toast.show(qsTranslate("SettingsNumberField", "Enter a whole number"))
+                return
+            }
+            setSettingValue(entry, value)
         }
 
         function optionValues(entry) {
@@ -2315,7 +2492,8 @@ import AndroidStatusBar 1.0
         ]
         Timer {
             id: settingsSearchDebounceTimer
-            interval: 1500
+            // The results while typing: after 1.5 s the search looked like it did not react
+            interval: 300
             repeat: false
             onTriggered: settingsPane.updateFilteredSettings()
         }
@@ -2353,7 +2531,8 @@ import AndroidStatusBar 1.0
                             // The text cleared: the whole list of changed settings at once
                             settingsPane.updateFilteredSettings()
                         } else if (settingsPane.settingsSearchActive) {
-                            settingsPane.filteredSettings = []
+                            // The results of the previous text stay until the new ones are
+                            // there: the list no longer blinks away on every key
                             settingsPane.settingsSearchPending = true
                             settingsPane.loadSettingsCatalog()
                             settingsSearchDebounceTimer.restart()
@@ -2456,7 +2635,7 @@ import AndroidStatusBar 1.0
                                     spacing: 2
 
                                     Label {
-                                        text: entry._translatedName || entry.name || entry.key
+                                        text: settingsPane.searchTitle(entry)
                                         font.bold: true
                                         wrapMode: Text.WordWrap
                                         Layout.fillWidth: true
@@ -2513,16 +2692,21 @@ import AndroidStatusBar 1.0
                                     id: searchSettingTextField
                                     Layout.fillWidth: true
                                     Layout.minimumWidth: 0
-                                    text: visible ? settingsPane.settingValue(entry) : ""
+                                    text: visible ? settingsPane.searchFieldValue(entry) : ""
                                     horizontalAlignment: Text.AlignRight
-                                    inputMethodHints: entry.type === "string" ? Qt.ImhNoPredictiveText : Qt.ImhFormattedNumbersOnly
-                                    onAccepted: settingsPane.setSettingValue(entry, text)
+                                    // A time and feet'inches on the full keyboard, as on their page:
+                                    // the number keyboard of Android may have no ':' or '
+                                    readonly property string kind: settingsPane.searchValueKind(entry)
+                                    inputMethodHints: entry.type === "string" || kind === "distance" || kind === "pace" ||
+                                                      (kind === "height" && settings.miles_unit)
+                                                      ? Qt.ImhNoPredictiveText : Qt.ImhFormattedNumbersOnly
+                                    onAccepted: settingsPane.setSearchFieldValue(entry, text)
                                     onActiveFocusChanged: if (this.focus) this.cursorPosition = this.text.length
                                 }
 
                                 Button {
                                     text: qsTr("OK")
-                                    onClicked: settingsPane.setSettingValue(entry, searchSettingTextField.text)
+                                    onClicked: settingsPane.setSearchFieldValue(entry, searchSettingTextField.text)
                                 }
                             }
 
