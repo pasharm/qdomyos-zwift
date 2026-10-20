@@ -1187,6 +1187,28 @@ homeform::homeform(QQmlApplicationEngine *engine, bluetooth *bl) {
             });
     fitProcessor->processDirectory(getWritableAppDir() + "fit");
 
+    // T-246 test only: a sample of the summary 20 s after the start and "Start pressed" 30 s after
+    // it, through speak(), to hear the voice without equipment
+    connect(&m_speech, &QTextToSpeech::stateChanged, this, [this](QTextToSpeech::State st) {
+        qDebug() << "T246 stateChanged" << st << "voice" << m_speech.voice().name();
+    });
+    QTimer::singleShot(20000, this, [this]() {
+        QSettings s;
+        QString text = tr(", speed ") + QStringLiteral("10.0") + tr(" kilometers per hour") + tr(", watt ") +
+                       QStringLiteral("150") + tr(", heart rate ") + QStringLiteral("120");
+        bool on = s.value(QZSettings::tts_enabled, QZSettings::default_tts_enabled).toBool();
+        qDebug() << "T246 sample" << on << text << "state" << m_speech.state();
+        if (on)
+            speak(text);
+        qDebug() << "T246 after sample: voice" << m_speech.voice().name();
+    });
+    QTimer::singleShot(30000, this, [this]() {
+        QSettings s;
+        if (s.value(QZSettings::tts_enabled, QZSettings::default_tts_enabled).toBool())
+            speak(tr("Start pressed"));
+        qDebug() << "T246 start sample: voice" << m_speech.voice().name();
+    });
+
 #if defined(Q_OS_LINUX) && !defined(Q_OS_ANDROID)
     QBluetoothDeviceInfo b;
     deviceConnected(b);
