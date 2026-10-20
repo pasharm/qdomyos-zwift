@@ -162,13 +162,10 @@ ApplicationWindow {
     // A Settings object writes all its properties to the store when any one of them changes
     // (Qt.labs.settings), so a copy read before another page changed a key writes the old value
     // back: a voice or tiles setting was lost with the next change on the settings page.
-    // Brings such keys from the store into the copy. known is the value of every key in the
-    // store at the last call: a key the copy changed itself since then is kept, its own write
-    // is still on the way. The first call (known undefined) only takes the store as it is, and
-    // a key that differs there stays the copy's own until the store has the copy's value: a
-    // Settings object that loads a store without one of its keys writes the defaults of the
-    // properties declared after it, not their values, and only its next write puts them right.
-    // Returns the next known
+    // Brings such keys from the store into the copy. known is what the copy held after the
+    // last call: a key the copy changed itself since then is kept, its own write is still on
+    // the way. The first call (known undefined) only takes that snapshot: it cannot tell the
+    // copy's own changes from the others. Returns the next known
     function reloadSettingsCopy(copy, known) {
         var next = {}
         var reloaded = []
@@ -178,12 +175,8 @@ ApplicationWindow {
             if (type !== "boolean" && type !== "number" && type !== "string")
                 continue
             var stored = settingFromStore(copy.value(key), type)
-            if (stored === undefined || sameSetting(stored, value)) {
+            if (known === undefined || stored === undefined || sameSetting(stored, value)) {
                 next[key] = value
-                continue
-            }
-            if (known === undefined) {
-                next[key] = stored
                 continue
             }
             if (known.hasOwnProperty(key) && !sameSetting(known[key], value)) {
