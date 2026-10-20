@@ -321,10 +321,13 @@ for n in nodes:
         break
 if label:
     cy = (label[1] + label[3]) // 2
+    # The field is a focusable node right of the label on its row, not the OK button (Qt gives
+    # it as a VirtualChild with the value in content-desc, not as an EditText)
     for n in nodes:
         b = box(n)
-        if b and n.get("class") == "android.widget.EditText" and b[1] <= cy <= b[3]:
-            print((b[0] + b[2]) // 2, cy, n.get("text") or "")
+        t = (n.get("text") or "") or (n.get("content-desc") or "")
+        if b and n.get("focusable") == "true" and b[0] >= label[2] and t != "OK" and b[1] <= cy <= b[3]:
+            print((b[0] + b[2]) // 2, cy, t)
             break
 ' ui.xml "$1"
 }
@@ -465,13 +468,16 @@ has '^150$' "T-244: the voice page shows 150 after the settings were opened agai
 
 # 3. Back at once after the change: the voice page is deleted with its write still pending
 mark fast-back
+was=$(switch_state 'Actual Speed')
+want=$([ "$was" = "true" ] && echo false || echo true)
 toggle 'Actual Speed' fast
 sleep 4
 shot e-fast-back
+expect tts_act_speed $want "the voice page closed at once wrote its switch when it was deleted"
 page_toggle
 sleep 3
 shot e-page-toggle
-expect tts_act_speed false "T-244: switch of a page closed at once kept (written when it was deleted)"
+expect tts_act_speed $want "T-244: switch of a page closed at once kept after a change on the settings page"
 expect pause_on_start false "the settings page switch back off"
 
 # 4. Tiles: a tile switched on, back, a change on the settings page
