@@ -1073,8 +1073,9 @@ import QtQuick 2.12 as Quick212
         }
 
         // From the store as well: a value changed on the voice or tiles page, opened over this
-        // one, is not in this page's copy until the settings are opened again. The copy stays the
-        // fallback of a key not written yet, and keeps the bindings of the cards on its property
+        // one, reaches this page's copy only a moment after coming back (reloadSettingsCopy). The
+        // copy stays the fallback of a key not written yet, and keeps the bindings of the cards on
+        // its property
         function settingValue(entry) {
             if (isUiOption(entry.key))
                 return window.ui.option(entry.key)

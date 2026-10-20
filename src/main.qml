@@ -146,8 +146,9 @@ ApplicationWindow {
     // (Qt.labs.settings), so a copy read before another page changed a key writes the old value
     // back: a voice or tiles setting was lost with the next change on the settings page.
     // Brings such keys from the store into the copy. known is what the copy held after the
-    // last call (undefined the first time): a key the copy changed itself since then is kept,
-    // its own write is still on the way. Returns the next known
+    // last call: a key the copy changed itself since then is kept, its own write is still on
+    // the way. The first call (known undefined) only takes that snapshot: it cannot tell the
+    // copy's own changes from the others. Returns the next known
     function reloadSettingsCopy(copy, known) {
         var next = {}
         var reloaded = []
@@ -157,11 +158,11 @@ ApplicationWindow {
             if (type !== "boolean" && type !== "number" && type !== "string")
                 continue
             var stored = settingFromStore(copy.value(key), type)
-            if (stored === undefined || sameSetting(stored, value)) {
+            if (known === undefined || stored === undefined || sameSetting(stored, value)) {
                 next[key] = value
                 continue
             }
-            if (known !== undefined && known.hasOwnProperty(key) && !sameSetting(known[key], value)) {
+            if (known.hasOwnProperty(key) && !sameSetting(known[key], value)) {
                 next[key] = known[key]
                 continue
             }
