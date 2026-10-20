@@ -393,20 +393,46 @@ if label:
     echo "!! OK of '$1': NOT FOUND" >> $STEPLOG
   fi
 }
-# A longer scroll than scroll_to: the voice page entry is near the end of the settings page
+# A longer scroll than scroll_to: the voice page entry is near the end of the settings page.
+# Down first, then back up: scroll_top does not always reach the top of a long page (the
+# classic run 39516300994 went past Tiles Options)
 scroll_far() {
   local i
-  for i in $(seq 1 40); do
+  for i in $(seq 1 70); do
     dump
     if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
       echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
       return 0
     fi
-    adb shell input swipe 700 2100 700 700 300 || true
+    if [ $i -le 35 ]; then
+      adb shell input swipe 700 2100 700 700 300 || true
+    else
+      adb shell input swipe 700 700 700 2100 300 || true
+    fi
     sleep 1
   done
   echo "!! scroll to '$1': NOT FOUND" >> $STEPLOG
   return 1
+}
+# tap_row 'regex': a row of the page, moved off the top bar or the gesture bar first (the modern
+# run 39516308751 tapped Tiles Options at y=8, under the status bar)
+tap_row() {
+  local xy="" y
+  dump
+  [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$1")
+  if [ -n "$xy" ]; then
+    y=${xy#* }
+    if [ "$y" -lt 400 ]; then
+      adb shell input swipe 700 1000 700 1600 400 || true
+      sleep 2
+      dump
+    elif [ "$y" -gt 2100 ]; then
+      adb shell input swipe 700 1900 700 1300 400 || true
+      sleep 2
+      dump
+    fi
+  fi
+  tap_ui "$1"
 }
 TTS='^TTS \(Text to Speech\) Settings.*'
 SUMMARY='Summary Each Seconds:'
@@ -418,7 +444,7 @@ open_settings() {
 open_tts() {
   scroll_top
   scroll_far "$TTS"
-  tap_ui "$TTS"
+  tap_row "$TTS"
   sleep 4
 }
 has_quiet() {
@@ -491,7 +517,7 @@ expect pause_on_start false "the settings page switch back off"
 mark tiles
 scroll_top
 scroll_far '^Tiles Options$'
-tap_ui '^Tiles Options$'
+tap_row '^Tiles Options$'
 sleep 5
 shot f-tiles
 toggle 'Weight loss'
