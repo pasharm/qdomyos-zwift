@@ -428,7 +428,8 @@ shot q-bar
 query 'weight' weight
 has '^Search results.*' "results for weight"
 check_editors "weight"
-value_is 'Player Weight' '80\.5'
+# With T-211 the title carries the unit of its page: "Player Weight (kg)"
+value_is 'Player Weight \(kg\)' '80\.5'
 value_is 'Use kg for weight' 'Off'
 
 query 'ftp%svalue' ftp
@@ -538,7 +539,7 @@ shot q-changed
 results "changed"
 has '^Changed settings.*' "changed list"
 [ "$UI_MODERN" = "true" ] && has '^Reset$' "a Reset button on the changed cards"
-value_is 'Player Weight' '80\.5'
+value_is 'Player Weight \(kg\)' '80\.5'
 value_is 'Strava Upload' 'Request'
 tap_ui '^Changed$'
 sleep 2
