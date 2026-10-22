@@ -3,7 +3,6 @@ import QtQuick.Dialogs 1.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
-import Qt.labs.settings 1.0
 
 ScrollView {
     contentWidth: -1
@@ -34,347 +33,10 @@ ScrollView {
         return settings.miles_unit ? parsedValue / speedPresetMilesConversion : parsedValue
     }
 
-    Settings {
-        id: settings
-        Component.onCompleted: window.retakeSettingsSnapshot(settings)
-        property bool miles_unit: false
-        property bool tile_speed_enabled: true
-        property int  tile_speed_order: 0
-        property bool tile_inclination_enabled: true
-        property int  tile_inclination_order: 1
-        property bool tile_cadence_enabled: true
-        property int  tile_cadence_order: 2
-        property bool tile_elevation_enabled: true
-        property int  tile_elevation_order: 3
-        property bool tile_calories_enabled: true
-        property int  tile_calories_order: 4
-        property bool tile_odometer_enabled: true
-        property int  tile_odometer_order: 5
-        property bool tile_pace_enabled: true
-        property int  tile_pace_order: 6
-        property bool tile_resistance_enabled: true
-        property int  tile_resistance_order: 7
-        property bool tile_watt_enabled: true
-        property int  tile_watt_order: 8
-        property bool tile_weight_loss_enabled: false
-        property int  tile_weight_loss_order: 24
-        property bool tile_avgwatt_enabled: true
-        property int  tile_avgwatt_order: 9
-        property bool tile_ftp_enabled: true
-        property int  tile_ftp_order: 10
-        property bool tile_heart_enabled: true
-        property int  tile_heart_order: 11
-        property bool tile_fan_enabled: true
-        property int  tile_fan_order: 12
-        property bool tile_jouls_enabled: true
-        property int  tile_jouls_order: 13
-        property bool tile_elapsed_enabled: true
-        property int  tile_elapsed_order: 14
-        property bool tile_lapelapsed_enabled: false
-        property int  tile_lapelapsed_order: 17
-        property bool tile_moving_time_enabled: false
-        property int  tile_moving_time_order: 21
-        property bool tile_peloton_offset_enabled: false
-        property int  tile_peloton_offset_order: 22
-        property bool tile_peloton_difficulty_enabled: false
-        property int  tile_peloton_difficulty_order: 32
-        property bool tile_peloton_resistance_enabled: true
-        property int  tile_peloton_resistance_order: 15
-        property bool tile_datetime_enabled: true
-        property int  tile_datetime_order: 16
-        property bool tile_target_resistance_enabled: true
-        property int  tile_target_resistance_order: 15
-        property bool tile_target_peloton_resistance_enabled: false
-        property int  tile_target_peloton_resistance_order: 21
-        property bool tile_target_cadence_enabled: false
-        property int  tile_target_cadence_order: 19
-        property bool tile_target_power_enabled: false
-        property int  tile_target_power_order: 20
-        property bool tile_target_zone_enabled: false
-        property int  tile_target_zone_order: 24
-        property bool tile_target_speed_enabled: false
-        property int  tile_target_speed_order: 27
-        property bool tile_target_incline_enabled: false
-        property int  tile_target_incline_order: 28
-        property bool tile_strokes_count_enabled: false
-        property int  tile_strokes_count_order: 22
-        property bool tile_strokes_length_enabled: false
-        property int  tile_strokes_length_order: 23
-        property bool tile_watt_kg_enabled: false
-        property int  tile_watt_kg_order: 25
-        property bool tile_gears_enabled: false
-        property int  tile_gears_order: 26
-        property bool tile_remainingtimetrainprogramrow_enabled: false
-        property int  tile_remainingtimetrainprogramrow_order: 27
-        property bool tile_nextrowstrainprogram_enabled: false
-        property int  tile_nextrowstrainprogram_order: 31
-        property bool tile_mets_enabled: false
-        property int  tile_mets_order: 28
-        property bool tile_targetmets_enabled: false
-        property int  tile_targetmets_order: 29
-        property bool tile_steering_angle_enabled: false
-        property int  tile_steering_angle_order: 30
-        property bool tile_pid_hr_enabled: false
-        property int  tile_pid_hr_order: 31
-        property bool tile_ext_incline_enabled: false
-        property int  tile_ext_incline_order: 32
-        property bool tile_cadence_color_enabled: false
-        property bool tile_peloton_remaining_enabled: false
-        property int  tile_peloton_remaining_order: 22
-        property bool tile_peloton_resistance_color_enabled: false
-        property bool tile_instantaneous_stride_length_enabled: false
-        property int  tile_instantaneous_stride_length_order: 32
-        property bool tile_ground_contact_enabled: false
-        property int  tile_ground_contact_order: 33
-        property bool tile_vertical_oscillation_enabled: false
-        property int  tile_vertical_oscillation_order: 34
-        property bool tile_preset_resistance_1_enabled: false
-        property int tile_preset_resistance_1_order: 33
-        property real tile_preset_resistance_1_value: 1.0
-        property string tile_preset_resistance_1_label: "Res. 1"
-        property bool tile_preset_resistance_2_enabled: false
-        property int tile_preset_resistance_2_order: 34
-        property real tile_preset_resistance_2_value: 10.0
-        property string tile_preset_resistance_2_label: "Res. 10"
-        property bool tile_preset_resistance_3_enabled: false
-        property int tile_preset_resistance_3_order: 35
-        property real tile_preset_resistance_3_value: 20.0
-        property string tile_preset_resistance_3_label: "Res. 20"
-        property bool tile_preset_resistance_4_enabled: false
-        property int tile_preset_resistance_4_order: 36
-        property real tile_preset_resistance_4_value: 25.0
-        property string tile_preset_resistance_4_label: "Res. 25"
-        property bool tile_preset_resistance_5_enabled: false
-        property int tile_preset_resistance_5_order: 37
-        property real tile_preset_resistance_5_value: 30.0
-        property string tile_preset_resistance_5_label: "Res. 30"
-        property bool tile_preset_speed_1_enabled: false
-        property int tile_preset_speed_1_order: 38
-        property real tile_preset_speed_1_value: 5.0
-        property string tile_preset_speed_1_label: "5 km/h"
-        property bool tile_preset_speed_2_enabled: false
-        property int tile_preset_speed_2_order: 39
-        property real tile_preset_speed_2_value: 7.0
-        property string tile_preset_speed_2_label: "7 km/h"
-        property bool tile_preset_speed_3_enabled: false
-        property int tile_preset_speed_3_order: 40
-        property real tile_preset_speed_3_value: 10.0
-        property string tile_preset_speed_3_label: "10 km/h"
-        property bool tile_preset_speed_4_enabled: false
-        property int tile_preset_speed_4_order: 41
-        property real tile_preset_speed_4_value: 11.0
-        property string tile_preset_speed_4_label: "11 km/h"
-        property bool tile_preset_speed_5_enabled: false
-        property int tile_preset_speed_5_order: 42
-        property real tile_preset_speed_5_value: 12.0
-        property string tile_preset_speed_5_label: "12 km/h"
-        property bool tile_preset_inclination_1_enabled: false
-        property int tile_preset_inclination_1_order: 43
-        property real tile_preset_inclination_1_value: 0.0
-        property string tile_preset_inclination_1_label: "0%"
-        property bool tile_preset_inclination_2_enabled: false
-        property int tile_preset_inclination_2_order: 44
-        property real tile_preset_inclination_2_value: 1.0
-        property string tile_preset_inclination_2_label: "1%"
-        property bool tile_preset_inclination_3_enabled: false
-        property int tile_preset_inclination_3_order: 45
-        property real tile_preset_inclination_3_value: 2.0
-        property string tile_preset_inclination_3_label: "2%"
-        property bool tile_preset_inclination_4_enabled: false
-        property int tile_preset_inclination_4_order: 46
-        property real tile_preset_inclination_4_value: 3.0
-        property string tile_preset_inclination_4_label: "3%"
-        property bool tile_preset_inclination_5_enabled: false
-        property int tile_preset_inclination_5_order: 47
-        property real tile_preset_inclination_5_value: 4.0
-        property string tile_preset_inclination_5_label: "4%"
-		  property string tile_preset_resistance_1_color: "grey"
-		  property string tile_preset_resistance_2_color: "grey"
-		  property string tile_preset_resistance_3_color: "grey"
-		  property string tile_preset_resistance_4_color: "grey"
-		  property string tile_preset_resistance_5_color: "grey"
-		  property string tile_preset_speed_1_color: "grey"
-		  property string tile_preset_speed_2_color: "grey"
-		  property string tile_preset_speed_3_color: "grey"
-		  property string tile_preset_speed_4_color: "grey"
-		  property string tile_preset_speed_5_color: "grey"
-		  property string tile_preset_inclination_1_color: "grey"
-		  property string tile_preset_inclination_2_color: "grey"
-		  property string tile_preset_inclination_3_color: "grey"
-		  property string tile_preset_inclination_4_color: "grey"
-		  property string tile_preset_inclination_5_color: "grey"
-		  property bool tile_avg_watt_lap_enabled: false
-		  property int tile_avg_watt_lap_order: 48
-        property bool tile_pace_last500m_enabled: true
-        property int  tile_pace_last500m_order: 49
-        property bool tile_target_pace_enabled: false
-        property int  tile_target_pace_order: 50
-        property bool tile_step_count_enabled: false
-        property int  tile_step_count_order: 51
-        property bool tile_erg_mode_enabled: false
-        property int  tile_erg_mode_order: 52
-        property bool tile_rss_enabled: false
-        property int  tile_rss_order: 53        
-        property bool tile_biggears_enabled: false
-        property int  tile_biggears_order: 54
-        property bool tile_biggears_swap: false
-        
-        property bool tile_preset_powerzone_1_enabled: false
-        property int tile_preset_powerzone_1_order: 55
-        property real tile_preset_powerzone_1_value: 1.0
-        property string tile_preset_powerzone_1_label: "Zone 1"
-        property string tile_preset_powerzone_1_color: "white"
-
-        property bool tile_preset_powerzone_2_enabled: false
-        property int tile_preset_powerzone_2_order: 56
-        property real tile_preset_powerzone_2_value: 2.0
-        property string tile_preset_powerzone_2_label: "Zone 2"
-        property string tile_preset_powerzone_2_color: "limegreen"
-
-        property bool tile_preset_powerzone_3_enabled: false
-        property int tile_preset_powerzone_3_order: 57
-        property real tile_preset_powerzone_3_value: 3.0
-        property string tile_preset_powerzone_3_label: "Zone 3"
-        property string tile_preset_powerzone_3_color: "gold"
-
-        property bool tile_preset_powerzone_4_enabled: false
-        property int tile_preset_powerzone_4_order: 58
-        property real tile_preset_powerzone_4_value: 4.0
-        property string tile_preset_powerzone_4_label: "Zone 4"
-        property string tile_preset_powerzone_4_color: "orange"
-
-        property bool tile_preset_powerzone_5_enabled: false
-        property int tile_preset_powerzone_5_order: 59
-        property real tile_preset_powerzone_5_value: 5.0
-        property string tile_preset_powerzone_5_label: "Zone 5"
-        property string tile_preset_powerzone_5_color: "darkorange"
-
-        property bool tile_preset_powerzone_6_enabled: false
-        property int tile_preset_powerzone_6_order: 60
-        property real tile_preset_powerzone_6_value: 6.0
-        property string tile_preset_powerzone_6_label: "Zone 6"
-        property string tile_preset_powerzone_6_color: "orangered"
-
-        property bool tile_preset_powerzone_7_enabled: false
-        property int tile_preset_powerzone_7_order: 61
-        property real tile_preset_powerzone_7_value: 7.0
-        property string tile_preset_powerzone_7_label: "Zone 7"
-        property string tile_preset_powerzone_7_color: "red"        
-
-        property bool tile_hr_time_in_zone_1_enabled: false
-        property int  tile_hr_time_in_zone_1_order: 62
-        property bool tile_hr_time_in_zone_2_enabled: false
-        property int  tile_hr_time_in_zone_2_order: 63
-        property bool tile_hr_time_in_zone_3_enabled: false
-        property int  tile_hr_time_in_zone_3_order: 64
-        property bool tile_hr_time_in_zone_4_enabled: false
-        property int  tile_hr_time_in_zone_4_order: 65
-        property bool tile_hr_time_in_zone_5_enabled: false
-        property int  tile_hr_time_in_zone_5_order: 66
-
-        property bool tile_coretemperature_enabled: false
-        property int  tile_coretemperature_order: 67
-
-        property bool tile_heat_time_in_zone_1_enabled: false
-        property int  tile_heat_time_in_zone_1_order: 68
-        property bool tile_heat_time_in_zone_2_enabled: false
-        property int  tile_heat_time_in_zone_2_order: 69
-        property bool tile_heat_time_in_zone_3_enabled: false
-        property int  tile_heat_time_in_zone_3_order: 70
-        property bool tile_heat_time_in_zone_4_enabled: false
-        property int  tile_heat_time_in_zone_4_order: 71
-
-        property bool tile_hr_time_in_zone_individual_mode: false
-
-        property bool tile_auto_virtual_shifting_cruise_enabled: false
-        property int  tile_auto_virtual_shifting_cruise_order: 72
-        property bool tile_auto_virtual_shifting_climb_enabled: false
-        property int  tile_auto_virtual_shifting_climb_order: 73
-        property bool tile_auto_virtual_shifting_sprint_enabled: false
-        property int  tile_auto_virtual_shifting_sprint_order: 74
-        property bool tile_negative_inclination_enabled: false
-        property int  tile_negative_inclination_order: 75
-        property bool tile_avg_pace_enabled: false
-        property int  tile_avg_pace_order: 76
-        property bool tile_power_avg_enabled: false
-        property int  tile_power_avg_order: 77
-
-        property bool tile_heart_show_as_percent: false
-
-        property bool tile_hrv_enabled: false
-        property int  tile_hrv_order: 78        
-    
-        property bool tile_grade_adjusted_pace_enabled: false
-        property int  tile_grade_adjusted_pace_order: 79
-
-        property bool shortcuts_enabled: false
-        property string shortcut_speed_plus: ""
-        property string shortcut_speed_minus: ""
-        property string shortcut_inclination_plus: ""
-        property string shortcut_inclination_minus: ""
-        property string shortcut_resistance_plus: ""
-        property string shortcut_resistance_minus: ""
-        property string shortcut_peloton_resistance_plus: ""
-        property string shortcut_peloton_resistance_minus: ""
-        property string shortcut_target_resistance_plus: ""
-        property string shortcut_target_resistance_minus: ""
-        property string shortcut_target_power_plus: ""
-        property string shortcut_target_power_minus: ""
-        property string shortcut_target_zone_plus: ""
-        property string shortcut_target_zone_minus: ""
-        property string shortcut_target_speed_plus: ""
-        property string shortcut_target_speed_minus: ""
-        property string shortcut_target_incline_plus: ""
-        property string shortcut_target_incline_minus: ""
-        property string shortcut_fan_plus: ""
-        property string shortcut_fan_minus: ""
-        property string shortcut_peloton_offset_plus: ""
-        property string shortcut_peloton_offset_minus: ""
-        property string shortcut_peloton_remaining_plus: ""
-        property string shortcut_peloton_remaining_minus: ""
-        property string shortcut_remaining_time_plus: ""
-        property string shortcut_remaining_time_minus: ""
-        property string shortcut_gears_plus: ""
-        property string shortcut_gears_minus: ""
-        property string shortcut_pid_hr_plus: ""
-        property string shortcut_pid_hr_minus: ""
-        property string shortcut_ext_incline_plus: ""
-        property string shortcut_ext_incline_minus: ""
-        property string shortcut_biggears_plus: ""
-        property string shortcut_biggears_minus: ""
-        property string shortcut_avs_cruise: ""
-        property string shortcut_avs_climb: ""
-        property string shortcut_avs_sprint: ""
-        property string shortcut_power_avg: ""
-        property string shortcut_erg_mode: ""
-        property string shortcut_preset_resistance_1: ""
-        property string shortcut_preset_resistance_2: ""
-        property string shortcut_preset_resistance_3: ""
-        property string shortcut_preset_resistance_4: ""
-        property string shortcut_preset_resistance_5: ""
-        property string shortcut_preset_speed_1: ""
-        property string shortcut_preset_speed_2: ""
-        property string shortcut_preset_speed_3: ""
-        property string shortcut_preset_speed_4: ""
-        property string shortcut_preset_speed_5: ""
-        property string shortcut_preset_inclination_1: ""
-        property string shortcut_preset_inclination_2: ""
-        property string shortcut_preset_inclination_3: ""
-        property string shortcut_preset_inclination_4: ""
-        property string shortcut_preset_inclination_5: ""
-        property string shortcut_preset_powerzone_1: ""
-        property string shortcut_preset_powerzone_2: ""
-        property string shortcut_preset_powerzone_3: ""
-        property string shortcut_preset_powerzone_4: ""
-        property string shortcut_preset_powerzone_5: ""
-        property string shortcut_preset_powerzone_6: ""
-        property string shortcut_preset_powerzone_7: ""
-        property string shortcut_auto_resistance: ""
-        property string shortcut_lap: ""
-        property string shortcut_start_stop: ""            
-        property bool tile_watt_color_enabled: true
-        property bool tile_pace_color_enabled: true
-    }
+    // The Settings object of settings.qml, given by the page that opens this one: one object
+    // for all the settings pages, so a page no longer writes back an old copy of what another
+    // page changed
+    property var settings
 
 
     ColumnLayout {
@@ -407,13 +69,14 @@ ScrollView {
             textColor: Material.color(Material.Grey)
             color: Material.backgroundColor
             accordionContent: "settings-shortcuts.qml"
+            pageSettings: settingsTilesPane.settings
         }
 
         AccordionCheckElement {
             id: speedEnabledAccordion
             title: qsTr("Speed")
             linkedBoolSetting: "tile_speed_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Speed in kilometers per hour. (To set your speed units to miles, go to Settings > General Options > Use Miles unit in UI).")
             accordionContent: RowLayout {
@@ -450,7 +113,7 @@ ScrollView {
             id: inclinationEnabledAccordion
             title: qsTr("Inclination")
             linkedBoolSetting: "tile_inclination_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: RowLayout {
                 spacing: 10
@@ -486,7 +149,7 @@ ScrollView {
             id: cadenceEnabledAccordion
             title: qsTr("Cadence")
             linkedBoolSetting: "tile_cadence_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Bike pedal cadence in rotations per minute (RPM) or Treadmill cadence if a shoe-mounted cadence sensor or Apple Watch QZ app is used.")
             accordionContent:  ColumnLayout {
@@ -553,7 +216,7 @@ ScrollView {
             id: elevationEnabledAccordion
             title: qsTr("Elevation Gain")
             linkedBoolSetting: "tile_elevation_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: RowLayout {
                 spacing: 10
@@ -589,7 +252,7 @@ ScrollView {
             id: negativeInclinationEnabledAccordion
             title: qsTr("Negative Elevation Gain (Descent)")
             linkedBoolSetting: "tile_negative_inclination_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays the total negative elevation gain (descent) in meters or feet accumulated during the workout.")
             accordionContent: RowLayout {
@@ -624,7 +287,7 @@ ScrollView {
             id: caloriesEnabledAccordion
             title: qsTr("Calories")
             linkedBoolSetting: "tile_calories_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Estimated calories burned during session, calculated on weight, age, and watts.")
             accordionContent: RowLayout {
@@ -661,7 +324,7 @@ ScrollView {
             id: odometerEnabledAccordion
             title: qsTr("Odometer")
             linkedBoolSetting: "tile_odometer_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Estimated distance traveled during the session.")
             accordionContent: RowLayout {
@@ -698,7 +361,7 @@ ScrollView {
             id: paceEnabledAccordion
             title: qsTr("Pace")
             linkedBoolSetting: "tile_pace_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Current pace per mile or kilometer (Treadmill, Elliptical and Rower)")
             accordionContent: ColumnLayout {
@@ -752,7 +415,7 @@ ScrollView {
             id: avgPaceEnabledAccordion
             title: qsTr("Average Pace")
             linkedBoolSetting: "tile_avg_pace_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: RowLayout {
                 spacing: 10
@@ -788,7 +451,7 @@ ScrollView {
             id: gradeAdjustedPaceEnabledAccordion
             title: qsTr("Grade Adjusted Pace")
             linkedBoolSetting: "tile_grade_adjusted_pace_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             // Modern look: the Minetti label below goes into the card
             description: window.ui.modern ? qsTr("Flat-equivalent pace computed from treadmill incline using the Minetti cost model.") : ""
@@ -840,7 +503,7 @@ ScrollView {
             id: resistanceEnabledAccordion
             title: qsTr("Resistance")
             linkedBoolSetting: "tile_resistance_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays your bike’s resistance. The +/- buttons can be used to change resistance, if your bike is compatible.")
             accordionContent: RowLayout {
@@ -877,7 +540,7 @@ ScrollView {
             id: wattEnabledAccordion
             title: qsTr("Watt")
             linkedBoolSetting: "tile_watt_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays the watts generated by your current effort. Watt is also referred to as output (for example, in Peloton). If your equipment does not communicate watts, QZ will calculate watts using resistance and cadence.")
             accordionContent:  ColumnLayout {
@@ -931,7 +594,7 @@ ScrollView {
             id: weightLossEnabledAccordion
             title: qsTr("Weight loss")
             linkedBoolSetting: "tile_weight_loss_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Estimation of weight loss during the session.")
             accordionContent:  RowLayout {
@@ -969,7 +632,7 @@ ScrollView {
             id: avgwattEnabledAccordion
             title: qsTr("AVG Watt")
             linkedBoolSetting: "tile_avgwatt_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Average watts produced for the session.")
             accordionContent: RowLayout {
@@ -1007,7 +670,7 @@ ScrollView {
 		      id: avgwattLapEnabledAccordion
 				title: qsTr("AVG Watt Lap")
 				linkedBoolSetting: "tile_avg_watt_lap_enabled"
-				settings: settings
+				settings: settingsTilesPane.settings
 				card: true
 				accordionContent: RowLayout {
 				    spacing: 10
@@ -1043,7 +706,7 @@ ScrollView {
             id: ftpEnabledAccordion
             title: "FTP %"
             linkedBoolSetting: "tile_ftp_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Percentage of current FTP and current FTP zone.")
             accordionContent: RowLayout {
@@ -1080,7 +743,7 @@ ScrollView {
             id: heartEnabledAccordion
             title: qsTr("Heart")
             linkedBoolSetting: "tile_heart_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 UiSwitchDelegate {
@@ -1146,7 +809,7 @@ ScrollView {
             id: fanEnabledAccordion
             title: qsTr("Fan")
             linkedBoolSetting: "tile_fan_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Built-in treadmill fan speed (Treadmill only)")
             accordionContent: RowLayout {
@@ -1183,7 +846,7 @@ ScrollView {
             id: joulsEnabledAccordion
             title: qsTr("Jouls")
             linkedBoolSetting: "tile_jouls_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Cumulative power produced during the session in kilojoules.")
             accordionContent: RowLayout {
@@ -1220,7 +883,7 @@ ScrollView {
             id: elapsedEnabledAccordion
             title: qsTr("Elapsed")
             linkedBoolSetting: "tile_elapsed_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Total time from start of the session.")
             accordionContent: RowLayout {
@@ -1257,7 +920,7 @@ ScrollView {
             id: movingTimeEnabledAccordion
             title: qsTr("Moving Time")
             linkedBoolSetting: "tile_moving_time_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Total time moving during the session.")
             accordionContent: RowLayout {
@@ -1294,7 +957,7 @@ ScrollView {
             id: pelotonOffsetEnabledAccordion
             title: qsTr("Peloton Offset")
             linkedBoolSetting: "tile_peloton_offset_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Allows you to sync resistance and cadence target changes with the Peloton coach’s callouts. If the targets are changing in QZ after the coach’s callouts, use the ‘+’ button to add seconds (essentially speeding QZ up). Use the ‘-’ button to slow QZ down. Use this tile in conjunction with the Remaining Time/Row tile (see below).")
             accordionContent: RowLayout {
@@ -1331,7 +994,7 @@ ScrollView {
             id: pelotonRemainingEnabledAccordion
             title: qsTr("Peloton Remaining")
             linkedBoolSetting: "tile_peloton_remaining_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays time remaining in Peloton class.")
             accordionContent: RowLayout {
@@ -1369,7 +1032,7 @@ ScrollView {
             id: pelotonDifficultyEnabledAccordion
             title: qsTr("Peloton Difficulty")
             linkedBoolSetting: "tile_peloton_difficulty_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: RowLayout {
                 spacing: 10
@@ -1404,7 +1067,7 @@ ScrollView {
             id: lapElapsedEnabledAccordion
             title: qsTr("Lap Elapsed")
             linkedBoolSetting: "tile_lapelapsed_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: RowLayout {
                 spacing: 10
@@ -1440,7 +1103,7 @@ ScrollView {
             id: pelotonResistanceEnabledAccordion
             title: qsTr("Peloton Resistance")
             linkedBoolSetting: "tile_peloton_resistance_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Resistance of your bike converted to the Peloton bike scale of 1 to 100.")
             accordionContent: ColumnLayout {
@@ -1493,7 +1156,7 @@ ScrollView {
             id: targetResistanceEnabledAccordion
             title: qsTr("Target Resistance")
             linkedBoolSetting: "tile_target_resistance_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class's resistance target up or down for the rest of the ride.")
             accordionContent: RowLayout {
@@ -1531,7 +1194,7 @@ ScrollView {
             id: targetPelotonResistanceEnabledAccordion
             title: qsTr("Target Peloton Resistance")
             linkedBoolSetting: "tile_target_peloton_resistance_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays target resistance converted to the Peloton bike scale of 1 to 100. For example, during a Peloton class, you want the resistance displayed in this tile to match the Peloton Resistance Tile.")
             accordionContent: RowLayout {
@@ -1568,7 +1231,7 @@ ScrollView {
             id: targetCadenceEnabledAccordion
             title: qsTr("Target Cadence")
             linkedBoolSetting: "tile_target_cadence_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays target cadence.")
             accordionContent: RowLayout {
@@ -1605,7 +1268,7 @@ ScrollView {
             id: targetPowerEnabledAccordion
             title: qsTr("Target Power")
             linkedBoolSetting: "tile_target_power_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays target output (watts) when this information is provided by third-party apps.")
             accordionContent: RowLayout {
@@ -1643,7 +1306,7 @@ ScrollView {
             id: targetZoneEnabledAccordion
             title: qsTr("Target Power Zone")
             linkedBoolSetting: "tile_target_zone_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays the target power zone when this information is provided by third-party apps.")
             accordionContent: RowLayout {
@@ -1680,7 +1343,7 @@ ScrollView {
             id: targetSpeedEnabledAccordion
             title: qsTr("Target Speed")
             linkedBoolSetting: "tile_target_speed_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: RowLayout {
                 spacing: 10
@@ -1716,7 +1379,7 @@ ScrollView {
             id: targetPaceEnabledAccordion
             title: qsTr("Target Pace")
             linkedBoolSetting: "tile_target_pace_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: RowLayout {
                 spacing: 10
@@ -1752,7 +1415,7 @@ ScrollView {
             id: targetInclineEnabledAccordion
             title: qsTr("Target Incline")
             linkedBoolSetting: "tile_target_incline_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: RowLayout {
                 spacing: 10
@@ -1787,7 +1450,7 @@ ScrollView {
             id: wattKgEnabledAccordion
             title: qsTr("Watt/Kg")
             linkedBoolSetting: "tile_watt_kg_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Calculates your output (watts) divided by your weight. This is the primary metric used by Zwift and similar apps to calculate your virtual speed. NOTE: This is a much better metric to use than Output/Watts when comparing your effort to other users. This is why Peloton’s leaderboard, which uses only Output, is flawed.")
             accordionContent: RowLayout {
@@ -1824,7 +1487,7 @@ ScrollView {
             id: gearsEnabledAccordion
             title: qsTr("Gears")
             linkedBoolSetting: "tile_gears_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Allows you to change resistance while in Auto-Follow Mode.This tile allows you override the target resistance sent by third-party apps. For example, you would use the Gears Tile to increase resistance and generate more watts for sprinting in Zwift.")
             accordionContent: RowLayout {
@@ -1860,7 +1523,7 @@ ScrollView {
         AccordionCheckElement {
             title: qsTr("Gears Big Buttons")
             linkedBoolSetting: "tile_biggears_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("It shows 2 big gear buttons on the UI")
             accordionContent: ColumnLayout {
@@ -1911,7 +1574,7 @@ ScrollView {
             //: Tile title: time left in the current step (row) of the workout program, not rowing and not a lap.
             title: qsTr("Remaining Time/Row")
             linkedBoolSetting: "tile_remainingtimetrainprogramrow_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays the time remaining until the next cadence and/or resistance interval.")
             accordionContent: RowLayout {
@@ -1949,7 +1612,7 @@ ScrollView {
             //: Tile title: the next steps (rows) of the loaded workout program, not a table row and not rowing.
             title: qsTr("Next Rows")
             linkedBoolSetting: "tile_nextrowstrainprogram_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays the next Peloton interval with duration and FTP Zone (in Power Zone classes) or Peloton Resistance (non–Power Zone classes).")
             accordionContent: RowLayout {
@@ -1986,7 +1649,7 @@ ScrollView {
             id: metsEnabledAccordion
             title: qsTr("METS")
             linkedBoolSetting: "tile_mets_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays metabolic equivalents (METs), a measurement of energy expenditure and amount of oxygen used by the body compared to the body at rest. (e.g., 4 METS requires the body to use 4 times as much oxygen than when at rest, which means it requires more energy and burns more calories).")
             accordionContent: RowLayout {
@@ -2023,7 +1686,7 @@ ScrollView {
             id: targetMetsEnabledAccordion
             title: qsTr("Target METS")
             linkedBoolSetting: "tile_targetmets_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: RowLayout {
                 spacing: 10
@@ -2059,7 +1722,7 @@ ScrollView {
             id: datetimeEnabledAccordion
             title: qsTr("Time")
             linkedBoolSetting: "tile_datetime_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays the current time.")
             accordionContent: RowLayout {
@@ -2096,7 +1759,7 @@ ScrollView {
             id: targetStrokesCountAccordion
             title: qsTr("Strokes Count")
             linkedBoolSetting: "tile_strokes_count_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("(Rower only) Displays the number of strokes rowed.")
             accordionContent: RowLayout {
@@ -2133,7 +1796,7 @@ ScrollView {
             id: targetStrokesLengthAccordion
             title: qsTr("Stroke Length")
             linkedBoolSetting: "tile_strokes_length_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("(Rower only) Displays the stroke length.")
             accordionContent: RowLayout {
@@ -2170,7 +1833,7 @@ ScrollView {
             id: targetSteeringAngleEnabledAccordion
             title: qsTr("Steering Angle")
             linkedBoolSetting: "tile_steering_angle_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("(Elite Rizer only) Displays steering angle.")
             accordionContent: RowLayout {
@@ -2207,7 +1870,7 @@ ScrollView {
             id: targetPIDHrAccordion
             title: qsTr("PID HR Zone")
             linkedBoolSetting: "tile_pid_hr_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Use this tile to display the target heart rate zone in which you’ve chosen to work out in Settings > Training Program Options.")
             accordionContent: RowLayout {
@@ -2244,7 +1907,7 @@ ScrollView {
             id: extInclineAccordion
             title: qsTr("External Incline")
             linkedBoolSetting: "tile_ext_incline_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("(Elite Rizer only) Allows control of the incline of external inclination equipment.")
             accordionContent: RowLayout {
@@ -2281,7 +1944,7 @@ ScrollView {
             id: strideLength
             title: qsTr("Stride Length")
             linkedBoolSetting: "tile_instantaneous_stride_length_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("(requires a compatible footpod with accelerometer; treadmill only) Displays stride while walking or running.")
             accordionContent: RowLayout {
@@ -2318,7 +1981,7 @@ ScrollView {
             id: groundContact
             title: qsTr("Ground Contact")
             linkedBoolSetting: "tile_ground_contact_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("(requires a compatible footpod with accelerometer; treadmill only) Displays time foot is on contact with ground while walking or running.")
             accordionContent: RowLayout {
@@ -2355,7 +2018,7 @@ ScrollView {
             id: verticalOscillation
             title: qsTr("Vertical Oscillation")
             linkedBoolSetting: "tile_vertical_oscillation_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("(requires a compatible footpod with accelerometer; treadmill only) Displays the up and down movement while walking or running.")
             accordionContent: RowLayout {
@@ -2392,7 +2055,7 @@ ScrollView {
             id: paceLast500mEnabledAccordion
             title: qsTr("Pace Last 500m")
             linkedBoolSetting: "tile_pace_last500m_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: RowLayout {
                 spacing: 10
@@ -2428,7 +2091,7 @@ ScrollView {
             id: stepCountEnabledAccordion
             title: qsTr("Step Count")
             linkedBoolSetting: "tile_step_count_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: RowLayout {
                 spacing: 10
@@ -2464,7 +2127,7 @@ ScrollView {
             id: ergModeEnabledAccordion
             title: qsTr("Erg Mode")
             linkedBoolSetting: "tile_erg_mode_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: RowLayout {
                 spacing: 10
@@ -2499,7 +2162,7 @@ ScrollView {
         AccordionCheckElement {
             title: qsTr("Running Stress Score")
             linkedBoolSetting: "tile_rss_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: RowLayout {
                 spacing: 10
@@ -2533,7 +2196,7 @@ ScrollView {
             id: presetResistance1EnabledAccordion
             title: qsTr("Preset Resistance 1")
             linkedBoolSetting: "tile_preset_resistance_1_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -2655,7 +2318,7 @@ ScrollView {
             id: presetResistance2EnabledAccordion
             title: qsTr("Preset Resistance 2")
             linkedBoolSetting: "tile_preset_resistance_2_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -2777,7 +2440,7 @@ ScrollView {
             id: presetResistance3EnabledAccordion
             title: qsTr("Preset Resistance 3")
             linkedBoolSetting: "tile_preset_resistance_3_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -2899,7 +2562,7 @@ ScrollView {
             id: presetResistance4EnabledAccordion
             title: qsTr("Preset Resistance 4")
             linkedBoolSetting: "tile_preset_resistance_4_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -3021,7 +2684,7 @@ ScrollView {
             id: presetResistance5EnabledAccordion
             title: qsTr("Preset Resistance 5")
             linkedBoolSetting: "tile_preset_resistance_5_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -3143,7 +2806,7 @@ ScrollView {
             id: presetSpeed1EnabledAccordion
             title: qsTr("Preset Speed 1")
             linkedBoolSetting: "tile_preset_speed_1_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -3269,7 +2932,7 @@ ScrollView {
             id: presetSpeed2EnabledAccordion
             title: qsTr("Preset Speed 2")
             linkedBoolSetting: "tile_preset_speed_2_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -3395,7 +3058,7 @@ ScrollView {
             id: presetSpeed3EnabledAccordion
             title: qsTr("Preset Speed 3")
             linkedBoolSetting: "tile_preset_speed_3_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -3521,7 +3184,7 @@ ScrollView {
             id: presetSpeed4EnabledAccordion
             title: qsTr("Preset Speed 4")
             linkedBoolSetting: "tile_preset_speed_4_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -3647,7 +3310,7 @@ ScrollView {
             id: presetSpeed5EnabledAccordion
             title: qsTr("Preset Speed 5")
             linkedBoolSetting: "tile_preset_speed_5_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -3773,7 +3436,7 @@ ScrollView {
             id: presetInclination1EnabledAccordion
             title: qsTr("Preset Inclination 1")
             linkedBoolSetting: "tile_preset_inclination_1_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -3895,7 +3558,7 @@ ScrollView {
             id: presetInclination2EnabledAccordion
             title: qsTr("Preset Inclination 2")
             linkedBoolSetting: "tile_preset_inclination_2_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -4017,7 +3680,7 @@ ScrollView {
             id: presetInclination3EnabledAccordion
             title: qsTr("Preset Inclination 3")
             linkedBoolSetting: "tile_preset_inclination_3_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -4139,7 +3802,7 @@ ScrollView {
             id: presetInclination4EnabledAccordion
             title: qsTr("Preset Inclination 4")
             linkedBoolSetting: "tile_preset_inclination_4_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -4261,7 +3924,7 @@ ScrollView {
             id: presetInclination5EnabledAccordion
             title: qsTr("Preset Inclination 5")
             linkedBoolSetting: "tile_preset_inclination_5_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -4383,7 +4046,7 @@ ScrollView {
             id: presetPowerZone1EnabledAccordion
             title: qsTr("Preset Power Zone 1")
             linkedBoolSetting: "tile_preset_powerzone_1_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -4497,7 +4160,7 @@ ScrollView {
             id: presetPowerZone2EnabledAccordion
             title: qsTr("Preset Power Zone 2")
             linkedBoolSetting: "tile_preset_powerzone_2_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -4611,7 +4274,7 @@ ScrollView {
             id: presetPowerZone3EnabledAccordion
             title: qsTr("Preset Power Zone 3")
             linkedBoolSetting: "tile_preset_powerzone_3_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -4725,7 +4388,7 @@ ScrollView {
             id: presetPowerZone4EnabledAccordion
             title: qsTr("Preset Power Zone 4")
             linkedBoolSetting: "tile_preset_powerzone_4_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -4839,7 +4502,7 @@ ScrollView {
             id: presetPowerZone5EnabledAccordion
             title: qsTr("Preset Power Zone 5")
             linkedBoolSetting: "tile_preset_powerzone_5_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -4953,7 +4616,7 @@ ScrollView {
             id: presetPowerZone6EnabledAccordion
             title: qsTr("Preset Power Zone 6")
             linkedBoolSetting: "tile_preset_powerzone_6_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             accordionContent: ColumnLayout {
                 spacing: 10
@@ -5067,7 +4730,7 @@ ScrollView {
             id: presetPowerZone7EnabledAccordion
             title: qsTr("Preset Power Zone 7")
             linkedBoolSetting: "tile_preset_powerzone_7_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Power zone presets allow quick access to specific training zones with customizable labels and values.")
             accordionContent: ColumnLayout {
@@ -5182,7 +4845,7 @@ ScrollView {
             id: hrTimeInZone1EnabledAccordion
             title: qsTr("Heart Rate Time in Zone 1+")
             linkedBoolSetting: "tile_hr_time_in_zone_1_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays total time spent in heart rate Zone 1 or higher during the session.")
             accordionContent: RowLayout {
@@ -5219,7 +4882,7 @@ ScrollView {
             id: hrTimeInZone2EnabledAccordion
             title: qsTr("Heart Rate Time in Zone 2+")
             linkedBoolSetting: "tile_hr_time_in_zone_2_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays total time spent in heart rate Zone 2 or higher during the session.")
             accordionContent: RowLayout {
@@ -5256,7 +4919,7 @@ ScrollView {
             id: hrTimeInZone3EnabledAccordion
             title: qsTr("Heart Rate Time in Zone 3+")
             linkedBoolSetting: "tile_hr_time_in_zone_3_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays total time spent in heart rate Zone 3 or higher during the session.")
             accordionContent: RowLayout {
@@ -5293,7 +4956,7 @@ ScrollView {
             id: hrTimeInZone4EnabledAccordion
             title: qsTr("Heart Rate Time in Zone 4+")
             linkedBoolSetting: "tile_hr_time_in_zone_4_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays total time spent in heart rate Zone 4 or higher during the session.")
             accordionContent: RowLayout {
@@ -5330,7 +4993,7 @@ ScrollView {
             id: hrTimeInZone5EnabledAccordion
             title: qsTr("Heart Rate Time in Zone 5+")
             linkedBoolSetting: "tile_hr_time_in_zone_5_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays total time spent in heart rate Zone 5 or higher during the session.")
             accordionContent: RowLayout {
@@ -5396,7 +5059,7 @@ ScrollView {
             id: coreTemperatureAccordion
             title: qsTr("Core Temperature")
             linkedBoolSetting: "tile_coretemperature_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Shows Core, Body Temperature and Heat Strain Index from a Core Temperature sensor.")
             accordionContent: RowLayout {
@@ -5433,7 +5096,7 @@ ScrollView {
             id: heatTimeInZone1EnabledAccordion
             title: qsTr("Heat Time in Zone 1")
             linkedBoolSetting: "tile_heat_time_in_zone_1_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays total time spent in heat Zone 1 during the session.")
             accordionContent: RowLayout {
@@ -5470,7 +5133,7 @@ ScrollView {
             id: heatTimeInZone2EnabledAccordion
             title: qsTr("Heat Time in Zone 2")
             linkedBoolSetting: "tile_heat_time_in_zone_2_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays total time spent in heat Zone 2 during the session.")
             accordionContent: RowLayout {
@@ -5507,7 +5170,7 @@ ScrollView {
             id: heatTimeInZone3EnabledAccordion
             title: qsTr("Heat Time in Zone 3")
             linkedBoolSetting: "tile_heat_time_in_zone_3_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays total time spent in heat Zone 3 during the session.")
             accordionContent: RowLayout {
@@ -5544,7 +5207,7 @@ ScrollView {
             id: heatTimeInZone4EnabledAccordion
             title: qsTr("Heat Time in Zone 4")
             linkedBoolSetting: "tile_heat_time_in_zone_4_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Displays total time spent in heat Zone 4 during the session.")
             accordionContent: RowLayout {
@@ -5581,7 +5244,7 @@ ScrollView {
             id: autoVirtualShiftingCruiseEnabledAccordion
             title: qsTr("Auto Virtual Shifting Cruise")
             linkedBoolSetting: "tile_auto_virtual_shifting_cruise_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Button tile to switch automatic virtual shifting to Cruise profile.")
             accordionContent: RowLayout {
@@ -5616,7 +5279,7 @@ ScrollView {
             id: autoVirtualShiftingClimbEnabledAccordion
             title: qsTr("Auto Virtual Shifting Climb")
             linkedBoolSetting: "tile_auto_virtual_shifting_climb_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Button tile to switch automatic virtual shifting to Climb profile.")
             accordionContent: RowLayout {
@@ -5651,7 +5314,7 @@ ScrollView {
             id: autoVirtualShiftingSprintEnabledAccordion
             title: qsTr("Auto Virtual Shifting Sprint")
             linkedBoolSetting: "tile_auto_virtual_shifting_sprint_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Button tile to switch automatic virtual shifting to Sprint profile.")
             accordionContent: RowLayout {
@@ -5686,7 +5349,7 @@ ScrollView {
             id: powerAvgEnabledAccordion
             title: qsTr("Power Averaging")
             linkedBoolSetting: "tile_power_avg_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Button tile to cycle through power averaging modes: Off, 3s avg (harmonic), 5s avg (harmonic). Tap to cycle between modes. Only for bikes.")
             accordionContent: RowLayout {
@@ -5721,7 +5384,7 @@ ScrollView {
             id: hrvEnabledAccordion
             title: qsTr("HRV (Heart Rate Variability)")
             linkedBoolSetting: "tile_hrv_enabled"
-            settings: settings
+            settings: settingsTilesPane.settings
             card: true
             description: qsTr("Shows Heart Rate Variability (HRV) from a compatible heart rate belt. Displays RMSSD value in milliseconds.")
             accordionContent: RowLayout {

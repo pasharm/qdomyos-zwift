@@ -19,6 +19,9 @@ ColumnLayout {
         return false
     }
 
+    // The Settings object of the settings page, given to the page this element opens: the
+    // pages share one object, so none of them writes back an old copy of what another changed
+    property var pageSettings: null
     spacing: 0
 
     Layout.fillWidth: true;
@@ -29,7 +32,7 @@ ColumnLayout {
         isOpen: rootElement.isOpen
         nested: rootElement.nested
         chevron: "chevron_right"
-        onClicked: stackView.push(rootElement.accordionContent)
+        onClicked: stackView.push(rootElement.accordionContent, { settings: rootElement.pageSettings })
     }
 
     Rectangle {
@@ -42,7 +45,7 @@ ColumnLayout {
 
         Accessible.role: Accessible.Button 
         Accessible.name: title 
-        Accessible.onPressAction: stackView.push(accordionContent)
+        Accessible.onPressAction: stackView.push(accordionContent, { settings: pageSettings })
 
         Rectangle{
            id:indicatRect
@@ -72,7 +75,7 @@ ColumnLayout {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
             onClicked: {
-                stackView.push(accordionContent)
+                stackView.push(accordionContent, { settings: pageSettings })
             }
         }
     }
