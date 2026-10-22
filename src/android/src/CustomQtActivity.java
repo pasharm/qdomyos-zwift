@@ -185,7 +185,6 @@ public class CustomQtActivity extends QtActivity {
         if (view != null) {
             AccessibilityNodeProvider provider = view.getAccessibilityNodeProvider();
             if (!(provider instanceof ScrollToFocusProvider)) {
-                Log.i("QzA11yDiag", "wrap provider " + provider); // DIAG
                 final ScrollToFocusProvider wrapped = new ScrollToFocusProvider(provider, view);
                 view.setAccessibilityDelegate(new View.AccessibilityDelegate() {
                     @Override
@@ -255,7 +254,6 @@ public class CustomQtActivity extends QtActivity {
                 }
             }
             boolean handled = qt.performAction(virtualViewId, action, arguments);
-            Log.i("QzA11yDiag", "performAction id=" + virtualViewId + " action=" + action + " handled=" + handled); // DIAG
             if (action == AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS && virtualViewId != View.NO_ID) {
                 try {
                     nativeScrollToAccessibleObject(virtualViewId);

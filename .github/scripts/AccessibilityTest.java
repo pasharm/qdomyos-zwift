@@ -135,9 +135,10 @@ public class AccessibilityTest {
             System.out.println("FAIL focus not taken by " + describe(lowest));
             return false;
         }
-        // the scroll runs on the Qt thread, which can be busy for a second or two after a start
+        // the scroll runs on the Qt thread, which can be busy for seconds after a start while a
+        // device connects (7 s seen on the API 36 emulator): wait for it up to 15 s
         AccessibilityNodeInfo moved = null;
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 30; i++) {
             Thread.sleep(500);
             moved = find(description, false);
             if (moved == null) {
