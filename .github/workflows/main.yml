@@ -119,6 +119,8 @@ jobs:
       - name: idb (taps and the accessibility tree)
         run: |
           brew tap facebook/fb && brew install idb-companion || true
+          # fb-idb looks for the companion in /usr/local/bin, brew on arm64 puts it in /opt/homebrew/bin
+          sudo mkdir -p /usr/local/bin && sudo ln -sf "$(brew --prefix)/bin/idb_companion" /usr/local/bin/idb_companion || true
           pip3 install --break-system-packages fb-idb || pip3 install fb-idb || true
 
       - name: Run on a simulator
@@ -145,9 +147,14 @@ jobs:
           xcrun simctl boot "$UDID"
           xcrun simctl bootstatus "$UDID" -b
           xcrun simctl install "$UDID" "$APP"
-          # QSettings on iOS = NSUserDefaults: a last device closes the first-run wizard (homeform::firstRun)
-          xcrun simctl spawn "$UDID" defaults write "$BID" bluetooth_lastdevice_name -string "Test Bike" || true
-          xcrun simctl spawn "$UDID" defaults read "$BID" > out/defaults.txt 2>&1 || true
+          # QSettings on iOS = CFPreferences of "<reversed organizationDomain>.<applicationName>" (main.cpp),
+          # in the app container; a last device closes the first-run wizard (homeform::firstRun)
+          QSD=cloud.robertoviola.qDomyos-Zwift
+          DATA=$(xcrun simctl get_app_container "$UDID" "$BID" data)
+          mkdir -p "$DATA/Library/Preferences"
+          defaults write "$DATA/Library/Preferences/$QSD.plist" bluetooth_lastdevice_name -string "Test Bike"
+          xcrun simctl spawn "$UDID" defaults write "$QSD" bluetooth_lastdevice_name -string "Test Bike" || true
+          plutil -p "$DATA/Library/Preferences/$QSD.plist" > out/defaults.txt 2>&1 || true
           shoot() {
             xcrun simctl launch --terminate-running-process --stdout="$PWD/out/$1.stdout.txt" --stderr="$PWD/out/$1.stderr.txt" "$UDID" "$BID" || echo "launch failed: $?"
             sleep "$WAIT"
@@ -162,6 +169,7 @@ jobs:
           xcrun simctl spawn "$UDID" log show --last 5m --style compact --predicate "process CONTAINS[c] 'qdomyos'" > out/syslog.txt 2>&1 || true
           ls ~/Library/Logs/DiagnosticReports/ > out/crash-list.txt 2>&1 || true
           cp ~/Library/Logs/DiagnosticReports/*qdomyos* out/ 2>/dev/null || true
+          for f in "$DATA"/Library/Preferences/*.plist; do echo "== $f"; plutil -p "$f" | head -40; done > out/prefs-after.txt 2>&1 || true
 
       - name: Keep the output
         if: always()
