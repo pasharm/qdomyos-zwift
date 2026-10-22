@@ -18,12 +18,19 @@ def run(*args):
 
 
 def tree():
-    r = run("ui", "describe-all", "--json")
-    try:
-        return json.loads(r.stdout)
-    except ValueError:
-        print("describe-all:", r.stderr[-500:])
-        return []
+    # right after a relaunch the tree can come back as one empty element: ask again
+    for _ in range(10):
+        r = run("ui", "describe-all", "--json")
+        try:
+            t = json.loads(r.stdout)
+        except ValueError:
+            print("describe-all:", r.stderr[-500:])
+            t = []
+        if len(t) > 1:
+            return t
+        time.sleep(3)
+    print("describe-all: empty tree")
+    return t
 
 
 def shot(name):
