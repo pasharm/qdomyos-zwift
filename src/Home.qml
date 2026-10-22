@@ -832,7 +832,10 @@ HomeForm {
             RoundButton {
                 objectName: minusName
                 autoRepeat: true
-                text: "-"
+                // the minus sign, not a hyphen: as wide as the "+" and on the same line
+                text: "−"
+                // the sign is a share of the button, so it grows with Tile size
+                font.pixelSize: Math.round(height * 0.45)
                 onClicked: minus_clicked(objectName)
                 visible: writable && !largeButton
                 anchors.top: myValue.top
@@ -852,6 +855,7 @@ HomeForm {
                 autoRepeat: true
                 objectName: plusName
                 text: "+"
+                font.pixelSize: Math.round(height * 0.45)
                 onClicked: plus_clicked(objectName)
                 visible: writable && !largeButton
                 anchors.top: myValue.top
