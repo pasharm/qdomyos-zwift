@@ -193,7 +193,7 @@ tiles() {
 }
 # conf: the stored keys of the test
 conf() {
-  echo "== conf ($1): $(adb shell "run-as $PKG grep -E '^(ui_zoom|theme_tile_icon_enabled|skipLocationServicesDialog)=''$CONF'" | tr '\r\n' '  ')" >> $STEPLOG
+  echo "== conf ($1): $(adb shell "run-as $PKG grep -E '^(ui_zoom|theme_tile_icon_enabled|skipLocationServicesDialog)=' '$CONF' < /dev/null" | tr '\r\n' '  ')" >> $STEPLOG
 }
 
 # open_tile_size: Settings, General UI Options open, the Tile size field typed with <value>
