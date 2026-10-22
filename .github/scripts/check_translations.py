@@ -2,8 +2,10 @@
 
     python .github/scripts/check_translations.py [база]      база по умолчанию upstream/master
 
-«Начатый» язык – .ts, где есть хоть один готовый перевод (не unfinished). В остальных .ts
-переводов нет вовсе, QZ там целиком английский – их не трогаем.
+«Начатый» язык – .ts, где готово (не unfinished) не меньше STARTED_SHARE строк. В остальных
+.ts переводов нет или почти нет, QZ там по сути английский – их не трогаем. Порог, а не «хоть
+одна строка»: PR #5420 перевёл свои 4 строки во все 14 языков апстрима, и cs, ko, nl, pl, tr
+с 4 переводами из ~2000 иначе потребовали бы перевода всех строк ветки.
 
 1. Новые строки ветки (от merge-base с базой) – переведены ли во всех начатых языках.
    Новые – литералы qsTr("…") / tr("…") в добавленных строках .qml/.cpp/.h и <source>,
@@ -27,6 +29,8 @@ MSG = re.compile(r"<message>.*?</message>", re.S)
 SRC = re.compile(r"<source>(.*?)</source>", re.S)
 TRN = re.compile(r"<translation([^>]*)>(.*?)</translation>", re.S)
 TSDIR = "src/translations"
+# Доля готовых переводов, с которой язык считается начатым (см. шапку)
+STARTED_SHARE = 0.10
 
 
 def git(*args):
@@ -68,7 +72,8 @@ def main():
             base_sources |= {s for s, _ in ts_messages(git("show", f"{mb}:{n}"))}
     for p in sorted(Path(TSDIR).glob("*.ts")):
         head[p.as_posix()] = ts_messages(p.read_text(encoding="utf-8"))
-    started = [n for n, msgs in head.items() if any(t for _, t in msgs)]
+    started = [n for n, msgs in head.items()
+               if msgs and sum(1 for _, t in msgs if t) >= STARTED_SHARE * len(msgs)]
     done = {n: {s for s, t in head[n] if t} for n in started}
 
     new = set()
