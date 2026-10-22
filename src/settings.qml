@@ -10190,7 +10190,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Garmin has sent a verification code to your email.\nPlease enter it below:")
                                 wrapMode: Text.WordWrap
-                                font.pixelSize: window.ui.modern ? window.ui.fontBody : Qt.application.font.pixelSize
+                                font.pixelSize: window.ui.modern ? window.ui.fontBody : (window.textScale === 1 ? Qt.application.font.pixelSize : window.fontPx(window.appFontPx))
                                 color: window.ui.ink(Material.foreground)
                                 Layout.fillWidth: true
                                 horizontalAlignment: Text.AlignHCenter

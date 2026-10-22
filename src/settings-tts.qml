@@ -45,7 +45,7 @@ ScrollView {
             verticalAlignment: Text.AlignVCenter
             // Modern look: a page title instead of the red caption
             color: window.ui.ink(Material.color(Material.Red))
-            font.pixelSize: window.ui.modern ? window.ui.fontHeadline : Qt.application.font.pixelSize
+            font.pixelSize: window.ui.modern ? window.ui.fontHeadline : (window.textScale === 1 ? Qt.application.font.pixelSize : window.fontPx(window.appFontPx))
             font.weight: window.ui.modern ? Font.DemiBold : Font.Normal
             topPadding: window.ui.modern ? 12 : 0
             bottomPadding: window.ui.modern ? 8 : 0

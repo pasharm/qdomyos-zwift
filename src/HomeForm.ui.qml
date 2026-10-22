@@ -390,7 +390,7 @@ Page {
                 text: page.searchStatus !== "" ? page.searchStatus : rootItem.info
                 visible: !window.ui.modern && !page.deviceLineHidden
                 color: Material.foreground
-                font.pixelSize: Qt.application.font.pixelSize
+                font.pixelSize: (window.textScale === 1 ? Qt.application.font.pixelSize : window.fontPx(window.appFontPx))
             }
         }
 
