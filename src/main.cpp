@@ -50,6 +50,7 @@
 #include <QTimer>
 #include <QtAndroid>
 #include <jni.h>
+#include <android/log.h> // DIAG
 #endif
 
 #ifdef Q_OS_MACOS
@@ -578,6 +579,9 @@ static bool scrollItemIntoView(QQuickItem *item) {
             continue;
         const QRectF rect = item->mapRectToItem(flickable, QRectF(0, 0, item->width(), item->height()));
         const qreal height = flickable->height();
+        __android_log_print(ANDROID_LOG_INFO, "QzA11yDiag", "flickable %s h=%f item %f..%f contentY=%f", // DIAG
+                            flickable->metaObject()->className(), height, rect.top(), rect.bottom(),
+                            flickable->property("contentY").toReal());
         // as Android's ScrollView: an item that already covers the whole view stays where it is,
         // one taller than the view is shown from its top
         qreal delta = 0;
@@ -613,6 +617,9 @@ Java_org_cagnulen_qdomyoszwift_CustomQtActivity_nativeScrollToAccessibleObject(J
         [id] {
             QAccessibleInterface *iface = QAccessible::accessibleInterface(QAccessible::Id(id));
             QQuickItem *item = iface && iface->isValid() ? qobject_cast<QQuickItem *>(iface->object()) : nullptr;
+            __android_log_print(ANDROID_LOG_INFO, "QzA11yDiag", "scroll to id=%d item=%s visible=%d window h=%d", id, // DIAG
+                                item ? item->metaObject()->className() : "none", item ? item->isVisible() : -1,
+                                item && item->window() ? item->window()->height() : -1);
             if (item && item->isVisible() && scrollItemIntoView(item))
                 QAndroidJniObject::callStaticMethod<void>("org/cagnulen/qdomyoszwift/CustomQtActivity",
                                                           "accessibilityTreeChanged", "()V");

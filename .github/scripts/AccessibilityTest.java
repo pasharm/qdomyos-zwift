@@ -219,14 +219,23 @@ public class AccessibilityTest {
     // counts down, e.g. "Next search in 3 s", is not focusable); null after 30 s
     private static List<AccessibilityNodeInfo> waitForSettledNodes() throws Exception {
         String last = null;
+        String now = null;
         for (int i = 0; i < 30; i++) {
             List<AccessibilityNodeInfo> nodes = appNodes();
-            String now = snapshot(nodes);
+            now = snapshot(nodes);
             if (now.equals(last)) {
                 return nodes;
             }
-            last = now;
-            Thread.sleep(1000);
+            if (i < 29) {
+                last = now;
+                Thread.sleep(1000);
+            }
+        }
+        // what kept changing: the lines of the last read that the one before did not have
+        for (String line : now.split("\n")) {
+            if (!last.contains(line + "\n")) {
+                System.out.println("INFO still changing: " + line);
+            }
         }
         return null;
     }
