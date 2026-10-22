@@ -4,9 +4,10 @@
 # the current folder. Sends QZ the actions of a screen reader through UiAutomation, so it runs
 # without TalkBack on every image, and fails on a crash of QZ, a native accessibility function
 # that is not found or a press that QZ did not handle.
-# Usage: android_accessibility_test.sh [description of a button to press]
+# Usage: android_accessibility_test.sh <description of a button to press> [next button ...]
+# (ASCII words without spaces; U+25C4 stands for a character outside ASCII)
 
-BUTTON="$1"
+BUTTONS="$*"
 
 # On failure save the logcat first: the job stops here and does not reach its own logcat lines
 fail() {
@@ -44,7 +45,7 @@ for i in 1 2 3 4 5; do
   sleep 5
 done
 
-timeout 180 adb shell "CLASSPATH=/data/local/tmp/a11y-test.jar app_process / AccessibilityTest '$BUTTON'" \
+timeout 180 adb shell "CLASSPATH=/data/local/tmp/a11y-test.jar app_process / AccessibilityTest $BUTTONS" \
   | tr -d '\r' > accessibility_test.txt
 cat accessibility_test.txt
 sleep 2

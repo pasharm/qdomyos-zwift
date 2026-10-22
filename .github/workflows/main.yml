@@ -462,7 +462,7 @@ jobs:
             # Accessibility test: a screen reader's focus, scroll and press, without TalkBack.
             # Last, on a new start of the app: its press must not change what the tests above see
             sh .github/scripts/android_app_start_test.sh
-            sh .github/scripts/android_accessibility_test.sh Start
+            sh .github/scripts/android_accessibility_test.sh Start U+25C4
 
             # Check if the package is installed
             adb shell pm list packages | grep org.cagnulen.qdomyoszwift
