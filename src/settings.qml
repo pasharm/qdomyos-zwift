@@ -472,24 +472,12 @@ import QtQuick 2.12 as Quick212
         // this page is forgotten once another page opens over it, or coming back from that
         // page would bring the old search up
         StackView.onActivated: {
-            settingsCopyReloadTimer.restart()
             if (searchReturn && searchReturn.viaPush)
                 restoreSearch()
         }
         StackView.onDeactivated: {
             if (searchReturn && !searchReturn.viaPush)
                 searchReturn = null
-        }
-
-        // The voice, tiles, gears... pages write through Settings objects of their own: the
-        // values they changed are read again into this page's copy, or its next write would put
-        // the old ones back (window.reloadSettingsCopy). Not at once: the page closed over this
-        // one is deleted only after its transition, and writes what is still pending then
-        property var settingsCopyKnown
-        Timer {
-            id: settingsCopyReloadTimer
-            interval: 100
-            onTriggered: settingsPane.settingsCopyKnown = window.reloadSettingsCopy(settings, settingsPane.settingsCopyKnown)
         }
 
         function revealPending() {
@@ -1086,9 +1074,8 @@ import QtQuick 2.12 as Quick212
         }
 
         // From the store as well: a value changed on the voice or tiles page, opened over this
-        // one, reaches this page's copy only a moment after coming back (reloadSettingsCopy). The
-        // copy stays the fallback of a key not written yet, and keeps the bindings of the cards on
-        // its property
+        // one, is not in this page's copy until the settings are opened again. The copy stays the
+        // fallback of a key not written yet, and keeps the bindings of the cards on its property
         function settingValue(entry) {
             if (isUiOption(entry.key))
                 return window.ui.option(entry.key)

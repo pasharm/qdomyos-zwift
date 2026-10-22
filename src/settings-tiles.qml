@@ -22,16 +22,6 @@ ScrollView {
 
     readonly property real speedPresetMilesConversion: 0.621371
 
-    // The shortcuts page opened over this one writes through a Settings object of its own: read
-    // its keys again into this copy, as the settings page does (window.reloadSettingsCopy)
-    property var settingsCopyKnown
-    StackView.onActivated: settingsCopyReloadTimer.restart()
-    Timer {
-        id: settingsCopyReloadTimer
-        interval: 100
-        onTriggered: settingsTilesPane.settingsCopyKnown = window.reloadSettingsCopy(settings, settingsTilesPane.settingsCopyKnown)
-    }
-
     function formatPresetSpeedValue(speedKmh) {
         var visibleValue = settings.miles_unit ? speedKmh * speedPresetMilesConversion : speedKmh
         return Number(visibleValue).toFixed(1).replace(/\.0$/, "")
