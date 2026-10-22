@@ -116,6 +116,11 @@ jobs:
       - name: Rosetta (the app of Qt 5.15.2 is x86_64)
         run: softwareupdate --install-rosetta --agree-to-license || true
 
+      - name: idb (taps and the accessibility tree)
+        run: |
+          brew tap facebook/fb && brew install idb-companion || true
+          pip3 install --break-system-packages fb-idb || pip3 install fb-idb || true
+
       - name: Run on a simulator
         env:
           APP: ${{ steps.app.outputs.app }}
@@ -140,10 +145,14 @@ jobs:
           xcrun simctl boot "$UDID"
           xcrun simctl bootstatus "$UDID" -b
           xcrun simctl install "$UDID" "$APP"
+          # QSettings on iOS = NSUserDefaults: a last device closes the first-run wizard (homeform::firstRun)
+          xcrun simctl spawn "$UDID" defaults write "$BID" bluetooth_lastdevice_name -string "Test Bike" || true
+          xcrun simctl spawn "$UDID" defaults read "$BID" > out/defaults.txt 2>&1 || true
           shoot() {
             xcrun simctl launch --terminate-running-process --stdout="$PWD/out/$1.stdout.txt" --stderr="$PWD/out/$1.stderr.txt" "$UDID" "$BID" || echo "launch failed: $?"
             sleep "$WAIT"
             xcrun simctl io "$UDID" screenshot "out/$1.png" || true
+            idb ui describe-all --udid "$UDID" --json > "out/$1.ui.json" 2> "out/$1.ui.err.txt" || true
             xcrun simctl spawn "$UDID" launchctl list | grep -i "$BID" || echo "app not running after $WAIT s"
           }
           xcrun simctl ui "$UDID" content_size large
