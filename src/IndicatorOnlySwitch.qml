@@ -50,7 +50,8 @@ UiSwitchDelegate {
     // (emulator log, 39172099490: the row high enough, the text moved). A wrapped title makes the row
     // higher than the one for one line, so the label places the text again, 6 px clear above and
     // below. The first three terms are those of the Material style: at 100 % the height is the one of
-    // the style
+    // the style. The last one is the wrapped title of the modern look (UiSwitchDelegate): this
+    // implicitHeight replaces the one of the base component
     property var titleText: null
     // The text size of the app (main.qml). Without the app window, as in the layout test of the
     // settings labels, the switch is the one of 100 %
@@ -62,7 +63,8 @@ UiSwitchDelegate {
                              textScale !== 1 && titleText && titleText.lineCount > 1
                                  ? Math.max(implicitBackgroundHeight + topInset + bottomInset + 1,
                                             titleText.contentHeight + topPadding + bottomPadding + 12)
-                                 : 0)
+                                 : 0,
+                             modernTitleHeight)
 
     // On iOS the title kept the size of the style while the text around it grew (the hint under it
     // too): with a size other than 100 % it takes the one of the window font, family, weight and

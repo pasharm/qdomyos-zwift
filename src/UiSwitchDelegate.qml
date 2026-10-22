@@ -18,7 +18,11 @@ T.SwitchDelegate {
     implicitHeight: Math.max(implicitBackgroundHeight + topInset + bottomInset,
                              implicitContentHeight + topPadding + bottomPadding,
                              implicitIndicatorHeight + topPadding + bottomPadding,
-                             window.ui.modern && wrapsTitle ? titleProbe.height + titleGap + topPadding + bottomPadding : 0)
+                             modernTitleHeight)
+    // Modern look: the height of the row for the wrapped title (0 otherwise). A property, so
+    // IndicatorOnlySwitch, which sets an implicitHeight of its own, keeps this term
+    readonly property real modernTitleHeight: window.ui.modern && wrapsTitle
+                                              ? titleProbe.height + titleGap + topPadding + bottomPadding : 0
 
     // The title wraps (set by IndicatorOnlySwitch: two lines in the classic look, all of it in
     // the modern one); here it stays one line, elided

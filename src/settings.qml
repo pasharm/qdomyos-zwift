@@ -3032,7 +3032,6 @@ import QtQuick 2.12 as Quick212
                 Layout.preferredWidth: Math.max(1, column1.width)
 
                 Label {
-                    // a label that sets only a weight keeps, in Qt 5, the size it inherited when created
                     // The size with the weight: in Qt 5 a write of the weight alone keeps the size
                     // the label inherits at that moment (the app font in the classic look)
                     font.pixelSize: window.ui.fontBase
