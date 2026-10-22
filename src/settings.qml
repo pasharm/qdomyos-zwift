@@ -1094,18 +1094,20 @@ import QtQuick 2.12 as Quick212
                 return
             }
             if (entry.type === "boolean") {
-                settings[entry.key] = !!value
+                value = !!value
             } else if (entry.type === "integer") {
-                settings[entry.key] = parseInt(value)
+                // An empty field stores 0, as the int property turned NaN into before
+                value = parseInt(value) || 0
             } else if (entry.type === "number") {
                 // A decimal comma (the keyboard of the phone's language): parseFloat stops at it
-                settings[entry.key] = parseFloat(String(value).replace(",", "."))
-            } else {
-                settings[entry.key] = value
+                value = parseFloat(String(value).replace(",", "."))
             }
-            // Straight into the store too: the card reads it back (settingValue), and the page's
-            // Settings writes it only a moment later
-            settings.setValue(entry.key, settings[entry.key])
+            // Straight into the store, and before the copy: the card reads the store back
+            // (settingValue) as soon as the copy changes, and the page's Settings writes it only
+            // a moment later. Stored after the copy, the card got the old value and the switch
+            // flipped back
+            settings.setValue(entry.key, value)
+            settings[entry.key] = value
 
             // The page is made again: nothing of it may run after (applyAppLanguage)
             if (entry.key === "app_language") {
