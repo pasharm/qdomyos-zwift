@@ -451,11 +451,11 @@ has_quiet() {
   dump
   [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null
 }
-# A switch of the settings page itself, in General Options (opened when closed: its first row
-# UI Zoom shows under the header)
+# A switch of the settings page itself, in General Options (opened when closed: a row of it
+# shows under the header - App Language; UI Zoom before #5375 moved it to General UI Options)
 page_toggle() {
   scroll_top
-  if ! has_quiet '^UI Zoom:$'; then
+  if ! has_quiet '^(App Language|UI Zoom):$'; then
     tap_ui '^General Options$'
     sleep 2
   fi
