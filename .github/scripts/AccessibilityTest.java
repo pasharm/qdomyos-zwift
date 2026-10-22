@@ -1,15 +1,22 @@
 // Accessibility test for the android-emulator-test job: sends QZ the actions a screen reader such
 // as TalkBack sends, without TalkBack, so it runs on every emulator image. It connects as the
-// shell's UiAutomation, as uiautomator does, which turns accessibility on in the app, then:
-// - moves the accessibility focus over the app's nodes (QZ scrolls the focused item into view,
-//   CustomQtActivity -> nativeScrollToAccessibleObject),
-// - scrolls a scrollable node forward and back (a spin box or a list),
-// - presses a button whose description starts with the given text (QZ presses a Qt button itself,
-//   nativeAccessibleClick, and answers true; Qt 5.15 alone answers false for a button).
+// shell's UiAutomation, as uiautomator does, which turns accessibility on in the app, waits until
+// the screen stops changing, then:
+// - moves the accessibility focus to a node below the screen, if there is one, and checks that QZ
+//   scrolled it into view (CustomQtActivity -> nativeScrollToAccessibleObject),
+// - moves the accessibility focus over the app's nodes; each one must take it,
+// - presses the given buttons in turn (QZ presses a Qt button itself, nativeAccessibleClick, and
+//   answers true; Qt 5.15 alone answers false for a button) and checks what each press shows.
 // Every line it prints starts with OK, FAIL, SKIP or INFO; the last one is DONE.
 //
-//   CLASSPATH=/data/local/tmp/a11y-test.jar app_process / AccessibilityTest [button]
+//   CLASSPATH=/data/local/tmp/a11y-test.jar app_process / AccessibilityTest <press> [<press> ...]
+//
+// A press is the start of a button's description, optionally with "=" and the start of the
+// description of a node that the press must show within 5 s and that must still be there 2 s later
+// (a second press, e.g. by auto repeat, would replace it). "_" stands for a space.
+// Example: Start=First-time_setup Increase_Resistance=Resistance:_1
 import android.app.UiAutomation;
+import android.graphics.Rect;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.view.accessibility.AccessibilityNodeInfo;
@@ -40,7 +47,11 @@ public class AccessibilityTest {
         System.out.println("DONE");
     }
 
-    private static void run(String[] buttons) throws Exception {
+    private static void run(String[] presses) throws Exception {
+        if (presses.length == 0) {
+            System.out.println("FAIL no button to press given");
+            return;
+        }
         List<AccessibilityNodeInfo> nodes = waitForAppNodes();
         if (nodes.isEmpty()) {
             AccessibilityNodeInfo root = automation.getRootInActiveWindow();
@@ -58,13 +69,24 @@ public class AccessibilityTest {
             }
             return;
         }
+        // Qt builds the page in steps after a start or a window in front of it: a node read too
+        // early may be gone by the time an action is sent to it
+        nodes = waitForSettledNodes();
+        if (nodes == null) {
+            System.out.println("FAIL the screen of QZ did not stop changing in 30 s");
+            return;
+        }
         System.out.println("OK " + nodes.size() + " nodes of QZ with a description");
         for (AccessibilityNodeInfo node : nodes) {
             System.out.println("INFO node " + describe(node));
         }
 
+        if (!focusBelowScreen(nodes)) {
+            return;
+        }
+
         int focused = 0;
-        for (AccessibilityNodeInfo node : nodes) {
+        for (AccessibilityNodeInfo node : appNodes()) {
             if (focused == 10) {
                 break;
             }
@@ -83,71 +105,102 @@ public class AccessibilityTest {
         }
         System.out.println("OK focus moved over " + focused + " nodes");
 
-        if (buttons.length == 0) {
-            System.out.println("FAIL no button to press given");
-            return;
-        }
-        for (String button : buttons) {
-            if (!press(button)) {
+        for (String press : presses) {
+            if (!press(press)) {
                 return;
             }
         }
     }
 
-    // Presses the first clickable node whose description starts with the button's text ("U+25C4"
-    // stands for that character, as adb shell arguments are not safe outside ASCII)
-    private static boolean press(String button) throws Exception {
-        if (button.startsWith("U+")) {
-            button = new String(Character.toChars(Integer.parseInt(button.substring(2), 16)));
-        }
-        AccessibilityNodeInfo target = null;
-        for (AccessibilityNodeInfo node : appNodes()) {
-            CharSequence description = node.getContentDescription();
-            if (node.isClickable() && description != null && description.toString().startsWith(button)) {
-                target = node;
-                break;
+    // The focusable node that ends lowest below the screen gets the focus, and must then be on it
+    private static boolean focusBelowScreen(List<AccessibilityNodeInfo> nodes) throws Exception {
+        Rect screen = new Rect();
+        automation.getRootInActiveWindow().getBoundsInScreen(screen);
+        AccessibilityNodeInfo lowest = null;
+        Rect bounds = new Rect();
+        int bottom = screen.bottom;
+        for (AccessibilityNodeInfo node : nodes) {
+            node.getBoundsInScreen(bounds);
+            if (node.isFocusable() && bounds.bottom > bottom) {
+                lowest = node;
+                bottom = bounds.bottom;
             }
         }
+        if (lowest == null) {
+            System.out.println("INFO every node is on the screen: no scroll to the focus to check");
+            return true;
+        }
+        String description = lowest.getContentDescription().toString();
+        if (!lowest.performAction(AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS)) {
+            System.out.println("FAIL focus not taken by " + describe(lowest));
+            return false;
+        }
+        Thread.sleep(1500);
+        AccessibilityNodeInfo moved = find(description, false);
+        if (moved == null) {
+            System.out.println("FAIL '" + description + "' is gone after the focus");
+            return false;
+        }
+        moved.getBoundsInScreen(bounds);
+        if (bounds.top < screen.top || bounds.bottom > screen.bottom) {
+            System.out.println("FAIL not scrolled into view: " + describe(moved) + " " + bounds.toShortString()
+                    + ", screen " + screen.toShortString());
+            return false;
+        }
+        System.out.println("OK scrolled into view on focus: '" + description + "' from bottom " + bottom
+                + " to " + bounds.toShortString());
+        return true;
+    }
+
+    private static boolean press(String press) throws Exception {
+        press = press.replace('_', ' ');
+        int sign = press.indexOf('=');
+        String button = sign < 0 ? press : press.substring(0, sign);
+        String expect = sign < 0 ? null : press.substring(sign + 1);
+        AccessibilityNodeInfo target = find(button, true);
         if (target == null) {
             System.out.println("FAIL no button '" + button + "' on screen");
             return false;
         }
-        String before = snapshot(appNodes());
         if (!target.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
             System.out.println("FAIL press not handled by QZ: " + describe(target));
             return false;
         }
-        Thread.sleep(2000);
-        List<AccessibilityNodeInfo> after = appNodes();
-        System.out.println("INFO screen " + (snapshot(after).equals(before) ? "unchanged" : "changed") + " after the press");
-        for (AccessibilityNodeInfo node : after) {
-            System.out.println("INFO node " + describe(node));
+        if (expect == null) {
+            Thread.sleep(1000);
+            System.out.println("OK pressed " + describe(target));
+            return true;
         }
-        System.out.println("OK pressed " + describe(target));
-
-        // TODO-EXPLORE: what is scrollable after the press, to choose the strict checks
-        for (AccessibilityNodeInfo node : after) {
-            if (node.isScrollable()) {
-                boolean forward = node.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
-                Thread.sleep(500);
-                boolean backward = node.performAction(AccessibilityNodeInfo.ACTION_SCROLL_BACKWARD);
-                Thread.sleep(500);
-                System.out.println("INFO scrolled " + describe(node) + ": forward " + forward + ", backward " + backward);
+        AccessibilityNodeInfo shown = null;
+        for (int i = 0; i < 10 && shown == null; i++) {
+            Thread.sleep(500);
+            shown = find(expect, false);
+        }
+        if (shown == null) {
+            System.out.println("FAIL pressed '" + button + "', but no '" + expect + "' in 5 s");
+            for (AccessibilityNodeInfo node : appNodes()) {
+                System.out.println("INFO node " + describe(node));
             }
+            return false;
         }
+        Thread.sleep(2000);
+        if (find(expect, false) == null) {
+            System.out.println("FAIL pressed '" + button + "': '" + expect + "' showed and went away (pressed twice?)");
+            return false;
+        }
+        System.out.println("OK pressed '" + button + "': " + describe(shown));
         return true;
     }
 
-    // What a screen reader can tell apart: names, states and places of the nodes
-    private static String snapshot(List<AccessibilityNodeInfo> nodes) {
-        StringBuilder out = new StringBuilder();
-        android.graphics.Rect bounds = new android.graphics.Rect();
-        for (AccessibilityNodeInfo node : nodes) {
-            node.getBoundsInScreen(bounds);
-            out.append(node.getContentDescription()).append(' ').append(node.isChecked()).append(' ')
-                    .append(node.isEnabled()).append(' ').append(bounds.toShortString()).append('\n');
+    // The first node whose description starts with the text; a button must be clickable
+    private static AccessibilityNodeInfo find(String text, boolean clickable) {
+        for (AccessibilityNodeInfo node : appNodes()) {
+            CharSequence description = node.getContentDescription();
+            if ((!clickable || node.isClickable()) && description != null && description.toString().startsWith(text)) {
+                return node;
+            }
         }
-        return out.toString();
+        return null;
     }
 
     // Qt adds its accessibility nodes once accessibility is on: wait for them up to 20 s
@@ -160,6 +213,34 @@ public class AccessibilityTest {
             Thread.sleep(500);
         }
         return new ArrayList<>();
+    }
+
+    // The nodes once their focusable part is the same in two reads a second apart (a text that
+    // counts down, e.g. "Next search in 3 s", is not focusable); null after 30 s
+    private static List<AccessibilityNodeInfo> waitForSettledNodes() throws Exception {
+        String last = null;
+        for (int i = 0; i < 30; i++) {
+            List<AccessibilityNodeInfo> nodes = appNodes();
+            String now = snapshot(nodes);
+            if (now.equals(last)) {
+                return nodes;
+            }
+            last = now;
+            Thread.sleep(1000);
+        }
+        return null;
+    }
+
+    private static String snapshot(List<AccessibilityNodeInfo> nodes) {
+        StringBuilder out = new StringBuilder();
+        Rect bounds = new Rect();
+        for (AccessibilityNodeInfo node : nodes) {
+            if (node.isFocusable()) {
+                node.getBoundsInScreen(bounds);
+                out.append(node.getContentDescription()).append(' ').append(bounds.toShortString()).append('\n');
+            }
+        }
+        return out.toString();
     }
 
     private static List<AccessibilityNodeInfo> appNodes() {
