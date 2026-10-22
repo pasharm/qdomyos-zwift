@@ -630,7 +630,8 @@ Java_org_cagnulen_qdomyoszwift_CustomQtActivity_nativeScrollToAccessibleObject(J
 // The object is looked up and pressed on the Qt thread, where QML items are created and destroyed
 // (as Qt 6 does with runInObjectContext()); this thread waits only for the lookup, not for what the
 // press runs. Qt 5.15 has no guard against a Qt thread that waits for this one, so the wait is
-// limited: when the Qt thread is busy that long, false is answered and the press is not made.
+// limited: when the Qt thread is busy that long, false is answered and this press is not made;
+// Qt's own press and TalkBack's tap run instead, as for anything else.
 // 2 s: the Qt thread can be busy for well over a second while a device connects, and Android
 // waits 5 s for the answer to an accessibility action.
 extern "C" JNIEXPORT jboolean JNICALL

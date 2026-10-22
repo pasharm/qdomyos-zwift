@@ -7,7 +7,7 @@
 // - moves the accessibility focus over the app's nodes; each one must take it,
 // - presses the given buttons in turn (QZ presses a Qt button itself, nativeAccessibleClick, and
 //   answers true; Qt 5.15 alone answers false for a button) and checks what each press shows.
-// Every line it prints starts with OK, FAIL, SKIP or INFO; the last one is DONE.
+// Every line it prints starts with OK, FAIL or INFO; the last one is DONE.
 //
 //   CLASSPATH=/data/local/tmp/a11y-test.jar app_process / AccessibilityTest <press> [<press> ...]
 //
@@ -57,13 +57,12 @@ public class AccessibilityTest {
             AccessibilityNodeInfo root = automation.getRootInActiveWindow();
             CharSequence active = root == null ? null : root.getPackageName();
             String nativeText = firstText(root);
+            // the images where QZ cannot show its page (no Bluetooth, API < 30) are skipped by
+            // android_accessibility_test.sh before this runs
             if (active == null || !active.toString().equals(PACKAGE)) {
-                // e.g. an "isn't responding" dialog of the system over QZ on a slow emulator
-                System.out.println("SKIP the active window is " + active + ", not QZ");
+                System.out.println("FAIL the active window is " + active + ", not QZ");
             } else if (nativeText != null) {
-                // QZ's own Android dialog, not the Qt view: e.g. "Permissions Required" on the
-                // emulator images without Bluetooth (the back button test skips them for it too)
-                System.out.println("SKIP a native window of QZ is in front: '" + nativeText + "'");
+                System.out.println("FAIL a native window of QZ is in front: '" + nativeText + "'");
             } else {
                 System.out.println("FAIL no accessibility node of QZ with a description: Qt accessibility is off");
             }
@@ -114,8 +113,13 @@ public class AccessibilityTest {
 
     // The focusable node that ends lowest below the screen gets the focus, and must then be on it
     private static boolean focusBelowScreen(List<AccessibilityNodeInfo> nodes) throws Exception {
+        AccessibilityNodeInfo root = automation.getRootInActiveWindow();
+        if (root == null) {
+            System.out.println("FAIL no active window");
+            return false;
+        }
         Rect screen = new Rect();
-        automation.getRootInActiveWindow().getBoundsInScreen(screen);
+        root.getBoundsInScreen(screen);
         AccessibilityNodeInfo lowest = null;
         Rect bounds = new Rect();
         int bottom = screen.bottom;
@@ -140,7 +144,13 @@ public class AccessibilityTest {
         AccessibilityNodeInfo moved = null;
         for (int i = 0; i < 30; i++) {
             Thread.sleep(500);
-            moved = find(description, false);
+            moved = null;
+            for (AccessibilityNodeInfo node : appNodes()) {
+                if (node.equals(lowest)) {
+                    moved = node;
+                    break;
+                }
+            }
             if (moved == null) {
                 System.out.println("FAIL '" + description + "' is gone after the focus");
                 return false;
@@ -168,6 +178,10 @@ public class AccessibilityTest {
         AccessibilityNodeInfo target = find(button, true);
         if (target == null) {
             System.out.println("FAIL no button '" + button + "' on screen");
+            return false;
+        }
+        if (expect != null && find(expect, false) != null) {
+            System.out.println("FAIL '" + expect + "' is on screen before '" + button + "' is pressed");
             return false;
         }
         if (!target.performAction(AccessibilityNodeInfo.ACTION_CLICK)) {
@@ -200,15 +214,25 @@ public class AccessibilityTest {
         return true;
     }
 
-    // The first node whose description starts with the text; a button must be clickable
+    // The first node whose description starts with the text, and not with a longer number
+    // ("Resistance: 1" is not "Resistance: 12"); a button must be clickable
     private static AccessibilityNodeInfo find(String text, boolean clickable) {
         for (AccessibilityNodeInfo node : appNodes()) {
             CharSequence description = node.getContentDescription();
-            if ((!clickable || node.isClickable()) && description != null && description.toString().startsWith(text)) {
+            if ((!clickable || node.isClickable()) && description != null && startsWith(description.toString(), text)) {
                 return node;
             }
         }
         return null;
+    }
+
+    private static boolean startsWith(String description, String text) {
+        if (!description.startsWith(text)) {
+            return false;
+        }
+        return description.length() == text.length() || text.isEmpty()
+                || !Character.isDigit(text.charAt(text.length() - 1))
+                || !Character.isDigit(description.charAt(text.length()));
     }
 
     // Qt adds its accessibility nodes once accessibility is on: wait for them up to 20 s

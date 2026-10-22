@@ -5,7 +5,8 @@
 # without TalkBack on every image, and fails on a crash of QZ, a native accessibility function
 # that is not found, a press that QZ did not handle or that did not show what it should.
 # Usage: android_accessibility_test.sh [--fake-bike] <press> [<press> ...]
-# A press is described in AccessibilityTest.java. With --fake-bike QZ is restarted first with only
+# A press is described in AccessibilityTest.java; it goes through the device's shell unquoted, so
+# letters, digits and "_ = : - ." only. With --fake-bike QZ is restarted first with only
 # the fake bike of its settings turned on, so the home page has tiles with - and + (the settings
 # the tests before made are dropped). The output of every run is added to accessibility_test.txt.
 
@@ -28,6 +29,13 @@ fail() {
 API=$(adb shell getprop ro.build.version.sdk | tr -d '\r')
 [ -n "$API" ] || fail "cannot read the API level from the emulator"
 echo "Accessibility test on API $API: $PRESSES"
+
+# As the back button test: the API < 30 images have no Bluetooth, so QZ keeps its native
+# "Permissions Required" dialog over its page and there is nothing of Qt to test
+if [ "$API" -lt 30 ]; then
+  echo "SKIPPED: no Bluetooth on this emulator image, the Permissions Required dialog blocks the app"
+  exit 0
+fi
 
 [ -f a11y-test.jar ] || fail "a11y-test.jar was not built"
 adb push a11y-test.jar /data/local/tmp/a11y-test.jar > /dev/null || fail "cannot push a11y-test.jar"
