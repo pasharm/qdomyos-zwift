@@ -4151,8 +4151,9 @@ import QtQuick 2.12 as Quick212
                     UiButton {
                         id: refreshHeartBeltNameButton
                         wrapsText: true
+                        wrapsScaled: true
                         text: qsTr("Refresh Devices List")
-                        Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
+                        Layout.maximumWidth: window.ui.modern || window.textScale !== 1 ? parent.width : Number.POSITIVE_INFINITY
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: refresh_bluetooth_devices_clicked();
                     }
@@ -8269,12 +8270,14 @@ import QtQuick 2.12 as Quick212
 
                     UiButton {
                         wrapsText: true
+                        wrapsScaled: true
                         text: qsTr("Open Floating on a Browser")
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                        // Modern look: no wider than the section. A button keeps its text on one
-                        // line, and at a large text size a long translation made the whole section
-                        // wider than its card
-                        Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
+                        // No wider than the section in the modern look and, in the classic one, at a
+                        // text size other than 100 %. A button keeps its text on one line, and at a
+                        // large text size a long translation made the whole section wider than its
+                        // card (classic at 170 %: wider than the screen)
+                        Layout.maximumWidth: window.ui.modern || window.textScale !== 1 ? parent.width : Number.POSITIVE_INFINITY
                         onClicked: openFloatingWindowBrowser();
                     }
 
@@ -14495,8 +14498,9 @@ import QtQuick 2.12 as Quick212
 
                     UiButton {
                         wrapsText: true
+                        wrapsScaled: true
                         text: qsTr("Refresh Devices List")
-                        Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
+                        Layout.maximumWidth: window.ui.modern || window.textScale !== 1 ? parent.width : Number.POSITIVE_INFINITY
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: refresh_bluetooth_devices_clicked();
                     }
@@ -14734,8 +14738,9 @@ import QtQuick 2.12 as Quick212
 
                     UiButton {
                         wrapsText: true
+                        wrapsScaled: true
                         text: qsTr("Refresh Devices List")
-                        Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
+                        Layout.maximumWidth: window.ui.modern || window.textScale !== 1 ? parent.width : Number.POSITIVE_INFINITY
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: refresh_bluetooth_devices_clicked();
                     }
@@ -14991,8 +14996,9 @@ import QtQuick 2.12 as Quick212
                     UiButton {
                         id: refreshFilterDeviceButton
                         wrapsText: true
+                        wrapsScaled: true
                         text: qsTr("Refresh Devices List")
-                        Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
+                        Layout.maximumWidth: window.ui.modern || window.textScale !== 1 ? parent.width : Number.POSITIVE_INFINITY
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: refresh_bluetooth_devices_clicked();
                     }
@@ -16130,8 +16136,9 @@ import QtQuick 2.12 as Quick212
                             UiButton {
                                 id: refreshCadenceSensorNameButton
                                 wrapsText: true
+                                wrapsScaled: true
                                 text: qsTr("Refresh Devices List")
-                                Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
+                                Layout.maximumWidth: window.ui.modern || window.textScale !== 1 ? parent.width : Number.POSITIVE_INFINITY
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                 onClicked: refresh_bluetooth_devices_clicked();
                             }
@@ -16764,8 +16771,9 @@ import QtQuick 2.12 as Quick212
                             UiButton {
                                 id: refreshPowerSensorNameButton
                                 wrapsText: true
+                                wrapsScaled: true
                                 text: qsTr("Refresh Devices List")
-                                Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
+                                Layout.maximumWidth: window.ui.modern || window.textScale !== 1 ? parent.width : Number.POSITIVE_INFINITY
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                 onClicked: refresh_bluetooth_devices_clicked();
                             }
@@ -16838,8 +16846,9 @@ import QtQuick 2.12 as Quick212
                                     UiButton {
                                         id: refreshEliteRizerNameButton
                                         wrapsText: true
+                                        wrapsScaled: true
                                         text: qsTr("Refresh Devices List")
-                                        Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
+                                        Layout.maximumWidth: window.ui.modern || window.textScale !== 1 ? parent.width : Number.POSITIVE_INFINITY
                                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                         onClicked: refresh_bluetooth_devices_clicked();
                                     }
@@ -16915,8 +16924,9 @@ import QtQuick 2.12 as Quick212
                                     UiButton {
                                         id: refreshEliteSterzoSmartNameButton
                                         wrapsText: true
+                                        wrapsScaled: true
                                         text: qsTr("Refresh Devices List")
-                                        Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
+                                        Layout.maximumWidth: window.ui.modern || window.textScale !== 1 ? parent.width : Number.POSITIVE_INFINITY
                                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                         onClicked: refresh_bluetooth_devices_clicked();
                                     }
@@ -16970,8 +16980,9 @@ import QtQuick 2.12 as Quick212
                             UiButton {
                                 id: refreshFTMSAccessoryNameButton
                                 wrapsText: true
+                                wrapsScaled: true
                                 text: qsTr("Refresh Devices List")
-                                Layout.maximumWidth: window.ui.modern ? parent.width : Number.POSITIVE_INFINITY
+                                Layout.maximumWidth: window.ui.modern || window.textScale !== 1 ? parent.width : Number.POSITIVE_INFINITY
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                 onClicked: refresh_bluetooth_devices_clicked();
                             }                                                        

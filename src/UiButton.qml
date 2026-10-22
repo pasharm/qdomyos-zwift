@@ -87,8 +87,11 @@ T.Button {
 
     // Modern look: the label wraps on words instead of eliding, and the button grows to the
     // lines – for a long label in a narrow button at a large text size. Text only: the icon
-    // is dropped. The classic look keeps the one-line IconLabel
+    // is dropped. The classic look keeps the one-line IconLabel, unless wrapsScaled is set
     property bool wrapsText: false
+    // Classic look: wraps as well while the text size is not 100 % (a button of a settings
+    // section: one line at 170 % made the whole section wider than the screen)
+    property bool wrapsScaled: false
     readonly property color labelColor: control.modern
                ? (!control.enabled ? (control.gated ? window.ui.alpha(window.ui.textMuted, 0.55)
                                                          : window.ui.textMuted)
@@ -101,7 +104,8 @@ T.Button {
                   control.highlighted ? control.Material.primaryHighlightedTextColor : control.Material.foreground)
 
     contentItem: Loader {
-        sourceComponent: control.modern && control.wrapsText ? wrappedLabel : iconLabel
+        sourceComponent: control.wrapsText && (control.modern || control.wrapsScaled && window.textScale !== 1)
+                         ? wrappedLabel : iconLabel
     }
 
     Component {
