@@ -31,6 +31,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         if: env.BUILD == 'true'
+      - uses: actions/checkout@v4
+        if: env.BUILD != 'true'
+        with:
+          sparse-checkout: .github
       - name: Checkout submodule repo
         if: env.BUILD == 'true'
         uses: actions/checkout@v4
@@ -164,6 +168,8 @@ jobs:
           mkdir -p "$DATA/Library/Preferences"
           # "defaults write <path>" did not create the file; PlistBuddy does
           /usr/libexec/PlistBuddy -c 'Add :bluetooth_lastdevice_name string TestBike' "$DATA/Library/Preferences/$QSD.plist" || true
+          # a fake bike: the home page gets its tiles without a trainer
+          /usr/libexec/PlistBuddy -c 'Add :applewatch_fakedevice bool true' "$DATA/Library/Preferences/$QSD.plist" || true
           xcrun simctl spawn "$UDID" defaults write "$QSD" bluetooth_lastdevice_name -string "Test Bike" || true
           plutil -p "$DATA/Library/Preferences/$QSD.plist" > out/defaults.txt 2>&1 || true
           shoot() {
@@ -171,6 +177,7 @@ jobs:
             sleep "$WAIT"
             xcrun simctl io "$UDID" screenshot "out/$1.png" || true
             "$IDB" ui describe-all --udid "$UDID" --json > "out/$1.ui.json" 2> "out/$1.ui.err.txt" || true
+            python .github/ios_nav.py "$IDB" "$UDID" out "$1" > "out/$1.nav.txt" 2>&1 || true
             xcrun simctl spawn "$UDID" launchctl list | grep -i "$BID" || echo "app not running after $WAIT s"
           }
           xcrun simctl ui "$UDID" content_size large
