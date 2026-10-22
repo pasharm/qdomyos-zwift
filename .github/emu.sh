@@ -193,7 +193,7 @@ tiles() {
 }
 # conf: the stored keys of the test
 conf() {
-  echo "== conf ($1): $(adb shell "run-as $PKG grep -E '^(ui_zoom|theme_tile_icon_enabled)=' '$CONF'" | tr '\r\n' '  ')" >> $STEPLOG
+  echo "== conf ($1): $(adb shell "run-as $PKG grep -E '^(ui_zoom|theme_tile_icon_enabled|skipLocationServicesDialog)=''$CONF'" | tr '\r\n' '  ')" >> $STEPLOG
 }
 
 # open_tile_size: Settings, General UI Options open, the Tile size field typed with <value>
@@ -261,7 +261,11 @@ tiles b-04-restart
 
 # 2. The tested APK
 install_apk apk-debug/android-debug.apk
-start_fresh ""
+# The location reminder: skipped in the file, the GPS on - homeform.cpp resets it at the start,
+# after the home page copy has read it; a tile change must not write the old value back
+adb shell cmd location set-location-enabled true || true
+start_fresh "skipLocationServicesDialog=true"
+conf "a start, skip=true before"
 round a
 
 # 80 + OK and the back key in one adb call (well within the 500 ms of the settings copy)
