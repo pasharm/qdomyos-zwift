@@ -17,14 +17,14 @@ on:
         required: false
         default: 'true'
       baseline:
-        description: run id of the build to shoot first, as the reference (T-255 - without the fix)
+        description: run id of the build to shoot first, as the reference (T-276 - without the fix)
         required: true
 
 jobs:
   emulator-logcat:
     runs-on: ubuntu-latest
-    # A run takes 11-12 min; a step stuck on adb ends here instead of after 6 hours
-    timeout-minutes: 25
+    # Two cases of 14 min with the screen off; a step stuck on adb ends here instead of after 6 hours
+    timeout-minutes: 45
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -81,6 +81,7 @@ jobs:
             screenshot.png
             *.png
             process_list.txt
+            exit-info-*.txt
             full_logcat.txt
             steps.log
             a11y.txt
