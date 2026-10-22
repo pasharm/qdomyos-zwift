@@ -135,13 +135,20 @@ public class AccessibilityTest {
             System.out.println("FAIL focus not taken by " + describe(lowest));
             return false;
         }
-        Thread.sleep(1500);
-        AccessibilityNodeInfo moved = find(description, false);
-        if (moved == null) {
-            System.out.println("FAIL '" + description + "' is gone after the focus");
-            return false;
+        // the scroll runs on the Qt thread, which can be busy for a second or two after a start
+        AccessibilityNodeInfo moved = null;
+        for (int i = 0; i < 10; i++) {
+            Thread.sleep(500);
+            moved = find(description, false);
+            if (moved == null) {
+                System.out.println("FAIL '" + description + "' is gone after the focus");
+                return false;
+            }
+            moved.getBoundsInScreen(bounds);
+            if (bounds.top >= screen.top && bounds.bottom <= screen.bottom) {
+                break;
+            }
         }
-        moved.getBoundsInScreen(bounds);
         if (bounds.top < screen.top || bounds.bottom > screen.bottom) {
             System.out.println("FAIL not scrolled into view: " + describe(moved) + " " + bounds.toShortString()
                     + ", screen " + screen.toShortString());
@@ -215,8 +222,9 @@ public class AccessibilityTest {
         return new ArrayList<>();
     }
 
-    // The nodes once their focusable part is the same in two reads a second apart (a text that
-    // counts down, e.g. "Next search in 3 s", is not focusable); null after 30 s
+    // The nodes once their buttons are the same in two reads a second apart: values change on
+    // their own (a running "Elapsed", "Next search in 3 s"), buttons only while a page is built;
+    // null after 30 s
     private static List<AccessibilityNodeInfo> waitForSettledNodes() throws Exception {
         String last = null;
         String now = null;
@@ -244,7 +252,7 @@ public class AccessibilityTest {
         StringBuilder out = new StringBuilder();
         Rect bounds = new Rect();
         for (AccessibilityNodeInfo node : nodes) {
-            if (node.isFocusable()) {
+            if (node.isClickable()) {
                 node.getBoundsInScreen(bounds);
                 out.append(node.getContentDescription()).append(' ').append(bounds.toShortString()).append('\n');
             }

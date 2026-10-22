@@ -668,7 +668,7 @@ Java_org_cagnulen_qdomyoszwift_CustomQtActivity_nativeAccessibleClick(JNIEnv *en
             QCoreApplication::sendEvent(button, &release);
         },
         Qt::QueuedConnection);
-    if (!click->found.tryAcquire(1, 500)) {
+    if (!click->found.tryAcquire(1, 2000)) {
         if (click->state.testAndSetOrdered(0, 2))
             return false;
         // started just now: the lookup does not wait for this thread
