@@ -23,6 +23,8 @@ on:
 jobs:
   emulator-logcat:
     runs-on: ubuntu-latest
+    # A run takes 11-12 min; a step stuck on adb ends here instead of after 6 hours
+    timeout-minutes: 25
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
