@@ -250,7 +250,9 @@ round() {
 
 # 1. Reference: master with the tile size rename, without the fix
 install_apk apk-base/android-debug.apk
-start_fresh ""
+adb shell cmd location set-location-enabled true || true
+start_fresh "skipLocationServicesDialog=true"
+conf "b start, skip=true before"
 round b
 # what the reference needs to show 60: a restart
 adb shell am force-stop $PKG || true
