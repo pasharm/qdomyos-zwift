@@ -186,6 +186,13 @@ jobs:
           shoot 01-default
           xcrun simctl ui "$UDID" content_size "$BIG"
           shoot 02-big
+          # the system size changed while QZ runs: does Qt pick it up without a restart? (T270 lines every 20 s)
+          xcrun simctl ui "$UDID" content_size large
+          sleep 45
+          xcrun simctl io "$UDID" screenshot out/03-live-large.png || true
+          xcrun simctl ui "$UDID" content_size "$BIG"
+          sleep 45
+          xcrun simctl io "$UDID" screenshot out/04-live-big.png || true
           xcrun simctl spawn "$UDID" log show --last 5m --style compact --predicate "process CONTAINS[c] 'qdomyos'" > out/syslog.txt 2>&1 || true
           ls ~/Library/Logs/DiagnosticReports/ > out/crash-list.txt 2>&1 || true
           cp ~/Library/Logs/DiagnosticReports/*qdomyos* out/ 2>/dev/null || true
