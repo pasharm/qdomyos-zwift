@@ -279,6 +279,7 @@ ScrollView {
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
             font.pixelSize: window.ui.fontHint
+            bottomPadding: window.hintGap
             color: window.ui.inkMuted(Material.accent)
         }
 
@@ -294,7 +295,7 @@ ScrollView {
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
-                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
             }
             Label {
                 text: qsTr("Resistance")
@@ -302,7 +303,7 @@ ScrollView {
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
-                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
             }
             Item { Layout.preferredWidth: 44 }
         }
@@ -326,8 +327,8 @@ ScrollView {
                     color: "transparent"
 
                     Text {
-                        // The text size of the modern look: a plain Text does not inherit the window font
-                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                        // a plain Text does not inherit the window font: the text size while it is not 100 %
+                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         anchors.centerIn: parent
                         text: qsTr("Inclination (%)")
                         font.bold: true
@@ -343,7 +344,7 @@ ScrollView {
                     color: "transparent"
 
                     Text {
-                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         anchors.centerIn: parent
                         text: qsTr("Resistance")
                         font.bold: true

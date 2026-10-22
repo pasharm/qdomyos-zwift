@@ -9,8 +9,8 @@ Rectangle {
     
     // Auto-size based on text
     width: tagText.implicitWidth + 16
-    height: 24
-    radius: 12
+    height: window.textScale !== 1 ? Math.max(24, tagText.implicitHeight + 8) : 24
+    radius: height / 2
     
     // Color scheme based on workout source
     color: {

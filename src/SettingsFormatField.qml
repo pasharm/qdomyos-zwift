@@ -105,7 +105,7 @@ UiTextField {
         y: field.height - implicitHeight - 2
         wrapMode: Text.WordWrap
         horizontalAlignment: field.horizontalAlignment
-        font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize - 3)
+        font.pixelSize: window.textScale === 1 ? Qt.application.font.pixelSize - 3 : window.fontPx(window.appFontPx - 3)
         color: field.modern ? window.ui.danger : Material.color(Material.Red)
     }
 }

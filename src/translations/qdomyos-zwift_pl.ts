@@ -4783,6 +4783,22 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Use System Text Size</source>
+        <translation>Rozmiar tekstu jak w systemie</translation>
+    </message>
+    <message>
+        <source>The text of the app follows the text size of the phone or tablet settings, up to 150%. Turn off to choose the size below, for example for a screen you read from a distance during a workout. Default is on.</source>
+        <translation>Tekst aplikacji ma rozmiar ustawiony w telefonie lub tablecie, maksymalnie 150%. Wyłącz, aby wybrać rozmiar poniżej – na przykład dla ekranu czytanego z daleka podczas treningu. Domyślnie: włączone.</translation>
+    </message>
+    <message>
+        <source>Text size:</source>
+        <translation>Rozmiar tekstu:</translation>
+    </message>
+    <message>
+        <source>Size of the text of the app (settings, menus, dialogs), in percent, from 80 to 170. The default is 100. The tiles keep their own size setting.</source>
+        <translation>Rozmiar tekstu aplikacji (ustawienia, menu, okna dialogowe) w procentach, od 80 do 170. Domyślnie: 100. Kafelki mają własne ustawienie rozmiaru.</translation>
+    </message>
+    <message>
         <source>Top Bar Enabled</source>
         <translation type="unfinished"></translation>
     </message>

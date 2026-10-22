@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQml 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
@@ -246,8 +247,7 @@ import QtQuick 2.12 as Quick212
 
         // The look of the modern interface (see the declarations at the end of the Settings
         // below): kept by main.qml, which applies it at once
-        readonly property var uiOptionKeys: ["ui_modern", "ui_theme", "ui_accent", "ui_theme_mode", "ui_tile_snap",
-                                             "ui_text_scale"]
+        readonly property var uiOptionKeys: ["ui_modern", "ui_theme", "ui_accent", "ui_theme_mode", "ui_tile_snap"]
         function isUiOption(key) {
             return uiOptionKeys.indexOf(key) >= 0
         }
@@ -1108,6 +1108,13 @@ import QtQuick 2.12 as Quick212
             // flipped back
             settings.setValue(entry.key, value)
             settings[entry.key] = value
+
+            // The text size applies at once, like on its own page
+            if (entry.key === "ui_text_scale" || entry.key === "ui_text_scale_system") {
+                window.setTextScaleOption(entry.key, settings[entry.key])
+                toast.show(qsTr("Setting saved!"))
+                return
+            }
 
             // The page is made again: nothing of it may run after (applyAppLanguage)
             if (entry.key === "app_language") {
@@ -2832,6 +2839,7 @@ import QtQuick 2.12 as Quick212
             property string ui_theme_mode: "auto"
             property bool ui_tile_snap: true
             property int ui_text_scale: 100
+            property bool ui_text_scale_system: true
         }
 
 
@@ -3024,6 +3032,7 @@ import QtQuick 2.12 as Quick212
                 Layout.preferredWidth: Math.max(1, column1.width)
 
                 Label {
+                    // a label that sets only a weight keeps, in Qt 5, the size it inherited when created
                     // The size with the weight: in Qt 5 a write of the weight alone keeps the size
                     // the label inherits at that moment (the app font in the classic look)
                     font.pixelSize: window.ui.fontBase
@@ -3040,7 +3049,7 @@ import QtQuick 2.12 as Quick212
                     color: window.ui.inkMuted(Material.color(Material.Red))
                     font.bold: true
                     Layout.fillWidth: true
-                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                 }
 
                 Repeater {
@@ -3165,6 +3174,7 @@ import QtQuick 2.12 as Quick212
                                                                : settingsPane.parentDisplayName(entry)
                                         color: window.ui.modern ? window.ui.accent : Material.color(Material.Grey)
                                         font.pixelSize: window.ui.fontHint
+                                        bottomPadding: window.hintGap
                                         wrapMode: Text.WordWrap
                                         Layout.fillWidth: true
                                         Layout.minimumWidth: 0
@@ -3200,6 +3210,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
@@ -3350,7 +3361,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelUiZoom
                             text: qsTr("UI Zoom:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -3377,6 +3388,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3391,7 +3403,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelAppLanguage
                             text: qsTr("App Language:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -3434,6 +3446,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3447,7 +3460,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelWeight
                             text: qsTr("Player Weight") + " (" + ((settings.miles_unit && !settings.weight_kg_unit)?qsTr("lbs"):qsTr("kg")) + ")"
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -3475,6 +3488,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3488,7 +3502,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelHeight
                             text: qsTr("Player Height") + " (" + (settings.miles_unit?qsTr("ft/in"):qsTr("cm")) + ")"
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsFormatField {
@@ -3538,6 +3552,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3551,7 +3566,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelAge
                             text: qsTr("Player Age:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -3581,6 +3596,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3594,7 +3610,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelSex
                             text: qsTr("Gender:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         ValueComboBox {
@@ -3623,6 +3639,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3637,7 +3654,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelFTP
                             text: qsTr("FTP value:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -3666,6 +3683,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3678,7 +3696,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Critical Power Run value:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -3706,6 +3724,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3719,7 +3738,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelNickname
                             text: qsTr("Nickname:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsTextField {
@@ -3745,6 +3764,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3758,7 +3778,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelEmail
                             text: qsTr("Email:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsTextField {
@@ -3786,6 +3806,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3816,6 +3837,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3845,6 +3867,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3874,6 +3897,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3902,6 +3926,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3918,6 +3943,7 @@ import QtQuick 2.12 as Quick212
                 font.bold: yes
                 font.italic: yes
                 font.pixelSize: window.ui.fontHint
+                bottomPadding: window.hintGap
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 verticalAlignment: Text.AlignVCenter
@@ -3951,6 +3977,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -3979,6 +4006,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -4007,6 +4035,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -4035,6 +4064,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -4063,6 +4093,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -4077,7 +4108,7 @@ import QtQuick 2.12 as Quick212
                         // Modern look: apart from the description above it, the name of a picker below
                         topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
-                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                     }
                     RowLayout {
                         spacing: 10
@@ -4110,6 +4141,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: true
                         font.italic: true
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -4139,7 +4171,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelheartRateZone1Ratio
                                     text: qsTr("Zone 1 %:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -4167,7 +4199,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelheartRateZone2Ratio
                                     text: qsTr("Zone 2 %:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -4195,7 +4227,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelheartRateZone3Ratio
                                     text: qsTr("Zone 3 %:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -4223,7 +4255,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelheartRateZone4Ratio
                                     text: qsTr("Zone 4 %:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -4251,6 +4283,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -4264,6 +4297,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -4300,7 +4334,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelHeartRateMaxOverrideValue
                                             text: qsTr("Max Heart Rate")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -4329,6 +4363,7 @@ import QtQuick 2.12 as Quick212
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
                                         font.pixelSize: window.ui.fontHint
+                                        bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter
@@ -4342,7 +4377,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelHeartRateRestingValue
                                             text: qsTr("Resting Heart Rate")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -4372,6 +4407,7 @@ import QtQuick 2.12 as Quick212
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
                                         font.pixelSize: window.ui.fontHint
+                                        bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter
@@ -4395,7 +4431,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelPowerFromHeartPWR1
                                             text: qsTr("Session 1 Watt:")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -4424,7 +4460,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelPowerFromHeartHR1
                                             text: qsTr("Session 1 HR:")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -4453,7 +4489,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelPowerFromHeartPWR2
                                             text: qsTr("Session 2 Watt:")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -4482,7 +4518,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelPowerFromHeartHR2
                                             text: qsTr("Session 2 HR:")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -4512,6 +4548,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -4554,6 +4591,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -4581,6 +4619,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -4610,6 +4649,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -4646,7 +4686,7 @@ import QtQuick 2.12 as Quick212
 
                         Label {
                             text: qsTr("Gear Value:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -4678,6 +4718,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -4690,7 +4731,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelRollingResistance
                             text: qsTr("Rolling Resistance Factor")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -4717,6 +4758,7 @@ import QtQuick 2.12 as Quick212
                         font.italic: true
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         color: "steelblue"
                     }
                     RowLayout {
@@ -4724,7 +4766,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelBikeWeight
                             text: qsTr("Bike Weight (%1)").arg((settings.miles_unit && !settings.weight_kg_unit) ? qsTr("lbs") : qsTr("kg"))
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -4751,6 +4793,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -4764,7 +4807,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelCRRGain
                             text: qsTr("Rolling Res. Gain")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -4790,7 +4833,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelCWGain
                             text: qsTr("Wind Res. Gain")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -4831,6 +4874,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -4870,6 +4914,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
                                 color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
@@ -4890,6 +4935,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
                                 color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
@@ -4901,13 +4947,13 @@ import QtQuick 2.12 as Quick212
                                 font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 2)
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
 
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Up:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4920,7 +4966,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Down:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4933,7 +4979,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Left:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4946,7 +4992,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Right:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4959,7 +5005,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Shoulder:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4972,7 +5018,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Power:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -4988,13 +5034,13 @@ import QtQuick 2.12 as Quick212
                                 font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 2)
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
 
                             RowLayout {
                                 Label {
                                     text: qsTr("Right Y:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -5007,7 +5053,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right A:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -5020,7 +5066,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right B:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -5033,7 +5079,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right Z:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -5046,7 +5092,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right Shoulder:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -5059,7 +5105,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right Power:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -5074,6 +5120,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: true
                                 font.italic: true
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
                                 Layout.topMargin: 10
@@ -5087,7 +5134,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelBikeResistanceOffset
                             text: qsTr("Zwift Resistance Offset:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -5118,6 +5165,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -5131,7 +5179,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelBikePowerOffset
                             text: qsTr("Zwift Power Offset (W):")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -5160,6 +5208,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -5173,7 +5222,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelBikeResistanceGain
                             text: qsTr("Zwift Resistance Gain:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -5200,6 +5249,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -5213,7 +5263,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelZwiftErgFilter
                             text: qsTr("Zwift ERG Watt Up Filter:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -5240,6 +5290,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -5253,7 +5304,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelZwiftErgDownFilter
                             text: qsTr("Zwift ERG Watt Down Filter:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -5280,6 +5331,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -5293,7 +5345,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelZwiftErgResistanceDown
                             text: qsTr("Min. Resistance:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -5320,6 +5372,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -5333,7 +5386,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelZwiftErgResistanceUp
                             text: qsTr("Max. Resistance:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -5360,6 +5413,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -5373,7 +5427,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelBikeResistanceStart
                             text: qsTr("Resistance at Startup:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -5401,6 +5455,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -5413,7 +5468,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Gears Gain:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -5439,6 +5494,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -5469,7 +5525,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Gears Offset:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -5496,6 +5552,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -5533,6 +5590,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -5547,7 +5605,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Profile:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -5570,7 +5628,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.fillWidth: true
                                 color: Material.color(Material.Grey)
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
 
                             RowLayout {
@@ -5578,7 +5636,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Cruise - Gear Up Cadence (RPM):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -5607,7 +5665,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Cruise - Gear Up Time (seconds):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -5633,7 +5691,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Cruise - Gear Down Cadence (RPM):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -5662,7 +5720,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Cruise - Gear Down Time (seconds):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -5691,7 +5749,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.fillWidth: true
                                 color: Material.color(Material.Grey)
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
 
                             RowLayout {
@@ -5699,7 +5757,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Climb - Gear Up Cadence (RPM):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -5728,7 +5786,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Climb - Gear Up Time (seconds):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -5754,7 +5812,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Climb - Gear Down Cadence (RPM):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -5783,7 +5841,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Climb - Gear Down Time (seconds):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -5812,7 +5870,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.fillWidth: true
                                 color: Material.color(Material.Grey)
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
 
                             RowLayout {
@@ -5820,7 +5878,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Sprint - Gear Up Cadence (RPM):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -5849,7 +5907,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Sprint - Gear Up Time (seconds):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -5875,7 +5933,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Sprint - Gear Down Cadence (RPM):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -5904,7 +5962,7 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
                                     text: qsTr("Sprint - Gear Down Time (seconds):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -5932,7 +5990,7 @@ import QtQuick 2.12 as Quick212
                         // Modern look: apart from the description above it, the name of a picker below
                         topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
-                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                     }
                     RowLayout {
                         spacing: 10
@@ -5963,6 +6021,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -5976,6 +6035,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -6047,7 +6107,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelSchwinnResistancSmoothing
                                     text: qsTr("Resistance Smoothing:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -6074,6 +6134,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -6094,7 +6155,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 id: labelHorizonGr7CadenceMultiplier
                                 text: qsTr("GR7 Cadence Multiplier:")
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                 Layout.fillWidth: true
                             }
                             SettingsNumberField {
@@ -6133,7 +6194,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelEchelonWattTable
                                     text: qsTr("Watt Profile:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -6161,7 +6222,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelEchelonResistanceGain
                                     text: qsTr("Resistance Gain:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -6187,7 +6248,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelEchelonResistanceOffset
                                     text: qsTr("Resistance Offset:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -6450,6 +6511,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -6563,7 +6625,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelflywheelBikeFilter
                                     text: qsTr("Samples Filter:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -6628,7 +6690,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelDomyosBikeCadenceFilter
                                     text: qsTr("Cadence Filter:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -6742,6 +6804,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -6763,7 +6826,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelproformBikeWheelRatio
                                     text: qsTr("Wheel Ratio:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -6788,7 +6851,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Specific Model:")
                                 Layout.fillWidth: true
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
 
                             UiComboBox {
@@ -6949,7 +7012,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("TDF1 IP:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsFormatField {
@@ -6976,7 +7039,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelproformTDF4IP
                                     text: qsTr("TDF4 IP:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsFormatField {
@@ -7003,7 +7066,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelproformTDFCompanionIP
                                     text: qsTr("TDF Companion IP:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsFormatField {
@@ -7066,7 +7129,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 id: labelcomputrainerSerialPort
                                 text: qsTr("Serial Port:")
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                 Layout.fillWidth: true
                             }
                             SettingsTextField {
@@ -7103,7 +7166,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 id: labelKettlerUsbSerialPort
                                 text: qsTr("Serial Port:")
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                 Layout.fillWidth: true
                             }
                             SettingsTextField {
@@ -7128,7 +7191,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 id: labelKettlerUsbBaudrate
                                 text: qsTr("Baudrate:")
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                 Layout.fillWidth: true
                             }
                             UiComboBox {
@@ -7172,7 +7235,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelFreebeatSerialPort
                                     text: qsTr("Serial Port:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -7227,7 +7290,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelm3iBikeId
                                     text: qsTr("Bike ID:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -7255,7 +7318,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelm3iBikeSpeedBuffsize
                                     text: qsTr("Speed Buffer Size:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -7366,7 +7429,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("ANT+ Bike Device Number (0=Auto):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -7421,6 +7484,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -7451,6 +7515,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: true
                         font.italic: true
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -7478,6 +7543,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -7490,7 +7556,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("ANT+ Speed Offset")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -7517,6 +7583,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -7530,7 +7597,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("ANT+ Speed Gain:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -7556,6 +7623,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -7583,7 +7651,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("ANT+ Heart Device Number (0=Auto):")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -7613,6 +7681,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -7640,6 +7709,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -7705,6 +7775,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
@@ -7730,6 +7801,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         Layout.fillWidth: true
@@ -7742,7 +7814,7 @@ import QtQuick 2.12 as Quick212
                         Layout.topMargin: 8
                         Label {
                             text: qsTr("Appearance")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -7773,7 +7845,7 @@ import QtQuick 2.12 as Quick212
                         Layout.topMargin: 8
                         Label {
                             text: qsTr("Theme")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -7795,47 +7867,6 @@ import QtQuick 2.12 as Quick212
                             }
                             onActivated: settingsPane.setUiOption("ui_theme", options[index].value)
                         }
-                    }
-
-                    // The text size of the modern look (T-078): applied at once, like the theme
-                    RowLayout {
-                        visible: window.ui.modern
-                        spacing: 10
-                        Layout.topMargin: 8
-                        Label {
-                            //: Size of all the text of the modern interface, in percent
-                            text: qsTr("Text size")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
-                            Layout.fillWidth: true
-                        }
-                        // A number like UI Zoom, any whole percent of the range
-                        SettingsNumberField {
-                            id: uiTextScaleField
-                            decimals: 0
-                            minimum: 80
-                            maximum: 170
-                            savedText: settings.ui_text_scale
-                            horizontalAlignment: Text.AlignRight
-                            Layout.fillHeight: false
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            onAccepted: if (valid) settingsPane.setUiOption("ui_text_scale", Math.round(value))
-                            onActiveFocusChanged: if (this.focus) this.cursorPosition = this.text.length
-                        }
-                        UiButton {
-                            text: qsTr("OK")
-                            enabled: uiTextScaleField.valid && uiTextScaleField.dirty
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            onClicked: { settingsPane.setUiOption("ui_text_scale", Math.round(uiTextScaleField.value)); toast.show(qsTr("Setting saved!")); }
-                        }
-                    }
-                    Label {
-                        visible: window.ui.modern
-                        text: qsTr("Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.")
-                        font.pixelSize: window.ui.fontHint
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        Layout.fillWidth: true
-                        color: window.ui.textMuted
                     }
 
                     RowLayout {
@@ -7892,6 +7923,95 @@ import QtQuick 2.12 as Quick212
                         }
                     }
 
+                    // Text size of the app: the system one on Android and iOS, or our own.
+                    // Both apply at once, through the window (main.qml, textScale)
+                    IndicatorOnlySwitch {
+                        id: uiTextScaleSystemDelegate
+                        text: qsTr("Use System Text Size")
+                        visible: window.systemTextScaleAvailable
+                        spacing: 0
+                        bottomPadding: 0
+                        topPadding: 0
+                        rightPadding: 0
+                        leftPadding: 0
+                        clip: false
+                        checked: settings.ui_text_scale_system
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        // in Qt 5.15 the role of a SwitchDelegate has no action: a double tap of the
+                        // screen reader did nothing
+                        Accessible.onPressAction: { toggle(); clicked(); }
+                        onClicked: {
+                            settings.ui_text_scale_system = checked;
+                            window.setTextScaleOption("ui_text_scale_system", checked);
+                            // back to the value the field shows for this mode, also after an edit
+                            uiTextScaleTextField.text = Qt.binding(function() { return uiTextScaleTextField.shownValue; });
+                        }
+                    }
+
+                    Label {
+                        text: qsTr("The text of the app follows the text size of the phone or tablet settings, up to 150%. Turn off to choose the size below, for example for a screen you read from a distance during a workout. Default is on.")
+                        visible: window.systemTextScaleAvailable
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
+                        font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                    }
+
+                    RowLayout {
+                        spacing: 10
+                        Label {
+                            id: labelUiTextScale
+                            text: qsTr("Text size:")
+                            Layout.fillWidth: true
+                        }
+                        SettingsNumberField {
+                            id: uiTextScaleTextField
+                            // while the system size is used: the size in effect, read only
+                            readonly property bool followsSystem: window.systemTextScaleAvailable && settings.ui_text_scale_system
+                            readonly property int shownValue: followsSystem ? Math.round(window.textScale * 100) : settings.ui_text_scale
+                            // the screen reader read only the number, not what it is; the value in the
+                            // name, as Qt 5.15 on Android stops reading the text once a name is set
+                            Accessible.name: labelUiTextScale.text + " " + text
+                            decimals: 0
+                            minimum: 80
+                            maximum: 170
+                            enabled: !followsSystem
+                            text: shownValue
+                            horizontalAlignment: Text.AlignRight
+                            Layout.fillHeight: false
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            onAccepted: if (valid) { settings.ui_text_scale = Math.round(value); window.setTextScaleOption("ui_text_scale", Math.round(value)); }
+                            onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
+                        }
+                        UiButton {
+                            id: okUiTextScaleButton
+                            text: qsTr("OK")
+                            enabled: uiTextScaleTextField.valid && !uiTextScaleTextField.followsSystem
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            onClicked: { settings.ui_text_scale = Math.round(uiTextScaleTextField.value); window.setTextScaleOption("ui_text_scale", Math.round(uiTextScaleTextField.value)); toast.show(qsTr("Setting saved!")); }
+                        }
+                    }
+                    Label {
+                        text: qsTr("Size of the text of the app (settings, menus, dialogs), in percent, from 80 to 170. The default is 100. The tiles keep their own size setting.")
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
+                        font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                    }
+
                     IndicatorOnlySwitch {
                         id: topBarEnabledDelegate
                         text: qsTr("Top Bar Enabled")
@@ -7929,6 +8049,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -7942,7 +8063,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelFloatingWindowType
                             text: qsTr("Floating Window Type:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -7969,6 +8090,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -7982,6 +8104,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -7995,7 +8118,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelFloatingWidth
                             text: qsTr("Floating Window Width:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -8023,6 +8146,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8036,7 +8160,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelFloatingHeight
                             text: qsTr("Floating Window Height:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -8064,6 +8188,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8077,7 +8202,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelFloatingTransparency
                             text: qsTr("Floating Window % Transparency:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -8105,6 +8230,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8133,6 +8259,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8157,7 +8284,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelChartDisplayMode
                             text: qsTr("Chart Display Mode:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -8184,6 +8311,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8196,7 +8324,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("iOS Live Activity Left Metric:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -8219,7 +8347,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("iOS Live Activity Right Metric:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -8243,6 +8371,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8278,7 +8407,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Background Color:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -8314,7 +8443,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelBackgroundColor
                                     text: qsTr("Tiles Background Color:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -8363,7 +8492,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Tiles Shadow Color:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -8398,7 +8527,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Statusbar Background Color:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -8433,7 +8562,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("2nd line tile text size:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -8474,7 +8603,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPelotonUsername
                             text: qsTr("Username:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsTextField {
@@ -8501,6 +8630,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8514,7 +8644,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPelotonPassword
                             text: qsTr("Password:") + ((rootItem.pelotonLogin===-1 || Qt.platform.os === "android")?"":(rootItem.pelotonLogin===1?"\u2705":"\u274c"))
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                             // Android has no reliable emoji font for the login result, so it is drawn
                             ShapeIcon {
@@ -8551,6 +8681,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8580,7 +8711,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPelotonDifficulty
                             text: qsTr("Difficulty:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         ValueComboBox {
@@ -8609,6 +8740,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8621,7 +8753,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Treadmill Level:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -8649,6 +8781,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8661,7 +8794,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Treadmill Walk Level:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -8689,6 +8822,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8701,7 +8835,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Walking Min Speed:") + " (" + (settings.miles_unit ? qsTr("mph") : qsTr("km/h")) + ")"
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -8725,6 +8859,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8737,7 +8872,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Running Min Speed:") + " (" + (settings.miles_unit ? qsTr("mph") : qsTr("km/h")) + ")"
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -8761,6 +8896,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8773,7 +8909,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Rower Level:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -8801,6 +8937,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8814,7 +8951,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPZPUsername
                             text: qsTr("PZP Username:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsTextField {
@@ -8840,6 +8977,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8853,7 +8991,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPZPPassword
                             text: qsTr("PZP Password:") + ((rootItem.pzpLogin===-1 || Qt.platform.os === "android")?"":(rootItem.pzpLogin===1?"\u2705":"\u274c"))
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                             // Android has no reliable emoji font for the login result, so it is drawn
                             ShapeIcon {
@@ -8890,6 +9028,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8903,7 +9042,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPelotonGain
                             text: qsTr("Conversion Gain:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -8930,6 +9069,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8943,7 +9083,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPelotonOffset
                             text: qsTr("Conversion Offset:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -8971,6 +9111,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -8999,6 +9140,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9026,6 +9168,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9053,6 +9196,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9067,7 +9211,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPelotonCadenceMetric
                             text: qsTr("Override Cadence Metric:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -9096,7 +9240,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPelotonHeartRateMetric
                             text: qsTr("Override HR Metric:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -9125,6 +9269,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9138,7 +9283,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelpelotonDateOnStrava
                             text: qsTr("Date on Strava:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         ValueComboBox {
@@ -9167,6 +9312,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9179,7 +9325,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Date Format:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -9222,6 +9368,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9249,6 +9396,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9277,6 +9425,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9304,6 +9453,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9332,6 +9482,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9354,7 +9505,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Username:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsTextField {
@@ -9381,6 +9532,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9394,7 +9546,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelZwiftPassword
                             text: qsTr("Password:") + ((rootItem.zwiftLogin===-1 || Qt.platform.os === "android")?"":(rootItem.zwiftLogin===1?"\u2705":"\u274c"))
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                             // Android has no reliable emoji font for the login result, so it is drawn
                             ShapeIcon {
@@ -9432,6 +9584,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9482,6 +9635,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9509,6 +9663,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9537,6 +9692,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9549,7 +9705,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Poll Time:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -9577,6 +9733,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9604,6 +9761,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9631,6 +9789,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9672,6 +9831,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9709,6 +9869,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9747,6 +9908,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9774,6 +9936,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9801,6 +9964,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9836,6 +10000,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9863,6 +10028,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9890,6 +10056,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -9902,7 +10069,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Garmin Email:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsTextField {
@@ -9932,7 +10099,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Garmin Password:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsTextField {
@@ -9961,7 +10128,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Garmin Server:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -10009,7 +10176,7 @@ import QtQuick 2.12 as Quick212
                                 // a long translation ("Потрібен код підтвердження Garmin") ran out of the card
                                 wrapMode: Text.WordWrap
                                 // Modern: the title of UiMessageDialog
-                                font.pixelSize: window.ui.modern ? window.ui.fontTitle : 18
+                                font.pixelSize: window.ui.modern ? window.ui.fontTitle : window.fontPx(18)
                                 font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
                                 color: window.ui.ink(Material.foreground)
                                 Layout.fillWidth: true
@@ -10030,7 +10197,7 @@ import QtQuick 2.12 as Quick212
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
                                 horizontalAlignment: Text.AlignHCenter
-                                font.pixelSize: window.ui.modern ? window.ui.fontLabel : 12
+                                font.pixelSize: window.ui.modern ? window.ui.fontLabel : window.fontPx(12)
                                 font.italic: !window.ui.modern
                                 color: window.ui.inkMuted(Material.color(Material.Grey))
                             }
@@ -10041,8 +10208,8 @@ import QtQuick 2.12 as Quick212
                                 horizontalAlignment: Text.AlignHCenter
                                 Layout.fillWidth: true
                                 // Modern: the height and the font of UiTextField
-                                Layout.preferredHeight: window.ui.modern ? -1 : 40
-                                font.pixelSize: window.ui.modern ? window.ui.fontBase : 16
+                                Layout.preferredHeight: window.ui.modern ? -1 : window.fontPx(40)
+                                font.pixelSize: window.ui.modern ? window.ui.fontBase : window.fontPx(16)
 
                                 onAccepted: {
                                     if (text.length > 0) {
@@ -10098,6 +10265,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -10125,6 +10293,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -10135,7 +10304,7 @@ import QtQuick 2.12 as Quick212
 
                     Label {
                         text: qsTr("Garmin device for FIT file")
-                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
                     }
@@ -10839,7 +11008,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Garmin device UNIT ID")
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                     }
 
                     RowLayout {
@@ -10862,6 +11031,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: true
                         font.italic: true
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -10905,6 +11075,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -10932,6 +11103,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -10959,6 +11131,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -10987,6 +11160,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11014,6 +11188,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11027,7 +11202,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTreadmillPidHR
                             text: qsTr("PID on Heart Zone:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         ValueComboBox {
@@ -11056,7 +11231,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTreadmillPidHRControl
                             text: qsTr("PID HR actuator:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         ValueComboBox {
@@ -11084,6 +11259,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11096,7 +11272,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("PID on HR min:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11123,7 +11299,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("PID on HR max:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11151,6 +11327,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11178,6 +11355,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11190,7 +11368,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("PID Recovery Zone Lower Limit (%):")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11215,6 +11393,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11227,7 +11406,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("PID Pushy Zone Limit:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11251,6 +11430,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11278,6 +11458,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11291,7 +11472,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramPace1mile
                             text: qsTr("1 mile pace (total time):")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsFormatField {
@@ -11318,6 +11499,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11331,7 +11513,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramPace5km
                             text: qsTr("5 km pace (total time):")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsFormatField {
@@ -11358,6 +11540,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11371,7 +11554,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramPace10km
                             text: qsTr("10 km pace (total time):")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsFormatField {
@@ -11398,6 +11581,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11411,7 +11595,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramPaceHalfMarathon
                             text: qsTr("Half Marathon pace (total time):")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsFormatField {
@@ -11438,6 +11622,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11451,7 +11636,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramPaceMarathon
                             text: qsTr("Marathon pace (total time):")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsFormatField {
@@ -11478,6 +11663,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11491,7 +11677,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramWarmupSpeed
                             text: qsTr("Warmup Speed (pace):")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsFormatField {
@@ -11517,7 +11703,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramCooldownSpeed
                             text: qsTr("Cooldown Speed (pace):")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsFormatField {
@@ -11543,7 +11729,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRestSpeed
                             text: qsTr("Rest Speed (pace):")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsFormatField {
@@ -11569,7 +11755,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTreadmillPaceDefault
                             text: qsTr("Default Pace:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         ValueComboBox {
@@ -11598,6 +11784,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11611,7 +11798,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPidHeartZoneErgModeWattStep
                             text: qsTr("ERG Mode Watt Step:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11638,6 +11825,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11665,7 +11853,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomDuration
                             text: qsTr("Duration (minutes):")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11694,7 +11882,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomPeriod
                             text: qsTr("Period (seconds):")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11722,7 +11910,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomSpeedMin
                             text: qsTr("Speed min.:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11749,7 +11937,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomSpeedMax
                             text: qsTr("Speed max.:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11776,7 +11964,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomInclineMin
                             text: qsTr("Incline min.:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11804,7 +11992,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomInclineMax
                             text: qsTr("Incline max.:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11831,7 +12019,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomResistanceMin
                             text: qsTr("Resistance min.:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11858,7 +12046,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTrainProgramRandomResistanceMax
                             text: qsTr("Resistance max.:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -11885,6 +12073,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11922,6 +12111,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11950,6 +12140,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -11978,6 +12169,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -12006,6 +12198,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -12034,6 +12227,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -12062,6 +12256,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -12075,7 +12270,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTreadmillStepSpeed
                             text: qsTr("Speed Step:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -12102,6 +12297,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -12115,7 +12311,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Min. Inclination:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -12144,6 +12340,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -12156,7 +12353,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Max. Inclination:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -12184,6 +12381,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -12196,7 +12394,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Max. Speed:") + " (" + (settings.miles_unit?qsTr("mph"):qsTr("km/h")) + ")"
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -12222,6 +12420,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -12234,7 +12433,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Min. Speed:") + " (" + (settings.miles_unit?qsTr("mph"):qsTr("km/h")) + ")"
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -12260,6 +12459,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -12273,7 +12473,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelStepGain
                             text: qsTr("Step Count Gain:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -12300,6 +12500,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -12323,6 +12524,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -12350,6 +12552,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -12363,7 +12566,7 @@ import QtQuick 2.12 as Quick212
                         // Modern look: apart from the description above it, the name of a picker below
                         topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
-                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                     }
                     RowLayout {
                         spacing: 10
@@ -12394,6 +12597,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -12407,6 +12611,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -12427,7 +12632,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.topMargin: window.ui.modern ? 8 : 0
                                 text: qsTr("Specific Model:")
                                 Layout.fillWidth: true
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
 
                             UiComboBox {
@@ -12749,7 +12954,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelproformtreadmillip
                                     text: qsTr("Proform IP:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsFormatField {
@@ -12776,7 +12981,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelnordictrack2950IP
                                     text: qsTr("Nordictrack 2950 IP:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsFormatField {
@@ -13000,6 +13205,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -13174,7 +13380,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Remap 5 km/h button:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -13199,7 +13405,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Remap 10 km/h button:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -13224,7 +13430,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Remap 16 km/h button:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -13249,7 +13455,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Remap 22 km/h button:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -13274,7 +13480,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Pool time (ms):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -13301,6 +13507,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -13497,7 +13704,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelfitshowTreadmillUserId
                                     text: qsTr("User ID:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -13673,7 +13880,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelhorizonTreadmillProfile1
                                     text: qsTr("User 1:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -13698,7 +13905,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelhorizonTreadmillProfile2
                                     text: qsTr("User 2:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -13723,7 +13930,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelhorizonTreadmillProfile3
                                     text: qsTr("User 3:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -13748,7 +13955,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelhorizonTreadmillProfile4
                                     text: qsTr("User 4:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -13773,7 +13980,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelhorizonTreadmillProfile5
                                     text: qsTr("User 5:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -14233,7 +14440,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Serial Port:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -14261,7 +14468,7 @@ import QtQuick 2.12 as Quick212
                         // Modern look: apart from the description above it, the name of a picker below
                         topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
-                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                     }
                     RowLayout {
                         spacing: 10
@@ -14300,6 +14507,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -14380,7 +14588,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("ProForm Rower IP:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsFormatField {
@@ -14425,7 +14633,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 id: labelDomyosEllipticalSpeedRatio
                                 text: qsTr("Speed Ratio:")
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                 Layout.fillWidth: true
                             }
                             SettingsNumberField {
@@ -14471,7 +14679,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Serial Port:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -14499,7 +14707,7 @@ import QtQuick 2.12 as Quick212
                         // Modern look: apart from the description above it, the name of a picker below
                         topPadding: window.ui.modern ? 16 : 0
                         Layout.fillWidth: true
-                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                     }
                     RowLayout {
                         spacing: 10
@@ -14538,6 +14746,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -14638,7 +14847,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Companion IP:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsFormatField {
@@ -14753,7 +14962,7 @@ import QtQuick 2.12 as Quick212
                         id: labelFilterDevice
                         text: qsTr("Manual Device:")
                         Layout.fillWidth: true
-                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                     }
                     RowLayout {
                         spacing: 10
@@ -14794,6 +15003,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -14821,6 +15031,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -14834,7 +15045,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelwattOffset
                             text: qsTr("Watt Offset:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -14862,6 +15073,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -14875,7 +15087,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelwattGain
                             text: qsTr("Watt Gain:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -14902,6 +15114,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -14915,7 +15128,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelwattMax
                             text: qsTr("Max Watt:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -14941,6 +15154,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -14954,7 +15168,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelspeedOffset
                             text: qsTr("Speed Offset")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -14982,6 +15196,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -14996,7 +15211,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelspeedGain
                             text: qsTr("Speed Gain:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -15023,6 +15238,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15036,7 +15252,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelcadenceOffset
                             text: qsTr("Cadence Offset")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -15064,6 +15280,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15077,7 +15294,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelcadenceGain
                             text: qsTr("Cadence Gain:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -15104,6 +15321,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15124,7 +15342,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Strava Upload:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         ValueComboBox {
@@ -15152,7 +15370,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelStravaSuffix
                             text: qsTr("Suffix activity:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsTextField {
@@ -15178,6 +15396,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15205,6 +15424,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15233,6 +15453,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15260,6 +15481,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15287,6 +15509,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15315,6 +15538,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15342,6 +15566,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15355,7 +15580,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelPowerAvg
                             text: qsTr("Power Averaging Mode:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -15388,6 +15613,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15416,6 +15642,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15444,6 +15671,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15457,7 +15685,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTreadmillInclinationOffset
                             text: qsTr("Zwift Inclination Offset:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -15485,6 +15713,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15498,7 +15727,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelTreadmillInclinationGain
                             text: qsTr("Zwift Inclination Gain:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -15525,6 +15754,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15537,7 +15767,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Minimum Inclination:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -15564,6 +15794,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15577,7 +15808,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelInclinationStep
                             text: qsTr("Inclination Step:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -15604,6 +15835,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15631,6 +15863,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15659,6 +15892,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15686,6 +15920,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15698,7 +15933,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("AutoLap on Distance:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -15724,6 +15959,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15736,7 +15972,7 @@ import QtQuick 2.12 as Quick212
                         spacing: 10
                         Label {
                             text: qsTr("Inclination Delay:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -15762,6 +15998,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -15796,6 +16033,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: true
                                 font.italic: true
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -15848,6 +16086,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -15862,7 +16101,7 @@ import QtQuick 2.12 as Quick212
                                 // Modern look: apart from the description above it, the name of a picker below
                                 topPadding: window.ui.modern ? 16 : 0
                                 Layout.fillWidth: true
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
                             RowLayout {
                                 spacing: 10
@@ -15903,6 +16142,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -15916,7 +16156,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelCadenceSpeedRatio
                                     text: qsTr("Wheel Ratio:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -15943,6 +16183,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -15970,6 +16211,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -15997,6 +16239,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -16009,7 +16252,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Resistance Level 1:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -16034,7 +16277,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Watt 1:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -16059,7 +16302,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Resistance Level 2:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -16084,7 +16327,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Watt 2:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -16110,6 +16353,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -16148,6 +16392,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -16176,6 +16421,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -16204,6 +16450,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -16232,6 +16479,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -16259,6 +16507,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -16286,6 +16535,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -16297,7 +16547,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Power sensor speed correction threshold (%):")
                                 Layout.fillWidth: true
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
                             RowLayout {
                                 spacing: 10
@@ -16324,6 +16574,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -16351,6 +16602,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -16378,6 +16630,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -16405,6 +16658,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -16416,7 +16670,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Power Sensor Speed/Incline Coefficient A:")
                                 Layout.fillWidth: true
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
                             RowLayout {
                                 spacing: 10
@@ -16440,7 +16694,7 @@ import QtQuick 2.12 as Quick212
                             Label {
                                 text: qsTr("Power Sensor Speed/Incline Coefficient B:")
                                 Layout.fillWidth: true
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
                             RowLayout {
                                 spacing: 10
@@ -16466,6 +16720,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -16480,7 +16735,7 @@ import QtQuick 2.12 as Quick212
                                 // Modern look: apart from the description above it, the name of a picker below
                                 topPadding: window.ui.modern ? 16 : 0
                                 Layout.fillWidth: true
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
                             RowLayout {
                                 spacing: 10
@@ -16521,6 +16776,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -16593,7 +16849,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelEliteRizerGain
                                             text: qsTr("Difficulty/Gain:")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -16685,7 +16941,7 @@ import QtQuick 2.12 as Quick212
                                 // Modern look: apart from the description above it, the name of a picker below
                                 topPadding: window.ui.modern ? 16 : 0
                                 Layout.fillWidth: true
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
                             RowLayout {
                                 spacing: 10
@@ -16741,7 +16997,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelSS2KShiftStep
                                     text: qsTr("Shift Step")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -16767,7 +17023,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelSS2KMaxResistance
                                     text: qsTr("Max Resistance")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -16793,7 +17049,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelSS2KMinResistance
                                     text: qsTr("Min Resistance")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -16828,7 +17084,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KResistanceSample1
                                             text: qsTr("Resistance Sample 1")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -16853,7 +17109,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KShiftStepSample1
                                             text: qsTr("Shift Step Sample 1")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -16879,7 +17135,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KResistanceSample2
                                             text: qsTr("Resistance Sample 2")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -16904,7 +17160,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KShiftStepSample2
                                             text: qsTr("Shift Step Sample 2")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -16930,7 +17186,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KResistanceSample3
                                             text: qsTr("Resistance Sample 3")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -16955,7 +17211,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KShiftStepSample3
                                             text: qsTr("Shift Step Sample 3")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -16981,7 +17237,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KResistanceSample4
                                             text: qsTr("Resistance Sample 4")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -17006,7 +17262,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelSS2KShiftStepSample4
                                             text: qsTr("Shift Step Sample 4")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -17061,7 +17317,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelFitmetriaFanFitMode
                                     text: qsTr("Mode:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 ValueComboBox {
@@ -17089,7 +17345,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelFitmetriaFanFitMin
                                     text: qsTr("Min. value (0-100):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -17117,7 +17373,7 @@ import QtQuick 2.12 as Quick212
                                 Label {
                                     id: labelFitmetriaFanFitMax
                                     text: qsTr("Max value (0-100):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -17169,7 +17425,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Mode:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 ValueComboBox {
@@ -17195,7 +17451,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Min. value (0-100):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -17221,7 +17477,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Max value (0-100):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -17272,7 +17528,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Mode:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 ValueComboBox {
@@ -17298,7 +17554,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Min. value (0-100):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -17324,7 +17580,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Max value (0-100):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -17377,6 +17633,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -17414,6 +17671,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -17451,6 +17709,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -17488,6 +17747,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -17515,6 +17775,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -17542,6 +17803,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -17569,6 +17831,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -17596,6 +17859,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -17623,6 +17887,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -17637,7 +17902,7 @@ import QtQuick 2.12 as Quick212
                                 font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 2)
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
-                                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
 
                             Label {
@@ -17645,6 +17910,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -17656,7 +17922,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Shifter Up (LS1):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -17669,7 +17935,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Shifter Down (LS2):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -17682,7 +17948,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right Shifter Up (RS1):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -17695,7 +17961,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right Shifter Down (RS2):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -17708,7 +17974,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Left Paddle (ZL):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -17721,7 +17987,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Right Paddle (ZR):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -17734,7 +18000,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Power Up (LB):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -17747,7 +18013,7 @@ import QtQuick 2.12 as Quick212
                             RowLayout {
                                 Label {
                                     text: qsTr("Ride On (RB):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 UiComboBox {
@@ -17761,7 +18027,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Pool time (ms):")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -17788,6 +18054,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -17826,7 +18093,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelMapsType
                             text: qsTr("Maps Type:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         UiComboBox {
@@ -17883,7 +18150,7 @@ import QtQuick 2.12 as Quick212
                         Label {
                             id: labelVideoWindow
                             text: qsTr("Window Time (sec.):")
-                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
                         }
                         SettingsNumberField {
@@ -17940,6 +18207,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -17968,6 +18236,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -17996,6 +18265,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -18024,6 +18294,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -18079,6 +18350,7 @@ import QtQuick 2.12 as Quick212
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
                                         font.pixelSize: window.ui.fontHint
+                                        bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter
@@ -18107,6 +18379,7 @@ import QtQuick 2.12 as Quick212
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
                                         font.pixelSize: window.ui.fontHint
+                                        bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter
@@ -18135,6 +18408,7 @@ import QtQuick 2.12 as Quick212
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
                                         font.pixelSize: window.ui.fontHint
+                                        bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter
@@ -18164,6 +18438,7 @@ import QtQuick 2.12 as Quick212
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
                                         font.pixelSize: window.ui.fontHint
+                                        bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter
@@ -18193,6 +18468,7 @@ import QtQuick 2.12 as Quick212
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
                                         font.pixelSize: window.ui.fontHint
+                                        bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter
@@ -18221,6 +18497,7 @@ import QtQuick 2.12 as Quick212
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
                                         font.pixelSize: window.ui.fontHint
+                                        bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter
@@ -18250,6 +18527,7 @@ import QtQuick 2.12 as Quick212
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
                                         font.pixelSize: window.ui.fontHint
+                                        bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter
@@ -18278,6 +18556,7 @@ import QtQuick 2.12 as Quick212
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
                                         font.pixelSize: window.ui.fontHint
+                                        bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter
@@ -18287,6 +18566,8 @@ import QtQuick 2.12 as Quick212
                                     }
 
                                     UiSwitchDelegate {
+                                        // on iOS the title of a switch kept the size of the style while the text around it grew: with a size other than 100 % it takes the one of the window font
+                                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                                         text: qsTr("Virtual Tacx")
                                         spacing: 0
                                         bottomPadding: 0
@@ -18342,6 +18623,7 @@ import QtQuick 2.12 as Quick212
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
                                         font.pixelSize: window.ui.fontHint
+                                        bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter
@@ -18354,7 +18636,7 @@ import QtQuick 2.12 as Quick212
                                         spacing: 10
                                         Label {
                                             text: qsTr("ID:")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -18381,6 +18663,7 @@ import QtQuick 2.12 as Quick212
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
                                         font.pixelSize: window.ui.fontHint
+                                        bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter
@@ -18394,7 +18677,7 @@ import QtQuick 2.12 as Quick212
                                         Label {
                                             id: labelDirconServerPort
                                             text: qsTr("Server Port:")
-                                            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                             Layout.fillWidth: true
                                         }
                                         SettingsNumberField {
@@ -18435,7 +18718,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("MQTT Host:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -18460,6 +18743,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -18472,7 +18756,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("MQTT Port:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -18501,6 +18785,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -18514,7 +18799,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Username:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -18539,6 +18824,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -18552,7 +18838,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Password:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -18578,6 +18864,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -18591,7 +18878,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("Device ID:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsTextField {
@@ -18616,6 +18903,7 @@ import QtQuick 2.12 as Quick212
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
                                 font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
@@ -18639,7 +18927,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("OSC IP:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsFormatField {
@@ -18665,7 +18953,7 @@ import QtQuick 2.12 as Quick212
                                 spacing: 10
                                 Label {
                                     text: qsTr("OSC Port:")
-                                    wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                                    wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
                                 }
                                 SettingsNumberField {
@@ -18711,6 +18999,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -18739,6 +19028,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -18819,6 +19109,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -18847,6 +19138,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -18874,6 +19166,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -18902,6 +19195,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -18930,6 +19224,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -18958,6 +19253,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -18986,6 +19282,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -19013,6 +19310,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -19041,6 +19339,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -19070,6 +19369,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -19097,6 +19397,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -19125,6 +19426,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
@@ -19163,6 +19465,7 @@ import QtQuick 2.12 as Quick212
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter

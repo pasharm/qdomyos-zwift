@@ -4,7 +4,7 @@ import QtQuick.Controls.Material 2.12
 
 // A notice with nothing to answer ("Your Strava account is now connected!", "Trial time
 // expired!" ...). Classic look: the popup of the upstream as it was - fixed size, white text,
-// the line breaks of the text. Modern look: the card of UiMessageDialog with an OK button,
+// the line breaks of the text; with a bigger text it wraps and grows. Modern look: the card of UiMessageDialog with an OK button,
 // the text in the theme colours and wrapped by the card width.
 UiPopup {
     id: control
@@ -40,8 +40,11 @@ UiPopup {
     parent: Overlay.overlay
     x: Math.round((parent.width - width) / 2)
     y: Math.round((parent.height - height) / 2)
-    width: modern ? Math.min(parent.width - 48, 440) : classicWidth
-    height: modern ? implicitHeight : classicHeight
+    width: modern ? Math.min(parent.width - 48, 440)
+                  : window.textScale !== 1 ? Math.min(classicWidth, parent.width - 32) : classicWidth
+    height: modern ? implicitHeight
+                   : window.textScale !== 1 ? Math.max(classicHeight, classicColumn.implicitHeight + topPadding + bottomPadding)
+                   : classicHeight
     modal: true
     focus: true
     palette.text: "white"
@@ -65,9 +68,11 @@ UiPopup {
             anchors.horizontalCenter: parent.horizontalCenter
             Label {
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: control.classicLabelWidth > 0 ? control.classicLabelWidth : implicitWidth
-                height: control.classicLabelHeight > 0 ? control.classicLabelHeight : implicitHeight
+                width: window.textScale !== 1 ? control.availableWidth
+                       : control.classicLabelWidth > 0 ? control.classicLabelWidth : implicitWidth
+                height: window.textScale === 1 && control.classicLabelHeight > 0 ? control.classicLabelHeight : implicitHeight
                 text: control.text
+                wrapMode: window.labelWrap
             }
         }
 

@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQml 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
@@ -182,6 +183,8 @@ ColumnLayout {
             }
 
             UiSwitchDelegate {
+                // on iOS the title of a switch kept the size of the style while the text around it grew: with a size other than 100 % it takes the one of the window font
+                Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                 visible: !window.ui.modern
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                 Layout.fillWidth: true
@@ -266,6 +269,7 @@ ColumnLayout {
                 font.bold: !window.ui.modern
                 font.italic: !window.ui.modern
                 font.pixelSize: window.ui.fontHint
+                bottomPadding: window.hintGap
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
                 verticalAlignment: Text.AlignVCenter

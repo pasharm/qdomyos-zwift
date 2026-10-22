@@ -26,8 +26,10 @@ ScrollView {
     }
 
     property var gearRows: []
-    property int rowHeight: 55
-    property int offsetControlHeight: 43
+    // the rows, the fields and their -/+ grow with the text like the Wahoo gear table
+    // (from 40 and 30), never below their size at 100 %
+    property int rowHeight: window.textScale !== 1 ? Math.max(55, window.fontPx(40)) : 55
+    property int offsetControlHeight: window.textScale !== 1 ? Math.max(43, window.fontPx(30)) : 43
 
     Component.onCompleted: {
         loadGearRows()
@@ -136,6 +138,7 @@ ScrollView {
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
             font.pixelSize: window.ui.fontHint
+            bottomPadding: window.hintGap
             color: window.ui.inkMuted(Material.accent)
         }
 
@@ -143,7 +146,7 @@ ScrollView {
             wrapsText: true
             text: qsTr("Reset to Linear Defaults")
             Layout.fillWidth: true
-            Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 24) : 40
+            Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 24) : window.fontPx(40)
             onClicked: {
                 gearRows = defaultGearRows()
                 updateGearListModel()
@@ -172,8 +175,8 @@ ScrollView {
                     color: "transparent"
 
                     Text {
-                        // The text size of the modern look: a plain Text does not inherit the window font
-                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                        // a plain Text does not inherit the window font: the text size while it is not 100 %
+                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         anchors.centerIn: parent
                         // Modern look: one line inside its column, smaller if it does not fit
                         width: window.ui.modern ? parent.width - 8 : implicitWidth
@@ -197,7 +200,7 @@ ScrollView {
                     color: "transparent"
 
                     Text {
-                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         anchors.centerIn: parent
                         width: window.ui.modern ? parent.width - 8 : implicitWidth
                         horizontalAlignment: Text.AlignHCenter
@@ -252,7 +255,7 @@ ScrollView {
                         color: "transparent"
 
                         Text {
-                            Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                            Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                             anchors.centerIn: parent
                             text: gear
                             color: window.ui.ink("black")
@@ -292,7 +295,7 @@ ScrollView {
                             UiButton {
                                 visible: !window.ui.modern
                                 text: "-"
-                                Layout.preferredWidth: 34
+                                Layout.preferredWidth: window.fontPx(34)
                                 Layout.fillHeight: true
                                 onClicked: offsetCell.stepOffset(-0.5)
                             }
@@ -326,6 +329,10 @@ ScrollView {
                                 selectedTextColor: window.ui.modern ? window.ui.accentInk : "white"
                                 selectionColor: window.ui.modern ? window.ui.accent : Material.accent
                                 horizontalAlignment: Text.AlignHCenter
+                                // Material pads 8 above and 16 below: with a bigger text the number sat
+                                // well over the middle of the field
+                                topPadding: window.textScale !== 1 ? 0 : 8
+                                bottomPadding: window.textScale !== 1 ? 0 : 16
                                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                                 // Modern look: no Material paddings and insets, they differ above
                                 // and below and the number sat high in the low field. Bindings that
@@ -357,7 +364,7 @@ ScrollView {
                             UiButton {
                                 visible: !window.ui.modern
                                 text: "+"
-                                Layout.preferredWidth: 34
+                                Layout.preferredWidth: window.fontPx(34)
                                 Layout.fillHeight: true
                                 onClicked: offsetCell.stepOffset(0.5)
                             }

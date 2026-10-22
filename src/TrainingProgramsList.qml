@@ -128,6 +128,12 @@ ColumnLayout {
                         folderModel.nameFilters = [filter + ".zwo", filter + ".xml", filter + ".mrc", filter + ".erg", filter + ".json", filter + ".xsr"]
                     }
                     id: filterField
+                    // the field kept its 120 of Material and showed less of the hint as the text grew.
+                    // The list column has no width of its own here: at most half of the window, so
+                    // the back button stays on a narrow screen
+                    width: window.textScale !== 1
+                           ? Math.max(implicitWidth, Math.min(window.fontPx(implicitWidth), window.width / 2))
+                           : implicitWidth
                     onTextChanged: updateFilter()
                 }
                      Button {
@@ -160,7 +166,7 @@ ColumnLayout {
                     Rectangle {
                         property alias textColor: fileTextBox.color
                         width: parent.width
-                        height: 40
+                        height: window.textScale !== 1 ? Math.max(40, fileTextBox.implicitHeight) : 40
                                 color: Material.backgroundColor
                         z: 1
                         Item {
@@ -174,7 +180,7 @@ ColumnLayout {
                             Text {
                                 id: fileTextBox
                                 color: (!folderModel.isFolder(index)?Material.color(Material.Grey):Material.color(Material.Orange))
-                                font.pixelSize: Qt.application.font.pixelSize * 1.6
+                                font.pixelSize: window.textScale === 1 ? Qt.application.font.pixelSize * 1.6 : (Qt.application.font.pixelSize > 0 ? window.fontPx(window.appFontPx * 1.6) : window.plainFontPx)
                                 text: (!folderModel.isFolder(index)?fileName.substring(0, fileName.length-4):fileName)
                                 NumberAnimation on x {
                                     Component.onCompleted: {
@@ -190,7 +196,7 @@ ColumnLayout {
                                   x: root.width
                                   text: fileTextBox.text
                                   color: Material.color(Material.Grey)
-                                  font.pixelSize: Qt.application.font.pixelSize * 1.6
+                                  font.pixelSize: window.textScale === 1 ? Qt.application.font.pixelSize * 1.6 : (Qt.application.font.pixelSize > 0 ? window.fontPx(window.appFontPx * 1.6) : window.plainFontPx)
                                 }
                             }
                         }

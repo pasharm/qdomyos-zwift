@@ -39,6 +39,9 @@ public:
     int waterfallRightInset() const { return m_waterfallRight; }
     bool hasWaterfallDisplay() const { return m_waterfallTop > 0 || m_waterfallBottom > 0 || m_waterfallLeft > 0 || m_waterfallRight > 0; }
     int apiLevel() const;
+    // System text size: Android font scale, iOS Dynamic Type; 1.0 elsewhere.
+    // Read again when the app comes back to the foreground, the user changes it in the system settings.
+    Q_INVOKABLE double systemFontScale() const;
     // Night mode of the system (Configuration.uiMode). Read on demand: QML asks again when
     // the app comes back to the foreground and every 2 s while it is on screen.
     // Android before 10 (API 29, no dark theme in the system) and not Android: true (the app is

@@ -41,7 +41,8 @@ ColumnLayout {
         color: "red"
         Layout.alignment: Qt.AlignTop
         Layout.fillWidth: true;
-        height: 48
+        height: window.textScale !== 1 ? Math.max(48, accordionText.y + accordionText.height + 13) : 48
+        Layout.preferredHeight: height
 
         Accessible.role: Accessible.Button 
         Accessible.name: title 
@@ -59,13 +60,19 @@ ColumnLayout {
             id: accordionText
             x:34;y:13
             color: "#FFFFFF"
+            font: window.headerFont
             text: rootElement.title
+            // A bigger text can run under the arrow: a long title wraps, and the header grows
+            width: window.textScale !== 1 ? indicatImg.x - x - 8 : implicitWidth
+            wrapMode: window.labelWrap
         }
         Text {
-            y:13
+            // With a bigger text the arrow grew down from the top of its box and sat below the
+            // title: it is centred on the first line of the title instead
+            y: window.textScale !== 1 ? accordionText.y + (accordionText.height / Math.max(1, accordionText.lineCount) - height) / 2 : 13
             anchors.right:  parent.right
             anchors.rightMargin: 20
-            width: 30; height: 30
+            width: 30; height: window.textScale !== 1 ? implicitHeight : 30
             id: indicatImg
             text: ">"
             font.pixelSize: window.ui.fontPx(24)

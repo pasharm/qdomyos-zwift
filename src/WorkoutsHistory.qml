@@ -304,6 +304,9 @@ Page {
             Layout.fillWidth: true
             height: 60
             color: workoutHistoryPage.modern ? "transparent" : "#f5f5f5"
+            // a bigger text: the title and the filter line keep inside the header (the layout reads
+            // the height only once, a preferred height it follows)
+            Layout.preferredHeight: window.textScale !== 1 ? Math.max(60, headerTitle.height + 12) : -1
 
             // Calendar Icon Button - positioned absolutely on the left
             Button {
@@ -394,6 +397,7 @@ Page {
 
             // Title with filter status - between the buttons, shrinking on narrow screens
             Column {
+                id: headerTitle
                 anchors.left: clearFilterButton.visible ? clearFilterButton.right : calendarButton.right
                 anchors.right: importButton.left
                 anchors.leftMargin: 8
@@ -404,7 +408,7 @@ Page {
                     width: parent.width
                     horizontalAlignment: Text.AlignHCenter
                     text: qsTr("Workout History")
-                    font.pixelSize: workoutHistoryPage.modern ? 22 : 24
+                    font.pixelSize: workoutHistoryPage.modern ? 22 : window.fontPx(24)
                     font.weight: workoutHistoryPage.modern ? Font.DemiBold : Font.Bold
                     color: window.ui.ink("black")
                     fontSizeMode: Text.HorizontalFit
@@ -572,8 +576,10 @@ Page {
                 // inside it, which cannot be pressed, and the workout cannot be opened
                 Accessible.name: title + ", " + date + ", " + duration
                 width: parent.width
-                // Modern look: three lines (the calories join the stats), the card is 92 px high
-                height: workoutHistoryPage.modern ? 104 : 135
+                // Modern look: three lines (the calories join the stats), the card is 92 px high.
+                // Classic with a bigger text: the card grows with its lines (margins 8 + 12 on each side)
+                height: workoutHistoryPage.modern ? 104
+                    : window.textScale !== 1 ? Math.max(135, workoutInfo.implicitHeight + 40) : 135
 
                 Component.onCompleted: {
                     console.log("Delegate data:", JSON.stringify({
@@ -786,14 +792,15 @@ Page {
 
                         // Workout info
                         ColumnLayout {
+                            id: workoutInfo
                             Layout.fillWidth: true
                             spacing: 4
 
                             // Title row (without tag) with auto-scrolling
                             Rectangle {
                                 Layout.fillWidth: true
-                                Layout.rightMargin: 80 // Reserve space for tag
-                                Layout.preferredHeight: 24
+                                Layout.rightMargin: window.fontPx(80) // Reserve space for tag
+                                Layout.preferredHeight: window.textScale !== 1 ? Math.max(24, titleText.implicitHeight) : 24
                                 clip: true
                                 color: "transparent"
                                 
@@ -850,8 +857,8 @@ Page {
                             }
 
                             Text {
-                                // The text size of the modern look: a plain Text does not inherit the window font
-                                Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                                // a plain Text does not inherit the window font: the text size while it is not 100 %
+                                Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                                 text: date
                                 color: window.ui.inkMuted("#666666")
                             }
@@ -859,7 +866,7 @@ Page {
                             // Modern look: one stats line, the calories included; it stops short
                             // of the action buttons in the bottom-right corner when they are shown
                             Text {
-                                Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                                Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                                 visible: workoutHistoryPage.modern
                                 Layout.fillWidth: true
                                 Layout.rightMargin: actionRow.width > 0 ? actionRow.width + 8 : 0
@@ -873,18 +880,23 @@ Page {
                                 color: window.ui.textMain
                             }
 
-                            // Stats row
-                            RowLayout {
+                            // Stats row; with a bigger text one under the other, clear of the action
+                            // buttons in the bottom-right corner
+                            GridLayout {
                                 visible: !workoutHistoryPage.modern
-                                spacing: 16
+                                columns: window.textScale > 1 ? 1 : 2
+                                columnSpacing: 16
+                                rowSpacing: 4
 
                                 Text {
+                                    Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                                     text: (workoutHistoryPage.modern ? "" : wrapEmoji("⏱ ")) + duration
                                     textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
                                     color: window.ui.ink("black")
                                 }
 
                                 Text {
+                                    Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                                     text: {
                                         var useMiles = settings && settings.miles_unit
                                         var displayDistance = useMiles ? (distance / 1.60934) : distance
@@ -1107,8 +1119,13 @@ Page {
         x: (parent.width - width) / 2
         y: (parent.height - height) / 2
 
+        // a bigger text: the dialog keeps inside the screen and the question wraps
+        width: window.textScale !== 1 ? Math.min(implicitWidth, parent.width - 32) : implicitWidth
+
         Text {
-            Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
+            width: window.textScale !== 1 ? confirmDialog.availableWidth : implicitWidth
+            wrapMode: window.labelWrap
+            Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
             text: qsTr("Are you sure you want to delete '%1'?").arg(confirmDialog.workoutTitle)
         }
 
@@ -1190,7 +1207,7 @@ Page {
             Text {
                 Layout.margins: 20
                 Layout.preferredWidth: 300
-                Layout.preferredHeight: 120
+                Layout.preferredHeight: window.textScale !== 1 ? Math.max(120, implicitHeight) : 120
                 text: Qt.platform.os === "android" ? 
                       wrapEmoji("🔥 ") +
                       wrapEmoji(trainingProgramDialog.isSuccess ? '✅ ' : '❌ ') +
@@ -1215,7 +1232,7 @@ Page {
         anchors.rightMargin: workoutHistoryPage.modern ? Math.max(16, window.contentSideMargin) : 0
         anchors.bottomMargin: workoutHistoryPage.modern ? 8 : 0
         radius: workoutHistoryPage.modern ? 20 : 0
-        height: 80
+        height: window.textScale !== 1 ? Math.max(80, streakColumn.implicitHeight + 16) : 80
         visible: workoutModel && !workoutHistoryPage.modern
         
         Behavior on visible {
@@ -1263,6 +1280,7 @@ Page {
         }
         
         ColumnLayout {
+            id: streakColumn
             anchors.centerIn: parent
             spacing: 4
 
@@ -1535,7 +1553,7 @@ Page {
                     model: workoutHistoryPage.modern ? workoutHistoryPage.weekDayNames()
                          : [qsTr("Sun"), qsTr("Mon"), qsTr("Tue"), qsTr("Wed"), qsTr("Thu"), qsTr("Fri"), qsTr("Sat")]
                     Text {
-                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         Layout.fillWidth: true
                         Layout.preferredHeight: 30
                         text: modelData

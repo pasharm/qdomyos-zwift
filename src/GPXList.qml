@@ -315,7 +315,7 @@ ColumnLayout {
                     Rectangle {
                         property alias textColor: fileTextBox.color
                         width: parent.width
-                        height: 40
+                        height: window.textScale !== 1 ? Math.max(40, fileTextBox.implicitHeight) : 40
                         color: Material.backgroundColor
                         z: 1
                         Item {
@@ -329,7 +329,7 @@ ColumnLayout {
                             Text {
                                 id: fileTextBox
                                 color: (!folderModel.isFolder(index)?Material.color(Material.Grey):Material.color(Material.Orange))
-                                font.pixelSize: Qt.application.font.pixelSize * 1.6
+                                font.pixelSize: window.textScale === 1 ? Qt.application.font.pixelSize * 1.6 : (Qt.application.font.pixelSize > 0 ? window.fontPx(window.appFontPx * 1.6) : window.plainFontPx)
                                 text: fileName.substring(0, fileName.length-4)
                                 NumberAnimation on x {
                                     Component.onCompleted: {
@@ -345,7 +345,7 @@ ColumnLayout {
                                   x: root.width
                                   text: fileTextBox.text
                                   color: Material.color(Material.Grey)
-                                  font.pixelSize: Qt.application.font.pixelSize * 1.6
+                                  font.pixelSize: window.textScale === 1 ? Qt.application.font.pixelSize * 1.6 : (Qt.application.font.pixelSize > 0 ? window.fontPx(window.appFontPx * 1.6) : window.plainFontPx)
                                 }
                             }
                         }
@@ -425,7 +425,7 @@ ColumnLayout {
                     // Modern look: the text gives way to the chips below, laid over it
                     height: row.chips ? routeChips.height + 8 : implicitHeight
                     text: rootItem.previewWorkoutDescription
-                    font.pixelSize: window.ui.modern ? window.ui.fontLabel : 16
+                    font.pixelSize: window.ui.modern ? window.ui.fontLabel : window.fontPx(16)
                     color: window.ui.inkMuted("white")
                     bottomPadding: window.ui.modern ? 8 : 0
                     wrapMode: Text.WordWrap

@@ -33,8 +33,10 @@ Item {
         y: Math.round((parent.height - height) / 2)
         // Modern look: as wide as the screen allows, as tall as the text; the fixed
         // size cut a long translation at a large text size
-        width: window.ui.modern ? Math.min(380, parent.width - 32) : 380
-        height: window.ui.modern ? Math.max(120, connectedText.height + topPadding + bottomPadding) : 120
+        // With a bigger text: as wide as the screen allows, as tall as the text; the fixed
+        // size cut the text
+        width: window.ui.modern ? Math.min(380, parent.width - 32) : (window.textScale !== 1 ? Math.min(380, parent.width - 32) : 380)
+        height: window.ui.modern ? Math.max(120, connectedText.height + topPadding + bottomPadding) : (window.textScale !== 1 ? Math.max(120, connectedText.height + topPadding + bottomPadding) : 120)
         modal: true
         focus: true
         palette.text: "white"
@@ -52,9 +54,9 @@ Item {
             Label {
                 id: connectedText
                 anchors.horizontalCenter: parent.horizontalCenter
-                width: window.ui.modern ? popupStravaConnectedWeb.availableWidth : 370
-                height: window.ui.modern ? undefined : 120
-                wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+                width: window.ui.modern || window.textScale !== 1 ? popupStravaConnectedWeb.availableWidth : 370
+                height: window.ui.modern || window.textScale !== 1 ? undefined : 120
+                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                 text: qsTr("Your Strava account is now connected!<br><br>When you will press STOP on QZ a file<br>will be automatically uploaded to Strava!")
             }
         }

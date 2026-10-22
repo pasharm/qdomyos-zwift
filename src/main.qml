@@ -20,20 +20,6 @@ ApplicationWindow {
 	 objectName: "stack"
     title: Qt.platform.os === "ios" ? "" : qsTr("qDomyos-Zwift")
 
-    // The labels, fields, buttons, lists and menus inherit the app font from the window. The
-    // modern look sets the window font only for a text size other than 100 %, and resets it
-    // otherwise: an explicit window font left after leaving the modern look (or set at start-up,
-    // before the settings file is read: ui_modern defaults to true) would change the classic look
-    readonly property int scaledFontPx: ui.modern && ui.textScale !== 1 ? ui.fontBase : 0
-    function applyTextScale() {
-        if (scaledFontPx > 0)
-            font.pixelSize = scaledFontPx
-        else
-            font = undefined
-    }
-    onScaledFontPxChanged: applyTextScale()
-    Component.onCompleted: applyTextScale()
-
     // Force update on orientation change
     property int currentOrientation: Screen.orientation
     onCurrentOrientationChanged: {
@@ -305,6 +291,7 @@ ApplicationWindow {
         property string ui_theme_mode: "auto"
         property bool ui_tile_snap: true
         property int ui_text_scale: 100
+        property bool ui_text_scale_system: true
     }
 
     // Modern look, switched in Settings > General UI Options. Pages read the palette
@@ -409,11 +396,10 @@ ApplicationWindow {
         readonly property color scrim: Qt.rgba(0, 0, 0, dark ? 0.6 : 0.4)
         readonly property int radius: 16
 
-        // Type scale (T-078): the role sizes at 100 %, times the text size the user picked in
-        // Settings > General UI Options (80-170 %). Pages and Ui* components take a role, not
-        // a number, so the text of the modern look grows as one. Always 1 in the classic look: a
-        // size picked in the modern look must not follow the user back into the classic one
-        readonly property real textScale: modern ? Math.max(0.8, Math.min(1.7, settings.ui_text_scale / 100)) : 1
+        // Type scale (T-078): the role sizes at 100 %, times the text size of the app
+        // (window.textScale: the system one or the one picked in Settings > General UI Options).
+        // Pages and Ui* components take a role, not a number, so the text of the modern look grows as one
+        readonly property real textScale: window.textScale
         function fontPx(base) { return Math.round(base * textScale) }
         // The font f with another size (and weight): Qt.font() alone keeps nothing but what it is given
         function fontOf(f, px, weight) {
@@ -426,12 +412,11 @@ ApplicationWindow {
         readonly property int fontTitleSmall: fontPx(18)   // toolbar title
         readonly property int fontBody: fontPx(16)         // dialog text, list titles, fields
         readonly property int fontLabel: fontPx(15)        // drawer entries, group titles
-        // The app font (12 on the emulator, not the Material 14): labels, fields, buttons, lists.
-        // A font set in points has no pixel size (-1): then the Material 14
-        readonly property int fontBase: fontPx(Qt.application.font.pixelSize > 0 ? Qt.application.font.pixelSize : 14)
+        // The app font (12 on the emulator, not the Material 14): labels, fields, buttons, lists
+        readonly property int fontBase: fontPx(window.appFontPx)
         readonly property int fontCaption: fontPx(13)      // secondary lines, chips, captions
-        // Hints under the settings: the app font less 2, as in the classic look
-        readonly property int fontHint: fontPx(Qt.application.font.pixelSize - 2)
+        // Hints under the settings: the same size as in the classic look
+        readonly property int fontHint: window.fontHint
 
         // Side margin of the list pages: at least 16, more where the screen cutout needs it
         readonly property int pageMargin: Math.max(16, window.contentSideMargin)
@@ -448,12 +433,6 @@ ApplicationWindow {
         // The settings page has its own Settings object, which the window's does not hear
         // about until a restart: it writes through here, so the look changes at once
         function setOption(key, value) {
-            // Leaving the modern look: the window font goes first. A binding on one font
-            // attribute that follows the look (font.weight of UiButton) writes the whole font
-            // back, and in Qt 5 that keeps the size an explicit window font gave it - the
-            // buttons stayed at the scaled size until a restart
-            if (key === "ui_modern" && !value)
-                window.font = undefined
             settings[key] = value
         }
         // ...and reads through here (the settings search): its own copy is stale after setOption
@@ -523,6 +502,68 @@ ApplicationWindow {
         running: window.ui.modern && window.ui.themeMode === "auto"
                  && Qt.application.state === Qt.ApplicationActive
         onTriggered: window.ui.refreshSystemDark()
+    }
+
+    // Text size of the app (not the tiles, they follow ui_zoom). On Android and iOS it follows the
+    // system text size by default, capped so the fixed-height rows still fit; otherwise ui_text_scale.
+    // Qt 5.15 applies neither by itself, and Qt.application.font is constant, so the size goes
+    // through the window font, which the labels, fields, buttons, lists and menus inherit
+    readonly property bool systemTextScaleAvailable: Qt.platform.os === "android" || Qt.platform.os === "ios"
+    readonly property real systemTextScaleCap: 1.5
+    property real systemTextScale: AndroidStatusBar.systemFontScale()
+    readonly property real textScale: systemTextScaleAvailable && settings.ui_text_scale_system
+        ? Math.max(0.8, Math.min(systemTextScaleCap, systemTextScale))
+        : Math.max(0.8, Math.min(1.7, settings.ui_text_scale / 100))
+    // At 100 % every size stays exactly as before
+    function fontPx(base) { return textScale === 1 ? base : Math.round(base * textScale) }
+    readonly property int appFontPx: Qt.application.font.pixelSize > 0 ? Qt.application.font.pixelSize : 14
+    // Size of the hints under the settings. Where the app font has no pixel size (iOS, desktop)
+    // "pixelSize - 2" is ignored and the hints have the size of the text: kept so when scaled
+    readonly property int fontHint: textScale === 1 ? Qt.application.font.pixelSize - 2
+        : fontPx(Qt.application.font.pixelSize > 0 ? Qt.application.font.pixelSize - 2 : appFontPx)
+    // The window font is set only for a size other than 100 % and reset otherwise
+    readonly property int scaledFontPx: textScale !== 1 ? fontPx(appFontPx) : 0
+    // Size of a plain Text, which takes the app font, not the window font (0 at 100 %). On Android
+    // the app font has a pixel size, the one of the controls. On iOS and desktop it has a point
+    // size of its own (17 on iOS, already scaled by the system text size QZ started with), so a
+    // Text is scaled from that, in pixels, and the start-up system size is taken out of it when
+    // the size follows the system
+    readonly property real startupSystemTextScale: AndroidStatusBar.systemFontScale()
+    readonly property int plainFontPx: textScale === 1 ? 0
+        : Qt.application.font.pixelSize > 0 || Qt.application.font.pointSizeF <= 0 ? scaledFontPx
+        : Math.round(Qt.application.font.pointSizeF * Screen.logicalPixelDensity * 25.4 / 72 * textScale
+            / (systemTextScaleAvailable && settings.ui_text_scale_system && startupSystemTextScale > 0 ? startupSystemTextScale : 1))
+    // Font of the section headers of the settings: a plain Text, which does not inherit the window
+    // font. At 100 % the app font, the one a Text takes by itself
+    readonly property font headerFont: textScale === 1 ? Qt.application.font
+        : Qt.font({ family: Qt.application.font.family, pixelSize: plainFontPx })
+    // Wrap mode of a label next to a field: with a bigger text it no longer fits in one line
+    // and ran under the field and the OK button. The fixed-size popups below wrap their text too,
+    // and then take the width of the screen and the height of the text
+    readonly property int labelWrap: textScale === 1 ? Text.NoWrap : Text.WordWrap
+    // Space under the hint of a setting: a wrapped label of the next one fills its row and
+    // touched the hint above it, the two read as one block
+    readonly property int hintGap: textScale === 1 ? 0 : Math.round(6 * textScale)
+    function applyTextScale() {
+        if (scaledFontPx > 0)
+            font.pixelSize = scaledFontPx
+        else
+            font = undefined
+    }
+    onScaledFontPxChanged: applyTextScale()
+    Component.onCompleted: applyTextScale()
+    // The settings page has its own Settings object, which this one does not hear about until a
+    // restart: the text size options are written through here, so the size changes at once
+    function setTextScaleOption(key, value) {
+        settings[key] = value
+    }
+    // The system text size is changed in the phone settings, while QZ is in the background
+    Connections {
+        target: Qt.application
+        function onStateChanged() {
+            if (Qt.application.state === Qt.ApplicationActive)
+                window.systemTextScale = AndroidStatusBar.systemFontScale()
+        }
     }
 
 
@@ -790,7 +831,10 @@ ApplicationWindow {
         x: Math.round((parent.width - width) / 2)
         y: Math.round((parent.height - height) / 2)
         width: Math.min(parent.width - 30, 720)
-        height: Math.min(parent.height - 40, 260)
+        // with a bigger text the content is taller: Skip fell out
+        height: window.textScale !== 1
+            ? Math.min(parent.height - 40, Math.max(260, gymModeColumn.implicitHeight + 36 + topPadding + bottomPadding))
+            : Math.min(parent.height - 40, 260)
         modal: true
         focus: true
         closePolicy: Popup.NoAutoClose
@@ -851,7 +895,7 @@ ApplicationWindow {
                 width: parent.width
                 text: qsTr("Select Your Gym Device")
                 // Modern: the title of UiMessageDialog
-                font.pixelSize: popupGymMode.modern ? window.ui.fontTitle : Qt.application.font.pixelSize + 10
+                font.pixelSize: popupGymMode.modern ? window.ui.fontTitle : window.fontPx(Qt.application.font.pixelSize + 10)
                 font.weight: popupGymMode.modern ? Font.DemiBold : Font.Bold
                 color: window.ui.ink(Material.foreground)
                 horizontalAlignment: Text.AlignHCenter
@@ -1255,6 +1299,7 @@ ApplicationWindow {
             spacing: 12
 
             Label {
+                id: echelonEnableTitle
                 width: parent.width
                 text: qsTr("Echelon Locked Bike")
                 font.bold: true
@@ -1264,7 +1309,10 @@ ApplicationWindow {
 
             ScrollView {
                 width: parent.width
-                height: parent.height - buttonsRow.height - 52
+                // 52 is a one-line title: a bigger one pushed the buttons out of the popup
+                height: window.textScale !== 1
+                    ? parent.height - buttonsRow.height - echelonEnableTitle.height - 2 * parent.spacing
+                    : parent.height - buttonsRow.height - 52
                 clip: true
 
                 TextArea {
@@ -1324,6 +1372,7 @@ ApplicationWindow {
             spacing: 12
 
             Label {
+                id: androidNotificationTitle
                 width: parent.width
                 text: qsTr("Connection lost in the background")
                 font.bold: true
@@ -1333,7 +1382,10 @@ ApplicationWindow {
 
             ScrollView {
                 width: parent.width
-                height: parent.height - androidNotificationButtons.height - 52
+                // 52 is a one-line title: a bigger one pushed the buttons out of the popup
+                height: window.textScale !== 1
+                    ? parent.height - androidNotificationButtons.height - androidNotificationTitle.height - 2 * parent.spacing
+                    : parent.height - androidNotificationButtons.height - 52
                 clip: true
 
                 TextArea {
@@ -1705,15 +1757,15 @@ ApplicationWindow {
             // Fixed position, like the buttons: centred in the full bar, it moved on its own when the bar collapsed
             anchors.horizontalCenter: parent.horizontalCenter
             y: (headerToolbar.contentHeight - height) / 2
-            // Modern look: no wider than the room between the nearest shown buttons, centred; a
-            // large text size ran the title into the search button. A title that does not fit
+            // Modern look and a text size other than 100 %: no wider than the room between the
+            // nearest shown buttons, centred; a large text size ran the title into the search button. A
             // takes a smaller font down to 14 px of the text size, and only then an ellipsis
-            width: window.ui.modern ? Math.min(implicitWidth, titleRoom) : implicitWidth
-            fontSizeMode: window.ui.modern ? Text.HorizontalFit : Text.FixedSize
-            minimumPixelSize: window.ui.fontPx(14)
+            width: window.ui.modern || window.textScale !== 1 ? Math.min(implicitWidth, titleRoom) : implicitWidth
+            fontSizeMode: window.ui.modern || window.textScale !== 1 ? Text.HorizontalFit : Text.FixedSize
+            minimumPixelSize: window.ui.modern ? window.ui.fontPx(14) : window.appFontPx
             // The line keeps the height of the full size: a smaller font in its middle, not at its top
-            verticalAlignment: window.ui.modern ? Text.AlignVCenter : Text.AlignTop
-            elide: window.ui.modern ? Text.ElideRight : Text.ElideNone
+            verticalAlignment: window.ui.modern || window.textScale !== 1 ? Text.AlignVCenter : Text.AlignTop
+            elide: window.ui.modern || window.textScale !== 1 ? Text.ElideRight : Text.ElideNone
             readonly property real titleRoom: {
                 var c = parent.width / 2, room = c
                 var left = [toolButton, toolButtonFloating]

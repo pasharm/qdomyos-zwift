@@ -1325,8 +1325,9 @@ const QString QZSettings::ui_theme_mode = QStringLiteral("ui_theme_mode");
 const QString QZSettings::default_ui_theme_mode = QStringLiteral("auto");
 const QString QZSettings::ui_tile_snap = QStringLiteral("ui_tile_snap");
 const QString QZSettings::ui_text_scale = QStringLiteral("ui_text_scale");
+const QString QZSettings::ui_text_scale_system = QStringLiteral("ui_text_scale_system");
 
-const uint32_t allSettingsCount = 1029;
+const uint32_t allSettingsCount = 1030;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -2382,6 +2383,7 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::ui_theme_mode, QZSettings::default_ui_theme_mode},
     {QZSettings::ui_tile_snap, QZSettings::default_ui_tile_snap},
     {QZSettings::ui_text_scale, QZSettings::default_ui_text_scale},
+    {QZSettings::ui_text_scale_system, QZSettings::default_ui_text_scale_system},
 };
 
 void QZSettings::qDebugAllSettings(bool showDefaults) {

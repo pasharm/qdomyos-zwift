@@ -109,9 +109,14 @@ HomeForm {
         x: Math.round((parent.width - width) / 2)
         y: Math.round((parent.height - height) / 2)
         // Modern: a card that fits a phone in portrait (420 is wider than most of them) and as
-        // tall as its content; classic: the fixed size as before
-        width: modern ? Math.min(parent.width - 48, 440) : 420
-        height: modern ? rpeFeelColumn.implicitHeight + 2 * 16 + topPadding + bottomPadding : 340
+        // tall as its content; classic: the fixed size as before, and with a bigger text as wide
+        // as the screen allows, as tall as the content (Skip/Save fell out)
+        width: modern ? Math.min(parent.width - 48, 440)
+            : window.textScale !== 1 ? Math.min(420, parent.width - 32) : 420
+        height: modern ? rpeFeelColumn.implicitHeight + 2 * 16 + topPadding + bottomPadding
+            : window.textScale !== 1
+            ? Math.min(parent.height - 40, Math.max(340, rpeFeelColumn.implicitHeight + 32 + topPadding + bottomPadding))
+            : 340
         modal: true
         focus: true
         palette.text: "white"
@@ -135,7 +140,7 @@ HomeForm {
                 text: qsTr("How was this workout?")
                 // Modern: the title of UiMessageDialog
                 font.weight: rpeFeelPopup.modern ? Font.DemiBold : Font.Bold
-                font.pixelSize: rpeFeelPopup.modern ? window.ui.fontTitle : 18
+                font.pixelSize: rpeFeelPopup.modern ? window.ui.fontTitle : window.fontPx(18)
                 color: window.ui.ink(Material.foreground)
                 width: parent.width
                 wrapMode: Text.WordWrap

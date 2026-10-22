@@ -4,6 +4,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.impl 2.15
 import QtQuick.Templates 2.15 as T
 import QtQuick.Controls.Material 2.15
+import QtQuick.Layouts 1.15
 import QtQuick.Controls.Material.impl 2.15
 
 // ComboBox of the settings pages and the wizard: the Qt 5.15 Material ComboBox, copied as
@@ -50,6 +51,11 @@ T.ComboBox {
         id: itemMetrics
         font: control.font
     }
+
+    // With a bigger text the label left of the box wraps, but the row still shared its width as
+    // if the label were one line, and squeezed the box: the shown item was cut in the middle of
+    // a word. The box keeps the width of its text (at most half the window); 0 is the default
+    Layout.minimumWidth: window.textScale !== 1 ? Math.min(implicitWidth, window.width / 2) : 0
 
     Connections {
         target: control.popup

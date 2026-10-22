@@ -1,4 +1,5 @@
 import QtQuick 2.7
+import QtQml 2.15
 import Qt.labs.folderlistmodel 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.15
@@ -161,6 +162,8 @@ ColumnLayout {
                     rightPadding: window.ui.modern ? window.ui.pageMargin : 0
 
                     Text {
+                        // a plain Text does not inherit the window font: the text size while it is not 100 %
+                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         visible: !window.ui.modern
                         text: qsTr("Filter")
                         color: window.ui.ink("white")
@@ -170,10 +173,16 @@ ColumnLayout {
                     UiTextField {
                         id: filterField
                         Layout.fillWidth: true
-                        // Row has no fill: the modern field takes what the up button leaves
+                        // Row has no fill: the modern field takes what the up button leaves. In a Row
+                        // fillWidth does nothing: the classic field kept its 120 of Material and
+                        // showed less of the hint as the text grew. It grows with the text, but
+                        // leaves room for the back button on a narrow screen
                         width: window.ui.modern ? filterRow.width - filterRow.leftPadding - filterRow.rightPadding
                                          - (upButton.visible ? upButton.width + filterRow.spacing : 0)
-                                     : implicitWidth
+                               : window.textScale !== 1
+                               ? Math.max(implicitWidth, Math.min(window.fontPx(implicitWidth),
+                                     parent.width - x - (upButton.visible ? upButton.width + parent.spacing : 0)))
+                               : implicitWidth
                         leftPadding: window.ui.modern ? 44 : undefined
                         placeholderText: qsTr("Search (recursive)...")
 
@@ -258,7 +267,8 @@ ColumnLayout {
                     delegate: ItemDelegate {
                         id: workoutDelegate
                         width: ListView.view.width
-                        height: window.ui.modern ? 60 : 50
+                        // a bigger text: the row grows with the name and the path of a search result
+                        height: window.ui.modern ? 60 : (window.textScale !== 1 ? Math.max(50, implicitContentHeight + topPadding + bottomPadding) : 50)
 
                         // Determine item properties based on which model is active
                         property bool isItemFolder: isSearching ? model.isFolder : folderModel.isFolder(index)
@@ -447,7 +457,7 @@ ColumnLayout {
                     text: rootItem.previewWorkoutDescription
                     // An empty line kept its height and margins: a gap above the chart
                     visible: text !== ""
-                    font.pixelSize: window.ui.modern ? window.ui.fontBody : 14
+                    font.pixelSize: window.ui.modern ? window.ui.fontBody : window.fontPx(14)
                     font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
                     color: window.ui.ink("white")
                     wrapMode: Text.WordWrap

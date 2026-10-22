@@ -6657,6 +6657,22 @@ Please enter it below:</source>
         <translation>Наклон</translation>
     </message>
     <message>
+        <source>Use System Text Size</source>
+        <translation>Размер текста как в системе</translation>
+    </message>
+    <message>
+        <source>The text of the app follows the text size of the phone or tablet settings, up to 150%. Turn off to choose the size below, for example for a screen you read from a distance during a workout. Default is on.</source>
+        <translation>Размер текста приложения берётся из настроек телефона или планшета, но не больше 150%. Выключите, чтобы задать размер ниже – например, для экрана, который читают издалека во время тренировки. По умолчанию включено.</translation>
+    </message>
+    <message>
+        <source>Text size:</source>
+        <translation>Размер текста:</translation>
+    </message>
+    <message>
+        <source>Size of the text of the app (settings, menus, dialogs), in percent, from 80 to 170. The default is 100. The tiles keep their own size setting.</source>
+        <translation>Размер текста приложения (настройки, меню, диалоги) в процентах, от 80 до 170. По умолчанию – 100. У плиток своя настройка размера.</translation>
+    </message>
+    <message>
         <source>Speed</source>
         <translation>Скорость</translation>
     </message>

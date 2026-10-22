@@ -40,7 +40,7 @@ ScrollView {
             font.pixelSize: window.ui.fontHeadline
             font.weight: Font.DemiBold
             topPadding: 12
-            wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
+            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
         }
 
         Label {
