@@ -1,10 +1,15 @@
 # test branch (T-270): build for the iOS simulator as the upstream ios-build job does, then run the
-# app on a simulator and keep frames, the app output and the .app (no device, no secrets)
+# app on a simulator and keep frames, the app output and the .app (no device, no secrets).
+# With app_run the build is skipped and the .app comes from the ios-sim artifact of that run
 name: CI
 
 on:
   workflow_dispatch:
     inputs:
+      app_run:
+        description: run id whose ios-sim artifact has the .app (empty = build it)
+        required: false
+        default: ''
       big_size:
         description: Dynamic Type of the second start (simctl ui content_size)
         required: false
@@ -21,15 +26,20 @@ concurrency:
 jobs:
   ios-sim:
     runs-on: macos-14
+    env:
+      BUILD: ${{ inputs.app_run == '' }}
     steps:
       - uses: actions/checkout@v4
+        if: env.BUILD == 'true'
       - name: Checkout submodule repo
+        if: env.BUILD == 'true'
         uses: actions/checkout@v4
         with:
           repository: bluetiger9/SmtpClient-for-Qt
           path: "src/smtpclient/"
           ref: 3fa4a0fe5797070339422cf18b5e9ed8dcb91f9c
       - name: Checkout googletest
+        if: env.BUILD == 'true'
         uses: actions/checkout@v4
         with:
           repository: google/googletest
@@ -37,6 +47,7 @@ jobs:
           ref: "release-1.12.1"
 
       - name: Install Qt iOS
+        if: env.BUILD == 'true'
         uses: jurplel/install-qt-action@v3
         with:
           version: '5.15.2'
@@ -48,15 +59,15 @@ jobs:
           cache-key-prefix: 'install-qt-action-ios'
 
       - name: fix qt
-        run: find ${{ github.workspace }}/output/ios/ -name 'ios.conf' -exec sed -i '' 's/ios-simulator/iphonesimulator/g' {} \;
-      - name: fix qt
-        run: find ${{ github.workspace }}/output/ios/ -name 'devices.py' -exec sed -i '' 's/\/usr\/bin\/python/\/usr\/bin\/python3/g' {} \;
-      - name: fix qt
-        run: find ./ -name 'qdomyos-zwift-lib.pro' -exec sed -i '' 's/TARGET = qdomyos-zwift/TARGET = qdomyoszwift/g' {} \;
-      - name: patching qt for bluetooth
-        run: cp qt-patches/ios/5.15.2/binary/*.* ${{ github.workspace }}/output/ios/Qt/5.15.2/ios/lib/
+        if: env.BUILD == 'true'
+        run: |
+          find ${{ github.workspace }}/output/ios/ -name 'ios.conf' -exec sed -i '' 's/ios-simulator/iphonesimulator/g' {} \;
+          find ${{ github.workspace }}/output/ios/ -name 'devices.py' -exec sed -i '' 's/\/usr\/bin\/python/\/usr\/bin\/python3/g' {} \;
+          find ./ -name 'qdomyos-zwift-lib.pro' -exec sed -i '' 's/TARGET = qdomyos-zwift/TARGET = qdomyoszwift/g' {} \;
+          cp qt-patches/ios/5.15.2/binary/*.* ${{ github.workspace }}/output/ios/Qt/5.15.2/ios/lib/
 
       - name: Build
+        if: env.BUILD == 'true'
         run: |
           cd src
           for k in STRAVA_SECRET_KEY PELOTON_SECRET_KEY SMTP_USERNAME SMTP_PASSWORD SMTP_SERVER INTERVALSICU_CLIENT_ID INTERVALSICU_CLIENT_SECRET; do
@@ -65,21 +76,42 @@ jobs:
           cd ..
           qmake CONFIG+=debug CONFIG+=iphonesimulator && make -j4
 
+      - name: The .app of an earlier run
+        if: env.BUILD != 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-sim
+          path: prev
+          run-id: ${{ inputs.app_run }}
+          github-token: ${{ github.token }}
+
       - name: Find the app
         id: app
         run: |
-          APP=$(find . -name '*.app' -type d -path '*iphonesimulator*' | grep -v '/output/' | head -n 1)
+          mkdir -p out
+          if [ "$BUILD" = "true" ]; then
+            APP=$(find . -name '*.app' -type d -path '*iphonesimulator*' | grep -v '/output/' | head -n 1)
+          else
+            mkdir -p appdir && ditto -x -k prev/app.zip appdir
+            APP=$(find appdir -maxdepth 1 -name '*.app' -type d | head -n 1)
+          fi
           echo "app: $APP"
           test -n "$APP"
-          BID=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$APP/Info.plist")
-          EXE=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$APP/Info.plist")
+          PL="$APP/Info.plist"
+          BID=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$PL")
+          EXE=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$PL")
           echo "bundle id: $BID, executable: $EXE"
+          echo "CFBundleVersion: '$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$PL" 2>&1)'"
+          echo "CFBundleShortVersionString: '$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$PL" 2>&1)'"
           file "$APP/$EXE"
-          lipo -archs "$APP/$EXE" || true
+          if [ "$BUILD" = "true" ]; then ditto -c -k --keepParent "$APP" out/app.zip; else cp prev/app.zip out/app.zip; fi
+          # the simulator refuses an app without a valid CFBundleVersion (qmake leaves it empty here)
+          /usr/libexec/PlistBuddy -c 'Set :CFBundleVersion 1' "$PL" 2>/dev/null || /usr/libexec/PlistBuddy -c 'Add :CFBundleVersion string 1' "$PL"
+          V=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$PL" 2>/dev/null || true)
+          case "$V" in ''|*'$'*) /usr/libexec/PlistBuddy -c 'Set :CFBundleShortVersionString 1.0' "$PL" 2>/dev/null || /usr/libexec/PlistBuddy -c 'Add :CFBundleShortVersionString string 1.0' "$PL" ;; esac
+          codesign --force --deep --sign - "$APP"
           echo "app=$APP" >> $GITHUB_OUTPUT
           echo "bid=$BID" >> $GITHUB_OUTPUT
-          mkdir -p out
-          ditto -c -k --keepParent "$APP" out/app.zip
 
       - name: Rosetta (the app of Qt 5.15.2 is x86_64)
         run: softwareupdate --install-rosetta --agree-to-license || true
@@ -93,7 +125,6 @@ jobs:
         run: |
           set -x
           xcodebuild -version
-          xcrun simctl list runtimes
           UDID=$(xcrun simctl list devices available -j | python3 -c '
           import json, sys
           d = json.load(sys.stdin)["devices"]
@@ -110,7 +141,7 @@ jobs:
           xcrun simctl bootstatus "$UDID" -b
           xcrun simctl install "$UDID" "$APP"
           shoot() {
-            xcrun simctl launch --terminate-running-process --stdout="out/$1.stdout.txt" --stderr="out/$1.stderr.txt" "$UDID" "$BID" || echo "launch failed: $?"
+            xcrun simctl launch --terminate-running-process --stdout="$PWD/out/$1.stdout.txt" --stderr="$PWD/out/$1.stderr.txt" "$UDID" "$BID" || echo "launch failed: $?"
             sleep "$WAIT"
             xcrun simctl io "$UDID" screenshot "out/$1.png" || true
             xcrun simctl spawn "$UDID" launchctl list | grep -i "$BID" || echo "app not running after $WAIT s"
