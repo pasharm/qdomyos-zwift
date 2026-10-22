@@ -170,6 +170,8 @@ jobs:
           /usr/libexec/PlistBuddy -c 'Add :bluetooth_lastdevice_name string TestBike' "$DATA/Library/Preferences/$QSD.plist" || true
           # a fake bike: the home page gets its tiles without a trainer
           /usr/libexec/PlistBuddy -c 'Add :applewatch_fakedevice bool true' "$DATA/Library/Preferences/$QSD.plist" || true
+          # the debug log of QZ (homeform::getWritableAppDir), with the QML warnings
+          /usr/libexec/PlistBuddy -c 'Add :log_debug bool true' "$DATA/Library/Preferences/$QSD.plist" || true
           xcrun simctl spawn "$UDID" defaults write "$QSD" bluetooth_lastdevice_name -string "Test Bike" || true
           plutil -p "$DATA/Library/Preferences/$QSD.plist" > out/defaults.txt 2>&1 || true
           shoot() {
@@ -187,6 +189,8 @@ jobs:
           xcrun simctl spawn "$UDID" log show --last 5m --style compact --predicate "process CONTAINS[c] 'qdomyos'" > out/syslog.txt 2>&1 || true
           ls ~/Library/Logs/DiagnosticReports/ > out/crash-list.txt 2>&1 || true
           cp ~/Library/Logs/DiagnosticReports/*qdomyos* out/ 2>/dev/null || true
+          find "$DATA" -name "debug-*.log" -exec cp {} out/ \; || true
+          cat out/debug-*.log 2>/dev/null | grep -a -E "T270|qml|QML" | head -400 > out/qml-log.txt || true
           for f in "$DATA"/Library/Preferences/*.plist; do echo "== $f"; plutil -p "$f" | head -40; done > out/prefs-after.txt 2>&1 || true
 
       - name: Keep the output

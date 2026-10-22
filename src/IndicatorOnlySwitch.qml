@@ -77,8 +77,10 @@ SwitchDelegate {
             titleFontSet = false
         }
     }
-    onScaledFontPxChanged: applyTitleFont()
-    onTitleTextChanged: applyTitleFont()
+    onScaledFontPxChanged: { applyTitleFont(); t270Log() }
+    onTitleTextChanged: { applyTitleFont(); t270Log() }
+    // T270-DIAG: test branch only
+    function t270Log() { if (titleText) console.warn("T270 switch '" + text + "' title.pixelSize=" + titleText.font.pixelSize + " title.pointSizeF=" + titleText.font.pointSizeF + " control.pixelSize=" + font.pixelSize + " control.pointSizeF=" + font.pointSizeF + " scaledFontPx=" + scaledFontPx + " titleFontSet=" + titleFontSet + " lines=" + titleText.lineCount) }
     // With a bigger text a long title needs more than two lines; back to two at 100 %
     Binding {
         target: root.titleText

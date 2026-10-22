@@ -280,7 +280,10 @@ ApplicationWindow {
             font = undefined
     }
     onScaledFontPxChanged: applyTextScale()
-    Component.onCompleted: applyTextScale()
+    Component.onCompleted: { applyTextScale(); t270Log() }
+    // T270-DIAG: test branch only
+    function t270Log() { console.warn("T270 os=" + Qt.platform.os + " systemTextScale=" + systemTextScale + " textScale=" + textScale + " appFont.pixelSize=" + Qt.application.font.pixelSize + " appFont.pointSizeF=" + Qt.application.font.pointSizeF + " appFont.family=" + Qt.application.font.family + " appFontPx=" + appFontPx + " scaledFontPx=" + scaledFontPx + " plainFontPx=" + plainFontPx + " fontHint=" + fontHint + " window.font.pixelSize=" + font.pixelSize + " window.font.pointSizeF=" + font.pointSizeF + " logicalPixelDensity=" + Screen.logicalPixelDensity + " pixelDensity=" + Screen.pixelDensity + " devicePixelRatio=" + Screen.devicePixelRatio) }
+    Timer { interval: 20000; running: true; repeat: true; onTriggered: window.t270Log() }
     // The settings page has its own Settings object, which this one does not hear about until a
     // restart: the text size options are written through here, so the size changes at once
     function setTextScaleOption(key, value) {
