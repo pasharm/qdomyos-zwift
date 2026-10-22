@@ -7945,7 +7945,8 @@ import QtQuick 2.12 as Quick212
                             settings.ui_text_scale_system = checked;
                             window.setTextScaleOption("ui_text_scale_system", checked);
                             // back to the value the field shows for this mode, also after an edit
-                            uiTextScaleTextField.text = Qt.binding(function() { return uiTextScaleTextField.shownValue; });
+                            // (savedText follows shownValue; set here too when shownValue stays the same)
+                            uiTextScaleTextField.text = uiTextScaleTextField.savedText;
                         }
                     }
 
@@ -7983,7 +7984,8 @@ import QtQuick 2.12 as Quick212
                             minimum: 80
                             maximum: 170
                             enabled: !followsSystem
-                            text: shownValue
+                            // the saved value: the OK is enabled (and in the modern look filled) only on a change (T-252)
+                            savedText: shownValue
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -7993,7 +7995,7 @@ import QtQuick 2.12 as Quick212
                         UiButton {
                             id: okUiTextScaleButton
                             text: qsTr("OK")
-                            enabled: uiTextScaleTextField.valid && !uiTextScaleTextField.followsSystem
+                            enabled: uiTextScaleTextField.valid && uiTextScaleTextField.dirty && !uiTextScaleTextField.followsSystem
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onClicked: { settings.ui_text_scale = Math.round(uiTextScaleTextField.value); window.setTextScaleOption("ui_text_scale", Math.round(uiTextScaleTextField.value)); toast.show(qsTr("Setting saved!")); }
                         }
