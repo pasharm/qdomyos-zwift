@@ -465,8 +465,7 @@ jobs:
             # fake bike each + of the resistance tile adds exactly one step
             sh .github/scripts/android_app_start_test.sh
             sh .github/scripts/android_accessibility_test.sh Start=First-time_setup First-time_setup=Bike
-            sh .github/scripts/android_accessibility_test.sh --fake-bike \
-              Increase_Resistance=Resistance:_1 Increase_Resistance=Resistance:_2
+            sh .github/scripts/android_accessibility_test.sh --fake-bike Increase_Resistance=Resistance:_1 Increase_Resistance=Resistance:_2
 
             # Check if the package is installed
             adb shell pm list packages | grep org.cagnulen.qdomyoszwift
