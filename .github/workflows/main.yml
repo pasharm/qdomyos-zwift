@@ -116,12 +116,22 @@ jobs:
       - name: Rosetta (the app of Qt 5.15.2 is x86_64)
         run: softwareupdate --install-rosetta --agree-to-license || true
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
       - name: idb (taps and the accessibility tree)
         run: |
-          brew tap facebook/fb && brew install idb-companion || true
-          # fb-idb looks for the companion in /usr/local/bin, brew on arm64 puts it in /opt/homebrew/bin
-          sudo mkdir -p /usr/local/bin && sudo ln -sf "$(brew --prefix)/bin/idb_companion" /usr/local/bin/idb_companion || true
-          pip3 install --break-system-packages fb-idb || pip3 install fb-idb || true
+          # brew refuses the facebook/fb tap ("untrusted"), and idb 1.7.x wants macOS 15 + Xcode 26:
+          # the last companion for Xcode 15 is 1.1.8, its client is fb-idb 1.1.7
+          curl -sSL -o idb.tar.gz https://github.com/facebook/idb/releases/download/v1.1.8/idb-companion.universal.tar.gz
+          sudo mkdir -p /usr/local/opt /usr/local/bin
+          sudo tar -xzf idb.tar.gz -C /usr/local/opt
+          ls /usr/local/opt
+          sudo ln -sf /usr/local/opt/idb-companion.universal/bin/idb_companion /usr/local/bin/idb_companion
+          idb_companion --version || true
+          python -m pip install fb-idb==1.1.7 || true
+          echo "IDB=$(python -c 'import shutil; print(shutil.which("idb") or "idb")')" >> $GITHUB_ENV
 
       - name: Run on a simulator
         env:
@@ -147,19 +157,20 @@ jobs:
           xcrun simctl boot "$UDID"
           xcrun simctl bootstatus "$UDID" -b
           xcrun simctl install "$UDID" "$APP"
-          # QSettings on iOS = CFPreferences of "<reversed organizationDomain>.<applicationName>" (main.cpp),
+          # QSettings on iOS = CFPreferences "com.<organizationDomain, dots as dashes>.<applicationName>" (main.cpp),
           # in the app container; a last device closes the first-run wizard (homeform::firstRun)
-          QSD=cloud.robertoviola.qDomyos-Zwift
+          QSD=com.robertoviola-cloud.qDomyos-Zwift
           DATA=$(xcrun simctl get_app_container "$UDID" "$BID" data)
           mkdir -p "$DATA/Library/Preferences"
-          defaults write "$DATA/Library/Preferences/$QSD.plist" bluetooth_lastdevice_name -string "Test Bike"
+          # "defaults write <path>" did not create the file; PlistBuddy does
+          /usr/libexec/PlistBuddy -c 'Add :bluetooth_lastdevice_name string TestBike' "$DATA/Library/Preferences/$QSD.plist" || true
           xcrun simctl spawn "$UDID" defaults write "$QSD" bluetooth_lastdevice_name -string "Test Bike" || true
           plutil -p "$DATA/Library/Preferences/$QSD.plist" > out/defaults.txt 2>&1 || true
           shoot() {
             xcrun simctl launch --terminate-running-process --stdout="$PWD/out/$1.stdout.txt" --stderr="$PWD/out/$1.stderr.txt" "$UDID" "$BID" || echo "launch failed: $?"
             sleep "$WAIT"
             xcrun simctl io "$UDID" screenshot "out/$1.png" || true
-            idb ui describe-all --udid "$UDID" --json > "out/$1.ui.json" 2> "out/$1.ui.err.txt" || true
+            "$IDB" ui describe-all --udid "$UDID" --json > "out/$1.ui.json" 2> "out/$1.ui.err.txt" || true
             xcrun simctl spawn "$UDID" launchctl list | grep -i "$BID" || echo "app not running after $WAIT s"
           }
           xcrun simctl ui "$UDID" content_size large
