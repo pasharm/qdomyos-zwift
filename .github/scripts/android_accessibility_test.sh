@@ -67,7 +67,7 @@ crashes_before=$(qz_crashes)
 for i in 1 2 3 4 5; do
   FOCUS=$(adb shell dumpsys window | grep -m 1 mCurrentFocus | tr -d '\r')
   case "$FOCUS" in
-    # "qdomyos-zwift has stopped" after the crash on exit in the back button test (shown on API 24)
+    # "qdomyos-zwift has stopped" after the crash on exit in the back button test (shown on API 24 and 26)
     *"Application Error"*) echo "Closing the crash dialog of an earlier run ($FOCUS) ($i)"; adb shell input keyevent KEYCODE_BACK ;;
     *$PKG*) break ;;
     *"=null"*) echo "No window has the focus, waiting ($i)" ;;
