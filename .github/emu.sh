@@ -23,6 +23,11 @@ install_apk() {
     adb shell pm grant $PKG android.permission.$p || true
   done
   adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
+  # Health Connect write permissions granted: otherwise QZ opens its request (and the Health
+  # Connect onboarding) over itself at the first start (HealthConnectHelper.writePermissions)
+  for p in EXERCISE DISTANCE TOTAL_CALORIES_BURNED HEART_RATE POWER SPEED CYCLING_PEDALING_CADENCE ELEVATION_GAINED STEPS STEPS_CADENCE HEART_RATE_VARIABILITY; do
+    adb shell pm grant $PKG android.permission.health.WRITE_$p || echo "!! health WRITE_$p not granted" >> $STEPLOG
+  done
   echo "== installed $1" >> $STEPLOG
 }
 adb shell cmd uimode night no || true
