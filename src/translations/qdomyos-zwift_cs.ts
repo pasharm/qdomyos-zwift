@@ -8131,7 +8131,7 @@ Výchozí: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Bikes that report their resistance back take about a second to confirm a new level, so several quick taps on the resistance +/- buttons change it by only one. Enable this setting to add the taps up: 3 quick taps change the resistance by 3. Default is off.</source>
-        <translation>Kola, která hlásí zpět svůj odpor, potvrzují novou úroveň asi sekundu, takže několik rychlých klepnutí na tlačítka odporu +/- ho změní jen o jednu. Zapnutím tohoto nastavení se klepnutí sčítají: 3 rychlá klepnutí změní odpor o 3. Výchozí: vypnuto.</translation>
+        <translation>Kola, která hlásí zpět svůj odpor, potvrzují novou úroveň asi za sekundu, takže několik rychlých klepnutí na tlačítka odporu +/- ho změní jen o jednu. Zapnutím tohoto nastavení se klepnutí sčítají: 3 rychlá klepnutí změní odpor o 3. Výchozí: vypnuto.</translation>
     </message>
     <message>
         <source>QZ opens FS- devices as treadmills unless &quot;Fit Plus Bike&quot; is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off. Not shown in the settings page.</source>

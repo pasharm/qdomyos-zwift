@@ -4245,7 +4245,7 @@ Przełączyć się na klasyczne urządzenie wirtualne Bluetooth do końca tej se
         <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
 No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
         <translation>Tak: QZ włączy „Rower Fit Plus” i zamknie się – uruchom QZ ponownie, aby połączyć się z urządzeniem jako z rowerem.
-Nie: QZ pozostawi je jako bieżnię i nie zapyta ponownie (rower można nadal ustawić ręcznie: „Rower Fit Plus” w „Opcje roweru Fitplus”).</translation>
+Nie: QZ pozostawi je jako bieżnię i nie zapyta ponownie (rower można nadal ustawić ręcznie: „Rower Fit Plus” w sekcji „Opcje roweru Fitplus”).</translation>
     </message>
     <message>
         <source>Auto Resistance enabled</source>

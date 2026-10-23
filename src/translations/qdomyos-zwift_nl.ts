@@ -8075,7 +8075,7 @@ Standaard: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Wallpaper colour</source>
-        <translation>Kleur van achtergrond</translation>
+        <translation>Kleur van je achtergrond</translation>
     </message>
     <message>
         <source>Violet</source>

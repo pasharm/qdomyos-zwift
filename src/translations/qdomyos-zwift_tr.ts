@@ -8087,7 +8087,7 @@ Varsayılan: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Teal</source>
-        <translation>Camgöbeği</translation>
+        <translation>Turkuaz</translation>
     </message>
     <message>
         <source>Green</source>
@@ -8115,7 +8115,7 @@ Varsayılan: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>%1 settings in “%2” go back to their default values.</source>
-        <translation>“%2” bölümündeki %1 ayar varsayılan değerlerine döner.</translation>
+        <translation>&quot;%2&quot; bölümündeki %1 ayar varsayılan değerlerine döner.</translation>
     </message>
     <message>
         <source>Setting reset</source>
