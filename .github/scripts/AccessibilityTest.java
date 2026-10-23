@@ -57,10 +57,10 @@ public class AccessibilityTest {
             AccessibilityNodeInfo root = automation.getRootInActiveWindow();
             CharSequence active = root == null ? null : root.getPackageName();
             String nativeText = firstText(root);
-            // e.g. the "Permissions Required" dialog, if the job did not answer it in the settings
             if (active == null || !active.toString().equals(PACKAGE)) {
                 System.out.println("FAIL the active window is " + active + ", not QZ");
             } else if (nativeText != null) {
+                // e.g. the native "Permissions Required" dialog, if the job did not answer it in the settings
                 System.out.println("FAIL a native window of QZ is in front: '" + nativeText + "'");
             } else {
                 System.out.println("FAIL no accessibility node of QZ with a description: Qt accessibility is off");

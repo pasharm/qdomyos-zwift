@@ -112,6 +112,10 @@ shot exit
 qz_in_front && fail "double back press did not close the app"
 if [ "$(qz_crashes)" -gt "$crashes_before" ]; then
   echo "::warning::QZ crashed during the back button test (on exit or before), see the stack below"
-  adb logcat -d | grep -F -A 12 -e "Process: org.cagnulen.qdomyoszwift" -e ">>> org.cagnulen.qdomyoszwift <<<" | tail -n 26
+  # the last native crash of QZ: its lines of the DEBUG tag only (other tags are mixed in between)
+  adb logcat -d | awk -v p=">>> org.cagnulen.qdomyoszwift <<<" 'index($0, p) { out = ""; on = 1 } on && index($0, " DEBUG ") { out = out $0 "\n" } END { printf "%s", out }' \
+    | grep -F -e ">>>" -e "signal " -e "Abort message" -e "Cause:" -e " #" | head -n 30
+  # or a Java crash
+  adb logcat -d | grep -F -A 10 "Process: org.cagnulen.qdomyoszwift" | tail -n 11
 fi
 echo "Back button test passed"
