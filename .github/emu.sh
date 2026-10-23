@@ -1,12 +1,9 @@
 #!/bin/bash
-# Test only (T-282, from T-255): feat/modern-ui after the master merge - "Tile size" (ui_zoom) in
-# General UI Options, applied without a restart. The reference APK (apk-base: feat/modern-ui before
-# the merge, the row is still "UI Zoom" in General Options) and the tested APK (apk-debug: the
-# merge) go through the same steps: Tile size 60 + OK, back to the home page - the tile size is
-# measured in the uiautomator dump, and the "Settings changed" restart question is looked for.
-# The tested APK then: 80 + OK and the back key at once (the settings page stores its copy 500 ms
-# later), 120 together with "Tiles Icons" off in one visit (no key of the home copy lost), and a
-# restart (the values kept).
+# Test only (T-287): the dot of a classic section header centred on the first line of the title.
+# The reference APK (apk-base: the header as in master, the dot at a fixed y) and the tested APK
+# (apk-debug: the fix) take the same frames of the classic settings page: the top of the list and
+# an open section with nested headers, at a text size of 100 and 170 (the largest - long titles
+# wrap there). The dot is measured on the frames afterwards.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -192,139 +189,34 @@ wait_tiles() {
   done
   echo "!! tiles NOT shown" >> $STEPLOG
 }
-# tiles <shot>: the tile size in the dump of that shot
-tiles() {
-  echo "== $1 $(python3 .github/tilesize.py dumps/$1.xml 2>&1)" >> $STEPLOG
-}
-# conf: the stored keys of the test
-conf() {
-  echo "== conf ($1): $(adb shell "run-as $PKG grep -E '^(ui_zoom|theme_tile_icon_enabled|skipLocationServicesDialog)=' '$CONF' < /dev/null" | tr '\r\n' '  ')" >> $STEPLOG
-}
-
-# open_tile_size: Settings, General UI Options open, the Tile size field typed with <value>
-# (the keyboard closed again); the OK button is left to the caller
-open_tile_size() {
-  goto_settings || return 1
-  scroll_to '^General UI Options$' || return 1
-  tap_ui '^General UI Options$' 700 1000
-  sleep 4
-  # the modern view puts its own rows first, Tile size is below the screen edge
-  scroll_to '^Tile size:$' 6 || return 1
-  tap_row '^Tile size:$' '^[0-9.]+$' || return 1
-  sleep 2
-  adb shell input keyevent KEYCODE_MOVE_END || true
-  for i in 1 2 3 4 5 6; do adb shell input keyevent KEYCODE_DEL || true; done
-  adb shell input text "$1" || true
-  sleep 1
-  hide_keyboard
-  sleep 1
-  dump
-}
-# after_back <shot>: the home page after leaving Settings - the restart question answered No
-# (and logged), then the frame and the tile size
-after_back() {
-  sleep 3
-  dump
-  if [ -f ui.xml ] && grep -q 'Settings changed' ui.xml; then
-    echo "== $1: restart question shown" >> $STEPLOG
-    snap $1-question
-    tap_ui '^(No|NO)$' || back "restart question"
-    sleep 2
-  else
-    echo "== $1: no restart question" >> $STEPLOG
-  fi
-  shot $1
-  tiles $1
-}
-
-# round <prefix>: 100 at start, then 60 + OK and back
-round() {
-  local s="$1"
+# settings_frames <prefix> <text size>: a fresh start with that text size, the settings page:
+# the top of the list, then Bike Options open (its nested sections) a few swipes down
+settings_frames() {
+  local s="$1" z="$2"
+  start_fresh "ui_text_scale_system=false\nui_text_scale=$z"
   wait_tiles
-  sleep 3
-  shot $s-01-home-100
-  tiles $s-01-home-100
-  if open_tile_size 60; then
-    tap_row '^Tile size:$' '^OK$'
-    sleep 1
-    snap $s-02-saved
+  goto_settings || return 1
+  shot $s-$z-01-top
+  if tap_ui '^Bike Options$'; then
+    sleep 4
+    adb shell input swipe 700 2000 700 1100 600 || true
     sleep 2
-    back "settings page"
-    after_back $s-03-home-60
+    shot $s-$z-02-bike
+    adb shell input swipe 700 2000 700 1100 600 || true
+    sleep 2
+    shot $s-$z-03-bike
   fi
-  conf "$s 60"
 }
 
-# 1. Reference: master with the tile size rename, without the fix
+# 1. Reference: the header as in master
 install_apk apk-base/android-debug.apk
-adb shell cmd location set-location-enabled true || true
-start_fresh "skipLocationServicesDialog=true"
-conf "b start, skip=true before"
-round b
-# what the reference needs to show 60: a restart
-adb shell am force-stop $PKG || true
-start_app
-wait_tiles
-shot b-04-restart
-tiles b-04-restart
+settings_frames b 100
+settings_frames b 170
 
 # 2. The tested APK
 install_apk apk-debug/android-debug.apk
-# The location reminder: skipped in the file, the GPS on - homeform.cpp resets it at the start,
-# after the home page copy has read it; a tile change must not write the old value back
-adb shell cmd location set-location-enabled true || true
-start_fresh "skipLocationServicesDialog=true"
-conf "a start, skip=true before"
-round a
-
-# 80 + OK and the back key in one adb call (well within the 500 ms of the settings copy)
-if open_tile_size 80; then
-  xy=$(row_xy '^Tile size:$' '^OK$')
-  echo "quick: OK at $xy and back at once" >> $STEPLOG
-  [ -n "$xy" ] && adb shell "input tap $xy; input keyevent KEYCODE_BACK"
-  after_back a-04-home-80-quick
-  conf "a 80 quick"
-fi
-
-# 120 and Tiles Icons off in the same visit
-if open_tile_size 120; then
-  tap_row '^Tile size:$' '^OK$'
-  sleep 2
-  if scroll_to '^UI Themes$' 20; then
-    tap_ui '^UI Themes$'
-    sleep 3
-    # IndicatorOnlySwitch toggles only on its indicator at the right end of the row
-    if scroll_to '^Tiles Icons$' 4 && xy=$(python3 .github/uiright.py ui.xml '^Tiles Icons$'); then
-      echo "tap 'Tiles Icons' switch at $xy" >> $STEPLOG
-      adb shell input tap $xy || true
-    else
-      echo "!! Tiles Icons switch NOT FOUND" >> $STEPLOG
-    fi
-    sleep 1
-    shot a-05-themes
-  fi
-  back "settings page"
-  after_back a-06-home-120-noicons
-  sleep 2
-  conf "a 120 no icons"
-fi
-
-# A restart: 120 and no icons kept
-adb shell am force-stop $PKG || true
-start_app
-wait_tiles
-shot a-07-restart
-tiles a-07-restart
-conf "a after restart"
-
-# Back to 100 without a restart
-if open_tile_size 100; then
-  tap_row '^Tile size:$' '^OK$'
-  sleep 2
-  back "settings page"
-  after_back a-08-home-100
-  conf "a 100"
-fi
+settings_frames a 100
+settings_frames a 170
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
