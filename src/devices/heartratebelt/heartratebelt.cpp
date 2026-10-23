@@ -100,7 +100,9 @@ void heartratebelt::characteristicChanged(const QLowEnergyCharacteristic &charac
             Heart = (uint8_t)newValue[1];
             index = 2;
         }
-        lastHeartRateTime = QDateTime::currentDateTime();
+        // 0 is what some chest straps send without skin contact: not a heart rate
+        if (Heart.value() > 0)
+            lastHeartRateTime = QDateTime::currentDateTime();
         emit heartRate((uint8_t)Heart.value());
 
         // Bit 3: Energy Expended Status

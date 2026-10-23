@@ -4131,6 +4131,16 @@ void bluetooth::reconnectHeartRateBelt(const QString &name) {
         return;
     }
 
+    // The same sensor created less than 15 s ago and no heart rate yet: still connecting, a second tap must not
+    // start it over (connectHeartRateBelt() says "connected!" or "no heart rate" by itself)
+    if (heartRateBelt && !heartRateBeltName.startsWith(QStringLiteral("Disabled")) &&
+        heartRateBelt->bluetoothDevice.name().startsWith(heartRateBeltName) &&
+        !heartRateBelt->lastHeartRateTime.isValid() &&
+        heartRateBelt->createdTime.msecsTo(QDateTime::currentDateTime()) < 15000) {
+        qDebug() << "heart rate sensor still connecting";
+        return;
+    }
+
     // The same sensor gone silent: the list of seen devices still has it, so connect only after a fresh scan
     // finds it advertising again
     const bool silentSameSensor =
