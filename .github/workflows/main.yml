@@ -12,9 +12,18 @@ on:
         required: false
         default: ''
       language:
-        description: label of the language to pick in the App Language list (empty = no taps)
+        description: label of the language to pick in the App Language list (empty = no language check)
         required: false
         default: 'Italian'
+      nav:
+        description: walk to General UI Options with frames (ios_nav.py)
+        type: boolean
+        required: false
+        default: false
+      content_size:
+        description: Larger Text of the simulator before the start (simctl ui content_size; empty = default)
+        required: false
+        default: ''
       wait:
         description: seconds after a start before the frame
         required: false
@@ -122,7 +131,7 @@ jobs:
           python-version: '3.11'
 
       - name: idb (taps and the accessibility tree)
-        if: inputs.language != ''
+        if: inputs.language != '' || inputs.nav
         run: |
           brew install facebook/fb/idb-companion || true
           if ! command -v idb_companion; then
@@ -140,6 +149,8 @@ jobs:
           APP: ${{ steps.app.outputs.app }}
           BID: ${{ steps.app.outputs.bid }}
           LANGUAGE: ${{ inputs.language }}
+          NAV: ${{ inputs.nav }}
+          CONTENT_SIZE: ${{ inputs.content_size }}
           WAIT: ${{ inputs.wait }}
         run: |
           set -x
@@ -173,8 +184,15 @@ jobs:
             sleep "$WAIT"
             xcrun simctl spawn "$UDID" launchctl list | grep -i "$BID" || echo "app not running after $WAIT s"
           }
+          if [ -n "$CONTENT_SIZE" ]; then
+            xcrun simctl ui "$UDID" content_size "$CONTENT_SIZE"
+          fi
+          xcrun simctl ui "$UDID" content_size > out/content-size.txt 2>&1 || true
           start 01
           xcrun simctl io "$UDID" screenshot out/01-start.png || true
+          if [ "$NAV" = "true" ]; then
+            python .github/ios_nav.py "$IDB" "$UDID" out nav > out/nav.txt 2>&1 || true
+          fi
           if [ -n "$LANGUAGE" ]; then
             python .github/ios_lang.py "$IDB" "$UDID" out 01 "$LANGUAGE" > out/01.nav.txt 2>&1 || true
             plutil -p "$PREFS" | grep -i language > out/prefs-after-ok.txt 2>&1 || true
@@ -185,7 +203,7 @@ jobs:
           ls ~/Library/Logs/DiagnosticReports/ > out/crash-list.txt 2>&1 || true
           cp ~/Library/Logs/DiagnosticReports/*qdomyos* out/ 2>/dev/null || true
           find "$DATA" -name "debug-*.log" -exec cp {} out/ \; || true
-          cat out/debug-*.log 2>/dev/null | grep -a -i -E "translation|language|qml" | head -400 > out/lang-log.txt || true
+          cat out/debug-*.log 2>/dev/null | grep -a -i -E "translation|language|qml|T270" | head -400 > out/lang-log.txt || true
           for f in "$DATA"/Library/Preferences/*.plist; do echo "== $f"; plutil -p "$f" | head -40; done > out/prefs-after.txt 2>&1 || true
 
       - name: Keep the output
