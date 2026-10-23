@@ -1541,7 +1541,10 @@ ApplicationWindow {
             icon.source: window.ui.modern ? "" : "icons/icons/icon.png"
             text: window.ui.modern ? "" : (stackView.depth > 1 ? "◄" : "◄")
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: stackView.depth > 1 ? "arrow_back" : "menu"; color: window.ui.textMain; visible: window.ui.modern }
-            font.pixelSize: Qt.application.font.pixelSize * 1.6
+            // The header is as tall as this button. On iOS the app font already carries the system
+            // text size (53 px at the largest one), so the arrow is scaled from the body size, as
+            // the rest of the text, and keeps the same cap
+            font.pixelSize: window.iosTextSize ? window.fontPx(Math.round(window.iosBodyPx * 1.6)) : Qt.application.font.pixelSize * 1.6
             onClicked: {
                 if (stackView.depth > 1) {
                     // Modern look: the arrow goes back one step inside the page as the back
