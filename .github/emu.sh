@@ -1,7 +1,8 @@
 #!/bin/bash
-# Test only (T-255): "Tile size" (ui_zoom) applied without a restart. The reference APK
-# (apk-base: master with the tile size rename, T-242) and the tested APK (apk-debug: the same plus
-# the fix) go through the same steps: Tile size 60 + OK, back to the home page - the tile size is
+# Test only (T-282, from T-255): feat/modern-ui after the master merge - "Tile size" (ui_zoom) in
+# General UI Options, applied without a restart. The reference APK (apk-base: feat/modern-ui before
+# the merge, the row is still "UI Zoom" in General Options) and the tested APK (apk-debug: the
+# merge) go through the same steps: Tile size 60 + OK, back to the home page - the tile size is
 # measured in the uiautomator dump, and the "Settings changed" restart question is looked for.
 # The tested APK then: 80 + OK and the back key at once (the settings page stores its copy 500 ms
 # later), 120 together with "Tiles Icons" off in one visit (no key of the home copy lost), and a
@@ -23,6 +24,10 @@ install_apk() {
     adb shell pm grant $PKG android.permission.$p || true
   done
   adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
+  # Health Connect: without these the first start opens its request over QZ (T-276)
+  for p in EXERCISE DISTANCE TOTAL_CALORIES_BURNED HEART_RATE POWER SPEED CYCLING_PEDALING_CADENCE ELEVATION_GAINED STEPS STEPS_CADENCE HEART_RATE_VARIABILITY; do
+    adb shell pm grant $PKG android.permission.health.WRITE_$p || echo "!! health WRITE_$p not granted" >> $STEPLOG
+  done
   echo "== installed $1" >> $STEPLOG
 }
 adb shell cmd uimode night no || true
