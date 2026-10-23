@@ -68,7 +68,22 @@ def tap_at(x, y, what):
     time.sleep(3)
 
 
+def dismiss_alerts():
+    """A system question of iOS ("… Would Like to Send You Notifications") covers the app: Allow."""
+    for _ in range(3):
+        t = tree()
+        if not any("Would Like" in (e.get("AXLabel") or "") for e in t):
+            return
+        for e in t:
+            if (e.get("AXLabel") or "") in ("Allow", "OK", "Allow While Using App"):
+                tap_at(*centre(e), "the system question: " + e["AXLabel"])
+                break
+        else:
+            return
+
+
 def tap(label, scrolls=0):
+    dismiss_alerts()
     for i in range(scrolls + 1):
         e = find(label)
         if e:
@@ -109,6 +124,7 @@ def language_row():
     return combo_xy, centre(ok)
 
 
+dismiss_alerts()
 shot("home")
 if not tap("◄"):
     sys.exit("no menu button")
