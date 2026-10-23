@@ -86,10 +86,11 @@ Page {
                     Accessible.name: qsTr("Bluetooth connection")
                     Accessible.description: rootItem.device ? qsTr("Device connected") : qsTr("Device not connected")
                     // No device yet: a tap searches right away instead of waiting for the next search;
-                    // with a device connected it restarts the DirCon (Wi-Fi) servers, see bluetoothSearchNow()
+                    // with a device connected it restarts the DirCon (Wi-Fi) servers, see bluetoothSearchNow(),
+                    // and looks for the chosen heart rate sensor again (reconnectHeartRateBelt())
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: rootItem.bluetoothSearchNow()
+                        onClicked: { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt(); }
                     }
                 }
             }
