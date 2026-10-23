@@ -15,6 +15,13 @@ API=$(adb shell getprop ro.build.version.sdk | tr -d '\r')
 [ -n "$API" ] || fail "cannot read the API level from the emulator"
 echo "Back button test on API $API"
 
+# Crash lines of QZ: a Java crash ("Process: <package>, PID") and a native one (">>> <package> <<<").
+# Counted before the test: the app leaving the screen is a pass only if it did not crash
+qz_crashes() {
+  adb logcat -d | grep -F -e "Process: org.cagnulen.qdomyoszwift" -e ">>> org.cagnulen.qdomyoszwift <<<" | grep -c -F -e "qdomyoszwift"
+}
+crashes_before=$(qz_crashes)
+
 qz_in_front() {
   adb shell dumpsys activity activities | grep -E "mResumedActivity|topResumedActivity" | grep -q CustomQtActivity
 }
@@ -102,4 +109,5 @@ adb shell input keyevent KEYCODE_BACK KEYCODE_BACK
 sleep 10
 shot exit
 qz_in_front && fail "double back press did not close the app"
+[ "$(qz_crashes)" -gt "$crashes_before" ] && fail "QZ crashed during the back button test (on exit or before)"
 echo "Back button test passed"

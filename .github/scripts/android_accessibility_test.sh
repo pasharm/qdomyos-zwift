@@ -30,6 +30,13 @@ API=$(adb shell getprop ro.build.version.sdk | tr -d '\r')
 [ -n "$API" ] || fail "cannot read the API level from the emulator"
 echo "Accessibility test on API $API: $PRESSES"
 
+# The fake bike comes up only after a Bluetooth scan, and without an adapter (the API < 30 images)
+# QZ does not start one: nothing to press then. Checked by the device's feature, not by API level
+if [ "$FAKE_BIKE" = 1 ] && ! adb shell pm list features | tr -d '\r' | grep -q -x "feature:android.hardware.bluetooth"; then
+  echo "SKIPPED: no Bluetooth on this emulator image, QZ does not bring up the fake bike without it"
+  exit 0
+fi
+
 [ -f a11y-test.jar ] || fail "a11y-test.jar was not built"
 adb push a11y-test.jar /data/local/tmp/a11y-test.jar > /dev/null || fail "cannot push a11y-test.jar"
 
