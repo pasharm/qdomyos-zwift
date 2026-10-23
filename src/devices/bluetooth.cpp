@@ -4062,10 +4062,14 @@ void bluetooth::connectHeartRateBelt(const QBluetoothDeviceInfo &b) {
 
 // Applies a heart rate sensor chosen while QZ is running, so no restart is needed:
 // drops the old sensor and connects the new one, scanning for it if it was not seen yet.
-void bluetooth::reconnectHeartRateBelt() {
+// name: the sensor just chosen in the settings page. Its QML Settings object writes the value to QSettings
+// a moment later, so reading it here would still give the old one; empty means take the saved value.
+void bluetooth::reconnectHeartRateBelt(const QString &name) {
     QSettings settings;
     QString heartRateBeltName =
-        settings.value(QZSettings::heart_rate_belt_name, QZSettings::default_heart_rate_belt_name).toString();
+        name.isEmpty()
+            ? settings.value(QZSettings::heart_rate_belt_name, QZSettings::default_heart_rate_belt_name).toString()
+            : name;
     qDebug() << "bluetooth::reconnectHeartRateBelt()" << heartRateBeltName;
 
     if (heartRateBelt && heartRateBelt->connected() && !heartRateBeltName.startsWith(QStringLiteral("Disabled")) &&
