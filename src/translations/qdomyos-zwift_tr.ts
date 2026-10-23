@@ -2,6 +2,13 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="tr_TR">
 <context>
+    <name>ChartJsTest</name>
+    <message>
+        <source>Close</source>
+        <translation>Kapat</translation>
+    </message>
+</context>
+<context>
     <name>ChartsEndWorkoutForm.ui</name>
     <message>
         <source>Power</source>
@@ -68,6 +75,26 @@
         <source>Other folders</source>
         <translation>Diğer klasörler</translation>
     </message>
+    <message>
+        <source>Open</source>
+        <translation>Aç</translation>
+    </message>
+    <message>
+        <source>Parent folder</source>
+        <translation>Üst klasör</translation>
+    </message>
+    <message>
+        <source>No GPX files here</source>
+        <translation>Burada GPX dosyası yok</translation>
+    </message>
+    <message>
+        <source>%1 km</source>
+        <translation>%1 km</translation>
+    </message>
+    <message>
+        <source>%1 m</source>
+        <translation>%1 m</translation>
+    </message>
 </context>
 <context>
     <name>Home</name>
@@ -90,64 +117,6 @@
     <message>
         <source>Do you really want to stop the current workout?</source>
         <translation>Mevcut antrenman durdurulsun mu?</translation>
-    </message>
-    <message>
-        <source>Permissions Required</source>
-        <translation>İzin gerekli</translation>
-    </message>
-    <message>
-        <source>QZ requires both Bluetooth and Location Services to be enabled.
-Location Services are necessary on Android to allow the app to find Bluetooth devices.
-The GPS will not be used.
-
-Would you like to enable them?</source>
-        <translation>QZ için hem Bluetooth hem de konum hizmetleri açık olmalıdır.
-Android&apos;de uygulamanın Bluetooth cihazlarını bulabilmesi için konum hizmetleri gereklidir.
-GPS kullanılmaz.
-
-Bunlar açılsın mı?</translation>
-    </message>
-    <message>
-        <source>Reminder Preference</source>
-        <translation>Hatırlatma tercihi</translation>
-    </message>
-    <message>
-        <source>Would you like to be reminded about enabling Location Services next time?</source>
-        <translation>Konum hizmetlerini açmak bir dahaki sefere hatırlatılsın mı?</translation>
-    </message>
-    <message>
-        <source>Restart the app</source>
-        <translation>Uygulamayı yeniden başlat</translation>
-    </message>
-    <message>
-        <source>To apply the changes, you need to restart the app.
-Would you like to do that now?</source>
-        <translation>Değişiklikleri uygulamak için uygulamanın yeniden başlatılması gerekiyor.
-Şimdi yeniden başlatılsın mı?</translation>
-    </message>
-    <message>
-        <source>Adjustable. Current value: </source>
-        <translation>Ayarlanabilir. Geçerli değer: </translation>
-    </message>
-    <message>
-        <source>Current value: </source>
-        <translation>Geçerli değer: </translation>
-    </message>
-    <message>
-        <source>Decrease </source>
-        <translation>Azalt </translation>
-    </message>
-    <message>
-        <source>Decrease the value of </source>
-        <translation>Değeri azalt – </translation>
-    </message>
-    <message>
-        <source>Increase </source>
-        <translation>Artır </translation>
-    </message>
-    <message>
-        <source>Increase the value of </source>
-        <translation>Değeri artır – </translation>
     </message>
     <message>
         <source>Rest</source>
@@ -233,6 +202,72 @@ Would you like to do that now?</source>
         <source>Save</source>
         <translation>Kaydet</translation>
     </message>
+    <message>
+        <source>Permissions Required</source>
+        <translation>İzin gerekli</translation>
+    </message>
+    <message>
+        <source>QZ requires both Bluetooth and Location Services to be enabled.
+Location Services are necessary on Android to allow the app to find Bluetooth devices.
+The GPS will not be used.
+
+Would you like to enable them?</source>
+        <translation>QZ için hem Bluetooth hem de konum hizmetleri açık olmalıdır.
+Android&apos;de uygulamanın Bluetooth cihazlarını bulabilmesi için konum hizmetleri gereklidir.
+GPS kullanılmaz.
+
+Bunlar açılsın mı?</translation>
+    </message>
+    <message>
+        <source>Reminder Preference</source>
+        <translation>Hatırlatma tercihi</translation>
+    </message>
+    <message>
+        <source>Would you like to be reminded about enabling Location Services next time?</source>
+        <translation>Konum hizmetlerini açmak bir dahaki sefere hatırlatılsın mı?</translation>
+    </message>
+    <message>
+        <source>Restart the app</source>
+        <translation>Uygulamayı yeniden başlat</translation>
+    </message>
+    <message>
+        <source>To apply the changes, you need to restart the app.
+Would you like to do that now?</source>
+        <translation>Değişiklikleri uygulamak için uygulamanın yeniden başlatılması gerekiyor.
+Şimdi yeniden başlatılsın mı?</translation>
+    </message>
+    <message>
+        <source>Adjustable. Current value: </source>
+        <translation>Ayarlanabilir. Geçerli değer: </translation>
+    </message>
+    <message>
+        <source>Current value: </source>
+        <translation>Geçerli değer: </translation>
+    </message>
+    <message>
+        <source>Decrease </source>
+        <translation>Azalt </translation>
+    </message>
+    <message>
+        <source>Decrease the value of </source>
+        <translation>Değeri azalt – </translation>
+    </message>
+    <message>
+        <source>Increase </source>
+        <translation>Artır </translation>
+    </message>
+    <message>
+        <source>Increase the value of </source>
+        <translation>Değeri artır – </translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Durdur</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>İptal</translation>
+    </message>
 </context>
 <context>
     <name>HomeForm.ui</name>
@@ -271,6 +306,26 @@ Would you like to do that now?</source>
     <message>
         <source>This app should automatically connect to your bike/treadmill/rower. &lt;b&gt;If it doesn&apos;t, please check&lt;/b&gt;:&lt;br&gt;1) your Echelon/Domyos App MUST be closed while qdomyos-zwift is running;&lt;br&gt;2) both Bluetooth and Bluetooth permissions MUST be enabled&lt;br&gt;3) your bike/treadmill/rower should be turned on BEFORE starting this app&lt;br&gt;4) try to restart your device&lt;br&gt;&lt;br&gt;If your bike/treadmill disconnects every 30 seconds try to disable the &apos;virtual device&apos; setting on the left bar.&lt;br&gt;&lt;br&gt;In case of issues, please feel free to contact me at roberto.viola83@gmail.com.&lt;br&gt;&lt;br&gt;&lt;b&gt;Have a nice ride!&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZ specifically disclaims liability for&lt;br&gt;incidental or consequential damages and assumes&lt;br&gt;no responsibility or liability for any loss&lt;br&gt;or damage suffered by any person as a result of&lt;br&gt;the use or misuse of the app.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</source>
         <translation>Bu uygulama bisikletinize/koşu bandınıza/kürek makinenize otomatik olarak bağlanmalıdır. &lt;b&gt;Bağlanmazsa şunları kontrol edin&lt;/b&gt;:&lt;br&gt;1) qdomyos-zwift çalışırken Echelon/Domyos uygulamanız MUTLAKA kapalı olmalıdır;&lt;br&gt;2) Bluetooth ve Bluetooth izinleri MUTLAKA açık olmalıdır&lt;br&gt;3) bisikletiniz/koşu bandınız/kürek makineniz bu uygulamayı başlatmadan ÖNCE açılmış olmalıdır&lt;br&gt;4) cihazınızı yeniden başlatmayı deneyin&lt;br&gt;&lt;br&gt;Bisikletinizin/koşu bandınızın bağlantısı her 30 saniyede bir kopuyorsa sol çubuktaki &quot;Sanal cihazı etkinleştir&quot; ayarını kapatmayı deneyin.&lt;br&gt;&lt;br&gt;Sorun yaşarsanız roberto.viola83@gmail.com adresinden bana çekinmeden ulaşabilirsiniz.&lt;br&gt;&lt;br&gt;&lt;b&gt;İyi sürüşler!&lt;/b&gt;&lt;br/ &gt;&lt;i&gt;QZ, arızi veya dolaylı zararlara ilişkin&lt;br&gt;sorumluluğu açıkça reddeder ve uygulamanın&lt;br&gt;kullanımı veya kötüye kullanımı sonucunda&lt;br&gt;herhangi bir kişinin uğradığı kayıp&lt;br&gt;veya zarardan hiçbir sorumluluk kabul etmez.&lt;/i&gt;&lt;br&gt;&lt;br&gt;Roberto Viola</translation>
+    </message>
+    <message>
+        <source>Equipment not found</source>
+        <translation>Cihaz bulunamadı</translation>
+    </message>
+    <message>
+        <source>Turn on your bike, treadmill or rower, then tap the Bluetooth icon at the top to search again.</source>
+        <translation>Bisikletinizi, koşu bandınızı veya kürek makinenizi açın, ardından yeniden aramak için üstteki Bluetooth simgesine dokunun.</translation>
+    </message>
+    <message>
+        <source>Looking for your equipment…</source>
+        <translation>Cihazınız aranıyor…</translation>
+    </message>
+    <message>
+        <source>Turn on your bike, treadmill or rower: QZ connects to it automatically.</source>
+        <translation>Bisikletinizi, koşu bandınızı veya kürek makinenizi açın: QZ ona otomatik olarak bağlanır.</translation>
+    </message>
+    <message>
+        <source>Not connecting?</source>
+        <translation>Bağlanmıyor mu?</translation>
     </message>
 </context>
 <context>
@@ -499,162 +554,6 @@ Would you like to do that now?</source>
 <context>
     <name>QObject</name>
     <message>
-        <source>%1 (HR sensor) connected!</source>
-        <translation>Bağlandı: %1 (nabız sensörü)</translation>
-    </message>
-    <message>
-        <source>%1 (cadence sensor) connected!</source>
-        <translation>Bağlandı: %1 (kadans sensörü)</translation>
-    </message>
-    <message>
-        <source>%1 (power sensor) connected!</source>
-        <translation>Bağlandı: %1 (güç sensörü)</translation>
-    </message>
-    <message>
-        <source>SRAM Connected!</source>
-        <translation>SRAM bağlandı</translation>
-    </message>
-    <message>
-        <source>Zwift Click Connected!</source>
-        <translation>Zwift Click bağlandı</translation>
-    </message>
-    <message>
-        <source>Zwift Click v2 Connected!</source>
-        <translation>Zwift Click v2 bağlandı</translation>
-    </message>
-    <message>
-        <source>Thinkrider Controller Connected!</source>
-        <translation>Thinkrider kumandası bağlandı</translation>
-    </message>
-    <message>
-        <source>CYCPLUS BC2 Connected!</source>
-        <translation>CYCPLUS BC2 bağlandı</translation>
-    </message>
-    <message>
-        <source>Elite Square Connected!</source>
-        <translation>Elite Square bağlandı</translation>
-    </message>
-    <message>
-        <source>Zwift Play/Ride Connected!</source>
-        <translation>Zwift Play/Ride bağlandı</translation>
-    </message>
-    <message>
-        <source>%1 connected!</source>
-        <translation>Bağlandı: %1</translation>
-    </message>
-    <message>
-        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
-        <translation>Dirence göre elle güç ayarı açıldı: güç artık &quot;Direnç&quot; kutucuğundaki değere göre değişiyor.</translation>
-    </message>
-    <message>
-        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
-        <translation>Özel CSC güç tablosu açıldı: güç artık ayarlanan direnç/watt noktalarına göre hesaplanıyor.</translation>
-    </message>
-    <message>
-        <source>%1 Battery Level %2 %</source>
-        <translation>%1 pil seviyesi %2 %</translation>
-    </message>
-    <message>
-        <source>FTMS bike found, restart the app to apply the change</source>
-        <translation>FTMS bisikleti bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın</translation>
-    </message>
-    <message>
-        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
-        <translation>Domyos eliptik bisikleti bir FTMS cihazıdır. Düzeltmeyi uygulamak için QZ&apos;yi yeniden başlatın, teşekkürler.</translation>
-    </message>
-    <message>
-        <source>FTMS rower found, restart the app to apply the change</source>
-        <translation>FTMS kürek makinesi bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın</translation>
-    </message>
-    <message>
-        <source>Bluetooth Service Error! Restart the bike!</source>
-        <translation>Bluetooth hizmeti hatası! Bisikleti yeniden başlatın!</translation>
-    </message>
-    <message>
-        <source>Switching to classic Bluetooth bridge</source>
-        <translation>Klasik Bluetooth sanal cihazına geçiliyor</translation>
-    </message>
-    <message>
-        <source>Virtual Echelon enabled for this bike</source>
-        <translation>Bu bisiklet için sanal Echelon açıldı</translation>
-    </message>
-    <message>
-        <source>FTMS treadmill found, restart the app to apply the change</source>
-        <translation>FTMS koşu bandı bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın</translation>
-    </message>
-    <message>
-        <source>Init completed, you can use the treadmill now!</source>
-        <translation>Hazırlık tamamlandı, koşu bandını artık kullanabilirsiniz!</translation>
-    </message>
-    <message>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>QZ bu bisikletin veri biçimini algıladı ve ayarlarda &quot;Virtufit Etappe 2.0 bisiklet&quot; seçeneğini açtı. Bisiklet verilerinin okunması için QZ yeniden başlatılmalıdır.</translation>
-    </message>
-    <message>
-        <source>FTMS bike found, restart the app to apply the change!</source>
-        <translation>FTMS bisikleti bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın!</translation>
-    </message>
-    <message>
-        <source>FTMS rower found, restart the app to apply the change!</source>
-        <translation>FTMS kürek makinesi bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın!</translation>
-    </message>
-    <message>
-        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
-        <translation>Domyos bisikleti kendini FTMS cihazı olarak tanıtıyor ama değil. Düzeltmeyi uygulamak için QZ&apos;yi yeniden başlatın, teşekkürler.</translation>
-    </message>
-    <message>
-        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
-        <translation>PM5 kürek makinesi bulundu. Düzeltmeyi uygulamak için QZ&apos;yi yeniden başlatın, teşekkürler.</translation>
-    </message>
-    <message>
-        <source>Treadmill initialization in progress...%1%</source>
-        <translation>Koşu bandı hazırlanıyor…%1%</translation>
-    </message>
-    <message>
-        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
-        <translation>Ayarlar → Koşu bandı seçenekleri → Horizon koşu bandı seçenekleri bölümündeki &quot;FTMS kullanımını zorla&quot; ayarını açın ve uygulamayı yeniden başlatın</translation>
-    </message>
-    <message>
-        <source>Treadmill initialization completed!</source>
-        <translation>Koşu bandı hazırlığı tamamlandı!</translation>
-    </message>
-    <message>
-        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
-        <translation>Domyos koşu bandı kendini FTMS cihazı olarak tanıtıyor ama değil. Düzeltmeyi uygulamak için QZ&apos;yi yeniden başlatın, teşekkürler.</translation>
-    </message>
-    <message>
-        <source>Treadmill ready</source>
-        <translation>Koşu bandı hazır</translation>
-    </message>
-    <message>
-        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
-        <translation>T01_ cihazı algılandı. Eğim değerleri tuhaf görünüyorsa &quot;Koşu bandı seçenekleri&quot; ayarlarında &quot;IConcept FTMS koşu bandı&quot; seçeneğini açın.</translation>
-    </message>
-    <message>
-        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
-        <translation>Güncel SmO2: %1%, önceki SmO2: %2%, THb: %3 g/dL</translation>
-    </message>
-    <message>
-        <source>SE7i init completed!</source>
-        <translation>SE7i hazırlığı tamamlandı!</translation>
-    </message>
-    <message>
-        <source>Starting treadmill before applying requested speed %1</source>
-        <translation>İstenen hız uygulanmadan önce koşu bandı başlatılıyor: %1</translation>
-    </message>
-    <message>
-        <source>Applying cached speed request %1</source>
-        <translation>Bekleyen hız isteği uygulanıyor: %1</translation>
-    </message>
-    <message>
-        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
-        <translation>Hizmet bulunamadı, roberto.viola83@gmail.com adresinden bana ulaşın!</translation>
-    </message>
-    <message>
-        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
-        <translation>Zwift Hub cihazı bulundu, sanal vitesleri kullanmak için uygulamayı yeniden başlatın!</translation>
-    </message>
-    <message>
         <source>Sending workout email...</source>
         <translation>Antrenman e-postayla gönderiliyor…</translation>
     </message>
@@ -835,10 +734,6 @@ QZ ayarları güncellensin mi?</translation>
         <translation>Bağlı cihaz bir Echelon Connect Sport değil</translation>
     </message>
     <message>
-        <source>Android notification enabled</source>
-        <translation>Android bildirimi açıldı</translation>
-    </message>
-    <message>
         <source>Strava: unable to open FIT file</source>
         <translation>Strava: FIT dosyası açılamıyor</translation>
     </message>
@@ -923,12 +818,12 @@ QZ ayarları güncellensin mi?</translation>
         <translation>Intervals.icu&apos;dan antrenman indiriliyor…</translation>
     </message>
     <message>
-        <source>Intervals.icu: %1</source>
-        <translation>Intervals.icu: %1</translation>
-    </message>
-    <message>
         <source>Failed to get workouts (HTTP %1)</source>
         <translation>Antrenmanlar alınamadı (HTTP %1)</translation>
+    </message>
+    <message>
+        <source>Intervals.icu: %1</source>
+        <translation>Intervals.icu: %1</translation>
     </message>
     <message>
         <source>Intervals.icu: Invalid response</source>
@@ -945,6 +840,158 @@ QZ ayarları güncellensin mi?</translation>
     <message>
         <source>Failed to save workout file</source>
         <translation>Antrenman dosyası kaydedilemedi</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor) connected!</source>
+        <translation>Bağlandı: %1 (nabız sensörü)</translation>
+    </message>
+    <message>
+        <source>%1 (cadence sensor) connected!</source>
+        <translation>Bağlandı: %1 (kadans sensörü)</translation>
+    </message>
+    <message>
+        <source>%1 (power sensor) connected!</source>
+        <translation>Bağlandı: %1 (güç sensörü)</translation>
+    </message>
+    <message>
+        <source>SRAM Connected!</source>
+        <translation>SRAM bağlandı</translation>
+    </message>
+    <message>
+        <source>Zwift Click Connected!</source>
+        <translation>Zwift Click bağlandı</translation>
+    </message>
+    <message>
+        <source>Zwift Click v2 Connected!</source>
+        <translation>Zwift Click v2 bağlandı</translation>
+    </message>
+    <message>
+        <source>Thinkrider Controller Connected!</source>
+        <translation>Thinkrider kumandası bağlandı</translation>
+    </message>
+    <message>
+        <source>CYCPLUS BC2 Connected!</source>
+        <translation>CYCPLUS BC2 bağlandı</translation>
+    </message>
+    <message>
+        <source>Elite Square Connected!</source>
+        <translation>Elite Square bağlandı</translation>
+    </message>
+    <message>
+        <source>Zwift Play/Ride Connected!</source>
+        <translation>Zwift Play/Ride bağlandı</translation>
+    </message>
+    <message>
+        <source>%1 connected!</source>
+        <translation>Bağlandı: %1</translation>
+    </message>
+    <message>
+        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
+        <translation>Dirence göre elle güç ayarı açıldı: güç artık &quot;Direnç&quot; kutucuğundaki değere göre değişiyor.</translation>
+    </message>
+    <message>
+        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
+        <translation>Özel CSC güç tablosu açıldı: güç artık ayarlanan direnç/watt noktalarına göre hesaplanıyor.</translation>
+    </message>
+    <message>
+        <source>%1 Battery Level %2 %</source>
+        <translation>%1 pil seviyesi %2 %</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change</source>
+        <translation>FTMS bisikleti bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın</translation>
+    </message>
+    <message>
+        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos eliptik bisikleti bir FTMS cihazıdır. Düzeltmeyi uygulamak için QZ&apos;yi yeniden başlatın, teşekkürler.</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change</source>
+        <translation>FTMS kürek makinesi bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın</translation>
+    </message>
+    <message>
+        <source>Bluetooth Service Error! Restart the bike!</source>
+        <translation>Bluetooth hizmeti hatası! Bisikleti yeniden başlatın!</translation>
+    </message>
+    <message>
+        <source>Switching to classic Bluetooth bridge</source>
+        <translation>Klasik Bluetooth sanal cihazına geçiliyor</translation>
+    </message>
+    <message>
+        <source>Virtual Echelon enabled for this bike</source>
+        <translation>Bu bisiklet için sanal Echelon açıldı</translation>
+    </message>
+    <message>
+        <source>FTMS treadmill found, restart the app to apply the change</source>
+        <translation>FTMS koşu bandı bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın</translation>
+    </message>
+    <message>
+        <source>Init completed, you can use the treadmill now!</source>
+        <translation>Hazırlık tamamlandı, koşu bandını artık kullanabilirsiniz!</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change!</source>
+        <translation>FTMS bisikleti bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın!</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change!</source>
+        <translation>FTMS kürek makinesi bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın!</translation>
+    </message>
+    <message>
+        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos bisikleti kendini FTMS cihazı olarak tanıtıyor ama değil. Düzeltmeyi uygulamak için QZ&apos;yi yeniden başlatın, teşekkürler.</translation>
+    </message>
+    <message>
+        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
+        <translation>PM5 kürek makinesi bulundu. Düzeltmeyi uygulamak için QZ&apos;yi yeniden başlatın, teşekkürler.</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization in progress...%1%</source>
+        <translation>Koşu bandı hazırlanıyor…%1%</translation>
+    </message>
+    <message>
+        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
+        <translation>Ayarlar → Koşu bandı seçenekleri → Horizon koşu bandı seçenekleri bölümündeki &quot;FTMS kullanımını zorla&quot; ayarını açın ve uygulamayı yeniden başlatın</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization completed!</source>
+        <translation>Koşu bandı hazırlığı tamamlandı!</translation>
+    </message>
+    <message>
+        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos koşu bandı kendini FTMS cihazı olarak tanıtıyor ama değil. Düzeltmeyi uygulamak için QZ&apos;yi yeniden başlatın, teşekkürler.</translation>
+    </message>
+    <message>
+        <source>Treadmill ready</source>
+        <translation>Koşu bandı hazır</translation>
+    </message>
+    <message>
+        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
+        <translation>T01_ cihazı algılandı. Eğim değerleri tuhaf görünüyorsa &quot;Koşu bandı seçenekleri&quot; ayarlarında &quot;IConcept FTMS koşu bandı&quot; seçeneğini açın.</translation>
+    </message>
+    <message>
+        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
+        <translation>Güncel SmO2: %1%, önceki SmO2: %2%, THb: %3 g/dL</translation>
+    </message>
+    <message>
+        <source>SE7i init completed!</source>
+        <translation>SE7i hazırlığı tamamlandı!</translation>
+    </message>
+    <message>
+        <source>Starting treadmill before applying requested speed %1</source>
+        <translation>İstenen hız uygulanmadan önce koşu bandı başlatılıyor: %1</translation>
+    </message>
+    <message>
+        <source>Applying cached speed request %1</source>
+        <translation>Bekleyen hız isteği uygulanıyor: %1</translation>
+    </message>
+    <message>
+        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
+        <translation>Hizmet bulunamadı, roberto.viola83@gmail.com adresinden bana ulaşın!</translation>
+    </message>
+    <message>
+        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
+        <translation>Zwift Hub cihazı bulundu, sanal vitesleri kullanmak için uygulamayı yeniden başlatın!</translation>
     </message>
     <message>
         <source>Peloton Auth Failed!</source>
@@ -1005,6 +1052,10 @@ QZ ayarları güncellensin mi?</translation>
     <message>
         <source>Zwift device: UPGRADE THE FIRMWARE!</source>
         <translation>Zwift cihazı: ÜRÜN YAZILIMINI GÜNCELLEYİN!</translation>
+    </message>
+    <message>
+        <source>Android notification enabled</source>
+        <translation>Android bildirimi açıldı</translation>
     </message>
 </context>
 <context>
@@ -1085,20 +1136,20 @@ QZ ayarları güncellensin mi?</translation>
 <context>
     <name>SettingsFormatField</name>
     <message>
-        <source>Enter an IP address, e.g. 192.168.1.10</source>
-        <translation>Bir IP adresi girin, ör. 192.168.1.10</translation>
-    </message>
-    <message>
-        <source>Enter an IP address or a host name, e.g. 192.168.1.10</source>
-        <translation>Bir IP adresi veya ana bilgisayar adı girin, ör. 192.168.1.10</translation>
-    </message>
-    <message>
         <source>Enter the height in centimetres</source>
         <translation>Boyu santimetre olarak girin</translation>
     </message>
     <message>
         <source>Enter the height as feet&apos;inches, e.g. 5&apos;10&quot;</source>
         <translation>Boyu fit&apos;inç olarak girin, ör. 5&apos;10&quot;</translation>
+    </message>
+    <message>
+        <source>Enter an IP address or a host name, e.g. 192.168.1.10</source>
+        <translation>Bir IP adresi veya ana bilgisayar adı girin, ör. 192.168.1.10</translation>
+    </message>
+    <message>
+        <source>Enter an IP address, e.g. 192.168.1.10</source>
+        <translation>Bir IP adresi girin, ör. 192.168.1.10</translation>
     </message>
     <message>
         <source>Enter the time as hh:mm:ss</source>
@@ -1108,16 +1159,28 @@ QZ ayarları güncellensin mi?</translation>
 <context>
     <name>SettingsList</name>
     <message>
-        <source>Settings folder</source>
-        <translation>Ayarlar klasörü</translation>
-    </message>
-    <message>
         <source>Please choose a file</source>
         <translation>Bir dosya seçin</translation>
     </message>
     <message>
+        <source>Settings folder</source>
+        <translation>Ayarlar klasörü</translation>
+    </message>
+    <message>
         <source>Other folders</source>
         <translation>Diğer klasörler</translation>
+    </message>
+    <message>
+        <source>Tap a file to select it, then Load.</source>
+        <translation>Seçmek için bir dosyaya dokunun, ardından Yükle&apos;ye basın.</translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation>Yükle</translation>
+    </message>
+    <message>
+        <source>No saved settings</source>
+        <translation>Kayıtlı ayar yok</translation>
     </message>
 </context>
 <context>
@@ -1145,6 +1208,21 @@ QZ ayarları güncellensin mi?</translation>
     <message>
         <source>Maximum: %1</source>
         <translation>En fazla: %1</translation>
+    </message>
+</context>
+<context>
+    <name>SwagBagItem</name>
+    <message>
+        <source>Purchasing...</source>
+        <translation>Satın alınıyor...</translation>
+    </message>
+    <message>
+        <source>Purchase Succeeded</source>
+        <translation>Satın alma başarılı</translation>
+    </message>
+    <message>
+        <source>Purchase Failed</source>
+        <translation>Satın alma başarısız</translation>
     </message>
 </context>
 <context>
@@ -1277,6 +1355,63 @@ QZ ayarları güncellensin mi?</translation>
         <source>Start Workout</source>
         <translation>Antrenmanı başlat</translation>
     </message>
+    <message>
+        <source>Parent folder</source>
+        <translation>Üst klasör</translation>
+    </message>
+    <message>
+        <source>No workouts here</source>
+        <translation>Burada antrenman yok</translation>
+    </message>
+    <message>
+        <source>No workouts found</source>
+        <translation>Antrenman bulunamadı</translation>
+    </message>
+</context>
+<context>
+    <name>UiMessageDialog</name>
+    <message>
+        <source>Yes</source>
+        <translation>Evet</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>Hayır</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>Tamam</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>İptal</translation>
+    </message>
+</context>
+<context>
+    <name>UiSectionHeader</name>
+    <message>
+        <source>Expanded</source>
+        <translation>Genişletildi</translation>
+    </message>
+    <message>
+        <source>Collapsed</source>
+        <translation>Daraltıldı</translation>
+    </message>
+</context>
+<context>
+    <name>UiTextField</name>
+    <message>
+        <source>hours</source>
+        <translation>sa</translation>
+    </message>
+    <message>
+        <source>min</source>
+        <translation>dk</translation>
+    </message>
+    <message>
+        <source>sec</source>
+        <translation>sn</translation>
+    </message>
 </context>
 <context>
     <name>WebIntervalsICUAuth</name>
@@ -1392,6 +1527,14 @@ QZ ayarları güncellensin mi?</translation>
     <message>
         <source>Rower</source>
         <translation>Kürek makinesi</translation>
+    </message>
+    <message>
+        <source>Jump Rope</source>
+        <translation>Atlama ipi</translation>
+    </message>
+    <message>
+        <source>Stair Climber</source>
+        <translation>Merdiven makinesi</translation>
     </message>
     <message>
         <source>Workout Editor</source>
@@ -1531,12 +1674,28 @@ QZ ayarları güncellensin mi?</translation>
         <translation>Maks. hız</translation>
     </message>
     <message>
+        <source>Max Incline</source>
+        <translation>Maks. eğim</translation>
+    </message>
+    <message>
         <source>Max Resistance</source>
         <translation>Maks. direnç</translation>
     </message>
     <message>
         <source>Ramp</source>
         <translation>Rampa</translation>
+    </message>
+    <message>
+        <source>Ramp Unit</source>
+        <translation>Rampa birimi</translation>
+    </message>
+    <message>
+        <source>Ramp From</source>
+        <translation>Rampa başlangıcı</translation>
+    </message>
+    <message>
+        <source>Ramp To</source>
+        <translation>Rampa bitişi</translation>
     </message>
     <message>
         <source>Stroke Rate</source>
@@ -1735,6 +1894,34 @@ QZ ayarları güncellensin mi?</translation>
         <translation>Seçim tekrarlanırken hata oluştu: {message}</translation>
     </message>
     <message>
+        <source>Block repeated {times} times</source>
+        <translation>Blok {times} kez tekrarlandı</translation>
+    </message>
+    <message>
+        <source>Loaded {name}</source>
+        <translation>Yüklendi: {name}</translation>
+    </message>
+    <message>
+        <source>Deleted {name}</source>
+        <translation>Silindi: {name}</translation>
+    </message>
+    <message>
+        <source>Untitled Workout</source>
+        <translation>Adsız antrenman</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation>Süre</translation>
+    </message>
+    <message>
+        <source>Duration {value}</source>
+        <translation>Süre: {value}</translation>
+    </message>
+    <message>
+        <source>{count} intervals</source>
+        <translation>{count} aralık</translation>
+    </message>
+    <message>
         <source>Training Programs Browser</source>
         <translation>Antrenman programı tarayıcısı</translation>
     </message>
@@ -1854,130 +2041,6 @@ QZ ayarları güncellensin mi?</translation>
         <translation>Hedef eğim</translation>
     </message>
     <message>
-        <source>Peloton Workout in progress!</source>
-        <translation>Peloton antrenmanı sürüyor!</translation>
-    </message>
-    <message>
-        <source>Do you want to follow the resistance?</source>
-        <translation>Hedef direnç takip edilsin mi?</translation>
-    </message>
-    <message>
-        <source>SPEED</source>
-        <translation>HIZ</translation>
-    </message>
-    <message>
-        <source>INCLINE</source>
-        <translation>EĞİM</translation>
-    </message>
-    <message>
-        <source>PACE</source>
-        <translation>TEMPO</translation>
-    </message>
-    <message>
-        <source>ELEV.</source>
-        <translation>YÜKS.</translation>
-    </message>
-    <message>
-        <source>CADENCE</source>
-        <translation>KADANS</translation>
-    </message>
-    <message>
-        <source>PULSE</source>
-        <translation>NABIZ</translation>
-    </message>
-    <message>
-        <source>POWER</source>
-        <translation>GÜÇ</translation>
-    </message>
-    <message>
-        <source>RESISTANCE</source>
-        <translation>DİRENÇ</translation>
-    </message>
-    <message>
-        <source>CALORIES</source>
-        <translation>KALORİ</translation>
-    </message>
-    <message>
-        <source>DISTANCE</source>
-        <translation>MESAFE</translation>
-    </message>
-    <message>
-        <source>Heart</source>
-        <translation>Nabız</translation>
-    </message>
-    <message>
-        <source>Odometer</source>
-        <translation>Toplam mesafe</translation>
-    </message>
-    <message>
-        <source>Watt</source>
-        <translation>Güç</translation>
-    </message>
-    <message>
-        <source>Elapsed</source>
-        <translation>Geçen süre</translation>
-    </message>
-    <message>
-        <source>Inclination</source>
-        <translation>Eğim</translation>
-    </message>
-    <message>
-        <source>Altitude</source>
-        <translation>İrtifa</translation>
-    </message>
-    <message>
-        <source>Elevation</source>
-        <translation>Yükseklik</translation>
-    </message>
-    <message>
-        <source>Jump Rope</source>
-        <translation>Atlama ipi</translation>
-    </message>
-    <message>
-        <source>Stair Climber</source>
-        <translation>Merdiven makinesi</translation>
-    </message>
-    <message>
-        <source>Ramp Unit</source>
-        <translation>Rampa birimi</translation>
-    </message>
-    <message>
-        <source>Ramp From</source>
-        <translation>Rampa başlangıcı</translation>
-    </message>
-    <message>
-        <source>Ramp To</source>
-        <translation>Rampa bitişi</translation>
-    </message>
-    <message>
-        <source>Block repeated {times} times</source>
-        <translation>Blok {times} kez tekrarlandı</translation>
-    </message>
-    <message>
-        <source>Loaded {name}</source>
-        <translation>Yüklendi: {name}</translation>
-    </message>
-    <message>
-        <source>Deleted {name}</source>
-        <translation>Silindi: {name}</translation>
-    </message>
-    <message>
-        <source>Untitled Workout</source>
-        <translation>Adsız antrenman</translation>
-    </message>
-    <message>
-        <source>Time</source>
-        <translation>Süre</translation>
-    </message>
-    <message>
-        <source>Duration {value}</source>
-        <translation>Süre: {value}</translation>
-    </message>
-    <message>
-        <source>{count} intervals</source>
-        <translation>{count} aralık</translation>
-    </message>
-    <message>
         <source>Heart Rate</source>
         <translation>Nabız</translation>
     </message>
@@ -2038,6 +2101,78 @@ QZ ayarları güncellensin mi?</translation>
         <translation>Nabız &lt;{value} bpm</translation>
     </message>
     <message>
+        <source>W</source>
+        <translation>W</translation>
+    </message>
+    <message>
+        <source>kJ</source>
+        <translation>kJ</translation>
+    </message>
+    <message>
+        <source>kcal</source>
+        <translation>kcal</translation>
+    </message>
+    <message>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>rpm</source>
+        <translation>rpm</translation>
+    </message>
+    <message>
+        <source>bpm</source>
+        <translation>bpm</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>min/km</source>
+        <translation>dk/km</translation>
+    </message>
+    <message>
+        <source>min/mi</source>
+        <translation>dk/mi</translation>
+    </message>
+    <message>
+        <source>Full screen</source>
+        <translation>Tam ekran</translation>
+    </message>
+    <message>
+        <source>Exit full screen</source>
+        <translation>Tam ekrandan çık</translation>
+    </message>
+    <message>
+        <source>Swipe left or right to switch charts</source>
+        <translation>Grafikler arasında geçiş için sola veya sağa kaydırın</translation>
+    </message>
+    <message>
+        <source>A workout named {name} already exists. Replace it?</source>
+        <translation>{name} adlı bir antrenman zaten var. Değiştirilsin mi?</translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation>Değiştir</translation>
+    </message>
+    <message>
+        <source>lvl</source>
+        <translation>sev.</translation>
+    </message>
+    <message>
+        <source>spm</source>
+        <translation>spm</translation>
+    </message>
+    <message>
         <source>Marathon</source>
         <translation>Maraton</translation>
     </message>
@@ -2056,6 +2191,14 @@ QZ ayarları güncellensin mi?</translation>
     <message>
         <source>1 Mile</source>
         <translation>1 mil</translation>
+    </message>
+    <message>
+        <source>Peloton Workout in progress!</source>
+        <translation>Peloton antrenmanı sürüyor!</translation>
+    </message>
+    <message>
+        <source>Do you want to follow the resistance?</source>
+        <translation>Hedef direnç takip edilsin mi?</translation>
     </message>
     <message>
         <source>AVG</source>
@@ -2156,64 +2299,100 @@ QZ ayarları güncellensin mi?</translation>
         <translation>Otomatik direnç</translation>
     </message>
     <message>
-        <source>Max Incline</source>
-        <translation>Maks. eğim</translation>
+        <source>SPEED</source>
+        <translation>HIZ</translation>
     </message>
     <message>
-        <source>W</source>
-        <translation>W</translation>
+        <source>INCLINE</source>
+        <translation>EĞİM</translation>
     </message>
     <message>
-        <source>kJ</source>
-        <translation>kJ</translation>
+        <source>PACE</source>
+        <translation>TEMPO</translation>
     </message>
     <message>
-        <source>kcal</source>
-        <translation>kcal</translation>
+        <source>ELEV.</source>
+        <translation>YÜKS.</translation>
     </message>
     <message>
-        <source>km</source>
-        <translation>km</translation>
+        <source>CADENCE</source>
+        <translation>KADANS</translation>
     </message>
     <message>
-        <source>mi</source>
-        <translation>mi</translation>
+        <source>PULSE</source>
+        <translation>NABIZ</translation>
     </message>
     <message>
-        <source>rpm</source>
-        <translation>rpm</translation>
+        <source>POWER</source>
+        <translation>GÜÇ</translation>
     </message>
     <message>
-        <source>bpm</source>
-        <translation>bpm</translation>
+        <source>RESISTANCE</source>
+        <translation>DİRENÇ</translation>
     </message>
     <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
+        <source>CALORIES</source>
+        <translation>KALORİ</translation>
     </message>
     <message>
-        <source>mph</source>
-        <translation>mph</translation>
+        <source>DISTANCE</source>
+        <translation>MESAFE</translation>
     </message>
     <message>
-        <source>min/km</source>
-        <translation>dk/km</translation>
+        <source>Heart</source>
+        <translation>Nabız</translation>
     </message>
     <message>
-        <source>min/mi</source>
-        <translation>dk/mi</translation>
+        <source>Odometer</source>
+        <translation>Toplam mesafe</translation>
     </message>
     <message>
-        <source>lvl</source>
-        <translation>sev.</translation>
+        <source>Watt</source>
+        <translation>Güç</translation>
     </message>
     <message>
-        <source>spm</source>
-        <translation>spm</translation>
+        <source>Elapsed</source>
+        <translation>Geçen süre</translation>
+    </message>
+    <message>
+        <source>Inclination</source>
+        <translation>Eğim</translation>
+    </message>
+    <message>
+        <source>Altitude</source>
+        <translation>İrtifa</translation>
+    </message>
+    <message>
+        <source>Elevation</source>
+        <translation>Yükseklik</translation>
     </message>
     <message>
         <source>Enter a number</source>
         <translation>Bir sayı girin</translation>
+    </message>
+    <message>
+        <source>{value} min</source>
+        <translation>{value} dk</translation>
+    </message>
+    <message>
+        <source>Heart Rate Distribution</source>
+        <translation>Nabız dağılımı</translation>
+    </message>
+    <message>
+        <source>Power Curve</source>
+        <translation>Güç eğrisi</translation>
+    </message>
+    <message>
+        <source>Live update</source>
+        <translation>Canlı güncelleme</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Kapalı</translation>
+    </message>
+    <message>
+        <source>{value} s</source>
+        <translation>{value} sn</translation>
     </message>
     <message>
         <source>Allowed range: {min} to {max}</source>
@@ -2287,6 +2466,22 @@ Aşağıdaki sorular QZ&apos;yi ekipmanınıza ve hedeflerinize göre özelleşt
         <translation>Fitness cihazınız hangisi?</translation>
     </message>
     <message>
+        <source>Bike</source>
+        <translation>Bisiklet</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>Koşu bandı</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>Kürek makinesi</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>Eliptik bisiklet</translation>
+    </message>
+    <message>
         <source>Back</source>
         <translation>Geri</translation>
     </message>
@@ -2297,6 +2492,14 @@ Aşağıdaki sorular QZ&apos;yi ekipmanınıza ve hedeflerinize göre özelleşt
     <message>
         <source>QZ allows you to connect to both of them, even simultaneously if you want!</source>
         <translation>QZ, isterseniz ikisine de bağlanabilir, hatta aynı anda!</translation>
+    </message>
+    <message>
+        <source>Other app</source>
+        <translation>Diğer uygulama</translation>
+    </message>
+    <message>
+        <source>QZ Standalone</source>
+        <translation>Yalnızca QZ</translation>
     </message>
     <message>
         <source>Connect to Peloton</source>
@@ -2317,6 +2520,18 @@ Aşağıdaki sorular QZ&apos;yi ekipmanınıza ve hedeflerinize göre özelleşt
     <message>
         <source>Difficulty</source>
         <translation>Zorluk</translation>
+    </message>
+    <message>
+        <source>lower</source>
+        <translation>alt sınır</translation>
+    </message>
+    <message>
+        <source>upper</source>
+        <translation>üst sınır</translation>
+    </message>
+    <message>
+        <source>average</source>
+        <translation>ortalama</translation>
     </message>
     <message>
         <source>Finish</source>
@@ -2435,6 +2650,14 @@ Aşağıdaki sorular QZ&apos;yi ekipmanınıza ve hedeflerinize göre özelleşt
         <translation>Fitness cihazınızı seçin</translation>
     </message>
     <message>
+        <source>Disabled</source>
+        <translation>Devre dışı</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Yenile</translation>
+    </message>
+    <message>
         <source>Unit System</source>
         <translation>Birim sistemi</translation>
     </message>
@@ -2443,8 +2666,28 @@ Aşağıdaki sorular QZ&apos;yi ekipmanınıza ve hedeflerinize göre özelleşt
         <translation>Tercih ettiğiniz birim sistemini seçin</translation>
     </message>
     <message>
+        <source>Metric</source>
+        <translation>Metrik</translation>
+    </message>
+    <message>
+        <source>Imperial</source>
+        <translation>İngiliz</translation>
+    </message>
+    <message>
         <source>User Information</source>
         <translation>Kullanıcı bilgileri</translation>
+    </message>
+    <message>
+        <source>Weight (%1)</source>
+        <translation>Ağırlık (%1)</translation>
+    </message>
+    <message>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <source>kg</source>
+        <translation>kg</translation>
     </message>
     <message>
         <source>Age</source>
@@ -2453,6 +2696,14 @@ Aşağıdaki sorular QZ&apos;yi ekipmanınıza ve hedeflerinize göre özelleşt
     <message>
         <source>Gender</source>
         <translation>Cinsiyet</translation>
+    </message>
+    <message>
+        <source>Male</source>
+        <translation>Erkek</translation>
+    </message>
+    <message>
+        <source>Female</source>
+        <translation>Kadın</translation>
     </message>
     <message>
         <source>Select Your Heart Rate Device</source>
@@ -2483,76 +2734,16 @@ Aşağıdaki sorular QZ&apos;yi ekipmanınıza ve hedeflerinize göre özelleşt
         <translation>Garmin saati</translation>
     </message>
     <message>
-        <source>Bike</source>
-        <translation>Bisiklet</translation>
+        <source>Your equipment, units and profile, step by step</source>
+        <translation>Cihazınız, birimleriniz ve profiliniz, adım adım</translation>
     </message>
     <message>
-        <source>Treadmill</source>
-        <translation>Koşu bandı</translation>
+        <source>Pick a topic and go straight to its settings</source>
+        <translation>Bir konu seçin ve doğrudan ayarlarına gidin</translation>
     </message>
     <message>
-        <source>Rower</source>
-        <translation>Kürek makinesi</translation>
-    </message>
-    <message>
-        <source>Elliptical</source>
-        <translation>Eliptik bisiklet</translation>
-    </message>
-    <message>
-        <source>Other app</source>
-        <translation>Diğer uygulama</translation>
-    </message>
-    <message>
-        <source>QZ Standalone</source>
-        <translation>Yalnızca QZ</translation>
-    </message>
-    <message>
-        <source>lower</source>
-        <translation>alt sınır</translation>
-    </message>
-    <message>
-        <source>upper</source>
-        <translation>üst sınır</translation>
-    </message>
-    <message>
-        <source>average</source>
-        <translation>ortalama</translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translation>Devre dışı</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>Yenile</translation>
-    </message>
-    <message>
-        <source>Metric</source>
-        <translation>Metrik</translation>
-    </message>
-    <message>
-        <source>Imperial</source>
-        <translation>İngiliz</translation>
-    </message>
-    <message>
-        <source>Weight (%1)</source>
-        <translation>Ağırlık (%1)</translation>
-    </message>
-    <message>
-        <source>Male</source>
-        <translation>Erkek</translation>
-    </message>
-    <message>
-        <source>Female</source>
-        <translation>Kadın</translation>
-    </message>
-    <message>
-        <source>lbs</source>
-        <translation>lbs</translation>
-    </message>
-    <message>
-        <source>kg</source>
-        <translation>kg</translation>
+        <source>Close the wizard</source>
+        <translation>Sihirbazı kapat</translation>
     </message>
 </context>
 <context>
@@ -2660,10 +2851,6 @@ Aşağıdaki sorular QZ&apos;yi ekipmanınıza ve hedeflerinize göre özelleşt
         <translation>Filtreyi temizle</translation>
     </message>
     <message>
-        <source>Importing workouts...</source>
-        <translation>Antrenmanlar içe aktarılıyor…</translation>
-    </message>
-    <message>
         <source>Processing workout files...
 This may take a few moments on first startup.</source>
         <translation>Antrenman dosyaları işleniyor…
@@ -2690,24 +2877,16 @@ This may take a few moments on first startup.</source>
         <translation>Antrenman programı yüklenemedi. Dosyanın mevcut olup olmadığını kontrol edin.</translation>
     </message>
     <message>
-        <source>Import FIT File...</source>
-        <translation>FIT dosyasını içe aktar…</translation>
+        <source>mi</source>
+        <translation>mi</translation>
     </message>
     <message>
-        <source>Import from QZ Folder...</source>
-        <translation>QZ klasöründen içe aktar…</translation>
+        <source>km</source>
+        <translation>km</translation>
     </message>
     <message>
-        <source>Please choose a file</source>
-        <translation>Bir dosya seçin</translation>
-    </message>
-    <message>
-        <source>FIT files (*.fit *.FIT)</source>
-        <translation>FIT dosyaları (*.fit *.FIT)</translation>
-    </message>
-    <message>
-        <source>All files (*)</source>
-        <translation>Tüm dosyalar (*)</translation>
+        <source>kcal</source>
+        <translation>kcal</translation>
     </message>
     <message>
         <source>Upload to Strava</source>
@@ -2782,32 +2961,20 @@ This may take a few moments on first startup.</source>
         <translation>Kapat</translation>
     </message>
     <message>
-        <source>Filter by date</source>
-        <translation>Tarihe göre filtrele</translation>
+        <source>Calendar</source>
+        <translation>Takvim</translation>
     </message>
     <message>
-        <source>Import workouts</source>
-        <translation>Antrenmanları içe aktar</translation>
+        <source>No workouts yet</source>
+        <translation>Henüz antrenman yok</translation>
     </message>
     <message>
-        <source>Open on Peloton</source>
-        <translation>Peloton&apos;da aç</translation>
+        <source>No workouts on this day</source>
+        <translation>Bu gün antrenman yok</translation>
     </message>
     <message>
-        <source>Load training program</source>
-        <translation>Antrenman programını yükle</translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>km</source>
-        <translation>km</translation>
-    </message>
-    <message>
-        <source>kcal</source>
-        <translation>kcal</translation>
+        <source>Finished workouts appear here: open one to see its charts.</source>
+        <translation>Tamamlanan antrenmanlar burada görünür: grafiklerini görmek için birini açın.</translation>
     </message>
     <message>
         <source>Previous month</source>
@@ -2816,6 +2983,46 @@ This may take a few moments on first startup.</source>
     <message>
         <source>Next month</source>
         <translation>Sonraki ay</translation>
+    </message>
+    <message>
+        <source>Import FIT File...</source>
+        <translation>FIT dosyasını içe aktar…</translation>
+    </message>
+    <message>
+        <source>Import from QZ Folder...</source>
+        <translation>QZ klasöründen içe aktar…</translation>
+    </message>
+    <message>
+        <source>Please choose a file</source>
+        <translation>Bir dosya seçin</translation>
+    </message>
+    <message>
+        <source>FIT files (*.fit *.FIT)</source>
+        <translation>FIT dosyaları (*.fit *.FIT)</translation>
+    </message>
+    <message>
+        <source>All files (*)</source>
+        <translation>Tüm dosyalar (*)</translation>
+    </message>
+    <message>
+        <source>Importing workouts...</source>
+        <translation>Antrenmanlar içe aktarılıyor…</translation>
+    </message>
+    <message>
+        <source>Filter by date</source>
+        <translation>Tarihe göre filtrele</translation>
+    </message>
+    <message>
+        <source>Import workouts</source>
+        <translation>Antrenmanları içe aktar</translation>
+    </message>
+    <message>
+        <source>Load training program</source>
+        <translation>Antrenman programını yükle</translation>
+    </message>
+    <message>
+        <source>Open on Peloton</source>
+        <translation>Peloton&apos;da aç</translation>
     </message>
     <message>
         <source>has a workout</source>
@@ -2906,9 +3113,24 @@ This may take a few moments on first startup.</source>
         <source>Reset Example</source>
         <translation>Örneğe sıfırla</translation>
     </message>
+    <message>
+        <source>Remove</source>
+        <translation>Kaldır</translation>
+    </message>
+</context>
+<context>
+    <name>fitplusbike</name>
+    <message>
+        <source>The bike keeps stopping the workout: turn the bike off and on again</source>
+        <translation>Bisiklet antrenmanı sürekli durduruyor: bisikleti kapatıp yeniden açın</translation>
+    </message>
 </context>
 <context>
     <name>gears</name>
+    <message>
+        <source>Wahoo Options</source>
+        <translation>Wahoo seçenekleri</translation>
+    </message>
     <message>
         <source>Without Wheel Diameter Protocol</source>
         <translation>Tekerlek çapı protokolü olmadan</translation>
@@ -2916,10 +3138,6 @@ This may take a few moments on first startup.</source>
     <message>
         <source>Enable this for simplified Wahoo protocol that adds gears directly to grade instead of using wheel diameter changes. Default is false.</source>
         <translation>Vitesleri tekerlek çapını değiştirerek değil, doğrudan eğime ekleyerek uygulayan basitleştirilmiş Wahoo protokolü için açın. Varsayılan: kapalı.</translation>
-    </message>
-    <message>
-        <source>Wahoo Options</source>
-        <translation>Wahoo seçenekleri</translation>
     </message>
     <message>
         <source>Chainring Size</source>
@@ -2984,6 +3202,30 @@ This may take a few moments on first startup.</source>
 </context>
 <context>
     <name>homeform</name>
+    <message>
+        <source>Bluetooth is off</source>
+        <translation>Bluetooth kapalı</translation>
+    </message>
+    <message>
+        <source>Searching for the device...</source>
+        <translation>Cihaz aranıyor…</translation>
+    </message>
+    <message>
+        <source>Connecting to %1...</source>
+        <translation>%1 cihazına bağlanılıyor...</translation>
+    </message>
+    <message>
+        <source>Search stopped, tap the Bluetooth icon</source>
+        <translation>Arama durdu, Bluetooth simgesine dokunun</translation>
+    </message>
+    <message>
+        <source>Next search in %1 s</source>
+        <translation>Sonraki arama %1 s sonra</translation>
+    </message>
+    <message>
+        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
+        <translation>Android 30 s içinde 5 Bluetooth aramasına izin verir, sonraki arama %1 s sonra başlar</translation>
+    </message>
     <message>
         <source>Speed (%1/h)</source>
         <translation>Hız (%1/h)</translation>
@@ -3174,8 +3416,58 @@ This may take a few moments on first startup.</source>
         <translation>Tırmanış</translation>
     </message>
     <message>
+        <source>Watts</source>
+        <translation>Güç</translation>
+    </message>
+    <message>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>m</source>
+        <comment>unit: meters</comment>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>Kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>ft</source>
+        <translation>ft</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <comment>unit: inches</comment>
+        <translation>in</translation>
+    </message>
+    <message>
+        <source>Oz</source>
+        <translation>oz</translation>
+    </message>
+    <message>
+        <source>AVG Watts</source>
+        <translation>Ort. güç</translation>
+    </message>
+    <message>
         <source>Power Avg</source>
         <translation>Güç ortalaması</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Kapalı</translation>
+    </message>
+    <message>
+        <source>HRV (ms)</source>
+        <translation>HRV (ms)</translation>
     </message>
     <message>
         <source>PID Heart</source>
@@ -3202,6 +3494,26 @@ This may take a few moments on first startup.</source>
         <translation>Adım sayısı</translation>
     </message>
     <message>
+        <source>Odometer (m)</source>
+        <translation>Toplam mesafe (m)</translation>
+    </message>
+    <message>
+        <source>Pace (m/500m)</source>
+        <translation>Tempo (dk/500 m)</translation>
+    </message>
+    <message>
+        <source>Avg Pace (m/500m)</source>
+        <translation>Ort. tempo (dk/500 m)</translation>
+    </message>
+    <message>
+        <source>T.Pace(m/500m)</source>
+        <translation>Hedef tempo (dk/500 m)</translation>
+    </message>
+    <message>
+        <source>%1 found</source>
+        <translation>Bulundu: %1</translation>
+    </message>
+    <message>
         <source>Stop</source>
         <translation>Durdur</translation>
     </message>
@@ -3212,6 +3524,26 @@ This may take a few moments on first startup.</source>
     <message>
         <source>Pause</source>
         <translation>Duraklat</translation>
+    </message>
+    <message>
+        <source>offset </source>
+        <translation>ofset </translation>
+    </message>
+    <message>
+        <source> /min</source>
+        <translation> /dk</translation>
+    </message>
+    <message>
+        <source> sec.</source>
+        <translation> sn</translation>
+    </message>
+    <message>
+        <source>Incl: </source>
+        <translation>Eğim: </translation>
+    </message>
+    <message>
+        <source>%1%2W</source>
+        <translation>%1%2W</translation>
     </message>
     <message>
         <source>Rec.</source>
@@ -3258,6 +3590,26 @@ This may take a few moments on first startup.</source>
     <message>
         <source>N/A</source>
         <translation>Yok</translation>
+    </message>
+    <message>
+        <source>3s avg</source>
+        <translation>Ort. 3 s</translation>
+    </message>
+    <message>
+        <source>5s avg</source>
+        <translation>Ort. 5 s</translation>
+    </message>
+    <message>
+        <source>Gain: </source>
+        <translation>Çarpan: </translation>
+    </message>
+    <message>
+        <source>MIN: </source>
+        <translation>Min.: </translation>
+    </message>
+    <message>
+        <source>W </source>
+        <translation>W </translation>
     </message>
     <message>
         <source>, speed </source>
@@ -3445,28 +3797,12 @@ This may take a few moments on first startup.</source>
         <translation>Erişim belirteci alınamadı, %1 (%2)</translation>
     </message>
     <message>
-        <source>Watts</source>
-        <translation>Güç</translation>
+        <source>License Approved!</source>
+        <translation>Lisans onaylandı!</translation>
     </message>
     <message>
-        <source>AVG Watts</source>
-        <translation>Ort. güç</translation>
-    </message>
-    <message>
-        <source>The workout history database could not be opened.</source>
-        <translation>Antrenman geçmişi veritabanı açılamadı.</translation>
-    </message>
-    <message>
-        <source>Workouts imported: %1.</source>
-        <translation>İçe aktarılan antrenman: %1.</translation>
-    </message>
-    <message>
-        <source>Already in the history: %1.</source>
-        <translation>Geçmişte zaten var: %1.</translation>
-    </message>
-    <message>
-        <source>Without workout data: %1.</source>
-        <translation>Antrenman verisi olmayan: %1.</translation>
+        <source>License not found</source>
+        <translation>Lisans bulunamadı</translation>
     </message>
     <message>
         <source>The workout file could not be opened.</source>
@@ -3481,138 +3817,24 @@ This may take a few moments on first startup.</source>
         <translation>Antrenman dosyası (.fit) bulunamadı.</translation>
     </message>
     <message>
-        <source>License Approved!</source>
-        <translation>Lisans onaylandı!</translation>
+        <source>Workouts imported: %1.</source>
+        <translation>İçe aktarılan antrenman: %1.</translation>
     </message>
     <message>
-        <source>License not found</source>
-        <translation>Lisans bulunamadı</translation>
+        <source>Already in the history: %1.</source>
+        <translation>Geçmişte zaten var: %1.</translation>
     </message>
     <message>
-        <source>km</source>
-        <translation>km</translation>
+        <source>Without workout data: %1.</source>
+        <translation>Antrenman verisi olmayan: %1.</translation>
     </message>
     <message>
-        <source>m</source>
-        <comment>unit: meters</comment>
-        <translation>m</translation>
+        <source>The workout history database could not be opened.</source>
+        <translation>Antrenman geçmişi veritabanı açılamadı.</translation>
     </message>
     <message>
-        <source>Kg</source>
-        <translation>kg</translation>
-    </message>
-    <message>
-        <source>cm</source>
-        <translation>cm</translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>ft</source>
-        <translation>ft</translation>
-    </message>
-    <message>
-        <source>in</source>
-        <comment>unit: inches</comment>
-        <translation>in</translation>
-    </message>
-    <message>
-        <source>Oz</source>
-        <translation>oz</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation>Kapalı</translation>
-    </message>
-    <message>
-        <source>HRV (ms)</source>
-        <translation>HRV (ms)</translation>
-    </message>
-    <message>
-        <source>Searching for the device...</source>
-        <translation>Cihaz aranıyor…</translation>
-    </message>
-    <message>
-        <source>%1 found</source>
-        <translation>Bulundu: %1</translation>
-    </message>
-    <message>
-        <source>Search stopped, tap the Bluetooth icon</source>
-        <translation>Arama durdu, Bluetooth simgesine dokunun</translation>
-    </message>
-    <message>
-        <source>Next search in %1 s</source>
-        <translation>Sonraki arama %1 s sonra</translation>
-    </message>
-    <message>
-        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
-        <translation>Android 30 s içinde 5 Bluetooth aramasına izin verir, sonraki arama %1 s sonra başlar</translation>
-    </message>
-    <message>
-        <source>Odometer (m)</source>
-        <translation>Toplam mesafe (m)</translation>
-    </message>
-    <message>
-        <source>Pace (m/500m)</source>
-        <translation>Tempo (dk/500 m)</translation>
-    </message>
-    <message>
-        <source>Avg Pace (m/500m)</source>
-        <translation>Ort. tempo (dk/500 m)</translation>
-    </message>
-    <message>
-        <source>T.Pace(m/500m)</source>
-        <translation>Hedef tempo (dk/500 m)</translation>
-    </message>
-    <message>
-        <source>offset </source>
-        <translation>ofset </translation>
-    </message>
-    <message>
-        <source> /min</source>
-        <translation> /dk</translation>
-    </message>
-    <message>
-        <source> sec.</source>
-        <translation> sn</translation>
-    </message>
-    <message>
-        <source>Incl: </source>
-        <translation>Eğim: </translation>
-    </message>
-    <message>
-        <source>%1%2W</source>
-        <translation>%1%2W</translation>
-    </message>
-    <message>
-        <source>3s avg</source>
-        <translation>Ort. 3 s</translation>
-    </message>
-    <message>
-        <source>5s avg</source>
-        <translation>Ort. 5 s</translation>
-    </message>
-    <message>
-        <source>Gain: </source>
-        <translation>Çarpan: </translation>
-    </message>
-    <message>
-        <source>MIN: </source>
-        <translation>Min.: </translation>
-    </message>
-    <message>
-        <source>W </source>
-        <translation>W </translation>
-    </message>
-    <message>
-        <source>meters</source>
-        <translation>m</translation>
-    </message>
-    <message>
-        <source>feet</source>
-        <translation>ft</translation>
+        <source>Wi-Fi connection (DirCon) restarted</source>
+        <translation>Wi-Fi bağlantısı (DirCon) yeniden başlatıldı</translation>
     </message>
     <message>
         <source>Great workout!</source>
@@ -3746,12 +3968,28 @@ This may take a few moments on first startup.</source>
         <source>Average Strokes Length: %1</source>
         <translation>Ortalama çekiş uzunluğu: %1</translation>
     </message>
+    <message>
+        <source>meters</source>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>feet</source>
+        <translation>ft</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
     <message>
+        <source>QZ is closing...</source>
+        <translation>QZ kapanıyor...</translation>
+    </message>
+    <message>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>
+    </message>
+    <message>
+        <source>Press back again to exit</source>
+        <translation>Çıkmak için tekrar &quot;Geri&quot; düğmesine basın</translation>
     </message>
     <message>
         <source>Program has been loaded correctly. Press start to begin!</source>
@@ -3792,12 +4030,16 @@ uygulamayı yeniden başlatın.</translation>
         <translation>QZ yakındaki Bluetooth antrenman cihazlarını buldu. Bu seansta kullanmak istediğiniz cihazı seçin.</translation>
     </message>
     <message>
+        <source>Disabled</source>
+        <translation type="vanished">Devre dışı</translation>
+    </message>
+    <message>
         <source>Select a device</source>
         <translation>Bir cihaz seçin</translation>
     </message>
     <message>
         <source>The list refreshes automatically every 10 seconds.</source>
-        <translation>Liste her 10 saniyede bir otomatik olarak yenilenir.</translation>
+        <translation type="vanished">Liste her 10 saniyede bir otomatik olarak yenilenir.</translation>
     </message>
     <message>
         <source>Skip</source>
@@ -3810,6 +4052,14 @@ uygulamayı yeniden başlatın.</translation>
     <message>
         <source>Settings has been loaded correctly. Restart the app!</source>
         <translation>Ayarlar yüklendi. Uygulamayı yeniden başlatın!</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the Files app.</source>
+        <translation>Kaydedildi! Dosyalar uygulamasına bakın.</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the app&apos;s private folder.</source>
+        <translation>Kaydedildi! Uygulamanın özel klasörüne bakın.</translation>
     </message>
     <message>
         <source>Saved! Check your private folder (Android)&lt;br&gt;or Files App (iOS)</source>
@@ -3836,6 +4086,22 @@ uygulamayı yeniden başlatın.</translation>
 Do you want to do it now?</source>
         <translation>Değişikliklerin uygulanması için uygulamanın yeniden başlatılması gerekiyor.
 Şimdi yeniden başlatılsın mı?</translation>
+    </message>
+    <message>
+        <source>QZ has detected the data format of this bike. Enable &quot;Virtufit Etappe 2.0 Bike&quot;?</source>
+        <translation>QZ bu bisikletin veri biçimini algıladı. &quot;Virtufit Etappe 2.0 bisiklet&quot; açılsın mı?</translation>
+    </message>
+    <message>
+        <source>Without it QZ uses the default settings, and the data or the resistance may be off.</source>
+        <translation>Bu ayar olmadan QZ varsayılan ayarları kullanır ve veriler ya da direnç hatalı olabilir.</translation>
+    </message>
+    <message>
+        <source>Restart now?</source>
+        <translation>Şimdi yeniden başlatılsın mı?</translation>
+    </message>
+    <message>
+        <source>This FitShow device also reports bike data. Is it a bike?</source>
+        <translation>Bu FitShow cihazı bisiklet verisi de gönderiyor. Bu bir bisiklet mi?</translation>
     </message>
     <message>
         <source>Strava</source>
@@ -3868,146 +4134,6 @@ Do you want to start it now?</source>
         <translation>
 
 Şimdi başlatılsın mı?</translation>
-    </message>
-    <message>
-        <source>You are already connected to Strava. Do you want to log out?</source>
-        <translation>Strava&apos;ya zaten bağlısınız. Çıkış yapılsın mı?</translation>
-    </message>
-    <message>
-        <source>Peloton</source>
-        <translation>Peloton</translation>
-    </message>
-    <message>
-        <source>You are already connected to Peloton. Do you want to log out?</source>
-        <translation>Peloton&apos;a zaten bağlısınız. Çıkış yapılsın mı?</translation>
-    </message>
-    <message>
-        <source>Intervals.icu</source>
-        <translation>Intervals.icu</translation>
-    </message>
-    <message>
-        <source>You are already connected to Intervals.icu. Do you want to log out?</source>
-        <translation>Intervals.icu&apos;ya zaten bağlısınız. Çıkış yapılsın mı?</translation>
-    </message>
-    <message>
-        <source>You can move the tiles!</source>
-        <translation>Kutucukları taşıyabilirsiniz!</translation>
-    </message>
-    <message>
-        <source>The tiles are locked now</source>
-        <translation>Kutucuklar artık kilitli</translation>
-    </message>
-    <message>
-        <source>Search settings</source>
-        <translation>Ayarlarda ara</translation>
-    </message>
-    <message>
-        <source>Profile: </source>
-        <translation>Profil: </translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Ayarlar</translation>
-    </message>
-    <message>
-        <source>Workouts History</source>
-        <translation>Antrenman geçmişi</translation>
-    </message>
-    <message>
-        <source>Swag Bag</source>
-        <translation>Swag Bag</translation>
-    </message>
-    <message>
-        <source>Charts</source>
-        <translation>Grafikler</translation>
-    </message>
-    <message>
-        <source>Open GPX</source>
-        <translation>GPX aç</translation>
-    </message>
-    <message>
-        <source>Open Train Program</source>
-        <translation>Antrenman programı aç</translation>
-    </message>
-    <message>
-        <source>Workout Editor</source>
-        <translation>Antrenman düzenleyici</translation>
-    </message>
-    <message>
-        <source>Save GPX</source>
-        <translation>GPX kaydet</translation>
-    </message>
-    <message>
-        <source>Save FIT</source>
-        <translation>FIT kaydet</translation>
-    </message>
-    <message>
-        <source>Wizard</source>
-        <translation>Kurulum sihirbazı</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation>Yardım</translation>
-    </message>
-    <message>
-        <source>Community</source>
-        <translation>Topluluk</translation>
-    </message>
-    <message>
-        <source>Credits</source>
-        <translation>Emeği geçenler</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>Çıkış</translation>
-    </message>
-    <message>
-        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
-        <translation>QDomyos-Zwift – Fitness cihazı köprüsü</translation>
-    </message>
-    <message>
-        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
-        <translation>Bu değişiklikleri &quot;%1&quot; profilinde tutmak istiyorsanız profili kaydetmeyi unutmayın.</translation>
-    </message>
-    <message>
-        <source>Press back again to exit</source>
-        <translation>Çıkmak için tekrar &quot;Geri&quot; düğmesine basın</translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translation>Devre dışı</translation>
-    </message>
-    <message>
-        <source>Camera Cutout</source>
-        <translation>Kamera çentiği</translation>
-    </message>
-    <message>
-        <source>In landscape, QZ keeps a margin on the camera side so the camera hole does not cover the content.
-Do you want to use the full screen width instead?
-
-You can change it later in Settings &gt; General UI Options &gt; Keep Content Clear of the Camera Cutout.</source>
-        <translation>Yatay modda QZ, kamera deliği içeriği kapatmasın diye kamera tarafında bir kenar boşluğu bırakır.
-Bunun yerine ekranın tam genişliği kullanılsın mı?
-
-Bunu daha sonra Ayarlar &gt; Genel arayüz seçenekleri &gt; İçeriği kamera çentiğinden uzak tut bölümünden değiştirebilirsiniz.</translation>
-    </message>
-    <message>
-        <source>Workout History</source>
-        <translation>Antrenman geçmişi</translation>
-    </message>
-    <message>
-        <source>Workouts of a previous installation may still be in the QZ folder.
-Do you want to look for them?
-
-In the next window, allow access to the QZ folder.</source>
-        <translation>Önceki bir kurulumdan kalan antrenmanlar QZ klasöründe olabilir.
-Bunlar aransın mı?
-
-Sonraki pencerede QZ klasörüne erişime izin verin.</translation>
-    </message>
-    <message>
-        <source>Restart now?</source>
-        <translation>Şimdi yeniden başlatılsın mı?</translation>
     </message>
     <message>
         <source>Garmin FTP Update</source>
@@ -4088,6 +4214,164 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
         <translation>Hayır</translation>
     </message>
     <message>
+        <source>You are already connected to Strava. Do you want to log out?</source>
+        <translation>Strava&apos;ya zaten bağlısınız. Çıkış yapılsın mı?</translation>
+    </message>
+    <message>
+        <source>Peloton</source>
+        <translation>Peloton</translation>
+    </message>
+    <message>
+        <source>You are already connected to Peloton. Do you want to log out?</source>
+        <translation>Peloton&apos;a zaten bağlısınız. Çıkış yapılsın mı?</translation>
+    </message>
+    <message>
+        <source>Intervals.icu</source>
+        <translation>Intervals.icu</translation>
+    </message>
+    <message>
+        <source>You are already connected to Intervals.icu. Do you want to log out?</source>
+        <translation>Intervals.icu&apos;ya zaten bağlısınız. Çıkış yapılsın mı?</translation>
+    </message>
+    <message>
+        <source>Please choose a file</source>
+        <translation>Bir dosya seçin</translation>
+    </message>
+    <message>
+        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
+        <translation>Bu değişiklikleri &quot;%1&quot; profilinde tutmak istiyorsanız profili kaydetmeyi unutmayın.</translation>
+    </message>
+    <message>
+        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
+No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
+        <translation>Evet: QZ &quot;Fit Plus bisiklet&quot; ayarını açar ve kapanır; cihaza bisiklet olarak bağlanmak için QZ&apos;yi yeniden açın.
+Hayır: QZ cihazı koşu bandı olarak tutar ve bir daha sormaz (bisiklet yine elle ayarlanabilir: &quot;Fitplus bisiklet seçenekleri&quot; bölümündeki &quot;Fit Plus bisiklet&quot;).</translation>
+    </message>
+    <message>
+        <source>Auto Resistance enabled</source>
+        <translation>Otomatik direnç açıldı</translation>
+    </message>
+    <message>
+        <source>Auto Resistance disabled</source>
+        <translation>Otomatik direnç kapatıldı</translation>
+    </message>
+    <message>
+        <source>You can move the tiles!</source>
+        <translation>Kutucukları taşıyabilirsiniz!</translation>
+    </message>
+    <message>
+        <source>The tiles are locked now</source>
+        <translation>Kutucuklar artık kilitli</translation>
+    </message>
+    <message>
+        <source>Search settings</source>
+        <translation>Ayarlarda ara</translation>
+    </message>
+    <message>
+        <source>Profile: </source>
+        <translation>Profil: </translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Ayarlar</translation>
+    </message>
+    <message>
+        <source>Workouts History</source>
+        <translation>Antrenman geçmişi</translation>
+    </message>
+    <message>
+        <source>Swag Bag</source>
+        <translation>Swag Bag</translation>
+    </message>
+    <message>
+        <source>Charts</source>
+        <translation>Grafikler</translation>
+    </message>
+    <message>
+        <source>Open GPX</source>
+        <translation>GPX aç</translation>
+    </message>
+    <message>
+        <source>Open Train Program</source>
+        <translation>Antrenman programı aç</translation>
+    </message>
+    <message>
+        <source>Workout Editor</source>
+        <translation>Antrenman düzenleyici</translation>
+    </message>
+    <message>
+        <source>Save GPX</source>
+        <translation>GPX kaydet</translation>
+    </message>
+    <message>
+        <source>Save FIT</source>
+        <translation>FIT kaydet</translation>
+    </message>
+    <message>
+        <source>Wizard</source>
+        <translation>Kurulum sihirbazı</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>Yardım</translation>
+    </message>
+    <message>
+        <source>Community</source>
+        <translation>Topluluk</translation>
+    </message>
+    <message>
+        <source>Credits</source>
+        <translation>Emeği geçenler</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Çıkış</translation>
+    </message>
+    <message>
+        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
+        <translation>QDomyos-Zwift – Fitness cihazı köprüsü</translation>
+    </message>
+    <message>
+        <source>Workout</source>
+        <translation>Antrenman</translation>
+    </message>
+    <message>
+        <source>App</source>
+        <translation>Uygulama</translation>
+    </message>
+    <message>
+        <source>Services</source>
+        <translation>Servisler</translation>
+    </message>
+    <message>
+        <source>Camera Cutout</source>
+        <translation>Kamera çentiği</translation>
+    </message>
+    <message>
+        <source>In landscape, QZ keeps a margin on the camera side so the camera hole does not cover the content.
+Do you want to use the full screen width instead?
+
+You can change it later in Settings &gt; General UI Options &gt; Keep Content Clear of the Camera Cutout.</source>
+        <translation>Yatay modda QZ, kamera deliği içeriği kapatmasın diye kamera tarafında bir kenar boşluğu bırakır.
+Bunun yerine ekranın tam genişliği kullanılsın mı?
+
+Bunu daha sonra Ayarlar &gt; Genel arayüz seçenekleri &gt; İçeriği kamera çentiğinden uzak tut bölümünden değiştirebilirsiniz.</translation>
+    </message>
+    <message>
+        <source>Workout History</source>
+        <translation>Antrenman geçmişi</translation>
+    </message>
+    <message>
+        <source>Workouts of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Önceki bir kurulumdan kalan antrenmanlar QZ klasöründe olabilir.
+Bunlar aransın mı?
+
+Sonraki pencerede QZ klasörüne erişime izin verin.</translation>
+    </message>
+    <message>
         <source>Connection lost in the background</source>
         <translation>Arka planda bağlantı koptu</translation>
     </message>
@@ -4114,18 +4398,6 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
     <message>
         <source>Don&apos;t ask again</source>
         <translation>Bir daha sorma</translation>
-    </message>
-    <message>
-        <source>Auto Resistance enabled</source>
-        <translation>Otomatik direnç açıldı</translation>
-    </message>
-    <message>
-        <source>Auto Resistance disabled</source>
-        <translation>Otomatik direnç kapatıldı</translation>
-    </message>
-    <message>
-        <source>Please choose a file</source>
-        <translation>Bir dosya seçin</translation>
     </message>
 </context>
 <context>
@@ -4198,20 +4470,52 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
         <translation>Profil adı</translation>
     </message>
     <message>
-        <source>Profiles</source>
-        <translation>Profiller</translation>
-    </message>
-    <message>
         <source>Save</source>
         <translation>Kaydet</translation>
+    </message>
+    <message>
+        <source>Profiles</source>
+        <translation>Profiller</translation>
     </message>
     <message>
         <source>Other folders</source>
         <translation>Diğer klasörler</translation>
     </message>
+    <message>
+        <source>New profile</source>
+        <translation>Yeni profil</translation>
+    </message>
+    <message>
+        <source>Saved profiles</source>
+        <translation>Kayıtlı profiller</translation>
+    </message>
+    <message>
+        <source>Tap a profile to select it, then Load. Long press to delete it.</source>
+        <translation>Seçmek için bir profile dokunun, ardından Yükle&apos;ye basın. Silmek için uzun basın.</translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation>Yükle</translation>
+    </message>
+    <message>
+        <source>Active</source>
+        <translation>Etkin</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Sil</translation>
+    </message>
 </context>
 <context>
     <name>settings</name>
+    <message>
+        <source>Hidden on its page right now: change it here</source>
+        <translation>Şu anda kendi sayfasında gizli: buradan değiştirin</translation>
+    </message>
+    <message>
+        <source>Turn on “%1” to change this setting</source>
+        <translation>Bu ayarı değiştirmek için &quot;%1&quot; seçeneğini açın</translation>
+    </message>
     <message>
         <source>General</source>
         <translation>Genel</translation>
@@ -4405,10 +4709,6 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
         <translation>Uygulama dili:</translation>
     </message>
     <message>
-        <source>Choose Auto to follow your device language, or pick a specific language for QZ. Restart required.</source>
-        <translation>Cihazınızın dilini kullanmak için &quot;Otomatik (sistem)&quot; seçeneğini seçin veya QZ için belirli bir dil seçin. Yeniden başlatma gerekir.</translation>
-    </message>
-    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Cihazınızın dilini kullanmak için &quot;Otomatik (sistem)&quot; seçeneğini seçin veya QZ için belirli bir dil seçin.</translation>
     </message>
@@ -4417,12 +4717,28 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
         <translation>Ağırlık</translation>
     </message>
     <message>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <source>kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
         <source>Enter your weight in kilograms so QZ can more accurately calculate calories burned. NOTE: If you choose to use miles as the unit for distance traveled, you will be asked to enter your weight in pounds (lbs) unless you enable &apos;Use kg for weight&apos;.</source>
         <translation>QZ&apos;nin yakılan kaloriyi daha doğru hesaplayabilmesi için ağırlığınızı kilogram cinsinden girin. NOT: Mesafe birimi olarak mili seçerseniz, &quot;Ağırlık için kg kullan&quot; açık değilse ağırlığınızı pound (lbs) cinsinden girmeniz istenir.</translation>
     </message>
     <message>
         <source>Player Height</source>
         <translation>Boy</translation>
+    </message>
+    <message>
+        <source>ft/in</source>
+        <translation>ft/in</translation>
+    </message>
+    <message>
+        <source>cm</source>
+        <translation>cm</translation>
     </message>
     <message>
         <source>Invalid format! Use feet&apos;inches (e.g., 6&apos;2&quot;)</source>
@@ -4443,6 +4759,14 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
     <message>
         <source>Gender:</source>
         <translation>Cinsiyet:</translation>
+    </message>
+    <message>
+        <source>Male</source>
+        <translation>Erkek</translation>
+    </message>
+    <message>
+        <source>Female</source>
+        <translation>Kadın</translation>
     </message>
     <message>
         <source>Select your gender so that calories burned can be more accurately calculated.</source>
@@ -4559,6 +4883,10 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
     <message>
         <source>Heart Belt Name:</source>
         <translation>Nabız sensörü adı:</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Devre dışı</translation>
     </message>
     <message>
         <source>Apple Watch users: leave it disabled! Just open the app on your watch</source>
@@ -4689,6 +5017,10 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
 0.012 = MTB</translation>
     </message>
     <message>
+        <source>Bike Weight (%1)</source>
+        <translation>Bisiklet ağırlığı (%1)</translation>
+    </message>
+    <message>
         <source>Enables QZ to include the weight of your bike when calculating speed. For example, if you are competing against yourself on VZfit, adding bike weight will &apos;level the playing field&apos; against your virtual self. If you have set QZ to calculate distance in miles, enter the bike weight in pounds (lbs) unless you enable &apos;Use kg for weight&apos;. Default unit is kilograms (kgs).</source>
         <translation>QZ&apos;nin hızı hesaplarken bisikletinizin ağırlığını da hesaba katmasını sağlar. Örneğin VZfit&apos;te kendinizle yarışıyorsanız bisiklet ağırlığını eklemek, sanal rakibinizle &quot;eşit şartlar&quot; sağlar. QZ&apos;de mesafe mil cinsinden hesaplanıyorsa, &quot;Ağırlık için kg kullan&quot; açık değilse bisiklet ağırlığını pound (lbs) cinsinden girin. Varsayılan birim kilogramdır (kg).</translation>
     </message>
@@ -4707,6 +5039,154 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
     <message>
         <source>Enable this setting ONLY when using Zwift in ERG (workout) Mode. QZ will communicate the target resistance (or automatically adjust your resistance if your bike has this capability) to match the target watts based on your cadence (RPM). In ERG Mode, the changes in road slope will not affect target resistance, as is the case in Simulation Mode. Default is off.</source>
         <translation>Bu ayarı YALNIZCA Zwift&apos;i ERG (antrenman) modunda kullanırken açın. QZ, kadansınıza (RPM) göre hedef güce ulaşmanız için hedef direnci iletir (bisikletiniz destekliyorsa direnci otomatik olarak ayarlar). ERG modunda yol eğimindeki değişiklikler, simülasyon modunun aksine hedef direnci etkilemez. Varsayılan: kapalı.</translation>
+    </message>
+    <message>
+        <source>OpenBikeControl</source>
+        <translation>OpenBikeControl</translation>
+    </message>
+    <message>
+        <source>Enable OpenBikeControl</source>
+        <translation>OpenBikeControl&apos;u etkinleştir</translation>
+    </message>
+    <message>
+        <source>OpenBikeControl enabled: Wahoo direct connect disabled.</source>
+        <translation>OpenBikeControl açık: Wahoo doğrudan bağlantısı kapalı.</translation>
+    </message>
+    <message>
+        <source>Enable TCP server on port 21587 to send control commands using the OpenBikeControl link protocol</source>
+        <translation>OpenBikeControl link protokolüyle kontrol komutları göndermek için 21587 numaralı bağlantı noktasında TCP sunucusunu etkinleştirin</translation>
+    </message>
+    <message>
+        <source>Override Local Gear Changes</source>
+        <translation>Yerel vites değişimini devre dışı bırak</translation>
+    </message>
+    <message>
+        <source>When enabled, gear shift commands go only to OpenBikeControl clients. When disabled, they go to both OpenBikeControl clients and the local gear system</source>
+        <translation>Açıkken vites komutları yalnızca OpenBikeControl istemcilerine gider. Kapalıyken hem OpenBikeControl istemcilerine hem de QZ&apos;nin kendi vites sistemine gider</translation>
+    </message>
+    <message>
+        <source>Left Controller Buttons</source>
+        <translation>Sol kumanda düğmeleri</translation>
+    </message>
+    <message>
+        <source>Left Up:</source>
+        <translation>Sol yukarı:</translation>
+    </message>
+    <message>
+        <source>Gear Up</source>
+        <translation>Vites yükselt</translation>
+    </message>
+    <message>
+        <source>Gear Down</source>
+        <translation>Vites düşür</translation>
+    </message>
+    <message>
+        <source>Steer Left</source>
+        <translation>Sola dön</translation>
+    </message>
+    <message>
+        <source>Steer Right</source>
+        <translation>Sağa dön</translation>
+    </message>
+    <message>
+        <source>U-Turn</source>
+        <translation>U dönüşü</translation>
+    </message>
+    <message>
+        <source>Camera Angle</source>
+        <translation>Kamera açısı</translation>
+    </message>
+    <message>
+        <source>Emote</source>
+        <translation>İfade</translation>
+    </message>
+    <message>
+        <source>Tuck</source>
+        <translation>Aero pozisyon</translation>
+    </message>
+    <message>
+        <source>Nav Up</source>
+        <translation>Yukarı git</translation>
+    </message>
+    <message>
+        <source>Nav Down</source>
+        <translation>Aşağı git</translation>
+    </message>
+    <message>
+        <source>Nav Left</source>
+        <translation>Sola git</translation>
+    </message>
+    <message>
+        <source>Nav Right</source>
+        <translation>Sağa git</translation>
+    </message>
+    <message>
+        <source>Select/Confirm</source>
+        <translation>Seç/Onayla</translation>
+    </message>
+    <message>
+        <source>Back/Cancel</source>
+        <translation>Geri/İptal</translation>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation>Menü</translation>
+    </message>
+    <message>
+        <source>Home</source>
+        <translation>Ana ekran</translation>
+    </message>
+    <message>
+        <source>Left Down:</source>
+        <translation>Sol aşağı:</translation>
+    </message>
+    <message>
+        <source>Left Left:</source>
+        <translation>Sol sola:</translation>
+    </message>
+    <message>
+        <source>Left Right:</source>
+        <translation>Sol sağa:</translation>
+    </message>
+    <message>
+        <source>Left Shoulder:</source>
+        <translation>Sol omuz düğmesi:</translation>
+    </message>
+    <message>
+        <source>Left Power:</source>
+        <translation>Sol Power Up düğmesi:</translation>
+    </message>
+    <message>
+        <source>Right Controller Buttons</source>
+        <translation>Sağ kumanda düğmeleri</translation>
+    </message>
+    <message>
+        <source>Right Y:</source>
+        <translation>Sağ Y:</translation>
+    </message>
+    <message>
+        <source>Right A:</source>
+        <translation>Sağ A:</translation>
+    </message>
+    <message>
+        <source>Right B:</source>
+        <translation>Sağ B:</translation>
+    </message>
+    <message>
+        <source>Right Z:</source>
+        <translation>Sağ Z:</translation>
+    </message>
+    <message>
+        <source>Right Shoulder:</source>
+        <translation>Sağ omuz düğmesi:</translation>
+    </message>
+    <message>
+        <source>Right Power:</source>
+        <translation>Sağ Power Up düğmesi:</translation>
+    </message>
+    <message>
+        <source>Note: Left and Right paddles are fixed to Steer Left/Right and cannot be configured</source>
+        <translation>Not: Sol ve sağ pedal kolları her zaman &quot;Sola dön&quot; / &quot;Sağa dön&quot; olarak çalışır ve değiştirilemez</translation>
     </message>
     <message>
         <source>Zwift Resistance Offset:</source>
@@ -4785,6 +5265,10 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
         <translation>Özel vites tablosu</translation>
     </message>
     <message>
+        <source>Custom Inclination to Resistance Table</source>
+        <translation>Özel eğim – direnç tablosu</translation>
+    </message>
+    <message>
         <source>Gears Offset:</source>
         <translation>Vites ofseti:</translation>
     </message>
@@ -4807,6 +5291,18 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
     <message>
         <source>Profile:</source>
         <translation>Profil:</translation>
+    </message>
+    <message>
+        <source>Cruise</source>
+        <translation>Seyir</translation>
+    </message>
+    <message>
+        <source>Climb</source>
+        <translation>Tırmanış</translation>
+    </message>
+    <message>
+        <source>Sprint</source>
+        <translation>Sprint</translation>
     </message>
     <message>
         <source>Cruise Profile Settings</source>
@@ -4959,6 +5455,10 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
     <message>
         <source>Use 0.5 resistance lvls</source>
         <translation>Direnç adımı 0.5</translation>
+    </message>
+    <message>
+        <source>Physical resistance knob controls QZ gears</source>
+        <translation>Cihazdaki direnç düğmesi QZ viteslerini değiştirir</translation>
     </message>
     <message>
         <source>Hammer Racer Bike Options</source>
@@ -5122,6 +5622,14 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
         <translation>Kettler USB bisiklet seçenekleri</translation>
     </message>
     <message>
+        <source>Baudrate:</source>
+        <translation>Baud hızı:</translation>
+    </message>
+    <message>
+        <source>Freebeat Bike Options</source>
+        <translation>Freebeat bisiklet seçenekleri</translation>
+    </message>
+    <message>
         <source>M3i Bike Options</source>
         <translation>M3i bisiklet seçenekleri</translation>
     </message>
@@ -5234,28 +5742,28 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
         <translation>Genel arayüz seçenekleri</translation>
     </message>
     <message>
-        <source>Use System Text Size</source>
-        <translation>Sistem yazı boyutunu kullan</translation>
-    </message>
-    <message>
-        <source>The text of the app follows the text size of the phone or tablet settings, up to 150%. Turn off to choose the size below, for example for a screen you read from a distance during a workout. Default is on.</source>
-        <translation>Uygulamanın yazıları, telefon veya tablet ayarlarındaki yazı boyutunu izler (en fazla 150%). Aşağıdan boyut seçmek için kapatın; örneğin antrenman sırasında uzaktan okuduğunuz bir ekran için. Varsayılan: açık.</translation>
-    </message>
-    <message>
-        <source>Text size:</source>
-        <translation>Yazı boyutu:</translation>
-    </message>
-    <message>
-        <source>Size of the text of the app (settings, menus, dialogs), in percent, from 80 to 170. The default is 100. The tiles keep their own size setting.</source>
-        <translation>Uygulama yazılarının (ayarlar, menüler, iletişim kutuları) yüzde olarak boyutu, 80 ile 170 arası. Varsayılan: 100. Kutucukların kendi boyut ayarı vardır.</translation>
-    </message>
-    <message>
         <source>Top Bar Enabled</source>
         <translation>Üst çubuğu göster</translation>
     </message>
     <message>
+        <source>Keep Content Clear of the Camera Cutout</source>
+        <translation>İçeriği kamera çentiğinden uzak tut</translation>
+    </message>
+    <message>
+        <source>In landscape, keeps a margin on the camera side so the camera hole does not cover the content. Turn off to let the content extend under the camera cutout. Default is on.</source>
+        <translation>Yatay modda kamera tarafında bir kenar boşluğu bırakır, böylece kamera deliği içeriği kapatmaz. İçeriğin kamera çentiğinin altına uzanması için kapatın. Varsayılan: açık.</translation>
+    </message>
+    <message>
         <source>Floating Window Type:</source>
         <translation>Kayan pencere türü:</translation>
+    </message>
+    <message>
+        <source>Classic</source>
+        <translation>Klasik</translation>
+    </message>
+    <message>
+        <source>Horizontal</source>
+        <translation>Yatay</translation>
     </message>
     <message>
         <source>Choose the floating window layout type. Classic uses the standard floating.htm file, while Horizontal uses the hfloating.htm file for horizontal layout.</source>
@@ -5304,6 +5812,18 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
     <message>
         <source>Chart Display Mode:</source>
         <translation>Grafik görüntüleme modu:</translation>
+    </message>
+    <message>
+        <source>Both Charts</source>
+        <translation>İki grafik de</translation>
+    </message>
+    <message>
+        <source>Heart Rate Only</source>
+        <translation>Yalnızca nabız</translation>
+    </message>
+    <message>
+        <source>Power Only</source>
+        <translation>Yalnızca güç</translation>
     </message>
     <message>
         <source>Choose which charts to display in the footer: both heart rate and power charts, only heart rate chart, or only power chart.</source>
@@ -5366,6 +5886,18 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
         <translation>Zorluk:</translation>
     </message>
     <message>
+        <source>lower</source>
+        <translation>alt sınır</translation>
+    </message>
+    <message>
+        <source>upper</source>
+        <translation>üst sınır</translation>
+    </message>
+    <message>
+        <source>average</source>
+        <translation>ortalama</translation>
+    </message>
+    <message>
         <source>Typically, Peloton coaches call out a range for target incline, resistance and/or speed. Use this setting to choose the difficulty of the target QZ communicates. Difficulty level can be set to lower, upper or average. Click OK.</source>
         <translation>Peloton eğitmenleri genellikle hedef eğim, direnç ve/veya hız için bir aralık söyler. QZ&apos;nin ileteceği hedefin zorluğunu bu ayarla seçin. Zorluk &quot;alt sınır&quot;, &quot;üst sınır&quot; veya &quot;ortalama&quot; olarak ayarlanabilir. &quot;Tamam&quot; düğmesine basın.</translation>
     </message>
@@ -5388,6 +5920,14 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
     <message>
         <source>Walking Min Speed:</source>
         <translation>Min. yürüyüş hızı:</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
     </message>
     <message>
         <source>Minimum speed for Peloton walking sessions. Set to 0 to disable. Applied to all speed targets in walking workouts.</source>
@@ -5476,6 +6016,14 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
     <message>
         <source>Date on Strava:</source>
         <translation>Strava&apos;da tarih:</translation>
+    </message>
+    <message>
+        <source>Before Title</source>
+        <translation>Başlıktan önce</translation>
+    </message>
+    <message>
+        <source>After Title</source>
+        <translation>Başlıktan sonra</translation>
     </message>
     <message>
         <source>Allows you to choose whether you would like the Peloton class air date to display before or after the class title on Strava.</source>
@@ -5642,6 +6190,14 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
         <translation>Antrenmandan sonra FIT dosyaları Garmin Connect&apos;e otomatik olarak yüklenir.</translation>
     </message>
     <message>
+        <source>Ask RPE / Feeling after workout</source>
+        <translation>Antrenmandan sonra RPE ve his durumunu sor</translation>
+    </message>
+    <message>
+        <source>Show a popup after Stop to rate perceived exertion (RPE) and how you felt; the values are saved into the FIT file and shown in Garmin Connect.</source>
+        <translation>Durdurduktan sonra algılanan zorluğu (RPE) ve nasıl hissettiğinizi değerlendirmek için bir pencere gösterir; değerler FIT dosyasına kaydedilir ve Garmin Connect&apos;te görünür.</translation>
+    </message>
+    <message>
         <source>Fetch Garmin Workouts on Startup</source>
         <translation>Açılışta Garmin antrenmanlarını getir</translation>
     </message>
@@ -5652,6 +6208,22 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
     <message>
         <source>Garmin Email:</source>
         <translation>Garmin e-postası:</translation>
+    </message>
+    <message>
+        <source>Garmin Password:</source>
+        <translation>Garmin şifresi:</translation>
+    </message>
+    <message>
+        <source>Garmin Server:</source>
+        <translation>Garmin sunucusu:</translation>
+    </message>
+    <message>
+        <source>Global (garmin.com)</source>
+        <translation>Küresel (garmin.com)</translation>
+    </message>
+    <message>
+        <source>China (garmin.cn)</source>
+        <translation>Çin (garmin.cn)</translation>
     </message>
     <message>
         <source>Test Garmin Login</source>
@@ -5728,6 +6300,14 @@ Kodu aşağıya girin:</translation>
         <translation>Panoya kopyalanan ZWO/XML antrenmanları algılanır. Varsayılan: kapalı.</translation>
     </message>
     <message>
+        <source>Sound on Segment Change</source>
+        <translation>Bölüm değişiminde ses</translation>
+    </message>
+    <message>
+        <source>Play a short sound when a training program starts a new row. Default: disabled.</source>
+        <translation>Antrenman programı yeni bir satıra geçtiğinde kısa bir ses çalınır. Varsayılan: kapalı.</translation>
+    </message>
+    <message>
         <source>Auto Lap on Segment</source>
         <translation>Her segmentte otomatik tur</translation>
     </message>
@@ -5766,6 +6346,22 @@ Kodu aşağıya girin:</translation>
     <message>
         <source>Enabling this the PID is trying to motivate yourself to always increase a little the effort trying anyway to keep you in the zone. Default: Enabled.</source>
         <translation>Açıkken QZ, sizi bölgede tutmaya çalışırken eforu hep biraz artırmanız için sizi motive eder. Varsayılan: açık.</translation>
+    </message>
+    <message>
+        <source>PID Recovery Zone Lower Limit (%):</source>
+        <translation>Agresif mod: toparlanma bölgesi alt sınırı (%):</translation>
+    </message>
+    <message>
+        <source>Lower HR boundary (% of max HR) that defines the bottom of Zone 1 for &apos;Pushy&apos; mode. Below this percentage the treadmill is at the bottom of the recovery area. Default: 60.</source>
+        <translation>&quot;Agresif&quot; modda 1. bölgenin alt ucunu belirleyen alt nabız sınırı (maksimum nabzın yüzdesi). Bu yüzdenin altında koşu bandı toparlanma alanının en altındadır. Varsayılan: 60.</translation>
+    </message>
+    <message>
+        <source>PID Pushy Zone Limit:</source>
+        <translation>Agresif mod sınırı:</translation>
+    </message>
+    <message>
+        <source>Fraction of zone above the target zone where &apos;Pushy&apos; mode stops pushing. 0.8 means the PID stops pushing at zone+0.8. Default: 0.8.</source>
+        <translation>Hedef bölgenin üstünde, &quot;Agresif&quot; modun zorlamayı bıraktığı bölge payı. 0.8, PID&apos;nin bölge+0.8 seviyesinde zorlamayı bıraktığı anlamına gelir. Varsayılan: 0.8.</translation>
     </message>
     <message>
         <source>PID Ignore Inclination</source>
@@ -5816,8 +6412,40 @@ Kodu aşağıya girin:</translation>
         <translation>Yukarıdaki &quot;1 mil temposu&quot; ayarına bakın; tek fark 1 mil yerine maraton mesafesi olmasıdır.</translation>
     </message>
     <message>
+        <source>Warmup Speed (pace):</source>
+        <translation>Isınma hızı (tempo):</translation>
+    </message>
+    <message>
+        <source>Cooldown Speed (pace):</source>
+        <translation>Soğuma hızı (tempo):</translation>
+    </message>
+    <message>
+        <source>Rest Speed (pace):</source>
+        <translation>Dinlenme hızı (tempo):</translation>
+    </message>
+    <message>
         <source>Default Pace:</source>
         <translation>Varsayılan tempo:</translation>
+    </message>
+    <message>
+        <source>1 mile</source>
+        <translation>1 mil</translation>
+    </message>
+    <message>
+        <source>Half Marathon</source>
+        <translation>Yarı maraton</translation>
+    </message>
+    <message>
+        <source>Marathon</source>
+        <translation>Maraton</translation>
+    </message>
+    <message>
+        <source>5 km</source>
+        <translation>5 km</translation>
+    </message>
+    <message>
+        <source>10 km</source>
+        <translation>10 km</translation>
     </message>
     <message>
         <source>Select the default Pace to be used when the ZWO file does not indicate a precise pace.</source>
@@ -5890,6 +6518,14 @@ Kodu aşağıya girin:</translation>
     <message>
         <source>Turn this on to have QZ control the speed of your treadmill during, for example, Peloton classes based on the coach’s speed callouts. Your speed will be in the low, upper or average range based on your Peloton Options &gt; Difficulty setting. Default is off.</source>
         <translation>QZ&apos;nin, örneğin Peloton derslerinde, eğitmenin hız komutlarına göre koşu bandınızın hızını kontrol etmesi için bunu açın. Hızınız, &quot;Peloton seçenekleri &gt; Zorluk&quot; ayarına bağlı olarak aralığın alt, üst veya orta kısmında olur. Varsayılan: kapalı.</translation>
+    </message>
+    <message>
+        <source>Force Running Activity</source>
+        <translation>Her zaman koşu olarak kaydet</translation>
+    </message>
+    <message>
+        <source>Turn this on to write treadmill FIT files as running activities even when the average speed is below 6.5 km/h. This can help Garmin calculate Training Effect for high-incline treadmill workouts. Default is off.</source>
+        <translation>Ortalama hız 6.5 km/h altında olsa bile koşu bandı FIT dosyalarını koşu aktivitesi olarak kaydetmek için açın. Bu, yüksek eğimli koşu bandı antrenmanlarında Garmin&apos;in Training Effect hesaplamasına yardımcı olabilir. Varsayılan: kapalı.</translation>
     </message>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
@@ -6015,6 +6651,26 @@ Kodu aşağıya girin:</translation>
     <message>
         <source>Inclination</source>
         <translation>Eğim</translation>
+    </message>
+    <message>
+        <source>Use System Text Size</source>
+        <translation>Sistem yazı boyutunu kullan</translation>
+    </message>
+    <message>
+        <source>The text of the app follows the text size of the phone or tablet settings, up to 150%. Turn off to choose the size below, for example for a screen you read from a distance during a workout. Default is on.</source>
+        <translation>Uygulamanın yazıları, telefon veya tablet ayarlarındaki yazı boyutunu izler (en fazla 150%). Aşağıdan boyut seçmek için kapatın; örneğin antrenman sırasında uzaktan okuduğunuz bir ekran için. Varsayılan: açık.</translation>
+    </message>
+    <message>
+        <source>Text size:</source>
+        <translation>Yazı boyutu:</translation>
+    </message>
+    <message>
+        <source>Size of the text of the app (settings, menus, dialogs), in percent, from 80 to 170. The default is 100. The tiles keep their own size setting.</source>
+        <translation>Uygulama yazılarının (ayarlar, menüler, iletişim kutuları) yüzde olarak boyutu, 80 ile 170 arası. Varsayılan: 100. Kutucukların kendi boyut ayarı vardır.</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>Hız</translation>
     </message>
     <message>
         <source>Echelon Options</source>
@@ -6209,6 +6865,10 @@ Kodu aşağıya girin:</translation>
         <translation>JTX Fitness Sprint koşu bandı</translation>
     </message>
     <message>
+        <source>Flow Fitness Runner DTM2000i</source>
+        <translation>Flow Fitness Runner DTM2000i</translation>
+    </message>
+    <message>
         <source>Reebok FR30 Treadmill</source>
         <translation>Reebok FR30 koşu bandı</translation>
     </message>
@@ -6263,6 +6923,10 @@ Kodu aşağıya girin:</translation>
     <message>
         <source>Allows you to force QZ to connect to your FTMS Rower. If you are in doubt, leave this Disabled and send an email to the QZ support. Default is “Disabled.”</source>
         <translation>QZ&apos;nin FTMS kürek makinenize bağlanmasını zorlamanızı sağlar. Emin değilseniz bunu &quot;Devre dışı&quot; bırakın ve QZ desteğine e-posta gönderin. Varsayılan: &quot;Devre dışı&quot;.</translation>
+    </message>
+    <message>
+        <source>WaterRower USB</source>
+        <translation>WaterRower USB</translation>
     </message>
     <message>
         <source>Proform/Nordictrack Rower Options</source>
@@ -6401,6 +7065,14 @@ Kodu aşağıya girin:</translation>
         <translation>Strava&apos;ya yükleme:</translation>
     </message>
     <message>
+        <source>Always</source>
+        <translation>Her zaman</translation>
+    </message>
+    <message>
+        <source>Request</source>
+        <translation>Sor</translation>
+    </message>
+    <message>
         <source>Suffix activity:</source>
         <translation>Etkinlik soneki:</translation>
     </message>
@@ -6459,6 +7131,18 @@ Kodu aşağıya girin:</translation>
     <message>
         <source>Power Averaging Mode:</source>
         <translation>Güç ortalaması modu:</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Kapalı</translation>
+    </message>
+    <message>
+        <source>3 seconds</source>
+        <translation>3 saniye</translation>
+    </message>
+    <message>
+        <source>5 seconds</source>
+        <translation>5 saniye</translation>
     </message>
     <message>
         <source>If the power output/watts your equipment sends to QZ is quite variable, this setting will result in smoother Power Zone graphs. This is also helpful for use with Power Meter Pedals. Uses harmonic averaging which smooths power spikes better than arithmetic averaging. If any reading is 0, power immediately becomes 0. Default is Off.
@@ -6551,6 +7235,18 @@ IMPORTANT NOTES:
     <message>
         <source>AutoLap on Distance:</source>
         <translation>Mesafeye göre otomatik tur:</translation>
+    </message>
+    <message>
+        <source>You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).</source>
+        <translation>FIT dosyasında mesafeye göre otomatik tur oluşturabilirsiniz. Birim: %1. Varsayılan: 0 (kapalı).</translation>
+    </message>
+    <message>
+        <source>Mi</source>
+        <translation>mil</translation>
+    </message>
+    <message>
+        <source>KM</source>
+        <translation>km</translation>
     </message>
     <message>
         <source>Inclination Delay:</source>
@@ -6671,6 +7367,22 @@ IMPORTANT NOTES:
     <message>
         <source>If you have a Bluetooth treadmill and also a Stryd device connected to QZ and you want to use the speed from the stryd instead of the speed of the treadmill, enable this. Default: disabled.</source>
         <translation>QZ&apos;ye bağlı bir Bluetooth koşu bandınız ve ayrıca bir Stryd cihazınız varsa ve hızı koşu bandı yerine Stryd&apos;den almak istiyorsanız bunu açın. Varsayılan: kapalı.</translation>
+    </message>
+    <message>
+        <source>Runn/Stryd closed-loop treadmill speed correction</source>
+        <translation>Runn/Stryd ile kapalı döngü koşu bandı hız düzeltmesi</translation>
+    </message>
+    <message>
+        <source>Experimental: gradually correct QZ-controlled treadmill speed using Runn/Stryd feedback, when the driver provides independent machine speed measurements. Requires &apos;Use speed from the power sensor&apos;. Disabled by default.</source>
+        <translation>Deneysel: QZ&apos;deki koşu bandı sürücüsü cihazın kendi hız ölçümlerini veriyorsa, QZ&apos;nin kontrol ettiği koşu bandı hızı Runn/Stryd verilerine göre kademeli olarak düzeltilir. &quot;Hızı güç sensöründen al&quot; ayarı gerekir. Varsayılan: kapalı.</translation>
+    </message>
+    <message>
+        <source>Power sensor speed correction threshold (%):</source>
+        <translation>Güç sensörü hız düzeltme eşiği (%):</translation>
+    </message>
+    <message>
+        <source>Maximum allowed difference between power sensor speed and treadmill speed before QZ stops applying the relative correction. Default: 20%.</source>
+        <translation>Güç sensörü hızı ile koşu bandı hızı arasında izin verilen en büyük fark; bu farkın üstünde QZ göreli düzeltmeyi uygulamayı bırakır. Varsayılan: 20%.</translation>
     </message>
     <message>
         <source>Use inclination from the power sensor</source>
@@ -6825,6 +7537,18 @@ Varsayılan: A = -0.96, B = 1.33</translation>
         <translation>Mod:</translation>
     </message>
     <message>
+        <source>Heart</source>
+        <translation>Nabız</translation>
+    </message>
+    <message>
+        <source>Power</source>
+        <translation>Güç</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation>Manuel</translation>
+    </message>
+    <message>
         <source>Min. value (0-100):</source>
         <translation>Min. değer (0-100):</translation>
     </message>
@@ -6911,6 +7635,46 @@ Varsayılan: A = -0.96, B = 1.33</translation>
     <message>
         <source>Use the zwift gears table instead of the QZ classic gears algorithm.  Default is off.</source>
         <translation>QZ&apos;nin klasik vites algoritması yerine Zwift vites tablosu kullanılır. Varsayılan: kapalı.</translation>
+    </message>
+    <message>
+        <source>Gear Controls</source>
+        <translation>Vites düğmeleri</translation>
+    </message>
+    <message>
+        <source>Assign each physical button to Gear Up, Gear Down or Disabled. Applies before the Swap sides option above.</source>
+        <translation>Her fiziksel düğmeye &quot;Vites yükselt&quot;, &quot;Vites düşür&quot; veya &quot;Devre dışı&quot; atayın. Yukarıdaki &quot;Tarafları değiştir&quot; seçeneğinden önce uygulanır.</translation>
+    </message>
+    <message>
+        <source>Left Shifter Up (LS1):</source>
+        <translation>Sol vites kolu yukarı (LS1):</translation>
+    </message>
+    <message>
+        <source>Left Shifter Down (LS2):</source>
+        <translation>Sol vites kolu aşağı (LS2):</translation>
+    </message>
+    <message>
+        <source>Right Shifter Up (RS1):</source>
+        <translation>Sağ vites kolu yukarı (RS1):</translation>
+    </message>
+    <message>
+        <source>Right Shifter Down (RS2):</source>
+        <translation>Sağ vites kolu aşağı (RS2):</translation>
+    </message>
+    <message>
+        <source>Left Paddle (ZL):</source>
+        <translation>Sol pedal kolu (ZL):</translation>
+    </message>
+    <message>
+        <source>Right Paddle (ZR):</source>
+        <translation>Sağ pedal kolu (ZR):</translation>
+    </message>
+    <message>
+        <source>Power Up (LB):</source>
+        <translation>Power Up (LB):</translation>
+    </message>
+    <message>
+        <source>Ride On (RB):</source>
+        <translation>Ride On (RB):</translation>
     </message>
     <message>
         <source>Default: 200ms. Lower it if you want to improve the gear reactivity. Warning: lowering this value will cause more power used on the QZ device</source>
@@ -7039,6 +7803,14 @@ Varsayılan: A = -0.96, B = 1.33</translation>
     <message>
         <source>Enables a virtual Bluetooth bridge to the iFit App. This setting requires that at least one device be Android. For example, this setting does NOT work with QZ on iOS and iFit to iOS, but DOES work with QZ on iOS and iFit to Android. On Android remember to rename your device into I_EL into the android settings and reboot your device.</source>
         <translation>iFit uygulaması için sanal Bluetooth cihazını açar. Bu ayar cihazlardan en az birinin Android olmasını gerektirir. Örneğin iOS&apos;ta QZ ve iOS&apos;ta iFit ile ÇALIŞMAZ, ama iOS&apos;ta QZ ve Android&apos;de iFit ile ÇALIŞIR. Android&apos;de cihazınızın adını Android ayarlarından I_EL olarak değiştirmeyi ve cihazı yeniden başlatmayı unutmayın.</translation>
+    </message>
+    <message>
+        <source>Virtual Tacx</source>
+        <translation>Sanal Tacx</translation>
+    </message>
+    <message>
+        <source>Enables a virtual bluetooth bridge to the Tacx App.</source>
+        <translation>Tacx uygulaması için sanal Bluetooth cihazını etkinleştirir.</translation>
     </message>
     <message>
         <source>Wahoo direct connect</source>
@@ -7241,344 +8013,129 @@ Varsayılan: A = -0.96, B = 1.33</translation>
         <translation>Kayıtlı profillerinize ve ayarlarınıza dokunmadan cihazdaki tüm QZ günlüklerini, QZ .fit dosyalarını ve QZ görüntülerini (QZ bunları her antrenman için kaydeder) siler.</translation>
     </message>
     <message>
-        <source>Hidden on its page right now: change it here</source>
-        <translation>Şu anda kendi sayfasında gizli: buradan değiştirin</translation>
+        <source>Modern interface</source>
+        <translation>Modern arayüz</translation>
     </message>
     <message>
-        <source>Turn on “%1” to change this setting</source>
-        <translation>Bu ayarı değiştirmek için &quot;%1&quot; seçeneğini açın</translation>
+        <source>New look of the main screen, the side menu, the settings and the wizard. Turn it off to get the classic look back.</source>
+        <translation>Ana ekranın, yan menünün, ayarların ve sihirbazın yeni görünümü. Klasik görünüme dönmek için kapatın.</translation>
     </message>
     <message>
-        <source>Male</source>
-        <translation>Erkek</translation>
+        <source>Snap tiles to rows</source>
+        <translation>Kutucukları satırlara hizala</translation>
     </message>
     <message>
-        <source>Female</source>
-        <translation>Kadın</translation>
+        <source>When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.</source>
+        <translation>Ana ekrandaki kutucukların kaydırması durduğunda tam bir satıra veya listenin sonuna oturur, böylece hiçbir kutucuk yarıda kesilmez.</translation>
     </message>
     <message>
-        <source>Disabled</source>
-        <translation>Devre dışı</translation>
+        <source>Theme</source>
+        <translation>Tema</translation>
     </message>
     <message>
-        <source>Bike Weight (%1)</source>
-        <translation>Bisiklet ağırlığı (%1)</translation>
+        <source>Graphite</source>
+        <translation>Grafit</translation>
     </message>
     <message>
-        <source>OpenBikeControl</source>
-        <translation>OpenBikeControl</translation>
+        <source>Midnight blue</source>
+        <translation>Gece mavisi</translation>
     </message>
     <message>
-        <source>Enable OpenBikeControl</source>
-        <translation>OpenBikeControl&apos;u etkinleştir</translation>
+        <source>Accent colour</source>
+        <translation>Vurgu rengi</translation>
     </message>
     <message>
-        <source>OpenBikeControl enabled: Wahoo direct connect disabled.</source>
-        <translation>OpenBikeControl açık: Wahoo doğrudan bağlantısı kapalı.</translation>
+        <source>Text size</source>
+        <translation>Yazı boyutu</translation>
     </message>
     <message>
-        <source>Enable TCP server on port 21587 to send control commands using the OpenBikeControl link protocol</source>
-        <translation>OpenBikeControl link protokolüyle kontrol komutları göndermek için 21587 numaralı bağlantı noktasında TCP sunucusunu etkinleştirin</translation>
+        <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
+        <translation>Modern arayüzün yazı boyutu, yüzde olarak, 80 ile 170 arası. Varsayılan: 100.</translation>
     </message>
     <message>
-        <source>Override Local Gear Changes</source>
-        <translation>Yerel vites değişimini devre dışı bırak</translation>
+        <source>Appearance</source>
+        <translation>Görünüm</translation>
     </message>
     <message>
-        <source>When enabled, gear shift commands go only to OpenBikeControl clients. When disabled, they go to both OpenBikeControl clients and the local gear system</source>
-        <translation>Açıkken vites komutları yalnızca OpenBikeControl istemcilerine gider. Kapalıyken hem OpenBikeControl istemcilerine hem de QZ&apos;nin kendi vites sistemine gider</translation>
+        <source>As on the phone</source>
+        <translation>Telefondaki gibi</translation>
     </message>
     <message>
-        <source>Left Controller Buttons</source>
-        <translation>Sol kumanda düğmeleri</translation>
+        <source>Dark</source>
+        <translation>Koyu</translation>
     </message>
     <message>
-        <source>Left Up:</source>
-        <translation>Sol yukarı:</translation>
+        <source>Light</source>
+        <extracomment>Colour theme: the light one (not &quot;easy&quot; as in the effort scale)</extracomment>
+        <translation>Açık</translation>
     </message>
     <message>
-        <source>Gear Up</source>
-        <translation>Vites yükselt</translation>
+        <source>Black / white</source>
+        <translation>Siyah / beyaz</translation>
     </message>
     <message>
-        <source>Gear Down</source>
-        <translation>Vites düşür</translation>
+        <source>Wallpaper colour</source>
+        <translation>Duvar kâğıdı rengi</translation>
     </message>
     <message>
-        <source>Steer Left</source>
-        <translation>Sola dön</translation>
+        <source>Violet</source>
+        <translation>Mor</translation>
     </message>
     <message>
-        <source>Steer Right</source>
-        <translation>Sağa dön</translation>
+        <source>Blue</source>
+        <translation>Mavi</translation>
     </message>
     <message>
-        <source>U-Turn</source>
-        <translation>U dönüşü</translation>
+        <source>Teal</source>
+        <translation>Camgöbeği</translation>
     </message>
     <message>
-        <source>Camera Angle</source>
-        <translation>Kamera açısı</translation>
+        <source>Green</source>
+        <translation>Yeşil</translation>
     </message>
     <message>
-        <source>Emote</source>
-        <translation>İfade</translation>
+        <source>Orange</source>
+        <translation>Turuncu</translation>
     </message>
     <message>
-        <source>Tuck</source>
-        <translation>Aero pozisyon</translation>
+        <source>Pink</source>
+        <translation>Pembe</translation>
     </message>
     <message>
-        <source>Nav Up</source>
-        <translation>Yukarı git</translation>
+        <source>Reset</source>
+        <translation>Sıfırla</translation>
     </message>
     <message>
-        <source>Nav Down</source>
-        <translation>Aşağı git</translation>
+        <source>Reset section</source>
+        <translation>Bölümü sıfırla</translation>
     </message>
     <message>
-        <source>Nav Left</source>
-        <translation>Sola git</translation>
+        <source>Reset section?</source>
+        <translation>Bölüm sıfırlansın mı?</translation>
     </message>
     <message>
-        <source>Nav Right</source>
-        <translation>Sağa git</translation>
+        <source>%1 settings in “%2” go back to their default values.</source>
+        <translation>“%2” bölümündeki %1 ayar varsayılan değerlerine döner.</translation>
     </message>
     <message>
-        <source>Select/Confirm</source>
-        <translation>Seç/Onayla</translation>
+        <source>Setting reset</source>
+        <translation>Ayar sıfırlandı</translation>
     </message>
     <message>
-        <source>Back/Cancel</source>
-        <translation>Geri/İptal</translation>
+        <source>%1 settings reset</source>
+        <translation>%1 ayar sıfırlandı</translation>
     </message>
     <message>
-        <source>Menu</source>
-        <translation>Menü</translation>
+        <source>Add Up Quick Resistance Taps</source>
+        <translation>Hızlı direnç dokunuşlarını topla</translation>
     </message>
     <message>
-        <source>Home</source>
-        <translation>Ana ekran</translation>
+        <source>Bikes that report their resistance back take about a second to confirm a new level, so several quick taps on the resistance +/- buttons change it by only one. Enable this setting to add the taps up: 3 quick taps change the resistance by 3. Default is off.</source>
+        <translation>Direncini geri bildiren bisikletler yeni bir seviyeyi yaklaşık bir saniyede onaylar, bu yüzden direnç +/- düğmelerine birkaç hızlı dokunuş direnci yalnızca bir kademe değiştirir. Dokunuşların toplanması için bu ayarı açın: 3 hızlı dokunuş direnci 3 değiştirir. Varsayılan: kapalı.</translation>
     </message>
     <message>
-        <source>Left Down:</source>
-        <translation>Sol aşağı:</translation>
-    </message>
-    <message>
-        <source>Left Left:</source>
-        <translation>Sol sola:</translation>
-    </message>
-    <message>
-        <source>Left Right:</source>
-        <translation>Sol sağa:</translation>
-    </message>
-    <message>
-        <source>Left Shoulder:</source>
-        <translation>Sol omuz düğmesi:</translation>
-    </message>
-    <message>
-        <source>Left Power:</source>
-        <translation>Sol Power Up düğmesi:</translation>
-    </message>
-    <message>
-        <source>Right Controller Buttons</source>
-        <translation>Sağ kumanda düğmeleri</translation>
-    </message>
-    <message>
-        <source>Right Y:</source>
-        <translation>Sağ Y:</translation>
-    </message>
-    <message>
-        <source>Right A:</source>
-        <translation>Sağ A:</translation>
-    </message>
-    <message>
-        <source>Right B:</source>
-        <translation>Sağ B:</translation>
-    </message>
-    <message>
-        <source>Right Z:</source>
-        <translation>Sağ Z:</translation>
-    </message>
-    <message>
-        <source>Right Shoulder:</source>
-        <translation>Sağ omuz düğmesi:</translation>
-    </message>
-    <message>
-        <source>Right Power:</source>
-        <translation>Sağ Power Up düğmesi:</translation>
-    </message>
-    <message>
-        <source>Note: Left and Right paddles are fixed to Steer Left/Right and cannot be configured</source>
-        <translation>Not: Sol ve sağ pedal kolları her zaman &quot;Sola dön&quot; / &quot;Sağa dön&quot; olarak çalışır ve değiştirilemez</translation>
-    </message>
-    <message>
-        <source>Custom Inclination to Resistance Table</source>
-        <translation>Özel eğim – direnç tablosu</translation>
-    </message>
-    <message>
-        <source>Cruise</source>
-        <translation>Seyir</translation>
-    </message>
-    <message>
-        <source>Climb</source>
-        <translation>Tırmanış</translation>
-    </message>
-    <message>
-        <source>Sprint</source>
-        <translation>Sprint</translation>
-    </message>
-    <message>
-        <source>Physical resistance knob controls QZ gears</source>
-        <translation>Cihazdaki direnç düğmesi QZ viteslerini değiştirir</translation>
-    </message>
-    <message>
-        <source>Baudrate:</source>
-        <translation>Baud hızı:</translation>
-    </message>
-    <message>
-        <source>Freebeat Bike Options</source>
-        <translation>Freebeat bisiklet seçenekleri</translation>
-    </message>
-    <message>
-        <source>Keep Content Clear of the Camera Cutout</source>
-        <translation>İçeriği kamera çentiğinden uzak tut</translation>
-    </message>
-    <message>
-        <source>In landscape, keeps a margin on the camera side so the camera hole does not cover the content. Turn off to let the content extend under the camera cutout. Default is on.</source>
-        <translation>Yatay modda kamera tarafında bir kenar boşluğu bırakır, böylece kamera deliği içeriği kapatmaz. İçeriğin kamera çentiğinin altına uzanması için kapatın. Varsayılan: açık.</translation>
-    </message>
-    <message>
-        <source>Classic</source>
-        <translation>Klasik</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation>Yatay</translation>
-    </message>
-    <message>
-        <source>Both Charts</source>
-        <translation>İki grafik de</translation>
-    </message>
-    <message>
-        <source>Heart Rate Only</source>
-        <translation>Yalnızca nabız</translation>
-    </message>
-    <message>
-        <source>Power Only</source>
-        <translation>Yalnızca güç</translation>
-    </message>
-    <message>
-        <source>lower</source>
-        <translation>alt sınır</translation>
-    </message>
-    <message>
-        <source>upper</source>
-        <translation>üst sınır</translation>
-    </message>
-    <message>
-        <source>average</source>
-        <translation>ortalama</translation>
-    </message>
-    <message>
-        <source>Before Title</source>
-        <translation>Başlıktan önce</translation>
-    </message>
-    <message>
-        <source>After Title</source>
-        <translation>Başlıktan sonra</translation>
-    </message>
-    <message>
-        <source>Ask RPE / Feeling after workout</source>
-        <translation>Antrenmandan sonra RPE ve his durumunu sor</translation>
-    </message>
-    <message>
-        <source>Show a popup after Stop to rate perceived exertion (RPE) and how you felt; the values are saved into the FIT file and shown in Garmin Connect.</source>
-        <translation>Durdurduktan sonra algılanan zorluğu (RPE) ve nasıl hissettiğinizi değerlendirmek için bir pencere gösterir; değerler FIT dosyasına kaydedilir ve Garmin Connect&apos;te görünür.</translation>
-    </message>
-    <message>
-        <source>Garmin Password:</source>
-        <translation>Garmin şifresi:</translation>
-    </message>
-    <message>
-        <source>Garmin Server:</source>
-        <translation>Garmin sunucusu:</translation>
-    </message>
-    <message>
-        <source>Global (garmin.com)</source>
-        <translation>Küresel (garmin.com)</translation>
-    </message>
-    <message>
-        <source>China (garmin.cn)</source>
-        <translation>Çin (garmin.cn)</translation>
-    </message>
-    <message>
-        <source>Sound on Segment Change</source>
-        <translation>Bölüm değişiminde ses</translation>
-    </message>
-    <message>
-        <source>Play a short sound when a training program starts a new row. Default: disabled.</source>
-        <translation>Antrenman programı yeni bir satıra geçtiğinde kısa bir ses çalınır. Varsayılan: kapalı.</translation>
-    </message>
-    <message>
-        <source>PID Recovery Zone Lower Limit (%):</source>
-        <translation>Agresif mod: toparlanma bölgesi alt sınırı (%):</translation>
-    </message>
-    <message>
-        <source>Lower HR boundary (% of max HR) that defines the bottom of Zone 1 for &apos;Pushy&apos; mode. Below this percentage the treadmill is at the bottom of the recovery area. Default: 60.</source>
-        <translation>&quot;Agresif&quot; modda 1. bölgenin alt ucunu belirleyen alt nabız sınırı (maksimum nabzın yüzdesi). Bu yüzdenin altında koşu bandı toparlanma alanının en altındadır. Varsayılan: 60.</translation>
-    </message>
-    <message>
-        <source>PID Pushy Zone Limit:</source>
-        <translation>Agresif mod sınırı:</translation>
-    </message>
-    <message>
-        <source>Fraction of zone above the target zone where &apos;Pushy&apos; mode stops pushing. 0.8 means the PID stops pushing at zone+0.8. Default: 0.8.</source>
-        <translation>Hedef bölgenin üstünde, &quot;Agresif&quot; modun zorlamayı bıraktığı bölge payı. 0.8, PID&apos;nin bölge+0.8 seviyesinde zorlamayı bıraktığı anlamına gelir. Varsayılan: 0.8.</translation>
-    </message>
-    <message>
-        <source>Warmup Speed (pace):</source>
-        <translation>Isınma hızı (tempo):</translation>
-    </message>
-    <message>
-        <source>Cooldown Speed (pace):</source>
-        <translation>Soğuma hızı (tempo):</translation>
-    </message>
-    <message>
-        <source>Rest Speed (pace):</source>
-        <translation>Dinlenme hızı (tempo):</translation>
-    </message>
-    <message>
-        <source>1 mile</source>
-        <translation>1 mil</translation>
-    </message>
-    <message>
-        <source>Half Marathon</source>
-        <translation>Yarı maraton</translation>
-    </message>
-    <message>
-        <source>Marathon</source>
-        <translation>Maraton</translation>
-    </message>
-    <message>
-        <source>Force Running Activity</source>
-        <translation>Her zaman koşu olarak kaydet</translation>
-    </message>
-    <message>
-        <source>Turn this on to write treadmill FIT files as running activities even when the average speed is below 6.5 km/h. This can help Garmin calculate Training Effect for high-incline treadmill workouts. Default is off.</source>
-        <translation>Ortalama hız 6.5 km/h altında olsa bile koşu bandı FIT dosyalarını koşu aktivitesi olarak kaydetmek için açın. Bu, yüksek eğimli koşu bandı antrenmanlarında Garmin&apos;in Training Effect hesaplamasına yardımcı olabilir. Varsayılan: kapalı.</translation>
-    </message>
-    <message>
-        <source>Pafers Rower</source>
-        <translation>Pafers kürek makinesi</translation>
-    </message>
-    <message>
-        <source>Flow Fitness Runner DTM2000i</source>
-        <translation>Flow Fitness Runner DTM2000i</translation>
-    </message>
-    <message>
-        <source>WaterRower USB</source>
-        <translation>WaterRower USB</translation>
+        <source>QZ opens FS- devices as treadmills unless &quot;Fit Plus Bike&quot; is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off. Not shown in the settings page.</source>
+        <translation>&quot;Fit Plus bisiklet&quot; açık değilse QZ, FS- cihazlarını koşu bandı olarak açar. Bir FS- cihazı bisiklet verisi de gönderdiğinde QZ bunun bir bisiklet olup olmadığını sorar; Hayır yanıtı bu soruyu kapatır. Ayarlar sayfasında gösterilmez.</translation>
     </message>
     <message>
         <source>Max Watt:</source>
@@ -7589,156 +8146,16 @@ Varsayılan: A = -0.96, B = 1.33</translation>
         <translation>QZ&apos;nin gönderdiği gücü sınırlar. Sınırı kaldırmak için 0 girin. Varsayılan: 9999 W.</translation>
     </message>
     <message>
-        <source>Always</source>
-        <translation>Her zaman</translation>
-    </message>
-    <message>
-        <source>Request</source>
-        <translation>Sor</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation>Kapalı</translation>
-    </message>
-    <message>
-        <source>3 seconds</source>
-        <translation>3 saniye</translation>
-    </message>
-    <message>
-        <source>5 seconds</source>
-        <translation>5 saniye</translation>
-    </message>
-    <message>
-        <source>You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).</source>
-        <translation>FIT dosyasında mesafeye göre otomatik tur oluşturabilirsiniz. Birim: %1. Varsayılan: 0 (kapalı).</translation>
-    </message>
-    <message>
-        <source>Power sensor speed correction threshold (%):</source>
-        <translation>Güç sensörü hız düzeltme eşiği (%):</translation>
-    </message>
-    <message>
-        <source>Maximum allowed difference between power sensor speed and treadmill speed before QZ stops applying the relative correction. Default: 20%.</source>
-        <translation>Güç sensörü hızı ile koşu bandı hızı arasında izin verilen en büyük fark; bu farkın üstünde QZ göreli düzeltmeyi uygulamayı bırakır. Varsayılan: 20%.</translation>
-    </message>
-    <message>
-        <source>Heart</source>
-        <translation>Nabız</translation>
-    </message>
-    <message>
-        <source>Power</source>
-        <translation>Güç</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Manuel</translation>
-    </message>
-    <message>
-        <source>Gear Controls</source>
-        <translation>Vites düğmeleri</translation>
-    </message>
-    <message>
-        <source>Assign each physical button to Gear Up, Gear Down or Disabled. Applies before the Swap sides option above.</source>
-        <translation>Her fiziksel düğmeye &quot;Vites yükselt&quot;, &quot;Vites düşür&quot; veya &quot;Devre dışı&quot; atayın. Yukarıdaki &quot;Tarafları değiştir&quot; seçeneğinden önce uygulanır.</translation>
-    </message>
-    <message>
-        <source>Left Shifter Up (LS1):</source>
-        <translation>Sol vites kolu yukarı (LS1):</translation>
-    </message>
-    <message>
-        <source>Left Shifter Down (LS2):</source>
-        <translation>Sol vites kolu aşağı (LS2):</translation>
-    </message>
-    <message>
-        <source>Right Shifter Up (RS1):</source>
-        <translation>Sağ vites kolu yukarı (RS1):</translation>
-    </message>
-    <message>
-        <source>Right Shifter Down (RS2):</source>
-        <translation>Sağ vites kolu aşağı (RS2):</translation>
-    </message>
-    <message>
-        <source>Left Paddle (ZL):</source>
-        <translation>Sol pedal kolu (ZL):</translation>
-    </message>
-    <message>
-        <source>Right Paddle (ZR):</source>
-        <translation>Sağ pedal kolu (ZR):</translation>
-    </message>
-    <message>
-        <source>Power Up (LB):</source>
-        <translation>Power Up (LB):</translation>
-    </message>
-    <message>
-        <source>Ride On (RB):</source>
-        <translation>Ride On (RB):</translation>
-    </message>
-    <message>
-        <source>Virtual Tacx</source>
-        <translation>Sanal Tacx</translation>
-    </message>
-    <message>
-        <source>Enables a virtual bluetooth bridge to the Tacx App.</source>
-        <translation>Tacx uygulaması için sanal Bluetooth cihazını etkinleştirir.</translation>
-    </message>
-    <message>
-        <source>lbs</source>
-        <translation>lbs</translation>
-    </message>
-    <message>
-        <source>kg</source>
-        <translation>kg</translation>
-    </message>
-    <message>
-        <source>ft/in</source>
-        <translation>ft/in</translation>
-    </message>
-    <message>
-        <source>cm</source>
-        <translation>cm</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
-    </message>
-    <message>
         <source>PID HR actuator:</source>
         <translation>Nabız sabitleme (PID) ile ayarlanan:</translation>
-    </message>
-    <message>
-        <source>Speed</source>
-        <translation>Hız</translation>
     </message>
     <message>
         <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. The global PID HR actuator setting selects speed or inclination for treadmills; a workout interval can override it in the Workout Editor. The PID HR tile changes only the target HR zone.</source>
         <translation>QZ, sizi seçilen nabız bölgesinde tutmak için koşu bandınızı veya bisikletinizi kontrol eder. Genel &quot;Nabız sabitleme (PID) ile ayarlanan&quot; ayarı, koşu bantlarında hızı veya eğimi seçer; antrenman düzenleyicide bir antrenman aralığı bu ayarı kendi değeriyle değiştirebilir. Nabız sabitleme (PID) kutucuğu yalnızca hedef nabız bölgesini değiştirir.</translation>
     </message>
     <message>
-        <source>5 km</source>
-        <translation>5 km</translation>
-    </message>
-    <message>
-        <source>10 km</source>
-        <translation>10 km</translation>
-    </message>
-    <message>
-        <source>Mi</source>
-        <translation>mil</translation>
-    </message>
-    <message>
-        <source>KM</source>
-        <translation>km</translation>
-    </message>
-    <message>
-        <source>Runn/Stryd closed-loop treadmill speed correction</source>
-        <translation>Runn/Stryd ile kapalı döngü koşu bandı hız düzeltmesi</translation>
-    </message>
-    <message>
-        <source>Experimental: gradually correct QZ-controlled treadmill speed using Runn/Stryd feedback, when the driver provides independent machine speed measurements. Requires &apos;Use speed from the power sensor&apos;. Disabled by default.</source>
-        <translation>Deneysel: QZ&apos;deki koşu bandı sürücüsü cihazın kendi hız ölçümlerini veriyorsa, QZ&apos;nin kontrol ettiği koşu bandı hızı Runn/Stryd verilerine göre kademeli olarak düzeltilir. &quot;Hızı güç sensöründen al&quot; ayarı gerekir. Varsayılan: kapalı.</translation>
+        <source>Pafers Rower</source>
+        <translation>Pafers kürek makinesi</translation>
     </message>
 </context>
 <context>
@@ -7967,6 +8384,10 @@ Varsayılan: A = -0.96, B = 1.33</translation>
         <translation>Tempo</translation>
     </message>
     <message>
+        <source>Enable Pace color</source>
+        <translation>Tempo rengini etkinleştir</translation>
+    </message>
+    <message>
         <source>Average Pace</source>
         <translation>Ortalama tempo</translation>
     </message>
@@ -7993,6 +8414,10 @@ Varsayılan: A = -0.96, B = 1.33</translation>
     <message>
         <source>Watt</source>
         <translation>Güç</translation>
+    </message>
+    <message>
+        <source>Enable Watt color</source>
+        <translation>Güç rengini etkinleştir</translation>
     </message>
     <message>
         <source>Displays the watts generated by your current effort. Watt is also referred to as output (for example, in Peloton). If your equipment does not communicate watts, QZ will calculate watts using resistance and cadence.</source>
@@ -8221,6 +8646,14 @@ Varsayılan: A = -0.96, B = 1.33</translation>
         <translation>(Yalnızca kürek makinesi) Yapılan kürek çekişi sayısını gösterir.</translation>
     </message>
     <message>
+        <source>Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class&apos;s resistance target up or down for the rest of the ride.</source>
+        <translation>Hedef direnci bisikletinizin direnç ölçeğinde gösterir. Örneğin bir Peloton dersinde veya Zwift oturumunda bu kutucuktaki direncin &quot;Direnç&quot; kutucuğuyla eşleşmesi gerekir. Peloton dersinde (yalnızca bisiklet) +/- düğmeleri dersin hedef direncini sürüşün geri kalanı için yukarı veya aşağı kaydırır.</translation>
+    </message>
+    <message>
+        <source>Stroke Length</source>
+        <translation>Çekiş uzunluğu</translation>
+    </message>
+    <message>
         <source>(Rower only) Displays the stroke length.</source>
         <translation>(Yalnızca kürek makinesi) Kürek çekişinin uzunluğunu gösterir.</translation>
     </message>
@@ -8327,6 +8760,14 @@ Varsayılan: A = -0.96, B = 1.33</translation>
     <message>
         <source>Preset Speed 1</source>
         <translation>Hız ön ayarı 1</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
     </message>
     <message>
         <source>Preset Speed 2</source>
@@ -8529,28 +8970,8 @@ Varsayılan: A = -0.96, B = 1.33</translation>
         <translation>Uyumlu bir göğüs bandından kalp atış hızı değişkenliğini (HRV) gösterir. RMSSD değerini milisaniye cinsinden gösterir.</translation>
     </message>
     <message>
-        <source>Enable Pace color</source>
-        <translation>Tempo rengini etkinleştir</translation>
-    </message>
-    <message>
-        <source>Enable Watt color</source>
-        <translation>Güç rengini etkinleştir</translation>
-    </message>
-    <message>
-        <source>Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class&apos;s resistance target up or down for the rest of the ride.</source>
-        <translation>Hedef direnci bisikletinizin direnç ölçeğinde gösterir. Örneğin bir Peloton dersinde veya Zwift oturumunda bu kutucuktaki direncin &quot;Direnç&quot; kutucuğuyla eşleşmesi gerekir. Peloton dersinde (yalnızca bisiklet) +/- düğmeleri dersin hedef direncini sürüşün geri kalanı için yukarı veya aşağı kaydırır.</translation>
-    </message>
-    <message>
-        <source>Stroke Length</source>
-        <translation>Çekiş uzunluğu</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
+        <source>Tiles Options</source>
+        <translation>Kutucuk seçenekleri</translation>
     </message>
 </context>
 <context>
