@@ -44,6 +44,20 @@ mark() {
   echo "$(date +%H:%M:%S) $1" >> $STEPLOG
   adb shell log -t T276 "'$1'" || true
 }
+# top <label>: the resumed activity into the steps
+top() {
+  echo "$1: top $(adb shell dumpsys activity activities < /dev/null | grep -m1 topResumedActivity | tr -d '\r')" >> $STEPLOG
+}
+# qz_on_top: Health Connect onboarding (and the like) over QZ closed with the back key
+qz_on_top() {
+  local i
+  for i in 1 2 3; do
+    adb shell dumpsys activity activities < /dev/null | grep -m1 topResumedActivity | grep -q $PKG && return 0
+    adb shell input keyevent KEYCODE_BACK || true
+    sleep 3
+  done
+  return 1
+}
 
 adb logcat -c || true
 adb logcat -b main,system,crash > full_logcat.txt 2>/dev/null &
@@ -59,7 +73,10 @@ run_case() {
   mark "$label: start"
   adb shell am start -n $PKG/$PKG.CustomQtActivity
   t0=$(date +%s)
-  sleep 40
+  sleep 30
+  qz_on_top || echo "$label: QZ NOT on top" >> $STEPLOG
+  sleep 5
+  top "$label started"
   pid=$(adb shell pidof $PKG | tr -d '\r')
   echo "$label: pid $pid" >> $STEPLOG
   snap $label-01-started
@@ -73,7 +90,14 @@ run_case() {
   sleep 2
   adb shell wm dismiss-keyguard || true
   sleep 5
+  top "$label screen on"
   snap $label-02-screen-on
+  # the popup closed at the screen on and opened its link over QZ: back to QZ, as on the phone
+  mark "$label: back to QZ"
+  adb shell am start -n $PKG/$PKG.CustomQtActivity || true
+  sleep 5
+  top "$label back to QZ"
+  echo "$label: pid after back to QZ: $(adb shell pidof $PKG | tr -d '\r')" >> $STEPLOG
   mark "$label: rotation"
   adb shell settings put system user_rotation 1 || true
   sleep 5
@@ -96,6 +120,6 @@ wait $LOGCAT_PID 2>/dev/null || true
 
 echo "== steps"; cat $STEPLOG
 echo "== markers, main() return, insets, crashes"
-grep -E "T276|exit app 0|Insets changed|Fatal signal|AndroidStatusBar|>>> $PKG <<<|Abort message|Cause:" full_logcat.txt | head -120 || true
+grep -E "T276|exit app 0|Insets changed|onApplyWindowInsets - Top|patreon|Fatal signal|AndroidStatusBar|>>> $PKG <<<|Abort message|Cause:" full_logcat.txt | head -160 || true
 echo "== exit-info"
 for f in exit-info-*.txt; do echo "-- $f"; grep -E "ApplicationExitInfo|reason=|description=|timestamp=|pid=" "$f" | head -12; done
