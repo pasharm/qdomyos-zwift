@@ -27,6 +27,8 @@ Page {
     property bool searchStopped: false
     // Gym mode: the trainer picked in the window, set by Home.qml until it is connected
     property string connectingDevice: ""
+    // Home.qml sets the new values from the settings page in it (the background color of the top bar)
+    property alias homeFormSettings: settings
 
     Settings {
 	     id: settings

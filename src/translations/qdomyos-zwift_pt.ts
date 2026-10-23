@@ -4522,7 +4522,7 @@ Não: o QZ o mantém como esteira e não pergunta de novo (uma bicicleta ainda p
     </message>
     <message>
         <source>UI Zoom:</source>
-        <translation>Zoom da UI:</translation>
+        <translation type="vanished">Zoom da UI:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4538,7 +4538,7 @@ Não: o QZ o mantém como esteira e não pergunta de novo (uma bicicleta ainda p
     </message>
     <message>
         <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol</source>
-        <translation>Isso altera o tamanho dos blocos que exibem suas métricas. O padrão é 100%. Para caber mais blocos na sua tela, escolha uma porcentagem menor. Para torná-los maiores, escolha uma porcentagem acima de 100%. Não insira o símbolo de porcentagem</translation>
+        <translation type="vanished">Isso altera o tamanho dos blocos que exibem suas métricas. O padrão é 100%. Para caber mais blocos na sua tela, escolha uma porcentagem menor. Para torná-los maiores, escolha uma porcentagem acima de 100%. Não insira o símbolo de porcentagem</translation>
     </message>
     <message>
         <source>Player Weight</source>
@@ -5852,6 +5852,14 @@ Não: o QZ o mantém como esteira e não pergunta de novo (uma bicicleta ainda p
     <message>
         <source>Open</source>
         <translation>Abrir</translation>
+    </message>
+    <message>
+        <source>Tile size:</source>
+        <translation>Tamanho dos blocos:</translation>
+    </message>
+    <message>
+        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
+        <translation>Isso altera o tamanho dos blocos que exibem suas métricas. O padrão é 100%. Para caber mais blocos na sua tela, escolha uma porcentagem menor. Para torná-los maiores, escolha uma porcentagem acima de 100%. Não insira o símbolo de porcentagem. Antes chamado “Zoom da UI” (UI Zoom).</translation>
     </message>
     <message>
         <source>App Language:</source>

@@ -4522,7 +4522,7 @@ Non : QZ le garde comme tapis de course et ne redemandera plus (un vélo peut to
     </message>
     <message>
         <source>UI Zoom:</source>
-        <translation>Zoom de l&apos;interface :</translation>
+        <translation type="vanished">Zoom de l&apos;interface :</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4534,7 +4534,7 @@ Non : QZ le garde comme tapis de course et ne redemandera plus (un vélo peut to
     </message>
     <message>
         <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol</source>
-        <translation>Ceci change la taille des tuiles affichant vos métriques. La valeur par défaut est de 100 %. Pour afficher plus de tuiles sur votre écran, choisissez un pourcentage plus petit. Pour les rendre plus grandes, choisissez un pourcentage supérieur à 100 %. Ne saisissez pas le symbole pourcentage</translation>
+        <translation type="vanished">Ceci change la taille des tuiles affichant vos métriques. La valeur par défaut est de 100 %. Pour afficher plus de tuiles sur votre écran, choisissez un pourcentage plus petit. Pour les rendre plus grandes, choisissez un pourcentage supérieur à 100 %. Ne saisissez pas le symbole pourcentage</translation>
     </message>
     <message>
         <source>Player Weight</source>
@@ -6647,6 +6647,14 @@ Veuillez le saisir ci-dessous :</translation>
     <message>
         <source>Inclination</source>
         <translation>Inclinaison</translation>
+    </message>
+    <message>
+        <source>Tile size:</source>
+        <translation>Taille des tuiles :</translation>
+    </message>
+    <message>
+        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
+        <translation>Ceci change la taille des tuiles affichant vos métriques. La valeur par défaut est de 100 %. Pour afficher plus de tuiles sur votre écran, choisissez un pourcentage plus petit. Pour les rendre plus grandes, choisissez un pourcentage supérieur à 100 %. Ne saisissez pas le symbole pourcentage. Anciennement « Zoom de l&apos;interface » (UI Zoom).</translation>
     </message>
     <message>
         <source>Speed</source>

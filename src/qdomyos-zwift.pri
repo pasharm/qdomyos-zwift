@@ -178,6 +178,7 @@ devices/kettlerusbbike/kettlerusbbike.cpp \
 devices/freebeatbike/freebeatbike.cpp \
 devices/fakeelliptical/fakeelliptical.cpp \
 devices/faketreadmill/faketreadmill.cpp \
+devices/lifefitnesstreadmill/lifefitnessworkout.cpp \
 devices/lifefitnesstreadmill/lifefitnesstreadmill.cpp \
 devices/mepanelbike/mepanelbike.cpp \
 devices/nautilusbike/nautilusbike.cpp \
@@ -225,6 +226,7 @@ devices/dircon/dirconprocessor.cpp \
 devices/domyoselliptical/domyoselliptical.cpp \
 devices/domyosrower/domyosrower.cpp \
 devices/domyostreadmill/domyostreadmill.cpp \
+devices/echelonconnectsport/echelonunlock.cpp \
 devices/echelonconnectsport/echelonconnectsport.cpp \
 devices/echelonrower/echelonrower.cpp \
 devices/echelonstride/echelonstride.cpp \
@@ -274,6 +276,8 @@ garminconnect.cpp \
 devices/horizongr7bike/horizongr7bike.cpp \
 devices/horizontreadmill/horizontreadmill.cpp \
 devices/iconceptbike/iconceptbike.cpp \
+devices/kettlerclassicbike/kettlerclassicbike.cpp \
+devices/kettlerclassicbike/kettlerclassicprotocol.cpp \
 devices/inspirebike/inspirebike.cpp \
 keepawakehelper.cpp \
 devices/keepbike/keepbike.cpp \
@@ -500,6 +504,7 @@ devices/freebeatboombike/freebeatboombike.h \
 definitions.h \
 devices/fakeelliptical/fakeelliptical.h \
 devices/faketreadmill/faketreadmill.h \
+devices/lifefitnesstreadmill/lifefitnessworkout.h \
 devices/lifefitnesstreadmill/lifefitnesstreadmill.h \
 devices/mepanelbike/mepanelbike.h \
 devices/nautilusbike/nautilusbike.h \
@@ -561,6 +566,7 @@ devices/dircon/dirconprocessor.h \
 devices/domyoselliptical/domyoselliptical.h \
 devices/domyosrower/domyosrower.h \
 devices/domyostreadmill/domyostreadmill.h \
+devices/echelonconnectsport/echelonunlock.h \
 devices/echelonconnectsport/echelonconnectsport.h \
 devices/echelonrower/echelonrower.h \
 devices/echelonstride/echelonstride.h \
@@ -577,6 +583,8 @@ devices/ftmsrower/ftmsrower.h \
 homefitnessbuddy.h \
 devices/horizongr7bike/horizongr7bike.h \
 devices/iconceptbike/iconceptbike.h \
+devices/kettlerclassicbike/kettlerclassicbike.h \
+devices/kettlerclassicbike/kettlerclassicprotocol.h \
 devices/keepbike/keepbike.h \
 devices/kingsmithr1protreadmill/kingsmithr1protreadmill.h \
 devices/kingsmithr2treadmill/kingsmithr2treadmill.h \
@@ -808,6 +816,7 @@ homeform.h \
 mywhooshlink.h \
 garminconnect.h \
 devices/horizontreadmill/horizontreadmill.h \
+devices/horizontreadmill/ypoom5control.h \
 devices/inspirebike/inspirebike.h \
 ios/lockscreen.h \
 keepawakehelper.h \

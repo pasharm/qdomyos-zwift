@@ -8,6 +8,9 @@ bool QZSettings::isSensitiveSettingKey(const QString &key) {
            normalizedKey.contains(QStringLiteral("user_email")) ||
            normalizedKey.contains(QStringLiteral("username")) ||
            normalizedKey.contains(QStringLiteral("token")) ||
+           normalizedKey.contains(QStringLiteral("api_key")) ||
+           normalizedKey.contains(QStringLiteral("preset_summary")) ||
+           normalizedKey.contains(QStringLiteral("life_fitness_")) ||
            normalizedKey.contains(QStringLiteral("cryptokey")) || // decrypts the passwords in the profile files
            normalizedKey.contains(QStringLiteral("garmin_device_serial")) ||
            normalizedKey.contains(QStringLiteral("garmin_email"));
@@ -315,6 +318,21 @@ const QString QZSettings::virtufit_layout_question = QStringLiteral("virtufit_la
 const QString QZSettings::flywheel_filter = QStringLiteral("flywheel_filter");
 const QString QZSettings::flywheel_life_fitness_ic8 = QStringLiteral("flywheel_life_fitness_ic8");
 const QString QZSettings::life_fitness_ic5 = QStringLiteral("life_fitness_ic5");
+const QString QZSettings::life_fitness_first_name = QStringLiteral("life_fitness_first_name");
+const QString QZSettings::default_life_fitness_first_name = QStringLiteral("");
+const QString QZSettings::life_fitness_last_name = QStringLiteral("life_fitness_last_name");
+const QString QZSettings::default_life_fitness_last_name = QStringLiteral("");
+const QString QZSettings::life_fitness_username = QStringLiteral("life_fitness_username");
+const QString QZSettings::default_life_fitness_username = QStringLiteral("");
+const QString QZSettings::life_fitness_password = QStringLiteral("life_fitness_password");
+const QString QZSettings::default_life_fitness_password = QStringLiteral("");
+const QString QZSettings::life_fitness_api_key = QStringLiteral("life_fitness_api_key");
+const QString QZSettings::default_life_fitness_api_key = QStringLiteral("");
+const QString QZSettings::life_fitness_token = QStringLiteral("life_fitness_token");
+const QString QZSettings::default_life_fitness_token = QStringLiteral("");
+const QString QZSettings::life_fitness_preset_summary = QStringLiteral("life_fitness_preset_summary");
+const QString QZSettings::default_life_fitness_preset_summary = QStringLiteral("00000001CC5B0A0A5D");
+const QString QZSettings::life_fitness_guest_login = QStringLiteral("life_fitness_guest_login");
 const QString QZSettings::technogym_bike = QStringLiteral("technogym_bike");
 const QString QZSettings::sole_treadmill_inclination = QStringLiteral("sole_treadmill_inclination");
 const QString QZSettings::sole_treadmill_miles = QStringLiteral("sole_treadmill_miles");
@@ -1327,7 +1345,7 @@ const QString QZSettings::ui_tile_snap = QStringLiteral("ui_tile_snap");
 const QString QZSettings::ui_text_scale = QStringLiteral("ui_text_scale");
 const QString QZSettings::ui_text_scale_system = QStringLiteral("ui_text_scale_system");
 
-const uint32_t allSettingsCount = 1030;
+const uint32_t allSettingsCount = 1038;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -1572,6 +1590,13 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::flywheel_filter, QZSettings::default_flywheel_filter},
     {QZSettings::flywheel_life_fitness_ic8, QZSettings::default_flywheel_life_fitness_ic8},
     {QZSettings::life_fitness_ic5, QZSettings::default_life_fitness_ic5},
+    {QZSettings::life_fitness_first_name, QZSettings::default_life_fitness_first_name},
+    {QZSettings::life_fitness_last_name, QZSettings::default_life_fitness_last_name},
+    {QZSettings::life_fitness_username, QZSettings::default_life_fitness_username},
+    {QZSettings::life_fitness_password, QZSettings::default_life_fitness_password},
+    {QZSettings::life_fitness_api_key, QZSettings::default_life_fitness_api_key},
+    {QZSettings::life_fitness_token, QZSettings::default_life_fitness_token},
+    {QZSettings::life_fitness_preset_summary, QZSettings::default_life_fitness_preset_summary},
     {QZSettings::technogym_bike, QZSettings::default_technogym_bike},
     {QZSettings::sole_treadmill_inclination, QZSettings::default_sole_treadmill_inclination},
     {QZSettings::sole_treadmill_miles, QZSettings::default_sole_treadmill_miles},
@@ -2377,6 +2402,7 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::virtufit_layout_question, QZSettings::default_virtufit_layout_question},
     {QZSettings::android_notification_prompt_disabled, QZSettings::default_android_notification_prompt_disabled},
     {QZSettings::android_notification_v2, QZSettings::default_android_notification_v2},
+    {QZSettings::life_fitness_guest_login, QZSettings::default_life_fitness_guest_login},
     {QZSettings::ui_modern, QZSettings::default_ui_modern},
     {QZSettings::ui_theme, QZSettings::default_ui_theme},
     {QZSettings::ui_accent, QZSettings::default_ui_accent},

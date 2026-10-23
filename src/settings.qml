@@ -2827,6 +2827,17 @@ import QtQuick 2.12 as Quick212
             property bool freemotion_t10_9b_hci: false
             property bool treadmill_runn_closed_loop: false
             property string treadmill_pid_heart_control: "Speed"
+
+            property string life_fitness_first_name: ""
+            property string life_fitness_last_name: ""
+            property string life_fitness_token: ""
+            property string life_fitness_preset_summary: ""
+            property string life_fitness_username: ""
+            property string life_fitness_password: ""
+            property string life_fitness_api_key: ""
+            property bool life_fitness_guest_login: false
+            property int ui_text_scale: 100
+            property bool ui_text_scale_system: true
             property bool fitshow_bike_question: true
             property bool resistance_buttons_accumulate: false
             property bool virtufit_layout_question: true
@@ -2838,8 +2849,20 @@ import QtQuick 2.12 as Quick212
             property string ui_accent: "violet"
             property string ui_theme_mode: "auto"
             property bool ui_tile_snap: true
-            property int ui_text_scale: 100
-            property bool ui_text_scale_system: true
+        }
+
+        // The home page has its own Settings copy, read once when it is created: hand it every new
+        // value of that copy right away, so the tile look shows without a restart (#466)
+        Connections {
+            target: settings
+            function onUi_zoomChanged() { window.tileSettingChanged("ui_zoom", settings.ui_zoom) }
+            function onTheme_tile_icon_enabledChanged() { window.tileSettingChanged("theme_tile_icon_enabled", settings.theme_tile_icon_enabled) }
+            function onTheme_tile_background_colorChanged() { window.tileSettingChanged("theme_tile_background_color", settings.theme_tile_background_color) }
+            function onTheme_background_colorChanged() { window.tileSettingChanged("theme_background_color", settings.theme_background_color) }
+            function onTheme_tile_shadow_enabledChanged() { window.tileSettingChanged("theme_tile_shadow_enabled", settings.theme_tile_shadow_enabled) }
+            function onTheme_tile_shadow_colorChanged() { window.tileSettingChanged("theme_tile_shadow_color", settings.theme_tile_shadow_color) }
+            function onTheme_tile_secondline_textsizeChanged() { window.tileSettingChanged("theme_tile_secondline_textsize", settings.theme_tile_secondline_textsize) }
+            function onTrainprogram_sound_on_segmentChanged() { window.tileSettingChanged("trainprogram_sound_on_segment", settings.trainprogram_sound_on_segment) }
         }
 
 
@@ -3354,48 +3377,6 @@ import QtQuick 2.12 as Quick212
                 //anchors.topMargin: 10
                 accordionContent: ColumnLayout {
                     spacing: 0
-
-                    RowLayout {
-                        spacing: 10
-                        Label {
-                            id: labelUiZoom
-                            text: qsTr("UI Zoom:")
-                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
-                            Layout.fillWidth: true
-                        }
-                        SettingsNumberField {
-                            id: uiZoomTextField
-                            minimum: 10
-                            savedText: settings.ui_zoom
-                            horizontalAlignment: Text.AlignRight
-                            Layout.fillHeight: false
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            //inputMethodHints: Qt.ImhFormattedNumbersOnly
-                            onAccepted: if (valid) { settings.ui_zoom = value; window.settings_restart_to_apply = true; }
-                            onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
-                        }
-                        UiButton {
-                            id: okUiZoomButton
-                            text: qsTr("OK")
-                            enabled: uiZoomTextField.valid && uiZoomTextField.dirty
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                            onClicked: { settings.ui_zoom = uiZoomTextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
-                        }
-                    }
-                    Label {
-                        text: qsTr("This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol")
-                        font.bold: !window.ui.modern
-                        font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
-                        bottomPadding: window.hintGap
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        verticalAlignment: Text.AlignVCenter
-                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                        width: column1.width * 0.8
-                        Layout.fillWidth: true
-                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-                    }
 
                     RowLayout {
                         spacing: 10
@@ -7923,6 +7904,48 @@ import QtQuick 2.12 as Quick212
                         }
                     }
 
+                    RowLayout {
+                        spacing: 10
+                        Label {
+                            id: labelUiZoom
+                            text: qsTr("Tile size:")
+                            wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                            Layout.fillWidth: true
+                        }
+                        SettingsNumberField {
+                            id: uiZoomTextField
+                            minimum: 10
+                            savedText: settings.ui_zoom
+                            horizontalAlignment: Text.AlignRight
+                            Layout.fillHeight: false
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            //inputMethodHints: Qt.ImhFormattedNumbersOnly
+                            onAccepted: if (valid) { settings.ui_zoom = value; }
+                            onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
+                        }
+                        UiButton {
+                            id: okUiZoomButton
+                            text: qsTr("OK")
+                            enabled: uiZoomTextField.valid && uiZoomTextField.dirty
+                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            onClicked: { settings.ui_zoom = uiZoomTextField.value; toast.show(qsTr("Setting saved!")); }
+                        }
+                    }
+                    Label {
+                        text: qsTr("This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.")
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
+                        font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        width: column1.width * 0.8
+                        Layout.fillWidth: true
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                    }
+
                     // Text size of the app: the system one on Android and iOS, or our own.
                     // Both apply at once, through the window (main.qml, textScale)
                     IndicatorOnlySwitch {
@@ -8578,14 +8601,14 @@ import QtQuick 2.12 as Quick212
                                     horizontalAlignment: Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                                    onAccepted: if (valid) { settings.theme_tile_secondline_textsize = value; window.settings_restart_to_apply = true; }
+                                    onAccepted: if (valid) { settings.theme_tile_secondline_textsize = value; }
                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                 }
                                 UiButton {
                                     text: qsTr("OK")
                                     enabled: secondLineTextSizeField.valid && secondLineTextSizeField.dirty
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                                    onClicked: { settings.theme_tile_secondline_textsize = secondLineTextSizeField.value; window.settings_restart_to_apply = true;  toast.show(qsTr("Setting saved!")); }
+                                    onClicked: { settings.theme_tile_secondline_textsize = secondLineTextSizeField.value; toast.show(qsTr("Setting saved!")); }
                                 }
                             }
                         }
@@ -12239,7 +12262,7 @@ import QtQuick 2.12 as Quick212
                         Layout.fillWidth: true
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
-
+                 
                     IndicatorOnlySwitch {
                         id: treadmillDifficultyGainOffsetDelegate
                         text: qsTr("Difficulty offset based")
@@ -13219,6 +13242,85 @@ import QtQuick 2.12 as Quick212
                             }
                         }
                     }
+
+                    AccordionElement {
+                        id: lifeFitnessAccordion
+                        title: qsTr("Life Fitness Options")
+                        indicatRectColor: Material.color(Material.Grey)
+                        textColor: Material.color(Material.Yellow)
+                        color: Material.backgroundColor
+                        accordionContent: ColumnLayout {
+                            spacing: 0
+
+                            RowLayout {
+                                spacing: 10
+                                Label { text: qsTr("Life Fitness username/email:"); wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap; Layout.fillWidth: true }
+                                SettingsTextField {
+                                    id: lifeFitnessUsernameTextField
+                                    savedText: settings.life_fitness_username
+                                    Accessible.name: qsTr("Life Fitness username/email:") + " " + text
+                                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                                    onAccepted: { settings.life_fitness_username = text; window.settings_restart_to_apply = true; }
+                                }
+                                UiButton {
+                                    text: qsTr("OK")
+                                    enabled: lifeFitnessUsernameTextField.dirty
+                                    onClicked: { settings.life_fitness_username = lifeFitnessUsernameTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
+                                }
+                            }
+                            RowLayout {
+                                spacing: 10
+                                Label { text: qsTr("Life Fitness password:"); wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap; Layout.fillWidth: true }
+                                SettingsTextField {
+                                    id: lifeFitnessPasswordTextField
+                                    savedText: settings.life_fitness_password
+                                    echoMode: TextInput.Password
+                                    // the name only: the screen reader must not read the password out
+                                    Accessible.name: qsTr("Life Fitness password:")
+                                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                                    onAccepted: { settings.life_fitness_password = text; window.settings_restart_to_apply = true; }
+                                }
+                                UiButton {
+                                    text: qsTr("OK")
+                                    enabled: lifeFitnessPasswordTextField.dirty
+                                    onClicked: { settings.life_fitness_password = lifeFitnessPasswordTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
+                                }
+                            }
+
+                            IndicatorOnlySwitch {
+                                id: lifeFitnessGuestLoginDelegate
+                                text: qsTr("Life Fitness guest login (experimental)")
+                                spacing: 0
+                                bottomPadding: 0
+                                topPadding: 0
+                                rightPadding: 0
+                                leftPadding: 0
+                                clip: false
+                                checked: settings.life_fitness_guest_login
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                Layout.fillWidth: true
+                                // in Qt 5.15 the role of a SwitchDelegate has no action: a double tap of the
+                                // screen reader did nothing
+                                Accessible.onPressAction: { toggle(); clicked(); }
+                                onClicked: { settings.life_fitness_guest_login = checked; window.settings_restart_to_apply = true; }
+                            }
+
+                            Label {
+                                text: qsTr("Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.")
+                                font.bold: !window.ui.modern
+                                font.italic: !window.ui.modern
+                                font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
+                                textFormat: Text.PlainText
+                                wrapMode: Text.WordWrap
+                                verticalAlignment: Text.AlignVCenter
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                Layout.fillWidth: true
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                            }
+                        }
+                    }
+
 
                     AccordionElement {
                         id: runnerTTreadmillAccordion
