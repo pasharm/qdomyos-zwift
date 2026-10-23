@@ -1000,6 +1000,13 @@ jobs:
             adb shell settings put secure location_providers_allowed +gps,+network || true
             adb shell cmd location set-location-enabled true || true
 
+            # The API < 30 images have no Bluetooth, so the "Permissions Required" dialog would stay over the app:
+            # answer it as a user who said "No" and "don't remind me" (skipLocationServicesDialog), before the first start
+            printf '[General]\nskipLocationServicesDialog=true\n' > qz.conf
+            adb push qz.conf /data/local/tmp/qz.conf
+            adb shell "run-as org.cagnulen.qdomyoszwift mkdir -p 'files/.config/Roberto Viola'"
+            adb shell "run-as org.cagnulen.qdomyoszwift cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
+
             # Start the main activity and wait for its process (retries a lost start, prints the logcat on failure)
             sh .github/scripts/android_app_start_test.sh
 

@@ -30,19 +30,13 @@ API=$(adb shell getprop ro.build.version.sdk | tr -d '\r')
 [ -n "$API" ] || fail "cannot read the API level from the emulator"
 echo "Accessibility test on API $API: $PRESSES"
 
-# As the back button test: the API < 30 images have no Bluetooth, so QZ keeps its native
-# "Permissions Required" dialog over its page and there is nothing of Qt to test
-if [ "$API" -lt 30 ]; then
-  echo "SKIPPED: no Bluetooth on this emulator image, the Permissions Required dialog blocks the app"
-  exit 0
-fi
-
 [ -f a11y-test.jar ] || fail "a11y-test.jar was not built"
 adb push a11y-test.jar /data/local/tmp/a11y-test.jar > /dev/null || fail "cannot push a11y-test.jar"
 
 if [ "$FAKE_BIKE" = 1 ]; then
   adb shell am force-stop $PKG
-  printf '[General]\napplewatch_fakedevice=true\nbluetooth_lastdevice_name=Fake\n' > qz.conf
+  # skipLocationServicesDialog: as the job's own settings, no "Permissions Required" dialog on the images without Bluetooth
+  printf '[General]\napplewatch_fakedevice=true\nbluetooth_lastdevice_name=Fake\nskipLocationServicesDialog=true\n' > qz.conf
   adb push qz.conf /data/local/tmp/qz.conf > /dev/null || fail "cannot push qz.conf"
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'" \

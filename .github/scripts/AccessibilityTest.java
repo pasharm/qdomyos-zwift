@@ -57,8 +57,7 @@ public class AccessibilityTest {
             AccessibilityNodeInfo root = automation.getRootInActiveWindow();
             CharSequence active = root == null ? null : root.getPackageName();
             String nativeText = firstText(root);
-            // the images where QZ cannot show its page (no Bluetooth, API < 30) are skipped by
-            // android_accessibility_test.sh before this runs
+            // e.g. the "Permissions Required" dialog, if the job did not answer it in the settings
             if (active == null || !active.toString().equals(PACKAGE)) {
                 System.out.println("FAIL the active window is " + active + ", not QZ");
             } else if (nativeText != null) {

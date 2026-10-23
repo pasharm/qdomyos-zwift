@@ -15,14 +15,6 @@ API=$(adb shell getprop ro.build.version.sdk | tr -d '\r')
 [ -n "$API" ] || fail "cannot read the API level from the emulator"
 echo "Back button test on API $API"
 
-# The API < 30 emulator images have no Bluetooth, so QZ keeps its modal
-# "Permissions Required" dialog open (it needs Bluetooth and location) and the
-# dialog swallows back presses: the test would not check anything there.
-if [ "$API" -lt 30 ]; then
-  echo "SKIPPED: no Bluetooth on this emulator image, the Permissions Required dialog blocks the app"
-  exit 0
-fi
-
 qz_in_front() {
   adb shell dumpsys activity activities | grep -E "mResumedActivity|topResumedActivity" | grep -q CustomQtActivity
 }
