@@ -71,6 +71,8 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p out
+          # the WatchKit 2 app has no product types for the iOS simulator: the app is built without it
+          python3 .github/scripts/ios_simulator_project.py build-qdomyos-zwift-Qt_5_15_2_for_iOS-Debug/qdomyoszwift.xcodeproj/project.pbxproj
           # Qt of the App Store build has x86_64 (simulator) and arm64 (device) slices
           xcodebuild -project src/qdomyoszwift.xcodeproj -scheme qdomyoszwift -configuration Release \
             -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath dd \
