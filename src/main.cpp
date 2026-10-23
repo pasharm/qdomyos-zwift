@@ -8,6 +8,9 @@
 #include "EventHandler.h"
 #endif
 #endif
+#ifdef Q_OS_ANDROID
+#include <unistd.h> // _exit
+#endif
 #include <QQmlContext>
 #include <QTranslator>
 #include <QLocale>
@@ -1267,6 +1270,14 @@ int main(int argc, char *argv[]) {
         homeform *h = new homeform(&engine, &bl);
         QObject::connect(app.data(), &QCoreApplication::aboutToQuit, h,
                          &homeform::aboutToQuit); // NOTE: clazy-unneeded-cast
+#ifdef Q_OS_ANDROID
+        // Qt 5.15.0 calls exit() twice when QZ closes: from its thread after main() returns and from
+        // System.exit() in QtActivityDelegate.onDestroy(). Both run the static destructors at once and
+        // the process aborts ("Cannot remove multiple registrations for QtQuick 2"). An atexit()
+        // handler registered last runs first: the first exit() ends the process without them, the
+        // locals of main() are destroyed by then
+        QObject::connect(app.data(), &QCoreApplication::aboutToQuit, [] { atexit([] { _exit(0); }); });
+#endif
 
         {
 #ifdef Q_OS_ANDROID
