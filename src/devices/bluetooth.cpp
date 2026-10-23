@@ -6,6 +6,7 @@
 #include <QRegularExpression>
 #include <QDateTime>
 #include <QFile>
+#include <memory>
 #include <QMetaEnum>
 
 #include <QtXml>
@@ -4056,8 +4057,22 @@ void bluetooth::connectHeartRateBelt(const QBluetoothDeviceInfo &b) {
     connect(heartRateBelt, &heartratebelt::heartRate, this->device(), &bluetoothdevice::heartRate);
     connect(heartRateBelt, &heartratebelt::rrIntervalReceived, this->device(), &bluetoothdevice::rrIntervalReceived);
     heartRateBelt->deviceDiscovered(b);
-    if (homeform::singleton())
-        homeform::singleton()->setToastRequested(QObject::tr("%1 (HR sensor) connected!").arg(b.name()));
+
+    // "connected!" waits for the first heart rate: a watch accepts the connection even when it does not
+    // broadcast. No heart rate in 15 s – say so instead
+    heartratebelt *belt = heartRateBelt;
+    const QString name = b.name();
+    auto firstHeartRate = std::make_shared<QMetaObject::Connection>();
+    *firstHeartRate = connect(belt, &heartratebelt::heartRate, this, [firstHeartRate, name]() {
+        QObject::disconnect(*firstHeartRate);
+        if (homeform::singleton())
+            homeform::singleton()->setToastRequested(QObject::tr("%1 (HR sensor) connected!").arg(name));
+    });
+    QTimer::singleShot(15000, belt, [belt, name]() {
+        if (!belt->lastHeartRateTime.isValid() && homeform::singleton())
+            homeform::singleton()->setToastRequested(
+                QObject::tr("%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.").arg(name));
+    });
 }
 
 // Applies a heart rate sensor chosen while QZ is running, so no restart is needed:
@@ -4072,14 +4087,24 @@ void bluetooth::reconnectHeartRateBelt(const QString &name) {
             : name;
     qDebug() << "bluetooth::reconnectHeartRateBelt()" << heartRateBeltName;
 
+    // Already connected only while the heart rate still comes: a watch that stopped broadcasting keeps the
+    // link up, so a silent sensor is dropped and searched for again below
     if (heartRateBelt && heartRateBelt->connected() && !heartRateBeltName.startsWith(QStringLiteral("Disabled")) &&
-        heartRateBelt->bluetoothDevice.name().startsWith(heartRateBeltName)) {
+        heartRateBelt->bluetoothDevice.name().startsWith(heartRateBeltName) &&
+        heartRateBelt->lastHeartRateTime.isValid() &&
+        heartRateBelt->lastHeartRateTime.msecsTo(QDateTime::currentDateTime()) < 5000) {
         qDebug() << "heart rate sensor already connected";
         if (homeform::singleton())
             homeform::singleton()->setToastRequested(
                 QObject::tr("%1 (HR sensor) connected!").arg(heartRateBelt->bluetoothDevice.name()));
         return;
     }
+
+    // The same sensor gone silent: the list of seen devices still has it, so connect only after a fresh scan
+    // finds it advertising again
+    const bool silentSameSensor =
+        heartRateBelt && !heartRateBeltName.startsWith(QStringLiteral("Disabled")) &&
+        heartRateBelt->bluetoothDevice.name().startsWith(heartRateBeltName);
 
     stopHeartRateBeltDiscovery();
     if (heartRateBelt) {
@@ -4100,7 +4125,7 @@ void bluetooth::reconnectHeartRateBelt(const QString &name) {
         return;
 
     for (const QBluetoothDeviceInfo &b : qAsConst(devices)) {
-        if (b.name().startsWith(heartRateBeltName)) {
+        if (!silentSameSensor && b.name().startsWith(heartRateBeltName)) {
             connectHeartRateBelt(b);
             return;
         }

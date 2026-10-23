@@ -34,6 +34,9 @@ class heartratebelt : public treadmill {
     heartratebelt();
     ~heartratebelt();
     bool connected() override;
+    // Last heart rate notification: a watch that stops broadcasting can keep the link up, so connected()
+    // alone does not tell whether the heart rate still comes
+    QDateTime lastHeartRateTime;
 
   private:
     QLowEnergyService *gattCommunicationChannelService = nullptr;

@@ -100,6 +100,7 @@ void heartratebelt::characteristicChanged(const QLowEnergyCharacteristic &charac
             Heart = (uint8_t)newValue[1];
             index = 2;
         }
+        lastHeartRateTime = QDateTime::currentDateTime();
         emit heartRate((uint8_t)Heart.value());
 
         // Bit 3: Energy Expended Status
