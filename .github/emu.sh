@@ -208,6 +208,8 @@ open_tile_size() {
   scroll_to '^General UI Options$' || return 1
   tap_ui '^General UI Options$' 700 1000
   sleep 4
+  # the modern view puts its own rows first, Tile size is below the screen edge
+  scroll_to '^Tile size:$' 6 || return 1
   tap_row '^Tile size:$' '^[0-9.]+$' || return 1
   sleep 2
   adb shell input keyevent KEYCODE_MOVE_END || true
