@@ -322,13 +322,10 @@ jobs:
       matrix:
         api-level: [24, 26, 28, 29, 30, 31, 33, 35, 36]
         include:
-          # QZ crashes on exit here (SIGSEGV in QCoreApplication::organizationName while Qt shuts down):
-          # the back button test reports it, but it must not block the other API levels
           - api-level: 24
             target: default
             arch: x86
             android-version: "Android 7.0"
-            flaky: true
           # google_apis: the default image has no WebView, and QZ stops at start without one
           - api-level: 26
             target: google_apis
