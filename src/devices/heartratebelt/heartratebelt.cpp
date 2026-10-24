@@ -246,8 +246,8 @@ void heartratebelt::deviceDiscovered(const QBluetoothDeviceInfo &device) {
     emit debug(QStringLiteral("Found new device: ") + device.name() + QStringLiteral(" (") +
                device.address().toString() + ')');
 
-    if(homeform::singleton())
-        homeform::singleton()->setToastRequested(QObject::tr("%1 connected!").arg(device.name()));
+    // No "connected!" here: nothing is connected yet. bluetooth::connectHeartRateBelt() says it on the first
+    // heart rate
 
     // if(device.name().startsWith(heartRateBeltName))
     {
