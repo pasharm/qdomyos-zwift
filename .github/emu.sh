@@ -1,9 +1,10 @@
 #!/bin/bash
-# Test only (T-287): the dot of a classic section header centred on the first line of the title.
-# The reference APK (apk-base: the header as in master, the dot at a fixed y) and the tested APK
-# (apk-debug: the fix) take the same frames of the classic settings page: the top of the list and
-# an open section with nested headers, at a text size of 100 and 170 (the largest - long titles
-# wrap there). The dot is measured on the frames afterwards.
+# Test only (T-290): the accessible state and press action of the classic section headers.
+# The reference APK (apk-base: master, `expanded` and `toggle()` that do not exist) and the tested
+# APK (apk-debug: the fix) go through the same steps on the classic settings page: the press action
+# of a screen reader (ACTION_CLICK from .github/A11yDriver.java, what TalkBack sends on a double
+# tap) on "Bike Options" (opens, then closes the section) and on "Tiles Options" (opens its page),
+# a frame after each; and the count of "expanded is not defined" in the log of each APK.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -189,34 +190,58 @@ wait_tiles() {
   done
   echo "!! tiles NOT shown" >> $STEPLOG
 }
-# settings_frames <prefix> <text size>: a fresh start with that text size, the settings page:
-# the top of the list, then Bike Options open (its nested sections) a few swipes down
-settings_frames() {
-  local s="$1" z="$2"
-  start_fresh "ui_text_scale_system=false\nui_text_scale=$z"
+# The driver: compiled here against the SDK the emulator action installed (T-222)
+SDK=${ANDROID_SDK_ROOT:-$ANDROID_HOME}
+JAR=$SDK/platforms/android-35/android.jar
+BT=$(ls -d $SDK/build-tools/*/ | sort -V | tail -n 1)
+mkdir -p drv
+if javac -source 8 -target 8 -bootclasspath $JAR -d drv .github/A11yDriver.java >> $STEPLOG 2>&1 \
+    && ${BT}d8 --lib $JAR --output a11y.jar drv/*.class >> $STEPLOG 2>&1; then
+  adb push a11y.jar /data/local/tmp/a11y.jar > /dev/null
+  echo "driver built" >> $STEPLOG
+else
+  echo "driver NOT built" >> $STEPLOG
+fi
+# drv <name> step...: one connection, all its steps, output in drv/<name>.txt (no dump meanwhile)
+drv() {
+  local name=$1 args="" a
+  shift
+  for a in "$@"; do args="$args '$a'"; done
+  echo "== drv $name:$args" >> $STEPLOG
+  timeout 200 adb shell "CLASSPATH=/data/local/tmp/a11y.jar app_process / A11yDriver$args" > drv/$name.txt 2>&1 || true
+  cat drv/$name.txt >> $STEPLOG
+  sleep 2
+}
+# press_steps <prefix>: the settings page, the press action on a section and on a page link
+press_steps() {
+  local s="$1"
+  start_fresh ""
   wait_tiles
   goto_settings || return 1
-  shot $s-$z-01-top
-  if tap_ui '^Bike Options$'; then
-    sleep 4
-    adb shell input swipe 700 2000 700 1100 600 || true
-    sleep 2
-    shot $s-$z-02-bike
-    adb shell input swipe 700 2000 700 1100 600 || true
-    sleep 2
-    shot $s-$z-03-bike
-  fi
+  shot $s-01-top
+  drv $s-bike-open 'find:Bike Options' 'click:Bike Options'
+  sleep 3
+  snap $s-02-bike-pressed
+  drv $s-bike-close 'click:Bike Options'
+  sleep 3
+  snap $s-03-bike-pressed-again
+  scroll_to '^Tiles Options$' 8
+  drv $s-tiles 'find:Tiles Options' 'click:Tiles Options'
+  sleep 4
+  snap $s-04-tiles-pressed
+  echo "!! $s: 'expanded is not defined' in the log: $(adb logcat -d | grep -c 'expanded is not defined')" >> $STEPLOG
+  echo "!! $s: 'toggle is not defined' in the log: $(adb logcat -d | grep -c 'toggle is not defined')" >> $STEPLOG
 }
 
-# 1. Reference: the header as in master
+# 1. Reference: master
 install_apk apk-base/android-debug.apk
-settings_frames b 100
-settings_frames b 170
+adb logcat -c || true
+press_steps b
 
 # 2. The tested APK
 install_apk apk-debug/android-debug.apk
-settings_frames a 100
-settings_frames a 170
+adb logcat -c || true
+press_steps a
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
