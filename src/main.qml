@@ -1564,6 +1564,9 @@ ApplicationWindow {
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "picture_in_picture_alt"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { console.log("floating!"); floatingOpen(); }
             anchors.left: toolButton.right
+            // The header is as tall as the back arrow, which grows with the text size (iOS):
+            // the icon buttons stay in its middle, in line with the arrow and the title
+            anchors.verticalCenter: parent.verticalCenter
             // Modern look: on the home page only, the other pages have nothing to float
             visible: OS_VERSION === "Android" ? (!window.ui.modern || stackView.depth === 1) : false
         }
@@ -1612,6 +1615,7 @@ ApplicationWindow {
                 drawer.close()
             }
             anchors.right: toolButtonSaveSettings.left
+            anchors.verticalCenter: parent.verticalCenter
             visible: false
         }
 
@@ -1647,6 +1651,7 @@ ApplicationWindow {
                     stackView.currentItem.showSettingsSearch()
             }
             anchors.right: toolButtonLoadSettings.left
+            anchors.verticalCenter: parent.verticalCenter
             // Modern look: the settings keep their search field on the page itself; the button
             // shows once that field has scrolled off the top and brings it back. It fades and
             // grows in, and out the same way, instead of popping up under the finger
@@ -1672,6 +1677,7 @@ ApplicationWindow {
                 popupSaveFile.open()
             }
             anchors.right: toolButtonAutoResistance.left/*toolClassifica.left*/
+            anchors.verticalCenter: parent.verticalCenter
             visible: false
         }
 
@@ -1700,6 +1706,7 @@ ApplicationWindow {
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "map"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { loadMaps(); }
             anchors.right: toolButtonChart.left
+            anchors.verticalCenter: parent.verticalCenter
             visible: rootItem.mapsVisible
         }      
 
@@ -1718,6 +1725,7 @@ ApplicationWindow {
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "videocam"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { loadVideo(); }
             anchors.right: toolButtonMaps.left
+            anchors.verticalCenter: parent.verticalCenter
             visible: rootItem.videoIconVisible
         }
 
@@ -1727,6 +1735,7 @@ ApplicationWindow {
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "show_chart"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { rootItem.chartFooterVisible = !rootItem.chartFooterVisible }
             anchors.right: toolButtonLockTiles.left
+            anchors.verticalCenter: parent.verticalCenter
             visible: rootItem.chartIconVisible
         }
 
@@ -1736,6 +1745,7 @@ ApplicationWindow {
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (window.lockTiles ? "lock_open" : "lock"); color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { window.lockTiles = !window.lockTiles; console.log("lock tiles toggled " + window.lockTiles); popuplockTiles.open(); popuplockTilesAutoClose.running = true; }
             anchors.right: toolButtonAutoResistance.left
+            anchors.verticalCenter: parent.verticalCenter
             // Modern look: the tiles are on the home page only, so is their lock; while the
             // equipment is being searched (rootItem.labelHelp) there are no tiles yet
             visible: window.ui.modern ? stackView.depth === 1 && typeof rootItem !== "undefined" && !rootItem.labelHelp : !toolButtonSaveSettings.visible
@@ -1750,6 +1760,7 @@ ApplicationWindow {
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (rootItem.autoResistance ? "motion_mode" : "pause_circle"); color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { rootItem.autoResistance = !rootItem.autoResistance; console.log("auto resistance toggled " + rootItem.autoResistance); popupAutoResistance.open(); popupAutoResistanceAutoClose.running = true; }
             anchors.right: parent.right
+            anchors.verticalCenter: parent.verticalCenter
             // Modern look: a workout control, on the home page only and once the equipment is
             // connected (before that there is no resistance to follow)
             visible: window.ui.modern ? stackView.depth === 1 && typeof rootItem !== "undefined" && !rootItem.labelHelp : !headerToolbar.settingsPageActive
