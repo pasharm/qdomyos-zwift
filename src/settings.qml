@@ -7968,9 +7968,6 @@ import QtQuick 2.12 as Quick212
                         onClicked: {
                             settings.ui_text_scale_system = checked;
                             window.setTextScaleOption("ui_text_scale_system", checked);
-                            // back to the value the field shows for this mode, also after an edit
-                            // (savedText follows shownValue; set here too when shownValue stays the same)
-                            uiTextScaleTextField.text = uiTextScaleTextField.savedText;
                         }
                     }
 
@@ -8010,6 +8007,10 @@ import QtQuick 2.12 as Quick212
                             enabled: !followsSystem
                             // the saved value: the OK is enabled (and in the modern look filled) only on a change (T-252)
                             savedText: shownValue
+                            // back to the value the field shows for this mode, also after an edit and
+                            // whatever turned the mode (this switch, the search card): the same value
+                            // in both modes leaves savedText as it is, and the typed number stayed
+                            onFollowsSystemChanged: text = savedText
                             horizontalAlignment: Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
