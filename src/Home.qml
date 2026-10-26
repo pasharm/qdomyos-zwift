@@ -519,12 +519,21 @@ HomeForm {
 
             transitions: Transition { NumberAnimation { property: "opacity"; duration: 200} }
 
+            // Only the tile of the current look is created: hidden, the other one still kept
+            // its elements and bindings, and its texts took every new value. Switching the
+            // look with the page open replaces the tile
+            Loader {
+                anchors.fill: parent
+                sourceComponent: window.ui.modern ? modernTileComponent : classicTileComponent
+            }
+
             // Modern tile: a card with the label and a small icon on top, the value in the
             // middle, the zone colour as a bar on the left edge and as the value colour
+            Component {
+                id: modernTileComponent
             Item {
                 id: modernTile
                 anchors.fill: parent
-                visible: window.ui.modern
                 readonly property real zoom: settings.ui_zoom / 100
                 readonly property bool zoned: !largeButton && valueFontColor !== "white"
 
@@ -736,11 +745,13 @@ HomeForm {
                     Accessible.onPressAction: { largeButton_clicked(objectName) }
                 }
             }
+            }
 
             // Classic tile
+            Component {
+                id: classicTileComponent
             Item {
                 anchors.fill: parent
-                visible: !window.ui.modern
 
             Rectangle {
                 width: id1.width - 2 * settings.ui_zoom / 100
@@ -915,6 +926,7 @@ HomeForm {
                 Accessible.description: name + ": " + largeButtonLabel
                 Accessible.focusable: true
                 Accessible.onPressAction: { largeButton_clicked(objectName) }
+            }
             }
             }
         }
