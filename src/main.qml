@@ -540,6 +540,22 @@ ApplicationWindow {
         AndroidStatusBar.setSystemBarsColor(ui.modern ? ui.bg : "black", ui.dark)
         systemBarsColored = ui.modern
     }
+    // T-293, test only: the window and the system bars at 3, 10 and 40 s
+    Timer {
+        property int n: 0
+        interval: n === 0 ? 3000 : (n === 1 ? 7000 : 30000)
+        running: Qt.platform.os === "ios" && n < 3
+        repeat: true
+        onTriggered: {
+            console.log("T293 qml", n, "window", window.x, window.y, window.width, window.height,
+                        "visibility", window.visibility, "flags", window.flags, "screen", Screen.width, Screen.height,
+                        "avail", Screen.desktopAvailableWidth, Screen.desktopAvailableHeight,
+                        "modern", ui.modern, "dark", ui.dark, "systemDark", ui.systemDark, "bg", ui.bg,
+                        "colored", window.systemBarsColored)
+            AndroidStatusBar.logSystemBars("t" + n)
+            n++
+        }
+    }
     Connections {
         target: window.ui
         function onBgChanged() { window.applySystemBars() }

@@ -142,6 +142,15 @@ QVariantMap AndroidStatusBar::safeAreaInsets() const
                        {QStringLiteral("left"), left}, {QStringLiteral("right"), right}};
 }
 
+void AndroidStatusBar::logSystemBars(const QString &tag) const
+{
+#if defined(Q_OS_IOS) && !defined(IO_UNDER_QT)
+    lockscreen::logSystemBars(tag.toUtf8().constData());
+#else
+    Q_UNUSED(tag)
+#endif
+}
+
 QString AndroidStatusBar::systemAccentColor(bool dark) const
 {
 #ifdef Q_OS_ANDROID

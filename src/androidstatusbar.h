@@ -60,6 +60,8 @@ public:
     // iOS 13+: the safe area of the screen (status bar and cutout, home indicator, sides held
     // sideways) in points, as { top, bottom, left, right }. Zeros elsewhere.
     Q_INVOKABLE QVariantMap safeAreaInsets() const;
+    // T-293, test only
+    Q_INVOKABLE void logSystemBars(const QString &tag) const;
     // Accent of the dynamic palette that Android 12+ (API 31) builds from the wallpaper, as
     // "#rrggbb": the Material 3 primary for a dark page (dark = true) or a light one. Empty
     // below API 31 and off Android. Read on demand: QML asks again on return to the foreground.

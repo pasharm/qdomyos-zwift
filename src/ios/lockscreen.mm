@@ -965,4 +965,40 @@ void lockscreen::safeAreaInsets(double *top, double *bottom, double *left, doubl
         }
     }
 }
+
+// T-293, test only: what UIKit has around the Qt window
+void lockscreen::logSystemBars(const char *tag) {
+    if (@available(iOS 13.0, *)) {
+        for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+            if (![scene isKindOfClass:[UIWindowScene class]])
+                continue;
+            UIWindowScene *ws = (UIWindowScene *)scene;
+            qDebug() << "T293" << tag << "scene" << (int)ws.activationState << "screen"
+                     << ws.screen.bounds.size.width << ws.screen.bounds.size.height
+                     << "statusBarHidden" << (bool)ws.statusBarManager.statusBarHidden
+                     << "statusBarStyle" << (int)ws.statusBarManager.statusBarStyle
+                     << "statusBarFrame" << ws.statusBarManager.statusBarFrame.size.height
+                     << "screenDark" << (UIScreen.mainScreen.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark);
+            for (UIWindow *w in ws.windows) {
+                UIViewController *c = w.rootViewController;
+                qDebug() << "T293" << tag << "window" << NSStringFromClass([w class]).UTF8String
+                         << "frame" << w.frame.origin.x << w.frame.origin.y << w.frame.size.width << w.frame.size.height
+                         << "safe" << w.safeAreaInsets.top << w.safeAreaInsets.bottom
+                         << "key" << (bool)w.isKeyWindow << "hidden" << (bool)w.hidden
+                         << "bg" << (w.backgroundColor ? [w.backgroundColor description].UTF8String : "nil")
+                         << "vc" << (c ? NSStringFromClass([c class]).UTF8String : "nil");
+                if (!c)
+                    continue;
+                qDebug() << "T293" << tag << "vc prefersHidden" << (bool)c.prefersStatusBarHidden
+                         << "style" << (int)c.preferredStatusBarStyle
+                         << "view" << c.view.frame.size.width << c.view.frame.size.height
+                         << "viewBg" << (c.view.backgroundColor ? [c.view.backgroundColor description].UTF8String : "nil");
+                for (UIView *v in c.view.subviews) {
+                    qDebug() << "T293" << tag << "  subview" << NSStringFromClass([v class]).UTF8String
+                             << v.frame.origin.x << v.frame.origin.y << v.frame.size.width << v.frame.size.height;
+                }
+            }
+        }
+    }
+}
 #endif

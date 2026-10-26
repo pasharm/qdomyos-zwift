@@ -143,6 +143,8 @@ class lockscreen {
 
     // safe area of the Qt window in points (status bar and cutout, home indicator); 0 before iOS 13
     static void safeAreaInsets(double *top, double *bottom, double *left, double *right);
+    // T-293, test only
+    static void logSystemBars(const char *tag);
 };
 
 #endif // LOCKSCREEN_H
