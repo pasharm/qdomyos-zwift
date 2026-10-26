@@ -4153,6 +4153,10 @@ void bluetooth::reconnectHeartRateBelt(const QString &name) {
         heartRateBelt->disconnectBluetooth();
         heartRateBelt->deleteLater();
         heartRateBelt = nullptr;
+        // its last heart rate would stay with nothing left to reset it (the dropped sensor no longer sends 0
+        // when it goes silent)
+        if (this->device())
+            this->device()->heartRate(0);
     }
 
     if (heartRateBeltName.startsWith(QStringLiteral("Disabled"))) {
