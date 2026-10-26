@@ -6693,6 +6693,26 @@ Please enter it below:</source>
         <translation>トレッドミルハードウェアの物理的なスタート/一時停止/停止ボタンの処理を有効にする</translation>
     </message>
     <message>
+        <source>Life Fitness Options</source>
+        <translation>Life Fitness連携設定</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Life Fitnessユーザー名/メール:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Life Fitnessパスワード:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Life Fitnessゲストログイン（実験的）</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>アカウント不要の合成Life Fitnessプロファイルを使用します。有効にすると、ユーザー名、パスワード、保存済みのアカウントデータは無視されます。サポートされているゲストログインのテストにのみ使用してください。</translation>
+    </message>
+    <message>
         <source>RunnerT Options</source>
         <translation>RunnerT オプション</translation>
     </message>
@@ -8139,11 +8159,11 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
     </message>
     <message>
         <source>Text size</source>
-        <translation>文字サイズ</translation>
+        <translation type="vanished">文字サイズ</translation>
     </message>
     <message>
         <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
-        <translation>モダンインターフェースの文字サイズ（パーセント、80～170）。既定値は 100 です。</translation>
+        <translation type="vanished">モダンインターフェースの文字サイズ（パーセント、80～170）。既定値は 100 です。</translation>
     </message>
     <message>
         <source>Appearance</source>

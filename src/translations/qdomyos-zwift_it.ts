@@ -6913,6 +6913,26 @@ NOTE IMPORTANTI:
         <translation>RUN100E (Usa Inclinazione Richiesta)</translation>
     </message>
     <message>
+        <source>Life Fitness Options</source>
+        <translation>Opzioni Life Fitness</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Nome utente/email Life Fitness:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Password Life Fitness:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Accesso ospite Life Fitness (sperimentale)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>Usa un profilo Life Fitness sintetico senza account. Se attivo, nome utente, password e dati dell&apos;account in cache vengono ignorati; usare solo per testare l&apos;accesso ospite supportato.</translation>
+    </message>
+    <message>
         <source>Default: 200. Change this only if you have random issues with speed or inclination (try to put 300)</source>
         <translation>Predefinito: 200. Cambia questo solo se hai problemi casuali di velocità o inclinazione (prova a mettere 300)</translation>
     </message>
@@ -8107,11 +8127,11 @@ Predefinito: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Text size</source>
-        <translation>Dimensione del testo</translation>
+        <translation type="vanished">Dimensione del testo</translation>
     </message>
     <message>
         <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
-        <translation>Dimensione del testo dell&apos;interfaccia moderna, in percentuale, da 80 a 170. Il valore predefinito è 100.</translation>
+        <translation type="vanished">Dimensione del testo dell&apos;interfaccia moderna, in percentuale, da 80 a 170. Il valore predefinito è 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

@@ -5622,6 +5622,26 @@ Non : QZ le garde comme tapis de course et ne redemandera plus (un vélo peut to
         <translation>Augmente la résistance affichée par QZ dans la tuile Résistance Peloton. Si la conversion calculée par QZ de l&apos;échelle de résistance de votre vélo à celle de Peloton vous semble trop faible, le nombre que vous entrez ici sera ajouté à la résistance calculée sans augmenter votre effort ni votre résistance réelle. (Exemple : Si QZ affiche une résistance Peloton de 30 et que vous entrez 5, QZ affichera 35.)</translation>
     </message>
     <message>
+        <source>Life Fitness Options</source>
+        <translation>Options Life Fitness</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Nom d&apos;utilisateur/courriel Life Fitness :</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Mot de passe Life Fitness :</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Connexion invité Life Fitness (expérimentale)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>Utilise un profil Life Fitness synthétique sans compte. Lorsque cette option est activée, le nom d&apos;utilisateur, le mot de passe et les données de compte en cache sont ignorés ; à utiliser uniquement pour tester la connexion invité prise en charge.</translation>
+    </message>
+    <message>
         <source>This changes the virtual Bluetooth bridge from the standard FTMS to the Power Sensor interface. Default is off.</source>
         <translation>Cela modifie l&apos;appareil Bluetooth virtuel du standard FTMS à l&apos;interface du capteur de puissance. Par défaut, désactivé.</translation>
     </message>
@@ -8119,11 +8139,11 @@ Par défaut : A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Text size</source>
-        <translation>Taille du texte</translation>
+        <translation type="vanished">Taille du texte</translation>
     </message>
     <message>
         <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
-        <translation>Taille du texte de l&apos;interface moderne, en pourcentage, de 80 à 170. La valeur par défaut est 100.</translation>
+        <translation type="vanished">Taille du texte de l&apos;interface moderne, en pourcentage, de 80 à 170. La valeur par défaut est 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

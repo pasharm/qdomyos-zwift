@@ -4690,7 +4690,7 @@ V dalším okně povolte přístup ke složce QZ.</translation>
     </message>
     <message>
         <source>UI Zoom:</source>
-        <translation>Velikost rozhraní:</translation>
+        <translation type="vanished">Velikost rozhraní:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4702,7 +4702,7 @@ V dalším okně povolte přístup ke složce QZ.</translation>
     </message>
     <message>
         <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol</source>
-        <translation>Mění velikost dlaždic s údaji. Výchozí: 100%. Chcete-li, aby se na obrazovku vešlo více dlaždic, zvolte menší procento, pro jejich zvětšení zvolte víc než 100%. Znak procenta nezadávejte</translation>
+        <translation type="vanished">Mění velikost dlaždic s údaji. Výchozí: 100%. Chcete-li, aby se na obrazovku vešlo více dlaždic, zvolte menší procento, pro jejich zvětšení zvolte víc než 100%. Znak procenta nezadávejte</translation>
     </message>
     <message>
         <source>App Language:</source>
@@ -5740,6 +5740,14 @@ V dalším okně povolte přístup ke složce QZ.</translation>
     <message>
         <source>General UI Options</source>
         <translation>Obecné možnosti rozhraní</translation>
+    </message>
+    <message>
+        <source>Tile size:</source>
+        <translation>Velikost dlaždic:</translation>
+    </message>
+    <message>
+        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
+        <translation>Mění velikost dlaždic s údaji. Výchozí: 100%. Chcete-li, aby se na obrazovku vešlo více dlaždic, zvolte menší procento, pro jejich zvětšení zvolte více než 100%. Znak procenta nezadávejte. Dříve pod názvem „Velikost rozhraní“ (UI Zoom).</translation>
     </message>
     <message>
         <source>Top Bar Enabled</source>
@@ -7249,6 +7257,26 @@ DŮLEŽITÉ:
         <translation>km</translation>
     </message>
     <message>
+        <source>Life Fitness Options</source>
+        <translation>Možnosti Life Fitness</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Uživatelské jméno/e-mail Life Fitness:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Heslo Life Fitness:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Přihlášení jako host Life Fitness (experimentální)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>Použije syntetický profil Life Fitness bez účtu. Po zapnutí se uživatelské jméno, heslo a uložená data účtu ignorují; používejte jen pro testování podporovaného přihlášení jako host.</translation>
+    </message>
+    <message>
         <source>Inclination Delay:</source>
         <translation>Zpoždění sklonu:</translation>
     </message>
@@ -8046,11 +8074,11 @@ Výchozí: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Text size</source>
-        <translation>Velikost textu</translation>
+        <translation type="vanished">Velikost textu</translation>
     </message>
     <message>
         <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
-        <translation>Velikost textu moderního rozhraní v procentech, od 80 do 170. Výchozí: 100.</translation>
+        <translation type="vanished">Velikost textu moderního rozhraní v procentech, od 80 do 170. Výchozí: 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

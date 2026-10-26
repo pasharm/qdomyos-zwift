@@ -5674,6 +5674,26 @@ Não: o QZ o mantém como esteira e não pergunta de novo (uma bicicleta ainda p
         <translation>Aumenta a resistência que o QZ exibe no bloco de Resistência Peloton. Se a conversão calculada do QZ da escala de resistência da sua bicicleta para a da Peloton parecer muito baixa, o número que você inserir aqui será adicionado à resistência calculada sem aumentar seu esforço ou resistência real. (Exemplo: Se o QZ exibir resistência Peloton de 30 e você inserir 5, o QZ exibirá 35.)</translation>
     </message>
     <message>
+        <source>Life Fitness Options</source>
+        <translation>Opções Life Fitness</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Nome de usuário/e-mail Life Fitness:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Senha Life Fitness:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Login de convidado Life Fitness (experimental)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>Usa um perfil sintético da Life Fitness sem conta. Quando ativado, o nome de usuário, a senha e os dados da conta em cache são ignorados; use apenas para testar o login de convidado compatível.</translation>
+    </message>
+    <message>
         <source>This changes the virtual Bluetooth bridge from the standard FTMS to the Power Sensor interface. Default is off.</source>
         <translation>Isso muda a conexão Bluetooth virtual de FTMS padrão para a interface do sensor de potência. Padrão: desativado.</translation>
     </message>
@@ -8103,11 +8123,11 @@ Padrão: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Text size</source>
-        <translation>Tamanho do texto</translation>
+        <translation type="vanished">Tamanho do texto</translation>
     </message>
     <message>
         <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
-        <translation>Tamanho do texto da interface moderna, em percentagem, de 80 a 170. O padrão é 100.</translation>
+        <translation type="vanished">Tamanho do texto da interface moderna, em percentagem, de 80 a 170. O padrão é 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

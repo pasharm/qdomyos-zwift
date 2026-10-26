@@ -6701,6 +6701,26 @@ Please enter it below:</source>
         <translation>Обробляти натискання фізичних кнопок «Старт», «Пауза» і «Стоп» на корпусі бігової доріжки</translation>
     </message>
     <message>
+        <source>Life Fitness Options</source>
+        <translation>Параметри Life Fitness</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Ім’я користувача/пошта Life Fitness:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Пароль Life Fitness:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Гостьовий вхід Life Fitness (експериментально)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>Використовує синтетичний профіль Life Fitness без облікового запису. Якщо увімкнено, ім’я користувача, пароль і збережені дані облікового запису не використовуються; вмикайте лише для перевірки підтримуваного гостьового входу.</translation>
+    </message>
+    <message>
         <source>RunnerT Options</source>
         <translation>Параметри RunnerT</translation>
     </message>
@@ -8066,11 +8086,11 @@ Default: A = -0.96, B = 1.33</source>
     </message>
     <message>
         <source>Text size</source>
-        <translation>Розмір тексту</translation>
+        <translation type="vanished">Розмір тексту</translation>
     </message>
     <message>
         <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
-        <translation>Розмір тексту нового інтерфейсу у відсотках, від 80 до 170. Типово – 100.</translation>
+        <translation type="vanished">Розмір тексту нового інтерфейсу у відсотках, від 80 до 170. Типово – 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

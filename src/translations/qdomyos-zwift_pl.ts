@@ -4690,7 +4690,7 @@ W następnym oknie zezwól na dostęp do folderu QZ.</translation>
     </message>
     <message>
         <source>UI Zoom:</source>
-        <translation>Skala interfejsu:</translation>
+        <translation type="vanished">Skala interfejsu:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4702,7 +4702,7 @@ W następnym oknie zezwól na dostęp do folderu QZ.</translation>
     </message>
     <message>
         <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol</source>
-        <translation>Zmienia rozmiar kafelków wyświetlających dane. Wartość domyślna to 100%. Aby zmieścić więcej kafelków na ekranie, wybierz mniejszą wartość. Aby je powiększyć, wybierz wartość powyżej 100%. Nie wpisuj znaku procentu.</translation>
+        <translation type="vanished">Zmienia rozmiar kafelków wyświetlających dane. Wartość domyślna to 100%. Aby zmieścić więcej kafelków na ekranie, wybierz mniejszą wartość. Aby je powiększyć, wybierz wartość powyżej 100%. Nie wpisuj znaku procentu.</translation>
     </message>
     <message>
         <source>App Language:</source>
@@ -5740,6 +5740,14 @@ W następnym oknie zezwól na dostęp do folderu QZ.</translation>
     <message>
         <source>General UI Options</source>
         <translation>Ogólne opcje interfejsu użytkownika</translation>
+    </message>
+    <message>
+        <source>Tile size:</source>
+        <translation>Rozmiar kafelków:</translation>
+    </message>
+    <message>
+        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
+        <translation>Zmienia rozmiar kafelków wyświetlających dane. Wartość domyślna to 100%. Aby zmieścić więcej kafelków na ekranie, wybierz mniejszą wartość. Aby je powiększyć, wybierz wartość powyżej 100%. Nie wpisuj znaku procentu. Dawniej nazywane „Skala interfejsu” (UI Zoom).</translation>
     </message>
     <message>
         <source>Top Bar Enabled</source>
@@ -7249,6 +7257,26 @@ WAŻNE UWAGI:
         <translation>km</translation>
     </message>
     <message>
+        <source>Life Fitness Options</source>
+        <translation>Opcje Life Fitness</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Nazwa użytkownika/e-mail Life Fitness:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Hasło Life Fitness:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Logowanie jako gość Life Fitness (eksperymentalne)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>Używa syntetycznego profilu Life Fitness bez konta. Po włączeniu nazwa użytkownika, hasło i zapisane dane konta są ignorowane; używaj tylko do testowania obsługiwanego logowania jako gość.</translation>
+    </message>
+    <message>
         <source>Inclination Delay:</source>
         <translation>Opóźnienie nachylenia:</translation>
     </message>
@@ -8046,11 +8074,11 @@ Domyślnie: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Text size</source>
-        <translation>Rozmiar tekstu</translation>
+        <translation type="vanished">Rozmiar tekstu</translation>
     </message>
     <message>
         <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
-        <translation>Rozmiar tekstu nowoczesnego interfejsu w procentach, od 80 do 170. Domyślnie: 100.</translation>
+        <translation type="vanished">Rozmiar tekstu nowoczesnego interfejsu w procentach, od 80 do 170. Domyślnie: 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

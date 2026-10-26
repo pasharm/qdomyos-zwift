@@ -6669,6 +6669,26 @@ Bitte geben Sie ihn unten ein:</translation>
         <translation>Verarbeitung der physischen Start/Pause/Stopp-Tasten am Laufband aktivieren</translation>
     </message>
     <message>
+        <source>Life Fitness Options</source>
+        <translation>Life Fitness Optionen</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Life Fitness Benutzername/E-Mail:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Life Fitness Passwort:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Life Fitness Gastanmeldung (experimentell)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>Verwendet ein synthetisches Life-Fitness-Profil ohne Konto. Wenn aktiviert, werden Benutzername, Passwort und zwischengespeicherte Kontodaten ignoriert; nur zum Testen der unterstützten Gastanmeldung verwenden.</translation>
+    </message>
+    <message>
         <source>RunnerT Options</source>
         <translation>RunnerT Optionen</translation>
     </message>
@@ -8099,11 +8119,11 @@ Standard: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Text size</source>
-        <translation>Textgröße</translation>
+        <translation type="vanished">Textgröße</translation>
     </message>
     <message>
         <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
-        <translation>Textgröße der modernen Oberfläche in Prozent, von 80 bis 170. Standard ist 100.</translation>
+        <translation type="vanished">Textgröße der modernen Oberfläche in Prozent, von 80 bis 170. Standard ist 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

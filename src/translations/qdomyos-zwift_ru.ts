@@ -6701,6 +6701,26 @@ Please enter it below:</source>
         <translation>Обрабатывать нажатия физических кнопок «Старт», «Пауза» и «Стоп» на корпусе беговой дорожки</translation>
     </message>
     <message>
+        <source>Life Fitness Options</source>
+        <translation>Параметры Life Fitness</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Имя пользователя/почта Life Fitness:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Пароль Life Fitness:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Гостевой вход Life Fitness (экспериментально)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>Использует синтетический профиль Life Fitness без учётной записи. Если включено, имя пользователя, пароль и сохранённые данные учётной записи не используются; включайте только для проверки поддерживаемого гостевого входа.</translation>
+    </message>
+    <message>
         <source>RunnerT Options</source>
         <translation>Параметры RunnerT</translation>
     </message>
@@ -8066,11 +8086,11 @@ Default: A = -0.96, B = 1.33</source>
     </message>
     <message>
         <source>Text size</source>
-        <translation>Размер текста</translation>
+        <translation type="vanished">Размер текста</translation>
     </message>
     <message>
         <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
-        <translation>Размер текста нового интерфейса в процентах, от 80 до 170. По умолчанию – 100.</translation>
+        <translation type="vanished">Размер текста нового интерфейса в процентах, от 80 до 170. По умолчанию – 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

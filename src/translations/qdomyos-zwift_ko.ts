@@ -4690,7 +4690,7 @@ In the next window, allow access to the QZ folder.</source>
     </message>
     <message>
         <source>UI Zoom:</source>
-        <translation>UI 확대/축소:</translation>
+        <translation type="vanished">UI 확대/축소:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4702,7 +4702,7 @@ In the next window, allow access to the QZ folder.</source>
     </message>
     <message>
         <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol</source>
-        <translation>측정값을 표시하는 타일의 크기를 바꿉니다. 기본값은 100%입니다. 화면에 타일을 더 많이 표시하려면 더 작은 비율을, 타일을 크게 하려면 100%보다 큰 비율을 선택하세요. 퍼센트 기호는 입력하지 마세요</translation>
+        <translation type="vanished">측정값을 표시하는 타일의 크기를 바꿉니다. 기본값은 100%입니다. 화면에 타일을 더 많이 표시하려면 더 작은 비율을, 타일을 크게 하려면 100%보다 큰 비율을 선택하세요. 퍼센트 기호는 입력하지 마세요</translation>
     </message>
     <message>
         <source>App Language:</source>
@@ -5740,6 +5740,14 @@ In the next window, allow access to the QZ folder.</source>
     <message>
         <source>General UI Options</source>
         <translation>일반 UI 옵션</translation>
+    </message>
+    <message>
+        <source>Tile size:</source>
+        <translation>타일 크기:</translation>
+    </message>
+    <message>
+        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
+        <translation>측정값을 표시하는 타일의 크기를 바꿉니다. 기본값은 100%입니다. 화면에 타일을 더 많이 표시하려면 더 작은 비율을, 타일을 크게 하려면 100%보다 큰 비율을 선택하세요. 퍼센트 기호는 입력하지 마세요. 이전 이름은 [UI 확대/축소]입니다.</translation>
     </message>
     <message>
         <source>Top Bar Enabled</source>
@@ -7249,6 +7257,26 @@ IMPORTANT NOTES:
         <translation>km</translation>
     </message>
     <message>
+        <source>Life Fitness Options</source>
+        <translation>Life Fitness 옵션</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Life Fitness 사용자 이름/이메일:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Life Fitness 비밀번호:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Life Fitness 게스트 로그인(실험적)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>계정 없이 쓰는 가상 Life Fitness 프로필을 사용합니다. 켜면 사용자 이름, 비밀번호, 저장된 계정 데이터는 무시됩니다. 지원되는 게스트 로그인을 테스트할 때만 사용하세요.</translation>
+    </message>
+    <message>
         <source>Inclination Delay:</source>
         <translation>경사도 지연:</translation>
     </message>
@@ -8046,11 +8074,11 @@ A와 B가 모두 0이면 QZ는 기본 공식 9.8 × 체중 × (경사도/100)을
     </message>
     <message>
         <source>Text size</source>
-        <translation>글자 크기</translation>
+        <translation type="vanished">글자 크기</translation>
     </message>
     <message>
         <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
-        <translation>새 인터페이스의 글자 크기를 퍼센트로 지정합니다(80–170). 기본값: 100.</translation>
+        <translation type="vanished">새 인터페이스의 글자 크기를 퍼센트로 지정합니다(80–170). 기본값: 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

@@ -4690,7 +4690,7 @@ Sonraki pencerede QZ klasörüne erişime izin verin.</translation>
     </message>
     <message>
         <source>UI Zoom:</source>
-        <translation>Arayüz ölçeği:</translation>
+        <translation type="vanished">Arayüz ölçeği:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4702,7 +4702,7 @@ Sonraki pencerede QZ klasörüne erişime izin verin.</translation>
     </message>
     <message>
         <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol</source>
-        <translation>Ölçümlerinizi gösteren kutucukların boyutunu değiştirir. Varsayılan: 100%. Ekrana daha fazla kutucuk sığdırmak için daha küçük bir yüzde, kutucukları büyütmek için 100&apos;den büyük bir yüzde seçin. Yüzde işaretini girmeyin</translation>
+        <translation type="vanished">Ölçümlerinizi gösteren kutucukların boyutunu değiştirir. Varsayılan: 100%. Ekrana daha fazla kutucuk sığdırmak için daha küçük bir yüzde, kutucukları büyütmek için 100&apos;den büyük bir yüzde seçin. Yüzde işaretini girmeyin</translation>
     </message>
     <message>
         <source>App Language:</source>
@@ -5740,6 +5740,14 @@ Sonraki pencerede QZ klasörüne erişime izin verin.</translation>
     <message>
         <source>General UI Options</source>
         <translation>Genel arayüz seçenekleri</translation>
+    </message>
+    <message>
+        <source>Tile size:</source>
+        <translation>Kutucuk boyutu:</translation>
+    </message>
+    <message>
+        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
+        <translation>Ölçümlerinizi gösteren kutucukların boyutunu değiştirir. Varsayılan: 100%. Ekrana daha fazla kutucuk sığdırmak için daha küçük bir yüzde, kutucukları büyütmek için 100&apos;den büyük bir yüzde seçin. Yüzde işaretini girmeyin. Önceki adı: &quot;Arayüz ölçeği&quot; (UI Zoom).</translation>
     </message>
     <message>
         <source>Top Bar Enabled</source>
@@ -7249,6 +7257,26 @@ IMPORTANT NOTES:
         <translation>km</translation>
     </message>
     <message>
+        <source>Life Fitness Options</source>
+        <translation>Life Fitness seçenekleri</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Life Fitness kullanıcı adı/e-postası:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Life Fitness şifresi:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Life Fitness misafir girişi (deneysel)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>Hesap gerektirmeyen yapay bir Life Fitness profili kullanır. Açıkken kullanıcı adı, şifre ve önbelleğe alınmış hesap verileri yok sayılır; yalnızca desteklenen misafir girişini test etmek için kullanın.</translation>
+    </message>
+    <message>
         <source>Inclination Delay:</source>
         <translation>Eğim gecikmesi:</translation>
     </message>
@@ -8046,11 +8074,11 @@ Varsayılan: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Text size</source>
-        <translation>Yazı boyutu</translation>
+        <translation type="vanished">Yazı boyutu</translation>
     </message>
     <message>
         <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
-        <translation>Modern arayüzün yazı boyutu, yüzde olarak, 80 ile 170 arası. Varsayılan: 100.</translation>
+        <translation type="vanished">Modern arayüzün yazı boyutu, yüzde olarak, 80 ile 170 arası. Varsayılan: 100.</translation>
     </message>
     <message>
         <source>Appearance</source>

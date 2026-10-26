@@ -4690,7 +4690,7 @@ Geef in het volgende venster toegang tot de QZ-map.</translation>
     </message>
     <message>
         <source>UI Zoom:</source>
-        <translation>Interfacezoom:</translation>
+        <translation type="vanished">Interfacezoom:</translation>
     </message>
     <message>
         <source>OK</source>
@@ -4702,7 +4702,7 @@ Geef in het volgende venster toegang tot de QZ-map.</translation>
     </message>
     <message>
         <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol</source>
-        <translation>Hiermee wijzig je de grootte van de tegels met je meetwaarden. Standaard: 100%. Kies een kleiner percentage om meer tegels op je scherm te krijgen, of een percentage boven 100% om ze groter te maken. Typ het procentteken niet mee</translation>
+        <translation type="vanished">Hiermee wijzig je de grootte van de tegels met je meetwaarden. Standaard: 100%. Kies een kleiner percentage om meer tegels op je scherm te krijgen, of een percentage boven 100% om ze groter te maken. Typ het procentteken niet mee</translation>
     </message>
     <message>
         <source>App Language:</source>
@@ -5740,6 +5740,14 @@ Geef in het volgende venster toegang tot de QZ-map.</translation>
     <message>
         <source>General UI Options</source>
         <translation>Algemene interface-opties</translation>
+    </message>
+    <message>
+        <source>Tile size:</source>
+        <translation>Tegelgrootte:</translation>
+    </message>
+    <message>
+        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
+        <translation>Hiermee wijzig je de grootte van de tegels met je meetwaarden. Standaard: 100%. Kies een kleiner percentage om meer tegels op je scherm te krijgen, of een percentage boven 100% om ze groter te maken. Typ het procentteken niet mee. Heette vroeger ‘Interfacezoom’.</translation>
     </message>
     <message>
         <source>Top Bar Enabled</source>
@@ -7249,6 +7257,26 @@ BELANGRIJK:
         <translation>km</translation>
     </message>
     <message>
+        <source>Life Fitness Options</source>
+        <translation>Life Fitness-opties</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Life Fitness-gebruikersnaam/e-mailadres:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Life Fitness-wachtwoord:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Inloggen als gast bij Life Fitness (experimenteel)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>Gebruikt een synthetisch Life Fitness-profiel zonder account. Als dit is ingeschakeld, worden gebruikersnaam, wachtwoord en opgeslagen accountgegevens genegeerd; gebruik dit alleen om het ondersteunde inloggen als gast te testen.</translation>
+    </message>
+    <message>
         <source>Inclination Delay:</source>
         <translation>Hellingsvertraging:</translation>
     </message>
@@ -8046,11 +8074,11 @@ Standaard: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Text size</source>
-        <translation>Tekstgrootte</translation>
+        <translation type="vanished">Tekstgrootte</translation>
     </message>
     <message>
         <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
-        <translation>Tekstgrootte van de moderne interface, in procenten, van 80 tot 170. Standaard: 100.</translation>
+        <translation type="vanished">Tekstgrootte van de moderne interface, in procenten, van 80 tot 170. Standaard: 100.</translation>
     </message>
     <message>
         <source>Appearance</source>
