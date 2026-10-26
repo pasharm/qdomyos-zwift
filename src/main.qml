@@ -540,11 +540,11 @@ ApplicationWindow {
         AndroidStatusBar.setSystemBarsColor(ui.modern ? ui.bg : "black", ui.dark)
         systemBarsColored = ui.modern
     }
-    // T-293, test only: the window and the system bars at 3, 10 and 40 s
+    // T-293, test only: the window and the system bars at 3, 10, 40 s and every 30 s up to ~4 min
     Timer {
         property int n: 0
         interval: n === 0 ? 3000 : (n === 1 ? 7000 : 30000)
-        running: Qt.platform.os === "ios" && n < 3
+        running: Qt.platform.os === "ios" && n < 9
         repeat: true
         onTriggered: {
             console.log("T293 qml", n, "window", window.x, window.y, window.width, window.height,
