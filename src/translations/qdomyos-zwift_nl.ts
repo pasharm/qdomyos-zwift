@@ -4710,7 +4710,7 @@ Geef in het volgende venster toegang tot de QZ-map.</translation>
     </message>
     <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
-        <translation>Kies Auto om de taal van je apparaat te volgen, of kies een specifieke taal voor QZ.</translation>
+        <translation>Kies ‘Automatisch’ om de taal van je apparaat te volgen, of kies een specifieke taal voor QZ.</translation>
     </message>
     <message>
         <source>Player Weight</source>
