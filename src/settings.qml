@@ -2620,6 +2620,8 @@ import AndroidStatusBar 1.0
                                     text: visible ? settingsPane.settingValue(entry) : ""
                                     horizontalAlignment: Text.AlignRight
                                     inputMethodHints: entry.type === "string" ? Qt.ImhNoPredictiveText : Qt.ImhFormattedNumbersOnly
+                                    // A password stays hidden here as it does on its own page
+                                    echoMode: entry.key.indexOf("password") >= 0 ? TextInput.PasswordEchoOnEdit : TextInput.Normal
                                     onAccepted: settingsPane.setSettingValue(entry, text)
                                     onActiveFocusChanged: if (this.focus) this.cursorPosition = this.text.length
                                 }
