@@ -6393,8 +6393,11 @@ QString homeform::startText() {
 
     QSettings settings;
     if (settings.value(QZSettings::top_bar_enabled, QZSettings::default_top_bar_enabled).toBool()) {
-        if (paused || stopped) {
+        if (stopped) {
             return tr("Start");
+        } else if (paused) {
+            // pressing it now continues the same workout, nothing is reset (see Start_inner)
+            return tr("Resume");
         } else {
             return tr("Pause");
         }

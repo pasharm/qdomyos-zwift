@@ -3222,6 +3222,10 @@ This may take a few moments on first startup.</source>
         <translation>일시 중지</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>재개</translation>
+    </message>
+    <message>
         <source>Rec.</source>
         <extracomment>Short tile value: Peloton running/walking pace target zone &quot;Recovery&quot; (not &quot;record&quot;); zones: (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
         <translation>회복</translation>

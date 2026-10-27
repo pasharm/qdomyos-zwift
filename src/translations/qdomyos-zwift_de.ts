@@ -3254,6 +3254,10 @@ Beim ersten Start kann dies einen Moment dauern.</translation>
         <translation>Pause</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>Fortsetzen</translation>
+    </message>
+    <message>
         <source>offset </source>
         <translation>Offset </translation>
     </message>

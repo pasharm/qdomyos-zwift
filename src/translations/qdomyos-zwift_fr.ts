@@ -3254,6 +3254,10 @@ Cela peut prendre quelques instants au premier démarrage.</translation>
         <translation>Pause</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>Reprendre</translation>
+    </message>
+    <message>
         <source>offset </source>
         <translation>décalage </translation>
     </message>

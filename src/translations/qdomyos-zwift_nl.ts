@@ -3222,6 +3222,10 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Pauze</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>Hervatten</translation>
+    </message>
+    <message>
         <source>Rec.</source>
         <extracomment>Short tile value: Peloton running/walking pace target zone &quot;Recovery&quot; (not &quot;record&quot;); zones: (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
         <translation>Herstel</translation>

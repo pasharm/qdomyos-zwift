@@ -3258,6 +3258,10 @@ This may take a few moments on first startup.</source>
         <translation>一時停止</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>再開</translation>
+    </message>
+    <message>
         <source>offset </source>
         <translation>オフセット </translation>
     </message>
