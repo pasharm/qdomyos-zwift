@@ -1025,7 +1025,7 @@ void fitshowtreadmill::controllerStateChanged(QLowEnergyController::ControllerSt
         cancelPendingStartTarget(QStringLiteral("connection lost"));
         qDebug() << QStringLiteral("trying to connect back again...");
         initDone = false;
-        m_control->connectToDevice();
+        connectBackLater();
     }
 }
 
