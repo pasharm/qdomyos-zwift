@@ -1,6 +1,7 @@
 #ifndef ANDROIDSTATUSBAR_H
 #define ANDROIDSTATUSBAR_H
 
+#include <QColor>
 #include <QObject>
 #include <QQmlEngine>
 
@@ -47,9 +48,14 @@ public:
     Q_INVOKABLE double systemFontScale() const;
     // Night mode of the system (Configuration.uiMode). Read on demand: QML asks again when
     // the app comes back to the foreground and every 2 s while it is on screen.
-    // Android before 10 (API 29, no dark theme in the system) and not Android: true (the app is
-    // dark by default).
+    // iOS: the dark appearance of the system (iOS 13+), read the same way.
+    // Android before 10 (API 29, no dark theme in the system), iOS before 13 and other systems:
+    // true (the app is dark by default).
     Q_INVOKABLE bool systemDarkMode() const;
+    // iOS: the window of Qt covers only the safe area, and the system paints the areas under the
+    // status bar and the home indicator black, with light status bar text. This gives them a colour
+    // and the status bar text for a dark (light text) or light page. Nothing elsewhere.
+    Q_INVOKABLE void setSystemBarsColor(const QColor &color, bool dark) const;
     // Accent of the dynamic palette that Android 12+ (API 31) builds from the wallpaper, as
     // "#rrggbb": the Material 3 primary for a dark page (dark = true) or a light one. Empty
     // below API 31 and off Android. Read on demand: QML asks again on return to the foreground.

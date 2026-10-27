@@ -115,8 +115,20 @@ bool AndroidStatusBar::systemDarkMode() const
     const jint uiMode = configuration.getField<jint>("uiMode");
     // Configuration.UI_MODE_NIGHT_MASK = 0x30, UI_MODE_NIGHT_YES = 0x20
     return (uiMode & 0x30) == 0x20;
+#elif defined(Q_OS_IOS) && !defined(IO_UNDER_QT)
+    return lockscreen::systemDarkMode();
 #else
     return true;
+#endif
+}
+
+void AndroidStatusBar::setSystemBarsColor(const QColor &color, bool dark) const
+{
+#if defined(Q_OS_IOS) && !defined(IO_UNDER_QT)
+    lockscreen::setSystemBarsColor(color.redF(), color.greenF(), color.blueF(), dark);
+#else
+    Q_UNUSED(color)
+    Q_UNUSED(dark)
 #endif
 }
 

@@ -133,6 +133,13 @@ class lockscreen {
 
     // system text size (Dynamic Type): 1.0 at the default size
     static double systemFontScale();
+
+    // dark appearance of the system (iOS 13+); true before iOS 13
+    static bool systemDarkMode();
+
+    // colour of the areas under the status bar and the home indicator, outside the Qt window,
+    // and the status bar text: light on a dark page, dark on a light one
+    static void setSystemBarsColor(double red, double green, double blue, bool darkPage);
 };
 
 #endif // LOCKSCREEN_H

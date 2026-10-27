@@ -6,6 +6,7 @@
 #import <HealthKit/HealthKit.h>
 #import <WebKit/WKWebsiteDataStore.h>
 #import <AVFoundation/AVFoundation.h>
+#import <objc/runtime.h>
 #import <ConnectIQ/ConnectIQ.h>
 #import "qdomyoszwift-Swift2.h"
 #import "swiftDebug.h"
@@ -870,5 +871,76 @@ double lockscreen::systemFontScale() {
     const CGFloat scaled = [[UIFontMetrics defaultMetrics] scaledValueForValue:body
                                                 compatibleWithTraitCollection:traits];
     return scaled > 0 ? scaled / body : 1.0;
+}
+
+bool lockscreen::systemDarkMode() {
+    // The screen carries the appearance of the system, not an override of a window
+    if (@available(iOS 13.0, *)) {
+        return UIScreen.mainScreen.traitCollection.userInterfaceStyle == UIUserInterfaceStyleDark;
+    }
+    return true;
+}
+
+// Status bar style of the Qt window while setSystemBarsColor() has set one. Qt writes its own
+// style (light text, without Qt::MaximizeUsingFullscreenGeometryHint) into the view controller
+// whenever the focus window changes, e.g. on the first tap: UIKit reads this one instead
+static bool qzStatusBarStyleSet = false;
+static UIStatusBarStyle qzStatusBarStyle = UIStatusBarStyleLightContent;
+
+static void qzKeepStatusBarStyle(UIViewController *controller) {
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        // The getter is synthesized in QIOSViewController itself, so only its windows change.
+        // Inherited from UIViewController instead, it would change every view controller: left alone
+        Method method = class_getInstanceMethod([controller class], @selector(preferredStatusBarStyle));
+        if (!method || method == class_getInstanceMethod([UIViewController class], @selector(preferredStatusBarStyle))) {
+            return;
+        }
+        IMP original = method_getImplementation(method);
+        IMP replacement = imp_implementationWithBlock(^UIStatusBarStyle(UIViewController *self_) {
+            if (qzStatusBarStyleSet) {
+                return qzStatusBarStyle;
+            }
+            return ((UIStatusBarStyle(*)(id, SEL))original)(self_, @selector(preferredStatusBarStyle));
+        });
+        method_setImplementation(method, replacement);
+    });
+}
+
+void lockscreen::setSystemBarsColor(double red, double green, double blue, bool darkPage) {
+    UIColor *color = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
+    UIStatusBarStyle style = UIStatusBarStyleLightContent;
+    if (!darkPage) {
+        if (@available(iOS 13.0, *)) {
+            style = UIStatusBarStyleDarkContent;
+        } else {
+            style = UIStatusBarStyleDefault;
+        }
+    }
+
+    NSMutableArray<UIWindow *> *windows = [NSMutableArray array];
+    if (@available(iOS 13.0, *)) {
+        for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+            if ([scene isKindOfClass:[UIWindowScene class]]) {
+                [windows addObjectsFromArray:((UIWindowScene *)scene).windows];
+            }
+        }
+    } else {
+        [windows addObjectsFromArray:UIApplication.sharedApplication.windows];
+    }
+
+    for (UIWindow *window in windows) {
+        UIViewController *controller = window.rootViewController;
+        // Only the window of Qt (QIOSViewController); the keyboard and other system windows are left alone
+        if (!controller || ![controller isKindOfClass:NSClassFromString(@"QIOSViewController")]) {
+            continue;
+        }
+        window.backgroundColor = color;
+        controller.view.backgroundColor = color;
+        qzKeepStatusBarStyle(controller);
+        qzStatusBarStyle = style;
+        qzStatusBarStyleSet = true;
+        [controller setNeedsStatusBarAppearanceUpdate];
+    }
 }
 #endif

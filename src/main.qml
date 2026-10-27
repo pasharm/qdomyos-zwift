@@ -304,8 +304,9 @@ ApplicationWindow {
         // a scroll stops; off, they stay where the scroll left them
         readonly property bool tileSnap: settings.ui_tile_snap
 
-        // Appearance: "auto" follows the night mode of the phone (dark on Android before 10, which
-        // has no dark theme), "dark" and "light" are fixed. The classic look is always dark.
+        // Appearance: "auto" follows the night mode of the phone (dark on Android before 10 and
+        // iOS before 13, which have no dark theme), "dark" and "light" are fixed. The classic look
+        // is always dark.
         readonly property string themeMode: settings.ui_theme_mode
         property bool systemDark: AndroidStatusBar.systemDarkMode()
         readonly property bool dark: !modern || themeMode === "dark" || (themeMode !== "light" && systemDark)
@@ -495,8 +496,27 @@ ApplicationWindow {
             if (Qt.application.state === Qt.ApplicationActive) {
                 window.ui.refreshSystemDark()
                 window.ui.refreshSystemAccent()
+                // the first time at start-up, when the native window is there
+                window.applySystemBars()
             }
         }
+    }
+
+    // iOS: the window of Qt covers only the safe area, the system paints the areas under the status
+    // bar and the home indicator black. The modern look gives them the page colour and the status
+    // bar text its contrast; the classic look keeps them as they are, unless the modern one was on
+    property bool systemBarsColored: false
+    function applySystemBars() {
+        if (Qt.platform.os !== "ios" || (!ui.modern && !systemBarsColored))
+            return
+        AndroidStatusBar.setSystemBarsColor(ui.modern ? ui.bg : "black", ui.dark)
+        systemBarsColored = ui.modern
+    }
+    Connections {
+        target: window.ui
+        function onBgChanged() { window.applySystemBars() }
+        function onDarkChanged() { window.applySystemBars() }
+        function onModernChanged() { window.applySystemBars() }
     }
     Timer {
         interval: 2000
