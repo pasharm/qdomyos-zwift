@@ -551,7 +551,9 @@ ApplicationWindow {
                         "visibility", window.visibility, "flags", window.flags, "screen", Screen.width, Screen.height,
                         "avail", Screen.desktopAvailableWidth, Screen.desktopAvailableHeight,
                         "modern", ui.modern, "dark", ui.dark, "systemDark", ui.systemDark, "bg", ui.bg,
-                        "colored", window.systemBarsColored)
+                        "colored", window.systemBarsColored,
+                        "safe", JSON.stringify(window.iosSafeArea), "pad", getTopPadding(), getBottomPadding(),
+                        getLeftPadding(), getRightPadding())
             AndroidStatusBar.logSystemBars("t" + n)
             n++
         }
