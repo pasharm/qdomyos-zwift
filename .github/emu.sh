@@ -1,18 +1,16 @@
 #!/bin/bash
-# Test only (T-276): a crash in AndroidStatusBar::insetsChanged() when the screen is turned on
-# after QZ has quit with the screen off. In a fork build (#define LICENSE) with no e-mail the
-# license popup shows after 10 min and closes itself 2 min later with Qt.quit: main() returns and
-# deletes the QML engine, but with the activity paused Qt keeps the activity until it is resumed.
-# The reference APK (apk-base: the build that crashed on the phone) and the tested APK (apk-debug:
-# the same master plus the fix) go through the same steps: a fresh start, the screen off for
-# 13 min, the screen on and unlocked, a rotation - then the crash is looked for in logcat.
+# Test only (T-302): feat/modern-ui merged with master 3036f62b8. The reference APK (apk-base:
+# feat/modern-ui before the merge) and the tested APK (apk-debug: the merge) go through the same
+# steps with a fake treadmill: start, home with tiles, Start and Stop (the treadmill stop path
+# changed in master with #5403), the menu, the settings and Treadmill Options, a rotation.
+# At the end the QML warnings of the tested APK that the reference did not have go to steps.log.
 PKG=org.cagnulen.qdomyoszwift
+UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
 STEPLOG=steps.log
 CONF='files/.config/Roberto Viola/qDomyos-Zwift.conf'
-# the license timer (600 s) plus the popup auto close (120 s), with a margin
-SCREEN_OFF_UNTIL=${SCREEN_OFF_UNTIL:-780}
 : > $STEPLOG
+mkdir -p dumps
 
 # install_apk <apk>: a fresh install with the permissions granted
 install_apk() {
@@ -33,82 +31,145 @@ install_apk() {
 adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
-# put_conf <extra lines>: the settings file of the app before a start (user_email stays empty)
+# put_conf: the settings file of the app before a start - a fake treadmill, so the home page has
+# tiles and no first-run wizard
 put_conf() {
-  printf '[General]\nlog_debug=%s\n%b' "$LOG_DEBUG" "$1" > qz.conf
+  printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\napp_language=en\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf '$CONF'"
 }
-snap() {
-  echo "-- snap $1" >> $STEPLOG
-  adb shell screencap -p /sdcard/$1.png || true
-  adb pull /sdcard/$1.png || true
+# The control tree of the screen into ui.xml (empty when uiautomator gives up)
+dump() {
+  rm -f ui.xml
+  timeout 25 adb shell uiautomator dump /sdcard/ui.xml < /dev/null > /dev/null 2>&1 || true
+  adb pull /sdcard/ui.xml ui.xml > /dev/null 2>&1 || true
 }
-mark() {
-  echo "$(date +%H:%M:%S) $1" >> $STEPLOG
-  adb shell log -t T276 "'$1'" || true
-}
-# top <label>: the resumed activity into the steps
-top() {
-  echo "$1: top $(adb shell dumpsys activity activities < /dev/null | grep -m1 topResumedActivity | tr -d '\r')" >> $STEPLOG
-}
-# qz_on_top: Health Connect onboarding (and the like) over QZ closed with the back key
-qz_on_top() {
-  local i
+# A window of another app over QZ (Health Connect, a launcher not responding) closed with the back key
+ensure_app() {
+  local i pkg
   for i in 1 2 3; do
-    adb shell dumpsys activity activities < /dev/null | grep -m1 topResumedActivity | grep -q $PKG && return 0
+    dump
+    [ -f ui.xml ] || return 0
+    pkg=$(python3 .github/uitap.py ui.xml --package)
+    [ -z "$pkg" ] || [ "$pkg" = "$PKG" ] && return 0
+    echo "!! $pkg over the app: back key" >> $STEPLOG
     adb shell input keyevent KEYCODE_BACK || true
     sleep 3
   done
+  rm -f ui.xml
+}
+# shot <label>: a frame and the control tree behind it
+shot() {
+  ensure_app
+  echo "-- shot $1" >> $STEPLOG
+  adb shell screencap -p /sdcard/$1.png || true
+  adb pull /sdcard/$1.png || true
+  [ -f ui.xml ] || dump
+  [ -f ui.xml ] && cp ui.xml dumps/$1.xml
+}
+mark() {
+  echo "$(date +%H:%M:%S) $1" >> $STEPLOG
+  adb shell log -t T302 "'$1'" || true
+}
+# tap_ui 'regex' [x y]: the control whose whole text or accessible name matches, else the
+# fallback coordinates; without them the step is skipped
+tap_ui() {
+  local rx="$1" fx="$2" fy="$3" xy=""
+  ensure_app
+  [ -f ui.xml ] || dump
+  [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$rx")
+  if [ -n "$xy" ]; then
+    echo "tap '$rx': by label at $xy" >> $STEPLOG
+    adb shell input tap $xy || true
+  elif [ -n "$fx" ]; then
+    echo "tap '$rx': NOT FOUND, coordinates $fx $fy" >> $STEPLOG
+    adb shell input tap $fx $fy || true
+  else
+    echo "!! tap '$rx': NOT FOUND, skipped" >> $STEPLOG
+    return 1
+  fi
+}
+# scroll_to 'regex': swipe the page up until the control shows (at most 12 swipes)
+scroll_to() {
+  local i
+  for i in $(seq 1 12); do
+    dump
+    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
+      echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
+      return 0
+    fi
+    adb shell input swipe 700 2000 700 1300 400 || true
+    sleep 1
+  done
+  echo "!! scroll to '$1': NOT FOUND" >> $STEPLOG
   return 1
 }
+# The fake treadmill comes after the first search ends: wait for its tiles (at most 3 min)
+wait_tiles() {
+  local i
+  for i in $(seq 1 18); do
+    dump
+    if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then
+      echo "tiles shown after $i looks" >> $STEPLOG; return 0
+    fi
+    sleep 10
+  done
+  echo "!! tiles NOT shown" >> $STEPLOG
+}
+back() { echo "back ($1)" >> $STEPLOG; adb shell input keyevent KEYCODE_BACK || true; }
+# Toolbar: the menu button on the home page (Nexus 6: 1440x2560 px)
+MENU="84 168"
 
 adb logcat -c || true
-adb logcat -b main,system,crash > full_logcat.txt 2>/dev/null &
+adb logcat -v threadtime -b main,system,crash > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
 
 # run_case <label> <apk>
 run_case() {
-  local label="$1" pid t0 left
+  local label="$1" pid
   install_apk "$2"
   adb shell settings put system accelerometer_rotation 0 || true
   adb shell settings put system user_rotation 0 || true
-  put_conf "app_language=en\n"
+  put_conf
   mark "$label: start"
   adb shell am start -n $PKG/$PKG.CustomQtActivity
-  t0=$(date +%s)
-  sleep 30
-  qz_on_top || echo "$label: QZ NOT on top" >> $STEPLOG
-  sleep 5
-  top "$label started"
+  sleep 25
   pid=$(adb shell pidof $PKG | tr -d '\r')
   echo "$label: pid $pid" >> $STEPLOG
-  snap $label-01-started
-  mark "$label: screen off"
-  adb shell input keyevent KEYCODE_SLEEP || true
-  left=$((t0 + SCREEN_OFF_UNTIL - $(date +%s)))
-  [ $left -gt 0 ] && sleep $left
-  echo "$label: pid after the screen off: $(adb shell pidof $PKG | tr -d '\r')" >> $STEPLOG
-  mark "$label: screen on"
-  adb shell input keyevent KEYCODE_WAKEUP || true
-  sleep 2
-  adb shell wm dismiss-keyguard || true
+  echo "$pid" > pid-$label.txt
+  wait_tiles
+  shot $label-01-home
+  mark "$label: Start"
+  tap_ui 'Start'
+  sleep 20
+  shot $label-02-running
+  mark "$label: Stop"
+  tap_ui 'Stop'
   sleep 5
-  top "$label screen on"
-  snap $label-02-screen-on
-  # the popup closed at the screen on and opened its link over QZ: back to QZ, as on the phone
-  mark "$label: back to QZ"
-  adb shell am start -n $PKG/$PKG.CustomQtActivity || true
-  sleep 5
-  top "$label back to QZ"
-  echo "$label: pid after back to QZ: $(adb shell pidof $PKG | tr -d '\r')" >> $STEPLOG
+  shot $label-03-stopped
+  mark "$label: menu"
+  ensure_app
+  echo "tap menu $MENU" >> $STEPLOG
+  adb shell input tap $MENU || true
+  sleep 3
+  shot $label-04-menu
+  mark "$label: settings"
+  tap_ui 'Settings' && sleep 5
+  shot $label-05-settings
+  scroll_to 'Treadmill Options' && tap_ui 'Treadmill Options' && sleep 3
+  shot $label-06-treadmill-options
+  back "settings"
+  sleep 3
+  back "home"
+  sleep 3
+  shot $label-07-back-home
   mark "$label: rotation"
   adb shell settings put system user_rotation 1 || true
   sleep 5
+  shot $label-08-landscape
   adb shell settings put system user_rotation 0 || true
-  sleep 10
-  snap $label-03-after
+  sleep 5
   echo "$label: pid at the end: $(adb shell pidof $PKG | tr -d '\r')" >> $STEPLOG
   adb shell dumpsys activity exit-info $PKG < /dev/null > exit-info-$label.txt 2>&1 || true
   mark "$label: done"
@@ -119,12 +180,15 @@ run_case() {
 run_case base apk-base/android-debug.apk
 run_case debug apk-debug/android-debug.apk
 
-adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 kill $LOGCAT_PID 2>/dev/null || true
-wait $LOGCAT_PID 2>/dev/null || true
-
-echo "== steps"; cat $STEPLOG
-echo "== markers, main() return, insets, crashes"
-grep -E "T276|exit app 0|Insets changed|onApplyWindowInsets - Top|patreon|Fatal signal|AndroidStatusBar|>>> $PKG <<<|Abort message|Cause:" full_logcat.txt | head -160 || true
-echo "== exit-info"
-for f in exit-info-*.txt; do echo "-- $f"; grep -E "ApplicationExitInfo|reason=|description=|timestamp=|pid=" "$f" | head -12; done
+sleep 1
+# QML warnings of each process, timestamps and pids cut off, then the ones only the tested APK has
+for label in base debug; do
+  pid=$(cat pid-$label.txt)
+  awk -v p="$pid" '$3 == p { $1 = $2 = $3 = $4 = ""; sub(/^ +/, ""); print }' full_logcat.txt | grep -E "\.qml:|qml:|QML " | sort -u > qml-$label.txt
+  echo "$label: QML warnings $(wc -l < qml-$label.txt), crash lines $(awk -v p="$pid" '$3 == p' full_logcat.txt | grep -c -E 'FATAL|SIGSEGV|SIGABRT')" >> $STEPLOG
+done
+echo "== QML warnings of debug that base did not have:" >> $STEPLOG
+comm -13 qml-base.txt qml-debug.txt >> $STEPLOG
+echo "== ANR / crash in the whole log:" >> $STEPLOG
+grep -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt >> $STEPLOG || echo "none" >> $STEPLOG
