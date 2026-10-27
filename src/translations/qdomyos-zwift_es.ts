@@ -3255,7 +3255,10 @@ Esto puede tardar un poco en el primer inicio.</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Reanudar</translation>
+        <translation variants="yes">
+            <lengthvariant>Reanudar</lengthvariant>
+            <lengthvariant>Seguir</lengthvariant>
+        </translation>
     </message>
     <message>
         <source>offset </source>
