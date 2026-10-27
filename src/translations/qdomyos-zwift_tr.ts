@@ -3534,6 +3534,10 @@ This may take a few moments on first startup.</source>
         <translation>Duraklat</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>Devam et</translation>
+    </message>
+    <message>
         <source>offset </source>
         <translation>ofset </translation>
     </message>

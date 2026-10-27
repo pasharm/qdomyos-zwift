@@ -3534,6 +3534,10 @@ This may take a few moments on first startup.</source>
         <translation>Пауза</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>Продолжить</translation>
+    </message>
+    <message>
         <source>offset </source>
         <translation>смещ. </translation>
     </message>

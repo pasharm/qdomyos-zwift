@@ -3534,6 +3534,10 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Pauze</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>Hervatten</translation>
+    </message>
+    <message>
         <source>offset </source>
         <translation>correctie </translation>
     </message>

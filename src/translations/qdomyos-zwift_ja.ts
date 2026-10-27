@@ -3460,6 +3460,10 @@ This may take a few moments on first startup.</source>
         <translation>一時停止</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>再開</translation>
+    </message>
+    <message>
         <source>Rec.</source>
         <extracomment>Short tile value: Peloton running/walking pace target zone &quot;Recovery&quot; (not &quot;record&quot;); zones: (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
         <translation>記録</translation>
