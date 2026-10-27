@@ -34,16 +34,17 @@ using namespace std;
 // of the Qt 5.15 inline functions, built here; toWCharArray()/fromWCharArray() take only plain pointers.
 // A FIT string field holds at most 255 bytes with the terminating zero: FieldBase::SetSTRINGValue() keeps the UTF-8
 // length in a FIT_UINT8 and writes past its buffer for a longer string (nickname, workout name, program path), so
-// the string is cut to 254 UTF-8 bytes on a character boundary first.
+// the string is cut to 254 UTF-8 bytes on a character boundary first. It is always rebuilt from those bytes, so a
+// lone surrogate is already replaced here and the FIT SDK counts the same length.
 static std::wstring toFitString(const QString &s) {
-    QString t = s;
     const QByteArray utf8 = s.toUtf8();
-    if (utf8.size() > 254) {
-        int end = 254;
+    int end = utf8.size();
+    if (end > 254) {
+        end = 254;
         while (end > 0 && (uchar(utf8.at(end)) & 0xC0) == 0x80)
             end--;
-        t = QString::fromUtf8(utf8.constData(), end);
     }
+    const QString t = QString::fromUtf8(utf8.constData(), end);
     std::wstring w(t.size(), L'\0');
     w.resize(t.toWCharArray(&w[0]));
     return w;
