@@ -3534,6 +3534,10 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
         <translation>Pauza</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>Wznów</translation>
+    </message>
+    <message>
         <source>offset </source>
         <translation>przes. </translation>
     </message>

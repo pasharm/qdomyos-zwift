@@ -3534,6 +3534,10 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Pauza</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>Pokračovat</translation>
+    </message>
+    <message>
         <source>offset </source>
         <translation>korekce </translation>
     </message>

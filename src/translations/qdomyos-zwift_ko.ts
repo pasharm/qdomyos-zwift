@@ -3534,6 +3534,10 @@ This may take a few moments on first startup.</source>
         <translation>일시 중지</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>재개</translation>
+    </message>
+    <message>
         <source>offset </source>
         <translation>보정값 </translation>
     </message>
