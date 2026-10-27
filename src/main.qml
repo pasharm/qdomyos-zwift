@@ -1572,8 +1572,8 @@ ApplicationWindow {
         clip: height < implicitHeight   // keeps the Material shadow when fully shown
         // The buttons are centred in the content, which has no height once collapsed: they sat
         // on the edge of the status bar, and a line of their pixels showed under it. They fade
-        // out with the collapse and are hidden at its end, from TalkBack as well
-        contentItem.opacity: implicitHeight > topPadding ? Math.max(0, Math.min(1, (height - topPadding) / (implicitHeight - topPadding))) : 1
+        // out with the collapse and are hidden at its end, from TalkBack as well. Modern look only
+        contentItem.opacity: window.ui.modern && implicitHeight > topPadding ? Math.max(0, Math.min(1, (height - topPadding) / (implicitHeight - topPadding))) : 1
         contentItem.visible: contentItem.opacity > 0
         Behavior on height {
             enabled: headerToolbar.heightSettled
