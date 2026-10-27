@@ -881,29 +881,45 @@ bool lockscreen::systemDarkMode() {
     return true;
 }
 
-// Status bar style of the Qt window while setSystemBarsColor() has set one. Qt writes its own
+// Status bar of the Qt window while setSystemBarsColor() has set its style. Qt writes its own
 // style (light text, without Qt::MaximizeUsingFullscreenGeometryHint) into the view controller
-// whenever the focus window changes, e.g. on the first tap: UIKit reads this one instead
+// whenever the focus window changes, e.g. on the first tap, and hides the bar for a full screen
+// window, the state the modern look takes the whole screen with: UIKit reads these instead
 static bool qzStatusBarStyleSet = false;
 static UIStatusBarStyle qzStatusBarStyle = UIStatusBarStyleLightContent;
 
-static void qzKeepStatusBarStyle(UIViewController *controller) {
+// The getters are synthesized in QIOSViewController itself, so only its windows change.
+// Inherited from UIViewController instead, a getter would change every view controller: left alone
+static IMP qzOwnGetter(UIViewController *controller, SEL selector, Method *method) {
+    *method = class_getInstanceMethod([controller class], selector);
+    if (!*method || *method == class_getInstanceMethod([UIViewController class], selector)) {
+        return nullptr;
+    }
+    return method_getImplementation(*method);
+}
+
+static void qzKeepStatusBar(UIViewController *controller) {
     static dispatch_once_t once;
     dispatch_once(&once, ^{
-        // The getter is synthesized in QIOSViewController itself, so only its windows change.
-        // Inherited from UIViewController instead, it would change every view controller: left alone
-        Method method = class_getInstanceMethod([controller class], @selector(preferredStatusBarStyle));
-        if (!method || method == class_getInstanceMethod([UIViewController class], @selector(preferredStatusBarStyle))) {
-            return;
+        Method method;
+        IMP original = qzOwnGetter(controller, @selector(preferredStatusBarStyle), &method);
+        if (original) {
+            method_setImplementation(method, imp_implementationWithBlock(^UIStatusBarStyle(UIViewController *self_) {
+                if (qzStatusBarStyleSet) {
+                    return qzStatusBarStyle;
+                }
+                return ((UIStatusBarStyle(*)(id, SEL))original)(self_, @selector(preferredStatusBarStyle));
+            }));
         }
-        IMP original = method_getImplementation(method);
-        IMP replacement = imp_implementationWithBlock(^UIStatusBarStyle(UIViewController *self_) {
-            if (qzStatusBarStyleSet) {
-                return qzStatusBarStyle;
-            }
-            return ((UIStatusBarStyle(*)(id, SEL))original)(self_, @selector(preferredStatusBarStyle));
-        });
-        method_setImplementation(method, replacement);
+        IMP originalHidden = qzOwnGetter(controller, @selector(prefersStatusBarHidden), &method);
+        if (originalHidden) {
+            method_setImplementation(method, imp_implementationWithBlock(^BOOL(UIViewController *self_) {
+                if (qzStatusBarStyleSet) {
+                    return NO;
+                }
+                return ((BOOL(*)(id, SEL))originalHidden)(self_, @selector(prefersStatusBarHidden));
+            }));
+        }
     });
 }
 
@@ -937,7 +953,7 @@ void lockscreen::setSystemBarsColor(double red, double green, double blue, bool 
         }
         window.backgroundColor = color;
         controller.view.backgroundColor = color;
-        qzKeepStatusBarStyle(controller);
+        qzKeepStatusBar(controller);
         qzStatusBarStyle = style;
         qzStatusBarStyleSet = true;
         [controller setNeedsStatusBarAppearanceUpdate];

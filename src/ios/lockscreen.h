@@ -138,7 +138,8 @@ class lockscreen {
     static bool systemDarkMode();
 
     // colour of the areas under the status bar and the home indicator, outside the Qt window,
-    // and the status bar text: light on a dark page, dark on a light one
+    // and the status bar text: light on a dark page, dark on a light one. From then on the status bar
+    // stays visible for a full screen window too
     static void setSystemBarsColor(double red, double green, double blue, bool darkPage);
 
     // safe area of the Qt window in points (status bar and cutout, home indicator); 0 before iOS 13

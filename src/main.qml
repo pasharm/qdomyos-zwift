@@ -15,13 +15,13 @@ ApplicationWindow {
     id: window
     width: 640
     height: 480
-    visibility: Qt.WindowFullScreen
-    // iOS: Qt shows the window maximized, inside the safe area, and the system paints the areas
-    // under the status bar and the home indicator. The modern look takes the whole screen, as on
-    // Android 12+: the drawer and the dimming of popups reach the edges, the content keeps clear
-    // of them by getTopPadding()/getBottomPadding()
-    flags: Qt.platform.os === "ios" && settings.ui_modern ? (Qt.Window | Qt.MaximizeUsingFullscreenGeometryHint)
-                                                          : Qt.Window
+    // Qt.WindowFullScreen is 4, Window.Maximized as a visibility. iOS: Qt fits a maximized window
+    // into the safe area, Qt::MaximizeUsingFullscreenGeometryHint or not, and the system paints the
+    // areas under the status bar and the home indicator. The modern look takes the whole screen as a
+    // full screen window, as on Android 12+: the drawer and the dimming of popups reach the edges,
+    // the content keeps clear of them by getTopPadding()/getBottomPadding(), and the status bar
+    // stays (AndroidStatusBar.setSystemBarsColor)
+    visibility: Qt.platform.os === "ios" && settings.ui_modern ? Window.FullScreen : Qt.WindowFullScreen
     visible: true
 	 objectName: "stack"
     title: Qt.platform.os === "ios" ? "" : qsTr("qDomyos-Zwift")
