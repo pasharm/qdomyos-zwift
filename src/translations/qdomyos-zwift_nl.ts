@@ -3535,7 +3535,10 @@ Bij de eerste start kan dit even duren.</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Hervatten</translation>
+        <translation variants="yes">
+            <lengthvariant>Hervatten</lengthvariant>
+            <lengthvariant>Verder</lengthvariant>
+        </translation>
     </message>
     <message>
         <source>offset </source>

@@ -122,6 +122,11 @@ Page {
                         }
                         Label {
                             anchors.verticalCenter: parent.verticalCenter
+                            // At most what the pill has left beside the icon: with the elide on, a
+                            // label with a long and a short variant ("Resume" in ru, de, cs ...)
+                            // shows the first that fits, like the classic button
+                            width: Math.min(implicitWidth, modernStart.width - 24 - 26 - 6)
+                            elide: Text.ElideRight
                             text: rootItem.startText
                             color: window.ui.accentInk
                             font.pixelSize: window.ui.fontBody
@@ -131,7 +136,8 @@ Page {
                     }
                 }
                 Accessible.role: Accessible.Button
-                Accessible.name: rootItem.startText
+                // only the long variant of the label (see the Label above)
+                Accessible.name: rootItem.startText.split("\u009C")[0]
                 Accessible.description: qsTr("Start workout")
                 Accessible.focusable: true
                 Accessible.onPressAction: start.clicked()
@@ -299,7 +305,9 @@ Page {
 
                     // VoiceOver accessibility
                     Accessible.role: Accessible.Button
-                    Accessible.name: rootItem.startText
+                    // the label may hold a long and a short variant (U+009C between them, the
+                    // button shows the one that fits): the screen reader gets only the long one
+                    Accessible.name: rootItem.startText.split("\u009C")[0]
                     Accessible.description: qsTr("Start workout")
                     Accessible.focusable: true
                 }
