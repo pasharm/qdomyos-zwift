@@ -331,6 +331,11 @@ void heartratebelt::controllerStateChanged(QLowEnergyController::ControllerState
     
     if (state == QLowEnergyController::UnconnectedState && m_control && !disconnectingForGood) {
         qDebug() << QStringLiteral("trying to connect back again...");
-        m_control->connectToDevice();
+        // Not from here: a connection that fails at once comes back to this slot from inside connectToDevice(),
+        // and the nested retries overflowed the stack (crash when the watch turned its Bluetooth off)
+        QTimer::singleShot(1000, this, [this]() {
+            if (m_control && !disconnectingForGood && m_control->state() == QLowEnergyController::UnconnectedState)
+                m_control->connectToDevice();
+        });
     }
 }
