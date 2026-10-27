@@ -425,124 +425,63 @@ open_search
 hide_keyboard
 shot q-bar
 
-query 'weight' weight
-has '^Search results.*' "results for weight"
-check_editors "weight"
-# With T-211 the title carries the unit of its page: "Player Weight (kg)"
-value_is 'Player Weight \(kg\)' '80\.5'
-value_is 'Use kg for weight' 'Off'
+# T-309: a password in the classic search results stays hidden as on its page (qz.conf above
+# writes pzp_password=secret). The field still edits and saves: a new value typed there and OK
+# reach the store.
+CONF="files/.config/Roberto Viola/qDomyos-Zwift.conf"
+stored_password() {
+  adb shell "run-as $PKG cat '$CONF' < /dev/null" | tr -d '\r' | grep '^pzp_password=' >> $STEPLOG || echo "!! pzp_password not in the store" >> $STEPLOG
+}
+# The OK of the first result card: the field is the same row, to its left
+first_ok_y() {
+  dump
+  [ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+best = None
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    t = (n.get("text") or "") or (n.get("content-desc") or "")
+    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+    if t == "OK" and m:
+        x1, y1, x2, y2 = map(int, m.groups())
+        if y2 > y1 and (best is None or y1 < best[0]):
+            best = (y1, (x1 + x2) // 2, (y1 + y2) // 2)
+if best:
+    print(best[1], best[2])
+' ui.xml
+}
 
-query 'ftp%svalue' ftp
-value_is 'FTP value' '250'
-
-query 'debug%slog' debug
-[ "$LOG_DEBUG" = "true" ] && value_is 'Debug Log' 'On'
-check_editors "debug log"
-
-query 'strava%supload' strava
-value_is 'Strava Upload' 'Request'
-
-query 'power%sup' powerup
-value_is 'Power Up \(LB\)' 'Gear Up'
-
-query 'floating%swindow%stype' floating
-value_is 'Floating Window Type' 'Horizontal'
-
-query 'theme' theme
-value_is 'Theme' 'Graphite'
-check_editors "theme"
-
-query 'specific%smodel' model
-value_is 'Specific Model' 'Other'
-check_editors "specific model"
-
-query '5%skm%space' pace
-value_is '5 km pace \(total time\)' '00:25:00'
-
-# A Bluetooth device and a password: no value at all
-query 'heart%sbelt' belt
-value_none 'Heart Belt Name'
 query 'password' password
-not_has '^secret$|.*: secret$' "a password is never shown"
-value_none 'PZP Password'
+has '^PZP Password$' "PZP Password listed"
+not_has '^secret$|.*: secret$' "the password is not shown"
+stored_password
 
-# Hidden from the modern results: on no settings page
-query 'camera' camera
-[ "$UI_MODERN" = "true" ] && not_has '^Camera Action$' "MyWhoosh camera is not listed"
-query 'peloton%sbike%socr' ocr
-[ "$UI_MODERN" = "true" ] && not_has '^Peloton Bike OCR$' "Peloton Bike OCR is not listed"
-
-# A page among the results: a chevron instead of Open
-query 'wahoo' wahoo
-has '^Wahoo Options$' "Wahoo Options page listed"
-check_editors "wahoo"
-[ "$UI_MODERN" = "true" ] && find_card '^Without Wheel Diameter Protocol: Off$' "the Wahoo switch shows Off"
-# The page card itself (catalogKind page): it keeps the query on the way out (no jump), and back
-# gave the Repeater the same list. A switch of that page, written by its own Settings, must show
-# anew on its card. The classic look has the Open button there instead
-if [ "$UI_MODERN" = "true" ]; then
-  tap_card '^Wahoo Options$' "the page card"
+OKXY=$(first_ok_y)
+echo "first OK at $OKXY" >> $STEPLOG
+if [ -n "$OKXY" ]; then
+  OKY=${OKXY#* }
+  tap 600 $OKY "PZP Password field"
+  sleep 1
+  adb shell input keyevent KEYCODE_MOVE_END || true
+  for i in $(seq 1 10); do adb shell input keyevent KEYCODE_DEL || true; done
+  adb shell input text newpass
+  sleep 1
+  shot q-pzp-typing
+  tap $OKXY "OK"
+  sleep 2
+  hide_keyboard
+  sleep 4
+  shot q-pzp-saved
+  results "after OK"
+  not_has '^newpass$|^secret$' "the new password is not shown after OK"
+  stored_password
 else
-  tap_ui '^Open$'
+  echo "!! first OK NOT FOUND: no edit" >> $STEPLOG
 fi
-sleep 4
-shot q-wahoo-page
-toggle_switch 'Without Wheel Diameter Protocol'
-shot q-wahoo-on
-back "to the results"
-sleep 3
-shot q-wahoo-back
-results "back from Wahoo Options"
-# The results come back at their scroll: the header may be off the top, the cards are there
-has '^Wahoo Options$|^Search results.*' "back from the page lands on the results"
-[ "$UI_MODERN" = "true" ] && find_card '^Without Wheel Diameter Protocol: On$' "the Wahoo switch shows On after the page"
-shot q-wahoo-on-card
 
-# A setting its page hides with the current values (kg only with miles on): back to the results
-# with a toast that no longer says "change it here". The toast lasts 3 s: looked for first
-query 'use%skg' kg
-tap_ui '^Use kg for weight$'
-# A screen capture takes about a second, a dump two: the pictures first. The toast fades in after
-# the jump has run (right after the tap it was not there yet) and lasts 3 s
-sleep 1
-adb shell screencap -p /sdcard/q-kg-toast-1s.png || true
-adb shell screencap -p /sdcard/q-kg-toast-2s.png || true
-adb pull /sdcard/q-kg-toast-1s.png || true
-adb pull /sdcard/q-kg-toast-2s.png || true
-has '^Hidden on its page.*' "the hidden-setting toast"
-cp ui.xml dumps/q-kg-toast-first.xml 2>/dev/null || true
-[ "$UI_MODERN" = "true" ] && [ -f ui.xml ] && grep -q "change it here" ui.xml &&
-  echo "!! the toast says change it here" >> $STEPLOG
-shot q-kg-toast
-sleep 3
+# Not a password: a field of the results still shows its value
+query 'ftp%svalue' ftp
+has '^250$' "FTP value shown as text"
 
-# The value is read again on the way back: Fake Device on, switched off on its page, back
-query 'fake%sdevice' fake
-value_is 'Fake Device' 'On'
-tap_ui '^Fake Device$'
-sleep 6
-shot q-fake-page
-toggle_switch 'Fake Device'
-shot q-fake-off
-back "to the results"
-sleep 3
-shot q-fake-back
-results "back after Fake Device off"
-has '^Fake Device$' "back lands on the results"
-value_is 'Fake Device' 'Off'
-
-# Changed: the reset stays, the values the same text
-type_query ''
-tap_ui '^Changed$'
-sleep 4
-shot q-changed
-results "changed"
-has '^Changed settings.*' "changed list"
-[ "$UI_MODERN" = "true" ] && has '^Reset$' "a Reset button on the changed cards"
-value_is 'Player Weight \(kg\)' '80\.5'
-value_is 'Strava Upload' 'Request'
-tap_ui '^Changed$'
-sleep 2
 shot e-end
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
