@@ -125,7 +125,9 @@ Page {
 
                     // VoiceOver accessibility
                     Accessible.role: Accessible.Button
-                    Accessible.name: rootItem.startText
+                    // the label may hold a long and a short variant (U+009C between them, the
+                    // button shows the one that fits): the screen reader gets only the long one
+                    Accessible.name: rootItem.startText.split("\u009C")[0]
                     Accessible.description: qsTr("Start workout")
                     Accessible.focusable: true
                 }

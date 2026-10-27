@@ -3223,7 +3223,10 @@ This may take a few moments on first startup.</source>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Devam et</translation>
+        <translation variants="yes">
+            <lengthvariant>Devam et</lengthvariant>
+            <lengthvariant>Devam</lengthvariant>
+        </translation>
     </message>
     <message>
         <source>Rec.</source>

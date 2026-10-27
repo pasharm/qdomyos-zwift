@@ -3223,7 +3223,10 @@ Při prvním spuštění to může chvíli trvat.</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Pokračovat</translation>
+        <translation variants="yes">
+            <lengthvariant>Pokračovat</lengthvariant>
+            <lengthvariant>Dál</lengthvariant>
+        </translation>
     </message>
     <message>
         <source>Rec.</source>
