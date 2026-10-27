@@ -3535,7 +3535,10 @@ This may take a few moments on first startup.</source>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Продолжить</translation>
+        <translation variants="yes">
+            <lengthvariant>Продолжить</lengthvariant>
+            <lengthvariant>Далее</lengthvariant>
+        </translation>
     </message>
     <message>
         <source>offset </source>

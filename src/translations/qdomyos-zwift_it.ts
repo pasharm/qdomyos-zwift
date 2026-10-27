@@ -3457,7 +3457,10 @@ Al primo avvio potrebbe richiedere qualche istante.</translation>
     </message>
     <message>
         <source>Resume</source>
-        <translation>Riprendi</translation>
+        <translation variants="yes">
+            <lengthvariant>Riprendi</lengthvariant>
+            <lengthvariant>Avanti</lengthvariant>
+        </translation>
     </message>
     <message>
         <source>Rec.</source>
