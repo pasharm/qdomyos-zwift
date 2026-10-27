@@ -32,9 +32,20 @@ using namespace std;
 // so a std::wstring must not cross the Qt DLL boundary: QString::toStdWString()/fromStdWString() run inside the DLL
 // and hand over a string with a different layout (crash in the FIT SDK on save, #3053, #3095). These are the bodies
 // of the Qt 5.15 inline functions, built here; toWCharArray()/fromWCharArray() take only plain pointers.
+// A FIT string field holds at most 255 bytes with the terminating zero: FieldBase::SetSTRINGValue() keeps the UTF-8
+// length in a FIT_UINT8 and writes past its buffer for a longer string (nickname, workout name, program path), so
+// the string is cut to 254 UTF-8 bytes on a character boundary first.
 static std::wstring toFitString(const QString &s) {
-    std::wstring w(s.size(), L'\0');
-    w.resize(s.toWCharArray(&w[0]));
+    QString t = s;
+    const QByteArray utf8 = s.toUtf8();
+    if (utf8.size() > 254) {
+        int end = 254;
+        while (end > 0 && (uchar(utf8.at(end)) & 0xC0) == 0x80)
+            end--;
+        t = QString::fromUtf8(utf8.constData(), end);
+    }
+    std::wstring w(t.size(), L'\0');
+    w.resize(t.toWCharArray(&w[0]));
     return w;
 }
 
