@@ -57,6 +57,7 @@ class horizontreadmill : public treadmill {
     void startDiscover();
     void btinit();
     void updateYpooM5Control();
+    void addDirectDistance(double treadmillDistance);
 
     QTimer *refresh;
 
@@ -77,6 +78,8 @@ class horizontreadmill : public treadmill {
     QByteArray lastPacketComplete;
     QDateTime lastRefreshCharacteristicChanged = QDateTime::currentDateTime();
     bool firstDistanceCalculated = false;
+    double lastDirectDistance = -1;
+    QDateTime lastDirectDistanceChanged;
     uint8_t firstStateChanged = 0;
     double lastSpeed = 0.0;
     double lastInclination = 0;
