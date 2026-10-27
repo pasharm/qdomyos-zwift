@@ -61,7 +61,9 @@ ApplicationWindow {
             var isMultiWindow = (typeof rootItem !== "undefined" && rootItem && rootItem.iPadMultiWindowMode) ||
                                 (window.width < Screen.width - 10);  // Window smaller than screen = multi-window
             if (isMultiWindow) {
-                return 15;  // Space for window control buttons
+                // Space for window control buttons, below the status bar in the modern look,
+                // whose window starts at the top of the screen
+                return Math.max(15, iosInsetTop());
             }
             return iosInsetTop();
         }

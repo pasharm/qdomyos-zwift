@@ -142,7 +142,8 @@ class lockscreen {
     // stays visible for a full screen window too
     static void setSystemBarsColor(double red, double green, double blue, bool darkPage);
 
-    // safe area of the Qt window in points (status bar and cutout, home indicator); 0 before iOS 13
+    // safe area of the screen in points, as the UIWindow of Qt has it (status bar and cutout, home
+    // indicator), whatever the geometry of the Qt window inside it
     static void safeAreaInsets(double *top, double *bottom, double *left, double *right);
     // T-293, test only
     static void logSystemBars(const char *tag);

@@ -962,23 +962,26 @@ void lockscreen::setSystemBarsColor(double red, double green, double blue, bool 
 
 void lockscreen::safeAreaInsets(double *top, double *bottom, double *left, double *right) {
     *top = *bottom = *left = *right = 0;
+    NSMutableArray<UIWindow *> *windows = [NSMutableArray array];
     if (@available(iOS 13.0, *)) {
         for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
-            if (![scene isKindOfClass:[UIWindowScene class]]) {
-                continue;
-            }
-            for (UIWindow *window in ((UIWindowScene *)scene).windows) {
-                if (![window.rootViewController isKindOfClass:NSClassFromString(@"QIOSViewController")]) {
-                    continue;
-                }
-                const UIEdgeInsets insets = window.safeAreaInsets;
-                *top = insets.top;
-                *bottom = insets.bottom;
-                *left = insets.left;
-                *right = insets.right;
-                return;
+            if ([scene isKindOfClass:[UIWindowScene class]]) {
+                [windows addObjectsFromArray:((UIWindowScene *)scene).windows];
             }
         }
+    } else {
+        [windows addObjectsFromArray:UIApplication.sharedApplication.windows];
+    }
+    for (UIWindow *window in windows) {
+        if (![window.rootViewController isKindOfClass:NSClassFromString(@"QIOSViewController")]) {
+            continue;
+        }
+        const UIEdgeInsets insets = window.safeAreaInsets;
+        *top = insets.top;
+        *bottom = insets.bottom;
+        *left = insets.left;
+        *right = insets.right;
+        return;
     }
 }
 
