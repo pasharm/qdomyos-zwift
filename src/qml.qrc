@@ -18,6 +18,7 @@
         <file>UiSpinInput.qml</file>
         <file>UiSpinBox.qml</file>
         <file>UiIcons.js</file>
+        <file>fonts/MaterialSymbolsQZ.ttf</file>
         <file>UiDrawerItem.qml</file>
         <file>UiSectionHeader.qml</file>
         <file>UiSettingFrames.qml</file>
