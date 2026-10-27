@@ -3258,6 +3258,10 @@ This may take a few moments on first startup.</source>
         <translation>暂停</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>继续</translation>
+    </message>
+    <message>
         <source>offset </source>
         <translation>偏移 </translation>
     </message>

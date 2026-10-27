@@ -3222,6 +3222,10 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Pauza</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>Pokračovat</translation>
+    </message>
+    <message>
         <source>Rec.</source>
         <extracomment>Short tile value: Peloton running/walking pace target zone &quot;Recovery&quot; (not &quot;record&quot;); zones: (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
         <translation>Regen.</translation>

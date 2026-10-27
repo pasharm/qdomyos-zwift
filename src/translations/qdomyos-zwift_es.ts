@@ -3254,6 +3254,10 @@ Esto puede tardar un poco en el primer inicio.</translation>
         <translation>Pausa</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>Reanudar</translation>
+    </message>
+    <message>
         <source>offset </source>
         <translation>desfase </translation>
     </message>

@@ -3254,6 +3254,10 @@ Isso pode levar alguns instantes na primeira inicialização.</translation>
         <translation>Pausar</translation>
     </message>
     <message>
+        <source>Resume</source>
+        <translation>Retomar</translation>
+    </message>
+    <message>
         <source>offset </source>
         <translation>desvio </translation>
     </message>
