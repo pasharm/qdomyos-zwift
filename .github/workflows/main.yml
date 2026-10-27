@@ -1,338 +1,235 @@
-
-# This is a basic workflow to help you get started with Actions
-
+# test branch (T-046): the modern look of feat/modern-ui on the iOS simulator. Built the way
+# Xcode Cloud builds the App Store app (T-281: build-qdomyos-zwift-Qt_5_15_2_for_iOS-Debug/ci_scripts,
+# the committed Xcode project, Release), then walked page by page (.github/ios_modern.py, idb) in
+# every theme of "themes" at the default text size and once more at "big_size", with frames.
+# With app_run the build is skipped and the .app comes from the ios-cloud-sim artifact of that run.
+# T-293 (test/t293-ios): the system bars of the modern look, a short walk by default
 name: CI
 
-env:
-  DISPLAY: ':99'
-  ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
-
-# Controls when the action will run. Triggers the workflow on push, pull request,
-# scheduled nightly, or manual workflow dispatch events.
-# test branch: android-only, manual trigger (trimmed from upstream main.yml)
 on:
   workflow_dispatch:
+    inputs:
+      app_run:
+        description: run id whose ios-cloud-sim artifact has the .app (empty = build it)
+        required: false
+        default: ''
+      themes:
+        description: walks at the default text size, space separated, each ui_theme_mode-system appearance (T-293)
+        required: false
+        default: 'light-dark dark-light auto-light auto-dark'
+      big_size:
+        description: Larger Text of one more walk in the first theme (simctl ui content_size; empty = none)
+        required: false
+        default: ''
+      walk:
+        description: short (T-293, home, settings, editor, the system appearance switched) or full
+        required: false
+        default: 'short'
+      wait:
+        description: seconds after a start before the frame
+        required: false
+        default: '45'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  android-build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-22.04
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
+  ios-cloud-sim:
+    runs-on: macos-26
+    timeout-minutes: 150
+    env:
+      BUILD: ${{ inputs.app_run == '' }}
     steps:
-#      - name: Cache Qt Linux Desktop
-#        id: cache-qt-linux-desktop
-#        uses: actions/cache@v1
-#        with:
-#          path: '${{ github.workspace }}/output/linux-desktop/'
-#          key: ${{ runner.os }}-QtCache-Linux-Desktop
-
-#      - name: Cache Qt Linux Android
-#        id: cache-qt-android
-#        uses: actions/cache@v1
-#        with:
-#          path: '${{ github.workspace }}/output/android/'
-#          key: ${{ runner.os }}-QtCache-Android
-
-      - name: Xvfb install and run
-        run: |
-          sudo apt-get install -y xvfb
-          Xvfb -ac ${{ env.DISPLAY }} -screen 0 1280x780x24 &
-
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
+        if: env.BUILD == 'true'
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          submodules: 'false'  # Prima disattiva il checkout automatico dei submodule
-        
-      - name: Checkout submodules with specific branches
-        run: |
-          git submodule init
-          git submodule update --init --recursive 
-
-      - name: Install packages required to run QZ inside workflow
-        run: sudo apt update -y && sudo apt-get install -y qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools qttools5-dev-tools qtquickcontrols2-5-dev libqt5bluetooth5 libqt5widgets5 libqt5positioning5 libqt5xml5 qtconnectivity5-dev qtpositioning5-dev libqt5charts5-dev libqt5charts5 libqt5networkauth5-dev libqt5websockets5* libxcb-randr0-dev libxcb-xtest0-dev libxcb-xinerama0-dev libxcb-shape0-dev libxcb-xkb-dev
-
-#      - name: Test Peloton API
-#        if: github.event_name == 'push' || github.event_name == 'schedule'
-#        run: cd /home/runner/work/qdomyos-zwift/qdomyos-zwift/src/; ./qdomyos-zwift -test-peloton -peloton-username ${{ secrets.peloton_username }} -peloton-password ${{ secrets.peloton_password }}
-#        timeout-minutes: 2
-
-#      - name: Test Home Fitness Buddy API
-#        run: cd /home/runner/work/qdomyos-zwift/qdomyos-zwift/src/; ./qdomyos-zwift -test-hfb
-#        timeout-minutes: 2
-
-#      - uses: actions/checkout@v2
-#        with:
-#          repository: nttld/setup-ndk
-#          path: setup-ndk
-      # The packages.json in nttld/setup-ndk has already been updated,
-      # https://github.com/nttld/setup-ndk/commit/831db5b02a0f0cab80614619efe461a3dcc140e6
-      # but `dist/*` has not been rebuilt yet. Build it.
-      # https://github.com/nttld/setup-ndk/tree/main/dist
-#      - name: Locally rebuilt setup-ndk
-#        run: |
-#          npm -prefix ./setup-ndk install
-#          npm -prefix ./setup-ndk run all
-      # Install using locally rebuilt setup-ndk
-#      - name: Setup Android NDK r21d
-#        uses: ./setup-ndk
-      #- uses: nttld/setup-ndk@v1
-#        with:
-#          ndk-version: r21d
-
-# waiting github.com/jurplel/install-qt-action/issues/63
-      - name: Install Qt Android
-        uses: jdpurcell/install-qt-action@v5
+          submodules: recursive
+      - uses: actions/checkout@v4
+        if: env.BUILD != 'true'
         with:
-          version: '5.15.0'
-          host: 'linux'
-          target: 'android'
-          arch: 'android'
-          modules: 'qtcharts qtnetworkauth qtpurchasing'
-          dir: '${{ github.workspace }}/output/android/'
-          cache: 'false'
+          sparse-checkout: .github
 
-      - name: Install custom 16K-page-size Qt (overlay onto stock Qt install)
+      - name: Xcode
         run: |
-          QT_DIR="${{ github.workspace }}/output/android/Qt/5.15.0/android"
-          curl -fsSL -o /tmp/qt5.15.0-android-page16.zip https://github.com/cagnulein/qt-5.15.0-android-page16k/releases/download/1.0.0/qt5.15.0-android-page16.zip
-          unzip -q /tmp/qt5.15.0-android-page16.zip -d /tmp/qt-page16k
-          # Overlay the 16K-page-aligned target libs/plugins/qml/mkspecs/jar/include onto the
-          # stock Qt install; keep the stock Linux host tools (bin/) since the custom Qt's
-          # host tools were built on macOS (Mach-O, not usable on this Linux runner).
-          rsync -a --exclude='bin/' "/tmp/qt-page16k/qt5.15.0-android-page16/usr/local/Qt-5.15.0/" "$QT_DIR/"
-          # qdevice.pri comes from the overlay carrying the macOS origin's NDK host value;
-          # fix it back to linux so qmake resolves the NDK toolchain path correctly.
-          sed -i 's/darwin-x86_64/linux-x86_64/' "$QT_DIR/mkspecs/qdevice.pri"
-          rm -rf /tmp/qt5.15.0-android-page16.zip /tmp/qt-page16k
-
-      - name: Install Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin' # See 'Supported distributions' for available options
-          java-version: '17'
-          
-      - name: patching qt for bluetooth
-        run: cp qt-patches/android/5.15.0/jar/*.* ${{ github.workspace }}/output/android/Qt/5.15.0/android/jar/
-
-      - name: download 3rd party files for qthttpserver
-        run: cp qHttpServerBin/5.15.2/headers/* src/qthttpserver/src/3rdparty/http-parser/
-
-      - name: Cache Android NDK
-        id: cache-ndk
-        uses: actions/cache@v4
-        with:
-          path: /usr/local/lib/android/sdk/ndk/21.1.6352462
-          key: android-ndk-21.1.6352462-${{ runner.os }}
-
-      - name: Install Android SDK packages
-        run: |
-          SDKMANAGER="/usr/local/lib/android/sdk/cmdline-tools/latest/bin/sdkmanager"
-          echo "y" | $SDKMANAGER "ndk;21.1.6352462" "platforms;android-35" "build-tools;35.0.0"
-
-      - name: Setup ccache
-        run: |
-          sudo apt-get install -y ccache
-          echo "CCACHE_DIR=${{ github.workspace }}/.ccache" >> $GITHUB_ENV
-          ccache --set-config=max_size=2G
-          ccache --set-config=compression=true
-          ccache --set-config=compression_level=6
-          ccache --set-config=base_dir=${{ github.workspace }}
-          ccache --set-config=sloppiness=pch_defines,time_macros,include_file_mtime,file_macro
-          ccache --zero-stats
-
-      - name: Restore ccache
-        uses: actions/cache@v4
-        with:
-          path: .ccache
-          key: ccache-android-ndk21_1-${{ hashFiles('src/**/*.cpp', 'src/**/*.h', 'src/*.pro') }}
-          restore-keys: |
-            ccache-android-ndk21_1-
-
-      - name: Setup NDK environment with ccache
-        run: |
-          NDK_PATH=/usr/local/lib/android/sdk/ndk/21.1.6352462
-          NDK_BIN=$NDK_PATH/toolchains/llvm/prebuilt/linux-x86_64/bin
-          ln -sfn $NDK_PATH /usr/local/lib/android/sdk/ndk-bundle
-          rm -rf /usr/local/lib/android/sdk/ndk/25.1.8937393
-          echo "ANDROID_NDK=/usr/local/lib/android/sdk/ndk-bundle" >> $GITHUB_ENV
-          echo "ANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk-bundle" >> $GITHUB_ENV
-          # Wrap NDK compilers with ccache for build caching
-          if [ ! -f "$NDK_BIN/clang.real" ]; then
-            mv $NDK_BIN/clang $NDK_BIN/clang.real
-            mv $NDK_BIN/clang++ $NDK_BIN/clang++.real
+          ls -d /Applications/Xcode*.app
+          # the newest Xcode; the scripts of Xcode Cloud use /Applications/Xcode.app
+          XC=$(ls -d /Applications/Xcode_*.app | sort -V | tail -n 1)
+          echo "newest: $XC"
+          sudo xcode-select -s "$XC/Contents/Developer"
+          if [ "$(readlink -f /Applications/Xcode.app)" != "$(readlink -f "$XC")" ]; then
+            sudo rm -rf /Applications/Xcode.app
+            sudo ln -s "$XC" /Applications/Xcode.app
           fi
-          printf '#!/bin/bash\nexec /usr/bin/ccache %s/clang.real "$@"\n' "$NDK_BIN" > $NDK_BIN/clang
-          printf '#!/bin/bash\nexec /usr/bin/ccache %s/clang++.real "$@"\n' "$NDK_BIN" > $NDK_BIN/clang++
-          chmod +x $NDK_BIN/clang $NDK_BIN/clang++
+          xcodebuild -version
+          xcrun simctl list runtimes
 
-      - name: Generate secrets
+      - name: Xcode Cloud scripts (ci_post_clone.sh, ci_pre_xcodebuild.sh)
+        if: env.BUILD == 'true'
         run: |
-          cd src
-          echo "#define STRAVA_SECRET_KEY ${{ secrets.strava_secret_key }}" > secret.h
-          echo "#define PELOTON_SECRET_KEY ${{ secrets.peloton_secret_key }}" >> secret.h
-          echo "#define SMTP_USERNAME ${{ secrets.smtp_username }}" >> secret.h
-          echo "#define SMTP_PASSWORD ${{ secrets.smtp_password }}" >> secret.h
-          echo "#define SMTP_SERVER ${{ secrets.smtp_server }}" >> secret.h
-          echo "#define INTERVALSICU_CLIENT_ID ${{ secrets.intervalsicu_client_id }}" >> secret.h
-          echo "#define INTERVALSICU_CLIENT_SECRET ${{ secrets.intervalsicu_client_secret }}" >> secret.h
-          echo "${{ secrets.cesiumkey }}" >> inner_templates/googlemaps/cesium-key.js
+          # what Xcode Cloud gives the scripts: the repository path and /Volumes/workspace/repository
+          export CI_PRIMARY_REPOSITORY_PATH="$GITHUB_WORKSPACE"
+          echo "CI_PRIMARY_REPOSITORY_PATH=$GITHUB_WORKSPACE" >> $GITHUB_ENV
+          sudo mkdir -p /Volumes/workspace
+          sudo ln -sfn "$GITHUB_WORKSPACE" /Volumes/workspace/repository
+          cd build-qdomyos-zwift-Qt_5_15_2_for_iOS-Debug/ci_scripts
+          bash ci_post_clone.sh
+          bash ci_pre_xcodebuild.sh
 
-      - name: Prepare Android signing key
+      - name: xcodebuild for the simulator (Release, the committed project)
+        if: env.BUILD == 'true'
+        run: |
+          set -o pipefail
+          mkdir -p out
+          # the WatchKit 2 app has no product types for the iOS simulator: the app is built without it
+          python3 .github/scripts/ios_simulator_project.py build-qdomyos-zwift-Qt_5_15_2_for_iOS-Debug/qdomyoszwift.xcodeproj/project.pbxproj
+          # T-046, test only: UiIcon.qml of the modern look imports QtQuick.Shapes, qmake puts its static
+          # plugin into qml_plugin_import.cpp, but the committed project does not link it (run 40289368702:
+          # undefined qt_static_plugin_QmlShapesPlugin). Linked here to see the look past that
+          # QZ_QT_ROOT of the Xcode Cloud scripts (the -L paths of run 40289368702)
+          ls -l /tmp/Qt-5.15.2/ios/qml/QtQuick/Shapes /tmp/Qt-5.15.2/ios/lib/libQt5QuickShapes.a || true
+          python3 .github/ios_link_shapes.py build-qdomyos-zwift-Qt_5_15_2_for_iOS-Debug/qdomyoszwift.xcodeproj/project.pbxproj
+          # Qt of the App Store build has x86_64 (simulator) and arm64 (device) slices
+          xcodebuild -project src/qdomyoszwift.xcodeproj -scheme qdomyoszwift -configuration Release \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' -derivedDataPath dd \
+            ARCHS=x86_64 ONLY_ACTIVE_ARCH=NO CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
+            build 2>&1 | tee out/xcodebuild.log | grep -E "error:|warning: .*(Qt|qml)|BUILD (SUCCEEDED|FAILED)|\*\* " || true
+          grep -q "BUILD SUCCEEDED" out/xcodebuild.log
+
+      - name: The .app of an earlier run
+        if: env.BUILD != 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: ios-cloud-sim
+          path: prev
+          run-id: ${{ inputs.app_run }}
+          github-token: ${{ github.token }}
+
+      - name: Find the app
+        id: app
+        run: |
+          mkdir -p out
+          if [ "$BUILD" = "true" ]; then
+            APP=$(find dd/Build/Products -maxdepth 2 -name '*.app' -type d -path '*iphonesimulator*' | grep -v -i watch | head -n 1)
+          else
+            mkdir -p appdir && ditto -x -k prev/app.zip appdir
+            APP=$(find appdir -maxdepth 1 -name '*.app' -type d | head -n 1)
+          fi
+          echo "app: $APP"
+          test -n "$APP"
+          PL="$APP/Info.plist"
+          BID=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$PL")
+          EXE=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$PL")
+          echo "bundle id: $BID, executable: $EXE"
+          echo "CFBundleVersion: '$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$PL" 2>&1)'"
+          file "$APP/$EXE"
+          if [ "$BUILD" = "true" ]; then ditto -c -k --keepParent "$APP" out/app.zip; else cp prev/app.zip out/app.zip; fi
+          V=$(/usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$PL" 2>/dev/null || true)
+          case "$V" in ''|*'$'*) /usr/libexec/PlistBuddy -c 'Set :CFBundleVersion 1' "$PL" 2>/dev/null || /usr/libexec/PlistBuddy -c 'Add :CFBundleVersion string 1' "$PL" ;; esac
+          codesign --force --deep --sign - "$APP"
+          echo "app=$APP" >> $GITHUB_OUTPUT
+          echo "bid=$BID" >> $GITHUB_OUTPUT
+
+      - name: Rosetta (the simulator slice of Qt 5.15.2 is x86_64)
+        run: softwareupdate --install-rosetta --agree-to-license || true
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: idb (taps and the accessibility tree)
+        run: |
+          brew install facebook/fb/idb-companion || true
+          if ! command -v idb_companion; then
+            curl -sSL -o idb.tar.gz https://github.com/facebook/idb/releases/download/v1.1.8/idb-companion.universal.tar.gz
+            sudo mkdir -p /usr/local/opt /usr/local/bin
+            sudo tar -xzf idb.tar.gz -C /usr/local/opt
+            sudo ln -sf /usr/local/opt/idb-companion.universal/bin/idb_companion /usr/local/bin/idb_companion
+          fi
+          idb_companion --version || true
+          python -m pip install fb-idb || true
+          echo "IDB=$(python -c 'import shutil; print(shutil.which("idb") or "idb")')" >> $GITHUB_ENV
+
+      - name: Run on a simulator
         env:
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-          SIGNING_ALIAS: ${{ secrets.ALIAS }}
-          KEY_STORE_PASSWORD: ${{ secrets.KEY_STORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+          APP: ${{ steps.app.outputs.app }}
+          BID: ${{ steps.app.outputs.bid }}
+          THEMES: ${{ inputs.themes }}
+          BIG_SIZE: ${{ inputs.big_size }}
+          WAIT: ${{ inputs.wait }}
+          WALK: ${{ inputs.walk }}
         run: |
-          if [ -z "$SIGNING_KEY" ] || [ -z "$SIGNING_ALIAS" ] || [ -z "$KEY_STORE_PASSWORD" ] || [ -z "$KEY_PASSWORD" ]; then
-            echo "Android signing secrets are not available; APK re-signing will be skipped."
-            echo "CI_ANDROID_RESIGN_APK=false" >> "$GITHUB_ENV"
-            exit 0
-          fi
-
-          KEYSTORE="${{ github.workspace }}/src/android/ci-signing-key.jks"
-          if ! printf '%s' "$SIGNING_KEY" | base64 --decode > "$KEYSTORE"; then
-            echo "Failed to decode Android signing key."
-            rm -f "$KEYSTORE"
-            exit 1
-          fi
-
-          if [ ! -s "$KEYSTORE" ]; then
-            echo "Decoded Android signing key is empty."
-            rm -f "$KEYSTORE"
-            exit 1
-          fi
-
-          echo "CI_ANDROID_SIGNING_KEYSTORE=$KEYSTORE" >> "$GITHUB_ENV"
-          echo "CI_ANDROID_RESIGN_APK=true" >> "$GITHUB_ENV"
-
-      - name: Build qthttpserver for Android
-        run: |
-          cd src/qthttpserver
-          qmake
-          make -j8
-          make install
-
-      - name: Build QZ for Android (arm64-v8a, x86_64)
-        run: |
-          lrelease src/qdomyos-zwift.pri
-          # CONFIG+=debug matches the real reference build validated against the Mac-built
-          # APK: it keeps .so unstripped (matching the reference almost byte-for-byte) and,
-          # with this custom Qt, naturally leaves android-extra-libs unset - the bundled
-          # android_openssl libs are not 16K-page-aligned, so we must NOT inject them (see
-          # below); Qt's own QtNetwork already has openssl linked in.
-          # Test builds only need two ABIs: arm64-v8a for the phone, x86_64 for the emulator.
-          # ANDROID_ABIS is given twice: defaults.pri sets all four, and an assignment after
-          # -after is read after the project files.
-          # CONFIG+=debug compiles without optimisation (the -O3 of the .pri is a release flag),
-          # so -O2 is added to the debug flags: same packaging, optimised code.
-          # The ABIs are built one after another (as upstream, #5198): with Qt 5.15.0 every ABI
-          # writes the same src/qdomyos-zwift_metatypes.json, qdomyos-zwift.qmltypes and
-          # qdomyos-zwift_qmltyperegistrations.cpp, and with a plain make -j4 two ABIs can
-          # write them at the same time ("Error parsing qdomyos-zwift_metatypes.json").
-          qmake -spec android-clang 'ANDROID_ABIS=arm64-v8a x86_64' 'ANDROID_NDK_ROOT=/usr/local/lib/android/sdk/ndk/21.1.6352462' 'CONFIG+=debug' 'QMAKE_CFLAGS_DEBUG+=-O2' 'QMAKE_CXXFLAGS_DEBUG+=-O2' -after 'ANDROID_ABIS=arm64-v8a x86_64'
-          make qmake_all
-          for abi in arm64-v8a x86_64; do
-            make -j4 -C src -f Makefile.qdomyos-zwift "$abi-all"
+          set -x
+          UDID=$(xcrun simctl list devices available -j | python3 -c '
+          import json, sys
+          d = json.load(sys.stdin)["devices"]
+          for rt in sorted(d, reverse=True):
+              if "iOS" not in rt:
+                  continue
+              for dev in d[rt]:
+                  if dev["name"].startswith("iPhone"):
+                      print(dev["udid"]); sys.exit()
+          ')
+          echo "device: $UDID"
+          test -n "$UDID"
+          xcrun simctl boot "$UDID"
+          xcrun simctl bootstatus "$UDID" -b
+          # QSettings on iOS = CFPreferences "com.<organizationDomain, dots as dashes>.<applicationName>" (main.cpp),
+          # in the app container; a last device closes the first-run wizard (homeform::firstRun)
+          QSD=com.robertoviola-cloud.qDomyos-Zwift
+          # one walk: a clean install (the settings file is written before the first start, so the
+          # cached preferences of a running app cannot overwrite it), theme $2, text size $3
+          walk() {
+            NAME=$1
+            # T-293: "light-dark" = ui_theme_mode light with the system in dark; switched to the
+            # other appearance during the short walk
+            MODE=${2%%-*}
+            SYS=${2#*-}
+            [ "$SYS" != "$2" ] || SYS=light
+            if [ "$SYS" = dark ]; then export SWITCH_TO=light; else export SWITCH_TO=dark; fi
+            xcrun simctl ui "$UDID" appearance "$SYS"
+            xcrun simctl terminate "$UDID" "$BID" 2>/dev/null || true
+            xcrun simctl uninstall "$UDID" "$BID" 2>/dev/null || true
+            xcrun simctl install "$UDID" "$APP"
+            xcrun simctl ui "$UDID" content_size "$3"
+            echo "$NAME: theme $MODE, system $(xcrun simctl ui "$UDID" appearance 2>&1), content size $(xcrun simctl ui "$UDID" content_size 2>&1)" >> out/walks.txt
+            DATA=$(xcrun simctl get_app_container "$UDID" "$BID" data)
+            mkdir -p "$DATA/Library/Preferences"
+            PREFS="$DATA/Library/Preferences/$QSD.plist"
+            /usr/libexec/PlistBuddy -c 'Add :bluetooth_lastdevice_name string TestBike' "$PREFS"
+            /usr/libexec/PlistBuddy -c 'Add :applewatch_fakedevice bool true' "$PREFS"
+            /usr/libexec/PlistBuddy -c 'Add :log_debug bool true' "$PREFS"
+            /usr/libexec/PlistBuddy -c 'Add :ui_modern bool true' "$PREFS"
+            /usr/libexec/PlistBuddy -c "Add :ui_theme_mode string $MODE" "$PREFS"
+            plutil -p "$PREFS" > "out/$NAME-prefs-before.txt" 2>&1 || true
+            xcrun simctl launch --stdout="$PWD/out/$NAME.stdout.txt" --stderr="$PWD/out/$NAME.stderr.txt" "$UDID" "$BID" || echo "launch failed: $?"
+            sleep "$WAIT"
+            xcrun simctl spawn "$UDID" launchctl list | grep -i "$BID" || echo "$NAME: app not running after $WAIT s" | tee -a out/walks.txt
+            python .github/ios_modern.py "$IDB" "$UDID" out "$NAME" > "out/$NAME.nav.txt" 2>&1 || echo "$NAME: walk failed" >> out/walks.txt
+            xcrun simctl spawn "$UDID" launchctl list | grep -i "$BID" || echo "$NAME: app not running after the walk" | tee -a out/walks.txt
+            grep -a "qrc:/" "out/$NAME.stderr.txt" | sort | uniq -c | sort -rn > "out/$NAME-qml-warnings.txt" || true
+            grep -a "T293" "out/$NAME.stderr.txt" "out/$NAME.stdout.txt" > "out/$NAME-t293.txt" || true
+            for f in "$DATA"/Library/Preferences/*.plist; do echo "== $f"; plutil -p "$f"; done > "out/$NAME-prefs-after.txt" 2>&1 || true
+            mkdir -p "out/$NAME-logs"
+            find "$DATA" -name "debug-*.log" -exec cp {} "out/$NAME-logs/" \; || true
+          }
+          N=0
+          FIRST=""
+          for T in $THEMES; do
+            N=$((N + 1))
+            [ -n "$FIRST" ] || FIRST=$T
+            walk "w$N-$T" "$T" large
           done
-          make -j4 && make INSTALL_ROOT=${{ github.workspace }}/output/android/ install
-          cat src/android-qdomyos-zwift-deployment-settings.json
-
-      - name: Cache Gradle
-        uses: actions/cache@v4
-        with:
-          path: |
-            ${{ github.workspace }}/.gradle-android/caches
-            ${{ github.workspace }}/.gradle-android/wrapper
-          key: gradle-android-${{ runner.os }}-v2
-          restore-keys: |
-            gradle-android-${{ runner.os }}-
-
-      - name: Build Android package
-        run: |
-          cd src
-          mkdir -p ${{ github.workspace }}/output/android
-          # libs/armeabi-v7a and libs/x86 only have libc++_shared.so: without the exclude the APK
-          # gets folders for ABIs that QZ is not built for
-          rsync -a --exclude build --exclude .gradle --exclude /libs/armeabi-v7a --exclude /libs/x86 android/ ${{ github.workspace }}/output/android/
-          androiddeployqt --input android-qdomyos-zwift-deployment-settings.json --output ${{ github.workspace }}/output/android/ --android-platform android-35 --gradle --aux-mode
-          # The QZ library is ~230 MB per ABI, ~200 MB of it debug info: the full copy goes to a
-          # separate artifact (to symbolise crashes), the APK gets the stripped one.
-          STRIP=/usr/local/lib/android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip
-          mkdir -p ${{ github.workspace }}/symbols
-          for so in ${{ github.workspace }}/output/android/libs/*/libqdomyos-zwift_*.so; do
-            abi=$(basename "$(dirname "$so")")
-            mkdir -p "${{ github.workspace }}/symbols/$abi"
-            cp "$so" "${{ github.workspace }}/symbols/$abi/"
-            ls -l "$so"
-            "$STRIP" --strip-debug "$so"
-            ls -l "$so"
-          done
-          export GRADLE_USER_HOME="${{ github.workspace }}/.gradle-android"
-          export GRADLE_OPTS="-Dgradle.user.home=$GRADLE_USER_HOME"
-          export GRADLE_DIST_DIR="${{ github.workspace }}/gradle-8.13"
-          export QT_ANDROID_DIR="${{ github.workspace }}/output/android/Qt/5.15.0/android"
-          mkdir -p "$GRADLE_USER_HOME"
-          rm -f "$GRADLE_USER_HOME/gradle.properties"
-          rm -f "$HOME/.gradle/gradle.properties"
-          find ${{ github.workspace }}/output/android \( -name '*.properties' -o -name '*.gradle' -o -name '*.gradle.kts' \) -exec sed -i '/android\.bundle\.enableUncompressedNativeLibs/d' {} +
-          printf '\nqt5AndroidDir=%s/src/android/java\n' "$QT_ANDROID_DIR" >> ${{ github.workspace }}/output/android/gradle.properties
-          echo "Residual enableUncompressedNativeLibs matches after sanitization:"
-          if grep -RInE "android\\.bundle\\.enableUncompressedNativeLibs|enableUncompressedNativeLibs" ${{ github.workspace }}/output/android "$GRADLE_USER_HOME" "$HOME/.gradle" ; then
-            echo "Unexpected residual matches found"
-            exit 1
+          if [ -n "$BIG_SIZE" ]; then
+            N=$((N + 1))
+            walk "w$N-${FIRST:-dark}-big" "${FIRST:-dark}" "$BIG_SIZE"
           fi
-          find ${{ github.workspace }}/output/android -name gradle.properties -print -exec cat {} \;
-          if [ ! -x "$GRADLE_DIST_DIR/bin/gradle" ]; then
-            curl -fsSL https://services.gradle.org/distributions/gradle-8.13-bin.zip -o /tmp/gradle-8.13-bin.zip
-            unzip -q /tmp/gradle-8.13-bin.zip -d ${{ github.workspace }}
-          fi
-          "$GRADLE_DIST_DIR/bin/gradle" -g "$GRADLE_USER_HOME" --no-daemon -p ${{ github.workspace }}/output/android assembleDebug bundleDebug
+          ls ~/Library/Logs/DiagnosticReports/ > out/crash-list.txt 2>&1 || true
+          cp ~/Library/Logs/DiagnosticReports/*qdomyos* out/ 2>/dev/null || true
 
-      - name: Re-sign APK for stable App Links fingerprint
-        run: |
-          if [ "$CI_ANDROID_RESIGN_APK" != "true" ]; then
-            echo "Skipping APK re-signing because Android signing secrets are not available."
-            exit 0
-          fi
-
-          APK_PATH="${{ github.workspace }}/output/android/build/outputs/apk/debug/android-debug.apk"
-          SIGNED_APK_PATH="${{ github.workspace }}/output/android/build/outputs/apk/debug/android-debug-signed.apk"
-          trap 'rm -f "$CI_ANDROID_SIGNING_KEYSTORE" "$SIGNED_APK_PATH"' EXIT
-          APKSIGNER=$(find /usr/local/lib/android/sdk/build-tools -name apksigner | sort | tail -n 1)
-          if [ -z "$APKSIGNER" ]; then
-            echo "apksigner not found"
-            exit 1
-          fi
-          "$APKSIGNER" sign \
-            --ks "$CI_ANDROID_SIGNING_KEYSTORE" \
-            --ks-key-alias "${{ secrets.ALIAS }}" \
-            --ks-pass "pass:${{ secrets.KEY_STORE_PASSWORD }}" \
-            --key-pass "pass:${{ secrets.KEY_PASSWORD }}" \
-            --out "$SIGNED_APK_PATH" \
-            "$APK_PATH"
-          mv "$SIGNED_APK_PATH" "$APK_PATH"
-
-      - name: Show ccache stats
+      - name: Keep the output
         if: always()
-        run: ccache --show-stats
-
-      - name: Archive apk binary
         uses: actions/upload-artifact@v4
         with:
-          name: fdroid-android-trial
-          path: ${{ github.workspace }}/output/android/build/outputs/apk/debug/android-debug.apk
-
-      - name: Archive the QZ library with debug info
-        uses: actions/upload-artifact@v4
-        with:
-          name: qz-library-with-debug-info
-          path: ${{ github.workspace }}/symbols/
-          retention-days: 14
+          name: ios-cloud-sim
+          path: out/
