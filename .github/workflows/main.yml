@@ -8,6 +8,10 @@ on:
       source:
         description: run id of the build to test
         required: true
+      repo:
+        description: repository of that run (cagnulein/qdomyos-zwift for an upstream build)
+        required: false
+        default: 'pasharm/qdomyos-zwift'
       modern:
         description: ui_modern for the run (false = the classic look, for comparison)
         required: false
@@ -39,6 +43,7 @@ jobs:
           name: fdroid-android-trial
           path: apk-debug
           run-id: ${{ inputs.source }}
+          repository: ${{ inputs.repo }}
           github-token: ${{ github.token }}
 
       - name: Setup Java for Android Emulator
