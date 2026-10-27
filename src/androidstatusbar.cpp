@@ -132,6 +132,16 @@ void AndroidStatusBar::setSystemBarsColor(const QColor &color, bool dark) const
 #endif
 }
 
+QVariantMap AndroidStatusBar::safeAreaInsets() const
+{
+    double top = 0, bottom = 0, left = 0, right = 0;
+#if defined(Q_OS_IOS) && !defined(IO_UNDER_QT)
+    lockscreen::safeAreaInsets(&top, &bottom, &left, &right);
+#endif
+    return QVariantMap{{QStringLiteral("top"), top}, {QStringLiteral("bottom"), bottom},
+                       {QStringLiteral("left"), left}, {QStringLiteral("right"), right}};
+}
+
 QString AndroidStatusBar::systemAccentColor(bool dark) const
 {
 #ifdef Q_OS_ANDROID

@@ -140,6 +140,9 @@ class lockscreen {
     // colour of the areas under the status bar and the home indicator, outside the Qt window,
     // and the status bar text: light on a dark page, dark on a light one
     static void setSystemBarsColor(double red, double green, double blue, bool darkPage);
+
+    // safe area of the Qt window in points (status bar and cutout, home indicator); 0 before iOS 13
+    static void safeAreaInsets(double *top, double *bottom, double *left, double *right);
 };
 
 #endif // LOCKSCREEN_H
