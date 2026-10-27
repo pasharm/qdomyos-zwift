@@ -17,7 +17,7 @@ on:
         required: false
         default: 'true'
       baseline:
-        description: run id of the build to shoot first, as the reference (T-302 - feat/modern-ui before the merge)
+        description: run id of the build to shoot first, as the reference (T-306 - feat/modern-ui, the label before the change)
         required: true
 
 jobs:

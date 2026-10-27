@@ -1,9 +1,8 @@
 #!/bin/bash
-# Test only (T-302): feat/modern-ui merged with master 3036f62b8. The reference APK (apk-base:
-# feat/modern-ui before the merge) and the tested APK (apk-debug: the merge) go through the same
-# steps with a fake treadmill: start, home with tiles, Start and Stop (the treadmill stop path
-# changed in master with #5403), the menu, the settings and Treadmill Options, a rotation.
-# At the end the QML warnings of the tested APK that the reference did not have go to steps.log.
+# Test only (T-306): the start button says "Resume" while the workout is paused. The tested APK
+# (apk-debug) with a fake treadmill, in several languages: home, Pause, the paused frame, Resume,
+# Stop. The reference APK (apk-base: before the change) - the same in en and ru, for the
+# before/after frames. The buttons are tapped by coordinates: their labels change with the language.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -31,10 +30,10 @@ install_apk() {
 adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
-# put_conf: the settings file of the app before a start - a fake treadmill, so the home page has
-# tiles and no first-run wizard
+# put_conf <lang>: the settings file of the app before a start - a fake treadmill, so the home
+# page has tiles and no first-run wizard
 put_conf() {
-  printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\napp_language=en\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+  printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\napp_language=%s\n' "$LOG_DEBUG" "$UI_MODERN" "$1" > qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf '$CONF'"
@@ -70,125 +69,57 @@ shot() {
 }
 mark() {
   echo "$(date +%H:%M:%S) $1" >> $STEPLOG
-  adb shell log -t T302 "'$1'" || true
+  adb shell log -t T306 "'$1'" || true
 }
-# tap_ui 'regex' [x y]: the control whose whole text or accessible name matches, else the
-# fallback coordinates; without them the step is skipped
-tap_ui() {
-  local rx="$1" fx="$2" fy="$3" xy=""
-  ensure_app
-  [ -f ui.xml ] || dump
-  [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$rx")
-  if [ -n "$xy" ]; then
-    echo "tap '$rx': by label at $xy" >> $STEPLOG
-    adb shell input tap $xy || true
-  elif [ -n "$fx" ]; then
-    echo "tap '$rx': NOT FOUND, coordinates $fx $fy" >> $STEPLOG
-    adb shell input tap $fx $fy || true
-  else
-    echo "!! tap '$rx': NOT FOUND, skipped" >> $STEPLOG
-    return 1
-  fi
-}
-# scroll_to 'regex': swipe the page up until the control shows (at most 12 swipes)
-scroll_to() {
-  local i
-  for i in $(seq 1 12); do
-    dump
-    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
-      echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
-      return 0
-    fi
-    adb shell input swipe 700 2000 700 1300 400 || true
-    sleep 1
-  done
-  echo "!! scroll to '$1': NOT FOUND" >> $STEPLOG
-  return 1
-}
-# The fake treadmill comes after the first search ends: wait for its tiles (at most 3 min)
-wait_tiles() {
-  local i
-  for i in $(seq 1 18); do
-    dump
-    if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then
-      echo "tiles shown after $i looks" >> $STEPLOG; return 0
-    fi
-    sleep 10
-  done
-  echo "!! tiles NOT shown" >> $STEPLOG
-}
-back() { echo "back ($1)" >> $STEPLOG; adb shell input keyevent KEYCODE_BACK || true; }
-# Toolbar: the menu button on the home page (Nexus 6: 1440x2560 px)
-MENU="84 168"
+# The fake treadmill comes after the first search ends; the tile names are translated, so a
+# fixed wait instead of looking for them (T-302: the tiles were there at the first look, 25 s)
+wait_tiles() { sleep 20; }
+# The start and the stop buttons of the top bar, both views (Nexus 6: 1440x2560 px)
+STARTXY="497 468"
+STOPXY="940 468"
+tap_xy() { ensure_app; echo "tap $1 at $2" >> $STEPLOG; adb shell input tap $2 || true; }
 
 adb logcat -c || true
 adb logcat -v threadtime -b main,system,crash > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
 
-# run_case <label> <apk>
-run_case() {
-  local label="$1" pid
-  install_apk "$2"
-  adb shell settings put system accelerometer_rotation 0 || true
-  adb shell settings put system user_rotation 0 || true
-  put_conf
+# run_lang <label> <lang>: the app (already installed) started in a language, through
+# running -> paused -> resumed -> stopped
+run_lang() {
+  local label="$1-$2"
+  adb shell am force-stop $PKG || true
+  sleep 2
+  put_conf "$2"
   mark "$label: start"
   adb shell am start -n $PKG/$PKG.CustomQtActivity
   sleep 25
-  pid=$(adb shell pidof $PKG | tr -d '\r')
-  echo "$label: pid $pid" >> $STEPLOG
-  echo "$pid" > pid-$label.txt
   wait_tiles
-  shot $label-01-home
-  mark "$label: Start"
-  tap_ui 'Start'
-  sleep 20
-  shot $label-02-running
+  shot $label-01-running
+  mark "$label: Pause"
+  tap_xy pause "$STARTXY"
+  sleep 4
+  shot $label-02-paused
+  mark "$label: Resume"
+  tap_xy resume "$STARTXY"
+  sleep 4
+  shot $label-03-resumed
   mark "$label: Stop"
-  tap_ui 'Stop'
-  sleep 5
-  shot $label-03-stopped
-  mark "$label: menu"
-  ensure_app
-  echo "tap menu $MENU" >> $STEPLOG
-  adb shell input tap $MENU || true
-  sleep 3
-  shot $label-04-menu
-  mark "$label: settings"
-  tap_ui 'Settings' && sleep 5
-  shot $label-05-settings
-  scroll_to 'Treadmill Options' && tap_ui 'Treadmill Options' && sleep 3
-  shot $label-06-treadmill-options
-  back "settings"
-  sleep 3
-  back "home"
-  sleep 3
-  shot $label-07-back-home
-  mark "$label: rotation"
-  adb shell settings put system user_rotation 1 || true
-  sleep 5
-  shot $label-08-landscape
-  adb shell settings put system user_rotation 0 || true
-  sleep 5
-  echo "$label: pid at the end: $(adb shell pidof $PKG | tr -d '\r')" >> $STEPLOG
-  adb shell dumpsys activity exit-info $PKG < /dev/null > exit-info-$label.txt 2>&1 || true
+  tap_xy stop "$STOPXY"
+  sleep 4
+  shot $label-04-stopped
   mark "$label: done"
-  adb shell am force-stop $PKG || true
-  sleep 3
 }
 
-run_case base apk-base/android-debug.apk
-run_case debug apk-debug/android-debug.apk
+adb shell settings put system accelerometer_rotation 0 || true
+adb shell settings put system user_rotation 0 || true
+
+install_apk apk-base/android-debug.apk
+for lang in en ru; do run_lang base $lang; done
+install_apk apk-debug/android-debug.apk
+for lang in en ru uk de fr cs; do run_lang debug $lang; done
+adb shell am force-stop $PKG || true
 
 kill $LOGCAT_PID 2>/dev/null || true
 sleep 1
-# QML warnings of each process, timestamps and pids cut off, then the ones only the tested APK has
-for label in base debug; do
-  pid=$(cat pid-$label.txt)
-  awk -v p="$pid" '$3 == p { $1 = $2 = $3 = $4 = ""; sub(/^ +/, ""); print }' full_logcat.txt | grep -E "\.qml:|qml:|QML " | sort -u > qml-$label.txt
-  echo "$label: QML warnings $(wc -l < qml-$label.txt), crash lines $(awk -v p="$pid" '$3 == p' full_logcat.txt | grep -c -E 'FATAL|SIGSEGV|SIGABRT')" >> $STEPLOG
-done
-echo "== QML warnings of debug that base did not have:" >> $STEPLOG
-comm -13 qml-base.txt qml-debug.txt >> $STEPLOG
 echo "== ANR / crash in the whole log:" >> $STEPLOG
 grep -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt >> $STEPLOG || echo "none" >> $STEPLOG
