@@ -33,7 +33,7 @@ adb shell settings put global hide_error_dialogs 1 || true
 # put_conf <lang>: the settings file of the app before a start - a fake treadmill, so the home
 # page has tiles and no first-run wizard
 put_conf() {
-  printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\napp_language=%s\n' "$LOG_DEBUG" "$UI_MODERN" "$1" > qz.conf
+  printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\napp_language=%s\n%b' "$LOG_DEBUG" "$UI_MODERN" "$1" "$EXTRA_CONF" > qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf '$CONF'"
@@ -117,6 +117,21 @@ install_apk apk-base/android-debug.apk
 for lang in en ru; do run_lang base $lang; done
 install_apk apk-debug/android-debug.apk
 for lang in en ru uk de fr cs; do run_lang debug $lang; done
+
+# pause_on_start: the device connect pauses the workout and marks it stopped - the button must
+# say "Start" (the next press resets the stats), not "Resume"
+adb shell am force-stop $PKG || true
+sleep 2
+EXTRA_CONF='pause_on_start_treadmill=true\n'
+put_conf ru
+mark "debug-ru-pos: start"
+adb shell am start -n $PKG/$PKG.CustomQtActivity
+sleep 25
+wait_tiles
+shot debug-ru-pos-01-connected
+sleep 3
+shot debug-ru-pos-02-later
+mark "debug-ru-pos: done"
 adb shell am force-stop $PKG || true
 
 kill $LOGCAT_PID 2>/dev/null || true
