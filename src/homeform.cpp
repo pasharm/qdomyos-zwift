@@ -4963,6 +4963,12 @@ void homeform::deviceConnected(QBluetoothDeviceInfo b) {
         Start_inner(false); // because if you sent the start command to a treadmill it could start the tape
         stopped = true; // when you will press start while you did some kms in pause mode from the beginning, the stats must be resetted
     }
+    // Start() above sent the labels of a pause ("Resume"); stopped is set after it, so the button
+    // has to say "Start" again: the next press resets the stats
+    if (stopped) {
+        emit startTextChanged(startText());
+        emit startIconChanged(startIcon());
+    }
 
     sortTiles();
 
