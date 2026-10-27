@@ -132,6 +132,9 @@ Page {
                             font.pixelSize: window.ui.fontBody
                             font.weight: Font.DemiBold
                             visible: text !== ""
+                            // the button carries the name; this node gave the screen reader both
+                            // variants ("Продолжить.Далее" in the emulator dump)
+                            Accessible.ignored: true
                         }
                     }
                 }
