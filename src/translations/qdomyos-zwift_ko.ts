@@ -1057,6 +1057,14 @@ QZ 설정을 업데이트하시겠습니까?</translation>
         <source>Android notification enabled</source>
         <translation>Android 알림을 켰습니다</translation>
     </message>
+    <message>
+        <source>YPOO M5 ready</source>
+        <translation>YPOO M5가 준비되었습니다</translation>
+    </message>
+    <message>
+        <source>YPOO M5 initialization failed; reconnect required</source>
+        <translation>YPOO M5 초기화에 실패했습니다. 다시 연결해야 합니다</translation>
+    </message>
 </context>
 <context>
     <name>QPlatformTheme</name>

@@ -99,3 +99,46 @@ QZ has dedicated **ProForm Carbon TLX** support, including a separate treadmill 
 For a typical Zwift setup, run QZ on one phone/tablet and the training app on another device, and pair the app to QZ's virtual device. Zwift route-based incline also requires QZ's separate **Zwift auto-inclination** configuration.
 
 A Carbon TLX owner reported that the setup was working after receiving these instructions, and QZ's treadmill driver contains both Carbon TLX profiles. The reply did **not** separately identify the firmware or prove that **automatic incline in both Zwift and Kinomap** worked, so do not assume those individual capabilities without testing.
+
+
+## My BH Spada Dual with a Dual Kit Bluetooth module is not found by QZ. What should I enable?
+
+On **Android**, open **QZ Settings > Bike Options > iConsole Bike Options** and enable **BH SPADA Compatibility**. Make sure the bike is powered on, close any other app connected to its Bluetooth module, then fully restart QZ and check whether the bike appears and its metrics update.
+
+An owner of a **BH Spada Dual with the Dual Kit module** explicitly confirmed that QZ connected after enabling this option. The setting is intended for older Bluetooth Classic-compatible bike discovery; it is not necessary for every BLE/FTMS bike. This is distinct from the [older Kettler Bluetooth Classic guidance](device-compatibility.md#my-older-kettler-bike-is-missing-from-nrf-connect-or-uses-bluetooth-20-how-can-qz-discover-it).
+
+## My older Kettler USB ergometer shows no data through QZ on Android. What should I check?
+
+If QZ is running on an Android phone connected to a **Kettler USB ergometer through a USB OTG adapter**, check the USB connection **before** troubleshooting Bluetooth:
+
+1. Use a USB cable and OTG adapter that support **data**, not charging only. If Android reports the connection as **charging only**, check its USB connection/default-USB settings and select a data-capable mode where available. Some phones expose the relevant default only in **Developer Options**.
+2. Allow any Android USB-device access prompt shown for QZ.
+3. In **QZ Settings > Bike Options > Kettler USB Bike Options**, check the serial **Baudrate**. One older Kettler setup required **57600 baud** rather than QZ's default **9600**; this is a confirmed example, **not** a universal Kettler value.
+4. Restart QZ and verify that the bike's power/cadence/speed metrics update in QZ. Only then pair a training app on another device with QZ's virtual Bluetooth bike.
+
+The USB-data mode plus 57600-baud combination restored an older Kettler ergometer setup, and the user confirmed that training apps on a separate tablet could then connect to QZ. QZ's Kettler USB driver uses a configurable baud rate and Android USB serial access. This guidance is for **USB-connected** Kettler machines, not the Bluetooth Classic RACER S models.
+
+## Does QZ work with the Hammer Fly Run 4.0 treadmill?
+
+Yes. A **Hammer Fly Run 4.0** owner explicitly confirmed that the treadmill worked with QZ after the model's Bluetooth details were checked. QZ also supports exporting completed workouts to **Garmin Connect** through its Garmin integration.
+
+This confirms that the treadmill can be used with QZ; it does **not** independently establish that every firmware version supports automatic speed or incline commands. If QZ does not recognize yours, share the advertised Bluetooth name and a screenshot from **nRF Connect**, then test live speed/incline readings in QZ before testing a third-party app.
+
+## QZ discovers my SmartSpin2K on a Schwinn IC4 but does not connect. How can I select it?
+
+In **QZ Settings > Bike Options**, open **FTMS Bike**, select the SmartSpin2K device (often shown as **SS2K**), and confirm with **OK**. Fully close and restart QZ, then let it connect again.
+
+A rider using a Schwinn IC4 with a SmartSpin2K confirmed that selecting **SS2K** under **FTMS Bike** and restarting QZ resolved the connection problem. Discovery of the device name alone did not mean QZ had connected to its FTMS service.
+
+
+## My BH i.Spada 2 FTMS is detected as an elliptical and Zwift does not change resistance. What should I try?
+
+For a **BH i.Spada 2 FTMS (H9355iZ)** that QZ can control manually but Zwift cannot control, QZ may have selected the elliptical path instead of the FTMS bike path.
+
+1. In **QZ Settings > Bike Options > FTMS Bike**, select the bike's **exact advertised Bluetooth name**.
+2. Press **OK/Save**, then fully close and restart QZ.
+3. Connect QZ to the bike first. Verify live power and cadence and that the **Resistance** tile can control the bike.
+4. In Zwift, select **QZ's virtual bike** as the power source and controllable/resistance device, rather than pairing Zwift directly to the physical bike.
+5. Try a short **ERG workout** to check that changing the target power changes physical resistance.
+
+In a confirmed support case, QZ had initially classified this bike as an elliptical. After explicitly selecting it under **FTMS Bike** and restarting QZ, the rider reported that Zwift ERG could increase resistance. This confirms ERG response in that setup; **automatic simulation-mode gradient changes and Kinomap control were not separately verified**. Do not force unrelated bikes into FTMS unless their protocol supports it.

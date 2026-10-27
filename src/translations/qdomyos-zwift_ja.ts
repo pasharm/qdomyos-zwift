@@ -1057,6 +1057,14 @@ QZの設定を更新しますか?</translation>
         <source>Android notification enabled</source>
         <translation>Androidバックグラウンド通知保持を有効にしました</translation>
     </message>
+    <message>
+        <source>YPOO M5 ready</source>
+        <translation>YPOO M5の準備ができました</translation>
+    </message>
+    <message>
+        <source>YPOO M5 initialization failed; reconnect required</source>
+        <translation>YPOO M5の初期化に失敗しました。再接続が必要です</translation>
+    </message>
 </context>
 <context>
     <name>QPlatformTheme</name>

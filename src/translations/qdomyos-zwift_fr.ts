@@ -1057,6 +1057,14 @@ Voulez-vous mettre à jour les paramètres de QZ ?</translation>
         <source>Android notification enabled</source>
         <translation>Notification Android activée</translation>
     </message>
+    <message>
+        <source>YPOO M5 ready</source>
+        <translation>YPOO M5 prêt</translation>
+    </message>
+    <message>
+        <source>YPOO M5 initialization failed; reconnect required</source>
+        <translation>Échec de l&apos;initialisation du YPOO M5 ; reconnexion nécessaire</translation>
+    </message>
 </context>
 <context>
     <name>QPlatformTheme</name>

@@ -1821,6 +1821,23 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                     emit searchingStop();
                 }
                 this->signalBluetoothDeviceConnected(wahooKickRunTreadmill);
+            } else if ((b.name().startsWith(QStringLiteral("YPTM-U0"), Qt::CaseInsensitive) ||
+                        b.name().startsWith(QStringLiteral("YP-M1552-"), Qt::CaseInsensitive)) &&
+                       !ypooTreadmill && !horizonTreadmill && filter) {
+                this->setLastBluetoothDevice(b);
+                this->stopDiscovery();
+                ypooTreadmill = new ypootreadmill(noWriteResistance, noHeartService);
+#if !defined(Q_OS_ANDROID) && !defined(Q_OS_IOS)
+                stateFileRead();
+#endif
+                emit deviceConnected(b);
+                connect(ypooTreadmill, &bluetoothdevice::connectedAndDiscovered, this,
+                        &bluetooth::connectedAndDiscovered);
+                connect(ypooTreadmill, &ypootreadmill::debug, this, &bluetooth::debug);
+                ypooTreadmill->deviceDiscovered(b);
+                if (this->discoveryAgent && !this->discoveryAgent->isActive())
+                    emit searchingStop();
+                this->signalBluetoothDeviceConnected(ypooTreadmill);
             } else if ((b.name().toUpper().startsWith(QStringLiteral("HORIZON")) ||
                         b.name().toUpper().startsWith(QStringLiteral("YPTM-")) ||
                         b.name().toUpper().startsWith(QStringLiteral("HZ_T101-")) ||
@@ -1861,7 +1878,6 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                         b.name().toUpper().startsWith(QStringLiteral("TM55-")) || // LifeSmart TM55
                         b.name().toUpper().startsWith(QStringLiteral("RUNN ")) ||
                         b.name().toUpper().startsWith(QStringLiteral("YS_T")) ||
-                        b.name().toUpper().startsWith(QStringLiteral("YP-M1552-")) ||
                         b.name().toUpper().startsWith(QStringLiteral("YPOO-MINI PRO-")) ||
                         b.name().toUpper().startsWith(QStringLiteral("BFX_T")) ||
                         (b.name().toUpper().startsWith("3G PRO ")) ||
@@ -2198,6 +2214,7 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                         (b.name().toUpper().startsWith("BESP-")) ||  // FITFIU BESP 250 indoor bike
                         (b.name().toUpper().startsWith("GLT") && deviceHasService(b, QBluetoothUuid((quint16)0x1826))) ||
                         (b.name().toUpper().startsWith("SPORT01-") && deviceHasService(b, QBluetoothUuid((quint16)0x1826))) || // Labgrey Magnetic Exercise Bike https://www.amazon.co.uk/dp/B0CXMF1NPY?_encoding=UTF8&psc=1&ref=cm_sw_r_cp_ud_dp_PE420HA7RD7WJBZPN075&ref_=cm_sw_r_cp_ud_dp_PE420HA7RD7WJBZPN075&social_share=cm_sw_r_cp_ud_dp_PE420HA7RD7WJBZPN075&skipTwisterOG=1
+                        (b.name().toUpper().startsWith("GB3.0-")) || // Gymstick GB3.0 FTMS bike
                         (b.name().toUpper().startsWith("FS-YK-")) ||
 						(b.name().toUpper().startsWith("T600E_")) ||
                         (b.name().toUpper().startsWith("SPEEDBIKE S2")) || // Maxxus Speedbike S2
@@ -2310,12 +2327,12 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
             }
 #ifndef Q_OS_IOS
             else if (bh_spada_2 &&
-                     b.name() == QStringLiteral("RACER S") &&
+                     b.name().toUpper().startsWith("RACER S") &&
                      !kettlerClassicBike && filter) {
                 // MyHomeFIT's Kettler Classic connector uses BR/EDR SPP.
-                // Only route the exact RACER S name to this driver when
-                // BH SPADA Compatibility is enabled; otherwise preserve
-                // the existing BLE Stages path below.
+                // Route RACER S-prefixed names to this driver when BH SPADA
+                // Compatibility is enabled; otherwise preserve the existing
+                // BLE Stages path below.
                 this->setLastBluetoothDevice(b);
                 this->stopDiscovery();
                 kettlerClassicBike = new kettlerclassicbike(noWriteResistance, noHeartService, testResistance,
@@ -4131,6 +4148,10 @@ void bluetooth::restart() {
         delete focusTreadmill;
         focusTreadmill = nullptr;
     }
+    if (ypooTreadmill) {
+        delete ypooTreadmill;
+        ypooTreadmill = nullptr;
+    }
     if (horizonTreadmill) {
 
         delete horizonTreadmill;
@@ -4888,6 +4909,10 @@ bluetoothdevice *bluetooth::device() {
         return ultraSportBike;
     } else if (xcxBike) {
         return xcxBike;
+    }
+    // Earlier matches return; split the lookup chain to avoid MSVC 2019's nesting limit.
+    if (ypooTreadmill) {
+        return ypooTreadmill;
     } else if (horizonTreadmill) {
         return horizonTreadmill;
     } else if (wahooKickRunTreadmill) {

@@ -6103,23 +6103,29 @@ void homeform::Minus(const QString &name) {
     } else if (name.contains(QStringLiteral("target_power"))) {
         if (bluetoothManager->device()) {
             if (bluetoothManager->device()->deviceType() == BIKE) {
+                const int32_t currentPower = qRound(((bike *)bluetoothManager->device())->lastRequestedPower().value());
+                const int32_t nextPower = currentPower > 0 ? qMax(1, currentPower - qRound(powerJog)) : 0;
+                if (nextPower == currentPower) return;
                 m_overridePower = true;
-                ((bike *)bluetoothManager->device())
-                    ->changePower(((bike *)bluetoothManager->device())->lastRequestedPower().value() - powerJog);
+                ((bike *)bluetoothManager->device())->changePower(nextPower);
                 if (trainProgram) {
                     trainProgram->adjustPowerOffsetForTrainingProgram(-powerJog);
                 }
             } else if (bluetoothManager->device()->deviceType() == TREADMILL) {
+                const int32_t currentPower = qRound(((treadmill *)bluetoothManager->device())->lastRequestedPower().value());
+                const int32_t nextPower = currentPower > 0 ? qMax(1, currentPower - qRound(powerJog)) : 0;
+                if (nextPower == currentPower) return;
                 m_overridePower = true;
-                ((treadmill *)bluetoothManager->device())
-                    ->changePower(((treadmill *)bluetoothManager->device())->lastRequestedPower().value() - powerJog);
+                ((treadmill *)bluetoothManager->device())->changePower(nextPower);
                 if (trainProgram) {
                     trainProgram->adjustPowerOffsetForTrainingProgram(-powerJog);
                 }
             } else if (bluetoothManager->device()->deviceType() == ROWING) {
+                const int32_t currentPower = qRound(((rower *)bluetoothManager->device())->lastRequestedPower().value());
+                const int32_t nextPower = currentPower > 0 ? qMax(1, currentPower - qRound(powerJog)) : 0;
+                if (nextPower == currentPower) return;
                 m_overridePower = true;
-                ((rower *)bluetoothManager->device())
-                    ->changePower(((rower *)bluetoothManager->device())->lastRequestedPower().value() - powerJog);
+                ((rower *)bluetoothManager->device())->changePower(nextPower);
                 if (trainProgram) {
                     trainProgram->adjustPowerOffsetForTrainingProgram(-powerJog);
                 }
@@ -6318,19 +6324,23 @@ void homeform::Stop() {
 
     qDebug() << QStringLiteral("Stop pressed - paused") << paused << QStringLiteral("stopped") << stopped;
 
+    const auto device = bluetoothManager ? bluetoothManager->device() : nullptr;
+    auto treadmillDevice = device && device->deviceType() == TREADMILL
+        ? static_cast<treadmill *>(device) : nullptr;
     if (stopped) {
+        if (treadmillDevice)
+            treadmillDevice->stopWhenIdle();
         qDebug() << QStringLiteral("Stop pressed - already pressed, ignoring...");
         return;
     }
 
-    if (bluetoothManager->device()) {
-        if (bluetoothManager->device()->deviceType() == TREADMILL) {
-            QTime zero(0, 0, 0, 0);
-            if (bluetoothManager->device()->currentSpeed().value() == 0.0 &&
-                zero.secsTo(bluetoothManager->device()->elapsedTime()) == 0) {
-                qDebug() << QStringLiteral("Stop pressed - nothing to do. Elapsed time is 0 and current speed is 0");
-                return;
-            }
+    if (treadmillDevice) {
+        QTime zero(0, 0, 0, 0);
+        if (treadmillDevice->currentSpeed().value() == 0.0 &&
+            zero.secsTo(treadmillDevice->elapsedTime()) == 0) {
+            treadmillDevice->stopWhenIdle();
+            qDebug() << QStringLiteral("Stop pressed - nothing to do. Elapsed time is 0 and current speed is 0");
+            return;
         }
     }
 
