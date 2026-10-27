@@ -15,7 +15,13 @@ ApplicationWindow {
     id: window
     width: 640
     height: 480
-    visibility: Qt.WindowFullScreen
+    // Qt.WindowFullScreen is 4, Window.Maximized as a visibility. iOS: Qt fits a maximized window
+    // into the safe area, Qt::MaximizeUsingFullscreenGeometryHint or not, and the system paints the
+    // areas under the status bar and the home indicator. The modern look takes the whole screen as a
+    // full screen window, as on Android 12+: the drawer and the dimming of popups reach the edges,
+    // the content keeps clear of them by getTopPadding()/getBottomPadding(), and the status bar
+    // stays (AndroidStatusBar.setSystemBarsColor)
+    visibility: Qt.platform.os === "ios" && settings.ui_modern ? Window.FullScreen : Qt.WindowFullScreen
     visible: true
 	 objectName: "stack"
     title: Qt.platform.os === "ios" ? "" : qsTr("qDomyos-Zwift")
@@ -29,7 +35,23 @@ ApplicationWindow {
             var temp = AndroidStatusBar.height + AndroidStatusBar.navigationBarHeight + AndroidStatusBar.leftInset + AndroidStatusBar.rightInset
         }
     }
-    
+
+    // iOS: the safe area of the screen in points, read again when the window changes size (it is
+    // put on the whole screen after start-up, and turned with the phone). The paddings take only
+    // the part of it inside the window: none while the window keeps to the safe area (the classic
+    // look), all of it on the whole screen (the modern look)
+    property var iosSafeArea: ({ top: 0, bottom: 0, left: 0, right: 0 })
+    function refreshIosSafeArea() {
+        if (Qt.platform.os === "ios")
+            iosSafeArea = AndroidStatusBar.safeAreaInsets()
+    }
+    onWidthChanged: refreshIosSafeArea()
+    onHeightChanged: refreshIosSafeArea()
+    function iosInsetTop() { return Math.max(0, iosSafeArea.top - window.y) }
+    function iosInsetBottom() { return Math.max(0, iosSafeArea.bottom - (Screen.height - window.y - window.height)) }
+    function iosInsetLeft() { return Math.max(0, iosSafeArea.left - window.x) }
+    function iosInsetRight() { return Math.max(0, iosSafeArea.right - (Screen.width - window.x - window.width)) }
+
     // Helper functions for cleaner padding calculations
     function getTopPadding() {
         // Add padding for iPadOS multi-window mode (Stage Manager, Split View, Slide Over)
@@ -39,8 +61,11 @@ ApplicationWindow {
             var isMultiWindow = (typeof rootItem !== "undefined" && rootItem && rootItem.iPadMultiWindowMode) ||
                                 (window.width < Screen.width - 10);  // Window smaller than screen = multi-window
             if (isMultiWindow) {
-                return 15;  // Space for window control buttons
+                // Space for window control buttons, below the status bar in the modern look,
+                // whose window starts at the top of the screen
+                return Math.max(15, iosInsetTop());
             }
+            return iosInsetTop();
         }
         if (Qt.platform.os !== "android" || AndroidStatusBar.apiLevel < 31) return 0;
         // AndroidStatusBar.height is always the top inset in the current orientation
@@ -49,18 +74,21 @@ ApplicationWindow {
     }
 
     function getBottomPadding() {
+        if (Qt.platform.os === "ios") return iosInsetBottom();
         if (Qt.platform.os !== "android" || AndroidStatusBar.apiLevel < 31) return 0;
         // navigationBarHeight is always the bottom inset in the current orientation
         return AndroidStatusBar.navigationBarHeight;
     }
 
     function getLeftPadding() {
+        if (Qt.platform.os === "ios") return iosInsetLeft();
         if (Qt.platform.os !== "android" || AndroidStatusBar.apiLevel < 31) return 0;
         return (Screen.orientation === Qt.LandscapeOrientation || Screen.orientation === Qt.InvertedLandscapeOrientation) ?
                (settings.android_landscape_cutout_margin ? AndroidStatusBar.leftInset : AndroidStatusBar.systemBarLeftInset) : 0;
     }
 
     function getRightPadding() {
+        if (Qt.platform.os === "ios") return iosInsetRight();
         if (Qt.platform.os !== "android" || AndroidStatusBar.apiLevel < 31) return 0;
         return (Screen.orientation === Qt.LandscapeOrientation || Screen.orientation === Qt.InvertedLandscapeOrientation) ?
                (settings.android_landscape_cutout_margin ? AndroidStatusBar.rightInset : AndroidStatusBar.systemBarRightInset) : 0;
@@ -498,13 +526,15 @@ ApplicationWindow {
                 window.ui.refreshSystemAccent()
                 // the first time at start-up, when the native window is there
                 window.applySystemBars()
+                window.refreshIosSafeArea()
             }
         }
     }
 
-    // iOS: the window of Qt covers only the safe area, the system paints the areas under the status
-    // bar and the home indicator black. The modern look gives them the page colour and the status
-    // bar text its contrast; the classic look keeps them as they are, unless the modern one was on
+    // iOS: around a window in the safe area the system paints the areas under the status bar and
+    // the home indicator black. The modern look gives them the page colour (seen until its window
+    // takes the whole screen) and the status bar text its contrast; the classic look keeps them as
+    // they are, unless the modern one was on
     property bool systemBarsColored: false
     function applySystemBars() {
         if (Qt.platform.os !== "ios" || (!ui.modern && !systemBarsColored))

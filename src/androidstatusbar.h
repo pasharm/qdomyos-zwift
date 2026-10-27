@@ -4,6 +4,7 @@
 #include <QColor>
 #include <QObject>
 #include <QQmlEngine>
+#include <QVariantMap>
 
 class AndroidStatusBar : public QObject
 {
@@ -54,8 +55,12 @@ public:
     Q_INVOKABLE bool systemDarkMode() const;
     // iOS: the window of Qt covers only the safe area, and the system paints the areas under the
     // status bar and the home indicator black, with light status bar text. This gives them a colour
-    // and the status bar text for a dark (light text) or light page. Nothing elsewhere.
+    // and the status bar text for a dark (light text) or light page, and from then on keeps the
+    // status bar for a full screen window, which Qt would hide. Nothing elsewhere.
     Q_INVOKABLE void setSystemBarsColor(const QColor &color, bool dark) const;
+    // iOS 11+: the safe area of the screen (status bar and cutout, home indicator, sides held
+    // sideways) in points, as { top, bottom, left, right }. Zeros elsewhere.
+    Q_INVOKABLE QVariantMap safeAreaInsets() const;
     // Accent of the dynamic palette that Android 12+ (API 31) builds from the wallpaper, as
     // "#rrggbb": the Material 3 primary for a dark page (dark = true) or a light one. Empty
     // below API 31 and off Android. Read on demand: QML asks again on return to the foreground.

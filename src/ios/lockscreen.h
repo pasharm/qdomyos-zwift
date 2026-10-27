@@ -138,8 +138,13 @@ class lockscreen {
     static bool systemDarkMode();
 
     // colour of the areas under the status bar and the home indicator, outside the Qt window,
-    // and the status bar text: light on a dark page, dark on a light one
+    // and the status bar text: light on a dark page, dark on a light one. From then on the status bar
+    // stays visible for a full screen window too
     static void setSystemBarsColor(double red, double green, double blue, bool darkPage);
+
+    // safe area of the screen in points, as the UIWindow of Qt has it (status bar and cutout, home
+    // indicator), whatever the geometry of the Qt window inside it
+    static void safeAreaInsets(double *top, double *bottom, double *left, double *right);
 };
 
 #endif // LOCKSCREEN_H
