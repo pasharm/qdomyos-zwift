@@ -195,22 +195,22 @@ launch debug-ru-pos ru true 'pause_on_start_treadmill=true\n'
 shot debug-ru-pos-01-connected
 
 # the tiles scrolled up: before - cut right at the bottom of the buttons, after - 8 dp lower
-# (the user on the phone, 28.10); a slow swipe, then the same once more to the end
+# (the user on the phone, 28.10); a slow swipe inside the 2560 px screen, then a fast one
 adb shell am force-stop $PKG || true
 install_apk apk-base/android-debug.apk
 launch base-ru-scroll ru true
-adb shell input swipe 720 2600 720 1700 900 || true
+adb shell input swipe 720 2200 720 1300 1200 || true
 sleep 3
 shot base-ru-scroll-01
 install_apk apk-debug/android-debug.apk
 launch debug-ru-scroll ru true
-adb shell input swipe 720 2600 720 1700 900 || true
+adb shell input swipe 720 2200 720 1300 1200 || true
 sleep 3
 shot debug-ru-scroll-01
 tap_xy pause "$WIDEXY"
 sleep 4
 shot debug-ru-scroll-02-paused
-adb shell input swipe 720 2600 720 900 300 || true
+adb shell input swipe 720 2200 720 900 300 || true
 sleep 4
 shot debug-ru-scroll-03-end
 
