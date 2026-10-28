@@ -84,7 +84,8 @@ mark() {
 wait_tiles() { sleep 20; }
 tap_xy() { ensure_app; echo "$(date +%H:%M:%S.%N | cut -c1-12) tap $1 at $2" >> $STEPLOG; adb shell input tap $2 || true; }
 
-# Modern buttons after the change: the row is 12 dp under the toolbar, centre y 421 px.
+# Modern buttons after the change: the row is 12 dp under the toolbar, centre y 421 px
+# (measured on run 40645708263).
 # One wide Start/Pause 286..1154 px; paused: Resume 286..804, Stop 832..1350
 WIDEXY="720 421"
 RESUMEXY="545 421"
@@ -113,7 +114,14 @@ launch() {
   wait_tiles
 }
 # rotate <0|1>: portrait or landscape
-rotate() { adb shell settings put system user_rotation $1 || true; sleep 4; }
+# (run 40645708263: the settings alone with 4 s left the frame in portrait - the window manager
+# command as well, and longer)
+rotate() {
+  adb shell settings put system user_rotation $1 || true
+  adb shell cmd window user-rotation lock $1 || true
+  sleep 8
+  echo "rotation now: $(adb shell dumpsys window displays | grep -o 'mRotation=[0-9A-Z_]*' | head -1)" >> $STEPLOG
+}
 
 # --- the reference: home before the change, both looks
 install_apk apk-base/android-debug.apk
