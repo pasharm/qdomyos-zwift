@@ -156,6 +156,10 @@ class homeform : public QObject {
     Q_PROPERTY(QString stopText READ stopText NOTIFY stopTextChanged)
     Q_PROPERTY(QString stopIcon READ stopIcon NOTIFY stopIconChanged)
     Q_PROPERTY(QString stopColor READ stopColor NOTIFY stopColorChanged)
+    // The state of the workout, for the modern controls (one button while running or stopped, two
+    // while paused): QML tells it by these, not by the translated startText
+    Q_PROPERTY(bool workoutPaused READ workoutPaused NOTIFY workoutStateChanged)
+    Q_PROPERTY(bool workoutStopped READ workoutStopped NOTIFY workoutStateChanged)
     Q_PROPERTY(QStringList metrics READ metrics)
     Q_PROPERTY(QStringList bluetoothDevices READ bluetoothDevices NOTIFY bluetoothDevicesChanged)
     Q_PROPERTY(QStringList tile_order READ tile_order NOTIFY tile_orderChanged)
@@ -507,6 +511,10 @@ class homeform : public QObject {
     QString stopText();
     QString stopIcon();
     QString stopColor();
+    // paused with stopped set (pause_on_start before the first start) is a stopped workout: the
+    // next start resets the stats
+    bool workoutPaused() { return paused && !stopped; }
+    bool workoutStopped() { return stopped; }
     QString workoutStartDate() {
         if (!Session.isEmpty()) {
             return Session.constFirst().time.toString();
@@ -1397,6 +1405,7 @@ public:
     void startColorChanged(QString value);
     void stopTextChanged(QString value);
     void stopIconChanged(QString value);
+    void workoutStateChanged();
     void stopColorChanged(QString value);
     void infoChanged(QString value);
     void topBarHeightChanged(int value);
