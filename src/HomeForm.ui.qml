@@ -73,6 +73,9 @@ Page {
             spacing: 8
 
             readonly property bool paired: rootItem.workoutPaused
+            // Room left at the ends of a pill beside its label: smaller in the 148 dp pair, so
+            // "Продолжить" (ru) and the like fit there and the short variant is not needed
+            readonly property int labelInset: paired ? 12 : 24
             // A new set of buttons fades in and takes taps only once it is all there: the second
             // tap of a double tap on Pause would otherwise land on Stop (or Resume) under the finger
             readonly property int workoutState: rootItem.workoutStopped ? 2 : (rootItem.workoutPaused ? 1 : 0)
@@ -149,7 +152,7 @@ Page {
                             // At most what the pill has left beside the icon: with the elide on, a
                             // label with a long and a short variant ("Resume" in ru, de, cs ...)
                             // shows the first that fits, like the classic button
-                            width: Math.min(implicitWidth, modernStart.width - 24 - 26 - 6)
+                            width: Math.min(implicitWidth, modernStart.width - modernRow.labelInset - 26 - 6)
                             elide: Text.ElideRight
                             text: rootItem.startText
                             color: window.ui.accentInk
@@ -198,7 +201,7 @@ Page {
                         Label {
                             anchors.verticalCenter: parent.verticalCenter
                             // at most what the pill has left beside the icon, as on Start
-                            width: Math.min(implicitWidth, modernStop.width - 24 - 24 - 6)
+                            width: Math.min(implicitWidth, modernStop.width - modernRow.labelInset - 24 - 6)
                             elide: Text.ElideRight
                             text: rootItem.stopText
                             color: window.ui.dangerInk
