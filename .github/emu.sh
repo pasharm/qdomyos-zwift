@@ -65,8 +65,9 @@ ensure_app() {
     pkg=$(python3 .github/uitap.py ui.xml --package)
     # QZ's own Android dialog "Permissions Required" (Bluetooth and location services off, API < 30
     # images): it belongs to the app, so the package check below would let it cover every step
-    if [ "$pkg" = "$PKG" ] && grep -q "Permissions Required" ui.xml && xy=$(python3 .github/uitap.py ui.xml '^No$'); then
-      echo "!! QZ Permissions Required dialog: No at $xy" >> $STEPLOG
+    # and after No its follow-up "Reminder Preference" (remind about location next time?)
+    if [ "$pkg" = "$PKG" ] && grep -qE "Permissions Required|Reminder Preference" ui.xml && xy=$(python3 .github/uitap.py ui.xml '^No$'); then
+      echo "!! QZ permission dialog: No at $xy" >> $STEPLOG
       adb shell input tap $xy || true
       sleep 3
       continue

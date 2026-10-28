@@ -29,7 +29,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        api: [22, 24, 28]
+        # not 22: the x86_64 image fails to load libc++_shared.so at start (run 40782365867), the
+        # upstream emulator matrix starts at 24 as well
+        api: [24, 28]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
