@@ -5037,7 +5037,20 @@ ScrollView {
             }
         }
 
+        // Modern look: a card with a switch like the tiles around it (the checkbox and the note
+        // below lay on the page with no frame, the title cut short)
+        AccordionCheckElement {
+            id: hrTimeInZoneIndividualModeAccordion
+            visible: window.ui.modern
+            title: qsTr("Show individual zone times (instead of cumulative)")
+            linkedBoolSetting: "tile_hr_time_in_zone_individual_mode"
+            settings: settingsTilesPane.settings
+            card: true
+            description: qsTr("When enabled, each zone shows only the time spent in that specific zone. When disabled (default), each zone shows cumulative time spent in that zone or higher.")
+        }
+
         RowLayout {
+            visible: !window.ui.modern
             spacing: 10
             Layout.fillWidth: true
 
@@ -5054,6 +5067,7 @@ ScrollView {
         }
 
         Label {
+            visible: !window.ui.modern
             text: qsTr("When enabled, each zone shows only the time spent in that specific zone. When disabled (default), each zone shows cumulative time spent in that zone or higher.")
             font.bold: !window.ui.modern
             font.italic: !window.ui.modern
