@@ -192,10 +192,15 @@ Page {
                 opacity: modernRow.shown
                 enabled: modernRow.ready
                 onClicked: stop.clicked()
-                background: Rectangle {
+                // Filled red once the workout is long (homeform workoutLong): the pause most likely
+                // ends it. A short one keeps Resume the main button, Stop is outlined as it was
+                readonly property bool filled: rootItem.workoutLong
+                background: UiFrame {
                     radius: height / 2
-                    color: window.ui.danger
-                    opacity: modernStop.down ? 0.8 : 1
+                    fill: modernStop.filled ? window.ui.alpha(window.ui.danger, modernStop.down ? 0.8 : 1)
+                                            : (modernStop.down ? window.ui.surfaceHighest : window.ui.surfaceHigh)
+                    stroke: window.ui.alpha(window.ui.danger, 0.45)
+                    strokeWidth: modernStop.filled ? 0 : 1
                 }
                 contentItem: Item {
                     Row {
@@ -206,7 +211,7 @@ Page {
                             width: 24
                             height: 24
                             name: "stop"
-                            color: window.ui.dangerInk
+                            color: modernStop.filled ? window.ui.dangerInk : window.ui.danger
                         }
                         Label {
                             anchors.verticalCenter: parent.verticalCenter
@@ -214,7 +219,7 @@ Page {
                             width: Math.min(implicitWidth, modernStop.width - modernRow.labelInset - 24 - 6)
                             elide: Text.ElideRight
                             text: rootItem.stopText
-                            color: window.ui.dangerInk
+                            color: modernStop.filled ? window.ui.dangerInk : window.ui.textMain
                             font.pixelSize: window.ui.fontBody
                             font.weight: Font.DemiBold
                             visible: text !== ""
