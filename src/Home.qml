@@ -383,10 +383,10 @@ HomeForm {
         model: appModel
         // The grid starts right under the Start/Stop buttons (they end 5 px above the bottom of
         // the top bar), so scrolled tiles leave no empty band under them
-        // Modern look: the controls are lower than the classic top bar (HomeForm modernControlsBottom);
-        // scrolled tiles stop 8 dp under them, as far as the status line is at rest
+        // Modern look: scrolled tiles stop 12 dp under the buttons, or under the status line when
+        // it is there - 4 dp above the first row at rest (HomeForm modernTilesTop)
         readonly property real gridTopInset: window.lockTiles ? 0
-                                           : modernControlsShown ? modernControlsBottom + 8
+                                           : modernControlsShown ? modernTilesTop - 4
                                            : Math.max(0, rootItem.topBarHeight - 3)
         anchors.topMargin: gridTopInset
         // The gap above the first row is part of the content, so it scrolls away with the tiles.
@@ -395,10 +395,10 @@ HomeForm {
         // hides as soon as the tiles move into the gap (deviceLineHidden), and the grid itself
         // never moves, so nothing jumps. While the tiles are being moved it keeps the first row
         // off the toolbar instead of staying as an empty band.
-        // Modern look: 16 dp under the status line, or under the buttons without it (HomeForm modernTilesTop);
-        // with the top bar off, as before: a small gap only when the modern line is not shown
+        // Modern look: the status line stays with the buttons above the grid, the first row is
+        // 4 dp under its top edge (gridTopInset); with the top bar off, as before: a small gap only when the modern line is not shown
         topMargin: window.lockTiles ? 30
-                   : modernControlsShown ? modernTilesTop - gridTopInset
+                   : modernControlsShown ? 4
                    : rootItem.topBarHeight + (window.ui.modern && !modernInfoShown ? 12 : 30) - gridTopInset
         onTopMarginChanged: if (contentY <= 0) contentY = -topMargin
         interactive: !window.lockTiles

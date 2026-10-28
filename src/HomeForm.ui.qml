@@ -29,13 +29,18 @@ Page {
     property string connectingDevice: ""
     // Home.qml sets the new values from the settings page in it (the background color of the top bar)
     property alias homeFormSettings: settings
-    // Modern look, for the grid of tiles in Home.qml: where the controls end (scrolled tiles stop
-    // there) and where the first row starts - 16 dp under the letters of the status line, or under
-    // the buttons without it. One line of the status counts: two lines come only before the first
+    // Modern look, for the grid of tiles in Home.qml: where the first row starts - 16 dp under the
+    // letters of the status line, or under the buttons without it (scrolled tiles stop 4 dp above). One line of the status counts: two lines come only before the first
     // connection, when the grid is empty, and they grow down
     // The top bar can be turned off (top_bar_enabled: topBarHeight 0, no labels): no controls then,
     // the grid and the status line as before
     readonly property bool modernControlsShown: window.ui.modern && topBar.height > 0
+    // How much of the app toolbar is shown, 0..1: it scrolls away with the tiles and main.qml
+    // animates its height down to the status bar inset (headerToolbar.scrolledAway)
+    readonly property real toolbarShown: headerToolbar.implicitHeight > headerToolbar.topPadding
+                                         ? Math.max(0, Math.min(1, (headerToolbar.height - headerToolbar.topPadding)
+                                                                   / (headerToolbar.implicitHeight - headerToolbar.topPadding)))
+                                         : 1
     readonly property real modernControlsBottom: topBar.y + modernRow.y + modernRow.height
     readonly property real modernTilesTop: modernInfoShown ? topBar.y + modernInfo.y + statusLine.height + 13
                                                            : modernControlsBottom + 16
@@ -71,8 +76,10 @@ Page {
             visible: page.modernControlsShown
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
-            // 12 dp under the toolbar: the top bar starts 8 dp above its edge
-            anchors.topMargin: 20
+            // 12 dp under the toolbar: the top bar starts 8 dp above its edge. With the toolbar
+            // scrolled away nothing covers those 8 dp, so the row follows it up: 12 dp under the
+            // status bar as well
+            anchors.topMargin: 12 + 8 * page.toolbarShown
             spacing: 8
 
             readonly property bool paired: rootItem.workoutPaused
@@ -455,8 +462,9 @@ Page {
             // it comes and goes without moving the page
             readonly property bool countdown: !page.searchStopped && page.searchStatus !== "" && page.connectingDevice === ""
                                               && page.searchStatus !== qsTranslate("homeform", "Searching for the device...")
-            // with the top bar off it is not shown either: its place is under the controls
-            visible: page.modernControlsShown && !page.deviceLineHidden && page.modernInfoShown && (!modernEmpty.visible || countdown)
+            // with the top bar off it is not shown either: its place is under the controls.
+            // It is the state of the buttons, so it stays with them while the tiles scroll
+            visible: page.modernControlsShown && page.modernInfoShown && (!modernEmpty.visible || countdown)
             anchors.horizontalCenter: parent.horizontalCenter
             // 8 dp from the buttons to the letters; a second line grows down (see modernTilesTop)
             anchors.top: modernRow.bottom
