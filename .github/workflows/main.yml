@@ -25,6 +25,11 @@ jobs:
   emulator-logcat:
     runs-on: ubuntu-latest
     timeout-minutes: 25
+    # T-318: the patched QtAndroid.jar on old Android (QZ minSdk 21, consoles on 5.1-8.1)
+    strategy:
+      fail-fast: false
+      matrix:
+        api: [22, 24, 28]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -58,8 +63,8 @@ jobs:
           UI_MODERN: ${{ inputs.modern }}
           LOG_DEBUG: ${{ inputs.log_debug }}
         with:
-          api-level: 35
-          target: google_apis
+          api-level: ${{ matrix.api }}
+          target: default
           arch: x86_64
           profile: Nexus 6
           disable-animations: true
@@ -69,13 +74,14 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.source }}-${{ inputs.modern }}${{ inputs.log_debug == 'false' && '-nolog' || '' }}
+          name: emulator-logcat-${{ inputs.source }}-api${{ matrix.api }}
           path: |
             screenshot.png
             *.png
             process_list.txt
             full_logcat.txt
             steps.log
+            t318-errors.txt
             dumps/
             qz-logs/
           if-no-files-found: warn

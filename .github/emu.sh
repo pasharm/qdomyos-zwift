@@ -169,68 +169,6 @@ sleep 30
 shot 02-first-screen        # the wizard opens on the first run
 # T-060: with the fake treadmill the wizard does not open; its back keys would leave the app
 shot 04-home
-
-# T-095: the Charts page updates itself while the workout runs (fake bike: the session grows
-# by a point a second), the period selector at the top right shows only then, and the page
-# opened by Stop draws once and keeps its selector hidden.
-wait_tiles() {
-  local i
-  # The fake bike comes after the first search ends: wait for its tiles (at most 3 min)
-  for i in $(seq 1 18); do
-    dump
-    if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then
-      echo "tiles shown after $i looks" >> $STEPLOG; return 0
-    fi
-    sleep 10
-  done
-  echo "!! tiles NOT shown" >> $STEPLOG
-}
-# The texts of the page (WebView nodes) with a digit or the selector, into steps.log
-page() {
-  dump
-  echo "page ($1):" >> $STEPLOG
-  [ -f ui.xml ] && python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t, d = n.get("text") or "", n.get("content-desc") or ""
-    if re.search(r"[0-9]|Live|update|Off|screen|Swipe", t + d):
-        print("   ", n.get("class"), repr(t), repr(d), n.get("bounds"))
-' ui.xml | head -40 >> $STEPLOG
-  cp ui.xml dumps/page-$1.xml 2>/dev/null || true
-}
-
-# Taps the node matching rx that is the lowest on the screen, or of class cls when given:
-# the Stop of the confirmation lies under the Stop button, the select under its label
-tap_node() {
-  local rx="$1" cls="$2" xy=""
-  dump
-  [ -f ui.xml ] && xy=$(python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-rx, cls = sys.argv[2], sys.argv[3]
-best = None
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
-    if not re.fullmatch(rx, t, re.I) or (cls and n.get("class") != cls):
-        continue
-    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
-    if not m:
-        continue
-    x1, y1, x2, y2 = map(int, m.groups())
-    if x2 <= x1 or y2 <= y1:
-        continue
-    if best is None or y1 > best[1]:
-        best = ((x1 + x2) // 2, y1, (y1 + y2) // 2)
-if best:
-    print(best[0], best[2])
-' ui.xml "$rx" "$cls")
-  if [ -n "$xy" ]; then
-    echo "tap node '$rx' ${cls:+($cls) }at $xy" >> $STEPLOG
-    adb shell input tap $xy || true
-  else
-    echo "!! tap node '$rx' ${cls:+($cls) }NOT FOUND" >> $STEPLOG
-    return 1
-  fi
-}
 has() {
   dump
   if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
@@ -292,200 +230,41 @@ type_query() {
   hide_keyboard
 }
 
-# T-119: in the modern look a search result shows its value as text and has no editor of its
-# own (no switch, no field with OK, no list); a tap opens the setting on its page. The classic
-# look keeps the editors of master: the same steps there are the comparison.
-# The value is a Label of its own: in the dump a node whose content-desc is the value.
-# Editors in the dump: a switch is a checkable node, the field has OK, a page has Open.
-editors() {
-  dump
-  [ -f ui.xml ] && python3 -c '
-import sys, xml.etree.ElementTree as ET
-sw = ok = op = 0
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
-    if n.get("bounds") == "[0,0][0,0]":
-        continue
-    sw += n.get("checkable") == "true"
-    ok += t == "OK"
-    op += t == "Open"
-print(sw, ok, op)
-' ui.xml
-}
-# check_editors <what>: none in the modern look, master's in the classic one (logged only)
-check_editors() {
-  local e
-  e=$(editors)
-  if [ "$UI_MODERN" = "true" ]; then
-    if [ "$e" = "0 0 0" ]; then
-      echo "check no editors in the results ($1): OK" >> $STEPLOG
-    else
-      echo "!! check no editors in the results ($1): switches/OK/Open = $e" >> $STEPLOG
-    fi
-  else
-    echo "classic editors ($1): switches/OK/Open = $e" >> $STEPLOG
-  fi
-}
-# value_is 'Title' 'value regex': in the modern look the card shows that value. The card is a
-# button named "Title: value" (the value Label alone would match any card of the screen)
-value_is() {
-  [ "$UI_MODERN" = "true" ] || return 0
-  has "^$1: $2\$" "$1 shows $2"
-}
-# value_none 'Title': the card has no value at all (named by the title alone)
-value_none() {
-  [ "$UI_MODERN" = "true" ] || return 0
-  not_has "^$1: .*" "$1 shows no value"
-}
-# card_xy 'name regex': the centre of the result card (the button from the card's left edge, not
-# a label inside it - a path label "Wahoo Options" is in every card of that page) on the screen
-card_xy() {
-  dump
-  [ -f ui.xml ] && python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
-    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
-    if m and re.fullmatch(sys.argv[2], t):
-        x1, y1, x2, y2 = map(int, m.groups())
-        if x1 < 60 and x2 > x1 and y2 > y1 and y1 > 470:
-            print((x1 + x2) // 2, (y1 + y2) // 2)
-            break
-' ui.xml "$1"
-}
-# find_card 'name regex' [what]: scrolls the results from the top until that card shows (12 swipes
-# at most); logged as a check
-find_card() {
-  local i xy
-  scroll_top
-  for i in $(seq 1 12); do
-    xy=$(card_xy "$1")
-    if [ -n "$xy" ]; then
-      echo "check card '$1' ($2): OK after $((i - 1)) swipes" >> $STEPLOG
-      return 0
-    fi
-    adb shell input swipe 700 2000 700 1300 400 || true
-    sleep 1
-  done
-  echo "!! check card '$1' ($2): NOT FOUND" >> $STEPLOG
-  return 1
-}
-tap_card() {
-  local xy
-  find_card "$1" "$2" || return 1
-  xy=$(card_xy "$1")
-  echo "tap card '$1' at $xy" >> $STEPLOG
-  adb shell input tap $xy || true
-}
-# The switch of a row named exactly 'name', tapped at its right end; its state into steps.log
-toggle_switch() {
-  local xy
-  dump
-  xy=$([ -f ui.xml ] && python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
-    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
-    if t == sys.argv[2] and n.get("checkable") == "true" and m:
-        x1, y1, x2, y2 = map(int, m.groups())
-        print(x2 - 70, (y1 + y2) // 2)
-        break
-' ui.xml "$1")
-  if [ -n "$xy" ]; then
-    echo "tap switch '$1' at $xy" >> $STEPLOG
-    adb shell input tap $xy || true
-  else
-    echo "!! tap switch '$1' NOT FOUND" >> $STEPLOG
-  fi
-  sleep 2
-  dump
-  [ -f ui.xml ] && python3 -c '
-import sys, xml.etree.ElementTree as ET
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
-    if t == sys.argv[2] and n.get("checkable") == "true":
-        print("switch " + sys.argv[2] + " checked=" + str(n.get("checked")))
-        break
-' ui.xml "$1" >> $STEPLOG
-}
-# query 'text' shot: a new search (spaces as %s for adb), its results into steps.log
-query() {
-  type_query "$1"
-  sleep 2
-  shot "q-$2"
-  results "$1"
-}
 
+# T-318: QtInputConnection of the patched QtAndroid.jar references android.view.inputmethod.TextAttribute
+# (API 33) in its new methods. The class is loaded when a text field takes the focus and the
+# keyboard connects (QtEditText.onCreateInputConnection) - on an old API that is the moment it
+# would fail (VerifyError, NoClassDefFoundError, a crash). Steps: the settings search field
+# takes the focus, the keyboard shows, text is typed and deleted, the results follow it.
+mark() { echo "$(date +%H:%M:%S) $1" >> $STEPLOG; adb shell log -t T318 "'$1'" || true; }
+echo "== API $(adb shell getprop ro.build.version.sdk | tr -d '\r')" >> $STEPLOG
 open_menu
 shot s-menu
 tap_drawer '^Settings$' 400 900
 sleep 8
 shot s-00
 open_search
+mark "focus search field"
+tap 470 338 "search field"
+sleep 4
+adb shell dumpsys input_method | grep -E "mInputShown|mServedInputConnection|mCurInputConnection|inputType" | sed 's/^/input_method: /' >> $STEPLOG || true
+shot t-keyboard
+mark "type speed"
+adb shell input text "speed"
+sleep 3
+shot t-typed
+results "speed"
+mark "delete 3"
+for i in 1 2 3; do adb shell input keyevent KEYCODE_DEL || true; done
+sleep 2
+shot t-deleted
+results "sp"
 hide_keyboard
-shot q-bar
-
-# T-309: a password in the classic search results stays hidden as on its page (qz.conf above
-# writes pzp_password=secret). The field still edits and saves: a new value typed there and OK
-# reach the store.
-CONF="files/.config/Roberto Viola/qDomyos-Zwift.conf"
-stored_password() {
-  adb shell "run-as $PKG cat '$CONF' < /dev/null" | tr -d '\r' | grep '^pzp_password=' >> $STEPLOG || echo "!! pzp_password not in the store" >> $STEPLOG
-}
-# The OK of the first result card: the field is the same row, to its left
-first_ok_y() {
-  dump
-  [ -f ui.xml ] && python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-best = None
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
-    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
-    if t == "OK" and m:
-        x1, y1, x2, y2 = map(int, m.groups())
-        if y2 > y1 and (best is None or y1 < best[0]):
-            best = (y1, (x1 + x2) // 2, (y1 + y2) // 2)
-if best:
-    print(best[1], best[2])
-' ui.xml
-}
-
-query 'password' password
-has '^PZP Password$' "PZP Password listed"
-not_has '^secret$|.*: secret$' "the password is not shown"
-stored_password
-
-OKXY=$(first_ok_y)
-echo "first OK at $OKXY" >> $STEPLOG
-if [ -n "$OKXY" ]; then
-  OKY=${OKXY#* }
-  tap 600 $OKY "PZP Password field"
-  sleep 1
-  adb shell input keyevent KEYCODE_MOVE_END || true
-  for i in $(seq 1 10); do adb shell input keyevent KEYCODE_DEL || true; done
-  adb shell input text newpass
-  sleep 1
-  shot q-pzp-typing
-  tap $OKXY "OK"
-  sleep 2
-  hide_keyboard
-  sleep 4
-  shot q-pzp-saved
-  results "after OK"
-  not_has '^newpass$|^secret$' "the new password is not shown after OK"
-  stored_password
-else
-  echo "!! first OK NOT FOUND: no edit" >> $STEPLOG
-fi
-
-# Not a password: a field of the results still shows its value
-query 'ftp%svalue' ftp
-has '^250$' "FTP value shown as text"
-
-shot e-end
-
-adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
-shot screenshot
+mark "focus again"
+tap 470 338 "search field"
+sleep 3
+shot t-refocus
+adb shell pidof $PKG > /dev/null && echo "app alive at the end: OK" >> $STEPLOG || echo "!! app not running at the end" >> $STEPLOG
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
 # If the recording broke off (adb restarted), the dump of the end is better than nothing
@@ -510,7 +289,7 @@ grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
 echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
 grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
 echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
-echo "== polling while the charts page was left (between the marks; 0 expected)"
-awk '/T095.*mark charts-left/{f=1;next} /T095.*mark home-20s/{f=0} f && /WS >> \{"msg":"getsessionarray"\}/' full_logcat.txt | tee -a $STEPLOG | wc -l
-echo "== requests of the charts page: whole / parts (\"from\")"
-echo "whole: $(grep -c 'WS >> {"msg":"getsessionarray"}' full_logcat.txt) parts: $(grep -c 'WS >> {"msg":"getsessionarray","content":{"from"' full_logcat.txt)" | tee -a $STEPLOG
+echo "== T-318 class loading / crashes (none expected)"
+grep -E "VerifyError|NoClassDefFoundError|NoSuchMethodError|ClassNotFoundException|TextAttribute|FATAL EXCEPTION|AndroidRuntime: |Rejecting re-init|QtInputConnection" full_logcat.txt | tee t318-errors.txt | sed 's/^/!! /' >> $STEPLOG || true
+[ -s t318-errors.txt ] || echo "no class loading errors, no crash: OK" >> $STEPLOG
+echo "== steps"; cat $STEPLOG
