@@ -383,9 +383,10 @@ HomeForm {
         model: appModel
         // The grid starts right under the Start/Stop buttons (they end 5 px above the bottom of
         // the top bar), so scrolled tiles leave no empty band under them
-        // Modern look: the controls are lower than the classic top bar (HomeForm modernControlsBottom)
+        // Modern look: the controls are lower than the classic top bar (HomeForm modernControlsBottom);
+        // scrolled tiles stop 8 dp under them, as far as the status line is at rest
         readonly property real gridTopInset: window.lockTiles ? 0
-                                           : modernControlsShown ? modernControlsBottom
+                                           : modernControlsShown ? modernControlsBottom + 8
                                            : Math.max(0, rootItem.topBarHeight - 3)
         anchors.topMargin: gridTopInset
         // The gap above the first row is part of the content, so it scrolls away with the tiles.
