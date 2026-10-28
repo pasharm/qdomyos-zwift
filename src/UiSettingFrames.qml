@@ -59,6 +59,11 @@ Item {
         return c.text !== undefined && c.wrapMode !== undefined && c.checked === undefined && c.readOnly === undefined
             && !isDescription(c)
     }
+    // A line in the danger colour ("Apple Watch users: leave it disabled!")
+    function isWarning(c) {
+        return c.text !== undefined && c.wrapMode !== undefined && c.color !== undefined
+            && Qt.colorEqual(c.color, window.ui.danger)
+    }
     // A UiButton on its own in the column
     function isButton(c) {
         return c.applyOnSelect !== undefined && c.clicked !== undefined
@@ -116,11 +121,14 @@ Item {
                 want.groupStart = true
                 cur = null
             } else if (cur && (isDescription(c) || (cur.titleOnly && c.checked === undefined)
-                               || (isButton(c) && hasPicker(cur.last.item)))) {
+                               || (isWarning(c) && hasPicker(cur.last.item))
+                               || (isButton(c) && (hasPicker(cur.last.item) || cur.pickerWarning)))) {
                 // A description joins the setting above it; a lone title ("FTMS Treadmill:")
                 // takes the picker below it into its frame, but not a switch: a warning line
-                // above a switch is a setting of its own. A button right under a picker
-                // ("Refresh Devices List") belongs to that picker
+                // above a switch is a setting of its own. A warning right under a picker and a
+                // button right under a picker or that warning ("Heart Belt Name", the Apple
+                // Watch line, "Refresh Devices List") belong to that picker
+                cur.pickerWarning = isWarning(c) && hasPicker(cur.last.item)
                 cur.last = want
                 cur.titleOnly = false
             } else {
