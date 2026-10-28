@@ -1964,6 +1964,15 @@ void homeform::ten_hz() {
 
 QString homeform::stopColor() { return QStringLiteral("#00000000"); }
 
+// The modern controls show Stop filled once the workout is this long: a pause then most likely
+// ends it, and the filled button reminds to save it. A shorter one is a warm-up or setting up the
+// equipment, and Resume stays the main button
+bool homeform::workoutLong() {
+    if (!bluetoothManager || !bluetoothManager->device())
+        return false;
+    return QTime(0, 0, 0).secsTo(bluetoothManager->device()->elapsedTime()) >= 5 * 60;
+}
+
 QString homeform::startColor() {
     static uint8_t startColorToggle = 0;
     if (paused || stopped) {

@@ -160,6 +160,8 @@ class homeform : public QObject {
     // while paused): QML tells it by these, not by the translated startText
     Q_PROPERTY(bool workoutPaused READ workoutPaused NOTIFY workoutStateChanged)
     Q_PROPERTY(bool workoutStopped READ workoutStopped NOTIFY workoutStateChanged)
+    // Read when the state changes, so it holds for the whole pause (the time stands still then)
+    Q_PROPERTY(bool workoutLong READ workoutLong NOTIFY workoutStateChanged)
     Q_PROPERTY(QStringList metrics READ metrics)
     Q_PROPERTY(QStringList bluetoothDevices READ bluetoothDevices NOTIFY bluetoothDevicesChanged)
     Q_PROPERTY(QStringList tile_order READ tile_order NOTIFY tile_orderChanged)
@@ -515,6 +517,7 @@ class homeform : public QObject {
     // next start resets the stats
     bool workoutPaused() { return paused && !stopped; }
     bool workoutStopped() { return stopped; }
+    bool workoutLong();
     QString workoutStartDate() {
         if (!Session.isEmpty()) {
             return Session.constFirst().time.toString();
