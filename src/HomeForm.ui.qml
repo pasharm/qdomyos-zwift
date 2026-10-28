@@ -33,6 +33,9 @@ Page {
     // there) and where the first row starts - 16 dp under the letters of the status line, or under
     // the buttons without it. One line of the status counts: two lines come only before the first
     // connection, when the grid is empty, and they grow down
+    // The top bar can be turned off (top_bar_enabled: topBarHeight 0, no labels): no controls then,
+    // the grid and the status line as before
+    readonly property bool modernControlsShown: window.ui.modern && topBar.height > 0
     readonly property real modernControlsBottom: topBar.y + modernRow.y + modernRow.height
     readonly property real modernTilesTop: modernInfoShown ? topBar.y + modernInfo.y + statusLine.height + 13
                                                            : modernControlsBottom + 16
@@ -65,7 +68,7 @@ Page {
         // The row is as wide in every state, so Bluetooth stays where it is
         Row {
             id: modernRow
-            visible: window.ui.modern
+            visible: page.modernControlsShown
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             // 12 dp under the toolbar: the top bar starts 8 dp above its edge
@@ -454,9 +457,11 @@ Page {
                                               && page.searchStatus !== qsTranslate("homeform", "Searching for the device...")
             visible: window.ui.modern && !page.deviceLineHidden && page.modernInfoShown && (!modernEmpty.visible || countdown)
             anchors.horizontalCenter: parent.horizontalCenter
-            // 8 dp from the buttons to the letters; a second line grows down (see modernTilesTop)
-            anchors.top: modernRow.bottom
+            // 8 dp from the buttons to the letters; a second line grows down (see modernTilesTop).
+            // Without the controls - where it was before them
+            anchors.top: page.modernControlsShown ? modernRow.bottom : undefined
             anchors.topMargin: 5
+            anchors.bottom: page.modernControlsShown ? undefined : row1.bottom
             spacing: 8
             // Bluetooth is off: a warning, drawn here because the app font has no warning sign
             readonly property bool bluetoothOff: page.searchStatus === qsTranslate("homeform", "Bluetooth is off")
