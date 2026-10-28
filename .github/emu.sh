@@ -19,6 +19,13 @@ STEPLOG=steps.log
 mkdir -p dumps
 
 adb install apk-debug/android-debug.apk
+# A failed install (API 22: the 554 MB APK did not fit the data partition) left a run of steps
+# against the launcher that still ended "OK"
+adb shell pm path $PKG > /dev/null 2>&1 || echo "!! APK NOT INSTALLED - the run proves nothing" >> $STEPLOG
+# Location on: without it QZ shows "Permissions Required" over every screen (API < 30 images)
+adb shell settings put secure location_providers_allowed +gps || true
+adb shell settings put secure location_providers_allowed +network || true
+adb shell settings put secure location_mode 3 || true
 for p in READ_EXTERNAL_STORAGE WRITE_EXTERNAL_STORAGE ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
   adb shell pm grant $PKG android.permission.$p || true
 done
@@ -56,6 +63,14 @@ ensure_app() {
     dump
     [ -f ui.xml ] || return 0
     pkg=$(python3 .github/uitap.py ui.xml --package)
+    # QZ's own Android dialog "Permissions Required" (Bluetooth and location services off, API < 30
+    # images): it belongs to the app, so the package check below would let it cover every step
+    if [ "$pkg" = "$PKG" ] && grep -q "Permissions Required" ui.xml && xy=$(python3 .github/uitap.py ui.xml '^No$'); then
+      echo "!! QZ Permissions Required dialog: No at $xy" >> $STEPLOG
+      adb shell input tap $xy || true
+      sleep 3
+      continue
+    fi
     [ -z "$pkg" ] || [ "$pkg" = "$PKG" ] && return 0
     # Somebody else hanging (the launcher) is closed, the app itself is waited for
     if grep -q "t responding" ui.xml && ! grep -q "QZ\|qdomyos" ui.xml &&
@@ -248,12 +263,13 @@ mark "focus search field"
 tap 470 338 "search field"
 sleep 4
 adb shell dumpsys input_method | grep -E "mInputShown|mServedInputConnection|mCurInputConnection|inputType" | sed 's/^/input_method: /' >> $STEPLOG || true
-# Without a served connection the field has no focus and QtInputConnection was never loaded:
-# the run then proves nothing (run 40780015706: a permission dialog over the app, no /sdcard on API 22)
-if adb shell dumpsys input_method | grep -q "mServedInputConnection=null"; then
-  echo "!! no input connection: the field did not take the focus" >> $STEPLOG
+# Without the keyboard shown the field has no focus and QtInputConnection was never loaded: the
+# run then proves nothing (runs 40780015706, 40781192936: dialogs over the app, no install on API 22).
+# mInputShown, not the connection field: its name differs by API (mServedInputConnectionWrapper on 28)
+if adb shell dumpsys input_method | grep -q "mInputShown=true"; then
+  echo "keyboard shown for the field: OK" >> $STEPLOG
 else
-  echo "input connection to the app: OK" >> $STEPLOG
+  echo "!! keyboard not shown: the field did not take the focus - the run proves nothing" >> $STEPLOG
 fi
 shot t-keyboard
 mark "type speed"
