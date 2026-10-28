@@ -19,7 +19,7 @@ STEPLOG=steps.log
 mkdir -p dumps
 
 adb install apk-debug/android-debug.apk
-for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
+for p in READ_EXTERNAL_STORAGE WRITE_EXTERNAL_STORAGE ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
   adb shell pm grant $PKG android.permission.$p || true
 done
 adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
@@ -43,8 +43,8 @@ adb shell "run-as $PKG ls -la 'files/.config/Roberto Viola'" || true
 # while something animates without pause)
 dump() {
   rm -f ui.xml
-  timeout 25 adb shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 || true
-  adb pull /sdcard/ui.xml ui.xml > /dev/null 2>&1 || true
+  timeout 25 adb shell uiautomator dump /data/local/tmp/ui.xml > /dev/null 2>&1 || true
+  adb pull /data/local/tmp/ui.xml ui.xml > /dev/null 2>&1 || true
 }
 # The emulator itself may put a window over the app: "Pixel Launcher isn't responding", or
 # the Health Connect screen left over when the back key went to such a dialog. They made a
@@ -79,8 +79,8 @@ ensure_app() {
 shot() {
   if [ "$1" = "01-healthconnect" ]; then rm -f ui.xml; else ensure_app; fi
   echo "-- shot $1" >> $STEPLOG
-  adb shell screencap -p /sdcard/$1.png || true
-  adb pull /sdcard/$1.png || true
+  adb shell screencap -p /data/local/tmp/$1.png || true
+  adb pull /data/local/tmp/$1.png || true
   [ -f ui.xml ] || dump
   [ -f ui.xml ] && cp ui.xml dumps/$1.xml
 }
@@ -248,6 +248,13 @@ mark "focus search field"
 tap 470 338 "search field"
 sleep 4
 adb shell dumpsys input_method | grep -E "mInputShown|mServedInputConnection|mCurInputConnection|inputType" | sed 's/^/input_method: /' >> $STEPLOG || true
+# Without a served connection the field has no focus and QtInputConnection was never loaded:
+# the run then proves nothing (run 40780015706: a permission dialog over the app, no /sdcard on API 22)
+if adb shell dumpsys input_method | grep -q "mServedInputConnection=null"; then
+  echo "!! no input connection: the field did not take the focus" >> $STEPLOG
+else
+  echo "input connection to the app: OK" >> $STEPLOG
+fi
 shot t-keyboard
 mark "type speed"
 adb shell input text "speed"
