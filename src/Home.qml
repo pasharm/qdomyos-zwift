@@ -383,7 +383,10 @@ HomeForm {
         model: appModel
         // The grid starts right under the Start/Stop buttons (they end 5 px above the bottom of
         // the top bar), so scrolled tiles leave no empty band under them
-        readonly property real gridTopInset: window.lockTiles ? 0 : Math.max(0, rootItem.topBarHeight - 3)
+        // Modern look: the controls are lower than the classic top bar (HomeForm modernControlsBottom)
+        readonly property real gridTopInset: window.lockTiles ? 0
+                                           : window.ui.modern ? modernControlsBottom
+                                           : Math.max(0, rootItem.topBarHeight - 3)
         anchors.topMargin: gridTopInset
         // The gap above the first row is part of the content, so it scrolls away with the tiles.
         // In normal mode it holds the device name line and signal icon at the bottom of the
@@ -391,8 +394,10 @@ HomeForm {
         // hides as soon as the tiles move into the gap (deviceLineHidden), and the grid itself
         // never moves, so nothing jumps. While the tiles are being moved it keeps the first row
         // off the toolbar instead of staying as an empty band.
-        // Modern look without the line (see modernInfoShown): a small gap only
-        topMargin: window.lockTiles ? 30 : rootItem.topBarHeight + (window.ui.modern && !modernInfoShown ? 12 : 30) - gridTopInset
+        // Modern look: 16 dp under the status line, or under the buttons without it (HomeForm modernTilesTop)
+        topMargin: window.lockTiles ? 30
+                   : window.ui.modern ? modernTilesTop - gridTopInset
+                   : rootItem.topBarHeight + 30 - gridTopInset
         onTopMarginChanged: if (contentY <= 0) contentY = -topMargin
         interactive: !window.lockTiles
         // Modern look before connection: the grid is still empty but lies over the "searching"

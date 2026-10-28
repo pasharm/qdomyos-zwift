@@ -5016,6 +5016,7 @@ void homeform::deviceConnected(QBluetoothDeviceInfo b) {
     if (stopped) {
         emit startTextChanged(startText());
         emit startIconChanged(startIcon());
+        emit workoutStateChanged();
     }
 
     sortTiles();
@@ -6264,6 +6265,7 @@ void homeform::Start_inner(bool send_event_to_device) {
         paused = false;
         stopped = false;
     }
+    emit workoutStateChanged();
 
     if (settings.value(QZSettings::top_bar_enabled, QZSettings::default_top_bar_enabled).toBool()) {
 
@@ -6368,6 +6370,7 @@ void homeform::Stop() {
     stopped = true;
 
     emit workoutEventStateChanged(bluetoothdevice::STOPPED);
+    emit workoutStateChanged();
 
     // Save session as training program only if it's not a Peloton workout
     if (!(pelotonHandler && !pelotonHandler->current_ride_id.isEmpty())) {

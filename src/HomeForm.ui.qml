@@ -29,6 +29,13 @@ Page {
     property string connectingDevice: ""
     // Home.qml sets the new values from the settings page in it (the background color of the top bar)
     property alias homeFormSettings: settings
+    // Modern look, for the grid of tiles in Home.qml: where the controls end (scrolled tiles stop
+    // there) and where the first row starts - 16 dp under the letters of the status line, or under
+    // the buttons without it. One line of the status counts: two lines come only before the first
+    // connection, when the grid is empty, and they grow down
+    readonly property real modernControlsBottom: topBar.y + modernRow.y + modernRow.height
+    readonly property real modernTilesTop: modernInfoShown ? topBar.y + modernInfo.y + statusLine.height + 13
+                                                           : modernControlsBottom + 16
 
     Settings {
 	     id: settings
@@ -44,29 +51,43 @@ Page {
         id: topBar
         visible: !window.lockTiles
 
-        // The two lines of the search status (modernInfo) at the text size, for the place of the
-        // modern controls above them
+        // One line of the modern status line at the text size, for the place of the tiles under it
         Text {
-            id: statusProbe
+            id: statusLine
             visible: false
-            text: "A\nA"
-            lineHeight: 0.8
+            text: "A"
             font.pixelSize: window.ui.fontCaption
         }
 
-        // Modern controls. They forward to the classic buttons below, which Home.qml listens to
+        // Modern controls. They forward to the classic buttons below, which Home.qml listens to.
+        // The workout state picks them: one wide Start or Pause, while paused Resume and Stop -
+        // stopping takes a pause first, so a running workout is not ended by a slip of the finger.
+        // The row is as wide in every state, so Bluetooth stays where it is
         Row {
             id: modernRow
             visible: window.ui.modern
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.verticalCenter: row.verticalCenter
-            // A large text size: the two lines of the search status under the buttons did not fit
-            // in the room below them and ran into them. The buttons go up by what is missing -
-            // by the two lines of the text size, not by the status shown, so they do not jump
-            // when it comes and goes
-            anchors.verticalCenterOffset: -Math.max(0, statusProbe.height + 4
-                                                       - ((row.height - height) / 2 - row1.anchors.bottomMargin))
+            anchors.top: parent.top
+            // 12 dp under the toolbar: the top bar starts 8 dp above its edge
+            anchors.topMargin: 20
             spacing: 8
+
+            readonly property bool paired: rootItem.workoutPaused
+            // A new set of buttons fades in and takes taps only once it is all there: the second
+            // tap of a double tap on Pause would otherwise land on Stop (or Resume) under the finger
+            readonly property int workoutState: rootItem.workoutStopped ? 2 : (rootItem.workoutPaused ? 1 : 0)
+            property real shown: 1
+            readonly property bool ready: shown === 1
+            onWorkoutStateChanged: appear.restart()
+            NumberAnimation {
+                id: appear
+                target: modernRow
+                property: "shown"
+                from: 0
+                to: 1
+                duration: 500
+                easing.type: Easing.OutCubic
+            }
 
             Item {
                 width: 48
@@ -98,8 +119,11 @@ Page {
 
             AbstractButton {
                 id: modernStart
-                width: 120
+                // alone it takes the place of two buttons and the gap between them
+                width: modernRow.paired ? 148 : 248
                 height: 56
+                opacity: modernRow.shown
+                enabled: modernRow.ready
                 onClicked: start.clicked()
                 background: Rectangle {
                     radius: height / 2
@@ -143,19 +167,22 @@ Page {
                 Accessible.name: rootItem.startText.split("\u009C")[0]
                 Accessible.description: qsTr("Start workout")
                 Accessible.focusable: true
-                Accessible.onPressAction: start.clicked()
+                Accessible.onPressAction: if (modernStart.enabled) start.clicked()
             }
 
+            // Only while paused, in the place of Lap: the reminder to end the workout
             AbstractButton {
                 id: modernStop
-                width: 120
+                visible: modernRow.paired
+                width: 148
                 height: 56
+                opacity: modernRow.shown
+                enabled: modernRow.ready
                 onClicked: stop.clicked()
-                background: UiFrame {
+                background: Rectangle {
                     radius: height / 2
-                    fill: modernStop.down ? window.ui.surfaceHighest : window.ui.surfaceHigh
-                    stroke: window.ui.alpha(window.ui.danger, 0.45)
-                    strokeWidth: 1
+                    color: window.ui.danger
+                    opacity: modernStop.down ? 0.8 : 1
                 }
                 contentItem: Item {
                     Row {
@@ -166,15 +193,19 @@ Page {
                             width: 24
                             height: 24
                             name: "stop"
-                            color: window.ui.danger
+                            color: window.ui.dangerInk
                         }
                         Label {
                             anchors.verticalCenter: parent.verticalCenter
+                            // at most what the pill has left beside the icon, as on Start
+                            width: Math.min(implicitWidth, modernStop.width - 24 - 24 - 6)
+                            elide: Text.ElideRight
                             text: rootItem.stopText
-                            color: window.ui.textMain
+                            color: window.ui.dangerInk
                             font.pixelSize: window.ui.fontBody
                             font.weight: Font.DemiBold
                             visible: text !== ""
+                            Accessible.ignored: true
                         }
                     }
                 }
@@ -182,15 +213,17 @@ Page {
                 Accessible.name: rootItem.stopText
                 Accessible.description: qsTr("Stop workout")
                 Accessible.focusable: true
-                Accessible.onPressAction: stop.clicked()
+                Accessible.onPressAction: if (modernStop.enabled) stop.clicked()
             }
 
+            // Hidden while paused: Stop takes its place
             AbstractButton {
                 id: modernLap
+                visible: !modernRow.paired
                 width: 48
                 height: 56
-                enabled: rootItem.lap
-                opacity: enabled ? 1 : 0.4
+                enabled: rootItem.lap && modernRow.ready
+                opacity: (rootItem.lap ? 1 : 0.4) * modernRow.shown
                 onClicked: lap.clicked()
                 background: Rectangle {
                     anchors.centerIn: parent
@@ -212,7 +245,7 @@ Page {
                 Accessible.name: qsTr("Lap")
                 Accessible.description: qsTr("Record a new lap")
                 Accessible.focusable: true
-                Accessible.onPressAction: lap.clicked()
+                Accessible.onPressAction: if (modernLap.enabled) lap.clicked()
             }
         }
 
@@ -418,7 +451,9 @@ Page {
                                               && page.searchStatus !== qsTranslate("homeform", "Searching for the device...")
             visible: window.ui.modern && !page.deviceLineHidden && page.modernInfoShown && (!modernEmpty.visible || countdown)
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.bottom: row1.bottom
+            // 8 dp from the buttons to the letters; a second line grows down (see modernTilesTop)
+            anchors.top: modernRow.bottom
+            anchors.topMargin: 5
             spacing: 8
             // Bluetooth is off: a warning, drawn here because the app font has no warning sign
             readonly property bool bluetoothOff: page.searchStatus === qsTranslate("homeform", "Bluetooth is off")
@@ -458,7 +493,7 @@ Page {
                 // first search it means the same as the search status
                 text: page.searchStatus !== "" ? page.searchStatus : (rootItem.info === "Connecting..." ? qsTranslate("homeform", "Searching for the device...") : rootItem.info)
                 horizontalAlignment: Text.AlignHCenter
-                // two lines ("<device> found" and the countdown) grow upwards: closer, off the buttons
+                // two lines ("<device> found" and the countdown) grow down, set closer
                 lineHeight: text.indexOf("\n") >= 0 ? 0.8 : 1
                 color: modernInfo.bluetoothOff ? window.ui.danger : window.ui.textMuted
                 font.pixelSize: window.ui.fontCaption
