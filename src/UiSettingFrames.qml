@@ -59,10 +59,10 @@ Item {
         return c.text !== undefined && c.wrapMode !== undefined && c.checked === undefined && c.readOnly === undefined
             && !isDescription(c)
     }
-    // A line in the danger colour ("Apple Watch users: leave it disabled!")
-    function isWarning(c) {
-        return c.text !== undefined && c.wrapMode !== undefined && c.color !== undefined
-            && Qt.colorEqual(c.color, window.ui.danger)
+    // A note in bold italic, which the modern look keeps in its own colour ("Apple Watch users:
+    // leave it disabled!", "0.005 = Clinchers", "IMPORTANT: ... UNIT ID")
+    function isNote(c) {
+        return c.text !== undefined && c.wrapMode !== undefined && c.font !== undefined && c.font.italic
     }
     // A UiButton on its own in the column
     function isButton(c) {
@@ -121,14 +121,15 @@ Item {
                 want.groupStart = true
                 cur = null
             } else if (cur && (isDescription(c) || (cur.titleOnly && c.checked === undefined)
-                               || (isWarning(c) && hasPicker(cur.last.item))
-                               || (isButton(c) && (hasPicker(cur.last.item) || cur.pickerWarning)))) {
-                // A description joins the setting above it; a lone title ("FTMS Treadmill:")
-                // takes the picker below it into its frame, but not a switch: a warning line
-                // above a switch is a setting of its own. A warning right under a picker and a
-                // button right under a picker or that warning ("Heart Belt Name", the Apple
-                // Watch line, "Refresh Devices List") belong to that picker
-                cur.pickerWarning = isWarning(c) && hasPicker(cur.last.item)
+                               || isNote(c)
+                               || (isButton(c) && (hasPicker(cur.last.item) || cur.pickerNote)))) {
+                // A description or a note joins the setting above it; a lone title ("FTMS
+                // Treadmill:") takes the picker below it into its frame, but not a switch: a
+                // warning line above a switch is a setting of its own. A note at the top of a
+                // section (no setting above) is one too. A button right under a picker, or
+                // under the note of a picker ("Heart Belt Name", the Apple Watch line,
+                // "Refresh Devices List"), belongs to that picker
+                cur.pickerNote = isNote(c) && hasPicker(cur.last.item)
                 cur.last = want
                 cur.titleOnly = false
             } else {
