@@ -455,13 +455,12 @@ Page {
             // it comes and goes without moving the page
             readonly property bool countdown: !page.searchStopped && page.searchStatus !== "" && page.connectingDevice === ""
                                               && page.searchStatus !== qsTranslate("homeform", "Searching for the device...")
-            visible: window.ui.modern && !page.deviceLineHidden && page.modernInfoShown && (!modernEmpty.visible || countdown)
+            // with the top bar off it is not shown either: its place is under the controls
+            visible: page.modernControlsShown && !page.deviceLineHidden && page.modernInfoShown && (!modernEmpty.visible || countdown)
             anchors.horizontalCenter: parent.horizontalCenter
-            // 8 dp from the buttons to the letters; a second line grows down (see modernTilesTop).
-            // Without the controls - where it was before them
-            anchors.top: page.modernControlsShown ? modernRow.bottom : undefined
+            // 8 dp from the buttons to the letters; a second line grows down (see modernTilesTop)
+            anchors.top: modernRow.bottom
             anchors.topMargin: 5
-            anchors.bottom: page.modernControlsShown ? undefined : row1.bottom
             spacing: 8
             // Bluetooth is off: a warning, drawn here because the app font has no warning sign
             readonly property bool bluetoothOff: page.searchStatus === qsTranslate("homeform", "Bluetooth is off")
