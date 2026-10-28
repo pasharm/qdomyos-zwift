@@ -35,7 +35,10 @@ Item {
     readonly property int insetRight: insetLeft
     // The content is one control, not a column of settings (a section of a single "Enable support"
     // switch): it gets one frame around itself, and the room for it is left by the holder margins
-    readonly property bool single: content !== null && (content.checked !== undefined || content.text !== undefined)
+    // A row is one setting as well ("GR7 Cadence Multiplier" with its field and OK): cut into
+    // groups, the OK button got the margins of a setting of its own and sat lower than the field
+    readonly property bool single: content !== null && (content.checked !== undefined || content.text !== undefined
+                                                         || String(content).indexOf("QQuickRowLayout") === 0)
     readonly property int insetTop: !window.ui.modern ? 0 : blockPad + (single ? framePadV : 0)
     readonly property int insetBottom: insetTop
 
