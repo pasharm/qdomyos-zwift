@@ -385,7 +385,7 @@ HomeForm {
         // the top bar), so scrolled tiles leave no empty band under them
         // Modern look: the controls are lower than the classic top bar (HomeForm modernControlsBottom)
         readonly property real gridTopInset: window.lockTiles ? 0
-                                           : window.ui.modern ? modernControlsBottom
+                                           : modernControlsShown ? modernControlsBottom
                                            : Math.max(0, rootItem.topBarHeight - 3)
         anchors.topMargin: gridTopInset
         // The gap above the first row is part of the content, so it scrolls away with the tiles.
@@ -394,10 +394,11 @@ HomeForm {
         // hides as soon as the tiles move into the gap (deviceLineHidden), and the grid itself
         // never moves, so nothing jumps. While the tiles are being moved it keeps the first row
         // off the toolbar instead of staying as an empty band.
-        // Modern look: 16 dp under the status line, or under the buttons without it (HomeForm modernTilesTop)
+        // Modern look: 16 dp under the status line, or under the buttons without it (HomeForm modernTilesTop);
+        // with the top bar off, as before: a small gap only when the modern line is not shown
         topMargin: window.lockTiles ? 30
-                   : window.ui.modern ? modernTilesTop - gridTopInset
-                   : rootItem.topBarHeight + 30 - gridTopInset
+                   : modernControlsShown ? modernTilesTop - gridTopInset
+                   : rootItem.topBarHeight + (window.ui.modern && !modernInfoShown ? 12 : 30) - gridTopInset
         onTopMarginChanged: if (contentY <= 0) contentY = -topMargin
         interactive: !window.lockTiles
         // Modern look before connection: the grid is still empty but lies over the "searching"
