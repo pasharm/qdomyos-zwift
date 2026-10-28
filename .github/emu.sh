@@ -214,6 +214,20 @@ adb shell input swipe 720 2200 720 900 300 || true
 sleep 4
 shot debug-ru-scroll-03-end
 
+# Stop on pause: outlined in the first 5 minutes of the workout (the frames above), filled after
+launch debug-ru-long ru true
+mark "debug-ru-long: running 5 min"
+sleep 310
+shot debug-ru-long-01-running
+tap_xy pause "$WIDEXY"
+sleep 4
+shot debug-ru-long-02-paused
+tap_xy resume "$RESUMEXY"
+sleep 4
+tap_xy pause "$WIDEXY"
+sleep 4
+shot debug-ru-long-03-paused-again
+
 # the top bar turned off (top_bar_enabled=false): no buttons, the tiles where they were before
 # the change (the reference in the same setting first)
 adb shell am force-stop $PKG || true
