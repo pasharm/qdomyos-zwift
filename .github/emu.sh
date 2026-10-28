@@ -194,6 +194,16 @@ shot debug-ru-big-03-paused
 launch debug-ru-pos ru true 'pause_on_start_treadmill=true\n'
 shot debug-ru-pos-01-connected
 
+# the top bar turned off (top_bar_enabled=false): no buttons, the tiles where they were before
+# the change (the reference in the same setting first)
+adb shell am force-stop $PKG || true
+install_apk apk-base/android-debug.apk
+launch base-ru-notop ru true 'top_bar_enabled=false\n'
+shot base-ru-notop-01-running
+install_apk apk-debug/android-debug.apk
+launch debug-ru-notop ru true 'top_bar_enabled=false\n'
+shot debug-ru-notop-01-running
+
 # the classic look: two buttons as before, the same place
 launch debug-classic ru false
 shot debug-classic-01-running
