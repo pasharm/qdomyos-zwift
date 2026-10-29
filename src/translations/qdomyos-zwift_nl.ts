@@ -3987,6 +3987,10 @@ Bij de eerste start kan dit even duren.</translation>
         <source>feet</source>
         <translation>ft</translation>
     </message>
+    <message>
+        <source>QZ target power is overriding the app&apos;s commands. Pause QZ and resume it to give control back to the app.</source>
+        <translation>Het QZ-doelvermogen overschrijft de opdrachten van de app. Pauzeer QZ en hervat het om de besturing aan de app terug te geven.</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
