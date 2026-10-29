@@ -2351,10 +2351,6 @@ Voulez-vous mettre à jour les paramètres de QZ ?</translation>
         <translation>Mise à jour en direct</translation>
     </message>
     <message>
-        <source>Off</source>
-        <translation>Désactivé</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} s</translation>
     </message>

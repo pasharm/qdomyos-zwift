@@ -39,6 +39,7 @@ var miles = 1;
 // setLiveActive), changes the same setting
 var LIVE_REFRESH_MS = 1000;
 var liveEnabled = false;
+var liveSwitched = false; // the switch was tapped on this page
 var liveTimer = null;
 var liveLoading = false;
 var liveActive = false;
@@ -63,40 +64,59 @@ function offScreen(canvas) {
     return rect.bottom < 0 || rect.top > window.innerHeight;
 }
 
-// the line keeps the lowest and the highest point of each slice of the time axis, one slice for
-// every 2 px of the chart: a long workout draws as fast as a short one, and the peaks stay.
+function isPointRow(row) {
+    return Array.isArray(row) && row.length > 0 && typeof row[0] === 'object' && row[0] !== null;
+}
+
+// the lines keep the lowest and the highest point of each slice of the time axis, one slice for
+// every 2 px of the screen: a long workout draws as fast as a short one, and the peaks stay.
+// The lines of a chart keep the same points (the union of their lowest and highest ones), so
+// the tooltip, which takes the point of one index from every line, shows them at one time.
 // Averages, maximums, zones and the power curve are counted on the whole session before this
-function thinLine(row, slices) {
-    if (!row || row.length <= slices * 2 || typeof row[0] !== 'object' || row[0] === null)
-        return row;
-    let out = [], size = row.length / slices;
+function thinLines(datasets, slices) {
+    let rows = [], length = 0;
+    datasets.forEach(function (d) {
+        if (isPointRow(d.data))
+            length = Math.max(length, d.data.length);
+    });
+    datasets.forEach(function (d) {
+        if (isPointRow(d.data) && d.data.length === length)
+            rows.push(d.data);
+    });
+    if (length <= slices * 2)
+        return;
+    let keep = [], size = length / slices;
     for (let b = 0; b < slices; b++) {
-        let from = Math.floor(b * size), to = Math.min(row.length, Math.floor((b + 1) * size));
-        let low = null, high = null, gap = false;
-        for (let i = from; i < to; i++) {
-            let p = row[i];
-            if (p.y === null || p.y === undefined) {
-                gap = true;
-                continue;
+        let from = Math.floor(b * size), to = Math.min(length, Math.floor((b + 1) * size));
+        let picked = [];
+        rows.forEach(function (row) {
+            let low = -1, high = -1, gap = -1;
+            for (let i = from; i < to; i++) {
+                let y = row[i].y;
+                if (y === null || y === undefined) {
+                    if (gap < 0)
+                        gap = i; // a pause in the slice (no pace while standing) stays a break
+                    continue;
+                }
+                if (low < 0 || y < row[low].y)
+                    low = i;
+                if (high < 0 || y > row[high].y)
+                    high = i;
             }
-            if (!low || p.y < low.y)
-                low = p;
-            if (!high || p.y > high.y)
-                high = p;
-        }
-        if (!low)
-            out.push(row[from]);
-        else if (low === high)
-            out.push(low);
-        else if (low.x < high.x)
-            out.push(low, high);
-        else
-            out.push(high, low);
-        // a pause in the slice (no pace while standing) stays a break in the line
-        if (low && gap)
-            out.push({ x: row[to - 1].x, y: null });
+            [low, high, gap].forEach(function (i) {
+                if (i >= 0 && picked.indexOf(i) < 0)
+                    picked.push(i);
+            });
+        });
+        if (picked.length === 0)
+            picked.push(from);
+        picked.sort(function (a, c) { return a - c; });
+        keep = keep.concat(picked);
     }
-    return out;
+    datasets.forEach(function (d) {
+        if (rows.indexOf(d.data) >= 0)
+            d.data = keep.map(function (i) { return d.data[i]; });
+    });
 }
 
 function updateInPlace(old, config) {
@@ -118,10 +138,9 @@ function updateInPlace(old, config) {
 // off screen is not drawn: drawing is most of the cost of a refresh, and only one or two of the
 // charts are on screen
 function makeChart(ctx, config) {
-    var slices = Math.max(100, Math.round((ctx.canvas.clientWidth || 400) / 2));
-    config.data.datasets.forEach(function (d) {
-        d.data = thinLine(d.data, slices);
-    });
+    // by the longer side of the screen, not by the chart: a chart spread over the whole page
+    // in landscape (chartfullscreen.js) keeps the same points
+    thinLines(config.data.datasets, Math.max(100, Math.round(Math.max(window.innerWidth, window.innerHeight) / 2)));
     var old = Chart.getChart(ctx.canvas);
     delete pendingLive[ctx.canvas.id];
     if (old && liveRefresh && old.data.datasets.length === config.data.datasets.length) {
@@ -1684,6 +1703,7 @@ function dochart_init() {
 
     showLiveSwitch();
     $('#live_refresh').on('click', function() {
+        liveSwitched = true;
         liveEnabled = !liveEnabled;
         showLiveSwitch();
         let save = new MainWSQueueElement({
@@ -1792,8 +1812,10 @@ function dochart_init() {
                         if(msg.content[key] === true || msg.content[key] === 'true')
                             miles = 0.621371;
                     } else if (key === 'charts_live_update') {
-                        // null while the setting was never saved: off, its default
-                        liveEnabled = isTrueSetting(msg.content[key]);
+                        // null while the setting was never saved: off, its default. A tap on the
+                        // switch before this answer wins: it has already saved its value
+                        if (!liveSwitched)
+                            liveEnabled = isTrueSetting(msg.content[key]);
                         showLiveSwitch();
                     }
                 }

@@ -2351,10 +2351,6 @@ Deseja atualizar as configurações do QZ?</translation>
         <translation>Atualização ao vivo</translation>
     </message>
     <message>
-        <source>Off</source>
-        <translation>Desligado</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} s</translation>
     </message>

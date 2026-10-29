@@ -2395,10 +2395,6 @@ QZ ayarları güncellensin mi?</translation>
         <translation>Canlı güncelleme</translation>
     </message>
     <message>
-        <source>Off</source>
-        <translation>Kapalı</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} sn</translation>
     </message>

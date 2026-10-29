@@ -2395,10 +2395,6 @@ Do you want to update QZ settings?</source>
         <translation>Онлайн-оновлення</translation>
     </message>
     <message>
-        <source>Off</source>
-        <translation>Вимк.</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} с</translation>
     </message>

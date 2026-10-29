@@ -2395,10 +2395,6 @@ Wil je de QZ-instellingen bijwerken?</translation>
         <translation>Live bijwerken</translation>
     </message>
     <message>
-        <source>Off</source>
-        <translation>Uit</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} s</translation>
     </message>

@@ -2351,10 +2351,6 @@ Möchten Sie die QZ-Einstellungen aktualisieren?</translation>
         <translation>Live-Aktualisierung</translation>
     </message>
     <message>
-        <source>Off</source>
-        <translation>Aus</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} s</translation>
     </message>
