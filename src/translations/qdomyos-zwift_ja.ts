@@ -2351,10 +2351,6 @@ QZの設定を更新しますか?</translation>
         <translation>ライブ更新</translation>
     </message>
     <message>
-        <source>Off</source>
-        <translation>オフ</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} 秒</translation>
     </message>

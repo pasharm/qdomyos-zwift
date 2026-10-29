@@ -2395,10 +2395,6 @@ Zaktualizować ustawienia QZ?</translation>
         <translation>Aktualizacja na żywo</translation>
     </message>
     <message>
-        <source>Off</source>
-        <translation>Wył.</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} s</translation>
     </message>

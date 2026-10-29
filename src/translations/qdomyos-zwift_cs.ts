@@ -2395,10 +2395,6 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Živá aktualizace</translation>
     </message>
     <message>
-        <source>Off</source>
-        <translation>Vypnuto</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} s</translation>
     </message>

@@ -2351,10 +2351,6 @@ Do you want to update QZ settings?</source>
         <translation>实时更新</translation>
     </message>
     <message>
-        <source>Off</source>
-        <translation>关</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} 秒</translation>
     </message>

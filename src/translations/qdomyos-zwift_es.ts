@@ -2351,10 +2351,6 @@ Do you want to update QZ settings?</source>
         <translation>Actualización en vivo</translation>
     </message>
     <message>
-        <source>Off</source>
-        <translation>Desactivado</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value} s</translation>
     </message>

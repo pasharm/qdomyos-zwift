@@ -2395,10 +2395,6 @@ QZ 설정을 업데이트하시겠습니까?</translation>
         <translation>실시간 업데이트</translation>
     </message>
     <message>
-        <source>Off</source>
-        <translation>끔</translation>
-    </message>
-    <message>
         <source>{value} s</source>
         <translation>{value}초</translation>
     </message>
