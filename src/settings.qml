@@ -2910,6 +2910,8 @@ import QtQuick 2.12 as Quick212
             property bool life_fitness_guest_login: false
             property int ui_text_scale: 100
             property bool ui_text_scale_system: true
+            property bool ios_background_keepalive: false
+            property bool treadmill_direct_distance_increment: false
             property bool fitshow_bike_question: true
             property bool resistance_buttons_accumulate: false
             property bool virtufit_layout_question: true
@@ -2921,7 +2923,6 @@ import QtQuick 2.12 as Quick212
             property string ui_accent: "violet"
             property string ui_theme_mode: "auto"
             property bool ui_tile_snap: true
-            property bool treadmill_direct_distance_increment: false
             property bool charts_live_update: false
         }
 
@@ -19466,6 +19467,37 @@ import QtQuick 2.12 as Quick212
 
                     Label {
                         text: qsTr("If you are experiencing crash on iOS midride, try to turn this on. Default is off.")
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
+                        font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                    }
+
+                    IndicatorOnlySwitch {
+                        text: qsTr("iOS Background Keep Alive")
+                        spacing: 0
+                        bottomPadding: 0
+                        topPadding: 0
+                        rightPadding: 0
+                        leftPadding: 0
+                        clip: false
+                        checked: settings.ios_background_keepalive
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        // in Qt 5.15 the role of a SwitchDelegate has no action: a double tap of the
+                        // screen reader did nothing
+                        Accessible.onPressAction: { toggle(); clicked(); }
+                        onClicked: { settings.ios_background_keepalive = checked; }
+                    }
+
+                    Label {
+                        text: qsTr("iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don't freeze. It uses a silent audio track mixed with your music, so nothing you're listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint
