@@ -27,14 +27,27 @@
         return window.qzTranslate ? window.qzTranslate(key, fallback) : fallback;
     }
 
+    // the cards in the order the page shows them: the workout history puts every chart in a
+    // <section> and orders them with CSS order (Workout History Charts in the settings), not in
+    // the markup, so the swipe and the "i / N" counter follow that order
     function cards() {
         var list = [];
         var canvases = document.querySelectorAll('canvas[id^="canvas"]');
         for (var i = 0; i < canvases.length; i++) {
             if (canvases[i].parentNode)
-                list.push(canvases[i].parentNode);
+                list.push({ card: canvases[i].parentNode, order: sectionOrder(canvases[i]), index: i });
         }
-        return list;
+        list.sort(function (a, b) { return a.order - b.order || a.index - b.index; });
+        return list.map(function (item) { return item.card; });
+    }
+
+    // CSS order of the <section> around the element; 0 without one (the live charts page)
+    function sectionOrder(el) {
+        for (; el && el !== document.body; el = el.parentNode) {
+            if (el.tagName === 'SECTION')
+                return Number(window.getComputedStyle(el).order) || 0;
+        }
+        return 0;
     }
 
     // a card the page shows: not inside a hidden box (display: none, or height 0 as the heart
