@@ -3453,6 +3453,24 @@ class QZSettings {
     // on the page itself (chartjs/dochart.js)
     static const QString charts_live_update;
     static constexpr bool default_charts_live_update = false;
+    // Chart positions in the Workout History preview.
+    static const QString history_chart_power_order;
+    static constexpr int default_history_chart_power_order = 0;
+    static const QString history_chart_heart_order;
+    static constexpr int default_history_chart_heart_order = 1;
+    static const QString history_chart_resistance_order;
+    static constexpr int default_history_chart_resistance_order = 2;
+    static const QString history_chart_peloton_resistance_order;
+    static constexpr int default_history_chart_peloton_resistance_order = 3;
+    static const QString history_chart_cadence_order;
+    static constexpr int default_history_chart_cadence_order = 4;
+    static const QString history_chart_power_distribution_order;
+    static constexpr int default_history_chart_power_distribution_order = 5;
+    static const QString history_chart_speed_inclination_order;
+    static constexpr int default_history_chart_speed_inclination_order = 6;
+
+    static const QString moovio_lynx_konect_2_0;
+    static constexpr bool default_moovio_lynx_konect_2_0 = false;
 
     /**
      * @brief Write the QSettings values using the constants from this namespace.

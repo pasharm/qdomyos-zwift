@@ -2912,6 +2912,14 @@ import QtQuick 2.12 as Quick212
             property bool ui_text_scale_system: true
             property bool ios_background_keepalive: false
             property bool treadmill_direct_distance_increment: false
+            property int history_chart_power_order: 0
+            property int history_chart_heart_order: 1
+            property int history_chart_resistance_order: 2
+            property int history_chart_peloton_resistance_order: 3
+            property int history_chart_cadence_order: 4
+            property int history_chart_power_distribution_order: 5
+            property int history_chart_speed_inclination_order: 6
+            property bool moovio_lynx_konect_2_0: false
             property bool fitshow_bike_question: true
             property bool resistance_buttons_accumulate: false
             property bool virtufit_layout_question: true
@@ -7861,6 +7869,131 @@ import QtQuick 2.12 as Quick212
                 //anchors.topMargin: 10
                 accordionContent: ColumnLayout {
                     spacing: 0
+
+                    // Workout History (not the live charts): customize the order of saved workout graphs.
+                    AccordionElement {
+                        id: historyChartsAccordion
+                        title: qsTr("Workout History Charts")
+                        indicatRectColor: Material.color(Material.Grey)
+                        textColor: Material.color(Material.Grey)
+                        color: Material.backgroundColor
+                        accordionContent: ColumnLayout {
+                            id: historyChartOrderEditor
+                            spacing: 8
+                            Layout.fillWidth: true
+
+                            readonly property var defaultChartIds: [
+                                "power", "heart", "resistance", "pelotonResistance",
+                                "cadence", "powerDistribution", "speedInclination"
+                            ]
+                            property var chartOrder: []
+
+                            function currentOrder() {
+                                var positions = [
+                                    settings.history_chart_power_order,
+                                    settings.history_chart_heart_order,
+                                    settings.history_chart_resistance_order,
+                                    settings.history_chart_peloton_resistance_order,
+                                    settings.history_chart_cadence_order,
+                                    settings.history_chart_power_distribution_order,
+                                    settings.history_chart_speed_inclination_order
+                                ]
+                                var order = defaultChartIds.slice()
+                                order.sort(function(a, b) {
+                                    var ai = defaultChartIds.indexOf(a)
+                                    var bi = defaultChartIds.indexOf(b)
+                                    return positions[ai] - positions[bi] || ai - bi
+                                })
+                                return order
+                            }
+
+                            function saveOrder() {
+                                settings.history_chart_power_order = chartOrder.indexOf("power")
+                                settings.history_chart_heart_order = chartOrder.indexOf("heart")
+                                settings.history_chart_resistance_order = chartOrder.indexOf("resistance")
+                                settings.history_chart_peloton_resistance_order = chartOrder.indexOf("pelotonResistance")
+                                settings.history_chart_cadence_order = chartOrder.indexOf("cadence")
+                                settings.history_chart_power_distribution_order = chartOrder.indexOf("powerDistribution")
+                                settings.history_chart_speed_inclination_order = chartOrder.indexOf("speedInclination")
+                            }
+
+                            function chartLabel(chartId) {
+                                switch (chartId) {
+                                case "power": return qsTr("Power")
+                                case "heart": return qsTr("Heart Rate")
+                                case "resistance": return qsTr("Resistance vs Target Resistance")
+                                case "pelotonResistance": return qsTr("Peloton Resistance")
+                                case "cadence": return qsTr("Cadence")
+                                case "powerDistribution": return qsTr("Power Distribution")
+                                case "speedInclination": return qsTr("Speed and Inclination")
+                                default: return chartId
+                                }
+                            }
+
+                            function moveChart(index, delta) {
+                                var destination = index + delta
+                                if (destination < 0 || destination >= chartOrder.length)
+                                    return
+                                var updated = chartOrder.slice()
+                                var item = updated[index]
+                                updated[index] = updated[destination]
+                                updated[destination] = item
+                                chartOrder = updated
+                                saveOrder()
+                            }
+
+                            Component.onCompleted: chartOrder = currentOrder()
+
+                            Label {
+                                text: qsTr("Move the charts up or down to choose their order in Workout History. Changes are saved automatically.")
+                                wrapMode: Text.WordWrap
+                                Layout.fillWidth: true
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                            }
+
+                            Repeater {
+                                model: historyChartOrderEditor.chartOrder.length
+                                delegate: RowLayout {
+                                    Layout.fillWidth: true
+                                    spacing: 8
+
+                                    Label {
+                                        text: historyChartOrderEditor.chartLabel(historyChartOrderEditor.chartOrder[index])
+                                        Layout.fillWidth: true
+                                        elide: Text.ElideRight
+                                        wrapMode: Text.NoWrap
+                                    }
+                                    UiButton {
+                                        text: "↑"
+                                        enabled: index > 0
+                                        Accessible.name: qsTr("Move up") + ": " +
+                                                         historyChartOrderEditor.chartLabel(historyChartOrderEditor.chartOrder[index])
+                                        onClicked: historyChartOrderEditor.moveChart(index, -1)
+                                    }
+                                    UiButton {
+                                        text: "↓"
+                                        enabled: index < historyChartOrderEditor.chartOrder.length - 1
+                                        Accessible.name: qsTr("Move down") + ": " +
+                                                         historyChartOrderEditor.chartLabel(historyChartOrderEditor.chartOrder[index])
+                                        onClicked: historyChartOrderEditor.moveChart(index, 1)
+                                    }
+                                }
+                            }
+
+                            UiButton {
+                                text: qsTr("Restore default order")
+                                Layout.alignment: Qt.AlignRight
+                                enabled: historyChartOrderEditor.chartOrder.join(",") !==
+                                         historyChartOrderEditor.defaultChartIds.join(",")
+                                onClicked: {
+                                    var defaults = historyChartOrderEditor.defaultChartIds.slice()
+                                    historyChartOrderEditor.chartOrder = defaults
+                                    historyChartOrderEditor.saveOrder()
+                                }
+                            }
+                        }
+                    }
+
                     // Look of the app: modern or classic, theme and accent colour
                     IndicatorOnlySwitch {
                         text: qsTr("Modern interface")
@@ -14343,6 +14476,48 @@ import QtQuick 2.12 as Quick212
                             }
                         }
                     }                    
+
+                    AccordionElement {
+                        id: moovioTreadmillAccordion
+                        title: qsTr("Moovio Options")
+                        indicatRectColor: Material.color(Material.Grey)
+                        textColor: Material.color(Material.Yellow)
+                        color: Material.backgroundColor
+                        accordionContent: ColumnLayout {
+                            spacing: 0
+                            IndicatorOnlySwitch {
+                                id: moovioLynxKonect20TreadmillDelegate
+                                text: qsTr("Lynx Konect 2.0")
+                                spacing: 0
+                                bottomPadding: 0
+                                topPadding: 0
+                                rightPadding: 0
+                                leftPadding: 0
+                                clip: false
+                                checked: settings.moovio_lynx_konect_2_0
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                Layout.fillWidth: true
+                                // in Qt 5.15 the role of a SwitchDelegate has no action: a double tap of the
+                                // screen reader did nothing
+                                Accessible.onPressAction: { toggle(); clicked(); }
+                                onClicked: { settings.moovio_lynx_konect_2_0 = checked; window.settings_restart_to_apply = true; }
+                            }
+
+                            Label {
+                                text: qsTr("Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.")
+                                font.bold: !window.ui.modern
+                                font.italic: !window.ui.modern
+                                font.pixelSize: window.ui.fontHint
+                                bottomPadding: window.hintGap
+                                textFormat: Text.PlainText
+                                wrapMode: Text.WordWrap
+                                verticalAlignment: Text.AlignVCenter
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                Layout.fillWidth: true
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                            }
+                        }
+                    }
                 }
             }            
 
