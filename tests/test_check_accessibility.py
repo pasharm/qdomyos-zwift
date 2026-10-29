@@ -65,6 +65,11 @@ class ValidPatterns(unittest.TestCase):
             'ToolButton { icon.source: "a.png"; Component.onCompleted: text = qsTr("Back") }',
             'ToolButton { id: b; icon.source: "a.png" }\nBinding { target: b; property: "Accessible.name"; value: qsTr("Back") }',
             'TextField { id: f }\nComponent.onCompleted: f.Accessible.name = qsTr("Weight")',
+            'ToolButton { icon.source: "a.png"; Binding on text { value: qsTr("Back") } }',
+            'ToolButton { icon.source: "a.png"; Binding on Accessible.name { value: qsTr("Back") } }',
+            # the same id in two delegates: the name given to one of them is not reported missing
+            'Repeater { delegate: ToolButton { id: b; icon.source: "c"; Component.onCompleted: b.text = qsTr("C") } }\n'
+            'Repeater { delegate: ToolButton { id: b; icon.source: "a"; Accessible.name: qsTr("A") } }',
         ):
             self.assertEqual(rules(wrap(qml)), [], qml)
 
@@ -123,12 +128,18 @@ class Violations(unittest.TestCase):
         # a name given to another button does not count
         self.assertEqual(rules(wrap('ToolButton { id: a; icon.source: "a.png" }\nToolButton { id: b; Component.onCompleted: a.width = 3 }')),
                          [("no-name", 3), ("no-name", 4)])
+        # a local variable named text is not the name of the control
+        for handler in ('{ var text = clip(); paste(text) }', '{ let text = clip() }', '{ const text = clip() }'):
+            self.assertEqual(rules(wrap('ToolButton { icon.source: "x.png"; onClicked: ' + handler + ' }')),
+                             [("no-name", 3)], handler)
 
     def test_symbol_names(self):
         self.assertEqual(findings(wrap('Button { text: "<" }')), [("symbol-text", "error", 3)])
         # a glyph as an escape sequence
         self.assertEqual(rules(wrap('ToolButton { text: "\\uD83D\\uDD0D" }')), [("symbol-text", 3)])
         self.assertEqual(rules(wrap('ToolButton { text: qsTr("+") }')), [("symbol-text", 3)])
+        # a text changed from script names the button, but its symbol is still read out
+        self.assertEqual(rules(wrap('ToolButton { text: "+"; onClicked: text = "-" }')), [("symbol-text", 3)])
         self.assertEqual(rules(wrap('Item {\n MouseArea { onClicked: f(); Accessible.role: Accessible.Button; Accessible.name: "-" }\n}')),
                          [("no-action", 4), ("symbol-text", 4)])
 
@@ -167,7 +178,10 @@ class Violations(unittest.TestCase):
         comps = {"UiButton.qml": "import QtQuick.Templates 2.15 as T\nT.Button {\n}\n",
                  "Sw.qml": "SwitchDelegate {\n}\n"}
         self.assertEqual(rules(wrap("UiButton { }"), comps), [("no-name", 3)])
-        self.assertEqual(rules(wrap('Sw { text: qsTr("On") }'), comps), [("no-action", 3)])
+        # an instance of an old component without the action: a warning, the fix is in the component
+        self.assertEqual(findings(wrap('Sw { text: qsTr("On") }'), comps), [("no-action", "warning", 3)])
+        # the component itself without the action: an error on its root
+        self.assertEqual(findings("SwitchDelegate {\n}\n"), [("no-action", "error", 1)])
 
 
 class Parse(unittest.TestCase):
@@ -372,6 +386,25 @@ class Baseline(unittest.TestCase):
         code, out = self.run_main(base, "--head", head)
         self.assertEqual(code, 1)
         self.assertIn("src/Page.qml:3: error: no-name: UiBtn", out)
+
+    def test_component_root_lost_action(self):
+        self.write("Sw.qml", "SwitchDelegate {\n Accessible.onPressAction: toggle()\n}\n")
+        base = self.commit(wrap('Sw { text: qsTr("On") }'))
+        self.write("Sw.qml", "SwitchDelegate {\n}\n")
+        head = self.commit()
+        code, out = self.run_main(base, "--head", head)
+        self.assertEqual(code, 1, out)
+        self.assertIn("src/Sw.qml:1: error: no-action: SwitchDelegate", out)
+        self.assertIn("src/Page.qml:3: warning: no-action: Sw", out)
+
+    def test_new_instance_of_old_component(self):
+        # a new settings switch on a component that never had the action: not a failed check
+        self.write("Sw.qml", "SwitchDelegate {\n}\n")
+        base = self.commit(wrap('Sw { text: qsTr("On") }'))
+        head = self.commit(wrap('Sw { text: qsTr("On") }\nSw { text: qsTr("Off") }'))
+        code, out = self.run_main(base, "--head", head)
+        self.assertEqual(code, 0, out)
+        self.assertIn("errors: 0, warnings: 1", out)
 
     def test_old_debt_survives_text_and_handler_edit(self):
         base = self.commit(wrap('Rectangle {\n MouseArea { onClicked: f() }\n}\nMenuItem { text: qsTr("Open") }\n'

@@ -19,6 +19,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          # the head of the pull request, not the merge commit: the line numbers of the
+          # annotations are then those of the "Files changed" tab
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
 
       - name: Test the checker
         run: python3 -m unittest tests/test_check_accessibility.py

@@ -22,6 +22,9 @@ Errors (exit code 1):
                 with `Accessible.role: Accessible.Button` and no `onPressAction`
 
 Warnings (printed, but do not fail the check):
+  no-action     the same for an instance of an own component (e.g. a settings switch based on
+                SwitchDelegate): the component is old code, and one fix there covers all its
+                instances; a component that loses its action is still an error on its root
   tap-only      a MouseArea/TapHandler with a click handler on an item without
                 `Accessible.role` and `onPressAction`: only a finger can press it. Sometimes this
                 is fine (tap outside to close), so it is a warning
@@ -30,7 +33,7 @@ Warnings (printed, but do not fail the check):
   name-no-value a field, list or spin box whose `Accessible.name` does not include its value:
                 Qt 5.15 on Android reads the value only when the name is empty, so the typed
                 value is not read (fix: `Accessible.name: qsTr("Weight") + ": " + text`)
-  glyph-text    a Text/Label of a single symbol or emoji outside a button, without
+  glyph-text    a Text/Label of symbols only (no letters or digits) outside a button, without
                 `Accessible.ignored: true`: the reader stops on it
   not-parsed    a QML file the checker could not parse, so it was not checked
 
@@ -47,8 +50,9 @@ changed (the file or `component X: ...`), its instances in all files. The type o
 properties: a component that names itself does not need a name on each instance.
 
 Not reported:
-  - names set from script: `id.text = ...`, `id.Accessible.name = ...`, a `text = ...` in the
-    element's own handler, `Binding { target: id; property: "Accessible.name" }`;
+  - a missing name when the name is set from script: `id.text = ...`, `id.Accessible.name = ...`,
+    a `text = ...` in the element's own handler, `Binding { target: id; property: "text" }`,
+    `Binding on text { ... }` (a symbol in the literal `text` is still reported);
   - names from an expression (`text: model.label`, `Accessible.name: title + qsTr(" settings")`);
     only plain strings are checked for qsTr, and a string compared with `===`, a format or a key
     (`Qt.formatDate(d, "dddd")`, `names["home"]`) is not a text;
@@ -221,6 +225,7 @@ class Elem:
         self.component = None     # name of an inline component (component X: Button { ... })
         self.script_text = False  # `text` is assigned from script
         self.script_name = False  # `Accessible.name` is assigned from script
+        self.binding_on = None    # target property of `Binding on <property> { ... }`
 
     def value(self, name):
         p = self.props.get(name)
@@ -368,8 +373,10 @@ class Parser:
                 continue
             if nxt.text == "on" and is_type_name(name):  # Behavior on x { }
                 self.i += 1
-                self.dotted()
-                el.children.append(self.obj(name, line, el, None))
+                target, _ = self.dotted()
+                child = self.obj(name, line, el, None)
+                child.binding_on = target
+                el.children.append(child)
                 continue
             if nxt.text == ":":
                 self.i += 1
@@ -482,14 +489,20 @@ def assigns(toks, k, names):
 def mark_script_names(root, toks):
     """Mark the elements whose `text` or `Accessible.name` is assigned from script, so a name
     given at run time is not reported missing."""
-    ids = {el.id: el for el in root.walk() if el.id}
+    # the same id may be used in separate scopes (delegates, Components): mark them all, so a
+    # name given to one of them is never reported missing
+    ids = {}
+    for el in root.walk():
+        if el.id:
+            ids.setdefault(el.id, []).append(el)
     text, name = ("text",), ("Accessible", "name")
 
-    def mark(el, which):
-        if which == text:
-            el.script_text = True
-        else:
-            el.script_name = True
+    def mark(els, which):
+        for el in els:
+            if which == text:
+                el.script_text = True
+            else:
+                el.script_name = True
 
     # anywhere in the file: myButton.text = ..., myField.Accessible.name = ...
     for k, t in enumerate(toks):
@@ -503,16 +516,21 @@ def mark_script_names(root, toks):
             target, prop = el.value("target"), literal(el.value("property"))
             if target and len(target) == 1 and target[0].text in ids and prop in ("text", "Accessible.name"):
                 mark(ids[target[0].text], text if prop == "text" else name)
-        # text = ... in the element's own handler (onCompleted, onLanguageChanged...)
+        # Binding on text { value: ... } inside the element
+        for child in el.children:
+            if child.type == "Binding" and child.binding_on in ("text", "Accessible.name"):
+                mark([el], text if child.binding_on == "text" else name)
+        # text = ... in the element's own handler (onCompleted, onLanguageChanged...); not a local
+        # variable `var text = ...`
         for prop, (vt, _) in el.props.items():
             if not prop.split(".")[-1].startswith("on"):
                 continue
             for k in range(len(vt)):
-                if k and vt[k - 1].text == ".":
+                if k and vt[k - 1].text in (".", "var", "let", "const"):
                     continue
                 which = assigns(vt, k, (text, name))
                 if which:
-                    mark(el, which)
+                    mark([el], which)
 
 
 # --- values ---------------------------------------------------------------------------------
@@ -686,24 +704,31 @@ def check_elem(el, types):
         out.append(("symbol-text", "error", f'Accessible.name is the symbol "{literal(name)}": the screen reader reads out the symbol; use a word in qsTr()'))
     # The root of a component (a file or component X: ...) gets its name from each instance
     definition = el.parent is None or el.component is not None
-    via = f" (a fix in {el.type}.qml covers all its instances)" if el.type != base and base in NEED_ACTION else ""
     if base in TEXT_CONTROLS:
         text = val("text")
         action = val("action")
         lit = literal(text) if text is not None else None
-        if definition or el.script_text:
+        # a text set from script names the control; a symbol in its literal text still counts
+        unnamed = not named and not el.script_text
+        if definition:
             pass
-        elif not named and text is None and action is None:
+        elif unnamed and text is None and action is None:
             out.append(("no-name", "error", f"{base} without text or Accessible.name: the screen reader says just \"button\", and voice control cannot press it"))
         elif name is None and lit is not None and symbol_only(lit):
             out.append(("symbol-text", "error", f'the name of the {base} is the symbol "{lit}": add Accessible.name: qsTr("...")'))
-        elif not named and lit == "":
+        elif unnamed and lit == "":
             out.append(("no-name", "error", f"{base} with an empty text and no Accessible.name"))
-        elif not named and text is not None and empty_branch(text):
+        elif unnamed and text is not None and empty_branch(text):
             # text: modern ? "" : "<" - in one of the states the button has no name
             out.append(("no-name", "error", f'{base}: text is "" in one branch of the condition and there is no Accessible.name, so in that state the control has no name'))
         if base in NEED_ACTION and "Accessible.onPressAction" not in props:
-            out.append(("no-action", "error", f"{base} without Accessible.onPressAction: in Qt 5.15 its role has no press action, so a double tap of the screen reader does nothing{via}"))
+            if el.type != base and not definition:
+                # an instance of an own component (a settings switch) without the action: the
+                # component is old code, and one fix there covers every instance; a change of
+                # the component itself is checked on its root
+                out.append(("no-action", "warning", f"{el.type} ({base}) without Accessible.onPressAction: in Qt 5.15 its role has no press action, so a double tap of the screen reader does nothing; a fix in {el.type}.qml covers all its instances"))
+            else:
+                out.append(("no-action", "error", f"{base} without Accessible.onPressAction: in Qt 5.15 its role has no press action, so a double tap of the screen reader does nothing"))
     elif base in INPUT_CONTROLS:
         # a field in contentItem is a part of its control (ComboBox, SpinBox), named by the control
         if el.slot == "contentItem" or (base in ("TextInput", "TextEdit") and is_true(val("readOnly"))):
@@ -1048,6 +1073,9 @@ def annotation(level, path, line, title, msg):
 
 def main(argv=None):
     argv = list(sys.argv[1:] if argv is None else argv)
+    if hasattr(sys.stdout, "reconfigure"):
+        # a symbol in a message must not stop the check on a console without UTF-8
+        sys.stdout.reconfigure(errors="replace")
     if argv and argv[0] in ("-h", "--help"):
         print(__doc__)
         return 0
