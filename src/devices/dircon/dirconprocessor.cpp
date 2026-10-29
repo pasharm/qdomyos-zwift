@@ -26,6 +26,7 @@ DirconProcessor::DirconProcessor(const QList<DirconProcessorService *> &my_servi
     qDebug() << "In the constructor of dircon processor for" << serverName;
     QSettings settings;
     rouvy_compatibility = settings.value(QZSettings::rouvy_compatibility, QZSettings::default_rouvy_compatibility).toBool();
+    wahoo_rgt_dircon = settings.value(QZSettings::wahoo_rgt_dircon, QZSettings::default_wahoo_rgt_dircon).toBool();
     foreach (DirconProcessorService *my_service, my_services) { my_service->setParent(this); }
     instances.append(this);
     handledNetworkLostGeneration = networkLostGeneration; // a loss before this processor isn't its
@@ -369,7 +370,6 @@ bool DirconProcessor::sendCharacteristicNotification(quint16 uuid, const QByteAr
     DirconPacket pkt;
     QTcpSocket *socket;
     DirconProcessorClient *client;
-    QSettings settings;
     bool rv = true, rvs;
     pkt.additional_data = data;
     // Remember the real Indoor Bike Data frame so a client connecting later is greeted
@@ -381,8 +381,7 @@ bool DirconProcessor::sendCharacteristicNotification(quint16 uuid, const QByteAr
     pkt.uuid = uuid;
     for (QHash<QTcpSocket *, DirconProcessorClient *>::iterator i = clientsMap.begin(); i != clientsMap.end(); ++i) {
         client = i.value();
-        if (!settings.value(QZSettings::wahoo_rgt_dircon, QZSettings::default_wahoo_rgt_dircon).toBool() ||
-            client->char_notify.indexOf(uuid) >= 0) {
+        if (!wahoo_rgt_dircon || client->char_notify.indexOf(uuid) >= 0) {
             socket = i.key();
             rvs = socket->write(pkt.encode(0)) < 0;
             if (rvs)
