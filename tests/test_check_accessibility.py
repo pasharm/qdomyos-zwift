@@ -80,6 +80,8 @@ class ValidPatterns(unittest.TestCase):
             'ComboBox { Accessible.name: qsTr("A") + displayText; contentItem: TextField { } }',
             'SpinBox { Accessible.name: qsTr("Age") + ": " + value }',
             'TextInput { readOnly: true; text: "1" }',
+            # a password field is named without its value, so the reader does not say it aloud
+            'TextField { echoMode: TextInput.Password; Accessible.name: qsTr("Password") }',
         ):
             self.assertEqual(rules(wrap(qml)), [], qml)
 
@@ -151,6 +153,10 @@ class Violations(unittest.TestCase):
         self.assertEqual(findings(wrap('TextField { placeholderText: qsTr("Name") }')), [("placeholder", "warning", 3)])
         self.assertEqual(findings(wrap('TextField { Accessible.name: qsTr("Weight") }')), [("name-no-value", "warning", 3)])
         self.assertEqual(findings(wrap('TextField { Accessible.name: label.text }')), [("name-no-value", "warning", 3)])
+        # the hint names the value of the control, and never for a password field
+        self.assertIn('+ ": " + displayText', c.check_elem(c.parse(wrap("ComboBox { }")).children[0], c.Types({}))[0][2])
+        pw = c.parse(wrap("TextField { echoMode: TextInput.Password }")).children[0]
+        self.assertNotIn("+ text", c.check_elem(pw, c.Types({}))[0][2])
         # `text = ...` of a field is its value, not its name
         self.assertEqual(rules(wrap('TextField { Component.onCompleted: text = "5" }')), [("no-name", 3)])
 

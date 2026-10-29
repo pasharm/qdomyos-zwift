@@ -34,7 +34,9 @@ Warnings (printed, but do not fail the check):
                 placeholder as a description, not as the name
   name-no-value a field, list or spin box whose `Accessible.name` does not include its value:
                 Qt 5.15 on Android reads the value only when the name is empty, so the typed
-                value is not read (fix: `Accessible.name: qsTr("Weight") + ": " + text`)
+                value is not read (fix: `Accessible.name: qsTr("Weight") + ": " + text`); not
+                for a password field (`echoMode: TextInput.Password`), whose value must stay
+                silent
   glyph-text    a Text/Label of symbols only (no letters or digits) outside a button, without
                 `Accessible.ignored: true`: the reader stops on it
   not-parsed    a QML file the checker could not parse, so it was not checked
@@ -735,13 +737,18 @@ def check_elem(el, types):
         # a field in contentItem is a part of its control (ComboBox, SpinBox), named by the control
         if el.slot == "contentItem" or (base in ("TextInput", "TextEdit") and is_true(val("readOnly"))):
             return out
+        # a password field must not put its value into the name: the reader would say it aloud
+        echo = val("echoMode")
+        password = echo is not None and any("Password" in t.text for t in echo)
+        value = text_of_value(base)
+        fix = 'add Accessible.name: qsTr("...")' if password or not value else f'add Accessible.name: qsTr("...") + ": " + {value}'
         if definition:
             pass
         elif not named and "placeholderText" in props:
-            out.append(("placeholder", "warning", f"{base} without Accessible.name: Qt reads placeholderText as a description, not as the name; add Accessible.name: qsTr(\"...\") + \": \" + text"))
+            out.append(("placeholder", "warning", f"{base} without Accessible.name: Qt reads placeholderText as a description, not as the name; {fix}"))
         elif not named:
-            out.append(("no-name", "error", f"{base} without Accessible.name: the screen reader reads only the value, not which setting it is"))
-        elif not el.script_name and not refs_value(name, el.id):
+            out.append(("no-name", "error", f"{base} without Accessible.name: the screen reader reads only the value, not which setting it is; {fix}"))
+        elif not password and not el.script_name and not refs_value(name, el.id):
             out.append(("name-no-value", "warning", f"{base}: Accessible.name does not include the value, and Qt 5.15 on Android then does not read the value"))
     else:
         role = val("Accessible.role")
@@ -759,6 +766,17 @@ def check_elem(el, types):
             if handlers and not is_false(val("enabled")) and not accessible_press(el, types):
                 out.append(("tap-only", "warning", f"{el.type} with {handlers[0]} on an item without Accessible.role and Accessible.onPressAction: the screen reader cannot press it"))
     return out
+
+
+def text_of_value(base):
+    """The property holding the value of an editable control, for the hint in a message."""
+    if base in ("TextField", "TextArea", "TextInput", "TextEdit"):
+        return "text"
+    if base == "ComboBox":
+        return "displayText"
+    if base in ("SpinBox", "Slider", "Dial"):
+        return "value"
+    return None
 
 
 def empty_branch(toks):
