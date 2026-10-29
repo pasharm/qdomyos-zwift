@@ -17,9 +17,11 @@ Errors (exit code 1):
   no-qstr       `Accessible.name`/`Accessible.description` has a string outside qsTr(): it stays
                 English in every language
   no-action     MenuItem and the delegates (ItemDelegate, SwipeDelegate, Switch/Check/
-                RadioDelegate) without `Accessible.onPressAction`: in Qt 5.15 their role has no
-                press action, so a double tap of the reader does nothing; the same for any item
-                with `Accessible.role: Accessible.Button` and no `onPressAction`
+                RadioDelegate) without `Accessible.onPressAction`: a double tap of the reader
+                does not emit clicked() - in Qt 5.15 the role of MenuItem and Item/Swipe/
+                SwitchDelegate has no press action, and Check/RadioDelegate only flip `checked`;
+                the same for any item with `Accessible.role: Accessible.Button` and no
+                `onPressAction`
 
 Warnings (printed, but do not fail the check):
   no-action     the same for an instance of an own component (e.g. a settings switch based on
@@ -726,9 +728,9 @@ def check_elem(el, types):
                 # an instance of an own component (a settings switch) without the action: the
                 # component is old code, and one fix there covers every instance; a change of
                 # the component itself is checked on its root
-                out.append(("no-action", "warning", f"{el.type} ({base}) without Accessible.onPressAction: in Qt 5.15 its role has no press action, so a double tap of the screen reader does nothing; a fix in {el.type}.qml covers all its instances"))
+                out.append(("no-action", "warning", f"{el.type} ({base}) without Accessible.onPressAction: in Qt 5.15 a double tap of the screen reader does not emit clicked(); a fix in {el.type}.qml covers all its instances"))
             else:
-                out.append(("no-action", "error", f"{base} without Accessible.onPressAction: in Qt 5.15 its role has no press action, so a double tap of the screen reader does nothing"))
+                out.append(("no-action", "error", f"{base} without Accessible.onPressAction: in Qt 5.15 a double tap of the screen reader does not emit clicked()"))
     elif base in INPUT_CONTROLS:
         # a field in contentItem is a part of its control (ComboBox, SpinBox), named by the control
         if el.slot == "contentItem" or (base in ("TextInput", "TextEdit") and is_true(val("readOnly"))):
