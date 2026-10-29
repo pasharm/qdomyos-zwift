@@ -53,8 +53,8 @@ html.modern div.qz-fs-card.qz-fs-on {   /* over the rounded cards of the modern 
     right: 16px;
     z-index: 91;
     color: rgb(120,120,120);
-    color: var(--qz-muted, rgb(120,120,120));
-    font: 600 16px Roboto, "Segoe UI", sans-serif;
+    color: var(--qz-text, rgb(120,120,120));   /* as the chart title next to it */
+    font: 600 20px Roboto, "Segoe UI", sans-serif;
 }
 html.qz-fs #qz_fs_counter {
     display: block;
