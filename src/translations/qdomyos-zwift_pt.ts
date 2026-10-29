@@ -5578,6 +5578,14 @@ Não: o QZ o mantém como esteira e não pergunta de novo (uma bicicleta ainda p
         <translation>Escolha quais gráficos exibir no rodapé: gráficos de frequência cardíaca e potência, apenas gráfico de frequência cardíaca ou apenas gráfico de potência.</translation>
     </message>
     <message>
+        <source>Live Charts During a Workout</source>
+        <translation>Gráficos ao vivo durante o treino</translation>
+    </message>
+    <message>
+        <source>The Charts page adds the new data every second while a workout is running. Also switched on the Charts page itself. Default is off.</source>
+        <translation>A página Gráficos acrescenta os novos dados a cada segundo durante um treino. Também se liga na própria página Gráficos. Padrão é desativado.</translation>
+    </message>
+    <message>
         <source>UI Themes</source>
         <translation>Temas da Interface</translation>
     </message>

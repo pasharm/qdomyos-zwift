@@ -5554,6 +5554,14 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>フッターに表示するチャートを選択します：心拍数とパワーの両方、心拍数のみ、またはパワーのみ。</translation>
     </message>
     <message>
+        <source>Live Charts During a Workout</source>
+        <translation>ワークアウト中のライブグラフ</translation>
+    </message>
+    <message>
+        <source>The Charts page adds the new data every second while a workout is running. Also switched on the Charts page itself. Default is off.</source>
+        <translation>ワークアウト中、グラフ画面に新しいデータを毎秒追加します。グラフ画面からも切り替えられます。初期設定はオフです。</translation>
+    </message>
+    <message>
         <source>UI Themes</source>
         <translation>UIテーマ</translation>
     </message>

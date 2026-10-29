@@ -5853,6 +5853,14 @@ Sonraki pencerede QZ klasörüne erişime izin verin.</translation>
         <translation>Ekranın altında hangi grafiklerin gösterileceğini seçin: nabız ve güç grafikleri, yalnızca nabız grafiği veya yalnızca güç grafiği.</translation>
     </message>
     <message>
+        <source>Live Charts During a Workout</source>
+        <translation>Antrenman sırasında canlı grafikler</translation>
+    </message>
+    <message>
+        <source>The Charts page adds the new data every second while a workout is running. Also switched on the Charts page itself. Default is off.</source>
+        <translation>Grafikler sayfası, antrenman sürerken yeni verileri her saniye ekler. Grafikler sayfasının kendisinden de açılıp kapatılabilir. Varsayılan: kapalı.</translation>
+    </message>
+    <message>
         <source>iOS Live Activity Left Metric:</source>
         <translation>Canlı Etkinlik sol değeri (iOS):</translation>
     </message>

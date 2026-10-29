@@ -5529,6 +5529,14 @@ Non : QZ le garde comme tapis de course et ne redemandera plus (un vélo peut to
         <translation>Choisissez les graphiques à afficher dans le pied de page : fréquence cardiaque et puissance, uniquement la fréquence cardiaque, ou uniquement la puissance.</translation>
     </message>
     <message>
+        <source>Live Charts During a Workout</source>
+        <translation>Graphiques en direct pendant l’entraînement</translation>
+    </message>
+    <message>
+        <source>The Charts page adds the new data every second while a workout is running. Also switched on the Charts page itself. Default is off.</source>
+        <translation>La page Graphiques ajoute les nouvelles données chaque seconde pendant un entraînement. S’active aussi directement sur la page Graphiques. Par défaut, désactivé.</translation>
+    </message>
+    <message>
         <source>UI Themes</source>
         <translation>Thèmes de l&apos;interface</translation>
     </message>

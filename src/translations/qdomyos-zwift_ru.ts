@@ -2392,7 +2392,7 @@ Do you want to update QZ settings?</source>
     </message>
     <message>
         <source>Live update</source>
-        <translation>Обновление</translation>
+        <translation>Онлайн-обновление</translation>
     </message>
     <message>
         <source>Off</source>
@@ -5843,6 +5843,14 @@ In the next window, allow access to the QZ folder.</source>
     <message>
         <source>Choose which charts to display in the footer: both heart rate and power charts, only heart rate chart, or only power chart.</source>
         <translation>Выберите, какие графики показывать внизу экрана: пульс и мощность, только пульс или только мощность.</translation>
+    </message>
+    <message>
+        <source>Live Charts During a Workout</source>
+        <translation>Графики онлайн во время тренировки</translation>
+    </message>
+    <message>
+        <source>The Charts page adds the new data every second while a workout is running. Also switched on the Charts page itself. Default is off.</source>
+        <translation>Страница «Графики» каждую секунду дорисовывает новые данные, пока идёт тренировка. Включается и на самой странице «Графики». По умолчанию выключено.</translation>
     </message>
     <message>
         <source>iOS Live Activity Left Metric:</source>
