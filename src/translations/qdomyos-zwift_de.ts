@@ -5545,6 +5545,14 @@ Nein: QZ behandelt es weiter als Laufband und fragt nicht erneut (ein Fahrrad l�
         <translation>Wählen Sie aus, welche Diagramme in der Fußzeile angezeigt werden sollen: Herzfrequenz- und Leistungsdiagramme, nur Herzfrequenzdiagramm oder nur Leistungsdiagramm.</translation>
     </message>
     <message>
+        <source>Live Charts During a Workout</source>
+        <translation>Live-Diagramme während des Trainings</translation>
+    </message>
+    <message>
+        <source>The Charts page adds the new data every second while a workout is running. Also switched on the Charts page itself. Default is off.</source>
+        <translation>Die Seite „Diagramme“ ergänzt während eines laufenden Trainings jede Sekunde die neuen Daten. Lässt sich auch direkt auf der Seite „Diagramme“ umschalten. Standardmäßig ist es aus.</translation>
+    </message>
+    <message>
         <source>UI Themes</source>
         <translation>UI-Themen</translation>
     </message>

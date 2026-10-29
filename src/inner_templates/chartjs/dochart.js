@@ -33,12 +33,12 @@ var maxHeartRate = 190;
 var heartZones = [];
 var miles = 1;
 
-// live update during a workout: the session array is polled and the charts are rebuilt;
-// the period (seconds, 0 = off) is chosen in the top-right selector, shown only while a workout
-// is running (see setLiveActive), and kept in localStorage
-var LIVE_REFRESH_OPTIONS = [0, 1, 5, 10, 30];
-var LIVE_REFRESH_KEY = 'chart_live_refresh_s';
-var liveRefreshSec = 5;
+// live update during a workout: the new points of the session are asked for once a second and
+// the charts are updated in place. On or off with the charts_live_update setting (off by
+// default); the switch in the top right, shown only while a workout is running (see
+// setLiveActive), changes the same setting
+var LIVE_REFRESH_MS = 1000;
+var liveEnabled = false;
 var liveTimer = null;
 var liveLoading = false;
 var liveActive = false;
@@ -46,40 +46,90 @@ var liveFinalPending = false;
 var lastSessionLength = -1;
 var sessionCache = null; // the session so far, grown by the parts the live update asks for
 var liveRefresh = false;
+var pendingLive = {}; // canvas id -> the config of a live refresh skipped while off screen
+var pendingLiveTimer = null;
 
-try {
-    var savedRefresh = parseInt(localStorage.getItem(LIVE_REFRESH_KEY), 10);
-    if (LIVE_REFRESH_OPTIONS.indexOf(savedRefresh) >= 0)
-        liveRefreshSec = savedRefresh;
-} catch (e) {}
+function showLiveSwitch() {
+    $('#live_refresh').attr('aria-checked', liveEnabled ? 'true' : 'false');
+}
 
-// buttons, not a <select>: the native list of a select did not open in the app's web view
-function fillLiveRefreshButtons() {
-    var box = $('#live_refresh');
-    box.empty();
-    LIVE_REFRESH_OPTIONS.forEach(function(sec) {
-        var label = sec === 0 ? t('chart.liveRefreshOff', 'Off') : t('chart.secondsValue', '{value} s').replace('{value}', sec);
-        box.append($('<button type="button">').attr('data-sec', sec).text(label)
-            .toggleClass('on', sec === liveRefreshSec));
-    });
+// the polling goes on: a chart off screen waits for the next refresh or for a scroll to it
+function livePolling() {
+    return liveActive && liveEnabled;
+}
+
+function offScreen(canvas) {
+    var rect = canvas.getBoundingClientRect();
+    return rect.bottom < 0 || rect.top > window.innerHeight;
+}
+
+// the line keeps the lowest and the highest point of each slice of the time axis, one slice for
+// every 2 px of the chart: a long workout draws as fast as a short one, and the peaks stay.
+// Averages, maximums, zones and the power curve are counted on the whole session before this
+function thinLine(row, slices) {
+    if (!row || row.length <= slices * 2 || typeof row[0] !== 'object' || row[0] === null)
+        return row;
+    let out = [], size = row.length / slices;
+    for (let b = 0; b < slices; b++) {
+        let from = Math.floor(b * size), to = Math.min(row.length, Math.floor((b + 1) * size));
+        let low = null, high = null, gap = false;
+        for (let i = from; i < to; i++) {
+            let p = row[i];
+            if (p.y === null || p.y === undefined) {
+                gap = true;
+                continue;
+            }
+            if (!low || p.y < low.y)
+                low = p;
+            if (!high || p.y > high.y)
+                high = p;
+        }
+        if (!low)
+            out.push(row[from]);
+        else if (low === high)
+            out.push(low);
+        else if (low.x < high.x)
+            out.push(low, high);
+        else
+            out.push(high, low);
+        // a pause in the slice (no pace while standing) stays a break in the line
+        if (low && gap)
+            out.push({ x: row[to - 1].x, y: null });
+    }
+    return out;
+}
+
+function updateInPlace(old, config) {
+    config.options.animation = false;
+    // keep the dataset objects: the chart's per-dataset state is bound to them
+    for (var i = 0; i < config.data.datasets.length; i++)
+        old.data.datasets[i].data = config.data.datasets[i].data;
+    if (config.data.labels)
+        old.data.labels = config.data.labels;
+    qzChartTheme.restyle(old, config); // the new options in the app theme, like create()
+    old.options = config.options;
+    old.update('none');
+    return old;
 }
 
 // creates a chart on ctx; on a live refresh the existing chart gets the new data and options
 // in place instead, so an open tooltip stays and nothing flickers; the animation is off there,
-// so its onComplete (saving screenshots) does not run again
+// so its onComplete (saving screenshots) does not run again. While the polling goes on, a chart
+// off screen is not drawn: drawing is most of the cost of a refresh, and only one or two of the
+// charts are on screen
 function makeChart(ctx, config) {
+    var slices = Math.max(100, Math.round((ctx.canvas.clientWidth || 400) / 2));
+    config.data.datasets.forEach(function (d) {
+        d.data = thinLine(d.data, slices);
+    });
     var old = Chart.getChart(ctx.canvas);
+    delete pendingLive[ctx.canvas.id];
     if (old && liveRefresh && old.data.datasets.length === config.data.datasets.length) {
-        config.options.animation = false;
-        // keep the dataset objects: the chart's per-dataset state is bound to them
-        for (var i = 0; i < config.data.datasets.length; i++)
-            old.data.datasets[i].data = config.data.datasets[i].data;
-        if (config.data.labels)
-            old.data.labels = config.data.labels;
-        qzChartTheme.restyle(old, config); // the new options in the app theme, like create()
-        old.options = config.options;
-        old.update('none');
-        return old;
+        if (livePolling() && offScreen(ctx.canvas)) {
+            pendingLive[ctx.canvas.id] = config;
+            return old;
+        }
+        return updateInPlace(old, config);
     }
     if (old)
         old.destroy();
@@ -87,6 +137,29 @@ function makeChart(ctx, config) {
         config.options.animation = false;
     return qzChartTheme.create(ctx, config);
 }
+
+// draws the skipped charts that came on screen, or all of them when the polling stops
+function drawPendingLive() {
+    for (var id in pendingLive) {
+        var canvas = document.getElementById(id);
+        var old = canvas && Chart.getChart(canvas);
+        if (old && livePolling() && offScreen(canvas))
+            continue;
+        if (old)
+            updateInPlace(old, pendingLive[id]);
+        delete pendingLive[id];
+    }
+}
+
+function schedulePendingLive() {
+    if (pendingLiveTimer === null)
+        pendingLiveTimer = setTimeout(function () {
+            pendingLiveTimer = null;
+            drawPendingLive();
+        }, 100);
+}
+window.addEventListener('scroll', schedulePendingLive);
+window.addEventListener('resize', schedulePendingLive);
 
 function t(key, fallback) {
     return window.qzTranslate ? window.qzTranslate(key, fallback) : fallback;
@@ -1554,14 +1627,16 @@ function drawPace(pace, maxEl, backgroundFill) {
 }
 
 function dochart_init() {
-    keys_arr = ['ftp', 'miles_unit', 'age', 'heart_rate_zone1', 'heart_rate_zone2', 'heart_rate_zone3', 'heart_rate_zone4', 'heart_max_override_enable', 'heart_max_override_value']
+    keys_arr = ['ftp', 'miles_unit', 'age', 'heart_rate_zone1', 'heart_rate_zone2', 'heart_rate_zone3', 'heart_rate_zone4', 'heart_max_override_enable', 'heart_max_override_value', 'charts_live_update']
 
     function scheduleLiveRefresh() {
         clearTimeout(liveTimer);
         liveTimer = null;
         // not before the first load: it runs after getsettings and draws with the right zones
-        if (liveActive && liveRefreshSec > 0 && !liveLoading && lastSessionLength >= 0 && !document.hidden)
-            liveTimer = setTimeout(load_workout_data, liveRefreshSec * 1000);
+        if (livePolling() && !liveLoading && lastSessionLength >= 0 && !document.hidden)
+            liveTimer = setTimeout(load_workout_data, LIVE_REFRESH_MS);
+        else
+            drawPendingLive();
     }
 
     // the selector and the polling work only while a workout is running: device connected,
@@ -1607,14 +1682,19 @@ function dochart_init() {
     }
     watchWorkoutState();
 
-    fillLiveRefreshButtons();
-    document.addEventListener('qz-translations-updated', fillLiveRefreshButtons);
-    $('#live_refresh').on('click', 'button', function() {
-        liveRefreshSec = parseInt($(this).attr('data-sec'), 10) || 0;
-        try {
-            localStorage.setItem(LIVE_REFRESH_KEY, String(liveRefreshSec));
-        } catch (e) {}
-        fillLiveRefreshButtons();
+    showLiveSwitch();
+    $('#live_refresh').on('click', function() {
+        liveEnabled = !liveEnabled;
+        showLiveSwitch();
+        let save = new MainWSQueueElement({
+            msg: 'setsettings',
+            content: { charts_live_update: liveEnabled }
+        }, function(msg) {
+            return msg.msg === 'R_setsettings' ? msg : null;
+        }, 5000, 3);
+        save.enqueue().catch(function(err) {
+            console.error('Error is ' + err);
+        });
         scheduleLiveRefresh();
     });
     // a page kept out of sight (the app may hide it instead of closing) does not poll
@@ -1711,6 +1791,10 @@ function dochart_init() {
                     } else if (key === 'miles_unit') {
                         if(msg.content[key] === true || msg.content[key] === 'true')
                             miles = 0.621371;
+                    } else if (key === 'charts_live_update') {
+                        // null while the setting was never saved: off, its default
+                        liveEnabled = isTrueSetting(msg.content[key]);
+                        showLiveSwitch();
                     }
                 }
                 if(heart_max_override_enable) {

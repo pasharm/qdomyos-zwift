@@ -5585,6 +5585,14 @@ No: QZ lo mantiene como cinta de correr y no volverá a preguntar (la bicicleta 
         <translation>Elige qué gráficos mostrar en el pie de página: gráficos de frecuencia cardíaca y potencia, solo gráfico de frecuencia cardíaca, o solo gráfico de potencia.</translation>
     </message>
     <message>
+        <source>Live Charts During a Workout</source>
+        <translation>Gráficos en vivo durante el entrenamiento</translation>
+    </message>
+    <message>
+        <source>The Charts page adds the new data every second while a workout is running. Also switched on the Charts page itself. Default is off.</source>
+        <translation>La página Gráficos añade los datos nuevos cada segundo mientras hay un entrenamiento en curso. También se activa en la propia página Gráficos. Predeterminado: apagado.</translation>
+    </message>
+    <message>
         <source>UI Themes</source>
         <translation>Temas de interfaz</translation>
     </message>

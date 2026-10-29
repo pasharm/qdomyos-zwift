@@ -5586,6 +5586,14 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>选择在页脚显示的图表：心率和功率图表，仅心率图表，或仅功率图表。</translation>
     </message>
     <message>
+        <source>Live Charts During a Workout</source>
+        <translation>训练中的实时图表</translation>
+    </message>
+    <message>
+        <source>The Charts page adds the new data every second while a workout is running. Also switched on the Charts page itself. Default is off.</source>
+        <translation>训练进行时，图表页面每秒补充新数据。也可以在图表页面直接开关。默认关闭。</translation>
+    </message>
+    <message>
         <source>UI Themes</source>
         <translation>主题</translation>
     </message>
