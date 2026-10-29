@@ -1415,6 +1415,40 @@ import QtQuick 2.12 as Quick212
             return ""
         }
 
+        // What the list shows for each value, as on the setting's page: the translated label of
+        // the catalog ("Gear Up" for 1), or the value itself translated ("Male"). The value
+        // written is still the one of optionValues at the same place. A list made at run time
+        // (Bluetooth devices) shows its values as they are
+        function optionTexts(entry) {
+            var values = optionValues(entry)
+            if (!entry.options || !entry.options.values)
+                return values
+
+            // By the place in the whole list of the catalog: optionValues() leaves the wallpaper
+            // colour out below Android 12, and the labels would shift by one
+            var allValues = entry.options.values
+            var labels = entry.options.labels || []
+            var texts = []
+            for (var i = 0; i < values.length; i++) {
+                var label = labels[allValues.indexOf(values[i])]
+                var text = label !== undefined ? label : values[i]
+                if (typeof text === "string")
+                    text = translatedText(text)
+                texts.push(String(text))
+            }
+            return texts
+        }
+
+        function translatedText(text) {
+            var contexts = translationContexts
+            for (var i = 0; i < contexts.length; i++) {
+                var translated = qsTranslate(contexts[i], text)
+                if (translated !== text)
+                    return translated
+            }
+            return text
+        }
+
         function isBluetoothDeviceSetting(entry) {
             return entry && entry.options && entry.options.expression &&
                    entry.options.expression.indexOf("bluetoothDevices") >= 0
@@ -3422,7 +3456,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.minimumWidth: 0
                                 Layout.preferredHeight: visible ? implicitHeight : 0
                                 Layout.maximumHeight: visible ? implicitHeight : 0
-                                model: visible ? settingsPane.optionValues(entry) : []
+                                model: visible ? settingsPane.optionTexts(entry) : []
                                 currentIndex: visible ? settingsPane.optionIndex(entry) : 0
                                 itemLabels: visible ? settingsPane.optionLabels(entry) : null
                                 displayText: labelFor(visible && settingsPane.isBluetoothDeviceSetting(entry)
@@ -3449,7 +3483,8 @@ import QtQuick 2.12 as Quick212
                                     }
                                 }
                                 onActivated: {
-                                    var selectedValue = currentValue
+                                    // The model holds the texts shown: the value is at the same place
+                                    var selectedValue = settingsPane.optionValues(entry)[index]
                                     if (settingsPane.isBluetoothDeviceSetting(entry))
                                         selectedValue = settingsPane.stripRssi(selectedValue)
                                     settingsPane.setSettingValue(entry, selectedValue)
