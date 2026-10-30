@@ -6,7 +6,7 @@ elliptical::elliptical() {}
 
 void elliptical::update_metrics(bool watt_calc, const double watts) {
 
-    QDateTime current = QDateTime::currentDateTime();
+    QDateTime current = QDateTime::currentDateTimeUtc();
     double deltaTime = (((double)_lastTimeUpdate.msecsTo(current)) / ((double)1000.0));
     QSettings settings;
     if (!_firstUpdate && !paused) {

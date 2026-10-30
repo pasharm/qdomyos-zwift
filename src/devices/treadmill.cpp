@@ -203,7 +203,7 @@ double treadmill::minStepSpeed() { return 0.5; }
 
 void treadmill::update_metrics(bool watt_calc, const double watts, const bool from_accessory) {
 
-    QDateTime current = QDateTime::currentDateTime();
+    QDateTime current = QDateTime::currentDateTimeUtc();
     double deltaTime = (((double)_lastTimeUpdate.msecsTo(current)) / ((double)1000.0));
     QSettings settings;
     bool power_as_treadmill =
@@ -677,7 +677,7 @@ void treadmill::evaluateStepCount() {
     QSettings settings;
     double step_gain = settings.value(QZSettings::step_gain, QZSettings::default_step_gain).toDouble();
 
-    StepCount += (Cadence.lastChanged().msecsTo(QDateTime::currentDateTime())) * (effectiveCadence / 60000) * step_gain;
+    StepCount += (Cadence.lastChanged().msecsTo(QDateTime::currentDateTimeUtc())) * (effectiveCadence / 60000) * step_gain;
 }
 
 bool treadmill::cadenceFromAppleWatch() {

@@ -673,7 +673,7 @@ void trainprogram::scheduler() {
     QMutexLocker(&this->schedulerMutex);
     QSettings settings;
     auto setErgMode = [&settings](bool enabled) { settings.setValue(QZSettings::zwift_erg, enabled); };
-    QDateTime now = QDateTime::currentDateTime();
+    QDateTime now = QDateTime::currentDateTimeUtc();
     qint64 msecsElapsed = lastSchedulerCall.msecsTo(now);
 
     // Reset jitter if it's getting too large
