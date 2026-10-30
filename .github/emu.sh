@@ -1,11 +1,10 @@
 #!/bin/bash
-# Test only (T-199, T-214): what a screen reader gets from the classic look.
-# Every shot keeps the uiautomator dump (dumps/<shot>.xml) - the accessibility tree TalkBack
-# reads - and .github/a11y.py lists the controls without a name at the end (a11y.txt).
-# Run once with the build of master and once with the branch to compare.
-#
-# T-214: a fake treadmill, then Settings > Tiles Options, Bike Options > Wahoo Options (gears),
-# Treadmill Options > Inclination Overrides, and the side menu > Workouts History.
+# Test only (T-346): the preview of a workout while the history database is in the private
+# folder of the app. Every ddb*.sqlite name in Documents/QZ is taken by a folder, so no name
+# opens (as after many reinstalls) and the database goes to /data/user/0/<pkg>/files.
+# A synthetic workout is in Documents/QZ/fit; the side menu > Workouts History > the workout
+# opens its preview, and the log says whether the FIT file was read.
+# Run once with the build of master (preview empty) and once with the fix.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -17,8 +16,18 @@ adb install apk-debug/android-debug.apk
 for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
   adb shell pm grant $PKG android.permission.$p || true
 done
+for p in EXERCISE DISTANCE TOTAL_CALORIES_BURNED HEART_RATE POWER SPEED CYCLING_PEDALING_CADENCE ELEVATION_GAINED STEPS STEPS_CADENCE HEART_RATE_VARIABILITY; do
+  adb shell pm grant $PKG android.permission.health.WRITE_$p || true
+done
 adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
 adb shell cmd uimode night no || true
+
+# T-346: every database name taken, one workout in the fit folder
+QZDIR=/sdcard/Documents/QZ
+adb shell mkdir -p $QZDIR/fit $QZDIR/ddb.sqlite
+for i in $(seq 1 19); do adb shell mkdir -p $QZDIR/ddb-$i.sqlite; done
+adb push .github/t346/t346-run.fit $QZDIR/fit/t346-run.fit
+adb shell ls -la $QZDIR $QZDIR/fit >> $STEPLOG 2>&1 || true
 adb shell settings put global hide_error_dialogs 1 || true
 
 # put_conf <extra lines>: the settings file of the app before a start
@@ -168,80 +177,27 @@ open_settings() {
   sleep 8
 }
 
-# T-214: the pages outside #4645 - tile settings, inclination overrides, gears, history.
-# A fake treadmill, so the wizard stays closed
-put_conf "applewatch_fakedevice=true\n"
+# T-346: a fake treadmill, so the wizard stays closed
+put_conf "applewatch_fakedevice=true\nskipLocationServicesDialog=true\n"
 start_app
 shot h-01-home
 
-open_settings
-scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' 700 1000
-sleep 8
-shot t-01-tiles
-tap_ui '^Speed$' && sleep 3
-shot t-02-speed-open
-# T-245: the list of a combo box - its items need a name and a press action for TalkBack
-if tap_ui 'Cadence, order index: .*'; then
-  sleep 3
-  shot t-02b-order-list
-  adb shell input keyevent 4 || true; sleep 2
-fi
-adb shell input swipe 700 2000 700 900 400 || true; sleep 1
-shot t-03-tiles-down
-back "tiles"; sleep 4
-
-scroll_top
-scroll_to '^Treadmill Options$' && tap_ui '^Treadmill Options$' 700 1000
-sleep 4
-scroll_to 'Inclination Overrides' && tap_ui 'Inclination Overrides' 700 1000
-sleep 8
-shot i-01-overrides
-adb shell input swipe 700 2000 700 900 400 || true; sleep 1
-shot i-02-overrides-down
-back "overrides"; sleep 4
-back "settings"; sleep 4
-
 open_menu
 tap_drawer 'Workouts History' 400 1500
-sleep 10
+sleep 15
+# the database is not ddb.sqlite: the app offers to look for the workouts of a previous install
+dump
+if [ -f ui.xml ] && grep -q "previous installation" ui.xml; then
+  shot w-00-offer
+  tap_ui '^No$' && sleep 3
+fi
 shot w-01-history
-tap_ui 'Filter by date' 150 330 && sleep 3
-shot w-02-calendar
-# a day sets the date filter and closes the calendar: the clear filter button must show up
-tap_ui ' 15, 20' 700 1400 && sleep 3
-shot w-02b-filtered
-tap_ui '^Clear Filter$' 260 330 && sleep 3
-shot w-02c-cleared
-tap_ui 'Import workouts' 1290 330 && sleep 3
-shot w-03-import
-back "import menu"; sleep 3
-back "history"; sleep 4
-
-# the gears page last: the back key there may only drop the focus of a field
-open_settings
-scroll_to '^Bike Options$' && tap_ui '^Bike Options$' 700 1000
-sleep 4
-scroll_to 'Wahoo Options' && tap_ui 'Wahoo Options' 700 1000
-sleep 8
-shot g-01-gears
-adb shell input swipe 700 2000 700 900 400 || true; sleep 1
-shot g-02-gears-down
-adb shell input swipe 700 2000 700 900 400 || true; sleep 1
-shot g-03-gears-table
-back "gears"; sleep 4
-
-# The import menu with the app in Ukrainian: on a Ukrainian phone TalkBack read its items
-# as unlabeled, while the English tree above has their names
-adb shell am force-stop $PKG || true
-put_conf "applewatch_fakedevice=true\napp_language=uk\n"
-start_app
-open_menu
-tap_drawer 'Історія тренувань' 400 1500
-sleep 10
-tap_ui 'Імпортувати тренування' 1290 330 && sleep 3
-shot u-01-import-uk
-back "import menu"; sleep 3
-
+# the workout row: "<title>, <date>, <duration>"
+if tap_ui '.+, .*20[0-9][0-9].*, .+' 700 750; then
+  sleep 12
+  shot w-02-preview
+  back "preview"; sleep 4
+fi
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
@@ -253,9 +209,28 @@ if [ "$(wc -l < full_logcat.txt)" -lt "$(wc -l < end_logcat.txt)" ]; then
 else
   rm -f end_logcat.txt
 fi
+mkdir -p qz-logs
+for f in $(adb shell "ls $QZDIR/*.log < /dev/null" 2>/dev/null | tr -d '\r'); do
+  adb pull "$f" qz-logs/ > /dev/null 2>&1 || true
+done
 grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
-python3 .github/a11y.py dumps > a11y.txt || true
+
+# T-346 verdict: the run proves something only with the database in the private folder
+cat full_logcat.txt qz-logs/*.log 2>/dev/null > all.txt
+grep -m3 "history database" all.txt | sed 's/^/log: /' >> $STEPLOG || true
+grep -m3 "fitfile_preview_clicked called\|Opening FIT file\|FIT file read:\|FIT file does not exist" all.txt | sed 's/^/log: /' >> $STEPLOG || true
+FAIL=0
+if ! grep -q "every name in the QZ folder is taken" all.txt; then
+  echo "!! database not in the private folder: the run proves nothing" >> $STEPLOG; FAIL=1
+fi
+if grep -q "FIT file does not exist" all.txt; then
+  echo "!! preview: FIT file does not exist" >> $STEPLOG; FAIL=1
+elif grep -q "FIT file read: [1-9]" all.txt; then
+  echo "OK preview: FIT file read" >> $STEPLOG
+else
+  echo "!! preview never opened" >> $STEPLOG; FAIL=1
+fi
+rm -f all.txt
 echo "== steps"; cat $STEPLOG
-echo "== a11y summary"; sed -n '/^== summary/,$p' a11y.txt
-echo "== QML warnings"; grep -iE "qrc:|\.qml:[0-9]+" full_logcat.txt | grep -iE "warning|error|ReferenceError|TypeError" | sort | uniq -c | sort -nr | head -60 || true
-echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
+echo "== QML warnings"; grep -iE "qrc:|\.qml:[0-9]+" full_logcat.txt | grep -iE "warning|error|ReferenceError|TypeError" | sort | uniq -c | sort -nr | head -40 || true
+exit $FAIL
