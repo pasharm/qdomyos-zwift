@@ -15807,9 +15807,9 @@
     },
     {
       "key": "zwiftplay_gear_lb",
-      "name": "Power Up (LB)",
+      "name": "Power Up button",
       "description": null,
-      "parent": "Zwift Devices Options",
+      "parent": "Zwift Devices",
       "type": "integer",
       "qmlType": "int",
       "control": "select",
