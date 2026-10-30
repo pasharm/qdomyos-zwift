@@ -24,14 +24,16 @@ adb shell cmd uimode night no || true
 
 # T-346: every database name taken, one workout in the fit folder
 QZDIR=/sdcard/Documents/QZ
-adb shell mkdir -p $QZDIR/fit $QZDIR/ddb.sqlite
+adb shell mkdir -p $QZDIR/ddb.sqlite
 for i in $(seq 1 19); do adb shell mkdir -p $QZDIR/ddb-$i.sqlite; done
-# a file pushed by adb belongs to the shell and the app does not see it in Documents
-# (scoped storage): copy it as the app
-adb push .github/t346/t346-run.fit /data/local/tmp/t346-run.fit
-adb shell "run-as $PKG cp /data/local/tmp/t346-run.fit $QZDIR/fit/t346-run.fit < /dev/null" >> $STEPLOG 2>&1 || true
-adb shell ls -la $QZDIR $QZDIR/fit >> $STEPLOG 2>&1 || true
-adb shell "run-as $PKG ls -la $QZDIR/fit < /dev/null" >> $STEPLOG 2>&1 || true
+# a file pushed by adb into Documents belongs to the shell and the app does not see it
+# (scoped storage), and run-as cannot write there. At start the app moves the content of
+# its Android/data folder into Documents/QZ itself (homeform constructor), so the file is
+# put there and reaches Documents/QZ/fit as a file of the app.
+DATADIR=/sdcard/Android/data/$PKG/files
+adb shell mkdir -p $DATADIR/fit
+adb push .github/t346/t346-run.fit $DATADIR/fit/t346-run.fit
+adb shell ls -la $QZDIR $DATADIR/fit >> $STEPLOG 2>&1 || true
 adb shell settings put global hide_error_dialogs 1 || true
 
 # put_conf <extra lines>: the settings file of the app before a start
@@ -226,6 +228,11 @@ grep -m3 "fitfile_preview_clicked called\|Opening FIT file\|FIT file read:\|FIT 
 FAIL=0
 if ! grep -q "every name in the QZ folder is taken" all.txt; then
   echo "!! database not in the private folder: the run proves nothing" >> $STEPLOG; FAIL=1
+fi
+adb shell ls -la $QZDIR/fit $DATADIR >> $STEPLOG 2>&1 || true
+grep -m2 "Processing FIT file" all.txt | sed 's/^/log: /' >> $STEPLOG || true
+if ! grep -q "Processing FIT file" all.txt; then
+  echo "!! the FIT file never reached the history" >> $STEPLOG; FAIL=1
 fi
 if grep -q "FIT file does not exist" all.txt; then
   echo "!! preview: FIT file does not exist" >> $STEPLOG; FAIL=1
