@@ -380,9 +380,16 @@ HomeForm {
         readonly property real toolbarShift: headerToolbar.implicitHeight - headerToolbar.topPadding
         readonly property real toolbarToggleDistance: toolbarShift + 40
         property real toolbarTurnY: 0
+        // The first row can be in full view with the toolbar gone: going back up within that row
+        // leaves the toolbar away, and at the top it takes a pull past the edge to bring it back
+        readonly property real toolbarPull: 40
         onContentYChanged: {
-            if (window.lockTiles || contentY <= 0) {
+            if (window.lockTiles || contentY < -toolbarPull) {
                 headerToolbar.scrolledAway = false
+                toolbarTurnY = contentY
+                return
+            }
+            if (contentY <= 0) {
                 toolbarTurnY = contentY
                 return
             }
@@ -405,7 +412,7 @@ HomeForm {
                     toolbarTurnY = contentY
                 }
             } else {
-                if (toolbarTurnY - contentY > toolbarToggleDistance && !atYEnd) {
+                if (toolbarTurnY - contentY > toolbarToggleDistance && !atYEnd && contentY >= cellHeight) {
                     headerToolbar.scrolledAway = false
                     toolbarTurnY = contentY
                 } else if (contentY > toolbarTurnY) {
