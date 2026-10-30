@@ -805,7 +805,8 @@ HomeForm {
 
         function indexAtMouse(mx, my) {
             var cols = gridView.tileColumns
-            var adjustedY = my + gridView.contentY
+            // The gap above the first row counts as the first row
+            var adjustedY = Math.max(0, my + gridView.contentY)
             var col = Math.floor((mx - gridView.x) / gridView.cellWidth)
             if (col < 0 || col >= cols) return -1
             var row = Math.floor(adjustedY / gridView.cellHeight)
