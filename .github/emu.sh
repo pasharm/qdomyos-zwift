@@ -26,8 +26,12 @@ adb shell cmd uimode night no || true
 QZDIR=/sdcard/Documents/QZ
 adb shell mkdir -p $QZDIR/fit $QZDIR/ddb.sqlite
 for i in $(seq 1 19); do adb shell mkdir -p $QZDIR/ddb-$i.sqlite; done
-adb push .github/t346/t346-run.fit $QZDIR/fit/t346-run.fit
+# a file pushed by adb belongs to the shell and the app does not see it in Documents
+# (scoped storage): copy it as the app
+adb push .github/t346/t346-run.fit /data/local/tmp/t346-run.fit
+adb shell "run-as $PKG cp /data/local/tmp/t346-run.fit $QZDIR/fit/t346-run.fit < /dev/null" >> $STEPLOG 2>&1 || true
 adb shell ls -la $QZDIR $QZDIR/fit >> $STEPLOG 2>&1 || true
+adb shell "run-as $PKG ls -la $QZDIR/fit < /dev/null" >> $STEPLOG 2>&1 || true
 adb shell settings put global hide_error_dialogs 1 || true
 
 # put_conf <extra lines>: the settings file of the app before a start
