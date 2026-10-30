@@ -263,7 +263,7 @@ void bluetoothdevice::setVirtualDevice(virtualdevice *virtualDevice, VIRTUAL_DEV
 // keiser m3i has a separate management of this, so please check it
 void bluetoothdevice::update_metrics(bool watt_calc, const double watts, const bool from_accessory) {
 
-    QDateTime current = QDateTime::currentDateTime();
+    QDateTime current = QDateTime::currentDateTimeUtc();
     double deltaTime = (((double)_lastTimeUpdate.msecsTo(current)) / ((double)1000.0));
     QSettings settings;
     QString heartRateBeltName =

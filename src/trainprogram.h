@@ -234,7 +234,7 @@ private slots:
     int lastLapButtonToastTick = -30;
     
     int64_t currentTimerJitter = 0;
-    QDateTime lastSchedulerCall = QDateTime::currentDateTime();
+    QDateTime lastSchedulerCall = QDateTime::currentDateTimeUtc();
 
     QUdpSocket* pelotonOCRsocket = nullptr;
     void pelotonOCRcomputeTime(QString t);

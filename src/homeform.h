@@ -1071,7 +1071,7 @@ public:
     QDateTime automaticShiftingGearDownStartTime = QDateTime::currentDateTime();
 
     // Timer jitter detection variables (same logic as trainprogram::scheduler)
-    QDateTime lastUpdateCall = QDateTime::currentDateTime();
+    QDateTime lastUpdateCall = QDateTime::currentDateTimeUtc();
     qint64 currentUpdateJitter = 0;
 
     peloton *pelotonHandler = nullptr;

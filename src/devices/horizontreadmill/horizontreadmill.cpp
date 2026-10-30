@@ -953,7 +953,7 @@ void horizontreadmill::update() {
         update_metrics(!powerReceivedFromPowerSensor, watts(settings.value(QZSettings::weight, QZSettings::default_weight).toFloat()));
 
         if (firstDistanceCalculated) {
-            QDateTime now = QDateTime::currentDateTime();
+            QDateTime now = QDateTime::currentDateTimeUtc();
             KCal +=
                 ((((0.048 * ((double)watts(settings.value(QZSettings::weight, QZSettings::default_weight).toFloat())) +
             1.19) *
@@ -1586,7 +1586,7 @@ void horizontreadmill::serviceDiscovered(const QBluetoothUuid &gatt) {
 // added, as with the distance calculated from speed. The counter is followed in both modes, so turning
 // the option on during a workout adds nothing twice
 void horizontreadmill::setDirectDistance(double treadmillDistance, bool increment) {
-    QDateTime now = QDateTime::currentDateTime();
+    QDateTime now = QDateTime::currentDateTimeUtc();
     if (!increment) {
         Distance = treadmillDistance;
     } else if (lastDirectDistance < 0) {
@@ -1628,7 +1628,7 @@ void horizontreadmill::characteristicChanged(const QLowEnergyCharacteristic &cha
         settings.value(QZSettings::treadmill_direct_distance_increment,
                        QZSettings::default_treadmill_direct_distance_increment).toBool();
 
-    QDateTime now = QDateTime::currentDateTime();
+    QDateTime now = QDateTime::currentDateTimeUtc();
     double weight = settings.value(QZSettings::weight, QZSettings::default_weight).toFloat();
 
     emit debug(QStringLiteral(" << ") + characteristic.uuid().toString() + " " + QString::number(newValue.length()) +

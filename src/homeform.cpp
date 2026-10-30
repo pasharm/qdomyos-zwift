@@ -6475,7 +6475,7 @@ void homeform::update() {
     double ftpZone = 1;
 
     // Timer jitter detection (same logic as trainprogram::scheduler)
-    QDateTime now = QDateTime::currentDateTime();
+    QDateTime now = QDateTime::currentDateTimeUtc();
     qint64 msecsElapsed = lastUpdateCall.msecsTo(now);
     
     // Reset jitter if it's getting too large

@@ -72,7 +72,7 @@ class horizontreadmill : public treadmill {
     uint8_t sec1Update = 0;
     QByteArray lastPacket;
     QByteArray lastPacketComplete;
-    QDateTime lastRefreshCharacteristicChanged = QDateTime::currentDateTime();
+    QDateTime lastRefreshCharacteristicChanged = QDateTime::currentDateTimeUtc();
     bool firstDistanceCalculated = false;
     double lastDirectDistance = -1;
     QDateTime lastDirectDistanceChanged;
