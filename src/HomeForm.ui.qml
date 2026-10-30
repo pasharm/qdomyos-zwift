@@ -368,6 +368,8 @@ Page {
                     id: start
                     width: 120
                     height: row.height - 4
+                    // The overlay would paint the shadow too, cut at the edges of the button
+                    Material.elevation: startOverlay.visible ? 0 : (down ? 8 : 2)
 
                     // VoiceOver accessibility
                     Accessible.role: Accessible.Button
@@ -378,10 +380,15 @@ Page {
                     Accessible.focusable: true
                 }
                 ColorOverlay {
+                    id: startOverlay
                     anchors.fill: start
                     source: start
                     color: rootItem.startColor
                     enabled: rootItem.startColor === "red" ? true : false
+                    // startColor changes on every read and blinks only with the reads above: use
+                    // color here. A transparent overlay would still draw the button a second time,
+                    // its shadow cut square at the edges of the button
+                    visible: color.a > 0
                 }
             }
 
@@ -413,6 +420,7 @@ Page {
                     source: stop
                     color: rootItem.stopColor
                     enabled: rootItem.stopColor === "red" ? true : false
+                    visible: color.a > 0
                 }
             }
 
@@ -444,6 +452,7 @@ Page {
                     anchors.fill: lap
                     source: lap
                     color: lap.enabled ? "#00000000" : "#B0D3d3d3"
+                    visible: color.a > 0
                 }
             }
         }
