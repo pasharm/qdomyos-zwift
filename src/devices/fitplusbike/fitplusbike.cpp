@@ -887,6 +887,16 @@ void fitplusbike::noteWorkoutStatus(int status, qint64 nowMs) {
     workoutStatus = status;
 }
 
+void fitplusbike::noteWorkoutStatus(int status, qint64 nowMs) {
+    if (status == 0x02) {
+        workoutEverRunning = true;
+        unstartedWorkoutWarned = false;
+    }
+    if (status == 0x00 && workoutStatus != 0x00)
+        workoutStoppedSinceMs = nowMs;
+    workoutStatus = status;
+}
+
 void fitplusbike::btinit() {
 
     // a new connection: the init below starts a new workout on the bike
