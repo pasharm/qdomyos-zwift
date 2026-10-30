@@ -83,6 +83,12 @@ class virtualtreadmill : public virtualdevice {
     DirconManager *dirconManager = 0;
 
     bool noHeartService = false;
+    // Read once in the constructor: these settings apply after a restart (the service set is built there),
+    // and treadmillProvider() runs on every treadmillTimer tick.
+    bool virtual_device_echelon = false;
+    bool run_cadence_sensor = false;
+    bool bluetooth_relaxed = false;
+    bool bike_cadence_sensor = false;
 
     bool m_autoInclinationEnabled = false;
     bool forwardControlPointWrites = false;

@@ -47,8 +47,11 @@ virtualtreadmill::virtualtreadmill(bluetoothdevice *t, bool noHeartService) {
         settings.value(QZSettings::bike_resistance_offset, QZSettings::default_bike_resistance_offset).toInt();
     double bikeResistanceGain =
         settings.value(QZSettings::bike_resistance_gain_f, QZSettings::default_bike_resistance_gain_f).toDouble();
-    bool bike_cadence_sensor = settings.value(QZSettings::bike_cadence_sensor, QZSettings::default_bike_cadence_sensor).toBool();
-    bool echelon = settings.value(QZSettings::virtual_device_echelon, QZSettings::default_virtual_device_echelon).toBool();
+    bike_cadence_sensor = settings.value(QZSettings::bike_cadence_sensor, QZSettings::default_bike_cadence_sensor).toBool();
+    virtual_device_echelon = settings.value(QZSettings::virtual_device_echelon, QZSettings::default_virtual_device_echelon).toBool();
+    run_cadence_sensor = settings.value(QZSettings::run_cadence_sensor, QZSettings::default_run_cadence_sensor).toBool();
+    bluetooth_relaxed = settings.value(QZSettings::bluetooth_relaxed, QZSettings::default_bluetooth_relaxed).toBool();
+    const bool echelon = virtual_device_echelon;
     const QString echelonAdvertisingName =
         !t->bluetoothDevice.name().isEmpty() ? t->bluetoothDevice.name() : QStringLiteral("STRIDE40SPT-000269");
     this->noHeartService = noHeartService;
@@ -497,8 +500,6 @@ virtualtreadmill::virtualtreadmill(bluetoothdevice *t, bool noHeartService) {
                              &virtualtreadmill::characteristicChanged);
         }
 
-        bool bluetooth_relaxed =
-            settings.value(QZSettings::bluetooth_relaxed, QZSettings::default_bluetooth_relaxed).toBool();
         QLowEnergyAdvertisingParameters pars = QLowEnergyAdvertisingParameters();
         if (!bluetooth_relaxed) {
 #if !defined(Q_OS_LINUX) || defined(Q_OS_ANDROID)
@@ -652,10 +653,7 @@ void virtualtreadmill::relayEchelonPacket(const QBluetoothUuid &sourceUuid, cons
     writeEchelonCharacteristic(targetCharacteristic, value);
 }
 
-bool virtualtreadmill::isEchelonVirtualEnabled() const {
-    QSettings settings;
-    return settings.value(QZSettings::virtual_device_echelon, QZSettings::default_virtual_device_echelon).toBool();
-}
+bool virtualtreadmill::isEchelonVirtualEnabled() const { return virtual_device_echelon; }
 
 void virtualtreadmill::writeEchelonCharacteristic(const QLowEnergyCharacteristic &characteristic,
                                                   const QByteArray &value) {
@@ -807,10 +805,6 @@ void virtualtreadmill::wahooCharacteristicChanged(const QLowEnergyCharacteristic
 }
 
 void virtualtreadmill::reconnect() {
-    QSettings settings;
-    bool bluetooth_relaxed =
-        settings.value(QZSettings::bluetooth_relaxed, QZSettings::default_bluetooth_relaxed).toBool();
-
     if (bluetooth_relaxed) {
         return;
     }
@@ -837,8 +831,7 @@ void virtualtreadmill::reconnect() {
     serviceDIS = leController->addService(serviceDataDIS);
     QThread::msleep(100);
     
-    const bool echelon =
-        settings.value(QZSettings::virtual_device_echelon, QZSettings::default_virtual_device_echelon).toBool();
+    const bool echelon = virtual_device_echelon;
     if (!echelon) {
         serviceWahoo = leController->addService(serviceDataWahoo);
         QThread::msleep(100);
@@ -894,8 +887,6 @@ void virtualtreadmill::reconnect() {
 
 void virtualtreadmill::treadmillProvider() {
     const uint64_t slopeTimeoutSecs = 30;
-    QSettings settings;
-    bool bike_cadence_sensor = settings.value(QZSettings::bike_cadence_sensor, QZSettings::default_bike_cadence_sensor).toBool();
     const bool echelon = isEchelonVirtualEnabled();
 
     if ((uint64_t)QDateTime::currentSecsSinceEpoch() > lastSlopeChanged + slopeTimeoutSecs)
@@ -903,6 +894,8 @@ void virtualtreadmill::treadmillProvider() {
 
 #ifdef Q_OS_IOS
 #ifndef IO_UNDER_QT
+    // live settings (cadence doubling, inclination offset/gain) are still read on every tick
+    QSettings settings;
     bool double_cadence = settings
                               .value(QZSettings::powr_sensor_running_cadence_double,
                                      QZSettings::default_powr_sensor_running_cadence_double)
@@ -1003,9 +996,6 @@ void virtualtreadmill::treadmillProvider() {
         qDebug() << QStringLiteral("virtualtreadmill connection error");
         return;
     } else {
-        QSettings settings;
-        bool bluetooth_relaxed =
-            settings.value(QZSettings::bluetooth_relaxed, QZSettings::default_bluetooth_relaxed).toBool();
         if (bluetooth_relaxed) {
             leController->stopAdvertising();
         }
@@ -1148,11 +1138,10 @@ bool virtualtreadmill::connected() {
 // Android>9 RSC   |               |                     |           |  X  |
 
 bool virtualtreadmill::ftmsServiceEnable() {
-    QSettings settings;
-    if (settings.value(QZSettings::virtual_device_echelon, QZSettings::default_virtual_device_echelon).toBool()) {
+    if (virtual_device_echelon) {
         return false;
     }
-    bool cadence = settings.value(QZSettings::run_cadence_sensor, QZSettings::default_run_cadence_sensor).toBool();
+    bool cadence = run_cadence_sensor;
     if (!cadence)
         return true;
     if (noHeartService == false)
@@ -1161,19 +1150,17 @@ bool virtualtreadmill::ftmsServiceEnable() {
 }
 
 bool virtualtreadmill::ftmsTreadmillEnable() {
-    QSettings settings;
-    if (settings.value(QZSettings::virtual_device_echelon, QZSettings::default_virtual_device_echelon).toBool()) {
+    if (virtual_device_echelon) {
         return false;
     }
-    bool cadence = settings.value(QZSettings::run_cadence_sensor, QZSettings::default_run_cadence_sensor).toBool();
+    bool cadence = run_cadence_sensor;
     if (!cadence)
         return true;
     return false;
 }
 
 bool virtualtreadmill::RSCEnable() {
-    QSettings settings;
-    bool cadence = settings.value(QZSettings::run_cadence_sensor, QZSettings::default_run_cadence_sensor).toBool();
+    bool cadence = run_cadence_sensor;
     if (cadence)
         return true;
     return false;
