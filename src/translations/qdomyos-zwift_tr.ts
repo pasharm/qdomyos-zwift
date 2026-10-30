@@ -3588,6 +3588,296 @@ This may take a few moments on first startup.</source>
         <translation>Tırmanış</translation>
     </message>
     <message>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Power Avg</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>PID Heart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ext.Inclin.(%)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stride L.(%1)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ground C.(ms)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vert.Osc.(mm)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Step Count</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Rec.</source>
+        <extracomment>Short tile value: Peloton running/walking pace target zone &quot;Recovery&quot; (not &quot;record&quot;); zones: (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Easy</source>
+        <extracomment>Short tile value: Peloton running/walking pace target zone (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Brisk</source>
+        <extracomment>Short tile value: Peloton running/walking pace target zone (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moder.</source>
+        <extracomment>Short tile value: Peloton running/walking pace target zone (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Power</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Chall.</source>
+        <extracomment>Short tile value: Peloton running/walking pace target zone (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>V.Hard</source>
+        <extracomment>Short tile value: Peloton running/walking pace target zone (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>N/A</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, speed </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> kilometers per hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> miles per hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, Average speed </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>kilometers per hour</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, Max speed </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, inclination </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, cadence </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, Average cadence </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, Max cadence </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, elevation </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> meters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> feet</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, calories burned </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, distance </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>kilometers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> miles</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, pace </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, resistance </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, average resistance </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, max resistance </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, watt </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, average watt </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, max watt </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, heart rate </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, average heart rate </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, max heart rate </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, jouls </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, elapsed </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> minutes </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> seconds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, peloton resistance </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, average peloton resistance </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, max peloton resistance </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, target peloton resistance </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, target cadence </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, target power </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, target zone </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, target speed </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, target incline </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, watt for kilograms </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, average watt for kilograms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>, max watt for kilograms</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>speed changed to</source>
+        <extracomment>Text-to-speech: spoken before the new speed value, e.g. &quot;speed changed to&quot; + &quot;12.5&quot; + &quot; kilometers per hour&quot;. Must read naturally when the number follows.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Start pressed</source>
+        <extracomment>Text-to-speech: spoken when the workout is started or resumed with the Start button.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stop pressed</source>
+        <extracomment>Text-to-speech: spoken when the workout is stopped with the Stop button.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>en</source>
+        <comment>TTS voice language</comment>
+        <extracomment>Text-to-speech: not a word to translate - the code of the language of this translation, such as &quot;de&quot;, &quot;pt_BR&quot; or &quot;zh_CN&quot;. The voice that reads the translated texts aloud is chosen by it.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>JSON parser error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error retrieving access token, %1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Watts</source>
         <translation>Güç</translation>
     </message>
