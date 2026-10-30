@@ -14912,9 +14912,15 @@
           "fr",
           "es",
           "pt",
+          "pt_BR",
           "ru",
           "zh_CN",
           "ja",
+          "ko",
+          "tr",
+          "pl",
+          "nl",
+          "cs",
           "uk"
         ],
         "labels": [
@@ -14925,9 +14931,15 @@
           "French",
           "Spanish",
           "Portuguese",
+          "Portuguese (Brazil)",
           "Russian",
           "Chinese (Simplified)",
           "Japanese",
+          "Korean",
+          "Turkish",
+          "Polish",
+          "Dutch",
+          "Czech",
           "Ukrainian"
         ]
       },

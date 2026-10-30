@@ -118,14 +118,20 @@ Page {
                         name: rootItem.device ? "bluetooth_connected" : "bluetooth"
                         color: rootItem.device ? window.ui.ok : window.ui.textMuted
                     }
-                    Accessible.role: Accessible.Indicator
-                    Accessible.name: qsTr("Bluetooth connection")
-                    Accessible.description: rootItem.device ? qsTr("Device connected") : qsTr("Device not connected")
                     // No device yet: a tap searches right away instead of waiting for the next search;
-                    // with a device connected it restarts the DirCon (Wi-Fi) servers, see bluetoothSearchNow()
+                    // with a device connected it restarts the DirCon (Wi-Fi) servers, see bluetoothSearchNow(),
+                    // and looks for the chosen heart rate sensor again (reconnectHeartRateBelt() waits for the device)
                     MouseArea {
                         anchors.fill: parent
-                        onClicked: rootItem.bluetoothSearchNow()
+                        onClicked: { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt(); }
+
+                        // VoiceOver/TalkBack: a button that searches. The state is in the name: TalkBack (Qt 5.15)
+                        // reads no description when the name is set
+                        Accessible.role: Accessible.Button
+                        Accessible.name: qsTr("Bluetooth connection") + ": " + (rootItem.device ? qsTr("Device connected") : qsTr("Device not connected"))
+                        Accessible.description: rootItem.device ? qsTr("Device connected") : qsTr("Device not connected")
+                        Accessible.focusable: true
+                        Accessible.onPressAction: { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt(); }
                     }
                 }
             }

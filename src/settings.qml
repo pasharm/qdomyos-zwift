@@ -3027,9 +3027,15 @@ import QtQuick 2.12 as Quick212
             { label: qsTr("French"), value: "fr" },
             { label: qsTr("Spanish"), value: "es" },
             { label: qsTr("Portuguese"), value: "pt" },
+            { label: qsTr("Portuguese (Brazil)"), value: "pt_BR" },
             { label: qsTr("Russian"), value: "ru" },
             { label: qsTr("Chinese (Simplified)"), value: "zh_CN" },
             { label: qsTr("Japanese"), value: "ja" },
+            { label: qsTr("Korean"), value: "ko" },
+            { label: qsTr("Turkish"), value: "tr" },
+            { label: qsTr("Polish"), value: "pl" },
+            { label: qsTr("Dutch"), value: "nl" },
+            { label: qsTr("Czech"), value: "cs" },
             { label: qsTr("Ukrainian"), value: "uk" }
         ]
         Timer {
