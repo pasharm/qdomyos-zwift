@@ -15932,9 +15932,9 @@
     },
     {
       "key": "zwiftplay_gear_rb",
-      "name": "Ride On (RB)",
+      "name": "Ride On button",
       "description": null,
-      "parent": "Zwift Devices Options",
+      "parent": "Zwift Devices",
       "type": "integer",
       "qmlType": "int",
       "control": "select",
