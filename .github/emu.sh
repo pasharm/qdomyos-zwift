@@ -205,6 +205,8 @@ wait_tiles() {
     sleep 10
   done
   echo "!! tiles NOT shown - the run proves nothing" >> $STEPLOG
+  echo "== steps"; cat $STEPLOG
+  exit 1
 }
 restart_with() {
   echo "== restart: $*" >> $STEPLOG
@@ -238,9 +240,21 @@ step small-back "150 px down: toolbar stays collapsed"
 drag_down 150
 shot t-03-back-150
 
-step back "600 px down: toolbar back with its icons"
+step first-row "600 px down, to the top: first row in full view, toolbar still away"
 drag_down 600
-shot t-04-back-600
+shot t-04-first-row-hidden
+
+step pull "a pull past the top edge: toolbar back with its icons"
+drag_down 700
+shot t-04b-pull
+
+scroll_top; sleep 2
+drag_up 1300
+drag_up 800
+shot t-04c-deep
+step back-deep "600 px down from deep in the list: toolbar back on the way"
+drag_down 600
+shot t-04d-back-deep
 
 scroll_top; sleep 2
 step flick "fast flick up: collapsed"
@@ -248,7 +262,7 @@ adb shell input swipe 700 1900 700 1200 120 || true
 sleep 5
 shot t-05-flick
 
-step top-again "swipes down to the top: toolbar back"
+step top-again "fast swipes down, past the top edge: toolbar back"
 scroll_top; sleep 2
 shot t-06-top-again
 
