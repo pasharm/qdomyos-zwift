@@ -371,8 +371,7 @@ HomeForm {
 
         // The app toolbar scrolls away while the tiles scroll down and comes back when they
         // scroll up (Material "hide on scroll"). It follows the finger, not the end of the
-        // movement, and main.qml animates its height, so the page does not jump. A flick is
-        // left alone until it ends: the toolbar resizes the grid, and that stops a flick dead.
+        // movement, and main.qml animates its height, so the page does not jump.
         // Hysteresis: the toolbar toggles only after the user has scrolled toolbarToggleDistance
         // in one direction since the last toggle. Collapsing it moves the page under the finger
         // by toolbarShift, which a per-frame check reads as scrolling back, and slow scrolling
@@ -393,14 +392,6 @@ HomeForm {
                 toolbarTurnY = contentY
                 return
             }
-            if (draggingVertically)
-                updateToolbar()
-        }
-        onMovementEnded: {
-            if (!window.lockTiles && contentY > 0 && !headerToolbar.animating)
-                updateToolbar()
-        }
-        function updateToolbar() {
             if (!headerToolbar.scrolledAway) {
                 // Only while the tiles still overflow once the toolbar is gone, and not while the
                 // view is pulled past its end: otherwise it would spring back to the top and bring
