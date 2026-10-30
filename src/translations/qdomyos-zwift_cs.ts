@@ -1010,158 +1010,6 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Soubor tréninku se nepodařilo uložit</translation>
     </message>
     <message>
-        <source>%1 (HR sensor) connected!</source>
-        <translation>Připojeno: %1 (snímač tepu)!</translation>
-    </message>
-    <message>
-        <source>%1 (cadence sensor) connected!</source>
-        <translation>Připojeno: %1 (snímač kadence)!</translation>
-    </message>
-    <message>
-        <source>%1 (power sensor) connected!</source>
-        <translation>Připojeno: %1 (snímač výkonu)!</translation>
-    </message>
-    <message>
-        <source>SRAM Connected!</source>
-        <translation>SRAM připojen!</translation>
-    </message>
-    <message>
-        <source>Zwift Click Connected!</source>
-        <translation>Zwift Click připojen!</translation>
-    </message>
-    <message>
-        <source>Zwift Click v2 Connected!</source>
-        <translation>Zwift Click v2 připojen!</translation>
-    </message>
-    <message>
-        <source>Thinkrider Controller Connected!</source>
-        <translation>Ovladač Thinkrider připojen!</translation>
-    </message>
-    <message>
-        <source>CYCPLUS BC2 Connected!</source>
-        <translation>CYCPLUS BC2 připojen!</translation>
-    </message>
-    <message>
-        <source>Elite Square Connected!</source>
-        <translation>Elite Square připojen!</translation>
-    </message>
-    <message>
-        <source>Zwift Play/Ride Connected!</source>
-        <translation>Zwift Play/Ride připojen!</translation>
-    </message>
-    <message>
-        <source>%1 connected!</source>
-        <translation>Připojeno: %1!</translation>
-    </message>
-    <message>
-        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
-        <translation>Ruční úprava výkonu podle odporu zapnuta: výkon se nyní řídí hodnotou dlaždice „Odpor“.</translation>
-    </message>
-    <message>
-        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
-        <translation>Vlastní tabulka výkonu CSC zapnuta: výkon se nyní řídí nastavenými dvojicemi odpor – výkon.</translation>
-    </message>
-    <message>
-        <source>%1 Battery Level %2 %</source>
-        <translation>%1: stav baterie %2 %</translation>
-    </message>
-    <message>
-        <source>FTMS bike found, restart the app to apply the change</source>
-        <translation>Nalezeno kolo FTMS, restartujte aplikaci, aby se změna projevila</translation>
-    </message>
-    <message>
-        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
-        <translation>Eliptický trenažér Domyos pracuje přes FTMS. Restartujte QZ, aby se oprava projevila. Děkujeme.</translation>
-    </message>
-    <message>
-        <source>FTMS rower found, restart the app to apply the change</source>
-        <translation>Nalezen veslovací trenažér FTMS, restartujte aplikaci, aby se změna projevila</translation>
-    </message>
-    <message>
-        <source>Bluetooth Service Error! Restart the bike!</source>
-        <translation>Chyba služby Bluetooth! Restartujte kolo!</translation>
-    </message>
-    <message>
-        <source>Switching to classic Bluetooth bridge</source>
-        <translation>Přepínání na klasické virtuální zařízení Bluetooth</translation>
-    </message>
-    <message>
-        <source>Virtual Echelon enabled for this bike</source>
-        <translation>Pro toto kolo je zapnutý virtuální Echelon</translation>
-    </message>
-    <message>
-        <source>FTMS treadmill found, restart the app to apply the change</source>
-        <translation>Nalezen běžecký pás FTMS, restartujte aplikaci, aby se změna projevila</translation>
-    </message>
-    <message>
-        <source>Init completed, you can use the treadmill now!</source>
-        <translation>Příprava dokončena, běžecký pás můžete používat!</translation>
-    </message>
-    <message>
-        <source>FTMS bike found, restart the app to apply the change!</source>
-        <translation>Nalezeno kolo FTMS, restartujte aplikaci, aby se změna projevila!</translation>
-    </message>
-    <message>
-        <source>FTMS rower found, restart the app to apply the change!</source>
-        <translation>Nalezen veslovací trenažér FTMS, restartujte aplikaci, aby se změna projevila!</translation>
-    </message>
-    <message>
-        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
-        <translation>Kolo Domyos se hlásí jako FTMS, ale ve skutečnosti jím není. Restartujte QZ, aby se oprava projevila. Děkujeme.</translation>
-    </message>
-    <message>
-        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
-        <translation>Nalezen veslovací trenažér PM5. Restartujte QZ, aby se oprava projevila. Děkujeme.</translation>
-    </message>
-    <message>
-        <source>Treadmill initialization in progress...%1%</source>
-        <translation>Příprava běžeckého pásu…%1%</translation>
-    </message>
-    <message>
-        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
-        <translation>Zapněte „Vynutit použití FTMS“ v části „Nastavení &gt; Možnosti běžeckého pásu &gt; Možnosti běžeckého pásu Horizon“ a restartujte aplikaci</translation>
-    </message>
-    <message>
-        <source>Treadmill initialization completed!</source>
-        <translation>Běžecký pás je připraven!</translation>
-    </message>
-    <message>
-        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
-        <translation>Běžecký pás Domyos se hlásí jako FTMS, ale ve skutečnosti jím není. Restartujte QZ, aby se oprava projevila. Děkujeme.</translation>
-    </message>
-    <message>
-        <source>Treadmill ready</source>
-        <translation>Běžecký pás připraven</translation>
-    </message>
-    <message>
-        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
-        <translation>Zjištěno zařízení T01_. Pokud vidíte podivné hodnoty sklonu, zapněte „Běžecký pás IConcept FTMS“ v části „Možnosti běžeckého pásu“.</translation>
-    </message>
-    <message>
-        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
-        <translation>Aktuální SmO2: %1%, předchozí SmO2: %2%, THb: %3 g/dL</translation>
-    </message>
-    <message>
-        <source>SE7i init completed!</source>
-        <translation>SE7i je připraven!</translation>
-    </message>
-    <message>
-        <source>Starting treadmill before applying requested speed %1</source>
-        <translation>Spouštění běžeckého pásu před nastavením rychlosti %1</translation>
-    </message>
-    <message>
-        <source>Applying cached speed request %1</source>
-        <translation>Nastavení odložené rychlosti %1</translation>
-    </message>
-    <message>
-        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
-        <translation>Nenalezena žádná služba, napište mi na roberto.viola83@gmail.com!</translation>
-    </message>
-    <message>
-        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
-        <translation>Nalezen Zwift Hub, restartujte aplikaci a používejte virtuální řazení!</translation>
-    </message>
-    <message>
         <source>Peloton Auth Failed!</source>
         <translation>Peloton: ověření se nezdařilo!</translation>
     </message>
@@ -3591,269 +3439,6 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Power Avg</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PID Heart</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ext.Inclin.(%)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stride L.(%1)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ground C.(ms)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Vert.Osc.(mm)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Step Count</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Pause</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Rec.</source>
-        <extracomment>Short tile value: Peloton running/walking pace target zone &quot;Recovery&quot; (not &quot;record&quot;); zones: (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Easy</source>
-        <extracomment>Short tile value: Peloton running/walking pace target zone (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Brisk</source>
-        <extracomment>Short tile value: Peloton running/walking pace target zone (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Moder.</source>
-        <extracomment>Short tile value: Peloton running/walking pace target zone (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Power</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Chall.</source>
-        <extracomment>Short tile value: Peloton running/walking pace target zone (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Max</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Hard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>V.Hard</source>
-        <extracomment>Short tile value: Peloton running/walking pace target zone (Recovery, Easy, Brisk, Moderate, Challenging, Very Hard, Max). Keep it short; abbreviations with a dot.</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>N/A</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, speed </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> kilometers per hour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> miles per hour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, Average speed </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>kilometers per hour</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, Max speed </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, inclination </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, cadence </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, Average cadence </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, Max cadence </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, elevation </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> meters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> feet</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, calories burned </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, distance </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>kilometers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> miles</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, pace </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, resistance </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, average resistance </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, max resistance </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, watt </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, average watt </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, max watt </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, heart rate </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, average heart rate </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, max heart rate </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, jouls </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, elapsed </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> minutes </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source> seconds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, peloton resistance </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, average peloton resistance </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, max peloton resistance </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, target peloton resistance </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, target cadence </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, target power </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, target zone </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, target speed </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, target incline </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, watt for kilograms </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, average watt for kilograms</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>, max watt for kilograms</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>speed changed to</source>
-        <extracomment>Text-to-speech: spoken before the new speed value, e.g. &quot;speed changed to&quot; + &quot;12.5&quot; + &quot; kilometers per hour&quot;. Must read naturally when the number follows.</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Start pressed</source>
         <extracomment>Text-to-speech: spoken when the workout is started or resumed with the Start button.</extracomment>
         <translation type="unfinished"></translation>
@@ -3867,14 +3452,6 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <source>en</source>
         <comment>TTS voice language</comment>
         <extracomment>Text-to-speech: not a word to translate - the code of the language of this translation, such as &quot;de&quot;, &quot;pt_BR&quot; or &quot;zh_CN&quot;. The voice that reads the translated texts aloud is chosen by it.</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>JSON parser error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Error retrieving access token, %1 (%2)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4274,10 +3851,6 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Licence nenalezena</translation>
     </message>
     <message>
-        <source>AVG Watts</source>
-        <translation>Prům. výkon</translation>
-    </message>
-    <message>
         <source>The workout history database could not be opened.</source>
         <translation>Databázi historie tréninků nelze otevřít.</translation>
     </message>
@@ -4316,22 +3889,6 @@ Při prvním spuštění to může chvíli trvat.</translation>
     <message>
         <source>No workout files (.fit) found.</source>
         <translation>Nebyly nalezeny žádné soubory tréninků (.fit).</translation>
-    </message>
-    <message>
-        <source>Workouts imported: %1.</source>
-        <translation>Importováno tréninků: %1.</translation>
-    </message>
-    <message>
-        <source>Already in the history: %1.</source>
-        <translation>Již v historii: %1.</translation>
-    </message>
-    <message>
-        <source>Without workout data: %1.</source>
-        <translation>Bez dat tréninku: %1.</translation>
-    </message>
-    <message>
-        <source>The workout history database could not be opened.</source>
-        <translation>Databázi historie tréninků nelze otevřít.</translation>
     </message>
     <message>
         <source>Wi-Fi connection (DirCon) restarted</source>
@@ -4741,14 +4298,6 @@ Spustit ho nyní?</translation>
         <translation>Nezapomeňte uložit profil „%1“, pokud chcete tyto změny v profilu zachovat.</translation>
     </message>
     <message>
-        <source>Press back again to exit</source>
-        <translation>Pro ukončení stiskněte znovu Zpět</translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translation>Vypnuto</translation>
-    </message>
-    <message>
         <source>Camera Cutout</source>
         <translation>Výřez kamery</translation>
     </message>
@@ -4789,10 +4338,6 @@ In the next window, allow access to the QZ folder.</source>
 Vyhledat je?
 
 V dalším okně povolte přístup ke složce QZ.</translation>
-    </message>
-    <message>
-        <source>Restart now?</source>
-        <translation>Restartovat nyní?</translation>
     </message>
     <message>
         <source>Garmin FTP Update</source>
@@ -4873,32 +4418,8 @@ Přepnout pro tuto relaci na klasické virtuální zařízení Bluetooth?</trans
         <translation>Ne</translation>
     </message>
     <message>
-        <source>You are already connected to Strava. Do you want to log out?</source>
-        <translation>Ke Stravě jste již připojeni. Odhlásit se?</translation>
-    </message>
-    <message>
-        <source>Peloton</source>
-        <translation>Peloton</translation>
-    </message>
-    <message>
-        <source>You are already connected to Peloton. Do you want to log out?</source>
-        <translation>K Pelotonu jste již připojeni. Odhlásit se?</translation>
-    </message>
-    <message>
-        <source>Intervals.icu</source>
-        <translation>Intervals.icu</translation>
-    </message>
-    <message>
-        <source>You are already connected to Intervals.icu. Do you want to log out?</source>
-        <translation>K Intervals.icu jste již připojeni. Odhlásit se?</translation>
-    </message>
-    <message>
         <source>Please choose a file</source>
         <translation>Vyberte soubor</translation>
-    </message>
-    <message>
-        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
-        <translation>Nezapomeňte uložit profil „%1“, pokud chcete tyto změny v profilu zachovat.</translation>
     </message>
     <message>
         <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
@@ -4915,82 +4436,6 @@ Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nasta
         <translation>Automatický odpor vypnut</translation>
     </message>
     <message>
-        <source>You can move the tiles!</source>
-        <translation>Dlaždice můžete přesouvat!</translation>
-    </message>
-    <message>
-        <source>The tiles are locked now</source>
-        <translation>Dlaždice jsou nyní uzamčeny</translation>
-    </message>
-    <message>
-        <source>Search settings</source>
-        <translation>Hledat v nastavení</translation>
-    </message>
-    <message>
-        <source>Profile: </source>
-        <translation>Profil: </translation>
-    </message>
-    <message>
-        <source>Settings</source>
-        <translation>Nastavení</translation>
-    </message>
-    <message>
-        <source>Workouts History</source>
-        <translation>Historie tréninků</translation>
-    </message>
-    <message>
-        <source>Swag Bag</source>
-        <translation>Swag Bag</translation>
-    </message>
-    <message>
-        <source>Charts</source>
-        <translation>Grafy</translation>
-    </message>
-    <message>
-        <source>Open GPX</source>
-        <translation>Otevřít GPX</translation>
-    </message>
-    <message>
-        <source>Open Train Program</source>
-        <translation>Otevřít tréninkový program</translation>
-    </message>
-    <message>
-        <source>Workout Editor</source>
-        <translation>Editor tréninků</translation>
-    </message>
-    <message>
-        <source>Save GPX</source>
-        <translation>Uložit GPX</translation>
-    </message>
-    <message>
-        <source>Save FIT</source>
-        <translation>Uložit FIT</translation>
-    </message>
-    <message>
-        <source>Wizard</source>
-        <translation>Průvodce</translation>
-    </message>
-    <message>
-        <source>Help</source>
-        <translation>Nápověda</translation>
-    </message>
-    <message>
-        <source>Community</source>
-        <translation>Komunita</translation>
-    </message>
-    <message>
-        <source>Credits</source>
-        <translation>Poděkování</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation>Ukončit</translation>
-    </message>
-    <message>
-        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
-        <translation>QDomyos-Zwift – propojení trenažérů s aplikacemi</translation>
-    </message>
-    <message>
         <source>Workout</source>
         <translation>Trénink</translation>
     </message>
@@ -5001,34 +4446,6 @@ Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nasta
     <message>
         <source>Services</source>
         <translation>Služby</translation>
-    </message>
-    <message>
-        <source>Camera Cutout</source>
-        <translation>Výřez kamery</translation>
-    </message>
-    <message>
-        <source>In landscape, QZ keeps a margin on the camera side so the camera hole does not cover the content.
-Do you want to use the full screen width instead?
-
-You can change it later in Settings &gt; General UI Options &gt; Keep Content Clear of the Camera Cutout.</source>
-        <translation>Na šířku QZ ponechává okraj na straně kamery, aby výřez kamery nezakrýval obsah.
-Použít místo toho celou šířku obrazovky?
-
-Lze to později změnit v „Nastavení &gt; Obecné možnosti rozhraní &gt; Odsadit obsah od výřezu kamery“.</translation>
-    </message>
-    <message>
-        <source>Workout History</source>
-        <translation>Historie tréninků</translation>
-    </message>
-    <message>
-        <source>Workouts of a previous installation may still be in the QZ folder.
-Do you want to look for them?
-
-In the next window, allow access to the QZ folder.</source>
-        <translation>Tréninky z předchozí instalace mohou být stále ve složce QZ.
-Vyhledat je?
-
-V dalším okně povolte přístup ke složce QZ.</translation>
     </message>
     <message>
         <source>Connection lost in the background</source>

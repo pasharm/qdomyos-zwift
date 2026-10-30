@@ -3849,30 +3849,6 @@ This may take a few moments on first startup.</source>
         <translation>以前のインストールのトレーニングプログラムは見つかりませんでした。</translation>
     </message>
     <message>
-        <source>Already in the history: %1.</source>
-        <translation>履歴に登録済み: %1。</translation>
-    </message>
-    <message>
-        <source>Without workout data: %1.</source>
-        <translation>ワークアウトデータなし: %1。</translation>
-    </message>
-    <message>
-        <source>The workout history database could not be opened.</source>
-        <translation>ワークアウト履歴のデータベースを開けませんでした。</translation>
-    </message>
-    <message>
-        <source>Searching for the device...</source>
-        <translation>機器を検索しています...</translation>
-    </message>
-    <message>
-        <source>Search stopped, tap the Bluetooth icon</source>
-        <translation>検索を停止しました。Bluetoothアイコンをタップしてください</translation>
-    </message>
-    <message>
-        <source>Next search in %1 s</source>
-        <translation>次の検索まで%1秒</translation>
-    </message>
-    <message>
         <source>%1 found</source>
         <translation>%1 を検出</translation>
     </message>

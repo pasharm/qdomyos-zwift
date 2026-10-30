@@ -3848,10 +3848,6 @@ Al primo avvio potrebbe richiedere qualche istante.</translation>
         <translation>Nessun programma di allenamento di un&apos;installazione precedente trovato.</translation>
     </message>
     <message>
-        <source>Already in the history: %1.</source>
-        <translation>Già nella cronologia: %1.</translation>
-    </message>
-    <message>
         <source>T.Pace(m/500m)</source>
         <translation>Ritmo obiettivo (m/500m)</translation>
     </message>

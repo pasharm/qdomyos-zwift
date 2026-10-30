@@ -3845,10 +3845,6 @@ Isso pode levar alguns instantes na primeira inicialização.</translation>
         <translation>Nenhum programa de treino de uma instalação anterior foi encontrado.</translation>
     </message>
     <message>
-        <source>Already in the history: %1.</source>
-        <translation>Já no histórico: %1.</translation>
-    </message>
-    <message>
         <source>T.Pace(m/500m)</source>
         <translation>Ritmo alvo (m/500m)</translation>
     </message>

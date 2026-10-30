@@ -3848,10 +3848,6 @@ Esto puede tardar un poco en el primer inicio.</translation>
         <translation>No se encontraron programas de entrenamiento de una instalación anterior.</translation>
     </message>
     <message>
-        <source>Already in the history: %1.</source>
-        <translation>Ya en el historial: %1.</translation>
-    </message>
-    <message>
         <source>T.Pace(m/500m)</source>
         <translation>Ritmo obj. (m/500m)</translation>
     </message>

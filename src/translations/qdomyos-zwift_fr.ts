@@ -3848,10 +3848,6 @@ Cela peut prendre quelques instants au premier démarrage.</translation>
         <translation>Aucun programme d&apos;entraînement d&apos;une installation précédente n&apos;a été trouvé.</translation>
     </message>
     <message>
-        <source>Already in the history: %1.</source>
-        <translation>Déjà dans l&apos;historique : %1.</translation>
-    </message>
-    <message>
         <source>T.Pace(m/500m)</source>
         <translation>Allure cible (m/500m)</translation>
     </message>

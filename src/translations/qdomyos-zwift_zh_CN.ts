@@ -3853,30 +3853,6 @@ This may take a few moments on first startup.</source>
         <translation>未找到以前安装的训练计划。</translation>
     </message>
     <message>
-        <source>Already in the history: %1.</source>
-        <translation>已在历史记录中：%1。</translation>
-    </message>
-    <message>
-        <source>Without workout data: %1.</source>
-        <translation>无训练数据：%1。</translation>
-    </message>
-    <message>
-        <source>The workout history database could not be opened.</source>
-        <translation>无法打开训练历史数据库。</translation>
-    </message>
-    <message>
-        <source>Searching for the device...</source>
-        <translation>正在搜索设备...</translation>
-    </message>
-    <message>
-        <source>Search stopped, tap the Bluetooth icon</source>
-        <translation>搜索已停止，请点击蓝牙图标</translation>
-    </message>
-    <message>
-        <source>Next search in %1 s</source>
-        <translation>%1 秒后再次搜索</translation>
-    </message>
-    <message>
         <source>%1 found</source>
         <translation>已找到 %1</translation>
     </message>

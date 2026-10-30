@@ -3848,10 +3848,6 @@ Beim ersten Start kann dies einen Moment dauern.</translation>
         <translation>Keine Trainingsprogramme einer früheren Installation gefunden.</translation>
     </message>
     <message>
-        <source>Already in the history: %1.</source>
-        <translation>Bereits im Verlauf: %1.</translation>
-    </message>
-    <message>
         <source>T.Pace(m/500m)</source>
         <translation>Z.Tempo(m/500m)</translation>
     </message>
