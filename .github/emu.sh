@@ -222,117 +222,28 @@ drag_up() { adb shell input swipe 700 1800 700 $((1800 - $1)) 1500 || true; slee
 drag_down() { adb shell input swipe 700 900 700 $((900 + $1)) 1500 || true; sleep 3; }
 to_end() { local i; for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 600 150 || true; done; sleep 4; }
 
+# T-357: Start, Stop and Lap of the classic home page. startColor blinks while stopped, so a burst
+# of frames holds both phases: red with no shadow, the plain button with its shadow, no square
+burst() {
+  local i
+  for i in 1 2 3 4 5 6; do
+    adb exec-out screencap -p > "$1-$i.png" || true
+    sleep 0.4
+  done
+}
 echo "== API $(adb shell getprop ro.build.version.sdk | tr -d '\r')" >> $STEPLOG
-wait_tiles
-step top "toolbar shown"
-shot t-00-top
-
-step short-drag "300 px, below the hysteresis: toolbar still shown, tiles clipped under the Start/Stop row"
-drag_up 300
-shot t-01-drag-300
-
-scroll_top; sleep 2
-step long-drag "800 px up: toolbar collapsed, no line of icon pixels under the status bar"
-drag_up 800
-shot t-02-drag-800
-
-step small-back "150 px down: toolbar stays collapsed"
-drag_down 150
-shot t-03-back-150
-
-step first-row "600 px down, to the top: first row in full view, toolbar still away"
-drag_down 600
-shot t-04-first-row-hidden
-
-step pull "a pull past the top edge: toolbar back with its icons"
-drag_down 700
-shot t-04b-pull
-
-scroll_top; sleep 2
-drag_up 1300
-drag_up 800
-shot t-04c-deep
-step back-deep "600 px down from deep in the list: toolbar back on the way"
-drag_down 600
-shot t-04d-back-deep
-
-scroll_top; sleep 2
-step flick "fast flick up: collapsed"
-adb shell input swipe 700 1900 700 1200 120 || true
-sleep 5
-shot t-05-flick
-
-step top-again "fast swipes down, past the top edge: toolbar back"
-scroll_top; sleep 2
-shot t-06-top-again
-
-step end "the end of the list, overscrolled: collapsed, no flicker back"
-to_end
-shot t-07-end
-step end-back "700 px down from the end: toolbar back"
-drag_down 700
-shot t-08-end-back
-
-# Another page brings it back: the drawer opens with an edge swipe, the toolbar is gone
-scroll_top; sleep 2
-drag_up 800
-shot t-09-before-page
-step page "drawer by edge swipe, Settings: page with a full toolbar"
-adb shell input swipe 2 1200 900 1200 300 || true
-sleep 3
-shot t-10-drawer
-tap_drawer '^Settings$' 400 900
+restart_with ui_modern=false
+step light "classic, light theme: both blink phases"
+shot s-00-home
+burst s-01-light
+adb shell cmd uimode night yes || true
 sleep 8
-shot t-11-settings
-step page-back "back key: home with the toolbar shown"
-back "settings"
-sleep 4
-shot t-12-home-after-page
-
-# Sideways while collapsed
-scroll_top; sleep 2
-drag_up 800
-adb shell settings put system accelerometer_rotation 0 || true
-step rotate "sideways after a collapse: nothing cut, the top reachable"
-adb shell settings put system user_rotation 1 || true
-sleep 10
-shot t-13-landscape-collapsed
-adb shell input swipe 1200 300 1200 1200 150 || true
-adb shell input swipe 1200 300 1200 1200 150 || true
-sleep 3
-shot t-14-landscape-top
-adb shell settings put system user_rotation 0 || true
-sleep 10
-shot t-15-portrait
-
-# Moving tiles: the gap above the first row
-scroll_top; sleep 2
-step lock "tile lock: 30 gap above the first row, inside the grid"
-tap $LOCK "lock tiles"
-sleep 3
-shot t-16-lock
-adb shell input swipe 1400 1800 1400 800 800 || true
-sleep 2
-shot t-17-lock-scrolled
-adb shell input swipe 1400 800 1400 2000 400 || true
-sleep 2
-tap $LOCK "unlock tiles"
-sleep 3
-shot t-18-unlock
-
-# A list that fits: nothing toggles
-restart_with ui_zoom=50
-step short-list "tiles fit: toolbar stays shown on a drag"
-shot t-19-short-top
-drag_up 400
-shot t-20-short-drag
-
-# A list just over the screen: the end is reachable by bottomMargin alone, the toolbar stays
-restart_with ui_zoom=60
-step just-over "swipes up: last row in full view above the bottom of the screen"
-shot t-21-over-top
-to_end
-shot t-22-over-end
+step dark "classic, dark theme: both blink phases"
+burst s-02-dark
+step running "Start pressed: no blink, plain buttons"
+tap_ui '^Start' 500 400
+sleep 6
+burst s-03-running
 adb shell pidof $PKG > /dev/null && echo "app alive at the end: OK" >> $STEPLOG || echo "!! app not running at the end" >> $STEPLOG
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
@@ -359,6 +270,6 @@ echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
 grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
 echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
 echo "== QML errors of the toolbar (none expected)"
-grep -E "(main|Home)[.]qml:[0-9]+|FATAL EXCEPTION" full_logcat.txt | grep -vE "qml: |QZ-|rootItem is not defined|appModel is not defined|onFoo properties|onTrainingProgramIntervalSoundRequested" | tee t052-errors.txt | head -40 | sed 's/^/!! /' >> $STEPLOG || true
-[ -s t052-errors.txt ] || echo "no QML error, no crash: OK" >> $STEPLOG
+grep -E "(main|Home|HomeForm[.]ui)[.]qml:[0-9]+|FATAL EXCEPTION" full_logcat.txt | grep -vE "qml: |QZ-|rootItem is not defined|appModel is not defined|onFoo properties|onTrainingProgramIntervalSoundRequested" | tee t357-errors.txt | head -40 | sed 's/^/!! /' >> $STEPLOG || true
+[ -s t357-errors.txt ] || echo "no QML error, no crash: OK" >> $STEPLOG
 echo "== steps"; cat $STEPLOG
