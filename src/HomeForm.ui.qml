@@ -378,19 +378,28 @@ Page {
                     Accessible.focusable: true
                 }
                 ColorOverlay {
-                    // The shadow lies outside the button: a source of the button alone cuts it square
                     anchors.fill: start
-                    anchors.margins: -12
-                    source: ShaderEffectSource {
-                        sourceItem: start
-                        sourceRect: Qt.rect(-12, -12, start.width + 24, start.height + 24)
-                    }
+                    source: start
                     color: rootItem.startColor
                     enabled: rootItem.startColor === "red" ? true : false
                     // startColor changes on every read and blinks only with the reads above: use
                     // color here. A transparent overlay would still draw the button a second time,
                     // its shadow cut square at the edges of the button
                     visible: color.a > 0
+                    // Red on the pill only: the faint tail of the shadow reaches far past the button,
+                    // and tinted it shows as a red square wherever the source ends
+                    layer.enabled: true
+                    layer.effect: OpacityMask {
+                        maskSource: Item {
+                            width: start.width
+                            height: start.height
+                            Rectangle {
+                                anchors.fill: parent
+                                anchors.margins: 6 // the insets of RoundButton in the Material style
+                                radius: start.radius
+                            }
+                        }
+                    }
                 }
             }
 
