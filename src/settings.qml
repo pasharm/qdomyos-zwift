@@ -3419,6 +3419,8 @@ import QtQuick 2.12 as Quick212
                                     RegExpValidator { id: searchTimeValidator; regExp: /^\d{1,2}:[0-5]?\d:[0-5]?\d$/ }
                                     RegExpValidator { id: searchIntValidator; regExp: /^-?\d+$/ }
                                     RegExpValidator { id: searchNumberValidator; regExp: /^-?(\d+([.,]\d*)?|[.,]\d+)$/ }
+                                    // A password stays hidden here as it does on its own page
+                                    echoMode: entry.key.indexOf("password") >= 0 ? TextInput.PasswordEchoOnEdit : TextInput.Normal
                                     onAccepted: settingsPane.setSearchFieldValue(entry, text)
                                     onActiveFocusChanged: if (this.focus) this.cursorPosition = this.text.length
                                 }
