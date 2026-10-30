@@ -25,13 +25,14 @@ jobs:
   emulator-logcat:
     runs-on: ubuntu-latest
     timeout-minutes: 40
-    # T-052: API 28 has no top inset, so the toolbar collapses to a height of 0; API 35 keeps one
+    # T-052: API 30 has no top inset, so the toolbar collapses to a height of 0; API 35 keeps one.
+    # API 28 of the default image never shows tiles (run 41130002380)
     strategy:
       fail-fast: false
       matrix:
         include:
-          - api: 28
-            target: default
+          - api: 30
+            target: google_apis
           - api: 35
             target: google_apis
     steps:

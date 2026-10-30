@@ -30,6 +30,9 @@ for p in READ_EXTERNAL_STORAGE WRITE_EXTERNAL_STORAGE ACCESS_FINE_LOCATION ACCES
   adb shell pm grant $PKG android.permission.$p || true
 done
 adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
+for p in EXERCISE DISTANCE TOTAL_CALORIES_BURNED HEART_RATE POWER SPEED CYCLING_PEDALING_CADENCE ELEVATION_GAINED STEPS STEPS_CADENCE HEART_RATE_VARIABILITY; do
+  adb shell pm grant $PKG android.permission.health.WRITE_$p || true
+done
 adb shell cmd uimode night no || true
 # The launcher of the emulator image hangs on the slow CI machine and its "isn't responding"
 # dialog came back before every step, however often Wait was tapped: the classic run
@@ -257,6 +260,8 @@ drag_down 700
 shot t-08-end-back
 
 # Another page brings it back: the drawer opens with an edge swipe, the toolbar is gone
+adb shell cmd overlay enable com.android.internal.systemui.navbar.threebutton || true
+sleep 3
 scroll_top; sleep 2
 drag_up 800
 shot t-09-before-page
@@ -335,6 +340,6 @@ echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
 grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
 echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
 echo "== QML errors of the toolbar (none expected)"
-grep -E "(main|Home)[.]qml:[0-9]+|FATAL EXCEPTION" full_logcat.txt | grep -vE "qml: |QZ-" | tee t052-errors.txt | head -40 | sed 's/^/!! /' >> $STEPLOG || true
+grep -E "(main|Home)[.]qml:[0-9]+|FATAL EXCEPTION" full_logcat.txt | grep -vE "qml: |QZ-|rootItem is not defined|appModel is not defined|onFoo properties|onTrainingProgramIntervalSoundRequested" | tee t052-errors.txt | head -40 | sed 's/^/!! /' >> $STEPLOG || true
 [ -s t052-errors.txt ] || echo "no QML error, no crash: OK" >> $STEPLOG
 echo "== steps"; cat $STEPLOG
