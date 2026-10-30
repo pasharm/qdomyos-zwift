@@ -26,14 +26,10 @@ adb shell cmd uimode night no || true
 QZDIR=/sdcard/Documents/QZ
 adb shell mkdir -p $QZDIR/ddb.sqlite
 for i in $(seq 1 19); do adb shell mkdir -p $QZDIR/ddb-$i.sqlite; done
-# a file pushed by adb into Documents belongs to the shell and the app does not see it
-# (scoped storage), and run-as cannot write there. At start the app moves the content of
-# its Android/data folder into Documents/QZ itself (homeform constructor), so the file is
-# put there and reaches Documents/QZ/fit as a file of the app.
-DATADIR=/sdcard/Android/data/$PKG/files
-adb shell mkdir -p $DATADIR/fit
-adb push .github/t346/t346-run.fit $DATADIR/fit/t346-run.fit
-adb shell ls -la $QZDIR $DATADIR/fit >> $STEPLOG 2>&1 || true
+# The workout is recorded by the app itself (fake device, Stop): a FIT file put in by adb is
+# hidden from the app on API 35 - in Documents it belongs to the shell (scoped storage),
+# run-as cannot write there, and a folder of the shell in Android/data is not listed either
+adb shell ls -la $QZDIR >> $STEPLOG 2>&1 || true
 adb shell settings put global hide_error_dialogs 1 || true
 
 # put_conf <extra lines>: the settings file of the app before a start
@@ -184,9 +180,23 @@ open_settings() {
 }
 
 # T-346: a fake treadmill, so the wizard stays closed
-put_conf "applewatch_fakedevice=true\nskipLocationServicesDialog=true\n"
+put_conf "applewatch_fakedevice=true\nskipLocationServicesDialog=true\nconfirm_stop_workout=true\n"
 start_app
 shot h-01-home
+# about a minute of the session of the fake device, then Stop saves the FIT file
+sleep 60
+tap_ui 'Stop' 1200 2300
+sleep 3
+shot h-02-stop-confirm
+tap_ui '^(Yes|OK|Stop)$' && echo "stop confirmed" >> $STEPLOG
+sleep 15
+shot h-03-after-stop
+# the end page of the workout, if any, back to home
+dump
+if [ -f ui.xml ] && ! python3 .github/uitap.py ui.xml 'Stop' > /dev/null; then
+  back "end page"; sleep 5
+fi
+shot h-04-home
 
 open_menu
 tap_drawer 'Workouts History' 400 1500
@@ -229,7 +239,7 @@ FAIL=0
 if ! grep -q "every name in the QZ folder is taken" all.txt; then
   echo "!! database not in the private folder: the run proves nothing" >> $STEPLOG; FAIL=1
 fi
-adb shell ls -la $QZDIR/fit $DATADIR >> $STEPLOG 2>&1 || true
+adb shell ls -la $QZDIR/fit >> $STEPLOG 2>&1 || true
 grep -m2 "Processing FIT file" all.txt | sed 's/^/log: /' >> $STEPLOG || true
 if ! grep -q "Processing FIT file" all.txt; then
   echo "!! the FIT file never reached the history" >> $STEPLOG; FAIL=1
