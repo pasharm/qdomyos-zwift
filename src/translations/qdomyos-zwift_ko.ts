@@ -3813,6 +3813,38 @@ This may take a few moments on first startup.</source>
         <translation>라이선스를 찾을 수 없습니다</translation>
     </message>
     <message>
+        <source>AVG Watts</source>
+        <translation>평균 파워</translation>
+    </message>
+    <message>
+        <source>The workout history database could not be opened.</source>
+        <translation>운동 기록 데이터베이스를 열 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>Workouts imported: %1.</source>
+        <translation>가져온 운동: %1.</translation>
+    </message>
+    <message>
+        <source>The file could not be copied to the QZ folder.</source>
+        <translation>파일을 QZ 폴더에 복사할 수 없습니다.</translation>
+    </message>
+    <message>
+        <source>Training programs restored: %1.</source>
+        <translation>복원된 훈련 프로그램: %1.</translation>
+    </message>
+    <message>
+        <source>No training programs of a previous installation were found.</source>
+        <translation>이전 설치의 훈련 프로그램을 찾지 못했습니다.</translation>
+    </message>
+    <message>
+        <source>Already in the history: %1.</source>
+        <translation>이미 기록에 있음: %1.</translation>
+    </message>
+    <message>
+        <source>Without workout data: %1.</source>
+        <translation>운동 데이터 없음: %1.</translation>
+    </message>
+    <message>
         <source>The workout file could not be opened.</source>
         <translation>운동 파일을 열 수 없습니다.</translation>
     </message>
@@ -4146,6 +4178,160 @@ Do you want to start it now?</source>
         <translation>
 
 지금 시작하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>You are already connected to Strava. Do you want to log out?</source>
+        <translation>이미 Strava에 연결되어 있습니다. 로그아웃하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>Peloton</source>
+        <translation>Peloton</translation>
+    </message>
+    <message>
+        <source>You are already connected to Peloton. Do you want to log out?</source>
+        <translation>이미 Peloton에 연결되어 있습니다. 로그아웃하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>Intervals.icu</source>
+        <translation>Intervals.icu</translation>
+    </message>
+    <message>
+        <source>You are already connected to Intervals.icu. Do you want to log out?</source>
+        <translation>이미 Intervals.icu에 연결되어 있습니다. 로그아웃하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>You can move the tiles!</source>
+        <translation>타일을 옮길 수 있습니다!</translation>
+    </message>
+    <message>
+        <source>The tiles are locked now</source>
+        <translation>타일이 고정되었습니다</translation>
+    </message>
+    <message>
+        <source>Search settings</source>
+        <translation>설정 검색</translation>
+    </message>
+    <message>
+        <source>Profile: </source>
+        <translation>프로필: </translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>설정</translation>
+    </message>
+    <message>
+        <source>Workouts History</source>
+        <translation>운동 기록</translation>
+    </message>
+    <message>
+        <source>Swag Bag</source>
+        <translation>Swag Bag</translation>
+    </message>
+    <message>
+        <source>Charts</source>
+        <translation>그래프</translation>
+    </message>
+    <message>
+        <source>Open GPX</source>
+        <translation>GPX 열기</translation>
+    </message>
+    <message>
+        <source>Open Train Program</source>
+        <translation>훈련 프로그램 열기</translation>
+    </message>
+    <message>
+        <source>Workout Editor</source>
+        <translation>운동 편집기</translation>
+    </message>
+    <message>
+        <source>Save GPX</source>
+        <translation>GPX 저장</translation>
+    </message>
+    <message>
+        <source>Save FIT</source>
+        <translation>FIT 저장</translation>
+    </message>
+    <message>
+        <source>Wizard</source>
+        <translation>마법사</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>도움말</translation>
+    </message>
+    <message>
+        <source>Community</source>
+        <translation>커뮤니티</translation>
+    </message>
+    <message>
+        <source>Credits</source>
+        <translation>크레딧</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>종료</translation>
+    </message>
+    <message>
+        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
+        <translation>QDomyos-Zwift - 운동 기구 브리지</translation>
+    </message>
+    <message>
+        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
+        <translation>변경 사항을 &quot;%1&quot; 프로필에 유지하려면 프로필을 저장하세요.</translation>
+    </message>
+    <message>
+        <source>Press back again to exit</source>
+        <translation>종료하려면 뒤로 버튼을 한 번 더 누르세요</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>사용 안 함</translation>
+    </message>
+    <message>
+        <source>Camera Cutout</source>
+        <translation>카메라 컷아웃</translation>
+    </message>
+    <message>
+        <source>In landscape, QZ keeps a margin on the camera side so the camera hole does not cover the content.
+Do you want to use the full screen width instead?
+
+You can change it later in Settings &gt; General UI Options &gt; Keep Content Clear of the Camera Cutout.</source>
+        <translation>가로 화면에서 QZ는 카메라 구멍이 내용을 가리지 않도록 카메라 쪽에 여백을 둡니다.
+대신 화면 전체 너비를 사용하시겠습니까?
+
+나중에 [설정] &gt; [일반 UI 옵션] &gt; [카메라 컷아웃 피해서 표시]에서 바꿀 수 있습니다.</translation>
+    </message>
+    <message>
+        <source>Workout History</source>
+        <translation>운동 기록</translation>
+    </message>
+    <message>
+        <source>Workouts of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>이전 설치의 운동이 QZ 폴더에 남아 있을 수 있습니다.
+찾아보시겠습니까?
+
+다음 창에서 QZ 폴더 접근을 허용하세요.</translation>
+    </message>
+    <message>
+        <source>Training Programs</source>
+        <translation>훈련 프로그램</translation>
+    </message>
+    <message>
+        <source>Training programs of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>이전 설치의 훈련 프로그램이 QZ 폴더에 남아 있을 수 있습니다.
+찾아보시겠습니까?
+
+다음 창에서 QZ 폴더 접근을 허용하세요.</translation>
+    </message>
+    <message>
+        <source>Restart now?</source>
+        <translation>지금 다시 시작하시겠습니까?</translation>
     </message>
     <message>
         <source>Garmin FTP Update</source>

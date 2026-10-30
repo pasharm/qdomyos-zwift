@@ -3816,6 +3816,38 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Licence nenalezena</translation>
     </message>
     <message>
+        <source>AVG Watts</source>
+        <translation>Prům. výkon</translation>
+    </message>
+    <message>
+        <source>The workout history database could not be opened.</source>
+        <translation>Databázi historie tréninků nelze otevřít.</translation>
+    </message>
+    <message>
+        <source>Workouts imported: %1.</source>
+        <translation>Importováno tréninků: %1.</translation>
+    </message>
+    <message>
+        <source>The file could not be copied to the QZ folder.</source>
+        <translation>Soubor nelze zkopírovat do složky QZ.</translation>
+    </message>
+    <message>
+        <source>Training programs restored: %1.</source>
+        <translation>Obnoveno tréninkových programů: %1.</translation>
+    </message>
+    <message>
+        <source>No training programs of a previous installation were found.</source>
+        <translation>Tréninkové programy z předchozí instalace nebyly nalezeny.</translation>
+    </message>
+    <message>
+        <source>Already in the history: %1.</source>
+        <translation>Již v historii: %1.</translation>
+    </message>
+    <message>
+        <source>Without workout data: %1.</source>
+        <translation>Bez dat tréninku: %1.</translation>
+    </message>
+    <message>
         <source>The workout file could not be opened.</source>
         <translation>Soubor tréninku nelze otevřít.</translation>
     </message>
@@ -4149,6 +4181,160 @@ Do you want to start it now?</source>
         <translation>
 
 Spustit ho nyní?</translation>
+    </message>
+    <message>
+        <source>You are already connected to Strava. Do you want to log out?</source>
+        <translation>Ke Stravě jste již připojeni. Odhlásit se?</translation>
+    </message>
+    <message>
+        <source>Peloton</source>
+        <translation>Peloton</translation>
+    </message>
+    <message>
+        <source>You are already connected to Peloton. Do you want to log out?</source>
+        <translation>K Pelotonu jste již připojeni. Odhlásit se?</translation>
+    </message>
+    <message>
+        <source>Intervals.icu</source>
+        <translation>Intervals.icu</translation>
+    </message>
+    <message>
+        <source>You are already connected to Intervals.icu. Do you want to log out?</source>
+        <translation>K Intervals.icu jste již připojeni. Odhlásit se?</translation>
+    </message>
+    <message>
+        <source>You can move the tiles!</source>
+        <translation>Dlaždice můžete přesouvat!</translation>
+    </message>
+    <message>
+        <source>The tiles are locked now</source>
+        <translation>Dlaždice jsou nyní uzamčeny</translation>
+    </message>
+    <message>
+        <source>Search settings</source>
+        <translation>Hledat v nastavení</translation>
+    </message>
+    <message>
+        <source>Profile: </source>
+        <translation>Profil: </translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Nastavení</translation>
+    </message>
+    <message>
+        <source>Workouts History</source>
+        <translation>Historie tréninků</translation>
+    </message>
+    <message>
+        <source>Swag Bag</source>
+        <translation>Swag Bag</translation>
+    </message>
+    <message>
+        <source>Charts</source>
+        <translation>Grafy</translation>
+    </message>
+    <message>
+        <source>Open GPX</source>
+        <translation>Otevřít GPX</translation>
+    </message>
+    <message>
+        <source>Open Train Program</source>
+        <translation>Otevřít tréninkový program</translation>
+    </message>
+    <message>
+        <source>Workout Editor</source>
+        <translation>Editor tréninků</translation>
+    </message>
+    <message>
+        <source>Save GPX</source>
+        <translation>Uložit GPX</translation>
+    </message>
+    <message>
+        <source>Save FIT</source>
+        <translation>Uložit FIT</translation>
+    </message>
+    <message>
+        <source>Wizard</source>
+        <translation>Průvodce</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>Nápověda</translation>
+    </message>
+    <message>
+        <source>Community</source>
+        <translation>Komunita</translation>
+    </message>
+    <message>
+        <source>Credits</source>
+        <translation>Poděkování</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Ukončit</translation>
+    </message>
+    <message>
+        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
+        <translation>QDomyos-Zwift – propojení trenažérů s aplikacemi</translation>
+    </message>
+    <message>
+        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
+        <translation>Nezapomeňte uložit profil „%1“, pokud chcete tyto změny v profilu zachovat.</translation>
+    </message>
+    <message>
+        <source>Press back again to exit</source>
+        <translation>Pro ukončení stiskněte znovu Zpět</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Vypnuto</translation>
+    </message>
+    <message>
+        <source>Camera Cutout</source>
+        <translation>Výřez kamery</translation>
+    </message>
+    <message>
+        <source>In landscape, QZ keeps a margin on the camera side so the camera hole does not cover the content.
+Do you want to use the full screen width instead?
+
+You can change it later in Settings &gt; General UI Options &gt; Keep Content Clear of the Camera Cutout.</source>
+        <translation>Na šířku QZ ponechává okraj na straně kamery, aby výřez kamery nezakrýval obsah.
+Použít místo toho celou šířku obrazovky?
+
+Lze to později změnit v „Nastavení &gt; Obecné možnosti rozhraní &gt; Odsadit obsah od výřezu kamery“.</translation>
+    </message>
+    <message>
+        <source>Workout History</source>
+        <translation>Historie tréninků</translation>
+    </message>
+    <message>
+        <source>Workouts of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Tréninky z předchozí instalace mohou být stále ve složce QZ.
+Vyhledat je?
+
+V dalším okně povolte přístup ke složce QZ.</translation>
+    </message>
+    <message>
+        <source>Training Programs</source>
+        <translation>Tréninkové programy</translation>
+    </message>
+    <message>
+        <source>Training programs of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Tréninkové programy z předchozí instalace mohou být stále ve složce QZ.
+Vyhledat je?
+
+V dalším okně povolte přístup ke složce QZ.</translation>
+    </message>
+    <message>
+        <source>Restart now?</source>
+        <translation>Restartovat nyní?</translation>
     </message>
     <message>
         <source>Garmin FTP Update</source>

@@ -3816,6 +3816,38 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Licentie niet gevonden</translation>
     </message>
     <message>
+        <source>AVG Watts</source>
+        <translation>Gem. vermogen</translation>
+    </message>
+    <message>
+        <source>The workout history database could not be opened.</source>
+        <translation>Kan de database met de trainingsgeschiedenis niet openen.</translation>
+    </message>
+    <message>
+        <source>Workouts imported: %1.</source>
+        <translation>Trainingen geïmporteerd: %1.</translation>
+    </message>
+    <message>
+        <source>The file could not be copied to the QZ folder.</source>
+        <translation>Kan het bestand niet naar de QZ-map kopiëren.</translation>
+    </message>
+    <message>
+        <source>Training programs restored: %1.</source>
+        <translation>Trainingsprogramma&apos;s hersteld: %1.</translation>
+    </message>
+    <message>
+        <source>No training programs of a previous installation were found.</source>
+        <translation>Geen trainingsprogramma&apos;s van een eerdere installatie gevonden.</translation>
+    </message>
+    <message>
+        <source>Already in the history: %1.</source>
+        <translation>Al in de geschiedenis: %1.</translation>
+    </message>
+    <message>
+        <source>Without workout data: %1.</source>
+        <translation>Zonder trainingsgegevens: %1.</translation>
+    </message>
+    <message>
         <source>The workout file could not be opened.</source>
         <translation>Kan het trainingsbestand niet openen.</translation>
     </message>
@@ -4149,6 +4181,160 @@ Do you want to start it now?</source>
         <translation>
 
 Wil je die nu starten?</translation>
+    </message>
+    <message>
+        <source>You are already connected to Strava. Do you want to log out?</source>
+        <translation>Je bent al verbonden met Strava. Wil je uitloggen?</translation>
+    </message>
+    <message>
+        <source>Peloton</source>
+        <translation>Peloton</translation>
+    </message>
+    <message>
+        <source>You are already connected to Peloton. Do you want to log out?</source>
+        <translation>Je bent al verbonden met Peloton. Wil je uitloggen?</translation>
+    </message>
+    <message>
+        <source>Intervals.icu</source>
+        <translation>Intervals.icu</translation>
+    </message>
+    <message>
+        <source>You are already connected to Intervals.icu. Do you want to log out?</source>
+        <translation>Je bent al verbonden met Intervals.icu. Wil je uitloggen?</translation>
+    </message>
+    <message>
+        <source>You can move the tiles!</source>
+        <translation>Je kunt de tegels verplaatsen!</translation>
+    </message>
+    <message>
+        <source>The tiles are locked now</source>
+        <translation>De tegels zijn nu vergrendeld</translation>
+    </message>
+    <message>
+        <source>Search settings</source>
+        <translation>Instellingen zoeken</translation>
+    </message>
+    <message>
+        <source>Profile: </source>
+        <translation>Profiel: </translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Instellingen</translation>
+    </message>
+    <message>
+        <source>Workouts History</source>
+        <translation>Trainingsgeschiedenis</translation>
+    </message>
+    <message>
+        <source>Swag Bag</source>
+        <translation>Swag Bag</translation>
+    </message>
+    <message>
+        <source>Charts</source>
+        <translation>Grafieken</translation>
+    </message>
+    <message>
+        <source>Open GPX</source>
+        <translation>GPX openen</translation>
+    </message>
+    <message>
+        <source>Open Train Program</source>
+        <translation>Trainingsprogramma openen</translation>
+    </message>
+    <message>
+        <source>Workout Editor</source>
+        <translation>Trainingseditor</translation>
+    </message>
+    <message>
+        <source>Save GPX</source>
+        <translation>GPX opslaan</translation>
+    </message>
+    <message>
+        <source>Save FIT</source>
+        <translation>FIT opslaan</translation>
+    </message>
+    <message>
+        <source>Wizard</source>
+        <translation>Wizard</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>Help</translation>
+    </message>
+    <message>
+        <source>Community</source>
+        <translation>Community</translation>
+    </message>
+    <message>
+        <source>Credits</source>
+        <translation>Credits</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Afsluiten</translation>
+    </message>
+    <message>
+        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
+        <translation>QDomyos-Zwift – brug tussen fitnessapparaten en apps</translation>
+    </message>
+    <message>
+        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
+        <translation>Vergeet niet profiel ‘%1’ op te slaan als je deze wijzigingen in dit profiel wilt bewaren.</translation>
+    </message>
+    <message>
+        <source>Press back again to exit</source>
+        <translation>Druk nogmaals op Terug om af te sluiten</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Uitgeschakeld</translation>
+    </message>
+    <message>
+        <source>Camera Cutout</source>
+        <translation>Camera-uitsparing</translation>
+    </message>
+    <message>
+        <source>In landscape, QZ keeps a margin on the camera side so the camera hole does not cover the content.
+Do you want to use the full screen width instead?
+
+You can change it later in Settings &gt; General UI Options &gt; Keep Content Clear of the Camera Cutout.</source>
+        <translation>In liggende stand houdt QZ aan de kant van de camera een marge vrij, zodat de camera-uitsparing de inhoud niet bedekt.
+Wil je in plaats daarvan de volledige schermbreedte gebruiken?
+
+Je kunt dit later wijzigen via Instellingen &gt; Algemene interface-opties &gt; Inhoud vrijhouden van de camera-uitsparing.</translation>
+    </message>
+    <message>
+        <source>Workout History</source>
+        <translation>Trainingsgeschiedenis</translation>
+    </message>
+    <message>
+        <source>Workouts of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Trainingen van een eerdere installatie staan mogelijk nog in de QZ-map.
+Wil je ernaar zoeken?
+
+Geef in het volgende venster toegang tot de QZ-map.</translation>
+    </message>
+    <message>
+        <source>Training Programs</source>
+        <translation>Trainingsprogramma&apos;s</translation>
+    </message>
+    <message>
+        <source>Training programs of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Trainingsprogramma&apos;s van een eerdere installatie staan mogelijk nog in de QZ-map.
+Wil je ernaar zoeken?
+
+Geef in het volgende venster toegang tot de QZ-map.</translation>
+    </message>
+    <message>
+        <source>Restart now?</source>
+        <translation>Nu opnieuw starten?</translation>
     </message>
     <message>
         <source>Garmin FTP Update</source>

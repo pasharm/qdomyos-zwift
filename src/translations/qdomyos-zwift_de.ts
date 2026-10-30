@@ -3808,6 +3808,22 @@ Beim ersten Start kann dies einen Moment dauern.</translation>
         <translation>Ø Tempo (m/500m)</translation>
     </message>
     <message>
+        <source>The file could not be copied to the QZ folder.</source>
+        <translation>Die Datei konnte nicht in den QZ-Ordner kopiert werden.</translation>
+    </message>
+    <message>
+        <source>Training programs restored: %1.</source>
+        <translation>Wiederhergestellte Trainingsprogramme: %1.</translation>
+    </message>
+    <message>
+        <source>No training programs of a previous installation were found.</source>
+        <translation>Keine Trainingsprogramme einer früheren Installation gefunden.</translation>
+    </message>
+    <message>
+        <source>Already in the history: %1.</source>
+        <translation>Bereits im Verlauf: %1.</translation>
+    </message>
+    <message>
         <source>T.Pace(m/500m)</source>
         <translation>Z.Tempo(m/500m)</translation>
     </message>
@@ -4393,6 +4409,20 @@ Nein: QZ behandelt es weiter als Laufband und fragt nicht erneut (ein Fahrrad l�
     <message>
         <source>Services</source>
         <translation>Dienste</translation>
+    </message>
+    <message>
+        <source>Training Programs</source>
+        <translation>Trainingsprogramme</translation>
+    </message>
+    <message>
+        <source>Training programs of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Trainingsprogramme einer früheren Installation können noch im QZ-Ordner liegen.
+Möchten Sie danach suchen?
+
+Erlauben Sie im nächsten Fenster den Zugriff auf den QZ-Ordner.</translation>
     </message>
     <message>
         <source>Connection lost in the background</source>

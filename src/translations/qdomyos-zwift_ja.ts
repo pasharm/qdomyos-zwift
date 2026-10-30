@@ -3809,6 +3809,42 @@ This may take a few moments on first startup.</source>
         <translation>目標ペース(m/500m)</translation>
     </message>
     <message>
+        <source>The file could not be copied to the QZ folder.</source>
+        <translation>ファイルをQZフォルダーにコピーできませんでした。</translation>
+    </message>
+    <message>
+        <source>Training programs restored: %1.</source>
+        <translation>復元したトレーニングプログラム: %1。</translation>
+    </message>
+    <message>
+        <source>No training programs of a previous installation were found.</source>
+        <translation>以前のインストールのトレーニングプログラムは見つかりませんでした。</translation>
+    </message>
+    <message>
+        <source>Already in the history: %1.</source>
+        <translation>履歴に登録済み: %1。</translation>
+    </message>
+    <message>
+        <source>Without workout data: %1.</source>
+        <translation>ワークアウトデータなし: %1。</translation>
+    </message>
+    <message>
+        <source>The workout history database could not be opened.</source>
+        <translation>ワークアウト履歴のデータベースを開けませんでした。</translation>
+    </message>
+    <message>
+        <source>Searching for the device...</source>
+        <translation>機器を検索しています...</translation>
+    </message>
+    <message>
+        <source>Search stopped, tap the Bluetooth icon</source>
+        <translation>検索を停止しました。Bluetoothアイコンをタップしてください</translation>
+    </message>
+    <message>
+        <source>Next search in %1 s</source>
+        <translation>次の検索まで%1秒</translation>
+    </message>
+    <message>
         <source>%1 found</source>
         <translation>%1 を検出</translation>
     </message>
@@ -4390,6 +4426,20 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <source>Services</source>
         <translation>サービス</translation>
+    </message>
+    <message>
+        <source>Training Programs</source>
+        <translation>トレーニングプログラム</translation>
+    </message>
+    <message>
+        <source>Training programs of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>以前のインストールのトレーニングプログラムがQZフォルダーに残っている可能性があります。
+検索しますか？
+
+次の画面でQZフォルダーへのアクセスを許可してください。</translation>
     </message>
     <message>
         <source>Connection lost in the background</source>

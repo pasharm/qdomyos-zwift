@@ -3816,6 +3816,38 @@ This may take a few moments on first startup.</source>
         <translation>Lisans bulunamadı</translation>
     </message>
     <message>
+        <source>AVG Watts</source>
+        <translation>Ort. güç</translation>
+    </message>
+    <message>
+        <source>The workout history database could not be opened.</source>
+        <translation>Antrenman geçmişi veritabanı açılamadı.</translation>
+    </message>
+    <message>
+        <source>Workouts imported: %1.</source>
+        <translation>İçe aktarılan antrenman: %1.</translation>
+    </message>
+    <message>
+        <source>The file could not be copied to the QZ folder.</source>
+        <translation>Dosya QZ klasörüne kopyalanamadı.</translation>
+    </message>
+    <message>
+        <source>Training programs restored: %1.</source>
+        <translation>Geri yüklenen antrenman programı: %1.</translation>
+    </message>
+    <message>
+        <source>No training programs of a previous installation were found.</source>
+        <translation>Önceki bir kurulumdan kalan antrenman programı bulunamadı.</translation>
+    </message>
+    <message>
+        <source>Already in the history: %1.</source>
+        <translation>Geçmişte zaten var: %1.</translation>
+    </message>
+    <message>
+        <source>Without workout data: %1.</source>
+        <translation>Antrenman verisi olmayan: %1.</translation>
+    </message>
+    <message>
         <source>The workout file could not be opened.</source>
         <translation>Antrenman dosyası açılamadı.</translation>
     </message>
@@ -4149,6 +4181,160 @@ Do you want to start it now?</source>
         <translation>
 
 Şimdi başlatılsın mı?</translation>
+    </message>
+    <message>
+        <source>You are already connected to Strava. Do you want to log out?</source>
+        <translation>Strava&apos;ya zaten bağlısınız. Çıkış yapılsın mı?</translation>
+    </message>
+    <message>
+        <source>Peloton</source>
+        <translation>Peloton</translation>
+    </message>
+    <message>
+        <source>You are already connected to Peloton. Do you want to log out?</source>
+        <translation>Peloton&apos;a zaten bağlısınız. Çıkış yapılsın mı?</translation>
+    </message>
+    <message>
+        <source>Intervals.icu</source>
+        <translation>Intervals.icu</translation>
+    </message>
+    <message>
+        <source>You are already connected to Intervals.icu. Do you want to log out?</source>
+        <translation>Intervals.icu&apos;ya zaten bağlısınız. Çıkış yapılsın mı?</translation>
+    </message>
+    <message>
+        <source>You can move the tiles!</source>
+        <translation>Kutucukları taşıyabilirsiniz!</translation>
+    </message>
+    <message>
+        <source>The tiles are locked now</source>
+        <translation>Kutucuklar artık kilitli</translation>
+    </message>
+    <message>
+        <source>Search settings</source>
+        <translation>Ayarlarda ara</translation>
+    </message>
+    <message>
+        <source>Profile: </source>
+        <translation>Profil: </translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Ayarlar</translation>
+    </message>
+    <message>
+        <source>Workouts History</source>
+        <translation>Antrenman geçmişi</translation>
+    </message>
+    <message>
+        <source>Swag Bag</source>
+        <translation>Swag Bag</translation>
+    </message>
+    <message>
+        <source>Charts</source>
+        <translation>Grafikler</translation>
+    </message>
+    <message>
+        <source>Open GPX</source>
+        <translation>GPX aç</translation>
+    </message>
+    <message>
+        <source>Open Train Program</source>
+        <translation>Antrenman programı aç</translation>
+    </message>
+    <message>
+        <source>Workout Editor</source>
+        <translation>Antrenman düzenleyici</translation>
+    </message>
+    <message>
+        <source>Save GPX</source>
+        <translation>GPX kaydet</translation>
+    </message>
+    <message>
+        <source>Save FIT</source>
+        <translation>FIT kaydet</translation>
+    </message>
+    <message>
+        <source>Wizard</source>
+        <translation>Kurulum sihirbazı</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>Yardım</translation>
+    </message>
+    <message>
+        <source>Community</source>
+        <translation>Topluluk</translation>
+    </message>
+    <message>
+        <source>Credits</source>
+        <translation>Emeği geçenler</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Çıkış</translation>
+    </message>
+    <message>
+        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
+        <translation>QDomyos-Zwift – Fitness cihazı köprüsü</translation>
+    </message>
+    <message>
+        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
+        <translation>Bu değişiklikleri &quot;%1&quot; profilinde tutmak istiyorsanız profili kaydetmeyi unutmayın.</translation>
+    </message>
+    <message>
+        <source>Press back again to exit</source>
+        <translation>Çıkmak için tekrar &quot;Geri&quot; düğmesine basın</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Devre dışı</translation>
+    </message>
+    <message>
+        <source>Camera Cutout</source>
+        <translation>Kamera çentiği</translation>
+    </message>
+    <message>
+        <source>In landscape, QZ keeps a margin on the camera side so the camera hole does not cover the content.
+Do you want to use the full screen width instead?
+
+You can change it later in Settings &gt; General UI Options &gt; Keep Content Clear of the Camera Cutout.</source>
+        <translation>Yatay modda QZ, kamera deliği içeriği kapatmasın diye kamera tarafında bir kenar boşluğu bırakır.
+Bunun yerine ekranın tam genişliği kullanılsın mı?
+
+Bunu daha sonra Ayarlar &gt; Genel arayüz seçenekleri &gt; İçeriği kamera çentiğinden uzak tut bölümünden değiştirebilirsiniz.</translation>
+    </message>
+    <message>
+        <source>Workout History</source>
+        <translation>Antrenman geçmişi</translation>
+    </message>
+    <message>
+        <source>Workouts of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Önceki bir kurulumdan kalan antrenmanlar QZ klasöründe olabilir.
+Bunlar aransın mı?
+
+Sonraki pencerede QZ klasörüne erişime izin verin.</translation>
+    </message>
+    <message>
+        <source>Training Programs</source>
+        <translation>Antrenman programları</translation>
+    </message>
+    <message>
+        <source>Training programs of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Önceki bir kurulumdan kalan antrenman programları QZ klasöründe olabilir.
+Bunlar aransın mı?
+
+Sonraki pencerede QZ klasörüne erişime izin verin.</translation>
+    </message>
+    <message>
+        <source>Restart now?</source>
+        <translation>Şimdi yeniden başlatılsın mı?</translation>
     </message>
     <message>
         <source>Garmin FTP Update</source>

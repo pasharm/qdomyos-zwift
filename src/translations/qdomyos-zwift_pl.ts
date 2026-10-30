@@ -3813,6 +3813,38 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
         <translation>Nie znaleziono licencji</translation>
     </message>
     <message>
+        <source>AVG Watts</source>
+        <translation>Śr. moc</translation>
+    </message>
+    <message>
+        <source>The workout history database could not be opened.</source>
+        <translation>Nie można otworzyć bazy historii treningów.</translation>
+    </message>
+    <message>
+        <source>Workouts imported: %1.</source>
+        <translation>Zaimportowane treningi: %1.</translation>
+    </message>
+    <message>
+        <source>The file could not be copied to the QZ folder.</source>
+        <translation>Nie można skopiować pliku do folderu QZ.</translation>
+    </message>
+    <message>
+        <source>Training programs restored: %1.</source>
+        <translation>Przywrócone programy treningowe: %1.</translation>
+    </message>
+    <message>
+        <source>No training programs of a previous installation were found.</source>
+        <translation>Nie znaleziono programów treningowych z poprzedniej instalacji.</translation>
+    </message>
+    <message>
+        <source>Already in the history: %1.</source>
+        <translation>Już w historii: %1.</translation>
+    </message>
+    <message>
+        <source>Without workout data: %1.</source>
+        <translation>Bez danych treningu: %1.</translation>
+    </message>
+    <message>
         <source>The workout file could not be opened.</source>
         <translation>Nie można otworzyć pliku treningu.</translation>
     </message>
@@ -4146,6 +4178,160 @@ Do you want to start it now?</source>
         <translation>
 
 Rozpocząć go teraz?</translation>
+    </message>
+    <message>
+        <source>You are already connected to Strava. Do you want to log out?</source>
+        <translation>Jesteś już połączony z serwisem Strava. Wylogować się?</translation>
+    </message>
+    <message>
+        <source>Peloton</source>
+        <translation>Peloton</translation>
+    </message>
+    <message>
+        <source>You are already connected to Peloton. Do you want to log out?</source>
+        <translation>Jesteś już połączony z serwisem Peloton. Wylogować się?</translation>
+    </message>
+    <message>
+        <source>Intervals.icu</source>
+        <translation>Intervals.icu</translation>
+    </message>
+    <message>
+        <source>You are already connected to Intervals.icu. Do you want to log out?</source>
+        <translation>Jesteś już połączony z serwisem Intervals.icu. Wylogować się?</translation>
+    </message>
+    <message>
+        <source>You can move the tiles!</source>
+        <translation>Możesz przesuwać kafelki!</translation>
+    </message>
+    <message>
+        <source>The tiles are locked now</source>
+        <translation>Kafelki są teraz zablokowane</translation>
+    </message>
+    <message>
+        <source>Search settings</source>
+        <translation>Szukaj w ustawieniach</translation>
+    </message>
+    <message>
+        <source>Profile: </source>
+        <translation>Profil: </translation>
+    </message>
+    <message>
+        <source>Settings</source>
+        <translation>Ustawienia</translation>
+    </message>
+    <message>
+        <source>Workouts History</source>
+        <translation>Historia treningów</translation>
+    </message>
+    <message>
+        <source>Swag Bag</source>
+        <translation>Swag Bag</translation>
+    </message>
+    <message>
+        <source>Charts</source>
+        <translation>Wykresy</translation>
+    </message>
+    <message>
+        <source>Open GPX</source>
+        <translation>Otwórz GPX</translation>
+    </message>
+    <message>
+        <source>Open Train Program</source>
+        <translation>Otwórz program treningowy</translation>
+    </message>
+    <message>
+        <source>Workout Editor</source>
+        <translation>Edytor treningów</translation>
+    </message>
+    <message>
+        <source>Save GPX</source>
+        <translation>Zapisz GPX</translation>
+    </message>
+    <message>
+        <source>Save FIT</source>
+        <translation>Zapisz FIT</translation>
+    </message>
+    <message>
+        <source>Wizard</source>
+        <translation>Kreator</translation>
+    </message>
+    <message>
+        <source>Help</source>
+        <translation>Pomoc</translation>
+    </message>
+    <message>
+        <source>Community</source>
+        <translation>Społeczność</translation>
+    </message>
+    <message>
+        <source>Credits</source>
+        <translation>Podziękowania</translation>
+    </message>
+    <message>
+        <source>Quit</source>
+        <translation>Zakończ</translation>
+    </message>
+    <message>
+        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
+        <translation>QDomyos-Zwift – most łączący urządzenia fitness</translation>
+    </message>
+    <message>
+        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
+        <translation>Pamiętaj, aby zapisać profil „%1”, jeśli chcesz zachować w nim te zmiany.</translation>
+    </message>
+    <message>
+        <source>Press back again to exit</source>
+        <translation>Naciśnij „Wstecz” jeszcze raz, aby wyjść</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Wyłączone</translation>
+    </message>
+    <message>
+        <source>Camera Cutout</source>
+        <translation>Wycięcie aparatu</translation>
+    </message>
+    <message>
+        <source>In landscape, QZ keeps a margin on the camera side so the camera hole does not cover the content.
+Do you want to use the full screen width instead?
+
+You can change it later in Settings &gt; General UI Options &gt; Keep Content Clear of the Camera Cutout.</source>
+        <translation>W orientacji poziomej QZ zostawia margines po stronie aparatu, aby otwór aparatu nie zasłaniał zawartości.
+Używać zamiast tego pełnej szerokości ekranu?
+
+Możesz to później zmienić w Ustawienia &gt; Ogólne opcje interfejsu użytkownika &gt; Margines przy wycięciu aparatu.</translation>
+    </message>
+    <message>
+        <source>Workout History</source>
+        <translation>Historia treningów</translation>
+    </message>
+    <message>
+        <source>Workouts of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Treningi z poprzedniej instalacji mogą nadal znajdować się w folderze QZ.
+Poszukać ich?
+
+W następnym oknie zezwól na dostęp do folderu QZ.</translation>
+    </message>
+    <message>
+        <source>Training Programs</source>
+        <translation>Programy treningowe</translation>
+    </message>
+    <message>
+        <source>Training programs of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Programy treningowe z poprzedniej instalacji mogą nadal znajdować się w folderze QZ.
+Poszukać ich?
+
+W następnym oknie zezwól na dostęp do folderu QZ.</translation>
+    </message>
+    <message>
+        <source>Restart now?</source>
+        <translation>Uruchomić ponownie teraz?</translation>
     </message>
     <message>
         <source>Garmin FTP Update</source>

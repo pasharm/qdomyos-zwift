@@ -3813,6 +3813,42 @@ This may take a few moments on first startup.</source>
         <translation>目标配速(m/500m)</translation>
     </message>
     <message>
+        <source>The file could not be copied to the QZ folder.</source>
+        <translation>无法将文件复制到 QZ 文件夹。</translation>
+    </message>
+    <message>
+        <source>Training programs restored: %1.</source>
+        <translation>已恢复训练计划：%1。</translation>
+    </message>
+    <message>
+        <source>No training programs of a previous installation were found.</source>
+        <translation>未找到以前安装的训练计划。</translation>
+    </message>
+    <message>
+        <source>Already in the history: %1.</source>
+        <translation>已在历史记录中：%1。</translation>
+    </message>
+    <message>
+        <source>Without workout data: %1.</source>
+        <translation>无训练数据：%1。</translation>
+    </message>
+    <message>
+        <source>The workout history database could not be opened.</source>
+        <translation>无法打开训练历史数据库。</translation>
+    </message>
+    <message>
+        <source>Searching for the device...</source>
+        <translation>正在搜索设备...</translation>
+    </message>
+    <message>
+        <source>Search stopped, tap the Bluetooth icon</source>
+        <translation>搜索已停止，请点击蓝牙图标</translation>
+    </message>
+    <message>
+        <source>Next search in %1 s</source>
+        <translation>%1 秒后再次搜索</translation>
+    </message>
+    <message>
         <source>%1 found</source>
         <translation>已找到 %1</translation>
     </message>
@@ -4394,6 +4430,20 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <source>Services</source>
         <translation>服务</translation>
+    </message>
+    <message>
+        <source>Training Programs</source>
+        <translation>训练计划</translation>
+    </message>
+    <message>
+        <source>Training programs of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>以前安装的训练计划可能仍在 QZ 文件夹中。
+要查找它们吗？
+
+请在下一个窗口中允许访问 QZ 文件夹。</translation>
     </message>
     <message>
         <source>Connection lost in the background</source>

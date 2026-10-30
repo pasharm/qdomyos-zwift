@@ -23,6 +23,12 @@ ColumnLayout {
                 trainprogram_open_clicked(localUrl)
             }
         }
+        // programs of a previous install were copied back into the training folder
+        function onTrainingProgramsRestored() {
+            var currentFolder = folderModel.folder
+            folderModel.folder = ""
+            folderModel.folder = currentFolder
+        }
     }
 
     function openWorkoutPreview(fileUrl) {
@@ -43,6 +49,7 @@ ColumnLayout {
         Qt.callLater(function() {
             openWorkoutPreview(initialWorkoutUrl)
         })
+        rootItem.trainingProgramsPageOpened()
     }
 
     // UiMessageDialog as in TrainingProgramsListJS.qml: modern look - Cancel / Delete in red,
