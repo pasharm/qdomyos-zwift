@@ -339,6 +339,7 @@ HomeForm {
     GridView {
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
+        anchors.bottom: parent.bottom
         // The tiles stretch to fill the row: the space left over by a whole number of columns
         // is shared between the columns, up to a quarter of the tile width, and what remains
         // centres the grid. Measured on the page, so the Android insets are excluded.
@@ -370,21 +371,8 @@ HomeForm {
 
         // The app toolbar scrolls away while the tiles scroll down and comes back when they
         // scroll up (Material "hide on scroll"). It follows the finger, not the end of the
-        // movement, and main.qml animates its height, so the page does not jump.
-        // Resizing a GridView stops its flick dead, so the grid keeps the height it has with the
-        // toolbar gone: with the toolbar shown it reaches below the page by toolbarRoom, and
-        // bottomMargin keeps the end of the list reachable. Not while the tiles are being moved:
-        // the toolbar stays then, and the edge scrolling below needs the real bottom of the grid.
-        readonly property real toolbarRoom: window.lockTiles ? 0 : headerToolbar.height - headerToolbar.topPadding
-        bottomMargin: toolbarRoom
-        Binding {
-            target: gridView
-            property: "height"
-            value: gridView.parent.height + gridView.toolbarRoom - gridView.anchors.topMargin
-            // The page and the toolbar change one after the other: only their rest states add up
-            when: !headerToolbar.animating
-            restoreMode: Binding.RestoreNone
-        }
+        // movement, and main.qml animates its height, so the page does not jump. A flick is
+        // left alone until it ends: the toolbar resizes the grid, and that stops a flick dead.
         // Hysteresis: the toolbar toggles only after the user has scrolled toolbarToggleDistance
         // in one direction since the last toggle. Collapsing it moves the page under the finger
         // by toolbarShift, which a per-frame check reads as scrolling back, and slow scrolling
@@ -405,14 +393,21 @@ HomeForm {
                 toolbarTurnY = contentY
                 return
             }
-            var endY = originY + contentHeight + bottomMargin - height
+            if (draggingVertically)
+                updateToolbar()
+        }
+        onMovementEnded: {
+            if (!window.lockTiles && contentY > 0 && !headerToolbar.animating)
+                updateToolbar()
+        }
+        function updateToolbar() {
             if (!headerToolbar.scrolledAway) {
                 // Only while the tiles still overflow once the toolbar is gone, and not while the
                 // view is pulled past its end: otherwise it would spring back to the top and bring
                 // the toolbar back at once
                 if (contentY - toolbarTurnY > toolbarToggleDistance
-                        && contentHeight > height
-                        && contentY <= endY) {
+                        && contentHeight - height > toolbarShift
+                        && contentY <= originY + contentHeight - height) {
                     headerToolbar.scrolledAway = true
                     toolbarTurnY = contentY
                 } else if (contentY < toolbarTurnY) {
@@ -425,7 +420,7 @@ HomeForm {
                 } else if (contentY > toolbarTurnY) {
                     // Not past the end: after pulling beyond it the view springs back, and the
                     // first move up would otherwise bring the toolbar back at once
-                    toolbarTurnY = Math.min(contentY, endY)
+                    toolbarTurnY = Math.min(contentY, originY + contentHeight - height)
                 }
             }
         }
