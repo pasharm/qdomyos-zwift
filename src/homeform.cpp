@@ -1106,7 +1106,9 @@ homeform::homeform(QQmlApplicationEngine *engine, bluetooth *bl) {
 #endif
 
     m_historyDatabasePath = historyDatabasePath();
-    fitProcessor = new FitDatabaseProcessor(m_historyDatabasePath);
+    // the .fit files stay in the QZ folder even when the database had to go to the private folder
+    const QString historyFilesDir = getWritableAppDir();
+    fitProcessor = new FitDatabaseProcessor(m_historyDatabasePath, historyFilesDir);
     connect(fitProcessor, &FitDatabaseProcessor::fileProcessed,
             this, [](const QString& filename) {
                 qDebug() << "FitDatabaseProcessor Processing:" << filename;
@@ -1119,7 +1121,7 @@ homeform::homeform(QQmlApplicationEngine *engine, bluetooth *bl) {
             this, [](const QString& error) {
                 qDebug() << "FitDatabaseProcessor Error:" << error;
             });
-    workoutModel = new WorkoutModel(m_historyDatabasePath);
+    workoutModel = new WorkoutModel(m_historyDatabasePath, historyFilesDir);
     engine->rootContext()->setContextProperty("workoutModel", workoutModel);
     
     connect(fitProcessor, &FitDatabaseProcessor::processingStopped,

@@ -13,11 +13,12 @@
 #include <QUrl>
 #include <QFile>
 
-WorkoutModel::WorkoutModel(const QString& dbPath, QObject *parent)
+WorkoutModel::WorkoutModel(const QString& dbPath, const QString& filesDir, QObject *parent)
     : QAbstractListModel(parent)
     , m_isLoading(false)
     , m_isDatabaseProcessing(true)
     , m_dbPath(dbPath)
+    , m_filesDir(filesDir)
     , m_currentStreak(0)
     , m_longestStreak(0)
     , m_isDateFiltered(false)
@@ -626,9 +627,8 @@ QString WorkoutModel::makeAbsolutePath(const QString& relativePath) const {
         return relativePath;
     }
 
-    // Extract base path from database path (remove the database filename)
-    QFileInfo dbInfo(m_dbPath);
-    QString basePath = dbInfo.absolutePath();
+    // Without a files folder, use the folder of the database (remove the database filename)
+    QString basePath = m_filesDir.isEmpty() ? QFileInfo(m_dbPath).absolutePath() : m_filesDir;
     if (!basePath.endsWith('/')) {
         basePath += '/';
     }

@@ -14,7 +14,10 @@ class FitDatabaseProcessor : public QObject {
     Q_OBJECT
 
   public:
-    explicit FitDatabaseProcessor(const QString& dbPath, QObject* parent = nullptr);
+    // filesDir: folder the stored relative .fit paths start from; empty means the folder of the
+    // database (the database can sit elsewhere, e.g. the private folder of the app on Android)
+    explicit FitDatabaseProcessor(const QString& dbPath, const QString& filesDir = QString(),
+                                  QObject* parent = nullptr);
     ~FitDatabaseProcessor();
 
     void processDirectory(const QString& dirPath);

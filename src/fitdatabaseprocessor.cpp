@@ -12,14 +12,13 @@
 
 const QString FitDatabaseProcessor::DB_CONNECTION_NAME = "FitProcessor";
 
-FitDatabaseProcessor::FitDatabaseProcessor(const QString& dbPath, QObject* parent)
+FitDatabaseProcessor::FitDatabaseProcessor(const QString& dbPath, const QString& filesDir, QObject* parent)
     : QObject(parent)
       , dbPath(dbPath)
       , stopRequested(0)
 {
-    // Extract base path from database path (remove the database filename)
-    QFileInfo dbInfo(dbPath);
-    basePath = dbInfo.absolutePath();
+    // Without a files folder, use the folder of the database (remove the database filename)
+    basePath = filesDir.isEmpty() ? QFileInfo(dbPath).absolutePath() : filesDir;
     if (!basePath.endsWith('/')) {
         basePath += '/';
     }

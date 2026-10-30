@@ -35,7 +35,8 @@ class WorkoutModel : public QAbstractListModel {
         IdRole
     };
 
-    explicit WorkoutModel(const QString& dbPath, QObject *parent = nullptr);
+    // filesDir: folder the stored relative .fit paths start from; empty means the folder of the database
+    explicit WorkoutModel(const QString& dbPath, const QString& filesDir = QString(), QObject *parent = nullptr);
     ~WorkoutModel();
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const override;
@@ -142,6 +143,7 @@ class WorkoutModel : public QAbstractListModel {
     bool m_refreshPending = false;
     bool m_isDatabaseProcessing;
     QString m_dbPath;
+    QString m_filesDir;
     int m_currentStreak;
     int m_longestStreak;
     bool m_isDateFiltered;
