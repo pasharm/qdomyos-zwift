@@ -260,8 +260,6 @@ drag_down 700
 shot t-08-end-back
 
 # Another page brings it back: the drawer opens with an edge swipe, the toolbar is gone
-adb shell cmd overlay enable com.android.internal.systemui.navbar.threebutton || true
-sleep 3
 scroll_top; sleep 2
 drag_up 800
 shot t-09-before-page
@@ -314,6 +312,13 @@ step short-list "tiles fit: toolbar stays shown on a drag"
 shot t-19-short-top
 drag_up 400
 shot t-20-short-drag
+
+# A list just over the screen: the end is reachable by bottomMargin alone, the toolbar stays
+restart_with ui_zoom=60
+step just-over "swipes up: last row in full view above the bottom of the screen"
+shot t-21-over-top
+to_end
+shot t-22-over-end
 adb shell pidof $PKG > /dev/null && echo "app alive at the end: OK" >> $STEPLOG || echo "!! app not running at the end" >> $STEPLOG
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
