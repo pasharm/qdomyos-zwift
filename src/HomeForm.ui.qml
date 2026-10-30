@@ -368,8 +368,6 @@ Page {
                     id: start
                     width: 120
                     height: row.height - 4
-                    // The overlay would paint the shadow too, cut at the edges of the button
-                    Material.elevation: startOverlay.visible ? 0 : (down ? 8 : 2)
 
                     // VoiceOver accessibility
                     Accessible.role: Accessible.Button
@@ -380,9 +378,13 @@ Page {
                     Accessible.focusable: true
                 }
                 ColorOverlay {
-                    id: startOverlay
+                    // The shadow lies outside the button: a source of the button alone cuts it square
                     anchors.fill: start
-                    source: start
+                    anchors.margins: -12
+                    source: ShaderEffectSource {
+                        sourceItem: start
+                        sourceRect: Qt.rect(-12, -12, start.width + 24, start.height + 24)
+                    }
                     color: rootItem.startColor
                     enabled: rootItem.startColor === "red" ? true : false
                     // startColor changes on every read and blinks only with the reads above: use
