@@ -554,6 +554,174 @@ Would you like to do that now?</source>
 <context>
     <name>QObject</name>
     <message>
+        <source>%1 (HR sensor) connected!</source>
+        <translation>%1(심박 센서) 연결됨!</translation>
+    </message>
+    <message>
+        <source>Searching for %1 (HR sensor)...</source>
+        <translation>%1(심박 센서) 검색 중…</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
+        <translation>%1(심박 센서)을(를) 찾을 수 없습니다. 켜져 있고 심박수를 전송하는지 확인하세요.</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
+        <translation>%1(심박 센서): 심박수 없음. 심박수를 전송하는지 확인하세요.</translation>
+    </message>
+    <message>
+        <source>%1 (cadence sensor) connected!</source>
+        <translation>%1(케이던스 센서) 연결됨!</translation>
+    </message>
+    <message>
+        <source>%1 (power sensor) connected!</source>
+        <translation>%1(파워 센서) 연결됨!</translation>
+    </message>
+    <message>
+        <source>SRAM Connected!</source>
+        <translation>SRAM 연결됨!</translation>
+    </message>
+    <message>
+        <source>Zwift Click Connected!</source>
+        <translation>Zwift Click 연결됨!</translation>
+    </message>
+    <message>
+        <source>Zwift Click v2 Connected!</source>
+        <translation>Zwift Click v2 연결됨!</translation>
+    </message>
+    <message>
+        <source>Thinkrider Controller Connected!</source>
+        <translation>Thinkrider 컨트롤러 연결됨!</translation>
+    </message>
+    <message>
+        <source>CYCPLUS BC2 Connected!</source>
+        <translation>CYCPLUS BC2 연결됨!</translation>
+    </message>
+    <message>
+        <source>Elite Square Connected!</source>
+        <translation>Elite Square 연결됨!</translation>
+    </message>
+    <message>
+        <source>Zwift Play/Ride Connected!</source>
+        <translation>Zwift Play/Ride 연결됨!</translation>
+    </message>
+    <message>
+        <source>%1 connected!</source>
+        <translation>%1 연결됨!</translation>
+    </message>
+    <message>
+        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
+        <translation>저항에 따른 파워 수동 조정 사용: 이제 파워가 [저항] 타일 값에 따라 달라집니다.</translation>
+    </message>
+    <message>
+        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
+        <translation>사용자 지정 CSC 파워 표 사용: 이제 파워가 설정한 저항/와트 지점을 따릅니다.</translation>
+    </message>
+    <message>
+        <source>%1 Battery Level %2 %</source>
+        <translation>%1 배터리 잔량 %2 %</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change</source>
+        <translation>FTMS 자전거를 찾았습니다. 변경 사항을 적용하려면 앱을 다시 시작하세요</translation>
+    </message>
+    <message>
+        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos 일립티컬은 FTMS 기기입니다. 수정 사항을 적용하려면 QZ를 다시 시작하세요.</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change</source>
+        <translation>FTMS 로잉 머신을 찾았습니다. 변경 사항을 적용하려면 앱을 다시 시작하세요</translation>
+    </message>
+    <message>
+        <source>Bluetooth Service Error! Restart the bike!</source>
+        <translation>Bluetooth 서비스 오류! 자전거를 다시 시작하세요!</translation>
+    </message>
+    <message>
+        <source>Switching to classic Bluetooth bridge</source>
+        <translation>클래식 Bluetooth 가상 기기로 전환하는 중</translation>
+    </message>
+    <message>
+        <source>Virtual Echelon enabled for this bike</source>
+        <translation>이 자전거에서 가상 Echelon을 사용합니다</translation>
+    </message>
+    <message>
+        <source>FTMS treadmill found, restart the app to apply the change</source>
+        <translation>FTMS 트레드밀을 찾았습니다. 변경 사항을 적용하려면 앱을 다시 시작하세요</translation>
+    </message>
+    <message>
+        <source>Init completed, you can use the treadmill now!</source>
+        <translation>초기화가 완료되었습니다. 이제 트레드밀을 사용할 수 있습니다!</translation>
+    </message>
+    <message>
+        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
+        <translation>QZ가 이 자전거의 데이터 형식을 감지하고 설정에서 [Virtufit Etappe 2.0 자전거]를 켰습니다. 자전거 데이터를 읽으려면 QZ를 다시 시작해야 합니다.</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change!</source>
+        <translation>FTMS 자전거를 찾았습니다. 변경 사항을 적용하려면 앱을 다시 시작하세요!</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change!</source>
+        <translation>FTMS 로잉 머신을 찾았습니다. 변경 사항을 적용하려면 앱을 다시 시작하세요!</translation>
+    </message>
+    <message>
+        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos 자전거는 FTMS처럼 보이지만 FTMS가 아닙니다. 수정 사항을 적용하려면 QZ를 다시 시작하세요.</translation>
+    </message>
+    <message>
+        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
+        <translation>PM5 로잉 머신을 찾았습니다. 수정 사항을 적용하려면 QZ를 다시 시작하세요.</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization in progress...%1%</source>
+        <translation>트레드밀 초기화 중…%1%</translation>
+    </message>
+    <message>
+        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
+        <translation>[설정] &gt; [트레드밀 옵션] &gt; [Horizon 트레드밀 옵션]에서 [FTMS 강제 사용]을 켜고 앱을 다시 시작하세요</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization completed!</source>
+        <translation>트레드밀 초기화가 완료되었습니다!</translation>
+    </message>
+    <message>
+        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos 트레드밀은 FTMS처럼 보이지만 FTMS가 아닙니다. 수정 사항을 적용하려면 QZ를 다시 시작하세요.</translation>
+    </message>
+    <message>
+        <source>Treadmill ready</source>
+        <translation>트레드밀 준비 완료</translation>
+    </message>
+    <message>
+        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
+        <translation>T01_ 기기가 감지되었습니다. 경사도 값이 이상하면 [트레드밀 옵션]에서 [IConcept FTMS 트레드밀]을 켜세요.</translation>
+    </message>
+    <message>
+        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
+        <translation>현재 SmO2: %1% 이전 SmO2: %2% THb: %3 g/dL</translation>
+    </message>
+    <message>
+        <source>SE7i init completed!</source>
+        <translation>SE7i 초기화가 완료되었습니다!</translation>
+    </message>
+    <message>
+        <source>Starting treadmill before applying requested speed %1</source>
+        <translation>요청된 속도 %1을(를) 적용하기 전에 트레드밀을 시작하는 중</translation>
+    </message>
+    <message>
+        <source>Applying cached speed request %1</source>
+        <translation>보류 중인 속도 요청 %1 적용 중</translation>
+    </message>
+    <message>
+        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
+        <translation>서비스를 찾을 수 없습니다. roberto.viola83@gmail.com으로 연락하세요!</translation>
+    </message>
+    <message>
+        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
+        <translation>Zwift Hub 기기를 찾았습니다. 가상 변속을 사용하려면 앱을 다시 시작하세요!</translation>
+    </message>
+    <message>
         <source>Sending workout email...</source>
         <translation>운동 이메일을 보내는 중…</translation>
     </message>

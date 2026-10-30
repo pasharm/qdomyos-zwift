@@ -554,6 +554,174 @@ Uruchomić ją ponownie teraz?</translation>
 <context>
     <name>QObject</name>
     <message>
+        <source>%1 (HR sensor) connected!</source>
+        <translation>Połączono: %1 (pulsometr)!</translation>
+    </message>
+    <message>
+        <source>Searching for %1 (HR sensor)...</source>
+        <translation>Wyszukiwanie: %1 (pulsometr)…</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
+        <translation>Nie znaleziono: %1 (pulsometr). Sprawdź, czy jest włączony i transmituje tętno.</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
+        <translation>%1 (pulsometr): brak tętna. Sprawdź, czy transmituje tętno.</translation>
+    </message>
+    <message>
+        <source>%1 (cadence sensor) connected!</source>
+        <translation>Połączono: %1 (czujnik kadencji)!</translation>
+    </message>
+    <message>
+        <source>%1 (power sensor) connected!</source>
+        <translation>Połączono: %1 (czujnik mocy)!</translation>
+    </message>
+    <message>
+        <source>SRAM Connected!</source>
+        <translation>Połączono SRAM!</translation>
+    </message>
+    <message>
+        <source>Zwift Click Connected!</source>
+        <translation>Połączono Zwift Click!</translation>
+    </message>
+    <message>
+        <source>Zwift Click v2 Connected!</source>
+        <translation>Połączono Zwift Click v2!</translation>
+    </message>
+    <message>
+        <source>Thinkrider Controller Connected!</source>
+        <translation>Połączono kontroler Thinkrider!</translation>
+    </message>
+    <message>
+        <source>CYCPLUS BC2 Connected!</source>
+        <translation>Połączono CYCPLUS BC2!</translation>
+    </message>
+    <message>
+        <source>Elite Square Connected!</source>
+        <translation>Połączono Elite Square!</translation>
+    </message>
+    <message>
+        <source>Zwift Play/Ride Connected!</source>
+        <translation>Połączono Zwift Play/Ride!</translation>
+    </message>
+    <message>
+        <source>%1 connected!</source>
+        <translation>Połączono: %1!</translation>
+    </message>
+    <message>
+        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
+        <translation>Włączono ręczną korektę mocy według oporu: moc zależy teraz od wartości kafelka „Opór”.</translation>
+    </message>
+    <message>
+        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
+        <translation>Włączono własną tabelę mocy CSC: moc jest teraz obliczana według ustawionych punktów opór/moc.</translation>
+    </message>
+    <message>
+        <source>%1 Battery Level %2 %</source>
+        <translation>%1: poziom baterii %2 %</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change</source>
+        <translation>Znaleziono rower FTMS, uruchom ponownie aplikację, aby zastosować zmianę</translation>
+    </message>
+    <message>
+        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
+        <translation>Orbitrek Domyos działa jako FTMS. Uruchom ponownie QZ, aby zastosować poprawkę.</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change</source>
+        <translation>Znaleziono ergometr wioślarski FTMS, uruchom ponownie aplikację, aby zastosować zmianę</translation>
+    </message>
+    <message>
+        <source>Bluetooth Service Error! Restart the bike!</source>
+        <translation>Błąd usługi Bluetooth! Uruchom ponownie rower!</translation>
+    </message>
+    <message>
+        <source>Switching to classic Bluetooth bridge</source>
+        <translation>Przełączanie na klasyczne urządzenie wirtualne Bluetooth</translation>
+    </message>
+    <message>
+        <source>Virtual Echelon enabled for this bike</source>
+        <translation>Włączono wirtualny Echelon dla tego roweru</translation>
+    </message>
+    <message>
+        <source>FTMS treadmill found, restart the app to apply the change</source>
+        <translation>Znaleziono bieżnię FTMS, uruchom ponownie aplikację, aby zastosować zmianę</translation>
+    </message>
+    <message>
+        <source>Init completed, you can use the treadmill now!</source>
+        <translation>Inicjalizacja zakończona, możesz już korzystać z bieżni!</translation>
+    </message>
+    <message>
+        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
+        <translation>QZ rozpoznał format danych tego roweru i włączył w ustawieniach opcję „Rower Virtufit Etappe 2.0”. Aby odczytywać dane roweru, musisz ponownie uruchomić QZ.</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change!</source>
+        <translation>Znaleziono rower FTMS, uruchom ponownie aplikację, aby zastosować zmianę!</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change!</source>
+        <translation>Znaleziono ergometr wioślarski FTMS, uruchom ponownie aplikację, aby zastosować zmianę!</translation>
+    </message>
+    <message>
+        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Rower Domyos przedstawia się jako FTMS, ale nim nie jest. Uruchom ponownie QZ, aby zastosować poprawkę.</translation>
+    </message>
+    <message>
+        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
+        <translation>Znaleziono ergometr wioślarski PM5. Uruchom ponownie QZ, aby zastosować poprawkę.</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization in progress...%1%</source>
+        <translation>Przygotowywanie bieżni…%1%</translation>
+    </message>
+    <message>
+        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
+        <translation>Włącz opcję „Wymuszanie użycia FTMS” w Ustawienia → Opcje bieżni → Opcje bieżni Horizon i uruchom ponownie aplikację</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization completed!</source>
+        <translation>Bieżnia jest gotowa!</translation>
+    </message>
+    <message>
+        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Bieżnia Domyos przedstawia się jako FTMS, ale nią nie jest. Uruchom ponownie QZ, aby zastosować poprawkę.</translation>
+    </message>
+    <message>
+        <source>Treadmill ready</source>
+        <translation>Bieżnia gotowa</translation>
+    </message>
+    <message>
+        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
+        <translation>Wykryto urządzenie T01_. Jeśli wartości nachylenia wyglądają dziwnie, włącz „Bieżnia IConcept FTMS” w sekcji „Opcje bieżni”.</translation>
+    </message>
+    <message>
+        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
+        <translation>SmO2 teraz: %1%, poprzednie SmO2: %2%, THb: %3 g/dl</translation>
+    </message>
+    <message>
+        <source>SE7i init completed!</source>
+        <translation>Inicjalizacja SE7i zakończona!</translation>
+    </message>
+    <message>
+        <source>Starting treadmill before applying requested speed %1</source>
+        <translation>Uruchamianie bieżni przed ustawieniem żądanej prędkości %1</translation>
+    </message>
+    <message>
+        <source>Applying cached speed request %1</source>
+        <translation>Ustawianie zapamiętanej prędkości %1</translation>
+    </message>
+    <message>
+        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
+        <translation>Nie znaleziono usługi, napisz do mnie na roberto.viola83@gmail.com!</translation>
+    </message>
+    <message>
+        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
+        <translation>Znaleziono Zwift Hub, uruchom ponownie aplikację, aby korzystać z wirtualnej zmiany biegów!</translation>
+    </message>
+    <message>
         <source>Sending workout email...</source>
         <translation>Wysyłanie treningu e-mailem…</translation>
     </message>

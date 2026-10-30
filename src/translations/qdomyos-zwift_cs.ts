@@ -554,6 +554,174 @@ Restartovat nyní?</translation>
 <context>
     <name>QObject</name>
     <message>
+        <source>%1 (HR sensor) connected!</source>
+        <translation>Připojeno: %1 (snímač tepu)!</translation>
+    </message>
+    <message>
+        <source>Searching for %1 (HR sensor)...</source>
+        <translation>Hledání: %1 (snímač tepu)…</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
+        <translation>Nenalezeno: %1 (snímač tepu). Zkontrolujte, že je zapnutý a vysílá tep.</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
+        <translation>%1 (snímač tepu): žádný tep. Zkontrolujte, že vysílá tep.</translation>
+    </message>
+    <message>
+        <source>%1 (cadence sensor) connected!</source>
+        <translation>Připojeno: %1 (snímač kadence)!</translation>
+    </message>
+    <message>
+        <source>%1 (power sensor) connected!</source>
+        <translation>Připojeno: %1 (snímač výkonu)!</translation>
+    </message>
+    <message>
+        <source>SRAM Connected!</source>
+        <translation>SRAM připojen!</translation>
+    </message>
+    <message>
+        <source>Zwift Click Connected!</source>
+        <translation>Zwift Click připojen!</translation>
+    </message>
+    <message>
+        <source>Zwift Click v2 Connected!</source>
+        <translation>Zwift Click v2 připojen!</translation>
+    </message>
+    <message>
+        <source>Thinkrider Controller Connected!</source>
+        <translation>Ovladač Thinkrider připojen!</translation>
+    </message>
+    <message>
+        <source>CYCPLUS BC2 Connected!</source>
+        <translation>CYCPLUS BC2 připojen!</translation>
+    </message>
+    <message>
+        <source>Elite Square Connected!</source>
+        <translation>Elite Square připojen!</translation>
+    </message>
+    <message>
+        <source>Zwift Play/Ride Connected!</source>
+        <translation>Zwift Play/Ride připojen!</translation>
+    </message>
+    <message>
+        <source>%1 connected!</source>
+        <translation>Připojeno: %1!</translation>
+    </message>
+    <message>
+        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
+        <translation>Ruční úprava výkonu podle odporu zapnuta: výkon se nyní řídí hodnotou dlaždice „Odpor“.</translation>
+    </message>
+    <message>
+        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
+        <translation>Vlastní tabulka výkonu CSC zapnuta: výkon se nyní řídí nastavenými dvojicemi odpor – výkon.</translation>
+    </message>
+    <message>
+        <source>%1 Battery Level %2 %</source>
+        <translation>%1: stav baterie %2 %</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change</source>
+        <translation>Nalezeno kolo FTMS, restartujte aplikaci, aby se změna projevila</translation>
+    </message>
+    <message>
+        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
+        <translation>Eliptický trenažér Domyos pracuje přes FTMS. Restartujte QZ, aby se oprava projevila. Děkujeme.</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change</source>
+        <translation>Nalezen veslovací trenažér FTMS, restartujte aplikaci, aby se změna projevila</translation>
+    </message>
+    <message>
+        <source>Bluetooth Service Error! Restart the bike!</source>
+        <translation>Chyba služby Bluetooth! Restartujte kolo!</translation>
+    </message>
+    <message>
+        <source>Switching to classic Bluetooth bridge</source>
+        <translation>Přepínání na klasické virtuální zařízení Bluetooth</translation>
+    </message>
+    <message>
+        <source>Virtual Echelon enabled for this bike</source>
+        <translation>Pro toto kolo je zapnutý virtuální Echelon</translation>
+    </message>
+    <message>
+        <source>FTMS treadmill found, restart the app to apply the change</source>
+        <translation>Nalezen běžecký pás FTMS, restartujte aplikaci, aby se změna projevila</translation>
+    </message>
+    <message>
+        <source>Init completed, you can use the treadmill now!</source>
+        <translation>Příprava dokončena, běžecký pás můžete používat!</translation>
+    </message>
+    <message>
+        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
+        <translation>QZ rozpoznalo formát dat tohoto kola a v nastavení zapnulo „Kolo Virtufit Etappe 2.0“. Aby QZ mohlo číst data kola, je nutné ho restartovat.</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change!</source>
+        <translation>Nalezeno kolo FTMS, restartujte aplikaci, aby se změna projevila!</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change!</source>
+        <translation>Nalezen veslovací trenažér FTMS, restartujte aplikaci, aby se změna projevila!</translation>
+    </message>
+    <message>
+        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Kolo Domyos se hlásí jako FTMS, ale ve skutečnosti jím není. Restartujte QZ, aby se oprava projevila. Děkujeme.</translation>
+    </message>
+    <message>
+        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
+        <translation>Nalezen veslovací trenažér PM5. Restartujte QZ, aby se oprava projevila. Děkujeme.</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization in progress...%1%</source>
+        <translation>Příprava běžeckého pásu…%1%</translation>
+    </message>
+    <message>
+        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
+        <translation>Zapněte „Vynutit použití FTMS“ v části „Nastavení &gt; Možnosti běžeckého pásu &gt; Možnosti běžeckého pásu Horizon“ a restartujte aplikaci</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization completed!</source>
+        <translation>Běžecký pás je připraven!</translation>
+    </message>
+    <message>
+        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Běžecký pás Domyos se hlásí jako FTMS, ale ve skutečnosti jím není. Restartujte QZ, aby se oprava projevila. Děkujeme.</translation>
+    </message>
+    <message>
+        <source>Treadmill ready</source>
+        <translation>Běžecký pás připraven</translation>
+    </message>
+    <message>
+        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
+        <translation>Zjištěno zařízení T01_. Pokud vidíte podivné hodnoty sklonu, zapněte „Běžecký pás IConcept FTMS“ v části „Možnosti běžeckého pásu“.</translation>
+    </message>
+    <message>
+        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
+        <translation>Aktuální SmO2: %1%, předchozí SmO2: %2%, THb: %3 g/dL</translation>
+    </message>
+    <message>
+        <source>SE7i init completed!</source>
+        <translation>SE7i je připraven!</translation>
+    </message>
+    <message>
+        <source>Starting treadmill before applying requested speed %1</source>
+        <translation>Spouštění běžeckého pásu před nastavením rychlosti %1</translation>
+    </message>
+    <message>
+        <source>Applying cached speed request %1</source>
+        <translation>Nastavení odložené rychlosti %1</translation>
+    </message>
+    <message>
+        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
+        <translation>Nenalezena žádná služba, napište mi na roberto.viola83@gmail.com!</translation>
+    </message>
+    <message>
+        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
+        <translation>Nalezen Zwift Hub, restartujte aplikaci a používejte virtuální řazení!</translation>
+    </message>
+    <message>
         <source>Sending workout email...</source>
         <translation>Odesílání tréninku e-mailem…</translation>
     </message>

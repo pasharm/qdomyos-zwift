@@ -554,6 +554,174 @@ Would you like to do that now?</source>
 <context>
     <name>QObject</name>
     <message>
+        <source>%1 (HR sensor) connected!</source>
+        <translation>Bağlandı: %1 (nabız sensörü)</translation>
+    </message>
+    <message>
+        <source>Searching for %1 (HR sensor)...</source>
+        <translation>Aranıyor: %1 (nabız sensörü)…</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
+        <translation>Bulunamadı: %1 (nabız sensörü). Açık olduğunu ve nabız yayınladığını kontrol edin.</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
+        <translation>%1 (nabız sensörü): nabız yok. Nabız yayınladığını kontrol edin.</translation>
+    </message>
+    <message>
+        <source>%1 (cadence sensor) connected!</source>
+        <translation>Bağlandı: %1 (kadans sensörü)</translation>
+    </message>
+    <message>
+        <source>%1 (power sensor) connected!</source>
+        <translation>Bağlandı: %1 (güç sensörü)</translation>
+    </message>
+    <message>
+        <source>SRAM Connected!</source>
+        <translation>SRAM bağlandı</translation>
+    </message>
+    <message>
+        <source>Zwift Click Connected!</source>
+        <translation>Zwift Click bağlandı</translation>
+    </message>
+    <message>
+        <source>Zwift Click v2 Connected!</source>
+        <translation>Zwift Click v2 bağlandı</translation>
+    </message>
+    <message>
+        <source>Thinkrider Controller Connected!</source>
+        <translation>Thinkrider kumandası bağlandı</translation>
+    </message>
+    <message>
+        <source>CYCPLUS BC2 Connected!</source>
+        <translation>CYCPLUS BC2 bağlandı</translation>
+    </message>
+    <message>
+        <source>Elite Square Connected!</source>
+        <translation>Elite Square bağlandı</translation>
+    </message>
+    <message>
+        <source>Zwift Play/Ride Connected!</source>
+        <translation>Zwift Play/Ride bağlandı</translation>
+    </message>
+    <message>
+        <source>%1 connected!</source>
+        <translation>Bağlandı: %1</translation>
+    </message>
+    <message>
+        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
+        <translation>Dirence göre elle güç ayarı açıldı: güç artık &quot;Direnç&quot; kutucuğundaki değere göre değişiyor.</translation>
+    </message>
+    <message>
+        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
+        <translation>Özel CSC güç tablosu açıldı: güç artık ayarlanan direnç/watt noktalarına göre hesaplanıyor.</translation>
+    </message>
+    <message>
+        <source>%1 Battery Level %2 %</source>
+        <translation>%1 pil seviyesi %2 %</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change</source>
+        <translation>FTMS bisikleti bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın</translation>
+    </message>
+    <message>
+        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos eliptik bisikleti bir FTMS cihazıdır. Düzeltmeyi uygulamak için QZ&apos;yi yeniden başlatın, teşekkürler.</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change</source>
+        <translation>FTMS kürek makinesi bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın</translation>
+    </message>
+    <message>
+        <source>Bluetooth Service Error! Restart the bike!</source>
+        <translation>Bluetooth hizmeti hatası! Bisikleti yeniden başlatın!</translation>
+    </message>
+    <message>
+        <source>Switching to classic Bluetooth bridge</source>
+        <translation>Klasik Bluetooth sanal cihazına geçiliyor</translation>
+    </message>
+    <message>
+        <source>Virtual Echelon enabled for this bike</source>
+        <translation>Bu bisiklet için sanal Echelon açıldı</translation>
+    </message>
+    <message>
+        <source>FTMS treadmill found, restart the app to apply the change</source>
+        <translation>FTMS koşu bandı bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın</translation>
+    </message>
+    <message>
+        <source>Init completed, you can use the treadmill now!</source>
+        <translation>Hazırlık tamamlandı, koşu bandını artık kullanabilirsiniz!</translation>
+    </message>
+    <message>
+        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
+        <translation>QZ bu bisikletin veri biçimini algıladı ve ayarlarda &quot;Virtufit Etappe 2.0 bisiklet&quot; seçeneğini açtı. Bisiklet verilerinin okunması için QZ yeniden başlatılmalıdır.</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change!</source>
+        <translation>FTMS bisikleti bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın!</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change!</source>
+        <translation>FTMS kürek makinesi bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın!</translation>
+    </message>
+    <message>
+        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos bisikleti kendini FTMS cihazı olarak tanıtıyor ama değil. Düzeltmeyi uygulamak için QZ&apos;yi yeniden başlatın, teşekkürler.</translation>
+    </message>
+    <message>
+        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
+        <translation>PM5 kürek makinesi bulundu. Düzeltmeyi uygulamak için QZ&apos;yi yeniden başlatın, teşekkürler.</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization in progress...%1%</source>
+        <translation>Koşu bandı hazırlanıyor…%1%</translation>
+    </message>
+    <message>
+        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
+        <translation>Ayarlar → Koşu bandı seçenekleri → Horizon koşu bandı seçenekleri bölümündeki &quot;FTMS kullanımını zorla&quot; ayarını açın ve uygulamayı yeniden başlatın</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization completed!</source>
+        <translation>Koşu bandı hazırlığı tamamlandı!</translation>
+    </message>
+    <message>
+        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos koşu bandı kendini FTMS cihazı olarak tanıtıyor ama değil. Düzeltmeyi uygulamak için QZ&apos;yi yeniden başlatın, teşekkürler.</translation>
+    </message>
+    <message>
+        <source>Treadmill ready</source>
+        <translation>Koşu bandı hazır</translation>
+    </message>
+    <message>
+        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
+        <translation>T01_ cihazı algılandı. Eğim değerleri tuhaf görünüyorsa &quot;Koşu bandı seçenekleri&quot; ayarlarında &quot;IConcept FTMS koşu bandı&quot; seçeneğini açın.</translation>
+    </message>
+    <message>
+        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
+        <translation>Güncel SmO2: %1%, önceki SmO2: %2%, THb: %3 g/dL</translation>
+    </message>
+    <message>
+        <source>SE7i init completed!</source>
+        <translation>SE7i hazırlığı tamamlandı!</translation>
+    </message>
+    <message>
+        <source>Starting treadmill before applying requested speed %1</source>
+        <translation>İstenen hız uygulanmadan önce koşu bandı başlatılıyor: %1</translation>
+    </message>
+    <message>
+        <source>Applying cached speed request %1</source>
+        <translation>Bekleyen hız isteği uygulanıyor: %1</translation>
+    </message>
+    <message>
+        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
+        <translation>Hizmet bulunamadı, roberto.viola83@gmail.com adresinden bana ulaşın!</translation>
+    </message>
+    <message>
+        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
+        <translation>Zwift Hub cihazı bulundu, sanal vitesleri kullanmak için uygulamayı yeniden başlatın!</translation>
+    </message>
+    <message>
         <source>Sending workout email...</source>
         <translation>Antrenman e-postayla gönderiliyor…</translation>
     </message>
