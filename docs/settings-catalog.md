@@ -62,8 +62,8 @@ For a removed setting, delete its catalog entry and decrement `settingCount`. Fo
 
 The settings search translates `name`, `description`, `parent` and the list texts by their exact English text, so a catalog text that differs from the page stays in English. `tools/check_settings_catalog.py` warns about these in a PR, without failing it, and only about what the PR adds:
 
-- `name`, `description`, list `labels`, string list `values`: the same text on a settings page (`name` also with a trailing `:`). Copy the text of the label or hint, including when it changes on the page.
-- `parent`: the title of a section on a page, or the key of another catalog entry.
+- `name`, `description`, list `labels`, string list `values`: the same text on a settings page (`name` also with a trailing `:`). Copy the text of the label or hint, including when it changes on the page. A label with a value in it (`qsTr("Bike Weight (%1)")`) is the exception: the catalog keeps the text without it ("Bike Weight"), and the warning is expected.
+- `parent`: the title of a section on a page, or the key of a setting.
 - A list with numeric `values` needs `labels` if the page shows texts for the numbers.
 
 A new settings page goes in `translationContexts` in `src/settings.qml` and in `SETTINGS_PAGES` in the check, or the search does not translate its texts.
