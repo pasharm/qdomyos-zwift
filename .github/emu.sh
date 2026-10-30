@@ -38,9 +38,7 @@ adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
 # T-060, T-066: a fake treadmill, so the home page has tiles (without a device it shows the search help)
-# T-119: values of every kind the results show as text - a real number, an integer, a list of
-# strings, a list of numbers with labels, a password, a MyWhoosh state key (hidden from the results)
-printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nui_modern=%s\napplewatch_fakedevice=true\nweight=80.5\nftp=250\nstrava_upload_mode=Request\nzwiftplay_gear_lb=1\nfloatingwindow_type=1\npzp_password=secret\nmywhoosh_link_camera_value=3\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nfakedevice_treadmill=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -185,109 +183,132 @@ sleep 30
 shot 02-first-screen        # the wizard opens on the first run
 # T-060: with the fake treadmill the wizard does not open; its back keys would leave the app
 shot 04-home
-has() {
-  dump
-  if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
-    echo "check '$1' ($2): OK" >> $STEPLOG
-  else
-    echo "!! check '$1' ($2): NOT FOUND" >> $STEPLOG
-  fi
+# T-052: the toolbar scrolls away with the tiles. Master look only (no ui_modern in this build).
+# The toolbar state is read from the frames; the steps only say what is expected of each.
+conf_with() {
+  { printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nfakedevice_treadmill=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG"
+    for kv in "$@"; do echo "$kv"; done; } > qz.conf
+  adb push qz.conf /data/local/tmp/qz.conf
+  adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf' < /dev/null"
 }
+wait_tiles() {
+  local i
+  # The fake treadmill comes after the first search ends: at most 3 min
+  for i in $(seq 1 18); do
+    dump
+    if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then
+      echo "tiles shown after $i looks" >> $STEPLOG; return 0
+    fi
+    sleep 10
+  done
+  echo "!! tiles NOT shown - the run proves nothing" >> $STEPLOG
+}
+restart_with() {
+  echo "== restart: $*" >> $STEPLOG
+  adb shell am force-stop $PKG || true
+  sleep 2
+  conf_with "$@"
+  adb shell am start -n $PKG/$PKG.CustomQtActivity
+  sleep 20
+  wait_tiles
+}
+step() { echo "[$1] expected: $2" >> $STEPLOG; }
+drag_up() { adb shell input swipe 700 1800 700 $((1800 - $1)) 1500 || true; sleep 3; }
+drag_down() { adb shell input swipe 700 900 700 $((900 + $1)) 1500 || true; sleep 3; }
+to_end() { local i; for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 600 150 || true; done; sleep 4; }
 
-# T-240: "Changed" in the search bar lists the settings that differ from their default.
-# qz.conf above changes Debug Log, Confirm Stop Workout, Fake Device and Player Weight; it also
-# writes a password (pzp_password), a MyWhoosh state key and a value equal to its default
-# (bike_weight=0) - none of them may be listed. Expected: "Changed settings (4)".
-CHANGED='^Changed settings.*'
-has_quiet() {
-  dump
-  [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null
-}
-not_has() {
-  dump
-  if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
-    echo "!! check no '$1' ($2): SHOWN" >> $STEPLOG
-  else
-    echo "check no '$1' ($2): OK" >> $STEPLOG
-  fi
-}
-# The headers and card titles of the results, into steps.log
-results() {
-  dump
-  echo "results ($1):" >> $STEPLOG
-  [ -f ui.xml ] && python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t = (n.get("text") or "") or (n.get("content-desc") or "")
-    if t and n.get("bounds") != "[0,0][0,0]":
-        print("   ", repr(t), n.get("bounds"))
-' ui.xml | head -60 >> $STEPLOG
-}
-# The toolbar button is named "Search settings" too: the bar is open when Changed shows
-open_search() {
-  if ! has_quiet '^Changed$'; then
-    tap_ui '🔍|Search settings'
-    sleep 2
-  fi
-}
-type_query() {
-  # The field of the bar, not the toolbar button of the same name (y below the toolbar)
-  # Modern look: the bar scrolls away with the results (after find_card it was off the top and
-  # the tap opened a result instead)
-  scroll_top
-  tap 470 338 "search field"
-  sleep 1
-  # The tap puts the cursor where it lands, the deletes take only what is before it (T-119:
-  # "theme" became "themew type"): to the end first
-  adb shell input keyevent KEYCODE_MOVE_END || true
-  for i in $(seq 1 30); do adb shell input keyevent KEYCODE_DEL || true; done
-  [ -n "$1" ] && adb shell input text "$1"
-  sleep 3
-  hide_keyboard
-}
-
-
-# T-318: QtInputConnection of the patched QtAndroid.jar references android.view.inputmethod.TextAttribute
-# (API 33) in its new methods. The class is loaded when a text field takes the focus and the
-# keyboard connects (QtEditText.onCreateInputConnection) - on an old API that is the moment it
-# would fail (VerifyError, NoClassDefFoundError, a crash). Steps: the settings search field
-# takes the focus, the keyboard shows, text is typed and deleted, the results follow it.
-mark() { echo "$(date +%H:%M:%S) $1" >> $STEPLOG; adb shell log -t T318 "'$1'" || true; }
 echo "== API $(adb shell getprop ro.build.version.sdk | tr -d '\r')" >> $STEPLOG
-open_menu
-shot s-menu
+wait_tiles
+step top "toolbar shown"
+shot t-00-top
+
+step short-drag "300 px, below the hysteresis: toolbar still shown, tiles clipped under the Start/Stop row"
+drag_up 300
+shot t-01-drag-300
+
+scroll_top; sleep 2
+step long-drag "800 px up: toolbar collapsed, no line of icon pixels under the status bar"
+drag_up 800
+shot t-02-drag-800
+
+step small-back "150 px down: toolbar stays collapsed"
+drag_down 150
+shot t-03-back-150
+
+step back "600 px down: toolbar back with its icons"
+drag_down 600
+shot t-04-back-600
+
+scroll_top; sleep 2
+step flick "fast flick up: collapsed"
+adb shell input swipe 700 1900 700 1200 120 || true
+sleep 5
+shot t-05-flick
+
+step top-again "swipes down to the top: toolbar back"
+scroll_top; sleep 2
+shot t-06-top-again
+
+step end "the end of the list, overscrolled: collapsed, no flicker back"
+to_end
+shot t-07-end
+step end-back "700 px down from the end: toolbar back"
+drag_down 700
+shot t-08-end-back
+
+# Another page brings it back: the drawer opens with an edge swipe, the toolbar is gone
+scroll_top; sleep 2
+drag_up 800
+shot t-09-before-page
+step page "drawer by edge swipe, Settings: page with a full toolbar"
+adb shell input swipe 2 1200 900 1200 300 || true
+sleep 3
+shot t-10-drawer
 tap_drawer '^Settings$' 400 900
 sleep 8
-shot s-00
-open_search
-mark "focus search field"
-tap 470 338 "search field"
+shot t-11-settings
+step page-back "back key: home with the toolbar shown"
+back "settings"
 sleep 4
-adb shell dumpsys input_method | grep -E "mInputShown|mServedInputConnection|mCurInputConnection|inputType" | sed 's/^/input_method: /' >> $STEPLOG || true
-# Without the keyboard shown the field has no focus and QtInputConnection was never loaded: the
-# run then proves nothing (runs 40780015706, 40781192936: dialogs over the app, no install on API 22).
-# mInputShown, not the connection field: its name differs by API (mServedInputConnectionWrapper on 28)
-if adb shell dumpsys input_method | grep -q "mInputShown=true"; then
-  echo "keyboard shown for the field: OK" >> $STEPLOG
-else
-  echo "!! keyboard not shown: the field did not take the focus - the run proves nothing" >> $STEPLOG
-fi
-shot t-keyboard
-mark "type speed"
-adb shell input text "speed"
+shot t-12-home-after-page
+
+# Sideways while collapsed
+scroll_top; sleep 2
+drag_up 800
+adb shell settings put system accelerometer_rotation 0 || true
+step rotate "sideways after a collapse: nothing cut, the top reachable"
+adb shell settings put system user_rotation 1 || true
+sleep 10
+shot t-13-landscape-collapsed
+adb shell input swipe 1200 300 1200 1200 150 || true
+adb shell input swipe 1200 300 1200 1200 150 || true
 sleep 3
-shot t-typed
-results "speed"
-mark "delete 3"
-for i in 1 2 3; do adb shell input keyevent KEYCODE_DEL || true; done
+shot t-14-landscape-top
+adb shell settings put system user_rotation 0 || true
+sleep 10
+shot t-15-portrait
+
+# Moving tiles: the gap above the first row
+scroll_top; sleep 2
+step lock "tile lock: 30 gap above the first row, inside the grid"
+tap $LOCK "lock tiles"
+sleep 3
+shot t-16-lock
+adb shell input swipe 1400 1800 1400 800 800 || true
 sleep 2
-shot t-deleted
-results "sp"
-hide_keyboard
-mark "focus again"
-tap 470 338 "search field"
+shot t-17-lock-scrolled
+adb shell input swipe 1400 800 1400 2000 400 || true
+sleep 2
+tap $LOCK "unlock tiles"
 sleep 3
-shot t-refocus
+shot t-18-unlock
+
+# A list that fits: nothing toggles
+restart_with ui_zoom=50
+step short-list "tiles fit: toolbar stays shown on a drag"
+shot t-19-short-top
+drag_up 400
+shot t-20-short-drag
 adb shell pidof $PKG > /dev/null && echo "app alive at the end: OK" >> $STEPLOG || echo "!! app not running at the end" >> $STEPLOG
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
@@ -313,7 +334,7 @@ grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
 echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
 grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
 echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
-echo "== T-318 class loading / crashes (none expected)"
-grep -E "VerifyError|NoClassDefFoundError|NoSuchMethodError|ClassNotFoundException|TextAttribute|FATAL EXCEPTION|AndroidRuntime: |Rejecting re-init|QtInputConnection" full_logcat.txt | tee t318-errors.txt | sed 's/^/!! /' >> $STEPLOG || true
-[ -s t318-errors.txt ] || echo "no class loading errors, no crash: OK" >> $STEPLOG
+echo "== QML errors of the toolbar (none expected)"
+grep -E "(main|Home)[.]qml:[0-9]+|FATAL EXCEPTION" full_logcat.txt | grep -vE "qml: |QZ-" | tee t052-errors.txt | head -40 | sed 's/^/!! /' >> $STEPLOG || true
+[ -s t052-errors.txt ] || echo "no QML error, no crash: OK" >> $STEPLOG
 echo "== steps"; cat $STEPLOG

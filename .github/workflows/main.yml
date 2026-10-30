@@ -24,14 +24,16 @@ on:
 jobs:
   emulator-logcat:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
-    # T-318: the patched QtAndroid.jar on old Android (QZ minSdk 21, consoles on 5.1-8.1)
+    timeout-minutes: 40
+    # T-052: API 28 has no top inset, so the toolbar collapses to a height of 0; API 35 keeps one
     strategy:
       fail-fast: false
       matrix:
-        # not 22: the x86_64 image fails to load libc++_shared.so at start (run 40782365867), the
-        # upstream emulator matrix starts at 24 as well
-        api: [24, 28]
+        include:
+          - api: 28
+            target: default
+          - api: 35
+            target: google_apis
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -66,7 +68,7 @@ jobs:
           LOG_DEBUG: ${{ inputs.log_debug }}
         with:
           api-level: ${{ matrix.api }}
-          target: default
+          target: ${{ matrix.target }}
           arch: x86_64
           profile: Nexus 6
           # the APK is 554 MB: on API 22 the default data partition had no room for it
@@ -85,7 +87,7 @@ jobs:
             process_list.txt
             full_logcat.txt
             steps.log
-            t318-errors.txt
+            t052-errors.txt
             dumps/
             qz-logs/
           if-no-files-found: warn
