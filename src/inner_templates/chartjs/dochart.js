@@ -426,7 +426,12 @@ function process_arr(arr) {
     $('.summary_distance').text((distance * miles).toFixed(1) + ' ' + (miles === 1 ? t('unit.km', 'km') : t('unit.mi', 'mi')));
     $('.summary_cadence_avg').text(Math.floor(cadence_avg) + ' ' + t('unit.rpm', 'rpm'));
     // Use resistance_avg for ellipticals (deviceType 4), peloton_resistance_avg for bikes/rowers
-    $('.summary_resistance_avg').text(Math.floor(deviceType === 4 ? resistance_avg : peloton_resistance_avg) + ' ' + t('unit.level', 'lvl'));
+    let summary_resistance_avg = deviceType === 4 ? resistance_avg : peloton_resistance_avg;
+    // Treadmills have no resistance and send no average: hide the cell instead of "NaN lvl"
+    let has_resistance_avg = typeof summary_resistance_avg === 'number' && isFinite(summary_resistance_avg);
+    if (has_resistance_avg)
+        $('.summary_resistance_avg').text(Math.floor(summary_resistance_avg) + ' ' + t('unit.level', 'lvl'));
+    $('.summary_resistance_avg, td[data-i18n="chart.avgResistance"]').css('visibility', has_resistance_avg ? '' : 'hidden');
 
     const backgroundFill = {
       id: 'custom_canvas_background_color',

@@ -287,6 +287,8 @@ function process_arr(arr) {
     $('.summary_cadence_avg').text(Math.floor(cadence_avg) + ' ' + t('unit.rpm', 'rpm'));
     $('.summary_cadence_max').text(Math.floor(cadence_max) + ' ' + t('unit.rpm', 'rpm'));
     $('.summary_resistance_avg').text(avgResistance + ' ' + t('unit.level', 'lvl'));
+    // No resistance samples (e.g. a treadmill workout): hide the cell instead of "0 lvl"
+    $('.summary_resistance_avg, td[data-i18n="chart.avgResistance"]').css('visibility', validResistance > 0 ? '' : 'hidden');
     $('.summary_heart_avg').text(Math.floor(heart_avg) + ' ' + t('unit.bpm', 'bpm'));
     $('.summary_heart_max').text(Math.floor(heart_max) + ' ' + t('unit.bpm', 'bpm'));
     $('.summary_speed_avg').text((speed_avg * miles).toFixed(1) + ' ' + (miles === 1 ? t('unit.kmh', 'km/h') : t('unit.mph', 'mph')));
