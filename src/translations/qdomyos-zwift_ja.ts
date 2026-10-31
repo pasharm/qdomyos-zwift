@@ -9554,5 +9554,23 @@ APK をダウンロードしますか？</translation>
         <source>Later</source>
         <translation>後で</translation>
     </message>
+    <message>
+        <source>Build %1 is downloaded, you have build %2.
+Install it?</source>
+        <translation>ビルド %1 をダウンロードしました。現在のビルドは %2 です。
+インストールしますか？</translation>
+    </message>
+    <message>
+        <source>Install</source>
+        <translation>インストール</translation>
+    </message>
+    <message>
+        <source>QZ build %1</source>
+        <translation>QZ ビルド %1</translation>
+    </message>
+    <message>
+        <source>Build %1 is downloaded, tap to install</source>
+        <translation>ビルド %1 をダウンロードしました。タップしてインストール</translation>
+    </message>
 </context>
 </TS>

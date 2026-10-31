@@ -2,8 +2,10 @@ import QtQuick 2.12
 import Qt.labs.platform 1.1
 
 // personal: the question about a newer build, only in the builds of feat/modern-beta. At launch,
-// once, on Android: the newest release of the fork against the number of this build. The browser
-// opens the APK and Android installs it, so QZ needs no permission for that.
+// once, on Android: a downloaded build newer than this one is offered for install at once, without
+// the network; otherwise the newest release of the fork against the number of this build.
+// "Download" hands the APK to the download manager of Android (betaUpdate, BetaUpdate.java): when it
+// ends with QZ on the screen the installer opens, in the background a notification does.
 // Launch only: QZ starts counting a workout by itself, a late answer must not cover it.
 UiMessageDialog {
     id: root
@@ -16,13 +18,29 @@ UiMessageDialog {
 
     property int newBuild: 0
     property string apkUrl: ""
+    // The APK of newBuild is downloaded already: the answer installs it
+    property bool downloaded: false
 
     text: qsTr("New QZ build")
-    informativeText: qsTr("Build %1 is available, you have build %2.\nDownload the APK?").arg(newBuild).arg(buildNumber)
+    informativeText: downloaded
+                     ? qsTr("Build %1 is downloaded, you have build %2.\nInstall it?").arg(newBuild).arg(buildNumber)
+                     : qsTr("Build %1 is available, you have build %2.\nDownload the APK?").arg(newBuild).arg(buildNumber)
     buttons: (MessageDialog.Yes | MessageDialog.No)
-    yesText: qsTr("Download")
+    yesText: downloaded ? qsTr("Install") : qsTr("Download")
     noText: qsTr("Later")
-    onYesClicked: Qt.openUrlExternally(apkUrl)
+    onYesClicked: {
+        if (downloaded)
+            betaUpdate.install()
+        else
+            betaUpdate.download(apkUrl, newBuild, qsTr("QZ build %1").arg(newBuild), qsTr("New QZ build"),
+                                qsTr("Build %1 is downloaded, tap to install").arg(newBuild))
+    }
+
+    function offer() {
+        // The wizard of the first run stands over the home page
+        if (!rootItem.firstRun())
+            open()
+    }
 
     function readAnswer(answer) {
         var release = JSON.parse(answer)
@@ -34,16 +52,23 @@ UiMessageDialog {
             if (url.endsWith(".apk")) {
                 newBuild = parseInt(name[1])
                 apkUrl = url
-                // The wizard of the first run stands over the home page
-                if (!rootItem.firstRun())
-                    open()
+                offer()
                 return
             }
         }
     }
 
-    Component.onCompleted: {
-        if (buildNumber === 0 || Qt.platform.os !== "android")
+    function check() {
+        betaUpdate.cleanup(buildNumber)
+        var ready = betaUpdate.downloadedBuild()
+        if (ready > buildNumber) {
+            newBuild = ready
+            downloaded = true
+            offer()
+            return
+        }
+        // A download is running: its end opens the installer
+        if (ready === -1)
             return
         var started = Date.now()
         var request = new XMLHttpRequest()
@@ -62,5 +87,19 @@ UiMessageDialog {
         }
         request.open("GET", releaseUrl)
         request.send()
+    }
+
+    // rootItem comes from C++ only after main.qml is loaded (main.cpp): the check waits for it,
+    // as the wizard of the first run does (Home.qml)
+    Timer {
+        interval: 300
+        running: root.buildNumber !== 0 && Qt.platform.os === "android" && typeof betaUpdate !== "undefined"
+        onTriggered: {
+            try {
+                root.check()
+            } catch (e) {
+                console.log("beta update: " + e)
+            }
+        }
     }
 }

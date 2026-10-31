@@ -1101,6 +1101,10 @@ SOURCES += \
     androidstatusbar.cpp \
     fontmanager.cpp
 
+# personal: the newer beta build (UiBetaUpdate.qml)
+HEADERS += betaupdate.h
+SOURCES += betaupdate.cpp
+
 include($$PWD/purchasing/purchasing.pri)
 INCLUDEPATH += purchasing/qmltypes
 INCLUDEPATH += purchasing/inapp

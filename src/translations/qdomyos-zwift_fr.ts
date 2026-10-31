@@ -9537,5 +9537,23 @@ Télécharger l&apos;APK ?</translation>
         <source>Later</source>
         <translation>Plus tard</translation>
     </message>
+    <message>
+        <source>Build %1 is downloaded, you have build %2.
+Install it?</source>
+        <translation>La version %1 est téléchargée, vous avez la version %2.
+L&apos;installer ?</translation>
+    </message>
+    <message>
+        <source>Install</source>
+        <translation>Installer</translation>
+    </message>
+    <message>
+        <source>QZ build %1</source>
+        <translation>Version de QZ %1</translation>
+    </message>
+    <message>
+        <source>Build %1 is downloaded, tap to install</source>
+        <translation>La version %1 est téléchargée, appuyez pour l&apos;installer</translation>
+    </message>
 </context>
 </TS>

@@ -9481,5 +9481,23 @@ Pobrać APK?</translation>
         <source>Later</source>
         <translation>Później</translation>
     </message>
+    <message>
+        <source>Build %1 is downloaded, you have build %2.
+Install it?</source>
+        <translation>Kompilacja %1 jest pobrana, masz kompilację %2.
+Zainstalować?</translation>
+    </message>
+    <message>
+        <source>Install</source>
+        <translation>Zainstaluj</translation>
+    </message>
+    <message>
+        <source>QZ build %1</source>
+        <translation>Kompilacja QZ %1</translation>
+    </message>
+    <message>
+        <source>Build %1 is downloaded, tap to install</source>
+        <translation>Kompilacja %1 jest pobrana, dotknij, aby zainstalować</translation>
+    </message>
 </context>
 </TS>

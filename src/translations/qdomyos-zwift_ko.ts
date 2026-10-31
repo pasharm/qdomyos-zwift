@@ -9481,5 +9481,23 @@ APK를 다운로드할까요?</translation>
         <source>Later</source>
         <translation>나중에</translation>
     </message>
+    <message>
+        <source>Build %1 is downloaded, you have build %2.
+Install it?</source>
+        <translation>빌드 %1을(를) 다운로드했습니다. 현재 빌드는 %2입니다.
+설치할까요?</translation>
+    </message>
+    <message>
+        <source>Install</source>
+        <translation>설치</translation>
+    </message>
+    <message>
+        <source>QZ build %1</source>
+        <translation>QZ 빌드 %1</translation>
+    </message>
+    <message>
+        <source>Build %1 is downloaded, tap to install</source>
+        <translation>빌드 %1을(를) 다운로드했습니다. 탭하여 설치</translation>
+    </message>
 </context>
 </TS>

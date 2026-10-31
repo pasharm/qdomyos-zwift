@@ -9550,5 +9550,23 @@ Download the APK?</source>
         <source>Later</source>
         <translation>稍后</translation>
     </message>
+    <message>
+        <source>Build %1 is downloaded, you have build %2.
+Install it?</source>
+        <translation>版本 %1 已下载，当前版本为 %2。
+安装？</translation>
+    </message>
+    <message>
+        <source>Install</source>
+        <translation>安装</translation>
+    </message>
+    <message>
+        <source>QZ build %1</source>
+        <translation>QZ 版本 %1</translation>
+    </message>
+    <message>
+        <source>Build %1 is downloaded, tap to install</source>
+        <translation>版本 %1 已下载，点按即可安装</translation>
+    </message>
 </context>
 </TS>

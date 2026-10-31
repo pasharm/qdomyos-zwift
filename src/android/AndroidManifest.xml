@@ -155,6 +155,10 @@
                                         <action android:name="android.media.VOLUME_CHANGED_ACTION" />
                                     </intent-filter>
                                 </receiver>
+                                <!-- personal: the downloaded beta build goes to the installer (BetaUpdate.java) -->
+                                <provider android:name="androidx.core.content.FileProvider" android:authorities="org.cagnulen.qdomyoszwift.betaupdate" android:exported="false" android:grantUriPermissions="true">
+                                    <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/beta_update_paths" />
+                                </provider>
 		  <!-- For adding service(s) please check: https://wiki.qt.io/AndroidServices -->
 		</application>
 
@@ -164,6 +168,8 @@
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE"/>
 <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+<!-- personal: the installer opened for the downloaded beta build (BetaUpdate.java) -->
+<uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES"/>
 <uses-permission android:name="android.permission.RECEIVE_MEDIA_BUTTON" />
     <uses-permission android:name="android.permission.ACCESS_CHECKIN_PROPERTIES"/>
     <!-- Qt 5 historically auto-injected these permissions. Keep the legacy

@@ -38,6 +38,7 @@
 #include "mqttpublisher.h"
 #include "androidstatusbar.h"
 #include "fontmanager.h"
+#include "betaupdate.h"
 #include "filesearcher.h"
 
 #ifdef Q_OS_ANDROID
@@ -1063,6 +1064,9 @@ int main(int argc, char *argv[]) {
         // Expose FileSearcher for fast recursive file searching
         FileSearcher fileSearcher;
         engine.rootContext()->setContextProperty("fileSearcher", &fileSearcher);
+        // personal: the newer beta build (UiBetaUpdate.qml)
+        BetaUpdate betaUpdate;
+        engine.rootContext()->setContextProperty("betaUpdate", &betaUpdate);
 
         engine.load(url);
 #ifdef Q_OS_ANDROID

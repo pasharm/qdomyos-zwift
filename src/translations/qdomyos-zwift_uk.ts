@@ -9489,5 +9489,23 @@ Download the APK?</source>
         <source>Later</source>
         <translation>Пізніше</translation>
     </message>
+    <message>
+        <source>Build %1 is downloaded, you have build %2.
+Install it?</source>
+        <translation>Збірку %1 завантажено, у вас збірка %2.
+Встановити?</translation>
+    </message>
+    <message>
+        <source>Install</source>
+        <translation>Встановити</translation>
+    </message>
+    <message>
+        <source>QZ build %1</source>
+        <translation>Збірка QZ %1</translation>
+    </message>
+    <message>
+        <source>Build %1 is downloaded, tap to install</source>
+        <translation>Збірку %1 завантажено, натисніть, щоб встановити</translation>
+    </message>
 </context>
 </TS>

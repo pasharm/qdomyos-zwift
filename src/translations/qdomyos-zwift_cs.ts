@@ -9484,5 +9484,23 @@ Stáhnout APK?</translation>
         <source>Later</source>
         <translation>Později</translation>
     </message>
+    <message>
+        <source>Build %1 is downloaded, you have build %2.
+Install it?</source>
+        <translation>Sestavení %1 je staženo, máte sestavení %2.
+Nainstalovat?</translation>
+    </message>
+    <message>
+        <source>Install</source>
+        <translation>Instalovat</translation>
+    </message>
+    <message>
+        <source>QZ build %1</source>
+        <translation>Sestavení QZ %1</translation>
+    </message>
+    <message>
+        <source>Build %1 is downloaded, tap to install</source>
+        <translation>Sestavení %1 je staženo, klepnutím nainstalujete</translation>
+    </message>
 </context>
 </TS>

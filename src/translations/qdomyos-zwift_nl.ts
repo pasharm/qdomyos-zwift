@@ -9484,5 +9484,23 @@ APK downloaden?</translation>
         <source>Later</source>
         <translation>Later</translation>
     </message>
+    <message>
+        <source>Build %1 is downloaded, you have build %2.
+Install it?</source>
+        <translation>Build %1 is gedownload, je hebt build %2.
+Installeren?</translation>
+    </message>
+    <message>
+        <source>Install</source>
+        <translation>Installeren</translation>
+    </message>
+    <message>
+        <source>QZ build %1</source>
+        <translation>QZ-build %1</translation>
+    </message>
+    <message>
+        <source>Build %1 is downloaded, tap to install</source>
+        <translation>Build %1 is gedownload, tik om te installeren</translation>
+    </message>
 </context>
 </TS>

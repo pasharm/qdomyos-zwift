@@ -9484,5 +9484,23 @@ APK indirilsin mi?</translation>
         <source>Later</source>
         <translation>Daha sonra</translation>
     </message>
+    <message>
+        <source>Build %1 is downloaded, you have build %2.
+Install it?</source>
+        <translation>%1 derlemesi indirildi, sizdeki derleme %2.
+Yüklensin mi?</translation>
+    </message>
+    <message>
+        <source>Install</source>
+        <translation>Yükle</translation>
+    </message>
+    <message>
+        <source>QZ build %1</source>
+        <translation>QZ derlemesi %1</translation>
+    </message>
+    <message>
+        <source>Build %1 is downloaded, tap to install</source>
+        <translation>%1 derlemesi indirildi, yüklemek için dokunun</translation>
+    </message>
 </context>
 </TS>
