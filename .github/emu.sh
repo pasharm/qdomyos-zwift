@@ -163,6 +163,7 @@ install_apk apk-base/android-debug.apk
 run_zero base uk
 install_apk apk-debug/android-debug.apk
 for lang in uk en; do run_zero debug $lang; done
+run_lang debug uk
 
 # pause_on_start: the device connect pauses the workout and marks it stopped - the button must
 # say "Start" (the next press resets the stats), not "Resume"
