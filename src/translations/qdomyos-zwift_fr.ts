@@ -6263,6 +6263,10 @@ Dans la fenêtre suivante, autorisez l&apos;accès au dossier QZ.</translation>
         <translation>Si vous souhaitez envoyer des métriques à votre appareil Garmin depuis votre Mac, activez ceci. Sinon, laissez-le désactivé.</translation>
     </message>
     <message>
+        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
+        <translation>Sur Android avec un tapis de course, QZ apparaît ainsi sur votre montre Garmin comme un capteur de foulée, sous le nom Bluetooth du téléphone. Tant que cette option est activée, Zwift ne peut pas utiliser QZ comme tapis de course Bluetooth.</translation>
+    </message>
+    <message>
         <source>Enable Companion App</source>
         <translation>Activer l&apos;application compagnon</translation>
     </message>

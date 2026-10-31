@@ -6266,6 +6266,10 @@ Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog 
         <translation>Schakel dit in als je gegevens van je Mac naar je Garmin-apparaat wilt sturen. Laat het anders uitgeschakeld.</translation>
     </message>
     <message>
+        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
+        <translation>Op Android met een loopband verschijnt QZ hierdoor op je Garmin-horloge als foot pod, onder de Bluetooth-naam van de telefoon. Zolang dit aanstaat, kan Zwift QZ niet als Bluetooth-loopband gebruiken.</translation>
+    </message>
+    <message>
         <source>Enable Companion App</source>
         <translation>Companion-app inschakelen</translation>
     </message>

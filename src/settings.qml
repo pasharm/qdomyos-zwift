@@ -10258,6 +10258,21 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
+                    Label {
+                        visible: Qt.platform.os === "android"
+                        text: qsTr("On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone's Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.")
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
+                        font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                    }
+
                     IndicatorOnlySwitch {
                         text: qsTr("Enable Companion App")
                         spacing: 0

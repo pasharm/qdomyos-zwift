@@ -5649,6 +5649,10 @@ Deseja mudar para a conexão Bluetooth clássica nesta sessão?</translation>
         <translation>Para enviar métricas para o seu dispositivo Garmin a partir do Mac, ative esta opção. Caso contrário, mantenha desativado.</translation>
     </message>
     <message>
+        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
+        <translation>No Android com uma esteira, o QZ aparece no relógio Garmin como sensor de passada, com o nome Bluetooth do celular. Enquanto isso estiver ativado, o Zwift não pode usar o QZ como esteira Bluetooth.</translation>
+    </message>
+    <message>
         <source>Enable Companion App</source>
         <translation>Ativar Aplicativo Companheiro</translation>
     </message>

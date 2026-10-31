@@ -6263,6 +6263,10 @@ Nie: QZ pozostawi je jako bieżnię i nie zapyta ponownie (rower można nadal us
         <translation>Jeśli chcesz wysyłać dane pomiarowe do urządzenia Garmin z komputera Mac, włącz tę opcję. W przeciwnym razie pozostaw ją wyłączoną.</translation>
     </message>
     <message>
+        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
+        <translation>Na Androidzie z bieżnią QZ pojawi się w zegarku Garmin jako czujnik kroków pod nazwą Bluetooth telefonu. Gdy ta opcja jest włączona, Zwift nie może używać QZ jako bieżni Bluetooth.</translation>
+    </message>
+    <message>
         <source>Enable Companion App</source>
         <translation>Włącz aplikację towarzyszącą</translation>
     </message>

@@ -6256,6 +6256,10 @@ In the next window, allow access to the QZ folder.</source>
         <translation>MacからGarminデバイスに指標データを送信したい場合は、これを有効にします。それ以外の場合は無効のままにしてください。</translation>
     </message>
     <message>
+        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
+        <translation>Android とトレッドミルの組み合わせでは、QZ がスマートフォンの Bluetooth 名でフットポッドとして Garmin ウォッチに表示されます。オンの間、Zwift は QZ を Bluetooth トレッドミルとして使用できません。</translation>
+    </message>
+    <message>
         <source>Enable Companion App</source>
         <translation>コンパニオンアプリを有効化</translation>
     </message>

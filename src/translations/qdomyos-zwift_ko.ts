@@ -6263,6 +6263,10 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>Mac에서 Garmin 기기로 측정값을 보내려면 이 설정을 켜세요. 그렇지 않으면 꺼 두세요.</translation>
     </message>
     <message>
+        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
+        <translation>Android에서 트레드밀을 사용할 때 QZ가 휴대폰의 Bluetooth 이름으로 Garmin 시계에 풋 포드로 표시됩니다. 이 옵션이 켜져 있는 동안 Zwift는 QZ를 Bluetooth 트레드밀로 사용할 수 없습니다.</translation>
+    </message>
+    <message>
         <source>Enable Companion App</source>
         <translation>Companion 앱 사용</translation>
     </message>

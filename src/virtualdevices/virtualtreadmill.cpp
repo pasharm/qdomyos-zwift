@@ -50,6 +50,7 @@ virtualtreadmill::virtualtreadmill(bluetoothdevice *t, bool noHeartService) {
     bike_cadence_sensor = settings.value(QZSettings::bike_cadence_sensor, QZSettings::default_bike_cadence_sensor).toBool();
     virtual_device_echelon = settings.value(QZSettings::virtual_device_echelon, QZSettings::default_virtual_device_echelon).toBool();
     run_cadence_sensor = settings.value(QZSettings::run_cadence_sensor, QZSettings::default_run_cadence_sensor).toBool();
+    garmin_bluetooth_compatibility = settings.value(QZSettings::garmin_bluetooth_compatibility, QZSettings::default_garmin_bluetooth_compatibility).toBool();
     bluetooth_relaxed = settings.value(QZSettings::bluetooth_relaxed, QZSettings::default_bluetooth_relaxed).toBool();
     const bool echelon = virtual_device_echelon;
     const QString echelonAdvertisingName =
@@ -70,7 +71,7 @@ virtualtreadmill::virtualtreadmill(bluetoothdevice *t, bool noHeartService) {
     notif2AD9 = new CharacteristicNotifier2AD9(t, this);
     notif2AD2 = new CharacteristicNotifier2AD2(t, this);
     notif2ACD = new CharacteristicNotifier2ACD(t, this);
-    notif2A53 = new CharacteristicNotifier2A53(t, this);
+    notif2A53 = new CharacteristicNotifier2A53(t, this, garminFootPod());
     notif2A37 = new CharacteristicNotifier2A37(t, this);
     writeP2AD9 = new CharacteristicWriteProcessor2AD9(bikeResistanceGain, bikeResistanceOffset, t, notif2AD9, this);
     connect(writeP2AD9, SIGNAL(changeInclination(double, double)), this, SIGNAL(changeInclination(double, double)));
@@ -82,7 +83,6 @@ virtualtreadmill::virtualtreadmill(bluetoothdevice *t, bool noHeartService) {
 #ifndef IO_UNDER_QT
     bool ios_peloton_workaround =
         settings.value(QZSettings::ios_peloton_workaround, QZSettings::default_ios_peloton_workaround).toBool();
-    bool garmin_bluetooth_compatibility = settings.value(QZSettings::garmin_bluetooth_compatibility, QZSettings::default_garmin_bluetooth_compatibility).toBool();
     if (ios_peloton_workaround) {
         qDebug() << "ios_zwift_workaround activated!";
         h = new lockscreen();
@@ -394,7 +394,8 @@ virtualtreadmill::virtualtreadmill(bluetoothdevice *t, bool noHeartService) {
                charData.setUuid(QBluetoothUuid::CharacteristicType::RSCFeature);
                charData.setProperties(QLowEnergyCharacteristic::Read);
                QByteArray value;
-               value.append((char)0x02); // Total Distance Measurement Supported
+               // Total Distance Measurement Supported, plus Walking or Running Status for a Garmin foot pod
+               value.append((char)(garminFootPod() ? 0x06 : 0x02));
                value.append((char)0x00);
                charData.setValue(value);
 
@@ -516,7 +517,8 @@ virtualtreadmill::virtualtreadmill(bluetoothdevice *t, bool noHeartService) {
                 QAndroidJniObject::fromString(echelonAdvertisingName).object<jstring>());
         } else {
             QAndroidJniObject::callStaticMethod<void>("org/cagnulen/qdomyoszwift/BleAdvertiser",
-                                                     "startAdvertisingTreadmill",
+                                                     garminFootPod() ? "startAdvertisingFootPod"
+                                                                     : "startAdvertisingTreadmill",
                                                      "(Landroid/content/Context;)V",
                                                      QtAndroid::androidContext().object());
         }
@@ -875,7 +877,8 @@ void virtualtreadmill::reconnect() {
                 QAndroidJniObject::fromString(echelonAdvertisingName).object<jstring>());
         } else {
             QAndroidJniObject::callStaticMethod<void>("org/cagnulen/qdomyoszwift/BleAdvertiser",
-                                                     "startAdvertisingTreadmill",
+                                                     garminFootPod() ? "startAdvertisingFootPod"
+                                                                     : "startAdvertisingTreadmill",
                                                      "(Landroid/content/Context;)V",
                                                      QtAndroid::androidContext().object());
         }
@@ -1142,7 +1145,7 @@ bool virtualtreadmill::ftmsServiceEnable() {
     if (virtual_device_echelon) {
         return false;
     }
-    bool cadence = run_cadence_sensor;
+    bool cadence = run_cadence_sensor || garminFootPod();
     if (!cadence)
         return true;
     if (noHeartService == false)
@@ -1154,17 +1157,26 @@ bool virtualtreadmill::ftmsTreadmillEnable() {
     if (virtual_device_echelon) {
         return false;
     }
-    bool cadence = run_cadence_sensor;
+    bool cadence = run_cadence_sensor || garminFootPod();
     if (!cadence)
         return true;
     return false;
 }
 
 bool virtualtreadmill::RSCEnable() {
-    bool cadence = run_cadence_sensor;
+    bool cadence = run_cadence_sensor || garminFootPod();
     if (cadence)
         return true;
     return false;
+}
+
+// A Garmin watch does not accept FTMS as a sensor, but it pairs with RSC as a foot pod.
+bool virtualtreadmill::garminFootPod() const {
+#ifdef Q_OS_ANDROID
+    return garmin_bluetooth_compatibility && !virtual_device_echelon;
+#else
+    return false;
+#endif
 }
 
 void virtualtreadmill::dirconChangedInclination(double grade, double percentage) {

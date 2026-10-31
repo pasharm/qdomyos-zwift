@@ -6266,6 +6266,10 @@ Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nasta
         <translation>Zapněte, pokud chcete posílat údaje z Macu do zařízení Garmin. Jinak ponechte vypnuté.</translation>
     </message>
     <message>
+        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
+        <translation>Na Androidu s běžeckým pásem se díky tomu QZ hodinkám Garmin zobrazí jako krokoměr pod názvem Bluetooth telefonu. Zatímco je to zapnuté, Zwift nemůže QZ používat jako běžecký pás přes Bluetooth.</translation>
+    </message>
+    <message>
         <source>Enable Companion App</source>
         <translation>Zapnout doprovodnou aplikaci</translation>
     </message>

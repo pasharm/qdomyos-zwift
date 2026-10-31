@@ -87,6 +87,7 @@ class virtualtreadmill : public virtualdevice {
     // and treadmillProvider() runs on every treadmillTimer tick.
     bool virtual_device_echelon = false;
     bool run_cadence_sensor = false;
+    bool garmin_bluetooth_compatibility = false;
     bool bluetooth_relaxed = false;
     bool bike_cadence_sensor = false;
 
@@ -100,6 +101,7 @@ class virtualtreadmill : public virtualdevice {
     bool ftmsServiceEnable();
     bool ftmsTreadmillEnable();
     bool RSCEnable();
+    bool garminFootPod() const;
     bool isEchelonVirtualEnabled() const;
     void writeEchelonCharacteristic(const QLowEnergyCharacteristic &characteristic, const QByteArray &value);
     void echelonWriteStatus();

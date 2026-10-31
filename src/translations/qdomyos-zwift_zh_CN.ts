@@ -6272,6 +6272,10 @@ In the next window, allow access to the QZ folder.</source>
         <translation>如果您想从 Mac 将数据发送到您的 Garmin 设备，请启用此项。否则请保持禁用。</translation>
     </message>
     <message>
+        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
+        <translation>在 Android 上使用跑步机时，QZ 会以手机的蓝牙名称作为跑步传感器显示在 Garmin 手表上。开启后，Zwift 无法将 QZ 用作蓝牙跑步机。</translation>
+    </message>
+    <message>
         <source>Enable Companion App</source>
         <translation>启用伴侣应用</translation>
     </message>

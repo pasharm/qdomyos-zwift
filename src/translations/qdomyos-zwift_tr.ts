@@ -6266,6 +6266,10 @@ Hayır: QZ cihazı koşu bandı olarak tutar ve bir daha sormaz (bisiklet yine e
         <translation>Mac&apos;inizden Garmin cihazınıza veri göndermek istiyorsanız bunu açın. Aksi hâlde kapalı bırakın.</translation>
     </message>
     <message>
+        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
+        <translation>Android&apos;de koşu bandıyla QZ, Garmin saatinizde telefonun Bluetooth adıyla ayak sensörü olarak görünür. Bu açıkken Zwift, QZ&apos;yi Bluetooth koşu bandı olarak kullanamaz.</translation>
+    </message>
+    <message>
         <source>Enable Companion App</source>
         <translation>Companion uygulamasını etkinleştir</translation>
     </message>
