@@ -6414,6 +6414,7 @@ void homeform::Stop() {
                 paused = false;
                 stopped = true;
                 emit workoutEventStateChanged(bluetoothdevice::STOPPED);
+                emit workoutStateChanged();
                 if (settings.value(QZSettings::top_bar_enabled, QZSettings::default_top_bar_enabled).toBool()) {
                     emit startIconChanged(startIcon());
                     emit startTextChanged(startText());
