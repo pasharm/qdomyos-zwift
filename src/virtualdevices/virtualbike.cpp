@@ -465,7 +465,8 @@ virtualbike::virtualbike(bluetoothdevice *t, bool noWriteResistance, bool noHear
                     charData.setUuid(QBluetoothUuid::CharacteristicType::CyclingPowerFeature);
                     charData.setProperties(QLowEnergyCharacteristic::Read);
                     QByteArray value;
-                    value.append((char)0x08); // crank supported
+                    // crank supported; for a Garmin watch also wheel, which CharacteristicNotifier2A63 always sends
+                    value.append((char)(garminPowerMeter() ? 0x0C : 0x08));
                     value.append((char)0x00);
                     value.append((char)0x00);
                     value.append((char)0x00);
@@ -745,6 +746,11 @@ virtualbike::virtualbike(bluetoothdevice *t, bool noWriteResistance, bool noHear
                                                       "(Landroid/content/Context;Ljava/lang/String;)V",
                                                       QtAndroid::androidContext().object(),
                                                       QAndroidJniObject::fromString(echelonAdvertisingName).object<jstring>());
+        } else if (garminPowerMeter()) {
+            QAndroidJniObject::callStaticMethod<void>("org/cagnulen/qdomyoszwift/BleAdvertiser",
+                                                      "startAdvertisingCyclingPower",
+                                                      "(Landroid/content/Context;)V",
+                                                      QtAndroid::androidContext().object());
         } else {
             leController->startAdvertising(pars, advertisingData, advertisingData);
         }
@@ -1919,11 +1925,31 @@ void virtualbike::reconnect() {
                                                   "(Landroid/content/Context;Ljava/lang/String;)V",
                                                   QtAndroid::androidContext().object(),
                                                   QAndroidJniObject::fromString(echelonAdvertisingName).object<jstring>());
+    } else if (garminPowerMeter()) {
+        QAndroidJniObject::callStaticMethod<void>("org/cagnulen/qdomyoszwift/BleAdvertiser",
+                                                  "startAdvertisingCyclingPower",
+                                                  "(Landroid/content/Context;)V",
+                                                  QtAndroid::androidContext().object());
     } else {
         leController->startAdvertising(pars, advertisingData, advertisingData);
     }
 #else
     leController->startAdvertising(pars, advertisingData, advertisingData);
+#endif
+}
+
+// A Garmin watch takes a power meter, not FTMS; on Android it is found only with the Java advertiser.
+bool virtualbike::garminPowerMeter() const {
+#ifdef Q_OS_ANDROID
+    QSettings settings;
+    return settings.value(QZSettings::garmin_bluetooth_compatibility, QZSettings::default_garmin_bluetooth_compatibility).toBool() &&
+           settings.value(QZSettings::bike_power_sensor, QZSettings::default_bike_power_sensor).toBool() &&
+           !settings.value(QZSettings::virtual_device_tacx, QZSettings::default_virtual_device_tacx).toBool() &&
+           !settings.value(QZSettings::virtual_device_ifit, QZSettings::default_virtual_device_ifit).toBool() &&
+           !settings.value(QZSettings::virtual_device_onlyheart, QZSettings::default_virtual_device_onlyheart).toBool() &&
+           !isEchelonVirtualEnabled();
+#else
+    return false;
 #endif
 }
 
