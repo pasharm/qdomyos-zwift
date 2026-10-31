@@ -134,6 +134,24 @@ Page {
                     source: start
                     color: rootItem.startColor
                     enabled: rootItem.startColor === "red" ? true : false
+                    // startColor() toggles on every read: the blink needs an odd number of reads per
+                    // tick (the signal argument, color, enabled), so use color here. A transparent
+                    // overlay would still draw the button a second time, its shadow cut square
+                    visible: color.a > 0
+                    // Red on the pill only: the faint tail of the shadow reaches far past the button,
+                    // and tinted it shows as a red square wherever the source ends
+                    layer.enabled: true
+                    layer.effect: OpacityMask {
+                        maskSource: Item {
+                            width: start.width
+                            height: start.height
+                            Rectangle {
+                                anchors.fill: parent
+                                anchors.margins: 6 // the insets of RoundButton in the Material style
+                                radius: start.radius
+                            }
+                        }
+                    }
                 }
             }
 
@@ -165,6 +183,7 @@ Page {
                     source: stop
                     color: rootItem.stopColor
                     enabled: rootItem.stopColor === "red" ? true : false
+                    visible: color.a > 0
                 }
             }
 
@@ -196,6 +215,7 @@ Page {
                     anchors.fill: lap
                     source: lap
                     color: lap.enabled ? "#00000000" : "#B0D3d3d3"
+                    visible: color.a > 0
                 }
             }
         }
