@@ -9526,4 +9526,25 @@ Default: A = -0.96, B = 1.33</source>
         <translation>最大 W/kg</translation>
     </message>
 </context>
+<context>
+    <name>UiBetaUpdate</name>
+    <message>
+        <source>New QZ build</source>
+        <translation>QZ 新版本</translation>
+    </message>
+    <message>
+        <source>Build %1 is available, you have build %2.
+Download the APK?</source>
+        <translation>版本 %1 可用，当前版本为 %2。
+下载 APK？</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>下载</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>稍后</translation>
+    </message>
+</context>
 </TS>

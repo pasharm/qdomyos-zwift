@@ -9460,4 +9460,25 @@ Standaard: A = -0.96, B = 1.33</translation>
         <translation>Max. W/kg</translation>
     </message>
 </context>
+<context>
+    <name>UiBetaUpdate</name>
+    <message>
+        <source>New QZ build</source>
+        <translation>Nieuwe QZ-build</translation>
+    </message>
+    <message>
+        <source>Build %1 is available, you have build %2.
+Download the APK?</source>
+        <translation>Build %1 is beschikbaar, je hebt build %2.
+APK downloaden?</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>Downloaden</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Later</translation>
+    </message>
+</context>
 </TS>

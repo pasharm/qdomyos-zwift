@@ -9493,4 +9493,25 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Max. Watt/kg</translation>
     </message>
 </context>
+<context>
+    <name>UiBetaUpdate</name>
+    <message>
+        <source>New QZ build</source>
+        <translation>Neuer QZ-Build</translation>
+    </message>
+    <message>
+        <source>Build %1 is available, you have build %2.
+Download the APK?</source>
+        <translation>Build %1 ist verfügbar, du hast Build %2.
+APK herunterladen?</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>Herunterladen</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Später</translation>
+    </message>
+</context>
 </TS>

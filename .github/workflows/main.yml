@@ -22,6 +22,9 @@ jobs:
   android-build:
     # The type of runner that the job will run on
     runs-on: ubuntu-22.04
+    # personal: the step "Publish the beta release" creates a release
+    permissions:
+      contents: write
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -225,6 +228,15 @@ jobs:
           make -j8
           make install
 
+      # personal: the build number for the question about a newer build (UiBetaUpdate.qml)
+      - name: Stamp the beta build number
+        if: github.ref == 'refs/heads/feat/modern-beta'
+        run: |
+          sed -i 's/property int buildNumber: 0/property int buildNumber: ${{ github.run_number }}/' src/UiBetaUpdate.qml
+          sed -i 's/android:versionName="\([^"]*\)"/android:versionName="\1-beta.${{ github.run_number }}"/' src/android/AndroidManifest.xml
+          grep -c 'buildNumber: ${{ github.run_number }}' src/UiBetaUpdate.qml
+          grep -c 'beta.${{ github.run_number }}"' src/android/AndroidManifest.xml
+
       - name: Build QZ for Android (arm64-v8a, x86_64)
         run: |
           lrelease src/qdomyos-zwift.pri
@@ -341,3 +353,18 @@ jobs:
           name: qz-library-with-debug-info
           path: ${{ github.workspace }}/symbols/
           retention-days: 14
+
+      # personal: only a build signed with the stable key can be installed over the previous one.
+      # Last: a re-run has the same number, the release exists and this step fails
+      - name: Publish the beta release
+        if: github.ref == 'refs/heads/feat/modern-beta'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "$CI_ANDROID_RESIGN_APK" != "true" ]; then
+            echo "::error::Signing secrets are missing, the beta release is not published."
+            exit 1
+          fi
+          APK="$RUNNER_TEMP/qz-beta-${{ github.run_number }}.apk"
+          cp "${{ github.workspace }}/output/android/build/outputs/apk/debug/android-debug.apk" "$APK"
+          gh release create "beta-${{ github.run_number }}" "$APK" --repo "${{ github.repository }}" --target "${{ github.sha }}" --title "QZ beta ${{ github.run_number }}" --notes "Build of feat/modern-beta ${{ github.sha }}" --latest

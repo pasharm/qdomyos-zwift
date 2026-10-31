@@ -9457,4 +9457,25 @@ Domyślnie: A = -0.96, B = 1.33</translation>
         <translation>Maksymalna moc W/kg</translation>
     </message>
 </context>
+<context>
+    <name>UiBetaUpdate</name>
+    <message>
+        <source>New QZ build</source>
+        <translation>Nowa kompilacja QZ</translation>
+    </message>
+    <message>
+        <source>Build %1 is available, you have build %2.
+Download the APK?</source>
+        <translation>Dostępna jest kompilacja %1, masz kompilację %2.
+Pobrać APK?</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>Pobierz</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Później</translation>
+    </message>
+</context>
 </TS>

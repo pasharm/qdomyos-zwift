@@ -9505,4 +9505,25 @@ Predeterminado: A = -0.96, B = 1.33</translation>
         <translation>Vatios/kg máx.</translation>
     </message>
 </context>
+<context>
+    <name>UiBetaUpdate</name>
+    <message>
+        <source>New QZ build</source>
+        <translation>Nueva compilación de QZ</translation>
+    </message>
+    <message>
+        <source>Build %1 is available, you have build %2.
+Download the APK?</source>
+        <translation>La compilación %1 está disponible, tienes la %2.
+¿Descargar el APK?</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>Descargar</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Más tarde</translation>
+    </message>
+</context>
 </TS>

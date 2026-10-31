@@ -9465,4 +9465,25 @@ Default: A = -0.96, B = 1.33</source>
         <translation>Макс. Вт/кг</translation>
     </message>
 </context>
+<context>
+    <name>UiBetaUpdate</name>
+    <message>
+        <source>New QZ build</source>
+        <translation>Новая сборка QZ</translation>
+    </message>
+    <message>
+        <source>Build %1 is available, you have build %2.
+Download the APK?</source>
+        <translation>Доступна сборка %1, у вас сборка %2.
+Скачать APK?</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>Скачать</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Позже</translation>
+    </message>
+</context>
 </TS>

@@ -9460,4 +9460,25 @@ Varsayılan: A = -0.96, B = 1.33</translation>
         <translation>Maks. watt/kg</translation>
     </message>
 </context>
+<context>
+    <name>UiBetaUpdate</name>
+    <message>
+        <source>New QZ build</source>
+        <translation>Yeni QZ derlemesi</translation>
+    </message>
+    <message>
+        <source>Build %1 is available, you have build %2.
+Download the APK?</source>
+        <translation>%1 derlemesi kullanılabilir, sizdeki derleme %2.
+APK indirilsin mi?</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>İndir</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Daha sonra</translation>
+    </message>
+</context>
 </TS>

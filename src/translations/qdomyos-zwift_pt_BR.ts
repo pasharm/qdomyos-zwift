@@ -8994,4 +8994,25 @@ Padrão: A = -0.96, B = 1.33</translation>
         <translation>W/kg máx.</translation>
     </message>
 </context>
+<context>
+    <name>UiBetaUpdate</name>
+    <message>
+        <source>New QZ build</source>
+        <translation>Nova compilação do QZ</translation>
+    </message>
+    <message>
+        <source>Build %1 is available, you have build %2.
+Download the APK?</source>
+        <translation>A compilação %1 está disponível, você tem a compilação %2.
+Baixar o APK?</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>Baixar</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Mais tarde</translation>
+    </message>
+</context>
 </TS>

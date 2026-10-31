@@ -78,6 +78,9 @@ HomeForm {
         }
     }
 
+    UiBetaUpdate {
+    }
+
     SoundEffect {
         id: trainingProgramSegmentSound
         source: "qrc:/sounds/training-program-segment.wav"

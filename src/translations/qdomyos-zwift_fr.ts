@@ -9513,4 +9513,25 @@ Par défaut : A = -0.96, B = 1.33</translation>
         <translation>Watts/kg max</translation>
     </message>
 </context>
+<context>
+    <name>UiBetaUpdate</name>
+    <message>
+        <source>New QZ build</source>
+        <translation>Nouvelle version de QZ</translation>
+    </message>
+    <message>
+        <source>Build %1 is available, you have build %2.
+Download the APK?</source>
+        <translation>La version %1 est disponible, vous avez la version %2.
+Télécharger l&apos;APK ?</translation>
+    </message>
+    <message>
+        <source>Download</source>
+        <translation>Télécharger</translation>
+    </message>
+    <message>
+        <source>Later</source>
+        <translation>Plus tard</translation>
+    </message>
+</context>
 </TS>
