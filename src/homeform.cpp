@@ -6302,6 +6302,18 @@ void homeform::Stop() {
             zero.secsTo(treadmillDevice->elapsedTime()) == 0) {
             treadmillDevice->stopWhenIdle();
             qDebug() << QStringLiteral("Stop pressed - nothing to do. Elapsed time is 0 and current speed is 0");
+            // Nothing to save, but a pause still ends here: without this the Start button keeps
+            // saying Resume and Stop looks dead
+            if (paused) {
+                paused = false;
+                stopped = true;
+                emit workoutEventStateChanged(bluetoothdevice::STOPPED);
+                if (settings.value(QZSettings::top_bar_enabled, QZSettings::default_top_bar_enabled).toBool()) {
+                    emit startIconChanged(startIcon());
+                    emit startTextChanged(startText());
+                    emit startColorChanged(startColor());
+                }
+            }
             return;
         }
     }
