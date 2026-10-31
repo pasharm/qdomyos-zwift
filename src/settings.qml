@@ -2954,6 +2954,8 @@ import QtQuick 2.12 as Quick212
             property int history_chart_power_distribution_order: 5
             property int history_chart_speed_inclination_order: 6
             property bool moovio_lynx_konect_2_0: false
+            property real virtual_device_rower_cadence_gain: 1.0
+            property real virtual_device_rower_cadence_offset: 0.0
             property bool fitshow_bike_question: true
             property bool resistance_buttons_accumulate: false
             property bool virtufit_layout_question: true
@@ -18950,6 +18952,94 @@ import QtQuick 2.12 as Quick212
                                         visible: settings.virtual_device_rower
                                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                     }
+
+                                    AccordionElement {
+                                        id: virtualRowerOptionsAccordion
+                                        title: qsTr("Rower Options")
+                                        indicatRectColor: Material.color(Material.Grey)
+                                        textColor: Material.color(Material.Yellow)
+                                        color: Material.backgroundColor
+                                        visible: settings.virtual_device_rower
+                                        accordionContent: ColumnLayout {
+                                            spacing: 0
+
+                                            RowLayout {
+                                                spacing: 10
+                                                Label {
+                                                    text: qsTr("Cadence Gain")
+                                                    Layout.fillWidth: true
+                                                }
+                                                SettingsNumberField {
+                                                    id: virtualRowerCadenceGainTextField
+                                                    savedText: settings.virtual_device_rower_cadence_gain
+                                                    Accessible.name: qsTr("Cadence Gain") + ": " + text
+                                                    horizontalAlignment: Text.AlignRight
+                                                    Layout.fillHeight: false
+                                                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                                                    onAccepted: if (valid) { settings.virtual_device_rower_cadence_gain = value; window.settings_restart_to_apply = true; }
+                                                    onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
+                                                }
+                                                Button {
+                                                    text: qsTr("OK")
+                                                    enabled: virtualRowerCadenceGainTextField.valid && virtualRowerCadenceGainTextField.dirty
+                                                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                                                    onClicked: { settings.virtual_device_rower_cadence_gain = virtualRowerCadenceGainTextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
+                                                }
+                                            }
+
+                                            Label {
+                                                text: qsTr("Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.")
+                                                font.bold: true
+                                                font.italic: true
+                                                font.pixelSize: Qt.application.font.pixelSize - 2
+                                                textFormat: Text.PlainText
+                                                wrapMode: Text.WordWrap
+                                                verticalAlignment: Text.AlignVCenter
+                                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                                Layout.fillWidth: true
+                                                color: Material.color(Material.Lime)
+                                            }
+
+                                            RowLayout {
+                                                spacing: 10
+                                                Label {
+                                                    text: qsTr("Cadence Offset")
+                                                    Layout.fillWidth: true
+                                                }
+                                                SettingsNumberField {
+                                                    id: virtualRowerCadenceOffsetTextField
+                                                    signed: true
+                                                    savedText: settings.virtual_device_rower_cadence_offset
+                                                    Accessible.name: qsTr("Cadence Offset") + ": " + text
+                                                    horizontalAlignment: Text.AlignRight
+                                                    Layout.fillHeight: false
+                                                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                                                    onAccepted: if (valid) { settings.virtual_device_rower_cadence_offset = value; window.settings_restart_to_apply = true; }
+                                                    onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
+                                                }
+                                                Button {
+                                                    text: qsTr("OK")
+                                                    enabled: virtualRowerCadenceOffsetTextField.valid && virtualRowerCadenceOffsetTextField.dirty
+                                                    Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                                                    onClicked: { settings.virtual_device_rower_cadence_offset = virtualRowerCadenceOffsetTextField.value; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
+                                                }
+                                            }
+
+                                            Label {
+                                                text: qsTr("Offset added after the gain. Default is 0.0. QZ's internal cadence display and workout metrics remain unchanged.")
+                                                font.bold: true
+                                                font.italic: true
+                                                font.pixelSize: Qt.application.font.pixelSize - 2
+                                                textFormat: Text.PlainText
+                                                wrapMode: Text.WordWrap
+                                                verticalAlignment: Text.AlignVCenter
+                                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                                Layout.fillWidth: true
+                                                color: Material.color(Material.Lime)
+                                            }
+                                        }
+                                    }
+
 
                                     IndicatorOnlySwitch {
                                         id: virtualDeviceForceTreadmillDelegate
