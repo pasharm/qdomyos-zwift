@@ -382,9 +382,9 @@ Page {
                     source: start
                     color: rootItem.startColor
                     enabled: rootItem.startColor === "red" ? true : false
-                    // startColor changes on every read and blinks only with the reads above: use
-                    // color here. A transparent overlay would still draw the button a second time,
-                    // its shadow cut square at the edges of the button
+                    // startColor() toggles on every read: the blink needs an odd number of reads per
+                    // tick (the signal argument, color, enabled), so use color here. A transparent
+                    // overlay would still draw the button a second time, its shadow cut square
                     visible: color.a > 0
                     // Red on the pill only: the faint tail of the shadow reaches far past the button,
                     // and tinted it shows as a red square wherever the source ends
