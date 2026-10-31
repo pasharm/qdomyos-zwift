@@ -521,9 +521,11 @@ class homeform : public QObject {
     QString stopIcon();
     QString stopColor();
     // paused with stopped set (pause_on_start before the first start) is a stopped workout: the
-    // next start resets the stats
-    bool workoutPaused() { return paused && !stopped; }
+    // next start resets the stats; a pause with nothing recorded yet (see startText) gets the
+    // single Start button, not Resume and Stop
+    bool workoutPaused() { return paused && !stopped && !nothingToResume(); }
     bool workoutStopped() { return stopped; }
+    bool nothingToResume();
     bool workoutLong();
     QString workoutStartDate() {
         if (!Session.isEmpty()) {

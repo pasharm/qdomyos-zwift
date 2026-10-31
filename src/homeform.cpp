@@ -6513,8 +6513,7 @@ QString homeform::startText() {
         } else if (paused) {
             // A treadmill standing still pauses itself before any workout (autoPauseWhenSpeedIsZero),
             // and there is nothing to resume yet. update() sends the label again every second.
-            bluetoothdevice *device = bluetoothManager ? bluetoothManager->device() : nullptr;
-            if (device && device->elapsedTime() == QTime(0, 0, 0, 0)) {
+            if (nothingToResume()) {
                 return tr("Start");
             }
             // pressing it now continues the same workout, nothing is reset (see Start_inner)
@@ -6524,6 +6523,11 @@ QString homeform::startText() {
         }
     }
     return QLatin1String("");
+}
+
+bool homeform::nothingToResume() {
+    bluetoothdevice *device = bluetoothManager ? bluetoothManager->device() : nullptr;
+    return device && device->elapsedTime() == QTime(0, 0, 0, 0);
 }
 
 QString homeform::startIcon() {
