@@ -113,10 +113,43 @@ run_lang() {
 adb shell settings put system accelerometer_rotation 0 || true
 adb shell settings put system user_rotation 0 || true
 
+# run_zero <label> <lang>: T-358 - Pause and Stop at zero time and speed. The button must go back
+# to Start, nothing is saved, and a new Start begins from zero. Stop opens the end-of-workout
+# page whatever it did (Home.qml, inner_stop), so back to the home page first.
+run_zero() {
+  local label="$1-$2-zero"
+  adb shell am force-stop $PKG || true
+  sleep 2
+  put_conf "$2"
+  mark "$label: start"
+  adb shell am start -n $PKG/$PKG.CustomQtActivity
+  sleep 25
+  wait_tiles
+  shot $label-01-running
+  mark "$label: Pause"
+  tap_xy pause "$STARTXY"
+  sleep 4
+  shot $label-02-paused
+  mark "$label: Stop"
+  tap_xy stop "$STOPXY"
+  sleep 6
+  shot $label-03-after-stop
+  adb shell input keyevent KEYCODE_BACK || true
+  sleep 4
+  shot $label-04-home
+  echo "fit files in $label: $(adb shell 'ls /sdcard/Documents/QZ/fit 2>/dev/null | wc -l' < /dev/null)" >> $STEPLOG
+  mark "$label: Start"
+  tap_xy start "$STARTXY"
+  sleep 4
+  shot $label-05-started
+  mark "$label: done"
+}
+
 install_apk apk-base/android-debug.apk
-for lang in en ru; do run_lang base $lang; done
+run_zero base uk
 install_apk apk-debug/android-debug.apk
-for lang in en ru uk de fr cs; do run_lang debug $lang; done
+for lang in uk en; do run_zero debug $lang; done
+for lang in en uk; do run_lang debug $lang; done
 
 # pause_on_start: the device connect pauses the workout and marks it stopped - the button must
 # say "Start" (the next press resets the stats), not "Resume"
@@ -138,3 +171,11 @@ kill $LOGCAT_PID 2>/dev/null || true
 sleep 1
 echo "== ANR / crash in the whole log:" >> $STEPLOG
 grep -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt >> $STEPLOG || echo "none" >> $STEPLOG
+
+# The run proves nothing unless Stop took the early return with the workout paused
+echo "== Stop in the log:" >> $STEPLOG
+grep -E "Stop pressed" full_logcat.txt >> $STEPLOG || true
+if ! grep -q "Stop pressed - nothing to do" full_logcat.txt; then
+  echo "!! Stop never took the nothing-to-do return: the zero case did not happen" >> $STEPLOG
+  exit 1
+fi
