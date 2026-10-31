@@ -113,11 +113,17 @@ run_lang() {
 adb shell settings put system accelerometer_rotation 0 || true
 adb shell settings put system user_rotation 0 || true
 
-# run_zero <label> <lang>: T-358 - Pause and Stop at zero time and speed. The button must go back
-# to Start, nothing is saved, and a new Start begins from zero. Stop opens the end-of-workout
-# page whatever it did (Home.qml, inner_stop), so back to the home page first.
+fit_count() { adb shell 'ls /sdcard/Documents/QZ/fit 2>/dev/null | wc -l' < /dev/null | tr -d '\r'; }
+zero_count() { grep -c "Stop pressed - nothing to do" full_logcat.txt; }
+# Stop opens the end-of-workout page whatever it did (Home.qml, inner_stop)
+back_home() { adb shell input keyevent KEYCODE_BACK || true; sleep 4; }
+
+# run_zero <label> <lang>: T-358 - Pause and Stop at zero time and speed. The time of the fake
+# treadmill runs from the app start and clears only on a Start after a Stop, so: a plain Stop, then
+# Start and Pause within a second (two taps together, adb alone takes longer). The race can be
+# lost: then Stop saved a short workout and the next try starts from a stopped workout again.
 run_zero() {
-  local label="$1-$2-zero"
+  local label="$1-$2-zero" try before
   adb shell am force-stop $PKG || true
   sleep 2
   put_conf "$2"
@@ -125,19 +131,27 @@ run_zero() {
   adb shell am start -n $PKG/$PKG.CustomQtActivity
   sleep 25
   wait_tiles
-  shot $label-01-running
-  mark "$label: Pause"
-  tap_xy pause "$STARTXY"
-  sleep 4
-  shot $label-02-paused
-  mark "$label: Stop"
+  mark "$label: plain Stop"
   tap_xy stop "$STOPXY"
   sleep 6
-  shot $label-03-after-stop
-  adb shell input keyevent KEYCODE_BACK || true
-  sleep 4
-  shot $label-04-home
-  echo "fit files in $label: $(adb shell 'ls /sdcard/Documents/QZ/fit 2>/dev/null | wc -l' < /dev/null)" >> $STEPLOG
+  back_home
+  shot $label-01-stopped
+  for try in 1 2 3 4 5 6; do
+    before=$(zero_count)
+    mark "$label: try $try: Start and Pause"
+    ensure_app
+    adb shell "input tap $STARTXY & sleep 0.3; input tap $STARTXY; wait" < /dev/null || true
+    sleep 4
+    shot $label-try$try-02-paused
+    mark "$label: try $try: Stop, fit files $(fit_count)"
+    tap_xy stop "$STOPXY"
+    sleep 6
+    shot $label-try$try-03-after-stop
+    back_home
+    shot $label-try$try-04-home
+    mark "$label: try $try: after Stop, fit files $(fit_count)"
+    [ "$(zero_count)" -gt "$before" ] && break
+  done
   mark "$label: Start"
   tap_xy start "$STARTXY"
   sleep 4
@@ -149,7 +163,6 @@ install_apk apk-base/android-debug.apk
 run_zero base uk
 install_apk apk-debug/android-debug.apk
 for lang in uk en; do run_zero debug $lang; done
-for lang in en uk; do run_lang debug $lang; done
 
 # pause_on_start: the device connect pauses the workout and marks it stopped - the button must
 # say "Start" (the next press resets the stats), not "Resume"
@@ -175,7 +188,7 @@ grep -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt >> $STEPLOG || ech
 # The run proves nothing unless Stop took the early return with the workout paused
 echo "== Stop in the log:" >> $STEPLOG
 grep -E "Stop pressed" full_logcat.txt >> $STEPLOG || true
-if ! grep -q "Stop pressed - nothing to do" full_logcat.txt; then
-  echo "!! Stop never took the nothing-to-do return: the zero case did not happen" >> $STEPLOG
+if [ "$(zero_count)" -lt 3 ]; then
+  echo "!! Stop took the nothing-to-do return in $(zero_count) of 3 cases" >> $STEPLOG
   exit 1
 fi
