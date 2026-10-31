@@ -24,6 +24,8 @@ import java.io.File;
 // personal: the newer beta build (UiBetaUpdate.qml). The system download manager fetches the APK into
 // the files of the app (no storage permission), its id is kept, so a download that ends while QZ is
 // closed is found at the next launch. The APK goes to the installer through a FileProvider.
+// The receiver below lives in the process that started the download: it only posts the notification
+// when QZ is in the background; QZ on the screen polls downloadedBuild().
 public class BetaUpdate {
     private static final String TAG = "QZ:BetaUpdate";
     private static final String PREFS = "qz_beta_update";
@@ -145,10 +147,9 @@ public class BetaUpdate {
                     Log.d(TAG, "download " + id + " did not finish");
                     return;
                 }
-                // Android 10+ does not start an activity of an app in the background: a notification then
-                if (inForeground())
-                    install(app);
-                else
+                // QZ on the screen asks itself (UiBetaUpdate.qml watches the download): the installer
+                // does not open over a workout, its "Install" would end QZ
+                if (!inForeground())
                     notifyDownloaded(app, doneTitle, doneText);
             }
         };

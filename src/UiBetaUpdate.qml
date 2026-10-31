@@ -4,8 +4,9 @@ import Qt.labs.platform 1.1
 // personal: the question about a newer build, only in the builds of feat/modern-beta. At launch,
 // once, on Android: a downloaded build newer than this one is offered for install at once, without
 // the network; otherwise the newest release of the fork against the number of this build.
-// "Download" hands the APK to the download manager of Android (betaUpdate, BetaUpdate.java): when it
-// ends with QZ on the screen the installer opens, in the background a notification does.
+// "Download" hands the APK to the download manager of Android (betaUpdate, BetaUpdate.java): while
+// it runs QZ watches it and asks again when it ends ("Install" opens the installer of Android, which
+// ends QZ: not opened by itself, a workout may be running); in the background a notification asks.
 // Launch only: QZ starts counting a workout by itself, a late answer must not cover it.
 UiMessageDialog {
     id: root
@@ -29,11 +30,42 @@ UiMessageDialog {
     yesText: downloaded ? qsTr("Install") : qsTr("Download")
     noText: qsTr("Later")
     onYesClicked: {
-        if (downloaded)
+        if (downloaded) {
             betaUpdate.install()
-        else
+        } else {
             betaUpdate.download(apkUrl, newBuild, qsTr("QZ build %1").arg(newBuild), qsTr("New QZ build"),
                                 qsTr("Build %1 is downloaded, tap to install").arg(newBuild))
+            downloadWatch.start()
+        }
+    }
+
+    // A download is running: its end is asked about on the screen
+    function readDownload() {
+        var ready = betaUpdate.downloadedBuild()
+        if (ready === -1)
+            return
+        downloadWatch.stop()
+        if (ready > buildNumber) {
+            newBuild = ready
+            downloaded = true
+            offer()
+        } else {
+            console.log("beta update: the download did not finish")
+        }
+    }
+
+    Timer {
+        id: downloadWatch
+        interval: 2000
+        repeat: true
+        onTriggered: {
+            try {
+                root.readDownload()
+            } catch (e) {
+                stop()
+                console.log("beta update: " + e)
+            }
+        }
     }
 
     function offer() {
@@ -67,9 +99,11 @@ UiMessageDialog {
             offer()
             return
         }
-        // A download is running: its end opens the installer
-        if (ready === -1)
+        // A download is running, started before a restart of QZ
+        if (ready === -1) {
+            downloadWatch.start()
             return
+        }
         var started = Date.now()
         var request = new XMLHttpRequest()
         request.onreadystatechange = function() {
