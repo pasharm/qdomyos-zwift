@@ -1,7 +1,6 @@
 #include "homeform.h"
 #include "devices/lifefitnesstreadmill/lifefitnessworkout.h"
 #include <QTranslator>
-#include "devices/dircon/dirconprocessor.h"
 #include "devices/echelonconnectsport/echelonconnectsport.h"
 #include "devices/fakebike/fakebike.h"
 #ifdef Q_OS_IOS

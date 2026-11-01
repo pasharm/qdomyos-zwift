@@ -954,10 +954,6 @@ QZ ayarları güncellensin mi?</translation>
         <translation>Hazırlık tamamlandı, koşu bandını artık kullanabilirsiniz!</translation>
     </message>
     <message>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>QZ bu bisikletin veri biçimini algıladı ve ayarlarda &quot;Virtufit Etappe 2.0 bisiklet&quot; seçeneğini açtı. Bisiklet verilerinin okunması için QZ yeniden başlatılmalıdır.</translation>
-    </message>
-    <message>
         <source>FTMS bike found, restart the app to apply the change!</source>
         <translation>FTMS bisikleti bulundu, değişikliği uygulamak için uygulamayı yeniden başlatın!</translation>
     </message>

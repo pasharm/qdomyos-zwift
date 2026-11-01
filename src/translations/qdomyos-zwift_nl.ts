@@ -954,10 +954,6 @@ Wil je de QZ-instellingen bijwerken?</translation>
         <translation>Initialisatie voltooid, je kunt de loopband nu gebruiken!</translation>
     </message>
     <message>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>QZ heeft het gegevensformaat van deze fiets herkend en ‘Virtufit Etappe 2.0-fiets’ ingeschakeld in de instellingen. Start QZ opnieuw om de gegevens van de fiets te kunnen lezen.</translation>
-    </message>
-    <message>
         <source>FTMS bike found, restart the app to apply the change!</source>
         <translation>FTMS-fiets gevonden, start de app opnieuw om de wijziging toe te passen!</translation>
     </message>

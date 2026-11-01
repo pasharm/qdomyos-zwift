@@ -954,10 +954,6 @@ Do you want to update QZ settings?</source>
         <translation>Подготовка завершена, можно пользоваться беговой дорожкой!</translation>
     </message>
     <message>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>QZ определил формат данных этого велотренажёра и включил в настройках «Велотренажёр Virtufit Etappe 2.0». Чтобы читать данные тренажёра, QZ нужно перезапустить.</translation>
-    </message>
-    <message>
         <source>FTMS bike found, restart the app to apply the change!</source>
         <translation>Найден велотренажёр FTMS, перезапустите приложение, чтобы применить изменение!</translation>
     </message>

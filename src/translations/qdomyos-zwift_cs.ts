@@ -954,10 +954,6 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Příprava dokončena, běžecký pás můžete používat!</translation>
     </message>
     <message>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>QZ rozpoznalo formát dat tohoto kola a v nastavení zapnulo „Kolo Virtufit Etappe 2.0“. Aby QZ mohlo číst data kola, je nutné ho restartovat.</translation>
-    </message>
-    <message>
         <source>FTMS bike found, restart the app to apply the change!</source>
         <translation>Nalezeno kolo FTMS, restartujte aplikaci, aby se změna projevila!</translation>
     </message>

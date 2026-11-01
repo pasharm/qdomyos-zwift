@@ -113,8 +113,8 @@ class DirconProcessor : public QObject {
                              quint16 serv_port, const QString &serv_sn, const QString &mac, QObject *parent = nullptr);
     bool sendCharacteristicNotification(quint16 uuid, const QByteArray &data);
     bool init();
-    // Rebuild the server and the mDNS announcement of every DirCon device (a tap on the Bluetooth
-    // icon with the device connected). Returns how many there are: 0 means DirCon is off.
+    // Rebuild the server and the mDNS announcement of every DirCon device. Not called since the tap on
+    // the Bluetooth icon no longer restarts DirCon. Returns how many there are: 0 means DirCon is off.
     static int restartAll();
   private slots:
     void tcpDataAvailable();

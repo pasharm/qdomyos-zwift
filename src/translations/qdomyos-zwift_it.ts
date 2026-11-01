@@ -1002,10 +1002,6 @@ Vuoi aggiornare le impostazioni di QZ?</translation>
         <translation>Inizializzazione completata, ora puoi usare il tapis roulant!</translation>
     </message>
     <message>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>QZ ha rilevato il formato dati di questa bici e ha attivato &quot;Virtufit Etappe 2.0 Bici&quot; nelle impostazioni. Devi riavviare QZ per leggere i dati della bici.</translation>
-    </message>
-    <message>
         <source>FTMS bike found, restart the app to apply the change!</source>
         <translation>Trovata bici FTMS, riavvia l&apos;app per applicare la modifica!</translation>
     </message>
@@ -4079,10 +4075,6 @@ riavvia l&apos;app.</translation>
     <message>
         <source>QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.</source>
         <translation>QZ ha trovato i trainer Bluetooth nelle vicinanze. Scegli la macchina che vuoi usare per questa sessione.</translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translation>Disattivato</translation>
     </message>
     <message>
         <source>Select a device</source>

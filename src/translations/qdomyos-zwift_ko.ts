@@ -954,10 +954,6 @@ QZ 설정을 업데이트하시겠습니까?</translation>
         <translation>초기화가 완료되었습니다. 이제 트레드밀을 사용할 수 있습니다!</translation>
     </message>
     <message>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>QZ가 이 자전거의 데이터 형식을 감지하고 설정에서 [Virtufit Etappe 2.0 자전거]를 켰습니다. 자전거 데이터를 읽으려면 QZ를 다시 시작해야 합니다.</translation>
-    </message>
-    <message>
         <source>FTMS bike found, restart the app to apply the change!</source>
         <translation>FTMS 자전거를 찾았습니다. 변경 사항을 적용하려면 앱을 다시 시작하세요!</translation>
     </message>

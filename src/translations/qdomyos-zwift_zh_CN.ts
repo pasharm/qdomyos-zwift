@@ -1002,10 +1002,6 @@ Do you want to update QZ settings?</source>
         <translation>初始化完成，现在可以使用跑步机了！</translation>
     </message>
     <message>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>QZ 已识别此自行车的数据格式，并在设置中启用了“Virtufit Etappe 2.0 自行车”。必须重启 QZ 才能读取自行车数据。</translation>
-    </message>
-    <message>
         <source>FTMS bike found, restart the app to apply the change!</source>
         <translation>发现 FTMS 自行车，请重启应用以应用更改！</translation>
     </message>
@@ -4080,10 +4076,6 @@ restart the app.</source>
     <message>
         <source>QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.</source>
         <translation>QZ 找到了附近的蓝牙训练器。请选择本次训练要使用的设备。</translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translation>已禁用</translation>
     </message>
     <message>
         <source>Select a device</source>

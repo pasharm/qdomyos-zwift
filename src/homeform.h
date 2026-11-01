@@ -257,8 +257,7 @@ class homeform : public QObject {
     Q_INVOKABLE QString gymModeConnectingDevice();
     // The search has given up and waits for a tap on the Bluetooth icon; false once connected
     Q_INVOKABLE bool bluetoothSearchStopped();
-    // Tap on the Bluetooth icon: search right away, or when Android allows it again (with a toast saying when);
-    // with the device already connected, restart the DirCon servers and mDNS instead (toast; nothing if DirCon is off)
+    // Tap on the Bluetooth icon: search right away, or when Android allows it again (with a toast saying when)
     Q_INVOKABLE void bluetoothSearchNow();
     // Heart rate sensor chosen in the settings (name) or a tap on the Bluetooth icon (no name, the saved one):
     // connect it without a restart
