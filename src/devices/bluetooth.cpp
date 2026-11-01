@@ -273,6 +273,12 @@ bluetooth::~bluetooth() {
 void bluetooth::signalBluetoothDeviceConnected(bluetoothdevice *b) { emit this->bluetoothDeviceConnected(b); }
 
 void bluetooth::finished() {
+    // discoveryTimeout may end up here in the middle of a scan
+    if (!discoveryAgent || !discoveryAgent->isActive()) {
+        deviceListScan = false;
+        updateLostDevices();
+    }
+
     if (discoveryFinishedHandled) {
         // The bookkeeping below runs once, but scanning has to go on until the equipment shows up:
         // otherwise discovery stopped for good about 20 s after launch, and equipment that was
@@ -446,6 +452,66 @@ int bluetooth::searchNow() {
     return 0;
 }
 
+void bluetooth::searchForDeviceList() {
+    if (!useDiscovery || !discoveryAgent || discoveryAgent->isActive())
+        return;
+
+    if (!device()) {
+        searchNow();
+        return;
+    }
+
+    // Android 7.0 and later ignore the 6th scan start in 30 s, and the list already shows the last search.
+    // 4 leaves room for an automatic search (a trainer lost meanwhile), as in searchNow()
+    pruneScanStarts(QDateTime::currentMSecsSinceEpoch());
+    if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::AndroidNougat && scanStartsMs.size() >= 4) {
+        debug(QStringLiteral("BTLE scanning for the device list skipped by the Android limit"));
+        return;
+    }
+
+    debug(QStringLiteral("BTLE scanning for the device list"));
+    deviceListScan = true;
+    startDiscovery();
+}
+
+// A device switched off stays in `devices`, which the checks for the accessories read: it is only
+// hidden from the lists, and comes back as soon as a search finds it. Only a device that can not be
+// found because it is in use is kept: a connected device does not advertise.
+void bluetooth::updateLostDevices() {
+    // nothing found at all: Android ignored the start or the scan failed, this says nothing about the devices
+    if (seenInSearch.isEmpty())
+        return;
+
+    QSettings settings;
+    QSet<QString> inUse;
+    if (device())
+        inUse.insert(device()->bluetoothDevice.name());
+    inUse.insert(settings.value(QZSettings::bluetooth_lastdevice_name,
+                                QZSettings::default_bluetooth_lastdevice_name).toString());
+    inUse.insert(settings.value(QZSettings::filter_device, QZSettings::default_filter_device).toString());
+    inUse.insert(settings.value(QZSettings::ftms_bike, QZSettings::default_ftms_bike).toString());
+    inUse.insert(settings.value(QZSettings::ftms_treadmill, QZSettings::default_ftms_treadmill).toString());
+    inUse.insert(settings.value(QZSettings::ftms_rower, QZSettings::default_ftms_rower).toString());
+    inUse.insert(settings.value(QZSettings::ftms_elliptical, QZSettings::default_ftms_elliptical).toString());
+    inUse.insert(settings.value(QZSettings::heart_rate_belt_name, QZSettings::default_heart_rate_belt_name).toString());
+    inUse.insert(settings.value(QZSettings::ftms_accessory_name, QZSettings::default_ftms_accessory_name).toString());
+    inUse.insert(settings.value(QZSettings::cadence_sensor_name, QZSettings::default_cadence_sensor_name).toString());
+    inUse.insert(settings.value(QZSettings::power_sensor_name, QZSettings::default_power_sensor_name).toString());
+    inUse.insert(settings.value(QZSettings::elite_rizer_name, QZSettings::default_elite_rizer_name).toString());
+    inUse.insert(settings.value(QZSettings::elite_sterzo_smart_name, QZSettings::default_elite_sterzo_smart_name)
+                     .toString());
+
+    QSet<QString> lost;
+    for (const QBluetoothDeviceInfo &b : qAsConst(devices)) {
+        if (!seenInSearch.contains(b.name()) && !inUse.contains(b.name()))
+            lost.insert(b.name());
+    }
+    if (lost != lostDevices) {
+        lostDevices = lost;
+        emit lostDevicesChanged();
+    }
+}
+
 void bluetooth::startDiscovery() {
 
     // no discoveryAgent without a Bluetooth adapter: nothing to scan with
@@ -458,6 +524,7 @@ void bluetooth::startDiscovery() {
         const qint64 now = QDateTime::currentMSecsSinceEpoch();
         pruneScanStarts(now);
         scanStartsMs.append(now);
+        seenInSearch.clear();
     }
 
 #ifndef Q_OS_IOS
@@ -491,6 +558,7 @@ void bluetooth::stopDiscovery() {
 
 void bluetooth::canceled() {
     debug(QStringLiteral("BTLE scanning stops"));
+    deviceListScan = false;
 
     emit searchingStop();
 }
@@ -911,6 +979,10 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                                                     device.majorDeviceClass());
 
             updateDiscoveredDevice(devices, manufacturerDevice);
+            seenInSearch.insert(manufacturerDevice.name());
+            // no name in the scan result: deviceFound() below does not refresh the lists
+            if (lostDevices.remove(manufacturerDevice.name()))
+                emit lostDevicesChanged();
             manufacturerDeviceFound = true;
         }
 #endif
@@ -918,6 +990,8 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
 
     if (manufacturerDeviceFound == false) {
         updateDiscoveredDevice(devices, device);
+        seenInSearch.insert(device.name());
+        lostDevices.remove(device.name());
     }
 
     emit deviceFound(device.name());
@@ -937,6 +1011,11 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
 #endif    
 
     if (onlyDiscover)
+        return;
+
+    // Below a device found is connected, and the chain checks only its own type: with no device
+    // filter a second trainer nearby would be connected in the middle of a workout
+    if (deviceListScan && this->device())
         return;
 
     if (gymModeEnabled() && gymModeSessionDevice.isEmpty())
@@ -4293,6 +4372,8 @@ void bluetooth::restart() {
     rescanTimer.stop();
     nextRescanMs = 0;
     rescanStopped = false;
+    // the trainer is gone: the search still running may connect the next one
+    deviceListScan = false;
 
     if (onlyDiscover) {
 
@@ -4307,6 +4388,7 @@ void bluetooth::restart() {
 
     stopHeartRateBeltDiscovery();
     devices.clear();
+    lostDevices.clear();
 
     emit this->bluetoothDeviceDisconnected();
 

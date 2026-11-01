@@ -1344,9 +1344,8 @@ Page {
 
                     RowLayout {
                         spacing: 10
-                        ValueComboBox {
+                        DeviceComboBox {
                             id: filterDeviceTextField
-                            model: rootItem.bluetoothDevices
                             labels: ({ "Disabled": qsTr("Disabled") })
                             value: settings.filter_device
                             Layout.fillHeight: false
@@ -1641,9 +1640,8 @@ Page {
                         spacing: 10
                         Layout.fillWidth: true
 
-                        ValueComboBox {
+                        DeviceComboBox {
                             id: heartBeltNameTextField
-                            model: rootItem.bluetoothDevices
                             labels: ({ "Disabled": qsTr("Disabled") })
                             value: settings.heart_rate_belt_name
                             Layout.fillHeight: false
