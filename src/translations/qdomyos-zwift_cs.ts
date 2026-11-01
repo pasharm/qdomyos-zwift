@@ -4050,6 +4050,11 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <source>Spotify songs:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>QZ is running</source>
+        <extracomment>Android notification: title shown while QZ works in the background.</extracomment>
+        <translation>QZ běží</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
