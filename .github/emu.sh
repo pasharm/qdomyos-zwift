@@ -171,105 +171,26 @@ tap_ui 'First-time setup' 720 620
 sleep 4
 shot 03b-wizard-step2
 
-# T-069: the +/- fields of the wizard (profile: weight and age; Zwift: bike resistance) in
-# UiSpinBox. A tap changes the number by one step, a hold repeats; the shot about 2 s after the
-# release must show the +/- unlit (the stock Material field kept it lit until the next tap).
-# The values are checked in the dump and in the settings file
-CONF="files/.config/Roberto Viola/qDomyos-Zwift.conf"
-conf() {
-  sleep 3
-  echo "conf after $1: $(adb shell "run-as $PKG cat '$CONF'" | tr -d '\r' | grep -E '^(weight|age|bike_resistance_offset)=' | tr '\n' ' ')" >> $STEPLOG
-}
-# Every node with a number in its text or name, with its class and bounds: how uiautomator
-# sees the field (the whole SpinBox or only its number)
-nums() {
-  [ -f ui.xml ] || dump
-  echo "numbers ($1):" >> $STEPLOG
-  [ -f ui.xml ] && python3 -c '
-import re, sys, xml.etree.ElementTree as ET
-for n in ET.parse(sys.argv[1]).getroot().iter("node"):
-    t, d = n.get("text") or "", n.get("content-desc") or ""
-    if re.search("[0-9]", t + d):
-        print("   ", n.get("class"), repr(t), repr(d), n.get("bounds"))
-' ui.xml >> $STEPLOG
-}
-# has 'regex' label: the number shows on the screen now (fresh dump)
-has() {
-  dump
-  if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
-    echo "check '$1' ($2): OK" >> $STEPLOG
-  else
-    echo "!! check '$1' ($2): NOT FOUND" >> $STEPLOG
-    nums "$2"
-  fi
-}
-# spin 'regex' plus|minus [hold_ms]: tap (or hold) the + or - of the field whose number
-# matches. The node may be the whole field or only its number: the whole field is wider than
-# 450 px (160 dp modern, 192 dp classic, 3.5 px per dp), the number alone narrower, and then the
-# button centre is 77 px (22 dp) beyond it
-spin() {
-  local rx="$1" side="$2" hold="$3" b x1 y1 x2 y2 x y
-  dump
-  b=""
-  [ -f ui.xml ] && b=$(python3 .github/uitap.py ui.xml "$rx" --bounds)
-  if [ -z "$b" ]; then
-    echo "!! spin '$rx' $side: NOT FOUND" >> $STEPLOG
-    nums "spin $rx"
-    return 1
-  fi
-  read x1 y1 x2 y2 <<< "$b"
-  y=$(( (y1 + y2) / 2 ))
-  if [ $((x2 - x1)) -gt 450 ]; then
-    if [ "$side" = plus ]; then x=$((x2 - 70)); else x=$((x1 + 70)); fi
-  else
-    if [ "$side" = plus ]; then x=$((x2 + 77)); else x=$((x1 - 77)); fi
-  fi
-  echo "spin '$rx' $side at $x $y (node $b)${hold:+, held $hold ms}" >> $STEPLOG
-  if [ -n "$hold" ]; then
-    adb shell input swipe $x $y $x $y $hold || true
-  else
-    adb shell input tap $x $y || true
-  fi
-  sleep 1
-}
-next() {
-  hide_keyboard
-  if ! tap_ui 'Next'; then scroll_to 'Next' && tap_ui 'Next'; fi
-  sleep 4
-}
-
-tap_ui 'Bike'; sleep 4
-next                                  # device
-next                                  # units
-shot p-profile
-nums "profile"
-spin '35' plus
-spin '36' plus
-spin '37' plus
-shot p-age-plus3                      # the + of the age unlit
-has '38' "age 35 + 3"
-spin '750' minus
-spin '749' minus
-shot p-weight-minus2                  # the - of the weight unlit
-has '748' "weight 75.0 - 0.2 (the raw value, tenths)"
-spin '38' plus 1500
-shot p-age-held                       # after a hold of 1.5 s
-nums "age after a hold"
-next                                  # profile -> heart rate
-conf "profile"
-next                                  # heart rate -> apps
-tap_ui 'Zwift'; sleep 4
-shot r-resistance
-nums "resistance"
-spin '18' plus
-spin '19' plus
-shot r-resistance-plus2               # the + unlit
-has '20' "resistance 18 + 2"
-next                                  # -> the last step
-conf "resistance"
-shot r-final
-echo "== T-069"; grep -E "^conf|^spin|^check|^!!" $STEPLOG
-
+# T-356: the device list of the wizard. A tap on the list opens it and starts a search; with no
+# Bluetooth devices around it holds Disabled and Wifi. The wizard page is a ScrollView, so the
+# field is looked for by name, then by its place under the title
+tap_ui 'Bike' 720 900
+sleep 5
+shot 04-device-page
+tap_ui 'Disabled' 720 640
+sleep 3
+shot 05-list-open
+adb shell input tap 720 2300 || true
+sleep 2
+shot 06-list-closed
+tap_ui 'Disabled' 720 640
+sleep 3
+shot 07-list-open-again
+back "close the list"
+sleep 2
+tap_ui 'Refresh' 720 840
+sleep 3
+shot 08-after-refresh
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 shot screenshot
 kill $LOGCAT_PID 2>/dev/null || true
