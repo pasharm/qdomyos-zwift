@@ -9599,5 +9599,9 @@ Install it?</source>
         <source>Build %1 is downloaded, tap to install</source>
         <translation>Сборка %1 скачана, нажмите, чтобы установить</translation>
     </message>
+    <message>
+        <source>Downloading the QZ build: %1%</source>
+        <translation>Скачивается сборка QZ: %1%</translation>
+    </message>
 </context>
 </TS>

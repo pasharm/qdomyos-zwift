@@ -1,4 +1,6 @@
 import QtQuick 2.12
+import QtQuick.Controls 2.12
+import QtQuick.Controls.Material 2.12
 import Qt.labs.platform 1.1
 
 // personal: the question about a newer build, only in the builds of feat/modern-beta. At launch,
@@ -7,6 +9,7 @@ import Qt.labs.platform 1.1
 // "Download" hands the APK to the download manager of Android (betaUpdate, BetaUpdate.java): while
 // it runs QZ watches it and asks again when it ends ("Install" opens the installer of Android, which
 // ends QZ: not opened by itself, a workout may be running); in the background a notification asks.
+// The strip at the bottom shows the percent of the download; a tap hides it, the download goes on.
 // Launch only: QZ starts counting a workout by itself, a late answer must not cover it.
 UiMessageDialog {
     id: root
@@ -21,6 +24,8 @@ UiMessageDialog {
     property string apkUrl: ""
     // The APK of newBuild is downloaded already: the answer installs it
     property bool downloaded: false
+    property int downloadPercent: 0
+    property bool stripHidden: false
 
     text: qsTr("New QZ build")
     informativeText: downloaded
@@ -42,8 +47,10 @@ UiMessageDialog {
     // A download is running: its end is asked about on the screen
     function readDownload() {
         var ready = betaUpdate.downloadedBuild()
-        if (ready === -1)
+        if (ready === -1) {
+            downloadPercent = betaUpdate.downloadProgress()
             return
+        }
         downloadWatch.stop()
         if (ready > buildNumber) {
             newBuild = ready
@@ -58,12 +65,79 @@ UiMessageDialog {
         id: downloadWatch
         interval: 2000
         repeat: true
+        triggeredOnStart: true
         onTriggered: {
             try {
                 root.readDownload()
             } catch (e) {
                 stop()
                 console.log("beta update: " + e)
+            }
+        }
+    }
+
+    // Not modal: the page around it stays usable, and the bottom is where the notices of
+    // UiNotice stand, above the navigation bar
+    UiPopup {
+        id: downloadStrip
+        readonly property string label: qsTr("Downloading the QZ build: %1%").arg(root.downloadPercent)
+        readonly property color ink: modern ? window.ui.bg : Material.foreground
+
+        parent: Overlay.overlay
+        visible: downloadWatch.running && !root.stripHidden && !rootItem.firstRun()
+        inverse: true
+        closePolicy: Popup.NoAutoClose
+        x: Math.round((parent.width - width) / 2)
+        y: parent.height - height - 24 - window.getBottomPadding()
+        width: Math.min(parent.width - 32, 560)
+        leftPadding: 20
+        rightPadding: 20
+        topPadding: 12
+        bottomPadding: 12
+
+        contentItem: Item {
+            implicitHeight: stripColumn.implicitHeight
+
+            Column {
+                id: stripColumn
+                width: parent.width
+                spacing: 8
+
+                Label {
+                    width: parent.width
+                    text: downloadStrip.label
+                    wrapMode: Text.WordWrap
+                    color: downloadStrip.ink
+                    font.pixelSize: window.ui.fontLabel
+                }
+
+                Item {
+                    width: parent.width
+                    height: 4
+
+                    Rectangle {
+                        anchors.fill: parent
+                        radius: 2
+                        color: downloadStrip.ink
+                        opacity: 0.3
+                    }
+
+                    Rectangle {
+                        width: parent.width * root.downloadPercent / 100
+                        height: parent.height
+                        radius: 2
+                        color: downloadStrip.ink
+                        Behavior on width { NumberAnimation { duration: 500 } }
+                    }
+                }
+            }
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: root.stripHidden = true
+                Accessible.role: Accessible.Button
+                Accessible.name: downloadStrip.label
+                Accessible.onPressAction: root.stripHidden = true
             }
         }
     }

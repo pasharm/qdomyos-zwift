@@ -9590,5 +9590,9 @@ Yüklensin mi?</translation>
         <source>Build %1 is downloaded, tap to install</source>
         <translation>%1 derlemesi indirildi, yüklemek için dokunun</translation>
     </message>
+    <message>
+        <source>Downloading the QZ build: %1%</source>
+        <translation>QZ derlemesi indiriliyor: %%1</translation>
+    </message>
 </context>
 </TS>

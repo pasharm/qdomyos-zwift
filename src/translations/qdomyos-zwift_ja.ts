@@ -9664,5 +9664,9 @@ Install it?</source>
         <source>Build %1 is downloaded, tap to install</source>
         <translation>ビルド %1 をダウンロードしました。タップしてインストール</translation>
     </message>
+    <message>
+        <source>Downloading the QZ build: %1%</source>
+        <translation>QZ ビルドをダウンロード中: %1%</translation>
+    </message>
 </context>
 </TS>

@@ -9587,5 +9587,9 @@ Zainstalować?</translation>
         <source>Build %1 is downloaded, tap to install</source>
         <translation>Kompilacja %1 jest pobrana, dotknij, aby zainstalować</translation>
     </message>
+    <message>
+        <source>Downloading the QZ build: %1%</source>
+        <translation>Pobieranie kompilacji QZ: %1%</translation>
+    </message>
 </context>
 </TS>

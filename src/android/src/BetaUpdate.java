@@ -76,6 +76,25 @@ public class BetaUpdate {
         return 0;
     }
 
+    // Percent of the running download, 0 while its size is not known
+    public static int downloadProgress(Context context) {
+        long id = prefs(context).getLong("id", -1);
+        if (id < 0)
+            return 0;
+        int percent = 0;
+        Cursor cursor = manager(context).query(new DownloadManager.Query().setFilterById(id));
+        if (cursor != null) {
+            if (cursor.moveToFirst()) {
+                long done = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_BYTES_DOWNLOADED_SO_FAR));
+                long total = cursor.getLong(cursor.getColumnIndexOrThrow(DownloadManager.COLUMN_TOTAL_SIZE_BYTES));
+                if (total > 0)
+                    percent = (int) (done * 100 / total);
+            }
+            cursor.close();
+        }
+        return percent;
+    }
+
     // The download and its file, and the stored id
     private static void forget(Context context) {
         SharedPreferences p = prefs(context);

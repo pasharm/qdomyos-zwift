@@ -9627,5 +9627,9 @@ Installieren?</translation>
         <source>Build %1 is downloaded, tap to install</source>
         <translation>Build %1 ist heruntergeladen, zum Installieren tippen</translation>
     </message>
+    <message>
+        <source>Downloading the QZ build: %1%</source>
+        <translation>QZ-Build wird heruntergeladen: %1 %</translation>
+    </message>
 </context>
 </TS>

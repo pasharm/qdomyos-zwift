@@ -9660,5 +9660,9 @@ Install it?</source>
         <source>Build %1 is downloaded, tap to install</source>
         <translation>版本 %1 已下载，点按即可安装</translation>
     </message>
+    <message>
+        <source>Downloading the QZ build: %1%</source>
+        <translation>正在下载 QZ 版本：%1%</translation>
+    </message>
 </context>
 </TS>

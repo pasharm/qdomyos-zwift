@@ -9587,5 +9587,9 @@ Install it?</source>
         <source>Build %1 is downloaded, tap to install</source>
         <translation>빌드 %1을(를) 다운로드했습니다. 탭하여 설치</translation>
     </message>
+    <message>
+        <source>Downloading the QZ build: %1%</source>
+        <translation>QZ 빌드 다운로드 중: %1%</translation>
+    </message>
 </context>
 </TS>

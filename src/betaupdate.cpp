@@ -28,6 +28,17 @@ int BetaUpdate::downloadedBuild() {
 #endif
 }
 
+int BetaUpdate::downloadProgress() {
+#ifdef Q_OS_ANDROID
+    jint percent = QAndroidJniObject::callStaticMethod<jint>(JAVA_CLASS, "downloadProgress", "(Landroid/content/Context;)I",
+                                                             QtAndroid::androidContext().object());
+    clearException();
+    return percent;
+#else
+    return 0;
+#endif
+}
+
 void BetaUpdate::cleanup(int installedBuild) {
 #ifdef Q_OS_ANDROID
     QAndroidJniObject::callStaticMethod<void>(JAVA_CLASS, "cleanup", "(Landroid/content/Context;I)V",

@@ -14,6 +14,8 @@ class BetaUpdate : public QObject {
 
     // The build of a finished download, -1 while it runs, 0 if there is none
     Q_INVOKABLE int downloadedBuild();
+    // Percent of the running download, 0 while its size is not known
+    Q_INVOKABLE int downloadProgress();
     // Removes the download of the installed build or of an older one
     Q_INVOKABLE void cleanup(int installedBuild);
     // The texts are translated in QML: the download notification, then the one of a download

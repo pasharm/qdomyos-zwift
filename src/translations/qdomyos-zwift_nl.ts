@@ -9590,5 +9590,9 @@ Installeren?</translation>
         <source>Build %1 is downloaded, tap to install</source>
         <translation>Build %1 is gedownload, tik om te installeren</translation>
     </message>
+    <message>
+        <source>Downloading the QZ build: %1%</source>
+        <translation>QZ-build downloaden: %1%</translation>
+    </message>
 </context>
 </TS>

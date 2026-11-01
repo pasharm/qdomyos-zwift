@@ -9590,5 +9590,9 @@ Nainstalovat?</translation>
         <source>Build %1 is downloaded, tap to install</source>
         <translation>Sestavení %1 je staženo, klepnutím nainstalujete</translation>
     </message>
+    <message>
+        <source>Downloading the QZ build: %1%</source>
+        <translation>Stahování sestavení QZ: %1 %</translation>
+    </message>
 </context>
 </TS>

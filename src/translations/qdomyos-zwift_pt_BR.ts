@@ -8962,5 +8962,9 @@ Default: A = -0.96, B = 1.33</source>
         <source>Max Watt/KG</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Downloading the QZ build: %1%</source>
+        <translation>Baixando a compilação do QZ: %1%</translation>
+    </message>
 </context>
 </TS>

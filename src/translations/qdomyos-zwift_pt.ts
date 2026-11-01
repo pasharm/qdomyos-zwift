@@ -9632,5 +9632,9 @@ Instalar?</translation>
         <source>Build %1 is downloaded, tap to install</source>
         <translation>A compilação %1 foi transferida, toque para instalar</translation>
     </message>
+    <message>
+        <source>Downloading the QZ build: %1%</source>
+        <translation>A transferir a compilação do QZ: %1%</translation>
+    </message>
 </context>
 </TS>

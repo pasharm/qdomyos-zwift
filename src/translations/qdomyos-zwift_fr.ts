@@ -9647,5 +9647,9 @@ L&apos;installer ?</translation>
         <source>Build %1 is downloaded, tap to install</source>
         <translation>La version %1 est téléchargée, appuyez pour l&apos;installer</translation>
     </message>
+    <message>
+        <source>Downloading the QZ build: %1%</source>
+        <translation>Téléchargement de la version de QZ : %1 %</translation>
+    </message>
 </context>
 </TS>
