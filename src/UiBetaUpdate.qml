@@ -83,7 +83,8 @@ UiMessageDialog {
         readonly property string label: qsTr("Downloading the QZ build: %1%").arg(root.downloadPercent)
         readonly property color ink: modern ? window.ui.bg : Material.foreground
 
-        parent: Overlay.overlay
+        // Not Overlay.overlay: this popup sits in a dialog that may be closed, without a window
+        parent: window.overlay
         visible: downloadWatch.running && !root.stripHidden && !rootItem.firstRun()
         inverse: true
         closePolicy: Popup.NoAutoClose
@@ -107,6 +108,7 @@ UiMessageDialog {
                     width: parent.width
                     text: downloadStrip.label
                     wrapMode: Text.WordWrap
+                    Accessible.ignored: true
                     color: downloadStrip.ink
                     font.pixelSize: window.ui.fontLabel
                 }
@@ -133,7 +135,12 @@ UiMessageDialog {
             }
 
             MouseArea {
+                // The whole strip, with its padding
                 anchors.fill: parent
+                anchors.leftMargin: -downloadStrip.leftPadding
+                anchors.rightMargin: -downloadStrip.rightPadding
+                anchors.topMargin: -downloadStrip.topPadding
+                anchors.bottomMargin: -downloadStrip.bottomPadding
                 onClicked: root.stripHidden = true
                 Accessible.role: Accessible.Button
                 Accessible.name: downloadStrip.label
