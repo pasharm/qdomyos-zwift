@@ -3469,7 +3469,7 @@ class QZSettings {
 
     // The buttons of the main page follow the workout state and the paused one says Resume
     static const QString ui_state_buttons;
-    static constexpr bool default_ui_state_buttons = false;
+    static constexpr bool default_ui_state_buttons = true;
 
     // Chart positions in the Workout History preview.
     static const QString history_chart_power_order;

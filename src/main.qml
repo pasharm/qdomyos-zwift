@@ -322,7 +322,7 @@ ApplicationWindow {
         property bool ui_tile_snap: true
         property int ui_text_scale: 100
         property bool ui_text_scale_system: true
-        property bool ui_state_buttons: false
+        property bool ui_state_buttons: true
     }
 
     // Modern look, switched in Settings > General UI Options. Pages read the palette
