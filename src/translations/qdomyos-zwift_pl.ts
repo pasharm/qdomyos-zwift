@@ -666,10 +666,6 @@ Uruchomić ją ponownie teraz?</translation>
         <translation>Inicjalizacja zakończona, możesz już korzystać z bieżni!</translation>
     </message>
     <message>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>QZ rozpoznał format danych tego roweru i włączył w ustawieniach opcję „Rower Virtufit Etappe 2.0”. Aby odczytywać dane roweru, musisz ponownie uruchomić QZ.</translation>
-    </message>
-    <message>
         <source>FTMS bike found, restart the app to apply the change!</source>
         <translation>Znaleziono rower FTMS, uruchom ponownie aplikację, aby zastosować zmianę!</translation>
     </message>

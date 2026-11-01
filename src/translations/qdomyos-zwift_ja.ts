@@ -1002,10 +1002,6 @@ QZの設定を更新しますか?</translation>
         <translation>初期化が完了しました。トレッドミルを使用できます!</translation>
     </message>
     <message>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>QZがこのバイクのデータ形式を検出し、設定で「Virtufit Etappe 2.0接続有効化」を有効にしました。バイクのデータを読み取るには QZ を再起動する必要があります。</translation>
-    </message>
-    <message>
         <source>FTMS bike found, restart the app to apply the change!</source>
         <translation>FTMSバイクが見つかりました。変更を適用するにはアプリを再起動してください!</translation>
     </message>
@@ -4104,10 +4100,6 @@ QZ Classificaを有効にして
     <message>
         <source>QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.</source>
         <translation>QZが近くのBluetoothトレーナーを見つけました。このセッションで使用したいマシンを選択してください。</translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translation>無効</translation>
     </message>
     <message>
         <source>Select a device</source>
