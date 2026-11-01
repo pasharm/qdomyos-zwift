@@ -570,6 +570,10 @@ Would you like to do that now?</source>
         <translation>%1(심박 센서) 연결됨!</translation>
     </message>
     <message>
+        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
+        <translation>심박수를 30초 동안 일시 중지했습니다. Garmin Connect를 두 번 중지하면 시계가 QZ에 연결됩니다.</translation>
+    </message>
+    <message>
         <source>Searching for %1 (HR sensor)...</source>
         <translation>%1(심박 센서) 검색 중…</translation>
     </message>

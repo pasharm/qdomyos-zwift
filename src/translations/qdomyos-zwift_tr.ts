@@ -570,6 +570,10 @@ Would you like to do that now?</source>
         <translation>Bağlandı: %1 (nabız sensörü)</translation>
     </message>
     <message>
+        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
+        <translation>Nabız 30 sn duraklatıldı: Garmin Connect&apos;i iki kez durdurun, saat QZ&apos;ye bağlanacak.</translation>
+    </message>
+    <message>
         <source>Searching for %1 (HR sensor)...</source>
         <translation>Aranıyor: %1 (nabız sensörü)…</translation>
     </message>

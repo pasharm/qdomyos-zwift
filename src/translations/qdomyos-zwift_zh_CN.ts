@@ -570,6 +570,10 @@ Would you like to enable the required services?</source>
         <translation>%1（心率传感器）已连接！</translation>
     </message>
     <message>
+        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
+        <translation>心率已暂停 30 秒：请停止 Garmin Connect 两次，手表将连接到 QZ。</translation>
+    </message>
+    <message>
         <source>Searching for %1 (HR sensor)...</source>
         <translation>正在搜索 %1（心率传感器）...</translation>
     </message>

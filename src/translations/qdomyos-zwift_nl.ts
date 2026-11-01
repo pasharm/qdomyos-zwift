@@ -570,6 +570,10 @@ Wil je dat nu doen?</translation>
         <translation>%1 (hartslagsensor) verbonden!</translation>
     </message>
     <message>
+        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
+        <translation>Hartslag 30 s gepauzeerd: stop Garmin Connect twee keer, dan maakt het horloge verbinding met QZ.</translation>
+    </message>
+    <message>
         <source>Searching for %1 (HR sensor)...</source>
         <translation>Zoeken naar %1 (hartslagsensor)…</translation>
     </message>

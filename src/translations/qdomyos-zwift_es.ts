@@ -570,6 +570,10 @@ Would you like to enable the required services?</source>
         <translation>¡%1 (sensor de frecuencia cardíaca) conectado!</translation>
     </message>
     <message>
+        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
+        <translation>Frecuencia cardíaca en pausa durante 30 s: detén Garmin Connect dos veces y el reloj se conectará a QZ.</translation>
+    </message>
+    <message>
         <source>Searching for %1 (HR sensor)...</source>
         <translation>Buscando %1 (sensor de frecuencia cardíaca)...</translation>
     </message>

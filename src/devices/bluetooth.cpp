@@ -3532,7 +3532,8 @@ void bluetooth::connectedAndDiscovered() {
 #endif
         for (const QBluetoothDeviceInfo &b : qAsConst(devices)) {
             if (((b.name().startsWith(heartRateBeltName))) && !heartRateBelt &&
-                !heartRateBeltName.startsWith(QStringLiteral("Disabled"))) {
+                !heartRateBeltName.startsWith(QStringLiteral("Disabled")) &&
+                !(hrmWatchWindow && hrmWatchWindow->isActive())) {
                 connectHeartRateBelt(b);
                 break;
             }
@@ -4228,10 +4229,39 @@ void bluetooth::connectHeartRateBelt(const QBluetoothDeviceInfo &b) {
     });
 }
 
+// Lets the heart rate go for 30 s and takes it back: Garmin Connect holds the same link and only the user can stop it,
+// so the time is for that. The Android event of a new connection comes for any link to the phone, so it does not tell
+// that the watch has connected; heart rate on the same link does not disturb the sensor afterwards.
+void bluetooth::letWatchConnectAsSensor() {
+    hrmWatchInfo = heartRateBelt->bluetoothDevice;
+    stopHeartRateBeltDiscovery();
+    heartRateBelt->disconnect();
+    heartRateBelt->disconnectForGood();
+    heartRateBelt->deleteLater();
+    heartRateBelt = nullptr;
+    if (this->device())
+        this->device()->heartRate(0);
+
+    if (!hrmWatchWindow) {
+        hrmWatchWindow = new QTimer(this);
+        hrmWatchWindow->setSingleShot(true);
+        connect(hrmWatchWindow, &QTimer::timeout, this, [this]() {
+            if (!heartRateBelt && this->device())
+                connectHeartRateBelt(hrmWatchInfo);
+        });
+    }
+    hrmWatchWindow->start(30000);
+    if (homeform::singleton())
+        homeform::singleton()->setToastRequested(
+            QObject::tr("Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ."));
+}
+
 // Applies a heart rate sensor chosen while QZ is running, so no restart is needed:
 // drops the old sensor and connects the new one, scanning for it if it was not seen yet.
 // name: the sensor just chosen in the settings page. Its QML Settings object writes the value to QSettings
-// a moment later, so reading it here would still give the old one; empty means take the saved value.
+// a moment later, so reading it here would still give the old one; empty means take the saved value (a tap on the
+// Bluetooth icon: on Android with the Garmin sensor mode it lets a Garmin watch go for a while instead, see
+// letWatchConnectAsSensor()).
 void bluetooth::reconnectHeartRateBelt(const QString &name) {
     QSettings settings;
     QString heartRateBeltName =
@@ -4239,6 +4269,35 @@ void bluetooth::reconnectHeartRateBelt(const QString &name) {
             ? settings.value(QZSettings::heart_rate_belt_name, QZSettings::default_heart_rate_belt_name).toString()
             : name;
     qDebug() << "bluetooth::reconnectHeartRateBelt()" << heartRateBeltName;
+
+    if (hrmWatchWindow && hrmWatchWindow->isActive()) {
+        // A sensor chosen in the settings: the window ends and the code below applies the choice
+        if (!name.isEmpty()) {
+            hrmWatchWindow->stop();
+        } else {
+            if (homeform::singleton())
+                homeform::singleton()->setToastRequested(
+                    QObject::tr("Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ."));
+            return;
+        }
+    }
+
+#ifdef Q_OS_ANDROID
+    // A tap on the Bluetooth icon (no name) with a Garmin watch as the heart rate sensor. The phone keeps one link
+    // to the watch, and the watch can connect to the QZ sensor only while nobody holds that link. A silent watch goes
+    // the usual way below: that tap is to get its heart rate back
+    if (name.isEmpty() && heartRateBelt && heartRateBelt->connected() && heartRateBelt->garminWatch &&
+        heartRateBelt->lastHeartRateTime.isValid() &&
+        heartRateBelt->lastHeartRateTime.msecsTo(QDateTime::currentDateTime()) < 5000 &&
+        settings.value(QZSettings::garmin_bluetooth_compatibility,
+                       QZSettings::default_garmin_bluetooth_compatibility).toBool() &&
+        this->device() &&
+        (this->device()->deviceType() != BIKE ||
+         settings.value(QZSettings::bike_power_sensor, QZSettings::default_bike_power_sensor).toBool())) {
+        letWatchConnectAsSensor();
+        return;
+    }
+#endif
 
     // Already searching for this sensor (or waiting for the Android limit): another tap keeps that scan
     if (hrmDiscoveryAgent && hrmDiscoveryName == heartRateBeltName) {

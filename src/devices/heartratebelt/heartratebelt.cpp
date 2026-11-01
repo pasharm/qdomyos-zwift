@@ -253,6 +253,9 @@ void heartratebelt::serviceScanDone(void) {
                     &heartratebelt::stateChanged);
             gattBatteryService->discoverDetails();
         }
+        else if (s == QBluetoothUuid(QStringLiteral("6a4e2800-667b-11e3-949a-0800200c9a66"))) {
+            garminWatch = true;
+        }
     }
 }
 

@@ -570,6 +570,10 @@ Vuoi attivare i servizi necessari?</translation>
         <translation>%1 (sensore FC) connesso!</translation>
     </message>
     <message>
+        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
+        <translation>Frequenza cardiaca in pausa per 30 s: arresta Garmin Connect due volte e l&apos;orologio si collegherà a QZ.</translation>
+    </message>
+    <message>
         <source>Searching for %1 (HR sensor)...</source>
         <translation>Ricerca di %1 (sensore FC)...</translation>
     </message>

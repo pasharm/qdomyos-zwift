@@ -227,6 +227,10 @@ class bluetooth : public QObject, public SignalHandler {
     QBluetoothDeviceDiscoveryAgent *discoveryAgent = nullptr;
     QBluetoothDeviceDiscoveryAgent *hrmDiscoveryAgent = nullptr;
     QString hrmDiscoveryName; // the heart rate sensor hrmDiscoveryAgent looks for
+    // Heart rate from a Garmin watch let go so that the watch can connect to QZ as a sensor; it comes back on timeout
+    QTimer *hrmWatchWindow = nullptr;
+    QBluetoothDeviceInfo hrmWatchInfo;
+    void letWatchConnectAsSensor();
     antbike *antBike = nullptr;
     android_antbike *android_antBike = nullptr;
     apexbike *apexBike = nullptr;

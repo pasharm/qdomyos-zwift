@@ -39,6 +39,8 @@ class heartratebelt : public treadmill {
     QDateTime lastHeartRateTime;
     // When this sensor was created: a sensor still connecting has no heart rate yet but is not silent
     QDateTime createdTime = QDateTime::currentDateTime();
+    // The sensor has the Garmin service: a Garmin device, as a rule a watch broadcasting heart rate
+    bool garminWatch = false;
     // Another sensor was chosen: disconnects without the automatic reconnection
     void disconnectForGood();
 

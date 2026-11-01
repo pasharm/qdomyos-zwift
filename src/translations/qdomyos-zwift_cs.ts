@@ -570,6 +570,10 @@ Restartovat nyní?</translation>
         <translation>Připojeno: %1 (snímač tepu)!</translation>
     </message>
     <message>
+        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
+        <translation>Srdeční tep pozastaven na 30 s: dvakrát zastavte Garmin Connect a hodinky se připojí k QZ.</translation>
+    </message>
+    <message>
         <source>Searching for %1 (HR sensor)...</source>
         <translation>Hledání: %1 (snímač tepu)…</translation>
     </message>

@@ -570,6 +570,10 @@ Uruchomić ją ponownie teraz?</translation>
         <translation>Połączono: %1 (pulsometr)!</translation>
     </message>
     <message>
+        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
+        <translation>Tętno wstrzymane na 30 s: zatrzymaj Garmin Connect dwa razy, a zegarek połączy się z QZ.</translation>
+    </message>
+    <message>
         <source>Searching for %1 (HR sensor)...</source>
         <translation>Wyszukiwanie: %1 (pulsometr)…</translation>
     </message>

@@ -858,6 +858,10 @@ Do you want to update QZ settings?</source>
         <translation>Під’єднано: %1 (пульсометр)!</translation>
     </message>
     <message>
+        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
+        <translation>Пульс вимкнено на 30 с: двічі зупиніть Garmin Connect, і годинник під’єднається до QZ.</translation>
+    </message>
+    <message>
         <source>Searching for %1 (HR sensor)...</source>
         <translation>Пошук: %1 (пульсометр)…</translation>
     </message>
