@@ -8213,7 +8213,7 @@ Default: A = -0.96, B = 1.33</source>
     </message>
     <message>
         <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
-        <translation>Новий інтерфейс: одна широка кнопка «Старт» або «Пауза», на паузі – «Продовжити» і «Стоп». У будь-якому вигляді на паузі кнопка називається «Продовжити». Вимкнено: «Старт/Пауза» і «Стоп» поруч, на паузі кнопка називається «Старт».</translation>
+        <translation>Новий інтерфейс: одна широка кнопка «Старт» або «Пауза», на паузі – «Продовжити» і «Стоп». У будь-якому вигляді на паузі кнопка називається «Продовжити» або, якщо не вміщується, «Далі». Вимкнено: «Старт/Пауза» і «Стоп» поруч, на паузі кнопка називається «Старт».</translation>
     </message>
     <message>
         <source>Theme</source>
