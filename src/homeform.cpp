@@ -2432,9 +2432,13 @@ void homeform::loadAppTranslation(const QString &language) {
         if (localeKey.isEmpty()) {
             return false;
         }
-        // An empty file is a language nobody has translated yet: it counts as no translation
-        if (translator->load(QStringLiteral(":/translations/translations/qdomyos-zwift_") + localeKey) &&
-            !translator->isEmpty()) {
+        if (translator->load(QStringLiteral(":/translations/translations/qdomyos-zwift_") + localeKey)) {
+            // A file with no translated strings loads fine but would keep the app in English:
+            // skip it, so a regional locale falls back to its language (pt_BR -> pt)
+            if (translator->isEmpty()) {
+                qDebug() << "Translation file is empty for" << sourceLabel << ":" << localeKey;
+                return false;
+            }
             QCoreApplication::installTranslator(translator);
             qDebug() << "Translation loaded successfully for" << sourceLabel << ":" << localeKey;
             return true;
