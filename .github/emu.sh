@@ -1,7 +1,7 @@
 #!/bin/bash
-# Test only (T-375): Tiles Options in the classic look, the build of master first, then the build
-# with the pace description moved under the Pace tile. Same steps for both, frames b-* and a-*.
-# QML text is not in the uiautomator dump, so the page is shot at every swipe and read by the frames.
+# Test only (T-375): Rower Options in the modern look, the current beta first, then the build with
+# the two hints in the style of the modern look. Same steps for both, frames b-* and a-*.
+# QML text is not in the uiautomator dump, so the section is read by the frames.
 PKG=org.cagnulen.qdomyoszwift
 LOG_DEBUG=${LOG_DEBUG:-true}
 STEPLOG=steps.log
@@ -32,7 +32,7 @@ adb shell settings put global hide_error_dialogs 1 || true
 # put_conf: the settings file of the app before a start - a fake treadmill, so there is no
 # first-run wizard; the classic look, English
 put_conf() {
-  printf '[General]\nlog_debug=%s\nui_modern=false\nfakedevice_treadmill=true\napp_language=en\n' "$LOG_DEBUG" > qz.conf
+  printf '[General]\nlog_debug=%s\nui_modern=true\nvirtual_device_rower=true\nfakedevice_treadmill=true\napp_language=en\n' "$LOG_DEBUG" > qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf '$CONF'"
@@ -134,12 +134,25 @@ case_run() {
   tap_drawer '^Settings$' 400 900
   sleep 8
   shot $1-settings
-  scroll_to '^Tiles Options$' || return 1
-  tap_ui '^Tiles Options$' 700 1000
-  sleep 8
+  # T-375, rower hints: Rower Options through the settings search of the modern look
+  dump
+  tap_ui '🔍|Search settings'
+  sleep 2
+  tap 470 338 "search field"
+  sleep 1
+  adb shell input text "Cadence%sGain"
+  sleep 3
+  if adb shell dumpsys input_method | grep -q "mInputShown=true"; then
+    adb shell input keyevent KEYCODE_BACK || true
+    sleep 1
+  fi
+  shot $1-results
+  dump
+  tap_ui '^Cadence Gain.*' || return 1
+  sleep 6
   shot $1-t00
-  for i in 1 2 3 4 5 6; do
-    adb shell input swipe 700 2000 700 1100 500 || true
+  for i in 1 2 3; do
+    adb shell input swipe 700 1800 700 1400 500 || true
     sleep 2
     shot $1-t0$i
   done
@@ -156,10 +169,10 @@ kill $LOGCAT_PID 2>/dev/null || true
 sleep 1
 # The frames decide, but the run proves nothing unless the page with the pace tiles was reached
 for side in b a; do
-  if grep -l 'Grade Adjusted Pace' dumps/$side-t0*.xml > /dev/null 2>&1; then
-    echo "check $side: the pace tiles reached: OK" >> $STEPLOG
+  if grep -l 'Cadence Offset' dumps/$side-t0*.xml > /dev/null 2>&1; then
+    echo "check $side: Rower Options in the dump: OK, the frames decide" >> $STEPLOG
   else
-    echo "!! check $side: the pace tiles NOT reached" >> $STEPLOG
+    echo "!! check $side: Rower Options NOT reached" >> $STEPLOG
     FAILED=1
   fi
 done
