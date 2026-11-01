@@ -1107,7 +1107,7 @@ void virtualtreadmill::treadmillProvider() {
 
     if (noHeartService == false) {
         value.clear();
-        if (notif2A53->notify(value) == CN_OK) {
+        if (notif2A37->notify(value) == CN_OK) {
             if (!serviceHR) {
                 qDebug() << QStringLiteral("serviceFIT not available");
 
