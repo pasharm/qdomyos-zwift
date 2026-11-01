@@ -189,8 +189,8 @@ shot 04-home
 # T-052: the Start/Stop row is the grid header and scrolls with the tiles; the toolbar scrolls
 # away and back by the drag direction. Master look only (no ui_modern in this build). The state
 # is read from the frames; the steps only say what is expected of each. The toolbar toggles after
-# about 88 dp in one direction (its 48 dp plus 40), about 310 px here. Going back up it stays away
-# within the row and the first row of tiles (150 + 130 dp, about 980 px from the top).
+# about 88 dp in one direction (its 48 dp plus 40), about 310 px here, and comes back at the top of
+# the page in any case.
 conf_with() {
   { printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nfakedevice_treadmill=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG"
     for kv in "$@"; do echo "$kv"; done; } > qz.conf
@@ -243,11 +243,11 @@ step small-back "150 px down: toolbar stays away"
 drag_down 150
 shot t-03-back-150
 
-step first-row "600 px down, to the top: the Start/Stop row and the first row in full view, toolbar still away"
+step first-row "600 px down, to the top: toolbar back on the way (or at the top at the latest), the Start/Stop row in full view"
 drag_down 600
 shot t-04-first-row-hidden
 
-step pull "a pull past the top edge: toolbar with its icons back"
+step pull "a pull past the top edge: toolbar with its icons shown"
 drag_down 700
 shot t-04b-pull
 
