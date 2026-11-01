@@ -77,15 +77,20 @@ ComboBox {
     popup.width: Math.min(Math.max(control.width, widestItem + 32 + popup.leftPadding + popup.rightPadding),
                           control.Window.width - popup.leftMargin - popup.rightMargin)
 
+    // DeviceComboBox calls it too: its items change while the list is open
+    function measureItems() {
+        var widest = 0
+        for (var i = 0; i < control.count; ++i) {
+            itemMetrics.text = control.labelFor(control.textAt(i))
+            widest = Math.max(widest, itemMetrics.advanceWidth)
+        }
+        control.widestItem = Math.ceil(widest)
+    }
+
     Connections {
         target: control.popup
         function onAboutToShow() {
-            var widest = 0
-            for (var i = 0; i < control.count; ++i) {
-                itemMetrics.text = control.labelFor(control.textAt(i))
-                widest = Math.max(widest, itemMetrics.advanceWidth)
-            }
-            control.widestItem = Math.ceil(widest)
+            control.measureItems()
         }
     }
 }
