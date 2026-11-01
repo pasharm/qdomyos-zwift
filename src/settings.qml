@@ -10259,7 +10259,7 @@ import QtQuick 2.12 as Quick212
 
                     Label {
                         visible: Qt.platform.os === "android"
-                        text: qsTr("On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone's Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.")
+                        text: qsTr("On Android, this makes QZ appear to your Garmin watch under the phone's Bluetooth name: as a foot pod with a treadmill, as a power meter with a bike and Bike Power Sensor on. The watch keeps one sensor per phone: when you change the machine, remove it on the watch and add it again. To connect the watch, start the sensor search on it, tap the Bluetooth icon in QZ and force stop Garmin Connect several times within 30 s. Zwift cannot use QZ as a Bluetooth machine while this is on.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint

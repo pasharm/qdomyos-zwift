@@ -4253,7 +4253,7 @@ void bluetooth::letWatchConnectAsSensor() {
     hrmWatchWindow->start(30000);
     if (homeform::singleton())
         homeform::singleton()->setToastRequested(
-            QObject::tr("Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ."));
+            QObject::tr("Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ."));
 }
 
 // Applies a heart rate sensor chosen while QZ is running, so no restart is needed:
@@ -4277,7 +4277,7 @@ void bluetooth::reconnectHeartRateBelt(const QString &name) {
         } else {
             if (homeform::singleton())
                 homeform::singleton()->setToastRequested(
-                    QObject::tr("Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ."));
+                    QObject::tr("Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ."));
             return;
         }
     }

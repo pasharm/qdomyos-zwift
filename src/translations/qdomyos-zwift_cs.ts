@@ -570,8 +570,8 @@ Restartovat nyní?</translation>
         <translation>Připojeno: %1 (snímač tepu)!</translation>
     </message>
     <message>
-        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
-        <translation>Srdeční tep pozastaven na 30 s: dvakrát zastavte Garmin Connect a hodinky se připojí k QZ.</translation>
+        <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
+        <translation>Srdeční tep pozastaven na 30 s: několikrát vynuceně zastavte Garmin Connect a hodinky se připojí k QZ.</translation>
     </message>
     <message>
         <source>Searching for %1 (HR sensor)...</source>
@@ -6287,8 +6287,8 @@ Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nasta
         <translation>Zapněte, pokud chcete posílat údaje z Macu do zařízení Garmin. Jinak ponechte vypnuté.</translation>
     </message>
     <message>
-        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
-        <translation>Na Androidu s běžeckým pásem se díky tomu QZ hodinkám Garmin zobrazí jako krokoměr pod názvem Bluetooth telefonu. Zatímco je to zapnuté, Zwift nemůže QZ používat jako běžecký pás přes Bluetooth.</translation>
+        <source>On Android, this makes QZ appear to your Garmin watch under the phone&apos;s Bluetooth name: as a foot pod with a treadmill, as a power meter with a bike and Bike Power Sensor on. The watch keeps one sensor per phone: when you change the machine, remove it on the watch and add it again. To connect the watch, start the sensor search on it, tap the Bluetooth icon in QZ and force stop Garmin Connect several times within 30 s. Zwift cannot use QZ as a Bluetooth machine while this is on.</source>
+        <translation>Na Androidu se díky tomu QZ zobrazí hodinkám Garmin pod názvem Bluetooth telefonu: s běžeckým pásem jako nožní snímač, s kolem a zapnutou volbou Snímač výkonu kola jako měřič výkonu. Hodinky si pamatují jeden snímač na telefon: při změně stroje jej v hodinkách odeberte a znovu přidejte. Chcete-li hodinky připojit, spusťte na nich hledání snímače, klepněte v QZ na ikonu Bluetooth a během 30 s několikrát vynuceně zastavte Garmin Connect. Když je tato volba zapnutá, Zwift nemůže používat QZ jako stroj přes Bluetooth.</translation>
     </message>
     <message>
         <source>Enable Companion App</source>

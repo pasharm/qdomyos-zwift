@@ -858,8 +858,8 @@ Do you want to update QZ settings?</source>
         <translation>Під’єднано: %1 (пульсометр)!</translation>
     </message>
     <message>
-        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
-        <translation>Пульс вимкнено на 30 с: двічі зупиніть Garmin Connect, і годинник під’єднається до QZ.</translation>
+        <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
+        <translation>Пульс вимкнено на 30 с: кілька разів примусово зупиніть Garmin Connect, і годинник під’єднається до QZ.</translation>
     </message>
     <message>
         <source>Searching for %1 (HR sensor)...</source>
@@ -6276,8 +6276,8 @@ In the next window, allow access to the QZ folder.</source>
         <translation>Увімкніть, якщо хочете передавати показники з Mac на пристрій Garmin. Інакше залиште вимкненим.</translation>
     </message>
     <message>
-        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
-        <translation>На Android із біговою доріжкою QZ з’явиться в годиннику Garmin як крокомір, під Bluetooth-іменем телефона. Поки це ввімкнено, Zwift не зможе використовувати QZ як Bluetooth-доріжку.</translation>
+        <source>On Android, this makes QZ appear to your Garmin watch under the phone&apos;s Bluetooth name: as a foot pod with a treadmill, as a power meter with a bike and Bike Power Sensor on. The watch keeps one sensor per phone: when you change the machine, remove it on the watch and add it again. To connect the watch, start the sensor search on it, tap the Bluetooth icon in QZ and force stop Garmin Connect several times within 30 s. Zwift cannot use QZ as a Bluetooth machine while this is on.</source>
+        <translation>На Android QZ видно годиннику Garmin під Bluetooth-іменем телефона: з доріжкою – як крокомір, з велотренажером і ввімкненим пунктом «Датчик потужності велосипеда» – як датчик потужності. Годинник зберігає один датчик на телефон: у разі зміни тренажера видаліть його на годиннику й додайте знову. Щоб під’єднати годинник, запустіть на ньому пошук датчика, натисніть значок Bluetooth у QZ і за 30 с кілька разів примусово зупиніть Garmin Connect. Поки режим увімкнено, Zwift не може використовувати QZ як тренажер через Bluetooth.</translation>
     </message>
     <message>
         <source>Enable Companion App</source>

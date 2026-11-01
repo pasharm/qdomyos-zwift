@@ -570,8 +570,8 @@ Would you like to enable the required services?</source>
         <translation>%1（心率传感器）已连接！</translation>
     </message>
     <message>
-        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
-        <translation>心率已暂停 30 秒：请停止 Garmin Connect 两次，手表将连接到 QZ。</translation>
+        <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
+        <translation>心率已暂停 30 秒：请多次强行停止 Garmin Connect，手表将连接到 QZ。</translation>
     </message>
     <message>
         <source>Searching for %1 (HR sensor)...</source>
@@ -6373,8 +6373,8 @@ In the next window, allow access to the QZ folder.</source>
         <translation>如果您想从 Mac 将数据发送到您的 Garmin 设备，请启用此项。否则请保持禁用。</translation>
     </message>
     <message>
-        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
-        <translation>在 Android 上使用跑步机时，QZ 会以手机的蓝牙名称作为跑步传感器显示在 Garmin 手表上。开启后，Zwift 无法将 QZ 用作蓝牙跑步机。</translation>
+        <source>On Android, this makes QZ appear to your Garmin watch under the phone&apos;s Bluetooth name: as a foot pod with a treadmill, as a power meter with a bike and Bike Power Sensor on. The watch keeps one sensor per phone: when you change the machine, remove it on the watch and add it again. To connect the watch, start the sensor search on it, tap the Bluetooth icon in QZ and force stop Garmin Connect several times within 30 s. Zwift cannot use QZ as a Bluetooth machine while this is on.</source>
+        <translation>在 Android 上,QZ 会以手机的蓝牙名称显示在 Garmin 手表上:使用跑步机时显示为跑步传感器,使用单车并开启 自行车功率传感器 时显示为功率计。手表每部手机只保存一个传感器:更换器械时,请在手表上删除后重新添加。要连接手表,请在手表上开始搜索传感器,点按 QZ 中的蓝牙图标,并在 30 秒内多次强行停止 Garmin Connect。开启此选项时,Zwift 无法将 QZ 用作蓝牙器械。</translation>
     </message>
     <message>
         <source>Enable Companion App</source>

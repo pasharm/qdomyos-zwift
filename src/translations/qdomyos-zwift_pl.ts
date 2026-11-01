@@ -570,8 +570,8 @@ Uruchomić ją ponownie teraz?</translation>
         <translation>Połączono: %1 (pulsometr)!</translation>
     </message>
     <message>
-        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
-        <translation>Tętno wstrzymane na 30 s: zatrzymaj Garmin Connect dwa razy, a zegarek połączy się z QZ.</translation>
+        <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
+        <translation>Tętno wstrzymane na 30 s: kilka razy wymuś zatrzymanie Garmin Connect, a zegarek połączy się z QZ.</translation>
     </message>
     <message>
         <source>Searching for %1 (HR sensor)...</source>
@@ -6284,8 +6284,8 @@ Nie: QZ pozostawi je jako bieżnię i nie zapyta ponownie (rower można nadal us
         <translation>Jeśli chcesz wysyłać dane pomiarowe do urządzenia Garmin z komputera Mac, włącz tę opcję. W przeciwnym razie pozostaw ją wyłączoną.</translation>
     </message>
     <message>
-        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
-        <translation>Na Androidzie z bieżnią QZ pojawi się w zegarku Garmin jako czujnik kroków pod nazwą Bluetooth telefonu. Gdy ta opcja jest włączona, Zwift nie może używać QZ jako bieżni Bluetooth.</translation>
+        <source>On Android, this makes QZ appear to your Garmin watch under the phone&apos;s Bluetooth name: as a foot pod with a treadmill, as a power meter with a bike and Bike Power Sensor on. The watch keeps one sensor per phone: when you change the machine, remove it on the watch and add it again. To connect the watch, start the sensor search on it, tap the Bluetooth icon in QZ and force stop Garmin Connect several times within 30 s. Zwift cannot use QZ as a Bluetooth machine while this is on.</source>
+        <translation>Na Androidzie QZ jest dzięki temu widoczny dla zegarka Garmin pod nazwą Bluetooth telefonu: z bieżnią jako czujnik kroków, z rowerem i włączoną opcją Czujnik mocy roweru jako miernik mocy. Zegarek przechowuje jeden czujnik na telefon: po zmianie urządzenia usuń go z zegarka i dodaj ponownie. Aby połączyć zegarek, uruchom na nim wyszukiwanie czujnika, dotknij ikony Bluetooth w QZ i w ciągu 30 s kilka razy wymuś zatrzymanie Garmin Connect. Gdy ta opcja jest włączona, Zwift nie może używać QZ jako urządzenia Bluetooth.</translation>
     </message>
     <message>
         <source>Enable Companion App</source>

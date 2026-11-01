@@ -570,8 +570,8 @@ Wil je dat nu doen?</translation>
         <translation>%1 (hartslagsensor) verbonden!</translation>
     </message>
     <message>
-        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
-        <translation>Hartslag 30 s gepauzeerd: stop Garmin Connect twee keer, dan maakt het horloge verbinding met QZ.</translation>
+        <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
+        <translation>Hartslag 30 s gepauzeerd: forceer meerdere keren het stoppen van Garmin Connect, dan maakt het horloge verbinding met QZ.</translation>
     </message>
     <message>
         <source>Searching for %1 (HR sensor)...</source>
@@ -6287,8 +6287,8 @@ Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog 
         <translation>Schakel dit in als je gegevens van je Mac naar je Garmin-apparaat wilt sturen. Laat het anders uitgeschakeld.</translation>
     </message>
     <message>
-        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
-        <translation>Op Android met een loopband verschijnt QZ hierdoor op je Garmin-horloge als foot pod, onder de Bluetooth-naam van de telefoon. Zolang dit aanstaat, kan Zwift QZ niet als Bluetooth-loopband gebruiken.</translation>
+        <source>On Android, this makes QZ appear to your Garmin watch under the phone&apos;s Bluetooth name: as a foot pod with a treadmill, as a power meter with a bike and Bike Power Sensor on. The watch keeps one sensor per phone: when you change the machine, remove it on the watch and add it again. To connect the watch, start the sensor search on it, tap the Bluetooth icon in QZ and force stop Garmin Connect several times within 30 s. Zwift cannot use QZ as a Bluetooth machine while this is on.</source>
+        <translation>Op Android verschijnt QZ hierdoor op je Garmin-horloge onder de Bluetooth-naam van de telefoon: als voetsensor bij een loopband, als vermogensmeter bij een fiets met Fietsvermogenssensor ingeschakeld. Het horloge bewaart één sensor per telefoon: verwijder hem op het horloge en voeg hem opnieuw toe als je van toestel wisselt. Om het horloge te verbinden, start je daarop het zoeken naar sensoren, tik je in QZ op het Bluetooth-pictogram en forceer je binnen 30 s meerdere keren het stoppen van Garmin Connect. Zolang dit aan staat, kan Zwift QZ niet als Bluetooth-toestel gebruiken.</translation>
     </message>
     <message>
         <source>Enable Companion App</source>

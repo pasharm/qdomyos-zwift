@@ -570,8 +570,8 @@ Pretende ativar os serviços necessários?</translation>
         <translation>%1 (sensor de FC) conectado!</translation>
     </message>
     <message>
-        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
-        <translation>Frequência cardíaca em pausa durante 30 s: pare o Garmin Connect duas vezes e o relógio liga-se ao QZ.</translation>
+        <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
+        <translation>Frequência cardíaca em pausa durante 30 s: force a paragem do Garmin Connect várias vezes e o relógio liga-se ao QZ.</translation>
     </message>
     <message>
         <source>Searching for %1 (HR sensor)...</source>
@@ -6365,8 +6365,8 @@ Na próxima janela, permita o acesso à pasta QZ.</translation>
         <translation>Para enviar métricas para o seu dispositivo Garmin a partir do Mac, ative esta opção. Caso contrário, mantenha desativado.</translation>
     </message>
     <message>
-        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
-        <translation>No Android com uma passadeira, o QZ aparece no relógio Garmin como sensor de passada, com o nome Bluetooth do telemóvel. Enquanto isto estiver ativo, o Zwift não pode usar o QZ como passadeira Bluetooth.</translation>
+        <source>On Android, this makes QZ appear to your Garmin watch under the phone&apos;s Bluetooth name: as a foot pod with a treadmill, as a power meter with a bike and Bike Power Sensor on. The watch keeps one sensor per phone: when you change the machine, remove it on the watch and add it again. To connect the watch, start the sensor search on it, tap the Bluetooth icon in QZ and force stop Garmin Connect several times within 30 s. Zwift cannot use QZ as a Bluetooth machine while this is on.</source>
+        <translation>No Android, o QZ aparece assim no relógio Garmin com o nome Bluetooth do telemóvel: como sensor de passada com uma passadeira e como medidor de potência com uma bicicleta e Sensor de Potência da Bicicleta ativado. O relógio guarda um sensor por telemóvel: ao mudar de máquina, remova-o no relógio e adicione-o novamente. Para ligar o relógio, inicie nele a procura de sensores, toque no ícone Bluetooth no QZ e force a paragem do Garmin Connect várias vezes em 30 s. Enquanto isto estiver ativo, o Zwift não pode usar o QZ como máquina Bluetooth.</translation>
     </message>
     <message>
         <source>Enable Companion App</source>

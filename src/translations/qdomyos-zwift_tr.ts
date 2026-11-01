@@ -570,8 +570,8 @@ Would you like to do that now?</source>
         <translation>Bağlandı: %1 (nabız sensörü)</translation>
     </message>
     <message>
-        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
-        <translation>Nabız 30 sn duraklatıldı: Garmin Connect&apos;i iki kez durdurun, saat QZ&apos;ye bağlanacak.</translation>
+        <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
+        <translation>Nabız 30 sn duraklatıldı: Garmin Connect&apos;i birkaç kez zorla durdurun, saat QZ&apos;ye bağlanacak.</translation>
     </message>
     <message>
         <source>Searching for %1 (HR sensor)...</source>
@@ -6287,8 +6287,8 @@ Hayır: QZ cihazı koşu bandı olarak tutar ve bir daha sormaz (bisiklet yine e
         <translation>Mac&apos;inizden Garmin cihazınıza veri göndermek istiyorsanız bunu açın. Aksi hâlde kapalı bırakın.</translation>
     </message>
     <message>
-        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
-        <translation>Android&apos;de koşu bandıyla QZ, Garmin saatinizde telefonun Bluetooth adıyla ayak sensörü olarak görünür. Bu açıkken Zwift, QZ&apos;yi Bluetooth koşu bandı olarak kullanamaz.</translation>
+        <source>On Android, this makes QZ appear to your Garmin watch under the phone&apos;s Bluetooth name: as a foot pod with a treadmill, as a power meter with a bike and Bike Power Sensor on. The watch keeps one sensor per phone: when you change the machine, remove it on the watch and add it again. To connect the watch, start the sensor search on it, tap the Bluetooth icon in QZ and force stop Garmin Connect several times within 30 s. Zwift cannot use QZ as a Bluetooth machine while this is on.</source>
+        <translation>Android&apos;de QZ, Garmin saatinizde telefonun Bluetooth adıyla görünür: koşu bandıyla adım sensörü, bisiklet ve Bisiklet güç sensörü açıkken güç ölçer olarak. Saat telefon başına bir sensör saklar: makineyi değiştirdiğinizde sensörü saatten silip yeniden ekleyin. Saati bağlamak için saatte sensör aramasını başlatın, QZ&apos;de Bluetooth simgesine dokunun ve 30 sn içinde Garmin Connect&apos;i birkaç kez zorla durdurun. Bu seçenek açıkken Zwift, QZ&apos;yi Bluetooth makinesi olarak kullanamaz.</translation>
     </message>
     <message>
         <source>Enable Companion App</source>

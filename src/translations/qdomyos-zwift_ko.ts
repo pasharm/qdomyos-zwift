@@ -570,8 +570,8 @@ Would you like to do that now?</source>
         <translation>%1(심박 센서) 연결됨!</translation>
     </message>
     <message>
-        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
-        <translation>심박수를 30초 동안 일시 중지했습니다. Garmin Connect를 두 번 중지하면 시계가 QZ에 연결됩니다.</translation>
+        <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
+        <translation>심박수를 30초 동안 일시 중지했습니다. Garmin Connect를 여러 번 강제 중지하면 시계가 QZ에 연결됩니다.</translation>
     </message>
     <message>
         <source>Searching for %1 (HR sensor)...</source>
@@ -6284,8 +6284,8 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>Mac에서 Garmin 기기로 측정값을 보내려면 이 설정을 켜세요. 그렇지 않으면 꺼 두세요.</translation>
     </message>
     <message>
-        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
-        <translation>Android에서 트레드밀을 사용할 때 QZ가 휴대폰의 Bluetooth 이름으로 Garmin 시계에 풋 포드로 표시됩니다. 이 옵션이 켜져 있는 동안 Zwift는 QZ를 Bluetooth 트레드밀로 사용할 수 없습니다.</translation>
+        <source>On Android, this makes QZ appear to your Garmin watch under the phone&apos;s Bluetooth name: as a foot pod with a treadmill, as a power meter with a bike and Bike Power Sensor on. The watch keeps one sensor per phone: when you change the machine, remove it on the watch and add it again. To connect the watch, start the sensor search on it, tap the Bluetooth icon in QZ and force stop Garmin Connect several times within 30 s. Zwift cannot use QZ as a Bluetooth machine while this is on.</source>
+        <translation>Android에서는 QZ가 휴대폰의 Bluetooth 이름으로 Garmin 시계에 표시됩니다. 트레드밀에서는 풋 포드로, 자전거에서 자전거 파워 센서이(가) 켜져 있으면 파워 미터로 표시됩니다. 시계는 휴대폰당 센서 하나만 저장합니다. 기기를 바꾸면 시계에서 센서를 삭제하고 다시 추가하세요. 시계를 연결하려면 시계에서 센서 검색을 시작하고 QZ의 Bluetooth 아이콘을 누른 뒤 30초 안에 Garmin Connect를 여러 번 강제 중지하세요. 이 옵션이 켜져 있으면 Zwift에서 QZ를 Bluetooth 기기로 사용할 수 없습니다.</translation>
     </message>
     <message>
         <source>Enable Companion App</source>

@@ -570,8 +570,8 @@ Möchten Sie die erforderlichen Dienste aktivieren?</translation>
         <translation>%1 (Herzfrequenzsensor) verbunden!</translation>
     </message>
     <message>
-        <source>Heart rate paused for 30 s: stop Garmin Connect twice, the watch will connect to QZ.</source>
-        <translation>Herzfrequenz für 30 s pausiert: Beenden Sie Garmin Connect zweimal, dann verbindet sich die Uhr mit QZ.</translation>
+        <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
+        <translation>Herzfrequenz für 30 s pausiert: Erzwingen Sie mehrmals das Beenden von Garmin Connect, dann verbindet sich die Uhr mit QZ.</translation>
     </message>
     <message>
         <source>Searching for %1 (HR sensor)...</source>
@@ -6260,8 +6260,8 @@ Erlauben Sie im nächsten Fenster den Zugriff auf den QZ-Ordner.</translation>
         <translation>Wenn Sie Metriken von Ihrem Mac auf Ihr Garmin-Gerät senden möchten, aktivieren Sie dies. Andernfalls lassen Sie es deaktiviert.</translation>
     </message>
     <message>
-        <source>On Android with a treadmill, this makes QZ appear to your Garmin watch as a foot pod, under the phone&apos;s Bluetooth name. Zwift cannot use QZ as a Bluetooth treadmill while this is on.</source>
-        <translation>Unter Android mit einem Laufband erscheint QZ dadurch auf deiner Garmin-Uhr als Laufsensor unter dem Bluetooth-Namen des Telefons. Solange dies aktiv ist, kann Zwift QZ nicht als Bluetooth-Laufband verwenden.</translation>
+        <source>On Android, this makes QZ appear to your Garmin watch under the phone&apos;s Bluetooth name: as a foot pod with a treadmill, as a power meter with a bike and Bike Power Sensor on. The watch keeps one sensor per phone: when you change the machine, remove it on the watch and add it again. To connect the watch, start the sensor search on it, tap the Bluetooth icon in QZ and force stop Garmin Connect several times within 30 s. Zwift cannot use QZ as a Bluetooth machine while this is on.</source>
+        <translation>Unter Android erscheint QZ dadurch auf Ihrer Garmin-Uhr unter dem Bluetooth-Namen des Telefons: mit einem Laufband als Fußsensor, mit einem Fahrrad und aktiviertem Leistungssensor als Leistungsmesser. Die Uhr speichert einen Sensor pro Telefon: Wenn Sie das Gerät wechseln, entfernen Sie ihn auf der Uhr und fügen Sie ihn neu hinzu. Um die Uhr zu verbinden, starten Sie dort die Sensorsuche, tippen Sie in QZ auf das Bluetooth-Symbol und erzwingen Sie innerhalb von 30 s mehrmals das Beenden von Garmin Connect. Solange dies aktiv ist, kann Zwift QZ nicht als Bluetooth-Gerät verwenden.</translation>
     </message>
     <message>
         <source>Enable Companion App</source>
