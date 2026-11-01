@@ -220,7 +220,7 @@ Location Services are necessary on Android to allow the app to find Bluetooth de
 The GPS will not be used.
 
 Would you like to enable them?</source>
-        <translation>QZ erfordert die Aktivierung von Bluetooth und Standortdiensten.
+        <translation type="vanished">QZ erfordert die Aktivierung von Bluetooth und Standortdiensten.
 Auf Android sind Standortdienste erforderlich, damit die App Bluetooth-Geräte finden kann.
 Das GPS wird nicht verwendet.
 
@@ -232,7 +232,7 @@ Möchten Sie sie aktivieren?</translation>
     </message>
     <message>
         <source>Would you like to be reminded about enabling Location Services next time?</source>
-        <translation>Möchten Sie beim nächsten Mal daran erinnert werden, die Standortdienste zu aktivieren?</translation>
+        <translation type="vanished">Möchten Sie beim nächsten Mal daran erinnert werden, die Standortdienste zu aktivieren?</translation>
     </message>
     <message>
         <source>Restart the app</source>
@@ -267,6 +267,18 @@ Möchten Sie das jetzt tun?</translation>
     <message>
         <source>Increase the value of </source>
         <translation>Erhöhen Sie den Wert von </translation>
+    </message>
+    <message>
+        <source>QZ needs Bluetooth enabled to discover fitness equipment. On Android 11 and earlier, Android also requires Location permission and Location Services for Bluetooth discovery. QZ does not use your location data. On Android 12 and later, Nearby devices permission allows Bluetooth discovery without Location.
+
+Would you like to enable the required services?</source>
+        <translation>QZ benötigt aktiviertes Bluetooth, um Fitnessgeräte zu finden. Unter Android 11 und älter sind für die Bluetooth-Suche zusätzlich die Standortberechtigung und aktivierte Standortdienste erforderlich. QZ verwendet Ihre Standortdaten nicht. Ab Android 12 ermöglicht die Berechtigung „Geräte in der Nähe“ die Bluetooth-Suche ohne Standortzugriff.
+
+Möchten Sie die erforderlichen Dienste aktivieren?</translation>
+    </message>
+    <message>
+        <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
+        <translation>Möchten Sie beim nächsten Mal daran erinnert werden, Bluetooth oder die Standortdienste zu aktivieren?</translation>
     </message>
 </context>
 <context>
@@ -556,6 +568,18 @@ Möchten Sie das jetzt tun?</translation>
     <message>
         <source>%1 (HR sensor) connected!</source>
         <translation>%1 (Herzfrequenzsensor) verbunden!</translation>
+    </message>
+    <message>
+        <source>Searching for %1 (HR sensor)...</source>
+        <translation>Suche nach %1 (Herzfrequenzsensor)...</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
+        <translation>%1 (Herzfrequenzsensor) nicht gefunden. Prüfe, ob er eingeschaltet ist und die Herzfrequenz sendet.</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
+        <translation>%1 (Herzfrequenzsensor): keine Herzfrequenz. Prüfe, ob er die Herzfrequenz sendet.</translation>
     </message>
     <message>
         <source>%1 (cadence sensor) connected!</source>
@@ -976,6 +1000,10 @@ Möchten Sie die QZ-Einstellungen aktualisieren?</translation>
     <message>
         <source>Init completed, you can use the treadmill now!</source>
         <translation>Initialisierung abgeschlossen, Sie können das Laufband jetzt benutzen!</translation>
+    </message>
+    <message>
+        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
+        <translation>QZ hat das Datenformat dieses Fahrrads erkannt und in den Einstellungen „Virtufit Etappe 2.0 Fahrrad“ aktiviert. QZ muss neu gestartet werden, um die Daten des Fahrrads zu lesen.</translation>
     </message>
     <message>
         <source>FTMS bike found, restart the app to apply the change!</source>
@@ -4003,6 +4031,10 @@ Beim ersten Start kann dies einen Moment dauern.</translation>
         <source>QZ target power is overriding the app&apos;s commands. Pause QZ and resume it to give control back to the app.</source>
         <translation>Die QZ-Zielleistung überschreibt die Befehle der App. Pausieren Sie QZ und setzen Sie es fort, um die Steuerung an die App zurückzugeben.</translation>
     </message>
+    <message>
+        <source>Spotify songs:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>main</name>
@@ -4047,6 +4079,10 @@ starten Sie die App neu.</translation>
     <message>
         <source>QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.</source>
         <translation>QZ hat Bluetooth-Trainingsgeräte in der Nähe gefunden. Wählen Sie das Gerät, das Sie für diese Trainingseinheit verwenden möchten.</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Deaktiviert</translation>
     </message>
     <message>
         <source>Select a device</source>
@@ -6718,6 +6754,82 @@ Bitte geben Sie ihn unten ein:</translation>
     <message>
         <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
         <translation>Verwendet ein synthetisches Life-Fitness-Profil ohne Konto. Wenn aktiviert, werden Benutzername, Passwort und zwischengespeicherte Kontodaten ignoriert; nur zum Testen der unterstützten Gastanmeldung verwenden.</translation>
+    </message>
+    <message>
+        <source>Workout History Charts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heart Rate</source>
+        <translation type="unfinished">Herzfrequenz</translation>
+    </message>
+    <message>
+        <source>Resistance vs Target Resistance</source>
+        <translation type="unfinished">Widerstand vs. Zielwiderstand</translation>
+    </message>
+    <message>
+        <source>Peloton Resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cadence</source>
+        <translation type="unfinished">Trittfrequenz</translation>
+    </message>
+    <message>
+        <source>Power Distribution</source>
+        <translation type="unfinished">Leistungsverteilung</translation>
+    </message>
+    <message>
+        <source>Speed and Inclination</source>
+        <translation type="unfinished">Geschwindigkeit und Neigung</translation>
+    </message>
+    <message>
+        <source>Move the charts up or down to choose their order in Workout History. Changes are saved automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore default order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moovio Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lynx Konect 2.0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cadence Gain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset added after the gain. Default is 0.0. QZ&apos;s internal cadence display and workout metrics remain unchanged.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>iOS Background Keep Alive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>RunnerT Options</source>

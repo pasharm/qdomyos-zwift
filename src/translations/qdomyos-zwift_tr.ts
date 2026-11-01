@@ -203,6 +203,18 @@
         <translation>Kaydet</translation>
     </message>
     <message>
+        <source>QZ needs Bluetooth enabled to discover fitness equipment. On Android 11 and earlier, Android also requires Location permission and Location Services for Bluetooth discovery. QZ does not use your location data. On Android 12 and later, Nearby devices permission allows Bluetooth discovery without Location.
+
+Would you like to enable the required services?</source>
+        <translation>QZ&apos;nin fitness ekipmanlarını bulabilmesi için Bluetooth&apos;un açık olması gerekir. Android 11 ve önceki sürümlerde Bluetooth cihazlarını keşfetmek için ayrıca konum izni ve konum hizmetlerinin açık olması gerekir. QZ konum verilerinizi kullanmaz. Android 12 ve sonraki sürümlerde &apos;Yakındaki cihazlar&apos; izni, konuma erişim olmadan Bluetooth cihazlarının keşfedilmesini sağlar.
+
+Gerekli hizmetleri açmak ister misiniz?</translation>
+    </message>
+    <message>
+        <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
+        <translation>Bir dahaki sefere Bluetooth&apos;u veya konum hizmetlerini açmanız hatırlatılsın mı?</translation>
+    </message>
+    <message>
         <source>Permissions Required</source>
         <translation>İzin gerekli</translation>
     </message>
@@ -212,7 +224,7 @@ Location Services are necessary on Android to allow the app to find Bluetooth de
 The GPS will not be used.
 
 Would you like to enable them?</source>
-        <translation>QZ için hem Bluetooth hem de konum hizmetleri açık olmalıdır.
+        <translation type="vanished">QZ için hem Bluetooth hem de konum hizmetleri açık olmalıdır.
 Android&apos;de uygulamanın Bluetooth cihazlarını bulabilmesi için konum hizmetleri gereklidir.
 GPS kullanılmaz.
 
@@ -224,7 +236,7 @@ Bunlar açılsın mı?</translation>
     </message>
     <message>
         <source>Would you like to be reminded about enabling Location Services next time?</source>
-        <translation>Konum hizmetlerini açmak bir dahaki sefere hatırlatılsın mı?</translation>
+        <translation type="vanished">Konum hizmetlerini açmak bir dahaki sefere hatırlatılsın mı?</translation>
     </message>
     <message>
         <source>Restart the app</source>
@@ -846,6 +858,18 @@ QZ ayarları güncellensin mi?</translation>
         <translation>Bağlandı: %1 (nabız sensörü)</translation>
     </message>
     <message>
+        <source>Searching for %1 (HR sensor)...</source>
+        <translation>Aranıyor: %1 (nabız sensörü)…</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
+        <translation>Bulunamadı: %1 (nabız sensörü). Açık olduğunu ve nabız yayınladığını kontrol edin.</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
+        <translation>%1 (nabız sensörü): nabız yok. Nabız yayınladığını kontrol edin.</translation>
+    </message>
+    <message>
         <source>%1 (cadence sensor) connected!</source>
         <translation>Bağlandı: %1 (kadans sensörü)</translation>
     </message>
@@ -928,6 +952,10 @@ QZ ayarları güncellensin mi?</translation>
     <message>
         <source>Init completed, you can use the treadmill now!</source>
         <translation>Hazırlık tamamlandı, koşu bandını artık kullanabilirsiniz!</translation>
+    </message>
+    <message>
+        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
+        <translation>QZ bu bisikletin veri biçimini algıladı ve ayarlarda &quot;Virtufit Etappe 2.0 bisiklet&quot; seçeneğini açtı. Bisiklet verilerinin okunması için QZ yeniden başlatılmalıdır.</translation>
     </message>
     <message>
         <source>FTMS bike found, restart the app to apply the change!</source>
@@ -3990,6 +4018,10 @@ This may take a few moments on first startup.</source>
     <message>
         <source>QZ target power is overriding the app&apos;s commands. Pause QZ and resume it to give control back to the app.</source>
         <translation>QZ hedef gücü uygulamanın komutlarını geçersiz kılıyor. Kontrolü uygulamaya geri vermek için QZ&apos;yi duraklatıp devam ettirin.</translation>
+    </message>
+    <message>
+        <source>Spotify songs:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7314,6 +7346,82 @@ IMPORTANT NOTES:
     <message>
         <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
         <translation>Hesap gerektirmeyen yapay bir Life Fitness profili kullanır. Açıkken kullanıcı adı, şifre ve önbelleğe alınmış hesap verileri yok sayılır; yalnızca desteklenen misafir girişini test etmek için kullanın.</translation>
+    </message>
+    <message>
+        <source>Workout History Charts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heart Rate</source>
+        <translation type="unfinished">Nabız</translation>
+    </message>
+    <message>
+        <source>Resistance vs Target Resistance</source>
+        <translation type="unfinished">Direnç ve hedef direnç</translation>
+    </message>
+    <message>
+        <source>Peloton Resistance</source>
+        <translation type="unfinished">Peloton direnci</translation>
+    </message>
+    <message>
+        <source>Cadence</source>
+        <translation type="unfinished">Kadans</translation>
+    </message>
+    <message>
+        <source>Power Distribution</source>
+        <translation type="unfinished">Güç dağılımı</translation>
+    </message>
+    <message>
+        <source>Speed and Inclination</source>
+        <translation type="unfinished">Hız ve eğim</translation>
+    </message>
+    <message>
+        <source>Move the charts up or down to choose their order in Workout History. Changes are saved automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore default order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moovio Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lynx Konect 2.0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cadence Gain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset added after the gain. Default is 0.0. QZ&apos;s internal cadence display and workout metrics remain unchanged.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>iOS Background Keep Alive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Inclination Delay:</source>
