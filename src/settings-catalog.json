@@ -16532,8 +16532,8 @@
     },
     {
       "key": "virtual_device_rower_cadence_gain",
-      "name": "Virtual Rower Cadence Gain",
-      "description": "Multiplier applied only to the stroke rate sent by the Virtual Rower. QZ's internal cadence display and workout metrics remain unchanged.",
+      "name": "Cadence Gain",
+      "description": "Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.",
       "parent": "Rower Options",
       "type": "number",
       "qmlType": "real",
@@ -16546,8 +16546,8 @@
     },
     {
       "key": "virtual_device_rower_cadence_offset",
-      "name": "Virtual Rower Cadence Offset",
-      "description": "Offset added after the gain to the stroke rate sent by the Virtual Rower. QZ's internal cadence display and workout metrics remain unchanged.",
+      "name": "Cadence Offset",
+      "description": "Offset added after the gain. Default is 0.0. QZ's internal cadence display and workout metrics remain unchanged.",
       "parent": "Rower Options",
       "type": "number",
       "qmlType": "real",
