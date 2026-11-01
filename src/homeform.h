@@ -247,6 +247,11 @@ class homeform : public QObject {
     Q_INVOKABLE QString bluetoothSearchStatus();
     // Tap on the Bluetooth icon: search right away, or when Android allows it again (with a toast saying when)
     Q_INVOKABLE void bluetoothSearchNow();
+    // An opened list of devices: a search that may run during a workout too
+    Q_INVOKABLE void searchForDeviceList() {
+        if (bluetoothManager)
+            bluetoothManager->searchForDeviceList();
+    }
     // Heart rate sensor chosen in the settings (name) or a tap on the Bluetooth icon (no name, the saved one):
     // connect it without a restart
     Q_INVOKABLE void reconnectHeartRateBelt(const QString &name = QString()) {
