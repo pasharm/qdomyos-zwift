@@ -192,7 +192,7 @@ Page {
                 Accessible.onPressAction: if (modernStart.enabled) start.clicked()
             }
 
-            // Only while paused, in the place of Lap: the reminder to end the workout
+            // By the state only while paused, in the place of Lap: the reminder to end the workout
             AbstractButton {
                 id: modernStop
                 visible: modernRow.paired || !modernRow.byState
@@ -224,8 +224,10 @@ Page {
                         }
                         Label {
                             anchors.verticalCenter: parent.verticalCenter
-                            // at most what the pill has left beside the icon, as on Start
-                            width: Math.min(implicitWidth, modernStop.width - modernRow.labelInset - 24 - 6)
+                            // at most what the pill has left beside the icon, as on Start;
+                            // with the switch off the whole word, as before
+                            width: modernRow.byState ? Math.min(implicitWidth, modernStop.width - modernRow.labelInset - 24 - 6)
+                                                     : implicitWidth
                             elide: Text.ElideRight
                             text: rootItem.stopText
                             color: modernStop.filled ? window.ui.dangerInk : window.ui.textMain
@@ -243,7 +245,7 @@ Page {
                 Accessible.onPressAction: if (modernStop.enabled) stop.clicked()
             }
 
-            // Hidden while paused: Stop takes its place
+            // By the state hidden while paused: Stop takes its place
             AbstractButton {
                 id: modernLap
                 visible: !modernRow.paired
