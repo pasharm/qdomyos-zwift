@@ -1,8 +1,7 @@
 #!/bin/bash
-# Test only (T-312): the switch ui_state_buttons in Experimental Features. Off - Start/Pause, Stop
-# and Lap all the time, the paused button says Start; on - the buttons follow the workout state.
-# Both looks, and the switch tapped in the settings: it applies at once and stays after a restart.
-# The buttons are tapped by coordinates (Nexus 6, 1440x2560 px).
+# Test only (T-375): Tiles Options in the classic look, the build of master first, then the build
+# with the pace description moved under the Pace tile. Same steps for both, frames b-* and a-*.
+# QML text is not in the uiautomator dump, so the page is shot at every swipe and read by the frames.
 PKG=org.cagnulen.qdomyoszwift
 LOG_DEBUG=${LOG_DEBUG:-true}
 STEPLOG=steps.log
@@ -15,6 +14,7 @@ install_apk() {
   adb uninstall $PKG > /dev/null 2>&1 || true
   adb shell rm -rf /sdcard/Documents/QZ || true
   adb install "$1"
+  adb shell pm path $PKG > /dev/null || { echo "!! $1 not installed" >> $STEPLOG; exit 1; }
   for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
     adb shell pm grant $PKG android.permission.$p || true
   done
@@ -29,10 +29,10 @@ install_apk() {
 adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
-# put_conf <lang> <modern> [extra lines]: the settings file of the app before a start - a fake
-# treadmill, so the home page has tiles and no first-run wizard
+# put_conf: the settings file of the app before a start - a fake treadmill, so there is no
+# first-run wizard; the classic look, English
 put_conf() {
-  printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\napp_language=%s\n%b' "$LOG_DEBUG" "$2" "$1" "$3" > qz.conf
+  printf '[General]\nlog_debug=%s\nui_modern=false\nfakedevice_treadmill=true\napp_language=en\n' "$LOG_DEBUG" > qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf '$CONF'"
@@ -66,23 +66,7 @@ shot() {
   [ -f ui.xml ] || dump
   [ -f ui.xml ] && cp ui.xml dumps/$1.xml
 }
-# quick <label>: a frame right away, without the control tree (the fade-in is 0.5 s)
-quick() {
-  echo "-- quick $1" >> $STEPLOG
-  adb shell screencap -p /sdcard/$1.png || true
-  adb pull /sdcard/$1.png || true
-}
-mark() {
-  echo "$(date +%H:%M:%S) $1" >> $STEPLOG
-  adb shell log -t T312 "'$1'" || true
-}
-# The fake treadmill comes after the first search ends; the tile names are translated, so a
-# fixed wait instead of looking for them (T-302: the tiles were there at the first look, 25 s)
-wait_tiles() { sleep 20; }
-tap_xy() { ensure_app; echo "$(date +%H:%M:%S.%N | cut -c1-12) tap $1 at $2" >> $STEPLOG; adb shell input tap $2 || true; }
-
 tap() { ensure_app; echo "tap $1 $2 ($3)" >> $STEPLOG; adb shell input tap $1 $2 || true; }
-back() { echo "back ($1)" >> $STEPLOG; adb shell input keyevent KEYCODE_BACK || true; }
 # tap_ui 'regex' [x y]: the control whose whole text or accessible name matches
 tap_ui() {
   local rx="$1" fx="$2" fy="$3" xy=""
@@ -100,113 +84,88 @@ tap_ui() {
     return 1
   fi
 }
-# The stored value of the switch, into steps.log
-conf_value() {
-  echo "conf ($1): $(adb shell "run-as $PKG cat '$CONF'" | grep ui_state_buttons | tr -d '\r')" >> $STEPLOG
-}
-# Opens the setting from the settings search and taps its switch, then back to the home page
-toggle_in_settings() {
-  tap $MENU "menu"
-  sleep 3
-  adb shell input swipe 500 700 500 2300 300 || true
-  sleep 2
+# A drawer entry that may be below the fold: one swipe up and a second look
+tap_drawer() {
+  local rx="$1" xy=""
   dump
-  tap_ui '^Settings$' 400 900
-  sleep 8
-  dump
-  tap_ui '🔍|Search settings'
-  sleep 2
-  tap 470 338 "search field"
-  sleep 1
-  adb shell input text "Buttons%sfollow"
-  sleep 3
-  if adb shell dumpsys input_method | grep -q "mInputShown=true"; then
-    back "keyboard"
-    sleep 1
+  [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$rx")
+  if [ -z "$xy" ]; then
+    adb shell input swipe 500 2200 500 900 400 || true
+    sleep 2
   fi
-  shot "$1-results"
-  dump
-  tap_ui '^Buttons follow the workout state.*'
-  sleep 5
-  shot "$1-section"
-  dump
-  xy=$(python3 .github/uitap.py ui.xml '^Buttons follow the workout state$')
-  y=${xy#* }
-  echo "tap the switch at 1222 $y (row at $xy)" >> $STEPLOG
-  adb shell input tap 1222 $y || true
-  sleep 2
-  shot "$1-toggled"
-  for i in 1 2 3; do
-    adb shell input keyevent KEYCODE_BACK || true
-    sleep 3
-  done
-  shot "$1-back"
+  tap_ui "$@"
 }
-
-# Modern buttons by the state (switch on): the row is 12 dp under the toolbar, centre y 421 px.
-# One wide Start/Pause 286..1154 px; paused: Resume 286..804, Stop 832..1350
-WIDEXY="720 421"
-RESUMEXY="545 421"
-STOPXY="1091 421"
-# Switch off, the same row: Start/Pause 286..706, Stop 734..1154, Lap 1182..1350
-OFFSTARTXY="497 421"
-OFFSTOPXY="940 421"
-# The classic look: Start 286..706, Stop 734..1154, centre y 468
-OLDSTARTXY="497 468"
-OLDSTOPXY="940 468"
-MENU="84 168"
+# scroll_to 'regex': swipe the page up until the control shows (at most 14 swipes)
+scroll_to() {
+  local i
+  for i in $(seq 1 14); do
+    dump
+    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
+      echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
+      return 0
+    fi
+    adb shell input swipe 700 2000 700 1300 400 || true
+    sleep 1
+  done
+  echo "!! scroll to '$1': NOT FOUND" >> $STEPLOG
+  return 1
+}
 
 adb logcat -c || true
 adb logcat -v threadtime -b main,system,crash > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
-
 adb shell settings put system accelerometer_rotation 0 || true
 adb shell settings put system user_rotation 0 || true
 
-# launch <label> <lang> <modern> [extra conf lines]: the app (already installed) started fresh
-launch() {
-  adb shell am force-stop $PKG || true
-  sleep 2
-  put_conf "$2" "$3" "$4"
-  mark "$1: start"
+# case_run <prefix> <apk>: Settings -> Tiles Options, a frame at the top and at every swipe
+case_run() {
+  local i
+  install_apk "$2"
+  put_conf
+  echo "== $1: start" >> $STEPLOG
   adb shell am start -n $PKG/$PKG.CustomQtActivity
-  sleep 25
-  wait_tiles
+  sleep 45
+  shot $1-home
+  tap 84 168 "menu"
+  sleep 3
+  adb shell input swipe 500 700 500 2300 300 || true
+  sleep 2
+  shot $1-menu
+  tap_drawer '^Settings$' 400 900
+  sleep 8
+  shot $1-settings
+  scroll_to '^Tiles Options$' || return 1
+  tap_ui '^Tiles Options$' 700 1000
+  sleep 8
+  shot $1-t00
+  for i in 1 2 3 4 5 6; do
+    adb shell input swipe 700 2000 700 1100 500 || true
+    sleep 2
+    shot $1-t0$i
+  done
 }
 
-install_apk apk-debug/android-debug.apk
-
-# --- at once: paused with the switch on, off in the settings, then on again; en for the names
-launch live en true 'ui_state_buttons=true\n'
-tap_xy pause "$WIDEXY"
-sleep 4
-shot live-01-paused-on
-mark "live: switch off"
-toggle_in_settings live-off
-conf_value "after off"
-sleep 2
-shot live-02-paused-off
-mark "live: switch on"
-toggle_in_settings live-on
-conf_value "after on"
-sleep 2
-shot live-03-paused-on
-
-# --- kept after a restart: off in the settings, the app started again without a new file
-mark "restart: switch off"
-toggle_in_settings restart-off
-sleep 3
+FAILED=0
+case_run b apk-base/android-debug.apk || FAILED=1
 adb shell am force-stop $PKG || true
 sleep 2
-conf_value "after force-stop"
-adb shell am start -n $PKG/$PKG.CustomQtActivity
-sleep 45
-shot restart-01-running
+case_run a apk-debug/android-debug.apk || FAILED=1
 adb shell am force-stop $PKG || true
 
 kill $LOGCAT_PID 2>/dev/null || true
 sleep 1
+# The frames decide, but the run proves nothing unless the page with the pace tiles was reached
+for side in b a; do
+  if grep -l 'Grade Adjusted Pace' dumps/$side-t0*.xml > /dev/null 2>&1; then
+    echo "check $side: the pace tiles reached: OK" >> $STEPLOG
+  else
+    echo "!! check $side: the pace tiles NOT reached" >> $STEPLOG
+    FAILED=1
+  fi
+done
 echo "== ANR / crash in the whole log:" >> $STEPLOG
 grep -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt >> $STEPLOG || echo "none" >> $STEPLOG
-echo "== QML warnings of homeform/HomeForm/Home:" >> $STEPLOG
-grep -E "HomeForm.ui.qml|Home.qml" full_logcat.txt | grep -i -E "warn|error|TypeError|ReferenceError|binding loop" | head -40 >> $STEPLOG || echo "none" >> $STEPLOG
+echo "== QML warnings of the tiles page:" >> $STEPLOG
+grep -E "settings-tiles.qml" full_logcat.txt | grep -i -E "warn|error|TypeError|ReferenceError|binding loop" | head -40 >> $STEPLOG || echo "none" >> $STEPLOG
+cat $STEPLOG
+exit $FAILED
