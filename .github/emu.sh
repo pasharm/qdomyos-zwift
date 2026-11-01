@@ -186,10 +186,11 @@ sleep 30
 shot 02-first-screen        # the wizard opens on the first run
 # T-060: with the fake treadmill the wizard does not open; its back keys would leave the app
 shot 04-home
-# T-052: the toolbar and the Start/Stop row scroll away with the tiles. Master look only (no
-# ui_modern in this build). The state is read from the frames; the steps only say what is
-# expected of each. The bars toggle after about 246 dp in one direction (the row 150 dp, the
-# toolbar about 56 dp, plus 40), about 860 px here: drags meant to toggle are longer than that.
+# T-052: the Start/Stop row is the grid header and scrolls with the tiles; the toolbar scrolls
+# away and back by the drag direction. Master look only (no ui_modern in this build). The state
+# is read from the frames; the steps only say what is expected of each. The toolbar toggles after
+# about 88 dp in one direction (its 48 dp plus 40), about 310 px here. Going back up it stays away
+# within the row and the first row of tiles (150 + 130 dp, about 980 px from the top).
 conf_with() {
   { printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nfakedevice_treadmill=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG"
     for kv in "$@"; do echo "$kv"; done; } > qz.conf
@@ -229,24 +230,24 @@ wait_tiles
 step top "toolbar and Start/Stop row shown"
 shot t-00-top
 
-step short-drag "300 px, below the hysteresis: both still shown, tiles clipped under the Start/Stop row"
-drag_up 300
-shot t-01-drag-300
+step short-drag "200 px, below the hysteresis: toolbar still shown, the Start/Stop row moved up 200 px with the tiles"
+drag_up 200
+shot t-01-drag-200
 
 scroll_top; sleep 2
-step long-drag "1300 px up: toolbar and Start/Stop row gone, no line of their pixels under the status bar"
-drag_up 1300
-shot t-02-drag-1300
+step long-drag "1100 px up: toolbar gone, no line of its pixels under the status bar; the row scrolled off with the tiles"
+drag_up 1100
+shot t-02-drag-1100
 
-step small-back "150 px down: both stay away"
+step small-back "150 px down: toolbar stays away"
 drag_down 150
 shot t-03-back-150
 
-step first-row "600 px down, to the top: first row in full view, both still away"
+step first-row "600 px down, to the top: the Start/Stop row and the first row in full view, toolbar still away"
 drag_down 600
 shot t-04-first-row-hidden
 
-step pull "a pull past the top edge: toolbar with its icons and the Start/Stop row back"
+step pull "a pull past the top edge: toolbar with its icons back"
 drag_down 700
 shot t-04b-pull
 
@@ -254,24 +255,24 @@ scroll_top; sleep 2
 drag_up 1300
 drag_up 1300
 shot t-04c-deep
-step back-deep "1000 px down from deep in the list: both back on the way"
+step back-deep "1000 px down from deep in the list: toolbar back on the way"
 drag_down 1000
 shot t-04d-back-deep
 
 scroll_top; sleep 2
-step flick "fast flick up: both gone, the flick glides on (not stopped about a row further)"
+step flick "fast flick up: toolbar gone, the flick glides on (not stopped about a row further)"
 adb shell input swipe 700 1900 700 1200 120 || true
 sleep 5
 shot t-05-flick
 
-step top-again "fast swipes down, past the top edge: both back"
+step top-again "fast swipes down, past the top edge: toolbar and Start/Stop row shown"
 scroll_top; sleep 2
 shot t-06-top-again
 
-step end "the end of the list, overscrolled: both gone, no flicker back, last row in full view"
+step end "the end of the list, overscrolled: toolbar gone, no flicker back, last row in full view"
 to_end
 shot t-07-end
-step end-back "1000 px down from the end: both back"
+step end-back "1000 px down from the end: toolbar back"
 drag_down 1000
 shot t-08-end-back
 
@@ -309,7 +310,7 @@ shot t-15-portrait
 
 # Moving tiles: the gap above the first row
 scroll_top; sleep 2
-step lock "tile lock: 30 gap above the first row, inside the grid"
+step lock "tile lock: no Start/Stop row, 30 gap above the first row, inside the grid; unlocked: the row back at the top"
 tap $LOCK "lock tiles"
 sleep 3
 shot t-16-lock
@@ -324,7 +325,7 @@ shot t-18-unlock
 
 # No Start/Stop row: the 30 px gap under the toolbar goes away with it
 restart_with top_bar_enabled=false
-step no-top-bar "top bar off: 30 px gap at the top, gone with the toolbar after a long drag"
+step no-top-bar "top bar off: 30 px gap at the top, scrolled off with the tiles, toolbar gone after a long drag"
 shot t-23-no-top-bar
 drag_up 1300
 shot t-24-no-top-bar-drag
