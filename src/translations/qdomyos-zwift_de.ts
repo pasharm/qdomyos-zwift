@@ -8296,6 +8296,14 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Wenn die Kacheln auf dem Startbildschirm aufhören zu scrollen, rasten sie an einer ganzen Reihe oder am Listenende ein, sodass keine Kachel halb abgeschnitten ist.</translation>
     </message>
     <message>
+        <source>Buttons follow the workout state</source>
+        <translation>Schaltflächen nach Trainingsstatus</translation>
+    </message>
+    <message>
+        <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
+        <translation>Moderne Oberfläche: eine breite Schaltfläche Start oder Pause, in der Pause Fortsetzen und Stopp. In jeder Ansicht steht in der Pause Fortsetzen auf der Schaltfläche. Aus: Start/Pause und Stopp nebeneinander, in der Pause steht Start auf der Schaltfläche.</translation>
+    </message>
+    <message>
         <source>Theme</source>
         <translation>Design</translation>
     </message>

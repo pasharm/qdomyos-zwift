@@ -8255,6 +8255,14 @@ Domyślnie: A = -0.96, B = 1.33</translation>
         <translation>Gdy kafelki na ekranie głównym przestają się przewijać, zatrzymują się na pełnym rzędzie lub na końcu listy, więc żaden kafelek nie jest ucięty w połowie.</translation>
     </message>
     <message>
+        <source>Buttons follow the workout state</source>
+        <translation>Przyciski według stanu treningu</translation>
+    </message>
+    <message>
+        <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
+        <translation>Nowoczesny interfejs: jeden szeroki przycisk Start lub Pauza, podczas pauzy Wznów i Stop. W każdym wyglądzie przycisk podczas pauzy to Wznów. Wyłączone: Start/Pauza i Stop obok siebie, a przycisk podczas pauzy to Start.</translation>
+    </message>
+    <message>
         <source>Theme</source>
         <translation>Motyw</translation>
     </message>

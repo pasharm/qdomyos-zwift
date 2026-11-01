@@ -8258,6 +8258,14 @@ Varsayılan: A = -0.96, B = 1.33</translation>
         <translation>Ana ekrandaki kutucukların kaydırması durduğunda tam bir satıra veya listenin sonuna oturur, böylece hiçbir kutucuk yarıda kesilmez.</translation>
     </message>
     <message>
+        <source>Buttons follow the workout state</source>
+        <translation>Antrenman durumuna göre düğmeler</translation>
+    </message>
+    <message>
+        <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
+        <translation>Modern arayüz: tek geniş Başlat veya Duraklat düğmesi, duraklatıldığında Devam et ve Durdur. Her görünümde duraklatıldığında düğmede Devam et yazar. Kapalı: Başlat/Duraklat ve Durdur yan yana, duraklatıldığında düğmede Başlat yazar.</translation>
+    </message>
+    <message>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>

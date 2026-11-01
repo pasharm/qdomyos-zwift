@@ -8325,6 +8325,14 @@ Default: A = -0.96, B = 1.33</source>
         <translation>主屏幕上的瓦片停止滚动时，会对齐到整行或列表末尾，不会有瓦片被截断一半。</translation>
     </message>
     <message>
+        <source>Buttons follow the workout state</source>
+        <translation>按训练状态显示按钮</translation>
+    </message>
+    <message>
+        <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
+        <translation>现代界面：一个宽按钮显示开始或暂停，暂停时显示继续和停止。任何外观下，暂停时按钮都显示继续。关闭：开始/暂停和停止并排显示，暂停时按钮显示开始。</translation>
+    </message>
+    <message>
         <source>Theme</source>
         <translation>主题</translation>
     </message>

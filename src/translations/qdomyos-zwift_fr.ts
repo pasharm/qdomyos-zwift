@@ -8316,6 +8316,14 @@ Par défaut : A = -0.96, B = 1.33</translation>
         <translation>Quand les tuiles de l’écran principal cessent de défiler, elles s’arrêtent sur une rangée entière ou sur la fin de la liste, afin qu’aucune tuile ne soit coupée en deux.</translation>
     </message>
     <message>
+        <source>Buttons follow the workout state</source>
+        <translation>Boutons selon l&apos;état de l&apos;entraînement</translation>
+    </message>
+    <message>
+        <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
+        <translation>Interface moderne : un seul grand bouton Démarrer ou Pause ; en pause, Reprendre et Arrêter. Dans tous les affichages, le bouton indique Reprendre en pause. Désactivé : Démarrer/Pause et Arrêter côte à côte, et le bouton indique Démarrer en pause.</translation>
+    </message>
+    <message>
         <source>Theme</source>
         <translation>Thème</translation>
     </message>

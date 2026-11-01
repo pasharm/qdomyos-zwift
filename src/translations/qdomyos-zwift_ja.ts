@@ -8333,6 +8333,14 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
         <translation>メイン画面のタイルのスクロールが止まると、行単位またはリストの末尾に揃い、タイルが途中で切れなくなります。</translation>
     </message>
     <message>
+        <source>Buttons follow the workout state</source>
+        <translation>ワークアウトの状態に応じたボタン</translation>
+    </message>
+    <message>
+        <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
+        <translation>モダンインターフェース: 幅の広いスタートまたは一時停止ボタンを1つ表示し、一時停止中は再開とストップを表示します。どの表示でも、一時停止中のボタンは再開になります。オフ: スタート/一時停止とストップを並べて表示し、一時停止中のボタンはスタートになります。</translation>
+    </message>
+    <message>
         <source>Theme</source>
         <translation>テーマ</translation>
     </message>

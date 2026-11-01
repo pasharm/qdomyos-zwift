@@ -8297,6 +8297,14 @@ Padrão: A = -0.96, B = 1.33</translation>
         <translation>Quando os tiles da tela principal param de rolar, eles se alinham a uma linha inteira ou ao fim da lista, para que nenhum tile fique cortado ao meio.</translation>
     </message>
     <message>
+        <source>Buttons follow the workout state</source>
+        <translation>Botões conforme o estado do treino</translation>
+    </message>
+    <message>
+        <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
+        <translation>Interface moderna: um botão largo Iniciar ou Pausar; em pausa, Retomar e Parar. Em qualquer aparência, o botão em pausa indica Retomar. Desligado: Iniciar/Pausar e Parar lado a lado, e o botão em pausa indica Iniciar.</translation>
+    </message>
+    <message>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>

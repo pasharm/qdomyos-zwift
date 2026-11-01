@@ -6520,7 +6520,9 @@ QString homeform::startText() {
         } else if (paused) {
             // A treadmill standing still pauses itself before any workout (autoPauseWhenSpeedIsZero),
             // and there is nothing to resume yet. update() sends the label again every second.
-            if (nothingToResume()) {
+            // With ui_state_buttons off the label stays Start, as before; the switch applies within
+            // that second as well.
+            if (nothingToResume() || !settings.value(QZSettings::ui_state_buttons, QZSettings::default_ui_state_buttons).toBool()) {
                 return tr("Start");
             }
             // pressing it now continues the same workout, nothing is reset (see Start_inner)
