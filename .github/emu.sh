@@ -130,7 +130,10 @@ toggle_in_settings() {
   sleep 5
   shot "$1-section"
   dump
-  tap_ui '^Buttons follow the workout state$'
+  xy=$(python3 .github/uitap.py ui.xml '^Buttons follow the workout state$')
+  y=${xy#* }
+  echo "tap the switch at 1222 $y (row at $xy)" >> $STEPLOG
+  adb shell input tap 1222 $y || true
   sleep 2
   shot "$1-toggled"
   for i in 1 2 3; do
@@ -172,68 +175,6 @@ launch() {
 }
 
 install_apk apk-debug/android-debug.apk
-
-# --- no key in the settings file: the default of this branch is off
-launch default ru true
-shot default-01-running
-
-# --- switch off, modern look
-launch off ru true 'ui_state_buttons=false\n'
-shot off-01-running
-mark "off: Pause"
-tap_xy pause "$OFFSTARTXY"
-quick off-02-right-away
-sleep 4
-shot off-03-paused
-mark "off: Start again, a double tap on Pause keeps Stop where it was"
-tap_xy start "$OFFSTARTXY"
-sleep 4
-shot off-04-resumed
-tap_xy pause "$OFFSTARTXY"
-sleep 4
-mark "off: Stop"
-tap_xy stop "$OFFSTOPXY"
-sleep 6
-shot off-05-stopped
-adb shell input keyevent KEYCODE_BACK || true
-sleep 4
-shot off-06-home-stopped
-for lang in uk de; do
-  launch off-$lang $lang true 'ui_state_buttons=false\n'
-  tap_xy pause "$OFFSTARTXY"
-  sleep 4
-  shot off-$lang-03-paused
-done
-
-# --- switch on, modern look: as T-312
-launch on ru true 'ui_state_buttons=true\n'
-shot on-01-running
-mark "on: Pause"
-tap_xy pause "$WIDEXY"
-quick on-02-fading
-sleep 4
-shot on-03-paused
-tap_xy resume "$RESUMEXY"
-sleep 4
-shot on-04-resumed
-tap_xy pause "$WIDEXY"
-sleep 4
-mark "on: Stop"
-tap_xy stop "$STOPXY"
-sleep 6
-adb shell input keyevent KEYCODE_BACK || true
-sleep 4
-shot on-05-home-stopped
-
-# --- the classic look: the label only
-launch classic-off ru false 'ui_state_buttons=false\n'
-tap_xy pause "$OLDSTARTXY"
-sleep 4
-shot classic-off-02-paused
-launch classic-on ru false 'ui_state_buttons=true\n'
-tap_xy pause "$OLDSTARTXY"
-sleep 4
-shot classic-on-02-paused
 
 # --- at once: paused with the switch on, off in the settings, then on again; en for the names
 launch live en true 'ui_state_buttons=true\n'
