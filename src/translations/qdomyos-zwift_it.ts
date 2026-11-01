@@ -8249,6 +8249,14 @@ Predefinito: A = -0.96, B = 1.33</translation>
         <translation>Quando i riquadri della schermata principale smettono di scorrere, si fermano su una riga intera o sulla fine dell&apos;elenco, così nessun riquadro resta tagliato a metà.</translation>
     </message>
     <message>
+        <source>Buttons follow the workout state</source>
+        <translation>Pulsanti in base allo stato dell&apos;allenamento</translation>
+    </message>
+    <message>
+        <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
+        <translation>Interfaccia moderna: un solo pulsante largo Inizia o Pausa; in pausa, Riprendi e Fermare. In ogni aspetto, in pausa il pulsante indica Riprendi. Disattivato: Inizia/Pausa e Fermare affiancati, e in pausa il pulsante indica Inizia.</translation>
+    </message>
+    <message>
         <source>Theme</source>
         <translation>Tema</translation>
     </message>

@@ -247,7 +247,7 @@ import QtQuick 2.12 as Quick212
 
         // The look of the modern interface (see the declarations at the end of the Settings
         // below): kept by main.qml, which applies it at once
-        readonly property var uiOptionKeys: ["ui_modern", "ui_theme", "ui_accent", "ui_theme_mode", "ui_tile_snap"]
+        readonly property var uiOptionKeys: ["ui_modern", "ui_theme", "ui_accent", "ui_theme_mode", "ui_tile_snap", "ui_state_buttons"]
         function isUiOption(key) {
             return uiOptionKeys.indexOf(key) >= 0
         }
@@ -2969,6 +2969,8 @@ import QtQuick 2.12 as Quick212
             property string ui_theme_mode: "auto"
             property bool ui_tile_snap: true
             property bool charts_live_update: false
+            // Also kept by main.qml, like the ui_ keys above (uiOptionKeys)
+            property bool ui_state_buttons: false
         }
 
         // The home page has its own Settings copy, read once when it is created: hand it every new
@@ -18725,6 +18727,34 @@ import QtQuick 2.12 as Quick212
 
                     Label {
                         text: qsTr("Useful in gyms with multiple similar machines. When enabled, QZ scans nearby equipment at startup and asks you which trainer to use before opening any Bluetooth connection.")
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
+                        font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                    }
+
+                    IndicatorOnlySwitch {
+                        text: qsTr("Buttons follow the workout state")
+                        spacing: 0
+                        bottomPadding: 0
+                        topPadding: 0
+                        rightPadding: 0
+                        leftPadding: 0
+                        clip: false
+                        checked: window.ui.stateButtons
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        onClicked: settingsPane.setUiOption("ui_state_buttons", checked)
+                    }
+
+                    Label {
+                        text: qsTr("Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint

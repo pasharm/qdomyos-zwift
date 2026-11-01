@@ -8197,6 +8197,14 @@ A와 B가 모두 0이면 QZ는 기본 공식 9.8 × 체중 × (경사도/100)을
         <translation>메인 화면의 타일 스크롤이 멈추면 한 행 단위 또는 목록 끝에 맞춰 정렬되어 타일이 반만 잘려 보이지 않습니다.</translation>
     </message>
     <message>
+        <source>Buttons follow the workout state</source>
+        <translation>운동 상태에 따른 버튼</translation>
+    </message>
+    <message>
+        <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
+        <translation>새 인터페이스: 넓은 시작 또는 일시 중지 버튼 하나를 표시하고, 일시 중지 중에는 재개와 중지를 표시합니다. 어떤 화면에서든 일시 중지 중인 버튼은 재개로 표시됩니다. 끄기: 시작/일시 중지와 중지를 나란히 표시하고, 일시 중지 중인 버튼은 시작으로 표시됩니다.</translation>
+    </message>
+    <message>
         <source>Theme</source>
         <translation>테마</translation>
     </message>

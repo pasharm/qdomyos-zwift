@@ -8208,6 +8208,14 @@ Default: A = -0.96, B = 1.33</source>
         <translation>Коли плитки на головному екрані перестають прокручуватися, вони стають рівно по ряду або по кінцю списку, і жодна плитка не обрізана.</translation>
     </message>
     <message>
+        <source>Buttons follow the workout state</source>
+        <translation>Кнопки за станом тренування</translation>
+    </message>
+    <message>
+        <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
+        <translation>Новий інтерфейс: одна широка кнопка «Старт» або «Пауза», на паузі – «Продовжити» і «Стоп». У будь-якому вигляді на паузі кнопка називається «Продовжити». Вимкнено: «Старт/Пауза» і «Стоп» поруч, на паузі кнопка називається «Старт».</translation>
+    </message>
+    <message>
         <source>Theme</source>
         <translation>Тема</translation>
     </message>

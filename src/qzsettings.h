@@ -3466,6 +3466,11 @@ class QZSettings {
     // on the page itself (chartjs/dochart.js)
     static const QString charts_live_update;
     static constexpr bool default_charts_live_update = false;
+
+    // The buttons of the main page follow the workout state and the paused one says Resume
+    static const QString ui_state_buttons;
+    static constexpr bool default_ui_state_buttons = false;
+
     // Chart positions in the Workout History preview.
     static const QString history_chart_power_order;
     static constexpr int default_history_chart_power_order = 0;

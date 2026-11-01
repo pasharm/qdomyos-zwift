@@ -8200,6 +8200,14 @@ Standaard: A = -0.96, B = 1.33</translation>
         <translation>Wanneer de tegels op het hoofdscherm stoppen met scrollen, komen ze precies op een hele rij of op het einde van de lijst uit, zodat geen tegel half wordt afgesneden.</translation>
     </message>
     <message>
+        <source>Buttons follow the workout state</source>
+        <translation>Knoppen volgens de trainingsstatus</translation>
+    </message>
+    <message>
+        <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
+        <translation>Moderne interface: één brede knop Start of Pauze, tijdens de pauze Hervatten en Stop. In elke weergave staat er tijdens de pauze Hervatten op de knop. Uit: Start/Pauze en Stop naast elkaar, en tijdens de pauze staat er Start op de knop.</translation>
+    </message>
+    <message>
         <source>Theme</source>
         <translation>Thema</translation>
     </message>

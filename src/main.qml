@@ -322,6 +322,7 @@ ApplicationWindow {
         property bool ui_tile_snap: true
         property int ui_text_scale: 100
         property bool ui_text_scale_system: true
+        property bool ui_state_buttons: false
     }
 
     // Modern look, switched in Settings > General UI Options. Pages read the palette
@@ -331,6 +332,9 @@ ApplicationWindow {
         // The tiles of the main page settle on a whole row (and on the end of the list) when
         // a scroll stops; off, they stay where the scroll left them
         readonly property bool tileSnap: settings.ui_tile_snap
+        // The buttons of the main page follow the workout state (HomeForm modernRow); off, they
+        // are the same all the time
+        readonly property bool stateButtons: settings.ui_state_buttons
 
         // Appearance: "auto" follows the night mode of the phone (dark on Android before 10 and
         // iOS before 13, which have no dark theme), "dark" and "light" are fixed. The classic look

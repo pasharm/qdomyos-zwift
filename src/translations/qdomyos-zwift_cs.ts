@@ -8200,6 +8200,14 @@ Výchozí: A = -0.96, B = 1.33</translation>
         <translation>Když se dlaždice na hlavní obrazovce přestanou posouvat, zastaví se na celém řádku nebo na konci seznamu, takže žádná dlaždice není useknutá napůl.</translation>
     </message>
     <message>
+        <source>Buttons follow the workout state</source>
+        <translation>Tlačítka podle stavu tréninku</translation>
+    </message>
+    <message>
+        <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
+        <translation>Moderní rozhraní: jedno široké tlačítko Start nebo Pauza, při pauze Pokračovat a Stop. V každém vzhledu je na tlačítku při pauze Pokračovat. Vypnuto: Start/Pauza a Stop vedle sebe, na tlačítku je při pauze Start.</translation>
+    </message>
+    <message>
         <source>Theme</source>
         <translation>Motiv</translation>
     </message>

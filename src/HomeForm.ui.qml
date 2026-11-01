@@ -70,7 +70,8 @@ Page {
         // Modern controls. They forward to the classic buttons below, which Home.qml listens to.
         // The workout state picks them: one wide Start or Pause, while paused Resume and Stop -
         // stopping takes a pause first, so a running workout is not ended by a slip of the finger.
-        // The row is as wide in every state, so Bluetooth stays where it is
+        // The row is as wide in every state, so Bluetooth stays where it is. With ui_state_buttons
+        // off (Experimental Features) Start/Pause, Stop and Lap are always there, as before
         Row {
             id: modernRow
             visible: page.modernControlsShown
@@ -82,7 +83,8 @@ Page {
             anchors.topMargin: 12 + 8 * page.toolbarShown
             spacing: 8
 
-            readonly property bool paired: rootItem.workoutPaused
+            readonly property bool byState: window.ui.stateButtons
+            readonly property bool paired: byState && rootItem.workoutPaused
             // Room left at the ends of a pill beside its label: smaller in the 148 dp pair, so
             // "Продолжить" (ru) and the like fit there and the short variant is not needed
             readonly property int labelInset: paired ? 12 : 24
@@ -91,7 +93,7 @@ Page {
             readonly property int workoutState: rootItem.workoutStopped ? 2 : (rootItem.workoutPaused ? 1 : 0)
             property real shown: 1
             readonly property bool ready: shown === 1
-            onWorkoutStateChanged: appear.restart()
+            onWorkoutStateChanged: if (byState) appear.restart()
             NumberAnimation {
                 id: appear
                 target: modernRow
@@ -139,7 +141,7 @@ Page {
             AbstractButton {
                 id: modernStart
                 // alone it takes the place of two buttons and the gap between them
-                width: modernRow.paired ? 148 : 248
+                width: !modernRow.byState ? 120 : (modernRow.paired ? 148 : 248)
                 height: 56
                 opacity: modernRow.shown
                 enabled: modernRow.ready
@@ -192,15 +194,15 @@ Page {
             // Only while paused, in the place of Lap: the reminder to end the workout
             AbstractButton {
                 id: modernStop
-                visible: modernRow.paired
-                width: 148
+                visible: modernRow.paired || !modernRow.byState
+                width: modernRow.byState ? 148 : 120
                 height: 56
                 opacity: modernRow.shown
                 enabled: modernRow.ready
                 onClicked: stop.clicked()
                 // Filled red once the workout is long (homeform workoutLong): the pause most likely
                 // ends it. A short one keeps Resume the main button, Stop is outlined as it was
-                readonly property bool filled: rootItem.workoutLong
+                readonly property bool filled: modernRow.byState && rootItem.workoutLong
                 background: UiFrame {
                     radius: height / 2
                     fill: modernStop.filled ? window.ui.alpha(window.ui.danger, modernStop.down ? 0.8 : 1)
