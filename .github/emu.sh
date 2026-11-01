@@ -259,6 +259,15 @@ step back-deep "1000 px down from deep in the list: toolbar back on the way"
 drag_down 1000
 shot t-04d-back-deep
 
+# The phone 02.11: after each drag the view settles on a whole pixel, and that reset the turn point,
+# so two short pulls in a row never added up to the ~310 px threshold
+drag_up 1300
+step two-pulls "deep in the list, toolbar gone, then 200 px down and 200 px down again: toolbar back after the second (400 px in all), not after the first"
+drag_down 200
+shot t-04e-pull-1
+drag_down 200
+shot t-04f-pull-2
+
 scroll_top; sleep 2
 step flick "fast flick up: toolbar gone, the flick glides on (not stopped about a row further)"
 adb shell input swipe 700 1900 700 1200 120 || true
