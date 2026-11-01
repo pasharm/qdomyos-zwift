@@ -481,6 +481,10 @@ void bluetooth::updateLostDevices() {
     inUse.insert(settings.value(QZSettings::bluetooth_lastdevice_name,
                                 QZSettings::default_bluetooth_lastdevice_name).toString());
     inUse.insert(settings.value(QZSettings::filter_device, QZSettings::default_filter_device).toString());
+    inUse.insert(settings.value(QZSettings::ftms_bike, QZSettings::default_ftms_bike).toString());
+    inUse.insert(settings.value(QZSettings::ftms_treadmill, QZSettings::default_ftms_treadmill).toString());
+    inUse.insert(settings.value(QZSettings::ftms_rower, QZSettings::default_ftms_rower).toString());
+    inUse.insert(settings.value(QZSettings::ftms_elliptical, QZSettings::default_ftms_elliptical).toString());
     inUse.insert(settings.value(QZSettings::heart_rate_belt_name, QZSettings::default_heart_rate_belt_name).toString());
     inUse.insert(settings.value(QZSettings::ftms_accessory_name, QZSettings::default_ftms_accessory_name).toString());
     inUse.insert(settings.value(QZSettings::cadence_sensor_name, QZSettings::default_cadence_sensor_name).toString());
@@ -967,7 +971,9 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
 
             updateDiscoveredDevice(devices, manufacturerDevice);
             seenInSearch.insert(manufacturerDevice.name());
-            lostDevices.remove(manufacturerDevice.name());
+            // no name in the scan result: deviceFound() below does not refresh the lists
+            if (lostDevices.remove(manufacturerDevice.name()))
+                emit lostDevicesChanged();
             manufacturerDeviceFound = true;
         }
 #endif
@@ -1000,7 +1006,7 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
 
     // Below a device found is connected, and the chain checks only its own type: with no device
     // filter a second trainer nearby would be connected in the middle of a workout
-    if (deviceListScan && device())
+    if (deviceListScan && this->device())
         return;
 
     if (gymModeEnabled() && gymModeSessionDevice.isEmpty())
