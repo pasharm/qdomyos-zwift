@@ -233,6 +233,16 @@ Deseja fazer isso agora?</translation>
         <source>Save</source>
         <translation>Salvar</translation>
     </message>
+    <message>
+        <source>QZ needs Bluetooth enabled to discover fitness equipment. On Android 11 and earlier, Android also requires Location permission and Location Services for Bluetooth discovery. QZ does not use your location data. On Android 12 and later, Nearby devices permission allows Bluetooth discovery without Location.
+
+Would you like to enable the required services?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>HomeForm.ui</name>
@@ -3781,6 +3791,14 @@ Isso pode levar alguns instantes na primeira inicialização.</translation>
     <message>
         <source>Average Strokes Length: %1</source>
         <translation>Comprimento médio da remada: %1</translation>
+    </message>
+    <message>
+        <source>QZ target power is overriding the app&apos;s commands. Pause QZ and resume it to give control back to the app.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Spotify songs:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7825,6 +7843,90 @@ Padrão: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Workout History Charts</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Heart Rate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resistance vs Target Resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Peloton Resistance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cadence</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Power Distribution</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed and Inclination</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move the charts up or down to choose their order in Workout History. Changes are saved automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Restore default order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Direct Distance: add only the increase</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Works with Direct Distance from Treadmill. Turn this on if the distance counter of your treadmill keeps running between workouts or starts again from 0 when the treadmill is switched off: only the distance walked during the workout is added, not what the treadmill counted before QZ connected. Default is off.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Moovio Options</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lynx Konect 2.0</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cadence Gain</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Offset added after the gain. Default is 0.0. QZ&apos;s internal cadence display and workout metrics remain unchanged.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>iOS Background Keep Alive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

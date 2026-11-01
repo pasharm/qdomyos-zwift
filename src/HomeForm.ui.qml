@@ -118,9 +118,9 @@ Page {
                         name: rootItem.device ? "bluetooth_connected" : "bluetooth"
                         color: rootItem.device ? window.ui.ok : window.ui.textMuted
                     }
-                    // No device yet: a tap searches right away instead of waiting for the next search;
-                    // with a device connected it restarts the DirCon (Wi-Fi) servers, see bluetoothSearchNow(),
-                    // and looks for the chosen heart rate sensor again (reconnectHeartRateBelt() waits for the device)
+                    // No device yet: a tap searches right away instead of waiting for the next search
+                    // (with a device connected bluetoothSearchNow() does nothing). With a device connected the tap
+                    // looks for the chosen heart rate sensor again (reconnectHeartRateBelt() waits for the device)
                     MouseArea {
                         anchors.fill: parent
                         onClicked: { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt(); }
@@ -321,9 +321,9 @@ Page {
                             source: treadmill_connection
                             color: treadmill_connection.enabled ? "#00000000" : "#B0D3d3d3"
                         }
-                        // No device yet: a tap searches right away instead of waiting for the next search;
-                        // with a device connected it restarts the DirCon (Wi-Fi) servers, see bluetoothSearchNow(),
-                        // and looks for the chosen heart rate sensor again (reconnectHeartRateBelt() waits for the device)
+                        // No device yet: a tap searches right away instead of waiting for the next search
+                        // (with a device connected bluetoothSearchNow() does nothing). With a device connected the tap
+                        // looks for the chosen heart rate sensor again (reconnectHeartRateBelt() waits for the device)
                         MouseArea {
                             anchors.fill: parent
                             onClicked: { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt(); }
