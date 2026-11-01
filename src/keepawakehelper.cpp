@@ -20,8 +20,10 @@ KeepAwakeHelper::KeepAwakeHelper() {
             QAndroidJniObject powerMgr = activity.callObjectMethod(
                 "getSystemService", "(Ljava/lang/String;)Ljava/lang/Object;", serviceName.object<jobject>());
             if (powerMgr.isValid()) {
+                // PARTIAL keeps the CPU running; the screen is kept on by FLAG_KEEP_SCREEN_ON only while QZ
+                // is visible. A screen wake lock held in the background gets QZ killed on OnePlus/OPPO.
                 jint levelAndFlags =
-                    QAndroidJniObject::getStaticField<jint>("android/os/PowerManager", "SCREEN_DIM_WAKE_LOCK");
+                    QAndroidJniObject::getStaticField<jint>("android/os/PowerManager", "PARTIAL_WAKE_LOCK");
 
                 QAndroidJniObject tag = QAndroidJniObject::fromString("My Tag");
 
