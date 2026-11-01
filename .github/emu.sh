@@ -1,10 +1,7 @@
 #!/bin/bash
-# Test only (T-312): the modern home buttons follow the workout state - one wide Start or Pause,
-# while paused Resume and a red Stop (no Lap), a new set fades in for 0.5 s and takes taps only
-# then; the block under the toolbar is lower (12 / 8 / 16 dp). The tested APK (apk-debug) with a
-# fake treadmill: the states and their changes, a double tap on Pause, the largest text size,
-# landscape, pause_on_start, the classic look unchanged. The reference APK (apk-base:
-# feat/modern-ui before the change) - the same home in both looks, for the before/after frames.
+# Test only (T-312): the switch ui_state_buttons in Experimental Features. Off - Start/Pause, Stop
+# and Lap all the time, the paused button says Start; on - the buttons follow the workout state.
+# Both looks, and the switch tapped in the settings: it applies at once and stays after a restart.
 # The buttons are tapped by coordinates (Nexus 6, 1440x2560 px).
 PKG=org.cagnulen.qdomyoszwift
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -84,17 +81,77 @@ mark() {
 wait_tiles() { sleep 20; }
 tap_xy() { ensure_app; echo "$(date +%H:%M:%S.%N | cut -c1-12) tap $1 at $2" >> $STEPLOG; adb shell input tap $2 || true; }
 
-# Modern buttons after the change: the row is 12 dp under the toolbar, centre y 421 px
-# (measured on run 40645708263).
+tap() { ensure_app; echo "tap $1 $2 ($3)" >> $STEPLOG; adb shell input tap $1 $2 || true; }
+back() { echo "back ($1)" >> $STEPLOG; adb shell input keyevent KEYCODE_BACK || true; }
+# tap_ui 'regex' [x y]: the control whose whole text or accessible name matches
+tap_ui() {
+  local rx="$1" fx="$2" fy="$3" xy=""
+  ensure_app
+  [ -f ui.xml ] || dump
+  [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$rx")
+  if [ -n "$xy" ]; then
+    echo "tap '$rx': by label at $xy" >> $STEPLOG
+    adb shell input tap $xy || true
+  elif [ -n "$fx" ]; then
+    echo "tap '$rx': NOT FOUND, coordinates $fx $fy" >> $STEPLOG
+    adb shell input tap $fx $fy || true
+  else
+    echo "!! tap '$rx': NOT FOUND, skipped" >> $STEPLOG
+    return 1
+  fi
+}
+# The stored value of the switch, into steps.log
+conf_value() {
+  echo "conf ($1): $(adb shell "run-as $PKG cat '$CONF'" | grep ui_state_buttons | tr -d '\r')" >> $STEPLOG
+}
+# Opens the setting from the settings search and taps its switch, then back to the home page
+toggle_in_settings() {
+  tap $MENU "menu"
+  sleep 3
+  adb shell input swipe 500 700 500 2300 300 || true
+  sleep 2
+  dump
+  tap_ui '^Settings$' 400 900
+  sleep 8
+  dump
+  tap_ui '🔍|Search settings'
+  sleep 2
+  tap 470 338 "search field"
+  sleep 1
+  adb shell input text "Buttons%sfollow"
+  sleep 3
+  if adb shell dumpsys input_method | grep -q "mInputShown=true"; then
+    back "keyboard"
+    sleep 1
+  fi
+  shot "$1-results"
+  dump
+  tap_ui '^Buttons follow the workout state.*'
+  sleep 5
+  shot "$1-section"
+  dump
+  tap_ui '^Buttons follow the workout state$'
+  sleep 2
+  shot "$1-toggled"
+  for i in 1 2 3; do
+    adb shell input keyevent KEYCODE_BACK || true
+    sleep 3
+  done
+  shot "$1-back"
+}
+
+# Modern buttons by the state (switch on): the row is 12 dp under the toolbar, centre y 421 px.
 # One wide Start/Pause 286..1154 px; paused: Resume 286..804, Stop 832..1350
 WIDEXY="720 421"
 RESUMEXY="545 421"
 STOPXY="1091 421"
-# the right part of the wide Pause - where Stop comes when it pauses
-WIDERIGHTXY="1050 421"
-# Before the change (apk-base) and the classic look: Start 286..706, Stop 734..1154, centre y 463
+# Switch off, the same row: Start/Pause 286..706, Stop 734..1154, Lap 1182..1350
+OFFSTARTXY="497 421"
+OFFSTOPXY="940 421"
+# The classic look: Start 286..706, Stop 734..1154, centre y 468
 OLDSTARTXY="497 468"
 OLDSTOPXY="940 468"
+MENU="84 168"
 
 adb logcat -c || true
 adb logcat -v threadtime -b main,system,crash > full_logcat.txt 2>/dev/null &
@@ -113,140 +170,97 @@ launch() {
   sleep 25
   wait_tiles
 }
-# rotate <0|1>: portrait or landscape
-# (run 40645708263: the settings alone with 4 s left the frame in portrait - the window manager
-# command as well, and longer)
-rotate() {
-  adb shell settings put system user_rotation $1 || true
-  adb shell cmd window user-rotation lock $1 || true
-  sleep 8
-  echo "rotation now: $(adb shell dumpsys window displays | grep -o 'mRotation=[0-9A-Z_]*' | head -1)" >> $STEPLOG
-}
 
-# --- the reference: home before the change, both looks
-install_apk apk-base/android-debug.apk
-launch base-modern ru true
-shot base-modern-01-running
-tap_xy pause "$OLDSTARTXY"
-sleep 4
-shot base-modern-02-paused
-launch base-classic ru false
-shot base-classic-01-running
-
-# --- the tested APK, modern look, ru
 install_apk apk-debug/android-debug.apk
-launch debug-ru ru true
-shot debug-ru-01-running
-mark "debug-ru: Pause"
-tap_xy pause "$WIDEXY"
-quick debug-ru-02-fading
+
+# --- no key in the settings file: the default of this branch is off
+launch default ru true
+shot default-01-running
+
+# --- switch off, modern look
+launch off ru true 'ui_state_buttons=false\n'
+shot off-01-running
+mark "off: Pause"
+tap_xy pause "$OFFSTARTXY"
+quick off-02-right-away
 sleep 4
-shot debug-ru-03-paused
-mark "debug-ru: Resume"
-tap_xy resume "$RESUMEXY"
+shot off-03-paused
+mark "off: Start again, a double tap on Pause keeps Stop where it was"
+tap_xy start "$OFFSTARTXY"
 sleep 4
-shot debug-ru-04-resumed
-# A double tap on the right part of Pause: the second tap comes where Stop appears - it must
-# not stop the workout (the buttons take taps only after the fade-in)
-mark "debug-ru: double tap on Pause"
-echo "$(date +%H:%M:%S.%N | cut -c1-12) double tap at $WIDERIGHTXY" >> $STEPLOG
-adb shell "input tap $WIDERIGHTXY & sleep 0.15; input tap $WIDERIGHTXY; wait" || true
-echo "$(date +%H:%M:%S.%N | cut -c1-12) double tap sent" >> $STEPLOG
+shot off-04-resumed
+tap_xy pause "$OFFSTARTXY"
 sleep 4
-shot debug-ru-05-after-double-tap
-mark "debug-ru: landscape, paused"
-rotate 1
-shot debug-ru-06-landscape-paused
-rotate 0
-mark "debug-ru: Stop"
-tap_xy stop "$STOPXY"
+mark "off: Stop"
+tap_xy stop "$OFFSTOPXY"
 sleep 6
-shot debug-ru-07-stopped
+shot off-05-stopped
 adb shell input keyevent KEYCODE_BACK || true
 sleep 4
-shot debug-ru-08-home-stopped
-mark "debug-ru: landscape, stopped"
-rotate 1
-shot debug-ru-09-landscape-stopped
-rotate 0
-mark "debug-ru: Start after Stop"
-tap_xy start "$WIDEXY"
-sleep 4
-shot debug-ru-10-started-again
-
-# other languages: the paused pair (labels in 148 dp)
-for lang in en uk de; do
-  launch debug-$lang $lang true
-  shot debug-$lang-01-running
-  tap_xy pause "$WIDEXY"
+shot off-06-home-stopped
+for lang in uk de; do
+  launch off-$lang $lang true 'ui_state_buttons=false\n'
+  tap_xy pause "$OFFSTARTXY"
   sleep 4
-  shot debug-$lang-03-paused
+  shot off-$lang-03-paused
 done
 
-# the largest text size (170 %, set in the app): the status line under the buttons, the tiles
-launch debug-ru-big ru true 'ui_text_scale_system=false\nui_text_scale=170\n'
-shot debug-ru-big-01-running
+# --- switch on, modern look: as T-312
+launch on ru true 'ui_state_buttons=true\n'
+shot on-01-running
+mark "on: Pause"
 tap_xy pause "$WIDEXY"
+quick on-02-fading
 sleep 4
-shot debug-ru-big-03-paused
-
-# pause_on_start: the device connect pauses the workout and marks it stopped - one wide Start
-launch debug-ru-pos ru true 'pause_on_start_treadmill=true\n'
-shot debug-ru-pos-01-connected
-
-# the tiles scrolled up: before - cut right at the bottom of the buttons, after - 8 dp lower
-# (the user on the phone, 28.10); a slow swipe inside the 2560 px screen, then a fast one
-adb shell am force-stop $PKG || true
-install_apk apk-base/android-debug.apk
-launch base-ru-scroll ru true
-adb shell input swipe 720 2200 720 1300 1200 || true
-sleep 3
-shot base-ru-scroll-01
-install_apk apk-debug/android-debug.apk
-launch debug-ru-scroll ru true
-adb shell input swipe 720 2200 720 1300 1200 || true
-sleep 3
-shot debug-ru-scroll-01
-tap_xy pause "$WIDEXY"
-sleep 4
-shot debug-ru-scroll-02-paused
-adb shell input swipe 720 2200 720 900 300 || true
-sleep 4
-shot debug-ru-scroll-03-end
-
-# Stop on pause: outlined in the first 5 minutes of the workout (the frames above), filled after
-launch debug-ru-long ru true
-mark "debug-ru-long: running 5 min"
-sleep 310
-shot debug-ru-long-01-running
-tap_xy pause "$WIDEXY"
-sleep 4
-shot debug-ru-long-02-paused
+shot on-03-paused
 tap_xy resume "$RESUMEXY"
 sleep 4
+shot on-04-resumed
 tap_xy pause "$WIDEXY"
 sleep 4
-shot debug-ru-long-03-paused-again
+mark "on: Stop"
+tap_xy stop "$STOPXY"
+sleep 6
+adb shell input keyevent KEYCODE_BACK || true
+sleep 4
+shot on-05-home-stopped
 
-# the top bar turned off (top_bar_enabled=false): no buttons, the tiles where they were before
-# the change (the reference in the same setting first)
-adb shell am force-stop $PKG || true
-install_apk apk-base/android-debug.apk
-launch base-ru-notop ru true 'top_bar_enabled=false\n'
-shot base-ru-notop-01-running
-install_apk apk-debug/android-debug.apk
-launch debug-ru-notop ru true 'top_bar_enabled=false\n'
-shot debug-ru-notop-01-running
-
-# the classic look: two buttons as before, the same place
-launch debug-classic ru false
-shot debug-classic-01-running
+# --- the classic look: the label only
+launch classic-off ru false 'ui_state_buttons=false\n'
 tap_xy pause "$OLDSTARTXY"
 sleep 4
-shot debug-classic-02-paused
-tap_xy stop "$OLDSTOPXY"
-sleep 6
-shot debug-classic-03-stopped
+shot classic-off-02-paused
+launch classic-on ru false 'ui_state_buttons=true\n'
+tap_xy pause "$OLDSTARTXY"
+sleep 4
+shot classic-on-02-paused
+
+# --- at once: paused with the switch on, off in the settings, then on again; en for the names
+launch live en true 'ui_state_buttons=true\n'
+tap_xy pause "$WIDEXY"
+sleep 4
+shot live-01-paused-on
+mark "live: switch off"
+toggle_in_settings live-off
+conf_value "after off"
+sleep 2
+shot live-02-paused-off
+mark "live: switch on"
+toggle_in_settings live-on
+conf_value "after on"
+sleep 2
+shot live-03-paused-on
+
+# --- kept after a restart: off in the settings, the app started again without a new file
+mark "restart: switch off"
+toggle_in_settings restart-off
+sleep 3
+adb shell am force-stop $PKG || true
+sleep 2
+conf_value "after force-stop"
+adb shell am start -n $PKG/$PKG.CustomQtActivity
+sleep 45
+shot restart-01-running
 adb shell am force-stop $PKG || true
 
 kill $LOGCAT_PID 2>/dev/null || true
