@@ -940,6 +940,9 @@ homeform::homeform(QQmlApplicationEngine *engine, bluetooth *bl) {
             &homeform::setActivityDescription);
     engine->rootContext()->setContextProperty(QStringLiteral("rootItem"), (QObject *)this);
     connect(this, &homeform::restoreDefaultWheelDiameter, this, &homeform::handleRestoreDefaultWheelDiameter);
+    // TEST ONLY T-390: no Kickr in the emulator, the driver's call is made twice per run
+    QTimer::singleShot(25000, this, [this]() { showWahooWheelNotice(); });
+    QTimer::singleShot(55000, this, [this]() { showWahooWheelNotice(); });
 
     this->trainProgram = new trainprogram(QList<trainrow>(), bl);
 
