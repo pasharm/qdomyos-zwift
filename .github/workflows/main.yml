@@ -125,7 +125,6 @@ jobs:
       - name: idb (taps and the accessibility tree)
         if: inputs.language != '' || inputs.nav
         run: |
-          brew install facebook/fb/idb-companion || true
           if ! command -v idb_companion; then
             curl -sSL -o idb.tar.gz https://github.com/facebook/idb/releases/download/v1.1.8/idb-companion.universal.tar.gz
             sudo mkdir -p /usr/local/opt /usr/local/bin
