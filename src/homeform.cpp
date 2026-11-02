@@ -62,6 +62,7 @@
 #include <QRegularExpression>
 #include <QXmlStreamReader>
 #include <QDataStream>
+#include <QElapsedTimer>
 #include <algorithm>
 #include <chrono>
 
@@ -2360,6 +2361,8 @@ static QStringList findTranslatedLanguages() {
     const QString prefix = QStringLiteral("qdomyos-zwift_");
     QMap<QString, int> strings;
     int most = 0;
+    QElapsedTimer t253Timer;
+    t253Timer.start();
     for (const QString &file : translations.entryList({prefix + QStringLiteral("*.qm")})) {
         const int count = translatedStrings(translations.filePath(file));
         strings.insert(QFileInfo(file).completeBaseName().mid(prefix.length()), count);
@@ -2374,7 +2377,9 @@ static QStringList findTranslatedLanguages() {
         if (count > 0 && count * 100 >= most * minTranslatedPercent) {
             languages.append(it.key());
         }
+        qDebug() << "T-253 language" << it.key() << it.value() << "of" << most;
     }
+    qDebug() << "T-253 translatedLanguages" << languages << "took ms" << t253Timer.elapsed();
     return languages;
 }
 

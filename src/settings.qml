@@ -2819,6 +2819,7 @@ import AndroidStatusBar 1.0
                             Component.onCompleted: {
                                 var selected = settings.app_language
                                 var i
+                                console.log("T-253 combo saved=" + selected + " list=" + appLanguageOptions.map(function(option) { return option.value }).join(","))
                                 for (i = 0; i < appLanguageOptions.length; i++) {
                                     if (appLanguageOptions[i].value === selected) {
                                         currentIndex = i
