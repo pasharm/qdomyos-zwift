@@ -21,7 +21,7 @@ class KeepAwakeHelper {
     void keepScreenOn(bool on);
 
   private:
-    QAndroidJniObject m_wakeLock;
+    bool m_keepScreenOn = false;
 };
 
 #endif

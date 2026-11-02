@@ -11,34 +11,9 @@ KeepAwakeHelper::KeepAwakeHelper() {
         return;
     }
 
-    activity = QAndroidJniObject::callStaticObjectMethod("org/qtproject/qt5/android/QtNative", "activity",
-                                                         "()Landroid/app/Activity;");
-    if (activity.isValid()) {
-        QAndroidJniObject serviceName =
-            QAndroidJniObject::getStaticObjectField<jstring>("android/content/Context", "POWER_SERVICE");
-        if (serviceName.isValid()) {
-            QAndroidJniObject powerMgr = activity.callObjectMethod(
-                "getSystemService", "(Ljava/lang/String;)Ljava/lang/Object;", serviceName.object<jobject>());
-            if (powerMgr.isValid()) {
-                jint levelAndFlags =
-                    QAndroidJniObject::getStaticField<jint>("android/os/PowerManager", "SCREEN_DIM_WAKE_LOCK");
-
-                QAndroidJniObject tag = QAndroidJniObject::fromString("My Tag");
-
-                m_wakeLock =
-                    powerMgr.callObjectMethod("newWakeLock", "(ILjava/lang/String;)Landroid/os/PowerManager$WakeLock;",
-                                              levelAndFlags, tag.object<jstring>());
-            }
-        }
-    }
-
-    if (m_wakeLock.isValid()) {
-        m_wakeLock.callMethod<void>("acquire", "()V");
-        qDebug() << "Locked device, can't go to standby anymore";
-    } else {
-        assert(false);
-    }
-
+    // Only the window flag, no wake lock: it keeps the screen on while the QZ activity is in front. A screen
+    // wake lock held in the background gets QZ killed on OnePlus.
+    m_keepScreenOn = true;
     keepScreenOn(true);
 
     /*antObject(true);
@@ -83,15 +58,11 @@ QAndroidJniObject *KeepAwakeHelper::antObject(bool forceCreate) {
 }
 
 KeepAwakeHelper::~KeepAwakeHelper() {
-    if (m_wakeLock.isValid()) {
-        m_wakeLock.callMethod<void>("release", "()V");
-
+    if (m_keepScreenOn) {
         QSettings settings;
         if ((settings.value(QZSettings::ant_cadence, QZSettings::default_ant_cadence).toBool() || settings.value(QZSettings::ant_heart, QZSettings::default_ant_heart).toBool()) &&
             KeepAwakeHelper::antObject(false))
             KeepAwakeHelper::antObject(false)->callMethod<void>("doUnbindChannelService", "()V");
-
-        qDebug() << "Unlocked device, can now go to standby";
 
         keepScreenOn(false);
     }
