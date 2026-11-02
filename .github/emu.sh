@@ -230,7 +230,9 @@ wait_tiles
 step top "toolbar and Start/Stop row shown"
 shot t-00-top
 
-step short-drag "200 px, below the hysteresis: toolbar still shown, the Start/Stop row moved up 200 px with the tiles"
+# The toolbar over the tiles (test/t052-overlay): it slides with the scroll 1:1 and snaps to the
+# nearer end after release; near the top (scrolled less than its height) it comes back
+step short-drag "200 px: the Start/Stop row moved up with the tiles; toolbar shown (near the top it snaps back), its room above the row"
 drag_up 200
 shot t-01-drag-200
 
@@ -239,11 +241,11 @@ step long-drag "1100 px up: toolbar gone, no line of its pixels under the status
 drag_up 1100
 shot t-02-drag-1100
 
-step small-back "150 px down: toolbar stays away"
+step small-back "150 px down: toolbar slid back over the tiles, whole after the snap (or still gone if less than half came back)"
 drag_down 150
 shot t-03-back-150
 
-step first-row "600 px down, to the top: toolbar back on the way (or at the top at the latest), the Start/Stop row in full view"
+step first-row "600 px down, to the top: toolbar shown, the Start/Stop row in full view below it"
 drag_down 600
 shot t-04-first-row-hidden
 
@@ -255,32 +257,29 @@ scroll_top; sleep 2
 drag_up 1300
 drag_up 1300
 shot t-04c-deep
-step back-deep "1000 px down from deep in the list: toolbar back on the way"
+step back-deep "1000 px down from deep in the list: toolbar shown over the tiles"
 drag_down 1000
 shot t-04d-back-deep
 
-# The phone 02.11: after each drag the view settles on a whole pixel, and that reset the turn point,
-# so two short pulls in a row never added up to the ~310 px threshold. A 200 px swipe moved the list
-# only 43-46 dp (touch slop), two of them 87 dp against 88 on API 30: 250 px each, one still short
+# Short pulls down deep in the list: a 250 px swipe moves the list about 60 dp, more than the toolbar
 drag_up 1300
-step two-pulls "deep in the list, toolbar gone, then 250 px down and 250 px down again: toolbar back after the second, not after the first"
+step two-pulls "deep in the list, toolbar gone, then 250 px down: toolbar back already; 250 px down again: still shown"
 drag_down 250
 shot t-04e-pull-1
 drag_down 250
 shot t-04f-pull-2
 
-# A touch near the top must not hide the toolbar at once (the phone 02.11: scrolled just under the
-# threshold, the next touch hid it with a 48 dp jerk): scrolls toward hiding count one at a time
+# Short drags up from the top (the phone 02.11: the jerk came from such steps): the toolbar follows
+# them, the tiles never jump
 scroll_top; sleep 2
-step touch-top "near the top, three 200 px drags up: toolbar stays (each under the threshold, not added up)"
+step touch-top "from the top, three 200 px drags up: toolbar gone (each slid it further), no band left above the tiles"
 drag_up 200
 drag_up 200
 drag_up 200
 shot t-04g-touch-top
-# The same with short flicks (the phone 02.11, 58ae02ba3: a flick ends without the whole-pixel
-# settle, the count went on across the steps and a later touch hid the toolbar with a jerk)
+# The same with short flicks
 scroll_top; sleep 2
-step flick-steps "near the top, three short quick swipes up (small flicks): toolbar stays"
+step flick-steps "from the top, three short quick swipes up (small flicks): toolbar gone, whole or not at all (snap)"
 for i in 1 2 3; do adb shell input swipe 700 1800 700 1650 120 || true; sleep 2; done
 shot t-04h-flick-steps
 
@@ -294,10 +293,10 @@ step top-again "fast swipes down, past the top edge: toolbar and Start/Stop row 
 scroll_top; sleep 2
 shot t-06-top-again
 
-step end "the end of the list, overscrolled: toolbar gone, no flicker back, last row in full view"
+step end "the end of the list, overscrolled: toolbar gone (the spring back does not bring it), last row in full view"
 to_end
 shot t-07-end
-step end-back "1000 px down from the end: toolbar back"
+step end-back "1000 px down from the end: toolbar shown"
 drag_down 1000
 shot t-08-end-back
 
@@ -305,7 +304,7 @@ shot t-08-end-back
 scroll_top; sleep 2
 drag_up 1300
 shot t-09-before-page
-step page "drawer by edge swipe, Settings: page with a full toolbar"
+step page "drawer by edge swipe, Settings: page with a full toolbar, its top not under the toolbar"
 adb shell input swipe 2 1200 900 1200 300 || true
 sleep 3
 shot t-10-drawer
@@ -335,7 +334,7 @@ shot t-15-portrait
 
 # Moving tiles: the gap above the first row
 scroll_top; sleep 2
-step lock "tile lock: no Start/Stop row, 30 gap above the first row, inside the grid; unlocked: the row back at the top"
+step lock "tile lock: toolbar shown, no Start/Stop row, 30 gap between the toolbar and the first row, inside the grid; unlocked: the row back at the top"
 tap $LOCK "lock tiles"
 sleep 3
 shot t-16-lock
@@ -350,7 +349,7 @@ shot t-18-unlock
 
 # No Start/Stop row: the 30 px gap under the toolbar goes away with it
 restart_with top_bar_enabled=false
-step no-top-bar "top bar off: 30 px gap at the top, scrolled off with the tiles, toolbar gone after a long drag"
+step no-top-bar "top bar off: 30 px gap under the toolbar, scrolled off with the tiles, toolbar gone after a long drag"
 shot t-23-no-top-bar
 drag_up 1300
 shot t-24-no-top-bar-drag
@@ -362,7 +361,7 @@ shot t-19-short-top
 drag_up 400
 shot t-20-short-drag
 
-# A list just over the screen: the end is reachable by bottomMargin alone, the toolbar stays
+# A list just over the screen: the end reachable, the last row above the bottom
 restart_with ui_zoom=60
 step just-over "swipes up: last row in full view above the bottom of the screen"
 shot t-21-over-top
