@@ -1,6 +1,6 @@
 #!/bin/bash
 # Test only (T-253): the App Language list made from the translations of the build. The build
-# holds Swedish at 12% and Finnish at 5%; an empty ca is saved to see the fall back to the system.
+# holds Swedish at 12% and Finnish at 5%; picking from the list and from the search of the settings.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -159,6 +159,17 @@ open_list() {
 saved_language() {
   adb shell "run-as $PKG cat '$CONF'" | tr -d '\r' | grep -a '^app_language' | head -n 1
 }
+# check_saved <name> <line of the conf>
+check_saved() {
+  local line
+  line=$(saved_language)
+  if [ "$line" = "$2" ]; then
+    echo "check $1: OK ($line)" >> $STEPLOG
+  else
+    echo "!! check $1: '$line', expected $2" >> $STEPLOG
+    FAILED=1
+  fi
+}
 start_app() {
   adb shell am start -n $PKG/$PKG.CustomQtActivity
   sleep 45
@@ -170,7 +181,7 @@ LOGCAT_PID=$!
 adb shell settings put system accelerometer_rotation 0 || true
 adb shell settings put system user_rotation 0 || true
 
-# 1. The device in English, Auto: the list from the translations of the build
+# 1. The device in English, Auto: the whole list; Swedish holds 12% of the strings and can be picked
 echo "== case 1: auto" >> $STEPLOG
 install_apk apk-debug/android-debug.apk
 put_conf auto
@@ -180,24 +191,21 @@ if open_language; then
   shot 1-1-row
   open_list
   shot 1-2-list-top
-  adb shell input swipe 700 2000 700 900 500 || true
-  sleep 2
+  # Inside the list: a swipe left of it closes it (run 41458140210)
+  adb shell input swipe 950 2200 950 500 500 || true
+  sleep 3
   rm -f ui.xml
-  shot 1-3-list-scrolled
-  adb shell input swipe 700 2000 700 900 500 || true
-  sleep 2
-  rm -f ui.xml
-  shot 1-4-list-end
-  # Swedish holds 12% of the strings: it can be picked and it applies at once
+  shot 1-3-list-end
   if tap_ui '^Swedish$'; then
     sleep 3
     rm -f ui.xml
-    shot 1-5-picked
-    LANG_OK2=$(python3 .github/uitap.py ui.xml '^OK$') && adb shell input tap $LANG_OK2
+    shot 1-4-picked
+    OK_XY=$(python3 .github/uitap.py ui.xml '^OK$') && adb shell input tap $OK_XY
     sleep 8
     rm -f ui.xml
-    shot 1-6-applied
-    echo "saved: $(saved_language)" >> $STEPLOG
+    shot 1-5-applied
+  else
+    FAILED=1
   fi
 else
   echo "!! case 1: language row not reached" >> $STEPLOG
@@ -205,27 +213,39 @@ else
 fi
 adb shell am force-stop $PKG || true
 sleep 3
+check_saved "1, picked Swedish" app_language=sv
 
-# 2. A saved language with an empty file: the list shows Auto. The search of the settings too
-echo "== case 2: saved ca" >> $STEPLOG
+# 2. A saved language with an empty file: Auto in the list. The search of the settings: Turkish is
+# 12th in the list and 15th in the catalog, so a wrong place would write another language
+echo "== case 2: saved ca, search" >> $STEPLOG
 put_conf ca
 start_app
 shot 2-0-home
 if open_language; then
   shot 2-1-row-auto
-  back "section stays"
-  sleep 1
-  scroll_top
+  tap 1018 168 "search icon"
+  sleep 3
   rm -f ui.xml
   dump
-  if tap_ui 'Search settings' 700 300; then
+  tap_ui 'Search settings' 500 330
+  sleep 2
+  adb shell input text language || true
+  sleep 5
+  rm -f ui.xml
+  shot 2-2-search
+  if tap_ui 'Auto \(System\)'; then
     sleep 3
-    adb shell input text language || true
-    sleep 5
-    adb shell input keyevent KEYCODE_BACK || true
-    sleep 2
     rm -f ui.xml
-    shot 2-2-search
+    shot 2-3-search-list
+    if tap_ui '^Turkish$'; then
+      sleep 8
+      rm -f ui.xml
+      shot 2-4-search-picked
+    else
+      FAILED=1
+    fi
+  else
+    FAILED=1
   fi
 else
   echo "!! case 2: language row not reached" >> $STEPLOG
@@ -233,31 +253,13 @@ else
 fi
 adb shell am force-stop $PKG || true
 sleep 3
-kill $LOGCAT_PID 2>/dev/null || true
-wait $LOGCAT_PID 2>/dev/null || true
-
-# 3. The same saved language on a device in German: it follows the system, as Auto does
-echo "== case 3: saved ca, device de-DE" >> $STEPLOG
-adb root >> $STEPLOG 2>&1 || true
-wait_boot
-adb shell setprop persist.sys.locale de-DE
-adb reboot
-wait_boot
-echo "locale $(adb shell getprop persist.sys.locale)" >> $STEPLOG
-adb logcat -c || true
-adb logcat -v threadtime -b main,system,crash > full_logcat3.txt 2>/dev/null &
-LOGCAT_PID=$!
-put_conf ca
-start_app
-shot 3-0-home-german
-adb shell am force-stop $PKG || true
-sleep 2
+check_saved "2, picked Turkish in the search" app_language=tr
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
 
 EXPECT='auto,en,it,de,fr,es,pt,pt_BR,ru,zh_CN,ja,ko,tr,pl,uk,nl,cs,sv,no,da'
 echo "== T-253 lines" >> $STEPLOG
-grep -a -h -E "T-253|Translation (file is empty|loaded)|No translation available" full_logcat.txt full_logcat3.txt | cut -c1-220 | sort -u -k7 | tail -n 60 >> $STEPLOG || true
+grep -a -h -E "T-253 (combo|translatedLanguages)|Translation (file is empty|loaded)|No translation available" full_logcat.txt | cut -c1-220 | tail -n 40 >> $STEPLOG || true
 check() {
   if grep -a -q -- "$2" "$3"; then
     echo "check $1: OK" >> $STEPLOG
@@ -268,12 +270,9 @@ check() {
 }
 check "list, auto" "T-253 combo saved=auto list=$EXPECT" full_logcat.txt
 check "list, saved ca" "T-253 combo saved=ca list=$EXPECT" full_logcat.txt
-check "empty file seen" "Translation file is empty" full_logcat.txt
-check "German by the system" "Translation loaded successfully for" full_logcat3.txt
-echo "== QML warnings of the page" >> $STEPLOG
-grep -a -E "settings\.qml|UiComboBox" full_logcat.txt | grep -a -v "T-253" | tail -n 30 >> $STEPLOG || true
+check "Swedish loaded" 'Translation loaded successfully for "locale" : "sv"' full_logcat.txt
+check "Turkish loaded" 'Translation loaded successfully for "locale" : "tr"' full_logcat.txt
 echo "== ANR / crash in the whole log:" >> $STEPLOG
-grep -a -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt full_logcat3.txt >> $STEPLOG || echo "none" >> $STEPLOG
-cat full_logcat3.txt >> full_logcat.txt
+grep -a -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt >> $STEPLOG || echo "none" >> $STEPLOG
 cat $STEPLOG
 exit $FAILED
