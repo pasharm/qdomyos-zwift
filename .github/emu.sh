@@ -1,7 +1,6 @@
 #!/bin/bash
-# Test only (T-386): Preset Gear Profiles on the Wahoo Options page, the way the user of issue 5508
-# went: pick Reality Bender, leave the page, quit the app, start it again, open the page. The build
-# without the change first, then the one with it. Same steps for both, frames b-* and a-*.
+# Test only (T-253): the App Language list made from the translations of the build. The build
+# holds Swedish at 12% and Finnish at 5%; an empty ca is saved to see the fall back to the system.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -29,9 +28,9 @@ install_apk() {
 adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
-# A fake treadmill, so there is no first-run wizard; English; the look of the run
+# A fake treadmill, so there is no first-run wizard; the saved language; the look of the run
 put_conf() {
-  printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\napp_language=en\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+  printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\napp_language=%s\n' "$LOG_DEBUG" "$UI_MODERN" "$1" > qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf '$CONF'"
@@ -123,44 +122,46 @@ scroll_top() {
   sleep 1
 }
 
-# From the home page to the top of Wahoo Options
-open_wahoo() {
+wait_boot() {
+  local i
+  adb wait-for-device
+  for i in $(seq 1 90); do
+    [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = 1 ] && break
+    sleep 2
+  done
+  sleep 10
+}
+
+# To the top of General Options; LANG_OK is the place of the OK of the language row
+open_language() {
   tap 84 168 "menu"
   sleep 3
   adb shell input swipe 500 700 500 2300 300 || true
   sleep 2
   tap_drawer '^Settings$' 400 900
   sleep 8
-  scroll_to 'Bike Options' 20 || return 1
-  tap_ui 'Bike Options'
+  scroll_to 'General Options' 20 || return 1
+  tap_ui 'General Options'
   sleep 5
-  scroll_to 'Wahoo Options' 40 || return 1
-  # A link at the very bottom may sit under the navigation bar
-  local y
-  y=$(python3 .github/uitap.py ui.xml 'Wahoo Options' | cut -d" " -f2)
-  if [ -n "$y" ] && [ "$y" -gt 2100 ]; then
-    adb shell input swipe 700 1800 700 1200 400 || true
-    sleep 2
-    rm -f ui.xml
-  fi
-  tap_ui 'Wahoo Options' || return 1
-  sleep 6
+  rm -f ui.xml
+  dump
+  LANG_OK=$(python3 .github/uitap.py ui.xml '^OK$')
+  echo "language OK at '$LANG_OK'" >> $STEPLOG
+  [ -n "$LANG_OK" ]
 }
-# The list of presets in view: it is right above the Add Gear button
-to_presets() {
-  scroll_to 'Add Gear' 12 || return 1
-  ADD_XY=$(python3 .github/uitap.py ui.xml 'Add Gear')
+# The list of the language row: the field is left of its OK
+open_list() {
+  local x=${LANG_OK% *} y=${LANG_OK#* }
+  tap $((x - 260)) $y "language field"
+  sleep 3
+  rm -f ui.xml
 }
-PRESET_RX='Select a profile.*|(Time Trial|Rolling Hills|Alpine|Reality Bender|Explorer) \(.*'
-# What the saved settings say, in the log; check_table <prefix> <start of the table>
-check_table() {
-  local line
-  line=$(adb shell "run-as $PKG cat '$CONF'" | tr -d '\r' | grep -a '^gear_configuration' | cut -c1-48)
-  echo "   $1: ${line:-no gear_configuration}" >> $STEPLOG
-  case "$line" in
-    "gear_configuration=$2"*) echo "check $1: OK" >> $STEPLOG ;;
-    *) echo "!! check $1: expected $2" >> $STEPLOG; FAILED=1 ;;
-  esac
+saved_language() {
+  adb shell "run-as $PKG cat '$CONF'" | tr -d '\r' | grep -a '^app_language' | head -n 1
+}
+start_app() {
+  adb shell am start -n $PKG/$PKG.CustomQtActivity
+  sleep 45
 }
 
 adb logcat -c || true
@@ -169,72 +170,110 @@ LOGCAT_PID=$!
 adb shell settings put system accelerometer_rotation 0 || true
 adb shell settings put system user_rotation 0 || true
 
-# case_run <prefix> <apk>
-case_run() {
-  local prefix="$1" xy x y
-  install_apk "$2"
-  put_conf
-  echo "== $prefix: start" >> $STEPLOG
-  adb shell am start -n $PKG/$PKG.CustomQtActivity
-  sleep 45
-  shot $prefix-0-home
-  open_wahoo || { echo "!! $prefix: Wahoo Options not reached" >> $STEPLOG; FAILED=1; return; }
-  to_presets || { FAILED=1; return; }
-  shot $prefix-1-default
-  python3 .github/uitap.py ui.xml "$PRESET_RX" >> $STEPLOG 2>&1 || echo "list not in the dump, by its place above Add Gear" >> $STEPLOG
-  x=${ADD_XY% *}
-  y=${ADD_XY#* }
-  tap_ui "$PRESET_RX" "$x" $((y - 406))
-  sleep 3
-  shot $prefix-2-list-open
-  # The list opens over its field: the fourth item is 3.5 items of 48 dp below its top
-  tap_ui 'Reality Bender.*' "$x" $((y - 406 - 84 + 588))
-  sleep 4
-  shot $prefix-3-picked
-  sleep 6
-  check_table $prefix-picked '1|75|100|true'
-
-  # Back to the settings and the page opened again
-  back "page"
-  sleep 4
-  scroll_top
-  scroll_to 'Wahoo Options' 40
-  tap_ui 'Wahoo Options'
-  sleep 6
-  to_presets
-  shot $prefix-4-reopened
-
-  # The app quit and started again: this is what the user of issue 5508 did
-  back "page"
-  sleep 8
-  adb shell am force-stop $PKG || true
-  sleep 3
-  adb shell am start -n $PKG/$PKG.CustomQtActivity
-  sleep 35
-  shot $prefix-5-home-after-restart
-  open_wahoo || { echo "!! $prefix: Wahoo Options not reached after the restart" >> $STEPLOG; FAILED=1; return; }
-  to_presets
-  shot $prefix-6-after-restart
-  check_table $prefix-after-restart '1|75|100|true'
-
-  # Reset All Gears: the list leaves the preset behind
-  scroll_to 'Reset All Gears' 6 && tap_ui 'Reset All Gears'
-  sleep 4
-  shot $prefix-7-after-reset
-  sleep 6
-  check_table $prefix-after-reset '1|38|44|true'
-  adb shell am force-stop $PKG || true
+# 1. The device in English, Auto: the list from the translations of the build
+echo "== case 1: auto" >> $STEPLOG
+install_apk apk-debug/android-debug.apk
+put_conf auto
+start_app
+shot 1-0-home
+if open_language; then
+  shot 1-1-row
+  open_list
+  shot 1-2-list-top
+  adb shell input swipe 700 2000 700 900 500 || true
   sleep 2
-}
+  rm -f ui.xml
+  shot 1-3-list-scrolled
+  adb shell input swipe 700 2000 700 900 500 || true
+  sleep 2
+  rm -f ui.xml
+  shot 1-4-list-end
+  # Swedish holds 12% of the strings: it can be picked and it applies at once
+  if tap_ui '^Swedish$'; then
+    sleep 3
+    rm -f ui.xml
+    shot 1-5-picked
+    LANG_OK2=$(python3 .github/uitap.py ui.xml '^OK$') && adb shell input tap $LANG_OK2
+    sleep 8
+    rm -f ui.xml
+    shot 1-6-applied
+    echo "saved: $(saved_language)" >> $STEPLOG
+  fi
+else
+  echo "!! case 1: language row not reached" >> $STEPLOG
+  FAILED=1
+fi
+adb shell am force-stop $PKG || true
+sleep 3
 
-case_run b apk-base/android-debug.apk
-case_run a apk-debug/android-debug.apk
-
+# 2. A saved language with an empty file: the list shows Auto. The search of the settings too
+echo "== case 2: saved ca" >> $STEPLOG
+put_conf ca
+start_app
+shot 2-0-home
+if open_language; then
+  shot 2-1-row-auto
+  back "section stays"
+  sleep 1
+  scroll_top
+  rm -f ui.xml
+  dump
+  if tap_ui 'Search settings' 700 300; then
+    sleep 3
+    adb shell input text language || true
+    sleep 5
+    adb shell input keyevent KEYCODE_BACK || true
+    sleep 2
+    rm -f ui.xml
+    shot 2-2-search
+  fi
+else
+  echo "!! case 2: language row not reached" >> $STEPLOG
+  FAILED=1
+fi
+adb shell am force-stop $PKG || true
+sleep 3
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
+
+# 3. The same saved language on a device in German: it follows the system, as Auto does
+echo "== case 3: saved ca, device de-DE" >> $STEPLOG
+adb root >> $STEPLOG 2>&1 || true
+wait_boot
+adb shell setprop persist.sys.locale de-DE
+adb reboot
+wait_boot
+echo "locale $(adb shell getprop persist.sys.locale)" >> $STEPLOG
+adb logcat -c || true
+adb logcat -v threadtime -b main,system,crash > full_logcat3.txt 2>/dev/null &
+LOGCAT_PID=$!
+put_conf ca
+start_app
+shot 3-0-home-german
+adb shell am force-stop $PKG || true
+sleep 2
+kill $LOGCAT_PID 2>/dev/null || true
+wait $LOGCAT_PID 2>/dev/null || true
+
+EXPECT='auto,en,it,de,fr,es,pt,pt_BR,ru,zh_CN,ja,ko,tr,pl,uk,nl,cs,sv,no,da'
+echo "== T-253 lines" >> $STEPLOG
+grep -a -h -E "T-253|Translation (file is empty|loaded)|No translation available" full_logcat.txt full_logcat3.txt | cut -c1-220 | sort -u -k7 | tail -n 60 >> $STEPLOG || true
+check() {
+  if grep -a -q -- "$2" "$3"; then
+    echo "check $1: OK" >> $STEPLOG
+  else
+    echo "!! check $1: no '$2' in $3" >> $STEPLOG
+    FAILED=1
+  fi
+}
+check "list, auto" "T-253 combo saved=auto list=$EXPECT" full_logcat.txt
+check "list, saved ca" "T-253 combo saved=ca list=$EXPECT" full_logcat.txt
+check "empty file seen" "Translation file is empty" full_logcat.txt
+check "German by the system" "Translation loaded successfully for" full_logcat3.txt
 echo "== QML warnings of the page" >> $STEPLOG
-grep -a -E "gears\.qml|UiComboBox" full_logcat.txt | grep -a -v "onCompleted\|onValueChanged\|onCurrentIndexChanged\|onSettingsChanged\|onGearSettingsChanged" | tail -n 40 >> $STEPLOG || true
+grep -a -E "settings\.qml|UiComboBox" full_logcat.txt | grep -a -v "T-253" | tail -n 30 >> $STEPLOG || true
 echo "== ANR / crash in the whole log:" >> $STEPLOG
-grep -a -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt >> $STEPLOG || echo "none" >> $STEPLOG
+grep -a -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt full_logcat3.txt >> $STEPLOG || echo "none" >> $STEPLOG
+cat full_logcat3.txt >> full_logcat.txt
 cat $STEPLOG
 exit $FAILED

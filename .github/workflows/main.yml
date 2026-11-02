@@ -16,15 +16,12 @@ on:
         description: log_debug for the run (false = the debug log off)
         required: false
         default: 'true'
-      baseline:
-        description: run id of the build to shoot first, as the reference (T-312 - feat/modern-ui before the change)
-        required: true
 
 jobs:
   emulator-logcat:
     runs-on: ubuntu-latest
-    # Two cases of 14 min with the screen off; a step stuck on adb ends here instead of after 6 hours
-    timeout-minutes: 45
+    # Three cases and a reboot, about 12 min; a step stuck on adb ends here instead of after 6 hours
+    timeout-minutes: 30
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -43,14 +40,6 @@ jobs:
           name: fdroid-android-trial
           path: apk-debug
           run-id: ${{ inputs.source }}
-          github-token: ${{ github.token }}
-
-      - name: Download the reference APK
-        uses: actions/download-artifact@v4
-        with:
-          name: fdroid-android-trial
-          path: apk-base
-          run-id: ${{ inputs.baseline }}
           github-token: ${{ github.token }}
 
       - name: Setup Java for Android Emulator
