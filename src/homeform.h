@@ -607,6 +607,7 @@ class homeform : public QObject {
     void setToastRequested(QString value) { m_toastRequested = value; emit toastRequestedChanged(value); }
     // a device changed a setting that only takes effect after a restart: say what changed and offer to restart now
     void requestRestartToApply(QString message) { emit restartToApplyRequested(message); }
+    void showWahooWheelNotice();
     void setStravaUploadRequested(bool value) {
         m_stravaUploadRequested = value;
     }
@@ -1363,6 +1364,8 @@ public:
     // a new history database was started and the workouts of a previous install may be
     // hidden in the QZ folder: QML asks whether to look for them (importFitFolder())
     void historyRecoveryOfferRequested();
+    // showWahooWheelNotice(): QML tells the user about the wheel circumference of the trainer
+    void wahooWheelNoticeRequested();
     void fitImportRunningChanged();
     void signalChanged(QString value);
     void startTextChanged(QString value);

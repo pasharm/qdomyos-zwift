@@ -3447,6 +3447,9 @@ class QZSettings {
     static const QString moovio_lynx_konect_2_0;
     static constexpr bool default_moovio_lynx_konect_2_0 = false;
 
+    static const QString wahoo_wheel_notice_shown;
+    static constexpr bool default_wahoo_wheel_notice_shown = false;
+
     /**
      * @brief Write the QSettings values using the constants from this namespace.
      * @param showDefaults Optionally indicates if the default should be shown with the key.

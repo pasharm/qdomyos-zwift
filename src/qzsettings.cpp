@@ -1349,7 +1349,9 @@ const QString QZSettings::history_chart_speed_inclination_order = QStringLiteral
 
 const QString QZSettings::moovio_lynx_konect_2_0 = QStringLiteral("moovio_lynx_konect_2_0");
 
-const uint32_t allSettingsCount = 1043;
+const QString QZSettings::wahoo_wheel_notice_shown = QStringLiteral("wahoo_wheel_notice_shown");
+
+const uint32_t allSettingsCount = 1044;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -2419,6 +2421,7 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::moovio_lynx_konect_2_0, QZSettings::default_moovio_lynx_konect_2_0},
     {QZSettings::virtual_device_rower_cadence_gain, QZSettings::default_virtual_device_rower_cadence_gain},
     {QZSettings::virtual_device_rower_cadence_offset, QZSettings::default_virtual_device_rower_cadence_offset},
+    {QZSettings::wahoo_wheel_notice_shown, QZSettings::default_wahoo_wheel_notice_shown},
 };
 
 void QZSettings::qDebugAllSettings(bool showDefaults) {
