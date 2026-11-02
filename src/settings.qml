@@ -839,6 +839,10 @@ import AndroidStatusBar 1.0
             if (!entry.options)
                 return []
 
+            // The catalog has a fixed list, the page offers the languages of this build
+            if (entry.key === "app_language")
+                return appLanguageOptions.map(function(option) { return option.value })
+
             if (entry.options.values)
                 return entry.options.values
 
@@ -856,6 +860,9 @@ import AndroidStatusBar 1.0
         // written is still the one of optionValues at the same place. A list made at run time
         // (Bluetooth devices) shows its values as they are
         function optionTexts(entry) {
+            if (entry.key === "app_language")
+                return appLanguageOptions.map(function(option) { return option.label })
+
             var values = optionValues(entry)
             if (!entry.options || !entry.options.values)
                 return values
@@ -2440,7 +2447,7 @@ import AndroidStatusBar 1.0
             return (parseInt(pieces[0]) * 3600) + (parseInt(pieces[1]) * 60) + parseInt(pieces[2])
         }
 
-        property var appLanguageOptions: [
+        property var appLanguageNames: [
             { label: qsTr("Auto (System)"), value: "auto" },
             { label: qsTr("English"), value: "en" },
             { label: qsTr("Italian"), value: "it" },
@@ -2474,6 +2481,13 @@ import AndroidStatusBar 1.0
             { label: qsTr("Hebrew"), value: "he" },
             { label: qsTr("Catalan"), value: "ca" }
         ]
+        // A language without enough of a translation in this build is not offered
+        property var appLanguageOptions: {
+            var translated = rootItem.translatedLanguages
+            return appLanguageNames.filter(function(option) {
+                return option.value === "auto" || option.value === "en" || translated.indexOf(option.value) >= 0
+            })
+        }
         Timer {
             id: settingsSearchDebounceTimer
             interval: 1500
