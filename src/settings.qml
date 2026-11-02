@@ -2971,7 +2971,7 @@ import QtQuick 2.12 as Quick212
             property bool charts_live_update: false
             // Also kept by main.qml, like the ui_ keys above (uiOptionKeys)
             property bool ui_state_buttons: true
-            property bool treadmill_auto_resume: false
+            property bool treadmill_auto_resume: true
         }
 
         // The home page has its own Settings copy, read once when it is created: hand it every new

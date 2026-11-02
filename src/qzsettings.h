@@ -3473,7 +3473,7 @@ class QZSettings {
 
     // A pause the treadmill set by itself ends when the belt moves again
     static const QString treadmill_auto_resume;
-    static constexpr bool default_treadmill_auto_resume = false;
+    static constexpr bool default_treadmill_auto_resume = true;
 
     // Chart positions in the Workout History preview.
     static const QString history_chart_power_order;
