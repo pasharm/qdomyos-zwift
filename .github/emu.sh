@@ -159,8 +159,9 @@ drv t-plus --keep 'mark:plus' 'focus:Increase Resistance' 'sleep:1500' 'touch:In
   'find:Resistance:' 'dtap' 'sleep:2500' 'find:Resistance:' 'dtap' 'sleep:2500' 'find:Resistance:'
 tshot t-01-plus
 
-# Start: two double taps, two lines "Start pressed" if each fires once
-drv t-start --keep 'mark:start' 'focus:Start' 'sleep:1500' 'touch:Start' 'mark:start-tap-1' 'dtap' 'sleep:3000' \
+# Start: the fake bike starts by itself, so the button reads Pause until it is pressed.
+# Two double taps, two lines "Start pressed" if each fires once
+drv t-start --keep 'mark:start' 'focus:Pause' 'sleep:1500' 'touch:Pause' 'mark:start-tap-1' 'dtap' 'sleep:3000' \
   'mark:start-tap-2' 'dtap' 'sleep:3000' 'mark:start-end'
 tshot t-02-start
 
@@ -185,12 +186,19 @@ adb shell input swipe 500 700 500 2300 300 || true
 sleep 2
 tap_ui '^Settings$' 400 900
 sleep 8
-if ! scroll_to 'Experimental Features'; then
-  tshot t-05-no-section
-fi
-tap_ui 'Experimental Features' 700 1300
+# The title of a section is QML text, not in the dump: the end of the page, then its place there
+for i in 1 2 3 4 5 6 7 8; do
+  adb shell input swipe 700 2000 700 1000 300 || true
+  sleep 1
+done
+tshot t-05-page-end
+echo "tap 700 2380 (Experimental Features)" >> $STEPLOG
+adb shell input tap 700 2380 || true
 sleep 3
-scroll_to 'Simulate Battery Service'
+scroll_to 'Enable Virtual Device'
+# from the bottom edge to the middle: the switch above it stays on the screen
+adb shell input swipe 700 1900 700 1300 500 || true
+sleep 2
 dump
 [ -f ui.xml ] && cp ui.xml dumps/settings-before.xml
 tshot t-05-settings
@@ -230,9 +238,9 @@ wait $TB_LOGCAT_PID 2>/dev/null || true
 cat full_logcat.txt tb_logcat.txt | grep -E "ANR in|FATAL EXCEPTION" | sed 's/^/!! /' >> $STEPLOG || true
 
 echo "== presses in logcat, in order, with the marks of the driver" >> $STEPLOG
-grep -E "A11yDriver: mark|Start pressed|Stop pressed|ACTION_CLICK failed" tb_logcat.txt >> $STEPLOG || true
+grep -E "A11yDriver: mark|Start pressed|Stop pressed|\"Plus\"|ACTION_CLICK failed" tb_logcat.txt >> $STEPLOG || true
 echo "== presses in the debug log of QZ" >> $STEPLOG
-grep -h -E "Start pressed|Stop pressed" qz-logs/*.log 2>/dev/null | cut -c1-160 >> $STEPLOG || true
+grep -h -E "Start pressed|Stop pressed|\"Plus\"" qz-logs/*.log 2>/dev/null | cut -c1-160 >> $STEPLOG || true
 grep -E "Speaking fragment|A11yDriver" tb_logcat.txt > tb-speech.txt || true
 
 echo "== steps"; cat $STEPLOG
