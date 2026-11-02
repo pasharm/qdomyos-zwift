@@ -1,6 +1,6 @@
 #!/bin/bash
 # Test only (T-253): the App Language list made from the translations of the build. The build
-# holds Swedish at 12% and Finnish at 5%; picking from the list and from the search of the settings.
+# holds Swedish at 12% and Finnish at 5%; a saved language below the threshold, pt_BR, OK on a saved empty one.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -181,29 +181,25 @@ LOGCAT_PID=$!
 adb shell settings put system accelerometer_rotation 0 || true
 adb shell settings put system user_rotation 0 || true
 
-# 1. The device in English, Auto: the whole list; Swedish holds 12% of the strings and can be picked
-echo "== case 1: auto" >> $STEPLOG
+# 1. A saved language below the threshold: it loads, the list shows Auto. Then Portuguese (Brazil),
+# an empty file with a base language: the app comes up in Portuguese
+echo "== case 1: saved fi, then pt_BR" >> $STEPLOG
 install_apk apk-debug/android-debug.apk
-put_conf auto
+put_conf fi
 start_app
 shot 1-0-home
 if open_language; then
-  shot 1-1-row
+  shot 1-1-row-auto
   open_list
   shot 1-2-list-top
-  # Inside the list: a swipe left of it closes it (run 41458140210)
-  adb shell input swipe 950 2200 950 500 500 || true
-  sleep 3
-  rm -f ui.xml
-  shot 1-3-list-end
-  if tap_ui '^Swedish$'; then
+  if tap_ui '^Portuguese \(Brazil\)$'; then
     sleep 3
     rm -f ui.xml
-    shot 1-4-picked
+    shot 1-3-picked
     OK_XY=$(python3 .github/uitap.py ui.xml '^OK$') && adb shell input tap $OK_XY
     sleep 8
     rm -f ui.xml
-    shot 1-5-applied
+    shot 1-4-applied
   else
     FAILED=1
   fi
@@ -213,65 +209,44 @@ else
 fi
 adb shell am force-stop $PKG || true
 sleep 3
-check_saved "1, picked Swedish" app_language=sv
+check_saved "1, picked pt_BR" app_language=pt_BR
 
-# 2. A saved language with an empty file: Auto in the list. The search of the settings: Turkish is
-# 12th in the list and 15th in the catalog, so a wrong place would write another language
-echo "== case 2: saved ca, search" >> $STEPLOG
+# 2. A saved language with an empty file: OK is active and writes auto
+echo "== case 2: saved ca, OK" >> $STEPLOG
 put_conf ca
 start_app
 shot 2-0-home
 if open_language; then
   shot 2-1-row-auto
-  tap 1018 168 "search icon"
-  sleep 3
+  adb shell input tap $LANG_OK
+  sleep 8
   rm -f ui.xml
-  dump
-  tap_ui 'Search settings' 500 330
-  sleep 2
-  adb shell input text language || true
-  sleep 5
-  rm -f ui.xml
-  shot 2-2-search
-  if tap_ui 'Auto \(System\)'; then
-    sleep 3
-    rm -f ui.xml
-    shot 2-3-search-list
-    if tap_ui '^Turkish$'; then
-      sleep 8
-      rm -f ui.xml
-      shot 2-4-search-picked
-    else
-      FAILED=1
-    fi
-  else
-    FAILED=1
-  fi
+  shot 2-2-after-ok
 else
   echo "!! case 2: language row not reached" >> $STEPLOG
   FAILED=1
 fi
 adb shell am force-stop $PKG || true
 sleep 3
-check_saved "2, picked Turkish in the search" app_language=tr
+check_saved "2, OK on the saved ca" app_language=auto
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
 
-EXPECT='auto,en,it,de,fr,es,pt,pt_BR,ru,zh_CN,ja,ko,tr,pl,uk,nl,cs,sv,no,da'
-echo "== T-253 lines" >> $STEPLOG
-grep -a -h -E "T-253 (combo|translatedLanguages)|Translation (file is empty|loaded)|No translation available" full_logcat.txt | cut -c1-220 | tail -n 40 >> $STEPLOG || true
+EXPECT='Translated app languages: ("cs", "da", "de", "es", "fr", "it", "ja", "ko", "nl", "no", "pl", "pt", "pt_BR", "ru", "sv", "tr", "uk", "zh_CN")'
+echo "== language lines" >> $STEPLOG
+grep -a -h -E "Translated app languages|Translation (file is empty|loaded)|No translation available" full_logcat.txt | cut -c1-200 | tail -n 30 >> $STEPLOG || true
 check() {
-  if grep -a -q -- "$2" "$3"; then
+  if grep -a -q -F -- "$2" "$3"; then
     echo "check $1: OK" >> $STEPLOG
   else
     echo "!! check $1: no '$2' in $3" >> $STEPLOG
     FAILED=1
   fi
 }
-check "list, auto" "T-253 combo saved=auto list=$EXPECT" full_logcat.txt
-check "list, saved ca" "T-253 combo saved=ca list=$EXPECT" full_logcat.txt
-check "Swedish loaded" 'Translation loaded successfully for "locale" : "sv"' full_logcat.txt
-check "Turkish loaded" 'Translation loaded successfully for "locale" : "tr"' full_logcat.txt
+check "list" "$EXPECT" full_logcat.txt
+check "Finnish below the threshold loaded" 'Translation loaded successfully for "locale" : "fi"' full_logcat.txt
+check "pt_BR empty" 'Translation file is empty for "locale" : "pt_BR"' full_logcat.txt
+check "pt_BR gives pt" 'Translation loaded successfully for "language" : "pt"' full_logcat.txt
 echo "== ANR / crash in the whole log:" >> $STEPLOG
 grep -a -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt >> $STEPLOG || echo "none" >> $STEPLOG
 cat $STEPLOG
