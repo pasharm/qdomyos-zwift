@@ -122,6 +122,21 @@ ScrollView {
         }
     }
 
+    // The preset with the gears of this table, -1 if none. Only the table is saved, not the pick,
+    // so the list went back to "Select a profile..." every time the page opened and the preset
+    // looked lost. Rows taken out of the table stay in the string as inactive and do not count
+    function gearProfileIndex(gearString) {
+        const table = gearRowsToString(stringToGearRows(gearString).filter(function(row) {
+            return row.active
+        }))
+        for (var i = 0; i < profileModel.count; i++) {
+            if (gearRowsToString(gearProfiles[profileModel.get(i).value].gears) === table) {
+                return i
+            }
+        }
+        return -1
+    }
+
     property var gearProfiles: {
         "Time Trial": {
             name: "Time Trial (52/36, 10 - 28)",
@@ -606,6 +621,7 @@ ScrollView {
                 id: profileCombo
                 width: parent.width
                 textRole: "text"
+                savedIndex: gearProfileIndex(settings.gear_configuration)
                 displayText: currentIndex < 0 ? qsTr("Select a profile...") : model.get(currentIndex).text
                 model: ListModel {
                  id: profileModel
@@ -620,11 +636,9 @@ ScrollView {
                  }
                 }
 
-                onCurrentIndexChanged: {
-                 if (currentIndex >= 0) {
-                     loadGearProfile(profileModel.get(currentIndex).value)
-                 }
-                }
+                // Only a pick loads a preset, not the list showing the saved one; the preset shown
+                // can be picked again, to undo changes made to the table since
+                onActivated: loadGearProfile(profileModel.get(index).value)
                 }
         }
 
