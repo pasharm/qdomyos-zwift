@@ -232,9 +232,17 @@ shot t-00-top
 
 # The toolbar over the tiles (test/t052-overlay): it slides with the scroll 1:1 and snaps to the
 # nearer end after release; near the top (scrolled less than its height) it comes back
-step short-drag "200 px: the Start/Stop row moved up with the tiles; toolbar shown (near the top it snaps back), its room above the row"
+step short-drag "200 px: the Start/Stop row moved up with the tiles; the toolbar gone and the row just under the status bar (it snaps with the list within its room), never resting over the row"
 drag_up 200
 shot t-01-drag-200
+# Within the toolbar's room the list snaps with it: a small drag goes back to the top
+scroll_top; sleep 2
+step tiny-drag "80 px from the top: back at the top after the release, toolbar and Start/Stop row shown"
+drag_up 80
+shot t-01b-drag-80
+step half-drag "150 px from the top: the toolbar gone and the row just under the status bar, not under the toolbar"
+drag_up 150
+shot t-01c-drag-150
 
 scroll_top; sleep 2
 step long-drag "1100 px up: toolbar gone, no line of its pixels under the status bar; the row scrolled off with the tiles"
@@ -365,6 +373,13 @@ step no-top-bar "top bar off: 30 px gap under the toolbar, scrolled off with the
 shot t-23-no-top-bar
 drag_up 1300
 shot t-24-no-top-bar-drag
+
+# A theme background of its own: where the toolbar was, the theme colour shows behind the tiles,
+# not the window one (Material dark #303030)
+restart_with 'theme_background_color="#000000"'
+step own-background "black theme background, toolbar gone: black between the tiles at the top too, no grey band under the status bar"
+drag_up 1300
+shot t-25-own-background
 
 # A list that fits: nothing toggles
 restart_with ui_zoom=50
