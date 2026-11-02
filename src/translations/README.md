@@ -37,6 +37,10 @@ This folder contains translation files for 30 languages.
 | Hebrew | qdomyos-zwift_he.ts | he |
 | Catalan | qdomyos-zwift_ca.ts | ca |
 
+Every language has a file here, translated or not. The App Language list in the settings offers a
+language once at least 10% of its strings are translated: a translation shows up there by itself, with
+no change to the code.
+
 ## How to Contribute Translations
 
 ### 1. Choose Your Language
