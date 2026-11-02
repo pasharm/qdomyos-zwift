@@ -3044,6 +3044,7 @@ import QtQuick 2.12 as Quick212
             { label: qsTr("Norwegian"), value: "no" },
             { label: qsTr("Danish"), value: "da" },
             { label: qsTr("Swedish"), value: "sv" },
+            { label: qsTr("Hungarian"), value: "hu" },
             { label: qsTr("Ukrainian"), value: "uk" }
         ]
         Timer {
