@@ -320,7 +320,8 @@ step end-back "1000 px down from the end: toolbar shown"
 drag_down 1000
 shot t-08-end-back
 
-# Another page brings it back: the drawer opens with an edge swipe, the toolbar is gone
+# Another page has it shown: the drawer opens with an edge swipe, the toolbar is gone; back on the
+# home page it is as the scroll left it
 scroll_top; sleep 2
 drag_up 1300
 shot t-09-before-page
@@ -331,7 +332,7 @@ shot t-10-drawer
 tap_drawer '^Settings$' 400 900
 sleep 8
 shot t-11-settings
-step page-back "back key: home with the toolbar shown"
+step page-back "back key: home as it was left (same as t-09): toolbar gone, the list where it was"
 back "settings"
 sleep 4
 shot t-12-home-after-page
@@ -388,11 +389,12 @@ shot t-19-short-top
 drag_up 400
 shot t-20-short-drag
 
-# A list just over the screen: the end reachable, the last row above the bottom
-restart_with ui_zoom=60
-step just-over "swipes up: last row in full view above the bottom of the screen"
+# A list longer than the screen by less than the toolbar (ui_zoom 77, by the frames of ui_zoom 60):
+# after a drag to the end and the release the list stays at its end, not sent back to the top
+restart_with ui_zoom=77
+step just-over "a drag up to the end and release: the last row in full view above the bottom of the screen, the list not back at the top"
 shot t-21-over-top
-to_end
+drag_up 600
 shot t-22-over-end
 adb shell pidof $PKG > /dev/null && echo "app alive at the end: OK" >> $STEPLOG || echo "!! app not running at the end" >> $STEPLOG
 kill $LOGCAT_PID 2>/dev/null || true
