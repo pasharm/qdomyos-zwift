@@ -2456,6 +2456,11 @@ void homeform::loadAppTranslation(const QString &language) {
         if (!loaded && localeKey.contains(QLatin1Char('_'))) {
             loaded = tryLoadTranslation(localeKey.section(QLatin1Char('_'), 0, 0), QStringLiteral("language"));
         }
+        // Qt names the Norwegian locales nb_NO and nn_NO, the translation file is "no" (QTBUG-107781)
+        const QString languageCode = localeKey.section(QLatin1Char('_'), 0, 0);
+        if (!loaded && (languageCode == QStringLiteral("nb") || languageCode == QStringLiteral("nn"))) {
+            loaded = tryLoadTranslation(QStringLiteral("no"), QStringLiteral("language"));
+        }
         return loaded;
     };
 
