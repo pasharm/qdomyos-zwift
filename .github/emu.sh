@@ -283,6 +283,18 @@ step flick-steps "from the top, three short quick swipes up (small flicks): tool
 for i in 1 2 3; do adb shell input swipe 700 1800 700 1650 120 || true; sleep 2; done
 shot t-04h-flick-steps
 
+# The toolbar is laid out only as tall as the status bar inset and drawn past it over the tiles: a
+# drag that starts on its title (y 168 = 24 dp below the status bar on both APIs) must stay on it
+scroll_top; sleep 2
+drag_up 1300
+drag_down 250
+shot t-04i-before-toolbar-drag
+step toolbar-drag "deep in the list, toolbar shown, a drag down from the toolbar title: the tiles stay where they were (same as t-04i)"
+ensure_app
+adb shell input swipe 720 168 720 1000 1500 || true
+sleep 3
+shot t-04j-toolbar-drag
+
 scroll_top; sleep 2
 step flick "fast flick up: toolbar gone, the flick glides on (not stopped about a row further)"
 adb shell input swipe 700 1900 700 1200 120 || true
