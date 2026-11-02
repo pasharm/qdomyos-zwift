@@ -4057,6 +4057,18 @@ Isso pode levar alguns instantes na primeira inicialização.</translation>
         <translation>A potência-alvo do QZ está substituindo os comandos do aplicativo. Pause o QZ e retome para devolver o controle ao aplicativo.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Treino pausado, a esteira parou</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Treino retomado, a esteira está em movimento</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>A esteira está em movimento, mas o treino está pausado</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Músicas do Spotify:</translation>
     </message>
@@ -6729,6 +6741,14 @@ Insira-o abaixo:</translation>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Ative isso para que o QZ entre no modo Pausa ao abrir ao usar esteira. Isso é apenas para esteiras. Padrão é desativado.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Retomar automaticamente quando a lona se mover</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Ative isso para que o QZ retome o treino sozinho quando a esteira o tiver pausado e a lona voltar a se mover. Uma pausa feita por você continua até você retomar. Padrão é desativado.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

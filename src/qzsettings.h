@@ -3471,6 +3471,10 @@ class QZSettings {
     static const QString ui_state_buttons;
     static constexpr bool default_ui_state_buttons = true;
 
+    // A pause the treadmill set by itself ends when the belt moves again
+    static const QString treadmill_auto_resume;
+    static constexpr bool default_treadmill_auto_resume = false;
+
     // Chart positions in the Workout History preview.
     static const QString history_chart_power_order;
     static constexpr int default_history_chart_power_order = 0;

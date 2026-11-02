@@ -4060,6 +4060,18 @@ Al primo avvio potrebbe richiedere qualche istante.</translation>
         <translation>La potenza target di QZ sta sovrascrivendo i comandi dell&apos;app. Metti in pausa QZ e riprendi per restituire il controllo all&apos;app.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Allenamento in pausa, il tapis roulant si è fermato</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Allenamento ripreso, il tapis roulant è in movimento</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>Il tapis roulant è in movimento, ma l&apos;allenamento è in pausa</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Brani Spotify:</translation>
     </message>
@@ -5606,6 +5618,14 @@ Nella finestra successiva, consenti l&apos;accesso alla cartella QZ.</translatio
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Attiva questo per far entrare QZ in modalità Pausa all&apos;apertura quando si utilizza un tapis roulant. Questo è solo per tapis roulant. Di default è disattivato.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Riprendi automaticamente quando il nastro si muove</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Attiva questo per far riprendere l&apos;allenamento a QZ da solo quando il tapis roulant lo ha messo in pausa e il nastro torna a muoversi. Una pausa impostata da te resta finché non riprendi. Di default è disattivato.</translation>
     </message>
     <message>
         <source>Difficulty offset based</source>

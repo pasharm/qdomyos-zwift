@@ -4048,6 +4048,18 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
         <translation>Moc docelowa QZ nadpisuje polecenia aplikacji. Wstrzymaj QZ i wznów, aby oddać sterowanie aplikacji.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Trening wstrzymany, bieżnia się zatrzymała</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Trening wznowiony, bieżnia jest w ruchu</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>Bieżnia jest w ruchu, ale trening jest wstrzymany</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Utwory Spotify:</translation>
     </message>
@@ -6652,6 +6664,14 @@ Wprowadź go poniżej:</translation>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Włącz tę opcję, aby podczas korzystania z bieżni QZ uruchamiał się w trybie pauzy. Dotyczy tylko bieżni. Domyślnie: wyłączone.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Wznawiaj automatycznie, gdy pas ruszy</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Włącz tę opcję, aby QZ sam wznawiał trening, gdy bieżnia go wstrzymała, a pas znów ruszył. Pauza ustawiona przez Ciebie trwa, dopóki nie wznowisz treningu. Domyślnie: wyłączone.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

@@ -1131,6 +1131,11 @@ public:
     bool stopped = false;
     bool lapTrigger = false;
 
+    // The pause was set by the treadmill, see autoPaused()
+    bool m_autoPaused = false;
+    qint64 m_autoResumeMovingSince = 0;
+    bool m_autoResumeReminded = false;
+
     // Automatic Virtual Shifting variables
     QDateTime automaticShiftingGearUpStartTime = QDateTime::currentDateTime();
     QDateTime automaticShiftingGearDownStartTime = QDateTime::currentDateTime();
@@ -1276,6 +1281,8 @@ public:
     bool getDevice();
     bool getLap();
     void Start_inner(bool send_event_to_device);
+    void autoPaused();
+    void autoResumeCheck(double speed);
 
     void speak(const QString &text);
     QTextToSpeech m_speech;

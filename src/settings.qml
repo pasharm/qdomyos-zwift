@@ -2971,6 +2971,7 @@ import QtQuick 2.12 as Quick212
             property bool charts_live_update: false
             // Also kept by main.qml, like the ui_ keys above (uiOptionKeys)
             property bool ui_state_buttons: true
+            property bool treadmill_auto_resume: false
         }
 
         // The home page has its own Settings copy, read once when it is created: hand it every new
@@ -12556,6 +12557,35 @@ import QtQuick 2.12 as Quick212
 
                     Label {
                         text: qsTr("Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.")
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
+                        font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                    }
+
+                    IndicatorOnlySwitch {
+                        id: treadmillAutoResumeDelegate
+                        text: qsTr("Auto Resume when the Belt Moves")
+                        spacing: 0
+                        bottomPadding: 0
+                        topPadding: 0
+                        rightPadding: 0
+                        leftPadding: 0
+                        clip: false
+                        checked: settings.treadmill_auto_resume
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        onClicked: settings.treadmill_auto_resume = checked
+                    }
+
+                    Label {
+                        text: qsTr("Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint

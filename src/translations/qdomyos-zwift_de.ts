@@ -4060,6 +4060,18 @@ Beim ersten Start kann dies einen Moment dauern.</translation>
         <translation>Die QZ-Zielleistung überschreibt die Befehle der App. Pausieren Sie QZ und setzen Sie es fort, um die Steuerung an die App zurückzugeben.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Training pausiert, das Laufband hat angehalten</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Training fortgesetzt, das Laufband läuft</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>Das Laufband läuft, aber das Training ist pausiert</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Spotify-Titel:</translation>
     </message>
@@ -6624,6 +6636,14 @@ Bitte geben Sie ihn unten ein:</translation>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Aktivieren Sie dies, damit QZ beim Öffnen in den Pausemodus geht, wenn Sie ein Laufband verwenden. Dies gilt nur für Laufbänder. Standardmäßig ist es deaktiviert.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Automatisch fortsetzen, wenn das Band läuft</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Aktivieren Sie dies, damit QZ das Training selbst fortsetzt, wenn das Laufband es pausiert hat und das Band wieder läuft. Eine selbst gesetzte Pause bleibt bestehen, bis Sie fortsetzen. Standardmäßig ist es deaktiviert.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

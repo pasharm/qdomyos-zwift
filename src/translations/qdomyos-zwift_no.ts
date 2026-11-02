@@ -4048,6 +4048,18 @@ Dette kan ta litt tid ved første oppstart.</translation>
         <translation>Måleffekten i QZ overstyrer kommandoene fra appen. Sett QZ på pause og fortsett for å gi kontrollen tilbake til appen.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Treningen er satt på pause, tredemøllen stoppet</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Treningen fortsetter, tredemøllen går</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>Tredemøllen går, men treningen er satt på pause</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Spotify-sanger:</translation>
     </message>
@@ -6648,6 +6660,14 @@ Skriv den inn nedenfor:</translation>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Slå på dette for at QZ skal gå til pausemodus ved åpning når du bruker en tredemølle. Gjelder bare tredemøller. Standard: av.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Fortsett automatisk når båndet går</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Slå på dette for at QZ selv skal fortsette treningen når tredemøllen har satt den på pause og båndet går igjen. En pause du har satt selv, varer til du fortsetter. Standard: av.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

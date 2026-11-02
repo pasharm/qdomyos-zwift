@@ -4060,6 +4060,18 @@ Esto puede tardar un poco en el primer inicio.</translation>
         <translation>La potencia objetivo de QZ está anulando los comandos de la app. Pausa QZ y reanúdalo para devolver el control a la app.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Entrenamiento en pausa, la cinta de correr se ha detenido</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Entrenamiento reanudado, la cinta de correr está en marcha</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>La cinta de correr está en marcha, pero el entrenamiento está en pausa</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Canciones de Spotify:</translation>
     </message>
@@ -6728,6 +6740,14 @@ Por favor, ingrésalo a continuación:</translation>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Activa esto para que QZ entre en modo Pausa al abrir cuando se usa una cinta de correr. Esto es solo para cintas de correr. Por defecto está desactivado.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Reanudar automáticamente cuando la cinta se mueva</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Activa esto para que QZ reanude el entrenamiento por sí solo cuando la cinta de correr lo haya pausado y vuelva a moverse. Una pausa que pongas tú sigue hasta que la reanudes. Por defecto está desactivado.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

@@ -6254,6 +6254,7 @@ void homeform::Start_inner(bool send_event_to_device) {
 
     m_overridePower = false;
     m_overridePowerWarned = false;
+    m_autoPaused = false;
 
     if (settings.value(QZSettings::tts_enabled, QZSettings::default_tts_enabled).toBool())
         //: Text-to-speech: spoken when the workout is started or resumed with the Start button.
@@ -6546,6 +6547,53 @@ QString homeform::startText() {
 bool homeform::nothingToResume() {
     bluetoothdevice *device = bluetoothManager ? bluetoothManager->device() : nullptr;
     return device && device->elapsedTime() == QTime(0, 0, 0, 0);
+}
+
+// The treadmill paused the workout by itself (autoPauseWhenSpeedIsZero). Only such a pause may end
+// by itself: the belt can still be moving under one set by the user.
+void homeform::autoPaused() {
+    m_autoPaused = true;
+    m_autoResumeMovingSince = 0;
+    m_autoResumeReminded = false;
+    // A treadmill standing still pauses itself before any workout too: nothing to tell then
+    QSettings settings;
+    if (!nothingToResume() &&
+        settings.value(QZSettings::treadmill_auto_resume, QZSettings::default_treadmill_auto_resume).toBool()) {
+        onToastRequested(tr("Workout paused, the treadmill stopped"));
+    }
+}
+
+// The belt moves again under such a pause. Before the first Start there is no workout to resume,
+// stepping on the belt must not begin one. A belt pushed by hand or by a step coasts to a stop
+// within the time below, so it does not count.
+void homeform::autoResumeCheck(double speed) {
+    const double minSpeed = 2.0;    // km/h
+    const qint64 movingMs = 3000;
+
+    if (!m_autoPaused || !paused || stopped || nothingToResume()) {
+        return;
+    }
+    if (speed < minSpeed) {
+        m_autoResumeMovingSince = 0;
+        return;
+    }
+    const qint64 now = QDateTime::currentMSecsSinceEpoch();
+    if (m_autoResumeMovingSince == 0) {
+        m_autoResumeMovingSince = now;
+    }
+    if (now - m_autoResumeMovingSince < movingMs) {
+        return;
+    }
+
+    QSettings settings;
+    if (settings.value(QZSettings::treadmill_auto_resume, QZSettings::default_treadmill_auto_resume).toBool()) {
+        qDebug() << QStringLiteral("auto resume, the belt is moving");
+        Start_inner(false);
+        onToastRequested(tr("Workout resumed, the treadmill is moving"));
+    } else if (!m_autoResumeReminded) {
+        m_autoResumeReminded = true;
+        onToastRequested(tr("The treadmill is moving, but the workout is paused"));
+    }
 }
 
 QString homeform::startIcon() {
@@ -7257,10 +7305,13 @@ void homeform::update() {
                 bluetoothManager->device()->currentSpeed().value() == 0 && paused == false && stopped == false) {
                 qDebug() << QStringLiteral("autoPauseWhenSpeedIsZero!");
                 Start_inner(false);
+                autoPaused();
             } else if (((treadmill *)bluetoothManager->device())->autoStartWhenSpeedIsGreaterThenZero() &&
                        bluetoothManager->device()->currentSpeed().value() > 0 && (paused == true || stopped == true)) {
                 qDebug() << QStringLiteral("autoStartWhenSpeedIsGreaterThenZero!");
                 Start_inner(false);
+            } else {
+                autoResumeCheck(bluetoothManager->device()->currentSpeed().value());
             }
         } else if (bluetoothManager->device()->deviceType() == STAIRCLIMBER) {
             odometer->setValue(QString::number(bluetoothManager->device()->odometer() * unit_conversion, 'f', 2));

@@ -4060,6 +4060,18 @@ Cela peut prendre quelques instants au premier démarrage.</translation>
         <translation>La puissance cible de QZ remplace les commandes de l&apos;application. Mettez QZ en pause puis reprenez pour rendre le contrôle à l&apos;application.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Entraînement en pause, le tapis de course s&apos;est arrêté</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Entraînement repris, le tapis de course est en marche</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>Le tapis de course est en marche, mais l&apos;entraînement est en pause</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Morceaux Spotify :</translation>
     </message>
@@ -6728,6 +6740,14 @@ Veuillez le saisir ci-dessous :</translation>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Activez ceci pour que QZ passe en mode Pause à l&apos;ouverture lors de l&apos;utilisation d&apos;un tapis de course. Ceci est uniquement pour les tapis de course. Par défaut, c&apos;est désactivé.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Reprise automatique quand le tapis se remet en marche</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Activez ceci pour que QZ reprenne seul l&apos;entraînement lorsque le tapis de course l&apos;a mis en pause et se remet en marche. Une pause que vous avez lancée dure jusqu&apos;à ce que vous repreniez. Par défaut, c&apos;est désactivé.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

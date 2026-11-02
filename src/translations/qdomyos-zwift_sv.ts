@@ -4044,6 +4044,18 @@ Det kan ta en stund vid första starten.</translation>
         <translation>QZ:s måleffekt åsidosätter appens kommandon. Pausa QZ och fortsätt igen om du vill lämna tillbaka styrningen till appen.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Träningen pausad, löpbandet stannade</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Träningen fortsätter, löpbandet rör sig</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>Löpbandet rör sig, men träningen är pausad</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Spotify-låtar:</translation>
     </message>
@@ -6644,6 +6656,14 @@ Ange den nedan:</translation>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Slå på om du vill att QZ ska gå till pausläge vid start när du använder ett löpband. Gäller endast löpband. Standard: av.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Fortsätt automatiskt när bandet rör sig</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Slå på om du vill att QZ själv ska fortsätta träningen när löpbandet har pausat den och bandet rör sig igen. En paus som du har satt själv varar tills du fortsätter. Standard: av.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

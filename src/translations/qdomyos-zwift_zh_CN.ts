@@ -4061,6 +4061,18 @@ This may take a few moments on first startup.</source>
         <translation>QZ 目标功率正在覆盖应用的指令。暂停 QZ 后再继续，即可将控制权交还给应用。</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>训练已暂停，跑步机已停止</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>训练已继续，跑步机正在运转</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>跑步机正在运转，但训练已暂停</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Spotify 歌曲:</translation>
     </message>
@@ -6737,6 +6749,14 @@ Please enter it below:</source>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>开启此项后，使用跑步机时，QZ在启动时会自动进入暂停模式。仅适用于跑步机。默认关闭。</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>跑带转动时自动继续</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>开启此项后，跑步机暂停训练且跑带再次转动时，QZ 会自动继续训练。您自己设置的暂停会一直保持，直到您继续。默认关闭。</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

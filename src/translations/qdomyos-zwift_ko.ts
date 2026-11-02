@@ -4048,6 +4048,18 @@ This may take a few moments on first startup.</source>
         <translation>QZ 목표 파워가 앱의 명령을 덮어쓰고 있습니다. 앱에 제어를 돌려주려면 QZ를 일시 중지했다가 다시 시작하세요.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>운동 일시 중지됨, 트레드밀이 멈췄습니다</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>운동 재개됨, 트레드밀이 움직이고 있습니다</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>트레드밀은 움직이고 있지만 운동은 일시 중지 상태입니다</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Spotify 노래:</translation>
     </message>
@@ -6652,6 +6664,14 @@ Please enter it below:</source>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>트레드밀을 사용할 때 QZ가 일시 중지 상태로 열리게 하려면 켜세요. 트레드밀 전용입니다. 기본값: 꺼짐.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>벨트가 움직이면 자동 재개</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>트레드밀이 운동을 일시 중지한 뒤 벨트가 다시 움직이면 QZ가 운동을 자동으로 재개하게 하려면 켜세요. 직접 설정한 일시 중지는 재개할 때까지 유지됩니다. 기본값: 꺼짐.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

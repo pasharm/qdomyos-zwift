@@ -4048,6 +4048,18 @@ This may take a few moments on first startup.</source>
         <translation>Целевая мощность QZ перебивает команды приложения. Чтобы вернуть управление приложению, поставьте QZ на паузу и продолжите.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Тренировка на паузе, дорожка остановилась</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Тренировка продолжена, дорожка движется</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>Дорожка движется, а тренировка на паузе</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Песни Spotify:</translation>
     </message>
@@ -6648,6 +6660,14 @@ Please enter it below:</source>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Включите, чтобы при запуске QZ сразу переходил в режим паузы, если используется беговая дорожка. Только для беговых дорожек. По умолчанию выключено.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Автопродолжение при движении полотна</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Включите, чтобы QZ сам продолжал тренировку, когда на паузу её поставила дорожка, а полотно снова пошло. Пауза, поставленная вами, остаётся, пока вы её не снимете. По умолчанию выключено.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

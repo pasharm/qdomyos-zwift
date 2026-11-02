@@ -4048,6 +4048,18 @@ This may take a few moments on first startup.</source>
         <translation>Цільова потужність QZ перебиває команди застосунку. Щоб повернути керування застосунку, поставте QZ на паузу і продовжте.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Тренування на паузі, доріжка зупинилася</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Тренування продовжено, доріжка рухається</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>Доріжка рухається, а тренування на паузі</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Пісні Spotify:</translation>
     </message>
@@ -6648,6 +6660,14 @@ Please enter it below:</source>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Увімкніть, щоб після запуску QZ одразу переходив у режим паузи, якщо використовується бігова доріжка. Лише для бігових доріжок. Типово вимкнено.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Автопродовження, коли полотно рушило</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Увімкніть, щоб QZ сам продовжував тренування, коли на паузу його поставила доріжка, а полотно знову рушило. Пауза, поставлена вами, триває, доки ви її не знімете. Типово вимкнено.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

@@ -4044,6 +4044,18 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <translation>A QZ célteljesítménye felülbírálja az alkalmazás parancsait. Ha vissza szeretné adni a vezérlést az alkalmazásnak, szüneteltesse, majd folytassa a QZ-t.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Edzés szüneteltetve, a futópad megállt</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Edzés folytatva, a futópad mozog</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>A futópad mozog, de az edzés szünetel</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Spotify-dalok:</translation>
     </message>
@@ -6644,6 +6656,14 @@ Please enter it below:</source>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Kapcsolja be, ha azt szeretné, hogy a QZ futópad használatakor indításkor szünet módba lépjen. A beállítás csak futópadokra vonatkozik. Alapértelmezett: ki.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Automatikus folytatás, ha a szalag mozog</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Kapcsolja be, ha azt szeretné, hogy a QZ magától folytassa az edzést, ha a futópad szüneteltette, és a szalag újra mozog. A saját maga által indított szünet addig tart, amíg nem folytatja az edzést. Alapértelmezetten kikapcsolva.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

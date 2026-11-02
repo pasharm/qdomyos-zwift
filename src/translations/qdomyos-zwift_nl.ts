@@ -4051,6 +4051,18 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Het QZ-doelvermogen overschrijft de opdrachten van de app. Pauzeer QZ en hervat het om de besturing aan de app terug te geven.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Training gepauzeerd, de loopband is gestopt</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Training hervat, de loopband beweegt</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>De loopband beweegt, maar de training is gepauzeerd</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Spotify-nummers:</translation>
     </message>
@@ -6655,6 +6667,14 @@ Voer de code hieronder in:</translation>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Schakel dit in om QZ bij het openen in de pauzestand te zetten als je een loopband gebruikt. Alleen voor loopbanden. Standaard: uit.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Automatisch hervatten als de band beweegt</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Schakel dit in om QZ de training zelf te laten hervatten als de loopband die heeft gepauzeerd en de band weer beweegt. Een pauze die je zelf instelt, blijft staan tot je hervat. Standaard: uit.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

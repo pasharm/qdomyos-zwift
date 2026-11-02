@@ -4051,6 +4051,18 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Cílový výkon QZ přebíjí příkazy aplikace. Ovládání vrátíte aplikaci tak, že QZ pozastavíte a znovu spustíte.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Trénink pozastaven, běžecký pás se zastavil</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Trénink pokračuje, běžecký pás se rozjel</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>Běžecký pás jede, ale trénink je pozastaven</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Skladby Spotify:</translation>
     </message>
@@ -6655,6 +6667,14 @@ Zadejte ho níže:</translation>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Zapněte, pokud chcete, aby QZ při spuštění rovnou přešlo do režimu pauzy, když používáte běžecký pás. Pouze pro běžecké pásy. Výchozí: vypnuto.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Automaticky pokračovat, když se pás rozjede</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Zapněte, pokud chcete, aby QZ sám pokračoval v tréninku, když ho pozastavil běžecký pás a pás se znovu rozjede. Pauza, kterou nastavíte sami, trvá, dokud v tréninku nebudete pokračovat. Výchozí: vypnuto.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

@@ -1351,6 +1351,7 @@ const QString QZSettings::ui_text_scale_system = QStringLiteral("ui_text_scale_s
 const QString QZSettings::treadmill_direct_distance_increment = QStringLiteral("treadmill_direct_distance_increment");
 const QString QZSettings::charts_live_update = QStringLiteral("charts_live_update");
 const QString QZSettings::ui_state_buttons = QStringLiteral("ui_state_buttons");
+const QString QZSettings::treadmill_auto_resume = QStringLiteral("treadmill_auto_resume");
 
 const QString QZSettings::history_chart_power_order = QStringLiteral("history_chart_power_order");
 const QString QZSettings::history_chart_heart_order = QStringLiteral("history_chart_heart_order");
@@ -1362,7 +1363,7 @@ const QString QZSettings::history_chart_speed_inclination_order = QStringLiteral
 
 const QString QZSettings::moovio_lynx_konect_2_0 = QStringLiteral("moovio_lynx_konect_2_0");
 
-const uint32_t allSettingsCount = 1053;
+const uint32_t allSettingsCount = 1054;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -2442,6 +2443,7 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::virtual_device_rower_cadence_gain, QZSettings::default_virtual_device_rower_cadence_gain},
     {QZSettings::virtual_device_rower_cadence_offset, QZSettings::default_virtual_device_rower_cadence_offset},
     {QZSettings::ui_state_buttons, QZSettings::default_ui_state_buttons},
+    {QZSettings::treadmill_auto_resume, QZSettings::default_treadmill_auto_resume},
 };
 
 void QZSettings::qDebugAllSettings(bool showDefaults) {

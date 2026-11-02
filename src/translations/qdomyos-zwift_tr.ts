@@ -4051,6 +4051,18 @@ This may take a few moments on first startup.</source>
         <translation>QZ hedef gücü uygulamanın komutlarını geçersiz kılıyor. Kontrolü uygulamaya geri vermek için QZ&apos;yi duraklatıp devam ettirin.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Antrenman duraklatıldı, koşu bandı durdu</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Antrenman devam ediyor, koşu bandı hareket ediyor</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>Koşu bandı hareket ediyor, ancak antrenman duraklatıldı</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Spotify şarkıları:</translation>
     </message>
@@ -6655,6 +6667,14 @@ Kodu aşağıya girin:</translation>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Koşu bandı kullanırken QZ&apos;nin açılışta duraklatma moduna geçmesi için bunu açın. Yalnızca koşu bantları için. Varsayılan: kapalı.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Bant hareket edince otomatik devam et</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Koşu bandı antrenmanı duraklattığında ve bant yeniden hareket ettiğinde QZ&apos;nin kendiliğinden devam etmesi için bunu açın. Kendi başlattığınız duraklatma, siz devam edene kadar sürer. Varsayılan: kapalı.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

@@ -4048,6 +4048,18 @@ Det kan tage et øjeblik ved første start.</translation>
         <translation>QZ&apos;s måleffekt erstatter appens kommandoer. Sæt QZ på pause, og genoptag det for at give styringen tilbage til appen.</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>Træning sat på pause, løbebåndet stoppede</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>Træningen fortsætter, løbebåndet kører</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>Løbebåndet kører, men træningen er sat på pause</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Spotify-sange:</translation>
     </message>
@@ -6648,6 +6660,14 @@ Indtast den herunder:</translation>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Slå dette til, hvis QZ skal gå i pausetilstand, når appen åbnes, og du bruger et løbebånd. Gælder kun løbebånd. Standard: fra.</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>Fortsæt automatisk, når båndet kører</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>Slå dette til, hvis QZ selv skal fortsætte træningen, når løbebåndet har sat den på pause, og båndet kører igen. En pause, du selv har sat, varer, indtil du fortsætter. Standard: fra.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

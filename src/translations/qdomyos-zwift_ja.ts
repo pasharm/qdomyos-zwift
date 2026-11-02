@@ -4057,6 +4057,18 @@ This may take a few moments on first startup.</source>
         <translation>QZの目標パワーがアプリのコマンドを上書きしています。アプリに制御を戻すには、QZを一時停止してから再開してください。</translation>
     </message>
     <message>
+        <source>Workout paused, the treadmill stopped</source>
+        <translation>ワークアウトを一時停止しました。トレッドミルが止まりました</translation>
+    </message>
+    <message>
+        <source>Workout resumed, the treadmill is moving</source>
+        <translation>ワークアウトを再開しました。トレッドミルが動いています</translation>
+    </message>
+    <message>
+        <source>The treadmill is moving, but the workout is paused</source>
+        <translation>トレッドミルは動いていますが、ワークアウトは一時停止中です</translation>
+    </message>
+    <message>
         <source>Spotify songs:</source>
         <translation>Spotifyの曲:</translation>
     </message>
@@ -6645,6 +6657,14 @@ Please enter it below:</source>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>トレッドミル使用時にQZを起動した際、ポーズモードにするにはこれをオンにしてください。トレッドミル専用です。初期設定はオフです。</translation>
+    </message>
+    <message>
+        <source>Auto Resume when the Belt Moves</source>
+        <translation>ベルトが動いたら自動で再開</translation>
+    </message>
+    <message>
+        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
+        <translation>トレッドミルがワークアウトを一時停止した後、ベルトが再び動くとQZが自動で再開します。自分で設定した一時停止は、再開するまで続きます。初期設定はオフです。</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>
