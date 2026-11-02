@@ -1,99 +1,41 @@
 #!/bin/bash
-# Test only (T-222): what the app does with the accessibility actions TalkBack sends.
-# Without TALKBACK (below) TalkBack is off, so .github/A11yDriver.java (built below, run through
-# app_process with the UiAutomation connection uiautomator uses) sends them instead: accessibility
-# focus on a cell below the screen (the page should scroll to it), scroll forward / backward on
-# the value fields (TalkBack's swipe up / down on a seek bar), click on the switch and the buttons
-# (TalkBack's double tap). Then the page is opened again to see what was saved.
-# With TALKBACK (input talkback of main.yml) the real TalkBack runs instead: "stock" is the
-# Google TalkBack of the image (the one phones have), a run id is a build of the TalkBack
-# workflow in tb/talkback.apk. Its log level is set to VERBOSE, so what it says is in
-# tb-speech.txt; the driver connects without switching it off and gives it finger gestures.
-TALKBACK=${TALKBACK:-}
+# Test only (T-199): how many times a double tap of the real TalkBack fires a control.
+# Qt 5.15 clickAction() runs the press action and answers false, and a false answer makes Android
+# tap the middle of the node, so a control with Accessible.onPressAction may fire twice.
+# Counted from the log of QZ ("Start pressed", "Stop pressed"), the tile value and qz.conf.
+# Compare a build with Start/Stop onPressAction against one without (input source).
 PKG=org.cagnulen.qdomyoszwift
+TBPKG=com.google.android.marvin.talkback
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
 STEPLOG=steps.log
 : > $STEPLOG
-mkdir -p dumps
-
-wait_boot() {
-  local i
-  adb wait-for-device
-  for i in $(seq 1 90); do
-    [ "$(adb shell getprop sys.boot_completed | tr -d '\r')" = 1 ] && break
-    sleep 2
-  done
-  sleep 10
-}
-# PHONE=uk: the user's phone as far as an emulator goes – Ukrainian system locale (the app and
-# TalkBack speak Ukrainian) and the OnePlus 12 screen, 1440x3168; the labels below follow it.
-PHONE=${PHONE:-}
-L_SETTINGS='^Settings$'; L_BIKE='^Bike Options$'; L_WAHOO='Wahoo Options'
-L_RESTORE='Restore Default'; L_CHAINRING='Chainring Size'; L_COG='Cog Size:'
-if [ "$PHONE" = uk ]; then
-  L_SETTINGS='^Налаштування$'; L_BIKE='^Параметри велотренажера$'; L_WAHOO='Параметри Wahoo'
-  L_RESTORE='Відновити типові'; L_CHAINRING='Розмір передньої зірки'; L_COG='Розмір задньої зірки:'
-  echo "== phone uk: locale and screen" >> $STEPLOG
-  adb root >> $STEPLOG 2>&1 || true
-  wait_boot
-  adb shell setprop persist.sys.locale uk-UA
-  adb reboot
-  wait_boot
-  adb shell wm size 1440x3168
-  echo "locale $(adb shell getprop persist.sys.locale), $(adb shell wm size | tail -n 1), $(adb shell wm density | tail -n 1)" >> $STEPLOG
-fi
-
-# Google's TalkBack APK (the version a user has) is signed by another key than the image's own
-# TalkBack, so it does not install over it: it replaces the system APK instead (the emulator
-# runs with -writable-system for such a run), and the package manager takes it at boot.
-if [ -f tb/talkback.apk ] && ! adb install -r tb/talkback.apk >> $STEPLOG 2>&1; then
-  echo "== talkback: replacing the image's own APK" >> $STEPLOG
-  adb root >> $STEPLOG 2>&1 || true
-  wait_boot
-  if adb remount 2>&1 | tee -a $STEPLOG | grep -qi reboot; then
-    adb reboot
-    wait_boot
-    adb root >> $STEPLOG 2>&1 || true
-    wait_boot
-    adb remount >> $STEPLOG 2>&1 || true
-  fi
-  adb push tb/talkback.apk /product/app/talkback/talkback.apk >> $STEPLOG 2>&1 || true
-  adb shell rm -rf /product/app/talkback/oat >> $STEPLOG 2>&1 || true
-  adb reboot
-  wait_boot
-  echo "talkback after the swap: $(adb shell dumpsys package com.google.android.marvin.talkback | grep -m1 versionName)" >> $STEPLOG
-  adb shell cmd uimode night no || true
-fi
+mkdir -p dumps drv
 
 adb install apk-debug/android-debug.apk
+adb shell pm path $PKG > /dev/null 2>&1 || echo "!! APK NOT INSTALLED - the run proves nothing" >> $STEPLOG
 for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
   adb shell pm grant $PKG android.permission.$p || true
 done
 adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
+for p in EXERCISE DISTANCE TOTAL_CALORIES_BURNED HEART_RATE POWER SPEED CYCLING_PEDALING_CADENCE ELEVATION_GAINED STEPS STEPS_CADENCE HEART_RATE_VARIABILITY; do
+  adb shell pm grant $PKG android.permission.health.WRITE_$p || true
+done
 adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
-put_conf() {
-  printf '[General]\nlog_debug=%s\nui_modern=%s\n%b' "$LOG_DEBUG" "$UI_MODERN" "$1" > qz.conf
-  adb push qz.conf /data/local/tmp/qz.conf
-  adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
-  adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
-}
+printf '[General]\nlog_debug=%s\nui_modern=%s\napplewatch_fakedevice=true\nbluetooth_lastdevice_name=Fake\nskipLocationServicesDialog=true\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+adb push qz.conf /data/local/tmp/qz.conf
+adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
+adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
 
-# Only one accessibility connection of the shell at a time: no dump while events record
+# uiautomator switches TalkBack off: only while TalkBack is off
 dump() {
   rm -f ui.xml
-  timeout 25 adb shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 || true
-  adb pull /sdcard/ui.xml ui.xml > /dev/null 2>&1 || true
+  timeout 25 adb shell uiautomator dump /data/local/tmp/ui.xml > /dev/null 2>&1 || true
+  adb pull /data/local/tmp/ui.xml ui.xml > /dev/null 2>&1 || true
 }
-shot() {
-  echo "-- shot $1" >> $STEPLOG
-  adb shell screencap -p /sdcard/$1.png || true
-  adb pull /sdcard/$1.png || true
-  dump
-  [ -f ui.xml ] && cp ui.xml dumps/$1.xml
-}
+tshot() { echo "-- shot $1" >> $STEPLOG; adb shell screencap -p /sdcard/$1.png >> $STEPLOG 2>&1 || true; adb pull /sdcard/$1.png >> $STEPLOG 2>&1 || true; }
 find_ui() { [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1"; }
 tap_ui() {
   local xy=""
@@ -109,71 +51,45 @@ tap_ui() {
 }
 scroll_to() {
   local i
-  for i in $(seq 1 12); do
+  for i in $(seq 1 40); do
     dump
     if find_ui "$1" > /dev/null; then
       echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
       return 0
     fi
-    adb shell input swipe 700 2000 700 1300 400 || true
+    adb shell input swipe 700 2000 700 1000 400 || true
     sleep 1
   done
   echo "scroll to '$1': NOT FOUND" >> $STEPLOG
   return 1
 }
-MENU="84 168"
-open_menu() { echo "tap $MENU (menu)" >> $STEPLOG; adb shell input tap $MENU || true; sleep 3; adb shell input swipe 500 700 500 2300 300 || true; sleep 2; }
-tap_drawer() {
-  dump
-  if ! find_ui "$1" > /dev/null; then adb shell input swipe 500 2200 500 900 400 || true; sleep 2; fi
-  tap_ui "$@"
-}
-
-# events_start <phase> / events_stop: record the accessibility events of a phase
-events_start() {
-  echo "== events $1 start" >> $STEPLOG
-  adb shell uiautomator events > events/$1.txt 2>&1 &
-  EVENTS_PID=$!
-  # the app turns its accessibility on when the connection appears
-  sleep 4
-}
-events_stop() {
-  sleep 4
-  adb shell pkill -f uiautomator || true
-  kill $EVENTS_PID 2>/dev/null || true
-  wait $EVENTS_PID 2>/dev/null || true
-  sleep 2
+# Anything over the app (Health Connect on the first start): the back key
+to_app() {
+  local i pkg
+  for i in 1 2 3; do
+    dump
+    pkg=$([ -f ui.xml ] && python3 .github/uitap.py ui.xml --package)
+    if [ -z "$pkg" ] || [ "$pkg" = "$PKG" ]; then return 0; fi
+    echo "!! $pkg over the app: back key" >> $STEPLOG
+    adb shell input keyevent KEYCODE_BACK || true
+    sleep 4
+  done
 }
 
 adb logcat -c || true
 adb logcat > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
-
-put_conf "applewatch_fakedevice=true\n"
 adb shell am start -n $PKG/$PKG.CustomQtActivity
-sleep 20
-dump
-if [ -f ui.xml ] && [ "$(python3 .github/uitap.py ui.xml --package)" != "$PKG" ]; then
-  adb shell input keyevent KEYCODE_BACK || true
-fi
+sleep 25
+to_app
 sleep 15
-shot h-01-home
-
-open_menu
-tap_drawer "$L_SETTINGS" 400 900
-sleep 8
-scroll_to "$L_BIKE" && tap_ui "$L_BIKE" 700 1000
-sleep 4
-scroll_to "$L_WAHOO"
-WAHOO=$(find_ui "$L_WAHOO")
-echo "Wahoo Options at '$WAHOO'" >> $STEPLOG
-shot s-01-settings
+to_app
+tshot h-01-home
 
 # The driver: compiled here against the SDK the emulator action installed
 SDK=${ANDROID_SDK_ROOT:-$ANDROID_HOME}
 JAR=$SDK/platforms/android-35/android.jar
 BT=$(ls -d $SDK/build-tools/*/ | sort -V | tail -n 1)
-mkdir -p drv
 if javac -source 8 -target 8 -bootclasspath $JAR -d drv .github/A11yDriver.java >> $STEPLOG 2>&1 \
     && ${BT}d8 --lib $JAR --output a11y.jar drv/*.class >> $STEPLOG 2>&1; then
   adb push a11y.jar /data/local/tmp/a11y.jar > /dev/null
@@ -181,7 +97,6 @@ if javac -source 8 -target 8 -bootclasspath $JAR -d drv .github/A11yDriver.java 
 else
   echo "driver NOT built" >> $STEPLOG
 fi
-# drv <name> step...: one connection, all its steps, output in drv/<name>.txt
 drv() {
   local name=$1 args="" a
   shift
@@ -192,137 +107,133 @@ drv() {
   sleep 2
 }
 conf() {
-  echo "== conf $1" >> $STEPLOG
-  adb shell "run-as $PKG cat 'files/.config/Roberto Viola/qDomyos-Zwift.conf'" | grep -E "^(gear_|wahoo_)" >> $STEPLOG || true
+  sleep 2
+  echo "== conf $1: $(adb shell "run-as $PKG cat 'files/.config/Roberto Viola/qDomyos-Zwift.conf'" | tr -d '\r' | grep -E '^(battery_service|virtual_device_enabled)=' | tr '\n' ' ')" >> $STEPLOG
 }
 
-echo "tap $WAHOO (Wahoo Options)" >> $STEPLOG
-adb shell input tap ${WAHOO:-700 1000} || true
-sleep 6
-shot g-01-gears
-conf before
-drv list list
-
-talkback_run() {
-  local tbpkg=com.google.android.marvin.talkback
-  if [ -f tb/talkback.apk ]; then
-    # our build is com.android.talkback; Google's APK replaces the image's own (same signature)
-    adb install -r tb/talkback.apk >> $STEPLOG 2>&1 || true
-    if adb shell pm list packages com.android.talkback | grep -q talkback; then tbpkg=com.android.talkback; fi
-  fi
-  echo "== talkback $tbpkg $(adb shell dumpsys package $tbpkg | grep -m1 versionName)" >> $STEPLOG
-  # its preferences, before it starts: VERBOSE log (a build of ours; Google's own strips it),
-  # speech shown on screen for the driver, no first-run tutorial
-  adb shell am force-stop $tbpkg || true
-  adb root >> $STEPLOG 2>&1 || true
-  adb wait-for-device
-  sleep 3
-  # adbd restarted as root: the logcat above has stopped, a new one from here on
-  adb logcat > tb_logcat.txt 2>/dev/null &
-  TB_LOGCAT_PID=$!
-  local dir
-  printf '%s\n' "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>" '<map>' \
-    '    <string name="pref_log_level">2</string>' \
-    '    <boolean name="pref_tts_overlay" value="true" />' \
-    '    <boolean name="first_time_user" value="false" />' \
-    '    <boolean name="pref_has_performed_restore_key" value="true" />' '</map>' > tbprefs.xml
-  adb push tbprefs.xml /data/local/tmp/tbprefs.xml > /dev/null
-  # both storages: the device protected one TalkBack's code reads, and the usual one
-  for dir in /data/user_de/0/$tbpkg /data/data/$tbpkg; do
-  adb shell "mkdir -p $dir/shared_prefs && cp /data/local/tmp/tbprefs.xml $dir/shared_prefs/${tbpkg}_preferences.xml \
+# adbd as root for the preferences of TalkBack: it restarts, so a new logcat from here on
+adb shell am force-stop $TBPKG || true
+adb root >> $STEPLOG 2>&1 || true
+adb wait-for-device
+sleep 3
+adb logcat > tb_logcat.txt 2>/dev/null &
+TB_LOGCAT_PID=$!
+printf '%s\n' "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>" '<map>' \
+  '    <boolean name="pref_tts_overlay" value="true" />' \
+  '    <boolean name="first_time_user" value="false" />' \
+  '    <boolean name="pref_has_performed_restore_key" value="true" />' '</map>' > tbprefs.xml
+adb push tbprefs.xml /data/local/tmp/tbprefs.xml > /dev/null
+for dir in /data/user_de/0/$TBPKG /data/data/$TBPKG; do
+  adb shell "mkdir -p $dir/shared_prefs && cp /data/local/tmp/tbprefs.xml $dir/shared_prefs/${TBPKG}_preferences.xml \
     && chown -R \$(stat -c %u:%g $dir) $dir/shared_prefs && chmod 771 $dir/shared_prefs \
-    && chmod 660 $dir/shared_prefs/${tbpkg}_preferences.xml && restorecon -R $dir/shared_prefs" >> $STEPLOG 2>&1 || true
-  adb shell ls -lZ $dir/shared_prefs >> $STEPLOG 2>&1 || true
-  done
-  adb shell "rm -rf /data/local/tmp/tbshots; mkdir -p /data/local/tmp/tbshots"
-  adb shell settings put secure enabled_accessibility_services $tbpkg/com.google.android.marvin.talkback.TalkBackService >> $STEPLOG 2>&1
+    && chmod 660 $dir/shared_prefs/${TBPKG}_preferences.xml && restorecon -R $dir/shared_prefs" >> $STEPLOG 2>&1 || true
+done
+adb shell "rm -rf /data/local/tmp/tbshots; mkdir -p /data/local/tmp/tbshots"
+
+tb_on() {
+  echo "== talkback on: $(adb shell dumpsys package $TBPKG | grep -m1 versionName)" >> $STEPLOG
+  adb shell settings put secure enabled_accessibility_services $TBPKG/$TBPKG.TalkBackService >> $STEPLOG 2>&1
   adb shell settings put secure accessibility_enabled 1 >> $STEPLOG 2>&1
   adb shell settings put secure touch_exploration_enabled 1 >> $STEPLOG 2>&1
   sleep 15
-  echo "enabled: $(adb shell settings get secure enabled_accessibility_services)" >> $STEPLOG
-  adb shell dumpsys accessibility | grep -iE "touch|Bound services|Enabled services|installed" | head -n 12 >> $STEPLOG || true
-  # the tutorial if it still opened, and the app in front again
-  adb shell dumpsys activity activities | grep -m3 -E "topResumedActivity|ResumedActivity" >> $STEPLOG || true
+  adb shell dumpsys accessibility | grep -iE "Bound services|Enabled features" | head -n 4 >> $STEPLOG || true
   adb shell am start -n $PKG/$PKG.CustomQtActivity >> $STEPLOG 2>&1 || true
-  sleep 5
-  # no uiautomator from here on: it would switch TalkBack off; screenshots only
-  tshot() { echo "-- shot $1" >> $STEPLOG; adb shell screencap -p /sdcard/$1.png >> $STEPLOG 2>&1 || true; adb pull /sdcard/$1.png >> $STEPLOG 2>&1 || true; }
-  tshot t-00-on
-  # Swipe right from the top: every stop and what is said (titles, Restore button)
-  drv t-walk --keep 'mark:walk' 'focused' swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right
-  tshot t-01-walk
-  # The table, on from where the walk stopped: more cells, a value up and down
-  drv t-table --keep 'mark:table' swipe:right swipe:right swipe:right swipe:right swipe:right swipe:right 'swipe:up' 'swipe:down' 'swipe:right' 'swipe:up'
-  tshot t-04-table
-  # Touch exploration: the Restore button and a group title, then double tap on the button
-  # (focus: first only brings the node on screen, then a finger touches it)
-  drv t-touch --keep 'mark:touch' "focus:$L_RESTORE" 'sleep:1500' "touch:$L_RESTORE" "touch:$L_CHAINRING" "touch:$L_RESTORE" 'dtap'
-  tshot t-02-touch
-  # A value by touch, then by swipe navigation (that is when TalkBack switches to adjusting)
-  drv t-seek --keep 'mark:seek-touch' "focus:$L_COG" 'sleep:1500' "touch:$L_COG" 'swipe:up' 'swipe:up' "find:$L_COG" \
-    'mark:seek-nav' 'swipe:left' 'swipe:right' 'swipe:up' 'swipe:down' 'swipe:down' "find:$L_COG"
-  tshot t-03-seek
-  mkdir -p drv/shots
-  adb pull /data/local/tmp/tbshots/. drv/shots >> $STEPLOG 2>&1 || true
-  conf talkback
+  sleep 6
+}
+tb_off() {
+  echo "== talkback off" >> $STEPLOG
+  adb shell settings put secure touch_exploration_enabled 0 >> $STEPLOG 2>&1
+  adb shell settings put secure enabled_accessibility_services null >> $STEPLOG 2>&1
+  adb shell settings put secure accessibility_enabled 0 >> $STEPLOG 2>&1
+  sleep 10
 }
 
-if [ -n "$TALKBACK" ]; then
-  talkback_run
-else
-# TalkBack moves its focus to a cell below the screen: the page should scroll to it
-drv focus-low 'find:Gear 12, Rear Cog' 'focus:Gear 12, Rear Cog' 'sleep:1500' 'find:Gear 12, Rear Cog'
-shot g-02-focus-gear12
+tb_on
+tshot t-00-on
 
-# Swipe up / down on a seek bar = scroll forward / backward
-drv values 'focus:Gear 12, Rear Cog' 'fwd:Gear 12, Rear Cog' 'fwd:Gear 12, Rear Cog' 'find:Gear 12, Rear Cog' 'back:Gear 11, Chainring' 'focus:Cog Size:' 'fwd:Cog Size:' 'back:Chainring Size:'
-shot g-03-values
+# The nodes of the home page, for the record
+drv t-list --keep list
 
-# Double tap = click on the focused node
-drv switch 'focus:Without Wheel' 'click:Without Wheel'
-drv buttons 'focus:Restore Default' 'click:Restore Default' 'focus:Add Gear' 'click:Add Gear' 'sleep:1000' 'find:Gear 13' 'focus:Chainring Size' 'find:Chainring Size'
-shot g-04-clicked
-conf after
+# A tile: Accessible.onPressAction in master too. One double tap, the value should go up by one
+drv t-plus --keep 'mark:plus' 'focus:Increase Resistance' 'sleep:1500' 'touch:Increase Resistance' \
+  'find:Resistance:' 'dtap' 'sleep:2500' 'find:Resistance:' 'dtap' 'sleep:2500' 'find:Resistance:'
+tshot t-01-plus
 
-# Saved: leave the page, open it again with TalkBack's double tap on the settings entry
-adb shell input keyevent KEYCODE_BACK || true
-sleep 4
-drv open-by-click 'focus:Wahoo Options' 'click:Wahoo Options' 'sleep:3000' 'find:Virtual Gear Table'
-# Qt answers false for an entry that is not a button; TalkBack then taps the middle of the node
-if ! grep -q "find:Virtual Gear Table: '" drv/open-by-click.txt; then
+# Start: two double taps, two lines "Start pressed" if each fires once
+drv t-start --keep 'mark:start' 'focus:Start' 'sleep:1500' 'touch:Start' 'mark:start-tap-1' 'dtap' 'sleep:3000' \
+  'mark:start-tap-2' 'dtap' 'sleep:3000' 'mark:start-end'
+tshot t-02-start
+
+# Stop: one double tap
+drv t-stop --keep 'mark:stop' 'focus:Stop' 'sleep:1500' 'touch:Stop' 'mark:stop-tap-1' 'dtap' 'sleep:4000' 'mark:stop-end'
+tshot t-03-stop
+
+# Off for the walk to the settings page: uiautomator and plain taps need it off
+tb_off
+for i in 1 2 3; do
   dump
-  WAHOO2=$(find_ui 'Wahoo Options')
-  echo "TalkBack's own tap after false: $WAHOO2" >> $STEPLOG
-  adb shell input tap ${WAHOO2:-$WAHOO} || true
-  sleep 6
+  if find_ui '^Start$' > /dev/null || find_ui '^Pause$' > /dev/null; then break; fi
+  echo "back key $i: home page not in front" >> $STEPLOG
+  adb shell input keyevent KEYCODE_BACK || true
+  sleep 3
+done
+tshot t-04-home-again
+echo "tap 84 168 (menu)" >> $STEPLOG
+adb shell input tap 84 168 || true
+sleep 3
+adb shell input swipe 500 700 500 2300 300 || true
+sleep 2
+tap_ui '^Settings$' 400 900
+sleep 8
+if ! scroll_to 'Experimental Features'; then
+  tshot t-05-no-section
 fi
-drv reopened 'find:Without Wheel' 'find:Chainring Size:' 'find:Cog Size:' 'find:Gear 11, Chainring' 'find:Gear 12, Rear Cog' 'find:Gear 13'
-shot g-05-reopened
+tap_ui 'Experimental Features' 700 1300
+sleep 3
+scroll_to 'Simulate Battery Service'
+dump
+[ -f ui.xml ] && cp ui.xml dumps/settings-before.xml
+tshot t-05-settings
+conf before
 
-# A switch of the settings page (IndicatorOnlySwitch, as on every settings page)
-adb shell input keyevent KEYCODE_BACK || true
-sleep 4
-drv settings-switch 'focus:Restore Gears on Startup' 'click:Restore Gears on Startup' 'sleep:1000' 'find:Restore Gears on Startup'
-shot s-03-settings-switch
-fi
+tb_on
+
+# A switch of the settings pages: one double tap should change the setting once
+drv t-switch --keep 'mark:switch' 'focus:Simulate Battery Service' 'sleep:1500' 'touch:Simulate Battery Service' \
+  'find:Simulate Battery Service' 'dtap' 'sleep:2500' 'find:Simulate Battery Service'
+conf switch-1
+drv t-switch2 --keep 'mark:switch-2' 'dtap' 'sleep:2500' 'find:Simulate Battery Service'
+conf switch-2
+tshot t-06-switch
+
+# The accordion switch: the same, and its content opens or closes
+drv t-accordion --keep 'mark:accordion' 'focus:Enable Virtual Device' 'sleep:1500' 'touch:Enable Virtual Device' \
+  'find:Enable Virtual Device' 'dtap' 'sleep:2500' 'find:Enable Virtual Device'
+conf accordion-1
+drv t-accordion2 --keep 'mark:accordion-2' 'dtap' 'sleep:2500' 'find:Enable Virtual Device'
+conf accordion-2
+tshot t-07-accordion
+
+mkdir -p drv/shots
+adb pull /data/local/tmp/tbshots/. drv/shots >> $STEPLOG 2>&1 || true
+mkdir -p qz-logs
+adb shell 'ls -la /sdcard/Documents/QZ/ 2>&1' > qz-logs/listing.txt || true
+for f in $(adb shell 'ls /sdcard/Documents/QZ/' | tr -d '\r' | grep -E '\.log$'); do
+  adb pull "/sdcard/Documents/QZ/$f" "qz-logs/$f" > /dev/null 2>&1 || true
+done
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
-adb logcat -d > end_logcat.txt || true
-if [ "$(wc -l < full_logcat.txt)" -lt "$(wc -l < end_logcat.txt)" ]; then
-  mv end_logcat.txt full_logcat.txt
-else
-  rm -f end_logcat.txt
-fi
-grep -E "ANR in|FATAL EXCEPTION" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
-if [ -n "$TALKBACK" ]; then
-  kill $TB_LOGCAT_PID 2>/dev/null || true
-  wait $TB_LOGCAT_PID 2>/dev/null || true
-  grep -E "Speaking fragment|A11yDriver|viewAccessibilityFocused|newItemFocused|FocusActionInfo|SelectorController|ensureAccessibilityFocusOnScreen" tb_logcat.txt > tb-speech.txt || true
-fi
+kill $TB_LOGCAT_PID 2>/dev/null || true
+wait $TB_LOGCAT_PID 2>/dev/null || true
+cat full_logcat.txt tb_logcat.txt | grep -E "ANR in|FATAL EXCEPTION" | sed 's/^/!! /' >> $STEPLOG || true
+
+echo "== presses in logcat, in order, with the marks of the driver" >> $STEPLOG
+grep -E "A11yDriver: mark|Start pressed|Stop pressed|ACTION_CLICK failed" tb_logcat.txt >> $STEPLOG || true
+echo "== presses in the debug log of QZ" >> $STEPLOG
+grep -h -E "Start pressed|Stop pressed" qz-logs/*.log 2>/dev/null | cut -c1-160 >> $STEPLOG || true
+grep -E "Speaking fragment|A11yDriver" tb_logcat.txt > tb-speech.txt || true
 
 echo "== steps"; cat $STEPLOG
-echo "== driver"; for f in drv/*.txt; do echo "-- $f"; cat "$f"; done
-echo "== CustomQtActivity and Java errors"; grep -E "CustomQtActivity|AndroidRuntime|FATAL" full_logcat.txt | tail -n 40 || true
-echo "== QML warnings"; grep -iE "qrc:|\.qml:[0-9]+" full_logcat.txt | grep -iE "warning|error|ReferenceError|TypeError" | sort | uniq -c | sort -nr | head -40 || true
+echo "== QML warnings"; cat full_logcat.txt tb_logcat.txt | grep -iE "qrc:|\.qml:[0-9]+" | grep -iE "warning|error|ReferenceError|TypeError" | sort | uniq -c | sort -nr | head -40 || true
