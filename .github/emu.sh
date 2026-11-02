@@ -41,16 +41,26 @@ dump() {
   timeout 25 adb shell uiautomator dump /sdcard/ui.xml < /dev/null > /dev/null 2>&1 || true
   adb pull /sdcard/ui.xml ui.xml > /dev/null 2>&1 || true
 }
-# A window of another app over QZ closed with the back key
+# A window of another app over QZ: the launcher of the image hangs on the slow CI machine and its
+# "isn't responding" dialog survives the back key (run 41376681046 lost both cases to it), so that
+# dialog is answered by its buttons; anything else gets the back key. Logged in steps.log.
 ensure_app() {
-  local i pkg
-  for i in 1 2 3; do
+  local i pkg xy
+  for i in 1 2 3 4 5; do
     dump
     [ -f ui.xml ] || return 0
     pkg=$(python3 .github/uitap.py ui.xml --package)
     [ -z "$pkg" ] || [ "$pkg" = "$PKG" ] && return 0
-    echo "!! $pkg over the app: back key" >> $STEPLOG
-    adb shell input keyevent KEYCODE_BACK || true
+    if grep -q "t responding" ui.xml && xy=$(python3 .github/uitap.py ui.xml 'Close app'); then
+      echo "!! $pkg not responding: Close app at $xy" >> $STEPLOG
+      adb shell input tap $xy || true
+    elif grep -q "t responding" ui.xml && xy=$(python3 .github/uitap.py ui.xml 'Wait'); then
+      echo "!! $pkg not responding: Wait at $xy" >> $STEPLOG
+      adb shell input tap $xy || true
+    else
+      echo "!! $pkg over the app: back key" >> $STEPLOG
+      adb shell input keyevent KEYCODE_BACK || true
+    fi
     sleep 3
   done
   rm -f ui.xml
