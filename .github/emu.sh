@@ -192,16 +192,28 @@ if open_language; then
   sleep 3
   rm -f ui.xml
   shot c-2-list-end
+  if tap_ui '^Swedish$'; then
+    sleep 3
+    rm -f ui.xml
+    shot c-3-picked
+    OK_XY=$(python3 .github/uitap.py ui.xml '^OK$') && adb shell input tap $OK_XY
+    sleep 8
+    rm -f ui.xml
+    shot c-4-swedish
+  else
+    FAILED=1
+  fi
 else
   echo "!! clean: language row not reached" >> $STEPLOG
   FAILED=1
 fi
 adb shell am force-stop $PKG || true
 sleep 3
+check_saved "picked Swedish" app_language=sv
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
 
-EXPECT='Translated app languages: ("cs", "da", "de", "es", "fr", "it", "ja", "ko", "nl", "no", "pl", "pt", "pt_BR", "ru", "tr", "uk", "zh_CN")'
+EXPECT='Translated app languages: ("cs", "da", "de", "es", "fr", "it", "ja", "ko", "nl", "no", "pl", "pt", "pt_BR", "ru", "sv", "tr", "uk", "zh_CN")'
 echo "== language lines" >> $STEPLOG
 grep -a -h -E "Translated app languages|Translation (file is empty|loaded)|No translation available" full_logcat.txt | cut -c1-200 | tail -n 10 >> $STEPLOG || true
 if grep -a -q -F -- "$EXPECT" full_logcat.txt; then
