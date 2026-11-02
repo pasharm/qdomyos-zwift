@@ -1,6 +1,5 @@
 #!/bin/bash
-# Test only (T-253): the App Language list made from the translations of the build. The build holds
-# Swedish at 60% and Finnish at 12%, the threshold is 50%.
+# Test only (T-253): the App Language list of the commit, with no test translations in the build.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -181,162 +180,37 @@ LOGCAT_PID=$!
 adb shell settings put system accelerometer_rotation 0 || true
 adb shell settings put system user_rotation 0 || true
 
-# 1. A saved language below the threshold: it loads, the list shows Auto. Swedish at 60% is picked
-echo "== case 1: saved fi, pick Swedish" >> $STEPLOG
+# The list of the commit as it is, the frames after the change
+echo "== clean: the list" >> $STEPLOG
 install_apk apk-debug/android-debug.apk
-put_conf fi
+put_conf auto
 start_app
-shot 1-0-home
 if open_language; then
-  shot 1-1-row-auto
   open_list
-  shot 1-2-list-top
+  shot c-1-list-top
   adb shell input swipe 950 2200 950 500 500 || true
   sleep 3
   rm -f ui.xml
-  shot 1-3-list-end
-  if tap_ui '^Swedish$'; then
-    sleep 3
-    rm -f ui.xml
-    shot 1-4-picked
-    OK_XY=$(python3 .github/uitap.py ui.xml '^OK$') && adb shell input tap $OK_XY
-    sleep 8
-    rm -f ui.xml
-    shot 1-5-applied
-  else
-    FAILED=1
-  fi
+  shot c-2-list-end
 else
-  echo "!! case 1: language row not reached" >> $STEPLOG
+  echo "!! clean: language row not reached" >> $STEPLOG
   FAILED=1
 fi
 adb shell am force-stop $PKG || true
 sleep 3
-check_saved "1, picked Swedish" app_language=sv
-
-# 2. Portuguese (Brazil), an empty file with a base language
-echo "== case 2: pick pt_BR" >> $STEPLOG
-put_conf auto
-start_app
-if open_language; then
-  open_list
-  shot 2-1-list
-  if tap_ui '^Portuguese \(Brazil\)$'; then
-    sleep 3
-    rm -f ui.xml
-    shot 2-2-picked
-    OK_XY=$(python3 .github/uitap.py ui.xml '^OK$') && adb shell input tap $OK_XY
-    sleep 8
-    rm -f ui.xml
-    shot 2-3-applied
-  else
-    FAILED=1
-  fi
-else
-  echo "!! case 2: language row not reached" >> $STEPLOG
-  FAILED=1
-fi
-adb shell am force-stop $PKG || true
-sleep 3
-check_saved "2, picked pt_BR" app_language=pt_BR
-
-# 3. A saved language with an empty file: Auto in the list, OK is active and writes auto
-echo "== case 3: saved ca, OK" >> $STEPLOG
-put_conf ca
-start_app
-if open_language; then
-  shot 3-1-row-auto
-  adb shell input tap $LANG_OK
-  sleep 8
-  rm -f ui.xml
-  shot 3-2-after-ok
-else
-  echo "!! case 3: language row not reached" >> $STEPLOG
-  FAILED=1
-fi
-adb shell am force-stop $PKG || true
-sleep 3
-check_saved "3, OK on the saved ca" app_language=auto
-
-# 4. The search of the settings: Turkish is 13th in the list and 15th in the catalog
-echo "== case 4: search" >> $STEPLOG
-put_conf auto
-start_app
-if open_language; then
-  tap 1018 168 "search icon"
-  sleep 3
-  rm -f ui.xml
-  dump
-  tap_ui 'Search settings' 500 330
-  sleep 2
-  adb shell input text language || true
-  sleep 5
-  rm -f ui.xml
-  shot 4-1-search
-  if tap_ui 'Auto \(System\)'; then
-    sleep 3
-    rm -f ui.xml
-    shot 4-2-search-list
-    if tap_ui '^Turkish$'; then
-      sleep 8
-      rm -f ui.xml
-      shot 4-3-search-picked
-    else
-      FAILED=1
-    fi
-  else
-    FAILED=1
-  fi
-else
-  echo "!! case 4: language row not reached" >> $STEPLOG
-  FAILED=1
-fi
-adb shell am force-stop $PKG || true
-sleep 3
-check_saved "4, picked Turkish in the search" app_language=tr
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
 
-# 5. An empty saved language on a device in German: it follows the system, as Auto does
-echo "== case 5: saved ca, device de-DE" >> $STEPLOG
-adb root >> $STEPLOG 2>&1 || true
-wait_boot
-adb shell setprop persist.sys.locale de-DE
-adb reboot
-wait_boot
-echo "locale $(adb shell getprop persist.sys.locale)" >> $STEPLOG
-adb logcat -c || true
-adb logcat -v threadtime -b main,system,crash > full_logcat5.txt 2>/dev/null &
-LOGCAT_PID=$!
-put_conf ca
-start_app
-shot 5-0-home-german
-adb shell am force-stop $PKG || true
-sleep 2
-kill $LOGCAT_PID 2>/dev/null || true
-wait $LOGCAT_PID 2>/dev/null || true
-
-EXPECT='Translated app languages: ("cs", "da", "de", "es", "fr", "it", "ja", "ko", "nl", "no", "pl", "pt", "pt_BR", "ru", "sv", "tr", "uk", "zh_CN")'
+EXPECT='Translated app languages: ("cs", "da", "de", "es", "fr", "it", "ja", "ko", "nl", "no", "pl", "pt", "pt_BR", "ru", "tr", "uk", "zh_CN")'
 echo "== language lines" >> $STEPLOG
-grep -a -h -E "Translated app languages|Translation (file is empty|loaded)|No translation available" full_logcat.txt full_logcat5.txt | cut -c1-200 | tail -n 40 >> $STEPLOG || true
-check() {
-  if grep -a -q -F -- "$2" "$3"; then
-    echo "check $1: OK" >> $STEPLOG
-  else
-    echo "!! check $1: no '$2' in $3" >> $STEPLOG
-    FAILED=1
-  fi
-}
-check "list" "$EXPECT" full_logcat.txt
-check "Finnish below the threshold loaded" 'Translation loaded successfully for "locale" : "fi"' full_logcat.txt
-check "Swedish loaded" 'Translation loaded successfully for "locale" : "sv"' full_logcat.txt
-check "pt_BR empty" 'Translation file is empty for "locale" : "pt_BR"' full_logcat.txt
-check "pt_BR gives pt" 'Translation loaded successfully for "language" : "pt"' full_logcat.txt
-check "Turkish loaded" 'Translation loaded successfully for "locale" : "tr"' full_logcat.txt
-check "ca empty on the German device" 'Translation file is empty for "locale" : "ca"' full_logcat5.txt
-check "German by the system" 'Translation loaded successfully for "locale" : "de_DE"' full_logcat5.txt
+grep -a -h -E "Translated app languages|Translation (file is empty|loaded)|No translation available" full_logcat.txt | cut -c1-200 | tail -n 10 >> $STEPLOG || true
+if grep -a -q -F -- "$EXPECT" full_logcat.txt; then
+  echo "check list: OK" >> $STEPLOG
+else
+  echo "!! check list: no '$EXPECT'" >> $STEPLOG
+  FAILED=1
+fi
 echo "== ANR / crash in the whole log:" >> $STEPLOG
-grep -a -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt full_logcat5.txt >> $STEPLOG || echo "none" >> $STEPLOG
-cat full_logcat5.txt >> full_logcat.txt
+grep -a -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt >> $STEPLOG || echo "none" >> $STEPLOG
 cat $STEPLOG
 exit $FAILED
