@@ -1,6 +1,5 @@
 #!/bin/bash
-# Test only (T-253): the App Language list made from the translations of the build. The build
-# holds Swedish at 12% and Finnish at 5%; a saved language below the threshold, pt_BR, OK on a saved empty one.
+# Test only (T-253): master as it is, the frames before the change.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -181,72 +180,47 @@ LOGCAT_PID=$!
 adb shell settings put system accelerometer_rotation 0 || true
 adb shell settings put system user_rotation 0 || true
 
-# 1. A saved language below the threshold: it loads, the list shows Auto. Then Portuguese (Brazil),
-# an empty file with a base language: the app comes up in Portuguese
-echo "== case 1: saved fi, then pt_BR" >> $STEPLOG
+# 1. Master as it is: the whole list of 32 entries, frame by frame
+echo "== case 1: master, auto" >> $STEPLOG
 install_apk apk-debug/android-debug.apk
-put_conf fi
+put_conf auto
 start_app
 shot 1-0-home
 if open_language; then
-  shot 1-1-row-auto
+  shot 1-1-row
   open_list
-  shot 1-2-list-top
-  if tap_ui '^Portuguese \(Brazil\)$'; then
+  shot 1-2-list-1
+  for i in 2 3 4; do
+    adb shell input swipe 950 2200 950 700 500 || true
     sleep 3
     rm -f ui.xml
-    shot 1-3-picked
-    OK_XY=$(python3 .github/uitap.py ui.xml '^OK$') && adb shell input tap $OK_XY
-    sleep 8
-    rm -f ui.xml
-    shot 1-4-applied
-  else
-    FAILED=1
-  fi
+    shot 1-2-list-$i
+  done
 else
   echo "!! case 1: language row not reached" >> $STEPLOG
   FAILED=1
 fi
 adb shell am force-stop $PKG || true
 sleep 3
-check_saved "1, picked pt_BR" app_language=pt_BR
 
-# 2. A saved language with an empty file: OK is active and writes auto
-echo "== case 2: saved ca, OK" >> $STEPLOG
+# 2. A saved language with an empty file on master: the list shows it, the app is in English
+echo "== case 2: master, saved ca" >> $STEPLOG
 put_conf ca
 start_app
 shot 2-0-home
 if open_language; then
-  shot 2-1-row-auto
-  adb shell input tap $LANG_OK
-  sleep 8
-  rm -f ui.xml
-  shot 2-2-after-ok
+  shot 2-1-row-catalan
 else
   echo "!! case 2: language row not reached" >> $STEPLOG
   FAILED=1
 fi
 adb shell am force-stop $PKG || true
 sleep 3
-check_saved "2, OK on the saved ca" app_language=auto
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
 
-EXPECT='Translated app languages: ("cs", "da", "de", "es", "fr", "it", "ja", "ko", "nl", "no", "pl", "pt", "pt_BR", "ru", "sv", "tr", "uk", "zh_CN")'
 echo "== language lines" >> $STEPLOG
-grep -a -h -E "Translated app languages|Translation (file is empty|loaded)|No translation available" full_logcat.txt | cut -c1-200 | tail -n 30 >> $STEPLOG || true
-check() {
-  if grep -a -q -F -- "$2" "$3"; then
-    echo "check $1: OK" >> $STEPLOG
-  else
-    echo "!! check $1: no '$2' in $3" >> $STEPLOG
-    FAILED=1
-  fi
-}
-check "list" "$EXPECT" full_logcat.txt
-check "Finnish below the threshold loaded" 'Translation loaded successfully for "locale" : "fi"' full_logcat.txt
-check "pt_BR empty" 'Translation file is empty for "locale" : "pt_BR"' full_logcat.txt
-check "pt_BR gives pt" 'Translation loaded successfully for "language" : "pt"' full_logcat.txt
+grep -a -h -E "Translation (file is empty|loaded)|No translation available" full_logcat.txt | cut -c1-200 | tail -n 20 >> $STEPLOG || true
 echo "== ANR / crash in the whole log:" >> $STEPLOG
 grep -a -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt >> $STEPLOG || echo "none" >> $STEPLOG
 cat $STEPLOG
