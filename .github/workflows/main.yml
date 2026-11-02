@@ -20,8 +20,8 @@ on:
 jobs:
   emulator-logcat:
     runs-on: ubuntu-latest
-    # Three cases and a reboot, about 12 min; a step stuck on adb ends here instead of after 6 hours
-    timeout-minutes: 30
+    # Five cases and a reboot, about 20 min; a step stuck on adb ends here instead of after 6 hours
+    timeout-minutes: 40
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
