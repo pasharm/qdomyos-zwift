@@ -277,6 +277,12 @@ drag_up 200
 drag_up 200
 drag_up 200
 shot t-04g-touch-top
+# The same with short flicks (the phone 02.11, 58ae02ba3: a flick ends without the whole-pixel
+# settle, the count went on across the steps and a later touch hid the toolbar with a jerk)
+scroll_top; sleep 2
+step flick-steps "near the top, three short quick swipes up (small flicks): toolbar stays"
+for i in 1 2 3; do adb shell input swipe 700 1800 700 1650 120 || true; sleep 2; done
+shot t-04h-flick-steps
 
 scroll_top; sleep 2
 step flick "fast flick up: toolbar gone, the flick glides on (not stopped about a row further)"
