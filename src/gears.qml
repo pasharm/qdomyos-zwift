@@ -636,9 +636,12 @@ ScrollView {
                  }
                 }
 
-                // Only a pick loads a preset, not the list showing the saved one; the preset shown
-                // can be picked again, to undo changes made to the table since
-                onActivated: loadGearProfile(profileModel.get(index).value)
+                // Only a pick loads a preset, not the list showing the saved one
+                onActivated: {
+                 if (index >= 0) {
+                     loadGearProfile(profileModel.get(index).value)
+                 }
+                }
                 }
         }
 
