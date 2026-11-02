@@ -260,13 +260,23 @@ drag_down 1000
 shot t-04d-back-deep
 
 # The phone 02.11: after each drag the view settles on a whole pixel, and that reset the turn point,
-# so two short pulls in a row never added up to the ~310 px threshold
+# so two short pulls in a row never added up to the ~310 px threshold. A 200 px swipe moved the list
+# only 43-46 dp (touch slop), two of them 87 dp against 88 on API 30: 250 px each, one still short
 drag_up 1300
-step two-pulls "deep in the list, toolbar gone, then 200 px down and 200 px down again: toolbar back after the second (400 px in all), not after the first"
-drag_down 200
+step two-pulls "deep in the list, toolbar gone, then 250 px down and 250 px down again: toolbar back after the second, not after the first"
+drag_down 250
 shot t-04e-pull-1
-drag_down 200
+drag_down 250
 shot t-04f-pull-2
+
+# A touch near the top must not hide the toolbar at once (the phone 02.11: scrolled just under the
+# threshold, the next touch hid it with a 48 dp jerk): scrolls toward hiding count one at a time
+scroll_top; sleep 2
+step touch-top "near the top, three 200 px drags up: toolbar stays (each under the threshold, not added up)"
+drag_up 200
+drag_up 200
+drag_up 200
+shot t-04g-touch-top
 
 scroll_top; sleep 2
 step flick "fast flick up: toolbar gone, the flick glides on (not stopped about a row further)"
