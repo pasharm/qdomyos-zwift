@@ -16570,7 +16570,7 @@
     {
       "key": "treadmill_auto_resume",
       "name": "Auto Resume when the Belt Moves",
-      "description": "Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.",
+      "description": "Turn this on to have QZ resume the workout by itself when the belt stopped and moves again. With this off, QZ only reminds you that the workout is paused. This setting does not end a pause you set yourself. Some treadmills resume on their own whichever way this is set. Default is off.",
       "parent": "Treadmill Options",
       "type": "boolean",
       "qmlType": "bool",

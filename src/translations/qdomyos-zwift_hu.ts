@@ -6662,8 +6662,8 @@ Please enter it below:</source>
         <translation>Automatikus folytatás, ha a szalag mozog</translation>
     </message>
     <message>
-        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
-        <translation>Kapcsolja be, ha azt szeretné, hogy a QZ magától folytassa az edzést, ha a futópad szüneteltette, és a szalag újra mozog. A saját maga által indított szünet addig tart, amíg nem folytatja az edzést. Alapértelmezetten kikapcsolva.</translation>
+        <source>Turn this on to have QZ resume the workout by itself when the belt stopped and moves again. With this off, QZ only reminds you that the workout is paused. This setting does not end a pause you set yourself. Some treadmills resume on their own whichever way this is set. Default is off.</source>
+        <translation>Kapcsolja be, ha azt szeretné, hogy a QZ magától folytassa az edzést, ha a szalag megállt, majd újra mozog. Kikapcsolva a QZ csak emlékezteti, hogy az edzés szünetel. Ez a beállítás nem szünteti meg a saját maga által indított szünetet. Egyes futópadok ettől a beállítástól függetlenül maguktól folytatják. Alapértelmezetten kikapcsolva.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

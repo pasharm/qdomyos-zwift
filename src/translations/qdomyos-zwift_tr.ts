@@ -6673,8 +6673,8 @@ Kodu aşağıya girin:</translation>
         <translation>Bant hareket edince otomatik devam et</translation>
     </message>
     <message>
-        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
-        <translation>Koşu bandı antrenmanı duraklattığında ve bant yeniden hareket ettiğinde QZ&apos;nin kendiliğinden devam etmesi için bunu açın. Kendi başlattığınız duraklatma, siz devam edene kadar sürer. Varsayılan: kapalı.</translation>
+        <source>Turn this on to have QZ resume the workout by itself when the belt stopped and moves again. With this off, QZ only reminds you that the workout is paused. This setting does not end a pause you set yourself. Some treadmills resume on their own whichever way this is set. Default is off.</source>
+        <translation>Bant durup yeniden hareket ettiğinde QZ&apos;nin antrenmana kendiliğinden devam etmesi için bunu açın. Kapalıyken QZ yalnızca antrenmanın duraklatıldığını hatırlatır. Bu ayar, kendi başlattığınız duraklatmayı bitirmez. Bazı koşu bantları bu ayardan bağımsız olarak kendiliğinden devam eder. Varsayılan: kapalı.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

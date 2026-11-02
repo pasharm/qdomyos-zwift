@@ -6746,8 +6746,8 @@ Por favor, ingrésalo a continuación:</translation>
         <translation>Reanudar automáticamente cuando la cinta se mueva</translation>
     </message>
     <message>
-        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
-        <translation>Activa esto para que QZ reanude el entrenamiento por sí solo cuando la cinta de correr lo haya pausado y vuelva a moverse. Una pausa que pongas tú sigue hasta que la reanudes. Por defecto está desactivado.</translation>
+        <source>Turn this on to have QZ resume the workout by itself when the belt stopped and moves again. With this off, QZ only reminds you that the workout is paused. This setting does not end a pause you set yourself. Some treadmills resume on their own whichever way this is set. Default is off.</source>
+        <translation>Activa esto para que QZ reanude el entrenamiento por sí solo cuando la cinta se haya detenido y vuelva a moverse. Si está desactivado, QZ solo te recuerda que el entrenamiento está en pausa. Este ajuste no termina una pausa que hayas puesto tú. Algunas cintas de correr se reanudan solas sea cual sea este ajuste. Por defecto está desactivado.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

@@ -5624,8 +5624,8 @@ Nella finestra successiva, consenti l&apos;accesso alla cartella QZ.</translatio
         <translation>Riprendi automaticamente quando il nastro si muove</translation>
     </message>
     <message>
-        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
-        <translation>Attiva questo per far riprendere l&apos;allenamento a QZ da solo quando il tapis roulant lo ha messo in pausa e il nastro torna a muoversi. Una pausa impostata da te resta finché non riprendi. Di default è disattivato.</translation>
+        <source>Turn this on to have QZ resume the workout by itself when the belt stopped and moves again. With this off, QZ only reminds you that the workout is paused. This setting does not end a pause you set yourself. Some treadmills resume on their own whichever way this is set. Default is off.</source>
+        <translation>Attiva questo per far riprendere l&apos;allenamento a QZ da solo quando il nastro si è fermato e torna a muoversi. Se è disattivato, QZ ti ricorda soltanto che l&apos;allenamento è in pausa. Questa impostazione non termina una pausa impostata da te. Alcuni tapis roulant riprendono da soli qualunque sia questa impostazione. Di default è disattivato.</translation>
     </message>
     <message>
         <source>Difficulty offset based</source>

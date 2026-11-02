@@ -6666,8 +6666,8 @@ Indtast den herunder:</translation>
         <translation>Fortsæt automatisk, når båndet kører</translation>
     </message>
     <message>
-        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
-        <translation>Slå dette til, hvis QZ selv skal fortsætte træningen, når løbebåndet har sat den på pause, og båndet kører igen. En pause, du selv har sat, varer, indtil du fortsætter. Standard: fra.</translation>
+        <source>Turn this on to have QZ resume the workout by itself when the belt stopped and moves again. With this off, QZ only reminds you that the workout is paused. This setting does not end a pause you set yourself. Some treadmills resume on their own whichever way this is set. Default is off.</source>
+        <translation>Slå dette til, hvis QZ selv skal fortsætte træningen, når båndet er stoppet og kører igen. Når det er slået fra, minder QZ dig kun om, at træningen er sat på pause. Denne indstilling afslutter ikke en pause, du selv har sat. Nogle løbebånd fortsætter selv, uanset denne indstilling. Standard: fra.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

@@ -6670,8 +6670,8 @@ Wprowadź go poniżej:</translation>
         <translation>Wznawiaj automatycznie, gdy pas ruszy</translation>
     </message>
     <message>
-        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
-        <translation>Włącz tę opcję, aby QZ sam wznawiał trening, gdy bieżnia go wstrzymała, a pas znów ruszył. Pauza ustawiona przez Ciebie trwa, dopóki nie wznowisz treningu. Domyślnie: wyłączone.</translation>
+        <source>Turn this on to have QZ resume the workout by itself when the belt stopped and moves again. With this off, QZ only reminds you that the workout is paused. This setting does not end a pause you set yourself. Some treadmills resume on their own whichever way this is set. Default is off.</source>
+        <translation>Włącz tę opcję, aby QZ sam wznawiał trening, gdy pas się zatrzymał i znów ruszy. Gdy jest wyłączona, QZ tylko przypomina, że trening jest wstrzymany. To ustawienie nie kończy pauzy ustawionej przez Ciebie. Niektóre bieżnie wznawiają trening same, niezależnie od tego ustawienia. Domyślnie: wyłączone.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

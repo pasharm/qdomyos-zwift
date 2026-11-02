@@ -1131,6 +1131,8 @@ public:
     bool stopped = false;
     bool lapTrigger = false;
 
+    // A workout began and has not been stopped, even if its time still stands at 0
+    bool m_workoutStarted = false;
     // The pause was set by the treadmill, see autoPaused()
     bool m_autoPaused = false;
     qint64 m_autoResumeMovingSince = 0;

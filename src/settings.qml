@@ -12585,7 +12585,7 @@ import QtQuick 2.12 as Quick212
                     }
 
                     Label {
-                        text: qsTr("Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.")
+                        text: qsTr("Turn this on to have QZ resume the workout by itself when the belt stopped and moves again. With this off, QZ only reminds you that the workout is paused. This setting does not end a pause you set yourself. Some treadmills resume on their own whichever way this is set. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
                         font.pixelSize: window.ui.fontHint

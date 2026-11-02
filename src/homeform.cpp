@@ -6337,6 +6337,7 @@ void homeform::Start_inner(bool send_event_to_device) {
 
         paused = false;
         stopped = false;
+        m_workoutStarted = true;
     }
     emit workoutStateChanged();
 
@@ -6446,6 +6447,7 @@ void homeform::Stop() {
 
     paused = false;
     stopped = true;
+    m_workoutStarted = false;
 
     emit workoutEventStateChanged(bluetoothdevice::STOPPED);
     emit workoutStateChanged();
@@ -6550,27 +6552,29 @@ bool homeform::nothingToResume() {
 }
 
 // The treadmill paused the workout by itself (autoPauseWhenSpeedIsZero). Only such a pause may end
-// by itself: the belt can still be moving under one set by the user.
+// by itself: the belt can still be moving under one set by the user. A treadmill standing still
+// pauses itself before any workout too, and stepping on the belt must not begin one. The time alone
+// does not tell them apart: with continuous_moving off it stands at 0 from Start until the belt moves.
 void homeform::autoPaused() {
-    m_autoPaused = true;
+    m_autoPaused = m_workoutStarted || !nothingToResume();
+    if (!m_autoPaused) {
+        return;
+    }
     m_autoResumeMovingSince = 0;
     m_autoResumeReminded = false;
-    // A treadmill standing still pauses itself before any workout too: nothing to tell then
     QSettings settings;
-    if (!nothingToResume() &&
-        settings.value(QZSettings::treadmill_auto_resume, QZSettings::default_treadmill_auto_resume).toBool()) {
+    if (settings.value(QZSettings::treadmill_auto_resume, QZSettings::default_treadmill_auto_resume).toBool()) {
         onToastRequested(tr("Workout paused, the treadmill stopped"));
     }
 }
 
-// The belt moves again under such a pause. Before the first Start there is no workout to resume,
-// stepping on the belt must not begin one. A belt pushed by hand or by a step coasts to a stop
+// The belt moves again under such a pause. A belt pushed by hand or by a step coasts to a stop
 // within the time below, so it does not count.
 void homeform::autoResumeCheck(double speed) {
     const double minSpeed = 2.0;    // km/h
     const qint64 movingMs = 3000;
 
-    if (!m_autoPaused || !paused || stopped || nothingToResume()) {
+    if (!m_autoPaused || !paused || stopped) {
         return;
     }
     if (speed < minSpeed) {

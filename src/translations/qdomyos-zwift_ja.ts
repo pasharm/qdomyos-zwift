@@ -6663,8 +6663,8 @@ Please enter it below:</source>
         <translation>ベルトが動いたら自動で再開</translation>
     </message>
     <message>
-        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
-        <translation>トレッドミルがワークアウトを一時停止した後、ベルトが再び動くとQZが自動で再開します。自分で設定した一時停止は、再開するまで続きます。初期設定はオフです。</translation>
+        <source>Turn this on to have QZ resume the workout by itself when the belt stopped and moves again. With this off, QZ only reminds you that the workout is paused. This setting does not end a pause you set yourself. Some treadmills resume on their own whichever way this is set. Default is off.</source>
+        <translation>ベルトが止まった後で再び動いたときに、QZが自動でワークアウトを再開します。オフの場合は、ワークアウトが一時停止中であることを知らせるだけです。自分で設定した一時停止は、この設定では解除されません。この設定に関係なく自動で再開するトレッドミルもあります。初期設定はオフです。</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

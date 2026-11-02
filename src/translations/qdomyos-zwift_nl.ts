@@ -6673,8 +6673,8 @@ Voer de code hieronder in:</translation>
         <translation>Automatisch hervatten als de band beweegt</translation>
     </message>
     <message>
-        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
-        <translation>Schakel dit in om QZ de training zelf te laten hervatten als de loopband die heeft gepauzeerd en de band weer beweegt. Een pauze die je zelf instelt, blijft staan tot je hervat. Standaard: uit.</translation>
+        <source>Turn this on to have QZ resume the workout by itself when the belt stopped and moves again. With this off, QZ only reminds you that the workout is paused. This setting does not end a pause you set yourself. Some treadmills resume on their own whichever way this is set. Default is off.</source>
+        <translation>Schakel dit in om QZ de training zelf te laten hervatten als de band is gestopt en weer beweegt. Staat dit uit, dan herinnert QZ je er alleen aan dat de training is gepauzeerd. Deze instelling beëindigt geen pauze die je zelf hebt ingesteld. Sommige loopbanden hervatten vanzelf, hoe dit ook staat ingesteld. Standaard: uit.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

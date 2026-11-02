@@ -6746,8 +6746,8 @@ Veuillez le saisir ci-dessous :</translation>
         <translation>Reprise automatique quand le tapis se remet en marche</translation>
     </message>
     <message>
-        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
-        <translation>Activez ceci pour que QZ reprenne seul l&apos;entraînement lorsque le tapis de course l&apos;a mis en pause et se remet en marche. Une pause que vous avez lancée dure jusqu&apos;à ce que vous repreniez. Par défaut, c&apos;est désactivé.</translation>
+        <source>Turn this on to have QZ resume the workout by itself when the belt stopped and moves again. With this off, QZ only reminds you that the workout is paused. This setting does not end a pause you set yourself. Some treadmills resume on their own whichever way this is set. Default is off.</source>
+        <translation>Activez ceci pour que QZ reprenne seul l&apos;entraînement lorsque le tapis s&apos;est arrêté et se remet en marche. Désactivé, QZ vous rappelle seulement que l&apos;entraînement est en pause. Ce réglage ne met pas fin à une pause que vous avez lancée. Certains tapis de course reprennent d&apos;eux-mêmes quel que soit ce réglage. Par défaut, c&apos;est désactivé.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>

@@ -6666,8 +6666,8 @@ Please enter it below:</source>
         <translation>Автопродолжение при движении полотна</translation>
     </message>
     <message>
-        <source>Turn this on to have QZ resume the workout by itself when the treadmill paused it and the belt moves again. A pause you set yourself stays until you resume it. Default is off.</source>
-        <translation>Включите, чтобы QZ сам продолжал тренировку, когда на паузу её поставила дорожка, а полотно снова пошло. Пауза, поставленная вами, остаётся, пока вы её не снимете. По умолчанию выключено.</translation>
+        <source>Turn this on to have QZ resume the workout by itself when the belt stopped and moves again. With this off, QZ only reminds you that the workout is paused. This setting does not end a pause you set yourself. Some treadmills resume on their own whichever way this is set. Default is off.</source>
+        <translation>Включите, чтобы QZ сам продолжал тренировку, когда полотно остановилось и снова пошло. Когда выключено, QZ только напоминает, что тренировка на паузе. Паузу, поставленную вами, эта настройка не снимает. Некоторые дорожки продолжают сами при любом значении настройки. По умолчанию выключено.</translation>
     </message>
     <message>
         <source>Direct Distance from Treadmill</source>
