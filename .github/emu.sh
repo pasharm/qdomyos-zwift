@@ -161,28 +161,28 @@ adb shell settings put system user_rotation 0 || true
 
 # case_run <prefix> <apk>
 case_run() {
-  local p="$1" xy x y
+  local prefix="$1" xy x y
   install_apk "$2"
   put_conf
-  echo "== $p: start" >> $STEPLOG
+  echo "== $prefix: start" >> $STEPLOG
   adb shell am start -n $PKG/$PKG.CustomQtActivity
   sleep 45
-  shot $p-0-home
-  open_wahoo || { echo "!! $p: Wahoo Options not reached" >> $STEPLOG; FAILED=1; return; }
+  shot $prefix-0-home
+  open_wahoo || { echo "!! $prefix: Wahoo Options not reached" >> $STEPLOG; FAILED=1; return; }
   to_presets || { FAILED=1; return; }
-  shot $p-1-default
+  shot $prefix-1-default
   python3 .github/uitap.py ui.xml "$PRESET_RX" >> $STEPLOG 2>&1 || echo "list not in the dump, by its place above Add Gear" >> $STEPLOG
   x=${ADD_XY% *}
   y=${ADD_XY#* }
   tap_ui "$PRESET_RX" "$x" $((y - 406))
   sleep 3
-  shot $p-2-list-open
+  shot $prefix-2-list-open
   # The list opens over its field: the fourth item is 3.5 items of 48 dp below its top
   tap_ui 'Reality Bender.*' "$x" $((y - 406 - 84 + 588))
   sleep 4
-  shot $p-3-picked
+  shot $prefix-3-picked
   sleep 6
-  check_table $p-picked '1|75|100|true'
+  check_table $prefix-picked '1|75|100|true'
 
   # Back to the settings and the page opened again
   back "page"
@@ -192,7 +192,7 @@ case_run() {
   tap_ui 'Wahoo Options'
   sleep 6
   to_presets
-  shot $p-4-reopened
+  shot $prefix-4-reopened
 
   # The app quit and started again: this is what the user of issue 5508 did
   back "page"
@@ -201,18 +201,18 @@ case_run() {
   sleep 3
   adb shell am start -n $PKG/$PKG.CustomQtActivity
   sleep 35
-  shot $p-5-home-after-restart
-  open_wahoo || { echo "!! $p: Wahoo Options not reached after the restart" >> $STEPLOG; FAILED=1; return; }
+  shot $prefix-5-home-after-restart
+  open_wahoo || { echo "!! $prefix: Wahoo Options not reached after the restart" >> $STEPLOG; FAILED=1; return; }
   to_presets
-  shot $p-6-after-restart
-  check_table $p-after-restart '1|75|100|true'
+  shot $prefix-6-after-restart
+  check_table $prefix-after-restart '1|75|100|true'
 
   # Reset All Gears: the list leaves the preset behind
   scroll_to 'Reset All Gears' 6 && tap_ui 'Reset All Gears'
   sleep 4
-  shot $p-7-after-reset
+  shot $prefix-7-after-reset
   sleep 6
-  check_table $p-after-reset '1|38|44|true'
+  check_table $prefix-after-reset '1|38|44|true'
   adb shell am force-stop $PKG || true
   sleep 2
 }
