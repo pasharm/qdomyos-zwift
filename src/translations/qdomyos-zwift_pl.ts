@@ -4016,6 +4016,11 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
         <source>Spotify songs:</source>
         <translation>Utwory Spotify:</translation>
     </message>
+    <message>
+        <source>QZ is running</source>
+        <extracomment>Android notification: title shown while QZ works in the background.</extracomment>
+        <translation>QZ działa</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
