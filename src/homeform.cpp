@@ -1147,6 +1147,7 @@ homeform::homeform(QQmlApplicationEngine *engine, bluetooth *bl) {
                 const bool quiet = m_fitImportQuiet;
                 m_fitImportQuiet = false;
                 workoutModel->refresh();
+                claimMainHistoryDatabaseName();
                 if (!databaseOpen) {
                     setToastRequested(tr("The workout history database could not be opened."));
                     return;
@@ -9408,6 +9409,23 @@ QString homeform::historyDatabasePath() {
     }
     qDebug() << "history database:" << chosen << "new:" << m_historyDatabaseIsNew;
     return chosen;
+}
+
+// A folder import removes ddb.sqlite of the previous install, but this install keeps running on
+// its spare database until the next start. The free name is taken at once with an empty file of
+// this install: if the app is reinstalled before that start, the next install still finds a
+// ddb.sqlite it cannot open and offers to recover the workouts. The next start of this install
+// opens the empty file as a new database, the same as a missing one.
+void homeform::claimMainHistoryDatabaseName() {
+    const QString mainPath = getWritableAppDir() + QStringLiteral("ddb.sqlite");
+    if (m_historyDatabasePath == mainPath || QFileInfo(mainPath).size() > 0) {
+        return;
+    }
+    QFile file(mainPath);
+    if (file.open(QIODevice::ReadWrite)) {
+        file.close();
+        qDebug() << "history database name taken for the next start:" << mainPath;
+    }
 }
 
 bool homeform::startFitFolderImport(bool allowPicker) {
