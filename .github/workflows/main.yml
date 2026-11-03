@@ -19,8 +19,8 @@ on:
 
 jobs:
   emulator-logcat:
-    runs-on: ubuntu-latest
-    timeout-minutes: 25
+    runs-on: ubuntu-26.04
+    timeout-minutes: 35
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

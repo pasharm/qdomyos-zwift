@@ -1,36 +1,24 @@
 #!/bin/bash
-# Test only (T-346): the preview of a workout while the history database is in the private
-# folder of the app. Every ddb*.sqlite name in Documents/QZ is taken by a folder, so no name
-# opens (as after many reinstalls) and the database goes to /data/user/0/<pkg>/files.
-# A synthetic workout is in Documents/QZ/fit; the side menu > Workouts History > the workout
-# opens its preview, and the log says whether the FIT file was read.
-# Run once with the build of master (preview empty) and once with the fix.
+# Test only (T-181): after a reinstall the app must offer to recover the workouts of the
+# previous install even when that install was removed right after its own folder import,
+# before any restart. Three installs of the same APK, without all-files access (scoped
+# storage, as on a phone):
+#   1. the first install records a workout (fake device, Stop) and owns ddb.sqlite;
+#   2. reinstall: ddb.sqlite is foreign, the app runs on a spare ddb-N.sqlite and offers the
+#      recovery; Yes, the folder picker on Documents/QZ, Use this folder, Allow - the import
+#      removes the old ddb.sqlite through the folder grant;
+#   3. reinstall again with no restart in between: the offer must show again.
+# Run once with a build of master (no offer in 3 - the defect) and once with the fix.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
 STEPLOG=steps.log
-: > $STEPLOG
-mkdir -p dumps
-
-adb install apk-debug/android-debug.apk
-for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
-  adb shell pm grant $PKG android.permission.$p || true
-done
-for p in EXERCISE DISTANCE TOTAL_CALORIES_BURNED HEART_RATE POWER SPEED CYCLING_PEDALING_CADENCE ELEVATION_GAINED STEPS STEPS_CADENCE HEART_RATE_VARIABILITY; do
-  adb shell pm grant $PKG android.permission.health.WRITE_$p || true
-done
-adb shell appops set $PKG MANAGE_EXTERNAL_STORAGE allow || true
-adb shell cmd uimode night no || true
-
-# T-346: every database name taken, one workout in the fit folder
 QZDIR=/sdcard/Documents/QZ
-adb shell mkdir -p $QZDIR/ddb.sqlite
-for i in $(seq 1 19); do adb shell mkdir -p $QZDIR/ddb-$i.sqlite; done
-# The workout is recorded by the app itself (fake device, Stop): a FIT file put in by adb is
-# hidden from the app on API 35 - in Documents it belongs to the shell (scoped storage),
-# run-as cannot write there, and a folder of the shell in Android/data is not listed either
-adb shell ls -la $QZDIR >> $STEPLOG 2>&1 || true
+: > $STEPLOG
+: > before.txt
+mkdir -p dumps qz-logs
 adb shell settings put global hide_error_dialogs 1 || true
+adb shell cmd uimode night no || true
 
 # put_conf <extra lines>: the settings file of the app before a start
 put_conf() {
@@ -39,19 +27,15 @@ put_conf() {
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
 }
-put_conf ""
 
-# The control tree of the screen into ui.xml (empty when uiautomator gives up, for instance
-# while something animates without pause)
+# The control tree of the screen into ui.xml (empty when uiautomator gives up)
 dump() {
   rm -f ui.xml
   timeout 25 adb shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 || true
   adb pull /sdcard/ui.xml ui.xml > /dev/null 2>&1 || true
 }
-# The emulator itself may put a window over the app: "Pixel Launcher isn't responding", or
-# the Health Connect screen left over when the back key went to such a dialog. They made a
-# whole run useless once. Clear them before every step: Wait on a "not responding" dialog,
-# the back key on anything else that is not the app. Logged in steps.log.
+# A window of another app over QZ ("not responding", Health Connect) is closed before a step.
+# Not for the folder picker: that one is wanted on top (shot_any, tap_any).
 ensure_app() {
   local i pkg xy
   for i in 1 2 3; do
@@ -59,7 +43,6 @@ ensure_app() {
     [ -f ui.xml ] || return 0
     pkg=$(python3 .github/uitap.py ui.xml --package)
     [ -z "$pkg" ] || [ "$pkg" = "$PKG" ] && return 0
-    # Somebody else hanging (the launcher) is closed, the app itself is waited for
     if grep -q "t responding" ui.xml && ! grep -q "QZ\|qdomyos" ui.xml &&
        xy=$(python3 .github/uitap.py ui.xml 'Close app'); then
       echo "!! $pkg: another app not responding, Close app at $xy" >> $STEPLOG
@@ -73,21 +56,27 @@ ensure_app() {
     fi
     sleep 3
   done
-  # The last dump showed the window that was then closed: not the screen any more
   rm -f ui.xml
 }
-# ensure_app leaves ui.xml of the app on top: the callers take it instead of a second dump
-# of the same screen (a dump costs about 2 s, half of all dumps of a run were such repeats)
-shot() {
-  if [ "$1" = "01-healthconnect" ]; then rm -f ui.xml; else ensure_app; fi
+# shot_any <name>: a frame and the control tree of whatever is on top
+shot_any() {
   echo "-- shot $1" >> $STEPLOG
   adb shell screencap -p /sdcard/$1.png || true
-  adb pull /sdcard/$1.png || true
+  adb pull /sdcard/$1.png > /dev/null 2>&1 || true
+  dump
+  [ -f ui.xml ] && cp ui.xml dumps/$1.xml
+}
+# shot <name>: the same with QZ on top
+shot() {
+  ensure_app
+  echo "-- shot $1" >> $STEPLOG
+  adb shell screencap -p /sdcard/$1.png || true
+  adb pull /sdcard/$1.png > /dev/null 2>&1 || true
   [ -f ui.xml ] || dump
   [ -f ui.xml ] && cp ui.xml dumps/$1.xml
 }
-# tap_ui 'regex' [x y]: the control whose whole text or accessible name matches, else the
-# fallback coordinates; without them the step is skipped (return 1)
+# tap_ui 'regex' [x y]: the control of QZ whose whole text or accessible name matches, else
+# the fallback coordinates; without them the step is skipped (return 1)
 tap_ui() {
   local rx="$1" fx="$2" fy="$3" xy=""
   ensure_app
@@ -104,7 +93,20 @@ tap_ui() {
     return 1
   fi
 }
-# The same for a drawer entry that may be below the fold: one swipe up and a second look
+# tap_any 'regex': the same in whatever window is on top (the folder picker), no fallback
+tap_any() {
+  local xy=""
+  dump
+  [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$1")
+  if [ -n "$xy" ]; then
+    echo "tap '$1' in $(python3 .github/uitap.py ui.xml --package): at $xy" >> $STEPLOG
+    adb shell input tap $xy || true
+    return 0
+  fi
+  echo "tap '$1': NOT FOUND in $(python3 .github/uitap.py ui.xml --package 2>/dev/null)" >> $STEPLOG
+  return 1
+}
+# A drawer entry may be below the fold: one swipe up and a second look
 tap_drawer() {
   local rx="$1" xy=""
   dump
@@ -115,46 +117,11 @@ tap_drawer() {
   fi
   tap_ui "$@"
 }
-# scroll_to 'regex': swipe the page up until the control shows (at most 12 swipes)
-scroll_to() {
-  local i
-  for i in $(seq 1 12); do
-    dump
-    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
-      echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
-      return 0
-    fi
-    adb shell input swipe 700 2000 700 1300 400 || true
-    sleep 1
-  done
-  echo "scroll to '$1': NOT FOUND" >> $STEPLOG
-  return 1
-}
-# The top of a page: a few quick swipes down
-scroll_top() {
-  local i
-  for i in 1 2 3 4 5; do adb shell input swipe 700 800 700 2200 150 || true; done
-  sleep 1
-}
-# The back key closes the keyboard, but only while it is shown: otherwise it leaves the page
-hide_keyboard() {
-  if adb shell dumpsys input_method | grep -q "mInputShown=true"; then
-    back "keyboard"
-    sleep 1
-  fi
-}
 tap() { ensure_app; echo "tap $1 $2 ($3)" >> $STEPLOG; adb shell input tap $1 $2 || true; }
 back() { echo "back ($1)" >> $STEPLOG; adb shell input keyevent KEYCODE_BACK || true; }
-# Toolbar buttons are icons without text: the same place in both looks (Nexus 6: 1440x2560
-# px, 3.5 px per dp)
-MENU="84 168"          # menu on the home page, back arrow elsewhere
-LOCK="1187 168"        # tile lock on the home page
+# Nexus 6: 1440x2560 px; the menu button of the home page
+MENU="84 168"
 open_menu() { tap $MENU "menu"; sleep 3; adb shell input swipe 500 700 500 2300 300 || true; sleep 2; }
-
-
-adb logcat -c || true
-adb logcat > full_logcat.txt 2>/dev/null &
-LOGCAT_PID=$!
 
 # start_app: launch and close the Health Connect screen the first start may show
 start_app() {
@@ -165,93 +132,184 @@ start_app() {
     back "health connect"
   fi
   sleep 15
-  # Home asks to turn on Bluetooth and Location (both off in the emulator): "No" keeps the
-  # page under it; the answer holds until the next start
+  # Home asks to turn on Bluetooth and Location (both off in the emulator): "No" keeps the page
   dump
-  if [ -f ui.xml ] && grep -q "Permissions Required\|Потрібні дозволи" ui.xml; then
-    tap_ui '^(No|Ні)$' && sleep 3
+  if [ -f ui.xml ] && grep -q "Permissions Required" ui.xml; then
+    tap_ui '^No$' && sleep 3
   fi
 }
-# open_settings: from anywhere back to home, then the menu and Settings
-open_settings() {
-  open_menu
-  tap_drawer '^Settings$' 400 900
-  sleep 8
+
+# mark <text>: a line in steps.log and in logcat, so the verdict can cut logcat by install
+mark() {
+  echo "== $1" >> $STEPLOG
+  adb shell log -t T181 "== $1" < /dev/null || true
+}
+# The debug logs of the app in the QZ folder; pull_new_logs <dir> takes those that appeared
+# since the last call (a reinstall leaves the old ones there)
+logs_now() {
+  adb shell "ls $QZDIR/ < /dev/null" 2>/dev/null | tr -d '\r' | grep '^debug-.*\.log$' | sort
+}
+pull_new_logs() {
+  mkdir -p qz-logs/$1
+  logs_now > after.txt
+  for f in $(comm -13 before.txt after.txt); do
+    adb pull "$QZDIR/$f" qz-logs/$1/ > /dev/null 2>&1 || true
+  done
+  cp after.txt before.txt
+}
+list_qz() {
+  echo "-- ls $QZDIR ($1)" >> $STEPLOG
+  adb shell "ls -la $QZDIR $QZDIR/fit < /dev/null" >> $STEPLOG 2>&1 || true
 }
 
-# T-346: a fake treadmill, so the wizard stays closed
-put_conf "applewatch_fakedevice=true\nskipLocationServicesDialog=true\nconfirm_stop_workout=true\n"
+# No MANAGE_EXTERNAL_STORAGE: with it the app could open the files of another install, and
+# the reinstall would not be a reinstall any more
+install_app() {
+  adb install apk-debug/android-debug.apk
+  if ! adb shell "pm path $PKG < /dev/null" | grep -q "package:"; then
+    echo "!! APK NOT INSTALLED (install $1)" >> $STEPLOG
+    finish
+    exit 1
+  fi
+  for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
+    adb shell pm grant $PKG android.permission.$p || true
+  done
+  for p in EXERCISE DISTANCE TOTAL_CALORIES_BURNED HEART_RATE POWER SPEED CYCLING_PEDALING_CADENCE ELEVATION_GAINED STEPS STEPS_CADENCE HEART_RATE_VARIABILITY; do
+    adb shell pm grant $PKG android.permission.health.WRITE_$p || true
+  done
+  # a fake treadmill keeps the wizard closed
+  put_conf "applewatch_fakedevice=true\nskipLocationServicesDialog=true\nconfirm_stop_workout=true\n"
+}
+# open_history <stage>: the side menu > Workouts History; OFFER=1 when the recovery offer
+# shows within about 40 s (it waits for the start-up processing of the history)
+open_history() {
+  local i
+  OFFER=0
+  open_menu
+  tap_drawer 'Workouts History' 400 1500
+  for i in 1 2 3 4 5 6 7 8; do
+    sleep 5
+    dump
+    if [ -f ui.xml ] && grep -q "previous installation" ui.xml; then
+      OFFER=1
+      break
+    fi
+  done
+  echo "recovery offer ($1): $OFFER" >> $STEPLOG
+}
+
+LOGCAT_PID=""
+finish() {
+  adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
+  adb shell screencap -p /sdcard/screenshot.png || true
+  adb pull /sdcard/screenshot.png > /dev/null 2>&1 || true
+  [ -n "$LOGCAT_PID" ] && kill $LOGCAT_PID 2>/dev/null
+  [ -n "$LOGCAT_PID" ] && wait $LOGCAT_PID 2>/dev/null
+  pull_new_logs end
+  rm -f before.txt after.txt qz.conf ui.xml
+  echo "== steps"; cat $STEPLOG
+}
+
+adb logcat -c || true
+adb logcat > full_logcat.txt 2>/dev/null &
+LOGCAT_PID=$!
+
+# --- 1. the previous install: a workout and ddb.sqlite of its own
+mark "install 1"
+install_app 1
 start_app
-shot h-01-home
-# about a minute of the session of the fake device, then Stop saves the FIT file
+shot s1-01-home
 sleep 60
 tap_ui 'Stop' 1200 2300
 sleep 3
-shot h-02-stop-confirm
+shot s1-02-stop-confirm
 tap_ui '^(Yes|OK|Stop)$' && echo "stop confirmed" >> $STEPLOG
 sleep 15
-shot h-03-after-stop
-# the end page of the workout, if any, back to home
-dump
-if [ -f ui.xml ] && ! python3 .github/uitap.py ui.xml 'Stop' > /dev/null; then
-  back "end page"; sleep 5
+shot s1-03-after-stop
+adb shell am force-stop $PKG
+sleep 3
+list_qz "after install 1"
+pull_new_logs s1
+if ! adb shell "ls $QZDIR/fit < /dev/null" 2>/dev/null | grep -qi '\.fit'; then
+  echo "!! no FIT file after install 1: the run proves nothing" >> $STEPLOG
+  finish
+  exit 1
 fi
-shot h-04-home
 
-open_menu
-tap_drawer 'Workouts History' 400 1500
-sleep 15
-# the database is not ddb.sqlite: the app offers to look for the workouts of a previous install
-dump
-if [ -f ui.xml ] && grep -q "previous installation" ui.xml; then
-  shot w-00-offer
+# --- 2. reinstall, the recovery through the folder import
+mark "install 2"
+adb uninstall $PKG
+install_app 2
+start_app
+shot s2-01-home
+open_history "install 2"
+OFFER2=$OFFER
+PICKED=0
+if [ "$OFFER2" = 1 ]; then
+  shot s2-02-offer
+  tap_ui '^Yes$'
+  sleep 6
+  shot_any s2-03-picker
+  # uitap.py matches the whole label, case-insensitively ("USE THIS FOLDER", "ALLOW")
+  if tap_any 'use this folder'; then
+    sleep 4
+    shot_any s2-04-allow
+    tap_any 'allow' && PICKED=1
+  fi
+  sleep 25
+  shot s2-05-after-import
+fi
+list_qz "after the import of install 2"
+pull_new_logs s2
+
+# --- 3. reinstall again, no restart of install 2 in between
+mark "install 3"
+adb uninstall $PKG
+install_app 3
+start_app
+shot s3-01-home
+open_history "install 3"
+OFFER3=$OFFER
+if [ "$OFFER3" = 1 ]; then
+  shot s3-02-offer
   tap_ui '^No$' && sleep 3
 fi
-shot w-01-history
-# the workout row: "<title>, <date>, <duration>"
-if tap_ui '.+, .*20[0-9][0-9].*, .+' 700 750; then
-  sleep 12
-  shot w-02-preview
-  back "preview"; sleep 4
-fi
+shot s3-03-history
+list_qz "install 3"
+pull_new_logs s3
+mark "end"
 
-adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
-shot screenshot
-kill $LOGCAT_PID 2>/dev/null || true
-wait $LOGCAT_PID 2>/dev/null || true
-adb logcat -d > end_logcat.txt || true
-if [ "$(wc -l < full_logcat.txt)" -lt "$(wc -l < end_logcat.txt)" ]; then
-  mv end_logcat.txt full_logcat.txt
-else
-  rm -f end_logcat.txt
-fi
-mkdir -p qz-logs
-for f in $(adb shell "ls $QZDIR/*.log < /dev/null" 2>/dev/null | tr -d '\r'); do
-  adb pull "$f" qz-logs/ > /dev/null 2>&1 || true
-done
-grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
-
-# T-346 verdict: the run proves something only with the database in the private folder
-cat full_logcat.txt qz-logs/*.log 2>/dev/null > all.txt
-grep -m3 "history database" all.txt | sed 's/^/log: /' >> $STEPLOG || true
-grep -m3 "fitfile_preview_clicked called\|Opening FIT file\|FIT file read:\|FIT file does not exist" all.txt | sed 's/^/log: /' >> $STEPLOG || true
+# --- verdict: logcat cut by the marks, with the debug logs of the same install
+sleep 2
+stage() {
+  awk -v a="== install $1" -v b="== $2" 'index($0, a) { on = 1; next } index($0, b) { on = 0 } on' full_logcat.txt
+  cat qz-logs/s$1/*.log 2>/dev/null
+}
+stage 2 "install 3" > s2.txt
+stage 3 "end" > s3.txt
 FAIL=0
-if ! grep -q "every name in the QZ folder is taken" all.txt; then
-  echo "!! database not in the private folder: the run proves nothing" >> $STEPLOG; FAIL=1
+for s in 2 3; do
+  grep -m2 "history database:" s$s.txt | sed "s/^/log $s: /" >> $STEPLOG || true
+done
+grep -m6 "deleteOldHistoryDatabase\|handleFitFolderResult\|FitDatabaseProcessor import:\|history database name taken" s2.txt |
+  sed 's/^/log 2: /' >> $STEPLOG || true
+if ! grep "history database:" s2.txt | grep -q "ddb-[0-9]*\.sqlite"; then
+  echo "!! install 2 is not on a spare database: the run proves nothing" >> $STEPLOG; FAIL=1
 fi
-adb shell ls -la $QZDIR/fit >> $STEPLOG 2>&1 || true
-grep -m2 "Processing FIT file" all.txt | sed 's/^/log: /' >> $STEPLOG || true
-if ! grep -q "Processing FIT file" all.txt; then
-  echo "!! the FIT file never reached the history" >> $STEPLOG; FAIL=1
+if [ "$OFFER2" != 1 ] || [ "$PICKED" != 1 ]; then
+  echo "!! install 2: offer $OFFER2, folder picked $PICKED - the run proves nothing" >> $STEPLOG; FAIL=1
 fi
-if grep -q "FIT file does not exist" all.txt; then
-  echo "!! preview: FIT file does not exist" >> $STEPLOG; FAIL=1
-elif grep -q "FIT file read: [1-9]" all.txt; then
-  echo "OK preview: FIT file read" >> $STEPLOG
-else
-  echo "!! preview never opened" >> $STEPLOG; FAIL=1
+if ! grep -q "deleteOldHistoryDatabase.*deleted=true" s2.txt; then
+  echo "!! install 2: the old ddb.sqlite was not removed - the run proves nothing" >> $STEPLOG; FAIL=1
 fi
-rm -f all.txt
-echo "== steps"; cat $STEPLOG
-echo "== QML warnings"; grep -iE "qrc:|\.qml:[0-9]+" full_logcat.txt | grep -iE "warning|error|ReferenceError|TypeError" | sort | uniq -c | sort -nr | head -40 || true
+if [ "$FAIL" = 0 ]; then
+  if [ "$OFFER3" = 1 ]; then
+    echo "OK T-181: the recovery is offered after the second reinstall" >> $STEPLOG
+  else
+    echo "!! T-181: no recovery offer after the second reinstall (the defect)" >> $STEPLOG; FAIL=1
+  fi
+fi
+rm -f s2.txt s3.txt
+grep -E "ANR in|FATAL EXCEPTION" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
+finish
 exit $FAIL
