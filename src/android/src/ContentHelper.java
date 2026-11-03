@@ -287,4 +287,168 @@ public class ContentHelper {
 
         return value.replace('\\', '_').replace('/', '_').trim();
     }
+
+    // One import of a folder of workouts (CustomQtActivity.importFitFilesFromTree). After every
+    // reinstall Documents/QZ/fit holds one more copy of each workout (the new install cannot read
+    // the copies of the previous one), so a folder import meets the same workout many times. Each
+    // picked file is hashed once and compared with the files of the destination folder, each of
+    // them read at most once per import: a workout that is already there is not copied again, a
+    // new one is copied under a free name.
+    public static class FolderImport {
+        private final File destinationDir;
+        // content hash -> local path, for the files of the folder read so far and the ones copied
+        private final java.util.HashMap<String, String> pathByHash = new java.util.HashMap<String, String>();
+        // files of the folder not read yet, listed on first need
+        private java.util.ArrayList<File> unread = null;
+        // bytes read by the last sha256 call
+        private long hashedLength = 0;
+        // local paths already passed on by isNewPath
+        private final java.util.HashSet<String> passedOn = new java.util.HashSet<String>();
+
+        public FolderImport(String destinationDirPath) {
+            destinationDir = new File(destinationDirPath == null ? "" : destinationDirPath);
+        }
+
+        // true the first time path is asked about: the copies of one workout give the same local
+        // path, and the native side needs it once
+        public boolean isNewPath(String path) {
+            return passedOn.add(path);
+        }
+
+        // Local path of the picked file uri, "" when it cannot be imported. fileName and size are
+        // the ones reported by the provider, size -1 when unknown.
+        public String importFile(Context context, Uri uri, String fileName, long size) {
+            String name = sanitizeFileName(fileName);
+            if (name.isEmpty()) {
+                return importContentToAppDirKeepExisting(context, uri, fileName, size, destinationDir.getPath());
+            }
+            // a readable file of the folder with the same name and size is taken without reading
+            // (Documents/QZ was picked, and its "fit" subfolder is the destination itself)
+            File sameName = new File(destinationDir, name);
+            if (size > 0 && sameName.length() == size && isReadable(sameName)) {
+                return sameName.getAbsolutePath();
+            }
+            String hash = sha256(context, uri);
+            if (hash == null) {
+                QLog.d("ContentHelper", "FolderImport could not read " + uri);
+                return "";
+            }
+            String copy = findCopy(hash, hashedLength);
+            if (copy != null) {
+                return copy;
+            }
+            if (!destinationDir.exists() && !destinationDir.mkdirs()) {
+                QLog.d("ContentHelper", "FolderImport could not create " + destinationDir);
+                return "";
+            }
+            int dot = name.lastIndexOf('.');
+            String base = dot > 0 ? name.substring(0, dot) : name;
+            String extension = dot > 0 ? name.substring(dot) : "";
+            for (int attempt = 0; attempt < 100; attempt++) {
+                File destinationFile = new File(destinationDir, attempt == 0 ? name : base + "_" + attempt + extension);
+                // a file of a previous install keeps its name taken
+                if (destinationFile.exists()) {
+                    continue;
+                }
+                if (copyContentToFile(context, uri, destinationFile.getAbsolutePath())) {
+                    pathByHash.put(hash, destinationFile.getAbsolutePath());
+                    return destinationFile.getAbsolutePath();
+                }
+                destinationFile.delete();
+            }
+            QLog.d("ContentHelper", "FolderImport gave up on " + name);
+            return "";
+        }
+
+        // A file of the folder with this content, or null. Only files whose size can match are read;
+        // a size of 0 is read too: under FUSE passthrough a recently written file can report 0.
+        private String findCopy(String hash, long length) {
+            String known = pathByHash.get(hash);
+            if (known != null) {
+                return known;
+            }
+            if (unread == null) {
+                unread = new java.util.ArrayList<File>();
+                File[] files = destinationDir.listFiles();
+                if (files != null) {
+                    for (File file : files) {
+                        if (file.isFile()) {
+                            unread.add(file);
+                        }
+                    }
+                }
+            }
+            java.util.Iterator<File> iterator = unread.iterator();
+            while (iterator.hasNext()) {
+                File file = iterator.next();
+                long fileLength = file.length();
+                if (fileLength != length && fileLength != 0) {
+                    continue;
+                }
+                iterator.remove();
+                // null: not readable, a file of a previous install
+                String fileHash;
+                try {
+                    fileHash = sha256(new java.io.FileInputStream(file));
+                } catch (Exception e) {
+                    fileHash = null;
+                }
+                if (fileHash == null) {
+                    continue;
+                }
+                if (!pathByHash.containsKey(fileHash)) {
+                    pathByHash.put(fileHash, file.getAbsolutePath());
+                }
+                if (fileHash.equals(hash)) {
+                    return file.getAbsolutePath();
+                }
+            }
+            return null;
+        }
+
+        private String sha256(Context context, Uri uri) {
+            try {
+                return sha256(context.getContentResolver().openInputStream(uri));
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        // Hash of the content of in, which is closed here; null when it cannot be read. The number
+        // of bytes read goes to hashedLength.
+        private String sha256(InputStream in) {
+            if (in == null) {
+                return null;
+            }
+            try {
+                java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
+                byte[] buffer = new byte[65536];
+                long total = 0;
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    digest.update(buffer, 0, read);
+                    total += read;
+                }
+                hashedLength = total;
+                return hex(digest.digest());
+            } catch (Exception e) {
+                return null;
+            } finally {
+                try {
+                    if (in != null) {
+                        in.close();
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+        }
+
+        private static String hex(byte[] bytes) {
+            StringBuilder result = new StringBuilder();
+            for (byte b : bytes) {
+                result.append(Character.forDigit((b >> 4) & 0xf, 16)).append(Character.forDigit(b & 0xf, 16));
+            }
+            return result.toString();
+        }
+    }
 }

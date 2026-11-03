@@ -412,9 +412,9 @@ public class CustomQtActivity extends QtActivity {
     }
 
     // Copies the .fit files of the picked folder and of its "fit" subfolder into destinationDir
-    // and passes their local paths, one per line, to the native side. An empty string still goes
-    // through, so the app can say that no workout was found. The copy runs off the UI thread:
-    // a folder can hold hundreds of workouts.
+    // and passes their local paths, one per line and each once, to the native side. An empty
+    // string still goes through, so the app can say that no workout was found. The copy runs off
+    // the UI thread: a folder can hold hundreds of workouts.
     // A saved grant that finds nothing may be stale (folder removed or renamed): it is dropped
     // and the picker opens, so the user can always choose the folder again.
     private void handleFitFolderResult(final int requestCode, final int resultCode, Intent data,
@@ -444,9 +444,11 @@ public class CustomQtActivity extends QtActivity {
             @Override
             public void run() {
                 StringBuilder localPaths = new StringBuilder();
+                long started = android.os.SystemClock.elapsedRealtime();
                 try {
                     String rootId = android.provider.DocumentsContract.getTreeDocumentId(treeUri);
-                    importFitFilesFromTree(treeUri, rootId, destinationDir, localPaths, true);
+                    importFitFilesFromTree(treeUri, rootId, new ContentHelper.FolderImport(destinationDir), localPaths,
+                                           true);
                     // only in the QZ folder itself, never in another folder the user picked
                     if (removeOldDatabase && localPaths.length() > 0 && QZ_DOCUMENTS_TREE_ID.equals(rootId)) {
                         deleteOldHistoryDatabase(treeUri, rootId, keepDatabase);
@@ -454,8 +456,9 @@ public class CustomQtActivity extends QtActivity {
                 } catch (Exception e) {
                     Log.d(TAG, "handleFitFolderResult failed " + e);
                 }
-                Log.d(TAG, "handleFitFolderResult requestCode=" + requestCode + " savedGrant=" + fromSavedGrant
-                    + " files=" + (localPaths.length() == 0 ? 0 : localPaths.toString().split("\n").length));
+                QLog.d(TAG, "handleFitFolderResult requestCode=" + requestCode + " savedGrant=" + fromSavedGrant
+                    + " files=" + (localPaths.length() == 0 ? 0 : localPaths.toString().split("\n").length)
+                    + " ms=" + (android.os.SystemClock.elapsedRealtime() - started));
                 if (fromSavedGrant && localPaths.length() == 0) {
                     releaseFolderGrant(treeUri);
                     if (allowPicker) {
@@ -550,7 +553,7 @@ public class CustomQtActivity extends QtActivity {
         }
     }
 
-    private void importFitFilesFromTree(Uri treeUri, String parentId, String destinationDir,
+    private void importFitFilesFromTree(Uri treeUri, String parentId, ContentHelper.FolderImport folderImport,
                                         StringBuilder localPaths, boolean descendIntoFit) {
         Uri childrenUri = android.provider.DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, parentId);
         String[] projection = new String[] {
@@ -571,7 +574,7 @@ public class CustomQtActivity extends QtActivity {
                 }
                 if (android.provider.DocumentsContract.Document.MIME_TYPE_DIR.equals(mimeType)) {
                     if (descendIntoFit && name.equalsIgnoreCase("fit")) {
-                        importFitFilesFromTree(treeUri, documentId, destinationDir, localPaths, false);
+                        importFitFilesFromTree(treeUri, documentId, folderImport, localPaths, false);
                     }
                     continue;
                 }
@@ -582,9 +585,8 @@ public class CustomQtActivity extends QtActivity {
                     continue;
                 }
                 Uri documentUri = android.provider.DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId);
-                String localPath = ContentHelper.importContentToAppDirKeepExisting(this, documentUri, name, size,
-                                                                                   destinationDir);
-                if (!localPath.isEmpty()) {
+                String localPath = folderImport.importFile(this, documentUri, name, size);
+                if (!localPath.isEmpty() && folderImport.isNewPath(localPath)) {
                     if (localPaths.length() > 0) {
                         localPaths.append('\n');
                     }
