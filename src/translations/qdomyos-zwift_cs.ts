@@ -7893,14 +7893,6 @@ Výchozí: A = -0.96, B = 1.33</translation>
         <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
         <translation>Jen iOS. Udrží QZ v chodu při vypnuté obrazovce nebo na pozadí, aby připojení Bluetooth a časovače relace nezamrzaly. Používá tichou zvukovou stopu smíchanou s vaší hudbou, takže nic, co posloucháte, se nepřeruší. Zapněte, pokud potřebujete trénovat se zamčenou obrazovkou nebo s QZ na pozadí. Výchozí: vypnuto.</translation>
     </message>
-    <message>
-        <source>Snap tiles to rows</source>
-        <translation>Přichytávat dlaždice k řádkům</translation>
-    </message>
-    <message>
-        <source>When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.</source>
-        <translation>Když se dlaždice na hlavní obrazovce přestanou posouvat, zastaví se na celém řádku nebo na konci seznamu, takže žádná dlaždice není useknutá napůl.</translation>
-    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>

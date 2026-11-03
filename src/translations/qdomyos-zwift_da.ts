@@ -7852,14 +7852,6 @@ Standard: A = -0.96, B = 1.33</translation>
         <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
         <translation>Kun iOS. Holder QZ kørende, når skærmen er slukket, eller QZ er i baggrunden, så Bluetooth-forbindelserne og træningstimerne ikke fryser. QZ bruger et lydløst lydspor, der blandes med din musik, så det, du lytter til, ikke bliver afbrudt. Slå til, hvis du skal træne med låst skærm eller med QZ i baggrunden. Standard: fra.</translation>
     </message>
-    <message>
-        <source>Snap tiles to rows</source>
-        <translation>Juster felter efter rækker</translation>
-    </message>
-    <message>
-        <source>When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.</source>
-        <translation>Når felterne på hovedskærmen stopper med at rulle, falder de på plads ved en hel række eller ved slutningen af listen, så intet felt skæres over.</translation>
-    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>

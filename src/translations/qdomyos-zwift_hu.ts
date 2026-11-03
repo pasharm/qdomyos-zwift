@@ -7852,14 +7852,6 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
         <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
         <translation>Csak iOS-en. Kikapcsolt képernyő mellett vagy a háttérben is futva tartja a QZ-t, hogy a Bluetooth-kapcsolatok és a munkamenet időzítői ne fagyjanak le. Ehhez néma hangsávot használ, amely összekeveredik a zenével, így semmi sem szakad meg abból, amit hallgat. Kapcsolja be, ha lezárt képernyővel vagy a háttérben futó QZ-vel szeretne edzeni. Alapértelmezett: ki.</translation>
     </message>
-    <message>
-        <source>Snap tiles to rows</source>
-        <translation>Csempék igazítása a sorokhoz</translation>
-    </message>
-    <message>
-        <source>When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.</source>
-        <translation>Amikor a főképernyő csempéi görgetés után megállnak, egy teljes sorra vagy a lista végére igazodnak, így egyik csempe sem vágódik ketté.</translation>
-    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>

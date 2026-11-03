@@ -3454,13 +3454,6 @@ class QZSettings {
     static constexpr bool default_moovio_lynx_konect_2_0 = false;
 
     /**
-     * @brief The tiles of the main page settle on a whole row (or on the end of the list) when a
-     * scroll stops.
-     */
-    static const QString ui_tile_snap;
-    static constexpr bool default_ui_tile_snap = false;
-
-    /**
      * @brief Write the QSettings values using the constants from this namespace.
      * @param showDefaults Optionally indicates if the default should be shown with the key.
      */

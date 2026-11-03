@@ -2391,7 +2391,6 @@ import AndroidStatusBar 1.0
             property bool proform_treadmill_sport_55: false
             property string daum_serialport: ""
             property real trainprogram_inclination_filter: 0.0
-            property bool ui_tile_snap: false
 
         }
 
@@ -2407,7 +2406,6 @@ import AndroidStatusBar 1.0
             function onTheme_tile_shadow_colorChanged() { window.tileSettingChanged("theme_tile_shadow_color", settings.theme_tile_shadow_color) }
             function onTheme_tile_secondline_textsizeChanged() { window.tileSettingChanged("theme_tile_secondline_textsize", settings.theme_tile_secondline_textsize) }
             function onTrainprogram_sound_on_segmentChanged() { window.tileSettingChanged("trainprogram_sound_on_segment", settings.trainprogram_sound_on_segment) }
-            function onUi_tile_snapChanged() { window.tileSettingChanged("ui_tile_snap", settings.ui_tile_snap) }
         }
 
 
@@ -7345,36 +7343,6 @@ import AndroidStatusBar 1.0
                     }
                     Label {
                         text: qsTr("This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.")
-                        font.bold: true
-                        font.italic: true
-                        font.pixelSize: window.fontHint
-                        bottomPadding: window.hintGap
-                        textFormat: Text.PlainText
-                        wrapMode: Text.WordWrap
-                        verticalAlignment: Text.AlignVCenter
-                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                        width: column1.width * 0.8
-                        Layout.fillWidth: true
-                        color: Material.color(Material.Lime)
-                    }
-
-                    IndicatorOnlySwitch {
-                        id: tileSnapDelegate
-                        text: qsTr("Snap tiles to rows")
-                        spacing: 0
-                        bottomPadding: 0
-                        topPadding: 0
-                        rightPadding: 0
-                        leftPadding: 0
-                        clip: false
-                        checked: settings.ui_tile_snap
-                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-                        Layout.fillWidth: true
-                        onClicked: settings.ui_tile_snap = checked
-                    }
-
-                    Label {
-                        text: qsTr("When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.")
                         font.bold: true
                         font.italic: true
                         font.pixelSize: window.fontHint

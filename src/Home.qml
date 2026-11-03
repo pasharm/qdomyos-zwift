@@ -47,7 +47,6 @@ HomeForm {
         property int theme_tile_secondline_textsize: 12
         property bool skipLocationServicesDialog: false
         property bool trainprogram_sound_on_segment: false
-        property bool ui_tile_snap: false
     }
 
     // The settings page writes through its own Settings copy, and a copy reads the stored values
@@ -441,19 +440,16 @@ HomeForm {
             barSnap.stop()
             listSnap.stop()
         }
-        // The gap between two rows of tiles: a tile is drawn 123 high at the top of its cell
-        readonly property real rowGap: cellHeight - 123 * settings.ui_zoom / 100
         onMovementEnded: {
             if (window.lockTiles)
                 return
             var b = headerToolbar.barShift, h = headerToolbar.contentHeight
-            var maxS = Math.max(contentHeight - height, 0)
-            var s = Math.min(Math.max(scrolledNow, 0), maxS)
+            var s = Math.min(Math.max(scrolledNow, 0), Math.max(contentHeight - height, 0))
             if (s > 0 && s < h) {
                 // The toolbar follows the list back to the top by itself (barShift <= s). A list
                 // longer than the page by less than the toolbar ends first: then the toolbar goes
                 // only as far as the list, so the last row stays in view
-                var end = Math.min(h, maxS)
+                var end = Math.min(h, contentHeight - height)
                 var hide = b >= end / 2
                 listSnap.to = originY + (hide ? end : 0)
                 listSnap.start()
@@ -461,42 +457,26 @@ HomeForm {
                     barSnap.to = end
                     barSnap.start()
                 }
-                return
-            }
-            var bTo = b > 0 && b < h ? (b < h / 2 ? 0 : h) : b
-            if (bTo !== b) {
-                barSnap.to = bTo
-                barSnap.start()
-            }
-            // Snap tiles to rows (setting): deeper in the list the scroll settles with a whole row
-            // at the top of the shown area, under the toolbar or under the status bar, and the gap
-            // there is between rows above it, so no tile is cut in half; or on the end of the
-            // list, whichever is nearer. Above the first row it settles on the nearer of the first
-            // row and the Start/Stop row. It runs once the movement has ended, so a flick settles
-            // by the row where it stopped by itself. Moving a tile scrolls the grid by contentY,
-            // which ends no movement, so it does not snap
-            if (!settings.ui_tile_snap || s <= 0)
-                return
-            // In scrolledNow: the Start/Stop row at the top of the shown area is bTo, the first
-            // row of tiles with the gap above it is first
-            var first = rowsRoom - barRoom + bTo - rowGap
-            var to
-            if (s < first) {
-                to = s - bTo < first - s ? bTo : first
             } else {
-                var row = first + Math.round((s - first) / cellHeight) * cellHeight
-                to = row > maxS || Math.abs(maxS - s) < Math.abs(row - s) ? maxS : row
+                var bTo = b
+                if (b > 0 && b < h) {
+                    bTo = b < h / 2 ? 0 : h
+                    barSnap.to = bTo
+                    barSnap.start()
+                }
+                // The Start/Stop row does not come to rest cut either: a list that stopped between
+                // the row at the top of the shown area (under the toolbar or under the status bar)
+                // and the first row of tiles goes on to the nearer of them. The first row keeps the
+                // gap there is between rows above it. Deeper in the list it stays where it stopped
+                var first = rowsRoom - barRoom + bTo - rowGap
+                if (s <= bTo || s >= first)
+                    return
+                listSnap.to = originY + Math.min(s - bTo < first - s ? bTo : first, contentHeight - height)
+                listSnap.start()
             }
-            to = Math.min(to, maxS)
-            // With the top bar off the first row under the toolbar is only the gap below the top:
-            // the top then, not a rest inside the toolbar's room
-            if (to > 0 && to < h)
-                to = 0
-            if (Math.abs(to - s) < 1)
-                return
-            listSnap.to = originY + to
-            listSnap.start()
         }
+        // The gap between two rows of tiles: a tile is drawn 123 high at the top of its cell
+        readonly property real rowGap: cellHeight - 123 * settings.ui_zoom / 100
         // Test only (T-091 emulator): where the scroll came to rest, measured on the tiles
         // themselves. startRow is the top of the Start/Stop row below the top of the shown area
         // (0 = at it), tileGap the room between that top and the first whole row of tiles
@@ -512,7 +492,8 @@ HomeForm {
             for (var i = 0; i < 3 && item && item.y < y0 - 0.5; i++)
                 item = contentItem.childAt(cellWidth / 2, item.y + (item.y < 0 ? item.height : cellHeight) + 1)
             var gap = item ? item.y - y0 : NaN
-            console.log("QZ-SNAP " + tag + " snap=" + settings.ui_tile_snap + " s=" + s.toFixed(1) + " bar=" + b.toFixed(1)
+            var first = rowsRoom - barRoom + b - rowGap
+            console.log("QZ-SNAP " + tag + " s=" + s.toFixed(1) + " bar=" + b.toFixed(1) + " first=" + first.toFixed(1)
                         + " h=" + h + " maxS=" + maxS.toFixed(1) + " cell=" + cellHeight + " rowGap=" + rowGap.toFixed(1)
                         + " startRow=" + (b - s).toFixed(1) + " tileGap=" + gap.toFixed(1) + " itemY=" + (item ? item.y : "none"))
         }
