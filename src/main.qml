@@ -56,13 +56,13 @@ ApplicationWindow {
     function getLeftPadding() {
         if (Qt.platform.os !== "android" || AndroidStatusBar.apiLevel < 31) return 0;
         return (Screen.orientation === Qt.LandscapeOrientation || Screen.orientation === Qt.InvertedLandscapeOrientation) ?
-               (settings.android_landscape_cutout_margin ? AndroidStatusBar.leftInset : AndroidStatusBar.systemBarLeftInset) : 0;
+               (cutoutMarginSettings.android_landscape_cutout_margin ? AndroidStatusBar.leftInset : AndroidStatusBar.systemBarLeftInset) : 0;
     }
 
     function getRightPadding() {
         if (Qt.platform.os !== "android" || AndroidStatusBar.apiLevel < 31) return 0;
         return (Screen.orientation === Qt.LandscapeOrientation || Screen.orientation === Qt.InvertedLandscapeOrientation) ?
-               (settings.android_landscape_cutout_margin ? AndroidStatusBar.rightInset : AndroidStatusBar.systemBarRightInset) : 0;
+               (cutoutMarginSettings.android_landscape_cutout_margin ? AndroidStatusBar.rightInset : AndroidStatusBar.systemBarRightInset) : 0;
     }
 
     // Side margin for text, after the Material 3 window margins (16 on compact windows
@@ -170,8 +170,6 @@ ApplicationWindow {
         property string profile_name: "default"        
         property string theme_status_bar_background_color: "#800080"
         property bool volume_change_gears: false
-        property string peloton_username: "username"
-        property string peloton_password: "password"
 
         property bool gym_mode: false
 
@@ -241,10 +239,33 @@ ApplicationWindow {
         property string shortcut_lap: ""
         property string shortcut_start_stop: ""
         property string shortcut_stop: ""
-        property bool android_landscape_cutout_margin: true
-        property bool android_landscape_cutout_prompt_shown: false
+    }
+
+    // The keys the window writes itself sit in copies of their own, like the one of profiles.qml.
+    // A change of any property makes Qt.labs.settings write every property of its copy, and the
+    // copy above holds what was read at start: with these keys in it, a write here put back the
+    // old values of the settings changed on the settings page since then (gym mode, shortcuts)
+    Settings {
+        id: textScaleSettings
+        Component.onCompleted: retakeSettingsSnapshot(textScaleSettings)
+        // the settings page writes both through setTextScaleOption too, so they are never stale
         property int ui_text_scale: 100
         property bool ui_text_scale_system: true
+    }
+    Settings {
+        id: pelotonLoginSettings
+        Component.onCompleted: retakeSettingsSnapshot(pelotonLoginSettings)
+        // written together, by the Peloton authentication question
+        property string peloton_username: "username"
+        property string peloton_password: "password"
+    }
+    Settings {
+        id: cutoutMarginSettings
+        property bool android_landscape_cutout_margin: true
+    }
+    Settings {
+        id: cutoutPromptSettings
+        property bool android_landscape_cutout_prompt_shown: false
     }
 
     // Text size of the app (not the tiles, they follow ui_zoom). On Android and iOS it follows the
@@ -254,9 +275,9 @@ ApplicationWindow {
     readonly property bool systemTextScaleAvailable: Qt.platform.os === "android" || Qt.platform.os === "ios"
     readonly property real systemTextScaleCap: 1.5
     property real systemTextScale: AndroidStatusBar.systemFontScale()
-    readonly property real textScale: systemTextScaleAvailable && settings.ui_text_scale_system
+    readonly property real textScale: systemTextScaleAvailable && textScaleSettings.ui_text_scale_system
         ? Math.max(0.8, Math.min(systemTextScaleCap, systemTextScale))
-        : Math.max(0.8, Math.min(1.7, settings.ui_text_scale / 100))
+        : Math.max(0.8, Math.min(1.7, textScaleSettings.ui_text_scale / 100))
     // At 100 % every size stays exactly as before
     function fontPx(base) { return textScale === 1 ? base : Math.round(base * textScale) }
     // On iOS the app font is not the one of the controls: Qt gives it the size of the body text,
@@ -304,7 +325,7 @@ ApplicationWindow {
     // The settings page has its own Settings object, which this one does not hear about until a
     // restart: the text size options are written through here, so the size changes at once
     function setTextScaleOption(key, value) {
-        settings[key] = value
+        textScaleSettings[key] = value
     }
     // The system text size is changed in the phone settings, while QZ is in the background
     Connections {
@@ -564,8 +585,8 @@ ApplicationWindow {
            informativeText: qsTr("Peloton has moved to a new authentication system. Username and password are no longer required.\n\nWould you like to switch to the new authentication method now?")
            buttons: (MessageDialog.Yes | MessageDialog.No)
            onYesClicked: {
-               settings.peloton_username = "username"
-               settings.peloton_password = "password"
+               pelotonLoginSettings.peloton_username = "username"
+               pelotonLoginSettings.peloton_password = "password"
                stackView.push("WebPelotonAuth.qml")
                peloton_connect_clicked()
            }
@@ -579,7 +600,7 @@ ApplicationWindow {
        running: true
        repeat: false
        onTriggered: {
-           if (settings.peloton_password !== "password") {
+           if (pelotonLoginSettings.peloton_password !== "password") {
                popupPelotonAuth.visible = true
            }
        }
@@ -935,16 +956,20 @@ ApplicationWindow {
     // the content go under the cutout instead. The delay lets the rotation settle first.
     readonly property bool landscapeCutoutPromptDue: Qt.platform.os === "android" && AndroidStatusBar.apiLevel >= 31 &&
         (Screen.orientation === Qt.LandscapeOrientation || Screen.orientation === Qt.InvertedLandscapeOrientation) &&
-        settings.android_landscape_cutout_margin && !settings.android_landscape_cutout_prompt_shown &&
+        cutoutMarginSettings.android_landscape_cutout_margin && !cutoutPromptSettings.android_landscape_cutout_prompt_shown &&
         // the cutout safe inset also covers curved (waterfall) edges, which are not a camera
         (AndroidStatusBar.leftInset > Math.max(AndroidStatusBar.systemBarLeftInset, AndroidStatusBar.waterfallLeftInset) ||
          AndroidStatusBar.rightInset > Math.max(AndroidStatusBar.systemBarRightInset, AndroidStatusBar.waterfallRightInset))
+    // The settings page keeps both cutout keys in its own copy, read when it opened, and its next
+    // write would put back what it read: the question waits until that page is closed
+    readonly property bool settingsPageInStack: stackView.depth > 1 &&
+        stackView.find(function(item) { return typeof item.showSettingsSearch === "function" }) !== null
 
     Timer {
         interval: 5000
-        running: window.landscapeCutoutPromptDue
+        running: window.landscapeCutoutPromptDue && !window.settingsPageInStack
         onTriggered: {
-            settings.android_landscape_cutout_prompt_shown = true
+            cutoutPromptSettings.android_landscape_cutout_prompt_shown = true
             popupLandscapeCutout.visible = true
         }
     }
@@ -954,7 +979,7 @@ ApplicationWindow {
         text: qsTr("Camera Cutout")
         informativeText: qsTr("In landscape, QZ keeps a margin on the camera side so the camera hole does not cover the content.\nDo you want to use the full screen width instead?\n\nYou can change it later in Settings > General UI Options > Keep Content Clear of the Camera Cutout.")
         buttons: (MessageDialog.Yes | MessageDialog.No)
-        onYesClicked: settings.android_landscape_cutout_margin = false
+        onYesClicked: cutoutMarginSettings.android_landscape_cutout_margin = false
         onNoClicked: this.visible = false
         visible: false
     }
