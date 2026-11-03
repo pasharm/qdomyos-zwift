@@ -352,6 +352,14 @@ public class ContentHelper {
             return "";
         }
 
+        // true when fileName in the destination folder is a file left by a previous install (it
+        // keeps its name, but this install cannot read it) and ownCopy, the path importFile gave
+        // for it, is another file
+        public boolean isPreviousInstallCopy(String fileName, String ownCopy) {
+            File file = new File(destinationDir, sanitizeFileName(fileName));
+            return !file.getAbsolutePath().equals(ownCopy) && file.exists() && !isReadable(file);
+        }
+
         // A file of the folder with this content, or null. Only files whose size can match are read;
         // a size of 0 is read too: under FUSE passthrough a recently written file can report 0.
         private String findCopy(String hash, long length) {

@@ -447,8 +447,12 @@ public class CustomQtActivity extends QtActivity {
                 long started = android.os.SystemClock.elapsedRealtime();
                 try {
                     String rootId = android.provider.DocumentsContract.getTreeDocumentId(treeUri);
+                    // the "fit" subfolder of the QZ folder is the destination itself only there
+                    boolean qzFitFolder = QZ_DOCUMENTS_TREE_ID.equals(rootId)
+                        && new java.io.File(destinationDir).getAbsolutePath().equals(new java.io.File(
+                            android.os.Environment.getExternalStorageDirectory(), "Documents/QZ/fit").getAbsolutePath());
                     importFitFilesFromTree(treeUri, rootId, new ContentHelper.FolderImport(destinationDir), localPaths,
-                                           true);
+                                           true, qzFitFolder);
                     // only in the QZ folder itself, never in another folder the user picked
                     if (removeOldDatabase && localPaths.length() > 0 && QZ_DOCUMENTS_TREE_ID.equals(rootId)) {
                         deleteOldHistoryDatabase(treeUri, rootId, keepDatabase);
@@ -553,8 +557,11 @@ public class CustomQtActivity extends QtActivity {
         }
     }
 
+    // qzFitFolder: the picked folder is the QZ folder, and its "fit" subfolder is the destination.
+    // There a file of a previous install whose bytes the import now has in a file of its own is
+    // removed through the grant: every reinstall would leave one more copy otherwise.
     private void importFitFilesFromTree(Uri treeUri, String parentId, ContentHelper.FolderImport folderImport,
-                                        StringBuilder localPaths, boolean descendIntoFit) {
+                                        StringBuilder localPaths, boolean descendIntoFit, boolean qzFitFolder) {
         Uri childrenUri = android.provider.DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, parentId);
         String[] projection = new String[] {
             android.provider.DocumentsContract.Document.COLUMN_DOCUMENT_ID,
@@ -574,7 +581,7 @@ public class CustomQtActivity extends QtActivity {
                 }
                 if (android.provider.DocumentsContract.Document.MIME_TYPE_DIR.equals(mimeType)) {
                     if (descendIntoFit && name.equalsIgnoreCase("fit")) {
-                        importFitFilesFromTree(treeUri, documentId, folderImport, localPaths, false);
+                        importFitFilesFromTree(treeUri, documentId, folderImport, localPaths, false, qzFitFolder);
                     }
                     continue;
                 }
@@ -591,6 +598,9 @@ public class CustomQtActivity extends QtActivity {
                         localPaths.append('\n');
                     }
                     localPaths.append(localPath);
+                    if (!descendIntoFit && qzFitFolder && folderImport.isPreviousInstallCopy(name, localPath)) {
+                        deleteTreeDocument(treeUri, documentId);
+                    }
                 }
             }
         } catch (Exception e) {
