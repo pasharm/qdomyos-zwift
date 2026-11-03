@@ -315,13 +315,15 @@ ApplicationWindow {
         property string shortcut_stop: ""
         property bool android_landscape_cutout_margin: true
         property bool android_landscape_cutout_prompt_shown: false
+        property int ui_text_scale: 100
+        property bool ui_text_scale_system: true
+        // new keys only at the end: on the first start Qt.labs.settings resets the stored
+        // keys declared after a missing one
         property bool ui_modern: true
         property string ui_theme: "graphite"
         property string ui_accent: "violet"
         property string ui_theme_mode: "auto"
         property bool ui_tile_snap: true
-        property int ui_text_scale: 100
-        property bool ui_text_scale_system: true
         property bool ui_state_buttons: true
     }
 
