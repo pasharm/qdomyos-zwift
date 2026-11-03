@@ -268,16 +268,14 @@ jobs:
           # gets folders for ABIs that QZ is not built for
           rsync -a --exclude build --exclude .gradle --exclude /libs/armeabi-v7a --exclude /libs/x86 android/ ${{ github.workspace }}/output/android/
           androiddeployqt --input android-qdomyos-zwift-deployment-settings.json --output ${{ github.workspace }}/output/android/ --android-platform android-37.0 --gradle --aux-mode
-          # The QZ library is ~230 MB per ABI, ~200 MB of it debug info: the full copy goes to a
-          # separate artifact (to symbolise crashes), the APK gets the stripped one.
-          STRIP=/usr/local/lib/android/sdk/ndk/21.1.6352462/toolchains/llvm/prebuilt/linux-x86_64/bin/llvm-strip
+          # The QZ library is ~230 MB per ABI, ~200 MB of it debug info. The APK keeps it unstripped:
+          # a stripped ~100 MB APK makes Play Protect ask to scan it on every install from a file,
+          # the ~300 MB one does not. A copy also goes to a separate artifact (to symbolise crashes).
           mkdir -p ${{ github.workspace }}/symbols
           for so in ${{ github.workspace }}/output/android/libs/*/libqdomyos-zwift_*.so; do
             abi=$(basename "$(dirname "$so")")
             mkdir -p "${{ github.workspace }}/symbols/$abi"
             cp "$so" "${{ github.workspace }}/symbols/$abi/"
-            ls -l "$so"
-            "$STRIP" --strip-debug "$so"
             ls -l "$so"
           done
           export GRADLE_USER_HOME="${{ github.workspace }}/.gradle-android"
