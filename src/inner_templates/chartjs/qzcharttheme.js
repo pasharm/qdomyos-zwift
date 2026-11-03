@@ -185,6 +185,35 @@
             callbacks.label = function (item) { return clock(item.parsed.y); };
     }
 
+    // A touch that scrolls the page is not a look at a chart. Chart.js shows the tooltip on
+    // touchmove (and on the mousemove and click of a tap) and hides it only on mouseout, so a
+    // swipe across a chart left the tooltip of the last point under the finger, and a live
+    // redraw (an update in place replays the last event) kept it. Once the page scrolls, the
+    // charts drop their tooltip and last event the way a mouse leaving does and skip the rest of
+    // the touch, up to the next first finger; a tap and a held finger show it as before
+    var touchScrolled = false;
+    document.addEventListener('touchstart', function (e) {
+        if (e.touches.length === 1)
+            touchScrolled = false;
+    }, { capture: true, passive: true });
+    document.addEventListener('scroll', function () {
+        if (touchScrolled)
+            return;
+        touchScrolled = true;
+        charts.forEach(function (chart) {
+            if (chart.canvas)
+                chart.canvas.dispatchEvent(new MouseEvent('mouseout'));
+        });
+    }, true);
+    var scrollGuard = {
+        id: 'qzScrollGuard',
+        beforeEvent: function (chart, args) {
+            var e = args.event.native;
+            if (touchScrolled && e && e.type.indexOf('touch') === 0)
+                return false;
+        }
+    };
+
     function clock(seconds) {
         var s = Math.round(seconds), h = Math.floor(s / 3600), m = Math.floor(s % 3600 / 60);
         function two(n) { return (n < 10 ? '0' : '') + n; }
@@ -202,6 +231,7 @@
             var pal = palette();
             apply(config, list, pal);
             fullscreen('prepare', ctx.canvas, config.options);
+            config.plugins = (config.plugins || []).concat(scrollGuard);
             var chart = new Chart(ctx, config);
             chart.$qzPatches = list;
             chart.$qzPalette = pal;
