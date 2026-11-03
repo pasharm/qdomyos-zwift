@@ -509,8 +509,8 @@ class homeform : public QObject {
 #endif
     }
 
-    // "Nearby devices" denied (Android 12+): Bluetooth reads as off and the system prompt to switch
-    // it on can't be shown. main.cpp asks for the permission again at the next start.
+    // "Nearby devices" denied (Android 12+): the system prompt to switch Bluetooth on can't be shown.
+    // main.cpp asks for the permission again at the next start.
     Q_INVOKABLE bool bluetoothPermissionDenied() {
 #ifdef Q_OS_ANDROID
         return QtAndroid::androidSdkVersion() >= 31 &&
