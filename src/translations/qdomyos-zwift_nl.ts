@@ -280,6 +280,14 @@ Wil je dat nu doen?</translation>
         <source>Cancel</source>
         <translation>Annuleren</translation>
     </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Terug naar app</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Geeft de besturing van de belasting terug aan de app</translation>
+    </message>
 </context>
 <context>
     <name>HomeForm.ui</name>

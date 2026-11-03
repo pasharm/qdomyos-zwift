@@ -280,6 +280,14 @@ Would you like to enable the required services?</source>
         <source>Cancel</source>
         <translation>Отмена</translation>
     </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Вернуть приложению</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Возвращает управление нагрузкой приложению</translation>
+    </message>
 </context>
 <context>
     <name>HomeForm.ui</name>

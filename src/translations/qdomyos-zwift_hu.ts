@@ -276,6 +276,14 @@ Szeretné bekapcsolni a szükséges szolgáltatásokat?</translation>
         <source>Cancel</source>
         <translation>Mégse</translation>
     </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Vissza az alkalmazásnak</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Visszaadja a terhelés vezérlését az alkalmazásnak</translation>
+    </message>
 </context>
 <context>
     <name>HomeForm.ui</name>

@@ -280,6 +280,14 @@ Vil du slå på de nødvendige tjenestene?</translation>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Tilbake til appen</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Gir kontrollen over belastningen tilbake til appen</translation>
+    </message>
 </context>
 <context>
     <name>HomeForm.ui</name>

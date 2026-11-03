@@ -280,6 +280,14 @@ Restartovat nyní?</translation>
         <source>Cancel</source>
         <translation>Zrušit</translation>
     </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Vrátit aplikaci</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Vrátí řízení zátěže aplikaci</translation>
+    </message>
 </context>
 <context>
     <name>HomeForm.ui</name>

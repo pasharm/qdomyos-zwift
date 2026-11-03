@@ -280,6 +280,14 @@ Would you like to enable the required services?</source>
         <source>Cancel</source>
         <translation>Скасувати</translation>
     </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Повернути застосунку</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Повертає керування навантаженням застосунку</translation>
+    </message>
 </context>
 <context>
     <name>HomeForm.ui</name>

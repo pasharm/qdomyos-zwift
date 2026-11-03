@@ -280,6 +280,14 @@ Uruchomić ją ponownie teraz?</translation>
         <source>Cancel</source>
         <translation>Anuluj</translation>
     </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Oddaj aplikacji</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Oddaje sterowanie obciążeniem aplikacji</translation>
+    </message>
 </context>
 <context>
     <name>HomeForm.ui</name>

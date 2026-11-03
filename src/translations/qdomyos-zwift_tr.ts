@@ -280,6 +280,14 @@ Would you like to do that now?</source>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Uygulamaya geri ver</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Yük kontrolünü uygulamaya geri verir</translation>
+    </message>
 </context>
 <context>
     <name>HomeForm.ui</name>

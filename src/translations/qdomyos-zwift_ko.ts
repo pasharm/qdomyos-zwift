@@ -280,6 +280,14 @@ Would you like to do that now?</source>
         <source>Cancel</source>
         <translation>취소</translation>
     </message>
+    <message>
+        <source>Return to app</source>
+        <translation>앱에 돌려주기</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>부하 제어를 앱에 돌려줍니다</translation>
+    </message>
 </context>
 <context>
     <name>HomeForm.ui</name>

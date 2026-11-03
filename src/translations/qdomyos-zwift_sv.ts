@@ -276,6 +276,14 @@ Vill du aktivera de tjänster som krävs?</translation>
         <source>Cancel</source>
         <translation>Avbryt</translation>
     </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Tillbaka till appen</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Lämnar tillbaka styrningen av belastningen till appen</translation>
+    </message>
 </context>
 <context>
     <name>HomeForm.ui</name>
