@@ -32,7 +32,6 @@ Page {
         property string peloton_password: "password"
         property string peloton_difficulty: "lower"
         property int bike_resistance_offset: 4
-        property int bike_resistance_start: 1
         property string zwift_username: ""
         property string zwift_password: ""
         property bool speed_power_based: false
@@ -52,6 +51,9 @@ Page {
         property bool garmin_companion: false
         property string filter_device: "Disabled"
         property bool weight_kg_unit: false
+        // new keys only at the end: on the first start Qt.labs.settings resets the stored
+        // keys declared after a missing one
+        property int bike_resistance_start: 1
     }
 
     background: Rectangle {
