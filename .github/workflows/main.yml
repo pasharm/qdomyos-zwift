@@ -1,29 +1,26 @@
 # test branch: run an APK that was already built on one emulator and keep logcat and
-# screenshots (no build). The source run id is below.
+# screenshots (no build). T-400: the fix and the reference APK of master, one after the other.
 name: CI
 
 on:
   workflow_dispatch:
     inputs:
       source:
-        description: run id of the build to test
+        description: run id of the build to test (this fork)
         required: true
-      modern:
-        description: ui_modern for the run (false = the classic look, for comparison)
-        required: false
-        default: 'false'
-      log_debug:
-        description: log_debug for the run (false = the debug log off)
-        required: false
-        default: 'true'
       baseline:
-        description: run id of the build to shoot first, as the reference (T-312 - feat/modern-ui before the change)
+        description: run id of the reference build (master of the upstream, same base commit)
         required: true
+      baseline_repo:
+        description: repository of the reference run
+        required: false
+        default: 'cagnulein/qdomyos-zwift'
 
 jobs:
   emulator-logcat:
-    runs-on: ubuntu-latest
-    # Two cases of 14 min with the screen off; a step stuck on adb ends here instead of after 6 hours
+    # the image of the upstream emulator test (qz-ci-build)
+    runs-on: ubuntu-26.04
+    # Four cases of ~4 min; a step stuck on adb ends here instead of after 6 hours
     timeout-minutes: 45
     steps:
       - name: Checkout code
@@ -51,6 +48,7 @@ jobs:
           name: fdroid-android-trial
           path: apk-base
           run-id: ${{ inputs.baseline }}
+          repository: ${{ inputs.baseline_repo }}
           github-token: ${{ github.token }}
 
       - name: Setup Java for Android Emulator
@@ -61,9 +59,6 @@ jobs:
 
       - name: Start the app and record logcat
         uses: ReactiveCircus/android-emulator-runner@v2
-        env:
-          UI_MODERN: ${{ inputs.modern }}
-          LOG_DEBUG: ${{ inputs.log_debug }}
         with:
           api-level: 35
           target: google_apis
@@ -76,17 +71,10 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.source }}-${{ inputs.modern }}${{ inputs.log_debug == 'false' && '-nolog' || '' }}
+          name: emulator-logcat-${{ inputs.source }}-t400
           path: |
-            screenshot.png
             *.png
-            process_list.txt
-            exit-info-*.txt
             full_logcat.txt
             steps.log
-            qml-*.txt
-            a11y.txt
             dumps/
-            style-*.json
-            qz-logs/
           if-no-files-found: warn
