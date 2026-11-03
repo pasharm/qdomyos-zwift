@@ -464,6 +464,11 @@ void bluetooth::startDiscovery() {
     if (!this->useDiscovery)
         return;
 
+    // no agent: no Bluetooth adapter or no "Nearby devices" permission (see the constructor). The
+    // refresh buttons and the gym mode popup call restart(), which calls this
+    if (!discoveryAgent)
+        return;
+
     // Android 7.0 and later ignore the scan starts after the 5th one in 30 s: searchNow() checks this list.
     // A start while scanning does nothing, so it is not counted.
     if (discoveryAgent && !discoveryAgent->isActive()) {
