@@ -274,6 +274,7 @@ HomeForm {
         informativeText: qsTr("QZ needs Bluetooth enabled to discover fitness equipment. On Android 11 and earlier, Android also requires Location permission and Location Services for Bluetooth discovery. QZ does not use your location data. On Android 12 and later, Nearby devices permission allows Bluetooth discovery without Location.\n\nWould you like to enable the required services?")
         buttons: (MessageDialog.Yes | MessageDialog.No)
         onYesClicked: {
+            bluetoothPermissionDenied = rootItem.bluetoothPermissionDenied()
             locationServiceRequsted = true
             rootItem.enableLocationServices()
         }
@@ -294,8 +295,19 @@ HomeForm {
         visible: false
     }
 
-    // No "restart the app" question after "Yes": bluetooth.cpp starts the search by itself once
-    // Bluetooth is switched on, so the question only flashed until the check above saw it on
+    // Only when "Nearby devices" is denied: then "Yes" can't switch Bluetooth on and the app asks for
+    // the permission again at start. Otherwise no restart is needed: bluetooth.cpp starts the search
+    // by itself once Bluetooth is on, and the question only flashed until the check above saw it on.
+    property bool bluetoothPermissionDenied: false
+
+    UiMessageDialog {
+        text: qsTr("Restart the app")
+        informativeText: qsTr("To apply the changes, you need to restart the app.\nWould you like to do that now?")
+        buttons: (MessageDialog.Yes | MessageDialog.No)
+        onYesClicked: Qt.callLater(window.quitApp)
+        onNoClicked: this.visible = false;
+        visible: locationServiceRequsted && bluetoothPermissionDenied && !locationServicesOn
+    }
 
     Timer {
         interval: 200; running: true; repeat: false
