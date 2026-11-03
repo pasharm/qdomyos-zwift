@@ -1182,6 +1182,8 @@ public:
     void importFitFilesToHistory(const QStringList &files);
     // path of a history database this install can open; sets m_historyDatabaseIsNew
     QString historyDatabasePath();
+    // on a spare database, takes the freed ddb.sqlite name with an empty file after an import
+    void claimMainHistoryDatabaseName();
     // folder import through the Android folder grant; without a saved grant it opens the
     // picker only when allowPicker is set, and returns false otherwise
     bool startFitFolderImport(bool allowPicker);
