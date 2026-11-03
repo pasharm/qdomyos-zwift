@@ -17,8 +17,8 @@ Page {
     property alias stop: stop
     property alias lap: lap
     property alias row: row
-    // Set by Home.qml while the tiles are scrolled into the gap under the Start/Stop row
-    property bool deviceLineHidden: false
+    // The Start/Stop row; Home.qml makes it the header of the tile grid, so it scrolls with the tiles
+    property alias topBar: topBar
     // Set by Home.qml: whether the modern status line has anything the drawer does not show
     property bool modernInfoShown: true
     // Search for the equipment ("Next search in 12 s"), set by Home.qml while no device is connected
@@ -29,20 +29,15 @@ Page {
     property string connectingDevice: ""
     // Home.qml sets the new values from the settings page in it (the background color of the top bar)
     property alias homeFormSettings: settings
-    // Modern look, for the grid of tiles in Home.qml: where the first row starts - 16 dp under the
-    // letters of the status line, or under the buttons without it (scrolled tiles stop 4 dp above). One line of the status counts: two lines come only before the first
-    // connection, when the grid is empty, and they grow down
+    // Modern look, for the grid of tiles in Home.qml: where the first row starts below the top of
+    // the Start/Stop row - 16 dp under the letters of the status line, or under the buttons without
+    // it. One line of the status counts: two lines come only before the first connection, when the
+    // grid is empty, and they grow down
     // The top bar can be turned off (top_bar_enabled: topBarHeight 0, no labels): no controls then,
     // the grid and the status line as before
     readonly property bool modernControlsShown: window.ui.modern && topBar.height > 0
-    // How much of the app toolbar is shown, 0..1: it scrolls away with the tiles and main.qml
-    // animates its height down to the status bar inset (headerToolbar.scrolledAway)
-    readonly property real toolbarShown: headerToolbar.implicitHeight > headerToolbar.topPadding
-                                         ? Math.max(0, Math.min(1, (headerToolbar.height - headerToolbar.topPadding)
-                                                                   / (headerToolbar.implicitHeight - headerToolbar.topPadding)))
-                                         : 1
-    readonly property real modernControlsBottom: topBar.y + modernRow.y + modernRow.height
-    readonly property real modernTilesTop: modernInfoShown ? topBar.y + modernInfo.y + statusLine.height + 13
+    readonly property real modernControlsBottom: modernRow.y + modernRow.height
+    readonly property real modernTilesTop: modernInfoShown ? modernInfo.y + statusLine.height + 13
                                                            : modernControlsBottom + 16
 
     Settings {
@@ -77,10 +72,9 @@ Page {
             visible: page.modernControlsShown
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
-            // 12 dp under the toolbar: the top bar starts 8 dp above its edge. With the toolbar
-            // scrolled away nothing covers those 8 dp, so the row follows it up: 12 dp under the
-            // status bar as well
-            anchors.topMargin: 12 + 8 * page.toolbarShown
+            // 12 dp under the toolbar: the top bar starts 8 dp above its edge. The row scrolls
+            // with the tiles (Home.qml), the toolbar slides over it
+            anchors.topMargin: 20
             spacing: 8
 
             readonly property bool byState: window.ui.stateButtons
@@ -351,8 +345,6 @@ Page {
                         source: rootItem.signal
                         smooth: true
                         Accessible.ignored: true
-                        // It hangs below the row, into the gap above the tiles
-                        visible: !page.deviceLineHidden
                     }
                 }
             }
@@ -490,7 +482,7 @@ Page {
                 horizontalAlignment: Text.AlignHCenter
                 lineHeight: text.indexOf("\n") >= 0 ? 0.8 : 1
                 text: page.searchStatus !== "" ? page.searchStatus : rootItem.info
-                visible: !window.ui.modern && !page.deviceLineHidden
+                visible: !window.ui.modern
                 color: Material.foreground
                 font.pixelSize: (window.textScale === 1 ? Qt.application.font.pixelSize : window.fontPx(window.appFontPx))
             }

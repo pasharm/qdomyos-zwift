@@ -9,7 +9,6 @@ import QtMultimedia 5.15
 
 HomeForm {
     objectName: "home"
-    deviceLineHidden: gridView.contentY > -gridView.topMargin + 1
     // Modern look: rootItem comes from C++ only after main.qml is loaded (main.cpp). Until
     // then every binding on it fails and leaves its default, visible, so the first frames
     // drew the classic help text and the unstyled buttons over the searching state. The
@@ -35,6 +34,13 @@ HomeForm {
         Accessible.role: Accessible.Pane
         Accessible.ignored: true
     }
+    // The Start/Stop row is the header of the grid (see GridView.header below), so it scrolls with
+    // the tiles as one page. It spans the page, not just the grid, so its buttons stay centred
+    topBar.x: -gridView.x
+    topBar.width: gridBox.width
+    // Below the room for the toolbar, which hangs over the top of the grid
+    topBar.y: gridView.barRoom
+
     signal start_clicked;
     signal stop_clicked;
     signal lap_clicked;
@@ -355,7 +361,26 @@ HomeForm {
         console.log("home.qml completed");
     }
 
+    // The scrolled area: the page, cut off at its edges. It is as wide as the page, so the shadows
+    // of the outer columns stay. It reaches up under the toolbar, which hangs over the page
+    // (main.qml), so the tiles can take its place once it has slid away. Not while the tiles are
+    // being moved: the toolbar stays then, and moving them needs the grid where the page is
+    Item {
+        id: gridBox
+        anchors.fill: parent
+        anchors.topMargin: window.lockTiles ? 0 : -headerToolbar.contentHeight
+        clip: true
+        // The page background reaches up with it: behind the tiles there the window colour would
+        // show, not the theme one
+        Rectangle {
+            width: parent.width
+            height: gridView.barRoom
+            color: window.ui.modern ? window.ui.bg : settings.theme_background_color
+        }
+    }
+
     GridView {
+        parent: gridBox
         anchors.horizontalCenter: parent.horizontalCenter
         anchors.top: parent.top
         // TEMP-LOG: QZ-NAV - scrolling of home-grid, to find a page that stops scrolling
@@ -392,114 +417,140 @@ HomeForm {
         cellHeight: 130 * settings.ui_zoom / 100
         focus: true
         model: appModel
-        // The grid starts right under the Start/Stop buttons (they end 5 px above the bottom of
-        // the top bar), so scrolled tiles leave no empty band under them
-        // Modern look: scrolled tiles stop 12 dp under the buttons, or under the status line when
-        // it is there - 4 dp above the first row at rest (HomeForm modernTilesTop)
-        readonly property real gridTopInset: window.lockTiles ? 0
-                                           : modernControlsShown ? modernTilesTop - 4
-                                           : Math.max(0, rootItem.topBarHeight - 3)
-        anchors.topMargin: gridTopInset
-        // The gap above the first row is part of the content, so it scrolls away with the tiles.
-        // In normal mode it holds the device name line and signal icon at the bottom of the
-        // Start/Stop row: at rest the first row is 30 px below the top bar as before, the line
-        // hides as soon as the tiles move into the gap (deviceLineHidden), and the grid itself
-        // never moves, so nothing jumps. While the tiles are being moved it keeps the first row
-        // off the toolbar instead of staying as an empty band.
-        // Modern look: the status line stays with the buttons above the grid, the first row is
-        // 4 dp under its top edge (gridTopInset); with the top bar off, as before: a small gap only when the modern line is not shown
-        topMargin: window.lockTiles ? 30
-                   : modernControlsShown ? 4
-                   : rootItem.topBarHeight + (window.ui.modern && !modernInfoShown ? 12 : 30) - gridTopInset
-        onTopMarginChanged: if (contentY <= 0) contentY = -topMargin
-        interactive: !window.lockTiles
-        // Modern look before connection: the grid is still empty but lies over the "searching"
-        // state (HomeForm modernEmpty) and would take its taps and scrolling
-        enabled: !(window.ui.modern && rootItem.labelHelp)
+        // While the tiles are being moved the gap above the first row is part of the content,
+        // so it scrolls away with the tiles instead of staying as an empty band
+        topMargin: window.lockTiles ? 30 : 0
+        // The room for the toolbar above the Start/Stop row, so at the top it covers nothing, then
+        // the row and the gap under it, part of the content; none while the tiles are being moved
+        // (the row is hidden then and the grid starts below the toolbar).
+        // Modern look: the status line is part of the row, the first row starts under it
+        // (HomeForm modernTilesTop); with the top bar off a smaller gap when the status line is
+        // not shown
+        readonly property real barRoom: window.lockTiles ? 0 : headerToolbar.contentHeight
+        readonly property real rowsRoom: window.lockTiles ? 0
+                                         : barRoom + (modernControlsShown ? modernTilesTop
+                                                      : rootItem.topBarHeight + (window.ui.modern && !modernInfoShown ? 12 : 30))
+        header: Item {
+            width: gridView.width
+            height: gridView.rowsRoom
+            // Under the tiles, as in the page before: the help text below the row (shown while
+            // searching) reaches down over the tiles. GridView would put the header at z 1, over them
+            z: -1
+            Component.onCompleted: topBar.parent = this
+        }
+        // At the top when the tiles get locked or unlocked: stay at the top, with the row or the gap
+        function keepAtTop() {
+            if (contentY <= 0)
+                contentY = -topMargin - rowsRoom
+        }
+        onTopMarginChanged: keepAtTop()
+        // Modern look: the status line comes and goes with a loaded workout, and the room above
+        // the first row with it. Only a list at the top goes to the new top; a scrolled one keeps
+        // its tiles where they are (the first row at the edge of the shown area has contentY <= 0
+        // as well)
+        property real lastRowsRoom: 0
+        onRowsRoomChanged: {
+            if (!window.ui.modern)
+                keepAtTop()
+            else if (contentY <= -topMargin - lastRowsRoom + 1)
+                contentY = -topMargin - rowsRoom
+            lastRowsRoom = rowsRoom
+        }
+        // Modern look before connection: the grid is still empty and the "searching" state
+        // (HomeForm modernEmpty) is in its header: the grid does not scroll then, the state does
+        interactive: !window.lockTiles && !(window.ui.modern && rootItem.labelHelp)
         id: gridView
         objectName: "gridview"
-        // Tiles scroll under the Start/Stop row instead of being drawn over it
-        clip: true
 
-        // The app toolbar scrolls away while the tiles scroll down and comes back when they
-        // scroll up (Material "hide on scroll"). It follows the finger, not the end of the
-        // movement, and main.qml animates its height, so the page does not jump.
-        // Hysteresis: the toolbar toggles only after the user has scrolled toolbarToggleDistance
-        // in one direction since the last toggle. Collapsing it moves the page under the finger
-        // by toolbarShift, which a per-frame check reads as scrolling back, and slow scrolling
-        // made the toolbar flicker. The distance must stay larger than that shift, so it is
-        // derived from it (a larger font makes the toolbar taller).
-        readonly property real toolbarShift: headerToolbar.implicitHeight - headerToolbar.topPadding
-        readonly property real toolbarToggleDistance: toolbarShift + 40
-        property real toolbarTurnY: 0
-        onContentYChanged: {
-            // At the top of the gap everything comes back together with the device line. With
-            // the gap scrolled away and the first row in full view the toolbar may stay hidden.
-            if (window.lockTiles || contentY <= -topMargin + 1) {
-                headerToolbar.scrolledAway = false
-                toolbarTurnY = contentY
+        // The app toolbar slides away while the tiles scroll down and comes back as soon as they
+        // scroll up, 1:1 with them (Material "scroll|enterAlways"): it hangs over the grid
+        // (main.qml), so the tiles never move under the finger. scrolledNow, not contentY: at
+        // start originY follows contentY later. Past the top or the end the view only springs
+        // back, which does not move the toolbar, and at the top it is always shown
+        readonly property real scrolledNow: contentY - originY
+        property real lastBarScroll: 0
+        onScrolledNowChanged: {
+            var s = Math.min(Math.max(scrolledNow, 0), Math.max(contentHeight - height, 0))
+            var d = s - lastBarScroll
+            lastBarScroll = s
+            if (window.lockTiles || barSnap.running)
                 return
-            }
-            // Movement of our own making: the view is not being scrolled by the user, or it is
-            // resizing while the toolbar animates
-            if (!(draggingVertically || flickingVertically) || headerToolbar.animating) {
-                toolbarTurnY = contentY
-                return
-            }
-            if (!headerToolbar.scrolledAway) {
-                // Only while the tiles still overflow once the toolbar is gone, and not while the
-                // view is pulled past its end: otherwise it would spring back to the top and bring
-                // the toolbar back at once
-                if (contentY - toolbarTurnY > toolbarToggleDistance
-                        && contentHeight + topMargin - height > toolbarShift
-                        && contentY <= originY + contentHeight - height) {
-                    headerToolbar.scrolledAway = true
-                    toolbarTurnY = contentY
-                } else if (contentY < toolbarTurnY) {
-                    toolbarTurnY = contentY
-                }
-            } else {
-                if (toolbarTurnY - contentY > toolbarToggleDistance && !atYEnd) {
-                    headerToolbar.scrolledAway = false
-                    toolbarTurnY = contentY
-                } else if (contentY > toolbarTurnY) {
-                    // Not past the end: after pulling beyond it the view springs back, and the
-                    // first move up would otherwise bring the toolbar back at once
-                    toolbarTurnY = Math.min(contentY, originY + contentHeight - height)
-                }
-            }
+            // Only the user's scrolling (a drag or its flick) moves it: the grid also moves on a
+            // rotation or a resize, with no snap to follow, and left it half shown
+            if (moving)
+                headerToolbar.barShift = Math.max(0, Math.min(headerToolbar.contentHeight, headerToolbar.barShift + d, s))
+            else
+                headerToolbar.barShift = Math.min(headerToolbar.barShift, s)
         }
-        // A scroll that stops settles on the nearest whole row at the top (no tile cut in half)
-        // or on the end of the list, whichever is nearer; inside the gap, on the nearer edge:
-        // the first row or the top with the device line. It runs once the movement has ended,
-        // so a flick settles by the row where it stopped by itself, not by the one where the
-        // finger let go. With the toolbar shown or hidden alike: the snap is not a finger move,
-        // so it does not toggle the toolbar. Moving a tile scrolls the grid by contentY, which
-        // ends no movement, so it does not snap. Off in Settings (ui.tileSnap)
-        // The end is taken from the grid height at the moment the movement ends: when the
-        // toolbar is still sliding away, the grid grows after that and the end moves up, so
-        // the snap could stop past it. Back within the bounds once it is done
-        NumberAnimation { id: snapToRow; target: gridView; property: "contentY"; duration: 150; easing.type: Easing.OutQuad
-                          onFinished: gridView.returnToBounds() }
+        // Snap: once the finger is off, a half-shown toolbar goes on to the nearer end (Material
+        // "snap"). Within its room above the Start/Stop row the list goes with it, so the toolbar
+        // never comes to rest over the row: to the top, or to the row under the status bar
+        NumberAnimation { id: barSnap; target: headerToolbar; property: "barShift"; duration: 150; easing.type: Easing.OutQuad }
+        NumberAnimation { id: listSnap; target: gridView; property: "contentY"; duration: 150; easing.type: Easing.OutQuad }
+        onMovementStarted: {
+            barSnap.stop()
+            listSnap.stop()
+        }
         onMovementEnded: {
-            if (window.lockTiles || !window.ui.tileSnap)
+            if (window.lockTiles)
                 return
-            var endY = originY + contentHeight - height
-            var to
-            if (contentY <= -topMargin + 1 || endY <= -topMargin)
+            var b = headerToolbar.barShift, h = headerToolbar.contentHeight
+            var maxS = Math.max(contentHeight - height, 0)
+            var s = Math.min(Math.max(scrolledNow, 0), maxS)
+            if (s > 0 && s < h) {
+                // The toolbar follows the list back to the top by itself (barShift <= s). A list
+                // longer than the page by less than the toolbar ends first: then the toolbar goes
+                // only as far as the list, so the last row stays in view
+                var end = Math.min(h, maxS)
+                var hide = b >= end / 2
+                listSnap.to = originY + (hide ? end : 0)
+                listSnap.start()
+                if (hide) {
+                    barSnap.to = end
+                    barSnap.start()
+                }
                 return
-            if (contentY < 0) {
-                to = contentY < -topMargin / 2 ? -topMargin : Math.min(0, endY)
-            } else {
-                var row = originY + Math.round((contentY - originY) / cellHeight) * cellHeight
-                to = row > endY || Math.abs(endY - contentY) < Math.abs(row - contentY) ? endY : row
             }
-            if (Math.abs(to - contentY) < 1)
+            var bTo = b > 0 && b < h ? (b < h / 2 ? 0 : h) : b
+            if (bTo !== b) {
+                barSnap.to = bTo
+                barSnap.start()
+            }
+            // Deeper in the list (Settings, ui.tileSnap) the scroll settles on the nearest whole
+            // row at the edge of the shown area, under the toolbar or under the status bar (no
+            // tile cut in half), or on the end of the list, whichever is nearer; above the first
+            // row, on the nearer of it and the Start/Stop row. It runs once the movement has
+            // ended, so a flick settles by the row where it stopped by itself. Moving a tile
+            // scrolls the grid by contentY, which ends no movement, so it does not snap
+            if (!window.ui.tileSnap || s <= 0)
                 return
-            snapToRow.to = to
-            snapToRow.start()
+            // In scrolledNow: the Start/Stop row at the edge is bTo, the first row is below it
+            var first = -originY - (barRoom - bTo)
+            var to
+            if (s < first) {
+                to = s - bTo < first - s ? bTo : first
+            } else {
+                var row = first + Math.round((s - first) / cellHeight) * cellHeight
+                to = row > maxS || Math.abs(maxS - s) < Math.abs(row - s) ? maxS : row
+            }
+            to = Math.min(to, maxS)
+            // With the top bar off the first row under the toolbar is only the gap below the top:
+            // the top then, not a rest inside the toolbar's room
+            if (to > 0 && to < h)
+                to = 0
+            if (Math.abs(to - s) < 1)
+                return
+            listSnap.to = originY + to
+            listSnap.start()
         }
-        onMovementStarted: snapToRow.stop()
+        // Moving the tiles shows the toolbar (main.qml); after it the toolbar starts shown again
+        Connections {
+            target: window
+            function onLockTilesChanged() {
+                listSnap.stop()
+                headerToolbar.barShift = 0
+            }
+        }
         Screen.orientationUpdateMask:  Qt.LandscapeOrientation | Qt.PortraitOrientation | Qt.InvertedLandscapeOrientation | Qt.InvertedPortraitOrientation
         Screen.onPrimaryOrientationChanged:{
             // Nothing to recompute: cellWidth and the grid width follow the page width
@@ -1129,7 +1180,8 @@ HomeForm {
 
         function indexAtMouse(mx, my) {
             var cols = gridView.tileColumns
-            var adjustedY = my + gridView.contentY
+            // The gap above the first row counts as the first row
+            var adjustedY = Math.max(0, my + gridView.contentY)
             var col = Math.floor((mx - gridView.x) / gridView.cellWidth)
             if (col < 0 || col >= cols) return -1
             var row = Math.floor(adjustedY / gridView.cellHeight)
