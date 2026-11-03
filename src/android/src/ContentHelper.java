@@ -302,6 +302,8 @@ public class ContentHelper {
         private java.util.ArrayList<File> unread = null;
         // bytes read by the last sha256 call
         private long hashedLength = 0;
+        // the last importFile copied the picked file, rather than finding its bytes here already
+        private boolean copiedLast = false;
 
         public FolderImport(String destinationDirPath) {
             destinationDir = new File(destinationDirPath == null ? "" : destinationDirPath);
@@ -310,6 +312,7 @@ public class ContentHelper {
         // Local path of the picked file uri, "" when it cannot be imported. fileName and size are
         // the ones reported by the provider, size -1 when unknown.
         public String importFile(Context context, Uri uri, String fileName, long size) {
+            copiedLast = false;
             String name = sanitizeFileName(fileName);
             if (name.isEmpty()) {
                 return importContentToAppDirKeepExisting(context, uri, fileName, size, destinationDir.getPath());
@@ -342,8 +345,9 @@ public class ContentHelper {
                 if (destinationFile.exists()) {
                     continue;
                 }
-                if (copyContentToFile(context, uri, destinationFile.getAbsolutePath())) {
+                if (copyChecked(context, uri, destinationFile, hash)) {
                     pathByHash.put(hash, destinationFile.getAbsolutePath());
+                    copiedLast = true;
                     return destinationFile.getAbsolutePath();
                 }
                 destinationFile.delete();
@@ -352,12 +356,57 @@ public class ContentHelper {
             return "";
         }
 
-        // true when fileName in the destination folder is a file left by a previous install (it
-        // keeps its name, but this install cannot read it) and ownCopy, the path importFile gave
-        // for it, is another file
-        public boolean isPreviousInstallCopy(String fileName, String ownCopy) {
-            File file = new File(destinationDir, sanitizeFileName(fileName));
+        // true when fileName in the destination folder is a file this install cannot read (left by
+        // a previous one: it keeps its name) and the last importFile, for that file, gave ownCopy,
+        // another file that already held the same bytes. A file the import copied from is never
+        // such a file, so its bytes stay in place whatever happened to the copy.
+        public boolean isOldCopy(String fileName, String ownCopy) {
+            if (copiedLast || fileName == null || fileName.isEmpty()) {
+                return false;
+            }
+            File file = new File(destinationDir, fileName);
             return !file.getAbsolutePath().equals(ownCopy) && file.exists() && !isReadable(file);
+        }
+
+        // Copies uri to file, on disk before it returns: true only when the bytes written have the
+        // hash the picked file had when it was read first.
+        private static boolean copyChecked(Context context, Uri uri, File file, String hash) {
+            InputStream in = null;
+            FileOutputStream out = null;
+            try {
+                in = context.getContentResolver().openInputStream(uri);
+                if (in == null) {
+                    return false;
+                }
+                java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
+                out = new FileOutputStream(file, false);
+                byte[] buffer = new byte[65536];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                    digest.update(buffer, 0, read);
+                }
+                out.getFD().sync();
+                out.close();
+                out = null;
+                return hash.equals(hex(digest.digest()));
+            } catch (Exception e) {
+                QLog.d("ContentHelper", "FolderImport could not copy to " + file + ": " + e);
+                return false;
+            } finally {
+                try {
+                    if (in != null) {
+                        in.close();
+                    }
+                } catch (Exception ignored) {
+                }
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (Exception ignored) {
+                }
+            }
         }
 
         // A file of the folder with this content, or null. Only files whose size can match are read;

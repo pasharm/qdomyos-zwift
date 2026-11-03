@@ -414,7 +414,8 @@ public class CustomQtActivity extends QtActivity {
     // Copies the .fit files of the picked folder and of its "fit" subfolder into destinationDir
     // and passes their local paths, one per line, to the native side. An empty string still goes
     // through, so the app can say that no workout was found. The copy runs off the UI thread:
-    // a folder can hold hundreds of workouts.
+    // a folder can hold hundreds of workouts. In the QZ folder the copies left in "fit" by previous
+    // installs go (importFitFilesFromTree).
     // A saved grant that finds nothing may be stale (folder removed or renamed): it is dropped
     // and the picker opens, so the user can always choose the folder again.
     private void handleFitFolderResult(final int requestCode, final int resultCode, Intent data,
@@ -448,7 +449,8 @@ public class CustomQtActivity extends QtActivity {
                 try {
                     String rootId = android.provider.DocumentsContract.getTreeDocumentId(treeUri);
                     // the "fit" subfolder of the QZ folder is the destination itself only there
-                    boolean qzFitFolder = QZ_DOCUMENTS_TREE_ID.equals(rootId)
+                    boolean qzFitFolder = "com.android.externalstorage.documents".equals(treeUri.getAuthority())
+                        && QZ_DOCUMENTS_TREE_ID.equals(rootId)
                         && new java.io.File(destinationDir).getAbsolutePath().equals(new java.io.File(
                             android.os.Environment.getExternalStorageDirectory(), "Documents/QZ/fit").getAbsolutePath());
                     importFitFilesFromTree(treeUri, rootId, new ContentHelper.FolderImport(destinationDir), localPaths,
@@ -558,8 +560,9 @@ public class CustomQtActivity extends QtActivity {
     }
 
     // qzFitFolder: the picked folder is the QZ folder, and its "fit" subfolder is the destination.
-    // There a file of a previous install whose bytes the import now has in a file of its own is
-    // removed through the grant: every reinstall would leave one more copy otherwise.
+    // There a file of a previous install is removed through the grant when the import already had
+    // its bytes in a file of its own (ContentHelper.FolderImport.isOldCopy): every reinstall would
+    // leave one more copy otherwise. The file a new copy was made from stays.
     private void importFitFilesFromTree(Uri treeUri, String parentId, ContentHelper.FolderImport folderImport,
                                         StringBuilder localPaths, boolean descendIntoFit, boolean qzFitFolder) {
         Uri childrenUri = android.provider.DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, parentId);
@@ -598,7 +601,9 @@ public class CustomQtActivity extends QtActivity {
                         localPaths.append('\n');
                     }
                     localPaths.append(localPath);
-                    if (!descendIntoFit && qzFitFolder && folderImport.isPreviousInstallCopy(name, localPath)) {
+                    // the document id of the external storage is its path: the file is this one
+                    if (!descendIntoFit && qzFitFolder && documentId.equals(QZ_DOCUMENTS_TREE_ID + "/fit/" + name)
+                        && folderImport.isOldCopy(name, localPath)) {
                         deleteTreeDocument(treeUri, documentId);
                     }
                 }
