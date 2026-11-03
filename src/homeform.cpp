@@ -6151,7 +6151,7 @@ void homeform::setTargetPowerReleaseVisible(bool value) {
 void homeform::clearTargetPowerOverride() {
     m_overridePower = false;
     m_overridePowerWarned = false;
-    if (bluetoothManager->device() && bluetoothManager->device()->deviceType() == BIKE) {
+    if (bluetoothManager && bluetoothManager->device() && bluetoothManager->device()->deviceType() == BIKE) {
         ((bike *)bluetoothManager->device())->setTargetPowerOverrideActive(false);
     }
     setTargetPowerReleaseVisible(false);
@@ -6161,7 +6161,7 @@ void homeform::releaseTargetPower() {
     qDebug() << QStringLiteral("Return to app pressed");
     // unlike Start/Pause/Stop, the app's last command is applied now, not at its next frame
     clearTargetPowerOverride();
-    if (bluetoothManager->device() && bluetoothManager->device()->deviceType() == BIKE) {
+    if (bluetoothManager && bluetoothManager->device() && bluetoothManager->device()->deviceType() == BIKE) {
         ((bike *)bluetoothManager->device())->releaseTargetPowerToApp();
     }
 }

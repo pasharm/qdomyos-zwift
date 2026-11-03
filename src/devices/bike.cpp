@@ -64,7 +64,8 @@ bool bike::targetPowerReleaseAvailable() {
 void bike::changeResistanceFromApp(resistance_t resistance) {
     m_lastAppCommand = AppCommand::Resistance;
     m_lastAppResistance = resistance;
-    if (targetPowerReleaseSupported() && m_targetPowerOverrideActive) {
+    // with auto resistance off changeResistance() only records the request, as before
+    if (targetPowerReleaseSupported() && m_targetPowerOverrideActive && autoResistanceEnable) {
         qDebug() << QStringLiteral("app resistance kept for Return to app, target power tile in control")
                  << resistance;
         return;
