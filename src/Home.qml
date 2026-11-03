@@ -294,14 +294,8 @@ HomeForm {
         visible: false
     }
 
-    UiMessageDialog {
-        text: qsTr("Restart the app")
-        informativeText: qsTr("To apply the changes, you need to restart the app.\nWould you like to do that now?")
-        buttons: (MessageDialog.Yes | MessageDialog.No)
-        onYesClicked: Qt.callLater(window.quitApp)
-        onNoClicked: this.visible = false;
-        visible: locationServiceRequsted && !locationServicesOn
-    }
+    // No "restart the app" question after "Yes": bluetooth.cpp starts the search by itself once
+    // Bluetooth is switched on, so the question only flashed until the check above saw it on
 
     Timer {
         interval: 200; running: true; repeat: false
