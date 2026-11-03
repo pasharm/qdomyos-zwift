@@ -1231,7 +1231,7 @@ ApplicationWindow {
 
     // after a reinstall the training programs of the previous install are hidden in the
     // training folder: with access to the QZ folder QZ copies them back as its own
-    MessageDialog {
+    UiMessageDialog {
         id: popupTrainingRestore
         text: qsTr("Training Programs")
         informativeText: qsTr("Training programs of a previous installation may still be in the QZ folder.\nDo you want to look for them?\n\nIn the next window, allow access to the QZ folder.")
