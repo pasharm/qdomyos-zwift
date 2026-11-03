@@ -703,7 +703,7 @@ HomeForm {
                     objectName: "target_power_release"
                     text: qsTr("Return to app")
                     onClicked: rootItem.releaseTargetPower()
-                    visible: identificator === "target_power" && rootItem.targetPowerReleaseVisible && !largeButton
+                    visible: identificator === "target_power" && !largeButton // emu only: always shown, to check the layout
                     anchors.top: modernValue.bottom
                     anchors.horizontalCenter: modernCard.horizontalCenter
                     height: 32 * modernTile.zoom
@@ -951,7 +951,7 @@ HomeForm {
                 objectName: "target_power_release"
                 text: qsTr("Return to app")
                 onClicked: rootItem.releaseTargetPower()
-                visible: identificator === "target_power" && rootItem.targetPowerReleaseVisible && !largeButton
+                visible: identificator === "target_power" && !largeButton // emu only: always shown, to check the layout
                 anchors.verticalCenter: secondLineText.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: 42 * settings.ui_zoom / 100
