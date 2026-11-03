@@ -19032,15 +19032,16 @@ import QtQuick 2.12 as Quick212
 
                                             Label {
                                                 text: qsTr("Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.")
-                                                font.bold: true
-                                                font.italic: true
-                                                font.pixelSize: Qt.application.font.pixelSize - 2
+                                                font.bold: !window.ui.modern
+                                                font.italic: !window.ui.modern
+                                                font.pixelSize: window.ui.fontHint
+                                                bottomPadding: window.hintGap
                                                 textFormat: Text.PlainText
                                                 wrapMode: Text.WordWrap
                                                 verticalAlignment: Text.AlignVCenter
                                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                                 Layout.fillWidth: true
-                                                color: Material.color(Material.Lime)
+                                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                             }
 
                                             RowLayout {
@@ -19070,15 +19071,16 @@ import QtQuick 2.12 as Quick212
 
                                             Label {
                                                 text: qsTr("Offset added after the gain. Default is 0.0. QZ's internal cadence display and workout metrics remain unchanged.")
-                                                font.bold: true
-                                                font.italic: true
-                                                font.pixelSize: Qt.application.font.pixelSize - 2
+                                                font.bold: !window.ui.modern
+                                                font.italic: !window.ui.modern
+                                                font.pixelSize: window.ui.fontHint
+                                                bottomPadding: window.hintGap
                                                 textFormat: Text.PlainText
                                                 wrapMode: Text.WordWrap
                                                 verticalAlignment: Text.AlignVCenter
                                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                                 Layout.fillWidth: true
-                                                color: Material.color(Material.Lime)
+                                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                             }
                                         }
                                     }
