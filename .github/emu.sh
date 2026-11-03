@@ -317,3 +317,7 @@ echo "== T-318 class loading / crashes (none expected)"
 grep -E "VerifyError|NoClassDefFoundError|NoSuchMethodError|ClassNotFoundException|TextAttribute|FATAL EXCEPTION|AndroidRuntime: |Rejecting re-init|QtInputConnection" full_logcat.txt | tee t318-errors.txt | sed 's/^/!! /' >> $STEPLOG || true
 [ -s t318-errors.txt ] || echo "no class loading errors, no crash: OK" >> $STEPLOG
 echo "== steps"; cat $STEPLOG
+
+# A "proves nothing" line in steps.log (no APK installed, the field took no focus) means the run
+# checked nothing: the job must end red, not green. Last, so the logcat and shots above are kept
+if grep -q "proves nothing" $STEPLOG; then echo "!! steps.log: the run proves nothing - failing the job"; exit 1; fi
