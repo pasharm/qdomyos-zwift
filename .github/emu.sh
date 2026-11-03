@@ -368,3 +368,7 @@ grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
 echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
 grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 60 || true
 echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 | tee -a $STEPLOG || true
+
+# A "proves nothing" line in steps.log (no APK installed, the field took no focus) means the run
+# checked nothing: the job must end red, not green. Last, so the logcat and shots above are kept
+if grep -q "proves nothing" $STEPLOG; then echo "!! steps.log: the run proves nothing - failing the job"; exit 1; fi
