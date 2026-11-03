@@ -1,27 +1,21 @@
 #!/bin/bash
-# Test only: start an already built APK on the emulator with log_debug on, so the Qt
-# warnings (QML errors among them) reach logcat, then keep logcat and screenshots.
-# The emulator starts in the day mode of the system: with the appearance on "auto" the
-# first screens are the light theme, the last ones the dark theme after "night yes".
-#
-# UI_MODERN (workflow input "modern"): false runs the same steps in the classic look, for a
-# before/after comparison. The two looks place their controls differently, so the steps
-# find a control by its text or accessible name in a uiautomator dump (tap_ui, .github/
-# uitap.py) and use fixed coordinates only when the dump has no such control. steps.log
-# says which way every tap went; dumps/<shot>.xml is the control tree behind every shot.
+# Test only (T-091): snap tiles to rows on the home page of the classic look. Starts an already
+# built APK (test/t091: home/tile-snap with a QZ-SNAP trace in Home.qml) on the emulator with
+# log_debug on and a fake treadmill, so the home page has tiles. After every movement the trace
+# logs where the scroll came to rest, measured on the tiles: steps.log checks each rest against
+# what the setting promises and marks a miss with "!!".
 PKG=org.cagnulen.qdomyoszwift
-UI_MODERN=${UI_MODERN:-true}
-# LOG_DEBUG (workflow input "log_debug"): false runs with the debug log off, to see that the app
-# works without it and writes no log file. QML errors do not reach logcat then.
 LOG_DEBUG=${LOG_DEBUG:-true}
 STEPLOG=steps.log
 : > $STEPLOG
 mkdir -p dumps
 
 adb install apk-debug/android-debug.apk
-# A failed install (API 22: the 554 MB APK did not fit the data partition) left a run of steps
-# against the launcher that still ended "OK"
-adb shell pm path $PKG > /dev/null 2>&1 || echo "!! APK NOT INSTALLED - the run proves nothing" >> $STEPLOG
+if ! adb shell pm path $PKG > /dev/null 2>&1; then
+  echo "!! APK NOT INSTALLED - the run proves nothing" >> $STEPLOG
+  cat $STEPLOG
+  exit 1
+fi
 # Location on: without it QZ shows "Permissions Required" over every screen (API < 30 images)
 adb shell settings put secure location_providers_allowed +gps || true
 adb shell settings put secure location_providers_allowed +network || true
@@ -34,39 +28,33 @@ for p in EXERCISE DISTANCE TOTAL_CALORIES_BURNED HEART_RATE POWER SPEED CYCLING_
   adb shell pm grant $PKG android.permission.health.WRITE_$p || true
 done
 adb shell cmd uimode night no || true
-# The launcher of the emulator image hangs on the slow CI machine and its "isn't responding"
-# dialog came back before every step, however often Wait was tapped: the classic run
-# 36505671077 got the dialog on nearly every shot. No error dialogs at all for the run; an
-# ANR still reaches logcat and the end of steps.log ("ANR in")
+# No error dialogs of other apps (the launcher hangs on the slow CI machine); an ANR still
+# reaches logcat and the end of steps.log
 adb shell settings put global hide_error_dialogs 1 || true
 
-# T-060, T-066: a fake treadmill, so the home page has tiles (without a device it shows the search help)
-printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nfakedevice_treadmill=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG" > qz.conf
-adb push qz.conf /data/local/tmp/qz.conf
-adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
-adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
-adb shell "run-as $PKG ls -la 'files/.config/Roberto Viola'" || true
+conf_with() {
+  { printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nfakedevice_treadmill=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG"
+    for kv in "$@"; do echo "$kv"; done; } > qz.conf
+  adb push qz.conf /data/local/tmp/qz.conf
+  adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
+  adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf' < /dev/null"
+}
+# The setting is not in the conf: the default (off) is what the first steps check
+conf_with
 
-# The control tree of the screen into ui.xml (empty when uiautomator gives up, for instance
-# while something animates without pause)
 dump() {
   rm -f ui.xml
   timeout 25 adb shell uiautomator dump /data/local/tmp/ui.xml > /dev/null 2>&1 || true
   adb pull /data/local/tmp/ui.xml ui.xml > /dev/null 2>&1 || true
 }
-# The emulator itself may put a window over the app: "Pixel Launcher isn't responding", or
-# the Health Connect screen left over when the back key went to such a dialog. They made a
-# whole run useless once. Clear them before every step: Wait on a "not responding" dialog,
-# the back key on anything else that is not the app. Logged in steps.log.
+# Another window over the app (a hanging launcher, Health Connect, QZ's own permission
+# dialog): closed before every step, logged in steps.log
 ensure_app() {
   local i pkg xy
   for i in 1 2 3; do
     dump
     [ -f ui.xml ] || return 0
     pkg=$(python3 .github/uitap.py ui.xml --package)
-    # QZ's own Android dialog "Permissions Required" (Bluetooth and location services off, API < 30
-    # images): it belongs to the app, so the package check below would let it cover every step
-    # and after No its follow-up "Reminder Preference" (remind about location next time?)
     if [ "$pkg" = "$PKG" ] && grep -qE "Permissions Required|Reminder Preference" ui.xml && xy=$(python3 .github/uitap.py ui.xml '^No$'); then
       echo "!! QZ permission dialog: No at $xy" >> $STEPLOG
       adb shell input tap $xy || true
@@ -74,7 +62,6 @@ ensure_app() {
       continue
     fi
     [ -z "$pkg" ] || [ "$pkg" = "$PKG" ] && return 0
-    # Somebody else hanging (the launcher) is closed, the app itself is waited for
     if grep -q "t responding" ui.xml && ! grep -q "QZ\|qdomyos" ui.xml &&
        xy=$(python3 .github/uitap.py ui.xml 'Close app'); then
       echo "!! $pkg: another app not responding, Close app at $xy" >> $STEPLOG
@@ -88,11 +75,8 @@ ensure_app() {
     fi
     sleep 3
   done
-  # The last dump showed the window that was then closed: not the screen any more
   rm -f ui.xml
 }
-# ensure_app leaves ui.xml of the app on top: the callers take it instead of a second dump
-# of the same screen (a dump costs about 2 s, half of all dumps of a run were such repeats)
 shot() {
   if [ "$1" = "01-healthconnect" ]; then rm -f ui.xml; else ensure_app; fi
   echo "-- shot $1" >> $STEPLOG
@@ -101,8 +85,6 @@ shot() {
   [ -f ui.xml ] || dump
   [ -f ui.xml ] && cp ui.xml dumps/$1.xml
 }
-# tap_ui 'regex' [x y]: the control whose whole text or accessible name matches, else the
-# fallback coordinates; without them the step is skipped (return 1)
 tap_ui() {
   local rx="$1" fx="$2" fy="$3" xy=""
   ensure_app
@@ -119,7 +101,6 @@ tap_ui() {
     return 1
   fi
 }
-# The same for a drawer entry that may be below the fold: one swipe up and a second look
 tap_drawer() {
   local rx="$1" xy=""
   dump
@@ -130,10 +111,9 @@ tap_drawer() {
   fi
   tap_ui "$@"
 }
-# scroll_to 'regex': swipe the page up until the control shows (at most 12 swipes)
 scroll_to() {
   local i
-  for i in $(seq 1 12); do
+  for i in $(seq 1 25); do
     dump
     if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
       echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
@@ -145,58 +125,42 @@ scroll_to() {
   echo "scroll to '$1': NOT FOUND" >> $STEPLOG
   return 1
 }
-# The top of a page: a few quick swipes down
-scroll_top() {
-  local i
-  for i in 1 2 3 4 5; do adb shell input swipe 700 800 700 2200 150 || true; done
-  sleep 1
+# The checked state of the control with this label in ui.xml: true, false or none
+checked_of() {
+  python3 - "$1" <<'EOF'
+import re, sys
+import xml.etree.ElementTree as ET
+rx = re.compile(sys.argv[1], re.I)
+try:
+    root = ET.parse("ui.xml").getroot()
+except (ET.ParseError, OSError):
+    print("none"); sys.exit(0)
+for node in root.iter("node"):
+    labels = [node.get("text") or "", node.get("content-desc") or ""]
+    if any(l and rx.fullmatch(l.strip()) for l in labels):
+        print(node.get("checked") or "none"); sys.exit(0)
+print("none")
+EOF
 }
-# The back key closes the keyboard, but only while it is shown: otherwise it leaves the page
-hide_keyboard() {
-  if adb shell dumpsys input_method | grep -q "mInputShown=true"; then
-    back "keyboard"
-    sleep 1
-  fi
-}
-tap() { ensure_app; echo "tap $1 $2 ($3)" >> $STEPLOG; adb shell input tap $1 $2 || true; }
 back() { echo "back ($1)" >> $STEPLOG; adb shell input keyevent KEYCODE_BACK || true; }
-# Toolbar buttons are icons without text: the same place in both looks (Nexus 6: 1440x2560
-# px, 3.5 px per dp)
-MENU="84 168"          # menu on the home page, back arrow elsewhere
+tap() { ensure_app; echo "tap $1 $2 ($3)" >> $STEPLOG; adb shell input tap $1 $2 || true; }
+# Nexus 6: 1440x2560 px, 3.5 px per dp
 LOCK="1187 168"        # tile lock on the home page
-open_menu() { tap $MENU "menu"; sleep 3; adb shell input swipe 500 700 500 2300 300 || true; sleep 2; }
 
 adb logcat -c || true
-# Recorded from the start: a dump at the end (logcat -d) has lost the first lines of the app by
-# then - the main buffer wraps in a long run, so the version line and the settings dump of
-# main() were missing in the runs of the modern look
 adb logcat > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
 adb shell am start -n $PKG/$PKG.CustomQtActivity
 sleep 20
 shot 01-healthconnect
-# Only while that screen is on top: once it had closed by itself and the back key closed
-# the first-run wizard instead
 if [ -f ui.xml ] && [ "$(python3 .github/uitap.py ui.xml --package)" = "$PKG" ]; then
   echo "health connect screen not shown: no back key" >> $STEPLOG
 else
   back "health connect"
 fi
 sleep 30
-shot 02-first-screen        # the wizard opens on the first run
-# T-060: with the fake treadmill the wizard does not open; its back keys would leave the app
 shot 04-home
-# T-052: the Start/Stop row is the grid header and scrolls with the tiles; the toolbar scrolls
-# away and back by the drag direction. Master look only (no ui_modern in this build). The state
-# is read from the frames; the steps only say what is expected of each. The toolbar toggles after
-# about 88 dp in one direction (its 48 dp plus 40), about 310 px here, and comes back at the top of
-# the page in any case.
-conf_with() {
-  { printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nfakedevice_treadmill=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG"
-    for kv in "$@"; do echo "$kv"; done; } > qz.conf
-  adb push qz.conf /data/local/tmp/qz.conf
-  adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf' < /dev/null"
-}
+
 wait_tiles() {
   local i
   # The fake treadmill comes after the first search ends: at most 3 min
@@ -211,178 +175,200 @@ wait_tiles() {
   echo "== steps"; cat $STEPLOG
   exit 1
 }
+start_app() {
+  adb shell am start -n $PKG/$PKG.CustomQtActivity
+  sleep 20
+  wait_tiles
+}
 restart_with() {
   echo "== restart: $*" >> $STEPLOG
   adb shell am force-stop $PKG || true
   sleep 2
   conf_with "$@"
-  adb shell am start -n $PKG/$PKG.CustomQtActivity
-  sleep 20
-  wait_tiles
+  start_app
+}
+# The same app settings as they are (a switch flipped in the app stays)
+restart_keep() {
+  echo "== restart, settings kept" >> $STEPLOG
+  adb shell am force-stop $PKG || true
+  sleep 2
+  start_app
 }
 step() { echo "[$1] expected: $2" >> $STEPLOG; }
 drag_up() { adb shell input swipe 700 1800 700 $((1800 - $1)) 1500 || true; sleep 3; }
 drag_down() { adb shell input swipe 700 900 700 $((900 + $1)) 1500 || true; sleep 3; }
 to_end() { local i; for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 600 150 || true; done; sleep 4; }
+scroll_top() { local i; for i in 1 2 3 4 5; do adb shell input swipe 700 800 700 2200 150 || true; done; sleep 3; }
+
+# Rests logged so far: a step reads only the rest that came after its mark
+mark() { REST_N=$(grep -c "QZ-SNAP rest" full_logcat.txt); }
+# rest_is on|off: the last rest after the mark, and whether it is what the setting promises.
+# on: at the top, the Start/Stop row at the top of the shown area, a row of tiles with the gap
+# between rows above it, or the end of the list - and the toolbar whole or gone, not half shown.
+# off: the setting is off (where it rests is the user's scroll)
+rest_is() {
+  local want=$1 n line verdict
+  sleep 1
+  n=$(grep -c "QZ-SNAP rest" full_logcat.txt)
+  if [ "$n" -le "$REST_N" ]; then
+    echo "!! no rest logged after the step (no movement ended)" >> $STEPLOG
+    return
+  fi
+  line=$(grep "QZ-SNAP rest" full_logcat.txt | tail -1 | sed 's/.*QZ-SNAP rest //')
+  verdict=$(echo "$line" | awk -v want="$want" '
+    function abs(x) { return x < 0 ? -x : x }
+    { for (i = 1; i <= NF; i++) { split($i, kv, "="); v[kv[1]] = kv[2] } }
+    END {
+      s = v["s"] + 0; bar = v["bar"] + 0; h = v["h"] + 0; maxS = v["maxS"] + 0
+      startRow = v["startRow"] + 0; tileGap = v["tileGap"] + 0; rowGap = v["rowGap"] + 0
+      if (want == "off") {
+        print (v["snap"] == "false" ? "snap off: OK" : "!! snap=" v["snap"] ", expected off"); exit
+      }
+      if (v["snap"] != "true") { print "!! snap=" v["snap"] ", expected on"; exit }
+      if (!(bar <= 0.5 || abs(bar - h) <= 0.5)) { print "!! toolbar half shown (bar " bar " of " h ")"; exit }
+      if (s <= 0.5) print "top: OK"
+      else if (abs(s - maxS) <= 1) print "end of the list: OK"
+      else if (abs(startRow) <= 1) print "Start/Stop row at the top: OK"
+      else if (abs(tileGap - rowGap) <= 1.5) print "row with the gap above it: OK"
+      else print "!! NOT on a row (tileGap " tileGap ", rowGap " rowGap ", startRow " startRow ")"
+    }')
+  echo "  rest: $line" >> $STEPLOG
+  echo "  -> $verdict" >> $STEPLOG
+}
+# One movement of the list, then its rest checked: check <on|off> <name> <expected> <command...>
+check() {
+  local want=$1 name=$2 what=$3
+  shift 3
+  step "$name" "$what"
+  mark
+  "$@"
+  rest_is "$want"
+  shot "t-$name"
+}
 
 echo "== API $(adb shell getprop ro.build.version.sdk | tr -d '\r')" >> $STEPLOG
 wait_tiles
-step top "toolbar and Start/Stop row shown"
 shot t-00-top
 
-# The toolbar over the tiles (test/t052-overlay): it slides with the scroll 1:1 and snaps to the
-# nearer end after release; near the top (scrolled less than its height) it comes back
-step short-drag "200 px: the Start/Stop row moved up with the tiles; toolbar shown (near the top it snaps back), its room above the row"
-drag_up 200
-shot t-01-drag-200
+# 1. Off by default: the scroll stays where the drag left it, as in master
+check off off-drag "setting off (default): the list stays where the drag left it, a row may be cut" drag_up 1100
+scroll_top
 
-scroll_top; sleep 2
-step long-drag "1100 px up: toolbar gone, no line of its pixels under the status bar; the row scrolled off with the tiles"
-drag_up 1100
-shot t-02-drag-1100
-
-step small-back "150 px down: toolbar slid back over the tiles, whole after the snap (or still gone if less than half came back)"
-drag_down 150
-shot t-03-back-150
-
-step first-row "600 px down, to the top: toolbar shown, the Start/Stop row in full view below it"
-drag_down 600
-shot t-04-first-row-hidden
-
-step pull "a pull past the top edge: toolbar with its icons shown"
-drag_down 700
-shot t-04b-pull
-
-scroll_top; sleep 2
-drag_up 1300
-drag_up 1300
-shot t-04c-deep
-step back-deep "1000 px down from deep in the list: toolbar shown over the tiles"
-drag_down 1000
-shot t-04d-back-deep
-
-# Short pulls down deep in the list: a 250 px swipe moves the list about 60 dp, more than the toolbar
-drag_up 1300
-step two-pulls "deep in the list, toolbar gone, then 250 px down: toolbar back already; 250 px down again: still shown"
-drag_down 250
-shot t-04e-pull-1
-drag_down 250
-shot t-04f-pull-2
-
-# Short drags up from the top (the phone 02.11: the jerk came from such steps): the toolbar follows
-# them, the tiles never jump
-scroll_top; sleep 2
-step touch-top "from the top, three 200 px drags up: toolbar gone (each slid it further), no band left above the tiles"
-drag_up 200
-drag_up 200
-drag_up 200
-shot t-04g-touch-top
-# The same with short flicks
-scroll_top; sleep 2
-step flick-steps "from the top, three short quick swipes up (small flicks): toolbar gone, whole or not at all (snap)"
-for i in 1 2 3; do adb shell input swipe 700 1800 700 1650 120 || true; sleep 2; done
-shot t-04h-flick-steps
-
-# The toolbar is laid out only as tall as the status bar inset and drawn past it over the tiles: a
-# drag that starts on its title (y 168 = 24 dp below the status bar on both APIs) must stay on it
-scroll_top; sleep 2
-drag_up 1300
-drag_down 250
-shot t-04i-before-toolbar-drag
-step toolbar-drag "deep in the list, toolbar shown, a drag down from the toolbar title: the tiles stay where they were (same as t-04i)"
-ensure_app
-adb shell input swipe 720 168 720 1000 1500 || true
-sleep 3
-shot t-04j-toolbar-drag
-
-scroll_top; sleep 2
-step flick "fast flick up: toolbar gone, the flick glides on (not stopped about a row further)"
-adb shell input swipe 700 1900 700 1200 120 || true
-sleep 5
-shot t-05-flick
-
-step top-again "fast swipes down, past the top edge: toolbar and Start/Stop row shown"
-scroll_top; sleep 2
-shot t-06-top-again
-
-step end "the end of the list, overscrolled: toolbar gone (the spring back does not bring it), last row in full view"
-to_end
-shot t-07-end
-step end-back "1000 px down from the end: toolbar shown"
-drag_down 1000
-shot t-08-end-back
-
-# Another page brings it back: the drawer opens with an edge swipe, the toolbar is gone
-scroll_top; sleep 2
-drag_up 1300
-shot t-09-before-page
-step page "drawer by edge swipe, Settings: page with a full toolbar, its top not under the toolbar"
+# 2. On in the settings, while the app runs: the home page takes it at once (its own Settings
+# copy gets it through window.tileSettingChanged), no restart
+step switch "Settings - General UI Options - Snap tiles to rows: off, a tap turns it on"
 adb shell input swipe 2 1200 900 1200 300 || true
 sleep 3
-shot t-10-drawer
 tap_drawer '^Settings$' 400 900
 sleep 8
-shot t-11-settings
-step page-back "back key: home with the toolbar shown"
+shot t-01-settings
+SWITCH_ON=false
+if scroll_to '^General UI Options$' && tap_ui '^General UI Options$'; then
+  sleep 3
+  if scroll_to '^Snap tiles to rows$'; then
+    echo "  switch before the tap: $(checked_of '^Snap tiles to rows$')" >> $STEPLOG
+    xy=$(python3 .github/uitap.py ui.xml '^Snap tiles to rows$')
+    y=${xy#* }
+    # IndicatorOnlySwitch: only the switch at the right end of the row takes the tap
+    tap 1330 "$y" "the switch of Snap tiles to rows"
+    sleep 2
+    dump
+    state=$(checked_of '^Snap tiles to rows$')
+    echo "  switch after the tap: $state" >> $STEPLOG
+    [ "$state" = "true" ] && SWITCH_ON=true
+    shot t-02-switch-on
+  fi
+fi
 back "settings"
 sleep 4
-shot t-12-home-after-page
+if [ "$SWITCH_ON" != "true" ]; then
+  echo "!! the switch was not turned on in the app: on by the conf instead, the live change is NOT checked" >> $STEPLOG
+  restart_with ui_tile_snap=true
+fi
+shot t-03-home-back
+scroll_top
 
-# Sideways while collapsed
-scroll_top; sleep 2
-drag_up 1300
-adb shell settings put system accelerometer_rotation 0 || true
-step rotate "sideways after a collapse: nothing cut, the top reachable"
-adb shell settings put system user_rotation 1 || true
-sleep 10
-shot t-13-landscape-collapsed
-adb shell input swipe 1200 300 1200 1200 150 || true
-adb shell input swipe 1200 300 1200 1200 150 || true
-sleep 3
-shot t-14-landscape-top
-adb shell settings put system user_rotation 0 || true
-sleep 10
-shot t-15-portrait
+# 3. On: each kind of rest. The cell is 130 dp (455 px), the toolbar about 56 dp; the drags are
+# of different lengths so that they stop at different places within a row
+check on drag-1100 "a row of tiles at the top under the status bar, the gap between rows above it" drag_up 1100
+check on drag-300-more "300 px further: the next or the same row, never half a row" drag_up 300
+check on drag-200-more "200 px further: a row" drag_up 200
+check on back-150 "150 px down deep in the list: toolbar back or gone (whole), a row at the top of the shown area" drag_down 150
+check on back-250 "250 px down: toolbar shown, a row with the gap below the toolbar" drag_down 250
+scroll_top
+check on top-400 "400 px from the top: the Start/Stop row at the top under the status bar, or the first row" drag_up 400
+scroll_top
+check on top-650 "650 px from the top: the first row (with the gap) or the Start/Stop row" drag_up 650
+scroll_top
+check on top-120 "120 px from the top (inside the toolbar room): back to the top or the toolbar gone with the list" drag_up 120
+scroll_top
+check on flick "a fast flick: the glide ends on a row" adb shell input swipe 700 1900 700 1200 120
+check on end "the end of the list: the last row in full view" to_end
+check on near-end "200 px back from the end: a row or the end again" drag_down 200
 
-# Moving tiles: the gap above the first row
-scroll_top; sleep 2
-step lock "tile lock: toolbar shown, no Start/Stop row, 30 gap between the toolbar and the first row, inside the grid; unlocked: the row back at the top"
+# 4. Moving the tiles scrolls the grid by contentY: no snap then, and the lock works as before
+scroll_top
+step lock "tile lock: no Start/Stop row, the 30 gap under the toolbar; a scroll there does not snap (no rest logged)"
 tap $LOCK "lock tiles"
 sleep 3
-shot t-16-lock
-adb shell input swipe 1400 1800 1400 800 800 || true
-sleep 2
-shot t-17-lock-scrolled
-adb shell input swipe 1400 800 1400 2000 400 || true
-sleep 2
+mark
+adb shell input swipe 1400 1800 1400 1100 800 || true
+sleep 3
+n=$(grep -c "QZ-SNAP rest" full_logcat.txt)
+[ "$n" -le "$REST_N" ] && echo "  -> no rest while the tiles are moved: OK" >> $STEPLOG || echo "  -> rest logged while locked (look at it)" >> $STEPLOG
+shot t-lock
 tap $LOCK "unlock tiles"
 sleep 3
-shot t-18-unlock
+shot t-unlock
 
-# No Start/Stop row: the 30 px gap under the toolbar goes away with it
-restart_with top_bar_enabled=false
-step no-top-bar "top bar off: 30 px gap under the toolbar, scrolled off with the tiles, toolbar gone after a long drag"
-shot t-23-no-top-bar
-drag_up 1300
-shot t-24-no-top-bar-drag
+# 5. The switch is kept: after a restart of the app it is still on
+if [ "$SWITCH_ON" = "true" ]; then
+  restart_keep
+  check on kept "after a restart the setting is still on: a row" drag_up 1100
+fi
 
-# A list that fits: nothing toggles
-restart_with ui_zoom=50
-step short-list "tiles fit: toolbar stays shown on a drag"
-shot t-19-short-top
+# 6. Sideways: the same rows
+scroll_top
+adb shell settings put system accelerometer_rotation 0 || true
+adb shell settings put system user_rotation 1 || true
+sleep 10
+step landscape "sideways: a drag ends on a row"
+mark
+adb shell input swipe 1200 1200 1200 500 1500 || true
+sleep 3
+rest_is on
+shot t-landscape
+adb shell settings put system user_rotation 0 || true
+sleep 10
+
+# 7. Top bar off: no Start/Stop row, the 30 gap under the toolbar
+restart_with ui_tile_snap=true top_bar_enabled=false
+check on no-top-bar "top bar off: a row" drag_up 1100
+scroll_top
+check on no-top-bar-short "top bar off, 150 px from the top: back to the top (no rest inside the toolbar room)" drag_up 150
+
+# 8. A list just over the screen and one that fits. In T-052 60 % did not overflow the screen:
+# the trace gives maxS of each, the one with maxS under the toolbar height is the case of a list
+# longer than the page by less than the toolbar (the toolbar then goes only as far as the list)
+for z in 60 65 70; do
+  restart_with ui_tile_snap=true ui_zoom=$z
+  check on just-over-$z "tiles $z %: the end reachable, the last row in full view" to_end
+  check on just-over-$z-back "tiles $z %: 150 px back from the end - a row, the end or the top" drag_down 150
+done
+restart_with ui_tile_snap=true ui_zoom=50
+step short-list "tiles fit: a drag springs back, nothing snaps away from the top"
+mark
 drag_up 400
-shot t-20-short-drag
+rest_is on
+shot t-short-list
 
-# A list just over the screen: the end reachable, the last row above the bottom
-restart_with ui_zoom=60
-step just-over "swipes up: last row in full view above the bottom of the screen"
-shot t-21-over-top
-to_end
-shot t-22-over-end
+# 9. Off again by the conf: as in master
+restart_with ui_tile_snap=false
+check off off-again "off: the list stays where the drag left it" drag_up 1100
+
 adb shell pidof $PKG > /dev/null && echo "app alive at the end: OK" >> $STEPLOG || echo "!! app not running at the end" >> $STEPLOG
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
-# If the recording broke off (adb restarted), the dump of the end is better than nothing
 adb logcat -d > end_logcat.txt || true
 if [ "$(wc -l < full_logcat.txt)" -lt "$(wc -l < end_logcat.txt)" ]; then
   echo "!! logcat recording shorter than the dump at the end: the dump is kept" >> $STEPLOG
@@ -390,21 +376,15 @@ if [ "$(wc -l < full_logcat.txt)" -lt "$(wc -l < end_logcat.txt)" ]; then
 else
   rm -f end_logcat.txt
 fi
-# The debug logs the app wrote itself (Documents/QZ on Android 14+): none with the log off
 mkdir -p qz-logs
 adb shell 'ls -la /sdcard/Documents/QZ/ 2>&1' > qz-logs/listing.txt || true
-for f in $(adb shell 'ls /sdcard/Documents/QZ/ 2>/dev/null' | tr -d '\r' | grep '^debug-.*[.]log$'); do
-  adb pull "/sdcard/Documents/QZ/$f" "qz-logs/$f" > /dev/null 2>&1 || true
-done
-echo "== app debug logs"; cat qz-logs/listing.txt; ls -la qz-logs
-echo "== steps"; cat $STEPLOG
-echo "== timing"; grep -E "QZ-TIMING|QZ-THEME" full_logcat.txt || true
-# The dialogs are hidden (hide_error_dialogs above), so hangs are only here
 grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
-echo "== ANR"; grep -E "ANR in" full_logcat.txt || true
-grep -iE "qrc:|\.qml|warning|critical|fatal" full_logcat.txt | tail -n 80 || true
-echo "== web page errors"; grep -iE "Uncaught|chromium.*(Error|error)|Error is " full_logcat.txt | tail -n 40 || true
-echo "== QML errors of the toolbar (none expected)"
-grep -E "(main|Home)[.]qml:[0-9]+|FATAL EXCEPTION" full_logcat.txt | grep -vE "qml: |QZ-|rootItem is not defined|appModel is not defined|onFoo properties|onTrainingProgramIntervalSoundRequested" | tee t052-errors.txt | head -40 | sed 's/^/!! /' >> $STEPLOG || true
-[ -s t052-errors.txt ] || echo "no QML error, no crash: OK" >> $STEPLOG
+echo "== all snap traces"; grep "QZ-SNAP" full_logcat.txt | sed 's/.*QZ-SNAP/QZ-SNAP/' || true
+echo "== QML errors of the change (none expected)"
+# settings.qml has warnings of its own in master: only the lines of the new switch (about 7360-7390)
+grep -E "(main|Home)[.]qml:[0-9]+|settings[.]qml:73[5-9][0-9]|tile_snap|FATAL EXCEPTION" full_logcat.txt | grep -vE "qml: |QZ-|rootItem is not defined|appModel is not defined|onFoo properties|onTrainingProgramIntervalSoundRequested" > t091-errors.txt || true
+head -40 t091-errors.txt | sed 's/^/!! /' >> $STEPLOG
+[ -s t091-errors.txt ] || echo "no QML error, no crash: OK" >> $STEPLOG
+MISSES=$(grep -c '^  -> !!\|^!!' $STEPLOG)
+echo "misses (lines with !!): $MISSES" >> $STEPLOG
 echo "== steps"; cat $STEPLOG
