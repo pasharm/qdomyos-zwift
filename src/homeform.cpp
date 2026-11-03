@@ -9417,6 +9417,7 @@ QString homeform::historyDatabasePath() {
 // ddb.sqlite it cannot open and offers to recover the workouts. The next start of this install
 // opens the empty file as a new database, the same as a missing one.
 void homeform::claimMainHistoryDatabaseName() {
+#ifdef Q_OS_ANDROID
     const QString mainPath = getWritableAppDir() + QStringLiteral("ddb.sqlite");
     if (m_historyDatabasePath == mainPath || QFileInfo(mainPath).size() > 0) {
         return;
@@ -9425,7 +9426,11 @@ void homeform::claimMainHistoryDatabaseName() {
     if (file.open(QIODevice::ReadWrite)) {
         file.close();
         qDebug() << "history database name taken for the next start:" << mainPath;
+    } else {
+        // still the file of the previous install: the import did not remove it
+        qDebug() << "history database name not taken:" << mainPath << file.errorString();
     }
+#endif
 }
 
 bool homeform::startFitFolderImport(bool allowPicker) {
