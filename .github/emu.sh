@@ -229,8 +229,10 @@ echo "import: Java part $(python3 -c "print(round(${JAVA_END:-0} - $ALLOWED, 1))
 sleep 3
 shot 06-after-import
 count_fit "after the import"
-# expected: one own copy of each workout (own-00.fit and 15 new), nothing else left over
-echo "expected: all $((WORKOUTS * COPIES + WORKOUTS)), seen by the app $WORKOUTS" >> $STEPLOG
+# expected: one own copy of each workout (own-00.fit and 15 new); the copies of the previous
+# install stay with master and are removed by the fix (4477d03a1 on)
+echo "expected: seen by the app $WORKOUTS; all $((WORKOUTS * COPIES + WORKOUTS)) on master, $WORKOUTS with the removal of the copies" >> $STEPLOG
+echo "removed through the grant: $(grep -c 'deleted=true' full_logcat.txt)" >> $STEPLOG
 echo "== own files after the import" >> $STEPLOG
 adb shell "run-as $PKG sh -c \"cd '$FIT' && ls -la && md5sum * | sort\" < /dev/null" >> $STEPLOG 2>&1 || true
 
