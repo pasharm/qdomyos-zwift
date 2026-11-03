@@ -28,9 +28,12 @@ put_conf() {
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
 }
 
-# The control tree of the screen into ui.xml (empty when uiautomator gives up)
+# The control tree of the screen into ui.xml (none when uiautomator gives up). The old file on
+# the device goes first: when the dump fails, pull would take the tree of an earlier screen
+# (run 41726390567: the folder picker on top, the dump still showed the offer of QZ)
 dump() {
   rm -f ui.xml
+  adb shell rm -f /sdcard/ui.xml < /dev/null || true
   timeout 25 adb shell uiautomator dump /sdcard/ui.xml > /dev/null 2>&1 || true
   adb pull /sdcard/ui.xml ui.xml > /dev/null 2>&1 || true
 }
@@ -93,17 +96,28 @@ tap_ui() {
     return 1
   fi
 }
-# tap_any 'regex': the same in whatever window is on top (the folder picker), no fallback
+# tap_any 'regex' [x y]: the same in whatever window is on top (the folder picker). The picker
+# may not let uiautomator dump it (thumbnails keep loading): four tries, then the fallback
+# coordinates if given
 tap_any() {
-  local xy=""
-  dump
-  [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$1")
+  local xy="" i
+  for i in 1 2 3 4; do
+    dump
+    [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$1") && break
+    echo "tap '$1': try $i, $([ -f ui.xml ] && echo "not in $(python3 .github/uitap.py ui.xml --package)" || echo "no dump")" >> $STEPLOG
+    sleep 3
+  done
   if [ -n "$xy" ]; then
     echo "tap '$1' in $(python3 .github/uitap.py ui.xml --package): at $xy" >> $STEPLOG
     adb shell input tap $xy || true
     return 0
   fi
-  echo "tap '$1': NOT FOUND in $(python3 .github/uitap.py ui.xml --package 2>/dev/null)" >> $STEPLOG
+  if [ -n "$2" ]; then
+    echo "tap '$1': NOT FOUND, coordinates $2 $3" >> $STEPLOG
+    adb shell input tap $2 $3 || true
+    return 0
+  fi
+  echo "tap '$1': NOT FOUND, skipped" >> $STEPLOG
   return 1
 }
 # A drawer entry may be below the fold: one swipe up and a second look
@@ -251,7 +265,8 @@ if [ "$OFFER2" = 1 ]; then
   sleep 6
   shot_any s2-03-picker
   # uitap.py matches the whole label, case-insensitively ("USE THIS FOLDER", "ALLOW")
-  if tap_any 'use this folder'; then
+  # fallback: the button at the bottom of the picker (frame s2-03-picker of run 41726390567)
+  if tap_any 'use this folder' 720 2391; then
     sleep 4
     shot_any s2-04-allow
     tap_any 'allow' && PICKED=1
