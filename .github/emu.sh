@@ -237,6 +237,10 @@ for LANG_CODE in ru de en; do
   adb shell am start -n $PKG/$PKG.CustomQtActivity
   sleep 30
   if scroll_to "$RELEASE"; then
+    # scroll_to stops as soon as the label is in the tree, even under the gesture bar (classic
+    # ru/de in 41675652462): one more swipe brings the last row of tiles fully on screen
+    adb shell input swipe 700 2000 700 1300 400 || true
+    sleep 1
     step $LANG_CODE-button "the button in the second line of T.Power(W), clear of the value, the name and the icon"
     shot t403-$LANG_CODE-button
     tap_ui "$RELEASE"
