@@ -1,6 +1,6 @@
 # test branch: run already built APKs on the emulator and keep logcat and screenshots (no
-# build). T-182: the folder import of the history after a reinstall, timed on two builds side
-# by side - plain master (test/t182-base) and the fix (test/t182-fix). Documents/QZ is the work
+# build). T-182: the folder import of the history after a reinstall, timed on builds side by
+# side - plain master (test/t182-base), the fix, the fix with the removal of old copies. Documents/QZ is the work
 # folder only from API 34 on, so the emulator stays at 35.
 name: CI
 
@@ -12,6 +12,9 @@ on:
         required: true
       fix:
         description: run id of the build of the fix
+        required: true
+      del:
+        description: run id of the build of the fix with the removal of old copies
         required: true
       modern:
         description: ui_modern for the run (false = the classic look)
@@ -25,7 +28,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        build: [base, fix]
+        build: [base, fix, del]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -43,7 +46,7 @@ jobs:
         with:
           name: fdroid-android-trial
           path: apk-debug
-          run-id: ${{ matrix.build == 'base' && inputs.base || inputs.fix }}
+          run-id: ${{ matrix.build == 'base' && inputs.base || matrix.build == 'fix' && inputs.fix || inputs.del }}
           github-token: ${{ github.token }}
 
       - name: Setup Java for Android Emulator

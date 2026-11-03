@@ -1,19 +1,21 @@
 #!/bin/bash
 # Test only (T-182): the folder import of the history after a reinstall, timed. The same steps
-# run on two APKs (matrix of the workflow): the build of plain master and the build of the fix.
+# run on several APKs (matrix of the workflow): plain master, the fix, the fix with the removal
+# of the old copies.
 #
 # On Android 14+ the work folder of QZ is Documents/QZ, and the files a previous install left
 # there are foreign to the app: missing from the folder list, exists() by name, unreadable
 # without a folder grant. After every reinstall the folder import copies each workout once
 # more, so Documents/QZ/fit of a phone held 14 copies of each of 16 workouts (logs of 08.10).
-# Here the first install plays the previous ones: run-as (uid of the app) puts 16 synthetic
-# workouts x 14 copies (workout-NN.fit, workout-NN_1.fit ... _13.fit) into Documents/QZ/fit,
-# then the app is uninstalled and installed again. One more workout copy is put as a file of
-# the new install (own-00.fit, the bytes of workout-00) after its start. The history page asks
-# about the previous install, Yes opens the folder picker, Use this folder and Allow start
-# the import. Measured: seconds from Allow to the end of the Java part (handleFitFolderResult
-# in logcat) and to the end of the C++ part (FitDatabaseProcessor import: added ...), the
-# files in the folder after it (own and all), the counts of the import.
+# Here a first install makes ddb.sqlite (so the reinstall gets a spare database and the
+# question), is uninstalled, and root puts 16 synthetic workouts x 14 copies
+# (workout-NN.fit, workout-NN_1.fit ... _13.fit) into Documents/QZ/fit: files of no package,
+# foreign to the app like those of a removed install (run-as cannot write to the shared storage,
+# run 41732658554). The history page asks about the previous install, Yes opens the folder
+# picker, Use this folder and Allow start the import. Measured: seconds from Allow to the end
+# of the Java part (handleFitFolderResult in logcat) and to the end of the C++ part
+# (FitDatabaseProcessor import: added ...), the files in the folder after it (of the app's uid
+# and all), the counts of the import.
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -32,15 +34,24 @@ install_app() {
     adb shell pm grant $PKG android.permission.$p || true
   done
 }
-# count_fit <when>: files in Documents/QZ/fit as the shell sees them (all) and as the app does
+# count_fit <when>: files in Documents/QZ/fit (root sees all of them) and those owned by the uid
+# of the installed app
 count_fit() {
-  local all own
+  local all own uid
+  uid=$(adb shell "stat -c %u /data/data/$PKG 2>/dev/null < /dev/null" | tr -d '\r ')
   all=$(adb shell "ls '$FIT/' 2>/dev/null < /dev/null | wc -l" | tr -d '\r ')
-  own=$(adb shell "run-as $PKG sh -c \"ls '$FIT/' 2>/dev/null | wc -l\" < /dev/null" | tr -d '\r ')
-  echo "fit folder, $1: all $all, seen by the app $own" >> $STEPLOG
+  own=0
+  [ -n "$uid" ] && own=$(adb shell "ls -ln '$FIT/' 2>/dev/null < /dev/null" | awk -v u="$uid" '$3 == u' | wc -l)
+  echo "fit folder, $1: all $all, of the app (uid ${uid:-none}) $own" >> $STEPLOG
   FIT_ALL=$all
   FIT_OWN=$own
 }
+
+# root for the files of "no package"; before logcat starts (adbd restarts)
+adb root || true
+sleep 5
+adb wait-for-device
+[ "$(adb shell id -u | tr -d '\r ')" = "0" ] || echo "!! no adb root - the run proves nothing" >> $STEPLOG
 
 install_app
 echo "appops MANAGE_EXTERNAL_STORAGE: $(adb shell appops get $PKG MANAGE_EXTERNAL_STORAGE 2>&1 | tr -d '\r')" >> $STEPLOG
@@ -171,24 +182,37 @@ shot 01-home
 echo "== Documents/QZ after the first start" >> $STEPLOG
 adb shell "ls -la /sdcard/Documents/QZ/ 2>&1" >> $STEPLOG || true
 
-# The copies of the previous installs, written as the app
-mark "copies of previous installs"
-adb shell "run-as $PKG sh -c 'mkdir -p $FIT; for f in /data/local/tmp/t182/*.fit; do b=\$(basename \$f .fit); cp \$f $FIT/\$b.fit; n=1; while [ \$n -lt $COPIES ]; do cp \$f $FIT/\${b}_\$n.fit; n=\$((n+1)); done; done' < /dev/null" 2>&1 | tail -n 5 >> $STEPLOG
-count_fit "with the copies"
-[ "$FIT_OWN" = "$((WORKOUTS * COPIES))" ] || echo "!! the copies were not written ($FIT_OWN of $((WORKOUTS * COPIES))) - the run proves nothing" >> $STEPLOG
-
 mark "reinstall"
 adb shell am force-stop $PKG || true
 adb uninstall $PKG || true
+
+# The copies of the previous installs: written by root through the shared storage, owned by no
+# package (the first start left fit/ empty)
+mark "copies of previous installs"
+# put_copies <folder>: workout-NN.fit and workout-NN_1.fit ... _<COPIES-1>.fit in it
+put_copies() {
+  adb shell "mkdir -p $1; for f in /data/local/tmp/t182/*.fit; do b=\$(basename \$f .fit); cp \$f $1/\$b.fit; n=1; while [ \$n -lt $COPIES ]; do cp \$f $1/\${b}_\$n.fit; n=\$((n+1)); done; done < /dev/null" 2>&1 | tail -n 5 >> $STEPLOG
+}
+put_copies $FIT
+count_fit "copies through the shared storage"
+if [ "$FIT_ALL" != "$((WORKOUTS * COPIES))" ]; then
+  # the storage under the shared one, as a last resort
+  echo "copies through /data/media/0 instead" >> $STEPLOG
+  put_copies /data/media/0/Documents/QZ/fit
+  adb shell "chown -R media_rw:media_rw /data/media/0/Documents/QZ/fit < /dev/null" >> $STEPLOG 2>&1 || true
+  count_fit "copies through /data/media/0"
+fi
+adb shell "ls -ln $FIT/ < /dev/null | head -n 4" >> $STEPLOG 2>&1 || true
+
 install_app
 put_conf "bluetooth_lastdevice_name=T182\n"
 start_app
 shot 02-home-reinstalled
 count_fit "after the reinstall"
-[ "$FIT_ALL" = "$((WORKOUTS * COPIES))" ] || echo "!! the copies are not in place after the reinstall ($FIT_ALL) - the run proves nothing" >> $STEPLOG
-# a file of this install, the same bytes as workout-00: the import must take it, not copy again
-adb shell "run-as $PKG cp /data/local/tmp/t182/workout-00.fit $FIT/own-00.fit < /dev/null" >> $STEPLOG 2>&1 || true
-count_fit "with own-00.fit"
+[ "$FIT_ALL" = "$((WORKOUTS * COPIES))" ] || echo "!! the copies are not in place after the reinstall ($FIT_ALL of $((WORKOUTS * COPIES))) - the run proves nothing" >> $STEPLOG
+[ "$FIT_OWN" = "0" ] || echo "!! $FIT_OWN copies belong to the new install: not foreign - the run proves nothing" >> $STEPLOG
+# the app itself cannot read them: that is the case of a reinstall
+echo "the app reads workout-00.fit: $(adb shell "run-as $PKG sh -c 'head -c 4 $FIT/workout-00.fit > /dev/null 2>&1 && echo yes || echo no' < /dev/null" | tr -d '\r')" >> $STEPLOG
 
 mark "history"
 open_menu
@@ -222,6 +246,11 @@ for i in $(seq 1 600); do
     CPP_END=$(date +%s.%N)
     break
   fi
+  # no workout found: the C++ part does not run
+  if [ -n "$JAVA_END" ] && grep -q "handleFitFolderResult requestCode.* files=0" full_logcat.txt; then
+    echo "!! the Java part found no workout (files=0) - the run proves nothing" >> $STEPLOG
+    break
+  fi
   sleep 1
 done
 echo "import: Java part $(python3 -c "print(round(${JAVA_END:-0} - $ALLOWED, 1))") s, whole $(python3 -c "print(round(${CPP_END:-0} - $ALLOWED, 1))") s after Allow (host clock, 1 s steps)" >> $STEPLOG
@@ -229,12 +258,14 @@ echo "import: Java part $(python3 -c "print(round(${JAVA_END:-0} - $ALLOWED, 1))
 sleep 3
 shot 06-after-import
 count_fit "after the import"
-# expected: one own copy of each workout (own-00.fit and 15 new); the copies of the previous
-# install stay with master and are removed by the fix (4477d03a1 on)
-echo "expected: seen by the app $WORKOUTS; all $((WORKOUTS * COPIES + WORKOUTS)) on master, $WORKOUTS with the removal of the copies" >> $STEPLOG
-echo "removed through the grant: $(grep -c 'deleted=true' full_logcat.txt)" >> $STEPLOG
-echo "== own files after the import" >> $STEPLOG
-adb shell "run-as $PKG sh -c \"cd '$FIT' && ls -la && md5sum * | sort\" < /dev/null" >> $STEPLOG 2>&1 || true
+# expected: one file of the app for each workout; the copies of the previous install stay with
+# master and the fix, the build "del" (602ba5e91 on) removes all but the one each new copy was
+# made from: $((WORKOUTS * (COPIES - 1))) removed
+echo "expected: of the app $WORKOUTS; all $((WORKOUTS * COPIES + WORKOUTS)) on base and fix, $((WORKOUTS * 2)) on del ($((WORKOUTS * (COPIES - 1))) removed)" >> $STEPLOG
+echo "removed through the grant (deleted=true, ddb.sqlite included): $(grep -c 'deleted=true' full_logcat.txt)" >> $STEPLOG
+echo "== the folder after the import: uid, size, name; md5 of each distinct content" >> $STEPLOG
+adb shell "ls -ln $FIT/ < /dev/null" | awk '{print $3, $5, $NF}' | sort -k3 >> $STEPLOG || true
+adb shell "cd $FIT && md5sum * < /dev/null" | awk '{print $1}' | sort | uniq -c >> $STEPLOG || true
 
 # The times from logcat itself (epoch column): the mark, the Java end, the C++ end
 python3 - full_logcat.txt >> $STEPLOG <<'EOF'
