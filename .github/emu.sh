@@ -41,7 +41,7 @@ adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
 # T-060, T-066: a fake treadmill, so the home page has tiles (without a device it shows the search help)
-printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nfakedevice_treadmill=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG" > qz.conf
+printf '[General]\nlog_debug=%s\nui_modern=%s\nconfirm_stop_workout=true\nfakedevice_treadmill=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -187,12 +187,11 @@ shot 02-first-screen        # the wizard opens on the first run
 # T-060: with the fake treadmill the wizard does not open; its back keys would leave the app
 shot 04-home
 # T-052: the Start/Stop row is the grid header and scrolls with the tiles; the toolbar scrolls
-# away and back by the drag direction. Master look only (no ui_modern in this build). The state
-# is read from the frames; the steps only say what is expected of each. The toolbar toggles after
-# about 88 dp in one direction (its 48 dp plus 40), about 310 px here, and comes back at the top of
-# the page in any case.
+# away and back by the drag direction, 1:1 with the scroll. The state is read from the frames; the
+# steps only say what is expected of each. feat/modern-ui build: ui_modern from UI_MODERN, the row
+# snap (ui_tile_snap) on by default there
 conf_with() {
-  { printf '[General]\nlog_debug=%s\nconfirm_stop_workout=true\nfakedevice_treadmill=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG"
+  { printf '[General]\nlog_debug=%s\nui_modern=%s\nconfirm_stop_workout=true\nfakedevice_treadmill=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG" "$UI_MODERN"
     for kv in "$@"; do echo "$kv"; done; } > qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf' < /dev/null"
