@@ -1351,8 +1351,9 @@ const QString QZSettings::history_chart_power_distribution_order = QStringLitera
 const QString QZSettings::history_chart_speed_inclination_order = QStringLiteral("history_chart_speed_inclination_order");
 
 const QString QZSettings::moovio_lynx_konect_2_0 = QStringLiteral("moovio_lynx_konect_2_0");
+const QString QZSettings::ui_tile_snap = QStringLiteral("ui_tile_snap");
 
-const uint32_t allSettingsCount = 1045;
+const uint32_t allSettingsCount = 1046;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -2424,6 +2425,7 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::moovio_lynx_konect_2_0, QZSettings::default_moovio_lynx_konect_2_0},
     {QZSettings::virtual_device_rower_cadence_gain, QZSettings::default_virtual_device_rower_cadence_gain},
     {QZSettings::virtual_device_rower_cadence_offset, QZSettings::default_virtual_device_rower_cadence_offset},
+    {QZSettings::ui_tile_snap, QZSettings::default_ui_tile_snap},
 };
 
 void QZSettings::qDebugAllSettings(bool showDefaults) {

@@ -7957,6 +7957,14 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
         <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
         <translation>iOS のみ。画面がオフのときや QZ がバックグラウンドにあるときも QZ を動作させ続け、Bluetooth 接続やセッションタイマーが止まらないようにします。音楽とミックスされる無音のオーディオトラックを使用するため、聴いている音楽は中断されません。画面をロックしたまま、または QZ をバックグラウンドにしたままトレーニングする必要がある場合に有効にしてください。デフォルトはオフです。</translation>
     </message>
+    <message>
+        <source>Snap tiles to rows</source>
+        <translation>タイルを行に揃える</translation>
+    </message>
+    <message>
+        <source>When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.</source>
+        <translation>メイン画面のタイルのスクロールが止まると、行単位またはリストの末尾に揃い、タイルが途中で切れなくなります。</translation>
+    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>

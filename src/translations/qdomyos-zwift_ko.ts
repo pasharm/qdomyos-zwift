@@ -7893,6 +7893,14 @@ A와 B가 모두 0이면 QZ는 기본 공식 9.8 × 체중 × (경사도/100)을
         <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
         <translation>iOS 전용. 화면이 꺼져 있거나 QZ가 백그라운드에 있을 때도 QZ가 계속 실행되도록 해 Bluetooth 연결과 세션 타이머가 멈추지 않게 합니다. 음악과 함께 재생되는 무음 오디오 트랙을 사용하므로 듣고 있는 음악이 끊기지 않습니다. 화면을 잠근 상태나 QZ를 백그라운드에 둔 상태로 운동해야 한다면 켜세요. 기본값: 꺼짐.</translation>
     </message>
+    <message>
+        <source>Snap tiles to rows</source>
+        <translation>타일을 행에 맞추기</translation>
+    </message>
+    <message>
+        <source>When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.</source>
+        <translation>메인 화면의 타일 스크롤이 멈추면 한 행 단위 또는 목록 끝에 맞춰 정렬되어 타일이 반만 잘려 보이지 않습니다.</translation>
+    </message>
 </context>
 <context>
     <name>settings-shortcuts</name>
