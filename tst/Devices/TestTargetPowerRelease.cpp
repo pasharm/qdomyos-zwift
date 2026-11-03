@@ -179,6 +179,14 @@ TEST_F(TargetPowerReleaseTest, ButtonNeedsOverrideAppCommandAndAutoResistance) {
     EXPECT_FALSE(device.targetPowerReleaseAvailable());
 }
 
+TEST_F(TargetPowerReleaseTest, AutoResistanceOffRecordsAppResistanceAsBefore) {
+    // changeResistance() then only records the request (Target Resistance tile), the bike isn't driven
+    device.setAutoResistance(false);
+    tilePlus(250);
+    write(kGrade5);
+    EXPECT_EQ(device.rawResistance(), referenceResistance(kGrade5));
+}
+
 TEST_F(TargetPowerReleaseTest, StopEndsOverrideWithoutRestoring) {
     write(kGrade5);
     tilePlus(250);

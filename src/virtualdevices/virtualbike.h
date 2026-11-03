@@ -63,7 +63,7 @@ class virtualbike : public virtualdevice {
     // Used by bikeProvider() on bikes that support the T.Power release (issue 5316). Each app command is applied
     // once, as on FTMS BLE and DIRCON, instead of re-sending the latest one every tick by zwift_erg, which the
     // T.Power +/- also sets: re-sending the app's power there reset the tile's target to 0.
-    static void applyIosAppCommands(CharacteristicWriteProcessor2AD9 *writeP, bike *Bike, IosAppCommands &applied,
+    static void applyIosAppCommands(CharacteristicWriteProcessor2AD9 *writeP, bike *device, IosAppCommands &applied,
                                     const QByteArray &frame, double slope, double crr, double cw, double power,
                                     qint64 lastFrame, qint64 now, bool ergMode);
 
