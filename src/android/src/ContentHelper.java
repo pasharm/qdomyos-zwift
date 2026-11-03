@@ -287,4 +287,199 @@ public class ContentHelper {
 
         return value.replace('\\', '_').replace('/', '_').trim();
     }
+
+    // One import of a folder of workouts (CustomQtActivity.importFitFilesFromTree). After every
+    // reinstall Documents/QZ/fit holds one more copy of each workout (the new install cannot read
+    // the copies of the previous one), so a folder import meets the same workout many times. Each
+    // picked file is read once and compared by content with the files of the destination folder,
+    // each of them read at most once per import: a workout that is already there is not copied
+    // again, a new one is written under a free name.
+    public static class FolderImport {
+        // a picked file bigger than this is not a workout of the app; it is imported the old way
+        private static final int MAX_IN_MEMORY = 64 * 1024 * 1024;
+
+        private final File destinationDir;
+        // content hash -> local path, for the files of the folder read so far and the ones written
+        private final java.util.HashMap<String, String> pathByHash = new java.util.HashMap<String, String>();
+        // files of the folder not read yet, listed on first need
+        private java.util.ArrayList<File> unread = null;
+
+        public FolderImport(String destinationDirPath) {
+            destinationDir = new File(destinationDirPath == null ? "" : destinationDirPath);
+        }
+
+        // Local path of the picked file uri, "" when it cannot be imported. fileName and size are
+        // the ones reported by the provider, size -1 when unknown.
+        public String importFile(Context context, Uri uri, String fileName, long size) {
+            String name = sanitizeFileName(fileName);
+            // the folder's own file under the same name (Documents/QZ was picked, and its "fit"
+            // subfolder is the destination itself) is taken without reading, as
+            // importContentToAppDirKeepExisting does
+            File sameName = new File(destinationDir, name);
+            if (!name.isEmpty() && size > 0 && sameName.length() == size && isReadable(sameName)) {
+                return sameName.getAbsolutePath();
+            }
+            byte[] content = name.isEmpty() ? null : readContent(context, uri);
+            String hash = content == null ? null : sha256(content);
+            if (hash == null) {
+                return importContentToAppDirKeepExisting(context, uri, fileName, size, destinationDir.getPath());
+            }
+            String copy = findCopy(hash, content.length);
+            if (copy != null) {
+                return copy;
+            }
+            if (!destinationDir.exists() && !destinationDir.mkdirs()) {
+                QLog.d("ContentHelper", "FolderImport could not create " + destinationDir);
+                return "";
+            }
+            int dot = name.lastIndexOf('.');
+            String base = dot > 0 ? name.substring(0, dot) : name;
+            String extension = dot > 0 ? name.substring(dot) : "";
+            for (int attempt = 0; attempt < 100; attempt++) {
+                File destinationFile = new File(destinationDir, attempt == 0 ? name : base + "_" + attempt + extension);
+                // a file of a previous install keeps its name taken
+                if (destinationFile.exists()) {
+                    continue;
+                }
+                if (writeFile(destinationFile, content)) {
+                    pathByHash.put(hash, destinationFile.getAbsolutePath());
+                    return destinationFile.getAbsolutePath();
+                }
+                destinationFile.delete();
+            }
+            QLog.d("ContentHelper", "FolderImport gave up on " + name);
+            return "";
+        }
+
+        // A file of the folder with this content, or null. Only files whose size can match are read;
+        // a size of 0 is read too: under FUSE passthrough a recently written file can report 0.
+        private String findCopy(String hash, long length) {
+            String known = pathByHash.get(hash);
+            if (known != null) {
+                return known;
+            }
+            if (unread == null) {
+                unread = new java.util.ArrayList<File>();
+                File[] files = destinationDir.listFiles();
+                if (files != null) {
+                    for (File file : files) {
+                        if (file.isFile()) {
+                            unread.add(file);
+                        }
+                    }
+                }
+            }
+            java.util.Iterator<File> iterator = unread.iterator();
+            while (iterator.hasNext()) {
+                File file = iterator.next();
+                long fileLength = file.length();
+                if (fileLength != length && fileLength != 0) {
+                    continue;
+                }
+                iterator.remove();
+                // null: not readable, a file of a previous install
+                String fileHash = sha256(file);
+                if (fileHash == null) {
+                    continue;
+                }
+                if (!pathByHash.containsKey(fileHash)) {
+                    pathByHash.put(fileHash, file.getAbsolutePath());
+                }
+                if (fileHash.equals(hash)) {
+                    return file.getAbsolutePath();
+                }
+            }
+            return null;
+        }
+
+        // Content of uri, or null when it cannot be read or is bigger than MAX_IN_MEMORY.
+        private static byte[] readContent(Context context, Uri uri) {
+            InputStream in = null;
+            try {
+                in = context.getContentResolver().openInputStream(uri);
+                if (in == null) {
+                    return null;
+                }
+                java.io.ByteArrayOutputStream out = new java.io.ByteArrayOutputStream();
+                byte[] buffer = new byte[65536];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    out.write(buffer, 0, read);
+                    if (out.size() > MAX_IN_MEMORY) {
+                        return null;
+                    }
+                }
+                return out.toByteArray();
+            } catch (Exception e) {
+                QLog.d("ContentHelper", "FolderImport could not read " + uri + ": " + e);
+                return null;
+            } finally {
+                try {
+                    if (in != null) {
+                        in.close();
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+        }
+
+        private static boolean writeFile(File file, byte[] content) {
+            FileOutputStream out = null;
+            try {
+                out = new FileOutputStream(file, false);
+                out.write(content);
+                out.flush();
+                return true;
+            } catch (Exception e) {
+                return false;
+            } finally {
+                try {
+                    if (out != null) {
+                        out.close();
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+        }
+
+        private static String sha256(byte[] content) {
+            try {
+                return hex(java.security.MessageDigest.getInstance("SHA-256").digest(content));
+            } catch (Exception e) {
+                return null;
+            }
+        }
+
+        // Hash of the file content, null when it cannot be read.
+        private static String sha256(File file) {
+            java.io.FileInputStream in = null;
+            try {
+                java.security.MessageDigest digest = java.security.MessageDigest.getInstance("SHA-256");
+                in = new java.io.FileInputStream(file);
+                byte[] buffer = new byte[65536];
+                int read;
+                while ((read = in.read(buffer)) != -1) {
+                    digest.update(buffer, 0, read);
+                }
+                return hex(digest.digest());
+            } catch (Exception e) {
+                return null;
+            } finally {
+                try {
+                    if (in != null) {
+                        in.close();
+                    }
+                } catch (Exception ignored) {
+                }
+            }
+        }
+
+        private static String hex(byte[] bytes) {
+            StringBuilder result = new StringBuilder();
+            for (byte b : bytes) {
+                result.append(Character.forDigit((b >> 4) & 0xf, 16)).append(Character.forDigit(b & 0xf, 16));
+            }
+            return result.toString();
+        }
+    }
 }

@@ -444,9 +444,11 @@ public class CustomQtActivity extends QtActivity {
             @Override
             public void run() {
                 StringBuilder localPaths = new StringBuilder();
+                long started = android.os.SystemClock.elapsedRealtime();
                 try {
                     String rootId = android.provider.DocumentsContract.getTreeDocumentId(treeUri);
-                    importFitFilesFromTree(treeUri, rootId, destinationDir, localPaths, true);
+                    importFitFilesFromTree(treeUri, rootId, new ContentHelper.FolderImport(destinationDir), localPaths,
+                                           true);
                     // only in the QZ folder itself, never in another folder the user picked
                     if (removeOldDatabase && localPaths.length() > 0 && QZ_DOCUMENTS_TREE_ID.equals(rootId)) {
                         deleteOldHistoryDatabase(treeUri, rootId, keepDatabase);
@@ -454,8 +456,9 @@ public class CustomQtActivity extends QtActivity {
                 } catch (Exception e) {
                     Log.d(TAG, "handleFitFolderResult failed " + e);
                 }
-                Log.d(TAG, "handleFitFolderResult requestCode=" + requestCode + " savedGrant=" + fromSavedGrant
-                    + " files=" + (localPaths.length() == 0 ? 0 : localPaths.toString().split("\n").length));
+                QLog.d(TAG, "handleFitFolderResult requestCode=" + requestCode + " savedGrant=" + fromSavedGrant
+                    + " files=" + (localPaths.length() == 0 ? 0 : localPaths.toString().split("\n").length)
+                    + " ms=" + (android.os.SystemClock.elapsedRealtime() - started));
                 if (fromSavedGrant && localPaths.length() == 0) {
                     releaseFolderGrant(treeUri);
                     if (allowPicker) {
@@ -550,7 +553,7 @@ public class CustomQtActivity extends QtActivity {
         }
     }
 
-    private void importFitFilesFromTree(Uri treeUri, String parentId, String destinationDir,
+    private void importFitFilesFromTree(Uri treeUri, String parentId, ContentHelper.FolderImport folderImport,
                                         StringBuilder localPaths, boolean descendIntoFit) {
         Uri childrenUri = android.provider.DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, parentId);
         String[] projection = new String[] {
@@ -571,7 +574,7 @@ public class CustomQtActivity extends QtActivity {
                 }
                 if (android.provider.DocumentsContract.Document.MIME_TYPE_DIR.equals(mimeType)) {
                     if (descendIntoFit && name.equalsIgnoreCase("fit")) {
-                        importFitFilesFromTree(treeUri, documentId, destinationDir, localPaths, false);
+                        importFitFilesFromTree(treeUri, documentId, folderImport, localPaths, false);
                     }
                     continue;
                 }
@@ -582,8 +585,7 @@ public class CustomQtActivity extends QtActivity {
                     continue;
                 }
                 Uri documentUri = android.provider.DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId);
-                String localPath = ContentHelper.importContentToAppDirKeepExisting(this, documentUri, name, size,
-                                                                                   destinationDir);
+                String localPath = folderImport.importFile(this, documentUri, name, size);
                 if (!localPath.isEmpty()) {
                     if (localPaths.length() > 0) {
                         localPaths.append('\n');
