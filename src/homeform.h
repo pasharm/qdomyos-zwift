@@ -494,6 +494,11 @@ class homeform : public QObject {
 #endif
     }
 
+    // "Nearby devices" was denied when the app started (Android 12+): no Bluetooth search runs until a
+    // restart, even if the permission is granted later, and the system prompt to switch Bluetooth on
+    // can't be shown while it is denied. main.cpp asks for the permission at every start.
+    Q_INVOKABLE bool bluetoothPermissionDenied() { return m_bluetoothPermissionDeniedAtStart; }
+
     homeform(QQmlApplicationEngine *engine, bluetooth *bl);
     ~homeform();
     int topBarHeight() { return m_topBarHeight; }
@@ -1236,6 +1241,21 @@ public:
     lockscreen *h = nullptr;
 #endif
     bool m_locationServices = true;
+
+    // the same check as in the bluetooth constructor, which runs just before homeform
+    static bool nearbyDevicesPermissionDenied() {
+#ifdef Q_OS_ANDROID
+        if (QtAndroid::androidSdkVersion() < 31)
+            return false;
+        return QtAndroid::checkPermission(QStringLiteral("android.permission.BLUETOOTH_SCAN")) ==
+                   QtAndroid::PermissionResult::Denied ||
+               QtAndroid::checkPermission(QStringLiteral("android.permission.BLUETOOTH_CONNECT")) ==
+                   QtAndroid::PermissionResult::Denied;
+#else
+        return false;
+#endif
+    }
+    const bool m_bluetoothPermissionDeniedAtStart = nearbyDevicesPermissionDenied();
 
 #ifndef Q_OS_IOS
     QMdnsEngine::Browser *iphone_browser = nullptr;
