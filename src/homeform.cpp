@@ -1084,8 +1084,9 @@ homeform::homeform(QQmlApplicationEngine *engine, bluetooth *bl) {
     QString bluetoothName = getBluetoothName();
     qDebug() << "getBluetoothName()" << bluetoothName;
 
+    // empty: the name could not be read (no "Nearby devices" permission), nothing to warn about
     QRegularExpression regex("^[A-Za-z0-9 ]+$");
-    if(bluetoothName.length() > 9 || !regex.match(bluetoothName).hasMatch()) {
+    if(!bluetoothName.isEmpty() && (bluetoothName.length() > 9 || !regex.match(bluetoothName).hasMatch())) {
         setToastRequested(QObject::tr("Bluetooth name too long, change it to a 4 letters one in the android settings and use only A-Z or 0-9 characters"));
     }
     
@@ -11700,7 +11701,15 @@ QString homeform::getBluetoothName()
         QAndroidJniObject name = bluetoothAdapter.callObjectMethod(
             "getName",
             "()Ljava/lang/String;");
-        
+        // Without "Nearby devices" (BLUETOOTH_CONNECT, Android 12+) getName() throws SecurityException.
+        // Qt 5.15 leaves the Java exception pending when the call returns null, and the next JNI call
+        // aborts the app at start (fixed in Qt 6.7.1 by QTBUG-122135): clear it here.
+        QAndroidJniEnvironment env;
+        if (env->ExceptionCheck()) {
+            env->ExceptionClear();
+            return QString();
+        }
+
         if (name.isValid()) {
             return name.toString();
         }

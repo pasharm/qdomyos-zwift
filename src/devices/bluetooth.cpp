@@ -16,6 +16,25 @@
 #include <QAndroidJniObject>
 #endif
 
+// "Nearby devices" (BLUETOOTH_SCAN/BLUETOOTH_CONNECT, Android 12+) denied: no scan is possible, and
+// QBluetoothLocalDevice::allDevices() would crash the app at start: it calls getName() and
+// getAddress() in a row, getName() throws SecurityException and Qt 5.15 leaves it pending, so the
+// next JNI call aborts (Qt 6.7.1 clears it, QTBUG-122135). main.cpp asks for it at every start.
+#if !defined(WIN32) && !defined(Q_OS_IOS)
+static bool nearbyDevicesPermissionDenied() {
+#ifdef Q_OS_ANDROID
+    if (QtAndroid::androidSdkVersion() < 31)
+        return false;
+    return QtAndroid::checkPermission(QStringLiteral("android.permission.BLUETOOTH_SCAN")) ==
+               QtAndroid::PermissionResult::Denied ||
+           QtAndroid::checkPermission(QStringLiteral("android.permission.BLUETOOTH_CONNECT")) ==
+               QtAndroid::PermissionResult::Denied;
+#else
+    return false;
+#endif
+}
+#endif
+
 static void updateDiscoveredDevice(QList<QBluetoothDeviceInfo> &devices, const QBluetoothDeviceInfo &device) {
     QMutableListIterator<QBluetoothDeviceInfo> i(devices);
     while (i.hasNext()) {
@@ -160,7 +179,9 @@ bluetooth::bluetooth(bool logs, const QString &deviceName, bool noWriteResistanc
     }
 
 #if !defined(WIN32) && !defined(Q_OS_IOS)
-    if (QBluetoothLocalDevice::allDevices().isEmpty()) {
+    if (nearbyDevicesPermissionDenied()) {
+        debug(QStringLiteral("Nearby devices permission denied: no Bluetooth search"));
+    } else if (QBluetoothLocalDevice::allDevices().isEmpty()) {
         debug(QStringLiteral("no bluetooth dongle found!"));
     } else
 
