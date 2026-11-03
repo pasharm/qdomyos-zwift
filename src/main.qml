@@ -1569,27 +1569,44 @@ ApplicationWindow {
                 toolButtonSaveSettings.visible = keep
             }
         }
-        // Set by the tile grid in Home.qml. The toolbar collapses to the status bar inset
-        // (topPadding) with an animation instead of disappearing at once
-        property bool scrolledAway: false
-        height: scrolledAway ? topPadding : implicitHeight
-        clip: height < implicitHeight   // keeps the Material shadow when fully shown
-        // The buttons are centred in the content, which has no height once collapsed: they sat
-        // on the edge of the status bar, and a line of their pixels showed under it. They fade
-        // out with the collapse and are hidden at its end, from TalkBack as well. Modern look only
-        contentItem.opacity: window.ui.modern && implicitHeight > topPadding ? Math.max(0, Math.min(1, (height - topPadding) / (implicitHeight - topPadding))) : 1
-        contentItem.visible: contentItem.opacity > 0
-        Behavior on height {
-            enabled: headerToolbar.heightSettled
-            NumberAnimation { id: headerHeightAnimation; duration: 150; easing.type: Easing.OutQuad }
+        // The toolbar hangs over the pages: in the window layout it is only as tall as the status
+        // bar inset, and the page stack below leaves room for the rest of it (stackView
+        // anchors.topMargin), so every page sits where it did. The tile grid in Home.qml reaches
+        // up under it and slides it away with the scroll (Material "scroll|enterAlways"): barShift
+        // is how much of it has gone up under the status bar. The page never changes size, so the
+        // tiles do not move under the finger
+        property real barShift: 0
+        // Set by a chart spread over its page (ChartJsTest, PreviewChart): the toolbar is gone and
+        // the page takes its room as well
+        property bool folded: false
+        // Moving the tiles keeps it shown: the lock button is on the toolbar. So does any other page
+        // (the tile grid can still be gliding or snapping under it when one is opened); back on the
+        // home page it is where the scroll left it, not over the Start/Stop row
+        readonly property real barHidden: folded ? contentHeight
+                                          : window.lockTiles || stackView.depth > 1 ? 0 : Math.max(0, Math.min(barShift, contentHeight))
+        // Set, not derived from the style, which counts the height of the background (48) as well
+        implicitHeight: getTopPadding()
+        // The content keeps its height and slides up with the bar
+        topPadding: getTopPadding() - barHidden
+        bottomPadding: barHidden - contentHeight
+        // The background, as tall as the status bar inset and the bar, slides up with it. Negative
+        // insets let it reach past the header: a background.height binding loses to the control's
+        // own resizing at an inset of 0
+        topInset: -barHidden
+        bottomInset: barHidden - contentHeight
+        // The buttons fade out as the bar goes and are hidden once it is gone, from TalkBack as
+        // well; the background goes then too. Folded for a chart it stays under the status bar,
+        // in the colour of the bar
+        contentItem.opacity: 1 - barHidden / contentHeight
+        contentItem.visible: barHidden < contentHeight
+        background.visible: folded || barHidden < contentHeight
+
+        // The bar takes the touches on it, as a toolbar the height of its content did: drawn
+        // past the height of the header, it would let a tap on the title reach the tiles below
+        MouseArea {
+            anchors.fill: parent
+            z: -1
         }
-        // On start the toolbar gets its real height only once rootItem is there (rootReady), and
-        // the animation slid it in from the top for half a second. Animated from a moment later
-        property bool heightSettled: false
-        Timer { interval: 500; running: window.rootReady; onTriggered: headerToolbar.heightSettled = true }
-        // While the height animates the page moves under the finger; Home.qml ignores that movement
-        property bool animating: headerHeightAnimation.running
-        topPadding: getTopPadding()
         // Clear of the side system bar and the cutout held sideways, as the page stack: with
         // button navigation the bar on the right covered the rightmost button
         leftPadding: getLeftPadding()
@@ -1835,9 +1852,7 @@ ApplicationWindow {
             font: window.ui.modern ? window.ui.fontOf(headerToolbar.font, window.ui.fontTitleSmall, Font.DemiBold)
                                    : headerToolbar.font
             color: window.ui.ink(Material.foreground)
-            // Fixed position, like the buttons: centred in the full bar, it moved on its own when the bar collapsed
-            anchors.horizontalCenter: parent.horizontalCenter
-            y: (headerToolbar.contentHeight - height) / 2
+            anchors.centerIn: parent
             // Modern look and a text size other than 100 %: no wider than the room between the
             // nearest shown buttons, centred; a large text size ran the title into the search button. A
             // takes a smaller font down to 14 px of the text size, and only then an ellipsis
@@ -2517,6 +2532,9 @@ ApplicationWindow {
             id: stackView
             initialItem: "Home.qml"
             anchors.fill: parent
+            // Below the toolbar, which hangs over the pages (headerToolbar); a spread chart takes
+            // its room too
+            anchors.topMargin: headerToolbar.folded ? 0 : headerToolbar.contentHeight
             // Clear of the bottom system bar in any orientation: held sideways with gesture
             // navigation the bar stays at the bottom (with buttons it moves to the side, and the
             // bottom inset is 0 then)
@@ -2524,11 +2542,12 @@ ApplicationWindow {
             anchors.rightMargin: getRightPadding()
             anchors.leftMargin: getLeftPadding()
             focus: true
-            // Only the tile grid scrolls the toolbar away; any other page gets it back
+            // A chart spread over its page folds the toolbar; any other page gets it back (the tile
+            // grid slides it away only on the home page, headerToolbar.barHidden)
             onCurrentItemChanged: {
                 // TEMP-LOG: QZ-NAV - the page on top of the stack
                 console.log("QZ-NAV stack depth=" + depth + " current=" + (currentItem ? (currentItem.objectName || currentItem.toString()) + " " + Math.round(currentItem.width) + "x" + Math.round(currentItem.height) : "none") + " stack " + Math.round(width) + "x" + Math.round(height) + " screen " + Screen.width + "x" + Screen.height)
-                headerToolbar.scrolledAway = false
+                headerToolbar.folded = false
                 // A kept page just left the stack: the countdown to giving its memory back,
                 // a minute while riding
                 if ((keptWorkoutEditor && !window.keptInStack(keptWorkoutEditor))
