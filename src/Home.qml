@@ -497,6 +497,34 @@ HomeForm {
             listSnap.to = originY + to
             listSnap.start()
         }
+        // Test only (T-091 emulator): where the scroll came to rest, measured on the tiles
+        // themselves. startRow is the top of the Start/Stop row below the top of the shown area
+        // (0 = at it), tileGap the room between that top and the first whole row of tiles
+        function snapTrace(tag) {
+            var h = headerToolbar.contentHeight, b = headerToolbar.barShift
+            var edge = h - b
+            var s = contentY - originY
+            var maxS = Math.max(contentHeight - height, 0)
+            // The first item at or below the top of the shown area, found by where the items are
+            // (itemAtIndex needs QtQuick 2.13): the header has y < 0, the tiles y >= 0
+            var y0 = contentY + edge
+            var item = contentItem.childAt(cellWidth / 2, y0 + 1)
+            for (var i = 0; i < 3 && item && item.y < y0 - 0.5; i++)
+                item = contentItem.childAt(cellWidth / 2, item.y + (item.y < 0 ? item.height : cellHeight) + 1)
+            var gap = item ? item.y - y0 : NaN
+            console.log("QZ-SNAP " + tag + " snap=" + settings.ui_tile_snap + " s=" + s.toFixed(1) + " bar=" + b.toFixed(1)
+                        + " h=" + h + " maxS=" + maxS.toFixed(1) + " cell=" + cellHeight + " rowGap=" + rowGap.toFixed(1)
+                        + " startRow=" + (b - s).toFixed(1) + " tileGap=" + gap.toFixed(1) + " itemY=" + (item ? item.y : "none"))
+        }
+        Timer { id: snapTraceTimer; interval: 600; onTriggered: gridView.snapTrace("rest") }
+        Connections {
+            target: gridView
+            function onMovementStarted() { snapTraceTimer.stop() }
+            function onMovementEnded() {
+                gridView.snapTrace("end")
+                snapTraceTimer.restart()
+            }
+        }
         // Moving the tiles shows the toolbar (main.qml); after it the toolbar starts shown again
         Connections {
             target: window
