@@ -1930,7 +1930,7 @@ bool virtualbike::resendLastTargetPower(qint64 lastFrame, qint64 now, bool ergMo
     return lastFrame > 0 && now > lastFrame + 2000 && ergMode;
 }
 
-void virtualbike::applyIosAppCommands(CharacteristicWriteProcessor2AD9 *writeP, bike *Bike,
+void virtualbike::applyIosAppCommands(CharacteristicWriteProcessor2AD9 *writeP, bike *device,
                                       IosAppCommands &applied, const QByteArray &frame, double slope, double crr,
                                       double cw, double power, qint64 lastFrame, qint64 now, bool ergMode) {
     const int cmd = frame.isEmpty() ? -1 : (uint8_t)frame.at(0);
@@ -1954,7 +1954,7 @@ void virtualbike::applyIosAppCommands(CharacteristicWriteProcessor2AD9 *writeP, 
     }
     if (resendLastTargetPower(lastFrame, now, ergMode)) {
         qDebug() << QStringLiteral("zwift is not sending the power anymore, let's continue with the last value");
-        writeP->changePower(Bike->lastRequestedPower().value());
+        writeP->changePower(device->lastRequestedPower().value());
     }
 }
 
@@ -2007,7 +2007,8 @@ void virtualbike::bikeProvider() {
                                                QByteArray::fromRawData((char *)ftms_message, ret));
             }
             qDebug() << "last FTMS rcv" << lastFTMSFrameReceived;
-            if (lastFTMSFrameReceived > 0 && ((bike *)Bike)->targetPowerReleaseSupported()) {
+            if (lastFTMSFrameReceived > 0 && Bike->deviceType() == BIKE &&
+                ((bike *)Bike)->targetPowerReleaseSupported()) {
                 applyIosAppCommands(writeP2AD9, (bike *)Bike, iosAppCommands,
                                     ret > 0 ? QByteArray((const char *)ftms_message, ret) : QByteArray(),
                                     h->virtualbike_getCurrentSlope(), h->virtualbike_getCurrentCRR(),
