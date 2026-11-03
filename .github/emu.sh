@@ -245,3 +245,7 @@ grep -E "Speaking fragment|A11yDriver" tb_logcat.txt > tb-speech.txt || true
 
 echo "== steps"; cat $STEPLOG
 echo "== QML warnings"; cat full_logcat.txt tb_logcat.txt | grep -iE "qrc:|\.qml:[0-9]+" | grep -iE "warning|error|ReferenceError|TypeError" | sort | uniq -c | sort -nr | head -40 || true
+
+# A "proves nothing" line in steps.log (no APK installed, the field took no focus) means the run
+# checked nothing: the job must end red, not green. Last, so the logcat and shots above are kept
+if grep -q "proves nothing" $STEPLOG; then echo "!! steps.log: the run proves nothing - failing the job"; exit 1; fi
