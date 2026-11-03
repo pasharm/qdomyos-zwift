@@ -225,176 +225,28 @@ drag_down() { adb shell input swipe 700 900 700 $((900 + $1)) 1500 || true; slee
 to_end() { local i; for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 600 150 || true; done; sleep 4; }
 
 echo "== API $(adb shell getprop ro.build.version.sdk | tr -d '\r')" >> $STEPLOG
-wait_tiles
-step top "toolbar and Start/Stop row shown"
-shot t-00-top
-
-# The toolbar over the tiles (test/t052-overlay): it slides with the scroll 1:1 and snaps to the
-# nearer end after release; near the top (scrolled less than its height) it comes back
-step short-drag "200 px: the Start/Stop row moved up with the tiles; the toolbar gone and the row just under the status bar (it snaps with the list within its room), never resting over the row"
-drag_up 200
-shot t-01-drag-200
-# Within the toolbar's room the list snaps with it: a small drag goes back to the top
-scroll_top; sleep 2
-step tiny-drag "80 px from the top: back at the top after the release, toolbar and Start/Stop row shown"
-drag_up 80
-shot t-01b-drag-80
-step half-drag "150 px from the top: the toolbar gone and the row just under the status bar, not under the toolbar"
-drag_up 150
-shot t-01c-drag-150
-
-scroll_top; sleep 2
-step long-drag "1100 px up: toolbar gone, no line of its pixels under the status bar; the row scrolled off with the tiles"
-drag_up 1100
-shot t-02-drag-1100
-
-step small-back "150 px down: toolbar slid back over the tiles, whole after the snap (or still gone if less than half came back)"
-drag_down 150
-shot t-03-back-150
-
-step first-row "600 px down, to the top: toolbar shown, the Start/Stop row in full view below it"
-drag_down 600
-shot t-04-first-row-hidden
-
-step pull "a pull past the top edge: toolbar with its icons shown"
-drag_down 700
-shot t-04b-pull
-
-scroll_top; sleep 2
-drag_up 1300
-drag_up 1300
-shot t-04c-deep
-step back-deep "1000 px down from deep in the list: toolbar shown over the tiles"
-drag_down 1000
-shot t-04d-back-deep
-
-# Short pulls down deep in the list: a 250 px swipe moves the list about 60 dp, more than the toolbar
-drag_up 1300
-step two-pulls "deep in the list, toolbar gone, then 250 px down: toolbar back already; 250 px down again: still shown"
-drag_down 250
-shot t-04e-pull-1
-drag_down 250
-shot t-04f-pull-2
-
-# Short drags up from the top (the phone 02.11: the jerk came from such steps): the toolbar follows
-# them, the tiles never jump
-scroll_top; sleep 2
-step touch-top "from the top, three 200 px drags up: toolbar gone (each slid it further), no band left above the tiles"
-drag_up 200
-drag_up 200
-drag_up 200
-shot t-04g-touch-top
-# The same with short flicks
-scroll_top; sleep 2
-step flick-steps "from the top, three short quick swipes up (small flicks): toolbar gone, whole or not at all (snap)"
-for i in 1 2 3; do adb shell input swipe 700 1800 700 1650 120 || true; sleep 2; done
-shot t-04h-flick-steps
-
-# The toolbar is laid out only as tall as the status bar inset and drawn past it over the tiles: a
-# drag that starts on its title (y 168 = 24 dp below the status bar on both APIs) must stay on it
-scroll_top; sleep 2
-drag_up 1300
-drag_down 250
-shot t-04i-before-toolbar-drag
-step toolbar-drag "deep in the list, toolbar shown, a drag down from the toolbar title: the tiles stay where they were (same as t-04i)"
-ensure_app
-adb shell input swipe 720 168 720 1000 1500 || true
-sleep 3
-shot t-04j-toolbar-drag
-
-scroll_top; sleep 2
-step flick "fast flick up: toolbar gone, the flick glides on (not stopped about a row further)"
-adb shell input swipe 700 1900 700 1200 120 || true
-sleep 5
-shot t-05-flick
-
-step top-again "fast swipes down, past the top edge: toolbar and Start/Stop row shown"
-scroll_top; sleep 2
-shot t-06-top-again
-
-step end "the end of the list, overscrolled: toolbar gone (the spring back does not bring it), last row in full view"
-to_end
-shot t-07-end
-step end-back "1000 px down from the end: toolbar shown"
-drag_down 1000
-shot t-08-end-back
-
-# Another page has it shown: the drawer opens with an edge swipe, the toolbar is gone; back on the
-# home page it is as the scroll left it
-scroll_top; sleep 2
-drag_up 1300
-shot t-09-before-page
-step page "drawer by edge swipe, Settings: page with a full toolbar, its top not under the toolbar"
-adb shell input swipe 2 1200 900 1200 300 || true
-sleep 3
-shot t-10-drawer
-tap_drawer '^Settings$' 400 900
-sleep 8
-shot t-11-settings
-step page-back "back key: home as it was left (same as t-09): toolbar gone, the list where it was"
-back "settings"
-sleep 4
-shot t-12-home-after-page
-
-# Sideways while collapsed
-scroll_top; sleep 2
-drag_up 1300
-adb shell settings put system accelerometer_rotation 0 || true
-step rotate "sideways after a collapse: nothing cut, the top reachable"
-adb shell settings put system user_rotation 1 || true
-sleep 10
-shot t-13-landscape-collapsed
-adb shell input swipe 1200 300 1200 1200 150 || true
-adb shell input swipe 1200 300 1200 1200 150 || true
-sleep 3
-shot t-14-landscape-top
-adb shell settings put system user_rotation 0 || true
-sleep 10
-shot t-15-portrait
-
-# Moving tiles: the gap above the first row
-scroll_top; sleep 2
-step lock "tile lock: toolbar shown, no Start/Stop row, 30 gap between the toolbar and the first row, inside the grid; unlocked: the row back at the top"
-tap $LOCK "lock tiles"
-sleep 3
-shot t-16-lock
-adb shell input swipe 1400 1800 1400 800 800 || true
-sleep 2
-shot t-17-lock-scrolled
-adb shell input swipe 1400 800 1400 2000 400 || true
-sleep 2
-tap $LOCK "unlock tiles"
-sleep 3
-shot t-18-unlock
-
-# No Start/Stop row: the 30 px gap under the toolbar goes away with it
-restart_with top_bar_enabled=false
-step no-top-bar "top bar off: 30 px gap under the toolbar, scrolled off with the tiles, toolbar gone after a long drag"
-shot t-23-no-top-bar
-drag_up 1300
-shot t-24-no-top-bar-drag
-
-# A theme background of its own: where the toolbar was, the theme colour shows behind the tiles,
-# not the window one (Material dark #303030)
-restart_with 'theme_background_color="#000000"'
-step own-background "black theme background, toolbar gone: black between the tiles at the top too, no grey band under the status bar"
-drag_up 1300
-shot t-25-own-background
-
-# A list that fits: nothing toggles
-restart_with ui_zoom=50
-step short-list "tiles fit: toolbar stays shown on a drag"
-shot t-19-short-top
-drag_up 400
-shot t-20-short-drag
-
-# A list longer than the screen by less than the toolbar (ui_zoom 77, by the frames of ui_zoom 60):
-# after a drag to the end and the release the list stays at its end, not sent back to the top
-restart_with ui_zoom=77
-step just-over "a drag up to the end and release: the last row in full view above the bottom of the screen, the list not back at the top"
-shot t-21-over-top
-drag_up 600
-shot t-22-over-end
+# T-403: the "Return to app" button of T.Power(W). This build always shows it (emu only, the
+# real one needs a FitPlus and an app); the frames show whether it fits the second line and keeps
+# off the value, the name and the icon, with a long label (ru, de) and the English one
+RELEASE='Return to app|Вернуть приложению|Zurück an die App'
+for LANG_CODE in ru de en; do
+  echo "== restart: app_language=$LANG_CODE" >> $STEPLOG
+  adb shell am force-stop $PKG || true
+  sleep 2
+  conf_with "app_language=$LANG_CODE" tile_target_power_enabled=true tile_target_power_order=0
+  adb shell am start -n $PKG/$PKG.CustomQtActivity
+  sleep 30
+  if scroll_to "$RELEASE"; then
+    step $LANG_CODE-button "the button in the second line of T.Power(W), clear of the value, the name and the icon"
+    shot t403-$LANG_CODE-button
+    tap_ui "$RELEASE"
+    sleep 2
+    step $LANG_CODE-tap "no crash, the tile as before (no bike: nothing to restore)"
+    shot t403-$LANG_CODE-after-tap
+  else
+    shot t403-$LANG_CODE-not-found
+  fi
+done
 adb shell pidof $PKG > /dev/null && echo "app alive at the end: OK" >> $STEPLOG || echo "!! app not running at the end" >> $STEPLOG
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
