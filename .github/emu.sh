@@ -314,14 +314,25 @@ fi
 if [ "$OFFER2" != 1 ] || [ "$PICKED" != 1 ]; then
   echo "!! install 2: offer $OFFER2, folder picked $PICKED - the run proves nothing" >> $STEPLOG; FAIL=1
 fi
-if ! grep -q "deleteOldHistoryDatabase.*deleted=true" s2.txt; then
+# the database itself, not only its journal
+if ! grep -q "deleteOldHistoryDatabase primary:Documents/QZ/ddb.sqlite deleted=true" s2.txt; then
   echo "!! install 2: the old ddb.sqlite was not removed - the run proves nothing" >> $STEPLOG; FAIL=1
 fi
+# install 3 really started and its history page was opened by the menu entry, not by a guess
+if ! grep -q "history database:" s3.txt; then
+  echo "!! install 3 never opened its database (not started, or install 2 still running) - the run proves nothing" >> $STEPLOG; FAIL=1
+fi
+if ! sed -n '/^== install 3/,$p' $STEPLOG | grep -q "tap 'Workouts History': by label"; then
+  echo "!! install 3: Workouts History not found by its label - the run proves nothing" >> $STEPLOG; FAIL=1
+fi
 if [ "$FAIL" = 0 ]; then
-  if [ "$OFFER3" = 1 ]; then
-    echo "OK T-181: the recovery is offered after the second reinstall" >> $STEPLOG
-  else
+  if [ "$OFFER3" != 1 ]; then
     echo "!! T-181: no recovery offer after the second reinstall (the defect)" >> $STEPLOG; FAIL=1
+  elif grep -q "history database name taken" s2.txt && grep "history database:" s3.txt | grep -q "ddb-[0-9]*\.sqlite"; then
+    echo "OK T-181: the name was taken after the import, the recovery is offered after the second reinstall" >> $STEPLOG
+  else
+    # an offer without the fix at work: some other way kept ddb.sqlite foreign
+    echo "!! install 3: offer shown, but not through the taken name - the run proves nothing" >> $STEPLOG; FAIL=1
   fi
 fi
 rm -f s2.txt s3.txt
