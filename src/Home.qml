@@ -301,11 +301,10 @@ HomeForm {
         visible: false
     }
 
-    // Only when "Nearby devices" is denied: then "Yes" can't switch Bluetooth on, and even with Bluetooth
-    // switched on from the quick settings there is no search until a restart (the app asks for the
-    // permission at start), so the question stays. Otherwise no restart is needed: bluetooth.cpp
-    // starts the search by itself once Bluetooth is on, and the question only flashed until the
-    // check above saw it on.
+    // Only when "Nearby devices" was denied at start: then there is no search until a restart (the
+    // app asks for the permission at start), even with Bluetooth on or the permission granted later,
+    // so the question stays. Otherwise no restart is needed: bluetooth.cpp starts the search by
+    // itself once Bluetooth is on, and the question only flashed until the check above saw it on.
     property bool bluetoothPermissionDenied: false
 
     UiMessageDialog {
