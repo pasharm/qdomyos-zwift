@@ -273,3 +273,7 @@ echo "== QML errors of the toolbar (none expected)"
 grep -E "(main|Home|HomeForm[.]ui)[.]qml:[0-9]+|FATAL EXCEPTION" full_logcat.txt | grep -vE "qml: |QZ-|rootItem is not defined|appModel is not defined|onFoo properties|onTrainingProgramIntervalSoundRequested" | tee t357-errors.txt | head -40 | sed 's/^/!! /' >> $STEPLOG || true
 [ -s t357-errors.txt ] || echo "no QML error, no crash: OK" >> $STEPLOG
 echo "== steps"; cat $STEPLOG
+
+# A "proves nothing" line in steps.log (no APK installed, the field took no focus) means the run
+# checked nothing: the job must end red, not green. Last, so the logcat and shots above are kept
+if grep -q "proves nothing" $STEPLOG; then echo "!! steps.log: the run proves nothing - failing the job"; exit 1; fi
