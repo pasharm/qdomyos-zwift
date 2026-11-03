@@ -207,6 +207,7 @@ class homeform : public QObject {
     Q_PROPERTY(bool echelonBridgeSwitchPromptRequested READ echelonBridgeSwitchPromptRequested NOTIFY echelonBridgeSwitchPromptRequestedChanged WRITE setEchelonBridgeSwitchPromptRequested)
     Q_PROPERTY(bool echelonEnablePromptRequested READ echelonEnablePromptRequested NOTIFY echelonEnablePromptRequestedChanged WRITE setEchelonEnablePromptRequested)
     Q_PROPERTY(bool androidNotificationPromptRequested READ androidNotificationPromptRequested NOTIFY androidNotificationPromptRequestedChanged)
+    Q_PROPERTY(bool targetPowerReleaseVisible READ targetPowerReleaseVisible NOTIFY targetPowerReleaseVisibleChanged)
 
     // workout preview
     Q_PROPERTY(int preview_workout_points READ preview_workout_points NOTIFY previewWorkoutPointsChanged)
@@ -669,6 +670,9 @@ class homeform : public QObject {
         m_androidNotificationPromptRequested = value;
         emit androidNotificationPromptRequestedChanged(value);
     }
+    // "Return to app" on the T.Power(W) tile
+    bool targetPowerReleaseVisible() const { return m_targetPowerReleaseVisible; }
+    Q_INVOKABLE void releaseTargetPower();
     // A virtual device lost its client because Android cut QZ's network in the background
     // (DirCon NetworkError while QZ is not active): offer the Android notification on resume
     void backgroundNetworkLost();
@@ -1162,6 +1166,9 @@ public:
     bool m_startRequested = false;
     bool m_overridePower = false;
     bool m_overridePowerWarned = false;
+    bool m_targetPowerReleaseVisible = false;
+    void setTargetPowerReleaseVisible(bool value);
+    void clearTargetPowerOverride();
     bool m_nativeShortcutCaptureSuspended = false;
 
     QTimer *timer;
@@ -1395,6 +1402,7 @@ public:
     void echelonBridgeSwitchPromptRequestedChanged(bool value);
     void echelonEnablePromptRequestedChanged(bool value);
     void androidNotificationPromptRequestedChanged(bool value);
+    void targetPowerReleaseVisibleChanged(bool value);
     void generalPopupVisibleChanged(bool value);
     void pelotonPopupVisibleChanged(bool value);
     void licensePopupVisibleChanged(bool value);

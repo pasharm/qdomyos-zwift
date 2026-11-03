@@ -64,6 +64,7 @@ SOURCES += \
         Devices/TestKettlerClassicProtocol.cpp \
         Devices/TestFitPlusBikeResistance.cpp \
         Devices/TestTargetPowerOverride.cpp \
+        Devices/TestTargetPowerRelease.cpp \
         VirtualRowerCadenceTest.cpp \
         main.cpp
 
