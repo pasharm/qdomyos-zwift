@@ -302,11 +302,19 @@ public class ContentHelper {
         private java.util.ArrayList<File> unread = null;
         // bytes read by the last sha256 call
         private long hashedLength = 0;
+        // local paths already passed on by isNewPath
+        private final java.util.HashSet<String> passedOn = new java.util.HashSet<String>();
         // the last importFile copied the picked file, rather than finding its bytes here already
         private boolean copiedLast = false;
 
         public FolderImport(String destinationDirPath) {
             destinationDir = new File(destinationDirPath == null ? "" : destinationDirPath);
+        }
+
+        // true the first time path is asked about: the copies of one workout give the same local
+        // path, and the native side needs it once
+        public boolean isNewPath(String path) {
+            return passedOn.add(path);
         }
 
         // Local path of the picked file uri, "" when it cannot be imported. fileName and size are

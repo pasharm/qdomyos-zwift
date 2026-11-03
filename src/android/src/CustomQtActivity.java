@@ -412,10 +412,10 @@ public class CustomQtActivity extends QtActivity {
     }
 
     // Copies the .fit files of the picked folder and of its "fit" subfolder into destinationDir
-    // and passes their local paths, one per line, to the native side. An empty string still goes
-    // through, so the app can say that no workout was found. The copy runs off the UI thread:
-    // a folder can hold hundreds of workouts. In the QZ folder the copies left in "fit" by previous
-    // installs go (importFitFilesFromTree).
+    // and passes their local paths, one per line and each once, to the native side. An empty
+    // string still goes through, so the app can say that no workout was found. The copy runs off
+    // the UI thread: a folder can hold hundreds of workouts. In the QZ folder the copies left in
+    // "fit" by previous installs go (importFitFilesFromTree).
     // A saved grant that finds nothing may be stale (folder removed or renamed): it is dropped
     // and the picker opens, so the user can always choose the folder again.
     private void handleFitFolderResult(final int requestCode, final int resultCode, Intent data,
@@ -596,16 +596,17 @@ public class CustomQtActivity extends QtActivity {
                 }
                 Uri documentUri = android.provider.DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId);
                 String localPath = folderImport.importFile(this, documentUri, name, size);
-                if (!localPath.isEmpty()) {
+                if (!localPath.isEmpty() && folderImport.isNewPath(localPath)) {
                     if (localPaths.length() > 0) {
                         localPaths.append('\n');
                     }
                     localPaths.append(localPath);
-                    // the document id of the external storage is its path: the file is this one
-                    if (!descendIntoFit && qzFitFolder && documentId.equals(QZ_DOCUMENTS_TREE_ID + "/fit/" + name)
-                        && folderImport.isOldCopy(name, localPath)) {
-                        deleteTreeDocument(treeUri, documentId);
-                    }
+                }
+                // the document id of the external storage is its path: the file is this one
+                if (!localPath.isEmpty() && !descendIntoFit && qzFitFolder
+                    && documentId.equals(QZ_DOCUMENTS_TREE_ID + "/fit/" + name)
+                    && folderImport.isOldCopy(name, localPath)) {
+                    deleteTreeDocument(treeUri, documentId);
                 }
             }
         } catch (Exception e) {
