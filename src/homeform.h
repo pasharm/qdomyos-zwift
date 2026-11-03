@@ -494,6 +494,18 @@ class homeform : public QObject {
 #endif
     }
 
+    // "Nearby devices" denied (Android 12+): Bluetooth reads as off and the system prompt to switch
+    // it on can't be shown. main.cpp asks for the permission again at the next start.
+    Q_INVOKABLE bool bluetoothPermissionDenied() {
+#ifdef Q_OS_ANDROID
+        return QtAndroid::androidSdkVersion() >= 31 &&
+               QtAndroid::checkPermission(QStringLiteral("android.permission.BLUETOOTH_CONNECT")) ==
+                   QtAndroid::PermissionResult::Denied;
+#else
+        return false;
+#endif
+    }
+
     homeform(QQmlApplicationEngine *engine, bluetooth *bl);
     ~homeform();
     int topBarHeight() { return m_topBarHeight; }
