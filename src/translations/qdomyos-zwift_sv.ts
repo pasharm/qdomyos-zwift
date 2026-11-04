@@ -1384,6 +1384,10 @@ Vill du uppdatera QZ-inställningarna?</translation>
         <translation>Andra mappar</translation>
     </message>
     <message>
+        <source>Restore programs</source>
+        <translation>Återställ program</translation>
+    </message>
+    <message>
         <source>← Back</source>
         <translation>← Tillbaka</translation>
     </message>

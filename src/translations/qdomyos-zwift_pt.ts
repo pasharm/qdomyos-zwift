@@ -1404,6 +1404,10 @@ Deseja atualizar as configurações do QZ?</translation>
         <translation>Outras pastas</translation>
     </message>
     <message>
+        <source>Restore programs</source>
+        <translation>Restaurar programas</translation>
+    </message>
+    <message>
         <source>← Back</source>
         <translation>← Voltar</translation>
     </message>

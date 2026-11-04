@@ -1388,6 +1388,10 @@ Vil du oppdatere QZ-innstillingene?</translation>
         <translation>Andre mapper</translation>
     </message>
     <message>
+        <source>Restore programs</source>
+        <translation>Gjenopprett programmer</translation>
+    </message>
+    <message>
         <source>← Back</source>
         <translation>← Tilbake</translation>
     </message>

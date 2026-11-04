@@ -1388,6 +1388,10 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Další složky</translation>
     </message>
     <message>
+        <source>Restore programs</source>
+        <translation>Obnovit programy</translation>
+    </message>
+    <message>
         <source>← Back</source>
         <translation>← Zpět</translation>
     </message>

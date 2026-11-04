@@ -1388,6 +1388,10 @@ Wil je de QZ-instellingen bijwerken?</translation>
         <translation>Andere mappen</translation>
     </message>
     <message>
+        <source>Restore programs</source>
+        <translation>Programma&apos;s herstellen</translation>
+    </message>
+    <message>
         <source>← Back</source>
         <translation>← Terug</translation>
     </message>

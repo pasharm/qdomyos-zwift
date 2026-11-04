@@ -1404,6 +1404,10 @@ Voulez-vous mettre à jour les paramètres de QZ ?</translation>
         <translation>Autres dossiers</translation>
     </message>
     <message>
+        <source>Restore programs</source>
+        <translation>Restaurer les programmes</translation>
+    </message>
+    <message>
         <source>← Back</source>
         <translation>← Retour</translation>
     </message>

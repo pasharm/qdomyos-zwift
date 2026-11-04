@@ -1388,6 +1388,10 @@ QZ ayarları güncellensin mi?</translation>
         <translation>Diğer klasörler</translation>
     </message>
     <message>
+        <source>Restore programs</source>
+        <translation>Programları geri yükle</translation>
+    </message>
+    <message>
         <source>← Back</source>
         <translation>← Geri</translation>
     </message>

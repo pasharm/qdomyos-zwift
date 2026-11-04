@@ -1384,6 +1384,10 @@ Szeretné frissíteni a QZ beállításait?</translation>
         <translation>Egyéb mappák</translation>
     </message>
     <message>
+        <source>Restore programs</source>
+        <translation>Programok visszaállítása</translation>
+    </message>
+    <message>
         <source>← Back</source>
         <translation>← Vissza</translation>
     </message>

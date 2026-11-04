@@ -1388,6 +1388,10 @@ Zaktualizować ustawienia QZ?</translation>
         <translation>Inne foldery</translation>
     </message>
     <message>
+        <source>Restore programs</source>
+        <translation>Przywróć programy</translation>
+    </message>
+    <message>
         <source>← Back</source>
         <translation>← Wstecz</translation>
     </message>
