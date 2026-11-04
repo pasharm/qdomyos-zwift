@@ -1992,12 +1992,6 @@ QString homeform::startColor() {
 
 void homeform::refresh_bluetooth_devices_clicked() {
 
-    // restart() clears onlyDiscover before the search, which then connects what it finds
-    if (bluetoothManager->device()) {
-        bluetoothManager->searchForDeviceList();
-        return;
-    }
-
     bluetoothManager->onlyDiscover = true;
     bluetoothManager->restart();
 }
