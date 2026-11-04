@@ -16,12 +16,18 @@
 //
 // A press is the start of a button's description, optionally with "=" and the start of the
 // description of a node that the press must show within 5 s and that must still be there 2 s later
-// (a second press, e.g. by auto repeat, would replace it). "_" stands for a space.
-// Example: Start=First-time_setup Increase_Resistance=Resistance:_1
+// (a second press, e.g. by auto repeat, would replace it). "_" stands for a space. A press that
+// starts with "tap:" taps the middle of the node instead, as TalkBack does with a node it cannot
+// press (in Qt 5.15 a ComboBox, or an ItemDelegate without Accessible.onPressAction); the node need
+// not be clickable, but must be on the screen.
+// Example: Start=First-time_setup Increase_Resistance=Resistance:_1 tap:Settings=Tiles_Options
 import android.app.UiAutomation;
 import android.graphics.Rect;
 import android.os.HandlerThread;
 import android.os.Looper;
+import android.os.SystemClock;
+import android.view.InputDevice;
+import android.view.MotionEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -222,21 +228,25 @@ public class AccessibilityTest {
     }
 
     private static boolean press(String press) throws Exception {
+        boolean tap = press.startsWith("tap:");
+        if (tap) {
+            press = press.substring("tap:".length());
+        }
         press = press.replace('_', ' ');
         int sign = press.indexOf('=');
         String button = sign < 0 ? press : press.substring(0, sign);
         String expect = sign < 0 ? null : press.substring(sign + 1);
-        AccessibilityNodeInfo target = find(button, true);
+        AccessibilityNodeInfo target = find(button, !tap);
         // the tiles show once the device is connected, later when a window of another app (Health
         // Connect on API 35+) was over QZ: wait for the button up to 30 s, then for its page
         boolean waited = target == null;
         for (int i = 0; i < 60 && target == null; i++) {
             Thread.sleep(500);
-            target = find(button, true);
+            target = find(button, !tap);
         }
         if (waited && target != null) {
             waitForSettledNodes();
-            target = find(button, true);
+            target = find(button, !tap);
         }
         if (target == null) {
             System.out.println("FAIL no button '" + button + "' on screen");
@@ -246,7 +256,12 @@ public class AccessibilityTest {
             System.out.println("FAIL '" + expect + "' is on screen before '" + button + "' is pressed");
             return false;
         }
-        boolean handled = target.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+        if (tap) {
+            if (!tap(target)) {
+                return false;
+            }
+        }
+        boolean handled = tap || target.performAction(AccessibilityNodeInfo.ACTION_CLICK);
         // QZ answers false when its Qt thread is busy for 2 s, as it can be just after a device
         // connected, and Qt's own press may still run: again for 10 s, unless that one worked
         for (int i = 0; i < 10 && !handled; i++) {
@@ -290,6 +305,41 @@ public class AccessibilityTest {
             return false;
         }
         System.out.println("OK pressed '" + button + "': " + describe(shown));
+        return true;
+    }
+
+    // A tap of a finger in the middle of the node, which must be on the screen
+    private static boolean tap(AccessibilityNodeInfo node) throws Exception {
+        AccessibilityNodeInfo root = automation.getRootInActiveWindow();
+        Rect screen = new Rect();
+        if (root != null) {
+            root.getBoundsInScreen(screen);
+        }
+        Rect bounds = new Rect();
+        node.getBoundsInScreen(bounds);
+        if (bounds.isEmpty() || !screen.contains(bounds.centerX(), bounds.centerY())) {
+            System.out.println("FAIL cannot tap " + describe(node) + ": its middle is off the screen "
+                    + bounds.toShortString() + ", screen " + screen.toShortString());
+            return false;
+        }
+        long down = SystemClock.uptimeMillis();
+        boolean injected = true;
+        int[] actions = {MotionEvent.ACTION_DOWN, MotionEvent.ACTION_UP};
+        for (int action : actions) {
+            if (action == MotionEvent.ACTION_UP) {
+                Thread.sleep(100);
+            }
+            MotionEvent event = MotionEvent.obtain(down, SystemClock.uptimeMillis(), action,
+                    bounds.exactCenterX(), bounds.exactCenterY(), 0);
+            event.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+            injected &= automation.injectInputEvent(event, true);
+            event.recycle();
+        }
+        if (!injected) {
+            System.out.println("FAIL tap not injected on " + describe(node));
+            return false;
+        }
+        System.out.println("INFO tapped " + describe(node) + " at " + bounds.centerX() + "," + bounds.centerY());
         return true;
     }
 
