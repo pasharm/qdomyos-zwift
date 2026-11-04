@@ -8,14 +8,17 @@ ColumnLayout {
     id: rootElement
     property string templateId: ""
     property Settings settings
+    // The classic look: the addresses above the port. The modern look shows them under it
+    // (modernIpsLabel), as the description of the port in its frame
     Label {
         Layout.preferredWidth: parent.width
         id: ipsLabel
+        visible: !window.ui.modern
         text: qsTr("Server addresses:")
         textFormat: Text.PlainText
         wrapMode: Text.WordWrap
         verticalAlignment: Text.AlignVCenter
-        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Red)
+        color: Material.color(Material.Red)
         function updateAddresses() {
             let ips = settings.value("template_"+rootElement.templateId+"_ips", []);
             let port = parseInt(settings.value("template_"+rootElement.templateId+"_port", 6666));
@@ -62,5 +65,15 @@ ColumnLayout {
                 ipsLabel.updateAddresses();
             }
         }
+    }
+    Label {
+        id: modernIpsLabel
+        visible: window.ui.modern
+        Layout.fillWidth: true
+        text: ipsLabel.text
+        textFormat: Text.PlainText
+        wrapMode: Text.WordWrap
+        font.pixelSize: window.ui.fontHint
+        color: window.ui.textMuted
     }
 }
