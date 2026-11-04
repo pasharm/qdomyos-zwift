@@ -497,6 +497,13 @@ jobs:
             # fields are nodes too, but only an item of the list can be pressed), and the switch of
             # a tile that is off turns it on, which shows its order field
             sh .github/scripts/android_accessibility_test.sh ◄=Settings tap:Settings=Tiles_Options Tiles_Options=Speed,_order_index: see:Speed,_order_index:_0 tap:Speed,_order_index:_0 2=Speed,_order_index:_2 Gears=Gears,_order_index:_26
+            # The settings search, back on the settings page: the search field is read with its
+            # name and the text typed, and the controls of a result with the setting they belong
+            # to (the list of "Maps Type" with its value, the switch of "Loop Start-End-Start")
+            adb shell input keyevent KEYCODE_BACK
+            sh .github/scripts/android_accessibility_test.sh Search_settings
+            adb shell input text maps
+            sh .github/scripts/android_accessibility_test.sh see:Search_settings:_maps see:Maps_Type:_3D see:Loop_Start-End-Start
 
             # Check if the package is installed
             adb shell pm list packages | grep org.cagnulen.qdomyoszwift
