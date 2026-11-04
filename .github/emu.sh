@@ -121,8 +121,11 @@ tap_wait() {
   for i in $(seq 1 "$2"); do
     rm -f ui.xml
     ensure_app
-    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
-      tap_ui "$1"
+    # tap where this dump has it: tap_ui would dump again, and a second dump of the picker
+    # (thumbnails still loading) may come back without the button (run 41745889548, base)
+    if [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$1"); then
+      echo "tap '$1': by label at $xy" >> $STEPLOG
+      adb shell input tap $xy || true
       return 0
     fi
     sleep 3
