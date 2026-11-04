@@ -277,7 +277,11 @@ mark "second import"
 if tap_ui '^Import workouts$' 1312 358; then
   sleep 3
   shot 07-import-menu
-  tap_wait '^Import from QZ Folder' 4 || echo "!! no 'Import from QZ Folder' in the menu - no second import" >> $STEPLOG
+  # the items of a QML Menu are not in the dump: by position (07-import-menu.png of run 41751759800)
+  if ! tap_wait '^Import from QZ Folder' 2; then
+    echo "tap Import from QZ Folder at 1018 723 (07-import-menu.png of run 41751759800)" >> $STEPLOG
+    adb shell input tap 1018 723 || true
+  fi
 fi
 for i in $(seq 1 600); do
   [ "$(grep -c 'FitDatabaseProcessor import: added' full_logcat.txt)" -ge 2 ] && break
