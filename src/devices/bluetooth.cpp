@@ -186,10 +186,10 @@ bluetooth::bluetooth(bool logs, const QString &deviceName, bool noWriteResistanc
         // Fake and network devices come up in finished(), and without an adapter no scan ever calls it:
         // on Android emulators and Waydroid without Bluetooth the fake device never appeared.
         // No Bluetooth accessory can be found either, so finished() does not wait for one.
-        // Queued: finished() must run once the app has connected to our signals
+        // Queued, as for the scan error below: finished() must run once the app has connected to our signals
         if (reliesOnFakeOrVirtualDevice) {
             forceHeartBeltOffForTimeout = true;
-            QTimer::singleShot(0, this, &bluetooth::finished);
+            QMetaObject::invokeMethod(this, &bluetooth::finished, Qt::QueuedConnection);
         }
     } else
 
