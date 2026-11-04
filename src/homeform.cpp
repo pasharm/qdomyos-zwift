@@ -9411,28 +9411,6 @@ QString homeform::historyDatabasePath() {
     return chosen;
 }
 
-// A folder import removes ddb.sqlite of the previous install, but this install keeps running on
-// its spare database until the next start. The free name is taken at once with an empty file of
-// this install: if the app is reinstalled before that start, the next install still finds a
-// ddb.sqlite it cannot open and offers to recover the workouts. The next start of this install
-// opens the empty file as a new database, the same as a missing one.
-void homeform::claimMainHistoryDatabaseName() {
-#ifdef Q_OS_ANDROID
-    const QString mainPath = getWritableAppDir() + QStringLiteral("ddb.sqlite");
-    if (m_historyDatabasePath == mainPath || QFileInfo(mainPath).size() > 0) {
-        return;
-    }
-    QFile file(mainPath);
-    if (file.open(QIODevice::ReadWrite)) {
-        file.close();
-        qDebug() << "history database name taken for the next start:" << mainPath;
-    } else {
-        // still the file of the previous install: the import did not remove it
-        qDebug() << "history database name not taken:" << mainPath << file.errorString();
-    }
-#endif
-}
-
 bool homeform::startFitFolderImport(bool allowPicker) {
 #ifdef Q_OS_ANDROID
     // the old database can be removed only through the folder grant
@@ -9486,6 +9464,28 @@ void homeform::maybeOfferHistoryRecovery() {
     }
     m_historyRecoveryPending = false;
     offerHistoryRecovery();
+}
+
+// A folder import removes ddb.sqlite of the previous install, but this install keeps running on
+// its spare database until the next start. The free name is taken at once with an empty file of
+// this install: if the app is reinstalled before that start, the next install still finds a
+// ddb.sqlite it cannot open and offers to recover the workouts. The next start of this install
+// opens the empty file as a new database, the same as a missing one.
+void homeform::claimMainHistoryDatabaseName() {
+#ifdef Q_OS_ANDROID
+    const QString mainPath = getWritableAppDir() + QStringLiteral("ddb.sqlite");
+    if (m_historyDatabasePath == mainPath || QFileInfo(mainPath).size() > 0) {
+        return;
+    }
+    QFile file(mainPath);
+    if (file.open(QIODevice::ReadWrite)) {
+        file.close();
+        qDebug() << "history database name taken for the next start:" << mainPath;
+    } else {
+        // still the file of the previous install: the import did not remove it
+        qDebug() << "history database name not taken:" << mainPath << file.errorString();
+    }
+#endif
 }
 
 void homeform::offerHistoryRecovery() {
