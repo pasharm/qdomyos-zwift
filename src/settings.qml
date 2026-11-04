@@ -681,6 +681,14 @@ import AndroidStatusBar 1.0
             return computeTranslatedName({name: name, key: entry.parent}) || name
         }
 
+        // The name of a control of a search result for a screen reader: the title of the result,
+        // and the value after it. Qt 5.15 on Android reads the value only when the name is empty,
+        // and without a name a control of the result reads its value alone ("3D")
+        function searchResultAccessibleName(entry, value) {
+            var title = entry._translatedName || entry.name || entry.key
+            return value === undefined || value === "" ? title : title + ": " + value
+        }
+
         function updateFilteredSettings() {
             if (!settingsCatalogLoaded) {
                 filteredSettings = []
@@ -2504,6 +2512,9 @@ import AndroidStatusBar 1.0
                     id: settingsSearchTextField
                     Layout.fillWidth: true
                     placeholderText: qsTr("Search settings")
+                    // Qt gives a text field no accessible name, TalkBack read this one as
+                    // unlabeled; the text typed follows the name, as in the fields of the tiles
+                    Accessible.name: text.length > 0 ? placeholderText + ": " + text : placeholderText
                     selectByMouse: true
                     inputMethodHints: Qt.ImhNoPredictiveText
                     // A new search of one's own: back no longer returns to the previous one
@@ -2645,12 +2656,14 @@ import AndroidStatusBar 1.0
                                 Switch {
                                     visible: entry.catalogKind === "setting" && entry.type === "boolean"
                                     checked: visible ? settingsPane.settingValue(entry) : false
+                                    Accessible.name: settingsPane.searchResultAccessibleName(entry)
                                     onClicked: settingsPane.setSettingValue(entry, checked)
                                 }
 
                                 Button {
                                     visible: entry.catalogKind === "page"
                                     text: qsTr("Open")
+                                    Accessible.name: settingsPane.searchResultAccessibleName(entry, text)
                                     onClicked: settingsPane.openPageResult(entry)
                                 }
                             }
@@ -2686,12 +2699,14 @@ import AndroidStatusBar 1.0
                                     text: visible ? settingsPane.settingValue(entry) : ""
                                     horizontalAlignment: Text.AlignRight
                                     inputMethodHints: entry.type === "string" ? Qt.ImhNoPredictiveText : Qt.ImhFormattedNumbersOnly
+                                    Accessible.name: settingsPane.searchResultAccessibleName(entry, text)
                                     onAccepted: settingsPane.setSettingValue(entry, text)
                                     onActiveFocusChanged: if (this.focus) this.cursorPosition = this.text.length
                                 }
 
                                 Button {
                                     text: qsTr("OK")
+                                    Accessible.name: settingsPane.searchResultAccessibleName(entry, text)
                                     onClicked: settingsPane.setSettingValue(entry, searchSettingTextField.text)
                                 }
                             }
@@ -2708,6 +2723,7 @@ import AndroidStatusBar 1.0
                                 displayText: visible && settingsPane.isBluetoothDeviceSetting(entry)
                                              ? settingsPane.settingValue(entry)
                                              : currentText
+                                Accessible.name: settingsPane.searchResultAccessibleName(entry, displayText)
                                 contentItem: Label {
                                     leftPadding: 12
                                     rightPadding: 36
@@ -2750,6 +2766,7 @@ import AndroidStatusBar 1.0
                                 Layout.maximumHeight: visible ? implicitHeight : 0
                                 model: visible ? settingsPane.virtualOptionLabels(entry) : []
                                 currentIndex: visible ? settingsPane.virtualSelectedIndex(entry) : 0
+                                Accessible.name: settingsPane.searchResultAccessibleName(entry, displayText)
                                 contentItem: Label {
                                     leftPadding: 12
                                     rightPadding: 36
