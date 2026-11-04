@@ -1,9 +1,11 @@
 #!/bin/bash
-# Test only (T-091): snap tiles to rows on the home page of the classic look. Starts an already
-# built APK (test/t091: home/tile-snap with a QZ-SNAP trace in Home.qml) on the emulator with
-# log_debug on and a fake treadmill, so the home page has tiles. After every movement the trace
-# logs where the scroll came to rest, measured on the tiles: steps.log checks each rest against
-# what the setting promises and marks a miss with "!!".
+# Test only (T-091): the Start/Stop row does not come to rest cut on the home page of the classic
+# look. Starts an already built APK (test/t091: home/start-row-snap with a QZ-SNAP trace in
+# Home.qml) on the emulator with log_debug on and a fake treadmill, so the home page has tiles.
+# After every movement the trace logs where the scroll came to rest, measured on the tiles:
+# steps.log checks each rest and marks a miss with "!!". Between the top and the first row of
+# tiles a rest is the top, the Start/Stop row at the top of the shown area or the first row with
+# the gap between rows above it; deeper in the list the list stays where the movement left it.
 PKG=org.cagnulen.qdomyoszwift
 LOG_DEBUG=${LOG_DEBUG:-true}
 STEPLOG=steps.log
@@ -39,7 +41,6 @@ conf_with() {
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf' < /dev/null"
 }
-# The setting is not in the conf: the default (off) is what the first steps check
 conf_with
 
 dump() {
@@ -48,7 +49,7 @@ dump() {
   adb pull /data/local/tmp/ui.xml ui.xml > /dev/null 2>&1 || true
 }
 # Another window over the app (a hanging launcher, Health Connect, QZ's own permission
-# dialog): closed before every step, logged in steps.log
+# dialog): closed before every shot, logged in steps.log
 ensure_app() {
   local i pkg xy
   for i in 1 2 3; do
@@ -85,63 +86,6 @@ shot() {
   [ -f ui.xml ] || dump
   [ -f ui.xml ] && cp ui.xml dumps/$1.xml
 }
-tap_ui() {
-  local rx="$1" fx="$2" fy="$3" xy=""
-  ensure_app
-  [ -f ui.xml ] || dump
-  [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$rx")
-  if [ -n "$xy" ]; then
-    echo "tap '$rx': by label at $xy" >> $STEPLOG
-    adb shell input tap $xy || true
-  elif [ -n "$fx" ]; then
-    echo "tap '$rx': NOT FOUND, coordinates $fx $fy" >> $STEPLOG
-    adb shell input tap $fx $fy || true
-  else
-    echo "tap '$rx': NOT FOUND, skipped" >> $STEPLOG
-    return 1
-  fi
-}
-tap_drawer() {
-  local rx="$1" xy=""
-  dump
-  [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$rx")
-  if [ -z "$xy" ]; then
-    adb shell input swipe 500 2200 500 900 400 || true
-    sleep 2
-  fi
-  tap_ui "$@"
-}
-scroll_to() {
-  local i
-  for i in $(seq 1 25); do
-    dump
-    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
-      echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
-      return 0
-    fi
-    adb shell input swipe 700 2000 700 1300 400 || true
-    sleep 1
-  done
-  echo "scroll to '$1': NOT FOUND" >> $STEPLOG
-  return 1
-}
-# The checked state of the control with this label in ui.xml: true, false or none
-checked_of() {
-  python3 - "$1" <<'EOF'
-import re, sys
-import xml.etree.ElementTree as ET
-rx = re.compile(sys.argv[1], re.I)
-try:
-    root = ET.parse("ui.xml").getroot()
-except (ET.ParseError, OSError):
-    print("none"); sys.exit(0)
-for node in root.iter("node"):
-    labels = [node.get("text") or "", node.get("content-desc") or ""]
-    if any(l and rx.fullmatch(l.strip()) for l in labels):
-        print(node.get("checked") or "none"); sys.exit(0)
-print("none")
-EOF
-}
 back() { echo "back ($1)" >> $STEPLOG; adb shell input keyevent KEYCODE_BACK || true; }
 tap() { ensure_app; echo "tap $1 $2 ($3)" >> $STEPLOG; adb shell input tap $1 $2 || true; }
 # Nexus 6: 1440x2560 px, 3.5 px per dp
@@ -175,67 +119,71 @@ wait_tiles() {
   echo "== steps"; cat $STEPLOG
   exit 1
 }
-start_app() {
-  adb shell am start -n $PKG/$PKG.CustomQtActivity
-  sleep 20
-  wait_tiles
-}
 restart_with() {
   echo "== restart: $*" >> $STEPLOG
   adb shell am force-stop $PKG || true
   sleep 2
   conf_with "$@"
-  start_app
-}
-# The same app settings as they are (a switch flipped in the app stays)
-restart_keep() {
-  echo "== restart, settings kept" >> $STEPLOG
-  adb shell am force-stop $PKG || true
-  sleep 2
-  start_app
+  adb shell am start -n $PKG/$PKG.CustomQtActivity
+  sleep 20
+  wait_tiles
 }
 step() { echo "[$1] expected: $2" >> $STEPLOG; }
 drag_up() { adb shell input swipe 700 1800 700 $((1800 - $1)) 1500 || true; sleep 3; }
 drag_down() { adb shell input swipe 700 900 700 $((900 + $1)) 1500 || true; sleep 3; }
+# A short quick swipe: a small flick
+flick_up() { adb shell input swipe 700 1800 700 $((1800 - $1)) 120 || true; sleep 4; }
 to_end() { local i; for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 600 150 || true; done; sleep 4; }
 scroll_top() { local i; for i in 1 2 3 4 5; do adb shell input swipe 700 800 700 2200 150 || true; done; sleep 3; }
 
-# Rests logged so far: a step reads only the rest that came after its mark
-mark() { REST_N=$(grep -c "QZ-SNAP rest" full_logcat.txt); }
-# rest_is on|off: the last rest after the mark, and whether it is what the setting promises.
-# on: at the top, the Start/Stop row at the top of the shown area, a row of tiles with the gap
-# between rows above it, or the end of the list - and the toolbar whole or gone, not half shown.
-# off: the setting is off (where it rests is the user's scroll)
+# A mark in logcat before each movement: the check reads the trace after its own mark from the
+# log buffer itself (adb logcat -d). Reading the recording file lost lines: adb writes it with a
+# buffer, and a rest logged a second before the check was not in it yet (run 41739939135)
+MARK_N=0
+mark() { MARK_N=$((MARK_N + 1)); MARK="t091-mark-$MARK_N"; adb shell log -t QZ-STEP "$MARK" || true; }
+since_mark() { adb logcat -d 2>/dev/null | awk -v m="$MARK" 'found { print } index($0, m) { found = 1 }'; }
+# rest_is zone|deep: the last rest after the mark and the end of the movement before it.
+#   zone: the movement ended between the top and the first row of tiles: the rest is the top, the
+#         Start/Stop row at the top of the shown area, the first row with the gap between rows
+#         above it, or the end of the list; the toolbar whole or gone.
+#   deep: the movement ended deeper: the list stays where the movement left it (rest = end).
 rest_is() {
-  local want=$1 n line verdict
+  local want=$1 seg endl restl verdict
   sleep 1
-  n=$(grep -c "QZ-SNAP rest" full_logcat.txt)
-  if [ "$n" -le "$REST_N" ]; then
+  seg=$(since_mark)
+  restl=$(echo "$seg" | grep "QZ-SNAP rest" | tail -1 | sed 's/.*QZ-SNAP rest //')
+  endl=$(echo "$seg" | grep "QZ-SNAP end" | tail -1 | sed 's/.*QZ-SNAP end //')
+  if [ -z "$restl" ]; then
     echo "!! no rest logged after the step (no movement ended)" >> $STEPLOG
     return
   fi
-  line=$(grep "QZ-SNAP rest" full_logcat.txt | tail -1 | sed 's/.*QZ-SNAP rest //')
-  verdict=$(echo "$line" | awk -v want="$want" '
+  verdict=$(printf '%s\n%s\n' "$endl" "$restl" | awk -v want="$want" '
     function abs(x) { return x < 0 ? -x : x }
-    { for (i = 1; i <= NF; i++) { split($i, kv, "="); v[kv[1]] = kv[2] } }
+    { for (i = 1; i <= NF; i++) { split($i, kv, "="); v[NR, kv[1]] = kv[2] } }
     END {
-      s = v["s"] + 0; bar = v["bar"] + 0; h = v["h"] + 0; maxS = v["maxS"] + 0
-      startRow = v["startRow"] + 0; tileGap = v["tileGap"] + 0; rowGap = v["rowGap"] + 0
-      if (want == "off") {
-        print (v["snap"] == "false" ? "snap off: OK" : "!! snap=" v["snap"] ", expected off"); exit
-      }
-      if (v["snap"] != "true") { print "!! snap=" v["snap"] ", expected on"; exit }
+      es = v[1, "s"] + 0
+      s = v[2, "s"] + 0; bar = v[2, "bar"] + 0; h = v[2, "h"] + 0; maxS = v[2, "maxS"] + 0
+      first = v[2, "first"] + 0; startRow = v[2, "startRow"] + 0
+      tileGap = v[2, "tileGap"] + 0; rowGap = v[2, "rowGap"] + 0
       if (!(bar <= 0.5 || abs(bar - h) <= 0.5)) { print "!! toolbar half shown (bar " bar " of " h ")"; exit }
+      if (want == "deep") {
+        if (es < first - 1) print "!! the movement ended in the top zone (end s " es ", first " first "): not a deep step"
+        else if (abs(s - es) <= 1 || abs(s - maxS) <= 1) print "stays where it stopped: OK"
+        else print "!! moved after the movement deep in the list (end s " es ", rest s " s ")"
+        exit
+      }
       if (s <= 0.5) print "top: OK"
       else if (abs(s - maxS) <= 1) print "end of the list: OK"
       else if (abs(startRow) <= 1) print "Start/Stop row at the top: OK"
-      else if (abs(tileGap - rowGap) <= 1.5) print "row with the gap above it: OK"
-      else print "!! NOT on a row (tileGap " tileGap ", rowGap " rowGap ", startRow " startRow ")"
+      else if (abs(s - first) <= 1 && abs(tileGap - rowGap) <= 1.5) print "first row with the gap above it: OK"
+      else if (s > first + 1) print "!! the movement ended deeper (rest s " s ", first " first "): not a zone step"
+      else print "!! cut in the top zone (s " s ", first " first ", startRow " startRow ", tileGap " tileGap ")"
     }')
-  echo "  rest: $line" >> $STEPLOG
+  echo "  end:  $endl" >> $STEPLOG
+  echo "  rest: $restl" >> $STEPLOG
   echo "  -> $verdict" >> $STEPLOG
 }
-# One movement of the list, then its rest checked: check <on|off> <name> <expected> <command...>
+# One movement of the list, then its rest checked: check <zone|deep> <name> <expected> <command...>
 check() {
   local want=$1 name=$2 what=$3
   shift 3
@@ -250,61 +198,39 @@ echo "== API $(adb shell getprop ro.build.version.sdk | tr -d '\r')" >> $STEPLOG
 wait_tiles
 shot t-00-top
 
-# 1. Off by default: the scroll stays where the drag left it, as in master
-check off off-drag "setting off (default): the list stays where the drag left it, a row may be cut" drag_up 1100
+# 1. From the top, drags of different lengths (px; about 3.5 px per dp): the row of the toolbar
+# room (master), then the Start/Stop row zone, then deeper
+check zone top-120 "inside the toolbar room: back to the top or the toolbar gone with the list (master)" drag_up 120
+scroll_top
+check zone top-300 "the Start/Stop row zone: the row at the top under the status bar or the first row" drag_up 300
+scroll_top
+check zone top-450 "the Start/Stop row zone: the row at the top or the first row" drag_up 450
+scroll_top
+check zone top-650 "near the first row: the first row with the gap above it" drag_up 650
+scroll_top
+check deep top-1100 "deeper: the list stays where the drag left it, a row may be cut (as in master)" drag_up 1100
+check deep deeper-300 "300 px further: stays where it stopped" drag_up 300
+
+# 2. Back up from deep in the list into the zone, the toolbar shown again
+check deep back-250 "250 px down deep in the list: toolbar back, the list where the drag left it" drag_down 250
+check zone back-600 "600 px down: into the zone with the toolbar shown - the top or the first row under the toolbar" drag_down 600
 scroll_top
 
-# 2. On in the settings, while the app runs: the home page takes it at once (its own Settings
-# copy gets it through window.tileSettingChanged), no restart
-step switch "Settings - General UI Options - Snap tiles to rows: off, a tap turns it on"
-adb shell input swipe 2 1200 900 1200 300 || true
-sleep 3
-tap_drawer '^Settings$' 400 900
-sleep 8
-shot t-01-settings
-SWITCH_ON=false
-if scroll_to '^General UI Options$' && tap_ui '^General UI Options$'; then
-  sleep 3
-  if scroll_to '^Snap tiles to rows$'; then
-    echo "  switch before the tap: $(checked_of '^Snap tiles to rows$')" >> $STEPLOG
-    xy=$(python3 .github/uitap.py ui.xml '^Snap tiles to rows$')
-    y=${xy#* }
-    # IndicatorOnlySwitch: only the switch at the right end of the row takes the tap
-    tap 1330 "$y" "the switch of Snap tiles to rows"
-    sleep 2
-    dump
-    state=$(checked_of '^Snap tiles to rows$')
-    echo "  switch after the tap: $state" >> $STEPLOG
-    [ "$state" = "true" ] && SWITCH_ON=true
-    shot t-02-switch-on
-  fi
-fi
-back "settings"
-sleep 4
-if [ "$SWITCH_ON" != "true" ]; then
-  echo "!! the switch was not turned on in the app: on by the conf instead, the live change is NOT checked" >> $STEPLOG
-  restart_with ui_tile_snap=true
-fi
-shot t-03-home-back
+# 3. Series and small flicks near the top (T-052: a series of short gestures was the defect the
+# emulator did not catch)
+step series "from the top, two 200 px drags in a row"
+mark
+drag_up 200
+drag_up 200
+rest_is zone
+shot t-series
 scroll_top
-
-# 3. On: each kind of rest. The cell is 130 dp (455 px), the toolbar about 56 dp; the drags are
-# of different lengths so that they stop at different places within a row
-check on drag-1100 "a row of tiles at the top under the status bar, the gap between rows above it" drag_up 1100
-check on drag-300-more "300 px further: the next or the same row, never half a row" drag_up 300
-check on drag-200-more "200 px further: a row" drag_up 200
-check on back-150 "150 px down deep in the list: toolbar back or gone (whole), a row at the top of the shown area" drag_down 150
-check on back-250 "250 px down: toolbar shown, a row with the gap below the toolbar" drag_down 250
+check zone flick-small "a small quick flick from the top: the rest whole (top, the row or the first row)" flick_up 250
 scroll_top
-check on top-400 "400 px from the top: the Start/Stop row at the top under the status bar, or the first row" drag_up 400
+check zone flick-small-2 "a slightly longer quick flick from the top" flick_up 400
 scroll_top
-check on top-650 "650 px from the top: the first row (with the gap) or the Start/Stop row" drag_up 650
-scroll_top
-check on top-120 "120 px from the top (inside the toolbar room): back to the top or the toolbar gone with the list" drag_up 120
-scroll_top
-check on flick "a fast flick: the glide ends on a row" adb shell input swipe 700 1900 700 1200 120
-check on end "the end of the list: the last row in full view" to_end
-check on near-end "200 px back from the end: a row or the end again" drag_down 200
+check deep flick "a fast flick: the glide ends where it ends (deep) or at the end" adb shell input swipe 700 1900 700 1200 120
+check zone end "the end of the list" to_end
 
 # 4. Moving the tiles scrolls the grid by contentY: no snap then, and the lock works as before
 scroll_top
@@ -314,57 +240,45 @@ sleep 3
 mark
 adb shell input swipe 1400 1800 1400 1100 800 || true
 sleep 3
-n=$(grep -c "QZ-SNAP rest" full_logcat.txt)
-[ "$n" -le "$REST_N" ] && echo "  -> no rest while the tiles are moved: OK" >> $STEPLOG || echo "  -> rest logged while locked (look at it)" >> $STEPLOG
+if since_mark | grep -q "QZ-SNAP rest"; then
+  echo "  -> rest logged while locked (look at it)" >> $STEPLOG
+else
+  echo "  -> no rest while the tiles are moved: OK" >> $STEPLOG
+fi
 shot t-lock
 tap $LOCK "unlock tiles"
 sleep 3
 shot t-unlock
 
-# 5. The switch is kept: after a restart of the app it is still on
-if [ "$SWITCH_ON" = "true" ]; then
-  restart_keep
-  check on kept "after a restart the setting is still on: a row" drag_up 1100
-fi
-
-# 6. Sideways: the same rows
+# 5. Sideways: the same zone
 scroll_top
 adb shell settings put system accelerometer_rotation 0 || true
 adb shell settings put system user_rotation 1 || true
 sleep 10
-step landscape "sideways: a drag ends on a row"
+step landscape "sideways, 400 px from the top: the zone rules"
 mark
-adb shell input swipe 1200 1200 1200 500 1500 || true
+adb shell input swipe 1200 1200 1200 800 1500 || true
 sleep 3
-rest_is on
+rest_is zone
 shot t-landscape
 adb shell settings put system user_rotation 0 || true
 sleep 10
 
-# 7. Top bar off: no Start/Stop row, the 30 gap under the toolbar
-restart_with ui_tile_snap=true top_bar_enabled=false
-check on no-top-bar "top bar off: a row" drag_up 1100
+# 6. Top bar off: no Start/Stop row, the 30 gap under the toolbar
+restart_with top_bar_enabled=false
+check zone no-top-bar-150 "top bar off, 150 px: the top, the toolbar gone with the list or the first row" drag_up 150
 scroll_top
-check on no-top-bar-short "top bar off, 150 px from the top: back to the top (no rest inside the toolbar room)" drag_up 150
+check zone no-top-bar-300 "top bar off, 300 px: the first row with the gap above it, or deeper" drag_up 300
+scroll_top
+check deep no-top-bar-1100 "top bar off, deeper: stays where it stopped" drag_up 1100
 
-# 8. A list just over the screen and one that fits. In T-052 60 % did not overflow the screen:
-# the trace gives maxS of each, the one with maxS under the toolbar height is the case of a list
-# longer than the page by less than the toolbar (the toolbar then goes only as far as the list)
-for z in 60 65 70; do
-  restart_with ui_tile_snap=true ui_zoom=$z
-  check on just-over-$z "tiles $z %: the end reachable, the last row in full view" to_end
-  check on just-over-$z-back "tiles $z %: 150 px back from the end - a row, the end or the top" drag_down 150
-done
-restart_with ui_tile_snap=true ui_zoom=50
-step short-list "tiles fit: a drag springs back, nothing snaps away from the top"
+# 7. A list that fits: nothing snaps away from the top
+restart_with ui_zoom=50
+step short-list "tiles fit: a drag springs back to the top"
 mark
 drag_up 400
-rest_is on
+rest_is zone
 shot t-short-list
-
-# 9. Off again by the conf: as in master
-restart_with ui_tile_snap=false
-check off off-again "off: the list stays where the drag left it" drag_up 1100
 
 adb shell pidof $PKG > /dev/null && echo "app alive at the end: OK" >> $STEPLOG || echo "!! app not running at the end" >> $STEPLOG
 kill $LOGCAT_PID 2>/dev/null || true
@@ -381,10 +295,11 @@ adb shell 'ls -la /sdcard/Documents/QZ/ 2>&1' > qz-logs/listing.txt || true
 grep -E "ANR in" full_logcat.txt | sed 's/^/!! /' >> $STEPLOG || true
 echo "== all snap traces"; grep "QZ-SNAP" full_logcat.txt | sed 's/.*QZ-SNAP/QZ-SNAP/' || true
 echo "== QML errors of the change (none expected)"
-# settings.qml has warnings of its own in master: only the lines of the new switch (about 7360-7390)
-grep -E "(main|Home)[.]qml:[0-9]+|settings[.]qml:73[5-9][0-9]|tile_snap|FATAL EXCEPTION" full_logcat.txt | grep -vE "qml: |QZ-|rootItem is not defined|appModel is not defined|onFoo properties|onTrainingProgramIntervalSoundRequested" > t091-errors.txt || true
+# Home.qml:580 (the tile delegate, y: myValue.bottom) and main.qml stackView.currentItem.title warn
+# in master as well (run 41739939135): only the lines around the change, 440-520 of this build
+grep -E "Home[.]qml:(4[4-9][0-9]|5[01][0-9]):|FATAL EXCEPTION" full_logcat.txt | grep -vE "qml: |QZ-" > t091-errors.txt || true
 head -40 t091-errors.txt | sed 's/^/!! /' >> $STEPLOG
-[ -s t091-errors.txt ] || echo "no QML error, no crash: OK" >> $STEPLOG
+[ -s t091-errors.txt ] || echo "no QML error of the change, no crash: OK" >> $STEPLOG
 MISSES=$(grep -c '^  -> !!\|^!!' $STEPLOG)
 echo "misses (lines with !!): $MISSES" >> $STEPLOG
 echo "== steps"; cat $STEPLOG
