@@ -499,9 +499,11 @@ jobs:
             sh .github/scripts/android_accessibility_test.sh ◄=Settings tap:Settings=Tiles_Options Tiles_Options=Speed,_order_index: see:Speed,_order_index:_0 tap:Speed,_order_index:_0 2=Speed,_order_index:_2 Gears=Gears,_order_index:_26
             # The settings search, back on the settings page: the search field is read with its
             # name and the text typed, and the controls of a result with the setting they belong
-            # to (the list of "Maps Type" with its value, the switch of "Loop Start-End-Start")
-            adb shell input keyevent KEYCODE_BACK
-            sh .github/scripts/android_accessibility_test.sh Search_settings
+            # to (the list of "Maps Type" with its value, the switch of "Loop Start-End-Start").
+            # Back with the "◄" of the toolbar (the search button shows only on the settings page),
+            # and the text is typed only once the search bar shows ("Changed"): the field takes
+            # the focus a moment after the press, and letters typed before it were lost
+            sh .github/scripts/android_accessibility_test.sh ◄=Search_settings Search_settings=Changed
             adb shell input text maps
             sh .github/scripts/android_accessibility_test.sh see:Search_settings:_maps see:Maps_Type:_3D see:Loop_Start-End-Start
 
