@@ -382,6 +382,8 @@ HomeForm {
         readonly property real tileGap: 5 * settings.ui_zoom / 100
         anchors.horizontalCenterOffset: tileGap / 2
         cellHeight: 130 * settings.ui_zoom / 100
+        // The gap between two rows of tiles: a tile is drawn 123 high at the top of its cell
+        readonly property real rowGap: cellHeight - 123 * settings.ui_zoom / 100
         focus: true
         model: appModel
         // While the tiles are being moved the gap above the first row is part of the content,
@@ -466,17 +468,17 @@ HomeForm {
                 }
                 // The Start/Stop row does not come to rest cut either: a list that stopped between
                 // the row at the top of the shown area (under the toolbar or under the status bar)
-                // and the first row of tiles goes on to the nearer of them. The first row keeps the
-                // gap there is between rows above it. Deeper in the list it stays where it stopped
-                var first = rowsRoom - barRoom + bTo - rowGap
+                // and the first row of tiles goes on to the nearer of them, the first row with the
+                // same gap above it as between two rows. The end of a list a little longer than the
+                // page takes the place of the first row if it comes before it, so the last row
+                // stays in view. Deeper in the list it stays where it stopped
+                var first = Math.min(rowsRoom - barRoom + bTo - rowGap, contentHeight - height)
                 if (s <= bTo || s >= first)
                     return
-                listSnap.to = originY + Math.min(s - bTo < first - s ? bTo : first, contentHeight - height)
+                listSnap.to = originY + (s - bTo < first - s ? bTo : first)
                 listSnap.start()
             }
         }
-        // The gap between two rows of tiles: a tile is drawn 123 high at the top of its cell
-        readonly property real rowGap: cellHeight - 123 * settings.ui_zoom / 100
         // Test only (T-091 emulator): where the scroll came to rest, measured on the tiles
         // themselves. startRow is the top of the Start/Stop row below the top of the shown area
         // (0 = at it), tileGap the room between that top and the first whole row of tiles
