@@ -308,6 +308,8 @@ void lifespanbike::controllerStateChanged(QLowEnergyController::ControllerState 
         Speed = 0;
         initDone = false;
         emit debug(QStringLiteral("Current speed: ") + QString::number(Speed.value()));
+        qDebug() << QStringLiteral("trying to connect back again...");
+        connectBackLater();
     }
 }
 

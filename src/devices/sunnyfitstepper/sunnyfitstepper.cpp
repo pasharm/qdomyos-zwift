@@ -347,7 +347,10 @@ void sunnyfitstepper::error(QLowEnergyController::Error err) {
 void sunnyfitstepper::controllerStateChanged(QLowEnergyController::ControllerState state) {
     qDebug() << QStringLiteral("sunnyfitstepper::controllerStateChanged") << state;
     if (state == QLowEnergyController::UnconnectedState) {
+        initDone = false;
         emit disconnected();
+        qDebug() << QStringLiteral("trying to connect back again...");
+        connectBackLater();
     }
 }
 

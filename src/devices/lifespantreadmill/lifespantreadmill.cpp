@@ -349,6 +349,8 @@ void lifespantreadmill::controllerStateChanged(QLowEnergyController::ControllerS
         Speed = 0;
         emit debug(QStringLiteral("Current speed: ") + QString::number(Speed.value()));
         initDone = false;
+        qDebug() << QStringLiteral("trying to connect back again...");
+        connectBackLater();
     }
 }
 

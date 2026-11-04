@@ -318,6 +318,8 @@ void freebeatboombike::controllerStateChanged(QLowEnergyController::ControllerSt
         initDone = false;
         firstCharacteristicChanged = true;
         Speed = 0;
+        emit debug(QStringLiteral("Freebeat Boom Bike trying to connect back again..."));
+        connectBackLater();
     }
 }
 
