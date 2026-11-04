@@ -170,10 +170,25 @@ wait_prompt() {
   return 1
 }
 mark() { adb shell log -t T400 "mark $1" || true; echo "== $1" >> $STEPLOG; }
+# The launcher keeps portrait by itself, so a capture of it proves nothing (run 41743616538: the
+# check said portrait, QZ came up in landscape). The orientation is checked with QZ on top, and
+# each case turns back to portrait before QZ is stopped
 start_app() {
-  portrait
+  local now
   adb shell am start -n $PKG/$PKG.CustomQtActivity
   sleep 50
+  ensure_app
+  now=$(orientation)
+  if [ "$now" != portrait ]; then
+    echo "!! QZ started in $now - the run proves nothing" >> $STEPLOG
+  else
+    echo "QZ started in portrait" >> $STEPLOG
+  fi
+}
+stop_app() {
+  portrait
+  adb shell am force-stop $PKG || true
+  sleep 2
 }
 
 adb logcat -c || true
@@ -221,7 +236,7 @@ case_closed() {
   if ! wait_prompt 40; then
     shot $tag-2-no-question
     echo "!! $tag: no cutout question in landscape - the run proves nothing" >> $STEPLOG
-    adb shell am force-stop $PKG || true
+    stop_app
     return
   fi
   shot $tag-2-question
@@ -244,8 +259,7 @@ case_closed() {
     expect android_landscape_cutout_margin false "$tag: Yes written"
     expect shortcut_lap F7 "$tag: kept after Yes"
   fi
-  adb shell am force-stop $PKG || true
-  sleep 2
+  stop_app
 }
 
 # B. The settings page is open in landscape: the fix waits with the question until it is closed
@@ -287,8 +301,7 @@ case_open() {
       FAILED=1
     fi
   fi
-  adb shell am force-stop $PKG || true
-  sleep 2
+  stop_app
 }
 
 if [ -n "$CUTOUT" ]; then
