@@ -151,6 +151,12 @@ rest_is() {
   local want=$1 seg endl restl verdict
   sleep 1
   seg=$(since_mark)
+  # API 35 once gave no rest from logcat -d that the recording had (run 41747112353, the flick):
+  # then the recording after the same mark
+  if ! echo "$seg" | grep -q "QZ-SNAP rest"; then
+    sleep 2
+    seg=$(awk -v m="$MARK" 'found { print } index($0, m) { found = 1 }' full_logcat.txt)
+  fi
   restl=$(echo "$seg" | grep "QZ-SNAP rest" | tail -1 | sed 's/.*QZ-SNAP rest //')
   endl=$(echo "$seg" | grep "QZ-SNAP end" | tail -1 | sed 's/.*QZ-SNAP end //')
   if [ -z "$restl" ]; then
@@ -172,7 +178,8 @@ rest_is() {
         else print "!! moved after the movement deep in the list (end s " es ", rest s " s ")"
         exit
       }
-      if (s <= 0.5) print "top: OK"
+      if (maxS > 0 && abs(es - maxS) <= 1 && abs(s - maxS) > 1) print "!! went back from the end of the list (end s " es ", rest s " s ")"
+      else if (s <= 0.5) print "top: OK"
       else if (abs(s - maxS) <= 1) print "end of the list: OK"
       else if (abs(startRow) <= 1) print "Start/Stop row at the top: OK"
       else if (abs(s - first) <= 1 && abs(tileGap - rowGap) <= 1.5) print "first row with the gap above it: OK"
@@ -213,7 +220,7 @@ check deep deeper-300 "300 px further: stays where it stopped" drag_up 300
 
 # 2. Back up from deep in the list into the zone, the toolbar shown again
 check deep back-250 "250 px down deep in the list: toolbar back, the list where the drag left it" drag_down 250
-check zone back-600 "600 px down: into the zone with the toolbar shown - the top or the first row under the toolbar" drag_down 600
+check zone back-850 "850 px down: into the zone with the toolbar shown (s below 143) - the top or the first row under the toolbar" drag_down 850
 scroll_top
 
 # 3. Series and small flicks near the top (T-052: a series of short gestures was the defect the
@@ -268,11 +275,22 @@ sleep 10
 restart_with top_bar_enabled=false
 check zone no-top-bar-150 "top bar off, 150 px: the top, the toolbar gone with the list or the first row" drag_up 150
 scroll_top
-check zone no-top-bar-300 "top bar off, 300 px: the first row with the gap above it, or deeper" drag_up 300
+check zone no-top-bar-230 "top bar off, 230 px (s between 48 and 71): the 30 gap at the top or the first row with the row gap" drag_up 230
+scroll_top
+check zone no-top-bar-250 "top bar off, 250 px: the same zone" drag_up 250
 scroll_top
 check deep no-top-bar-1100 "top bar off, deeper: stays where it stopped" drag_up 1100
 
-# 7. A list that fits: nothing snaps away from the top
+# 7. A list a little longer than the page: 7 tiles off, 17 -> 10, 5 rows, maxS about 59 on API 30
+# (35 on API 35): between the toolbar height and the first row. At its end it must stay at the end
+# (the last row in view), not go back to the Start/Stop row (subagent review of the PR text, 04.11)
+restart_with tile_calories_enabled=false tile_odometer_enabled=false tile_pace_enabled=false tile_watt_enabled=false tile_avgwatt_enabled=false tile_ftp_enabled=false tile_jouls_enabled=false
+check zone just-over-end "a list just over the page, swipes to its end: the end, the last row in full view" to_end
+check zone just-over-back "40 px back down from the end: the end again, the toolbar room (master) or the Start/Stop row" drag_down 40
+scroll_top
+check zone just-over-250 "250 px from the top: the end or the Start/Stop row, never back from the end" drag_up 250
+
+# 8. A list that fits: nothing snaps away from the top
 restart_with ui_zoom=50
 step short-list "tiles fit: a drag springs back to the top"
 mark
