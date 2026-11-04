@@ -132,8 +132,32 @@ tap_drawer() {
 MENU="84 168"
 open_menu() { tap $MENU "menu"; sleep 3; adb shell input swipe 500 700 500 2300 300 || true; sleep 2; }
 open_settings() { open_menu; tap_drawer '^Settings$' 400 900; sleep 8; }
-portrait() { adb shell settings put system user_rotation 0 || true; sleep 4; }
-landscape() { echo "rotate to landscape" >> $STEPLOG; adb shell settings put system user_rotation 1 || true; sleep 4; }
+# orientation: portrait or landscape, by the size of a screen capture (run 41741972187: after the
+# first turn "settings put system user_rotation 0" left the screen in landscape, unnoticed)
+orientation() {
+  adb exec-out screencap -p > orient.png 2>/dev/null || true
+  python3 -c '
+import struct, sys
+d = open(sys.argv[1], "rb").read(24)
+w, h = struct.unpack(">II", d[16:24]) if len(d) == 24 else (0, 0)
+print("portrait" if h > w else "landscape" if w > h else "unknown")
+' orient.png
+}
+# rotate <0|1> <portrait|landscape>: lock the rotation and check it took
+rotate() {
+  local i now
+  adb shell cmd window user-rotation lock $1 || true
+  adb shell settings put system user_rotation $1 || true
+  for i in 1 2 3 4 5; do
+    sleep 2
+    now=$(orientation)
+    [ "$now" = "$2" ] && { echo "rotation $1: $now" >> $STEPLOG; return 0; }
+  done
+  echo "!! rotation $1: still $now, expected $2 - the run proves nothing" >> $STEPLOG
+  return 1
+}
+portrait() { rotate 0 portrait; sleep 2; }
+landscape() { echo "rotate to landscape" >> $STEPLOG; rotate 1 landscape; sleep 2; }
 # prompt_on: the cutout question is on the screen now
 prompt_on() { dump; [ -f ui.xml ] && grep -q 'Camera Cutout' ui.xml; }
 # wait_prompt <seconds>: wait for the question, 0 when it showed
@@ -185,6 +209,9 @@ case_closed() {
   put_conf
   start_app
   shot $tag-1-home
+  if grep -q 'Camera Cutout' ui.xml 2>/dev/null || [ "$(conf_val android_landscape_cutout_prompt_shown)" = "true" ]; then
+    echo "!! $tag: the question came before the outside write - the run proves nothing" >> $STEPLOG
+  fi
   conf_set shortcut_lap=F7 volume_change_gears=true
   sleep 3
   if [ "$(conf_val shortcut_lap)" != "F7" ]; then
