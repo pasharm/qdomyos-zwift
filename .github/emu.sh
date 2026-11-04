@@ -31,8 +31,9 @@ adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
 # A fake treadmill, so there is no first-run wizard; English; classic look; the question not asked yet
+# put_conf ['key=value\n...']: the keys of a case go after the common ones
 put_conf() {
-  printf '[General]\nlog_debug=true\nui_modern=false\nfakedevice_treadmill=true\napp_language=en\nskipLocationServicesDialog=true\nandroid_landscape_cutout_margin=true\nandroid_landscape_cutout_prompt_shown=false\n' > qz.conf
+  printf '[General]\nlog_debug=true\nui_modern=false\nfakedevice_treadmill=true\napp_language=en\nskipLocationServicesDialog=true\nandroid_landscape_cutout_margin=true\nandroid_landscape_cutout_prompt_shown=false\n%b' "$1" > qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf '$CONF'"
@@ -279,6 +280,19 @@ case_open() {
   if [ "$kind" = base ]; then
     if grep -q 'Camera Cutout' ui.xml 2>/dev/null; then
       echo "   $tag: master asks over the settings page (as before)" >> $STEPLOG
+      # Why the fix waits: Yes, then a switch of the page - its copy writes back what it read
+      tap_ui '^(Yes|YES)$' || true
+      sleep 3
+      echo "   $tag: after Yes margin='$(conf_val android_landscape_cutout_margin)' flag='$(conf_val android_landscape_cutout_prompt_shown)'" >> $STEPLOG
+      tap_ui '^General Options$' || true
+      sleep 3
+      if tap_ui '^Pause when App Starts$'; then
+        sleep 3
+        shot $tag-3-after-page-switch
+        echo "   $tag: after a switch of the page margin='$(conf_val android_landscape_cutout_margin)' flag='$(conf_val android_landscape_cutout_prompt_shown)' pause_on_start='$(conf_val pause_on_start)'" >> $STEPLOG
+      else
+        shot $tag-3-no-page-switch
+      fi
     else
       echo "   $tag: master did not ask over the settings page" >> $STEPLOG
     fi
@@ -304,12 +318,113 @@ case_open() {
   stop_app
 }
 
+# C. The Peloton authentication question (a stored password other than "password" shows it 1 s
+# after the start): "Yes" writes the login back to its defaults. master: through the big copy
+case_peloton() {
+  local tag="$1" apk="$2" kind="$3"
+  mark "$tag: Yes in the Peloton question"
+  install_apk "$apk"
+  put_conf 'peloton_username=me@example.com\npeloton_password=secret\n'
+  start_app
+  shot $tag-1-question
+  if ! grep -q 'Peloton Authentication Change' ui.xml 2>/dev/null; then
+    echo "!! $tag: no Peloton question - the run proves nothing" >> $STEPLOG
+    stop_app
+    return
+  fi
+  conf_set shortcut_lap=F7
+  sleep 3
+  tap_ui '^(Yes|YES)$' || { echo "!! $tag: no Yes button - the run proves nothing" >> $STEPLOG; stop_app; return; }
+  sleep 6
+  shot $tag-2-after-yes
+  expect peloton_username username "$tag: login reset by Yes"
+  expect peloton_password password "$tag: password reset by Yes"
+  if [ "$kind" = base ]; then
+    if [ "$(conf_val shortcut_lap)" = "F7" ]; then
+      echo "!! $tag: master kept the outside write - the run proves nothing" >> $STEPLOG
+    else
+      echo "check $tag: master put back shortcut_lap='$(conf_val shortcut_lap)' - the defect, as expected: OK" >> $STEPLOG
+    fi
+  else
+    expect shortcut_lap F7 "$tag: kept after Yes"
+  fi
+  stop_app
+}
+
+# node_height 'regex': the height of the first node with that text in a fresh dump
+node_height() {
+  dump
+  [ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    if re.fullmatch(sys.argv[2], n.get("text") or n.get("content-desc") or "", re.I):
+        m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+        if m:
+            print(int(m.group(4)) - int(m.group(2)))
+            break
+' ui.xml "$1"
+}
+# scroll_to 'regex' [swipes]: swipe the page up (portrait) until the control shows
+scroll_to() {
+  local i
+  for i in $(seq 1 ${2:-14}); do
+    dump
+    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$1" > /dev/null; then
+      echo "scroll to '$1': found after $((i - 1)) swipes" >> $STEPLOG
+      return 0
+    fi
+    adb shell input swipe 700 2000 700 1300 400 || true
+    sleep 1
+  done
+  echo "!! scroll to '$1': NOT FOUND" >> $STEPLOG
+  return 1
+}
+
+# D. The text size through setTextScaleOption: "Use System Text Size" off with a stored size of
+# 130 % - the page text grows at once (the window font) and the key is written. Here the settings
+# page writes the same keys too, so it shows the path works, not which copy wins
+case_text_size() {
+  local tag="$1" apk="$2" h1 h2
+  mark "$tag: Use System Text Size off"
+  install_apk "$apk"
+  put_conf 'ui_text_scale=130\nui_text_scale_system=true\n'
+  start_app
+  open_settings
+  tap_ui '^General UI Options$' || true
+  sleep 3
+  if ! scroll_to '^Use System Text Size$'; then
+    shot $tag-1-no-switch
+    echo "!! $tag: no Use System Text Size - the run proves nothing" >> $STEPLOG
+    stop_app
+    return
+  fi
+  h1=$(node_height '^Use System Text Size$')
+  shot $tag-1-before
+  tap_ui '^Use System Text Size$' || true
+  sleep 4
+  h2=$(node_height '^Use System Text Size$')
+  shot $tag-2-after
+  echo "   $tag: height of the switch row $h1 -> $h2 px" >> $STEPLOG
+  if [ -n "$h1" ] && [ -n "$h2" ] && [ "$h2" -gt "$h1" ]; then
+    echo "check $tag: the text grew at once: OK" >> $STEPLOG
+  else
+    echo "!! $tag: the text did not grow ($h1 -> $h2)" >> $STEPLOG
+    FAILED=1
+  fi
+  expect ui_text_scale_system false "$tag: written"
+  stop_app
+}
+
 if [ -n "$CUTOUT" ]; then
   case_closed a-base "$BASE_APK" base
   case_closed a-fix "$FIX_APK" fix
   case_open b-base "$BASE_APK" base
   case_open b-fix "$FIX_APK" fix
 fi
+case_peloton c-base "$BASE_APK" base
+case_peloton c-fix "$FIX_APK" fix
+case_text_size d-base "$BASE_APK"
+case_text_size d-fix "$FIX_APK"
 portrait
 
 kill $LOGCAT_PID 2>/dev/null || true
