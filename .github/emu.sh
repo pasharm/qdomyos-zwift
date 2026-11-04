@@ -432,13 +432,15 @@ case_text_size() {
     stop_app
     return
   fi
-  h1=$(node_height '^Use System Text Size$')
+  # A label of one line: its height follows the window font. The switch row has a fixed height
+  # (run 41750812664: 167 -> 167 px while the text grew on the frames)
+  h1=$(node_height '^Tile size:$')
   shot $tag-1-before
   tap_switch '^Use System Text Size$' || true
   sleep 4
-  h2=$(node_height '^Use System Text Size$')
+  h2=$(node_height '^Tile size:$')
   shot $tag-2-after
-  echo "   $tag: height of the switch row $h1 -> $h2 px" >> $STEPLOG
+  echo "   $tag: height of the 'Tile size:' label $h1 -> $h2 px" >> $STEPLOG
   if [ -n "$h1" ] && [ -n "$h2" ] && [ "$h2" -gt "$h1" ]; then
     echo "check $tag: the text grew at once: OK" >> $STEPLOG
   else
