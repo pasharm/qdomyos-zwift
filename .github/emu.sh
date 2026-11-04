@@ -270,26 +270,46 @@ echo "== the folder after the import: uid, size, name; md5 of each distinct cont
 adb shell "ls -ln $FIT/ < /dev/null" | awk '{print $3, $5, $NF}' | sort -k3 >> $STEPLOG || true
 adb shell "cd $FIT && md5sum * < /dev/null" | awk '{print $1}' | sort | uniq -c >> $STEPLOG || true
 
-# The times from logcat itself (epoch column): the mark, the Java end, the C++ end
+# The same import again (the usual case later: the folder already holds the app's own copies):
+# the import button of the history header and "Import from QZ Folder..."; the saved grant is
+# used, no picker. Expected: nothing added; on "del" the old copies left by the first import go.
+mark "second import"
+if tap_ui '^Import workouts$' 1312 358; then
+  sleep 3
+  shot 07-import-menu
+  tap_wait '^Import from QZ Folder' 4 || echo "!! no 'Import from QZ Folder' in the menu - no second import" >> $STEPLOG
+fi
+for i in $(seq 1 600); do
+  [ "$(grep -c 'FitDatabaseProcessor import: added' full_logcat.txt)" -ge 2 ] && break
+  [ "$(grep -c 'handleFitFolderResult requestCode' full_logcat.txt)" -ge 2 ] &&
+    grep 'handleFitFolderResult requestCode' full_logcat.txt | tail -n 1 | grep -q ' files=0' && break
+  sleep 1
+done
+sleep 3
+shot 08-after-second-import
+count_fit "after the second import"
+echo "expected: $((WORKOUTS * COPIES + WORKOUTS)) on base and fix, $WORKOUTS on del" >> $STEPLOG
+adb shell "cd $FIT && md5sum * < /dev/null" | awk '{print $1}' | sort | uniq -c >> $STEPLOG || true
+
+# The times from logcat itself (epoch column): from each mark, the first Java end and C++ end
 python3 - full_logcat.txt >> $STEPLOG <<'EOF'
 import sys
-marks = {}
+lines = []
 for line in open(sys.argv[1], errors="replace"):
     parts = line.split(None, 1)
-    if not parts:
-        continue
     try:
-        t = float(parts[0])
-    except ValueError:
+        lines.append((float(parts[0]), line.rstrip()))
+    except (ValueError, IndexError):
         continue
-    for key, text in (("allowed", "mark allowed"), ("java", "handleFitFolderResult requestCode"),
-                      ("cpp", "FitDatabaseProcessor import: added")):
-        if key not in marks and text in line:
-            marks[key] = t
-if "allowed" in marks:
-    for key in ("java", "cpp"):
-        if key in marks:
-            print("logcat: %s end %.2f s after Allow" % (key, marks[key] - marks["allowed"]))
+for mark in ("mark allowed", "mark second import"):
+    start = next((t for t, l in lines if mark in l), None)
+    if start is None:
+        print("logcat: no '%s'" % mark)
+        continue
+    for name, text in (("java", "handleFitFolderResult requestCode"), ("cpp", "FitDatabaseProcessor import: added")):
+        hit = next(((t, l) for t, l in lines if t >= start and text in l), None)
+        if hit:
+            print("logcat: %s, %s end %.2f s: %s" % (mark, name, hit[0] - start, hit[1].split(": ", 1)[-1][:120]))
 EOF
 
 adb shell "ps -A 2>/dev/null || ps" > process_list.txt || true
