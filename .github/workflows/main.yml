@@ -501,10 +501,12 @@ jobs:
             # name and the text typed, and the controls of a result with the setting they belong
             # to (the list of "Maps Type" with its value, the switch of "Loop Start-End-Start").
             # Back with the "◄" of the toolbar (the search button shows only on the settings page),
-            # and the text is typed only once the search bar shows ("Changed"): the field takes
-            # the focus a moment after the press, and letters typed before it were lost
+            # and the text is typed only once the search bar shows ("Changed"). On some API levels
+            # the field still drops the first keys for a while after it shows (it read "ps"), so
+            # the first letter is typed again until the field reads it, then the rest
             sh .github/scripts/android_accessibility_test.sh ◄=Search_settings Search_settings=Changed
-            adb shell input text maps
+            for i in 1 2 3 4 5; do adb shell input text m; if sh .github/scripts/android_accessibility_test.sh see:Search_settings:_m; then break; fi; done
+            adb shell input text aps
             sh .github/scripts/android_accessibility_test.sh see:Search_settings:_maps see:Maps_Type:_3D see:Loop_Start-End-Start
 
             # Check if the package is installed
