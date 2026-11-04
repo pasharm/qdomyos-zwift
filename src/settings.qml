@@ -19679,17 +19679,28 @@ import QtQuick 2.12 as Quick212
                         id: templateSettingsAccordion
                         // Filled from the user's *.qzt template files; without any it only
                         // shows a header that opens to nothing: the modern look hides it then.
-                        // Counted here: the content id is not reachable from the handler below.
+                        // Counted from the settings: the entries themselves are made only when it opens
                         property int shownTemplates: 0
                         visible: !window.ui.modern || shownTemplates > 0
                         title: qsTr("Template Settings")
                         indicatRectColor: Material.color(Material.Grey)
                         textColor: Material.color(Material.Grey)
                         color: Material.backgroundColor
+                        Component.onCompleted: {
+                            let ids = settings.value("template_user_ids", []);
+                            let n = 0;
+                            if (ids)
+                                ids.forEach(function(id) { if (settings.value("template_" + id + "_type", "")) n++; });
+                            shownTemplates = n;
+                        }
+                        // The Loader of AccordionElement creates the content each time the section opens,
+                        // so the template entries are made from there: the content is a component, its
+                        // id is not reachable from the accordion's own Component.onCompleted
                         accordionContent: ColumnLayout {
                             id: templateSettingsContent
+                            Component.onCompleted: templateSettingsAccordion.createTemplates(templateSettingsContent)
                         }
-                        Component.onCompleted: function() {
+                        function createTemplates(parentItem) {
                             let template_ids = settings.value("template_user_ids", []);
                             console.log("template_ids current val "+template_ids);
                             if (template_ids) {
@@ -19706,20 +19717,19 @@ import QtQuick 2.12 as Quick212
                                         if (component) {
                                             let key_enabled = "template_" + template_id + "_enabled";
                                             console.log("Creating component object for id "+template_id);
-                                            let template_object = component.createObject(null,
+                                            // parentItem owns it, so it is not garbage collected and goes with the section
+                                            let template_object = component.createObject(parentItem,
                                                                                          {
                                                                                              settings: settings,
                                                                                              templateId: template_id
                                                                                          });
-                                            let accordionCheck = accordionCheckComponent.createObject(templateSettingsContent,
+                                            let accordionCheck = accordionCheckComponent.createObject(parentItem,
                                                                                                       {
                                                                                                           title: template_id +" (" + template_type +")",
                                                                                                           settings: settings,
                                                                                                           linkedBoolSetting: key_enabled,
                                                                                                           accordionContent: template_object
                                                                                                       });
-                                            if (accordionCheck)
-                                                templateSettingsAccordion.shownTemplates++;
                                         }
                                     }
                                 });
