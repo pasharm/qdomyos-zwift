@@ -286,7 +286,7 @@ case_open() {
       echo "   $tag: after Yes margin='$(conf_val android_landscape_cutout_margin)' flag='$(conf_val android_landscape_cutout_prompt_shown)'" >> $STEPLOG
       tap_ui '^General Options$' || true
       sleep 3
-      if tap_ui '^Pause when App Starts$'; then
+      if tap_switch '^Pause when App Starts$'; then
         sleep 3
         shot $tag-3-after-page-switch
         echo "   $tag: after a switch of the page margin='$(conf_val android_landscape_cutout_margin)' flag='$(conf_val android_landscape_cutout_prompt_shown)' pause_on_start='$(conf_val pause_on_start)'" >> $STEPLOG
@@ -380,6 +380,40 @@ scroll_to() {
   return 1
 }
 
+# tap_switch 'regex': an IndicatorOnlySwitch reacts only on its indicator at the right end of the
+# row, not on the label (run 41748616998: a tap on the middle of the row changed nothing). Swipes
+# the page up (in the current orientation) until the row is on the screen with a size
+tap_switch() {
+  local i xy
+  for i in 1 2 3 4 5 6 7 8; do
+    dump
+    xy=$([ -f ui.xml ] && python3 -c '
+import re, sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).getroot().iter("node"):
+    if re.fullmatch(sys.argv[2], n.get("text") or n.get("content-desc") or "", re.I):
+        m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", n.get("bounds") or "")
+        if m:
+            x1, y1, x2, y2 = map(int, m.groups())
+            if x2 - x1 > 100 and y2 - y1 > 40:
+                print(x2 - 60, (y1 + y2) // 2)
+                break
+' ui.xml "$1")
+    if [ -n "$xy" ]; then
+      echo "tap switch '$1' at $xy (after $((i - 1)) swipes)" >> $STEPLOG
+      adb shell input tap $xy || true
+      return 0
+    fi
+    if [ "$(orientation)" = landscape ]; then
+      adb shell input swipe 1280 1150 1280 650 400 || true
+    else
+      adb shell input swipe 700 2000 700 1300 400 || true
+    fi
+    sleep 1
+  done
+  echo "!! switch '$1' NOT FOUND" >> $STEPLOG
+  return 1
+}
+
 # D. The text size through setTextScaleOption: "Use System Text Size" off with a stored size of
 # 130 % - the page text grows at once (the window font) and the key is written. Here the settings
 # page writes the same keys too, so it shows the path works, not which copy wins
@@ -400,7 +434,7 @@ case_text_size() {
   fi
   h1=$(node_height '^Use System Text Size$')
   shot $tag-1-before
-  tap_ui '^Use System Text Size$' || true
+  tap_switch '^Use System Text Size$' || true
   sleep 4
   h2=$(node_height '^Use System Text Size$')
   shot $tag-2-after
