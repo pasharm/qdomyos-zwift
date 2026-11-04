@@ -19025,7 +19025,7 @@ import QtQuick 2.12 as Quick212
                                                     onAccepted: if (valid) { settings.virtual_device_rower_cadence_gain = value; window.settings_restart_to_apply = true; }
                                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                                 }
-                                                Button {
+                                                UiButton {
                                                     text: qsTr("OK")
                                                     enabled: virtualRowerCadenceGainTextField.valid && virtualRowerCadenceGainTextField.dirty
                                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -19064,7 +19064,7 @@ import QtQuick 2.12 as Quick212
                                                     onAccepted: if (valid) { settings.virtual_device_rower_cadence_offset = value; window.settings_restart_to_apply = true; }
                                                     onActiveFocusChanged: if(this.focus) this.cursorPosition = this.text.length
                                                 }
-                                                Button {
+                                                UiButton {
                                                     text: qsTr("OK")
                                                     enabled: virtualRowerCadenceOffsetTextField.valid && virtualRowerCadenceOffsetTextField.dirty
                                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
