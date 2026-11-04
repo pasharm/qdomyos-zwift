@@ -27,7 +27,7 @@ ColumnLayout {
             }
         }
 
-        TextField {
+        UiTextField {
             id:textTcpClientIp
             text: settings.value("template_"+rootElement.templateId+"_ip","127.0.0.1")
             horizontalAlignment: Text.AlignRight
@@ -36,7 +36,7 @@ ColumnLayout {
             //inputMethodHints: Qt.ImhFormattedNumbersOnly
             onAccepted: hostRow.doSaveHost(text)
         }
-        Button {
+        UiButton {
             id: buttonTcpClientIp
             text: "OK"
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
@@ -59,7 +59,7 @@ ColumnLayout {
                 settings.setValue("template_"+rootElement.templateId+"_port", port);
         }
 
-        TextField {
+        UiTextField {
             id: textTcpClientPort
             text: settings.value("template_"+rootElement.templateId+"_port",4321) + "";
             horizontalAlignment: Text.AlignRight
@@ -68,7 +68,7 @@ ColumnLayout {
             inputMethodHints: Qt.ImhDigitsOnly
             onAccepted: portRow.doSavePort(text)
         }
-        Button {
+        UiButton {
             id: buttonlabelTcpClientPort
             text: "OK"
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter

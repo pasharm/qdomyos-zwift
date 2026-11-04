@@ -15,7 +15,7 @@ ColumnLayout {
         textFormat: Text.PlainText
         wrapMode: Text.WordWrap
         verticalAlignment: Text.AlignVCenter
-        color: Material.color(Material.Red)
+        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Red)
         function updateAddresses() {
             let ips = settings.value("template_"+rootElement.templateId+"_ips", []);
             let port = parseInt(settings.value("template_"+rootElement.templateId+"_port", 6666));
@@ -44,7 +44,7 @@ ColumnLayout {
             if (!isNaN(port) && port>0 && port < 65535)
                 settings.setValue("template_"+rootElement.templateId+"_port", port);
         }
-        TextField {
+        UiTextField {
             id: textWebServerPort
             text: settings.value("template_"+rootElement.templateId+"_port",6666) + '';
             horizontalAlignment: Text.AlignRight
@@ -53,7 +53,7 @@ ColumnLayout {
             inputMethodHints: Qt.ImhDigitsOnly
             onAccepted: portRow.doSavePort(text)
         }
-        Button {
+        UiButton {
             id: buttonlabelWebServerPort
             text: "OK"
             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
