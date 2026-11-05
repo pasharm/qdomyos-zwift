@@ -1,4 +1,4 @@
-# test branch (T-423): run two APKs that were already built on one emulator - the build with the
+# test branch (T-426, scenario from T-423): run two APKs that were already built on one emulator - the build with the
 # fix (source) and the build of the same master without it (baseline) - and keep the frames of
 # the settings search in Russian, logcat and steps.log (no build).
 name: CI
