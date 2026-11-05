@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQml 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
+import QtQuick.Window 2.15
 import QtCharts 2.15
 import Qt.labs.calendar 1.0
 import Qt.labs.settings 1.0
@@ -104,6 +105,10 @@ Page {
         uploadMenu.filePath = details.filePath
 
         var popupPoint = delegateItem.mapToItem(workoutHistoryPage, delegateItem.width / 2, delegateItem.height / 2)
+        if (workoutHistoryPage.modern) {
+            modernUploadMenu.openAt(popupPoint)
+            return
+        }
         uploadMenu.x = Math.max(8, popupPoint.x - 40)
         uploadMenu.y = Math.max(8, popupPoint.y - 20)
         uploadMenu.open()
@@ -1023,6 +1028,149 @@ Page {
                         else
                             fitFileDialogLoader.active = true
                     }
+                }
+            }
+        }
+    }
+
+    // Modern look: the long press menu of a workout on a UiPopup card, as the import menu:
+    // the workout title on top, then Share and the upload services that are set up, each
+    // with its icon. Only the shown items are in the list, so there are no empty rows.
+    // Modal without a dim, as the classic menu: a screen reader stays inside the card
+    UiPopup {
+        id: modernUploadMenu
+        padding: 8
+        modal: true
+        dim: false
+        closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
+
+        readonly property int itemWidth: Math.min(296, workoutHistoryPage.width - 32)
+        property var items: []
+
+        function openAt(point) {
+            var list = [{ label: qsTr("Share FIT file"), icon: "share", action: "share" }]
+            if (rootItem && rootItem.isStravaLoggedIn())
+                list.push({ label: qsTr("Upload to Strava"), icon: "upload_file", action: "strava" })
+            if (rootItem && rootItem.isGarminUploadConfigured())
+                list.push({ label: qsTr("Upload to Garmin"), icon: "upload_file", action: "garmin" })
+            if (rootItem && rootItem.isIntervalsICUUploadConfigured())
+                list.push({ label: qsTr("Upload to Intervals.icu"), icon: "upload_file", action: "intervals" })
+            if (Qt.platform.os === "ios" && workoutModel && workoutModel.canWriteAppleHealth(uploadMenu.workoutId))
+                list.push({ label: qsTr("Upload to Apple Health"), icon: "upload_file", action: "health" })
+            items = list
+            // the Column lays out the new rows only on the next frame: do it now,
+            // so the clamp below uses the height of this list, not the previous one
+            contentItem.forceLayout()
+            // centred on the pressed row, kept inside the page
+            x = Math.max(8, Math.min(point.x - width / 2, workoutHistoryPage.width - width - 8))
+            y = Math.max(8, Math.min(point.y - 24, workoutHistoryPage.height - height - 8))
+            open()
+        }
+
+        function run(action) {
+            close()
+            if (action === "share")
+                rootItem.shareWorkoutFile(uploadMenu.filePath)
+            else if (action === "strava")
+                rootItem.uploadHistoricalWorkoutToStrava(uploadMenu.filePath)
+            else if (action === "garmin")
+                rootItem.uploadHistoricalWorkoutToGarmin(uploadMenu.filePath)
+            else if (action === "intervals")
+                rootItem.uploadHistoricalWorkoutToIntervalsICU(uploadMenu.filePath)
+            else if (action === "health")
+                workoutModel.uploadWorkoutToAppleHealth(uploadMenu.workoutId)
+        }
+
+        contentItem: Column {
+            width: modernUploadMenu.itemWidth
+
+            // which workout the actions are for
+            Text {
+                width: parent.width
+                leftPadding: 12
+                rightPadding: 12
+                topPadding: 6
+                bottomPadding: 8
+                text: uploadMenu.workoutTitle
+                font.pixelSize: window.ui.fontLabel
+                font.weight: Font.DemiBold
+                color: window.ui.textMuted
+                elide: Text.ElideRight
+                Accessible.role: Accessible.Heading
+                Accessible.name: text
+            }
+
+            Repeater {
+                model: modernUploadMenu.items
+                delegate: AbstractButton {
+                    id: modernUploadItem
+                    width: modernUploadMenu.itemWidth
+                    height: 48
+                    Accessible.role: Accessible.MenuItem
+                    Accessible.name: modelData.label
+                    Accessible.onPressAction: modernUploadMenu.run(modelData.action)
+                    background: Rectangle {
+                        radius: 10
+                        color: modernUploadItem.down ? window.ui.surfaceHighest : "transparent"
+                    }
+                    contentItem: Item {
+                        // the share icon is not in the icon font: drawn as the one of the toolbar,
+                        // at the pixel density of the screen and scaled down into a 20 x 20 box
+                        Item {
+                            visible: modelData.icon === "share"
+                            x: 12
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 20
+                            height: 20
+                            Canvas {
+                                property color color: window.ui.textMain
+                                anchors.centerIn: parent
+                                width: 20 * Screen.devicePixelRatio
+                                height: 20 * Screen.devicePixelRatio
+                                scale: 1 / Screen.devicePixelRatio
+                                onColorChanged: requestPaint()
+                                onPaint: {
+                                    var ctx = getContext("2d")
+                                    ctx.reset()
+                                    ctx.scale(width / 24, height / 24)
+                                    ctx.strokeStyle = color
+                                    ctx.fillStyle = color
+                                    ctx.lineWidth = 1.6
+                                    ctx.beginPath()
+                                    ctx.moveTo(18, 5)
+                                    ctx.lineTo(6, 12)
+                                    ctx.lineTo(18, 19)
+                                    ctx.stroke()
+                                    var dots = [[18, 5], [6, 12], [18, 19]]
+                                    for (var i = 0; i < dots.length; i++) {
+                                        ctx.beginPath()
+                                        ctx.arc(dots[i][0], dots[i][1], 3, 0, 2 * Math.PI)
+                                        ctx.fill()
+                                    }
+                                }
+                            }
+                        }
+                        UiIcon {
+                            visible: modelData.icon !== "share"
+                            x: 12
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 20
+                            height: 20
+                            name: modelData.icon
+                            color: window.ui.textMain
+                        }
+                        Text {
+                            x: 44
+                            width: parent.width - x - 12
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: modelData.label
+                            font.pixelSize: window.ui.fontBody
+                            color: window.ui.textMain
+                            elide: Text.ElideRight
+                            Accessible.ignored: true
+                        }
+                    }
+                    onClicked: modernUploadMenu.run(modelData.action)
                 }
             }
         }
