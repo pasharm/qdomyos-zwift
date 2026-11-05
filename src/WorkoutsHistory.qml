@@ -106,7 +106,7 @@ Page {
 
         var popupPoint = delegateItem.mapToItem(workoutHistoryPage, delegateItem.width / 2, delegateItem.height / 2)
         if (workoutHistoryPage.modern) {
-            modernUploadMenu.openAt(popupPoint)
+            modernUploadMenu.openFor(delegateItem, popupPoint.x)
             return
         }
         uploadMenu.x = Math.max(8, popupPoint.x - 40)
@@ -632,14 +632,23 @@ Page {
                     confirmDialog.open()
                 }
 
+                // Modern look: the long press card is placed by this card and lights it up
+                readonly property Item cardItem: rowCard
+                readonly property string workoutDate: date
+
                 // Card-like container
                 Rectangle {
+                    id: rowCard
                     anchors.fill: parent
                     anchors.margins: workoutHistoryPage.modern ? 6 : 8
                     anchors.leftMargin: window.contentSideMargin
                     anchors.rightMargin: window.contentSideMargin
                     radius: workoutHistoryPage.modern ? 16 : 10
-                    color: workoutHistoryPage.modern ? window.ui.surface : "white"
+                    // Modern look: the workout of the open long press card is tinted with the accent
+                    color: !workoutHistoryPage.modern ? "white"
+                         : modernUploadMenu.visible && modernUploadMenu.row === swipeDelegate
+                           ? Qt.tint(window.ui.surface, window.ui.alpha(window.ui.accent, 0.10))
+                           : window.ui.surface
                     border.color: workoutHistoryPage.modern ? "transparent" : "#e0e0e0"
 
                     // Workout Type Tag - positioned absolutely in top-right
@@ -1033,21 +1042,83 @@ Page {
         }
     }
 
-    // Modern look: the long press menu of a workout on a UiPopup card, as the import menu:
-    // the workout title on top, then Share and the upload services that are set up, each
-    // with its icon. Only the shown items are in the list, so there are no empty rows.
-    // Modal without a dim, as the classic menu: a screen reader stays inside the card
+    // Modern look: the long press menu of a workout on a UiPopup card: the workout title and
+    // date on top, then Share and the upload services that are set up, each with its icon.
+    // Only the shown items are in the list, so there are no empty rows. The card opens under
+    // the pressed workout (above it when there is no room below), the workout is tinted and
+    // stays light in a hole of the scrim, so it is clear which workout the actions are for.
+    // Modal: a screen reader stays inside the card
     UiPopup {
         id: modernUploadMenu
         padding: 8
         modal: true
-        dim: false
+        dim: true
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
         readonly property int itemWidth: Math.min(296, workoutHistoryPage.width - 32)
         property var items: []
+        // the delegate of the pressed workout and its card in the coordinates of the window
+        property Item row: null
+        property rect hole: Qt.rect(0, 0, 0, 0)
+        property string subtitle: ""
 
-        function openAt(point) {
+        onClosed: row = null
+
+        // White as the workout cards: a grey card on the scrim reads as a disabled block
+        background: UiFrame {
+            radius: 20
+            fill: window.ui.surface
+            stroke: window.ui.outline
+            strokeWidth: window.ui.dark ? 0 : 1
+        }
+
+        // The scrim of the page with a hole for the pressed workout: a transparent rectangle
+        // with a border far wider than the window, so its inner edge is the rounded hole
+        Overlay.modal: Item {
+            readonly property real reach: 2 * Math.max(width, height)
+            Rectangle {
+                x: modernUploadMenu.hole.x - parent.reach
+                y: modernUploadMenu.hole.y - parent.reach
+                width: modernUploadMenu.hole.width + 2 * parent.reach
+                height: modernUploadMenu.hole.height + 2 * parent.reach
+                radius: 16 + parent.reach
+                color: "transparent"
+                border.width: parent.reach
+                border.color: window.ui.scrim
+            }
+            Behavior on opacity { NumberAnimation { duration: 150 } }
+        }
+
+        // Under the card of the pressed workout with a gap of 8, above it when the card does
+        // not fit below; when it fits on neither side (a short page in landscape), pinned to
+        // the edge of the side with more room. Across: centred on the row, kept inside the page
+        function openFor(delegateItem, centerX) {
+            var card = delegateItem.cardItem
+            var onPage = card.mapToItem(workoutHistoryPage, 0, 0)
+            // the hole is the part of the workout card the list shows: a row scrolled half
+            // under the header does not light up the header above the list
+            var inWindow = card.mapToItem(null, 0, 0)
+            var list = workoutListView.mapToItem(null, 0, 0)
+            var top = Math.max(inWindow.y, list.y)
+            var bottom = Math.min(inWindow.y + card.height, list.y + workoutListView.height)
+            hole = Qt.rect(inWindow.x, top, card.width, Math.max(0, bottom - top))
+            subtitle = delegateItem.workoutDate
+            row = delegateItem
+            buildItems()
+            var pageH = workoutHistoryPage.height
+            x = Math.max(8, Math.min(centerX - width / 2, workoutHistoryPage.width - width - 8))
+            var below = onPage.y + card.height + 8
+            var above = onPage.y - 8 - height
+            if (below + height <= pageH - 8)
+                y = below
+            else if (above >= 8)
+                y = above
+            else
+                y = pageH - 8 - below >= onPage.y - 16 ? Math.max(8, pageH - height - 8) : 8
+            open()
+        }
+
+        function buildItems() {
             var list = [{ label: qsTr("Share FIT file"), icon: "share", action: "share" }]
             if (rootItem && rootItem.isStravaLoggedIn())
                 list.push({ label: qsTr("Upload to Strava"), icon: "upload_file", action: "strava" })
@@ -1059,12 +1130,8 @@ Page {
                 list.push({ label: qsTr("Upload to Apple Health"), icon: "upload_file", action: "health" })
             items = list
             // the Column lays out the new rows only on the next frame: do it now,
-            // so the clamp below uses the height of this list, not the previous one
+            // so the placement uses the height of this list, not the previous one
             contentItem.forceLayout()
-            // centred on the pressed row, kept inside the page
-            x = Math.max(8, Math.min(point.x - width / 2, workoutHistoryPage.width - width - 8))
-            y = Math.max(8, Math.min(point.y - 24, workoutHistoryPage.height - height - 8))
-            open()
         }
 
         function run(action) {
@@ -1091,7 +1158,9 @@ Page {
                 rightPadding: 12
                 topPadding: 6
                 bottomPadding: 8
-                text: uploadMenu.workoutTitle
+                // the date tells apart the many workouts of the same name ("1 minutes Run")
+                text: modernUploadMenu.subtitle !== "" ? uploadMenu.workoutTitle + "  ·  " + modernUploadMenu.subtitle
+                                                       : uploadMenu.workoutTitle
                 font.pixelSize: window.ui.fontLabel
                 font.weight: Font.DemiBold
                 color: window.ui.textMuted
@@ -1111,7 +1180,7 @@ Page {
                     Accessible.onPressAction: modernUploadMenu.run(modelData.action)
                     background: Rectangle {
                         radius: 10
-                        color: modernUploadItem.down ? window.ui.surfaceHighest : "transparent"
+                        color: modernUploadItem.down ? window.ui.surfaceHigh : "transparent"
                     }
                     contentItem: Item {
                         // the share icon is not in the icon font: drawn as the one of the toolbar,
