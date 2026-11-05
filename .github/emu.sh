@@ -177,11 +177,11 @@ case_run() {
   shot $1-bar
   query "Inclination%sto%sResistance" $1-q3-table
   dump
-  echo "results $1: Open $(count_ui '^(Open|Открыть)$'), OK $(count_ui '^OK$')" >> $STEPLOG
+  echo "results $1: Open $(count_ui '^(Open|Открыть)$'), OK $(count_ui '^(OK|ОК)$')" >> $STEPLOG
   if [ "$1" = b ]; then
     # master: OK of the table field as it is shown, then the table page (the only Open) -
-    # are the points still there?
-    tap_ui '^OK$' || return 1
+    # are the points still there? In Russian the button reads Cyrillic "ОК"
+    tap_ui '^(OK|ОК)$' || return 1
     sleep 3
     shot $1-q3-ok
     rm -f ui.xml
@@ -191,9 +191,10 @@ case_run() {
   wait_page $1
   shot $1-q3-page
 }
-# count_ui 'regex': how many controls of ui.xml match, as uitap.py does (zero size left out)
+# count_ui 'regex' [all]: how many controls of ui.xml match, as uitap.py does (zero size left
+# out); with "all" the ones below the screen (zero height in the dump) count too
 count_ui() {
-  python3 - "$1" ui.xml <<'PYEOF'
+  python3 - "$1" ui.xml "${2:-}" <<'PYEOF'
 import re, sys, xml.etree.ElementTree as ET
 rx = re.compile(sys.argv[1], re.I)
 try:
@@ -207,21 +208,24 @@ for node in root.iter("node"):
     if not any(l and rx.fullmatch(l.strip()) for l in labels):
         continue
     m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", node.get("bounds") or "")
-    if m and int(m.group(3)) > int(m.group(1)) and int(m.group(4)) > int(m.group(2)):
+    if sys.argv[3] == "all" or (m and int(m.group(3)) > int(m.group(1)) and int(m.group(4)) > int(m.group(2))):
         n += 1
 print(n)
 PYEOF
 }
-# wait_page <side>: the table page is up - its switch with a text, column header or buttons,
-# none of which a search result has as a control (the page opens at its top, the buttons may be
-# below the screen)
+# wait_page <side>: the table page is up - its "×" (delete a point) buttons, one per point, which
+# no search result has; below the screen they have zero height, so counted with "all". Not the
+# switch text: the labels of the result cards are in the dump too, "Enable Custom ..." among them,
+# and "Add Point" is below the screen (run 42015440791). The count is the number of points: 11 by
+# default - fewer on master after OK would mean OK spoilt the table
 wait_page() {
-  local i
+  local i n
   for i in $(seq 1 10); do
     sleep 2
     dump
-    if [ -f ui.xml ] && python3 .github/uitap.py ui.xml '^(Inclination \(%\)|Наклон \(%\)|Enable Custom Inclination to Resistance Table|Включить свою таблицу «наклон – сопротивление»|Add Point|Добавить точку|Reset Example|Сбросить к примеру)$' > /dev/null; then
-      echo "page $1: table page opened" >> $STEPLOG
+    n=$(count_ui '^×$' all)
+    if [ -f ui.xml ] && [ "$n" -gt 0 ] 2>/dev/null; then
+      echo "page $1: table page opened, points $n" >> $STEPLOG
       return 0
     fi
   done
@@ -246,10 +250,10 @@ for side in b a; do
   if [ $side = b ]; then want="results b: Open 1, OK 1"; else want="results a: Open 2, OK 0"; fi
   if echo "$lines" | grep -q "Поиск настроек': by label\|Search settings': by label" &&
      echo "$lines" | grep -qx "$want" &&
-     echo "$lines" | grep -q "^page $side: table page opened"; then
-    echo "check $side: '$want', table page opened: OK, the frames decide" >> $STEPLOG
+     echo "$lines" | grep -qx "page $side: table page opened, points 11"; then
+    echo "check $side: '$want', table page with 11 points: OK, the frames decide" >> $STEPLOG
   else
-    echo "!! check $side: want '$want' and the table page - NOT reached" >> $STEPLOG
+    echo "!! check $side: want '$want' and the table page with 11 points - NOT reached" >> $STEPLOG
     FAILED=1
   fi
 done
