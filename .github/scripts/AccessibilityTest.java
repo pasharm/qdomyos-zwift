@@ -15,12 +15,12 @@
 // below it, some seconds after it connected), so the scroll to the focus is checked, not passed over.
 //
 // A press is the start of a button's description, optionally with "=" and the start of the
-// description of a node that the press must show within 15 s and that must still be there 2 s later
+// description of a node that the press must show within 5 s and that must still be there 2 s later
 // (a second press, e.g. by auto repeat, would replace it). "_" stands for a space. A press that
 // starts with "tap:" taps the middle of the node instead, as TalkBack does with a node it cannot
 // press (in Qt 5.15 a ComboBox, or an ItemDelegate without Accessible.onPressAction); the node need
 // not be clickable, but must be on the screen. "see:" and a description presses nothing: a node
-// with that description must show within 15 s. "none:" and a text presses nothing either: no node
+// with that description must show within 5 s. "none:" and a text presses nothing either: no node
 // on the screen may read exactly that text (its description or text).
 // Example: Start=First-time_setup Increase_Resistance=Resistance:_1 tap:Settings=Tiles_Options
 //          see:Speed,_order_index:_0 none:0
@@ -39,9 +39,6 @@ import java.util.List;
 
 public class AccessibilityTest {
     private static final String PACKAGE = "org.cagnulen.qdomyoszwift";
-    // How long what a press shows (a page, a field) may take to show, in steps of 0.5 s: 15 s. A
-    // page of many items (the tiles settings) took longer than 5 s on a busy emulator
-    private static final int SHOW_STEPS = 30;
     private static UiAutomation automation;
     private static boolean scrollRequired;
 
@@ -277,13 +274,12 @@ public class AccessibilityTest {
         // QZ answers false when its Qt thread is busy for 2 s, as it can be just after a device
         // connected, and Qt's own press may still run; Qt 5.15 answers false for an item that is
         // not a button too (e.g. NewPageElement), though it ran its press. So wait for what the
-        // press shows up to 15 s before pressing again, else a second page opens over the first;
-        // again for 5 tries, unless that one worked (at most some 75 s, within the 240 s the
-        // script gives a run)
-        for (int i = 0; i < 5 && !handled; i++) {
+        // press shows up to 5 s before pressing again, else a second page opens over the first;
+        // again for 10 tries, unless that one worked
+        for (int i = 0; i < 10 && !handled; i++) {
             System.out.println("INFO press refused: " + describe(target) + " enabled=" + target.isEnabled()
                     + " visible=" + target.isVisibleToUser());
-            for (int j = 0; j < (expect == null ? 2 : SHOW_STEPS) && !handled; j++) {
+            for (int j = 0; j < (expect == null ? 2 : 10) && !handled; j++) {
                 Thread.sleep(500);
                 handled = expect != null && find(expect, false) != null;
             }
@@ -311,12 +307,12 @@ public class AccessibilityTest {
             return true;
         }
         AccessibilityNodeInfo shown = null;
-        for (int i = 0; i < SHOW_STEPS && shown == null; i++) {
+        for (int i = 0; i < 10 && shown == null; i++) {
             Thread.sleep(500);
             shown = find(expect, false);
         }
         if (shown == null) {
-            System.out.println("FAIL pressed '" + button + "', but no '" + expect + "' in 15 s");
+            System.out.println("FAIL pressed '" + button + "', but no '" + expect + "' in 5 s");
             for (AccessibilityNodeInfo node : appNodes()) {
                 System.out.println("INFO node " + describe(node));
             }
@@ -331,15 +327,15 @@ public class AccessibilityTest {
         return true;
     }
 
-    // A node with this description must show within 15 s, nothing is pressed
+    // A node with this description must show within 5 s, nothing is pressed
     private static boolean see(String text) throws Exception {
         AccessibilityNodeInfo shown = find(text, false);
-        for (int i = 0; i < SHOW_STEPS && shown == null; i++) {
+        for (int i = 0; i < 10 && shown == null; i++) {
             Thread.sleep(500);
             shown = find(text, false);
         }
         if (shown == null) {
-            System.out.println("FAIL no '" + text + "' in 15 s");
+            System.out.println("FAIL no '" + text + "' in 5 s");
             for (AccessibilityNodeInfo node : appNodes()) {
                 System.out.println("INFO node " + describe(node));
             }
