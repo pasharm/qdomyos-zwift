@@ -14728,7 +14728,7 @@
     },
     {
       "key": "shortcut_start_stop",
-      "name": "Start / Stop",
+      "name": "Start / Pause",
       "description": null,
       "parent": "Keyboard Shortcuts",
       "type": "string",
@@ -16056,7 +16056,7 @@
     {
       "key": "custom_inclination_resistance_table_enabled",
       "name": "Enable Custom Inclination to Resistance Table",
-      "description": "Set the resistance QZ should target at each incline. QZ interpolates automatically between points and uses the nearest endpoint outside the configured range. Changes are saved automatically.",
+      "description": "Use a custom mapping when QZ converts virtual-app inclination into resistance.",
       "parent": "Custom Inclination to Resistance Table",
       "type": "boolean",
       "qmlType": "bool",
@@ -16070,7 +16070,7 @@
     {
       "key": "custom_inclination_resistance_table",
       "name": "Custom Inclination to Resistance Table",
-      "description": "Set the resistance QZ should target at each incline. QZ interpolates automatically between points and uses the nearest endpoint outside the configured range. Changes are saved automatically.",
+      "description": "One inclination|resistance pair per line. QZ interpolates between points and clamps outside the configured range.",
       "parent": "Custom Inclination to Resistance Table",
       "type": "string",
       "qmlType": "string",

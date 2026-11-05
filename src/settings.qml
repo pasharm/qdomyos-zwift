@@ -928,6 +928,27 @@ import QtQuick 2.12 as Quick212
             QT_TR_NOOP("QZ opens FS- devices as treadmills unless \"Fit Plus Bike\" is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off. Not shown in the settings page.")
         ]
 
+        // Catalog texts that no settings page shows: listed here only so that lupdate takes them
+        // into the settings context and the search can show them translated
+        readonly property var catalogOnlyTexts: [
+            QT_TR_NOOP("Configure how virtual-app inclination maps to bike resistance."),
+            QT_TR_NOOP("Use a custom mapping when QZ converts virtual-app inclination into resistance."),
+            QT_TR_NOOP("One inclination|resistance pair per line. QZ interpolates between points and clamps outside the configured range."),
+            QT_TR_NOOP("Life Fitness account username used for the service sign-in. Stored locally and never written to debug logs."),
+            QT_TR_NOOP("Life Fitness account password used for the service sign-in. Stored locally and never written to debug logs."),
+            QT_TR_NOOP("Camera Action"),
+            QT_TR_NOOP("Emote Action"),
+            QT_TR_NOOP("Wattbike Emulator"),
+            QT_TR_NOOP("Power Chart Position"),
+            QT_TR_NOOP("Heart Rate Chart Position"),
+            QT_TR_NOOP("Resistance vs Target Resistance Chart Position"),
+            QT_TR_NOOP("Peloton Resistance Chart Position"),
+            QT_TR_NOOP("Cadence Chart Position"),
+            QT_TR_NOOP("Power Distribution Chart Position"),
+            QT_TR_NOOP("Speed and Inclination Chart Position"),
+            QT_TR_NOOP("Numeric position of this chart in Workout History. Reorder using the up and down buttons in General UI Options.")
+        ]
+
         function computeTranslatedName(entry) {
             var name = entry.name || entry.key
             if (!name) return name
