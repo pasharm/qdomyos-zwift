@@ -2994,6 +2994,8 @@ import QtQuick 2.12 as Quick212
             property bool charts_live_update: false
             // Also kept by main.qml, like the ui_ keys above (uiOptionKeys)
             property bool ui_state_buttons: false
+            property bool heart_rate_belt_suggest: false
+
         }
 
         // The home page has its own Settings copy, read once when it is created: hand it every new
@@ -3008,6 +3010,14 @@ import QtQuick 2.12 as Quick212
             function onTheme_tile_shadow_colorChanged() { window.tileSettingChanged("theme_tile_shadow_color", settings.theme_tile_shadow_color) }
             function onTheme_tile_secondline_textsizeChanged() { window.tileSettingChanged("theme_tile_secondline_textsize", settings.theme_tile_secondline_textsize) }
             function onTrainprogram_sound_on_segmentChanged() { window.tileSettingChanged("trainprogram_sound_on_segment", settings.trainprogram_sound_on_segment) }
+        }
+
+        // The heart rate sensor bar (HeartRateSuggestion.qml) saves its answer from C++, and this copy does not
+        // read QSettings again: take the new value, so Heart Rate Options shows it while this page is open
+        Connections {
+            target: rootItem
+            function onHeartRateSensorChosenFromOffer(name) { settings.heart_rate_belt_name = name }
+            function onHeartRateSensorOfferTurnedOff() { settings.heart_rate_belt_suggest = false }
         }
 
 
@@ -4332,6 +4342,40 @@ import QtQuick 2.12 as Quick212
                         Layout.maximumWidth: window.ui.modern || window.textScale !== 1 ? parent.width : Number.POSITIVE_INFINITY
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         onClicked: refresh_bluetooth_devices_clicked();
+                    }
+
+                    IndicatorOnlySwitch {
+                        id: switchHeartRateBeltSuggestDelegate
+                        text: qsTr("Search for a Heart Rate Sensor at Start")
+                        spacing: 0
+                        bottomPadding: 0
+                        topPadding: 0
+                        rightPadding: 0
+                        leftPadding: 0
+                        clip: false
+                        checked: settings.heart_rate_belt_suggest
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        onClicked: settings.heart_rate_belt_suggest = checked
+                    }
+                    // a tap on the switch replaces its binding: "Don't ask again" on the bar after that still shows here
+                    Connections {
+                        target: settings
+                        function onHeart_rate_belt_suggestChanged() { switchHeartRateBeltSuggestDelegate.checked = settings.heart_rate_belt_suggest }
+                    }
+
+                    Label {
+                        text: qsTr("During the first 5 minutes after the fitness machine connects, while no heart rate comes, QZ searches for a heart rate sensor once a minute: it connects the chosen heart belt as soon as it is found or, with none chosen, offers one found nearby. A tap on the heart rate tile or the Bluetooth icon on the home page searches at any time.")
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
+                        font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     AccordionElement {
