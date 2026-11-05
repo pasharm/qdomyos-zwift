@@ -60,6 +60,7 @@ ColumnLayout {
         Qt.callLater(function() {
             openWorkoutPreview(initialWorkoutUrl)
         })
+        rootItem.trainingProgramsPageOpened()
     }
 
     // Model for search results
@@ -152,6 +153,16 @@ ColumnLayout {
 
             ColumnLayout {
                 spacing: window.ui.modern ? 8 : 5
+
+                // programs of a previous install were copied back into the training folder
+                Connections {
+                    target: rootItem
+                    function onTrainingProgramsRestored() {
+                        var currentFolder = folderModel.folder
+                        folderModel.folder = ""
+                        folderModel.folder = currentFolder
+                    }
+                }
 
                 Row {
                     id: filterRow
@@ -272,8 +283,10 @@ ColumnLayout {
 
                         // Determine item properties based on which model is active
                         property bool isItemFolder: isSearching ? model.isFolder : folderModel.isFolder(index)
-                        property string itemFileName: isSearching ? model.fileName : folderModel.get(index, "fileName")
-                        property string itemFileUrl: isSearching ? model.filePath : (folderModel.get(index, 'fileUrl') || folderModel.get(index, 'fileURL'))
+                        // || "": while the folder is set again (onTrainingProgramsRestored) the model
+                        // is empty for a moment and get() gives undefined to the rows still shown
+                        property string itemFileName: isSearching ? model.fileName : (folderModel.get(index, "fileName") || "")
+                        property string itemFileUrl: isSearching ? model.filePath : (folderModel.get(index, 'fileUrl') || folderModel.get(index, 'fileURL') || "")
                         property string itemRelativePath: isSearching ? model.relativePath : ""
 
                         background: Rectangle {
@@ -384,19 +397,34 @@ ColumnLayout {
                     }
                 }
 
-                UiButton {
+                RowLayout {
                     Layout.fillWidth: true
                     Layout.leftMargin: window.ui.modern ? window.ui.pageMargin : 0
                     Layout.rightMargin: window.ui.modern ? window.ui.pageMargin : 0
                     Layout.bottomMargin: window.ui.modern ? 8 : 0
-                    height: 50
-                    text: qsTr("Other folders")
-                    onClicked: {
-                        if (Qt.platform.os === "android") {
-                            rootItem.openAndroidDocumentPicker("training")
-                        } else {
-                            fileDialogLoader.active = true
+                    spacing: window.ui.modern ? 8 : 5
+
+                    UiButton {
+                        Layout.fillWidth: true
+                        height: 50
+                        text: qsTr("Other folders")
+                        onClicked: {
+                            if (Qt.platform.os === "android") {
+                                rootItem.openAndroidDocumentPicker("training")
+                            } else {
+                                fileDialogLoader.active = true
+                            }
                         }
+                    }
+
+                    // programs of a previous install that no bundled program points to are
+                    // found only on request
+                    UiButton {
+                        Layout.fillWidth: true
+                        height: 50
+                        visible: Qt.platform.os === "android"
+                        text: qsTr("Restore programs")
+                        onClicked: rootItem.offerTrainingRestore()
                     }
                 }
             }
