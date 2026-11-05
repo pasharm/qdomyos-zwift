@@ -2972,6 +2972,10 @@ Det kan tage et øjeblik ved første start.</translation>
         <translation>kcal</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Del FIT-fil</translation>
+    </message>
+    <message>
         <source>Upload to Strava</source>
         <translation>Upload til Strava</translation>
     </message>
@@ -3903,6 +3907,10 @@ Det kan tage et øjeblik ved første start.</translation>
         <translation>Fejl ved hentning af adgangstoken, %1 (%2)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Del FIT-fil</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Licensen er godkendt!</translation>
     </message>
@@ -4397,6 +4405,10 @@ Nej: QZ beholder den som løbebånd og spørger ikke igen (en cykel kan stadig a
     <message>
         <source>Search settings</source>
         <translation>Søg i indstillinger</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Del FIT-fil</translation>
     </message>
     <message>
         <source>Profile: </source>

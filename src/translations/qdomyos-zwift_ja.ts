@@ -3052,6 +3052,10 @@ This may take a few moments on first startup.</source>
         <translation>完了したワークアウトがここに表示されます。開くとグラフを確認できます。</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FITファイルを共有</translation>
+    </message>
+    <message>
         <source>Upload to Strava</source>
         <translation>Stravaにアップロード</translation>
     </message>
@@ -3786,6 +3790,10 @@ This may take a few moments on first startup.</source>
         <translation>アクセス トークンの取得に失敗しました、%1 (%2)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FITファイルを共有</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>ライセンスが承認されました！</translation>
     </message>
@@ -4364,6 +4372,10 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
     <message>
         <source>Search settings</source>
         <translation>設定を検索</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FITファイルを共有</translation>
     </message>
     <message>
         <source>Profile: </source>

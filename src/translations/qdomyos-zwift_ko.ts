@@ -2972,6 +2972,10 @@ This may take a few moments on first startup.</source>
         <translation>kcal</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FIT 파일 공유</translation>
+    </message>
+    <message>
         <source>Upload to Strava</source>
         <translation>Strava에 업로드</translation>
     </message>
@@ -3903,6 +3907,10 @@ This may take a few moments on first startup.</source>
         <translation>액세스 토큰을 가져오지 못했습니다. %1 (%2)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FIT 파일 공유</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>라이선스가 승인되었습니다!</translation>
     </message>
@@ -4297,6 +4305,10 @@ Do you want to start it now?</source>
     <message>
         <source>Search settings</source>
         <translation>설정 검색</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FIT 파일 공유</translation>
     </message>
     <message>
         <source>Profile: </source>

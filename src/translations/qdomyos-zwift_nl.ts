@@ -2972,6 +2972,10 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>kcal</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FIT-bestand delen</translation>
+    </message>
+    <message>
         <source>Upload to Strava</source>
         <translation>Uploaden naar Strava</translation>
     </message>
@@ -3906,6 +3910,10 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Fout bij het ophalen van het toegangstoken, %1 (%2)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FIT-bestand delen</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Licentie goedgekeurd!</translation>
     </message>
@@ -4300,6 +4308,10 @@ Wil je die nu starten?</translation>
     <message>
         <source>Search settings</source>
         <translation>Instellingen zoeken</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FIT-bestand delen</translation>
     </message>
     <message>
         <source>Profile: </source>

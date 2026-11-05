@@ -145,6 +145,9 @@ class lockscreen {
     // safe area of the screen in points, as the UIWindow of Qt has it (status bar and cutout, home
     // indicator), whatever the geometry of the Qt window inside it
     static void safeAreaInsets(double *top, double *bottom, double *left, double *right);
+
+    // the share sheet with a file (a saved workout)
+    static void shareFile(const char* path);
 };
 
 #endif // LOCKSCREEN_H

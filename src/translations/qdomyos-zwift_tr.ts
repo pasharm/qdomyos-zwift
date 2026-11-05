@@ -2972,6 +2972,10 @@ This may take a few moments on first startup.</source>
         <translation>kcal</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FIT dosyasını paylaş</translation>
+    </message>
+    <message>
         <source>Upload to Strava</source>
         <translation>Strava&apos;ya yükle</translation>
     </message>
@@ -3906,6 +3910,10 @@ This may take a few moments on first startup.</source>
         <translation>Erişim belirteci alınamadı, %1 (%2)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FIT dosyasını paylaş</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Lisans onaylandı!</translation>
     </message>
@@ -4300,6 +4308,10 @@ Do you want to start it now?</source>
     <message>
         <source>Search settings</source>
         <translation>Ayarlarda ara</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FIT dosyasını paylaş</translation>
     </message>
     <message>
         <source>Profile: </source>

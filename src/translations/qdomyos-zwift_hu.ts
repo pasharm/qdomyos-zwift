@@ -2968,6 +2968,10 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <translation>kcal</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FIT-fájl megosztása</translation>
+    </message>
+    <message>
         <source>Upload to Strava</source>
         <translation>Feltöltés a Stravára</translation>
     </message>
@@ -3899,6 +3903,10 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <translation>Nem sikerült lekérni a hozzáférési tokent: %1 (%2)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FIT-fájl megosztása</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Licenc jóváhagyva!</translation>
     </message>
@@ -4393,6 +4401,10 @@ Nem: a QZ futópadként kezeli tovább, és többé nem kérdez rá (a kerékpá
     <message>
         <source>Search settings</source>
         <translation>Keresés a beállításokban</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FIT-fájl megosztása</translation>
     </message>
     <message>
         <source>Profile: </source>

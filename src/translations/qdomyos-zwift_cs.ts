@@ -2972,6 +2972,10 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>kcal</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Sdílet soubor FIT</translation>
+    </message>
+    <message>
         <source>Upload to Strava</source>
         <translation>Nahrát do Stravy</translation>
     </message>
@@ -3906,6 +3910,10 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Chyba při získávání přístupového tokenu, %1 (%2)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Sdílet soubor FIT</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Licence potvrzena!</translation>
     </message>
@@ -4300,6 +4308,10 @@ Spustit ho nyní?</translation>
     <message>
         <source>Search settings</source>
         <translation>Hledat v nastavení</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Sdílet soubor FIT</translation>
     </message>
     <message>
         <source>Profile: </source>

@@ -2968,6 +2968,10 @@ Det kan ta en stund vid första starten.</translation>
         <translation>kcal</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Dela FIT-fil</translation>
+    </message>
+    <message>
         <source>Upload to Strava</source>
         <translation>Ladda upp till Strava</translation>
     </message>
@@ -3899,6 +3903,10 @@ Det kan ta en stund vid första starten.</translation>
         <translation>Det gick inte att hämta åtkomsttoken, %1 (%2)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Dela FIT-fil</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Licensen godkänd!</translation>
     </message>
@@ -4393,6 +4401,10 @@ Nej: QZ behåller den som löpband och frågar inte igen (du kan fortfarande vä
     <message>
         <source>Search settings</source>
         <translation>Sök i inställningar</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Dela FIT-fil</translation>
     </message>
     <message>
         <source>Profile: </source>

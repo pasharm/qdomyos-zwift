@@ -3052,6 +3052,10 @@ Esto puede tardar un poco en el primer inicio.</translation>
         <translation>Los entrenamientos terminados aparecen aquí: abre uno para ver sus gráficos.</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Compartir archivo FIT</translation>
+    </message>
+    <message>
         <source>Upload to Strava</source>
         <translation>Subir a Strava</translation>
     </message>
@@ -3785,6 +3789,10 @@ Esto puede tardar un poco en el primer inicio.</translation>
         <translation>Error al recuperar el token de acceso, %1 (%2)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Compartir archivo FIT</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>¡Licencia aprobada!</translation>
     </message>
@@ -4367,6 +4375,10 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
     <message>
         <source>Search settings</source>
         <translation>Buscar ajustes</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Compartir archivo FIT</translation>
     </message>
     <message>
         <source>Profile: </source>

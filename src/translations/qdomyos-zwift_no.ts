@@ -2972,6 +2972,10 @@ Dette kan ta litt tid ved første oppstart.</translation>
         <translation>kcal</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Del FIT-fil</translation>
+    </message>
+    <message>
         <source>Upload to Strava</source>
         <translation>Last opp til Strava</translation>
     </message>
@@ -3903,6 +3907,10 @@ Dette kan ta litt tid ved første oppstart.</translation>
         <translation>Kan ikke hente tilgangstoken, %1 (%2)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Del FIT-fil</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Lisensen er godkjent!</translation>
     </message>
@@ -4397,6 +4405,10 @@ Nei: QZ beholder den som tredemølle og spør ikke igjen (du kan fortsatt velge 
     <message>
         <source>Search settings</source>
         <translation>Søk i innstillinger</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Del FIT-fil</translation>
     </message>
     <message>
         <source>Profile: </source>

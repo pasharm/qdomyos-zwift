@@ -2972,6 +2972,10 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
         <translation>kcal</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Udostępnij plik FIT</translation>
+    </message>
+    <message>
         <source>Upload to Strava</source>
         <translation>Prześlij do Strava</translation>
     </message>
@@ -3903,6 +3907,10 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
         <translation>Błąd podczas pobierania tokena dostępu, %1 (%2)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Udostępnij plik FIT</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Licencja zatwierdzona!</translation>
     </message>
@@ -4297,6 +4305,10 @@ Rozpocząć go teraz?</translation>
     <message>
         <source>Search settings</source>
         <translation>Szukaj w ustawieniach</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Udostępnij plik FIT</translation>
     </message>
     <message>
         <source>Profile: </source>
