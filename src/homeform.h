@@ -274,11 +274,12 @@ class homeform : public QObject {
     // name, the saved one): connect it without a restart. With none chosen and the machine connected, the tap
     // searches for one to offer, also with heart_rate_belt_suggest off, and offers again the sensors hidden with Not
     // now (the user asks for it); with no machine the icon searches for the machine only, and Not now stays.
-    Q_INVOKABLE void reconnectHeartRateBelt(const QString &name = QString()) {
+    // letWatchGo: false from the heart rate tile – it does not let a Garmin watch go (bluetooth::reconnectHeartRateBelt())
+    Q_INVOKABLE void reconnectHeartRateBelt(const QString &name = QString(), bool letWatchGo = true) {
         if (name.isEmpty() && bluetoothManager && bluetoothManager->device())
             heartRateSensorsDismissed.clear();
         if (bluetoothManager)
-            bluetoothManager->reconnectHeartRateBelt(name);
+            bluetoothManager->reconnectHeartRateBelt(name, QString(), letWatchGo);
     }
     QVariantList heartRateSensorSuggestions() const { return m_heartRateSensorSuggestions; }
     // The bar shows a sensor found by the search a tap started: the user asked, so no "Don't ask again"

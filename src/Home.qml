@@ -567,7 +567,7 @@ HomeForm {
 
             // VoiceOver accessibility support. The heart rate tile is a button: a tap looks for the sensor (heartTap)
             Accessible.role: largeButton || identificator === "heart" ? Accessible.Button : (writable ? Accessible.Pane : Accessible.StaticText)
-            Accessible.onPressAction: { if (heartTap.enabled) { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt(); } }
+            Accessible.onPressAction: { if (heartTap.enabled) { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt("", false); } }
             Accessible.name: name + (largeButton ? "" : (": " + value))
             Accessible.description: largeButton ? largeButtonLabel : (secondLine !== "" ? secondLine : (writable ? qsTr("Adjustable. Current value: ") + value : qsTr("Current value: ") + value))
             Accessible.focusable: true
@@ -599,7 +599,8 @@ HomeForm {
             // The heart rate tile: a tap does what a tap on the Bluetooth icon does – with no machine yet it searches
             // for it (bluetoothSearchNow(), nothing with one connected), and it looks for the heart rate sensor
             // (homeform::reconnectHeartRateBelt()): the chosen one again or, with none chosen, one nearby to offer.
-            // Not while the tiles are being moved (loc takes the presses then). Here and not in a tile component:
+            // Unlike the icon it does not let a Garmin watch go for 30 s (letWatchGo false): a hand touches this big
+            // tile by chance during a workout. Not while the tiles are being moved (loc takes the presses then). Here and not in a tile component:
             // the same in both looks, over the card of either (rect, modernCard: this size), and in scope of the
             // delegate's Accessible.onPressAction
             MouseArea {
@@ -607,7 +608,7 @@ HomeForm {
                 width: id1.width - 2 * settings.ui_zoom / 100
                 height: 123 * settings.ui_zoom / 100
                 enabled: identificator === "heart" && !window.lockTiles
-                onClicked: { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt(); }
+                onClicked: { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt("", false); }
                 Accessible.ignored: true
             }
 

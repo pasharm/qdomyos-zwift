@@ -4329,11 +4329,13 @@ void bluetooth::letWatchConnectAsSensor() {
 // name: the sensor just chosen in the settings page. Its QML Settings object writes the value to QSettings
 // a moment later, so reading it here would still give the old one; empty (a tap on the heart rate tile or the
 // Bluetooth icon) means take the saved value, and with Disabled saved, search for a sensor to offer
-// (heartRateSensorSearch()); on Android with the Garmin sensor mode a tap lets a Garmin watch go for a while
-// instead, see letWatchConnectAsSensor().
+// (heartRateSensorSearch()); on Android with the Garmin sensor mode a tap on the Bluetooth icon lets a Garmin watch
+// go for a while instead, see letWatchConnectAsSensor().
 // address: the one sensor meant (deviceAddress()), as the heart rate sensor bar shows it: of two sensors with the
 // same name the other one is not connected; empty means any sensor whose name starts with the name.
-void bluetooth::reconnectHeartRateBelt(const QString &name, const QString &address) {
+// letWatchGo: false for a tap on the heart rate tile – a hand touches it by chance during a workout, and the watch
+// would stop the heart rate for 30 s; with the watch's heart rate coming that tap only says it is connected.
+void bluetooth::reconnectHeartRateBelt(const QString &name, const QString &address, bool letWatchGo) {
     QSettings settings;
     QString heartRateBeltName =
         name.isEmpty()
@@ -4354,10 +4356,10 @@ void bluetooth::reconnectHeartRateBelt(const QString &name, const QString &addre
     }
 
 #ifdef Q_OS_ANDROID
-    // A tap on the Bluetooth icon (no name) with a Garmin watch as the heart rate sensor. The phone keeps one link
-    // to the watch, and the watch can connect to the QZ sensor only while nobody holds that link. A silent watch goes
-    // the usual way below: that tap is to get its heart rate back
-    if (name.isEmpty() && heartRateBelt && heartRateBelt->connected() && heartRateBelt->garminWatch &&
+    // A tap on the Bluetooth icon (no name, letWatchGo) with a Garmin watch as the heart rate sensor. The phone keeps
+    // one link to the watch, and the watch can connect to the QZ sensor only while nobody holds that link. A silent
+    // watch goes the usual way below: that tap is to get its heart rate back
+    if (name.isEmpty() && letWatchGo && heartRateBelt && heartRateBelt->connected() && heartRateBelt->garminWatch &&
         heartRateBelt->lastHeartRateTime.isValid() &&
         heartRateBelt->lastHeartRateTime.msecsTo(QDateTime::currentDateTime()) < 5000 &&
         settings.value(QZSettings::garmin_bluetooth_compatibility,

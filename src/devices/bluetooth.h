@@ -532,7 +532,10 @@ class bluetooth : public QObject, public SignalHandler {
     // offer bar); empty – a tap on the heart rate tile or the Bluetooth icon: the saved one, or with none chosen a
     // search for one to offer.
     // address: of the sensor shown on the bar, so another one with the same name is not connected; empty – any.
-    void reconnectHeartRateBelt(const QString &name = QString(), const QString &address = QString());
+    // letWatchGo: a tap may let a Garmin watch go for a while (letWatchConnectAsSensor()); false – a tap on the
+    // heart rate tile, which a hand touches by chance during a workout: only the Bluetooth icon does that.
+    void reconnectHeartRateBelt(const QString &name = QString(), const QString &address = QString(),
+                                bool letWatchGo = true);
     void selectGymModeDevice(const QString &deviceName);
     void debug(const QString &string);
     void heartRate(uint8_t heart);
