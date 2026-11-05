@@ -1061,6 +1061,17 @@ jobs:
             # is tapped, as TalkBack does: Qt 5.15 gives a ComboBox no press), and the switch of a
             # tile that is off turns it on, which shows its order field
             sh .github/scripts/android_accessibility_test.sh ◄=Settings tap:Settings=Tiles_Options Tiles_Options=Speed,_order_index: see:Speed,_order_index:_0 none:0 tap:Speed,_order_index:_0 2=Speed,_order_index:_2 Gears=Gears,_order_index:_26
+            # The settings search, back on the settings page: the search field is read with its
+            # name and the text typed, and the controls of a result with the setting they belong
+            # to (the list of "Maps Type" with its value, the switch of "Loop Start-End-Start").
+            # Back with the "◄" of the toolbar (the search button shows only on the settings page),
+            # and the text is typed only once the search bar shows ("Changed"). On some API levels
+            # the field still drops the first keys for a while after it shows (it read "ps"), so
+            # the first letter is typed again until the field reads it, then the rest
+            sh .github/scripts/android_accessibility_test.sh ◄=Search_settings Search_settings=Changed
+            for i in 1 2 3 4 5; do adb shell input text m; if sh .github/scripts/android_accessibility_test.sh see:Search_settings:_m; then break; fi; done
+            adb shell input text aps
+            sh .github/scripts/android_accessibility_test.sh see:Search_settings:_maps see:Maps_Type:_3D see:Loop_Start-End-Start
 
             # Check if the package is installed
             adb shell pm list packages | grep org.cagnulen.qdomyoszwift
