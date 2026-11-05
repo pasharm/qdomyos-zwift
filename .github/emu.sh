@@ -186,6 +186,34 @@ query() {
 label() {
   echo "$3: $(count_in "dumps/$1.xml" "$2")" >> $STEPLOG
 }
+# open_card 'card regex' 'page label regex' label: a tap on the result opens its setting on its
+# page - up when the label of the field is there and the results heading is gone (the text of a
+# field is not in the dump of Qt 5.15: the value on the page is read from the frame)
+open_card() {
+  local i n h
+  rm -f ui.xml
+  tap_ui "$1" || return 1
+  for i in $(seq 1 10); do
+    sleep 2
+    dump
+    n=$(count_in ui.xml "$2")
+    h=$(count_in ui.xml 'Search results \([0-9]+\)')
+    [ "$n" -gt 0 ] 2>/dev/null && [ "$h" = 0 ] && break
+  done
+  sleep 2
+  shot "$3"
+  echo "$3 page label: $(count_in dumps/$3.xml "$2")" >> $STEPLOG
+  echo "$3 results heading: $(count_in dumps/$3.xml 'Search results \([0-9]+\)')" >> $STEPLOG
+  rm -f ui.xml
+  tap_ui '^◄$' || return 1
+  for i in $(seq 1 10); do
+    sleep 2
+    dump
+    n=$(count_in ui.xml 'Search results \([0-9]+\)')
+    [ "$n" -gt 0 ] 2>/dev/null && break
+  done
+  echo "$3 back to the results: $n" >> $STEPLOG
+}
 
 adb logcat -c || true
 adb logcat -v threadtime -b main,system,crash > full_logcat.txt 2>/dev/null &
@@ -221,12 +249,16 @@ case_run() {
   label $1-pace "${V}300" "$1 pace 300"
   label $1-pace "${V}00:25:00" "$1 pace 00:25:00"
   label $1-pace "${V}06:42|${V}00:06:42" "$1 mile 00:06:42"
+  # The fix: the page of the setting shows what the card shows
+  [ "$1" = a ] && { open_card '5 km pace \(total time\)(: .*)?' '5 km pace \(total time\):' a-pace-page || return 1; }
   query "weight" $1-weight 'Search results \(5\)'
   label $1-weight "${V}9\.979044" "$1 bike 9.979044"
   label $1-weight "Bike Weight \(lbs\)(: .*)?" "$1 bike title lbs"
   label $1-weight "${V}22" "$1 bike 22"
   label $1-weight "${V}85" "$1 player 85"
   label $1-weight "${V}187\.39" "$1 player 187.39"
+  [ "$1" = a ] && { open_card 'Bike Weight \(lbs\)(: .*)?' 'Bike Weight \(lbs\)' a-bike-page || return 1; }
+  return 0
 }
 # ru_run: the build with the fix again, in Russian - the name from the template of the page
 ru_run() {
@@ -267,10 +299,12 @@ want_some() {
 }
 for l in "b pace 300" "b bike 9.979044" "b player 85" \
          "a pace 00:25:00" "a mile 00:06:42" "a bike title lbs" "a bike 22" "a player 187.39" \
-         "r bike title фунт" "r player title фунт" "r bike 22"; do
+         "r bike title фунт" "r player title фунт" "r bike 22" \
+         "a-pace-page page label" "a-pace-page back to the results" \
+         "a-bike-page page label" "a-bike-page back to the results"; do
   want_some "$l"
 done
-for l in "b pace 00:25:00: 0" "b bike title lbs: 0" "b player 187.39: 0" \
+for l in "a-pace-page results heading: 0" "a-bike-page results heading: 0" "b pace 00:25:00: 0" "b bike title lbs: 0" "b player 187.39: 0" \
          "a pace 300: 0" "a bike 9.979044: 0" "a player 85: 0"; do
   want "$l"
 done
