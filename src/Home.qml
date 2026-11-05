@@ -1022,7 +1022,19 @@ HomeForm {
         clip: true
         visible: rootItem.chartFooterVisible || rootItem.videoVisible
         // TEST ONLY (T-441): the chart under the tiles from the start, its height in the log
-        Component.onCompleted: rootItem.chartFooterVisible = true
+        // (rootItem is not defined yet in Component.onCompleted: run 42130051927 showed no chart)
+        Timer {
+            interval: 3000
+            running: true
+            repeat: true
+            onTriggered: {
+                if (typeof rootItem === "undefined" || !rootItem)
+                    return
+                rootItem.chartFooterVisible = true
+                console.log("T441 chart footer on")
+                stop()
+            }
+        }
         onHeightChanged: console.log("T441 footer h " + Math.round(height) + " page h " + Math.round(parent.height)
                                      + " handle " + Math.round(dragHandle.width) + "x" + dragHandle.height)
 
