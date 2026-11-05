@@ -1038,6 +1038,14 @@ import QtQuick 2.12 as Quick212
             return computeTranslatedName({name: name, key: entry.parent}) || name
         }
 
+        // The name of a control of a search result for a screen reader: the title of the result,
+        // and the value after it. Qt 5.15 on Android reads the value only when the name is empty,
+        // and without a name a control of the result reads its value alone ("3D")
+        function searchResultAccessibleName(entry, value) {
+            var title = entry._translatedName || entry.name || entry.key
+            return value === undefined || value === "" ? title : title + ": " + value
+        }
+
         function updateFilteredSettings() {
             if (!settingsCatalogLoaded) {
                 filteredSettings = []
@@ -3103,6 +3111,9 @@ import QtQuick 2.12 as Quick212
                     id: settingsSearchTextField
                     Layout.fillWidth: true
                     placeholderText: qsTr("Search settings")
+                    // Qt gives a text field no accessible name, TalkBack read this one as
+                    // unlabeled; the text typed follows the name, as in the fields of the tiles
+                    Accessible.name: text.length > 0 ? placeholderText + ": " + text : placeholderText
                     selectByMouse: true
                     inputMethodHints: Qt.ImhNoPredictiveText
                     leftPadding: window.ui.modern ? 44 : undefined
@@ -3388,12 +3399,14 @@ import QtQuick 2.12 as Quick212
                                 UiSwitch {
                                     visible: !window.ui.modern && entry.catalogKind === "setting" && entry.type === "boolean"
                                     checked: visible ? settingsPane.settingValue(entry) : false
+                                    Accessible.name: settingsPane.searchResultAccessibleName(entry)
                                     onClicked: settingsPane.setSettingValue(entry, checked)
                                 }
 
                                 UiButton {
                                     visible: !window.ui.modern && entry.catalogKind === "page"
                                     text: qsTr("Open")
+                                    Accessible.name: settingsPane.searchResultAccessibleName(entry, text)
                                     onClicked: settingsPane.openPageResult(entry)
                                 }
 
@@ -3459,6 +3472,7 @@ import QtQuick 2.12 as Quick212
                                     RegExpValidator { id: searchNumberValidator; regExp: /^-?(\d+([.,]\d*)?|[.,]\d+)$/ }
                                     // A password stays hidden here as it does on its own page
                                     echoMode: entry.key.indexOf("password") >= 0 ? TextInput.PasswordEchoOnEdit : TextInput.Normal
+                                    Accessible.name: settingsPane.searchResultAccessibleName(entry, text)
                                     onAccepted: settingsPane.setSearchFieldValue(entry, text)
                                     onActiveFocusChanged: if (this.focus) this.cursorPosition = this.text.length
                                 }
@@ -3466,6 +3480,7 @@ import QtQuick 2.12 as Quick212
                                 UiButton {
                                     text: qsTr("OK")
                                     enabled: searchSettingTextField.acceptableInput
+                                    Accessible.name: settingsPane.searchResultAccessibleName(entry, text)
                                     onClicked: settingsPane.setSearchFieldValue(entry, searchSettingTextField.text)
                                 }
                             }
@@ -3483,6 +3498,7 @@ import QtQuick 2.12 as Quick212
                                 displayText: labelFor(visible && settingsPane.isBluetoothDeviceSetting(entry)
                                                       ? settingsPane.settingValue(entry)
                                                       : currentText)
+                                Accessible.name: settingsPane.searchResultAccessibleName(entry, displayText)
                                 contentItem: Label {
                                     leftPadding: 12
                                     rightPadding: 36
@@ -3495,6 +3511,10 @@ import QtQuick 2.12 as Quick212
                                 delegate: ItemDelegate {
                                     width: ListView.view.width
                                     text: searchSettingComboBox.labelFor(modelData)
+                                    // a screen reader can pick it: Qt 5.15 gives an ItemDelegate no
+                                    // accessible action, as the items of UiComboBox
+                                    Accessible.name: text
+                                    Accessible.onPressAction: clicked()
                                     contentItem: Label {
                                         text: searchSettingComboBox.labelFor(modelData)
                                         font: searchSettingComboBox.font
@@ -3521,6 +3541,7 @@ import QtQuick 2.12 as Quick212
                                 Layout.maximumHeight: visible ? implicitHeight : 0
                                 model: visible ? settingsPane.virtualOptionLabels(entry) : []
                                 currentIndex: visible ? settingsPane.virtualSelectedIndex(entry) : 0
+                                Accessible.name: settingsPane.searchResultAccessibleName(entry, displayText)
                                 contentItem: Label {
                                     leftPadding: 12
                                     rightPadding: 36
@@ -3533,6 +3554,9 @@ import QtQuick 2.12 as Quick212
                                 delegate: ItemDelegate {
                                     width: ListView.view.width
                                     text: modelData
+                                    // as the list above
+                                    Accessible.name: text
+                                    Accessible.onPressAction: clicked()
                                     contentItem: Label {
                                         text: modelData
                                         font: searchVirtualComboBox.font
