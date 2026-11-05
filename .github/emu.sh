@@ -1,9 +1,11 @@
 #!/bin/bash
-# Test only (T-426): the settings search in Russian, the classic look of master, the query
-# "Inclination to Resistance". Side b is master without the fix (input baseline): the table
-# result is a one-line field with OK - OK pressed as shown, then the table page. Side a is the
-# build with the fix (input source): Open instead of the field, pressed - the table page.
-# Frames b-* and a-*; steps.log counts Open/OK of the results and sees the page by its buttons.
+# Test only (T-211): the values of the settings search results in the units of their page.
+# "Use Miles unit in UI" on, the bike weight 9.979044 kg (22 lbs), the player weight 85 kg, the
+# paces at their defaults (5 km: 300 s/km = 00:25:00). Side b is master without the fix (input
+# baseline): the results show the stored numbers - 300, 9.979044, 85 - and names without a unit.
+# Side a is the build with the fix (input source): 00:25:00, 22 and 187.39 with "(lbs)" in the
+# name; then again in Russian, where the name comes from the page's template "Вес велосипеда (%1)".
+# Frames b-*, a-*, r-*; steps.log has the checks, read from the dumps of the frames.
 PKG=org.cagnulen.qdomyoszwift
 STEPLOG=steps.log
 CONF='files/.config/Roberto Viola/qDomyos-Zwift.conf'
@@ -30,9 +32,10 @@ install_apk() {
 adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
-# put_conf: a fake device, so there is no first-run wizard; the app in Russian
+# put_conf [language]: a fake device, so there is no first-run wizard; miles, the weights
 put_conf() {
-  printf '[General]\nlog_debug=true\napplewatch_fakedevice=true\napp_language=ru\n' > qz.conf
+  printf '[General]\nlog_debug=true\napplewatch_fakedevice=true\nmiles_unit=true\nbike_weight=9.979044\nweight=85\n' > qz.conf
+  [ -n "$1" ] && printf 'app_language=%s\n' "$1" >> qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf '$CONF'"
@@ -135,8 +138,32 @@ hide_keyboard() {
     sleep 1
   fi
 }
-# query 'text' label: a new search (spaces as %s for adb) and its frame
+# count_in <dump> 'regex': how many controls of the dump have a whole text or accessible name
+# that matches (zero size left out, as uitap.py does)
+count_in() {
+  python3 - "$1" "$2" <<'PYEOF'
+import re, sys, xml.etree.ElementTree as ET
+try:
+    root = ET.parse(sys.argv[1]).getroot()
+except (ET.ParseError, OSError):
+    print("no-dump")
+    sys.exit(0)
+rx = re.compile(sys.argv[2])
+n = 0
+for node in root.iter("node"):
+    labels = [node.get("text") or "", node.get("content-desc") or ""]
+    if not any(l and rx.fullmatch(l.strip()) for l in labels):
+        continue
+    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", node.get("bounds") or "")
+    if m and int(m.group(3)) > int(m.group(1)) and int(m.group(4)) > int(m.group(2)):
+        n += 1
+print(n)
+PYEOF
+}
+# query 'text' label count-regex: a new search (spaces as %s for adb), its results heading
+# (the count of the results, which the build does not change) waited for, then the frame
 query() {
+  local i n
   tap_field
   sleep 1
   # the tap puts the cursor where it lands: to the end, then the old text out
@@ -144,10 +171,20 @@ query() {
   for i in $(seq 1 40); do adb shell input keyevent KEYCODE_DEL || true; done
   adb shell input text "$1"
   echo "query '$1'" >> $STEPLOG
-  sleep 4
+  sleep 2
   hide_keyboard
-  sleep 1
+  for i in $(seq 1 10); do
+    sleep 2
+    dump
+    n=$(count_in ui.xml "$3")
+    [ "$n" -gt 0 ] 2>/dev/null && break
+  done
+  echo "results '$1': heading '$3' seen $n" >> $STEPLOG
   shot "$2"
+}
+# label <dump> 'regex' 'what': one line of steps.log, how many controls show it
+label() {
+  echo "$3: $(count_in "dumps/$1.xml" "$2")" >> $STEPLOG
 }
 
 adb logcat -c || true
@@ -156,10 +193,8 @@ LOGCAT_PID=$!
 adb shell settings put system accelerometer_rotation 0 || true
 adb shell settings put system user_rotation 0 || true
 
-# case_run <side> <apk>: Settings, the search bar, four queries with a frame each
-case_run() {
-  install_apk "$2"
-  put_conf
+# open_search <side>: QZ started, the drawer, Settings, the search bar
+open_search() {
   echo "== $1: start" >> $STEPLOG
   adb shell am start -n $PKG/$PKG.CustomQtActivity
   sleep 45
@@ -168,69 +203,41 @@ case_run() {
   sleep 3
   adb shell input swipe 500 700 500 2300 300 || true
   sleep 2
-  shot $1-menu
   tap_drawer '^(Settings|Настройки)$' 400 900
   sleep 8
   shot $1-settings
   tap_ui '🔍|Search settings|Поиск настроек' || return 1
   sleep 2
-  shot $1-bar
-  query "Inclination%sto%sResistance" $1-q3-table
-  dump
-  echo "results $1: Open $(count_ui '^(Open|Открыть)$'), OK $(count_ui '^(OK|ОК)$')" >> $STEPLOG
-  if [ "$1" = b ]; then
-    # master: OK of the table field as it is shown, then the table page (the only Open) -
-    # are the points still there? In Russian the button reads Cyrillic "ОК"
-    tap_ui '^(OK|ОК)$' || return 1
-    sleep 3
-    shot $1-q3-ok
-    rm -f ui.xml
-  fi
-  # the topmost Open: with the fix the table result, on master the page result
-  tap_ui '^(Open|Открыть)$' || return 1
-  wait_page $1
-  shot $1-q3-page
 }
-# count_ui 'regex' [all]: how many controls of ui.xml match, as uitap.py does (zero size left
-# out); with "all" the ones below the screen (zero height in the dump) count too
-count_ui() {
-  python3 - "$1" ui.xml "${2:-}" <<'PYEOF'
-import re, sys, xml.etree.ElementTree as ET
-rx = re.compile(sys.argv[1], re.I)
-try:
-    root = ET.parse(sys.argv[2]).getroot()
-except (ET.ParseError, OSError):
-    print("no-dump")
-    sys.exit(0)
-n = 0
-for node in root.iter("node"):
-    labels = [node.get("text") or "", node.get("content-desc") or ""]
-    if not any(l and rx.fullmatch(l.strip()) for l in labels):
-        continue
-    m = re.match(r"\[(\d+),(\d+)\]\[(\d+),(\d+)\]", node.get("bounds") or "")
-    if sys.argv[3] == "all" or (m and int(m.group(3)) > int(m.group(1)) and int(m.group(4)) > int(m.group(2))):
-        n += 1
-print(n)
-PYEOF
+
+# The value of a card is in the dump as its own label and in the accessible name of the card
+# ("<title>: <value>"); either counts
+V='(.*: )?'
+case_run() {
+  install_apk "$2"
+  put_conf
+  open_search $1 || return 1
+  query "pace%stotal" $1-pace 'Search results \(5\)'
+  label $1-pace "${V}300" "$1 pace 300"
+  label $1-pace "${V}00:25:00" "$1 pace 00:25:00"
+  label $1-pace "${V}06:42|${V}00:06:42" "$1 mile 00:06:42"
+  query "weight" $1-weight 'Search results \(5\)'
+  label $1-weight "${V}9\.979044" "$1 bike 9.979044"
+  label $1-weight "Bike Weight \(lbs\)(: .*)?" "$1 bike title lbs"
+  label $1-weight "${V}22" "$1 bike 22"
+  label $1-weight "${V}85" "$1 player 85"
+  label $1-weight "${V}187\.39" "$1 player 187.39"
 }
-# wait_page <side>: the table page is up - its "×" (delete a point) buttons, one per point, which
-# no search result has; below the screen they have zero height, so counted with "all". Not the
-# switch text: the labels of the result cards are in the dump too, "Enable Custom ..." among them,
-# and "Add Point" is below the screen (run 42015440791). The count is the number of points: 11 by
-# default - fewer on master after OK would mean OK spoilt the table
-wait_page() {
-  local i n
-  for i in $(seq 1 10); do
-    sleep 2
-    dump
-    n=$(count_ui '^×$' all)
-    if [ -f ui.xml ] && [ "$n" -gt 0 ] 2>/dev/null; then
-      echo "page $1: table page opened, points $n" >> $STEPLOG
-      return 0
-    fi
-  done
-  echo "!! page $1: table page NOT opened" >> $STEPLOG
-  return 1
+# ru_run: the build with the fix again, in Russian - the name from the template of the page
+ru_run() {
+  adb shell am force-stop $PKG || true
+  sleep 2
+  put_conf ru
+  open_search r || return 1
+  query "weight" r-weight 'Результаты поиска \(5\)'
+  label r-weight "Вес велосипеда \(фунт\)(: .*)?" "r bike title фунт"
+  label r-weight "Вес \(фунт\)(: .*)?" "r player title фунт"
+  label r-weight "${V}22" "r bike 22"
 }
 
 FAILED=0
@@ -238,24 +245,34 @@ case_run b apk-base/android-debug.apk || FAILED=1
 adb shell am force-stop $PKG || true
 sleep 2
 case_run a apk-debug/android-debug.apk || FAILED=1
+ru_run || FAILED=1
 adb shell am force-stop $PKG || true
 
 kill $LOGCAT_PID 2>/dev/null || true
 sleep 1
-# Only the lines of the side: from its start to the next install. Master (b): the field with OK
-# and one Open (the page result); the fix (a): no OK, two Open (table result and page result).
-# Each side must reach the search by its label and open the table page; the frames decide the rest
-for side in b a; do
-  lines=$(awk -v s="== $side: start" '/^== installed/ { on = 0 } $0 == s { on = 1 } on' $STEPLOG)
-  if [ $side = b ]; then want="results b: Open 1, OK 1"; else want="results a: Open 2, OK 0"; fi
-  if echo "$lines" | grep -q "Поиск настроек': by label\|Search settings': by label" &&
-     echo "$lines" | grep -qx "$want" &&
-     echo "$lines" | grep -qx "page $side: table page opened, points 11"; then
-    echo "check $side: '$want', table page with 11 points: OK, the frames decide" >> $STEPLOG
+# want <line>: steps.log has it, as the whole line
+want() {
+  if grep -qx "$1" $STEPLOG; then
+    echo "ok: $1" >> $STEPLOG
   else
-    echo "!! check $side: want '$want' and the table page with 11 points - NOT reached" >> $STEPLOG
+    echo "!! want '$1', got '$(grep -F "${1% *}" $STEPLOG | grep -v '^ok: ' | tail -1)'" >> $STEPLOG
     FAILED=1
   fi
+}
+# Master: the stored numbers; the fix: the page's units. Any count above 0: the value is in the
+# dump as its label, as the accessible name of the card, or both
+want_some() {
+  if grep -qE "^$1: [1-9][0-9]*$" $STEPLOG; then echo "ok: $1" >> $STEPLOG
+  else echo "!! want '$1' on screen, got '$(grep -F "$1:" $STEPLOG | tail -1)'" >> $STEPLOG; FAILED=1; fi
+}
+for l in "b pace 300" "b bike 9.979044" "b player 85" \
+         "a pace 00:25:00" "a mile 00:06:42" "a bike title lbs" "a bike 22" "a player 187.39" \
+         "r bike title фунт" "r player title фунт" "r bike 22"; do
+  want_some "$l"
+done
+for l in "b pace 00:25:00: 0" "b bike title lbs: 0" "b player 187.39: 0" \
+         "a pace 300: 0" "a bike 9.979044: 0" "a player 85: 0"; do
+  want "$l"
 done
 echo "== ANR / crash in the whole log:" >> $STEPLOG
 grep -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt >> $STEPLOG || echo "none" >> $STEPLOG
