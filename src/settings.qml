@@ -1134,95 +1134,6 @@ import QtQuick 2.12 as Quick212
             return value === undefined ? entry.defaultValue : value
         }
 
-        // Settings whose own page shows them in other units than they are kept in. The search
-        // shows them the same way, with the factors of the page:
-        // - the paces of a distance: kept as seconds per km, shown as the time of the whole
-        //   distance ("00:25:00" for 5 km at 300)
-        // - the warmup, cooldown and rest paces: seconds per km, shown as hh:mm:ss
-        // - with "Use Miles unit in UI": the weights in pounds (unless "Weight in kg"), the height
-        //   in feet'inches, the speeds in mph, the autolap distance in miles. The factor
-        //   of the page (1.60934 on some, 1 / 0.621371 on others)
-        readonly property var searchPaceDistances: ({ pacef_1mile: 1.60934, pacef_5km: 5, pacef_10km: 10,
-                                                     pacef_halfmarathon: 21, pacef_marathon: 42 })
-        readonly property var searchPaceKeys: ["trainprogram_warmup_speed", "trainprogram_cooldown_speed",
-                                               "trainprogram_rest_speed"]
-        readonly property var searchMileFactors: ({
-            treadmill_speed_max: 1.60934, treadmill_speed_min: 1.60934, treadmill_step_speed: 1.60934,
-            autolap_distance: 1.60934,
-            peloton_treadmill_walking_min_speed: 1 / 0.621371, peloton_treadmill_running_min_speed: 1 / 0.621371,
-            tile_preset_speed_1_value: 1 / 0.621371, tile_preset_speed_2_value: 1 / 0.621371,
-            tile_preset_speed_3_value: 1 / 0.621371, tile_preset_speed_4_value: 1 / 0.621371,
-            tile_preset_speed_5_value: 1 / 0.621371
-        })
-
-        // "distance", "pace", "weight", "height", "miles", or "" for a value shown as it is kept
-        function searchValueKind(entry) {
-            if (searchPaceDistances[entry.key])
-                return "distance"
-            if (searchPaceKeys.indexOf(entry.key) >= 0)
-                return "pace"
-            if (entry.key === "weight" || entry.key === "bike_weight")
-                return "weight"
-            if (entry.key === "height")
-                return "height"
-            if (searchMileFactors[entry.key])
-                return "miles"
-            return ""
-        }
-
-        function searchInPounds() {
-            return settings.miles_unit && !settings.weight_kg_unit
-        }
-
-        // The unit the page writes next to the name of the setting, "" when it writes none
-        function searchUnit(entry) {
-            var kind = searchValueKind(entry)
-            if (kind === "weight")
-                return searchInPounds() ? qsTr("lbs") : qsTr("kg")
-            if (kind === "height")
-                return settings.miles_unit ? qsTr("ft/in") : qsTr("cm")
-            if (kind === "miles" && entry.key === "autolap_distance")
-                return settings.miles_unit ? qsTr("Mi") : qsTr("KM")
-            if (kind === "miles")
-                return settings.miles_unit ? qsTr("mph") : qsTr("km/h")
-            return ""
-        }
-
-        function searchTitle(entry) {
-            var name = entry._translatedName || entry.name || entry.key
-            var unit = entry.catalogKind === "setting" ? searchUnit(entry) : ""
-            return unit.length > 0 ? name + " (" + unit + ")" : name
-        }
-
-        function searchTimeText(seconds) {
-            var t = Math.round(seconds)
-            var pad = function (n) { return n < 10 ? "0" + n : "" + n }
-            return pad(Math.floor(t / 3600)) + ":" + pad(Math.floor(t / 60) % 60) + ":" + pad(t % 60)
-        }
-
-        // A number of a search result as its page shows it (searchValueText)
-        function searchFieldValue(entry) {
-            var value = settingValue(entry)
-            if (entry.type !== "integer" && entry.type !== "number")
-                return value
-            var kind = searchValueKind(entry)
-            if (kind === "distance")
-                return searchTimeText(value * searchPaceDistances[entry.key])
-            if (kind === "pace")
-                return searchTimeText(value)
-            if (kind === "weight")
-                return String(Number((searchInPounds() ? value * 2.20462 : value).toFixed(2)))
-            if (kind === "height" && settings.miles_unit)
-                return Math.floor(value / 30.48) + "'" + Math.round((value % 30.48) / 2.54) + '"'
-            if (kind === "miles") {
-                var shown = (settings.miles_unit ? value * 0.621371 : value).toFixed(1)
-                // The tiles page drops a trailing ".0" of its speed presets
-                return entry.key.indexOf("tile_preset_speed_") === 0 ? String(Number(shown)) : shown
-            }
-            // A real written as a float by the C++ side reads back as 0.33000001...
-            return String(Math.round(value * 1000000) / 1000000)
-        }
-
         // The value of a result as text, read only. It is changed on its own page, where its
         // rules are (the range, the settings it depends on, the restart question); an editor
         // here would have to repeat them all. Empty when the value cannot be told for sure - a
@@ -1262,8 +1173,11 @@ import QtQuick 2.12 as Quick212
                 if (entry.type === "integer" || entry.type === "number") {
                     if (!isFinite(value))
                         return ""
-                    // As its page shows it: a time, feet'inches, pounds, miles
-                    return String(searchFieldValue(entry))
+                    var inUnits = searchUnitValueText(entry, value)
+                    if (inUnits.length > 0)
+                        return inUnits
+                    // A real written as a float by the C++ side reads back as 0.33000001
+                    return String(value % 1 === 0 ? value : parseFloat(value.toPrecision(7)))
                 }
                 if (entry.type === "string") {
                     // A text of several lines (a table of rows): its first line alone would
@@ -1274,6 +1188,77 @@ import QtQuick 2.12 as Quick212
             } catch (e) {
                 console.log("settings search: no value for " + entry.key + ": " + e)
             }
+            return ""
+        }
+
+        // Numbers whose page shows them in other units than they are kept in. A result shows them
+        // as the page does, with its formula:
+        // - the pace of a distance, kept in seconds per km: the time of the whole distance,
+        //   "00:25:00" for 5 km at 300
+        // - the warmup, cooldown and rest paces, in seconds per km: as hh:mm:ss, "00:07:00" at 420
+        // - with "Use Miles unit in UI": the weights in pounds (unless "Weight in kg"), the height
+        //   in feet'inches, the speeds in mph, the autolap distance in miles
+        readonly property var searchPaceDistances: ({ "pacef_1mile": 1.60934, "pacef_5km": 5, "pacef_10km": 10,
+                                                      "pacef_halfmarathon": 21, "pacef_marathon": 42 })
+        readonly property var searchPaceKeys: ["trainprogram_warmup_speed", "trainprogram_cooldown_speed",
+                                               "trainprogram_rest_speed"]
+        readonly property var searchSpeedKeys: ["treadmill_speed_max", "treadmill_speed_min", "treadmill_step_speed",
+                                                "peloton_treadmill_walking_min_speed",
+                                                "peloton_treadmill_running_min_speed", "autolap_distance"]
+
+        function searchInPounds() {
+            return settings.miles_unit && !settings.weight_kg_unit
+        }
+
+        // The speed values of the tiles page (tile_preset_speed_1_value ... _5_value)
+        function isTileSpeedPreset(key) {
+            return key.indexOf("tile_preset_speed_") === 0 && key.endsWith("_value")
+        }
+
+        // The unit of a value shown converted, "" for any other setting. A pace needs none: its
+        // name says it
+        function searchUnit(entry) {
+            if (entry.catalogKind !== "setting")
+                return ""
+            if (entry.key === "weight" || entry.key === "bike_weight")
+                return searchInPounds() ? qsTr("lbs") : qsTr("kg")
+            if (entry.key === "height")
+                return settings.miles_unit ? qsTr("ft/in") : qsTr("cm")
+            if (entry.key === "autolap_distance")
+                return settings.miles_unit ? qsTr("Mi") : qsTr("KM")
+            if (searchSpeedKeys.indexOf(entry.key) >= 0 || isTileSpeedPreset(entry.key))
+                return settings.miles_unit ? qsTr("mph") : qsTr("km/h")
+            return ""
+        }
+
+        // The name of a result with the unit of its value, as the page writes it next to the
+        // field: "Bike Weight (lbs)". A page label made of a translated template ("Bike Weight
+        // (%1)") is taken as it is: Japanese and Chinese put the unit in full-width brackets
+        function searchTitle(entry) {
+            var name = entry._translatedName || entry.name || entry.key
+            var unit = searchUnit(entry)
+            if (unit.length === 0)
+                return name
+            var template = (entry.name || entry.key) + " (%1)"
+            var translated = translatedText(template)
+            return translated !== template ? translated.arg(unit) : name + " (" + unit + ")"
+        }
+
+        // A number as its page shows it, "" when the page shows it as it is kept
+        function searchUnitValueText(entry, value) {
+            if (searchPaceDistances[entry.key] !== undefined)
+                return paceSecondsToTime(value * searchPaceDistances[entry.key])
+            if (searchPaceKeys.indexOf(entry.key) >= 0)
+                return paceSecondsToTime(value)
+            if (entry.key === "weight" || entry.key === "bike_weight")
+                return String(Number((searchInPounds() ? value * 2.20462 : value).toFixed(2)))
+            if (entry.key === "height")
+                return settings.miles_unit ? Math.floor(value / 30.48) + "'" + Math.round((value % 30.48) / 2.54) + '"' : ""
+            if (searchSpeedKeys.indexOf(entry.key) >= 0)
+                return (settings.miles_unit ? value * 0.621371 : value).toFixed(1)
+            // The tiles page drops a trailing ".0"
+            if (isTileSpeedPreset(entry.key))
+                return String(Number((settings.miles_unit ? value * 0.621371 : value).toFixed(1)))
             return ""
         }
 
