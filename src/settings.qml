@@ -173,8 +173,8 @@ import QtQuick 2.12 as Quick212
             return appWrittenKeys.indexOf(entry.key) >= 0
         }
 
-        // From the store, not from this page's Settings: another settings page (tiles, voice)
-        // writes through a Settings object of its own, which this one does not hear about. The
+        // From the store: what "Changed" compares with the default, and the value of a key that
+        // is not a property of this page's Settings (settingValue reads the property first). The
         // store may give a boolean back as the string "true"
         function storedValue(key, type, fallback) {
             var value = isUiOption(key) ? window.ui.option(key) : settings.value(key, fallback)
@@ -226,7 +226,7 @@ import QtQuick 2.12 as Quick212
             }
         }
 
-        // setSettingValue() without its toast, for a reset of several settings at once. Also
+        // A setting written for a reset of several settings at once. Also
         // straight into the store: when this page's copy is stale and already equal to the
         // default, the property assignment alone changes nothing and writes nothing
         function writeSetting(entry, value) {
@@ -352,9 +352,8 @@ import QtQuick 2.12 as Quick212
             }
             // TEMP-LOG: QZ-NAV - a search result tapped
             console.log("QZ-NAV search jump key=" + entry.key + " name=" + entry.name + " file=" + (where ? where.file : "none") + " chain=" + (where ? JSON.stringify(where.chain) : "none"))
-            // A setting that is on no page (Garmin ANT+, Peloton Bike OCR...): the result is
-            // the only place to change it, the tap leaves the results as they are instead of
-            // dropping them for the top of the settings
+            // A setting that is on no page (searchHiddenSettings, in "Changed" only): the tap
+            // leaves the results as they are
             if (!where)
                 return
             var page = settingsPane
@@ -416,7 +415,7 @@ import QtQuick 2.12 as Quick212
             })
             // A setting its page hides with the current values ("Use kg for weight" shows only
             // with miles on) - the whole section was lit instead. Back to the results, the
-            // sections opened on the way closed again: the result has the control itself
+            // sections opened on the way closed again
             if (!target && searchReturn && findItem(container, named)) {
                 for (var k = 0; k < opened.length; k++)
                     opened[k].isOpen = false
@@ -424,9 +423,7 @@ import QtQuick 2.12 as Quick212
                     stackView.pop()
                 else
                     restoreSearch()
-                // Modern look: the result shows the value only, it cannot be changed there
-                toast.show(window.ui.modern ? qsTr("Hidden on its page with the current settings")
-                                            : qsTr("Hidden on its page right now: change it here"))
+                toast.show(qsTr("Hidden on its page with the current settings"))
                 return
             }
             // The fields of a switched-off section are not on the page yet
@@ -855,7 +852,7 @@ import QtQuick 2.12 as Quick212
                 }
                 if (!persistentSettings[j].visible)
                     continue
-                if (window.ui.modern && searchHiddenSettings[persistentSettings[j].key])
+                if (window.ui.modern && modernHiddenSettings[persistentSettings[j].key])
                     continue
                 if (settingsPane.isTileOrderSetting(persistentSettings[j]))
                     continue
@@ -894,18 +891,10 @@ import QtQuick 2.12 as Quick212
             "custominclinationresistance", "homeform", "gears"
         ]
 
-        // Modern look: settings the catalog lists but no page shows - the author took their
-        // control off the page on purpose. Garmin ANT+ moves the ANT channels to Garmin's private
-        // network (ChannelService.java), switched on by chance it would cut the ANT+ sensors
-        // off; its result was the only place left to change it, and a tap on it led nowhere
-        // custom_inclination_resistance_table: the whole table as one text line; it is changed on its
-        // own page, which the search lists as a link
-        // The results only show a value (searchValueText), so a setting with no place on a page
-        // could not be changed from them either: Peloton Bike OCR (its switch is commented out on
-        // the page), the camera and emote of MyWhoosh Link (QZ cycles them with a button itself)
-        readonly property var searchHiddenSettings: ({ "ant_garmin": true, "custom_inclination_resistance_table": true,
-                                                       "peloton_bike_ocr": true, "mywhoosh_link_camera_value": true,
-                                                       "mywhoosh_link_emote_value": true })
+        // Modern look: custom_inclination_resistance_table is the whole table as one text line;
+        // it is changed on its own page, which the search lists as a link. The settings no page
+        // shows are searchHiddenSettings, for both looks
+        readonly property var modernHiddenSettings: ({ "custom_inclination_resistance_table": true })
 
         // The English titles and descriptions as written on gears.qml: translated through its
         // context (the texts are extracted there, not here)
@@ -1070,6 +1059,8 @@ import QtQuick 2.12 as Quick212
                 // the look may be switched on this very page)
                 if (searchableSettings[i].catalogKind === "link" && !window.ui.modern)
                     continue
+                if (!changedOnly && searchHiddenSettings[searchableSettings[i].key])
+                    continue
                 var matched = true
                 if (tokens.length > 0) {
                     var haystack = searchableText(searchableSettings[i])
@@ -1118,66 +1109,39 @@ import QtQuick 2.12 as Quick212
             updateFilteredSettings()
         }
 
-        // From the store as well: a value changed on the voice or tiles page, opened over this
-        // one, is not in this page's copy until the settings are opened again. The copy stays the
-        // fallback of a key not written yet, and keeps the bindings of the cards on its property
+        // Settings the catalog lists but no page shows: the results only show a value, so they
+        // could not be changed from there either. Garmin ANT+ (moves the ANT channels to Garmin's
+        // private network, switched on by chance it cuts the ANT+ sensors off), Peloton Bike OCR
+        // (its switch is commented out on the page), the camera and emote of MyWhoosh Link (QZ
+        // cycles them with a controller button itself). Left out of the search by text only:
+        // "Changed" still lists Garmin ANT+ and Peloton Bike OCR, so one switched on by chance is
+        // seen there (the MyWhoosh keys are written by QZ, isPrivateSetting keeps them out of it)
+        readonly property var searchHiddenSettings: ({ "ant_garmin": true, "peloton_bike_ocr": true,
+                                                       "mywhoosh_link_camera_value": true,
+                                                       "mywhoosh_link_emote_value": true })
+
+        // From this page's Settings: the pages opened over it (voice, tiles...) write into the same
+        // object, and the card is bound to its property. Not from the store: Settings writes a
+        // change there only a moment later, a card read again at once got the old value and kept
+        // it. The store only for a key that is not a property here
         function settingValue(entry) {
             if (isUiOption(entry.key))
                 return window.ui.option(entry.key)
             var copy = settings[entry.key]
-            var value = storedValue(entry.key, entry.type, copy === undefined ? entry.defaultValue : copy)
+            var value = copy === undefined ? storedValue(entry.key, entry.type, entry.defaultValue) : copy
             if ((entry.type === "integer" || entry.type === "number") && value !== null && value !== "")
                 return Number(value)
             return value === undefined ? entry.defaultValue : value
         }
 
-        function setSettingValue(entry, value) {
-            if (isUiOption(entry.key)) {
-                // Applied at once, like the switch on the page: no restart question
-                setUiOption(entry.key, entry.type === "boolean" ? !!value : value)
-                toast.show(qsTr("Setting saved!"))
-                return
-            }
-            if (entry.type === "boolean") {
-                value = !!value
-            } else if (entry.type === "integer") {
-                // An empty field stores 0, as the int property turned NaN into before
-                value = parseInt(value) || 0
-            } else if (entry.type === "number") {
-                // A decimal comma (the keyboard of the phone's language): parseFloat stops at it
-                value = parseFloat(String(value).replace(",", "."))
-            }
-            // Straight into the store, and before the copy: the card reads the store back
-            // (settingValue) as soon as the copy changes, and the page's Settings writes it only
-            // a moment later. Stored after the copy, the card got the old value and the switch
-            // flipped back
-            settings.setValue(entry.key, value)
-            settings[entry.key] = value
-
-            // The text size applies at once, like on its own page
-            if (entry.key === "ui_text_scale" || entry.key === "ui_text_scale_system") {
-                window.setTextScaleOption(entry.key, settings[entry.key])
-                toast.show(qsTr("Setting saved!"))
-                return
-            }
-
-            // The page is made again: nothing of it may run after (applyAppLanguage)
-            if (entry.key === "app_language") {
-                applyAppLanguage(value)
-                return
-            }
-            window.settings_restart_to_apply = true
-            toast.show(qsTr("Setting saved!"))
-        }
-
         // Settings whose own page shows them in other units than they are kept in. The search
-        // shows and takes them the same way, with the factors of the page:
+        // shows them the same way, with the factors of the page:
         // - the paces of a distance: kept as seconds per km, shown as the time of the whole
         //   distance ("00:25:00" for 5 km at 300)
         // - the warmup, cooldown and rest paces: seconds per km, shown as hh:mm:ss
         // - with "Use Miles unit in UI": the weights in pounds (unless "Weight in kg"), the height
-        //   in feet'inches, the speeds in mph, the autolap distance in miles. The factor back
-        //   to the kept unit is the one of the page (1.60934 on some, 1 / 0.621371 on others)
+        //   in feet'inches, the speeds in mph, the autolap distance in miles. The factor
+        //   of the page (1.60934 on some, 1 / 0.621371 on others)
         readonly property var searchPaceDistances: ({ pacef_1mile: 1.60934, pacef_5km: 5, pacef_10km: 10,
                                                      pacef_halfmarathon: 21, pacef_marathon: 42 })
         readonly property var searchPaceKeys: ["trainprogram_warmup_speed", "trainprogram_cooldown_speed",
@@ -1236,54 +1200,7 @@ import QtQuick 2.12 as Quick212
             return pad(Math.floor(t / 3600)) + ":" + pad(Math.floor(t / 60) % 60) + ":" + pad(t % 60)
         }
 
-        // One to two digits and nothing else
-        function searchIsTwoDigits(text) {
-            if (text.length === 0 || text.length > 2)
-                return false
-            for (var c = 0; c < text.length; c++) {
-                if (text[c] < "0" || text[c] > "9")
-                    return false
-            }
-            return true
-        }
-
-        // hh:mm:ss as the pace fields take it, NaN for anything else
-        function searchTimeSeconds(text) {
-            var parts = text.trim().split(":")
-            if (parts.length !== 3)
-                return NaN
-            var seconds = 0
-            for (var i = 0; i < parts.length; i++) {
-                if (!searchIsTwoDigits(parts[i]))
-                    return NaN
-                var n = parseInt(parts[i], 10)
-                if (i > 0 && n > 59)
-                    return NaN
-                seconds = seconds * 60 + n
-            }
-            return seconds
-        }
-
-        // feet'inches as the height field takes it (5'10", the quotes may be typographic), in cm;
-        // NaN for anything else ("5.9" is not 5'9")
-        function searchFeetInchesCm(text) {
-            var feetMark = -1
-            for (var i = 0; i < text.length && feetMark < 0; i++) {
-                if ("'‘’".indexOf(text.charAt(i)) >= 0)
-                    feetMark = i
-            }
-            if (feetMark < 0)
-                return NaN
-            var feet = text.substring(0, feetMark).trim()
-            var inches = text.substring(feetMark + 1).trim()
-            if (inches.length > 0 && "\"“”".indexOf(inches.charAt(inches.length - 1)) >= 0)
-                inches = inches.substring(0, inches.length - 1).trim()
-            if (!searchIsTwoDigits(feet) || !searchIsTwoDigits(inches))
-                return NaN
-            return parseInt(feet, 10) * 30.48 + parseInt(inches, 10) * 2.54
-        }
-
-        // The text of the value field of a search result: the value as its page shows it
+        // A number of a search result as its page shows it (searchValueText)
         function searchFieldValue(entry) {
             var value = settingValue(entry)
             if (entry.type !== "integer" && entry.type !== "number")
@@ -1306,98 +1223,17 @@ import QtQuick 2.12 as Quick212
             return String(Math.round(value * 1000000) / 1000000)
         }
 
-        // The value field of a search result written back: converted to the kept unit as its
-        // page does it. Not saved, with the reason in a toast, when it is not a value of the
-        // setting (parseFloat made 0 of the time "00:25:00" and 2 of "2,5")
-        function setSearchFieldValue(entry, text) {
-            if (entry.type !== "integer" && entry.type !== "number") {
-                setSettingValue(entry, text)
-                return
-            }
-            var kind = searchValueKind(entry)
-            var value
-            if (kind === "distance" || kind === "pace") {
-                value = searchTimeSeconds(text)
-                if (isNaN(value)) {
-                    toast.show(qsTranslate("SettingsFormatField", "Enter the time as hh:mm:ss"))
-                    return
-                }
-                setSettingValue(entry, kind === "distance" ? value / searchPaceDistances[entry.key] : value)
-                return
-            }
-            if (kind === "height" && settings.miles_unit) {
-                value = searchFeetInchesCm(text)
-                if (isNaN(value)) {
-                    toast.show(qsTranslate("SettingsFormatField", "Enter the height as feet'inches, e.g. 5'10\""))
-                    return
-                }
-                setSettingValue(entry, value)
-                return
-            }
-            // A decimal comma (the keyboard of the phone's language) counts as a point
-            var trimmed = text.trim()
-            value = Number(trimmed.replace(",", "."))
-            if (trimmed.length === 0 || !isFinite(value)) {
-                toast.show(qsTranslate("SettingsNumberField", "Enter a number"))
-                return
-            }
-            if (kind === "weight" && searchInPounds())
-                value = value / 2.20462
-            else if (kind === "miles" && settings.miles_unit)
-                value = value * searchMileFactors[entry.key]
-            // parseInt of setSettingValue reads 1e21 as 1
-            if (entry.type === "integer" && (Math.round(value) !== value || Math.abs(value) > 2147483647)) {
-                toast.show(qsTranslate("SettingsNumberField", "Enter a whole number"))
-                return
-            }
-            setSettingValue(entry, value)
-        }
-
-        function optionValues(entry) {
-            if (!entry.options)
-                return []
-
-            // The wallpaper colour only where Android offers it (API 31+), as on the page
-            if (entry.key === "ui_accent" && !window.ui.systemAccentAvailable)
-                return entry.options.values.filter(function (v) { return v !== "system" })
-            if (entry.options.values)
-                return entry.options.values
-
-            if (entry.options.expression && entry.options.expression.indexOf("rootItem.") === 0) {
-                var propertyName = entry.options.expression.substring("rootItem.".length)
-                if (typeof rootItem !== "undefined" && rootItem && rootItem[propertyName] !== undefined)
-                    return rootItem[propertyName]
-            }
-
-            return []
-        }
-
-        // Modern look: the labels of a search result's list, as on the setting's own page
-        // (ValueComboBox labels). The stored "Disabled" of the device pickers, and every value
-        // of a fixed list ("Always", "Request") that has a translation in this page's context;
-        // a value without one ("MM/dd/yy", "700 x 18C") comes back as it is
-        // A list whose catalog entry has its own labels (the look of the modern interface: "auto"
-        // shows as "As on the phone") takes those
-        function optionLabels(entry) {
-            var labels = { "Disabled": qsTr("Disabled") }
-            var values = entry && entry.options && entry.options.values ? entry.options.values : []
-            var names = entry && entry.options && entry.options.labels ? entry.options.labels : []
-            for (var i = 0; i < values.length; i++)
-                if (typeof values[i] === "string")
-                    labels[values[i]] = qsTranslate("settings", names[i] || values[i])
-            return labels
-        }
-
-        // Modern look: the value of a result as text, read only. It is changed on its own page,
-        // where its rules are (the range, the settings it depends on, the restart question); a
-        // second editor here would have to repeat them all. Empty when the value cannot be told
-        // for sure - a Bluetooth device, a stored value that is not one of the list, a secret,
-        // a type not known here: then the result shows no value rather than a wrong one
+        // The value of a result as text, read only. It is changed on its own page, where its
+        // rules are (the range, the settings it depends on, the restart question); an editor
+        // here would have to repeat them all. Empty when the value cannot be told for sure - a
+        // Bluetooth device, a stored value that is not one of the list, a secret, a text of
+        // several lines, a type not known here: then the result shows no value rather than a
+        // wrong one. A number in the unit of its page, as the title says (searchTitle)
         function searchValueText(entry) {
             try {
                 if (entry.catalogKind === "virtual") {
                     var picked = entry.options ? entry.options[virtualSelectedIndex(entry)] : null
-                    return picked && picked.label ? qsTranslate("settings", picked.label) : ""
+                    return picked && picked.label ? translatedText(picked.label) : ""
                 }
                 if (entry.catalogKind !== "setting" && entry.catalogKind !== "link")
                     return ""
@@ -1408,66 +1244,41 @@ import QtQuick 2.12 as Quick212
                     return ""
                 if (entry.type === "boolean")
                     return value ? qsTr("On") : qsTr("Off")
-                // The whole list of the catalog: optionValues() leaves the wallpaper colour out
-                // below Android 12, and the labels would shift by one. A list made at run time
-                // (rootItem.metrics) has no labels, its value is shown as it is - and reading it
-                // here bound every card to a property without a change signal (a warning a card)
+                // A list of the catalog, as its page shows it: the translated label of the value
+                // by its place ("Horizontal" for 1), or the value itself translated ("Male"). A
+                // list made at run time (rootItem.metrics) is not read: it has no change signal,
+                // a card bound to it warned in the log
                 var values = entry.options && entry.options.values ? entry.options.values : []
                 if (values.length > 0) {
-                    // By the place in the list: the labels of a list of numbers (the buttons of
-                    // MyWhoosh Link, 0 = "Disabled") are not keyed by the value
-                    var names = entry.options.labels || []
+                    var labels = entry.options.labels || []
                     for (var i = 0; i < values.length; i++) {
                         if (String(values[i]) !== String(value))
                             continue
-                        if (names[i])
-                            return qsTranslate("settings", names[i])
-                        var labels = optionLabels(entry)
-                        return labels.hasOwnProperty(value) ? labels[value] : String(value)
+                        var shown = labels[i] !== undefined ? labels[i] : values[i]
+                        return typeof shown === "string" ? translatedText(shown) : String(shown)
                     }
                     return ""
                 }
                 if (entry.type === "integer" || entry.type === "number") {
-                    var shown = searchFieldValue(entry)
-                    // A real written as a float by the C++ side reads back as 0.33000001
-                    if (typeof shown !== "number")
-                        return String(shown)
-                    if (!isFinite(shown))
+                    if (!isFinite(value))
                         return ""
-                    return String(shown % 1 === 0 ? shown : parseFloat(shown.toPrecision(7)))
+                    // As its page shows it: a time, feet'inches, pounds, miles
+                    return String(searchFieldValue(entry))
                 }
-                if (entry.type === "string")
-                    return String(value)
+                if (entry.type === "string") {
+                    // A text of several lines (a table of rows): its first line alone would
+                    // read as the whole value
+                    var text = String(value)
+                    return text.indexOf("\n") >= 0 ? "" : text
+                }
             } catch (e) {
                 console.log("settings search: no value for " + entry.key + ": " + e)
             }
             return ""
         }
 
-        // What the list shows for each value, as on the setting's page: the translated label of
-        // the catalog ("Gear Up" for 1), or the value itself translated ("Male"). The value
-        // written is still the one of optionValues at the same place. A list made at run time
-        // (Bluetooth devices) shows its values as they are
-        function optionTexts(entry) {
-            var values = optionValues(entry)
-            if (!entry.options || !entry.options.values)
-                return values
-
-            // By the place in the whole list of the catalog: optionValues() leaves the wallpaper
-            // colour out below Android 12, and the labels would shift by one
-            var allValues = entry.options.values
-            var labels = entry.options.labels || []
-            var texts = []
-            for (var i = 0; i < values.length; i++) {
-                var label = labels[allValues.indexOf(values[i])]
-                var text = label !== undefined ? label : values[i]
-                if (typeof text === "string")
-                    text = translatedText(text)
-                texts.push(String(text))
-            }
-            return texts
-        }
-
+        // A text of a settings page translated in the context it is shown in, the text itself
+        // when there is no translation
         function translatedText(text) {
             var contexts = translationContexts
             for (var i = 0; i < contexts.length; i++) {
@@ -1483,25 +1294,6 @@ import QtQuick 2.12 as Quick212
                    entry.options.expression.indexOf("bluetoothDevices") >= 0
         }
 
-        function optionIndex(entry) {
-            var values = optionValues(entry)
-            var value = settingValue(entry)
-            var bluetoothDeviceSetting = isBluetoothDeviceSetting(entry)
-            for (var i = 0; i < values.length; i++) {
-                var candidate = bluetoothDeviceSetting ? stripRssi(values[i]) : values[i]
-                if (candidate === value)
-                    return i
-            }
-            return bluetoothDeviceSetting ? -1 : 0
-        }
-
-        function virtualOptionLabels(entry) {
-            var labels = []
-            for (var i = 0; entry.options && i < entry.options.length; i++)
-                labels.push(entry.options[i].label)
-            return labels
-        }
-
         function virtualSelectedIndex(entry) {
             if (!entry.options)
                 return 0
@@ -1511,22 +1303,6 @@ import QtQuick 2.12 as Quick212
                     return i
             }
             return 0
-        }
-
-        function setVirtualSelection(entry, index) {
-            if (!entry.options)
-                return
-
-            for (var i = 0; i < entry.options.length; i++) {
-                if (entry.options[i].sets)
-                    settings[entry.options[i].sets] = false
-            }
-
-            if (entry.options[index] && entry.options[index].sets)
-                settings[entry.options[index].sets] = true
-
-            window.settings_restart_to_apply = true
-            toast.show(qsTr("Setting saved!"))
         }
 
         // always add a property at the end of the file to avoid corruption of the settings when loading old versions
@@ -3250,25 +3026,22 @@ import QtQuick 2.12 as Quick212
                         Layout.preferredWidth: width
                         Layout.preferredHeight: implicitHeight
                         implicitWidth: width
-                        // Modern: a switch or button in the title row makes it 48 px high, the title
-                        // sits in its middle, and 12 on top of that looked like a gap: 6 there. At
-                        // the bottom only when that row is also the last one; a field or list at the
-                        // bottom keeps 12, its own inset matches the gap above the title then
-                        // Modern look: no editor in the result, only its value as text and the
-                        // chevron; the 48 px button in the title row is the reset of "Changed"
+                        // No editor in the result, only its value as text and the chevron. Modern
+                        // look: the Reset button of "Changed" makes the title row 48 px high, the
+                        // title sits in its middle, and 12 on top of that looked like a gap: 6
+                        // there. At the bottom only when that row is also the last one (no
+                        // description below)
                         readonly property bool controlOnTop: window.ui.modern && settingsPane.changedOnly
                         readonly property bool hasDescription: entry.description !== null && entry.description !== undefined &&
                                                                entry.description.length > 0
-                        readonly property bool editorBelow: !window.ui.modern && (entry.catalogKind === "virtual" ||
-                                                            (entry.catalogKind === "setting" && entry.type !== "boolean"))
-                        // Read when the card is made: coming back from the setting's page, the
-                        // cards are made anew (restoreSearch empties the list first)
-                        readonly property string valueText: window.ui.modern ? settingsPane.searchValueText(entry) : ""
+                        // The value as text: a binding on the setting, so it follows a change
+                        // made on its page
+                        readonly property string valueText: settingsPane.searchValueText(entry)
                         readonly property bool valueOn: entry.type === "boolean" && valueText.length > 0 &&
                                                         !!settingsPane.settingValue(entry)
                         // With the unit of its page, as the title of the card: "Bike Weight (lbs)"
                         readonly property string titleText: settingsPane.searchTitle(entry)
-                        readonly property bool controlAtBottom: controlOnTop && !hasDescription && !editorBelow
+                        readonly property bool controlAtBottom: controlOnTop && !hasDescription
                         readonly property real topPad: window.ui.modern ? (controlOnTop ? 6 : 12) : 4
                         readonly property real bottomPad: window.ui.modern ? (controlAtBottom ? 6 : 12) : 4
                         implicitHeight: headerHeight + searchResultContent.implicitHeight + topPad + bottomPad
@@ -3319,16 +3092,14 @@ import QtQuick 2.12 as Quick212
                                 settingsPane.jumpToSetting(entry)
                         }
 
-                        // A tap on the card (not on its controls) opens the setting itself.
-                        // Modern look: the whole card is the one way to change it, a button for
-                        // the screen reader too. The value goes into the name, as on the home
-                        // tiles: Qt 5.15 on Android reads the description only without a name
+                        // A tap on the card opens the setting itself, the one way to change it.
+                        // For the screen reader a button; the value goes into the name: Qt 5.15
+                        // on Android reads the description only without a name
                         MouseArea {
                             id: resultArea
                             anchors.fill: parent
                             anchors.topMargin: searchResultFrame.headerHeight
                             onClicked: searchResultFrame.open()
-                            Accessible.ignored: !window.ui.modern
                             Accessible.role: Accessible.Button
                             Accessible.name: window.ui.plainTitle(searchResultFrame.titleText) +
                                              (searchResultFrame.valueText.length > 0 ? ": " + searchResultFrame.valueText : "")
@@ -3382,17 +3153,19 @@ import QtQuick 2.12 as Quick212
                                     }
                                 }
 
-                                // Modern look: the value as text ("On" in the accent), as wide as
-                                // 42 % of the card at most, cut at the end; nothing when unknown
+                                // The value as text, "On" in the accent; as wide as 42 % of the card
+                                // at most, cut at the end; nothing when the value is not known
                                 Label {
                                     visible: searchResultFrame.valueText.length > 0
                                     text: searchResultFrame.valueText
-                                    color: searchResultFrame.valueOn ? window.ui.accent : window.ui.textMuted
-                                    font.pixelSize: window.ui.fontCaption
+                                    color: searchResultFrame.valueOn ? (window.ui.modern ? window.ui.accent : Material.accent)
+                                                                     : (window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey))
+                                    font.pixelSize: window.ui.modern ? window.ui.fontCaption : window.ui.fontBase
                                     horizontalAlignment: Text.AlignRight
                                     elide: Text.ElideRight
                                     maximumLineCount: 1
                                     textFormat: Text.PlainText
+                                    Accessible.ignored: true
                                     Layout.alignment: Qt.AlignVCenter
                                     Layout.maximumWidth: Math.max(0, searchResultFrame.width * 0.42)
                                 }
@@ -3406,18 +3179,14 @@ import QtQuick 2.12 as Quick212
                                     color: window.ui.textMuted
                                 }
 
-                                UiSwitch {
-                                    visible: !window.ui.modern && entry.catalogKind === "setting" && entry.type === "boolean"
-                                    checked: visible ? settingsPane.settingValue(entry) : false
-                                    Accessible.name: settingsPane.searchResultAccessibleName(entry)
-                                    onClicked: settingsPane.setSettingValue(entry, checked)
-                                }
-
-                                UiButton {
-                                    visible: !window.ui.modern && entry.catalogKind === "page"
-                                    text: qsTr("Open")
-                                    Accessible.name: settingsPane.searchResultAccessibleName(entry, text)
-                                    onClicked: settingsPane.openPageResult(entry)
+                                Label {
+                                    visible: !window.ui.modern
+                                    font.pixelSize: window.ui.fontBase
+                                    text: "›"
+                                    font.bold: true
+                                    color: Material.color(Material.Grey)
+                                    Accessible.ignored: true
+                                    Layout.alignment: Qt.AlignVCenter
                                 }
 
                                 UiButton {
@@ -3442,140 +3211,6 @@ import QtQuick 2.12 as Quick212
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
                                 Layout.minimumWidth: 0
-                            }
-
-                            // Classic look: the editors of master. Modern look: none, the value
-                            // is shown above and changed on its page
-                            RowLayout {
-                                visible: !window.ui.modern && entry.catalogKind === "setting" && entry.type !== "boolean" &&
-                                         settingsPane.optionValues(entry).length === 0
-                                Layout.fillWidth: true
-                                Layout.minimumWidth: 0
-                                Layout.preferredHeight: visible ? implicitHeight : 0
-                                Layout.maximumHeight: visible ? implicitHeight : 0
-                                spacing: 8
-
-                                UiTextField {
-                                    id: searchSettingTextField
-                                    Layout.fillWidth: true
-                                    Layout.minimumWidth: 0
-                                    text: visible ? settingsPane.searchFieldValue(entry) : ""
-                                    horizontalAlignment: Text.AlignRight
-                                    // A time and feet'inches on the full keyboard, as on their page:
-                                    // the number keyboard of Android may have no ':' or '
-                                    readonly property string kind: settingsPane.searchValueKind(entry)
-                                    readonly property bool feetInches: kind === "height" && settings.miles_unit
-                                    inputMethodHints: entry.type === "string" || timeShaped || feetInches
-                                                      ? Qt.ImhNoPredictiveText : Qt.ImhFormattedNumbersOnly
-                                    // One field for every setting found, so its own rule by the type
-                                    // of the setting (the page uses SettingsNumberField for these):
-                                    // a pace is a time; a number may be negative (offsets, the
-                                    // lowest incline), a decimal comma counts as a point. Feet'inches
-                                    // are checked by setSearchFieldValue()
-                                    timeShaped: kind === "distance" || kind === "pace"
-                                    validator: entry.type === "string" || feetInches ? null
-                                             : timeShaped ? searchTimeValidator
-                                             : entry.type === "integer" ? searchIntValidator
-                                             : searchNumberValidator
-                                    RegExpValidator { id: searchTimeValidator; regExp: /^\d{1,2}:[0-5]?\d:[0-5]?\d$/ }
-                                    RegExpValidator { id: searchIntValidator; regExp: /^-?\d+$/ }
-                                    RegExpValidator { id: searchNumberValidator; regExp: /^-?(\d+([.,]\d*)?|[.,]\d+)$/ }
-                                    // A password stays hidden here as it does on its own page
-                                    echoMode: entry.key.indexOf("password") >= 0 ? TextInput.PasswordEchoOnEdit : TextInput.Normal
-                                    Accessible.name: settingsPane.searchResultAccessibleName(entry, text)
-                                    onAccepted: settingsPane.setSearchFieldValue(entry, text)
-                                    onActiveFocusChanged: if (this.focus) this.cursorPosition = this.text.length
-                                }
-
-                                UiButton {
-                                    text: qsTr("OK")
-                                    enabled: searchSettingTextField.acceptableInput
-                                    Accessible.name: settingsPane.searchResultAccessibleName(entry, text)
-                                    onClicked: settingsPane.setSearchFieldValue(entry, searchSettingTextField.text)
-                                }
-                            }
-
-                            UiComboBox {
-                                id: searchSettingComboBox
-                                visible: !window.ui.modern && entry.catalogKind === "setting" && settingsPane.optionValues(entry).length > 0
-                                Layout.fillWidth: true
-                                Layout.minimumWidth: 0
-                                Layout.preferredHeight: visible ? implicitHeight : 0
-                                Layout.maximumHeight: visible ? implicitHeight : 0
-                                model: visible ? settingsPane.optionTexts(entry) : []
-                                currentIndex: visible ? settingsPane.optionIndex(entry) : 0
-                                itemLabels: visible ? settingsPane.optionLabels(entry) : null
-                                displayText: labelFor(visible && settingsPane.isBluetoothDeviceSetting(entry)
-                                                      ? settingsPane.settingValue(entry)
-                                                      : currentText)
-                                Accessible.name: settingsPane.searchResultAccessibleName(entry, displayText)
-                                contentItem: Label {
-                                    leftPadding: 12
-                                    rightPadding: 36
-                                    text: searchSettingComboBox.displayText
-                                    font: searchSettingComboBox.font
-                                    color: window.ui.ink(searchSettingComboBox.palette.text)
-                                    verticalAlignment: Text.AlignVCenter
-                                    elide: Text.ElideRight
-                                }
-                                delegate: ItemDelegate {
-                                    width: ListView.view.width
-                                    text: searchSettingComboBox.labelFor(modelData)
-                                    // a screen reader can pick it: Qt 5.15 gives an ItemDelegate no
-                                    // accessible action, as the items of UiComboBox
-                                    Accessible.name: text
-                                    Accessible.onPressAction: clicked()
-                                    contentItem: Label {
-                                        text: searchSettingComboBox.labelFor(modelData)
-                                        font: searchSettingComboBox.font
-                                        color: window.ui.ink(searchSettingComboBox.palette.text)
-                                        verticalAlignment: Text.AlignVCenter
-                                        elide: Text.ElideRight
-                                    }
-                                }
-                                onActivated: {
-                                    // The model holds the texts shown: the value is at the same place
-                                    var selectedValue = settingsPane.optionValues(entry)[index]
-                                    if (settingsPane.isBluetoothDeviceSetting(entry))
-                                        selectedValue = settingsPane.stripRssi(selectedValue)
-                                    settingsPane.setSettingValue(entry, selectedValue)
-                                }
-                            }
-
-                            UiComboBox {
-                                id: searchVirtualComboBox
-                                visible: !window.ui.modern && entry.catalogKind === "virtual"
-                                Layout.fillWidth: true
-                                Layout.minimumWidth: 0
-                                Layout.preferredHeight: visible ? implicitHeight : 0
-                                Layout.maximumHeight: visible ? implicitHeight : 0
-                                model: visible ? settingsPane.virtualOptionLabels(entry) : []
-                                currentIndex: visible ? settingsPane.virtualSelectedIndex(entry) : 0
-                                Accessible.name: settingsPane.searchResultAccessibleName(entry, displayText)
-                                contentItem: Label {
-                                    leftPadding: 12
-                                    rightPadding: 36
-                                    text: searchVirtualComboBox.displayText
-                                    font: searchVirtualComboBox.font
-                                    color: window.ui.ink(searchVirtualComboBox.palette.text)
-                                    verticalAlignment: Text.AlignVCenter
-                                    elide: Text.ElideRight
-                                }
-                                delegate: ItemDelegate {
-                                    width: ListView.view.width
-                                    text: modelData
-                                    // as the list above
-                                    Accessible.name: text
-                                    Accessible.onPressAction: clicked()
-                                    contentItem: Label {
-                                        text: modelData
-                                        font: searchVirtualComboBox.font
-                                        color: window.ui.ink(searchVirtualComboBox.palette.text)
-                                        verticalAlignment: Text.AlignVCenter
-                                        elide: Text.ElideRight
-                                    }
-                                }
-                                onActivated: settingsPane.setVirtualSelection(entry, currentIndex)
                             }
                         }
                     }

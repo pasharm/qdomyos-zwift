@@ -4671,7 +4671,7 @@ Tillåt åtkomst till QZ-mappen i nästa fönster.</translation>
     </message>
     <message>
         <source>Hidden on its page with the current settings</source>
-        <translation>Dold på sin sida med aktuella inställningar</translation>
+        <translation>Dold på sin sida med nuvarande inställningar</translation>
     </message>
     <message>
         <source>Turn on “%1” to change this setting</source>

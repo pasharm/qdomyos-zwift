@@ -4671,7 +4671,7 @@ A következő ablakban engedélyezze a hozzáférést a QZ-mappához.</translati
     </message>
     <message>
         <source>Hidden on its page with the current settings</source>
-        <translation>Az aktuális beállításokkal rejtve van a saját oldalán.</translation>
+        <translation>A saját oldalán rejtve a jelenlegi beállításokkal</translation>
     </message>
     <message>
         <source>Turn on “%1” to change this setting</source>

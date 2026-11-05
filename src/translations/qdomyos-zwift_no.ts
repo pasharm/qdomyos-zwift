@@ -4675,7 +4675,7 @@ I neste vindu gir du tilgang til QZ-mappen.</translation>
     </message>
     <message>
         <source>Hidden on its page with the current settings</source>
-        <translation>Skjult på siden sin med gjeldende innstillinger</translation>
+        <translation>Skjult på sin side med gjeldende innstillinger</translation>
     </message>
     <message>
         <source>Turn on “%1” to change this setting</source>
