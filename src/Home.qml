@@ -1021,6 +1021,10 @@ HomeForm {
         anchors.bottom: parent.bottom
         clip: true
         visible: rootItem.chartFooterVisible || rootItem.videoVisible
+        // TEST ONLY (T-441): the chart under the tiles from the start, its height in the log
+        Component.onCompleted: rootItem.chartFooterVisible = true
+        onHeightChanged: console.log("T441 footer h " + Math.round(height) + " page h " + Math.round(parent.height)
+                                     + " handle " + Math.round(dragHandle.width) + "x" + dragHandle.height)
 
         // Modern look: a full-width strip in the page colour with a pill in the middle (T-441) –
         // the whole strip is the touch area, the chart below loses only 6 px of height.
