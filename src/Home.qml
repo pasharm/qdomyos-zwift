@@ -1022,17 +1022,29 @@ HomeForm {
         clip: true
         visible: rootItem.chartFooterVisible || rootItem.videoVisible
 
+        // Modern look: a full-width strip in the page colour with a pill in the middle (T-441) –
+        // the whole strip is the touch area, the chart below loses only 6 px of height.
+        // Classic: the purple bar with three lines, as in master
         Rectangle {
             id: dragHandle
-            width: parent.width / 5
-            height: 10
-            color: window.ui.modern ? window.ui.accent : "#9C27B0"
-            radius: window.ui.modern ? 5 : 0
+            width: window.ui.modern ? parent.width : parent.width / 5
+            height: window.ui.modern ? 16 : 10
+            color: window.ui.modern ? window.ui.bg : "#9C27B0"
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
             visible: rootItem.chartFooterVisible || rootItem.videoVisible
 
+            Rectangle {
+                visible: window.ui.modern
+                width: 48
+                height: 5
+                radius: height / 2
+                anchors.centerIn: parent
+                color: Qt.rgba(window.ui.textMuted.r, window.ui.textMuted.g, window.ui.textMuted.b, 0.55)
+            }
+
             Canvas {
+                visible: !window.ui.modern
                 anchors.fill: parent
                 onPaint: {
                     var ctx = getContext("2d");
