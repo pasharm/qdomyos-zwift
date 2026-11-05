@@ -4635,7 +4635,7 @@ Tillat tilgang til QZ-mappen i neste vindu.</translation>
     </message>
     <message>
         <source>Hidden on its page with the current settings</source>
-        <translation>Skjult på siden sin med gjeldende innstillinger</translation>
+        <translation>Skjult på sin side med gjeldende innstillinger</translation>
     </message>
     <message>
         <source>Turn on “%1” to change this setting</source>
