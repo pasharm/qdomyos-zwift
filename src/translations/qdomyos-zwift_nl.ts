@@ -97,6 +97,37 @@
     </message>
 </context>
 <context>
+    <name>HeartRateSuggestion</name>
+    <message>
+        <source>Heart rate sensor found: %1</source>
+        <translation>Hartslagsensor gevonden: %1</translation>
+    </message>
+    <message>
+        <source>Heart rate sensors found: %1</source>
+        <translation>Hartslagsensoren gevonden: %1</translation>
+    </message>
+    <message>
+        <source>Connect</source>
+        <translation>Verbinden</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Kiezen</translation>
+    </message>
+    <message>
+        <source>Not now</source>
+        <translation>Niet nu</translation>
+    </message>
+    <message>
+        <source>Don&apos;t ask again</source>
+        <translation>Niet meer vragen</translation>
+    </message>
+    <message>
+        <source>Choose a heart rate sensor</source>
+        <translation>Kies een hartslagsensor</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>Peloton Workout in progress</source>
@@ -578,6 +609,10 @@ Wil je dat nu doen?</translation>
         <translation>%1 (hartslagsensor) verbonden!</translation>
     </message>
     <message>
+        <source>Searching for heart rate sensors...</source>
+        <translation>Zoeken naar hartslagsensoren…</translation>
+    </message>
+    <message>
         <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
         <translation>Hartslag 30 s gepauzeerd: forceer meerdere keren het stoppen van Garmin Connect, dan maakt het horloge verbinding met QZ.</translation>
     </message>
@@ -628,6 +663,10 @@ Wil je dat nu doen?</translation>
     <message>
         <source>Zwift Play/Ride Connected!</source>
         <translation>Zwift Play/Ride verbonden!</translation>
+    </message>
+    <message>
+        <source>No heart rate sensor found nearby. Make sure it is on and broadcasting heart rate.</source>
+        <translation>Geen hartslagsensor in de buurt gevonden. Controleer of hij aan staat en de hartslag uitzendt.</translation>
     </message>
     <message>
         <source>%1 connected!</source>
@@ -5076,6 +5115,14 @@ Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog 
     <message>
         <source>Refresh Devices List</source>
         <translation>Apparatenlijst vernieuwen</translation>
+    </message>
+    <message>
+        <source>Search for a Heart Rate Sensor at Start</source>
+        <translation>Bij het starten naar een hartslagsensor zoeken</translation>
+    </message>
+    <message>
+        <source>During the first 5 minutes after the fitness machine connects, while no heart rate comes, QZ searches for a heart rate sensor once a minute: it connects the chosen heart belt as soon as it is found or, with none chosen, offers one found nearby. A tap on the heart rate tile or the Bluetooth icon on the home page searches at any time.</source>
+        <translation>In de eerste 5 minuten na het verbinden van het fitnesstoestel zoekt QZ, zolang er geen hartslag binnenkomt, eens per minuut naar een hartslagsensor: de gekozen hartslagband wordt verbonden zodra die gevonden is, of als er geen is gekozen, wordt een sensor in de buurt voorgesteld. Tikken op de hartslagtegel of het Bluetooth-pictogram op de startpagina zoekt op elk moment.</translation>
     </message>
     <message>
         <source>Heart Rate Zone Options</source>

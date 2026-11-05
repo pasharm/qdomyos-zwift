@@ -97,6 +97,37 @@
     </message>
 </context>
 <context>
+    <name>HeartRateSuggestion</name>
+    <message>
+        <source>Heart rate sensor found: %1</source>
+        <translation>Herzfrequenzsensor gefunden: %1</translation>
+    </message>
+    <message>
+        <source>Heart rate sensors found: %1</source>
+        <translation>Herzfrequenzsensoren gefunden: %1</translation>
+    </message>
+    <message>
+        <source>Connect</source>
+        <translation>Verbinden</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Auswählen</translation>
+    </message>
+    <message>
+        <source>Not now</source>
+        <translation>Nicht jetzt</translation>
+    </message>
+    <message>
+        <source>Don&apos;t ask again</source>
+        <translation>Nicht mehr fragen</translation>
+    </message>
+    <message>
+        <source>Choose a heart rate sensor</source>
+        <translation>Herzfrequenzsensor auswählen</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>Peloton Workout in progress</source>
@@ -578,6 +609,10 @@ Möchten Sie die erforderlichen Dienste aktivieren?</translation>
         <translation>%1 (Herzfrequenzsensor) verbunden!</translation>
     </message>
     <message>
+        <source>Searching for heart rate sensors...</source>
+        <translation>Suche nach Herzfrequenzsensoren...</translation>
+    </message>
+    <message>
         <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
         <translation>Herzfrequenz für 30 s pausiert: Erzwingen Sie mehrmals das Beenden von Garmin Connect, dann verbindet sich die Uhr mit QZ.</translation>
     </message>
@@ -628,6 +663,10 @@ Möchten Sie die erforderlichen Dienste aktivieren?</translation>
     <message>
         <source>Zwift Play/Ride Connected!</source>
         <translation>Zwift Play/Ride verbunden!</translation>
+    </message>
+    <message>
+        <source>No heart rate sensor found nearby. Make sure it is on and broadcasting heart rate.</source>
+        <translation>Kein Herzfrequenzsensor in der Nähe gefunden. Prüfe, ob er eingeschaltet ist und die Herzfrequenz sendet.</translation>
     </message>
     <message>
         <source>Sending workout email...</source>
@@ -6018,6 +6057,14 @@ Erlauben Sie im nächsten Fenster den Zugriff auf den QZ-Ordner.</translation>
     <message>
         <source>Refresh Devices List</source>
         <translation>Geräteliste aktualisieren</translation>
+    </message>
+    <message>
+        <source>Search for a Heart Rate Sensor at Start</source>
+        <translation>Beim Start nach Herzfrequenzsensor suchen</translation>
+    </message>
+    <message>
+        <source>During the first 5 minutes after the fitness machine connects, while no heart rate comes, QZ searches for a heart rate sensor once a minute: it connects the chosen heart belt as soon as it is found or, with none chosen, offers one found nearby. A tap on the heart rate tile or the Bluetooth icon on the home page searches at any time.</source>
+        <translation>In den ersten 5 Minuten nach dem Verbinden des Trainingsgeräts sucht QZ, solange keine Herzfrequenz ankommt, einmal pro Minute nach einem Herzfrequenzsensor: Der gewählte Herzgurt wird verbunden, sobald er gefunden ist; ist keiner gewählt, wird ein Sensor in der Nähe angeboten. Ein Tippen auf die Herzfrequenz-Kachel oder das Bluetooth-Symbol auf der Startseite sucht jederzeit.</translation>
     </message>
     <message>
         <source>Zone 1 %:</source>

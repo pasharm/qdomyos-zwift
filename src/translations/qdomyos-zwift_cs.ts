@@ -97,6 +97,37 @@
     </message>
 </context>
 <context>
+    <name>HeartRateSuggestion</name>
+    <message>
+        <source>Heart rate sensor found: %1</source>
+        <translation>Nalezen snímač tepu: %1</translation>
+    </message>
+    <message>
+        <source>Heart rate sensors found: %1</source>
+        <translation>Nalezené snímače tepu: %1</translation>
+    </message>
+    <message>
+        <source>Connect</source>
+        <translation>Připojit</translation>
+    </message>
+    <message>
+        <source>Choose</source>
+        <translation>Vybrat</translation>
+    </message>
+    <message>
+        <source>Not now</source>
+        <translation>Teď ne</translation>
+    </message>
+    <message>
+        <source>Don&apos;t ask again</source>
+        <translation>Už se neptat</translation>
+    </message>
+    <message>
+        <source>Choose a heart rate sensor</source>
+        <translation>Vyberte snímač tepu</translation>
+    </message>
+</context>
+<context>
     <name>Home</name>
     <message>
         <source>Peloton Workout in progress</source>
@@ -578,6 +609,10 @@ Restartovat nyní?</translation>
         <translation>Připojeno: %1 (snímač tepu)!</translation>
     </message>
     <message>
+        <source>Searching for heart rate sensors...</source>
+        <translation>Hledání snímačů tepu…</translation>
+    </message>
+    <message>
         <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
         <translation>Srdeční tep pozastaven na 30 s: několikrát vynuceně zastavte Garmin Connect a hodinky se připojí k QZ.</translation>
     </message>
@@ -628,6 +663,10 @@ Restartovat nyní?</translation>
     <message>
         <source>Zwift Play/Ride Connected!</source>
         <translation>Zwift Play/Ride připojen!</translation>
+    </message>
+    <message>
+        <source>No heart rate sensor found nearby. Make sure it is on and broadcasting heart rate.</source>
+        <translation>V okolí nebyl nalezen žádný snímač tepu. Zkontrolujte, že je zapnutý a vysílá tep.</translation>
     </message>
     <message>
         <source>%1 connected!</source>
@@ -5076,6 +5115,14 @@ Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nasta
     <message>
         <source>Refresh Devices List</source>
         <translation>Obnovit seznam zařízení</translation>
+    </message>
+    <message>
+        <source>Search for a Heart Rate Sensor at Start</source>
+        <translation>Hledat snímač tepu po spuštění</translation>
+    </message>
+    <message>
+        <source>During the first 5 minutes after the fitness machine connects, while no heart rate comes, QZ searches for a heart rate sensor once a minute: it connects the chosen heart belt as soon as it is found or, with none chosen, offers one found nearby. A tap on the heart rate tile or the Bluetooth icon on the home page searches at any time.</source>
+        <translation>Během prvních 5 minut po připojení trenažéru, dokud nepřichází tep, hledá QZ jednou za minutu snímač tepu: vybraný snímač připojí, jakmile ho najde, a když není žádný vybrán, nabídne snímač nalezený poblíž. Klepnutím na dlaždici tepu nebo na ikonu Bluetooth na hlavní stránce lze hledat kdykoli.</translation>
     </message>
     <message>
         <source>Heart Rate Zone Options</source>

@@ -116,8 +116,9 @@ Page {
                     }
                     // No device yet: a tap searches right away instead of waiting for the next search
                     // (with a device connected bluetoothSearchNow() does nothing). With a device connected the tap
-                    // looks for the chosen heart rate sensor again (reconnectHeartRateBelt() waits for the device), or
-                    // lets a Garmin watch go for a while so that it can connect to the QZ sensor
+                    // looks for the chosen heart rate sensor again (reconnectHeartRateBelt() waits for the device),
+                    // with none chosen for one to offer, or lets a Garmin watch go for a while so that it can connect
+                    // to the QZ sensor
                     MouseArea {
                         anchors.fill: parent
                         onClicked: { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt(); }
@@ -322,8 +323,9 @@ Page {
                         }
                         // No device yet: a tap searches right away instead of waiting for the next search
                         // (with a device connected bluetoothSearchNow() does nothing). With a device connected the tap
-                        // looks for the chosen heart rate sensor again (reconnectHeartRateBelt() waits for the device), or
-                        // lets a Garmin watch go for a while so that it can connect to the QZ sensor
+                        // looks for the chosen heart rate sensor again (reconnectHeartRateBelt() waits for the device),
+                        // with none chosen for one to offer, or lets a Garmin watch go for a while so that it can
+                        // connect to the QZ sensor
                         MouseArea {
                             anchors.fill: parent
                             onClicked: { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt(); }

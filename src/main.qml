@@ -676,6 +676,8 @@ ApplicationWindow {
         id: toast
     }
 
+    HeartRateSuggestion {}
+
     property bool lapPromptVisible: false
     property string lapPromptText: ""
 
