@@ -222,28 +222,65 @@ drag_up() { adb shell input swipe 700 1800 700 $((1800 - $1)) 1500 || true; slee
 drag_down() { adb shell input swipe 700 900 700 $((900 + $1)) 1500 || true; sleep 3; }
 to_end() { local i; for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 600 150 || true; done; sleep 4; }
 
-# T-357: Start, Stop and Lap of the classic home page. startColor blinks while stopped, so a burst
-# of frames holds both phases: red with no shadow, the plain button with its shadow, no square
-burst() {
-  local i
-  for i in 1 2 3 4 5 6; do
-    adb exec-out screencap -p > "$1-$i.png" || true
-    sleep 0.4
-  done
+# T-441: the drag handle of the chart under the tiles. The test build (test/t441) shows the chart
+# from the start and logs "T441 footer h <px> page h <px> handle <w>x<h>" on every height change.
+# The handle sits right above the chart (a WebView in the dump): modern 16 dp = 56 px, classic
+# 10 dp = 35 px. A drag either changes the footer height (a new log line) or does not.
+footer_h() { grep -a "T441 footer h" full_logcat.txt | tail -n 1 | sed 's/.*T441 footer h \([0-9]*\).*/\1/'; }
+# drag LABEL X DY_ABOVE_CHART EXPECT(yes|no): press DY px above the top of the chart, pull 500 px up
+drag() {
+  local label="$1" x="$2" dy="$3" expect="$4" top h0 h1 y
+  sleep 2
+  dump
+  top=$(python3 .github/webtop.py ui.xml) || top=""
+  if [ -z "$top" ]; then
+    echo "!! $label: no WebView in the dump - drag skipped" >> $STEPLOG
+    return 1
+  fi
+  h0=$(footer_h)
+  # without the beacon line both heights are empty and "not resized" would pass unseen
+  if [ -z "$h0" ]; then
+    echo "!! $label: no 'T441 footer h' line in logcat (log_debug off or not the test build) - the run proves nothing" >> $STEPLOG
+    return 1
+  fi
+  y=$((top - dy))
+  echo "$label: chart top $top, press at $x $y, footer h before '$h0'" >> $STEPLOG
+  adb shell input swipe $x $y $x $((y - 500)) 1500 || true
+  sleep 3
+  h1=$(footer_h)
+  if [ "$h1" != "$h0" ]; then got=yes; else got=no; fi
+  if [ "$got" = "$expect" ]; then
+    echo "$label: footer h '$h0' -> '$h1', resized=$got: OK" >> $STEPLOG
+  else
+    echo "!! $label: footer h '$h0' -> '$h1', resized=$got, expected $expect" >> $STEPLOG
+  fi
 }
 echo "== API $(adb shell getprop ro.build.version.sdk | tr -d '\r')" >> $STEPLOG
-restart_with ui_modern=false
-step light "classic, light theme: both blink phases"
-shot s-00-home
-burst s-01-light
+
+restart_with ui_modern=true
+sleep 5
+step m-light "modern, light: full-width strip in the page colour, grey pill 48x5 dp in the middle, chart right below"
+shot m-01-light
+# x 150: left of where the old 1/5-width bar was (576..864 on 1440 px) - only the new strip is there
+drag "modern drag at the left edge" 150 28 yes
+step m-dragged "modern after the drag: chart taller, strip and pill above it"
+shot m-02-dragged
+# the theme switched before a restart: QZ does not recreate its window on a uimode change
 adb shell cmd uimode night yes || true
-sleep 8
-step dark "classic, dark theme: both blink phases"
-burst s-02-dark
-step running "Start pressed: no blink, plain buttons"
-tap_ui '^Start' 500 400
-sleep 6
-burst s-03-running
+restart_with ui_modern=true
+sleep 5
+step m-dark "modern, dark: strip in the dark page colour, pill light grey"
+shot m-03-dark
+adb shell cmd uimode night no || true
+
+restart_with ui_modern=false
+sleep 5
+step c-light "classic: purple bar 1/5 width with three white lines, as in master"
+shot c-01-light
+drag "classic drag at the left edge (no handle there)" 150 18 no
+drag "classic drag at the bar" 720 18 yes
+step c-dragged "classic after the drag at the bar: chart taller"
+shot c-02-dragged
 adb shell pidof $PKG > /dev/null && echo "app alive at the end: OK" >> $STEPLOG || echo "!! app not running at the end" >> $STEPLOG
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
