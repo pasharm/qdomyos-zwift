@@ -3924,6 +3924,10 @@ This may take a few moments on first startup.</source>
         <translation>FIT dosyasını paylaş</translation>
     </message>
     <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>Bu antrenmanın FIT dosyası paylaşılamadı</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Lisans onaylandı!</translation>
     </message>

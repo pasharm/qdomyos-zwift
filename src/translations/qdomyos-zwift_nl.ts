@@ -3924,6 +3924,10 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>FIT-bestand delen</translation>
     </message>
     <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>Het FIT-bestand van deze training kon niet worden gedeeld</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Licentie goedgekeurd!</translation>
     </message>

@@ -3921,6 +3921,10 @@ This may take a few moments on first startup.</source>
         <translation>FIT 파일 공유</translation>
     </message>
     <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>이 운동의 FIT 파일을 공유할 수 없습니다</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>라이선스가 승인되었습니다!</translation>
     </message>

@@ -3917,6 +3917,10 @@ Det kan ta en stund vid första starten.</translation>
         <translation>Dela FIT-fil</translation>
     </message>
     <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>FIT-filen för det här passet kunde inte delas</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Licensen godkänd!</translation>
     </message>

@@ -3921,6 +3921,10 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
         <translation>Udostępnij plik FIT</translation>
     </message>
     <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>Nie udało się udostępnić pliku FIT tego treningu</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Licencja zatwierdzona!</translation>
     </message>

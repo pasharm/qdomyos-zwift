@@ -3924,6 +3924,10 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Sdílet soubor FIT</translation>
     </message>
     <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>Soubor FIT tohoto tréninku se nepodařilo sdílet</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Licence potvrzena!</translation>
     </message>
