@@ -259,6 +259,51 @@ const WebTranslationEntry entries[] = {
     {"workoutEditor.durationZero", QT_TRANSLATE_NOOP("WebTranslations", "The duration must be longer than 0")},
     {"workoutEditor.paceFormat", QT_TRANSLATE_NOOP("WebTranslations", "Enter the pace as mm:ss, at least 1:00")},
     {"workoutEditor.fixField", QT_TRANSLATE_NOOP("WebTranslations", "Interval {number}, {field}: {error}")},
+    //: 3D map: tooltip of the "?" button that opens the help on moving the map with the mouse or fingers.
+    {"map.navigationInstructions", QT_TRANSLATE_NOOP("WebTranslations", "Navigation Instructions")},
+    //: 3D map, navigation help: tab with instructions for the mouse.
+    {"map.helpMouse", QT_TRANSLATE_NOOP("WebTranslations", "Mouse")},
+    //: 3D map, navigation help: tab with instructions for touch screens.
+    {"map.helpTouch", QT_TRANSLATE_NOOP("WebTranslations", "Touch")},
+    //: 3D map, navigation help: move the visible area of the map sideways.
+    {"map.panView", QT_TRANSLATE_NOOP("WebTranslations", "Pan view")},
+    //: 3D map, navigation help: zoom the map in or out.
+    {"map.zoomView", QT_TRANSLATE_NOOP("WebTranslations", "Zoom view")},
+    //: 3D map, navigation help: turn the map around.
+    {"map.rotateView", QT_TRANSLATE_NOOP("WebTranslations", "Rotate view")},
+    //: 3D map, navigation help: tilt the camera to look at the map from the side.
+    {"map.tiltView", QT_TRANSLATE_NOOP("WebTranslations", "Tilt view")},
+    {"map.leftClickDrag", QT_TRANSLATE_NOOP("WebTranslations", "Left click + drag")},
+    //: 3D map, navigation help: first of two lines, the second line is "Mouse wheel scroll".
+    {"map.rightClickDragOr", QT_TRANSLATE_NOOP("WebTranslations", "Right click + drag, or")},
+    {"map.mouseWheelScroll", QT_TRANSLATE_NOOP("WebTranslations", "Mouse wheel scroll")},
+    //: 3D map, navigation help: first of two lines, the second line is "CTRL + Left/Right click + drag".
+    {"map.middleClickDragOr", QT_TRANSLATE_NOOP("WebTranslations", "Middle click + drag, or")},
+    {"map.ctrlClickDrag", QT_TRANSLATE_NOOP("WebTranslations", "CTRL + Left/Right click + drag")},
+    {"map.oneFingerDrag", QT_TRANSLATE_NOOP("WebTranslations", "One finger drag")},
+    {"map.twoFingerPinch", QT_TRANSLATE_NOOP("WebTranslations", "Two finger pinch")},
+    //: 3D map, navigation help: both fingers move the same way.
+    {"map.twoFingerDragSame", QT_TRANSLATE_NOOP("WebTranslations", "Two finger drag, same direction")},
+    //: 3D map, navigation help: the fingers move in opposite directions (twist).
+    {"map.twoFingerDragOpposite", QT_TRANSLATE_NOOP("WebTranslations", "Two finger drag, opposite direction")},
+    //: 3D map: tooltip of the button that returns the camera to the start view.
+    {"map.viewHome", QT_TRANSLATE_NOOP("WebTranslations", "View Home")},
+    //: 3D map: tooltip of the scene mode button; Columbus View is a flat map with 3D objects on it.
+    {"map.columbusView", QT_TRANSLATE_NOOP("WebTranslations", "Columbus View")},
+    //: 3D map, map layer picker: section title for the map pictures (satellite, roads).
+    {"map.imagery", QT_TRANSLATE_NOOP("WebTranslations", "Imagery")},
+    //: 3D map, map layer picker: section title for the ground relief (heights).
+    {"map.terrain", QT_TRANSLATE_NOOP("WebTranslations", "Terrain")},
+    //: 3D map, map layer picker: group of map providers other than Cesium ion.
+    {"map.otherProviders", QT_TRANSLATE_NOOP("WebTranslations", "Other")},
+    //: 3D map: placeholder of the place search field.
+    {"map.searchPlaceholder", QT_TRANSLATE_NOOP("WebTranslations", "Enter an address or landmark...")},
+    //: 3D map: tooltip of the camera button in the info box of a selected object (the camera flies to the object and follows it).
+    {"map.focusCamera", QT_TRANSLATE_NOOP("WebTranslations", "Focus camera on object")},
+    //: 3D map: short uppercase label above the start point of the route.
+    {"map.start", QT_TRANSLATE_NOOP("WebTranslations", "START")},
+    //: 3D map: short uppercase label above the end point of the route.
+    {"map.finish", QT_TRANSLATE_NOOP("WebTranslations", "FINISH")},
 };
 } // namespace
 

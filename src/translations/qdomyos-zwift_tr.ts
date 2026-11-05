@@ -2318,6 +2318,126 @@ QZ ayarları güncellensin mi?</translation>
         <source>Interval {number}, {field}: {error}</source>
         <translation>Aralık {number}, {field}: {error}</translation>
     </message>
+    <message>
+        <source>Navigation Instructions</source>
+        <extracomment>3D map: tooltip of the &quot;?&quot; button that opens the help on moving the map with the mouse or fingers.</extracomment>
+        <translation>Gezinme talimatları</translation>
+    </message>
+    <message>
+        <source>Mouse</source>
+        <extracomment>3D map, navigation help: tab with instructions for the mouse.</extracomment>
+        <translation>Fare</translation>
+    </message>
+    <message>
+        <source>Touch</source>
+        <extracomment>3D map, navigation help: tab with instructions for touch screens.</extracomment>
+        <translation>Dokunma</translation>
+    </message>
+    <message>
+        <source>Pan view</source>
+        <extracomment>3D map, navigation help: move the visible area of the map sideways.</extracomment>
+        <translation>Görünümü kaydır</translation>
+    </message>
+    <message>
+        <source>Zoom view</source>
+        <extracomment>3D map, navigation help: zoom the map in or out.</extracomment>
+        <translation>Yakınlaştır veya uzaklaştır</translation>
+    </message>
+    <message>
+        <source>Rotate view</source>
+        <extracomment>3D map, navigation help: turn the map around.</extracomment>
+        <translation>Görünümü döndür</translation>
+    </message>
+    <message>
+        <source>Tilt view</source>
+        <extracomment>3D map, navigation help: tilt the camera to look at the map from the side.</extracomment>
+        <translation>Görünümü eğ</translation>
+    </message>
+    <message>
+        <source>Left click + drag</source>
+        <translation>Sol tık + sürükle</translation>
+    </message>
+    <message>
+        <source>Right click + drag, or</source>
+        <extracomment>3D map, navigation help: first of two lines, the second line is &quot;Mouse wheel scroll&quot;.</extracomment>
+        <translation>Sağ tık + sürükle veya</translation>
+    </message>
+    <message>
+        <source>Mouse wheel scroll</source>
+        <translation>Fare tekerleği</translation>
+    </message>
+    <message>
+        <source>Middle click + drag, or</source>
+        <extracomment>3D map, navigation help: first of two lines, the second line is &quot;CTRL + Left/Right click + drag&quot;.</extracomment>
+        <translation>Orta tık + sürükle veya</translation>
+    </message>
+    <message>
+        <source>CTRL + Left/Right click + drag</source>
+        <translation>CTRL + sol/sağ tık + sürükle</translation>
+    </message>
+    <message>
+        <source>One finger drag</source>
+        <translation>Tek parmakla sürükle</translation>
+    </message>
+    <message>
+        <source>Two finger pinch</source>
+        <translation>İki parmakla sıkıştır</translation>
+    </message>
+    <message>
+        <source>Two finger drag, same direction</source>
+        <extracomment>3D map, navigation help: both fingers move the same way.</extracomment>
+        <translation>İki parmağı aynı yöne sürükle</translation>
+    </message>
+    <message>
+        <source>Two finger drag, opposite direction</source>
+        <extracomment>3D map, navigation help: the fingers move in opposite directions (twist).</extracomment>
+        <translation>İki parmağı zıt yönlere sürükle</translation>
+    </message>
+    <message>
+        <source>View Home</source>
+        <extracomment>3D map: tooltip of the button that returns the camera to the start view.</extracomment>
+        <translation>Başlangıç görünümü</translation>
+    </message>
+    <message>
+        <source>Columbus View</source>
+        <extracomment>3D map: tooltip of the scene mode button; Columbus View is a flat map with 3D objects on it.</extracomment>
+        <translation>Düz 3D harita</translation>
+    </message>
+    <message>
+        <source>Imagery</source>
+        <extracomment>3D map, map layer picker: section title for the map pictures (satellite, roads).</extracomment>
+        <translation>Görüntüler</translation>
+    </message>
+    <message>
+        <source>Terrain</source>
+        <extracomment>3D map, map layer picker: section title for the ground relief (heights).</extracomment>
+        <translation>Arazi</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <extracomment>3D map, map layer picker: group of map providers other than Cesium ion.</extracomment>
+        <translation>Diğer</translation>
+    </message>
+    <message>
+        <source>Enter an address or landmark...</source>
+        <extracomment>3D map: placeholder of the place search field.</extracomment>
+        <translation>Bir adres veya yer girin...</translation>
+    </message>
+    <message>
+        <source>Focus camera on object</source>
+        <extracomment>3D map: tooltip of the camera button in the info box of a selected object (the camera flies to the object and follows it).</extracomment>
+        <translation>Kamerayı nesneye odakla</translation>
+    </message>
+    <message>
+        <source>START</source>
+        <extracomment>3D map: short uppercase label above the start point of the route.</extracomment>
+        <translation>BAŞLANGIÇ</translation>
+    </message>
+    <message>
+        <source>FINISH</source>
+        <extracomment>3D map: short uppercase label above the end point of the route.</extracomment>
+        <translation>BİTİŞ</translation>
+    </message>
 </context>
 <context>
     <name>Wizard</name>

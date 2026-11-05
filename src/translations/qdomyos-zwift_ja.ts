@@ -2318,6 +2318,126 @@ QZの設定を更新しますか?</translation>
         <source>Interval {number}, {field}: {error}</source>
         <translation>インターバル {number}、{field}: {error}</translation>
     </message>
+    <message>
+        <source>Navigation Instructions</source>
+        <extracomment>3D map: tooltip of the &quot;?&quot; button that opens the help on moving the map with the mouse or fingers.</extracomment>
+        <translation>操作方法</translation>
+    </message>
+    <message>
+        <source>Mouse</source>
+        <extracomment>3D map, navigation help: tab with instructions for the mouse.</extracomment>
+        <translation>マウス</translation>
+    </message>
+    <message>
+        <source>Touch</source>
+        <extracomment>3D map, navigation help: tab with instructions for touch screens.</extracomment>
+        <translation>タッチ</translation>
+    </message>
+    <message>
+        <source>Pan view</source>
+        <extracomment>3D map, navigation help: move the visible area of the map sideways.</extracomment>
+        <translation>視点の移動</translation>
+    </message>
+    <message>
+        <source>Zoom view</source>
+        <extracomment>3D map, navigation help: zoom the map in or out.</extracomment>
+        <translation>ズーム</translation>
+    </message>
+    <message>
+        <source>Rotate view</source>
+        <extracomment>3D map, navigation help: turn the map around.</extracomment>
+        <translation>視点の回転</translation>
+    </message>
+    <message>
+        <source>Tilt view</source>
+        <extracomment>3D map, navigation help: tilt the camera to look at the map from the side.</extracomment>
+        <translation>視点の傾き</translation>
+    </message>
+    <message>
+        <source>Left click + drag</source>
+        <translation>左クリック + ドラッグ</translation>
+    </message>
+    <message>
+        <source>Right click + drag, or</source>
+        <extracomment>3D map, navigation help: first of two lines, the second line is &quot;Mouse wheel scroll&quot;.</extracomment>
+        <translation>右クリック + ドラッグ、または</translation>
+    </message>
+    <message>
+        <source>Mouse wheel scroll</source>
+        <translation>マウスホイール</translation>
+    </message>
+    <message>
+        <source>Middle click + drag, or</source>
+        <extracomment>3D map, navigation help: first of two lines, the second line is &quot;CTRL + Left/Right click + drag&quot;.</extracomment>
+        <translation>中クリック + ドラッグ、または</translation>
+    </message>
+    <message>
+        <source>CTRL + Left/Right click + drag</source>
+        <translation>CTRL + 左/右クリック + ドラッグ</translation>
+    </message>
+    <message>
+        <source>One finger drag</source>
+        <translation>1本指でドラッグ</translation>
+    </message>
+    <message>
+        <source>Two finger pinch</source>
+        <translation>2本指でピンチ</translation>
+    </message>
+    <message>
+        <source>Two finger drag, same direction</source>
+        <extracomment>3D map, navigation help: both fingers move the same way.</extracomment>
+        <translation>2本指で同じ方向にドラッグ</translation>
+    </message>
+    <message>
+        <source>Two finger drag, opposite direction</source>
+        <extracomment>3D map, navigation help: the fingers move in opposite directions (twist).</extracomment>
+        <translation>2本指で逆方向にドラッグ</translation>
+    </message>
+    <message>
+        <source>View Home</source>
+        <extracomment>3D map: tooltip of the button that returns the camera to the start view.</extracomment>
+        <translation>初期表示</translation>
+    </message>
+    <message>
+        <source>Columbus View</source>
+        <extracomment>3D map: tooltip of the scene mode button; Columbus View is a flat map with 3D objects on it.</extracomment>
+        <translation>平面3Dマップ</translation>
+    </message>
+    <message>
+        <source>Imagery</source>
+        <extracomment>3D map, map layer picker: section title for the map pictures (satellite, roads).</extracomment>
+        <translation>画像</translation>
+    </message>
+    <message>
+        <source>Terrain</source>
+        <extracomment>3D map, map layer picker: section title for the ground relief (heights).</extracomment>
+        <translation>地形</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <extracomment>3D map, map layer picker: group of map providers other than Cesium ion.</extracomment>
+        <translation>その他</translation>
+    </message>
+    <message>
+        <source>Enter an address or landmark...</source>
+        <extracomment>3D map: placeholder of the place search field.</extracomment>
+        <translation>住所または地名を入力...</translation>
+    </message>
+    <message>
+        <source>Focus camera on object</source>
+        <extracomment>3D map: tooltip of the camera button in the info box of a selected object (the camera flies to the object and follows it).</extracomment>
+        <translation>カメラをオブジェクトに合わせる</translation>
+    </message>
+    <message>
+        <source>START</source>
+        <extracomment>3D map: short uppercase label above the start point of the route.</extracomment>
+        <translation>スタート</translation>
+    </message>
+    <message>
+        <source>FINISH</source>
+        <extracomment>3D map: short uppercase label above the end point of the route.</extracomment>
+        <translation>ゴール</translation>
+    </message>
 </context>
 <context>
     <name>Wizard</name>

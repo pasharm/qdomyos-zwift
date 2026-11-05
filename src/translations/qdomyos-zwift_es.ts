@@ -2318,6 +2318,126 @@ Do you want to update QZ settings?</source>
         <source>Interval {number}, {field}: {error}</source>
         <translation>Intervalo {number}, {field}: {error}</translation>
     </message>
+    <message>
+        <source>Navigation Instructions</source>
+        <extracomment>3D map: tooltip of the &quot;?&quot; button that opens the help on moving the map with the mouse or fingers.</extracomment>
+        <translation>Instrucciones de navegación</translation>
+    </message>
+    <message>
+        <source>Mouse</source>
+        <extracomment>3D map, navigation help: tab with instructions for the mouse.</extracomment>
+        <translation>Ratón</translation>
+    </message>
+    <message>
+        <source>Touch</source>
+        <extracomment>3D map, navigation help: tab with instructions for touch screens.</extracomment>
+        <translation>Táctil</translation>
+    </message>
+    <message>
+        <source>Pan view</source>
+        <extracomment>3D map, navigation help: move the visible area of the map sideways.</extracomment>
+        <translation>Desplazar la vista</translation>
+    </message>
+    <message>
+        <source>Zoom view</source>
+        <extracomment>3D map, navigation help: zoom the map in or out.</extracomment>
+        <translation>Acercar o alejar la vista</translation>
+    </message>
+    <message>
+        <source>Rotate view</source>
+        <extracomment>3D map, navigation help: turn the map around.</extracomment>
+        <translation>Girar la vista</translation>
+    </message>
+    <message>
+        <source>Tilt view</source>
+        <extracomment>3D map, navigation help: tilt the camera to look at the map from the side.</extracomment>
+        <translation>Inclinar la vista</translation>
+    </message>
+    <message>
+        <source>Left click + drag</source>
+        <translation>Clic izquierdo + arrastrar</translation>
+    </message>
+    <message>
+        <source>Right click + drag, or</source>
+        <extracomment>3D map, navigation help: first of two lines, the second line is &quot;Mouse wheel scroll&quot;.</extracomment>
+        <translation>Clic derecho + arrastrar, o</translation>
+    </message>
+    <message>
+        <source>Mouse wheel scroll</source>
+        <translation>Rueda del ratón</translation>
+    </message>
+    <message>
+        <source>Middle click + drag, or</source>
+        <extracomment>3D map, navigation help: first of two lines, the second line is &quot;CTRL + Left/Right click + drag&quot;.</extracomment>
+        <translation>Clic central + arrastrar, o</translation>
+    </message>
+    <message>
+        <source>CTRL + Left/Right click + drag</source>
+        <translation>CTRL + clic izquierdo/derecho + arrastrar</translation>
+    </message>
+    <message>
+        <source>One finger drag</source>
+        <translation>Arrastrar con un dedo</translation>
+    </message>
+    <message>
+        <source>Two finger pinch</source>
+        <translation>Pellizcar con dos dedos</translation>
+    </message>
+    <message>
+        <source>Two finger drag, same direction</source>
+        <extracomment>3D map, navigation help: both fingers move the same way.</extracomment>
+        <translation>Arrastrar dos dedos en la misma dirección</translation>
+    </message>
+    <message>
+        <source>Two finger drag, opposite direction</source>
+        <extracomment>3D map, navigation help: the fingers move in opposite directions (twist).</extracomment>
+        <translation>Arrastrar dos dedos en direcciones opuestas</translation>
+    </message>
+    <message>
+        <source>View Home</source>
+        <extracomment>3D map: tooltip of the button that returns the camera to the start view.</extracomment>
+        <translation>Vista inicial</translation>
+    </message>
+    <message>
+        <source>Columbus View</source>
+        <extracomment>3D map: tooltip of the scene mode button; Columbus View is a flat map with 3D objects on it.</extracomment>
+        <translation>Mapa plano 3D</translation>
+    </message>
+    <message>
+        <source>Imagery</source>
+        <extracomment>3D map, map layer picker: section title for the map pictures (satellite, roads).</extracomment>
+        <translation>Imágenes</translation>
+    </message>
+    <message>
+        <source>Terrain</source>
+        <extracomment>3D map, map layer picker: section title for the ground relief (heights).</extracomment>
+        <translation>Terreno</translation>
+    </message>
+    <message>
+        <source>Other</source>
+        <extracomment>3D map, map layer picker: group of map providers other than Cesium ion.</extracomment>
+        <translation>Otros</translation>
+    </message>
+    <message>
+        <source>Enter an address or landmark...</source>
+        <extracomment>3D map: placeholder of the place search field.</extracomment>
+        <translation>Introduce una dirección o un lugar...</translation>
+    </message>
+    <message>
+        <source>Focus camera on object</source>
+        <extracomment>3D map: tooltip of the camera button in the info box of a selected object (the camera flies to the object and follows it).</extracomment>
+        <translation>Centrar la cámara en el objeto</translation>
+    </message>
+    <message>
+        <source>START</source>
+        <extracomment>3D map: short uppercase label above the start point of the route.</extracomment>
+        <translation>SALIDA</translation>
+    </message>
+    <message>
+        <source>FINISH</source>
+        <extracomment>3D map: short uppercase label above the end point of the route.</extracomment>
+        <translation>META</translation>
+    </message>
 </context>
 <context>
     <name>Wizard</name>

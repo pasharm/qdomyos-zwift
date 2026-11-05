@@ -96,6 +96,101 @@ viewer.trackedEntity = bike;
         return window.qzTranslate ? window.qzTranslate(key, fallback) : fallback;
     }
 
+    let startMarker = null;
+    let finishMarker = null;
+
+    // The Cesium widgets have no translation API: their English texts are replaced
+    // by exact match. A text that differs in another Cesium version stays in English.
+    const cesiumTexts = {
+        'Navigation Instructions': 'map.navigationInstructions',
+        'Mouse': 'map.helpMouse',
+        'Touch': 'map.helpTouch',
+        'Pan view': 'map.panView',
+        'Zoom view': 'map.zoomView',
+        'Rotate view': 'map.rotateView',
+        'Tilt view': 'map.tiltView',
+        'Left click + drag': 'map.leftClickDrag',
+        'Right click + drag, or': 'map.rightClickDragOr',
+        'Mouse wheel scroll': 'map.mouseWheelScroll',
+        'Middle click + drag, or': 'map.middleClickDragOr',
+        'CTRL + Left/Right click + drag': 'map.ctrlClickDrag',
+        'One finger drag': 'map.oneFingerDrag',
+        'Two finger pinch': 'map.twoFingerPinch',
+        'Two finger drag, same direction': 'map.twoFingerDragSame',
+        'Two finger drag, opposite direction': 'map.twoFingerDragOpposite',
+        'View Home': 'map.viewHome',
+        'Columbus View': 'map.columbusView',
+        'Imagery': 'map.imagery',
+        'Terrain': 'map.terrain',
+        'Other': 'map.otherProviders',
+        'Enter an address or landmark...': 'map.searchPlaceholder',
+        'Focus camera on object': 'map.focusCamera'
+    };
+
+    function cesiumText(english) {
+        if (!Object.prototype.hasOwnProperty.call(cesiumTexts, english)) {
+            return null;
+        }
+        return t(cesiumTexts[english], english);
+    }
+
+    // Translates one attribute; the English original is kept on the element,
+    // so a later translation update starts from it again.
+    function translateCesiumAttribute(el, name) {
+        const store = 'qzEnglish_' + name;
+        if (el[store] === undefined) {
+            el[store] = el.getAttribute(name);
+        }
+        const translated = cesiumText(el[store]);
+        if (translated) {
+            el.setAttribute(name, translated);
+        }
+    }
+
+    function translateMapPage() {
+        // Tooltips bound to the widget view models.
+        if (viewer.homeButton) {
+            viewer.homeButton.viewModel.tooltip = cesiumText('View Home');
+        }
+        if (viewer.sceneModePicker) {
+            viewer.sceneModePicker.viewModel.tooltipColumbusView = cesiumText('Columbus View');
+        }
+        if (viewer.navigationHelpButton) {
+            viewer.navigationHelpButton.viewModel.tooltip = cesiumText('Navigation Instructions');
+        }
+
+        // Static texts: navigation help, layer picker titles. Only the toolbar is walked:
+        // the info box title there shows names from the GPX file.
+        const toolbar = viewer.container.querySelector('.cesium-viewer-toolbar');
+        if (toolbar) {
+            const walker = document.createTreeWalker(toolbar, NodeFilter.SHOW_TEXT, null, false);
+            let node = walker.nextNode();
+            while (node) {
+                if (node.qzEnglish === undefined) {
+                    node.qzEnglish = node.nodeValue.trim();
+                }
+                const translated = cesiumText(node.qzEnglish);
+                if (translated) {
+                    node.nodeValue = translated;
+                }
+                node = walker.nextNode();
+            }
+            toolbar.querySelectorAll('[placeholder]').forEach(function(el) {
+                translateCesiumAttribute(el, 'placeholder');
+            });
+        }
+        viewer.container.querySelectorAll('[title]').forEach(function(el) {
+            translateCesiumAttribute(el, 'title');
+        });
+
+        if (startMarker) {
+            startMarker.label.text = t('map.start', 'START');
+        }
+        if (finishMarker) {
+            finishMarker.label.text = t('map.finish', 'FINISH');
+        }
+    }
+
     function a() {
     onWorkout = false;
     let el = new MainWSQueueElement({
@@ -264,7 +359,7 @@ Promise.resolve(
 										// Add start marker (green) - elevated 45m above ground
 										const startPos = Cesium.Cartographic.fromCartesian(positions[0]);
 										const elevatedStartPos = Cesium.Cartesian3.fromRadians(startPos.longitude, startPos.latitude, startPos.height + 45);
-										viewer.entities.add({
+										startMarker = viewer.entities.add({
 											position: elevatedStartPos,
 											billboard: {
 												image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiMwMEZGMDAiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRkZGRiI+CjxwYXRoIGQ9Im04IDEyIDQgNCA4LTgiLz4KPC9zdmc+Cjwvc3ZnPgo=',
@@ -273,7 +368,7 @@ Promise.resolve(
 												verticalOrigin: Cesium.VerticalOrigin.BOTTOM
 											},
 											label: {
-												text: 'START',
+												text: t('map.start', 'START'),
 												font: 'bold 14px sans-serif',
 												fillColor: Cesium.Color.WHITE,
 												outlineColor: Cesium.Color.BLACK,
@@ -287,7 +382,7 @@ Promise.resolve(
 										// Add end marker (red) - elevated 45m above ground
 										const endPos = Cesium.Cartographic.fromCartesian(positions[positions.length - 1]);
 										const elevatedEndPos = Cesium.Cartesian3.fromRadians(endPos.longitude, endPos.latitude, endPos.height + 45);
-										viewer.entities.add({
+										finishMarker = viewer.entities.add({
 											position: elevatedEndPos,
 											billboard: {
 												image: 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMTYiIGN5PSIxNiIgcj0iMTYiIGZpbGw9IiNGRjAwMDAiLz4KPHN2ZyB4PSI4IiB5PSI4IiB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0iI0ZGRkZGRiI+CjxwYXRoIGQ9Ik02IDZoMTJ2MTJINnoiLz4KPC9zdmc+Cjwvc3ZnPgo=',
@@ -296,7 +391,7 @@ Promise.resolve(
 												verticalOrigin: Cesium.VerticalOrigin.BOTTOM
 											},
 											label: {
-												text: 'FINISH',
+												text: t('map.finish', 'FINISH'),
 												font: 'bold 14px sans-serif',
 												fillColor: Cesium.Color.WHITE,
 												outlineColor: Cesium.Color.BLACK,
@@ -324,6 +419,13 @@ el.enqueue().then(process_gpxbase64).catch(function(err) {
 console.error('Error is ' + err);
 });
       setTimeout(a,0);
+
+      // On a touch screen the help opens on the touch instructions, not on the mouse ones.
+      if (viewer.navigationHelpButton && (navigator.maxTouchPoints > 0 || 'ontouchstart' in window)) {
+          viewer.navigationHelpButton.viewModel.showTouch();
+      }
+      translateMapPage();
+      document.addEventListener('qz-translations-updated', translateMapPage);
 
       // Metrics container drag and resize functionality
       (function() {
