@@ -3076,6 +3076,10 @@ Det kan tage et øjeblik ved første start.</translation>
         <translation>Alle filer (*)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Del FIT-fil</translation>
+    </message>
+    <message>
         <source>Importing workouts...</source>
         <translation>Importerer træningspas...</translation>
     </message>
@@ -3688,6 +3692,14 @@ Det kan tage et øjeblik ved første start.</translation>
     <message>
         <source>W </source>
         <translation>W </translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Del FIT-fil</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>FIT-filen for denne træning kunne ikke deles</translation>
     </message>
     <message>
         <source>, speed </source>
@@ -4369,6 +4381,10 @@ Nej: QZ beholder den som løbebånd og spørger ikke igen (en cykel kan stadig a
     <message>
         <source>Search settings</source>
         <translation>Søg i indstillinger</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Del FIT-fil</translation>
     </message>
     <message>
         <source>Profile: </source>

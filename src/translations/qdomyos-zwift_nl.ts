@@ -3076,6 +3076,10 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Alle bestanden (*)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FIT-bestand delen</translation>
+    </message>
+    <message>
         <source>Importing workouts...</source>
         <translation>Trainingen importeren…</translation>
     </message>
@@ -3688,6 +3692,14 @@ Bij de eerste start kan dit even duren.</translation>
     <message>
         <source>W </source>
         <translation>W </translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FIT-bestand delen</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>Het FIT-bestand van deze training kon niet worden gedeeld</translation>
     </message>
     <message>
         <source>, speed </source>
@@ -4369,6 +4381,10 @@ Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog 
     <message>
         <source>Search settings</source>
         <translation>Instellingen zoeken</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FIT-bestand delen</translation>
     </message>
     <message>
         <source>Profile: </source>

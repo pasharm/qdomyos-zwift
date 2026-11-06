@@ -3072,6 +3072,10 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <translation>Minden fájl (*)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FIT-fájl megosztása</translation>
+    </message>
+    <message>
         <source>Importing workouts...</source>
         <translation>Edzések importálása...</translation>
     </message>
@@ -3684,6 +3688,14 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
     <message>
         <source>W </source>
         <translation>W </translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FIT-fájl megosztása</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>Az edzés FIT-fájlját nem sikerült megosztani</translation>
     </message>
     <message>
         <source>, speed </source>
@@ -4365,6 +4377,10 @@ Nem: a QZ futópadként kezeli tovább, és többé nem kérdez rá (a kerékpá
     <message>
         <source>Search settings</source>
         <translation>Keresés a beállításokban</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FIT-fájl megosztása</translation>
     </message>
     <message>
         <source>Profile: </source>

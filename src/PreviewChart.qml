@@ -9,6 +9,8 @@ import QtQuick.Window 2.2
 ColumnLayout {
     signal popupclose()
     id: column1
+    // the workout file shown, set by the workout history: the toolbar shows Share for it
+    property string fitFilePath: ""
     spacing: 10
     anchors.fill: parent
 

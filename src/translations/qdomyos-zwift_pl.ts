@@ -3076,6 +3076,10 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
         <translation>Wszystkie pliki (*)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Udostępnij plik FIT</translation>
+    </message>
+    <message>
         <source>Importing workouts...</source>
         <translation>Importowanie treningów…</translation>
     </message>
@@ -3685,6 +3689,14 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
     <message>
         <source>W </source>
         <translation>W </translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Udostępnij plik FIT</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>Nie udało się udostępnić pliku FIT tego treningu</translation>
     </message>
     <message>
         <source>, speed </source>
@@ -4366,6 +4378,10 @@ Nie: QZ pozostawi je jako bieżnię i nie zapyta ponownie (rower można nadal us
     <message>
         <source>Search settings</source>
         <translation>Szukaj w ustawieniach</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Udostępnij plik FIT</translation>
     </message>
     <message>
         <source>Profile: </source>

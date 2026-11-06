@@ -2960,6 +2960,10 @@ This may take a few moments on first startup.</source>
         <translation>ккал</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Поделиться файлом FIT</translation>
+    </message>
+    <message>
         <source>Upload to Strava</source>
         <translation>Загрузить в Strava</translation>
     </message>
@@ -3875,6 +3879,14 @@ This may take a few moments on first startup.</source>
         <translation>Ошибка получения токена доступа, %1 (%2)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Поделиться файлом FIT</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>Не удалось поделиться файлом FIT этой тренировки</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Лицензия подтверждена!</translation>
     </message>
@@ -4369,6 +4381,10 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <source>Search settings</source>
         <translation>Поиск настроек</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Поделиться файлом FIT</translation>
     </message>
     <message>
         <source>Profile: </source>

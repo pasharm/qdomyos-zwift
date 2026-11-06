@@ -3072,6 +3072,10 @@ Det kan ta en stund vid första starten.</translation>
         <translation>Alla filer (*)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Dela FIT-fil</translation>
+    </message>
+    <message>
         <source>Importing workouts...</source>
         <translation>Importerar träningspass…</translation>
     </message>
@@ -3684,6 +3688,14 @@ Det kan ta en stund vid första starten.</translation>
     <message>
         <source>W </source>
         <translation>W </translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Dela FIT-fil</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>FIT-filen för det här passet kunde inte delas</translation>
     </message>
     <message>
         <source>, speed </source>
@@ -4365,6 +4377,10 @@ Nej: QZ behåller den som löpband och frågar inte igen (du kan fortfarande vä
     <message>
         <source>Search settings</source>
         <translation>Sök i inställningar</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Dela FIT-fil</translation>
     </message>
     <message>
         <source>Profile: </source>

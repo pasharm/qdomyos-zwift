@@ -2930,6 +2930,10 @@ The following questions will customize QZ for your equipment and goals.</source>
         <translation>すべてのファイル (*)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FITファイルを共有</translation>
+    </message>
+    <message>
         <source>Importing workouts...</source>
         <translation>ワークアウトをインポート中...</translation>
     </message>
@@ -3758,6 +3762,14 @@ This may take a few moments on first startup.</source>
         <translation>アクセス トークンの取得に失敗しました、%1 (%2)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FITファイルを共有</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>このワークアウトのFITファイルを共有できませんでした</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>ライセンスが承認されました！</translation>
     </message>
@@ -4336,6 +4348,10 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
     <message>
         <source>Search settings</source>
         <translation>設定を検索</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FITファイルを共有</translation>
     </message>
     <message>
         <source>Profile: </source>

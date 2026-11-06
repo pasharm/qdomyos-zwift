@@ -3076,6 +3076,10 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Všechny soubory (*)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Sdílet soubor FIT</translation>
+    </message>
+    <message>
         <source>Importing workouts...</source>
         <translation>Importování tréninků…</translation>
     </message>
@@ -3688,6 +3692,14 @@ Při prvním spuštění to může chvíli trvat.</translation>
     <message>
         <source>W </source>
         <translation>W </translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Sdílet soubor FIT</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>Soubor FIT tohoto tréninku se nepodařilo sdílet</translation>
     </message>
     <message>
         <source>, speed </source>
@@ -4369,6 +4381,10 @@ Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nasta
     <message>
         <source>Search settings</source>
         <translation>Hledat v nastavení</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Sdílet soubor FIT</translation>
     </message>
     <message>
         <source>Profile: </source>

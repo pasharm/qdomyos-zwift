@@ -2930,6 +2930,10 @@ Le seguenti domande personalizzeranno QZ per la tua attrezzatura e i tuoi obiett
         <translation>Tutti i file (*)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Condividi file FIT</translation>
+    </message>
+    <message>
         <source>Importing workouts...</source>
         <translation>Importazione degli allenamenti...</translation>
     </message>
@@ -3757,6 +3761,14 @@ Al primo avvio potrebbe richiedere qualche istante.</translation>
         <translation>Errore nel recuperare il token di accesso, %1 (%2)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Condividi file FIT</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>Impossibile condividere il file FIT di questo allenamento</translation>
+    </message>
+    <message>
         <source>License Approved!</source>
         <translation>Licenza approvata!</translation>
     </message>
@@ -4335,6 +4347,10 @@ Vuoi passare al bridge Bluetooth classico per questa sessione?</translation>
     <message>
         <source>Search settings</source>
         <translation>Cerca impostazioni</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Condividi file FIT</translation>
     </message>
     <message>
         <source>Profile: </source>

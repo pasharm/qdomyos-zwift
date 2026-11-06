@@ -3076,6 +3076,10 @@ This may take a few moments on first startup.</source>
         <translation>Tüm dosyalar (*)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>FIT dosyasını paylaş</translation>
+    </message>
+    <message>
         <source>Importing workouts...</source>
         <translation>Antrenmanlar içe aktarılıyor…</translation>
     </message>
@@ -3688,6 +3692,14 @@ This may take a few moments on first startup.</source>
     <message>
         <source>W </source>
         <translation>W </translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FIT dosyasını paylaş</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>Bu antrenmanın FIT dosyası paylaşılamadı</translation>
     </message>
     <message>
         <source>, speed </source>
@@ -4369,6 +4381,10 @@ Hayır: QZ cihazı koşu bandı olarak tutar ve bir daha sormaz (bisiklet yine e
     <message>
         <source>Search settings</source>
         <translation>Ayarlarda ara</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FIT dosyasını paylaş</translation>
     </message>
     <message>
         <source>Profile: </source>

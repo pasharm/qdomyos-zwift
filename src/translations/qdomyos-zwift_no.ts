@@ -3076,6 +3076,10 @@ Dette kan ta litt tid ved første oppstart.</translation>
         <translation>Alle filer (*)</translation>
     </message>
     <message>
+        <source>Share FIT file</source>
+        <translation>Del FIT-fil</translation>
+    </message>
+    <message>
         <source>Importing workouts...</source>
         <translation>Importerer treningsøkter …</translation>
     </message>
@@ -3688,6 +3692,14 @@ Dette kan ta litt tid ved første oppstart.</translation>
     <message>
         <source>W </source>
         <translation>W </translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Del FIT-fil</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>FIT-filen for denne økten kunne ikke deles</translation>
     </message>
     <message>
         <source>, speed </source>
@@ -4369,6 +4381,10 @@ Nei: QZ beholder den som tredemølle og spør ikke igjen (du kan fortsatt velge 
     <message>
         <source>Search settings</source>
         <translation>Søk i innstillinger</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Del FIT-fil</translation>
     </message>
     <message>
         <source>Profile: </source>
