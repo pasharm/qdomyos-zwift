@@ -42,7 +42,14 @@ T.ComboBox {
     }
     onSavedTextChanged: control.showSaved()
     onSavedIndexChanged: control.showSaved()
-    Component.onCompleted: control.showSaved()
+    Component.onCompleted: {
+        control.showSaved()
+        // Screen reader: the text inside the box (the Material style's TextField) is a node of
+        // its own, so a TalkBack swipe also stopped on it and read the bare value ("75"); the box
+        // itself already reads its name and value. None of these boxes is editable
+        if (!control.editable && control.contentItem)
+            control.contentItem.Accessible.ignored = true
+    }
 
     // Width of the widest item, measured when the list opens (#5236)
     property real widestItem: 0
@@ -90,6 +97,11 @@ T.ComboBox {
         id: menuItem
         width: ListView.view.width
         text: control.labelFor(control.textRole ? (Array.isArray(control.model) ? modelData[control.textRole] : model[control.textRole]) : modelData)
+        // Screen reader: Qt 5.15 gives a MenuItem no accessible action (Qt 6.5 does), so on
+        // Android its node is not clickable and a TalkBack touch on an item went to the whole
+        // window. The name is set from the text too, as in the menus of the workout history
+        Accessible.name: text
+        Accessible.onPressAction: clicked()
         Material.foreground: control.currentIndex === index ? ListView.view.contentItem.Material.accent : ListView.view.contentItem.Material.foreground
         highlighted: control.highlightedIndex === index
         hoverEnabled: control.hoverEnabled
@@ -193,6 +205,10 @@ T.ComboBox {
         height: Math.min(control.count * control.Material.menuItemHeight + topPadding + bottomPadding,
                          control.Window.height - topMargin - bottomMargin)
         transformOrigin: Item.Top
+        // Modal, as the menus of the workout history, so a screen reader's touch on an item cannot
+        // reach the row under the list; no dim, so it looks as before
+        modal: true
+        dim: false
         // The window runs under the status and gesture bars (edge to edge) in both looks, a
         // long list pushed to the top hid its first item under the status bar (#5236)
         topMargin: 12 + window.getTopPadding()
