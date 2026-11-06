@@ -239,13 +239,20 @@ open_search() {
 # type_query 'text': the field emptied and the text typed; then past the delay of master (1.5 s)
 # with room for the search itself, and one key more, which throws the shown results away
 # (the clear line) and searches again
-type_query() {
+# clear_field: the field emptied wherever the tap put the cursor (on API 30 at the start: the
+# keys back from the end alone left the old text, 42231917316 - the queries were glued)
+clear_field() {
   local i
   tap_field
   sleep 1
   adb shell input keyevent KEYCODE_MOVE_END || true
   for i in $(seq 1 30); do adb shell input keyevent KEYCODE_DEL || true; done
+  adb shell input keyevent KEYCODE_MOVE_HOME || true
+  for i in $(seq 1 30); do adb shell input keyevent KEYCODE_FORWARD_DEL || true; done
   sleep 3
+}
+type_query() {
+  clear_field
   adb shell input text "$1"
   echo "query '$1'" >> $STEPLOG
   sleep 6
@@ -254,43 +261,47 @@ type_query() {
   sleep 6
 }
 
-# kept_check: the shown results stay while typing. 'pac' typed and its results waited for, then
-# one key more ('pace') and dumps back to back: only a dump that ended within 1.5 s of the key
-# counts (master is then surely still in its delay and shows "Searching..."). Red: "Searching..."
-# in such a dump (the list went away), or no such dump (nothing proved)
+# kept_check: the shown results stay while typing. 'pac' typed, its search line (query='pac' in
+# the log, so the field held just that) and results heading waited for; then one key more and a
+# dump at once: master is still in its delay (1.5 s) and shows "Searching...", the fix keeps the
+# results of 'pac' until those of 'pace' come. A dump of 2.3 s on API 35 still caught
+# "Searching..." on master (42231917316: the tree is taken early in the dump), so what the check
+# tells is proved per API by the run on master being red with "went away". Red: "Searching..."
+# in a dump after the key, no dump, or no search line of 'pace' at the end
 kept_check() {
-  local i n t0 t ms searching results seen=0
-  tap_field
-  sleep 1
-  adb shell input keyevent KEYCODE_MOVE_END || true
-  for i in $(seq 1 30); do adb shell input keyevent KEYCODE_DEL || true; done
-  sleep 3
+  local i n t0 t ms searching results
+  clear_field
   adb shell input text "pac"
   for i in $(seq 1 10); do
     sleep 2
+    grep -q "T211COST query='pac' " full_logcat.txt && break
+  done
+  grep -q "T211COST query='pac' " full_logcat.txt || { echo "!! kept: no search line of 'pac': the field held something else" >> $STEPLOG; FAILED=1; return 1; }
+  for i in $(seq 1 10); do
     dump
     n=$(count_in ui.xml 'Search results \([0-9]+\)')
     [ "$n" -gt 0 ] 2>/dev/null && break
+    sleep 2
   done
   echo "kept: 'pac' results heading seen $n" >> $STEPLOG
-  [ "$n" -gt 0 ] 2>/dev/null || { echo "!! kept: no results for 'pac'" >> $STEPLOG; FAILED=1; return 1; }
+  [ "$n" -gt 0 ] 2>/dev/null || { echo "!! kept: no results heading for 'pac'" >> $STEPLOG; FAILED=1; return 1; }
+  # the rounds before searched 'pace' too: a new line of it is what counts
+  n=$(grep -c "T211COST query='pace' " full_logcat.txt)
   t0=$(date +%s%N)
   adb shell input text "e"
-  for i in 1 2 3 4; do
+  for i in 1 2 3; do
     dump
     t=$(date +%s%N)
     ms=$(( (t - t0) / 1000000 ))
-    cp ui.xml dumps/kept-$i.xml 2>/dev/null || true
+    [ -f ui.xml ] || { echo "!! kept: no dump $i after the key - proves nothing" >> $STEPLOG; FAILED=1; return 1; }
+    cp ui.xml dumps/kept-$i.xml
     searching=$(count_in ui.xml 'Searching\.\.\.')
     results=$(count_in ui.xml 'Search results \([0-9]+\)')
     echo "kept: dump $i ended +${ms} ms: Searching=$searching results=$results" >> $STEPLOG
-    if [ $ms -lt 1500 ]; then
-      seen=1
-      [ "$searching" = 0 ] && [ "$results" -gt 0 ] 2>/dev/null || { echo "!! kept: the list went away while typing (dump $i)" >> $STEPLOG; shot kept-gone; FAILED=1; return 1; }
-    fi
+    [ "$searching" = 0 ] && [ "$results" -gt 0 ] 2>/dev/null || { echo "!! kept: the list went away while typing (dump $i)" >> $STEPLOG; shot kept-gone; FAILED=1; return 1; }
   done
   shot kept-after
-  [ $seen = 1 ] || { echo "!! kept: no dump ended within 1.5 s of the key - proves nothing" >> $STEPLOG; FAILED=1; return 1; }
+  [ "$(grep -c "T211COST query='pace' " full_logcat.txt)" -gt "$n" ] || { echo "!! kept: no new search line of 'pace'" >> $STEPLOG; FAILED=1; return 1; }
   echo "kept: OK" >> $STEPLOG
 }
 
