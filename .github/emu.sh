@@ -254,6 +254,46 @@ type_query() {
   sleep 6
 }
 
+# kept_check: the shown results stay while typing. 'pac' typed and its results waited for, then
+# one key more ('pace') and dumps back to back: only a dump that ended within 1.5 s of the key
+# counts (master is then surely still in its delay and shows "Searching..."). Red: "Searching..."
+# in such a dump (the list went away), or no such dump (nothing proved)
+kept_check() {
+  local i n t0 t ms searching results seen=0
+  tap_field
+  sleep 1
+  adb shell input keyevent KEYCODE_MOVE_END || true
+  for i in $(seq 1 30); do adb shell input keyevent KEYCODE_DEL || true; done
+  sleep 3
+  adb shell input text "pac"
+  for i in $(seq 1 10); do
+    sleep 2
+    dump
+    n=$(count_in ui.xml 'Search results \([0-9]+\)')
+    [ "$n" -gt 0 ] 2>/dev/null && break
+  done
+  echo "kept: 'pac' results heading seen $n" >> $STEPLOG
+  [ "$n" -gt 0 ] 2>/dev/null || { echo "!! kept: no results for 'pac'" >> $STEPLOG; FAILED=1; return 1; }
+  t0=$(date +%s%N)
+  adb shell input text "e"
+  for i in 1 2 3 4; do
+    dump
+    t=$(date +%s%N)
+    ms=$(( (t - t0) / 1000000 ))
+    cp ui.xml dumps/kept-$i.xml 2>/dev/null || true
+    searching=$(count_in ui.xml 'Searching\.\.\.')
+    results=$(count_in ui.xml 'Search results \([0-9]+\)')
+    echo "kept: dump $i ended +${ms} ms: Searching=$searching results=$results" >> $STEPLOG
+    if [ $ms -lt 1500 ]; then
+      seen=1
+      [ "$searching" = 0 ] && [ "$results" -gt 0 ] 2>/dev/null || { echo "!! kept: the list went away while typing (dump $i)" >> $STEPLOG; shot kept-gone; FAILED=1; return 1; }
+    fi
+  done
+  shot kept-after
+  [ $seen = 1 ] || { echo "!! kept: no dump ended within 1.5 s of the key - proves nothing" >> $STEPLOG; FAILED=1; return 1; }
+  echo "kept: OK" >> $STEPLOG
+}
+
 FAILED=0
 install_apk apk-debug/android-debug.apk
 put_conf
@@ -266,6 +306,7 @@ if [ $FAILED = 0 ]; then
     done
   done
   shot c-last
+  kept_check || FAILED=1
 fi
 adb shell am force-stop $PKG || true
 kill $LOGCAT_PID 2>/dev/null || true
