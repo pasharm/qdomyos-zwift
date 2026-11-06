@@ -142,7 +142,7 @@ import AndroidStatusBar 1.0
 
         function currentSearch(viaPush) {
             return { query: settingsSearchTextField.text, changedOnly: changedOnly,
-                     results: filteredSettings, scroll: contentItem.contentY, viaPush: viaPush }
+                     scroll: contentItem.contentY, viaPush: viaPush }
         }
 
         // A page among the results ("Wahoo Options"): back from it lands on the results
@@ -270,10 +270,9 @@ import AndroidStatusBar 1.0
             changedOnly = back.changedOnly
             settingsSearchActive = back.query.trim().length > 0 || back.changedOnly
             settingsSearchPending = false
-            filteredSettings = back.results
-            // "Changed" may differ now (the setting just opened was edited): that list is rebuilt
-            if (changedOnly)
-                updateFilteredSettings()
+            // The results are found again for the text: "Changed" may differ now (the setting just
+            // opened was edited), and a tap may have come before the results caught up with the text
+            updateFilteredSettings()
             // After the list is laid out again
             contentItem.contentY = 0
             Qt.callLater(function () {
@@ -579,6 +578,11 @@ import AndroidStatusBar 1.0
                 items[t]._translatedName = computeTranslatedName(items[t])
                 items[t]._translatedDescription = computeTranslatedDescription(items[t])
             }
+            // The text a search looks in, made once: built on every key it cost more than the
+            // match itself (the parent's name looked up and translated for each entry). The page
+            // is made again when the language changes, and the catalog with it
+            for (var s = 0; s < items.length; s++)
+                items[s]._searchText = searchableText(items[s])
 
             searchableSettings = items
             if (settingsSearchActive && settingsSearchPending && settingsSearchDebounceTimer.running)
@@ -723,7 +727,7 @@ import AndroidStatusBar 1.0
                     continue
                 if (!changedOnly && searchHiddenSettings[searchableSettings[i].key])
                     continue
-                var haystack = searchableText(searchableSettings[i])
+                var haystack = searchableSettings[i]._searchText
                 var matched = true
                 for (var tokenIndex = 0; tokenIndex < tokens.length; tokenIndex++) {
                     if (haystack.indexOf(tokens[tokenIndex]) < 0) {
@@ -2550,7 +2554,7 @@ import AndroidStatusBar 1.0
         ]
         Timer {
             id: settingsSearchDebounceTimer
-            interval: 1500
+            interval: 300
             repeat: false
             onTriggered: settingsPane.updateFilteredSettings()
         }
@@ -2588,7 +2592,8 @@ import AndroidStatusBar 1.0
                             // The text cleared: the whole list of changed settings at once
                             settingsPane.updateFilteredSettings()
                         } else if (settingsPane.settingsSearchActive) {
-                            settingsPane.filteredSettings = []
+                            // The results shown stay until the new ones are ready: the list does
+                            // not blink away on every key (a tap on them meanwhile: restoreSearch)
                             settingsPane.settingsSearchPending = true
                             settingsPane.loadSettingsCatalog()
                             settingsSearchDebounceTimer.restart()
@@ -2631,7 +2636,7 @@ import AndroidStatusBar 1.0
                     // a label that sets only a weight keeps, in Qt 5, the size it inherited when created
                     Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
                     text: settingsCatalogLoading ? qsTr("Loading settings...") :
-                          settingsSearchPending ? qsTr("Searching...") :
+                          settingsSearchPending && filteredSettings.length === 0 ? qsTr("Searching...") :
                           changedOnly && filteredSettings.length > 0 ?
                               qsTr("Changed settings") + " (" + filteredSettings.length + ")" :
                           // With a text the changed settings may be there, just not matching it
