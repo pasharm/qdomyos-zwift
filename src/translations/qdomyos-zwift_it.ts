@@ -123,6 +123,26 @@
         <translation>Vuoi davvero interrompere l&apos;allenamento corrente?</translation>
     </message>
     <message>
+        <source>Auto Resistance is off</source>
+        <translation>La resistenza automatica è disattivata</translation>
+    </message>
+    <message>
+        <source>QZ is not changing the resistance now. Apply: levels from the Resistance, Target R. and preset tiles take effect until QZ restarts. Commands from apps (for example Zwift) are still ignored.</source>
+        <translation>QZ ora non modifica la resistenza. «Applica»: i livelli dei riquadri Resistenza, Obiettivo R. e delle preimpostazioni valgono fino al riavvio di QZ. I comandi delle app (ad esempio Zwift) continuano a essere ignorati.</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Applica</translation>
+    </message>
+    <message>
+        <source>Enable Auto Resistance</source>
+        <translation>Attiva resistenza automatica</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annulla</translation>
+    </message>
+    <message>
         <source>Rest</source>
         <translation>Riposo</translation>
     </message>
