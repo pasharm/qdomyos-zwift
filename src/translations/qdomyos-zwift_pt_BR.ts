@@ -3770,6 +3770,126 @@ This may take a few moments on first startup.</source>
         <source>Spotify songs:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Support request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QZ issue | %1 | %2 | %3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hi Roberto,</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>I need help with QZ.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Problem:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Please describe the issue]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Expected behavior:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>[Please describe what should happen]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>--- QZ diagnostics ---</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QZ version: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Platform: %1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profile: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Device: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Connection: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed: %1 km/h</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Power: %1 W</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Detected situation: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug log not requested.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug log disabled. Enable debug logging and restart QZ before reproducing.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug log not found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug log unavailable or too large to prepare.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Debug log attached (gzip).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not write debug log attachment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Could not compress debug log or attachment exceeds 10 MB.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Please attach the generated debug log manually</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No device detected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Unable to open an email application</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>main</name>
@@ -9003,6 +9123,69 @@ Default: A = -0.96, B = 1.33</source>
     </message>
     <message>
         <source>Max Watt/KG</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SupportHelpButton</name>
+    <message>
+        <source>Contact QZ support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Prepare a support email with diagnostics</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No device connected</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Speed and power at zero</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>QZ Support</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide keyboard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close support request</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tell us what is not working. QZ will add your device and app information.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Describe the problem...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Describe the problem</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Attach debug log if available</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>You can review or edit the email before sending it. Nothing is sent automatically.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Open email</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
