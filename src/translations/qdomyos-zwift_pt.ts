@@ -1053,6 +1053,10 @@ Deseja atualizar as configurações do QZ?</translation>
         <translation>Inicialização concluída, você já pode usar a esteira!</translation>
     </message>
     <message>
+        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
+        <translation>O QZ detectou o formato de dados desta bicicleta e ativou &quot;Virtufit Etappe 2.0 Bike&quot; nas configurações. O QZ precisa ser reiniciado para ler os dados da bicicleta.</translation>
+    </message>
+    <message>
         <source>FTMS bike found, restart the app to apply the change!</source>
         <translation>Bicicleta FTMS encontrada, reinicie o aplicativo para aplicar a alteração!</translation>
     </message>
@@ -4138,6 +4142,126 @@ Isso pode levar alguns instantes na primeira inicialização.</translation>
         <extracomment>Android notification: title shown while QZ works in the background.</extracomment>
         <translation>QZ em execução</translation>
     </message>
+    <message>
+        <source>Support request</source>
+        <translation>Pedido de suporte</translation>
+    </message>
+    <message>
+        <source>QZ issue | %1 | %2 | %3</source>
+        <translation>Problema do QZ | %1 | %2 | %3</translation>
+    </message>
+    <message>
+        <source>Hi Roberto,</source>
+        <translation>Olá, Roberto,</translation>
+    </message>
+    <message>
+        <source>I need help with QZ.</source>
+        <translation>Preciso de ajuda com o QZ.</translation>
+    </message>
+    <message>
+        <source>Problem:</source>
+        <translation>Problema:</translation>
+    </message>
+    <message>
+        <source>[Please describe the issue]</source>
+        <translation>[Descreva o problema]</translation>
+    </message>
+    <message>
+        <source>Expected behavior:</source>
+        <translation>Comportamento esperado:</translation>
+    </message>
+    <message>
+        <source>[Please describe what should happen]</source>
+        <translation>[Descreva o que deveria acontecer]</translation>
+    </message>
+    <message>
+        <source>--- QZ diagnostics ---</source>
+        <translation>--- Diagnóstico do QZ ---</translation>
+    </message>
+    <message>
+        <source>QZ version: %1</source>
+        <translation>Versão do QZ: %1</translation>
+    </message>
+    <message>
+        <source>Platform: %1 (%2)</source>
+        <translation>Plataforma: %1 (%2)</translation>
+    </message>
+    <message>
+        <source>Profile: %1</source>
+        <translation>Perfil: %1</translation>
+    </message>
+    <message>
+        <source>Device: %1</source>
+        <translation>Dispositivo: %1</translation>
+    </message>
+    <message>
+        <source>Connected</source>
+        <translation>Ligado</translation>
+    </message>
+    <message>
+        <source>Not connected</source>
+        <translation>Desligado</translation>
+    </message>
+    <message>
+        <source>Connection: %1</source>
+        <translation>Ligação: %1</translation>
+    </message>
+    <message>
+        <source>Speed: %1 km/h</source>
+        <translation>Velocidade: %1 km/h</translation>
+    </message>
+    <message>
+        <source>Not available</source>
+        <translation>Indisponível</translation>
+    </message>
+    <message>
+        <source>Power: %1 W</source>
+        <translation>Potência: %1 W</translation>
+    </message>
+    <message>
+        <source>Detected situation: %1</source>
+        <translation>Situação detetada: %1</translation>
+    </message>
+    <message>
+        <source>Debug log not requested.</source>
+        <translation>O registo de depuração não foi solicitado.</translation>
+    </message>
+    <message>
+        <source>Debug log disabled. Enable debug logging and restart QZ before reproducing.</source>
+        <translation>O registo de depuração está desativado. Ative-o e reinicie o QZ antes de reproduzir o problema.</translation>
+    </message>
+    <message>
+        <source>Debug log not found.</source>
+        <translation>Não foi encontrado qualquer registo de depuração.</translation>
+    </message>
+    <message>
+        <source>Debug log unavailable or too large to prepare.</source>
+        <translation>O registo de depuração está indisponível ou é demasiado grande para preparar.</translation>
+    </message>
+    <message>
+        <source>Debug log attached (gzip).</source>
+        <translation>Registo de depuração anexado (gzip).</translation>
+    </message>
+    <message>
+        <source>Could not write debug log attachment.</source>
+        <translation>Não foi possível escrever o anexo do registo de depuração.</translation>
+    </message>
+    <message>
+        <source>Could not compress debug log or attachment exceeds 10 MB.</source>
+        <translation>Não foi possível comprimir o registo ou o anexo excede 10 MB.</translation>
+    </message>
+    <message>
+        <source>Please attach the generated debug log manually</source>
+        <translation>Anexe manualmente o registo de depuração gerado</translation>
+    </message>
+    <message>
+        <source>No device detected</source>
+        <translation>Nenhum dispositivo detetado</translation>
+    </message>
+    <message>
+        <source>Unable to open an email application</source>
+        <translation>Não foi possível abrir uma aplicação de e-mail</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
@@ -4182,6 +4306,10 @@ reinicie o aplicativo.</translation>
     <message>
         <source>QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.</source>
         <translation>QZ encontrou os equipamentos Bluetooth próximos. Escolha a máquina que você deseja usar para esta sessão.</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Desativado</translation>
     </message>
     <message>
         <source>Select a device</source>
@@ -9801,6 +9929,69 @@ Instalar?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>A transferir a compilação do QZ: %1%</translation>
+    </message>
+</context>
+<context>
+    <name>SupportHelpButton</name>
+    <message>
+        <source>Contact QZ support</source>
+        <translation>Contactar o suporte do QZ</translation>
+    </message>
+    <message>
+        <source>Prepare a support email with diagnostics</source>
+        <translation>Preparar um e-mail de suporte com dados de diagnóstico</translation>
+    </message>
+    <message>
+        <source>No device connected</source>
+        <translation>Nenhum dispositivo ligado</translation>
+    </message>
+    <message>
+        <source>Speed and power at zero</source>
+        <translation>A velocidade e a potência estão a zero</translation>
+    </message>
+    <message>
+        <source>QZ Support</source>
+        <translation>Suporte do QZ</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation>Concluído</translation>
+    </message>
+    <message>
+        <source>Hide keyboard</source>
+        <translation>Ocultar teclado</translation>
+    </message>
+    <message>
+        <source>Close support request</source>
+        <translation>Fechar pedido de suporte</translation>
+    </message>
+    <message>
+        <source>Tell us what is not working. QZ will add your device and app information.</source>
+        <translation>Diga-nos o que não está a funcionar. O QZ adicionará informações sobre o dispositivo e a aplicação.</translation>
+    </message>
+    <message>
+        <source>Describe the problem...</source>
+        <translation>Descreva o problema...</translation>
+    </message>
+    <message>
+        <source>Describe the problem</source>
+        <translation>Descreva o problema</translation>
+    </message>
+    <message>
+        <source>Attach debug log if available</source>
+        <translation>Anexar registo de depuração, se disponível</translation>
+    </message>
+    <message>
+        <source>You can review or edit the email before sending it. Nothing is sent automatically.</source>
+        <translation>Pode rever ou editar o e-mail antes de o enviar. Nada é enviado automaticamente.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Cancelar</translation>
+    </message>
+    <message>
+        <source>Open email</source>
+        <translation>Abrir e-mail</translation>
     </message>
 </context>
 </TS>

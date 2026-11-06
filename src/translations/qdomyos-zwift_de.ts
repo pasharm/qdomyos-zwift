@@ -1053,6 +1053,10 @@ Möchten Sie die QZ-Einstellungen aktualisieren?</translation>
         <translation>Initialisierung abgeschlossen, Sie können das Laufband jetzt benutzen!</translation>
     </message>
     <message>
+        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
+        <translation>QZ hat das Datenformat dieses Fahrrads erkannt und in den Einstellungen „Virtufit Etappe 2.0 Fahrrad“ aktiviert. QZ muss neu gestartet werden, um die Daten des Fahrrads zu lesen.</translation>
+    </message>
+    <message>
         <source>FTMS bike found, restart the app to apply the change!</source>
         <translation>FTMS-Fahrrad gefunden, starten Sie die App neu, um die Änderung zu übernehmen!</translation>
     </message>
@@ -4141,6 +4145,126 @@ Beim ersten Start kann dies einen Moment dauern.</translation>
         <extracomment>Android notification: title shown while QZ works in the background.</extracomment>
         <translation>QZ läuft</translation>
     </message>
+    <message>
+        <source>Support request</source>
+        <translation>Supportanfrage</translation>
+    </message>
+    <message>
+        <source>QZ issue | %1 | %2 | %3</source>
+        <translation>QZ-Problem | %1 | %2 | %3</translation>
+    </message>
+    <message>
+        <source>Hi Roberto,</source>
+        <translation>Hallo Roberto,</translation>
+    </message>
+    <message>
+        <source>I need help with QZ.</source>
+        <translation>Ich brauche Hilfe mit QZ.</translation>
+    </message>
+    <message>
+        <source>Problem:</source>
+        <translation>Problem:</translation>
+    </message>
+    <message>
+        <source>[Please describe the issue]</source>
+        <translation>[Bitte beschreibe das Problem]</translation>
+    </message>
+    <message>
+        <source>Expected behavior:</source>
+        <translation>Erwartetes Verhalten:</translation>
+    </message>
+    <message>
+        <source>[Please describe what should happen]</source>
+        <translation>[Bitte beschreibe, was passieren sollte]</translation>
+    </message>
+    <message>
+        <source>--- QZ diagnostics ---</source>
+        <translation>--- QZ-Diagnose ---</translation>
+    </message>
+    <message>
+        <source>QZ version: %1</source>
+        <translation>QZ-Version: %1</translation>
+    </message>
+    <message>
+        <source>Platform: %1 (%2)</source>
+        <translation>Plattform: %1 (%2)</translation>
+    </message>
+    <message>
+        <source>Profile: %1</source>
+        <translation>Profil: %1</translation>
+    </message>
+    <message>
+        <source>Device: %1</source>
+        <translation>Gerät: %1</translation>
+    </message>
+    <message>
+        <source>Connected</source>
+        <translation>Verbunden</translation>
+    </message>
+    <message>
+        <source>Not connected</source>
+        <translation>Nicht verbunden</translation>
+    </message>
+    <message>
+        <source>Connection: %1</source>
+        <translation>Verbindung: %1</translation>
+    </message>
+    <message>
+        <source>Speed: %1 km/h</source>
+        <translation>Geschwindigkeit: %1 km/h</translation>
+    </message>
+    <message>
+        <source>Not available</source>
+        <translation>Nicht verfügbar</translation>
+    </message>
+    <message>
+        <source>Power: %1 W</source>
+        <translation>Leistung: %1 W</translation>
+    </message>
+    <message>
+        <source>Detected situation: %1</source>
+        <translation>Erkannte Situation: %1</translation>
+    </message>
+    <message>
+        <source>Debug log not requested.</source>
+        <translation>Debug-Protokoll nicht angefordert.</translation>
+    </message>
+    <message>
+        <source>Debug log disabled. Enable debug logging and restart QZ before reproducing.</source>
+        <translation>Debug-Protokoll ist deaktiviert. Aktiviere die Protokollierung und starte QZ neu, bevor du das Problem reproduzierst.</translation>
+    </message>
+    <message>
+        <source>Debug log not found.</source>
+        <translation>Kein Debug-Protokoll gefunden.</translation>
+    </message>
+    <message>
+        <source>Debug log unavailable or too large to prepare.</source>
+        <translation>Debug-Protokoll nicht verfügbar oder zu groß zur Vorbereitung.</translation>
+    </message>
+    <message>
+        <source>Debug log attached (gzip).</source>
+        <translation>Debug-Protokoll angehängt (gzip).</translation>
+    </message>
+    <message>
+        <source>Could not write debug log attachment.</source>
+        <translation>Debug-Protokoll konnte nicht als Anhang geschrieben werden.</translation>
+    </message>
+    <message>
+        <source>Could not compress debug log or attachment exceeds 10 MB.</source>
+        <translation>Debug-Protokoll konnte nicht komprimiert werden oder der Anhang ist größer als 10 MB.</translation>
+    </message>
+    <message>
+        <source>Please attach the generated debug log manually</source>
+        <translation>Bitte hänge das erstellte Debug-Protokoll manuell an</translation>
+    </message>
+    <message>
+        <source>No device detected</source>
+        <translation>Kein Gerät erkannt</translation>
+    </message>
+    <message>
+        <source>Unable to open an email application</source>
+        <translation>E-Mail-Anwendung konnte nicht geöffnet werden</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
@@ -4185,6 +4309,10 @@ starten Sie die App neu.</translation>
     <message>
         <source>QZ found the nearby Bluetooth trainers. Choose the machine you want to use for this session.</source>
         <translation>QZ hat Bluetooth-Trainingsgeräte in der Nähe gefunden. Wählen Sie das Gerät, das Sie für diese Trainingseinheit verwenden möchten.</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Deaktiviert</translation>
     </message>
     <message>
         <source>Select a device</source>
@@ -9796,6 +9924,69 @@ Installieren?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>QZ-Build wird heruntergeladen: %1 %</translation>
+    </message>
+</context>
+<context>
+    <name>SupportHelpButton</name>
+    <message>
+        <source>Contact QZ support</source>
+        <translation>QZ-Support kontaktieren</translation>
+    </message>
+    <message>
+        <source>Prepare a support email with diagnostics</source>
+        <translation>Support-E-Mail mit Diagnosedaten vorbereiten</translation>
+    </message>
+    <message>
+        <source>No device connected</source>
+        <translation>Kein Gerät verbunden</translation>
+    </message>
+    <message>
+        <source>Speed and power at zero</source>
+        <translation>Geschwindigkeit und Leistung sind null</translation>
+    </message>
+    <message>
+        <source>QZ Support</source>
+        <translation>QZ-Support</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation>Fertig</translation>
+    </message>
+    <message>
+        <source>Hide keyboard</source>
+        <translation>Tastatur ausblenden</translation>
+    </message>
+    <message>
+        <source>Close support request</source>
+        <translation>Supportanfrage schließen</translation>
+    </message>
+    <message>
+        <source>Tell us what is not working. QZ will add your device and app information.</source>
+        <translation>Beschreibe, was nicht funktioniert. QZ fügt Informationen zu deinem Gerät und der App hinzu.</translation>
+    </message>
+    <message>
+        <source>Describe the problem...</source>
+        <translation>Problem beschreiben...</translation>
+    </message>
+    <message>
+        <source>Describe the problem</source>
+        <translation>Problem beschreiben</translation>
+    </message>
+    <message>
+        <source>Attach debug log if available</source>
+        <translation>Debug-Protokoll anhängen, falls verfügbar</translation>
+    </message>
+    <message>
+        <source>You can review or edit the email before sending it. Nothing is sent automatically.</source>
+        <translation>Du kannst die E-Mail vor dem Senden überprüfen oder bearbeiten. Es wird nichts automatisch gesendet.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>Open email</source>
+        <translation>E-Mail öffnen</translation>
     </message>
 </context>
 </TS>
