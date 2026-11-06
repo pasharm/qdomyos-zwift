@@ -720,9 +720,17 @@ import AndroidStatusBar 1.0
                 return
             }
 
+            // TEST ONLY (T-211 cost): every part of one search step, in ms, into the log
+            var costT0 = Date.now()
+            for (var costI = 0; costI < searchableSettings.length; costI++)
+                searchableText(searchableSettings[costI])
+            var costHay = Date.now() - costT0
+            var costScanned = 0
+            var costT1 = Date.now()
             var tokens = query.length > 0 ? query.split(/\s+/) : []
             var results = []
             for (var i = 0; i < searchableSettings.length; i++) {
+                costScanned++
                 if (changedOnly && !isChanged(searchableSettings[i]))
                     continue
                 if (!changedOnly && searchHiddenSettings[searchableSettings[i].key])
@@ -743,8 +751,29 @@ import AndroidStatusBar 1.0
                 if (results.length >= 80 && !changedOnly)
                     break
             }
+            var costFilter = Date.now() - costT1
+            var costT2 = Date.now()
             filteredSettings = results
             settingsSearchPending = false
+            var costModel = Date.now() - costT2
+            costFrameStart = costT2
+            costLine = "T211COST query='" + query + "' entries=" + searchableSettings.length +
+                       " scanned=" + costScanned + " found=" + results.length +
+                       " hay_all_ms=" + costHay + " filter_ms=" + costFilter + " model_ms=" + costModel
+            costWaitFrame = true
+        }
+
+        // TEST ONLY (T-211 cost): the first frame after the new results, then one log line
+        property bool costWaitFrame: false
+        property double costFrameStart: 0
+        property string costLine: ""
+        Connections {
+            target: window
+            enabled: settingsPane.costWaitFrame
+            function onFrameSwapped() {
+                settingsPane.costWaitFrame = false
+                console.log(settingsPane.costLine + " frame_ms=" + (Date.now() - settingsPane.costFrameStart))
+            }
         }
 
         function setChangedOnly(on) {
