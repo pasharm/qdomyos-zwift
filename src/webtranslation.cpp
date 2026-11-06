@@ -304,6 +304,26 @@ const WebTranslationEntry entries[] = {
     {"map.start", QT_TRANSLATE_NOOP("WebTranslations", "START")},
     //: 3D map: short uppercase label above the end point of the route.
     {"map.finish", QT_TRANSLATE_NOOP("WebTranslations", "FINISH")},
+    //: 3D map, map layer picker: layer name. Keep the brand "Bing Maps", translate the rest: satellite photos. Form "brand: description", e.g. "Bing Maps: satellite".
+    {"map.layerBingAerial", QT_TRANSLATE_NOOP("WebTranslations", "Bing Maps Aerial")},
+    //: 3D map, map layer picker: layer name. Keep "Bing Maps": satellite photos with place names and roads.
+    {"map.layerBingAerialLabels", QT_TRANSLATE_NOOP("WebTranslations", "Bing Maps Aerial with Labels")},
+    //: 3D map, map layer picker: layer name. Keep "Bing Maps": road map.
+    {"map.layerBingRoads", QT_TRANSLATE_NOOP("WebTranslations", "Bing Maps Roads")},
+    //: 3D map, map layer picker: layer name, NASA satellite picture of the city lights at night.
+    {"map.layerEarthAtNight", QT_TRANSLATE_NOOP("WebTranslations", "Earth at night")},
+    //: 3D map, map layer picker: layer name. Keep "ESRI": satellite photos.
+    {"map.layerEsriImagery", QT_TRANSLATE_NOOP("WebTranslations", "ESRI World Imagery")},
+    //: 3D map, map layer picker: layer name. Keep "ESRI": street map.
+    {"map.layerEsriStreets", QT_TRANSLATE_NOOP("WebTranslations", "ESRI World Street Map")},
+    //: 3D map, map layer picker: layer name. Keep "Stamen": map drawn in watercolor style.
+    {"map.layerStamenWatercolor", QT_TRANSLATE_NOOP("WebTranslations", "Stamen Watercolor")},
+    //: 3D map, map layer picker: layer name. Keep "Stamen": high contrast black and white map.
+    {"map.layerStamenToner", QT_TRANSLATE_NOOP("WebTranslations", "Stamen Toner")},
+    //: 3D map, map layer picker, ground relief: no relief, the Earth as a smooth ellipsoid (WGS84 is a standard name).
+    {"map.terrainEllipsoid", QT_TRANSLATE_NOOP("WebTranslations", "WGS84 Ellipsoid")},
+    //: 3D map, map layer picker, ground relief: the world relief from Cesium. Keep "Cesium World" as a name.
+    {"map.terrainCesiumWorld", QT_TRANSLATE_NOOP("WebTranslations", "Cesium World Terrain")},
 };
 } // namespace
 

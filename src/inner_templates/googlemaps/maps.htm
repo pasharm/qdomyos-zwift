@@ -127,6 +127,34 @@ viewer.trackedEntity = bike;
         'Focus camera on object': 'map.focusCamera'
     };
 
+    // Layer names in the layer picker: brand names stay, the descriptive part is translated.
+    // Names like Sentinel-2, Blue Marble or OpenStreetMap are not in the table and stay as they are.
+    const cesiumLayerNames = {
+        'Bing Maps Aerial': 'map.layerBingAerial',
+        'Bing Maps Aerial with Labels': 'map.layerBingAerialLabels',
+        'Bing Maps Roads': 'map.layerBingRoads',
+        'Earth at night': 'map.layerEarthAtNight',
+        'ESRI World Imagery': 'map.layerEsriImagery',
+        'ESRI World Street Map': 'map.layerEsriStreets',
+        'Stamen Watercolor': 'map.layerStamenWatercolor',
+        'Stamen Toner': 'map.layerStamenToner',
+        'WGS84 Ellipsoid': 'map.terrainEllipsoid',
+        'Cesium World Terrain': 'map.terrainCesiumWorld'
+    };
+
+    // The names are observable properties of the provider view models: the labels and the
+    // picker button tooltip follow them. The English name is kept on the view model.
+    function translateLayerNames(providers) {
+        providers.forEach(function(provider) {
+            if (provider.qzEnglishName === undefined) {
+                provider.qzEnglishName = provider.name;
+            }
+            if (Object.prototype.hasOwnProperty.call(cesiumLayerNames, provider.qzEnglishName)) {
+                provider.name = t(cesiumLayerNames[provider.qzEnglishName], provider.qzEnglishName);
+            }
+        });
+    }
+
     function cesiumText(english) {
         if (!Object.prototype.hasOwnProperty.call(cesiumTexts, english)) {
             return null;
@@ -157,6 +185,10 @@ viewer.trackedEntity = bike;
         }
         if (viewer.navigationHelpButton) {
             viewer.navigationHelpButton.viewModel.tooltip = cesiumText('Navigation Instructions');
+        }
+        if (viewer.baseLayerPicker) {
+            translateLayerNames(viewer.baseLayerPicker.viewModel.imageryProviderViewModels);
+            translateLayerNames(viewer.baseLayerPicker.viewModel.terrainProviderViewModels);
         }
 
         // Static texts: navigation help, layer picker titles. Only the toolbar is walked:

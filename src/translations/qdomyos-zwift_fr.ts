@@ -2438,6 +2438,56 @@ Voulez-vous mettre à jour les paramètres de QZ ?</translation>
         <extracomment>3D map: short uppercase label above the end point of the route.</extracomment>
         <translation>ARRIVÉE</translation>
     </message>
+    <message>
+        <source>Bing Maps Aerial</source>
+        <extracomment>3D map, map layer picker: layer name. Keep the brand &quot;Bing Maps&quot;, translate the rest: satellite photos. Form &quot;brand: description&quot;, e.g. &quot;Bing Maps: satellite&quot;.</extracomment>
+        <translation>Bing Maps : satellite</translation>
+    </message>
+    <message>
+        <source>Bing Maps Aerial with Labels</source>
+        <extracomment>3D map, map layer picker: layer name. Keep &quot;Bing Maps&quot;: satellite photos with place names and roads.</extracomment>
+        <translation>Bing Maps : satellite avec libellés</translation>
+    </message>
+    <message>
+        <source>Bing Maps Roads</source>
+        <extracomment>3D map, map layer picker: layer name. Keep &quot;Bing Maps&quot;: road map.</extracomment>
+        <translation>Bing Maps : routes</translation>
+    </message>
+    <message>
+        <source>Earth at night</source>
+        <extracomment>3D map, map layer picker: layer name, NASA satellite picture of the city lights at night.</extracomment>
+        <translation>La Terre la nuit</translation>
+    </message>
+    <message>
+        <source>ESRI World Imagery</source>
+        <extracomment>3D map, map layer picker: layer name. Keep &quot;ESRI&quot;: satellite photos.</extracomment>
+        <translation>ESRI : satellite</translation>
+    </message>
+    <message>
+        <source>ESRI World Street Map</source>
+        <extracomment>3D map, map layer picker: layer name. Keep &quot;ESRI&quot;: street map.</extracomment>
+        <translation>ESRI : rues</translation>
+    </message>
+    <message>
+        <source>Stamen Watercolor</source>
+        <extracomment>3D map, map layer picker: layer name. Keep &quot;Stamen&quot;: map drawn in watercolor style.</extracomment>
+        <translation>Stamen : aquarelle</translation>
+    </message>
+    <message>
+        <source>Stamen Toner</source>
+        <extracomment>3D map, map layer picker: layer name. Keep &quot;Stamen&quot;: high contrast black and white map.</extracomment>
+        <translation>Stamen : noir et blanc</translation>
+    </message>
+    <message>
+        <source>WGS84 Ellipsoid</source>
+        <extracomment>3D map, map layer picker, ground relief: no relief, the Earth as a smooth ellipsoid (WGS84 is a standard name).</extracomment>
+        <translation>Sans relief (ellipsoïde WGS84)</translation>
+    </message>
+    <message>
+        <source>Cesium World Terrain</source>
+        <extracomment>3D map, map layer picker, ground relief: the world relief from Cesium. Keep &quot;Cesium World&quot; as a name.</extracomment>
+        <translation>Relief Cesium World</translation>
+    </message>
 </context>
 <context>
     <name>Wizard</name>
