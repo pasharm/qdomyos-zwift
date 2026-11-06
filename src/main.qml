@@ -2356,6 +2356,8 @@ ApplicationWindow {
                 ItemDelegate {
                     text: "version 2.22.0"
                     width: parent.width
+                    // Android: versionName at runtime, with the CI build suffix (2.22.0-beta.N)
+                    Component.onCompleted: if (Qt.platform.os === "android" && Qt.application.version !== "") text = "version " + Qt.application.version
                 }
 
                 ItemDelegate {
@@ -2620,6 +2622,8 @@ ApplicationWindow {
                     text: "version 2.22.0"
                     font.pixelSize: window.ui.fontCaption
                     color: window.ui.textMuted
+                    // Android: versionName at runtime, with the CI build suffix (2.22.0-beta.N)
+                    Component.onCompleted: if (Qt.platform.os === "android" && Qt.application.version !== "") text = "version " + Qt.application.version
                 }
             }
         }
