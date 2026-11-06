@@ -1839,9 +1839,10 @@ ApplicationWindow {
             id: toolButtonShareFit
             readonly property string filePath: stackView.currentItem && stackView.currentItem.fitFilePath ? stackView.currentItem.fitFilePath : ""
             Accessible.name: qsTr("Share FIT file")
-            // drawn as the search button: no image file, sharp at any density
+            // drawn as the search button: no image file, sharp at any density. The icon font of the
+            // modern look has no share glyph: the same drawing there, in the colour of its icons
             Canvas {
-                property color color: toolButtonShareFit.Material.foreground
+                property color color: window.ui.modern ? window.ui.textMain : toolButtonShareFit.Material.foreground
                 anchors.centerIn: parent
                 width: 24 * Screen.devicePixelRatio
                 height: 24 * Screen.devicePixelRatio
