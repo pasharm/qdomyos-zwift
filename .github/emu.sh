@@ -210,10 +210,45 @@ fi
 adb shell am force-stop $PKG || true
 sleep 3
 check_saved "picked Hungarian" app_language=hu
+
+# The search card of a saved language with no translation: Auto, as its page, not Catalan
+echo "== search: saved ca" >> $STEPLOG
+put_conf ca
+start_app
+if open_language; then
+  tap 1018 168 "search icon"
+  sleep 3
+  rm -f ui.xml
+  dump
+  tap_ui 'Search settings' 500 330
+  sleep 2
+  adb shell input text language || true
+  sleep 5
+  rm -f ui.xml
+  shot s-1-search-ca
+  if ! python3 .github/uitap.py ui.xml 'App Language' > /dev/null; then
+    echo "!! search: no App Language result" >> $STEPLOG
+    FAILED=1
+  elif grep -q 'Catalan' ui.xml; then
+    echo "!! search: the card shows Catalan" >> $STEPLOG
+    FAILED=1
+  elif python3 .github/uitap.py ui.xml 'Auto \(System\)' > /dev/null; then
+    echo "check search card: OK (Auto, no Catalan)" >> $STEPLOG
+  else
+    echo "!! search: no Auto on the card" >> $STEPLOG
+    FAILED=1
+  fi
+else
+  echo "!! search: language row not reached" >> $STEPLOG
+  FAILED=1
+fi
+adb shell am force-stop $PKG || true
+sleep 3
+check_saved "search left ca as it is" app_language=ca
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
 
-EXPECT='Translated app languages: ("cs", "da", "de", "es", "fr", "hu", "it", "ja", "ko", "nl", "no", "pl", "pt", "pt_BR", "ru", "sv", "tr", "uk", "zh_CN")'
+EXPECT='Translated app languages: ("cs", "da", "de", "es", "fr", "hu", "it", "ja", "ko", "nl", "no", "pl", "pt", "ru", "sv", "tr", "uk", "zh_CN")'
 echo "== language lines" >> $STEPLOG
 grep -a -h -E "Translated app languages|Translation (file is empty|loaded)|No translation available" full_logcat.txt | cut -c1-200 | tail -n 10 >> $STEPLOG || true
 if grep -a -q -F -- "$EXPECT" full_logcat.txt; then
