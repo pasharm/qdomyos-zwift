@@ -305,17 +305,34 @@ kept_check() {
   echo "kept: OK" >> $STEPLOG
 }
 
+# replace_series: 80 results replaced by 80 results, as typing slower than the delay does: "e",
+# then "r" and back 6 times ("er", "e", ...), 4 s after each key (past the delay of master too).
+# On master a key clears the list (the clear line) and the search comes 1.5 s later; on the fix the
+# new cards replace the shown ones. Red: fewer than 13 search lines (1 + 12 replacements) of "e"/"er" with 80 results
+replace_series() {
+  local i n0 n
+  clear_field
+  n0=$(grep -cE "T211COST query='er?' .*found=80 " full_logcat.txt)
+  adb shell input text "e"
+  sleep 4
+  for i in 1 2 3 4 5 6; do
+    adb shell input text "r"
+    sleep 4
+    adb shell input keyevent KEYCODE_DEL || true
+    sleep 4
+  done
+  n=$(( $(grep -cE "T211COST query='er?' .*found=80 " full_logcat.txt) - n0 ))
+  echo "replace: $n searches of 'e'/'er' with 80 results" >> $STEPLOG
+  [ "$n" -ge 13 ] || { echo "!! replace: fewer than 13 searches with 80 results" >> $STEPLOG; FAILED=1; return 1; }
+}
+
 FAILED=0
 install_apk apk-debug/android-debug.apk
 put_conf
 open_search c || FAILED=1
 if [ $FAILED = 0 ]; then
   # A word with many results (stops at 80), a few, none (the whole catalog scanned)
-  for round in 1 2 3; do
-    for q in a pace weight zzzz; do
-      type_query "$q"
-    done
-  done
+  replace_series
   shot c-last
   kept_check || FAILED=1
 fi

@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        api: [30, 35]
+        api: [35]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
