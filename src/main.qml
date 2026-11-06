@@ -1863,7 +1863,29 @@ ApplicationWindow {
         }
 
         Label {
-            text: stackView.currentItem.title
+            id: toolbarTitle
+            // Modern look, home page: more buttons on the right than on the left, and the title centred
+            // on the screen had room for one letter ("Q..."). It stays centred on the screen if it fits
+            // there, else it goes to the middle of the free room between the buttons, in its full
+            // size; the name that does not fit there either is cut to "QZ", not to "QZ Fi..." (T-445).
+            // "QZ" goes too when it would not keep the width of a button of free room around it
+            readonly property bool homeTitle: window.ui.modern && stackView.depth === 1
+            readonly property bool fitsCentred: titleMetrics.advanceWidth <= titleSpan.centred
+            readonly property bool fitsFree: titleMetrics.advanceWidth <= titleSpan.to - titleSpan.from
+            readonly property bool fitsShort: shortTitleMetrics.advanceWidth + toolButton.width <= titleSpan.to - titleSpan.from
+            TextMetrics {
+                id: titleMetrics
+                font: toolbarTitle.font
+                // No page or no title yet at start-up: an empty one, not a warning in the log
+                text: stackView.currentItem && stackView.currentItem.title ? stackView.currentItem.title : ""
+            }
+            TextMetrics {
+                id: shortTitleMetrics
+                font: toolbarTitle.font
+                text: "QZ"
+            }
+            text: homeTitle && !fitsCentred && !fitsFree ? shortTitleMetrics.text : stackView.currentItem.title
+            visible: !homeTitle || fitsCentred || fitsFree || fitsShort
             // Modern look only: the classic title keeps the font of the bar, as it inherited it. A
             // plain binding to the bar font: not Binding (its restored value was the size at
             // start-up, the scaled one after a text size), not Qt.font({}) (a default font with a
@@ -1871,17 +1893,24 @@ ApplicationWindow {
             font: window.ui.modern ? window.ui.fontOf(headerToolbar.font, window.ui.fontTitleSmall, Font.DemiBold)
                                    : headerToolbar.font
             color: window.ui.ink(Material.foreground)
-            anchors.centerIn: parent
+            anchors.verticalCenter: parent.verticalCenter
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.horizontalCenterOffset: homeTitle && !fitsCentred ? (titleSpan.from + titleSpan.to - parent.width) / 2 : 0
             // Modern look and a text size other than 100 %: no wider than the room between the
             // nearest shown buttons, centred; a large text size ran the title into the search button. A
-            // takes a smaller font down to 14 px of the text size, and only then an ellipsis
-            width: window.ui.modern || window.textScale !== 1 ? Math.min(implicitWidth, titleRoom) : implicitWidth
-            fontSizeMode: window.ui.modern || window.textScale !== 1 ? Text.HorizontalFit : Text.FixedSize
+            // takes a smaller font down to 14 px of the text size, and only then an ellipsis. The home
+            // page keeps the full size (above); a title that fits is not cut by a pixel of rounding
+            // between titleMetrics and implicitWidth
+            width: homeTitle ? (fitsCentred || fitsFree ? implicitWidth : Math.min(implicitWidth, titleSpan.to - titleSpan.from))
+                 : window.ui.modern || window.textScale !== 1 ? Math.min(implicitWidth, titleSpan.centred) : implicitWidth
+            fontSizeMode: homeTitle ? Text.FixedSize : window.ui.modern || window.textScale !== 1 ? Text.HorizontalFit : Text.FixedSize
             minimumPixelSize: window.ui.modern ? window.ui.fontPx(14) : window.appFontPx
             // The line keeps the height of the full size: a smaller font in its middle, not at its top
             verticalAlignment: window.ui.modern || window.textScale !== 1 ? Text.AlignVCenter : Text.AlignTop
             elide: window.ui.modern || window.textScale !== 1 ? Text.ElideRight : Text.ElideNone
-            readonly property real titleRoom: {
+            // centred: the width of a title centred on the bar; from, to: the free room between the
+            // nearest shown buttons on the left and on the right
+            readonly property var titleSpan: {
                 var c = parent.width / 2, room = c
                 var left = [toolButton, toolButtonFloating]
                 var right = [toolButtonSettingsSearch, toolButtonLoadSettings, toolButtonSaveSettings, toolButtonMaps,
@@ -1896,7 +1925,16 @@ ApplicationWindow {
                     if ((held || (right[j].visible && right[j].opacity > 0)) && right[j].width > 0)
                         room = Math.min(room, right[j].x - c)
                 }
-                return Math.max(0, 2 * (room - 4))
+                var from = 0, to = parent.width
+                for (var k = 0; k < left.length; k++)
+                    if (left[k].visible && left[k].opacity > 0 && left[k].width > 0)
+                        from = Math.max(from, left[k].x + left[k].width)
+                for (var n = 0; n < right.length; n++) {
+                    var kept = right[n] === toolButtonSettingsSearch && headerToolbar.settingsPageActive
+                    if ((kept || (right[n].visible && right[n].opacity > 0)) && right[n].width > 0)
+                        to = Math.min(to, right[n].x)
+                }
+                return { centred: Math.max(0, 2 * (room - 4)), from: from + 4, to: Math.max(from + 4, to - 4) }
             }
         }
     }
