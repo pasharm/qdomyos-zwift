@@ -232,7 +232,7 @@ if open_language; then
   elif grep -q 'Catalan' ui.xml; then
     echo "!! search: the card shows Catalan" >> $STEPLOG
     FAILED=1
-  elif python3 .github/uitap.py ui.xml 'Auto \(System\)' > /dev/null; then
+  elif python3 .github/uitap.py ui.xml 'App Language: Auto \(System\)' > /dev/null; then
     echo "check search card: OK (Auto, no Catalan)" >> $STEPLOG
   else
     echo "!! search: no Auto on the card" >> $STEPLOG
