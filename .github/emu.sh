@@ -40,8 +40,8 @@ adb shell cmd uimode night no || true
 # ANR still reaches logcat and the end of steps.log ("ANR in")
 adb shell settings put global hide_error_dialogs 1 || true
 
-# T-060, T-066: a fake treadmill, so the home page has tiles (without a device it shows the search help)
-printf '[General]\nlog_debug=%s\nui_modern=%s\nconfirm_stop_workout=true\nfakedevice_treadmill=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+# T-228: a fake bike (applewatch_fakedevice), so the home page has the Resistance tiles
+printf '[General]\nlog_debug=%s\nui_modern=%s\nconfirm_stop_workout=true\napplewatch_fakedevice=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
 adb push qz.conf /data/local/tmp/qz.conf
 adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
 adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf'"
@@ -191,17 +191,17 @@ shot 04-home
 # steps only say what is expected of each. feat/modern-ui build: ui_modern from UI_MODERN, the row
 # snap (ui_tile_snap) on by default there
 conf_with() {
-  { printf '[General]\nlog_debug=%s\nui_modern=%s\nconfirm_stop_workout=true\nfakedevice_treadmill=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG" "$UI_MODERN"
+  { printf '[General]\nlog_debug=%s\nui_modern=%s\nconfirm_stop_workout=true\napplewatch_fakedevice=true\nskipLocationServicesDialog=true\n' "$LOG_DEBUG" "$UI_MODERN"
     for kv in "$@"; do echo "$kv"; done; } > qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf 'files/.config/Roberto Viola/qDomyos-Zwift.conf' < /dev/null"
 }
 wait_tiles() {
   local i
-  # The fake treadmill comes after the first search ends: at most 3 min
+  # The fake bike comes after the first search ends: at most 3 min. Any tile +/- button, in any language
   for i in $(seq 1 18); do
     dump
-    if [ -f ui.xml ] && grep -q 'content-desc="Speed' ui.xml; then
+    if [ -f ui.xml ] && grep -qE 'content-desc="(Increase|Збільшити) ' ui.xml; then
       echo "tiles shown after $i looks" >> $STEPLOG; return 0
     fi
     sleep 10
@@ -225,32 +225,100 @@ drag_down() { adb shell input swipe 700 900 700 $((900 + $1)) 1500 || true; slee
 to_end() { local i; for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 600 150 || true; done; sleep 4; }
 
 echo "== API $(adb shell getprop ro.build.version.sdk | tr -d '\r')" >> $STEPLOG
-# T-403: the "Return to app" button of T.Power(W). This build always shows it (emu only, the
-# real one needs a FitPlus and an app); the frames show whether it fits the second line and keeps
-# off the value, the name and the icon, with a long label (ru, de) and the English one
-RELEASE='Return to app|Вернуть приложению|Zurück an die App'
-for LANG_CODE in ru de en; do
-  echo "== restart: app_language=$LANG_CODE" >> $STEPLOG
+# T-228 PR 2: the question on the first Resistance / Target R. press with Auto Resistance off.
+# A fake bike (applewatch_fakedevice); Auto Resistance is on at every start and is turned off with the
+# rightmost toolbar button (an icon without a name: coordinates, checked by its console.log line).
+# Wrong behaviour is a "!! FAIL" line, a step that could not be done a "proves nothing" line: both end red
+INC_RES='Increase Resistance|Збільшити Опір'
+INC_TR='Increase Target R\.|Збільшити Ціль оп\.'
+DLG='Enable Auto Resistance|Увімкнути автоопір'
+APPLY='Apply|Застосувати'
+CANCEL='Cancel|Скасувати'
+AUTORES="1356 168"
+logcount() { grep -c "$1" full_logcat.txt 2>/dev/null || true; }
+has_dialog() { dump; [ -f ui.xml ] && python3 .github/uitap.py ui.xml "$DLG" > /dev/null; }
+auto_off() {
+  local before after
+  before=$(logcount "auto resistance toggled false")
+  tap $AUTORES "Auto Resistance toolbar button"
+  sleep 3
+  after=$(logcount "auto resistance toggled false")
+  if [ "$after" -gt "$before" ]; then
+    echo "Auto Resistance off: OK" >> $STEPLOG
+  else
+    echo "!! Auto Resistance NOT turned off (no console line) - the run proves nothing" >> $STEPLOG
+  fi
+  # the toolbar toast closes by itself
+  sleep 4
+}
+start_bike() {
+  echo "== restart: $*" >> $STEPLOG
   adb shell am force-stop $PKG || true
   sleep 2
-  conf_with "app_language=$LANG_CODE" tile_target_power_enabled=true tile_target_power_order=0
+  conf_with "$@" tile_resistance_order=0 tile_target_resistance_order=1
   adb shell am start -n $PKG/$PKG.CustomQtActivity
-  sleep 30
-  if scroll_to "$RELEASE"; then
-    # scroll_to stops as soon as the label is in the tree, even under the gesture bar (classic
-    # ru/de in 41675652462): one more swipe brings the last row of tiles fully on screen
-    adb shell input swipe 700 2000 700 1300 400 || true
-    sleep 1
-    step $LANG_CODE-button "the button in the second line of T.Power(W), clear of the value, the name and the icon"
-    shot t403-$LANG_CODE-button
-    tap_ui "$RELEASE"
-    sleep 2
-    step $LANG_CODE-tap "no crash, the tile as before (no bike: nothing to restore)"
-    shot t403-$LANG_CODE-after-tap
-  else
-    shot t403-$LANG_CODE-not-found
-  fi
+  sleep 20
+  wait_tiles
+  scroll_top
+}
+for LANG_CODE in en uk; do
+  start_bike "app_language=$LANG_CODE"
+  step $LANG_CODE-auto-on "Auto Resistance on: + on Resistance applies, no question"
+  tap_ui "$INC_RES" || echo "!! Resistance + NOT found - the run proves nothing" >> $STEPLOG
+  sleep 2
+  shot t228-$LANG_CODE-1-auto-on
+  has_dialog && echo "!! FAIL: question with Auto Resistance on" >> $STEPLOG
+  auto_off
+  step $LANG_CODE-question "Auto Resistance off: the first + on Resistance asks"
+  tap_ui "$INC_RES"
+  sleep 2
+  shot t228-$LANG_CODE-2-question
+  has_dialog || echo "!! question NOT shown - the run proves nothing" >> $STEPLOG
+  step $LANG_CODE-cancel "Cancel closes it, nothing applied"
+  tap_ui "$CANCEL"
+  sleep 2
+  shot t228-$LANG_CODE-3-cancel
+  has_dialog && echo "!! FAIL: question still open after Cancel" >> $STEPLOG
+  step $LANG_CODE-ask-again "after Cancel the next + asks again"
+  tap_ui "$INC_RES"
+  sleep 2
+  has_dialog || echo "!! FAIL: no question after Cancel" >> $STEPLOG
+  applied=$(logcount "resistance tile with auto resistance off")
+  sent=$(logcount 'changeResistance" true')
+  step $LANG_CODE-apply "Apply closes it and sends the level to the bike"
+  tap_ui "$APPLY"
+  sleep 2
+  shot t228-$LANG_CODE-4-apply
+  has_dialog && echo "!! FAIL: question still open after Apply" >> $STEPLOG
+  [ "$(logcount "resistance tile with auto resistance off")" -gt "$applied" ] || echo "!! FAIL: Apply did not apply the press" >> $STEPLOG
+  [ "$(logcount 'changeResistance" true')" -gt "$sent" ] || echo "!! FAIL: no bike::changeResistance with auto resistance lifted" >> $STEPLOG
+  step $LANG_CODE-no-question "after Apply: + on Target R. applies without a question"
+  applied=$(logcount "resistance tile with auto resistance off")
+  tap_ui "$INC_TR" || echo "!! Target R. + NOT found - the run proves nothing" >> $STEPLOG
+  sleep 2
+  shot t228-$LANG_CODE-5-no-question
+  has_dialog && echo "!! FAIL: asked again after Apply" >> $STEPLOG
+  [ "$(logcount "resistance tile with auto resistance off")" -gt "$applied" ] || echo "!! FAIL: Target R. press not applied after Apply" >> $STEPLOG
+  # Auto Resistance stays off: a toolbar tap would turn it on, so the icon is left as is
 done
+# The biggest text size in landscape: the question must stay on screen and scroll
+start_bike "app_language=en" ui_text_scale_system=false ui_text_scale=170
+auto_off
+adb shell settings put system accelerometer_rotation 0 || true
+adb shell settings put system user_rotation 1 || true
+sleep 8
+step big-landscape "text 170 % in landscape: the question on screen, the title at the top, scrolls to the buttons"
+tap_ui "$INC_RES" || echo "!! Resistance + NOT found in landscape - the run proves nothing" >> $STEPLOG
+sleep 2
+shot t228-big-1-question
+adb shell input swipe 1280 1000 1280 400 400 || true
+sleep 2
+shot t228-big-2-scrolled
+dump
+[ -f ui.xml ] && python3 .github/uitap.py ui.xml "$CANCEL" > /dev/null || echo "!! FAIL: Cancel not reachable in landscape" >> $STEPLOG
+tap_ui "$CANCEL"
+sleep 2
+adb shell settings put system user_rotation 0 || true
 adb shell pidof $PKG > /dev/null && echo "app alive at the end: OK" >> $STEPLOG || echo "!! app not running at the end" >> $STEPLOG
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
@@ -284,3 +352,5 @@ echo "== steps"; cat $STEPLOG
 # A "proves nothing" line in steps.log (no APK installed, the field took no focus) means the run
 # checked nothing: the job must end red, not green. Last, so the logcat and shots above are kept
 if grep -q "proves nothing" $STEPLOG; then echo "!! steps.log: the run proves nothing - failing the job"; exit 1; fi
+# T-228: a step that went the wrong way
+if grep -q "!! FAIL" $STEPLOG; then echo "!! steps.log: a step failed - failing the job"; exit 1; fi

@@ -28,12 +28,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # T-403: the Return to app button in both looks
+        # T-228 PR 2: a master build (classic look only), two Android versions
         include:
           - api: 35
             target: google_apis
-            modern: 'true'
-          - api: 35
+            modern: 'false'
+          - api: 30
             target: google_apis
             modern: 'false'
     steps:
