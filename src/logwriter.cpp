@@ -10,6 +10,8 @@ LogWriter::~LogWriter() {
     outFile.close();
 }
 
+qint64 LogWriter::maxFileSize = 0;
+
 void LogWriter::writeLog(const QString &path, const QString &txt) {
     if (!outFile.isOpen() || outFile.fileName() != path) {
         ts.setDevice(nullptr);
@@ -24,7 +26,7 @@ void LogWriter::writeLog(const QString &path, const QString &txt) {
         if (outFile.isOpen())
             ts.setDevice(&outFile);
     }
-    if (outFile.isOpen()) {
+    if (outFile.isOpen() && (maxFileSize <= 0 || outFile.size() < maxFileSize)) {
         ts << txt;
         // flushed for every line as before (the file was closed after each one), so a crash or a log
         // attached while the app runs has every line
