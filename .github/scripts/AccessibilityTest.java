@@ -7,6 +7,8 @@
 // - moves the accessibility focus over the app's nodes; each one must take it,
 // - presses the given buttons in turn (QZ presses a Qt button itself, nativeAccessibleClick, and
 //   answers true; Qt 5.15 alone answers false for a button) and checks what each press shows.
+//   An item that is not a Qt button with Accessible.onPressAction must answer true too (Qt 5.15.0
+//   answers false although it ran the press, and TalkBack then taps the item a second time).
 // Every line it prints starts with OK, FAIL or INFO; the last one is DONE.
 //
 //   CLASSPATH=/data/local/tmp/a11y-test.jar app_process / AccessibilityTest [--scroll] <press> [<press> ...]
@@ -271,24 +273,16 @@ public class AccessibilityTest {
             }
         }
         boolean handled = tap || target.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-        // QZ answers false when its Qt thread is busy for 2 s, as it can be just after a device
-        // connected, and Qt's own press may still run; Qt 5.15 answers false for an item that is
-        // not a button too (e.g. NewPageElement), though it ran its press. So wait for what the
-        // press shows up to 5 s before pressing again, else a second page opens over the first;
-        // again for 10 tries, unless that one worked
+        // QZ answers false when its Qt thread is busy for 3 s, as it can be just after a device
+        // connected, and then presses nothing: again for 10 s. TalkBack taps the middle of a node
+        // it got false for, so a press that ran although false was answered would run twice
         for (int i = 0; i < 10 && !handled; i++) {
             System.out.println("INFO press refused: " + describe(target) + " enabled=" + target.isEnabled()
                     + " visible=" + target.isVisibleToUser());
-            for (int j = 0; j < (expect == null ? 2 : 10) && !handled; j++) {
-                Thread.sleep(500);
-                handled = expect != null && find(expect, false) != null;
-            }
-            if (handled) {
-                System.out.println("INFO '" + expect + "' showed after the refused press");
-            } else if (!target.refresh() || !target.isVisibleToUser()) {
-                // the press ran and its page went away: it must not be pressed again
-                System.out.println("INFO '" + button + "' went away after the press: its page changed");
-                handled = true;
+            Thread.sleep(1000);
+            if (expect != null && find(expect, false) != null) {
+                System.out.println("FAIL pressed '" + button + "', but QZ answered false: TalkBack would press it again");
+                return false;
             } else {
                 AccessibilityNodeInfo again = find(button, true);
                 if (again != null) {
@@ -402,18 +396,26 @@ public class AccessibilityTest {
     // The first node whose description starts with the text, and not with a longer number
     // ("Resistance: 1" is not "Resistance: 12"); a button must be clickable. A node with no
     // size is not shown: Qt keeps the items of a hidden page (one under the top page of a
-    // StackView) and of a closed section in the tree, with empty bounds
+    // StackView) and of a closed section in the tree, with empty bounds. A button with no size
+    // is taken only when no button of that name has one: Qt 5.15 gives no bounds to some items
+    // on the screen too (the Bluetooth icon of the home page, a MouseArea it takes as hidden)
     private static AccessibilityNodeInfo find(String text, boolean clickable) {
         Rect bounds = new Rect();
+        AccessibilityNodeInfo noSize = null;
         for (AccessibilityNodeInfo node : appNodes()) {
             CharSequence description = node.getContentDescription();
-            node.getBoundsInScreen(bounds);
-            if ((!clickable || node.isClickable()) && description != null && !bounds.isEmpty()
+            if ((!clickable || node.isClickable()) && description != null
                     && startsWith(description.toString(), text)) {
-                return node;
+                node.getBoundsInScreen(bounds);
+                if (!bounds.isEmpty()) {
+                    return node;
+                }
+                if (clickable && noSize == null) {
+                    noSize = node;
+                }
             }
         }
-        return null;
+        return noSize;
     }
 
     private static boolean startsWith(String description, String text) {
