@@ -1,11 +1,9 @@
 #!/bin/bash
-# Test only (T-211): the values of the settings search results in the units of their page.
-# "Use Miles unit in UI" on, the bike weight 9.979044 kg (22 lbs), the player weight 85 kg, the
-# paces at their defaults (5 km: 300 s/km = 00:25:00). Side b is master without the fix (input
-# baseline): the results show the stored numbers - 300, 9.979044, 85 - and names without a unit.
-# Side a is the build with the fix (input source): 00:25:00, 22 and 187.39 with "(lbs)" in the
-# name; then again in Russian, where the name comes from the page's template "Вес велосипеда (%1)".
-# Frames b-*, a-*, r-*; steps.log has the checks, read from the dumps of the frames.
+# Test only (T-211 cost): what one step of the settings search of master costs. The build
+# (input source, test/t211-cost) logs a T211COST line per search: the text of all entries
+# (hay_all_ms), the match (filter_ms), the new results (model_ms), up to the first frame
+# (frame_ms); and per key that throws shown results away (clear_ms). Three rounds of the words
+# a / pace / weight / zzzz, each with one key more; the lines go into cost.txt.
 PKG=org.cagnulen.qdomyoszwift
 STEPLOG=steps.log
 CONF='files/.config/Roberto Viola/qDomyos-Zwift.conf'
@@ -238,77 +236,46 @@ open_search() {
   sleep 2
 }
 
-# The value of a card is in the dump as its own label and in the accessible name of the card
-# ("<title>: <value>"); either counts
-V='(.*: )?'
-case_run() {
-  install_apk "$2"
-  put_conf
-  open_search $1 || return 1
-  query "pace%stotal" $1-pace 'Search results \(5\)'
-  label $1-pace "${V}300" "$1 pace 300"
-  label $1-pace "${V}00:25:00" "$1 pace 00:25:00"
-  label $1-pace "${V}06:42|${V}00:06:42" "$1 mile 00:06:42"
-  # The fix: the page of the setting shows what the card shows
-  [ "$1" = a ] && { open_card '5 km pace \(total time\)(: .*)?' '5 km pace \(total time\):' a-pace-page || return 1; }
-  query "weight" $1-weight 'Search results \(5\)'
-  label $1-weight "${V}9\.979044" "$1 bike 9.979044"
-  label $1-weight "Bike Weight \(lbs\)(: .*)?" "$1 bike title lbs"
-  label $1-weight "${V}22" "$1 bike 22"
-  label $1-weight "${V}85" "$1 player 85"
-  label $1-weight "${V}187\.39" "$1 player 187.39"
-  [ "$1" = a ] && { open_card 'Bike Weight \(lbs\)(: .*)?' 'Bike Weight \(lbs\)' a-bike-page || return 1; }
-  return 0
-}
-# ru_run: the build with the fix again, in Russian - the name from the template of the page
-ru_run() {
-  adb shell am force-stop $PKG || true
-  sleep 2
-  put_conf ru
-  open_search r || return 1
-  query "weight" r-weight 'Результаты поиска \(5\)'
-  label r-weight "Вес велосипеда \(фунт\)(: .*)?" "r bike title фунт"
-  label r-weight "Вес \(фунт\)(: .*)?" "r player title фунт"
-  label r-weight "${V}22" "r bike 22"
+# type_query 'text': the field emptied and the text typed; then past the delay of master (1.5 s)
+# with room for the search itself, and one key more, which throws the shown results away
+# (the clear line) and searches again
+type_query() {
+  local i
+  tap_field
+  sleep 1
+  adb shell input keyevent KEYCODE_MOVE_END || true
+  for i in $(seq 1 30); do adb shell input keyevent KEYCODE_DEL || true; done
+  sleep 3
+  adb shell input text "$1"
+  echo "query '$1'" >> $STEPLOG
+  sleep 6
+  adb shell input text "e"
+  echo "query '$1' + e" >> $STEPLOG
+  sleep 6
 }
 
 FAILED=0
-case_run b apk-base/android-debug.apk || FAILED=1
+install_apk apk-debug/android-debug.apk
+put_conf
+open_search c || FAILED=1
+if [ $FAILED = 0 ]; then
+  # A word with many results (stops at 80), a few, none (the whole catalog scanned)
+  for round in 1 2 3; do
+    for q in a pace weight zzzz; do
+      type_query "$q"
+    done
+  done
+  shot c-last
+fi
 adb shell am force-stop $PKG || true
-sleep 2
-case_run a apk-debug/android-debug.apk || FAILED=1
-ru_run || FAILED=1
-adb shell am force-stop $PKG || true
-
 kill $LOGCAT_PID 2>/dev/null || true
 sleep 1
-# want <line>: steps.log has it, as the whole line
-want() {
-  if grep -qx "$1" $STEPLOG; then
-    echo "ok: $1" >> $STEPLOG
-  else
-    echo "!! want '$1', got '$(grep -F "${1% *}" $STEPLOG | grep -v '^ok: ' | tail -1)'" >> $STEPLOG
-    FAILED=1
-  fi
-}
-# Master: the stored numbers; the fix: the page's units. Any count above 0: the value is in the
-# dump as its label, as the accessible name of the card, or both
-want_some() {
-  if grep -qE "^$1: [1-9][0-9]*$" $STEPLOG; then echo "ok: $1" >> $STEPLOG
-  else echo "!! want '$1' on screen, got '$(grep -F "$1:" $STEPLOG | tail -1)'" >> $STEPLOG; FAILED=1; fi
-}
-for l in "b pace 300" "b bike 9.979044" "b player 85" \
-         "a pace 00:25:00" "a mile 00:06:42" "a bike title lbs" "a bike 22" "a player 187.39" \
-         "r bike title фунт" "r player title фунт" "r bike 22" \
-         "a-pace-page page label" "a-pace-page back to the results" \
-         "a-bike-page page label" "a-bike-page back to the results"; do
-  want_some "$l"
-done
-for l in "a-pace-page results heading: 0" "a-bike-page results heading: 0" "b pace 00:25:00: 0" "b bike title lbs: 0" "b player 187.39: 0" \
-         "a pace 300: 0" "a bike 9.979044: 0" "a player 85: 0"; do
-  want "$l"
-done
+grep -F "T211COST" full_logcat.txt > cost.txt || true
+echo "== T211COST lines: $(grep -c 'frame_ms=' cost.txt) searches, $(grep -c 'clear_ms=' cost.txt) clears" >> $STEPLOG
+# The beacon: log_debug on and the build is the one with the lines - none means nothing measured
+grep -q "frame_ms=" cost.txt || { echo "!! no T211COST search line: nothing measured" >> $STEPLOG; FAILED=1; }
 echo "== ANR / crash in the whole log:" >> $STEPLOG
 grep -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt >> $STEPLOG || echo "none" >> $STEPLOG
 cat $STEPLOG
+cat cost.txt
 exit $FAILED

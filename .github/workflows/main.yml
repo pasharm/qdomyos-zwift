@@ -1,21 +1,22 @@
-# test branch (T-211, scenario from T-426): run two APKs that were already built on one emulator - the build with the
-# fix (source) and the build of the same master without it (baseline) - and keep the frames of
-# the settings search results with miles on, in English and Russian, logcat and steps.log (no build).
+# test branch (T-211 cost): run one APK that was already built (test/t211-cost, the settings search of
+# master with a log line per search step) on emulators of two API levels and keep the T211COST lines
+# of the log (no build).
 name: CI
 
 on:
   workflow_dispatch:
     inputs:
       source:
-        description: run id of the build with the fix (fdroid-android-trial)
-        required: true
-      baseline:
-        description: run id of the build without it (fdroid-android-trial)
+        description: run id of the build with the T211COST log lines (fdroid-android-trial)
         required: true
 
 jobs:
-  emulator-logcat:
-    runs-on: ubuntu-latest
+  emulator-cost:
+    runs-on: ubuntu-26.04
+    strategy:
+      fail-fast: false
+      matrix:
+        api: [30, 35]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -28,20 +29,12 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - name: Download the APK with the fix
+      - name: Download the APK
         uses: actions/download-artifact@v4
         with:
           name: fdroid-android-trial
           path: apk-debug
           run-id: ${{ inputs.source }}
-          github-token: ${{ github.token }}
-
-      - name: Download the APK without it
-        uses: actions/download-artifact@v4
-        with:
-          name: fdroid-android-trial
-          path: apk-base
-          run-id: ${{ inputs.baseline }}
           github-token: ${{ github.token }}
 
       - name: Setup Java for Android Emulator
@@ -50,11 +43,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Search results in the units of their page, before and after
+      - name: Cost of one settings search step
         timeout-minutes: 25
         uses: ReactiveCircus/android-emulator-runner@v2
         with:
-          api-level: 35
+          api-level: ${{ matrix.api }}
           target: google_apis
           arch: x86_64
           profile: Nexus 6
@@ -65,10 +58,11 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.source }}-vs-${{ inputs.baseline }}
+          name: emulator-cost-${{ inputs.source }}-api${{ matrix.api }}
           path: |
             *.png
             full_logcat.txt
             steps.log
+            cost.txt
             dumps/
           if-no-files-found: warn
