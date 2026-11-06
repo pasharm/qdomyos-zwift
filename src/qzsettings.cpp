@@ -1365,8 +1365,11 @@ const QString QZSettings::history_chart_speed_inclination_order = QStringLiteral
 
 const QString QZSettings::moovio_lynx_konect_2_0 = QStringLiteral("moovio_lynx_konect_2_0");
 const QString QZSettings::heart_rate_belt_suggest = QStringLiteral("heart_rate_belt_suggest");
+const QString QZSettings::log_debug_first_setup = QStringLiteral("log_debug_first_setup");
+const QString QZSettings::log_debug_first_setup_since = QStringLiteral("log_debug_first_setup_since");
+const QString QZSettings::default_log_debug_first_setup_since = QStringLiteral("");
 
-const uint32_t allSettingsCount = 1056;
+const uint32_t allSettingsCount = 1058;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -2449,6 +2452,8 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::virtual_device_rower_cadence_offset, QZSettings::default_virtual_device_rower_cadence_offset},
     {QZSettings::ui_state_buttons, QZSettings::default_ui_state_buttons},
     {QZSettings::heart_rate_belt_suggest, QZSettings::default_heart_rate_belt_suggest},
+    {QZSettings::log_debug_first_setup, QZSettings::default_log_debug_first_setup},
+    {QZSettings::log_debug_first_setup_since, QZSettings::default_log_debug_first_setup_since},
 };
 
 void QZSettings::qDebugAllSettings(bool showDefaults) {
