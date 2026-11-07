@@ -101,8 +101,12 @@ T.Button {
     // The classic look ignores it
     property bool inverse: false
     readonly property bool modernInverse: modern && inverse
+    // The wallpaper accent of the opposite theme is taken as it is: unlike accentOf() it is not checked for
+    // contrast here (Material You pairs read on their surfaces)
     readonly property color inverseAccent: {
         const u = window.ui
+        if (!modernInverse)
+            return u.accent
         if (u.accentName === "system" && u.systemAccentAvailable)
             return u.dark ? u.systemAccentLight : u.systemAccentDark
         const set = u.dark ? u.lightAccents : u.accents
@@ -200,7 +204,9 @@ T.Button {
             pressed: control.pressed
             anchor: control
             active: control.down || control.visualFocus || control.hovered
-            color: control.flat && control.highlighted ? control.Material.highlightedRippleColor : control.Material.rippleColor
+            // on an inverse surface the ripple of the page theme (light on a light bar) is not seen
+            color: control.modernInverse ? window.ui.alpha(window.ui.bg, 0.16)
+                 : control.flat && control.highlighted ? control.Material.highlightedRippleColor : control.Material.rippleColor
         }
     }
 }

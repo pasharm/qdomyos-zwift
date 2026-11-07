@@ -136,6 +136,7 @@ UiFrame {
             spacing: 8
 
             Label {
+                id: listTitle
                 width: parent.width
                 text: qsTr("Choose a heart rate sensor")
                 color: window.ui.ink(Material.foreground)
@@ -146,7 +147,12 @@ UiFrame {
             // the strongest signal first: most likely the user's own sensor. A gym may have many: it scrolls
             ListView {
                 width: parent.width
-                height: Math.min(contentHeight, window.height - 180)
+                // Modern look: what the card leaves after its padding, the title and Cancel (a gym with many
+                // sensors, a phone in landscape); classic: the limit as before
+                height: Math.min(contentHeight, window.ui.modern
+                                 ? window.height - 60 - list.topPadding - list.bottomPadding - listTitle.height
+                                   - cancelRow.height - 2 * listColumn.spacing
+                                 : window.height - 180)
                 clip: true
                 model: bar.sensors
 
@@ -200,8 +206,10 @@ UiFrame {
             }
 
             // Modern look: a visible way out without a choice (the bar stays); classic: a tap outside, as before.
-            // The Cancel of the question cards, already translated
+            // A tonal pill, as Not now on the bar (decision of 08.11); the text is the Cancel of the question cards,
+            // already translated
             Item {
+                id: cancelRow
                 visible: window.ui.modern
                 width: parent.width
                 height: cancelButton.height
