@@ -1063,6 +1063,16 @@ import QtQuick 2.12 as Quick212
                 return
             }
 
+            // Modern look: "Changed" is ordered and grouped by the index of the pages - shown once
+            // the index is there (onMessage of settingsIndexWorker updates the list), not in the
+            // catalog order first and re-sorted half a second later
+            if (changedOnly && window.ui.modern && !settingsIndex) {
+                filteredSettings = []
+                settingsSearchPending = true
+                loadSettingsIndex()
+                return
+            }
+
             var query = settingsSearchTextField ? settingsSearchTextField.text.trim().toLowerCase() : ""
             if (query.length === 0 && !changedOnly) {
                 filteredSettings = []
