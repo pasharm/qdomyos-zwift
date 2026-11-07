@@ -1035,6 +1035,27 @@ import QtQuick 2.12 as Quick212
             return value === undefined || value === "" ? title : title + ": " + value
         }
 
+        // Where a setting stands on the pages (pos of settings-index-worker.js), "" when unknown.
+        // A setting made of others ("Specific Model": a picker over one switch per model) stands
+        // where the first of them does, as in jumpToSetting
+        function pagePositionOf(entry) {
+            if (!settingsIndex)
+                return ""
+            var where = settingsIndex[entry.key]
+            if (where && where.pos)
+                return where.pos
+            var first = ""
+            var persistent = settingsCatalog.settings || []
+            for (var v = 0; v < persistent.length; v++) {
+                if (persistent[v].virtualParent !== entry.key)
+                    continue
+                var part = settingsIndex[persistent[v].key]
+                if (part && part.pos && (first === "" || part.pos < first))
+                    first = part.pos
+            }
+            return first
+        }
+
         function updateFilteredSettings() {
             if (!settingsCatalogLoaded) {
                 filteredSettings = []
@@ -1081,16 +1102,38 @@ import QtQuick 2.12 as Quick212
             }
             // Modern look: grouped by section, for the section headers and their reset
             if (changedOnly && window.ui.modern) {
-                // The catalog order within a section: the sort of the engine need not keep it
+                // The order of the pages: a section where its first changed setting stands, the
+                // settings of a section as they stand in it (pos of settings-index-worker.js).
+                // Without a place on the pages (the index not built yet, a setting on no page):
+                // after the rest, by name and in the catalog order - the sort of the engine need
+                // not keep it
                 var sections = {}
+                var positions = {}
+                var sectionPositions = {}
                 var order = {}
+                var last = "~"
                 for (var r = 0; r < results.length; r++) {
-                    sections[results[r].key] = sectionOf(results[r])
-                    order[results[r].key] = r
+                    var resultKey = results[r].key
+                    var resultSection = sectionOf(results[r])
+                    var position = pagePositionOf(results[r]) || last
+                    sections[resultKey] = resultSection
+                    positions[resultKey] = position
+                    order[resultKey] = r
+                    if (sectionPositions[resultSection] === undefined || position < sectionPositions[resultSection])
+                        sectionPositions[resultSection] = position
                 }
                 results.sort(function (a, b) {
                     var sa = sections[a.key], sb = sections[b.key]
-                    return sa < sb ? -1 : (sa > sb ? 1 : order[a.key] - order[b.key])
+                    if (sa !== sb) {
+                        var fa = sectionPositions[sa], fb = sectionPositions[sb]
+                        if (fa !== fb)
+                            return fa < fb ? -1 : 1
+                        return sa < sb ? -1 : 1
+                    }
+                    var pa = positions[a.key], pb = positions[b.key]
+                    if (pa !== pb)
+                        return pa < pb ? -1 : 1
+                    return order[a.key] - order[b.key]
                 })
             }
             filteredSettings = results
