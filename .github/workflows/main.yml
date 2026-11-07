@@ -1,5 +1,5 @@
 # test branch: run an APK that was already built on one emulator and keep logcat and
-# screenshots (no build). T-468: the settings search, classic look.
+# screenshots (no build). T-324: Reset in the list of changed settings, classic look.
 name: CI
 
 on:

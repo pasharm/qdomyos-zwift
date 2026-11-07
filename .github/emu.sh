@@ -1,14 +1,18 @@
 #!/bin/bash
-# Test only (T-468): the settings search of the commit, classic look.
-#  r: "ftp" -> a tap on "FTP value" opens it on its page, back returns to the results
-#  c: ant_garmin on -> "Changed" lists it; a tap shows the toast "not found on the settings pages",
-#     the list stays
+# Test only (T-324): Reset in the list of changed settings, classic look.
+#  a: "Changed" lists five settings, each with Reset, and Reset all next to the title
+#  b: Reset of Player Weight (no restart in the catalog): gone from the list, the toast, and back
+#     from the settings asks no restart
+#  c: the settings again: Player Weight still not changed (written to the store)
+#  d: Reset all: the confirmation, Yes - "No changed settings"; back asks the restart (Debug Log
+#     and Fake Treadmill need it in the catalog)
+#  e: the settings again: still "No changed settings"
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
 STEPLOG=steps.log
 CONF='files/.config/Roberto Viola/qDomyos-Zwift.conf'
-TOAST='This setting was not found on the settings pages'
+RESTART='Settings changed'
 : > $STEPLOG
 mkdir -p dumps
 FAILED=0
@@ -31,10 +35,10 @@ install_apk() {
 adb shell cmd uimode night no || true
 adb shell settings put global hide_error_dialogs 1 || true
 
-# A fake treadmill, so there is no first-run wizard; Garmin ANT+ on: a setting with no place on
-# the pages, listed in "Changed" only
+# A fake treadmill, so there is no first-run wizard. Changed from the default: Debug Log and Fake
+# Treadmill (restartRequired), Garmin ANT+, Player Weight, FTP value (no restart)
 put_conf() {
-  printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\nant_garmin=true\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+  printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\nant_garmin=true\nweight=90\nftp=250\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf '$CONF'"
@@ -115,8 +119,50 @@ check_none() {   # check_none <name> <regex>
     echo "check $1: OK" >> $STEPLOG
   fi
 }
+# Frames back to back right after a tap: a toast is gone before a few dumps are taken
+frames() {
+  local i
+  for i in 1 2 3; do
+    adb exec-out screencap -p > $1-$i.png || true
+  done
+  echo "-- frames $1-1..3" >> $STEPLOG
+}
 # Toolbar buttons are icons without text (Nexus 6: 1440x2560)
 BACK_XY="84 168"
+
+# open_changed: from the home page, the settings and their "Changed" list
+open_changed() {
+  tap $BACK_XY "menu"
+  sleep 3
+  adb shell input swipe 500 700 500 2300 300 || true
+  sleep 2
+  tap_ui '^Settings$' || FAILED=1
+  wait_ui '^General Options$' 60 || { echo "!! settings not opened" >> $STEPLOG; FAILED=1; }
+  # The search bar: the toolbar button is named "Search settings" too, the bar is open when
+  # "Changed" shows
+  if ! wait_ui '^Changed$' 3; then
+    tap_ui '🔍|Search settings'
+    sleep 2
+  fi
+  tap_ui '^Changed$' || FAILED=1
+  check "$1: Changed list" '^Changed settings.*|^No changed settings$' 20
+}
+# back_home <name> <yes|no>: back from the settings; the restart question shown or not
+back_home() {
+  tap $BACK_XY "back"
+  sleep 3
+  if [ "$2" = yes ]; then
+    check "$1: restart asked" "^$RESTART\$" 15
+    shot $1-restart
+    tap_ui '^No$' || FAILED=1
+    sleep 2
+  else
+    sleep 3
+    shot $1-home
+    check_none "$1: no restart asked" "^$RESTART\$"
+  fi
+  check "$1: home page" '^Start$|^Stop$' 30
+}
 
 adb logcat -c || true
 adb logcat -v threadtime -b main,system,crash > full_logcat.txt 2>/dev/null &
@@ -135,83 +181,49 @@ if ! wait_ui '^Start$|^Stop$' 120; then
 fi
 shot 01-home
 
-# Settings from the menu
-tap $BACK_XY "menu"
-sleep 3
-adb shell input swipe 500 700 500 2300 300 || true
-sleep 2
-tap_ui '^Settings$' || FAILED=1
-wait_ui '^General Options$' 60 || { echo "!! settings not opened" >> $STEPLOG; FAILED=1; }
-shot 02-settings
-# The search bar: the toolbar button is named "Search settings" too, the bar is open when
-# "Changed" shows
-if ! wait_ui '^Changed$' 3; then
-  tap_ui '🔍|Search settings'
-  sleep 2
-fi
-check "search bar open" '^Changed$' 15
+echo "== a: Changed" >> $STEPLOG
+open_changed a
+check "a: five listed" '^Changed settings \(5\)$' 10
+check "a: Reset all" '^Reset all$' 5
+check "a: Reset of Player Weight" '^Reset: Player Weight.*' 5
+shot a-1-changed
 
-# r: "ftp", first letter first until the field has it (the first keys can be lost)
-echo "== r: ftp" >> $STEPLOG
-for i in 1 2 3; do
-  tap 470 338 "search field"
-  sleep 1
-  adb shell input text f || true
+echo "== b: Reset of Player Weight" >> $STEPLOG
+if tap_ui '^Reset: Player Weight.*'; then
+  frames b-1-toast
   sleep 2
-  wait_ui '^Search results.*|^No settings found$' 6 && break
-done
-adb shell input text tp || true
-sleep 4
-adb shell input keyevent KEYCODE_BACK || true   # the keyboard down
-sleep 2
-check "r: results of ftp" '^Search results.*' 15
-shot r-1-results
-if tap_ui '^FTP value.*'; then
-  sleep 4
-  shot r-2-opened
-  check_none "r: results closed on the tap" '^Search results.*'
-  check "r: FTP value on its page" '^FTP value.*' 10
-  tap $BACK_XY "back"
-  sleep 4
-  shot r-3-back
-  check "r: back returns to the results" '^Search results.*' 15
-  check "r: FTP value among them" '^FTP value.*' 5
+  shot b-2-after
+  check "b: four left" '^Changed settings \(4\)$' 10
+  check_none "b: Player Weight gone" '^Player Weight.*'
+  check "b: FTP value still listed" '^FTP value.*' 5
 else
   FAILED=1
 fi
+back_home b no
 
-# c: "Changed" with Garmin ANT+ on
-echo "== c: Changed" >> $STEPLOG
-tap_ui '^Clear$' || true
-sleep 3
-if ! wait_ui '^Changed$' 3; then
-  tap_ui '🔍|Search settings'
-  sleep 2
-fi
-tap_ui '^Changed$' || FAILED=1
-check "c: Changed list" '^Changed settings.*' 20
+echo "== c: Changed again" >> $STEPLOG
+open_changed c
+check "c: four listed" '^Changed settings \(4\)$' 10
+check_none "c: Player Weight not changed" '^Player Weight.*'
 shot c-1-changed
-if tap_ui '^Garmin ANT\+.*'; then
-  # The toast is gone in a few seconds and a dump takes 2-3 s (run 42397892075: the frame after six
-  # dumps had no toast): frames first, back to back, then one dump. QZ does not log its toasts, and
-  # a Qt toast need not be in the dump - the frames are the evidence, the dump a hint
-  for i in 1 2 3 4 5; do
-    adb exec-out screencap -p > c-2-toast-$i.png || true
-  done
-  dump
-  [ -f ui.xml ] && cp ui.xml dumps/c-2-toast.xml
-  if [ -f ui.xml ] && grep -q "$TOAST" ui.xml; then
-    echo "check c: toast '$TOAST' in the dump: OK" >> $STEPLOG
-  else
-    echo "-- toast not in the dump: see the frames c-2-toast-1..5" >> $STEPLOG
-  fi
-  sleep 3
-  shot c-3-after
-  check "c: the list stays" '^Changed settings.*' 10
-  check "c: Garmin ANT+ still listed" '^Garmin ANT\+.*' 5
+
+echo "== d: Reset all" >> $STEPLOG
+if tap_ui '^Reset all$'; then
+  check "d: confirmation" '^Reset changed settings\?$' 15
+  shot d-1-confirm
+  tap_ui '^Yes$' || FAILED=1
+  frames d-2-toast
+  check "d: none left" '^No changed settings$' 15
+  shot d-3-after
 else
   FAILED=1
 fi
+back_home d yes
+
+echo "== e: Changed again" >> $STEPLOG
+open_changed e
+check "e: none listed" '^No changed settings$' 10
+shot e-1-changed
 
 adb shell am force-stop $PKG || true
 kill $LOGCAT_PID 2>/dev/null || true
@@ -219,8 +231,6 @@ wait $LOGCAT_PID 2>/dev/null || true
 echo "== QML errors of settings.qml in the whole log:" >> $STEPLOG
 grep -a -E "qrc:/settings\.qml" full_logcat.txt | grep -a -E "Error|error|undefined|not a function" | cut -c1-220 | head -n 20 >> $STEPLOG
 grep -a -q -E "qrc:/settings\.qml.*(TypeError|ReferenceError)" full_logcat.txt && { echo "!! JS error in settings.qml" >> $STEPLOG; FAILED=1; }
-echo "== search lines:" >> $STEPLOG
-grep -a -E "Unable to (build|load|parse)" full_logcat.txt | cut -c1-200 | head -n 10 >> $STEPLOG
 echo "== ANR / crash in the whole log:" >> $STEPLOG
 grep -a -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt >> $STEPLOG || echo "none" >> $STEPLOG
 grep -q "^check " $STEPLOG || { echo "!! no check ran: the run proves nothing" >> $STEPLOG; FAILED=1; }
