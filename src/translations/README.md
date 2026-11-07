@@ -1,10 +1,8 @@
 # QDomyos-Zwift Translations
 
-This folder contains translation files for 30 languages: 9 are translated, the others are empty and wait for a translator.
+This folder contains translation files for 30 languages.
 
-## Translated Languages
-
-These are the languages offered in Settings → General Options → App Language.
+## Supported Languages
 
 | Language | File | Locale Code |
 |----------|------|-------------|
@@ -13,25 +11,18 @@ These are the languages offered in Settings → General Options → App Language
 | French | qdomyos-zwift_fr.ts | fr |
 | Spanish | qdomyos-zwift_es.ts | es |
 | Portuguese | qdomyos-zwift_pt.ts | pt |
+| Portuguese (Brazil) | qdomyos-zwift_pt_BR.ts | pt_BR |
 | Russian | qdomyos-zwift_ru.ts | ru |
 | Chinese (Simplified) | qdomyos-zwift_zh_CN.ts | zh_CN |
-| Japanese | qdomyos-zwift_ja.ts | ja |
-| Ukrainian | qdomyos-zwift_uk.ts | uk |
-
-## Languages Waiting for a Translation
-
-These files are empty, so the language is not offered in the app yet.
-
-| Language | File | Locale Code |
-|----------|------|-------------|
-| Portuguese (Brazil) | qdomyos-zwift_pt_BR.ts | pt_BR |
 | Chinese (Traditional) | qdomyos-zwift_zh_TW.ts | zh_TW |
+| Japanese | qdomyos-zwift_ja.ts | ja |
 | Korean | qdomyos-zwift_ko.ts | ko |
 | Arabic | qdomyos-zwift_ar.ts | ar |
 | Hindi | qdomyos-zwift_hi.ts | hi |
 | Turkish | qdomyos-zwift_tr.ts | tr |
 | Vietnamese | qdomyos-zwift_vi.ts | vi |
 | Polish | qdomyos-zwift_pl.ts | pl |
+| Ukrainian | qdomyos-zwift_uk.ts | uk |
 | Dutch | qdomyos-zwift_nl.ts | nl |
 | Thai | qdomyos-zwift_th.ts | th |
 | Indonesian | qdomyos-zwift_id.ts | id |
@@ -45,6 +36,11 @@ These files are empty, so the language is not offered in the app yet.
 | Danish | qdomyos-zwift_da.ts | da |
 | Hebrew | qdomyos-zwift_he.ts | he |
 | Catalan | qdomyos-zwift_ca.ts | ca |
+
+Every language in this table has a file here, translated or not. The App Language list in the settings
+offers one once at least 50% of its strings are translated: a translation shows up there by itself, with
+no change to the code. A regional language with an empty file shows its base language, if it has one
+(`pt_BR` -> `pt`).
 
 ## How to Contribute Translations
 
@@ -137,8 +133,6 @@ See setup guide: `docs/60_translation_platforms.md`
    git commit -m "i18n: Add German translations for main UI"
    ```
 4. Create a Pull Request on GitHub
-
-When a new language is translated, add it to `appLanguageOptions` in `src/settings.qml` and to the `app_language` options in `src/settings-catalog.json`, and move it to the translated table above.
 
 ## Automatic Updates
 
