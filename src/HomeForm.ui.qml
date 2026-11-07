@@ -577,6 +577,10 @@ Page {
             width: Math.min(parent.width - 2 * window.contentSideMargin, 560)
             height: page.height - (row1.y + row1.height) - 24
             contentHeight: emptyColumn.height + 24
+            // The support button "?" shows mostly in this state ("No device connected"): room for
+            // it under the checklist, as under the tiles (Home.qml), eased when it goes
+            bottomMargin: window.supportHelpShown ? 56 + 16 : 0
+            Behavior on bottomMargin { NumberAnimation { duration: 150; easing.type: Easing.OutQuad } }
             clip: true
             boundsBehavior: Flickable.StopAtBounds
 
