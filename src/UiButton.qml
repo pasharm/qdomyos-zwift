@@ -64,15 +64,17 @@ T.Button {
     spacing: 6
 
     // The font of the label: the button font with the weight and the case of the look
-    // (classic: the Material Medium, all caps). Not written into font itself: in Qt 5 a
+    // (modern: DemiBold, mixed case). Not written into font itself: in Qt 5 a
     // write of one attribute keeps the size the button inherits at that moment, and a
     // button made at another text size kept it after the size or the look changed. A
     // weight set on an instance (font.bold) still wins
-    readonly property font labelFont: Qt.font({
+    // Classic: the button font as is - case and weight of the style, as the stock Button
+    // (emulator 42417513235: the stock one mixed case, the forced all caps differed)
+    readonly property font labelFont: !modern ? font : Qt.font({
         family: font.family, pixelSize: font.pixelSize, italic: font.italic,
         letterSpacing: font.letterSpacing, hintingPreference: font.hintingPreference,
-        weight: font.weight !== Font.Normal ? font.weight : (modern ? Font.DemiBold : Font.Medium),
-        capitalization: modern ? Font.MixedCase : Font.AllUppercase
+        weight: font.weight !== Font.Normal ? font.weight : Font.DemiBold,
+        capitalization: Font.MixedCase
     })
 
     icon.width: 24
