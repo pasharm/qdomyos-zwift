@@ -294,6 +294,8 @@ for LANG_CODE in en uk; do
   [ "$(logcount 'changeResistance" true')" -gt "$sent" ] || echo "!! FAIL: no bike::changeResistance with auto resistance lifted" >> $STEPLOG
   step $LANG_CODE-no-question "after Apply: + on Target R. applies without a question"
   applied=$(logcount "resistance tile with auto resistance off")
+  # Target R. is below the fold on the fake bike (41st run: not in the tree without a swipe)
+  scroll_to "$INC_TR"
   tap_ui "$INC_TR" || echo "!! Target R. + NOT found - the run proves nothing" >> $STEPLOG
   sleep 2
   shot t228-$LANG_CODE-5-no-question
@@ -304,18 +306,29 @@ done
 # The biggest text size in landscape: the question must stay on screen and scroll
 start_bike "app_language=en" ui_text_scale_system=false ui_text_scale=170
 auto_off
+# Opened in portrait (the swipes of scroll_to are portrait ones), then turned with the question open
+tap_ui "$INC_RES" || echo "!! Resistance + NOT found - the run proves nothing" >> $STEPLOG
+sleep 2
 adb shell settings put system accelerometer_rotation 0 || true
 adb shell settings put system user_rotation 1 || true
 sleep 8
-step big-landscape "text 170 % in landscape: the question on screen, the title at the top, scrolls to the buttons"
-tap_ui "$INC_RES" || echo "!! Resistance + NOT found in landscape - the run proves nothing" >> $STEPLOG
-sleep 2
+step big-landscape "text 170 % in landscape: the question clear of the status and gesture bars, scrolls to the buttons"
 shot t228-big-1-question
+has_dialog || echo "!! question NOT shown in landscape - the run proves nothing" >> $STEPLOG
 adb shell input swipe 1280 1000 1280 400 400 || true
 sleep 2
 shot t228-big-2-scrolled
 dump
-[ -f ui.xml ] && python3 .github/uitap.py ui.xml "$CANCEL" > /dev/null || echo "!! FAIL: Cancel not reachable in landscape" >> $STEPLOG
+# 41st run: Cancel was in the tree but its lower half under the gesture bar (centre y 1301 of 1440)
+xy=""
+[ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$CANCEL")
+if [ -z "$xy" ]; then
+  echo "!! FAIL: Cancel not reachable in landscape" >> $STEPLOG
+elif [ "${xy#* }" -gt 1290 ]; then
+  echo "!! FAIL: Cancel at $xy - under the gesture bar" >> $STEPLOG
+else
+  echo "Cancel at $xy: clear of the gesture bar" >> $STEPLOG
+fi
 tap_ui "$CANCEL"
 sleep 2
 adb shell settings put system user_rotation 0 || true
