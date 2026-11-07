@@ -4974,6 +4974,10 @@ V dalším okně povolte přístup ke složce QZ.</translation>
         <translation>Jazyk aplikace:</translation>
     </message>
     <message>
+        <source>This setting was not found on the settings pages</source>
+        <translation>Toto nastavení nebylo na stránkách nastavení nalezeno</translation>
+    </message>
+    <message>
         <source>Configure how virtual-app inclination maps to bike resistance.</source>
         <translation>Nastavení, jak se sklon z virtuální aplikace převádí na odpor kola.</translation>
     </message>

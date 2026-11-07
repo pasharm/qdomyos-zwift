@@ -4974,6 +4974,10 @@ Tillat tilgang til QZ-mappen i neste vindu.</translation>
         <translation>Appspråk:</translation>
     </message>
     <message>
+        <source>This setting was not found on the settings pages</source>
+        <translation>Denne innstillingen ble ikke funnet på innstillingssidene</translation>
+    </message>
+    <message>
         <source>Configure how virtual-app inclination maps to bike resistance.</source>
         <translation>Angi hvordan stigningen fra den virtuelle appen gjøres om til motstand på sykkelen.</translation>
     </message>

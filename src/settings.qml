@@ -106,27 +106,42 @@ import QtQuick 2.12 as Quick212
                     if (xhr.readyState !== XMLHttpRequest.DONE)
                         return
                     pages.push({ file: file, source: (xhr.status === 200 || xhr.status === 0) ? xhr.responseText : "" })
-                    if (--left === 0)
+                    if (--left !== 0)
+                        return
+                    // No index rather than none ever: the loading would never end, and a result
+                    // tapped meanwhile would never open
+                    try {
                         settingsIndexWorker.sendMessage({ pages: pages })
+                    } catch (e) {
+                        console.log("Unable to build the settings index: " + e)
+                        settingsIndexReady({})
+                    }
                 }
                 xhr.send()
             })
+        }
+
+        // The index is there (empty when it could not be built): the result tapped before it opens.
+        // The list first (sections and order come from the index): the jump closes it anyway, and
+        // a failed jump leaves no "Searching..." behind
+        function settingsIndexReady(map) {
+            settingsIndex = map
+            settingsIndexLoading = false
+            if (settingsSearchActive || changedOnly)
+                updateFilteredSettings()
+            if (pendingJump) {
+                var entry = pendingJump
+                pendingJump = null
+                jumpToSetting(entry)
+            }
         }
 
         WorkerScript {
             id: settingsIndexWorker
             source: "settings-index-worker.js"
             onMessage: {
-                settingsPane.settingsIndex = messageObject.map
-                settingsPane.settingsIndexLoading = false
-                if (settingsPane.pendingJump) {
-                    var entry = settingsPane.pendingJump
-                    settingsPane.pendingJump = null
-                    settingsPane.jumpToSetting(entry)
-                }
                 console.log("QZ-TIMING settings index: " + messageObject.keys + " settings in " + messageObject.ms + " ms")
-                if (settingsPane.settingsSearchActive || settingsPane.changedOnly)
-                    settingsPane.updateFilteredSettings()
+                settingsPane.settingsIndexReady(messageObject.map)
             }
         }
 
@@ -325,6 +340,8 @@ import QtQuick 2.12 as Quick212
         // A page among the results ("Wahoo Options"): back from it lands on the results, as
         // from a setting
         function openPageResult(entry) {
+            // A setting tapped before the index came must not open over this page later
+            pendingJump = null
             searchReturn = currentSearch(true)
             // Or the search field takes the focus back with the keyboard on the way back
             dropTextFocus()
@@ -352,10 +369,12 @@ import QtQuick 2.12 as Quick212
             }
             // TEMP-LOG: QZ-NAV - a search result tapped
             console.log("QZ-NAV search jump key=" + entry.key + " name=" + entry.name + " file=" + (where ? where.file : "none") + " chain=" + (where ? JSON.stringify(where.chain) : "none"))
-            // A setting that is on no page (searchHiddenSettings, in "Changed" only): the tap
-            // leaves the results as they are
-            if (!where)
+            // A setting that is on no page (searchHiddenSettings, in "Changed" only; any setting
+            // when the index could not be built): the results stay, the tap says why
+            if (!where) {
+                toast.show(qsTr("This setting was not found on the settings pages"))
                 return
+            }
             var page = settingsPane
             var context = "settings"
             // The results and their scroll as they were: back shows them without searching again
@@ -681,8 +700,10 @@ import QtQuick 2.12 as Quick212
         }
 
         function hideSettingsSearch() {
-            // Classic look: the search closed is done with, back no longer brings its results up
+            // Classic look: the search closed is done with, back no longer brings its results up,
+            // a result tapped before the index came no longer opens
             searchReturn = null
+            pendingJump = null
             settingsSearchDebounceTimer.stop()
             changedOnly = false
             settingsSearchTextField.text = ""
@@ -803,12 +824,13 @@ import QtQuick 2.12 as Quick212
                     return
 
                 settingsCatalogLoading = false
+                var catalog = null
                 if (xhr.status === 200 || xhr.status === 0) {
                     try {
-                        settingsCatalog = JSON.parse(xhr.responseText)
-                        settingsCatalogLoaded = true
-                        settingsCatalogError = ""
-                        buildSearchableSettings()
+                        catalog = JSON.parse(xhr.responseText)
+                        // "null" or an empty answer parses too: no catalog all the same
+                        if (!catalog)
+                            throw "empty catalog"
                     } catch (e) {
                         settingsCatalogError = "Unable to parse settings catalog"
                         console.log(settingsCatalogError + ": " + e)
@@ -817,6 +839,21 @@ import QtQuick 2.12 as Quick212
                     settingsCatalogError = "Unable to load settings catalog"
                     console.log(settingsCatalogError + ": " + xhr.status)
                 }
+                if (catalog) {
+                    settingsCatalog = catalog
+                    settingsCatalogLoaded = true
+                    settingsCatalogError = ""
+                    // Apart from the parsing: a failure here is not a broken catalog
+                    try {
+                        buildSearchableSettings()
+                    } catch (e) {
+                        settingsCatalogError = "Unable to build the settings list"
+                        console.log(settingsCatalogError + ": " + e)
+                    }
+                }
+                // With an error the search waits for nothing: the error is the answer
+                if (settingsCatalogError.length > 0)
+                    settingsSearchPending = false
             }
             xhr.send()
         }
@@ -1144,8 +1181,10 @@ import QtQuick 2.12 as Quick212
 
         function setChangedOnly(on) {
             changedOnly = on
-            // A new list of one's own: back no longer returns to the previous one
+            // A new list of one's own: back no longer returns to the previous one, a result of
+            // the previous one tapped before the index came no longer opens
             searchReturn = null
+            pendingJump = null
             settingsSearchDebounceTimer.stop()
             settingsSearchActive = on || settingsSearchTextField.text.trim().length > 0
             settingsSearchPending = settingsSearchActive
@@ -2956,7 +2995,11 @@ import QtQuick 2.12 as Quick212
                     leftPadding: window.ui.modern ? 44 : undefined
                     rightPadding: window.ui.modern ? 44 : undefined
                     // A new search of one's own: back no longer returns to the previous one
-                    onTextEdited: settingsPane.searchReturn = null
+                    // A new text: the result tapped before the index came is not wanted any more
+                    onTextEdited: {
+                        settingsPane.searchReturn = null
+                        settingsPane.pendingJump = null
+                    }
                     onTextChanged: {
                         if (settingsPane.restoringSearch)
                             return
@@ -3042,6 +3085,8 @@ import QtQuick 2.12 as Quick212
                     // The size with the weight: in Qt 5 a write of the weight alone keeps the size
                     // the label inherits at that moment (the app font in the classic look)
                     font.pixelSize: window.ui.fontBase
+                    // The catalog error above says it all: no "Searching..." or "No settings found"
+                    visible: settingsCatalogError.length === 0
                     text: settingsCatalogLoading ? qsTr("Loading settings...") :
                           settingsSearchPending ? qsTr("Searching...") :
                           changedOnly && filteredSettings.length > 0 ?

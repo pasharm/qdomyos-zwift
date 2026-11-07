@@ -6228,6 +6228,10 @@ Não: o QZ o mantém como esteira e não pergunta de novo (uma bicicleta ainda p
         <translation>Idioma do Aplicativo:</translation>
     </message>
     <message>
+        <source>This setting was not found on the settings pages</source>
+        <translation>Esta configuração não foi encontrada nas páginas de configurações</translation>
+    </message>
+    <message>
         <source>Configure how virtual-app inclination maps to bike resistance.</source>
         <translation>Define como a inclinação do aplicativo virtual é convertida em resistência da bicicleta.</translation>
     </message>

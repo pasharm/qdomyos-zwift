@@ -4971,6 +4971,10 @@ W następnym oknie zezwól na dostęp do folderu QZ.</translation>
         <translation>Język aplikacji:</translation>
     </message>
     <message>
+        <source>This setting was not found on the settings pages</source>
+        <translation>Nie znaleziono tego ustawienia na stronach ustawień</translation>
+    </message>
+    <message>
         <source>Configure how virtual-app inclination maps to bike resistance.</source>
         <translation>Określa, jak nachylenie z aplikacji wirtualnej jest przeliczane na opór roweru.</translation>
     </message>

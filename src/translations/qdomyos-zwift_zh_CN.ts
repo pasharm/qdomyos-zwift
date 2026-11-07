@@ -5980,6 +5980,10 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>训练历史图表</translation>
     </message>
     <message>
+        <source>This setting was not found on the settings pages</source>
+        <translation>在设置页面中未找到此设置</translation>
+    </message>
+    <message>
         <source>Configure how virtual-app inclination maps to bike resistance.</source>
         <translation>设置虚拟应用的坡度如何换算为单车阻力。</translation>
     </message>
