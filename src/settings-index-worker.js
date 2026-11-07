@@ -184,7 +184,12 @@ WorkerScript.onMessage = function (message) {
     }
     var keys = 0
     for (var key in map) {
-        map[key].pos = pagePrefix(map[key].file, anchors, 0) + padLine(map[key].line)
+        // Without a place the setting goes after the rest, in the catalog order
+        try {
+            map[key].pos = pagePrefix(map[key].file, anchors, 0) + padLine(map[key].line)
+        } catch (e) {
+            delete map[key].pos
+        }
         delete map[key].strength
         delete map[key].line
         keys++
