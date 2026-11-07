@@ -494,11 +494,12 @@ import QtQuick 2.12 as Quick212
             if (searchReturn && searchReturn.viaPush)
                 restoreSearch()
         }
+        // Another page coming on top: a result tapped before the index came must not open over
+        // it. At the start of the transition - deactivated comes only at its end
+        StackView.onDeactivating: pendingJump = null
         StackView.onDeactivated: {
             if (searchReturn && !searchReturn.viaPush)
                 searchReturn = null
-            // Another page on top: a result tapped before the index came must not open over it
-            pendingJump = null
         }
 
         function revealPending() {
