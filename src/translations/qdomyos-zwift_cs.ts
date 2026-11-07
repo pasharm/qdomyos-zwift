@@ -5015,6 +5015,10 @@ Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nasta
         <translation>Jazyk aplikace:</translation>
     </message>
     <message>
+        <source>This setting was not found on the settings pages</source>
+        <translation>Toto nastavení nebylo na stránkách nastavení nalezeno</translation>
+    </message>
+    <message>
         <source>Configure how virtual-app inclination maps to bike resistance.</source>
         <translation>Nastavení, jak se sklon z virtuální aplikace převádí na odpor kola.</translation>
     </message>

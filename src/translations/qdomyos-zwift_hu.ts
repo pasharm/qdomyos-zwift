@@ -5008,6 +5008,10 @@ A következő ablakban engedélyezze a hozzáférést a QZ-mappához.</translati
         <translation>Alkalmazás nyelve:</translation>
     </message>
     <message>
+        <source>This setting was not found on the settings pages</source>
+        <translation>Ez a beállítás nem található a beállítási oldalakon</translation>
+    </message>
+    <message>
         <source>Configure how virtual-app inclination maps to bike resistance.</source>
         <translation>Beállítja, hogyan alakul át a virtuális alkalmazás emelkedése a kerékpár ellenállásává.</translation>
     </message>

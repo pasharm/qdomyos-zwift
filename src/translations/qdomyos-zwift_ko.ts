@@ -5012,6 +5012,10 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>앱 언어:</translation>
     </message>
     <message>
+        <source>This setting was not found on the settings pages</source>
+        <translation>설정 페이지에서 이 설정을 찾을 수 없습니다</translation>
+    </message>
+    <message>
         <source>Configure how virtual-app inclination maps to bike resistance.</source>
         <translation>가상 앱의 경사도를 자전거 저항으로 변환하는 방식을 설정합니다.</translation>
     </message>

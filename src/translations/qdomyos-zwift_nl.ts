@@ -5015,6 +5015,10 @@ Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog 
         <translation>Taal van de app:</translation>
     </message>
     <message>
+        <source>This setting was not found on the settings pages</source>
+        <translation>Deze instelling is niet gevonden op de instellingenpagina&apos;s</translation>
+    </message>
+    <message>
         <source>Configure how virtual-app inclination maps to bike resistance.</source>
         <translation>Stel in hoe de helling uit de virtuele app wordt omgezet in weerstand van de fiets.</translation>
     </message>
