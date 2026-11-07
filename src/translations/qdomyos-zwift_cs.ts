@@ -4719,6 +4719,30 @@ Přepnout pro tuto relaci na klasické virtuální zařízení Bluetooth?</trans
         <translation>Pořadí tohoto grafu v historii tréninků. Pořadí změníte tlačítky nahoru a dolů v Obecných možnostech rozhraní.</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>Nastavení obnoveno</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>Obnovená nastavení: %1</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>Obnovit vše</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>Obnovit změněná nastavení?</translation>
+    </message>
+    <message>
+        <source>%1 settings go back to their default values.</source>
+        <translation>Změněná nastavení (%1) se vrátí na výchozí hodnoty.</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Obnovit</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Zvolte „Auto“ pro jazyk zařízení, nebo vyberte konkrétní jazyk QZ.</translation>
     </message>

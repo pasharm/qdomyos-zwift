@@ -16207,7 +16207,7 @@
       "defaultValue": false,
       "defaultExpression": "false",
       "options": null,
-      "restartRequired": false
+      "restartRequired": true
     },
     {
       "key": "ui_text_scale",

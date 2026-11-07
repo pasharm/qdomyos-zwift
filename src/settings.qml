@@ -826,6 +826,94 @@ import AndroidStatusBar 1.0
                    differsFromDefault(entry.key, entry.type, entry.defaultValue)
         }
 
+        // A reset writes the default and does what the control of the setting does besides
+        // storing the value
+        function writeDefault(key, type, value) {
+            if (type === "boolean")
+                value = !!value
+            else if (type === "integer")
+                value = parseInt(value)
+            else if (type === "number")
+                value = parseFloat(value)
+            // The account of one server is no good on the other
+            if (key === "garmin_domain" && value !== settings.garmin_domain)
+                rootItem.garmin_connect_logout()
+            // Into the store at once: "Changed" and the page made again read it, and this page's
+            // Settings writes a property only a moment later, or not at all when its copy already
+            // holds the default
+            settings.setValue(key, value)
+            if (settings[key] !== undefined)
+                settings[key] = value
+            if (key === "ui_text_scale" || key === "ui_text_scale_system")
+                window.setTextScaleOption(key, value)
+            else if (key === "android_notification_v2")
+                rootItem.android_notification_apply(value)
+            else if (key === "app_language")
+                rootItem.setAppLanguage(value)
+            else if (key === "heart_rate_belt_name")
+                rootItem.reconnectHeartRateBelt(value)
+            else if (key === "watt_offset" || key === "watt_gain" || key === "power_sensor_name") {
+                settings.treadmillDataPoints = ""
+                settings.ergDataPoints = ""
+            }
+        }
+
+        // The restart is asked for as the catalog says (restartRequired), not for every setting
+        function resetEntry(entry) {
+            if (entry.catalogKind === "virtual") {
+                // A model picker goes back by its switches: it has no value of its own
+                for (var o = 0; entry.options && o < entry.options.length; o++) {
+                    var key = entry.options[o].sets
+                    if (key && settingDefaults[key] !== undefined && settingDefaults[key] !== null)
+                        writeDefault(key, "boolean", settingDefaults[key])
+                }
+            } else {
+                writeDefault(entry.key, entry.type, entry.defaultValue)
+            }
+            if (entry.restartRequired)
+                window.settings_restart_to_apply = true
+        }
+
+        function resetSetting(entry) {
+            resetEntry(entry)
+            showResetDone(qsTr("Setting reset"))
+        }
+
+        // The settings listed now: with a text in the search field, only the ones it matches
+        function resetListedSettings() {
+            var list = filteredSettings
+            for (var i = 0; i < list.length; i++)
+                resetEntry(list[i])
+            showResetDone(qsTr("%1 settings reset").arg(list.length))
+        }
+
+        // The page is made again, as for a new language: some controls read their setting once,
+        // when they are made (the switch of a section, the list of models, the order of the
+        // charts), and would show the old value or write it back. It opens on the same sections
+        // and on the changed settings
+        function showResetDone(message) {
+            var states = sectionStates(contentItem, [])
+            var snapshot = initialProfileSettingsSnapshot
+            var restartToApply = window.settings_restart_to_apply
+            var query = settingsSearchTextField.text
+            // The context of this page goes with the replace, the new page does the rest
+            var page = stackView.replace("settings.qml", {}, StackView.Immediate)
+            page.showChangedAfterReset(states, snapshot, restartToApply, query, message)
+        }
+
+        function showChangedAfterReset(states, snapshot, restartToApply, query, message) {
+            // Set by this page when it was made: what was changed before still counts
+            initialProfileSettingsSnapshot = snapshot
+            window.settings_restart_to_apply = restartToApply
+            openSections(contentItem, states, 0)
+            settingsSearchVisible = true
+            restoringSearch = true
+            settingsSearchTextField.text = query
+            restoringSearch = false
+            setChangedOnly(true)
+            toast.show(message)
+        }
+
         // From this page's Settings: the pages opened over it (voice, tiles...) write into the same
         // object, and the card is bound to its property. Not from the store: Settings writes a
         // change there only a moment later, a card read again at once got the old value and kept
@@ -2642,22 +2730,44 @@ import AndroidStatusBar 1.0
                 Layout.fillWidth: true
                 Layout.preferredWidth: Math.max(1, column1.width)
 
-                Label {
-                    // a label that sets only a weight keeps, in Qt 5, the size it inherited when created
-                    Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
-                    text: settingsCatalogLoading ? qsTr("Loading settings...") :
-                          settingsSearchPending ? qsTr("Searching...") :
-                          changedOnly && filteredSettings.length > 0 ?
-                              qsTr("Changed settings") + " (" + filteredSettings.length + ")" :
-                          // With a text the changed settings may be there, just not matching it
-                          changedOnly && settingsSearchTextField.text.trim().length === 0 ?
-                              qsTr("No changed settings") :
-                          filteredSettings.length === 0 ? qsTr("No settings found") :
-                          qsTr("Search results") + " (" + filteredSettings.length + ")"
-                    color: Material.color(Material.Red)
-                    font.bold: true
+                RowLayout {
                     Layout.fillWidth: true
-                    wrapMode: window.labelWrap
+                    spacing: 8
+
+                    Label {
+                        // a label that sets only a weight keeps, in Qt 5, the size it inherited when created
+                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                        text: settingsCatalogLoading ? qsTr("Loading settings...") :
+                              settingsSearchPending ? qsTr("Searching...") :
+                              changedOnly && filteredSettings.length > 0 ?
+                                  qsTr("Changed settings") + " (" + filteredSettings.length + ")" :
+                              // With a text the changed settings may be there, just not matching it
+                              changedOnly && settingsSearchTextField.text.trim().length === 0 ?
+                                  qsTr("No changed settings") :
+                              filteredSettings.length === 0 ? qsTr("No settings found") :
+                              qsTr("Search results") + " (" + filteredSettings.length + ")"
+                        color: Material.color(Material.Red)
+                        font.bold: true
+                        Layout.fillWidth: true
+                        wrapMode: window.labelWrap
+                    }
+
+                    // Back to the defaults: the changed settings listed, after a confirmation
+                    Button {
+                        visible: changedOnly && filteredSettings.length > 0 &&
+                                 !settingsCatalogLoading && !settingsSearchPending
+                        text: qsTr("Reset all")
+                        onClicked: resetChangedDialog.open()
+                    }
+                }
+
+                MessageDialog {
+                    id: resetChangedDialog
+                    text: qsTr("Reset changed settings?")
+                    informativeText: qsTr("%1 settings go back to their default values.").arg(settingsPane.filteredSettings.length)
+                    buttons: (MessageDialog.Yes | MessageDialog.No)
+                    onYesClicked: settingsPane.resetListedSettings()
+                    visible: false
                 }
 
                 Repeater {
@@ -2768,6 +2878,19 @@ import AndroidStatusBar 1.0
                                     font.bold: true
                                     color: Material.color(Material.Grey)
                                     Accessible.ignored: true
+                                    Layout.alignment: Qt.AlignVCenter
+                                }
+
+                                // Over the card's MouseArea: a tap here resets, the rest of the
+                                // card still opens the setting. No insets: the card keeps nearly
+                                // its height
+                                Button {
+                                    visible: settingsPane.changedOnly
+                                    text: qsTr("Reset")
+                                    topInset: 0
+                                    bottomInset: 0
+                                    Accessible.name: qsTr("Reset") + ": " + settingsPane.plainTitle(settingsPane.searchTitle(entry))
+                                    onClicked: settingsPane.resetSetting(entry)
                                     Layout.alignment: Qt.AlignVCenter
                                 }
                             }

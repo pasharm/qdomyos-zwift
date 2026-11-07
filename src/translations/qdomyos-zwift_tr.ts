@@ -4719,6 +4719,30 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
         <translation>Bu grafiğin antrenman geçmişindeki sırası. Sıra, Genel arayüz seçeneklerindeki yukarı ve aşağı düğmeleriyle değiştirilir.</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>Ayar sıfırlandı</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>%1 ayar sıfırlandı</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>Tümünü sıfırla</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>Değiştirilmiş ayarlar sıfırlansın mı?</translation>
+    </message>
+    <message>
+        <source>%1 settings go back to their default values.</source>
+        <translation>%1 ayar varsayılan değerlerine döner.</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Sıfırla</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Cihazınızın dilini kullanmak için &quot;Otomatik (sistem)&quot; seçeneğini seçin veya QZ için belirli bir dil seçin.</translation>
     </message>

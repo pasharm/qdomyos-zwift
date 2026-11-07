@@ -5772,6 +5772,30 @@ Dans la fenêtre suivante, autorisez l&apos;accès au dossier QZ.</translation>
         <translation>Langue de l&apos;application :</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>Paramètre réinitialisé</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>%1 paramètres réinitialisés</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>Tout réinitialiser</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>Réinitialiser les paramètres modifiés ?</translation>
+    </message>
+    <message>
+        <source>%1 settings go back to their default values.</source>
+        <translation>%1 paramètres reviennent à leurs valeurs par défaut.</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Réinitialiser</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Choisissez Auto pour suivre la langue de votre appareil, ou sélectionnez une langue spécifique pour QZ.</translation>
     </message>

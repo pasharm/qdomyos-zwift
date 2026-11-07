@@ -5832,6 +5832,30 @@ En la siguiente ventana, permite el acceso a la carpeta QZ.</translation>
         <translation>Idioma de la aplicación:</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>Ajuste restablecido</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>%1 ajustes restablecidos</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>Restablecer todo</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>¿Restablecer los ajustes modificados?</translation>
+    </message>
+    <message>
+        <source>%1 settings go back to their default values.</source>
+        <translation>%1 ajustes vuelven a sus valores predeterminados.</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Restablecer</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Selecciona Automático para seguir el idioma de tu dispositivo o elige un idioma específico para QZ.</translation>
     </message>

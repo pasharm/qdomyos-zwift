@@ -4678,6 +4678,30 @@ Vill du byta till den klassiska virtuella Bluetooth-enheten för den här sessio
         <translation>Diagrammets plats i ordningen i träningshistoriken. Ordningen ändras med knapparna upp och ned i Allmänna gränssnittsalternativ.</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>Inställningen har återställts</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>%1 inställningar har återställts</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>Återställ alla</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>Vill du återställa ändrade inställningar?</translation>
+    </message>
+    <message>
+        <source>%1 settings go back to their default values.</source>
+        <translation>%1 inställningar återställs till standardvärdena.</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Återställ</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Välj Auto om du vill följa enhetens språk eller välj ett visst språk för QZ.</translation>
     </message>

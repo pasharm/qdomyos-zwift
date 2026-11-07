@@ -4655,6 +4655,30 @@ In the next window, allow access to the QZ folder.</source>
         <translation>Язык приложения:</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>Настройка сброшена</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>Сброшено настроек: %1</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>Сбросить все</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>Сбросить изменённые настройки?</translation>
+    </message>
+    <message>
+        <source>%1 settings go back to their default values.</source>
+        <translation>Изменённые настройки (%1) вернутся к значениям по умолчанию.</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Сбросить</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Выберите «Авто», чтобы использовать язык устройства, или задайте язык QZ вручную.</translation>
     </message>

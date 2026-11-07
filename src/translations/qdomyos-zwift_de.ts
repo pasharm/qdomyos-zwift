@@ -5836,6 +5836,30 @@ Erlauben Sie im nächsten Fenster den Zugriff auf den QZ-Ordner.</translation>
         <translation>Platz dieses Diagramms im Trainingsverlauf. Die Reihenfolge ändern Sie mit den Schaltflächen nach oben und nach unten in den Allgemeinen UI-Optionen.</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>Einstellung zurückgesetzt</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>%1 Einstellungen zurückgesetzt</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>Alle zurücksetzen</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>Geänderte Einstellungen zurücksetzen?</translation>
+    </message>
+    <message>
+        <source>%1 settings go back to their default values.</source>
+        <translation>%1 Einstellungen werden auf ihre Standardwerte zurückgesetzt.</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Zurücksetzen</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Wählen Sie Auto, um die Sprache Ihres Geräts zu übernehmen, oder wählen Sie eine bestimmte Sprache für QZ.</translation>
     </message>

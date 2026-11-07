@@ -4719,6 +4719,30 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>운동 기록에서 이 그래프의 순서입니다. 순서는 일반 UI 옵션의 위로/아래로 버튼으로 바꿉니다.</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>설정을 초기화했습니다</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>설정 %1개를 초기화했습니다</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>모두 초기화</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>변경된 설정을 초기화하시겠습니까?</translation>
+    </message>
+    <message>
+        <source>%1 settings go back to their default values.</source>
+        <translation>설정 %1개가 기본값으로 돌아갑니다.</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>초기화</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>기기 언어를 따르려면 [자동(시스템)]을 선택하고, 아니면 QZ에서 쓸 언어를 직접 선택하세요.</translation>
     </message>

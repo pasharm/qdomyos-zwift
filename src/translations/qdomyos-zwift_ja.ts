@@ -5780,6 +5780,30 @@ In the next window, allow access to the QZ folder.</source>
         <translation>アプリ言語:</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>設定をリセットしました</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>%1個の設定をリセットしました</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>すべてリセット</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>変更した設定をリセットしますか？</translation>
+    </message>
+    <message>
+        <source>%1 settings go back to their default values.</source>
+        <translation>%1個の設定が既定値に戻ります。</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>リセット</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>デバイスの言語設定に従う場合は「自動（システム）」を選択するか、QZ用の特定の言語を選択してください。</translation>
     </message>

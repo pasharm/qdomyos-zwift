@@ -5876,6 +5876,30 @@ Na próxima janela, permita o acesso à pasta QZ.</translation>
         <translation>Posição deste gráfico no histórico de treinos. A ordem é alterada com os botões para cima e para baixo em Opções gerais da interface.</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>Configuração redefinida</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>%1 configurações redefinidas</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>Redefinir tudo</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>Redefinir configurações alteradas?</translation>
+    </message>
+    <message>
+        <source>%1 settings go back to their default values.</source>
+        <translation>%1 configurações voltam aos valores padrão.</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Redefinir</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Escolha Automático para seguir o idioma do seu dispositivo, ou selecione um idioma específico para QZ.</translation>
     </message>

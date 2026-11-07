@@ -4678,6 +4678,30 @@ Szeretne ebben a munkamenetben átváltani a klasszikus virtuális Bluetooth-esz
         <translation>A diagram sorszáma az edzéselőzményekben. A sorrend a felület általános beállításaiban, a fel és le gombokkal módosítható.</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>Beállítás visszaállítva</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>%1 beállítás visszaállítva</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>Összes visszaállítása</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>Visszaállítja a módosított beállításokat?</translation>
+    </message>
+    <message>
+        <source>%1 settings go back to their default values.</source>
+        <translation>%1 beállítás visszaáll az alapértelmezett értékére.</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>Visszaállítás</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>Az Automatikus az eszköz nyelvét követi, de konkrét nyelvet is választhat a QZ-hez.</translation>
     </message>

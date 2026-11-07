@@ -5860,6 +5860,30 @@ In the next window, allow access to the QZ folder.</source>
         <translation>应用语言:</translation>
     </message>
     <message>
+        <source>Setting reset</source>
+        <translation>设置已重置</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>已重置 %1 项设置</translation>
+    </message>
+    <message>
+        <source>Reset all</source>
+        <translation>全部重置</translation>
+    </message>
+    <message>
+        <source>Reset changed settings?</source>
+        <translation>重置已更改的设置？</translation>
+    </message>
+    <message>
+        <source>%1 settings go back to their default values.</source>
+        <translation>%1 项设置将恢复为默认值。</translation>
+    </message>
+    <message>
+        <source>Reset</source>
+        <translation>重置</translation>
+    </message>
+    <message>
         <source>Choose Auto to follow your device language, or pick a specific language for QZ.</source>
         <translation>选择自动以匹配设备语言，或为 QZ 选择特定语言。</translation>
     </message>
