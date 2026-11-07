@@ -3998,6 +3998,10 @@ Beim ersten Start kann dies einen Moment dauern.</translation>
         <translation>Denken Sie daran, das Profil &quot;%1&quot; zu speichern, wenn Sie diese Änderungen darin behalten möchten.</translation>
     </message>
     <message>
+        <source>QZ is closing...</source>
+        <translation>QZ wird geschlossen...</translation>
+    </message>
+    <message>
         <source>Press back again to exit</source>
         <translation>Zum Beenden erneut Zurück drücken</translation>
     </message>

@@ -4206,6 +4206,10 @@ Rozpocząć go teraz?</translation>
         <translation>Pamiętaj, aby zapisać profil „%1”, jeśli chcesz zachować w nim te zmiany.</translation>
     </message>
     <message>
+        <source>QZ is closing...</source>
+        <translation>Zamykanie QZ...</translation>
+    </message>
+    <message>
         <source>Press back again to exit</source>
         <translation>Naciśnij „Wstecz” jeszcze raz, aby wyjść</translation>
     </message>

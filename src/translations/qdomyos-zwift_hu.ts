@@ -4173,6 +4173,10 @@ Szeretné most elindítani?</translation>
         <translation>Ha a profilban meg szeretné tartani ezeket a módosításokat, ne felejtse el menteni: „%1”.</translation>
     </message>
     <message>
+        <source>QZ is closing...</source>
+        <translation>A QZ bezárul...</translation>
+    </message>
+    <message>
         <source>Press back again to exit</source>
         <translation>A kilépéshez nyomja meg még egyszer a Vissza gombot.</translation>
     </message>

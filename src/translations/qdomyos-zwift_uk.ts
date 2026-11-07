@@ -3986,6 +3986,10 @@ This may take a few moments on first startup.</source>
         <translation>qDomyos-Zwift</translation>
     </message>
     <message>
+        <source>QZ is closing...</source>
+        <translation>QZ закривається...</translation>
+    </message>
+    <message>
         <source>Press back again to exit</source>
         <translation>Натисніть «Назад» ще раз, щоб вийти</translation>
     </message>

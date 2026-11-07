@@ -4206,6 +4206,10 @@ Do you want to start it now?</source>
         <translation>Bu değişiklikleri &quot;%1&quot; profilinde tutmak istiyorsanız profili kaydetmeyi unutmayın.</translation>
     </message>
     <message>
+        <source>QZ is closing...</source>
+        <translation>QZ kapatılıyor...</translation>
+    </message>
+    <message>
         <source>Press back again to exit</source>
         <translation>Çıkmak için tekrar &quot;Geri&quot; düğmesine basın</translation>
     </message>

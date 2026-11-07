@@ -4206,6 +4206,10 @@ Do you want to start it now?</source>
         <translation>변경 사항을 &quot;%1&quot; 프로필에 유지하려면 프로필을 저장하세요.</translation>
     </message>
     <message>
+        <source>QZ is closing...</source>
+        <translation>QZ를 종료하는 중...</translation>
+    </message>
+    <message>
         <source>Press back again to exit</source>
         <translation>종료하려면 뒤로 버튼을 한 번 더 누르세요</translation>
     </message>

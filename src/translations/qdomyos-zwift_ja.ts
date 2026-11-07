@@ -4002,6 +4002,10 @@ This may take a few moments on first startup.</source>
         <translation>これらの変更をプロファイル「%1」に残す場合は、プロファイルを保存してください。</translation>
     </message>
     <message>
+        <source>QZ is closing...</source>
+        <translation>QZ を終了しています...</translation>
+    </message>
+    <message>
         <source>Press back again to exit</source>
         <translation>もう一度戻るを押すと終了します</translation>
     </message>

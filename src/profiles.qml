@@ -60,7 +60,9 @@ ColumnLayout {
         informativeText: qsTr("You must quit and restart for changes to take effect.")
         buttons: (MessageDialog.Yes | MessageDialog.No)
         onYesClicked: {
-            restart()
+            // the method of the window, not a closure of this page: the page may be popped
+            // while the quit waits for the settings warm-up
+            window.quitApp(window.restart)
         }
         onNoClicked: {
             quitDialog.close()

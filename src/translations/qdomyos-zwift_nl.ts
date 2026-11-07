@@ -4206,6 +4206,10 @@ Wil je die nu starten?</translation>
         <translation>Vergeet niet profiel ‘%1’ op te slaan als je deze wijzigingen in dit profiel wilt bewaren.</translation>
     </message>
     <message>
+        <source>QZ is closing...</source>
+        <translation>QZ wordt afgesloten...</translation>
+    </message>
+    <message>
         <source>Press back again to exit</source>
         <translation>Druk nogmaals op Terug om af te sluiten</translation>
     </message>

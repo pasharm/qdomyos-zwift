@@ -4206,6 +4206,10 @@ Spustit ho nyní?</translation>
         <translation>Nezapomeňte uložit profil „%1“, pokud chcete tyto změny v profilu zachovat.</translation>
     </message>
     <message>
+        <source>QZ is closing...</source>
+        <translation>QZ se zavírá...</translation>
+    </message>
+    <message>
         <source>Press back again to exit</source>
         <translation>Pro ukončení stiskněte znovu Zpět</translation>
     </message>

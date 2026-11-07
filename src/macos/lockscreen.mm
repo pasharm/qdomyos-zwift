@@ -7,7 +7,10 @@
 // the portable main.cpp patch does not collide with the Qt6/MSVC2022 branch.
 #include <QCoreApplication>
 #include <QGuiApplication>
+#include <QMetaObject>
+#include <QPointer>
 #include <QQuickWindow>
+#include <QVariant>
 #include <QTimer>
 #include <QtGlobal>
 #include <stdio.h>
@@ -18,22 +21,28 @@ void lockScreen() {
     // CI exercises the app inside the mounted DMG. This runs after main.qml
     // and homeform have loaded, immediately before QApplication::exec().
     if (qEnvironmentVariableIsSet("QZ_CI_GUI_SMOKE_TEST")) {
-        bool visibleQmlWindow = false;
+        QQuickWindow *qmlWindow = nullptr;
         for (QWindow *window : QGuiApplication::allWindows()) {
             if (qobject_cast<QQuickWindow *>(window) && window->isVisible()) {
-                visibleQmlWindow = true;
+                qmlWindow = qobject_cast<QQuickWindow *>(window);
                 break;
             }
         }
 
-        if (!visibleQmlWindow) {
+        if (!qmlWindow) {
             fputs("QZ_QML_WINDOW_NOT_VISIBLE\n", stderr);
             fflush(stderr);
             QTimer::singleShot(0, [] { QCoreApplication::exit(1); });
         } else {
             fputs("QZ_QML_LOADED\n", stderr);
             fflush(stderr);
-            QTimer::singleShot(5000, [] { QCoreApplication::quit(); });
+            // Quit the way the app quits (main.qml quitApp): it waits for the settings
+            // warm-up, which may still compile 5 s after the start on a slow runner
+            QPointer<QQuickWindow> window(qmlWindow);
+            QTimer::singleShot(5000, [window] {
+                if (!window || !QMetaObject::invokeMethod(window, "quitApp", Q_ARG(QVariant, QVariant())))
+                    QCoreApplication::quit();
+            });
         }
         // No sleep-prevention assertion needed for a five-second smoke test.
         return;

@@ -4106,6 +4106,10 @@ Do you want to start it now?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>QZ is closing...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Press back again to exit</source>
         <translation type="unfinished"></translation>
     </message>

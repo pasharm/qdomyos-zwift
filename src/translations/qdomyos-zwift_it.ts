@@ -3998,6 +3998,10 @@ Al primo avvio potrebbe richiedere qualche istante.</translation>
         <translation>Ricordati di salvare il profilo &quot;%1&quot; se vuoi mantenere queste modifiche in questo profilo.</translation>
     </message>
     <message>
+        <source>QZ is closing...</source>
+        <translation>QZ si sta chiudendo...</translation>
+    </message>
+    <message>
         <source>Press back again to exit</source>
         <translation>Premi di nuovo Indietro per uscire</translation>
     </message>

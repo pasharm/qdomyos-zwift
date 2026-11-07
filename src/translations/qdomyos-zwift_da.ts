@@ -4173,6 +4173,10 @@ Vil du starte det nu?</translation>
         <translation>Husk at gemme profilen &quot;%1&quot;, hvis du vil beholde ændringerne i den.</translation>
     </message>
     <message>
+        <source>QZ is closing...</source>
+        <translation>QZ lukkes...</translation>
+    </message>
+    <message>
         <source>Press back again to exit</source>
         <translation>Tryk på &quot;Tilbage&quot; igen for at afslutte</translation>
     </message>

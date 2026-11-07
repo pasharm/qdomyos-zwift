@@ -4006,6 +4006,10 @@ This may take a few moments on first startup.</source>
         <translation>如果要在配置文件“%1”中保留这些更改，请记得保存该配置文件。</translation>
     </message>
     <message>
+        <source>QZ is closing...</source>
+        <translation>QZ 正在关闭...</translation>
+    </message>
+    <message>
         <source>Press back again to exit</source>
         <translation>再按一次返回键退出</translation>
     </message>
