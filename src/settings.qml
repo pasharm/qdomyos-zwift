@@ -81,25 +81,36 @@ import AndroidStatusBar 1.0
                     if (xhr.readyState !== XMLHttpRequest.DONE)
                         return
                     pages.push({ file: file, source: (xhr.status === 200 || xhr.status === 0) ? xhr.responseText : "" })
-                    if (--left === 0)
+                    if (--left !== 0)
+                        return
+                    // No index rather than none ever: the loading would never end, and a result
+                    // tapped meanwhile would never open
+                    try {
                         settingsIndexWorker.sendMessage({ pages: pages })
+                    } catch (e) {
+                        console.log("Unable to build the settings index: " + e)
+                        settingsIndexReady({})
+                    }
                 }
                 xhr.send()
             })
         }
 
+        // The index is there (empty when it could not be built): the result tapped before it opens
+        function settingsIndexReady(map) {
+            settingsIndex = map
+            settingsIndexLoading = false
+            if (pendingJump) {
+                var entry = pendingJump
+                pendingJump = null
+                jumpToSetting(entry)
+            }
+        }
+
         WorkerScript {
             id: settingsIndexWorker
             source: "settings-index-worker.js"
-            onMessage: {
-                settingsPane.settingsIndex = messageObject.map
-                settingsPane.settingsIndexLoading = false
-                if (settingsPane.pendingJump) {
-                    var entry = settingsPane.pendingJump
-                    settingsPane.pendingJump = null
-                    settingsPane.jumpToSetting(entry)
-                }
-            }
+            onMessage: settingsPane.settingsIndexReady(messageObject.map)
         }
 
         function findItem(item, predicate) {
@@ -147,6 +158,8 @@ import AndroidStatusBar 1.0
 
         // A page among the results ("Wahoo Options"): back from it lands on the results
         function openPageResult(entry) {
+            // A setting tapped before the index came must not open over this page later
+            pendingJump = null
             searchReturn = currentSearch(true)
             // Or the search field takes the focus back with the keyboard on the way back
             dropTextFocus()
@@ -171,10 +184,12 @@ import AndroidStatusBar 1.0
                     if (persistent[v].virtualParent === entry.key)
                         where = settingsIndex[persistent[v].key] || null
             }
-            // A setting that is on no page (searchHiddenSettings, in "Changed" only): the tap
-            // leaves the results as they are
-            if (!where)
+            // A setting that is on no page (searchHiddenSettings, in "Changed" only; any setting
+            // when the index could not be built): the results stay, the tap says why
+            if (!where) {
+                toast.show(qsTr("This setting was not found on the settings pages"))
                 return
+            }
             var page = settingsPane
             var context = "settings"
             searchReturn = currentSearch(false)
@@ -412,8 +427,10 @@ import AndroidStatusBar 1.0
         }
 
         function hideSettingsSearch() {
-            // The search closed is done with: back no longer brings its results up
+            // The search closed is done with: back no longer brings its results up, a result
+            // tapped before the index came no longer opens
             searchReturn = null
+            pendingJump = null
             settingsSearchDebounceTimer.stop()
             changedOnly = false
             settingsSearchTextField.text = ""
@@ -523,12 +540,13 @@ import AndroidStatusBar 1.0
                     return
 
                 settingsCatalogLoading = false
+                var catalog = null
                 if (xhr.status === 200 || xhr.status === 0) {
                     try {
-                        settingsCatalog = JSON.parse(xhr.responseText)
-                        settingsCatalogLoaded = true
-                        settingsCatalogError = ""
-                        buildSearchableSettings()
+                        catalog = JSON.parse(xhr.responseText)
+                        // "null" or an empty answer parses too: no catalog all the same
+                        if (!catalog)
+                            throw "empty catalog"
                     } catch (e) {
                         settingsCatalogError = "Unable to parse settings catalog"
                         console.log(settingsCatalogError + ": " + e)
@@ -537,6 +555,21 @@ import AndroidStatusBar 1.0
                     settingsCatalogError = "Unable to load settings catalog"
                     console.log(settingsCatalogError + ": " + xhr.status)
                 }
+                if (catalog) {
+                    settingsCatalog = catalog
+                    settingsCatalogLoaded = true
+                    settingsCatalogError = ""
+                    // Apart from the parsing: a failure here is not a broken catalog
+                    try {
+                        buildSearchableSettings()
+                    } catch (e) {
+                        settingsCatalogError = "Unable to build the settings list"
+                        console.log(settingsCatalogError + ": " + e)
+                    }
+                }
+                // With an error the search waits for nothing: the error is the answer
+                if (settingsCatalogError.length > 0)
+                    settingsSearchPending = false
             }
             xhr.send()
         }
@@ -745,8 +778,10 @@ import AndroidStatusBar 1.0
 
         function setChangedOnly(on) {
             changedOnly = on
-            // A new list of one's own: back no longer returns to the previous one
+            // A new list of one's own: back no longer returns to the previous one, a result of
+            // the previous one tapped before the index came no longer opens
             searchReturn = null
+            pendingJump = null
             settingsSearchDebounceTimer.stop()
             settingsSearchActive = on || settingsSearchTextField.text.trim().length > 0
             settingsSearchPending = settingsSearchActive
@@ -2593,7 +2628,11 @@ import AndroidStatusBar 1.0
                     selectByMouse: true
                     inputMethodHints: Qt.ImhNoPredictiveText
                     // A new search of one's own: back no longer returns to the previous one
-                    onTextEdited: settingsPane.searchReturn = null
+                    // A new text: the result tapped before the index came is not wanted any more
+                    onTextEdited: {
+                        settingsPane.searchReturn = null
+                        settingsPane.pendingJump = null
+                    }
                     onTextChanged: {
                         if (settingsPane.restoringSearch)
                             return
@@ -2645,6 +2684,8 @@ import AndroidStatusBar 1.0
                 Label {
                     // a label that sets only a weight keeps, in Qt 5, the size it inherited when created
                     Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                    // The catalog error above says it all: no "Searching..." or "No settings found"
+                    visible: settingsCatalogError.length === 0
                     text: settingsCatalogLoading ? qsTr("Loading settings...") :
                           settingsSearchPending ? qsTr("Searching...") :
                           changedOnly && filteredSettings.length > 0 ?
