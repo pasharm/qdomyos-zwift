@@ -271,6 +271,12 @@ Item {
                     Accessible.name: text
                     // Qt 5.15: the double tap of the screen reader sends no clicked() to a SwitchDelegate
                     Accessible.onPressAction: toggle()
+                    // The whole row toggles, as the check box of the classic look did with its text;
+                    // IndicatorOnlySwitch alone takes only a tap on the switch (settings pages)
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: includeDebugLogSwitch.toggle()
+                    }
                 }
 
                 Label {
