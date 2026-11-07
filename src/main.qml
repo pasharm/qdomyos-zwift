@@ -1579,6 +1579,9 @@ ApplicationWindow {
         // Opacity, not visible: some pages set headerToolbar.visible themselves
         opacity: window.rootReady ? 1 : 0
         property bool settingsPageActive: stackView.currentItem && typeof stackView.currentItem.showSettingsSearch === "function"
+        // The map, video and chart buttons: everywhere in the classic look, on the home page only
+        // in the modern one (T-446)
+        readonly property bool workoutButtonsShown: !window.ui.modern || stackView.depth === 1
         // Modern look: load and save belong to the settings page itself. The pages opened from
         // it (the settings files of the load button among them) kept both, and load could open
         // the list again and again. The profiles page has its own buttons and none of these.
@@ -1804,7 +1807,12 @@ ApplicationWindow {
             onClicked: { loadMaps(); }
             anchors.right: toolButtonChart.left
             anchors.verticalCenter: parent.verticalCenter
-            visible: rootItem.mapsVisible
+            // Modern look: the map, video and chart buttons belong to the workout of the home page,
+            // as the lock and the auto resistance. Elsewhere video and chart toggled what is under
+            // the tiles, out of sight, the map pushed itself again, and on the settings they lay over
+            // load and save (T-446). Hidden, they leave no gap
+            visible: rootItem.mapsVisible && headerToolbar.workoutButtonsShown
+            width: window.ui.modern && !visible ? 0 : implicitWidth
         }      
 
         ToolButton {
@@ -1823,7 +1831,9 @@ ApplicationWindow {
             onClicked: { loadVideo(); }
             anchors.right: toolButtonMaps.left
             anchors.verticalCenter: parent.verticalCenter
-            visible: rootItem.videoIconVisible
+            // Modern look: on the home page only, as the map (above)
+            visible: rootItem.videoIconVisible && headerToolbar.workoutButtonsShown
+            width: window.ui.modern && !visible ? 0 : implicitWidth
         }
 
         ToolButton {
@@ -1833,7 +1843,9 @@ ApplicationWindow {
             onClicked: { rootItem.chartFooterVisible = !rootItem.chartFooterVisible }
             anchors.right: toolButtonLockTiles.left
             anchors.verticalCenter: parent.verticalCenter
-            visible: rootItem.chartIconVisible
+            // Modern look: on the home page only, as the map (above)
+            visible: rootItem.chartIconVisible && headerToolbar.workoutButtonsShown
+            width: window.ui.modern && !visible ? 0 : implicitWidth
         }
 
         // Share the workout file of the page (PreviewChart.qml opened from the workout history)
