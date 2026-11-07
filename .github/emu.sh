@@ -290,7 +290,10 @@ for LANG_CODE in en uk; do
   sleep 2
   shot t228-$LANG_CODE-4-apply
   has_dialog && echo "!! FAIL: question still open after Apply" >> $STEPLOG
-  [ "$(logcount "resistance tile with auto resistance off")" -gt "$applied" ] || echo "!! FAIL: Apply did not apply the press" >> $STEPLOG
+  # The "resistance tile with auto resistance off" line itself is not required here: logd of the API 30
+  # image dropped it once (run 42382346814, the Plus and changeResistance lines right after it were there).
+  # Apply is proved by changeResistance true with Auto Resistance off and by the next step (no question)
+  [ "$(logcount "resistance tile with auto resistance off")" -gt "$applied" ] || echo "note: apply line not in logcat" >> $STEPLOG
   [ "$(logcount 'changeResistance" true')" -gt "$sent" ] || echo "!! FAIL: no bike::changeResistance with auto resistance lifted" >> $STEPLOG
   step $LANG_CODE-no-question "after Apply: + on Target R. applies without a question"
   applied=$(logcount "resistance tile with auto resistance off")
