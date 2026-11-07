@@ -409,6 +409,12 @@ HomeForm {
         // While the tiles are being moved the gap above the first row is part of the content,
         // so it scrolls away with the tiles instead of staying as an empty band
         topMargin: window.lockTiles ? 30 : 0
+        // Modern look: while the support button "?" is in the corner the list goes on under the
+        // last row by the button and its 16 dp margin (main.qml), so at the end it covers no tile
+        bottomMargin: window.ui.modern && window.supportHelpShown ? 56 + 16 : 0
+        // Eased: when the button goes with the list at its end, the tiles glide down by the room
+        // instead of jumping (Flickable fixes contentY at once on a smaller margin)
+        Behavior on bottomMargin { NumberAnimation { duration: 150; easing.type: Easing.OutQuad } }
         // The room for the toolbar above the Start/Stop row, so at the top it covers nothing, then
         // the row and the gap under it, part of the content; none while the tiles are being moved
         // (the row is hidden then and the grid starts below the toolbar).
@@ -459,7 +465,7 @@ HomeForm {
         readonly property real scrolledNow: contentY - originY
         property real lastBarScroll: 0
         onScrolledNowChanged: {
-            var s = Math.min(Math.max(scrolledNow, 0), Math.max(contentHeight - height, 0))
+            var s = Math.min(Math.max(scrolledNow, 0), Math.max(contentHeight + bottomMargin - height, 0))
             var d = s - lastBarScroll
             lastBarScroll = s
             if (window.lockTiles || barSnap.running)
@@ -484,7 +490,9 @@ HomeForm {
             if (window.lockTiles)
                 return
             var b = headerToolbar.barShift, h = headerToolbar.contentHeight
-            var maxS = Math.max(contentHeight - height, 0)
+            // the end of the list: with the room under the last row (bottomMargin) while the
+            // support button is shown, or the snap pulled that row back under the button
+            var maxS = Math.max(contentHeight + bottomMargin - height, 0)
             var s = Math.min(Math.max(scrolledNow, 0), maxS)
             if (s > 0 && s < h) {
                 // The toolbar follows the list back to the top by itself (barShift <= s). A list

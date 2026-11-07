@@ -185,6 +185,8 @@ ApplicationWindow {
     signal strava_upload_file_prepare();
 
     property bool lockTiles: false
+    // The support button "?" (SupportHelpButton) is in the bottom right corner of the home page
+    readonly property bool supportHelpShown: supportHelpButton.shown
     property bool settings_restart_to_apply: false
     // Modern look: the workout editor page, made on its first opening and kept (see "editor")
     property var keptWorkoutEditor: null
@@ -2756,6 +2758,7 @@ ApplicationWindow {
         }
 
         SupportHelpButton {
+            id: supportHelpButton
             activeOnHome: window.rootReady && stackView.depth === 1 && !window.lockTiles
             anchors.right: parent.right
             anchors.bottom: parent.bottom
