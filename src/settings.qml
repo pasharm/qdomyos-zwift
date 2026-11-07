@@ -106,22 +106,14 @@ import QtQuick 2.12 as Quick212
                     if (xhr.readyState !== XMLHttpRequest.DONE)
                         return
                     pages.push({ file: file, source: (xhr.status === 200 || xhr.status === 0) ? xhr.responseText : "" })
-                    if (--left !== 0)
-                        return
-                    // No index rather than none ever: the loading would never end, and a result
-                    // tapped meanwhile would never open
-                    try {
+                    if (--left === 0)
                         settingsIndexWorker.sendMessage({ pages: pages })
-                    } catch (e) {
-                        console.log("Unable to build the settings index: " + e)
-                        settingsIndexReady({})
-                    }
                 }
                 xhr.send()
             })
         }
 
-        // The index is there (empty when it could not be built): the result tapped before it opens.
+        // The index is there: the result tapped before it opens.
         // The list first (sections and order come from the index): the jump closes it anyway, and
         // a failed jump leaves no "Searching..." behind
         function settingsIndexReady(map) {
@@ -505,6 +497,8 @@ import QtQuick 2.12 as Quick212
         StackView.onDeactivated: {
             if (searchReturn && !searchReturn.viaPush)
                 searchReturn = null
+            // Another page on top: a result tapped before the index came must not open over it
+            pendingJump = null
         }
 
         function revealPending() {
@@ -828,7 +822,7 @@ import QtQuick 2.12 as Quick212
                 if (xhr.status === 200 || xhr.status === 0) {
                     try {
                         catalog = JSON.parse(xhr.responseText)
-                        // "null" or an empty answer parses too: no catalog all the same
+                        // "null" parses too: no catalog all the same
                         if (!catalog)
                             throw "empty catalog"
                     } catch (e) {
@@ -851,9 +845,6 @@ import QtQuick 2.12 as Quick212
                         console.log(settingsCatalogError + ": " + e)
                     }
                 }
-                // With an error the search waits for nothing: the error is the answer
-                if (settingsCatalogError.length > 0)
-                    settingsSearchPending = false
             }
             xhr.send()
         }
@@ -2994,8 +2985,8 @@ import QtQuick 2.12 as Quick212
                     inputMethodHints: Qt.ImhNoPredictiveText
                     leftPadding: window.ui.modern ? 44 : undefined
                     rightPadding: window.ui.modern ? 44 : undefined
-                    // A new search of one's own: back no longer returns to the previous one
-                    // A new text: the result tapped before the index came is not wanted any more
+                    // A new search of one's own: back no longer returns to the previous one, and
+                    // the result tapped before the index came is not wanted any more
                     onTextEdited: {
                         settingsPane.searchReturn = null
                         settingsPane.pendingJump = null
