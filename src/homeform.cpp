@@ -926,6 +926,18 @@ homeform::homeform(QQmlApplicationEngine *engine, bluetooth *bl) {
     });
     connect(bluetoothManager, &bluetooth::deviceConnected, this, &homeform::deviceConnected);
     connect(bluetoothManager, &bluetooth::heartRateSensorFound, this, &homeform::heartRateSensorFound);
+    // TEST ONLY (T-473): the emulator has no heart rate sensor; t473_fake_sensors in qz.conf "finds" two, as the
+    // background search would (offered with heart_rate_belt_suggest on)
+    if (QSettings().value(QStringLiteral("t473_fake_sensors"), false).toBool()) {
+        QTimer::singleShot(30000, this, [this]() {
+            qDebug() << "T-473 test: fake sensor 1";
+            heartRateSensorFound(QStringLiteral("Forerunner 965"), QStringLiteral("AA:BB:CC:DD:EE:01"), -58, false);
+        });
+        QTimer::singleShot(45000, this, [this]() {
+            qDebug() << "T-473 test: fake sensor 2";
+            heartRateSensorFound(QStringLiteral("XOSS X2P"), QStringLiteral("AA:BB:CC:DD:EE:02"), -71, false);
+        });
+    }
     connect(bluetoothManager, &bluetooth::ftmsAccessoryConnected, this, &homeform::ftmsAccessoryConnected);
     connect(bluetoothManager, &bluetooth::deviceConnected, this, &homeform::trainProgramSignals);
     connect(this, &homeform::workoutNameChanged, this->userTemplateManager,
