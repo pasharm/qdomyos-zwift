@@ -151,10 +151,17 @@ BACK_XY="84 168"
 
 # open_changed: from the home page, the settings and their "Changed" list
 open_changed() {
-  tap $BACK_XY "menu"
-  sleep 3
-  adb shell input swipe 500 700 500 2300 300 || true
-  sleep 2
+  local i
+  # The menu button has no label: tapped again until the menu shows Settings (right after the
+  # start the first tap can be lost, run 42475242602)
+  for i in 1 2 3 4 5; do
+    tap $BACK_XY "menu"
+    sleep 3
+    adb shell input swipe 500 700 500 2300 300 || true
+    sleep 2
+    wait_ui '^Settings$' 6 && break
+    echo "menu $i: no Settings yet" >> $STEPLOG
+  done
   tap_ui '^Settings$' || FAILED=1
   wait_ui '^General Options$' 60 || { echo "!! settings not opened" >> $STEPLOG; FAILED=1; }
   # The search bar: the toolbar button is named "Search settings" too, the bar is open when
