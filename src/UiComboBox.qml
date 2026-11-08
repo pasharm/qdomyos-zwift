@@ -127,6 +127,19 @@ T.ComboBox {
                 active: menuItem.down || menuItem.highlighted
                 color: menuItem.Material.rippleColor
             }
+
+            // Modern: a thin line under the item, inset like the highlight, so the items of a long
+            // list (heart rate belts with similar names) do not run together. None under the last
+            // item and none around the highlighted one, its rounded block is not cut
+            Rectangle {
+                visible: control.modern && index < control.count - 1
+                         && !menuItem.highlighted && control.highlightedIndex !== index + 1
+                y: parent.height - height
+                width: parent.width
+                height: 1
+                color: window.ui.outline
+                opacity: 0.6
+            }
         }
     }
 
