@@ -10501,7 +10501,7 @@ import QtQuick 2.12 as Quick212
 
                                 UiButton {
                                     text: qsTr("Cancel")
-                                    flat: window.ui.modern
+                                    cardSurface: true
                                     Layout.fillWidth: true
                                     onClicked: {
                                         mfaCodeTextField.text = "";

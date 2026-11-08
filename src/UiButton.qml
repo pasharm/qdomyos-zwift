@@ -101,6 +101,10 @@ T.Button {
     // The classic look ignores it
     property bool inverse: false
     readonly property bool modernInverse: modern && inverse
+    // Modern look: a tonal pill on a card or a question (surfaceHigh). The surfaceHighest of the pill
+    // is about 1.1 : 1 there and the pill is not seen, so it takes textMain at 10 % (12 % in the
+    // dark), like the danger pill takes the danger colour at 16 %. The classic look ignores it
+    property bool cardSurface: false
     // The wallpaper accent of the opposite theme is taken as it is: unlike accentOf() it is not checked for
     // contrast here (Material You pairs read on their surfaces)
     readonly property color inverseAccent: {
@@ -174,7 +178,9 @@ T.Button {
                   : !control.enabled ? window.ui.alpha(window.ui.textMain, 0.08)
                   : control.savePending ? window.ui.accent
                   : control.danger ? window.ui.alpha(window.ui.danger, 0.16)
-                  : control.highlighted ? window.ui.accent : window.ui.surfaceHighest)
+                  : control.highlighted ? window.ui.accent
+                  : control.cardSurface ? window.ui.alpha(window.ui.textMain, window.ui.dark ? 0.12 : 0.10)
+                  : window.ui.surfaceHighest)
                : (!control.enabled ? control.Material.buttonDisabledColor :
                   control.highlighted ? control.Material.highlightedButtonColor : control.Material.buttonColor)
 

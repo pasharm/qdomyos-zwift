@@ -218,6 +218,7 @@ UiFrame {
                     id: cancelButton
                     anchors.right: parent.right
                     text: qsTranslate("UiMessageDialog", "Cancel")
+                    cardSurface: true
                     onClicked: list.close()
                 }
             }

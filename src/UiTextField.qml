@@ -130,7 +130,7 @@ T.TextField {
             Row {
                 anchors.right: parent.right
                 spacing: 8
-                UiButton { text: qsTranslate("settings", "Cancel"); flat: true; onClicked: timePicker.close() }
+                UiButton { text: qsTranslate("settings", "Cancel"); cardSurface: true; onClicked: timePicker.close() }
                 UiButton {
                     text: qsTranslate("settings", "OK")
                     highlighted: true
