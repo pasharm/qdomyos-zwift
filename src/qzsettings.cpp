@@ -1369,7 +1369,9 @@ const QString QZSettings::log_debug_first_setup = QStringLiteral("log_debug_firs
 const QString QZSettings::log_debug_first_setup_since = QStringLiteral("log_debug_first_setup_since");
 const QString QZSettings::default_log_debug_first_setup_since = QStringLiteral("");
 
-const uint32_t allSettingsCount = 1058;
+const QString QZSettings::wahoo_wheel_question_answered = QStringLiteral("wahoo_wheel_question_answered");
+
+const uint32_t allSettingsCount = 1059;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -2454,6 +2456,7 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::heart_rate_belt_suggest, QZSettings::default_heart_rate_belt_suggest},
     {QZSettings::log_debug_first_setup, QZSettings::default_log_debug_first_setup},
     {QZSettings::log_debug_first_setup_since, QZSettings::default_log_debug_first_setup_since},
+    {QZSettings::wahoo_wheel_question_answered, QZSettings::default_wahoo_wheel_question_answered},
 };
 
 void QZSettings::qDebugAllSettings(bool showDefaults) {

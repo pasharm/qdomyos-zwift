@@ -2871,6 +2871,12 @@ import QtQuick 2.12 as Quick212
             function onHeartRateSensorOfferTurnedOff() { settings.heart_rate_belt_suggest = false }
         }
 
+        // The same for the Wahoo wheel circumference question (main.qml): No turns on the option from C++
+        Connections {
+            target: rootItem
+            function onWahooWheelAnswered(withoutWheelDiameter) { settings.wahoo_without_wheel_diameter = withoutWheelDiameter }
+        }
+
 
         function paddingZeros(text, limit) {
           if (text.length < limit) {
