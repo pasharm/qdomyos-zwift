@@ -8538,7 +8538,7 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Midnatsblå</translation>
     </message>
     <message>
-        <source>Accent colour</source>
+        <source>Accent color</source>
         <translation>Accentfarve</translation>
     </message>
     <message>
@@ -8571,7 +8571,7 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Sort / hvid</translation>
     </message>
     <message>
-        <source>Wallpaper colour</source>
+        <source>Wallpaper color</source>
         <translation>Baggrundsbilledets farve</translation>
     </message>
     <message>

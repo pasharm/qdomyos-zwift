@@ -8575,7 +8575,7 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Mitternachtsblau</translation>
     </message>
     <message>
-        <source>Accent colour</source>
+        <source>Accent color</source>
         <translation>Akzentfarbe</translation>
     </message>
     <message>
@@ -8603,7 +8603,7 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Schwarz / Weiß</translation>
     </message>
     <message>
-        <source>Wallpaper colour</source>
+        <source>Wallpaper color</source>
         <translation>Hintergrundfarbe</translation>
     </message>
     <message>

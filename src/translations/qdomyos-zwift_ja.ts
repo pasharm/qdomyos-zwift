@@ -8612,7 +8612,7 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
         <translation>ミッドナイトブルー</translation>
     </message>
     <message>
-        <source>Accent colour</source>
+        <source>Accent color</source>
         <translation>アクセントカラー</translation>
     </message>
     <message>
@@ -8640,7 +8640,7 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
         <translation>ブラック / ホワイト</translation>
     </message>
     <message>
-        <source>Wallpaper colour</source>
+        <source>Wallpaper color</source>
         <translation>壁紙の色</translation>
     </message>
     <message>

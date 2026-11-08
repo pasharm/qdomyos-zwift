@@ -8534,7 +8534,7 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
         <translation>Éjkék</translation>
     </message>
     <message>
-        <source>Accent colour</source>
+        <source>Accent color</source>
         <translation>Kiemelőszín</translation>
     </message>
     <message>
@@ -8567,7 +8567,7 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
         <translation>Fekete / fehér</translation>
     </message>
     <message>
-        <source>Wallpaper colour</source>
+        <source>Wallpaper color</source>
         <translation>Háttérkép színe</translation>
     </message>
     <message>

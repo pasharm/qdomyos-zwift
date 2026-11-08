@@ -8583,7 +8583,7 @@ Predeterminado: A = -0.96, B = 1.33</translation>
         <translation>Azul medianoche</translation>
     </message>
     <message>
-        <source>Accent colour</source>
+        <source>Accent color</source>
         <translation>Color de acento</translation>
     </message>
     <message>
@@ -8611,7 +8611,7 @@ Predeterminado: A = -0.96, B = 1.33</translation>
         <translation>Negro / blanco</translation>
     </message>
     <message>
-        <source>Wallpaper colour</source>
+        <source>Wallpaper color</source>
         <translation>Color del fondo de pantalla</translation>
     </message>
     <message>

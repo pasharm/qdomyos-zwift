@@ -8050,7 +8050,7 @@ import QtQuick 2.12 as Quick212
                         // Wraps instead of running under the swatches: inside the frames of the
                         // section the row is narrower than the seven swatches and a long name
                         Label {
-                            text: qsTr("Accent colour")
+                            text: qsTr("Accent color")
                             wrapMode: Text.WordWrap
                             Layout.fillWidth: true
                             Layout.minimumWidth: 60
@@ -8072,7 +8072,7 @@ import QtQuick 2.12 as Quick212
                                     stroke: window.ui.textMain
                                     Accessible.role: Accessible.RadioButton
                                     // The same names as in settings-catalog.json (ui_accent): the search shows them
-                                    Accessible.name: ({ system: qsTr("Wallpaper colour"), violet: qsTr("Violet"), blue: qsTr("Blue"),
+                                    Accessible.name: ({ system: qsTr("Wallpaper color"), violet: qsTr("Violet"), blue: qsTr("Blue"),
                                                         teal: qsTr("Teal"), green: qsTr("Green"), orange: qsTr("Orange"),
                                                         pink: qsTr("Pink") })[modelData] || modelData
                                     Accessible.checked: window.ui.accentName === modelData

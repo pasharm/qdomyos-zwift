@@ -8534,7 +8534,7 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Midnattsblå</translation>
     </message>
     <message>
-        <source>Accent colour</source>
+        <source>Accent color</source>
         <translation>Accentfärg</translation>
     </message>
     <message>
@@ -8567,7 +8567,7 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Svart / vitt</translation>
     </message>
     <message>
-        <source>Wallpaper colour</source>
+        <source>Wallpaper color</source>
         <translation>Färg från bakgrundsbilden</translation>
     </message>
     <message>

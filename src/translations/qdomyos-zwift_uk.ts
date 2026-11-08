@@ -8538,7 +8538,7 @@ Default: A = -0.96, B = 1.33</source>
         <translation>Темно-синя</translation>
     </message>
     <message>
-        <source>Accent colour</source>
+        <source>Accent color</source>
         <translation>Акцентний колір</translation>
     </message>
     <message>
@@ -8571,7 +8571,7 @@ Default: A = -0.96, B = 1.33</source>
         <translation>Чорна / біла</translation>
     </message>
     <message>
-        <source>Wallpaper colour</source>
+        <source>Wallpaper color</source>
         <translation>Колір шпалер</translation>
     </message>
     <message>
