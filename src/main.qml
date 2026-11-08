@@ -1808,11 +1808,13 @@ ApplicationWindow {
             onClicked: { loadMaps(); }
             anchors.right: toolButtonChart.left
             anchors.verticalCenter: parent.verticalCenter
+            // Hidden where load and save are shown (settings, profiles), as the tile lock: there the
+            // map, video and chart buttons lie over search, load and the title.
             // Modern look: the map, video and chart buttons belong to the workout of the home page,
             // as the lock and the auto resistance. Elsewhere video and chart toggled what is under
-            // the tiles, out of sight, the map pushed itself again, and on the settings they lay over
-            // load and save (T-446). Hidden, they leave no gap
-            visible: rootItem.mapsVisible && headerToolbar.workoutButtonsShown
+            // the tiles, out of sight, and the map pushed itself again (T-446). Hidden, they leave
+            // no gap
+            visible: rootItem.mapsVisible && headerToolbar.workoutButtonsShown && !toolButtonSaveSettings.visible
             width: window.ui.modern && !visible ? 0 : implicitWidth
         }      
 
@@ -1833,7 +1835,7 @@ ApplicationWindow {
             anchors.right: toolButtonMaps.left
             anchors.verticalCenter: parent.verticalCenter
             // Modern look: on the home page only, as the map (above)
-            visible: rootItem.videoIconVisible && headerToolbar.workoutButtonsShown
+            visible: rootItem.videoIconVisible && headerToolbar.workoutButtonsShown && !toolButtonSaveSettings.visible
             width: window.ui.modern && !visible ? 0 : implicitWidth
         }
 
@@ -1845,7 +1847,7 @@ ApplicationWindow {
             anchors.right: toolButtonLockTiles.left
             anchors.verticalCenter: parent.verticalCenter
             // Modern look: on the home page only, as the map (above)
-            visible: rootItem.chartIconVisible && headerToolbar.workoutButtonsShown
+            visible: rootItem.chartIconVisible && headerToolbar.workoutButtonsShown && !toolButtonSaveSettings.visible
             width: window.ui.modern && !visible ? 0 : implicitWidth
         }
 
