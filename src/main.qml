@@ -816,9 +816,10 @@ ApplicationWindow {
         }
 
         stackView.pop()
-        // Modern look: back from a page opened out of the settings (Tiles Options...) the
-        // settings keep their load and save buttons; hidden, they left a gap next to search
-        var backOnSettings = window.ui.modern && stackView.depth > 1 && headerToolbar.settingsPageActive
+        // Back from a page opened out of the settings (Tiles Options...) the settings keep their
+        // load and save buttons, and with them the tile lock, map, video and chart stay hidden;
+        // in the modern look, hidden, they also left a gap next to search
+        var backOnSettings = stackView.depth > 1 && headerToolbar.settingsPageActive
         toolButtonLoadSettings.visible = backOnSettings;
         toolButtonSaveSettings.visible = backOnSettings;
         rootItem.sortTiles()
