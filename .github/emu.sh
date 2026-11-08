@@ -326,12 +326,106 @@ adb shell settings put system font_scale 1.0 || true
 adb shell wm density reset || true
 adb shell am force-stop $PKG || true
 
+# The real TalkBack on the modern look (T-322 in this PR): recipe and traps -
+# notes/talkback-in-emulator-2026-10-15.md of the work folder; the driver is the one of T-199.
+# Last stage: adb root restarts adbd and ends the logcat above; uiautomator dumps switch TalkBack
+# off, so from here on only the driver ("focused '<name>'" after each gesture) and screencap.
+tb_check() {
+  if grep -q -E "^$1: focused '$2" drv/$3.txt; then
+    echo "check $1: $4: OK" >> $STEPLOG
+  else
+    echo "!! check $1: $4: no \"focused '$2\" in drv/$3.txt" >> $STEPLOG
+    FAILED=1
+  fi
+}
+tb_any() {
+  if grep -q -E "focused '($1)" drv/$2.txt; then
+    echo "check $2: $3: OK" >> $STEPLOG
+  else
+    echo "!! check $2: $3: no \"focused '$1\" in drv/$2.txt" >> $STEPLOG
+    FAILED=1
+  fi
+}
+TBPKG=com.google.android.marvin.talkback
+mkdir -p drv
+SDK=${ANDROID_SDK_ROOT:-$ANDROID_HOME}
+JAR=$SDK/platforms/android-35/android.jar
+BT=$(ls -d $SDK/build-tools/*/ | sort -V | tail -n 1)
+if [ "$(adb shell getprop ro.build.version.sdk | tr -d '\r')" != 35 ]; then
+  echo "== talkback: skipped, not API 35" >> $STEPLOG
+elif ! adb shell pm path $TBPKG > /dev/null 2>&1; then
+  echo "!! talkback: $TBPKG not in the image" >> $STEPLOG; FAILED=1
+elif ! { javac -source 8 -target 8 -bootclasspath $JAR -d drv .github/A11yDriver.java >> $STEPLOG 2>&1 \
+         && ${BT}d8 --lib $JAR --output a11y.jar drv/*.class >> $STEPLOG 2>&1; }; then
+  echo "!! talkback: driver not built" >> $STEPLOG; FAILED=1
+elif start_case t-head-modern true fake; then
+  wait_ui '^Lock tiles$|^Unlock tiles$' 60 || echo "!! t-head-modern: no tile lock in 60 s" >> $STEPLOG
+  adb push a11y.jar /data/local/tmp/a11y.jar > /dev/null
+  drv() {
+    local name=$1 args="" a
+    shift
+    for a in "$@"; do args="$args '$a'"; done
+    echo "== drv $name:$args" >> $STEPLOG
+    timeout 200 adb shell "CLASSPATH=/data/local/tmp/a11y.jar app_process / A11yDriver$args" > drv/$name.txt 2>&1 || true
+    cat drv/$name.txt >> $STEPLOG
+    sleep 2
+  }
+  kill $LOGCAT_PID 2>/dev/null || true
+  wait $LOGCAT_PID 2>/dev/null || true
+  adb shell am force-stop $TBPKG || true
+  adb root >> $STEPLOG 2>&1 || true
+  adb wait-for-device
+  sleep 3
+  adb logcat -v threadtime -b main,system,crash > tb_logcat.txt 2>/dev/null &
+  LOGCAT_PID=$!
+  printf '%s\n' "<?xml version='1.0' encoding='utf-8' standalone='yes' ?>" '<map>' \
+    '    <boolean name="pref_tts_overlay" value="true" />' \
+    '    <boolean name="first_time_user" value="false" />' \
+    '    <boolean name="pref_has_performed_restore_key" value="true" />' '</map>' > tbprefs.xml
+  adb push tbprefs.xml /data/local/tmp/tbprefs.xml > /dev/null
+  for dir in /data/user_de/0/$TBPKG /data/data/$TBPKG; do
+    adb shell "mkdir -p $dir/shared_prefs && cp /data/local/tmp/tbprefs.xml $dir/shared_prefs/${TBPKG}_preferences.xml \
+      && chown -R \$(stat -c %u:%g $dir) $dir/shared_prefs && chmod 771 $dir/shared_prefs \
+      && chmod 660 $dir/shared_prefs/${TBPKG}_preferences.xml && restorecon -R $dir/shared_prefs" >> $STEPLOG 2>&1 || true
+  done
+  adb shell "rm -rf /data/local/tmp/tbshots; mkdir -p /data/local/tmp/tbshots"
+  echo "== talkback on: $(adb shell dumpsys package $TBPKG | grep -m1 versionName)" >> $STEPLOG
+  adb shell settings put secure enabled_accessibility_services $TBPKG/$TBPKG.TalkBackService >> $STEPLOG 2>&1
+  adb shell settings put secure accessibility_enabled 1 >> $STEPLOG 2>&1
+  adb shell settings put secure touch_exploration_enabled 1 >> $STEPLOG 2>&1
+  sleep 15
+  adb shell dumpsys accessibility | grep -iE "Bound services|Enabled features" | head -n 4 >> $STEPLOG || true
+  # the notification question of the suite comes over the app: bring QZ back
+  adb shell am start -n $PKG/$PKG.CustomQtActivity >> $STEPLOG 2>&1 || true
+  sleep 6
+  adb shell screencap -p /sdcard/t-head-modern-0-on.png && adb pull /sdcard/t-head-modern-0-on.png >> $STEPLOG 2>&1 || true
+  drv t-list --keep list
+  # Header: a finger on the menu button, then swipes to the right along the header
+  drv t-head --keep 'touch:Main menu' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right'
+  tb_check 'touch:Main menu' 'Main menu' t-head "talkback: the menu button read by its name"
+  tb_any 'Lock tiles|Unlock tiles' t-head "talkback: the tiles lock reached by swipes"
+  # Double tap on the menu button opens the drawer; swipes go along its entries
+  drv t-drawer --keep 'touch:Main menu' 'dtap' 'sleep:2000' 'swipe:right' 'swipe:right' 'swipe:right' \
+    'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right'
+  adb shell screencap -p /sdcard/t-head-modern-1-drawer.png && adb pull /sdcard/t-head-modern-1-drawer.png >> $STEPLOG 2>&1 || true
+  tb_any 'Workouts History|Workout|Settings|Profile|Device|Searching|Connected' t-drawer "talkback: double tap opened the drawer, swipes read its entries"
+  mkdir -p drv/shots
+  adb pull /data/local/tmp/tbshots/. drv/shots >> $STEPLOG 2>&1 || true
+  echo "== talkback off" >> $STEPLOG
+  adb shell settings put secure touch_exploration_enabled 0 >> $STEPLOG 2>&1
+  adb shell settings put secure enabled_accessibility_services null >> $STEPLOG 2>&1
+  adb shell settings put secure accessibility_enabled 0 >> $STEPLOG 2>&1
+  adb shell am force-stop $PKG || true
+fi
+
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
+[ -f tb_logcat.txt ] && cat tb_logcat.txt >> full_logcat.txt
 echo "== QML errors of main.qml / UiDrawerItem.qml (for reading):" >> $STEPLOG
 grep -a -E "(main|UiDrawerItem)\.qml.*(TypeError|ReferenceError|Error)" full_logcat.txt | sed 's/.*qDomyos-Zwift: //' | sort | uniq -c | head -n 20 >> $STEPLOG || true
 echo "== ANR / crash in the whole log:" >> $STEPLOG
-if grep -a -E "ANR in|FATAL EXCEPTION|Fatal signal" full_logcat.txt >> $STEPLOG; then
+# QZ only: an ANR of the launcher before the start (run 42517980949) is not the app's
+if grep -a -E "ANR in $PKG|Process: $PKG,|Fatal signal.*qdomyoszwift" full_logcat.txt >> $STEPLOG; then
   echo "!! check log: ANR or crash" >> $STEPLOG; FAILED=1
 else
   echo "none" >> $STEPLOG

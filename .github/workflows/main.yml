@@ -80,4 +80,5 @@ jobs:
             full_logcat.txt
             steps.log
             dumps/
+            drv/
           if-no-files-found: warn
