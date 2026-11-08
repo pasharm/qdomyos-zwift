@@ -1266,7 +1266,15 @@ ApplicationWindow {
         function onTrainingRestoreOfferRequested() {
             popupTrainingRestore.visible = true
         }
+        function onChangeOfdevice() {
+            window.equipmentConnected = window.ui.modern && rootItem.supportDeviceConnected()
+        }
     }
+
+    // Modern look: equipment connected, for the header and the drawer, set by onChangeOfdevice
+    // above. Not rootItem.device: with no equipment its getter flips on every read to blink the
+    // Bluetooth icon of the home page, and one more binding reading it would stop the blinking
+    property bool equipmentConnected: false
 
     // after a reinstall the training programs of the previous install are hidden in the
     // training folder: with access to the QZ folder QZ copies them back as its own
@@ -1318,7 +1326,7 @@ ApplicationWindow {
         buttons: (MessageDialog.Yes | MessageDialog.No)
         onYesClicked: {strava_upload_file_prepare(); rootItem.stravaUploadRequested = false;}
         onNoClicked: {rootItem.stravaUploadRequested = false;}
-        backAnswersNo: true
+        backAnswersNo: window.ui.modern
         visible: rootItem.stravaUploadRequested
     }
 
@@ -1330,7 +1338,7 @@ ApplicationWindow {
         buttons: (MessageDialog.Yes | MessageDialog.No)
         onYesClicked: { rootItem.garmin_start_downloaded_workout(); }
         onNoClicked: { rootItem.garmin_dismiss_downloaded_workout_prompt(); }
-        backAnswersNo: true
+        backAnswersNo: window.ui.modern
         visible: rootItem.garminWorkoutPromptRequested
     }
 
@@ -1340,7 +1348,7 @@ ApplicationWindow {
         buttons: (MessageDialog.Yes | MessageDialog.No)
         onYesClicked: { rootItem.garmin_accept_ftp_update(); }
         onNoClicked: { rootItem.garmin_dismiss_ftp_update(); }
-        backAnswersNo: true
+        backAnswersNo: window.ui.modern
         visible: rootItem.garminFtpPromptRequested
     }
 
@@ -1365,7 +1373,7 @@ ApplicationWindow {
             });
         }
         onNoClicked: { rootItem.clipboard_dismiss_workout_prompt(); }
-        backAnswersNo: true
+        backAnswersNo: window.ui.modern
         visible: rootItem.clipboardWorkoutPromptRequested
     }
 
@@ -1375,7 +1383,7 @@ ApplicationWindow {
         buttons: (MessageDialog.Yes | MessageDialog.No)
         onYesClicked: rootItem.clipboard_delete_finished_workout()
         onNoClicked: rootItem.clipboard_keep_finished_workout()
-        backAnswersNo: true
+        backAnswersNo: window.ui.modern
         visible: rootItem.clipboardWorkoutDeletePromptRequested
     }
 
@@ -1385,7 +1393,7 @@ ApplicationWindow {
         buttons: (MessageDialog.Yes | MessageDialog.No)
         onYesClicked: { rootItem.echelon_switch_to_classic_bridge(); }
         onNoClicked: { rootItem.echelon_dismiss_bridge_switch_prompt(); }
-        backAnswersNo: true
+        backAnswersNo: window.ui.modern
         visible: rootItem.echelonBridgeSwitchPromptRequested
     }
 
@@ -1550,11 +1558,12 @@ ApplicationWindow {
         buttons: (MessageDialog.Yes | MessageDialog.No | MessageDialog.Cancel)
         yesText: qsTr("Enable")
         noText: qsTr("Don't ask again")
+        cancelText: qsTr("Not now")
         onYesClicked: rootItem.android_notification_prompt_enable()
         onNoClicked: rootItem.android_notification_prompt_dismiss(true)
         onCancelClicked: rootItem.android_notification_prompt_dismiss(false)
         onClosed: if (!answered) rootItem.android_notification_prompt_dismiss(false)
-        visible: rootItem.androidNotificationPromptRequested && window.ui.modern
+        visible: window.ui.modern && rootItem.androidNotificationPromptRequested
     }
 
     // Modern look of echelonEnablePopup: the card of the other questions, the same texts.
@@ -1571,7 +1580,7 @@ ApplicationWindow {
         onYesClicked: rootItem.echelon_enable_virtual_bridge()
         onNoClicked: rootItem.echelon_dismiss_enable_prompt()
         backAnswersNo: true
-        visible: rootItem.echelonEnablePromptRequested && window.ui.modern
+        visible: window.ui.modern && rootItem.echelonEnablePromptRequested
     }
 
     UiMessageDialog {
@@ -1671,6 +1680,9 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButton
+            // Modern look: the buttons of the bar are icons without a text, each named for the
+            // screen reader; the classic look keeps the name it had (the text, if any)
+            Accessible.name: window.ui.modern ? (stackView.depth > 1 ? qsTr("Back") : qsTr("Main menu")) : text
             icon.source: window.ui.modern ? "" : "icons/icons/icon.png"
             text: window.ui.modern ? "" : (stackView.depth > 1 ? "◄" : "◄")
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: stackView.depth > 1 ? "arrow_back" : "menu"; color: window.ui.textMain; visible: window.ui.modern }
@@ -1693,6 +1705,7 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonFloating
+            Accessible.name: window.ui.modern ? qsTr("Floating window") : text
             icon.source: window.ui.modern ? "" : "icons/icons/mini-display.png"
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "picture_in_picture_alt"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { console.log("floating!"); floatingOpen(); }
@@ -1728,6 +1741,7 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonLoadSettings
+            Accessible.name: window.ui.modern ? qsTr("Load settings") : text
             icon.source: window.ui.modern ? "" : "icons/icons/tray-arrow-up.png"
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "upload_file"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: {
@@ -1803,6 +1817,7 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonSaveSettings
+            Accessible.name: window.ui.modern ? qsTr("Save settings") : text
             icon.source: window.ui.modern ? "" : "icons/icons/tray-arrow-down.png"
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "save"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: {
@@ -1835,6 +1850,7 @@ ApplicationWindow {
                 }
             }
             id: toolButtonMaps
+            Accessible.name: window.ui.modern ? qsTr("Map") : text
             icon.source: window.ui.modern ? "" : ( "icons/icons/maps-icon-16.png" )
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "map"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { loadMaps(); }
@@ -1844,7 +1860,7 @@ ApplicationWindow {
             // map, video and chart buttons lie over search, load and the title.
             // Modern look: the map, video and chart buttons belong to the workout of the home page,
             // as the lock and the auto resistance. Elsewhere video and chart toggled what is under
-            // the tiles, out of sight, and the map pushed itself again (T-446). Hidden, they leave
+            // the tiles, out of sight, and the map pushed itself again. Hidden, they leave
             // no gap
             visible: rootItem.mapsVisible && headerToolbar.workoutButtonsShown && !toolButtonSaveSettings.visible
             width: window.ui.modern && !visible ? 0 : implicitWidth
@@ -1873,6 +1889,7 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonChart
+            Accessible.name: window.ui.modern ? qsTr("Chart") : text
             icon.source: window.ui.modern ? "" : ( "icons/icons/chart.png" )
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "show_chart"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { rootItem.chartFooterVisible = !rootItem.chartFooterVisible }
@@ -1931,6 +1948,9 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonLockTiles
+            // the name says what a tap does, like auto resistance: lockTiles is the move mode
+            // ("You can move the tiles!"), so the fixed tiles of the default get "Unlock tiles"
+            Accessible.name: window.ui.modern ? (window.lockTiles ? qsTr("Lock tiles") : qsTr("Unlock tiles")) : text
             icon.source: window.ui.modern ? "" : ( window.lockTiles ? "icons/icons/unlock.png" : "icons/icons/lock.png")
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (window.lockTiles ? "lock_open" : "lock"); color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { window.lockTiles = !window.lockTiles; console.log("lock tiles toggled " + window.lockTiles); popuplockTiles.open(); popuplockTilesAutoClose.running = true; }
@@ -1946,14 +1966,16 @@ ApplicationWindow {
 
         ToolButton {
             id: toolButtonAutoResistance
+            Accessible.name: window.ui.modern ? (rootItem.autoResistance ? qsTr("Disable auto resistance") : qsTr("Enable auto resistance")) : text
             icon.source: window.ui.modern ? "" : ( rootItem.autoResistance ? "icons/icons/resistance.png" : "icons/icons/pause.png")
-            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (rootItem.autoResistance ? "motion_mode" : "pause_circle"); color: window.ui.textMain; visible: window.ui.modern }
+            UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: (window.ui.modern && rootItem.autoResistance ? "motion_mode" : "pause_circle"); color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { rootItem.autoResistance = !rootItem.autoResistance; console.log("auto resistance toggled " + rootItem.autoResistance); popupAutoResistance.open(); popupAutoResistanceAutoClose.running = true; }
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            // Modern look: a workout control, on the home page only and once the equipment is
+            // Modern look: a workout control, on the home page only and while the equipment is
             // connected (before that there is no resistance to follow)
-            visible: window.ui.modern ? stackView.depth === 1 && typeof rootItem !== "undefined" && !rootItem.labelHelp : !headerToolbar.settingsPageActive
+            visible: window.ui.modern ? stackView.depth === 1 && typeof rootItem !== "undefined" && !rootItem.labelHelp && window.equipmentConnected
+                                      : !headerToolbar.settingsPageActive
             width: visible ? implicitWidth : 0
         }
 
@@ -1962,7 +1984,7 @@ ApplicationWindow {
             // Modern look, home page: more buttons on the right than on the left, and the title centred
             // on the screen had room for one letter ("Q..."). It stays centred on the screen if it fits
             // there, else it goes to the middle of the free room between the buttons, in its full
-            // size; the name that does not fit there either is cut to "QZ", not to "QZ Fi..." (T-445).
+            // size; the name that does not fit there either is cut to "QZ", not to "QZ Fi...".
             // "QZ" goes too when it would not keep the width of a button of free room around it
             readonly property bool homeTitle: window.ui.modern && stackView.depth === 1
             readonly property bool fitsCentred: titleMetrics.advanceWidth <= titleSpan.centred
@@ -1984,8 +2006,11 @@ ApplicationWindow {
             // Modern look only: the classic title keeps the font of the bar, as it inherited it. A
             // plain binding to the bar font: not Binding (its restored value was the size at
             // start-up, the scaled one after a text size), not Qt.font({}) (a default font with a
-            // size of its own, not an inherited one)
-            font: window.ui.modern ? window.ui.fontOf(headerToolbar.font, window.ui.fontTitleSmall, Font.DemiBold)
+            // size of its own, not an inherited one). Modern: its own font in mixed case - built
+            // from the bar font, the title came out in capitals on iOS
+            font: window.ui.modern ? Qt.font({ family: headerToolbar.font.family, pixelSize: window.ui.fontTitleSmall,
+                                               weight: Font.DemiBold, capitalization: Font.MixedCase,
+                                               hintingPreference: headerToolbar.font.hintingPreference })
                                    : headerToolbar.font
             color: window.ui.ink(Material.foreground)
             anchors.verticalCenter: parent.verticalCenter
@@ -1993,7 +2018,7 @@ ApplicationWindow {
             anchors.horizontalCenterOffset: homeTitle && !fitsCentred ? (titleSpan.from + titleSpan.to - parent.width) / 2 : 0
             // Modern look and a text size other than 100 %: no wider than the room between the
             // nearest shown buttons, centred; a large text size ran the title into the search button. A
-            // takes a smaller font down to 14 px of the text size, and only then an ellipsis. The home
+            // longer title takes a smaller font down to 14 px of the text size, and only then an ellipsis. The home
             // page keeps the full size (above); a title that fits is not cut by a pixel of rounding
             // between titleMetrics and implicitWidth
             width: homeTitle ? (fitsCentred || fitsFree ? implicitWidth : Math.min(implicitWidth, titleSpan.to - titleSpan.from))
@@ -2211,20 +2236,21 @@ ApplicationWindow {
         rightPadding: window.ui.modern ? 0 : getRightPadding()
         Accessible.ignored: !drawer.opened
 
-        // Modern: a sheet with rounded outer corners. The rectangle runs past the left edge,
-        // so only the right-hand corners show. Classic: the shadow of the Material drawer
-        // (its own background, Drawer.qml of Qt 5.15), lost when the background was replaced
-        background: Rectangle {
-            color: window.ui.modern ? window.ui.surface : Material.dialogColor
-            radius: window.ui.modern ? 20 : 0
-            x: window.ui.modern ? -radius : 0
-            width: parent.width + (window.ui.modern ? radius : 0)
-            height: parent.height
-            layer.enabled: !window.ui.modern && drawer.position > 0
-            layer.effect: MaterialImpl.ElevationEffect {
-                elevation: drawer.Material.elevation
-                fullHeight: true
-            }
+        // Classic look: the background of the style, untouched. Modern look: it is hidden (with
+        // it its shadow) and the sheet below takes its place
+        background.visible: !window.ui.modern
+
+        // Modern: a sheet with rounded outer corners, over the whole drawer (paddings too). It
+        // runs past the left edge, so only the right-hand corners show
+        Rectangle {
+            visible: window.ui.modern
+            anchors.fill: parent
+            anchors.topMargin: -drawer.topPadding
+            anchors.bottomMargin: -drawer.bottomPadding
+            anchors.leftMargin: -drawer.leftPadding - radius
+            anchors.rightMargin: -drawer.rightPadding
+            radius: 20
+            color: window.ui.surface
         }
 
         ScrollView {
@@ -2335,6 +2361,7 @@ ApplicationWindow {
                 }
 
                 ItemDelegate {
+                    id: drawerVersion
                     text: "version 2.22.0"
                     width: parent.width
                 }
@@ -2416,14 +2443,26 @@ ApplicationWindow {
         Flickable {
             id: modernDrawerList
             visible: window.ui.modern
+            // Screen reader names of the service cards (images only)
+            function serviceName(key) {
+                switch (key) {
+                case "strava":
+                    return rootItem.isStravaLoggedIn() ? qsTr("Disconnect from Strava") : qsTr("Connect with Strava")
+                case "peloton":
+                    return rootItem.isPelotonLoggedIn() ? qsTr("Disconnect from Peloton") : qsTr("Connect with Peloton")
+                case "garmin":
+                    return qsTr("Garmin Connect settings")
+                case "intervals":
+                    return rootItem.isIntervalsICULoggedIn() ? qsTr("Disconnect from Intervals.icu") : qsTr("Connect with Intervals.icu")
+                }
+                return ""
+            }
             anchors.fill: parent
             contentHeight: modernDrawerColumn.height + 16
             clip: true
             boundsBehavior: Flickable.StopAtBounds
             // Only vertical moves scroll: a slightly sideways one went to the drawer and the list
-            // did not move. No pressDelay: in Qt 5 an entry pressed through it and then taken
-            // over by the scroll stayed pressed for good. The entries light up late instead
-            // (UiDrawerItem), so a scroll starting on one does not flash it
+            // did not move
             flickableDirection: Flickable.VerticalFlick
             ScrollIndicator.vertical: ScrollIndicator { }
 
@@ -2469,12 +2508,15 @@ ApplicationWindow {
                             width: 8
                             height: 8
                             radius: 4
-                            color: (typeof rootItem !== "undefined" && rootItem && rootItem.device) ? window.ui.ok : window.ui.textMuted
+                            color: window.equipmentConnected ? window.ui.ok : window.ui.textMuted
                         }
                         Label {
                             width: parent.width - 14
-                            // "Connecting..." - the untranslated start value of homeform::m_info, see HomeForm.ui.qml
-                            text: (typeof rootItem !== "undefined" && rootItem) ? (rootItem.info === "Connecting..." ? qsTranslate("homeform", "Searching for the device...") : rootItem.info) : ""
+                            // "Connecting..." - the untranslated start value of homeform::m_info, kept until the
+                            // equipment writes its own status: shown as the search, or as connected next to the green dot
+                            text: (typeof rootItem !== "undefined" && rootItem) ? (rootItem.info !== "Connecting..." ? rootItem.info
+                                  : window.equipmentConnected ? qsTranslate("HomeForm.ui", "Device connected")
+                                  : qsTranslate("homeform", "Searching for the device...")) : ""
                             font.pixelSize: window.ui.fontCaption
                             color: window.ui.textMuted
                             elide: Text.ElideRight
@@ -2518,6 +2560,9 @@ ApplicationWindow {
                             id: profileChipArea
                             anchors.fill: parent
                             onClicked: drawerAction("profile")
+                            Accessible.role: Accessible.Button
+                            Accessible.name: qsTr("Profile: ") + settings.profile_name
+                            Accessible.onPressAction: drawerAction("profile")
                         }
                     }
                 }
@@ -2589,6 +2634,11 @@ ApplicationWindow {
                                 id: serviceArea
                                 anchors.fill: parent
                                 onClicked: drawerAction(modelData.key)
+                                Accessible.role: Accessible.Button
+                                // The login state has no change signal: read again on every
+                                // opening of the drawer
+                                Accessible.name: window.ui.modern && drawer.opened ? modernDrawerList.serviceName(modelData.key) : ""
+                                Accessible.onPressAction: drawerAction(modelData.key)
                             }
                         }
                     }
@@ -2598,7 +2648,7 @@ ApplicationWindow {
                     width: parent.width
                     leftPadding: 28
                     topPadding: 16
-                    text: "version 2.22.0"
+                    text: drawerVersion.text
                     font.pixelSize: window.ui.fontCaption
                     color: window.ui.textMuted
                 }
