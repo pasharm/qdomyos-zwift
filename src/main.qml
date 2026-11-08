@@ -1045,6 +1045,7 @@ ApplicationWindow {
                 UiButton {
                     anchors.left: parent.left
                     text: qsTr("Skip")
+                    cardSurface: true
                     onClicked: {
                         gymModePopupDismissed = true
                         popupGymMode.close()

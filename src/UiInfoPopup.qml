@@ -121,7 +121,8 @@ UiPopup {
                 anchors.right: parent.right
                 // the OK of the question cards, already translated
                 text: qsTranslate("UiMessageDialog", "OK")
-                flat: true
+                // the only button: a grey pill, as the negative ones of the question cards (T-479)
+                cardSurface: true
                 onClicked: control.close()
             }
         }

@@ -1896,6 +1896,7 @@ Page {
             UiButton {
                 Layout.alignment: Qt.AlignHCenter
                 text: qsTr("Close")
+                cardSurface: true
                 onClicked: calendarPopup.close()
             }
         }

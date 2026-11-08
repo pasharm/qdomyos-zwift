@@ -143,7 +143,7 @@ Popup {
 
         Row {
             anchors.right: parent.right
-            spacing: 4
+            spacing: 8
             topPadding: 8
 
             Repeater {
@@ -156,7 +156,8 @@ Popup {
                         : modelData === P.MessageDialog.No ? (root.noText.length > 0 ? root.noText : qsTr("No"))
                         : modelData === P.MessageDialog.Ok ? qsTr("OK")
                         : qsTr("Cancel")
-                    flat: !positive
+                    // the negative ones a grey pill: a pill reads as a button, accent text did not (T-479)
+                    cardSurface: true
                     highlighted: positive
                     danger: positive && root.destructive
                     onClicked: root.answer(modelData)

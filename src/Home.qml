@@ -210,7 +210,7 @@ HomeForm {
 
                 UiButton {
                     text: qsTr("Skip")
-                    flat: rpeFeelPopup.modern
+                    cardSurface: true
                     onClicked: {
                         rpeFeelPopup.close();
                         rootItem.finalizeFitSave(-1, -1);

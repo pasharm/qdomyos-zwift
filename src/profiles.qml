@@ -184,7 +184,6 @@ ColumnLayout {
                 Item { Layout.fillWidth: true }
                 UiButton {
                     text: qsTr("New profile")
-                    flat: true
                     onClicked: {
                         profileNameTextField.text = modernNameField.text
                         newProfileDialog.visible = true;
