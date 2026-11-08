@@ -4682,8 +4682,8 @@ Szeretne ebben a munkamenetben átváltani a klasszikus virtuális Bluetooth-esz
         <translation>Beállítás visszaállítva</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
-        <translation>%1 beállítás visszaállítva</translation>
+        <source>Settings reset: %1</source>
+        <translation>Visszaállított beállítások: %1</translation>
     </message>
     <message>
         <source>Reset all</source>
@@ -4694,8 +4694,8 @@ Szeretne ebben a munkamenetben átváltani a klasszikus virtuális Bluetooth-esz
         <translation>Visszaállítja a módosított beállításokat?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
-        <translation>%1 beállítás visszaáll az alapértelmezett értékére.</translation>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Az alapértelmezett értékre visszaálló beállítások: %1</translation>
     </message>
     <message>
         <source>Reset</source>

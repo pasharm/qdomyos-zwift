@@ -430,11 +430,18 @@ import AndroidStatusBar 1.0
             scrollTimer.start()
         }
 
+        // A section that opens by itself: the open state of a section with a switch
+        // (AccordionCheckElement) is the value of its setting, which the new page reads anew
+        function isPlainSection(item) {
+            return item.isOpen !== undefined && item.accordionContent !== undefined &&
+                   item.linkedBoolSetting === undefined
+        }
+
         // The sections of a page in page order, open or not: a new page opens the same ones
         function sectionStates(item, states) {
             var kids = item ? item.children : []
             for (var i = 0; i < kids.length; i++) {
-                if (kids[i].isOpen !== undefined && kids[i].accordionContent !== undefined)
+                if (isPlainSection(kids[i]))
                     states.push(kids[i].isOpen)
                 sectionStates(kids[i], states)
             }
@@ -444,7 +451,7 @@ import AndroidStatusBar 1.0
         function openSections(item, states, at) {
             var kids = item ? item.children : []
             for (var i = 0; i < kids.length; i++) {
-                if (kids[i].isOpen !== undefined && kids[i].accordionContent !== undefined) {
+                if (isPlainSection(kids[i])) {
                     if (at < states.length && kids[i].isOpen !== states[at])
                         kids[i].isOpen = states[at]
                     at++
@@ -886,7 +893,7 @@ import AndroidStatusBar 1.0
             var list = filteredSettings
             for (var i = 0; i < list.length; i++)
                 resetEntry(list[i])
-            showResetDone(qsTr("%1 settings reset").arg(list.length))
+            showResetDone(qsTr("Settings reset: %1").arg(list.length))
         }
 
         // The page is made again, as for a new language: some controls read their setting once,
@@ -2552,6 +2559,7 @@ import AndroidStatusBar 1.0
             property string daum_serialport: ""
             property real trainprogram_inclination_filter: 0.0
             property bool heart_rate_belt_suggest: false
+            property bool proform_treadmill_sport_6_0: false
 
         }
 
@@ -2766,7 +2774,7 @@ import AndroidStatusBar 1.0
                 MessageDialog {
                     id: resetChangedDialog
                     text: qsTr("Reset changed settings?")
-                    informativeText: qsTr("%1 settings go back to their default values.").arg(settingsPane.filteredSettings.length)
+                    informativeText: qsTr("Settings that go back to their default values: %1").arg(settingsPane.filteredSettings.length)
                     buttons: (MessageDialog.Yes | MessageDialog.No)
                     onYesClicked: settingsPane.resetListedSettings()
                     visible: false
@@ -12366,6 +12374,7 @@ import AndroidStatusBar 1.0
                                     "ProForm 305 CST PETL59817.0",
                                     "Freemotion T10.9B (HCI snoop)",
                                     "Proform Sport 5.5",
+                                    "Proform Sport 6.0",
                                 ]
 
                                 // Initialize when the accordion content becomes visible
@@ -12450,7 +12459,8 @@ import AndroidStatusBar 1.0
                                                     settings.proform_trainer_8_0_pftl59721_0 ? 65 :
                                                     settings.proform_treadmill_305_cst ? 66 :
                                                     settings.freemotion_t10_9b_hci ? 67 :
-                                                    settings.proform_treadmill_sport_55 ? 68 : 0;
+                                                    settings.proform_treadmill_sport_55 ? 68 :
+                                                    settings.proform_treadmill_sport_6_0 ? 69 : 0;
 
                                     console.log("treadmillModelComboBox selected model: " + selectedModel);
                                     if (selectedModel >= 0) {
@@ -12533,6 +12543,7 @@ import AndroidStatusBar 1.0
                                     settings.proform_treadmill_305_cst = false;
                                     settings.freemotion_t10_9b_hci = false;
                                     settings.proform_treadmill_sport_55 = false;
+                                    settings.proform_treadmill_sport_6_0 = false;
 
                                     // Set new setting based on selection
                                     switch (currentIndex) {
@@ -12604,6 +12615,7 @@ import AndroidStatusBar 1.0
                                         case 66: settings.proform_treadmill_305_cst = true; break;
                                         case 67: settings.freemotion_t10_9b_hci = true; break;
                                         case 68: settings.proform_treadmill_sport_55 = true; break;
+                                        case 69: settings.proform_treadmill_sport_6_0 = true; break;
                                     }
 
                                     window.settings_restart_to_apply = true;

@@ -4723,8 +4723,8 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>설정을 초기화했습니다</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
-        <translation>설정 %1개를 초기화했습니다</translation>
+        <source>Settings reset: %1</source>
+        <translation>초기화한 설정: %1</translation>
     </message>
     <message>
         <source>Reset all</source>
@@ -4735,8 +4735,8 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>변경된 설정을 초기화하시겠습니까?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
-        <translation>설정 %1개가 기본값으로 돌아갑니다.</translation>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>기본값으로 돌아갈 설정: %1</translation>
     </message>
     <message>
         <source>Reset</source>

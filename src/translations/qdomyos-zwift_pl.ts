@@ -4723,7 +4723,7 @@ Przełączyć się na klasyczne urządzenie wirtualne Bluetooth do końca tej se
         <translation>Zresetowano ustawienie</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
+        <source>Settings reset: %1</source>
         <translation>Zresetowano ustawienia: %1</translation>
     </message>
     <message>
@@ -4735,7 +4735,7 @@ Przełączyć się na klasyczne urządzenie wirtualne Bluetooth do końca tej se
         <translation>Zresetować zmienione ustawienia?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
+        <source>Settings that go back to their default values: %1</source>
         <translation>Zmienione ustawienia (%1) wrócą do wartości domyślnych.</translation>
     </message>
     <message>

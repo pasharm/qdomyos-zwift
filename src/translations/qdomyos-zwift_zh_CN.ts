@@ -5864,8 +5864,8 @@ In the next window, allow access to the QZ folder.</source>
         <translation>设置已重置</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
-        <translation>已重置 %1 项设置</translation>
+        <source>Settings reset: %1</source>
+        <translation>已重置的设置：%1</translation>
     </message>
     <message>
         <source>Reset all</source>
@@ -5876,8 +5876,8 @@ In the next window, allow access to the QZ folder.</source>
         <translation>重置已更改的设置？</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
-        <translation>%1 项设置将恢复为默认值。</translation>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>将恢复为默认值的设置：%1</translation>
     </message>
     <message>
         <source>Reset</source>

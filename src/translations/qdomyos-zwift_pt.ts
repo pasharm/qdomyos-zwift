@@ -5880,8 +5880,8 @@ Na próxima janela, permita o acesso à pasta QZ.</translation>
         <translation>Configuração redefinida</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
-        <translation>%1 configurações redefinidas</translation>
+        <source>Settings reset: %1</source>
+        <translation>Configurações redefinidas: %1</translation>
     </message>
     <message>
         <source>Reset all</source>
@@ -5892,8 +5892,8 @@ Na próxima janela, permita o acesso à pasta QZ.</translation>
         <translation>Redefinir configurações alteradas?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
-        <translation>%1 configurações voltam aos valores padrão.</translation>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Configurações que voltam aos valores padrão: %1</translation>
     </message>
     <message>
         <source>Reset</source>

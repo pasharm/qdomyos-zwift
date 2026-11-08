@@ -5836,8 +5836,8 @@ En la siguiente ventana, permite el acceso a la carpeta QZ.</translation>
         <translation>Ajuste restablecido</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
-        <translation>%1 ajustes restablecidos</translation>
+        <source>Settings reset: %1</source>
+        <translation>Ajustes restablecidos: %1</translation>
     </message>
     <message>
         <source>Reset all</source>
@@ -5848,8 +5848,8 @@ En la siguiente ventana, permite el acceso a la carpeta QZ.</translation>
         <translation>¿Restablecer los ajustes modificados?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
-        <translation>%1 ajustes vuelven a sus valores predeterminados.</translation>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Ajustes que vuelven a sus valores predeterminados: %1</translation>
     </message>
     <message>
         <source>Reset</source>

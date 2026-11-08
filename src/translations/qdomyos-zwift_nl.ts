@@ -4723,8 +4723,8 @@ Wil je voor deze sessie overschakelen naar het klassieke virtuele Bluetooth-appa
         <translation>Instelling gereset</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
-        <translation>%1 instellingen gereset</translation>
+        <source>Settings reset: %1</source>
+        <translation>Instellingen gereset: %1</translation>
     </message>
     <message>
         <source>Reset all</source>
@@ -4735,8 +4735,8 @@ Wil je voor deze sessie overschakelen naar het klassieke virtuele Bluetooth-appa
         <translation>Gewijzigde instellingen resetten?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
-        <translation>%1 instellingen worden teruggezet naar hun standaardwaarden.</translation>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Instellingen die worden teruggezet naar hun standaardwaarden: %1</translation>
     </message>
     <message>
         <source>Reset</source>

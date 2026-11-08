@@ -4723,7 +4723,7 @@ Přepnout pro tuto relaci na klasické virtuální zařízení Bluetooth?</trans
         <translation>Nastavení obnoveno</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
+        <source>Settings reset: %1</source>
         <translation>Obnovená nastavení: %1</translation>
     </message>
     <message>
@@ -4735,7 +4735,7 @@ Přepnout pro tuto relaci na klasické virtuální zařízení Bluetooth?</trans
         <translation>Obnovit změněná nastavení?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
+        <source>Settings that go back to their default values: %1</source>
         <translation>Změněná nastavení (%1) se vrátí na výchozí hodnoty.</translation>
     </message>
     <message>

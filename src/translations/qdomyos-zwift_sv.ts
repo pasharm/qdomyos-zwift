@@ -4682,8 +4682,8 @@ Vill du byta till den klassiska virtuella Bluetooth-enheten för den här sessio
         <translation>Inställningen har återställts</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
-        <translation>%1 inställningar har återställts</translation>
+        <source>Settings reset: %1</source>
+        <translation>Återställda inställningar: %1</translation>
     </message>
     <message>
         <source>Reset all</source>
@@ -4694,8 +4694,8 @@ Vill du byta till den klassiska virtuella Bluetooth-enheten för den här sessio
         <translation>Vill du återställa ändrade inställningar?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
-        <translation>%1 inställningar återställs till standardvärdena.</translation>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Inställningar som återställs till standardvärdena: %1</translation>
     </message>
     <message>
         <source>Reset</source>

@@ -5840,8 +5840,8 @@ Erlauben Sie im nächsten Fenster den Zugriff auf den QZ-Ordner.</translation>
         <translation>Einstellung zurückgesetzt</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
-        <translation>%1 Einstellungen zurückgesetzt</translation>
+        <source>Settings reset: %1</source>
+        <translation>Zurückgesetzte Einstellungen: %1</translation>
     </message>
     <message>
         <source>Reset all</source>
@@ -5852,8 +5852,8 @@ Erlauben Sie im nächsten Fenster den Zugriff auf den QZ-Ordner.</translation>
         <translation>Geänderte Einstellungen zurücksetzen?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
-        <translation>%1 Einstellungen werden auf ihre Standardwerte zurückgesetzt.</translation>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Einstellungen, die auf ihre Standardwerte zurückgesetzt werden: %1</translation>
     </message>
     <message>
         <source>Reset</source>

@@ -5784,8 +5784,8 @@ In the next window, allow access to the QZ folder.</source>
         <translation>設定をリセットしました</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
-        <translation>%1個の設定をリセットしました</translation>
+        <source>Settings reset: %1</source>
+        <translation>リセットした設定: %1</translation>
     </message>
     <message>
         <source>Reset all</source>
@@ -5796,8 +5796,8 @@ In the next window, allow access to the QZ folder.</source>
         <translation>変更した設定をリセットしますか？</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
-        <translation>%1個の設定が既定値に戻ります。</translation>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>既定値に戻る設定: %1</translation>
     </message>
     <message>
         <source>Reset</source>
