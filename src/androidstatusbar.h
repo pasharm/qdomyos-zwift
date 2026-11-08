@@ -47,8 +47,8 @@ public:
     // In the iOS qmake build (IO_UNDER_QT) it comes from the app font Qt sets at start-up, so a change
     // there needs a restart.
     Q_INVOKABLE double systemFontScale() const;
-    // Night mode of the system (Configuration.uiMode). Read on demand: QML asks again when
-    // the app comes back to the foreground and every 2 s while it is on screen.
+    // Night mode of the system (Configuration.uiMode), for the modern look. Read on demand: QML asks
+    // again when the app comes back to the foreground and on systemThemeChanged().
     // iOS: the dark appearance of the system (iOS 13+), read the same way.
     // Android before 10 (API 29, no dark theme in the system), iOS before 13 and other systems:
     // true (the app is dark by default).
@@ -73,6 +73,9 @@ public slots:
 
 signals:
     void insetsChanged();
+    // Android: the system configuration changed (night mode among others); systemDarkMode() may
+    // answer differently now
+    void systemThemeChanged();
 
 private:
     int m_top = 0;

@@ -225,6 +225,17 @@ Java_org_cagnulen_qdomyoszwift_CustomQtActivity_onInsetsChanged(JNIEnv *env, job
 }
 
 extern "C" JNIEXPORT void JNICALL
+Java_org_cagnulen_qdomyoszwift_CustomQtActivity_onSystemThemeChanged(JNIEnv *env, jclass clazz)
+{
+    Q_UNUSED(env);
+    Q_UNUSED(clazz);
+    // Queued, as onInsetsChanged: the signal reaches QML on the Qt thread
+    QMutexLocker locker(&instanceMutex);
+    if (AndroidStatusBar::instance())
+        QMetaObject::invokeMethod(AndroidStatusBar::instance(), "systemThemeChanged", Qt::QueuedConnection);
+}
+
+extern "C" JNIEXPORT void JNICALL
 Java_org_cagnulen_qdomyoszwift_CustomQtActivity_onSystemBarSideInsetsChanged(JNIEnv *env, jobject thiz, jint left,
                                                                                  jint right)
 {
