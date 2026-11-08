@@ -1130,7 +1130,7 @@ ApplicationWindow {
         id: popupLicense
          enabled: rootItem.licensePopupVisible
          onEnabledChanged: { if(rootItem.licensePopupVisible) popupLicense.open() }
-         onClosed: { Qt.openUrlExternally("https://www.patreon.com/bePatron?u=45290147"); Qt.callLater(window.quitApp); }
+         onClosed: { Qt.openUrlExternally("https://www.patreon.com/bePatron?u=45290147"); Qt.callLater(Qt.quit); }
         classicWidth: 580
         classicHeight: 230
         classicLabelWidth: 570
@@ -1143,7 +1143,7 @@ ApplicationWindow {
         text: qsTr("Settings changed")
         informativeText: qsTr("In order to apply the changes you need to restart the app.\nDo you want to do it now?")
         buttons: (MessageDialog.Yes | MessageDialog.No)
-        onYesClicked: Qt.callLater(window.quitApp)
+        onYesClicked: Qt.callLater(Qt.quit)
         onNoClicked: this.visible = false;
         visible: false
     }
@@ -1254,7 +1254,7 @@ ApplicationWindow {
         text: ""
         informativeText: qsTr("Restart now?")
         buttons: (MessageDialog.Yes | MessageDialog.No)
-        onYesClicked: Qt.callLater(window.quitApp)
+        onYesClicked: Qt.callLater(Qt.quit)
         onNoClicked: this.visible = false;
         visible: false
     }
@@ -1265,7 +1265,7 @@ ApplicationWindow {
         text: qsTr("This FitShow device also reports bike data. Is it a bike?")
         informativeText: qsTr("Yes: QZ enables \"Fit Plus Bike\" and closes, open it again to connect to it as a bike.\nNo: QZ keeps it as a treadmill and won't ask again (a bike can still be set by hand: \"Fit Plus Bike\" in Fitplus Bike Options).")
         buttons: (MessageDialog.Yes | MessageDialog.No)
-        onYesClicked: { rootItem.fitshowBikeAnswer(true); Qt.callLater(window.quitApp); }
+        onYesClicked: { rootItem.fitshowBikeAnswer(true); Qt.callLater(Qt.quit); }
         onNoClicked: { rootItem.fitshowBikeAnswer(false); this.visible = false; }
         visible: false
     }
@@ -2000,73 +2000,6 @@ ApplicationWindow {
         }
     }
 
-    // The settings pages are about 1.3 MB of QML. The first time after install the engine
-    // compiles them when they are opened (then from the disk cache), and the settings froze
-    // for a moment. They are compiled ahead instead, off the GUI thread: a few seconds after
-    // start, or as soon as the drawer starts to open if that comes first. Only compiled, not
-    // created. The components are kept so the engine does not drop the compiled types; a push
-    // of the same file while the compilation runs picks it up rather than starting over.
-    property var settingsWarmup: []
-    function warmUpSettings() {
-        if (settingsWarmup.length > 0)
-            return
-        var started = Date.now()
-        var pages = ["settings.qml", "settings-tiles.qml"]
-        var components = []
-        pages.forEach(function (page) {
-            var component = Qt.createComponent(page, Component.Asynchronous)
-            var report = function () {
-                if (component.status === Component.Ready)
-                    console.log("QZ-TIMING warm-up " + page + " ready in " + (Date.now() - started) + " ms")
-                else if (component.status === Component.Error)
-                    console.warn("QZ-TIMING warm-up " + page + ": " + component.errorString())
-            }
-            if (component.status === Component.Loading)
-                component.statusChanged.connect(report)
-            else
-                report()
-            components.push(component)
-        })
-        settingsWarmup = components
-    }
-
-    Timer {
-        interval: 4000; running: true; repeat: false
-        onTriggered: window.warmUpSettings()
-    }
-
-    // Quit, but not while the warm-up still compiles: on Android Qt.quit() in the middle of it
-    // froze the closing and the next start (T-109, the FS- bike question a few seconds after the
-    // first start). The compilation cannot be cancelled, so wait for it (2-3 s after an install),
-    // at most quitWaitTimer.interval
-    property bool quitting: false
-    function warmUpCompiling() {
-        return settingsWarmup.some(function (c) { return c.status === Component.Loading })
-    }
-    function quitApp() {
-        if (quitting)
-            return
-        quitting = true
-        if (!warmUpCompiling()) {
-            Qt.quit()
-            return
-        }
-        console.log("QZ-TIMING quit waits for the settings warm-up")
-        toast.show(qsTr("QZ is closing..."), quitWaitTimer.interval)
-        settingsWarmup.forEach(function (c) {
-            c.statusChanged.connect(function () {
-                if (!warmUpCompiling())
-                    Qt.quit()
-            })
-        })
-        quitWaitTimer.start()
-    }
-    Timer {
-        id: quitWaitTimer
-        interval: 10000
-        onTriggered: Qt.quit()
-    }
-
     // Drawer entries, shared by the classic and the modern drawer
     function drawerAction(key) {
         switch (key) {
@@ -2191,7 +2124,7 @@ ApplicationWindow {
             break
         case "quit":
             console.log("closing...")
-            Qt.callLater(window.quitApp)
+            Qt.callLater(Qt.quit)
             return
         case "strava":
             if (rootItem.isStravaLoggedIn()) {
@@ -2243,7 +2176,6 @@ ApplicationWindow {
         leftPadding: getLeftPadding()
         rightPadding: window.ui.modern ? 0 : getRightPadding()
         Accessible.ignored: !drawer.opened
-        onAboutToShow: window.warmUpSettings()
 
         // Modern: a sheet with rounded outer corners. The rectangle runs past the left edge,
         // so only the right-hand corners show. Classic: the shadow of the Material drawer
