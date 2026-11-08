@@ -10,6 +10,8 @@
 #  d: Reset all: the confirmation, Yes - "No changed settings"; back asks the restart (Debug Log
 #     and Fake Treadmill need it in the catalog)
 #  e: the settings again: still "No changed settings"
+#  h: control for f without a reset: the search jumps to Virtual Device Bluetooth and Enable
+#     Virtual Device on a page made the usual way - is the switch row on the screen there?
 PKG=org.cagnulen.qdomyoszwift
 UI_MODERN=${UI_MODERN:-false}
 LOG_DEBUG=${LOG_DEBUG:-true}
@@ -120,6 +122,15 @@ check_none() {   # check_none <name> <regex>
     FAILED=1
   else
     echo "check $1: OK" >> $STEPLOG
+  fi
+}
+# in_tree <name> <literal>: in the last dump, on the screen or scrolled away
+in_tree() {
+  if [ -f ui.xml ] && grep -q -F "$2" ui.xml; then
+    echo "check $1: OK" >> $STEPLOG
+  else
+    echo "!! check $1: '$2' not in the tree" >> $STEPLOG
+    FAILED=1
   fi
 }
 # Frames back to back right after a tap: a toast is gone before a few dumps are taken
@@ -247,7 +258,8 @@ if tap_ui '^Virtual Device Bluetooth.*'; then
   if tap_ui '^Virtual Device Bluetooth.*'; then
     sleep 4
     shot f-3-page
-    check "f: section open after the reset" '^Virtual Heart Only$' 10
+    in_tree "f: section open after the reset" 'content-desc="Virtual Heart Only"'
+    check "f: switch row on screen" '^Virtual Device Bluetooth$' 5
   else
     FAILED=1
   fi
@@ -305,6 +317,33 @@ echo "== e: Changed again" >> $STEPLOG
 open_changed e
 check "e: none listed" '^No changed settings$' 10
 shot e-1-changed
+
+# h: control for f - the same jumps on a page made the usual way (no reset): where the search
+# puts an open section with a switch. h1 Virtual Device Bluetooth (reset in f, now on),
+# h2 Enable Virtual Device (never changed)
+echo "== h: jumps to a section switch without a reset" >> $STEPLOG
+# The page of e was made by the usual entry to the settings
+tap_ui '^Changed$' || FAILED=1
+sleep 2
+type_search v 'irtual%sdevice%sbluetooth'
+if tap_ui '^Virtual Device Bluetooth.*'; then
+  sleep 4
+  shot h-1-page
+  in_tree "h1: section open" 'content-desc="Virtual Heart Only"'
+  check "h1: switch row on screen" '^Virtual Device Bluetooth$' 5
+fi
+tap $BACK_XY "back"
+sleep 3
+tap_ui '^Clear$' || true
+sleep 2
+type_search e 'nable%svirtual%sdevice'
+if tap_ui '^Enable Virtual Device.*'; then
+  sleep 4
+  shot h-2-page
+  check "h2: switch row on screen" '^Enable Virtual Device$' 5
+fi
+tap $BACK_XY "back"
+sleep 3
 
 adb shell am force-stop $PKG || true
 kill $LOGCAT_PID 2>/dev/null || true
