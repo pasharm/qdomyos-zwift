@@ -1,9 +1,12 @@
 #!/bin/bash
 # Test only (T-324): Reset in the list of changed settings, classic look.
-#  a: "Changed" lists five settings, each with Reset, and Reset all next to the title
+#  a: "Changed" lists six settings, each with Reset, and Reset all next to the title
 #  b: Reset of Player Weight (no restart in the catalog): gone from the list, the toast, and back
 #     from the settings asks no restart
 #  c: the settings again: Player Weight still not changed (written to the store)
+#  f: Virtual Device Bluetooth (the switch of a section) opened from its card, Back, Reset: on the
+#     page made again its switch is on and its section open ("Virtual Heart Only" shown)
+#  g: Reset all with "ftp" in the search field: only FTP value is reset
 #  d: Reset all: the confirmation, Yes - "No changed settings"; back asks the restart (Debug Log
 #     and Fake Treadmill need it in the catalog)
 #  e: the settings again: still "No changed settings"
@@ -38,7 +41,7 @@ adb shell settings put global hide_error_dialogs 1 || true
 # A fake treadmill, so there is no first-run wizard. Changed from the default: Debug Log and Fake
 # Treadmill (restartRequired), Garmin ANT+, Player Weight, FTP value (no restart)
 put_conf() {
-  printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\nant_garmin=true\nweight=90\nftp=250\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
+  printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\nant_garmin=true\nweight=90\nftp=250\nvirtual_device_bluetooth=false\n' "$LOG_DEBUG" "$UI_MODERN" > qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola'"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf '$CONF'"
@@ -127,6 +130,22 @@ frames() {
   done
   echo "-- frames $1-1..3" >> $STEPLOG
 }
+# type_search <first letter> <rest>: the first letter until the field has it (the first keys can
+# be lost), then the rest, then the keyboard down
+type_search() {
+  local i
+  for i in 1 2 3; do
+    tap 470 338 "search field"
+    sleep 1
+    adb shell input text "$1" || true
+    sleep 2
+    wait_ui '^Search results.*|^No settings found$|^Changed settings.*' 6 && break
+  done
+  adb shell input text "$2" || true
+  sleep 4
+  adb shell input keyevent KEYCODE_BACK || true   # the keyboard down
+  sleep 2
+}
 # Toolbar buttons are icons without text (Nexus 6: 1440x2560)
 BACK_XY="84 168"
 
@@ -183,7 +202,7 @@ shot 01-home
 
 echo "== a: Changed" >> $STEPLOG
 open_changed a
-check "a: five listed" '^Changed settings \(5\)$' 10
+check "a: six listed" '^Changed settings \(6\)$' 10
 check "a: Reset all" '^Reset all$' 5
 check "a: Reset of Player Weight" '^Reset: Player Weight.*' 5
 shot a-1-changed
@@ -193,7 +212,7 @@ if tap_ui '^Reset: Player Weight.*'; then
   frames b-1-toast
   sleep 2
   shot b-2-after
-  check "b: four left" '^Changed settings \(4\)$' 10
+  check "b: five left" '^Changed settings \(5\)$' 10
   check_none "b: Player Weight gone" '^Player Weight.*'
   check "b: FTP value still listed" '^FTP value.*' 5
 else
@@ -203,9 +222,71 @@ back_home b no
 
 echo "== c: Changed again" >> $STEPLOG
 open_changed c
-check "c: four listed" '^Changed settings \(4\)$' 10
+check "c: five listed" '^Changed settings \(5\)$' 10
 check_none "c: Player Weight not changed" '^Player Weight.*'
 shot c-1-changed
+
+echo "== f: Reset of a section switch" >> $STEPLOG
+if tap_ui '^Virtual Device Bluetooth.*'; then
+  sleep 4
+  shot f-1-opened
+  check_none "f: section closed while off" '^Virtual Heart Only$'
+  tap $BACK_XY "back"
+  check "f: back to Changed" '^Changed settings \(5\)$' 15
+  if tap_ui '^Reset: Virtual Device Bluetooth.*'; then
+    check "f: four left" '^Changed settings \(4\)$' 15
+    shot f-2-after
+  else
+    FAILED=1
+  fi
+  # The page made again: Changed off, the switch found by the search and opened on its page
+  tap_ui '^Changed$' || FAILED=1
+  sleep 2
+  type_search v 'irtual%sdevice%sbluetooth'
+  check "f: results" '^Search results.*' 15
+  if tap_ui '^Virtual Device Bluetooth.*'; then
+    sleep 4
+    shot f-3-page
+    check "f: section open after the reset" '^Virtual Heart Only$' 10
+  else
+    FAILED=1
+  fi
+  tap $BACK_XY "back"
+  sleep 3
+else
+  FAILED=1
+fi
+
+echo "== g: Reset all with a text" >> $STEPLOG
+tap_ui '^Clear$' || true
+sleep 3
+if ! wait_ui '^Changed$' 3; then
+  tap_ui '🔍|Search settings'
+  sleep 2
+fi
+tap_ui '^Changed$' || FAILED=1
+check "g: four changed" '^Changed settings \(4\)$' 15
+type_search f 'tp'
+check "g: only FTP" '^Changed settings \(1\)$' 15
+shot g-1-ftp
+if tap_ui '^Reset all$'; then
+  check "g: confirmation of one" '^Settings that go back to their default values: 1$' 15
+  shot g-2-confirm
+  tap_ui '^Yes$' || FAILED=1
+  check "g: FTP reset" '^No settings found$' 15
+  shot g-3-after
+else
+  FAILED=1
+fi
+tap_ui '^Clear$' || true
+sleep 3
+if ! wait_ui '^Changed$' 3; then
+  tap_ui '🔍|Search settings'
+  sleep 2
+fi
+tap_ui '^Changed$' || FAILED=1
+check "g: three left" '^Changed settings \(3\)$' 15
+check "g: Debug Log kept" '^Debug Log.*' 5
 
 echo "== d: Reset all" >> $STEPLOG
 if tap_ui '^Reset all$'; then
