@@ -18,7 +18,9 @@ import AndroidStatusBar 1.0
         // to 7254 while the page stayed 1310, a section opened after it could not be scrolled
         contentHeight: column1.implicitHeight
         focus: true
-        anchors.horizontalCenter: parent.horizontalCenter
+        // No parent while StackView takes the page away (Back, the page made again after a
+        // reset or a new language)
+        anchors.horizontalCenter: parent ? parent.horizontalCenter : undefined
         anchors.fill: parent
         anchors.leftMargin: (Qt.platform.os === "android" && AndroidStatusBar.hasWaterfallDisplay) ?
                             AndroidStatusBar.waterfallLeftInset : 0
