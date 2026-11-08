@@ -2588,6 +2588,14 @@ ApplicationWindow {
         StackView {
             id: stackView
             initialItem: "Home.qml"
+            // The home page has no load and save buttons, whichever way it is reached (a profile
+            // saved, a settings file loaded): with them shown the lock, map, video and chart hide
+            onDepthChanged: {
+                if (depth === 1) {
+                    toolButtonLoadSettings.visible = false;
+                    toolButtonSaveSettings.visible = false;
+                }
+            }
             anchors.fill: parent
             // Below the toolbar, which hangs over the pages (headerToolbar); a spread chart takes
             // its room too
