@@ -405,9 +405,12 @@ elif start_case t-head-modern true fake; then
   tb_check 'touch:Main menu' 'Main menu' t-head "talkback: the menu button read by its name"
   tb_any 'Lock tiles|Unlock tiles' t-head "talkback: the tiles lock reached by swipes"
   # Double tap on the menu button opens the drawer; swipes go along its entries
-  drv t-drawer --keep 'touch:Main menu' 'dtap' 'sleep:2000' 'swipe:right' 'swipe:right' 'swipe:right' \
+  # focus by the accessibility action: a second touch by the driver left the focus on Pause (run
+  # 42521352123), and the double tap then paused the workout
+  drv t-drawer --keep 'focus:Main menu' 'sleep:1500' 'focused' 'dtap' 'sleep:2000' 'swipe:right' 'swipe:right' 'swipe:right' \
     'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right'
   adb shell screencap -p /sdcard/t-head-modern-1-drawer.png && adb pull /sdcard/t-head-modern-1-drawer.png >> $STEPLOG 2>&1 || true
+  tb_check 'focused' 'Main menu' t-drawer "talkback: the focus is on the menu button before the double tap"
   tb_any 'Workouts History|Workout|Settings|Profile|Device|Searching|Connected' t-drawer "talkback: double tap opened the drawer, swipes read its entries"
   mkdir -p drv/shots
   adb pull /data/local/tmp/tbshots/. drv/shots >> $STEPLOG 2>&1 || true
