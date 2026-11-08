@@ -9,6 +9,9 @@ import QtQuick.Controls.Material.impl 2.12
 // (qtquickcontrols2 5.15, src/imports/controls/material/SwitchDelegate.qml), with the
 // indicator swapped for UiSwitchIndicator - the stock one in the classic look, the
 // Material 3 switch in the modern look.
+// Screen reader: as with the stock one, the caller gives it its press action (Qt 5.15 gives a
+// SwitchDelegate none), e.g. Accessible.onPressAction: { toggle(); clicked(); } - not here, both
+// would run and turn it twice
 T.SwitchDelegate {
     id: control
 

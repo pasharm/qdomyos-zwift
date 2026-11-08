@@ -50,8 +50,24 @@ T.TextField {
     // search results field is created with no text), an assignment of false would break that
     // binding
     property bool timeShaped: false
+    // "h:mm" or "h:mm:ss": digits only, the hours any length, minutes and seconds two digits
+    function isTime(s) {
+        var parts = String(s).split(":")
+        if (parts.length < 2 || parts.length > 3)
+            return false
+        for (var i = 0; i < parts.length; i++) {
+            var p = parts[i]
+            if (p.length === 0 || (i > 0 && p.length !== 2))
+                return false
+            for (var j = 0; j < p.length; j++) {
+                if (p[j] < "0" || p[j] > "9")
+                    return false
+            }
+        }
+        return true
+    }
     Component.onCompleted: {
-        if (!timeShaped && /^\d+:\d{2}(:\d{2})?$/.test(text))
+        if (!timeShaped && isTime(text))
             timeShaped = true
     }
 
@@ -117,14 +133,14 @@ T.TextField {
                     spacing: 4
                     height: 200
                     Tumbler { id: hours; model: 100; visibleItemCount: 5; width: 64; height: 200
-                              delegate: timeDigit }
+                              delegate: timeDigit; Accessible.name: qsTr("hours") + ": " + currentIndex }
                     Label { id: timeColon; text: ":"; font.pixelSize: window.ui.fontPx(24); anchors.verticalCenter: parent.verticalCenter }
                     Tumbler { id: minutes; model: 60; visibleItemCount: 5; width: 64; height: 200
-                              delegate: timeDigit }
+                              delegate: timeDigit; Accessible.name: qsTr("min") + ": " + currentIndex }
                     Label { text: ":"; font.pixelSize: window.ui.fontPx(24); visible: timePicker.withSeconds
                             anchors.verticalCenter: parent.verticalCenter }
                     Tumbler { id: seconds; model: 60; visibleItemCount: 5; width: 64; height: 200
-                              visible: timePicker.withSeconds; delegate: timeDigit }
+                              visible: timePicker.withSeconds; delegate: timeDigit; Accessible.name: qsTr("sec") + ": " + currentIndex }
                 }
             }
             Row {

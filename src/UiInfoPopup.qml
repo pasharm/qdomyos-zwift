@@ -23,18 +23,74 @@ UiPopup {
     // The texts break their lines by hand (\n, <br>) for the fixed classic width: in the card
     // the single breaks become spaces and only the empty lines between paragraphs stay
     function flowText(s) {
-        return s.replace(/<br\s*\/?>/g, "\n")
-                .replace(/([^\n])\n(?!\n)/g, "$1 ")
-                .replace(/ {2,}/g, " ")
-                .trim()
+        // <br>, <br/>, <br /> -> line break
+        var t = ""
+        var i = 0
+        while (i < s.length) {
+            if (s.substr(i, 3) === "<br") {
+                var j = i + 3
+                while (j < s.length && (s[j] === " " || s[j] === "\t" || s[j] === "\n" || s[j] === "\r"))
+                    j++
+                if (s[j] === "/")
+                    j++
+                if (s[j] === ">") {
+                    t += "\n"
+                    i = j + 1
+                    continue
+                }
+            }
+            t += s[i]
+            i++
+        }
+        // a single line break between two lines -> space; empty lines stay; runs of spaces -> one
+        var out = ""
+        for (var k = 0; k < t.length; k++) {
+            var c = t[k]
+            if (c === "\n" && k > 0 && t[k - 1] !== "\n" && t[k + 1] !== "\n")
+                c = " "
+            if (c === " " && out.length > 0 && out[out.length - 1] === " ")
+                continue
+            out += c
+        }
+        return out.trim()
     }
 
     // The card text as StyledText: the markup characters escaped, the addresses made links
     function linkText(s) {
-        var t = flowText(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        var t = flowText(s).split("&").join("&amp;").split("<").join("&lt;").split(">").join("&gt;")
         if (links)
-            t = t.replace(/(https?:[^ \n]+[^ \n.,!?])/g, '<a href="$1">$1</a>')
-        return t.replace(/\n/g, "<br>")
+            t = linkAddresses(t)
+        return t.split("\n").join("<br>")
+    }
+
+    // http: and https: addresses -> links; an address ends at a space or a line break, without
+    // the . , ! ? that close the sentence after it
+    function linkAddresses(t) {
+        var out = ""
+        var i = 0
+        while (i < t.length) {
+            var start = t.indexOf("http", i)
+            if (start < 0)
+                break
+            var prefix = t.substr(start, 6) === "https:" ? 6 : t.substr(start, 5) === "http:" ? 5 : 0
+            var end = start + prefix
+            if (prefix > 0) {
+                while (end < t.length && t[end] !== " " && t[end] !== "\n")
+                    end++
+                while (end > start + prefix && ".,!?".indexOf(t[end - 1]) >= 0)
+                    end--
+            }
+            // at least two characters after "http(s):", the last one not . , ! ?
+            if (prefix === 0 || end - start - prefix < 2) {
+                out += t.substring(i, start + 4)
+                i = start + 4
+                continue
+            }
+            var address = t.substring(start, end)
+            out += t.substring(i, start) + '<a href="' + address + '">' + address + "</a>"
+            i = end
+        }
+        return out + t.substring(i)
     }
 
     parent: Overlay.overlay
