@@ -264,7 +264,7 @@ import QtQuick 2.12 as Quick212
         function setUiOption(key, value) {
             // "As on the phone" takes the night mode of the phone as it is now
             if (key === "ui_theme_mode")
-                window.ui.refreshSystemDark()
+                window.ui.refreshSystemTheme()
             window.ui.setOption(key, value)
             settings[key] = value
         }

@@ -344,9 +344,8 @@ ApplicationWindow {
         // iOS before 13, which have no dark theme), "dark" and "light" are fixed. The classic look
         // is always dark.
         readonly property string themeMode: settings.ui_theme_mode
-        property bool systemDark: AndroidStatusBar.systemDarkMode()
+        property bool systemDark: true
         readonly property bool dark: !modern || themeMode === "dark" || (themeMode !== "light" && systemDark)
-        function refreshSystemDark() { systemDark = AndroidStatusBar.systemDarkMode() }
 
         readonly property var themes: ({
             "graphite": { bg: "#111318", surface: "#1B1E24", surfaceHigh: "#23272E", surfaceHighest: "#2D323A",
@@ -381,14 +380,24 @@ ApplicationWindow {
         // the dark and the light page. Empty elsewhere, then the choice is not offered and a
         // saved "system" falls back to violet. Read again on return to the foreground, since
         // the wallpaper is changed outside the app.
-        property string systemAccentDark: AndroidStatusBar.systemAccentColor(true)
-        property string systemAccentLight: AndroidStatusBar.systemAccentColor(false)
+        property string systemAccentDark: ""
+        property string systemAccentLight: ""
         readonly property bool systemAccentAvailable: systemAccentDark !== "" && systemAccentLight !== ""
-        Component.onCompleted: console.log("QZ-THEME system accent dark '" + systemAccentDark
-                                           + "' light '" + systemAccentLight + "'")
-        function refreshSystemAccent() {
+
+        // The system (night mode, wallpaper accent) is asked only while the modern look is on
+        function refreshSystemTheme() {
+            if (!modern)
+                return
+            systemDark = AndroidStatusBar.systemDarkMode()
             systemAccentDark = AndroidStatusBar.systemAccentColor(true)
             systemAccentLight = AndroidStatusBar.systemAccentColor(false)
+        }
+        onModernChanged: refreshSystemTheme()
+        Component.onCompleted: {
+            refreshSystemTheme()
+            if (modern)
+                console.log("QZ-THEME system accent dark '" + systemAccentDark
+                            + "' light '" + systemAccentLight + "'")
         }
         function accentOf(name) {
             if (name === "system" && systemAccentAvailable)
@@ -519,19 +528,23 @@ ApplicationWindow {
         }
     }
 
-    Material.theme: ui.dark ? Material.Dark : Material.Light
-    Material.accent: ui.modern ? ui.accent : Material.color(Material.Pink, Material.Shade200)
+    // Classic look: undefined resets them to the style (qtquickcontrols2.conf), as without these lines
+    Material.theme: ui.modern ? (ui.dark ? Material.Dark : Material.Light) : undefined
+    Material.accent: ui.modern ? ui.accent : undefined
     Material.background: ui.modern ? ui.bg : undefined
 
     // The phone can switch its night mode while the app runs (by schedule or from the quick
-    // settings). Qt 5.15 passes no such event on to QML, so ask again on return to the
-    // foreground and every 2 s while the app is on screen (three light JNI calls)
+    // settings): Android reports it as a configuration change, iOS through the return to the
+    // foreground (onStateChanged below). The wallpaper accent is read again on that return too.
+    Connections {
+        target: AndroidStatusBar
+        function onSystemThemeChanged() { window.ui.refreshSystemTheme() }
+    }
     Connections {
         target: Qt.application
         function onStateChanged() {
             if (Qt.application.state === Qt.ApplicationActive) {
-                window.ui.refreshSystemDark()
-                window.ui.refreshSystemAccent()
+                window.ui.refreshSystemTheme()
                 // the first time at start-up, when the native window is there
                 window.applySystemBars()
                 window.refreshIosSafeArea()
@@ -555,13 +568,6 @@ ApplicationWindow {
         function onBgChanged() { window.applySystemBars() }
         function onDarkChanged() { window.applySystemBars() }
         function onModernChanged() { window.applySystemBars() }
-    }
-    Timer {
-        interval: 2000
-        repeat: true
-        running: window.ui.modern && window.ui.themeMode === "auto"
-                 && Qt.application.state === Qt.ApplicationActive
-        onTriggered: window.ui.refreshSystemDark()
     }
 
     // Text size of the app (not the tiles, they follow ui_zoom). On Android and iOS it follows the
