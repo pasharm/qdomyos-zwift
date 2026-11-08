@@ -302,9 +302,11 @@ node_check "t1: Reset all" "Reset all'"
 node_check "t1: Reset of Player Weight" "Reset: Player Weight (kg)'"
 grep -E "'(Reset all|Reset: [^']*|Changed settings[^']*|Player Weight[^']*)'" drv/t1-list.txt | sed 's/^ */   /' >> $STEPLOG || true
 
-drv t2-order --keep 'focus:Changed settings (6)' 'sleep:1500' 'touch:Changed settings (6)' \
-  'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right'
-drv_check "t2: title focused by touch" t2-order "touch:Changed settings (6): focused 'Changed settings (6)'"
+# From Clear (a button: a touch focuses it; on the title the touch went to the window, run
+# 42476067986), then on through the title, Reset all, the first card and its Reset
+drv t2-order --keep 'focus:Clear' 'sleep:1500' 'touch:Clear' \
+  'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right'
+drv_check "t2: Clear focused by touch" t2-order "touch:Clear: focused 'Clear'"
 drv_check "t2: swipe reaches Reset all" t2-order "swipe:right: focused 'Reset all'"
 drv_check "t2: swipe reaches the card" t2-order "swipe:right: focused 'Player Weight (kg): 90'"
 drv_check "t2: swipe reaches Reset of the card" t2-order "swipe:right: focused 'Reset: Player Weight (kg)'"
@@ -318,7 +320,9 @@ adb exec-out screencap -p > t-3-row.png || true
 
 drv t4-all --keep 'focus:Reset all' 'sleep:1500' 'touch:Reset all' 'dtap' 'sleep:2000' 'list'
 drv_check "t4: Reset all focused before the double tap" t4-all "touch:Reset all: focused 'Reset all'"
-drv_check "t4: the confirmation read" t4-all "Reset changed settings?"
+# The speech overlay is not in getWindows (said [] - notes/talkback-in-emulator): the native
+# dialog is told by its buttons (the nodes of Qt are View$VirtualChild); its text - drv/shots
+drv_check "t4: the confirmation opened" t4-all "class=android.widget.Button"
 adb exec-out screencap -p > t-4-confirm.png || true
 
 # TalkBack off for the dump: Yes of the native dialog by its text
