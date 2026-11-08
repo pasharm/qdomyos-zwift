@@ -314,6 +314,16 @@ fi
 adb shell am force-stop $PKG || true
 peloton p-head-modern true
 adb shell am force-stop $PKG || true
+# A long text in the modern card: landscape and the largest font scale, so the text of the
+# question scrolls - its lines must end before the scroll bar (UiMessageDialog rightPadding)
+adb shell settings put system font_scale 2.0 || true
+adb shell settings put system user_rotation 1 || true
+sleep 3
+peloton p-head-modern-big true
+adb shell am force-stop $PKG || true
+adb shell settings put system font_scale 1.0 || true
+adb shell settings put system user_rotation 0 || true
+adb shell am force-stop $PKG || true
 
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
