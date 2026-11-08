@@ -430,11 +430,18 @@ import AndroidStatusBar 1.0
             scrollTimer.start()
         }
 
+        // A section that opens by itself: the open state of a section with a switch
+        // (AccordionCheckElement) is the value of its setting, which the new page reads anew
+        function isPlainSection(item) {
+            return item.isOpen !== undefined && item.accordionContent !== undefined &&
+                   item.linkedBoolSetting === undefined
+        }
+
         // The sections of a page in page order, open or not: a new page opens the same ones
         function sectionStates(item, states) {
             var kids = item ? item.children : []
             for (var i = 0; i < kids.length; i++) {
-                if (kids[i].isOpen !== undefined && kids[i].accordionContent !== undefined)
+                if (isPlainSection(kids[i]))
                     states.push(kids[i].isOpen)
                 sectionStates(kids[i], states)
             }
@@ -444,7 +451,7 @@ import AndroidStatusBar 1.0
         function openSections(item, states, at) {
             var kids = item ? item.children : []
             for (var i = 0; i < kids.length; i++) {
-                if (kids[i].isOpen !== undefined && kids[i].accordionContent !== undefined) {
+                if (isPlainSection(kids[i])) {
                     if (at < states.length && kids[i].isOpen !== states[at])
                         kids[i].isOpen = states[at]
                     at++
@@ -886,7 +893,7 @@ import AndroidStatusBar 1.0
             var list = filteredSettings
             for (var i = 0; i < list.length; i++)
                 resetEntry(list[i])
-            showResetDone(qsTr("%1 settings reset").arg(list.length))
+            showResetDone(qsTr("Settings reset: %1").arg(list.length))
         }
 
         // The page is made again, as for a new language: some controls read their setting once,
@@ -2766,7 +2773,7 @@ import AndroidStatusBar 1.0
                 MessageDialog {
                     id: resetChangedDialog
                     text: qsTr("Reset changed settings?")
-                    informativeText: qsTr("%1 settings go back to their default values.").arg(settingsPane.filteredSettings.length)
+                    informativeText: qsTr("Settings that go back to their default values: %1").arg(settingsPane.filteredSettings.length)
                     buttons: (MessageDialog.Yes | MessageDialog.No)
                     onYesClicked: settingsPane.resetListedSettings()
                     visible: false

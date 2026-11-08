@@ -4527,7 +4527,7 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
+        <source>Settings reset: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4539,7 +4539,7 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
+        <source>Settings that go back to their default values: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

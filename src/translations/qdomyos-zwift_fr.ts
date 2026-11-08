@@ -5776,8 +5776,8 @@ Dans la fenêtre suivante, autorisez l&apos;accès au dossier QZ.</translation>
         <translation>Paramètre réinitialisé</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
-        <translation>%1 paramètres réinitialisés</translation>
+        <source>Settings reset: %1</source>
+        <translation>Paramètres réinitialisés : %1</translation>
     </message>
     <message>
         <source>Reset all</source>
@@ -5788,8 +5788,8 @@ Dans la fenêtre suivante, autorisez l&apos;accès au dossier QZ.</translation>
         <translation>Réinitialiser les paramètres modifiés ?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
-        <translation>%1 paramètres reviennent à leurs valeurs par défaut.</translation>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Paramètres qui reviennent à leurs valeurs par défaut : %1</translation>
     </message>
     <message>
         <source>Reset</source>

@@ -4723,8 +4723,8 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
         <translation>Ayar sıfırlandı</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
-        <translation>%1 ayar sıfırlandı</translation>
+        <source>Settings reset: %1</source>
+        <translation>Sıfırlanan ayarlar: %1</translation>
     </message>
     <message>
         <source>Reset all</source>
@@ -4735,8 +4735,8 @@ Bu seans için klasik Bluetooth sanal cihazına geçilsin mi?</translation>
         <translation>Değiştirilmiş ayarlar sıfırlansın mı?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
-        <translation>%1 ayar varsayılan değerlerine döner.</translation>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Varsayılan değerlerine dönecek ayarlar: %1</translation>
     </message>
     <message>
         <source>Reset</source>

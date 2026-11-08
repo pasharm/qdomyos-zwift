@@ -4659,7 +4659,7 @@ In the next window, allow access to the QZ folder.</source>
         <translation>Настройка сброшена</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
+        <source>Settings reset: %1</source>
         <translation>Сброшено настроек: %1</translation>
     </message>
     <message>
@@ -4671,7 +4671,7 @@ In the next window, allow access to the QZ folder.</source>
         <translation>Сбросить изменённые настройки?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
+        <source>Settings that go back to their default values: %1</source>
         <translation>Изменённые настройки (%1) вернутся к значениям по умолчанию.</translation>
     </message>
     <message>

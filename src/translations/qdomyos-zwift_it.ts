@@ -6895,8 +6895,8 @@ NOTE IMPORTANTI:
         <translation>Impostazione ripristinata</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
-        <translation>%1 impostazioni ripristinate</translation>
+        <source>Settings reset: %1</source>
+        <translation>Impostazioni ripristinate: %1</translation>
     </message>
     <message>
         <source>Reset all</source>
@@ -6907,8 +6907,8 @@ NOTE IMPORTANTI:
         <translation>Ripristinare le impostazioni modificate?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
-        <translation>%1 impostazioni tornano ai valori predefiniti.</translation>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Impostazioni che tornano ai valori predefiniti: %1</translation>
     </message>
     <message>
         <source>Reset</source>

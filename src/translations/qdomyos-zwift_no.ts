@@ -4682,8 +4682,8 @@ Vil du bytte til den klassiske virtuelle Bluetooth-enheten for denne økten?</tr
         <translation>Innstillingen er tilbakestilt</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
-        <translation>%1 innstillinger er tilbakestilt</translation>
+        <source>Settings reset: %1</source>
+        <translation>Tilbakestilte innstillinger: %1</translation>
     </message>
     <message>
         <source>Reset all</source>
@@ -4694,8 +4694,8 @@ Vil du bytte til den klassiske virtuelle Bluetooth-enheten for denne økten?</tr
         <translation>Tilbakestille endrede innstillinger?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
-        <translation>%1 innstillinger går tilbake til standardverdiene.</translation>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Innstillinger som går tilbake til standardverdiene: %1</translation>
     </message>
     <message>
         <source>Reset</source>

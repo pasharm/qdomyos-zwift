@@ -4682,8 +4682,8 @@ Vil du skifte til den klassiske virtuelle Bluetooth-enhed i denne session?</tran
         <translation>Indstillingen er nulstillet</translation>
     </message>
     <message>
-        <source>%1 settings reset</source>
-        <translation>%1 indstillinger er nulstillet</translation>
+        <source>Settings reset: %1</source>
+        <translation>Nulstillede indstillinger: %1</translation>
     </message>
     <message>
         <source>Reset all</source>
@@ -4694,8 +4694,8 @@ Vil du skifte til den klassiske virtuelle Bluetooth-enhed i denne session?</tran
         <translation>Nulstil ændrede indstillinger?</translation>
     </message>
     <message>
-        <source>%1 settings go back to their default values.</source>
-        <translation>%1 indstillinger nulstilles til standardværdierne.</translation>
+        <source>Settings that go back to their default values: %1</source>
+        <translation>Indstillinger, der nulstilles til standardværdierne: %1</translation>
     </message>
     <message>
         <source>Reset</source>
