@@ -15,22 +15,13 @@ ItemDelegate {
     rightPadding: 24
     focusPolicy: Qt.NoFocus
 
-    // Lit only when the finger stays on the entry: a scroll starting on it takes the press
-    // away within this time, and the entry does not flash
-    property bool lit: false
-    onDownChanged: {
-        if (down) {
-            litTimer.restart()
-        } else {
-            litTimer.stop()
-            lit = false
-        }
-    }
-    Timer {
-        id: litTimer
-        interval: 100
-        onTriggered: control.lit = control.down
-    }
+    // Screen reader: a button named after the entry. In Qt 5.15 its double tap does not send
+    // clicked() to an ItemDelegate, so the press action does
+    Accessible.role: Accessible.Button
+    Accessible.name: text
+    Accessible.onPressAction: clicked()
+
+    readonly property bool lit: down
 
     background: Rectangle {
         x: 12
