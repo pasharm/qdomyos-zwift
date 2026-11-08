@@ -37,7 +37,13 @@ Popup {
 
     // The card stays tappable during its closing animation: one answer per opening
     property bool answered: false
-    onAboutToShow: answered = false
+    // Classic look: the native dialog at once, as a MessageDialog opens, not after the enter
+    // transition of this (empty) popup
+    onAboutToShow: {
+        answered = false
+        if (!modern)
+            nativeDialog.open()
+    }
 
     function answer(button) {
         if (answered)
@@ -70,7 +76,6 @@ Popup {
         Behavior on opacity { NumberAnimation { duration: 150 } }
     }
 
-    onOpened: if (!modern) nativeDialog.open()
     onClosed: {
         if (nativeDialog.visible)
             nativeDialog.close()
