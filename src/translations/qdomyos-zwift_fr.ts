@@ -8637,7 +8637,7 @@ Par défaut : A = -0.96, B = 1.33</translation>
         <translation>Bleu nuit</translation>
     </message>
     <message>
-        <source>Accent colour</source>
+        <source>Accent color</source>
         <translation>Couleur d’accentuation</translation>
     </message>
     <message>
@@ -8665,7 +8665,7 @@ Par défaut : A = -0.96, B = 1.33</translation>
         <translation>Noir / blanc</translation>
     </message>
     <message>
-        <source>Wallpaper colour</source>
+        <source>Wallpaper color</source>
         <translation>Couleur du fond d’écran</translation>
     </message>
     <message>

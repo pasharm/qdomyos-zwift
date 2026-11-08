@@ -8646,7 +8646,7 @@ Default: A = -0.96, B = 1.33</source>
         <translation>午夜蓝</translation>
     </message>
     <message>
-        <source>Accent colour</source>
+        <source>Accent color</source>
         <translation>强调色</translation>
     </message>
     <message>
@@ -8674,7 +8674,7 @@ Default: A = -0.96, B = 1.33</source>
         <translation>黑 / 白</translation>
     </message>
     <message>
-        <source>Wallpaper colour</source>
+        <source>Wallpaper color</source>
         <translation>壁纸颜色</translation>
     </message>
     <message>

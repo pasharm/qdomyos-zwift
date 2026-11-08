@@ -8571,7 +8571,7 @@ Standaard: A = -0.96, B = 1.33</translation>
         <translation>Middernachtblauw</translation>
     </message>
     <message>
-        <source>Accent colour</source>
+        <source>Accent color</source>
         <translation>Accentkleur</translation>
     </message>
     <message>
@@ -8604,7 +8604,7 @@ Standaard: A = -0.96, B = 1.33</translation>
         <translation>Zwart / wit</translation>
     </message>
     <message>
-        <source>Wallpaper colour</source>
+        <source>Wallpaper color</source>
         <translation>Kleur van je achtergrond</translation>
     </message>
     <message>

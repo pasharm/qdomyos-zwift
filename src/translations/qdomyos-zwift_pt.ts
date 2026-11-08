@@ -8618,7 +8618,7 @@ Padrão: A = -0.96, B = 1.33</translation>
         <translation>Azul-noite</translation>
     </message>
     <message>
-        <source>Accent colour</source>
+        <source>Accent color</source>
         <translation>Cor de destaque</translation>
     </message>
     <message>
@@ -8646,7 +8646,7 @@ Padrão: A = -0.96, B = 1.33</translation>
         <translation>Preto / branco</translation>
     </message>
     <message>
-        <source>Wallpaper colour</source>
+        <source>Wallpaper color</source>
         <translation>Cor do papel de parede</translation>
     </message>
     <message>

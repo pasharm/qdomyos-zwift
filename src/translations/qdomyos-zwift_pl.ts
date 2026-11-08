@@ -8568,7 +8568,7 @@ Domyślnie: A = -0.96, B = 1.33</translation>
         <translation>Granatowy</translation>
     </message>
     <message>
-        <source>Accent colour</source>
+        <source>Accent color</source>
         <translation>Kolor akcentu</translation>
     </message>
     <message>
@@ -8601,7 +8601,7 @@ Domyślnie: A = -0.96, B = 1.33</translation>
         <translation>Czarny / biały</translation>
     </message>
     <message>
-        <source>Wallpaper colour</source>
+        <source>Wallpaper color</source>
         <translation>Kolor tapety</translation>
     </message>
     <message>

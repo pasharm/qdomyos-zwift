@@ -16272,7 +16272,7 @@
     },
     {
       "key": "ui_accent",
-      "name": "Accent colour",
+      "name": "Accent color",
       "description": null,
       "parent": "General UI Options",
       "type": "string",
@@ -16292,7 +16292,7 @@
           "pink"
         ],
         "labels": [
-          "Wallpaper colour",
+          "Wallpaper color",
           "Violet",
           "Blue",
           "Teal",

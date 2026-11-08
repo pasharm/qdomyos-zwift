@@ -8571,7 +8571,7 @@ Varsayılan: A = -0.96, B = 1.33</translation>
         <translation>Gece mavisi</translation>
     </message>
     <message>
-        <source>Accent colour</source>
+        <source>Accent color</source>
         <translation>Vurgu rengi</translation>
     </message>
     <message>
@@ -8604,7 +8604,7 @@ Varsayılan: A = -0.96, B = 1.33</translation>
         <translation>Siyah / beyaz</translation>
     </message>
     <message>
-        <source>Wallpaper colour</source>
+        <source>Wallpaper color</source>
         <translation>Duvar kâğıdı rengi</translation>
     </message>
     <message>
