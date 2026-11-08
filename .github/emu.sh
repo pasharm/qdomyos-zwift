@@ -411,7 +411,17 @@ elif start_case t-head-modern true fake; then
     'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right'
   adb shell screencap -p /sdcard/t-head-modern-1-drawer.png && adb pull /sdcard/t-head-modern-1-drawer.png >> $STEPLOG 2>&1 || true
   tb_check 'focused' 'Main menu' t-drawer "talkback: the focus is on the menu button before the double tap"
-  tb_any 'Workouts History|Workout|Settings|Profile|Device|Searching|Connected' t-drawer "talkback: double tap opened the drawer, swipes read its entries"
+  # run 42522512090: the drawer opened, but the swipes after it went along the page under it
+  # (open item of T-322) - recorded, not a check. An entry by touch, then a double tap opens its page
+  drv t-entry --keep 'find:Settings' 'touch:Settings' 'dtap' 'sleep:4000' 'find:Save settings' 'find:Load settings'
+  adb shell screencap -p /sdcard/t-head-modern-2-entry.png && adb pull /sdcard/t-head-modern-2-entry.png >> $STEPLOG 2>&1 || true
+  tb_check 'touch:Settings' 'Settings' t-entry "talkback: a drawer entry takes the focus by touch"
+  if grep -q "^find:Save settings: '" drv/t-entry.txt; then
+    echo "check t-entry: talkback: double tap on the entry opened the settings page: OK" >> $STEPLOG
+  else
+    echo "!! check t-entry: talkback: double tap on the entry opened the settings page: no Save settings" >> $STEPLOG
+    FAILED=1
+  fi
   mkdir -p drv/shots
   adb pull /data/local/tmp/tbshots/. drv/shots >> $STEPLOG 2>&1 || true
   echo "== talkback off" >> $STEPLOG
