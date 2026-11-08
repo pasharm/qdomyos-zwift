@@ -9,6 +9,9 @@
 #  m-head: modern look of the PR: header names (Main menu, Lock tiles), the drawer with its entries,
 #           Settings reached from a drawer entry (the header shows Load/Save settings), Auto resistance
 #           hidden with no equipment (b-head-modern).
+#  popups (review of the PR): the tile lock notice, the Save settings toast (classic: base against head;
+#           modern: their cards) and the native Peloton question (p-<apk>: peloton_password set, the
+#           question opens 1 s after the start; answered No, it must go away).
 PKG=org.cagnulen.qdomyoszwift
 LOG_DEBUG=${LOG_DEBUG:-true}
 STEPLOG=steps.log
@@ -18,6 +21,9 @@ mkdir -p dumps
 FAILED=0
 # Toolbar menu / back button by its place (Nexus 6, 3.5 px per dp): classic buttons have no names
 MENU="84 168"
+# Classic tile lock (home page) and Save settings (settings page), the two rightmost buttons
+LOCK="1187 168"
+SAVE="1354 168"
 
 install_apk() {
   adb uninstall $PKG > /dev/null 2>&1 || true
@@ -35,13 +41,14 @@ install_apk() {
 }
 adb shell settings put global hide_error_dialogs 1 || true
 
-# put_conf <ui_modern> <equipment: fake|none>
+# put_conf <ui_modern> <equipment: fake|none> [extra line of the conf]
 put_conf() {
   if [ "$2" = fake ]; then
     printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\n' "$LOG_DEBUG" "$1" > qz.conf
   else
     printf '[General]\nlog_debug=%s\nui_modern=%s\nbluetooth_lastdevice_name=NO-SUCH-DEVICE\n' "$LOG_DEBUG" "$1" > qz.conf
   fi
+  [ -n "$3" ] && printf '%s\n' "$3" >> qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola' < /dev/null"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf '$CONF' < /dev/null"
@@ -181,6 +188,37 @@ tap_entry() {
   FAILED=1
   return 1
 }
+# quick_shot <shot> <x y>: tap, then the frame at once (the notices close by themselves after 2 s)
+quick_shot() {
+  echo "tap $2 for $1" >> $STEPLOG
+  adb shell input tap $2 || true
+  sleep 0.7
+  shot $1
+}
+# peloton <case> <ui_modern>: the Peloton question at start, answered No
+peloton() {
+  local xy=""
+  echo "== $1: start (ui_modern=$2, peloton_password set)" >> $STEPLOG
+  adb shell am force-stop $PKG || true
+  sleep 2
+  put_conf "$2" none "peloton_password=secret"
+  adb shell am start -n $PKG/$PKG.CustomQtActivity
+  if ! wait_ui '^Peloton Authentication Change$' 60; then
+    shot $1-1-question
+    echo "!! $1: Peloton question not shown in 60 s" >> $STEPLOG
+    FAILED=1
+    return 1
+  fi
+  sleep 2
+  shot $1-1-question
+  expect $1-1-question '^No$' "Peloton question: the No button"
+  dump
+  [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml '^No$')
+  [ -n "$xy" ] && { echo "tap No at $xy" >> $STEPLOG; adb shell input tap $xy || true; }
+  sleep 3
+  shot $1-2-answered
+  expect_not $1-2-answered '^Peloton Authentication Change$' "Peloton question gone after No"
+}
 # blink <case>: the Bluetooth icon of the home page names both states over 8 dumps
 blink() {
   local i s seen_on=0 seen_off=0
@@ -214,8 +252,17 @@ for side in base head; do
   # Classic look, fake treadmill: frames for the base/head comparison
   if start_case c-$side false fake; then
     shot c-$side-1-home
-    if open_drawer c-$side-2-drawer '^Settings$'; then
-      tap_entry '^Settings$' '^General Options$|^Search settings$' && shot c-$side-3-settings
+    quick_shot c-$side-2-lock "$LOCK"
+    expect c-$side-2-lock '^You can move the tiles!$|^The tiles are locked now$' "tile lock notice"
+    sleep 3
+    adb shell input tap $LOCK || true
+    sleep 3
+    if open_drawer c-$side-3-drawer '^Settings$'; then
+      if tap_entry '^Settings$' '^General Options$|^Search settings$'; then
+        shot c-$side-4-settings
+        quick_shot c-$side-5-save "$SAVE"
+        expect c-$side-5-save '^Saved!.*' "Save settings toast"
+      fi
     fi
   fi
   adb shell am force-stop $PKG || true
@@ -225,19 +272,37 @@ for side in base head; do
     blink b-$side-classic
   fi
   adb shell am force-stop $PKG || true
+  peloton p-$side false
+  adb shell am force-stop $PKG || true
 done
 
 # Modern look of the PR (apk-head is installed last)
 if start_case m-head true fake; then
+  # the tile lock shows once the help text is gone (equipment connected, tiles on the page)
+  wait_ui '^Lock tiles$|^Unlock tiles$' 60 || echo "!! m-head: no tile lock in 60 s" >> $STEPLOG
+  sleep 2
   shot m-head-1-home
   expect m-head-1-home '^Main menu$' "header: the menu button has its name"
   expect m-head-1-home '^Lock tiles$|^Unlock tiles$' "header: the tiles lock has its name"
+  expect m-head-1-home '^Disable auto resistance$|^Enable auto resistance$' "header: auto resistance shown with the equipment"
+  dump
+  if [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml '^Lock tiles$|^Unlock tiles$'); then
+    quick_shot m-head-1b-lock "$xy"
+    expect m-head-1b-lock '^You can move the tiles!$|^The tiles are locked now$' "tile lock notice"
+    sleep 3
+    adb shell input tap $xy || true
+    sleep 3
+  fi
   if open_drawer m-head-2-drawer '^Settings$'; then
     expect m-head-2-drawer '^Workouts History$' "drawer: a workout entry"
     expect m-head-2-drawer '^Workout$' "drawer: the Workout group"
     tap_entry '^Settings$' '^Save settings$' && shot m-head-3-settings
     expect m-head-3-settings '^Load settings$' "settings page: Load settings in the header"
     expect m-head-3-settings '^Back$' "settings page: the arrow is named Back"
+    if xy=$(python3 .github/uitap.py dumps/m-head-3-settings.xml '^Save settings$'); then
+      quick_shot m-head-4-save "$xy"
+      expect m-head-4-save '^Saved!.*' "Save settings toast"
+    fi
   fi
 fi
 adb shell am force-stop $PKG || true
@@ -246,6 +311,8 @@ if start_case b-head-modern true none; then
   expect_not b-head-modern-1-home '.*auto resistance' "no equipment: Auto resistance hidden"
   blink b-head-modern
 fi
+adb shell am force-stop $PKG || true
+peloton p-head-modern true
 adb shell am force-stop $PKG || true
 
 kill $LOGCAT_PID 2>/dev/null || true
