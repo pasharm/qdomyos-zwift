@@ -9968,4 +9968,15 @@ Nainstalovat?</translation>
         <translation>Otevřít e-mail</translation>
     </message>
 </context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Kadence se zdá poloviční oproti skutečné. Zapněte „Zdvojnásobit kadenci při běhu“ a „Poloviční kadence na Stravě“ v části „Možnosti snímače výkonu“.</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Kadence se zdá dvojnásobná oproti skutečné. Vypněte „Zdvojnásobit kadenci při běhu“ a „Poloviční kadence na Stravě“ v části „Možnosti snímače výkonu“.</translation>
+    </message>
+</context>
 </TS>

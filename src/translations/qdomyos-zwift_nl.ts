@@ -9968,4 +9968,15 @@ Installeren?</translation>
         <translation>E-mail openen</translation>
     </message>
 </context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>De cadans lijkt de helft van de werkelijke. Schakel ‘Cadans verdubbelen bij hardlopen’ en ‘Halve cadans naar Strava’ in bij ‘Opties voor vermogenssensor’.</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>De cadans lijkt het dubbele van de werkelijke. Schakel ‘Cadans verdubbelen bij hardlopen’ en ‘Halve cadans naar Strava’ uit bij ‘Opties voor vermogenssensor’.</translation>
+    </message>
+</context>
 </TS>

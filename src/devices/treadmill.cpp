@@ -9,6 +9,7 @@
 #endif
 #include <QSettings>
 #include <cmath>
+#include "homeform.h"
 
 static double gradeAdjustedCost(double gradePercent) {
     const double i = gradePercent / 100.0;
@@ -389,7 +390,73 @@ void treadmill::cadenceSensor(uint8_t cadence) {
     if (Cadence.value() > 0 || cadence > 0) {
         evaluateStepCount();
     }
+    // A running power sensor is a treadmill object too: keep track of whether its cadence came from RSC.
+    treadmill *source = qobject_cast<treadmill *>(sender());
+    if (source && source->cadenceFromRsc()) {
+        rscCadenceReceived(cadence);
+    }
     Cadence.setValue(cadence);
+}
+
+void treadmill::rscCadenceReceived(double cadence) {
+    m_lastRscCadence = cadence;
+    m_lastRscCadenceTime = QDateTime::currentDateTime();
+}
+
+bool treadmill::cadenceFromRsc() {
+    // Another source (FTMS, Apple Watch, Garmin) may have overwritten Cadence after the RSC packet.
+    return m_lastRscCadenceTime.isValid() && m_lastRscCadenceTime.secsTo(QDateTime::currentDateTime()) < 5 &&
+           Cadence.value() == m_lastRscCadence;
+}
+
+void treadmill::checkCadenceAgainstSpeed() {
+    const double speed = Speed.value();     // km/h
+    const double cadence = Cadence.value(); // steps per minute
+    if (m_cadenceHintShown || speed < 2.0 || cadence <= 0) {
+        m_cadenceMismatchSeconds = 0;
+        return;
+    }
+
+    // Usual steps per minute for this speed: walking up to 6.5 km/h, running above.
+    const double usual = speed <= 6.5 ? 80.0 + 6.0 * speed : 150.0 + 2.5 * speed;
+    const bool halved = cadence < usual * 0.65;
+    const bool doubled = cadence > usual * 1.6;
+    if (!halved && !doubled) {
+        m_cadenceMismatchSeconds = 0;
+        return;
+    }
+    m_cadenceMismatchSeconds++;
+    if (m_cadenceMismatchSeconds < 30) {
+        return;
+    }
+    m_cadenceMismatchSeconds = 0;
+
+    QSettings settings;
+    const bool doubling = settings
+                              .value(QZSettings::powr_sensor_running_cadence_double,
+                                     QZSettings::default_powr_sensor_running_cadence_double)
+                              .toBool();
+    const bool fromRsc = cadenceFromRsc();
+    if (!m_cadenceMismatchLogged) {
+        m_cadenceMismatchLogged = true;
+        qDebug() << QStringLiteral("cadence does not match the speed: cadence") << cadence
+                 << QStringLiteral("speed") << speed << QStringLiteral("usual") << usual
+                 << QStringLiteral("fromRsc") << fromRsc << QStringLiteral("doubling") << doubling;
+    }
+
+    // Doubling Cadence for Run changes only the RSC cadence: for other sources the setting would not help.
+    if (!fromRsc || !homeform::singleton()) {
+        return;
+    }
+    if (halved && !doubling) {
+        m_cadenceHintShown = true;
+        homeform::singleton()->setToastRequested(
+            tr("Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options."));
+    } else if (doubled && doubling) {
+        m_cadenceHintShown = true;
+        homeform::singleton()->setToastRequested(
+            tr("Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options."));
+    }
 }
 void treadmill::powerSensor(uint16_t power) {
     double vwatts = 0;

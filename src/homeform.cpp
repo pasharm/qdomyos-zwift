@@ -7387,6 +7387,7 @@ void homeform::update() {
 #endif
 
         if (bluetoothManager->device()->deviceType() == TREADMILL) {
+            ((treadmill *)bluetoothManager->device())->checkCadenceAgainstSpeed();
             double _rss = ((treadmill *)bluetoothManager->device())->runningStressScore();
             odometer->setValue(QString::number(bluetoothManager->device()->odometer() * unit_conversion, 'f', 2));
             if (bluetoothManager->device()->currentSpeed().value()) {

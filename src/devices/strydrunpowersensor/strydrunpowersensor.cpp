@@ -413,6 +413,7 @@ void strydrunpowersensor::characteristicChanged(const QLowEnergyCharacteristic &
         }
 
         Cadence = cadence;
+        rscCadenceReceived(cadence);
         emit cadenceChanged(cadence);
         if (treadmill_from_sensor) {
             Speed = speed;

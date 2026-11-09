@@ -9973,4 +9973,15 @@ Szeretné telepíteni?</translation>
         <translation>E-mail megnyitása</translation>
     </message>
 </context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>A kadencia a valódinak a felének tűnik. Kapcsolja be a „Kadencia duplázása futáshoz” és a „Fél kadencia a Stravában” beállítást a „Teljesítményérzékelő beállításai” részben.</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>A kadencia a valódi kétszeresének tűnik. Kapcsolja ki a „Kadencia duplázása futáshoz” és a „Fél kadencia a Stravában” beállítást a „Teljesítményérzékelő beállításai” részben.</translation>
+    </message>
+</context>
 </TS>

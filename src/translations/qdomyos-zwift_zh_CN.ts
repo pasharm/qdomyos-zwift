@@ -10042,4 +10042,15 @@ Install it?</source>
         <translation>打开邮件</translation>
     </message>
 </context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>踏频似乎只有实际值的一半。请在“功率传感器选项”中开启“跑步踏频加倍”和“Strava 踏频减半”。</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>踏频似乎是实际值的两倍。请在“功率传感器选项”中关闭“跑步踏频加倍”和“Strava 踏频减半”。</translation>
+    </message>
+</context>
 </TS>

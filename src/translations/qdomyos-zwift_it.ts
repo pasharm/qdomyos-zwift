@@ -10005,4 +10005,15 @@ Installarla?</translation>
         <translation>Apri email</translation>
     </message>
 </context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>La cadenza sembra la metà di quella reale. Attiva &apos;Raddoppiare la cadenza per corsa&apos; e &apos;Mezza Cadenza su Strava&apos; in &apos;Opzioni sensore di potenza&apos;.</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>La cadenza sembra il doppio di quella reale. Disattiva &apos;Raddoppiare la cadenza per corsa&apos; e &apos;Mezza Cadenza su Strava&apos; in &apos;Opzioni sensore di potenza&apos;.</translation>
+    </message>
+</context>
 </TS>

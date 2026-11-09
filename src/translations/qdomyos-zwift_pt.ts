@@ -10014,4 +10014,15 @@ Instalar?</translation>
         <translation>Abrir e-mail</translation>
     </message>
 </context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>A cadência parece ser metade da real. Ative &apos;Dobrar a cadência para corrida&apos; e &apos;Metade da cadência no Strava&apos; em &apos;Opções de Sensor de Potência&apos;.</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>A cadência parece ser o dobro da real. Desative &apos;Dobrar a cadência para corrida&apos; e &apos;Metade da cadência no Strava&apos; em &apos;Opções de Sensor de Potência&apos;.</translation>
+    </message>
+</context>
 </TS>

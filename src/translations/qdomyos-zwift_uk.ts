@@ -9977,4 +9977,15 @@ Install it?</source>
         <translation>Відкрити пошту</translation>
     </message>
 </context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Схоже, каденс удвічі менший за справжній. Увімкніть «Подвоєння каденсу для бігу» і «Половинний каденс у Strava» в розділі «Параметри датчика потужності».</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Схоже, каденс удвічі більший за справжній. Вимкніть «Подвоєння каденсу для бігу» і «Половинний каденс у Strava» в розділі «Параметри датчика потужності».</translation>
+    </message>
+</context>
 </TS>

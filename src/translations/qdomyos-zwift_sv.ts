@@ -9973,4 +9973,15 @@ Vill du installera den?</translation>
         <translation>Öppna e-post</translation>
     </message>
 </context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Kadensen verkar vara hälften av den verkliga. Aktivera ”Dubbel kadens för löpning” och ”Halverad kadens på Strava” under ”Alternativ för effektsensor”.</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Kadensen verkar vara dubbelt så hög som den verkliga. Inaktivera ”Dubbel kadens för löpning” och ”Halverad kadens på Strava” under ”Alternativ för effektsensor”.</translation>
+    </message>
+</context>
 </TS>

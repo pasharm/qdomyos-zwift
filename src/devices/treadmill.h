@@ -56,6 +56,11 @@ class treadmill : public bluetoothdevice {
     double runningStressScore();
     QTime speedToPace(double Speed);
     double gradeAdjustedSpeed(double speed, double inclination);
+    // Called once per second: hints the Doubling Cadence for Run setting when the cadence
+    // stays about half (or double) of the usual cadence for the current speed.
+    void checkCadenceAgainstSpeed();
+    // True while the current cadence is the last value received from RSC Measurement.
+    bool cadenceFromRsc();
 
   public slots:
     virtual void changeSpeed(double speed);
@@ -113,10 +118,17 @@ class treadmill : public bluetoothdevice {
     void parseCadence(double cadence);
     bool areInclinationSettingsDefault();
     void evaluateStepCount();
+    // RSC parsers call this after setting Cadence: only there Doubling Cadence for Run applies.
+    void rscCadenceReceived(double cadence);
 
   private:
     bool simulateInclinationWithSpeed();
     bool followPowerBySpeed();
+    double m_lastRscCadence = -1;
+    QDateTime m_lastRscCadenceTime;
+    int m_cadenceMismatchSeconds = 0;
+    bool m_cadenceHintShown = false;
+    bool m_cadenceMismatchLogged = false;
 };
 
 #endif // TREADMILL_H

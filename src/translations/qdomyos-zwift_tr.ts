@@ -9968,4 +9968,15 @@ Yüklensin mi?</translation>
         <translation>E-postayı aç</translation>
     </message>
 </context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Kadans gerçek değerin yarısı gibi görünüyor. “Güç sensörü seçenekleri” bölümünde “Koşuda kadansı ikiye katla” ve “Strava&apos;da yarım kadans” ayarlarını açın.</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Kadans gerçek değerin iki katı gibi görünüyor. “Güç sensörü seçenekleri” bölümünde “Koşuda kadansı ikiye katla” ve “Strava&apos;da yarım kadans” ayarlarını kapatın.</translation>
+    </message>
+</context>
 </TS>

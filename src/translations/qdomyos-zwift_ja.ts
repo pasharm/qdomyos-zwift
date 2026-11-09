@@ -10046,4 +10046,15 @@ Install it?</source>
         <translation>メールを開く</translation>
     </message>
 </context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>ケイデンスが実際の半分のようです。「パワーセンサー設定」で「ランニング時のケイデンス倍増」と「Stravaのケイデンスを半分にする」をオンにしてください。</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>ケイデンスが実際の2倍のようです。「パワーセンサー設定」で「ランニング時のケイデンス倍増」と「Stravaのケイデンスを半分にする」をオフにしてください。</translation>
+    </message>
+</context>
 </TS>

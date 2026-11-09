@@ -9965,4 +9965,15 @@ Zainstalować?</translation>
         <translation>Otwórz e-mail</translation>
     </message>
 </context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Kadencja wydaje się o połowę niższa od rzeczywistej. Włącz „Podwajanie kadencji podczas biegu” i „Połowa kadencji w serwisie Strava” w sekcji „Opcje czujnika mocy”.</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Kadencja wydaje się dwukrotnie wyższa od rzeczywistej. Wyłącz „Podwajanie kadencji podczas biegu” i „Połowa kadencji w serwisie Strava” w sekcji „Opcje czujnika mocy”.</translation>
+    </message>
+</context>
 </TS>

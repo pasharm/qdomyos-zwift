@@ -9205,4 +9205,15 @@ Default: A = -0.96, B = 1.33</source>
         <translation>Άνοιγμα email</translation>
     </message>
 </context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
 </TS>

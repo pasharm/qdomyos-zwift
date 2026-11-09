@@ -10009,4 +10009,15 @@ Installieren?</translation>
         <translation>E-Mail öffnen</translation>
     </message>
 </context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Die Trittfrequenz scheint nur halb so hoch wie die tatsächliche zu sein. Aktivieren Sie „Doppeln der Trittfrequenz beim Laufen“ und „Halbe Trittfrequenz auf Strava“ unter „Leistungssensor-Optionen“.</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Die Trittfrequenz scheint doppelt so hoch wie die tatsächliche zu sein. Deaktivieren Sie „Doppeln der Trittfrequenz beim Laufen“ und „Halbe Trittfrequenz auf Strava“ unter „Leistungssensor-Optionen“.</translation>
+    </message>
+</context>
 </TS>

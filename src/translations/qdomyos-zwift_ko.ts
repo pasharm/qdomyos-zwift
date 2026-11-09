@@ -9965,4 +9965,15 @@ Install it?</source>
         <translation>이메일 열기</translation>
     </message>
 </context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>케이던스가 실제의 절반으로 보입니다. ‘파워 센서 옵션’에서 ‘달리기 케이던스 2배’와 ‘Strava 케이던스 절반’을 켜세요.</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>케이던스가 실제의 2배로 보입니다. ‘파워 센서 옵션’에서 ‘달리기 케이던스 2배’와 ‘Strava 케이던스 절반’을 끄세요.</translation>
+    </message>
+</context>
 </TS>

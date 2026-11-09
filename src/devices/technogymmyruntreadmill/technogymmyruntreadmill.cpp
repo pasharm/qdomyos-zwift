@@ -441,6 +441,7 @@ void technogymmyruntreadmill::characteristicChanged(const QLowEnergyCharacterist
         double cadence = (uint8_t)newValue.at(3) * cadence_multiplier;
 
         Cadence = cadence;
+        rscCadenceReceived(cadence);
         emit cadenceChanged(cadence);
         emit debug(QStringLiteral("Current Cadence: ") + QString::number(cadence));
     }
