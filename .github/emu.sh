@@ -341,17 +341,17 @@ modern_head() {
   adb shell am force-stop $PKG || true
 }
 
-# timing_case <case> <ui_modern>: settings 3 times, tiles 3 times
+# timing_case <case> <ui_modern>: settings and tiles REPS times each
 timing_case() {
   local i
   start_case $1 $2 || return 1
-  for i in 1 2 3; do
+  for i in $(seq 1 $REPS); do
     echo "-- $1 settings $i" >> $STEPLOG
     settings_open && back_to "$HOME_RX"
   done
   settings_open
   scroll_to '^Tiles Options$'
-  for i in 1 2 3; do
+  for i in $(seq 1 $REPS); do
     echo "-- $1 tiles $i" >> $STEPLOG
     tap_ui '^Tiles Options$' '^Speed$' && back_to '^General Options$'
   done
@@ -359,9 +359,13 @@ timing_case() {
 }
 
 if [ "$MODE" = timing ]; then
-  for side in base head; do
-    install_apk apk-$side/android-debug.apk
-    timing_case tc-$side false
+  REPS=7
+  # two rounds base, head, base, head: the order of the runs does not decide
+  for round in 1 2; do
+    for side in base head; do
+      install_apk apk-$side/android-debug.apk
+      timing_case tc-$side-$round false
+    done
   done
   timing_case tm-head true
 else
