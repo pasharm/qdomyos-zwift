@@ -6,7 +6,7 @@
 #            the settings folder (Load settings) and the profiles page - frames compared base against
 #            head afterwards (the classic look must not change). The two list pages give their only
 #            section the rest of the page for a list without a height of its own: the list must show
-#            its files (t498-a, t498-b put there by the run);
+#            its files (made by the app with its Save buttons in the classic case);
 #  m-head:   modern look of the PR: section cards, a nested section, the sticky copy of an open
 #            section header while scrolling, the tiles page with a switch section (Speed) turned by
 #            a tap on its row and back, the two list pages;
@@ -228,6 +228,18 @@ EOF
     echo "!! tap_dot $1: header dot not found below $2" >> $STEPLOG; FAILED=1
   fi
 }
+# close_ok <what>: the confirmation box of a save ("Profile Saved" and the like) closed by its OK
+close_ok() {
+  local xy
+  dump
+  if [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml '^OK$'); then
+    echo "close_ok $1: OK at $xy" >> $STEPLOG
+    adb shell input tap $xy || true
+    sleep 2
+  else
+    echo "close_ok $1: no box" >> $STEPLOG
+  fi
+}
 # checked_of <xml> 'name': the checked attribute of the first node with that content-desc or text
 checked_of() {
   python3 - "$1" "$2" << 'EOF'
@@ -297,6 +309,7 @@ frames_side() {
       adb shell input tap $SAVE || true
       sleep 3
       adb shell ls $DOCS/settings >> $STEPLOG 2>&1 || echo "!! Save settings made no file" >> $STEPLOG
+      close_ok save-settings
       echo "tap Load settings $LOAD" >> $STEPLOG
       adb shell input tap $LOAD || true
       if wait_ui '^Other folders$' 30; then
@@ -304,7 +317,7 @@ frames_side() {
         tap_dot c-$side-5 260
         sleep 2
         shot c-$side-5-settingslist
-        echo "record c-$side-5-settingslist: the list of t498-a, t498-b - compare the frames base/head" >> $STEPLOG
+        echo "record c-$side-5-settingslist: the list of the saved settings - compare the frames base/head" >> $STEPLOG
         back_to '^General Options$'
       else
         echo "!! Load settings: settings folder page not shown" >> $STEPLOG; FAILED=1
@@ -314,10 +327,11 @@ frames_side() {
     if open_drawer '^Profile: .*'; then
       tap_ui '^Profile: .*' '^Profile name$' && { sleep 2
         tap_ui '^Save$' '.*' 2; sleep 3
+        close_ok save-profile
         adb shell ls $DOCS/profiles >> $STEPLOG 2>&1 || echo "!! Save made no profile" >> $STEPLOG
-        dump; shot c-$side-6a-profiles-saved
-        tap_dot c-$side-6 430; sleep 2; shot c-$side-6-profiles
-        echo "record c-$side-6-profiles: the list of t498-a, t498-b - compare the frames base/head" >> $STEPLOG; }
+        # the section of the profiles is open from the start (isOpen: true)
+        shot c-$side-6-profiles
+        echo "record c-$side-6-profiles: the list (default) - compare the frames base/head" >> $STEPLOG; }
       back_to "$HOME_RX"
     fi
   fi
@@ -362,14 +376,13 @@ modern_head() {
       back_to '^General Options$'
       tap_ui '^Load settings$' '^Other folders$' && { sleep 2; shot m-head-8a-settingslist-before
         tap_ui '^Settings folder$' '.*' 3; sleep 2; shot m-head-8-settingslist
-        echo "record m-head-8-settingslist: the list of t498-a, t498-b - by the frame" >> $STEPLOG
+        echo "record m-head-8-settingslist: the list of the saved settings - by the frame" >> $STEPLOG
         back_to '^General Options$'; }
       back_to "$HOME_RX"
     fi
     if open_drawer '^Profile: .*'; then
-      tap_ui '^Profile: .*' '^Profiles$' && { sleep 2; shot m-head-9a-profiles-before
-        tap_ui '^Profiles$' '.*' 3; sleep 2; shot m-head-9-profiles
-        echo "record m-head-9-profiles: the list of t498-a, t498-b - by the frame (9a before the tap)" >> $STEPLOG; }
+      tap_ui '^Profile: .*' '^Profiles$' && { sleep 2; shot m-head-9-profiles
+        echo "record m-head-9-profiles: the list (default) - by the frame; the section is open from the start" >> $STEPLOG; }
       back_to "$HOME_RX"
     fi
   fi
