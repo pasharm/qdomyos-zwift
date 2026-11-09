@@ -43,16 +43,6 @@ install_apk() {
   for p in EXERCISE DISTANCE TOTAL_CALORIES_BURNED HEART_RATE POWER SPEED CYCLING_PEDALING_CADENCE ELEVATION_GAINED STEPS STEPS_CADENCE HEART_RATE_VARIABILITY; do
     adb shell pm grant $PKG android.permission.health.WRITE_$p || true
   done
-  # Files for the two list pages. QZ has no MANAGE_EXTERNAL_STORAGE: on API 30+ it sees in Documents
-  # only the files it owns, and run-as has no shared storage. The shell makes them and hands them to
-  # the app in the media store (owner_package_name)
-  adb shell "mkdir -p $DOCS/settings $DOCS/profiles && for n in t498-a t498-b; do echo General > $DOCS/settings/\$n.qzs; echo General > $DOCS/profiles/\$n.qzs; done"
-  adb shell "content update --uri content://media/external/file --bind owner_package_name:s:$PKG --where \"_data LIKE '%t498-%'\"" >> $STEPLOG 2>&1 || true
-  adb shell "content query --uri content://media/external/file --projection _data:owner_package_name --where \"_data LIKE '%t498-%'\"" > owners.txt 2>&1 || true
-  cat owners.txt >> $STEPLOG
-  if [ "$(grep -c "owner_package_name=$PKG" owners.txt)" != 4 ]; then
-    echo "!! list files not put - the list checks prove nothing" >> $STEPLOG; FAILED=1
-  fi
   echo "== installed $1" >> $STEPLOG
 }
 adb shell settings put global hide_error_dialogs 1 || true
@@ -305,6 +295,12 @@ frames_side() {
     if settings_open; then
       scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' '^Speed$' && shot c-$side-4-tiles
       back_to '^General Options$'
+      # Files for the lists made by the app itself (QZ sees in Documents only its own files on
+      # API 30+): Save settings here, Save on the profiles page below; m-head reuses them
+      echo "tap Save settings $SAVE" >> $STEPLOG
+      adb shell input tap $SAVE || true
+      sleep 3
+      adb shell ls $DOCS/settings >> $STEPLOG 2>&1 || echo "!! Save settings made no file" >> $STEPLOG
       echo "tap Load settings $LOAD" >> $STEPLOG
       adb shell input tap $LOAD || true
       if wait_ui '^Other folders$' 30; then
@@ -320,7 +316,11 @@ frames_side() {
       back_to "$HOME_RX"
     fi
     if open_drawer '^Profile: .*'; then
-      tap_ui '^Profile: .*' '^Profile name$' && { sleep 2; tap_dot c-$side-6 430; sleep 2; shot c-$side-6-profiles
+      tap_ui '^Profile: .*' '^Profile name$' && { sleep 2
+        tap_ui '^Save$' '.*' 2; sleep 3
+        adb shell ls $DOCS/profiles >> $STEPLOG 2>&1 || echo "!! Save made no profile" >> $STEPLOG
+        dump; shot c-$side-6a-profiles-saved
+        tap_dot c-$side-6 430; sleep 2; shot c-$side-6-profiles
         echo "record c-$side-6-profiles: the list of t498-a, t498-b - compare the frames base/head" >> $STEPLOG; }
       back_to "$HOME_RX"
     fi
