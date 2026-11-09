@@ -400,7 +400,8 @@ function process_arr(arr) {
                     max: speed_max,
                     ticks: {
                         stepSize: 1,
-                        autoSkip: false,
+                        // the zone names are no longer axis labels, so Chart.js may skip numbers that would
+                        // overlap on a short chart (every 3rd at 150 dp, every 2nd at 277 dp, all when stretched)
                         color: 'black',
                         callback: value => Math.round(value)
                     }
