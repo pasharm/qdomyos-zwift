@@ -333,7 +333,7 @@ ColumnLayout {
                                     id: fileName
                                     Layout.fillWidth: true
                                     text: !isItemFolder ?
-                                          itemFileName.substring(0, itemFileName.length-4) :
+                                          itemFileName.substring(0, itemFileName.lastIndexOf(".")) :
                                           itemFileName
                                     color: window.ui.modern ? window.ui.textMain
                                          : isItemFolder ? Material.color(Material.Orange)
