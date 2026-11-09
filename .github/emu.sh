@@ -222,16 +222,44 @@ drag_up() { adb shell input swipe 700 1800 700 $((1800 - $1)) 1500 || true; slee
 drag_down() { adb shell input swipe 700 900 700 $((900 + $1)) 1500 || true; sleep 3; }
 to_end() { local i; for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 600 150 || true; done; sleep 4; }
 
-# T-494: the chart under the tiles (a native WebView) drawn over the open drawer. The test build
-# keeps the chart on (homeform turns it off when a program without a target chart loads) and logs
-# "T494 chart footer on". The same steps run on the master build (before) and on the fix (after).
+# T-496, T-497: the treadmill chart under the tiles. The test build (test/t496) has a hook in Home.qml:
+# once the fake treadmill is connected it loads files/t496.xml (a workout with speed rows, so homeform
+# picks the treadmill chart), keeps the chart open and after 20 s stretches it to 3/4 of the page. It
+# logs "T496 hook: ..." at each step. Frames: the pace zone names inside the chart (T-496) and the time
+# labels under the heart chart on the right (T-497), at the first height, stretched, and in miles.
+# The pace settings are the user's phone ones (beta-2110): zones at 10; 10.6; 11.25; 12; 14.4 km/h.
+PACE="pacef_marathon=360 pacef_halfmarathon=340 pacef_10km=320 pacef_5km=300 pacef_1mile=250"
+printf '<rows>\n<row duration="00:05:00" speed="9" inclination="0"/>\n<row duration="00:05:00" speed="11" inclination="0"/>\n</rows>\n' > t496.xml
+adb push t496.xml /data/local/tmp/t496.xml
+adb shell "run-as $PKG cp /data/local/tmp/t496.xml files/t496.xml < /dev/null" || true
+if adb shell "run-as $PKG ls files/t496.xml < /dev/null" | grep -q t496.xml; then
+  echo "workout files/t496.xml in place" >> $STEPLOG
+else
+  echo "!! files/t496.xml NOT in place - the run proves nothing" >> $STEPLOG
+  echo "== steps"; cat $STEPLOG
+  exit 1
+fi
+# wait_hook PATTERN BEFORE: wait (at most 2 min) for more than BEFORE log lines with PATTERN
+wait_hook() {
+  local i n
+  for i in $(seq 1 24); do
+    n=$(grep -ac "T496 hook: $1" full_logcat.txt)
+    if [ "$n" -gt "$2" ]; then
+      echo "hook: $(grep -a "T496 hook: $1" full_logcat.txt | tail -n 1 | sed 's/.*T496/T496/')" >> $STEPLOG
+      return 0
+    fi
+    sleep 5
+  done
+  echo "!! no 'T496 hook: $1' in the log for 2 min - the run proves nothing" >> $STEPLOG
+  return 1
+}
 # chart_ready LABEL: wait until the chart (a WebView) is in the dump; without it the frame proves nothing
 chart_ready() {
   local i
   for i in 1 2 3 4 5 6; do
     dump
     if python3 .github/webtop.py ui.xml > /dev/null 2>&1; then
-      echo "$1: chart on screen, top $(python3 .github/webtop.py ui.xml) (last switch: $(grep -a 'chart footer on' full_logcat.txt | tail -n 1 | sed 's/.*T4/T4/'))" >> $STEPLOG
+      echo "$1: chart on screen, top $(python3 .github/webtop.py ui.xml)" >> $STEPLOG
       return 0
     fi
     sleep 5
@@ -239,55 +267,31 @@ chart_ready() {
   echo "!! $1: no chart (WebView) on screen for 30 s - the frame proves nothing" >> $STEPLOG
   return 1
 }
-# open_drawer LABEL: the menu button at the left of the toolbar (both looks put it there; the dump
-# has no name for it in the classic look), then the frame. A point inside the drawer and inside the
-# chart is compared with the home frame: unchanged means the WebView stayed on top of the drawer
-drawer_steps() {
-  local p="$1" top y
-  chart_ready "$p-home" || return 1
-  top=$(python3 .github/webtop.py ui.xml)
-  shot $p-01-home
-  # the drawer item "Credits" is in the dump only while the drawer is open (dumps of run 41298582156,
-  # T-052: t-10-drawer only); a missed tap is repeated
-  local i opened=no
-  for i in 1 2 3; do
-    echo "$p: menu button at 84 166 (try $i)" >> $STEPLOG
-    adb shell input tap 84 166 || true
-    sleep 3
-    dump
-    if [ -f ui.xml ] && grep -q 'content-desc="Credits"' ui.xml; then opened=yes; break; fi
-  done
-  if [ "$opened" != yes ]; then
-    echo "!! $p: the drawer did not open (no 'Credits' in the dump) - the run proves nothing" >> $STEPLOG
-    return 1
-  fi
-  shot $p-02-drawer-open
-  # x 300: inside the drawer of both looks (classic 66 % of 1440, modern up to 340 dp); y: 150 px into the chart
-  y=$((top + 150))
-  echo "$p: drawer open, $(python3 .github/drawercheck.py $p-01-home.png $p-02-drawer-open.png 300 $y)" >> $STEPLOG
-  # x 1300 is outside the drawer: the chart there is only dimmed (QML) or unchanged (WebView on top)
-  echo "$p: outside the drawer, $(python3 .github/drawercheck.py $p-01-home.png $p-02-drawer-open.png 1300 $y)" >> $STEPLOG
-  # close by a tap outside the drawer, above the chart
-  adb shell input tap 1350 700 || true
-  sleep 3
-  dump
-  if [ -f ui.xml ] && grep -q 'content-desc="Credits"' ui.xml; then
-    echo "!! $p: the drawer is still open after the tap outside it" >> $STEPLOG
-  fi
-  chart_ready "$p-closed"
-  shot $p-03-closed
-  echo "$p: drawer closed, $(python3 .github/drawercheck.py $p-01-home.png $p-03-closed.png 300 $y) - expected yes: the chart is back" >> $STEPLOG
+# chart_steps PREFIX: the frame at the first height (1/4 of the page) and stretched (3/4)
+chart_steps() {
+  local p="$1" shown tall
+  shown=$(grep -ac "T496 hook: chart shown" full_logcat.txt)
+  tall=$(grep -ac "T496 hook: chart tall" full_logcat.txt)
+  wait_hook "chart shown" "$shown" || return 1
+  grep -a "T496 hook: chart shown" full_logcat.txt | tail -n 1 | grep -q "treadmillMode=true" ||
+    echo "!! $p: not the treadmill chart (treadmillMode is not true) - the run proves nothing" >> $STEPLOG
+  chart_ready "$p-first" || return 1
+  # the page draws once the session array comes (about a second); a little more for the WebView
+  sleep 8
+  shot $p-01-chart
+  wait_hook "chart tall" "$tall" || return 1
+  sleep 8
+  chart_ready "$p-tall"
+  shot $p-02-tall
 }
 echo "== API $(adb shell getprop ro.build.version.sdk | tr -d '\r')" >> $STEPLOG
 
-restart_with ui_modern=false
-sleep 5
-step c "classic: home with the chart; the drawer open - before the fix the chart stays over it (chart over drawer: yes), after the fix the drawer covers it (no); closed - the chart is back"
-drawer_steps c
-restart_with ui_modern=true
-sleep 5
-step m "modern (master has none - the same classic look there): the same three frames"
-drawer_steps m
+restart_with $PACE
+step t "km/h: axis numbers only, the names 42K 21K 10K 5K 1 mi small at the right edge above each zone line (T-496); the time labels under the heart chart whole (T-497); stretched - the same names, bigger"
+chart_steps t
+restart_with $PACE miles_unit=true
+step mi "miles: the axis in mph, the same names"
+chart_steps mi
 adb shell pidof $PKG > /dev/null && echo "app alive at the end: OK" >> $STEPLOG || echo "!! app not running at the end" >> $STEPLOG
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
