@@ -227,6 +227,22 @@ to_end() { local i; for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 
 # The handle sits right above the chart (a WebView in the dump): modern 16 dp = 56 px, classic
 # 10 dp = 35 px. A drag either changes the footer height (a new log line) or does not.
 footer_h() { grep -a "T441 footer h" full_logcat.txt | tail -n 1 | sed 's/.*T441 footer h \([0-9]*\).*/\1/'; }
+# chart_ready LABEL: before a frame, wait until the chart (a WebView) is in the dump. homeform
+# turns the footer off when a program without a target chart loads (lesson 2 of T-441); the
+# test hook turns it back on every 2 s. No chart within 30 s - the frame proves nothing
+chart_ready() {
+  local i
+  for i in 1 2 3 4 5 6; do
+    dump
+    if python3 .github/webtop.py ui.xml > /dev/null 2>&1; then
+      echo "$1: chart on screen (last switch: $(grep -a 'T441 chart footer on\|T441 footer visible' full_logcat.txt | tail -n 1 | sed 's/.*T441/T441/'))" >> $STEPLOG
+      return 0
+    fi
+    sleep 5
+  done
+  echo "!! $1: no chart (WebView) on screen for 30 s - the frame proves nothing" >> $STEPLOG
+  return 1
+}
 # drag LABEL X DY_ABOVE_CHART EXPECT(yes|no): press DY px above the top of the chart, pull 500 px up
 drag() {
   local label="$1" x="$2" dy="$3" expect="$4" top h0 h1 y
@@ -259,7 +275,8 @@ echo "== API $(adb shell getprop ro.build.version.sdk | tr -d '\r')" >> $STEPLOG
 
 restart_with ui_modern=true
 sleep 5
-step m-light "modern, light: full-width strip in the page colour, grey pill 48x5 dp in the middle, chart right below"
+step m-light "modern, light: strip 16 dp surfaceHigh with rounded top corners (16 dp) and a soft shadow above, grey pill 48x5 dp in the middle, chart right below"
+chart_ready m-light
 shot m-01-light
 # x 150: left of where the old 1/5-width bar was (576..864 on 1440 px) - only the new strip is there
 drag "modern drag at the left edge" 150 28 yes
@@ -269,13 +286,15 @@ shot m-02-dragged
 adb shell cmd uimode night yes || true
 restart_with ui_modern=true
 sleep 5
-step m-dark "modern, dark: strip in the dark page colour, pill light grey"
+step m-dark "modern, dark: strip surfaceHigh (lighter than the page) with rounded top corners and a shadow above, pill light grey"
+chart_ready m-dark
 shot m-03-dark
 adb shell cmd uimode night no || true
 
 restart_with ui_modern=false
 sleep 5
 step c-light "classic: purple bar 1/5 width with three white lines, as in master"
+chart_ready c-light
 shot c-01-light
 drag "classic drag at the left edge (no handle there)" 150 18 no
 drag "classic drag at the bar" 720 18 yes
