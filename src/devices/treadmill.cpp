@@ -450,10 +450,12 @@ void treadmill::checkCadenceAgainstSpeed() {
     }
     if (halved && !doubling) {
         m_cadenceHintShown = true;
+        qDebug() << QStringLiteral("cadence hint: halved") << cadence << speed;
         homeform::singleton()->setToastRequested(
             tr("Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options."));
     } else if (doubled && doubling) {
         m_cadenceHintShown = true;
+        qDebug() << QStringLiteral("cadence hint: doubled") << cadence << speed;
         homeform::singleton()->setToastRequested(
             tr("Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options."));
     }

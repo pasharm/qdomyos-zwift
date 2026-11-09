@@ -2369,7 +2369,12 @@ void horizontreadmill::characteristicChanged(const QLowEnergyCharacteristic &cha
         }
 
         parseCadence(cadence);
-        rscCadenceReceived(cadence);
+        // parseCadence() discards it when the power sensor cadence is used instead.
+        if (!settings.value(QZSettings::power_sensor_cadence_instead_treadmill,
+                            QZSettings::default_power_sensor_cadence_instead_treadmill)
+                 .toBool()) {
+            rscCadenceReceived(cadence);
+        }
         cadenceAvailable = true;
         emit cadenceChanged(cadence);
         emit debug(QStringLiteral("Current Cadence: ") + QString::number(cadence));
