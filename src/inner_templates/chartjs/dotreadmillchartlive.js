@@ -51,8 +51,8 @@ function isTrueSetting(value) {
 // bike power chart derives its zones from FTP, but for running there's no single "reference value" like
 // FTP -- each race distance gives its own reference pace -- so we use all five, sorted from slowest
 // (marathon) to fastest (1 mile), as the zone boundaries.
-var paceZoneLabels = ['Marathon', 'Half Marathon', '10K', '5K', '1 Mile'];
-var paceZoneLabelKeys = ['chart.paceMarathon', 'chart.paceHalfMarathon', 'chart.pace10k', 'chart.pace5k', 'chart.pace1Mile'];
+// Short race names, drawn inside the chart (paceZoneNames below): the same in km and miles, no translation
+var paceZoneShortNames = ['42K', '21K', '10K', '5K', '1 mi'];
 var paceZones = [8, 10, 11, 12, 14]; // km/h fallback if settings can't be read; overwritten in dochart_init()
 var paceZoneColorsT = ['greyt', 'limegreent', 'goldt', 'oranget', 'darkoranget', 'redt'];
 
@@ -136,7 +136,7 @@ function rebuildTrainingProgramTarget(updateChart) {
     treadmillChart.options.scales.x.max = finalElapsed;
 
     if (paceZones.length > 0 && speed_max < paceZones[paceZones.length - 1]) {
-        // Always show all pace zone bands/labels on the axis, even if the workout
+        // Always show all pace zone bands and names, even if the workout
         // never actually reaches the fastest configured pace.
         speed_max = paceZones[paceZones.length - 1];
     }
@@ -245,7 +245,7 @@ function process_arr(arr) {
     }
 
     if (paceZones.length > 0 && speed_max < paceZones[paceZones.length - 1]) {
-        // Always show all pace zone bands/labels on the axis, even if the workout
+        // Always show all pace zone bands and names, even if the workout
         // never actually reached the fastest configured pace.
         speed_max = paceZones[paceZones.length - 1];
     }
@@ -264,9 +264,43 @@ function process_arr(arr) {
         }
     };
 
+    // Zone names drawn small inside the chart, at the right edge just above each zone boundary, so the
+    // speed axis keeps plain numbers and the chart keeps its width. The live line grows from the left,
+    // so the right edge stays free for most of the workout. The font fits the tightest gap between neighbouring boundaries
+    // (10 px down to 7 px, so a taller chart gets bigger names); a name that would still overlap the
+    // one below is skipped.
+    const paceZoneNames = {
+        id: 'pace_zone_names',
+        afterDatasetsDraw: (chart) => {
+            const scale = chart.scales['y-speed'];
+            const area = chart.chartArea;
+            const ctx = chart.ctx;
+            let minGap = Infinity;
+            for (let i = 1; i < paceZones.length; i++) {
+                minGap = Math.min(minGap, scale.getPixelForValue(paceZones[i - 1]) - scale.getPixelForValue(paceZones[i]));
+            }
+            const size = Math.max(7, Math.min(10, Math.floor(minGap) - 1));
+            ctx.save();
+            ctx.font = 'bold ' + size + 'px sans-serif';
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.55)';
+            ctx.textAlign = 'right';
+            ctx.textBaseline = 'bottom';
+            let lastY = Infinity;
+            for (let i = 0; i < paceZones.length; i++) {
+                const y = scale.getPixelForValue(paceZones[i]);
+                if (y < area.top + size || y > area.bottom || lastY - y < size + 1) {
+                    continue;
+                }
+                ctx.fillText(paceZoneShortNames[i], area.right - 3, y - 1);
+                lastY = y;
+            }
+            ctx.restore();
+        }
+    };
+
     let config = {
         type: 'line',
-        plugins: [backgroundFill],
+        plugins: [backgroundFill, paceZoneNames],
         data: {
             // Target datasets are listed first and actual datasets last: Chart.js paints datasets
             // in array order, so the actual (solid, zone-colored) lines are always drawn on top of
@@ -368,10 +402,7 @@ function process_arr(arr) {
                         stepSize: 1,
                         autoSkip: false,
                         color: 'black',
-                        callback: value => {
-                            const i = paceZones.findIndex(z => Math.abs(z - value) < 0.5);
-                            return i === -1 ? Math.round(value) : `${Math.round(value)} (${t(paceZoneLabelKeys[i], paceZoneLabels[i])})`;
-                        }
+                        callback: value => Math.round(value)
                     }
                 },
                 'y-incline': {
