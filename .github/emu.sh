@@ -239,13 +239,19 @@ else
   echo "== steps"; cat $STEPLOG
   exit 1
 fi
-# wait_hook PATTERN BEFORE: wait (at most 2 min) for more than BEFORE log lines with PATTERN
+# hook_lines PATTERN: the hook lines of the running app (logcat -d of its pid; the background recording
+# of full_logcat.txt broke off on API 35 in run 42696624480 and every wait there ran out)
+hook_lines() {
+  local pid
+  pid=$(adb shell pidof -s $PKG | tr -d '\r')
+  [ -n "$pid" ] && adb logcat -d --pid="$pid" | grep -a "T496 hook: $1"
+}
+# wait_hook PATTERN: wait (at most 2 min) for a hook line of the running app with PATTERN
 wait_hook() {
-  local i n
+  local i
   for i in $(seq 1 24); do
-    n=$(grep -ac "T496 hook: $1" full_logcat.txt)
-    if [ "$n" -gt "$2" ]; then
-      echo "hook: $(grep -a "T496 hook: $1" full_logcat.txt | tail -n 1 | sed 's/.*T496/T496/')" >> $STEPLOG
+    if hook_lines "$1" > hook.txt && [ -s hook.txt ]; then
+      echo "hook: $(tail -n 1 hook.txt | sed 's/.*T496/T496/')" >> $STEPLOG
       return 0
     fi
     sleep 5
@@ -269,17 +275,15 @@ chart_ready() {
 }
 # chart_steps PREFIX: the frame at the first height (1/4 of the page) and stretched (3/4)
 chart_steps() {
-  local p="$1" shown tall
-  shown=$(grep -ac "T496 hook: chart shown" full_logcat.txt)
-  tall=$(grep -ac "T496 hook: chart tall" full_logcat.txt)
-  wait_hook "chart shown" "$shown" || return 1
-  grep -a "T496 hook: chart shown" full_logcat.txt | tail -n 1 | grep -q "treadmillMode=true" ||
+  local p="$1"
+  wait_hook "chart shown" || return 1
+  grep -q "treadmillMode=true" hook.txt ||
     echo "!! $p: not the treadmill chart (treadmillMode is not true) - the run proves nothing" >> $STEPLOG
   chart_ready "$p-first" || return 1
   # the page draws once the session array comes (about a second); a little more for the WebView
   sleep 8
   shot $p-01-chart
-  wait_hook "chart tall" "$tall" || return 1
+  wait_hook "chart tall" || return 1
   sleep 8
   chart_ready "$p-tall"
   shot $p-02-tall
