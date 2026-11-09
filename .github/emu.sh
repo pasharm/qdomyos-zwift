@@ -247,9 +247,20 @@ drawer_steps() {
   chart_ready "$p-home" || return 1
   top=$(python3 .github/webtop.py ui.xml)
   shot $p-01-home
-  echo "$p: menu button at 84 166" >> $STEPLOG
-  adb shell input tap 84 166 || true
-  sleep 3
+  # the drawer item "Credits" is in the dump only while the drawer is open (dumps of run 41298582156,
+  # T-052: t-10-drawer only); a missed tap is repeated
+  local i opened=no
+  for i in 1 2 3; do
+    echo "$p: menu button at 84 166 (try $i)" >> $STEPLOG
+    adb shell input tap 84 166 || true
+    sleep 3
+    dump
+    if [ -f ui.xml ] && grep -q 'content-desc="Credits"' ui.xml; then opened=yes; break; fi
+  done
+  if [ "$opened" != yes ]; then
+    echo "!! $p: the drawer did not open (no 'Credits' in the dump) - the run proves nothing" >> $STEPLOG
+    return 1
+  fi
   shot $p-02-drawer-open
   # x 300: inside the drawer of both looks (classic 66 % of 1440, modern up to 340 dp); y: 150 px into the chart
   y=$((top + 150))
@@ -259,6 +270,10 @@ drawer_steps() {
   # close by a tap outside the drawer, above the chart
   adb shell input tap 1350 700 || true
   sleep 3
+  dump
+  if [ -f ui.xml ] && grep -q 'content-desc="Credits"' ui.xml; then
+    echo "!! $p: the drawer is still open after the tap outside it" >> $STEPLOG
+  fi
   chart_ready "$p-closed"
   shot $p-03-closed
   echo "$p: drawer closed, $(python3 .github/drawercheck.py $p-01-home.png $p-03-closed.png 300 $y) - expected yes: the chart is back" >> $STEPLOG
