@@ -1094,20 +1094,42 @@ HomeForm {
         property real minHeight: parent.height / 4
         property real maxHeight: parent.height * 3 / 4
         anchors.bottom: parent.bottom
-        clip: true
+        // Modern look: the shadow of the strip falls above the footer, so the chart and the
+        // video clip themselves instead
+        clip: !window.ui.modern
         visible: rootItem.chartFooterVisible || rootItem.videoVisible
 
-        // Modern look: a full-width strip in the page colour with a pill in the middle (T-441) –
-        // the whole strip is the touch area, the chart below loses only 6 px of height.
-        // Classic: the purple bar with three lines, as in master
+        // Modern look: the strip is the top of a bottom sheet holding the chart (T-441) –
+        // surfaceHigh with rounded top corners and a soft shadow above, a pill in the middle;
+        // the whole strip is the touch area. Classic: the purple bar with three lines, as in master
         Rectangle {
             id: dragHandle
             width: window.ui.modern ? parent.width : parent.width / 5
             height: window.ui.modern ? 16 : 10
-            color: window.ui.modern ? window.ui.bg : "#9C27B0"
+            color: window.ui.modern ? "transparent" : "#9C27B0"
             anchors.top: parent.top
             anchors.horizontalCenter: parent.horizontalCenter
             visible: rootItem.chartFooterVisible || rootItem.videoVisible
+
+            // Rounded at the top only: the lower corners reach under the chart, which covers them
+            Rectangle {
+                visible: window.ui.modern
+                anchors.top: parent.top
+                anchors.left: parent.left
+                anchors.right: parent.right
+                height: parent.height + radius
+                radius: 16
+                color: window.ui.surfaceHigh
+                layer.enabled: visible
+                layer.effect: DropShadow {
+                    transparentBorder: true
+                    horizontalOffset: 0
+                    verticalOffset: -1
+                    radius: 6
+                    samples: 13
+                    color: Qt.rgba(0, 0, 0, window.ui.dark ? 0.45 : 0.10)
+                }
+            }
 
             Rectangle {
                 visible: window.ui.modern
@@ -1160,6 +1182,7 @@ HomeForm {
         Rectangle {
             id: chartFooterRectangle
             visible: rootItem.chartFooterVisible
+            clip: window.ui.modern
             anchors.top: dragHandle.bottom
             anchors.left: parent.left
             anchors.right: parent.right
@@ -1173,6 +1196,7 @@ HomeForm {
         Rectangle {
             objectName: "footerrectangle"
             visible: rootItem.videoVisible
+            clip: window.ui.modern
             anchors.top: dragHandle.bottom
             anchors.left: parent.left
             anchors.right: parent.right
