@@ -4547,6 +4547,10 @@ Hayır: QZ cihazı koşu bandı olarak tutar ve bir daha sormaz (bisiklet yine e
         <translation>Harita</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Grafik</translation>
     </message>

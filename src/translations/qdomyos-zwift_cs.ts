@@ -4547,6 +4547,10 @@ Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nasta
         <translation>Mapa</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Graf</translation>
     </message>

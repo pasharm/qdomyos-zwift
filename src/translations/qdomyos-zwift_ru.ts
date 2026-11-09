@@ -4547,6 +4547,10 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>Карта</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Видео</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>График</translation>
     </message>

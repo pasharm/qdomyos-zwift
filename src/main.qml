@@ -1877,6 +1877,7 @@ ApplicationWindow {
                 }
             }
             id: toolButtonVideo
+            Accessible.name: window.ui.modern ? qsTr("Video") : text
             icon.source: window.ui.modern ? "" : ( "icons/icons/video.png" )
             UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "videocam"; color: window.ui.textMain; visible: window.ui.modern }
             onClicked: { loadVideo(); }

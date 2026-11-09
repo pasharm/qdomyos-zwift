@@ -4547,6 +4547,10 @@ Nej: QZ beholder den som løbebånd og spørger ikke igen (en cykel kan stadig a
         <translation>Kort</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Graf</translation>
     </message>

@@ -4521,6 +4521,10 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>Mapa</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Vídeo</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Gráfico</translation>
     </message>

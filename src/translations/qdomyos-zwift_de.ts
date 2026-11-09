@@ -4521,6 +4521,10 @@ Möchten Sie für diese Sitzung zur klassischen Bluetooth-Brücke wechseln?</tra
         <translation>Karte</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Diagramm</translation>
     </message>

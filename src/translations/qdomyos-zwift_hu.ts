@@ -4543,6 +4543,10 @@ Nem: a QZ futópadként kezeli tovább, és többé nem kérdez rá (a kerékpá
         <translation>Térkép</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Videó</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Diagram</translation>
     </message>

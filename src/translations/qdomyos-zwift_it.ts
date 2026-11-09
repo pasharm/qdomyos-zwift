@@ -4517,6 +4517,10 @@ Vuoi passare al bridge Bluetooth classico per questa sessione?</translation>
         <translation>Mappa</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Grafico</translation>
     </message>

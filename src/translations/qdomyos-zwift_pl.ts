@@ -4544,6 +4544,10 @@ Nie: QZ pozostawi je jako bieżnię i nie zapyta ponownie (rower można nadal us
         <translation>Mapa</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Wideo</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Wykres</translation>
     </message>

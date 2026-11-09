@@ -4518,6 +4518,10 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>地図</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>動画</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>グラフ</translation>
     </message>
