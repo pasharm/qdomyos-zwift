@@ -4449,6 +4449,18 @@ Rozpocząć go teraz?</translation>
         <translation>Jesteś już połączony z serwisem Intervals.icu. Wylogować się?</translation>
     </message>
     <message>
+        <source>Back</source>
+        <translation>Wstecz</translation>
+    </message>
+    <message>
+        <source>Main menu</source>
+        <translation>Menu główne</translation>
+    </message>
+    <message>
+        <source>Floating window</source>
+        <translation>Okno pływające</translation>
+    </message>
+    <message>
         <source>You can move the tiles!</source>
         <translation>Możesz przesuwać kafelki!</translation>
     </message>
@@ -4457,12 +4469,44 @@ Rozpocząć go teraz?</translation>
         <translation>Kafelki są teraz zablokowane</translation>
     </message>
     <message>
+        <source>Load settings</source>
+        <translation>Wczytaj ustawienia</translation>
+    </message>
+    <message>
         <source>Search settings</source>
         <translation>Szukaj w ustawieniach</translation>
     </message>
     <message>
+        <source>Save settings</source>
+        <translation>Zapisz ustawienia</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>Mapa</translation>
+    </message>
+    <message>
+        <source>Chart</source>
+        <translation>Wykres</translation>
+    </message>
+    <message>
         <source>Share FIT file</source>
         <translation>Udostępnij plik FIT</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Zablokuj kafelki</translation>
+    </message>
+    <message>
+        <source>Unlock tiles</source>
+        <translation>Odblokuj kafelki</translation>
+    </message>
+    <message>
+        <source>Disable auto resistance</source>
+        <translation>Wyłącz automatyczny opór</translation>
+    </message>
+    <message>
+        <source>Enable auto resistance</source>
+        <translation>Włącz automatyczny opór</translation>
     </message>
     <message>
         <source>Profile: </source>
@@ -4669,6 +4713,34 @@ Nie: QZ pozostawi je jako bieżnię i nie zapyta ponownie (rower można nadal us
     <message>
         <source>Auto Resistance disabled</source>
         <translation>Automatyczny opór wyłączony</translation>
+    </message>
+    <message>
+        <source>Disconnect from Strava</source>
+        <translation>Rozłącz z serwisem Strava</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>Połącz z serwisem Strava</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>Rozłącz z serwisem Peloton</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>Połącz z serwisem Peloton</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Ustawienia Garmin Connect</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>Rozłącz z serwisem Intervals.icu</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>Połącz z serwisem Intervals.icu</translation>
     </message>
     <message>
         <source>Workout</source>
@@ -6021,6 +6093,22 @@ Nie: QZ pozostawi je jako bieżnię i nie zapyta ponownie (rower można nadal us
         <translation>Prędkość transmisji (bod):</translation>
     </message>
     <message>
+        <source>Daum Bike Options</source>
+        <translation>Opcje roweru Daum</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>Port szeregowy używany przez klasyczne ergometry Daum, np. 8008 TRS 3. W systemie Android z adapterem USB–szeregowym użyj &apos;usb&apos;. COM1, COM2 itd. są akceptowane w Androidzie jako aliasy wyszukiwania adaptera USB, ale nie są nazwami portów Androida. W Windows użyj COM1 lub COM3; w Linux/macOS ścieżki do urządzenia szeregowego, np. /dev/ttyUSB0.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Opóźnienie odpytywania oporu:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>Używa ustawienia opóźnienia nachylenia, aby ograniczyć częstotliwość wysyłania aktualizacji oporu i mocy do Daum. Domyślnie: 0 sekund.</translation>
+    </message>
+    <message>
         <source>Freebeat Bike Options</source>
         <translation>Opcje roweru Freebeat</translation>
     </message>
@@ -7094,6 +7182,14 @@ Wprowadź go poniżej:</translation>
     <message>
         <source>Speed</source>
         <translation>Prędkość</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Filtr nachylenia (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>W treningach GPX ignoruje zmiany nachylenia mniejsze niż ta wartość, a nowe polecenie wysyła dopiero wtedy, gdy różnica względem ostatnio wysłanej wartości osiągnie ustawiony próg. Domyślnie: 0 (wyłączony).</translation>
     </message>
     <message>
         <source>Echelon Options</source>

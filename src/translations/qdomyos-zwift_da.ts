@@ -4541,6 +4541,18 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
 Nej: QZ beholder den som løbebånd og spørger ikke igen (en cykel kan stadig angives manuelt: "Fit Plus-cykel" under "Indstillinger for Fitplus-cykel").</translation>
     </message>
     <message>
+        <source>Back</source>
+        <translation>Tilbage</translation>
+    </message>
+    <message>
+        <source>Main menu</source>
+        <translation>Hovedmenu</translation>
+    </message>
+    <message>
+        <source>Floating window</source>
+        <translation>Flydende vindue</translation>
+    </message>
+    <message>
         <source>Auto Resistance enabled</source>
         <translation>Automatisk modstand er aktiveret</translation>
     </message>
@@ -4557,12 +4569,44 @@ Nej: QZ beholder den som løbebånd og spørger ikke igen (en cykel kan stadig a
         <translation>Felterne er nu låst</translation>
     </message>
     <message>
+        <source>Load settings</source>
+        <translation>Indlæs indstillinger</translation>
+    </message>
+    <message>
         <source>Search settings</source>
         <translation>Søg i indstillinger</translation>
     </message>
     <message>
+        <source>Save settings</source>
+        <translation>Gem indstillinger</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>Kort</translation>
+    </message>
+    <message>
+        <source>Chart</source>
+        <translation>Graf</translation>
+    </message>
+    <message>
         <source>Share FIT file</source>
         <translation>Del FIT-fil</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Lås felterne</translation>
+    </message>
+    <message>
+        <source>Unlock tiles</source>
+        <translation>Lås felterne op</translation>
+    </message>
+    <message>
+        <source>Disable auto resistance</source>
+        <translation>Deaktiver automatisk modstand</translation>
+    </message>
+    <message>
+        <source>Enable auto resistance</source>
+        <translation>Aktivér automatisk modstand</translation>
     </message>
     <message>
         <source>Profile: </source>
@@ -4623,6 +4667,34 @@ Nej: QZ beholder den som løbebånd og spørger ikke igen (en cykel kan stadig a
     <message>
         <source>Quit</source>
         <translation>Afslut</translation>
+    </message>
+    <message>
+        <source>Disconnect from Strava</source>
+        <translation>Afbryd forbindelsen til Strava</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>Opret forbindelse til Strava</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>Afbryd forbindelsen til Peloton</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>Opret forbindelse til Peloton</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Indstillinger for Garmin Connect</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>Afbryd forbindelsen til Intervals.icu</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>Opret forbindelse til Intervals.icu</translation>
     </message>
     <message>
         <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
@@ -6021,6 +6093,22 @@ Giv adgang til QZ-mappen i det næste vindue.</translation>
         <translation>Baudhastighed:</translation>
     </message>
     <message>
+        <source>Daum Bike Options</source>
+        <translation>Indstillinger for Daum-cykel</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>Seriel port til klassiske Daum-ergometre såsom 8008 TRS 3. På Android med en USB-til-seriel-adapter skal du bruge &apos;usb&apos;. COM1, COM2 osv. accepteres på Android som aliaser for søgning efter USB-adapteren, men er ikke Android-portnavne. På Windows bruges COM1 eller COM3; på Linux/macOS bruges stien til den serielle enhed, f.eks. /dev/ttyUSB0.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Forsinkelse mellem modstandsforespørgsler:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>Bruger indstillingen Forsinkelse for hældning til at begrænse, hvor ofte QZ sender opdateringer om modstand og effekt til Daum. Standard: 0 sekunder.</translation>
+    </message>
+    <message>
         <source>Freebeat Bike Options</source>
         <translation>Indstillinger for Freebeat-cykel</translation>
     </message>
@@ -7214,6 +7302,14 @@ Indtast den herunder:</translation>
     <message>
         <source>RunnerT Options</source>
         <translation>RunnerT-indstillinger</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Filter for hældning (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>Ved GPX-træning ignoreres ændringer i hældning under denne værdi, og en ny kommando sendes først, når forskellen fra den sidst sendte værdi når den angivne grænse. Standard: 0 (deaktiveret).</translation>
     </message>
     <message>
         <source>Domyos Treadmill Options</source>

@@ -4537,6 +4537,18 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
 Nem: a QZ futópadként kezeli tovább, és többé nem kérdez rá (a kerékpár kézzel továbbra is beállítható: „Fit Plus kerékpár” a Fitplus-kerékpár beállításai között).</translation>
     </message>
     <message>
+        <source>Back</source>
+        <translation>Vissza</translation>
+    </message>
+    <message>
+        <source>Main menu</source>
+        <translation>Főmenü</translation>
+    </message>
+    <message>
+        <source>Floating window</source>
+        <translation>Lebegő ablak</translation>
+    </message>
+    <message>
         <source>Auto Resistance enabled</source>
         <translation>Automatikus ellenállás bekapcsolva</translation>
     </message>
@@ -4553,12 +4565,44 @@ Nem: a QZ futópadként kezeli tovább, és többé nem kérdez rá (a kerékpá
         <translation>A csempék rögzítve vannak.</translation>
     </message>
     <message>
+        <source>Load settings</source>
+        <translation>Beállítások betöltése</translation>
+    </message>
+    <message>
         <source>Search settings</source>
         <translation>Keresés a beállításokban</translation>
     </message>
     <message>
+        <source>Save settings</source>
+        <translation>Beállítások mentése</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>Térkép</translation>
+    </message>
+    <message>
+        <source>Chart</source>
+        <translation>Diagram</translation>
+    </message>
+    <message>
         <source>Share FIT file</source>
         <translation>FIT-fájl megosztása</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Csempék rögzítése</translation>
+    </message>
+    <message>
+        <source>Unlock tiles</source>
+        <translation>Csempék feloldása</translation>
+    </message>
+    <message>
+        <source>Disable auto resistance</source>
+        <translation>Automatikus ellenállás kikapcsolása</translation>
+    </message>
+    <message>
+        <source>Enable auto resistance</source>
+        <translation>Automatikus ellenállás bekapcsolása</translation>
     </message>
     <message>
         <source>Profile: </source>
@@ -4619,6 +4663,34 @@ Nem: a QZ futópadként kezeli tovább, és többé nem kérdez rá (a kerékpá
     <message>
         <source>Quit</source>
         <translation>Kilépés</translation>
+    </message>
+    <message>
+        <source>Disconnect from Strava</source>
+        <translation>Strava leválasztása</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>Csatlakozás a Stravához</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>Peloton leválasztása</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>Csatlakozás a Pelotonhoz</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Garmin Connect-beállítások</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>Intervals.icu leválasztása</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>Csatlakozás az Intervals.icu szolgáltatáshoz</translation>
     </message>
     <message>
         <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
@@ -6017,6 +6089,22 @@ A következő ablakban engedélyezze a hozzáférést a QZ-mappához.</translati
         <translation>Adatátviteli sebesség (baud):</translation>
     </message>
     <message>
+        <source>Daum Bike Options</source>
+        <translation>Daum kerékpár beállításai</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>A klasszikus Daum ergométerekhez (pl. 8008 TRS 3) használt soros port. Androidon USB–soros adapterrel az &apos;usb&apos; értéket használja. A COM1, COM2 stb. Androidon az USB-adapter keresésének álnevei, nem valódi Android-portnevek. Windowson COM1 vagy COM3; Linux/macOS rendszeren a soros eszköz útvonala használható, pl. /dev/ttyUSB0.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Ellenállás-lekérdezés késleltetése:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>A Dőlésszög késleltetése beállítással korlátozza, milyen gyakran küld a QZ ellenállás- és teljesítményfrissítéseket a Daum eszköznek. Alapértelmezés: 0 másodperc.</translation>
+    </message>
+    <message>
         <source>Freebeat Bike Options</source>
         <translation>Freebeat-kerékpár beállításai</translation>
     </message>
@@ -7210,6 +7298,14 @@ Please enter it below:</source>
     <message>
         <source>RunnerT Options</source>
         <translation>RunnerT beállításai</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Dőlésszögszűrő (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>GPX-edzéseknél az ennél kisebb dőlésszög-változásokat figyelmen kívül hagyja. Új parancsot csak akkor küld, ha az utoljára küldött értékhez képest a változás eléri a megadott küszöböt. Alapértelmezés: 0 (kikapcsolva).</translation>
     </message>
     <message>
         <source>Domyos Treadmill Options</source>

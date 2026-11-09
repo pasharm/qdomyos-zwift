@@ -1479,7 +1479,7 @@ QZの設定を更新しますか?</translation>
     <name>UiMessageDialog</name>
     <message>
         <source>OK</source>
-        <translation>普通</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -4512,6 +4512,18 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>Intervals.icuにすでに接続されています。ログアウトしますか？</translation>
     </message>
     <message>
+        <source>Back</source>
+        <translation>戻る</translation>
+    </message>
+    <message>
+        <source>Main menu</source>
+        <translation>メインメニュー</translation>
+    </message>
+    <message>
+        <source>Floating window</source>
+        <translation>フローティングウィンドウ</translation>
+    </message>
+    <message>
         <source>Auto Resistance enabled</source>
         <translation>自動負荷調整を有効にしました</translation>
     </message>
@@ -4528,12 +4540,44 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>タイルはロックされています</translation>
     </message>
     <message>
+        <source>Load settings</source>
+        <translation>設定を読み込む</translation>
+    </message>
+    <message>
         <source>Search settings</source>
         <translation>設定を検索</translation>
     </message>
     <message>
+        <source>Save settings</source>
+        <translation>設定を保存</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>地図</translation>
+    </message>
+    <message>
+        <source>Chart</source>
+        <translation>グラフ</translation>
+    </message>
+    <message>
         <source>Share FIT file</source>
         <translation>FITファイルを共有</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>タイルをロック</translation>
+    </message>
+    <message>
+        <source>Unlock tiles</source>
+        <translation>タイルのロックを解除</translation>
+    </message>
+    <message>
+        <source>Disable auto resistance</source>
+        <translation>自動負荷調整を無効にする</translation>
+    </message>
+    <message>
+        <source>Enable auto resistance</source>
+        <translation>自動負荷調整を有効にする</translation>
     </message>
     <message>
         <source>Profile: </source>
@@ -4664,6 +4708,34 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <source>Please choose a file</source>
         <translation>ファイルを選択してください</translation>
+    </message>
+    <message>
+        <source>Disconnect from Strava</source>
+        <translation>Stravaとの接続を解除</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>Stravaに接続</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>Pelotonとの接続を解除</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>Pelotonに接続</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Garmin Connectの設定</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>Intervals.icuとの接続を解除</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>Intervals.icuに接続</translation>
     </message>
     <message>
         <source>Workout</source>
@@ -5680,6 +5752,22 @@ In the next window, allow access to the QZ folder.</source>
     <message>
         <source>Baudrate:</source>
         <translation>ボーレート（通信速度設定）:</translation>
+    </message>
+    <message>
+        <source>Daum Bike Options</source>
+        <translation>Daum バイクのオプション</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>8008 TRS 3 などの従来型 Daum エルゴメーターで使用するシリアルポートです。Android で USB-シリアル変換アダプターを使用する場合は &apos;usb&apos; を指定してください。COM1、COM2 などは Android で USB アダプター検索用の別名として使用できますが、Android のポート名ではありません。Windows では COM1 または COM3、Linux/macOS では /dev/ttyUSB0 などのシリアルデバイスのパスを指定してください。</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>負荷のポーリング間隔:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>「傾斜の遅延」設定を使い、QZ から Daum へ負荷とパワーの更新を送る頻度を制限します。初期値: 0 秒。</translation>
     </message>
     <message>
         <source>Freebeat Bike Options</source>
@@ -6830,6 +6918,14 @@ Please enter it below:</source>
     <message>
         <source>Incline max.:</source>
         <translation>最高傾斜：</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>傾斜フィルター (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>GPX ワークアウトでは、この値より小さい傾斜の変化を無視します。最後に送信した値との差が設定したしきい値に達した場合のみ、新しい傾斜コマンドを送信します。初期値: 0（無効）。</translation>
     </message>
     <message>
         <source>Resistance min.:</source>

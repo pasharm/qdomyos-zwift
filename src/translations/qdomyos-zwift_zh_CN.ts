@@ -1479,7 +1479,7 @@ Do you want to update QZ settings?</source>
     <name>UiMessageDialog</name>
     <message>
         <source>OK</source>
-        <translation>一般</translation>
+        <translation>确定</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -4516,6 +4516,18 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>您已连接到 Intervals.icu。是否要登出？</translation>
     </message>
     <message>
+        <source>Back</source>
+        <translation>返回</translation>
+    </message>
+    <message>
+        <source>Main menu</source>
+        <translation>主菜单</translation>
+    </message>
+    <message>
+        <source>Floating window</source>
+        <translation>浮动窗口</translation>
+    </message>
+    <message>
         <source>Auto Resistance enabled</source>
         <translation>自动阻力已启用</translation>
     </message>
@@ -4532,12 +4544,44 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>卡片已锁定</translation>
     </message>
     <message>
+        <source>Load settings</source>
+        <translation>加载设置</translation>
+    </message>
+    <message>
         <source>Search settings</source>
         <translation>搜索设置</translation>
     </message>
     <message>
+        <source>Save settings</source>
+        <translation>保存设置</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>地图</translation>
+    </message>
+    <message>
+        <source>Chart</source>
+        <translation>图表</translation>
+    </message>
+    <message>
         <source>Share FIT file</source>
         <translation>分享 FIT 文件</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>锁定卡片</translation>
+    </message>
+    <message>
+        <source>Unlock tiles</source>
+        <translation>解锁卡片</translation>
+    </message>
+    <message>
+        <source>Disable auto resistance</source>
+        <translation>禁用自动阻力</translation>
+    </message>
+    <message>
+        <source>Enable auto resistance</source>
+        <translation>启用自动阻力</translation>
     </message>
     <message>
         <source>Profile: </source>
@@ -4668,6 +4712,34 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <source>Please choose a file</source>
         <translation>请选择文件</translation>
+    </message>
+    <message>
+        <source>Disconnect from Strava</source>
+        <translation>断开与 Strava 的连接</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>连接到 Strava</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>断开与 Peloton 的连接</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>连接到 Peloton</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Garmin Connect 设置</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>断开与 Intervals.icu 的连接</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>连接到 Intervals.icu</translation>
     </message>
     <message>
         <source>Workout</source>
@@ -5698,6 +5770,22 @@ In the next window, allow access to the QZ folder.</source>
         <translation>波特率:</translation>
     </message>
     <message>
+        <source>Daum Bike Options</source>
+        <translation>Daum 单车选项</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>用于 8008 TRS 3 等经典 Daum 功率车的串口。Android 使用 USB 转串口适配器时请输入 &apos;usb&apos;。Android 也接受 COM1、COM2 等作为搜索 USB 适配器的别名，但它们并非 Android 的串口名称。Windows 使用 COM1 或 COM3；Linux/macOS 使用串口设备路径，例如 /dev/ttyUSB0。</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>阻力轮询延迟：</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>使用“坡度延迟”设置限制 QZ 向 Daum 发送阻力和功率更新的频率。默认：0 秒。</translation>
+    </message>
+    <message>
         <source>Freebeat Bike Options</source>
         <translation>Freebeat 单车选项</translation>
     </message>
@@ -6008,6 +6096,14 @@ In the next window, allow access to the QZ folder.</source>
     <message>
         <source>Increases the resistance that QZ displays in the Peloton Resistance tile. If QZ’s calculated conversion from your bike’s resistance scale to Peloton’s seems too low, the number you enter here will be added to the calculated resistance without increasing your effort or actual resistance. (Example: If QZ displays Peloton resistance of 30 and you enter 5, QZ will display 35.)</source>
         <translation>增加 QZ 在 Peloton 阻力卡片中显示的阻力。如果 QZ 计算的从您的自行车阻力刻度到 Peloton 的转换值过低，您在此处输入的数字将加到计算出的阻力上，而不会增加您的努力程度或实际阻力。（示例：如果 QZ 显示 Peloton 阻力为 30，您输入 5，QZ 将显示 35。）</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>坡度过滤阈值（%）：</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>在 GPX 训练中，忽略小于此值的坡度变化。只有与上次发送的数值之差达到设置的阈值时，才发送新的坡度指令。默认：0（禁用）。</translation>
     </message>
     <message>
         <source>Life Fitness Options</source>

@@ -1479,7 +1479,7 @@ Voulez-vous mettre à jour les paramètres de QZ ?</translation>
     <name>UiMessageDialog</name>
     <message>
         <source>OK</source>
-        <translation>Correct</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <source>Yes</source>
@@ -4515,6 +4515,18 @@ Voulez-vous passer à l&apos;appareil Bluetooth virtuel classique pour cette ses
         <translation>Vous êtes déjà connecté à Intervals.icu. Voulez-vous vous déconnecter ?</translation>
     </message>
     <message>
+        <source>Back</source>
+        <translation>Retour</translation>
+    </message>
+    <message>
+        <source>Main menu</source>
+        <translation>Menu principal</translation>
+    </message>
+    <message>
+        <source>Floating window</source>
+        <translation>Fenêtre flottante</translation>
+    </message>
+    <message>
         <source>Auto Resistance enabled</source>
         <translation>Résistance auto activée</translation>
     </message>
@@ -4531,12 +4543,44 @@ Voulez-vous passer à l&apos;appareil Bluetooth virtuel classique pour cette ses
         <translation>Les tuiles sont verrouillées maintenant</translation>
     </message>
     <message>
+        <source>Load settings</source>
+        <translation>Charger les paramètres</translation>
+    </message>
+    <message>
         <source>Search settings</source>
         <translation>Rechercher les paramètres</translation>
     </message>
     <message>
+        <source>Save settings</source>
+        <translation>Enregistrer les paramètres</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>Carte</translation>
+    </message>
+    <message>
+        <source>Chart</source>
+        <translation>Graphique</translation>
+    </message>
+    <message>
         <source>Share FIT file</source>
         <translation>Partager le fichier FIT</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Verrouiller les tuiles</translation>
+    </message>
+    <message>
+        <source>Unlock tiles</source>
+        <translation>Déverrouiller les tuiles</translation>
+    </message>
+    <message>
+        <source>Disable auto resistance</source>
+        <translation>Désactiver la résistance auto</translation>
+    </message>
+    <message>
+        <source>Enable auto resistance</source>
+        <translation>Activer la résistance auto</translation>
     </message>
     <message>
         <source>Profile: </source>
@@ -4667,6 +4711,34 @@ Non : QZ le garde comme tapis de course et ne redemandera plus (un vélo peut to
     <message>
         <source>Please choose a file</source>
         <translation>Veuillez choisir un fichier</translation>
+    </message>
+    <message>
+        <source>Disconnect from Strava</source>
+        <translation>Se déconnecter de Strava</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>Se connecter avec Strava</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>Se déconnecter de Peloton</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>Se connecter avec Peloton</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Paramètres Garmin Connect</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>Se déconnecter d’Intervals.icu</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>Se connecter avec Intervals.icu</translation>
     </message>
     <message>
         <source>Workout</source>
@@ -5645,6 +5717,22 @@ Dans la fenêtre suivante, autorisez l&apos;accès au dossier QZ.</translation>
         <translation>Débit en bauds :</translation>
     </message>
     <message>
+        <source>Daum Bike Options</source>
+        <translation>Options du vélo Daum</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>Port série utilisé par les ergomètres Daum classiques, comme le 8008 TRS 3. Sur Android avec un adaptateur USB-série, utilisez &apos;usb&apos;. COM1, COM2, etc. sont acceptés comme alias pour rechercher l&apos;adaptateur USB, mais ne sont pas des noms de ports Android. Sur Windows, utilisez COM1 ou COM3 ; sur Linux/macOS, le chemin du périphérique série, par exemple /dev/ttyUSB0.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Délai d&apos;interrogation de la résistance :</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>Utilise le réglage Délai d&apos;inclinaison pour limiter la fréquence d&apos;envoi des mises à jour de résistance et de puissance à Daum. Par défaut : 0 seconde.</translation>
+    </message>
+    <message>
         <source>Freebeat Bike Options</source>
         <translation>Options du vélo Freebeat</translation>
     </message>
@@ -5951,6 +6039,14 @@ Dans la fenêtre suivante, autorisez l&apos;accès au dossier QZ.</translation>
     <message>
         <source>Increases the resistance that QZ displays in the Peloton Resistance tile. If QZ’s calculated conversion from your bike’s resistance scale to Peloton’s seems too low, the number you enter here will be added to the calculated resistance without increasing your effort or actual resistance. (Example: If QZ displays Peloton resistance of 30 and you enter 5, QZ will display 35.)</source>
         <translation>Augmente la résistance affichée par QZ dans la tuile Résistance Peloton. Si la conversion calculée par QZ de l&apos;échelle de résistance de votre vélo à celle de Peloton vous semble trop faible, le nombre que vous entrez ici sera ajouté à la résistance calculée sans augmenter votre effort ni votre résistance réelle. (Exemple : Si QZ affiche une résistance Peloton de 30 et que vous entrez 5, QZ affichera 35.)</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Filtre d&apos;inclinaison (%) :</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>Pour les entraînements GPX, ignore les variations d&apos;inclinaison inférieures à cette valeur et n&apos;envoie une nouvelle commande que lorsque l&apos;écart par rapport à la dernière valeur envoyée atteint le seuil défini. Par défaut : 0 (désactivé).</translation>
     </message>
     <message>
         <source>Life Fitness Options</source>

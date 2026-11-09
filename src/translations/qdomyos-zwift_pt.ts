@@ -4512,6 +4512,18 @@ Deseja mudar para a conexão Bluetooth clássica nesta sessão?</translation>
         <translation>Você já está conectado ao Intervals.icu. Deseja sair?</translation>
     </message>
     <message>
+        <source>Back</source>
+        <translation>Voltar</translation>
+    </message>
+    <message>
+        <source>Main menu</source>
+        <translation>Menu principal</translation>
+    </message>
+    <message>
+        <source>Floating window</source>
+        <translation>Janela flutuante</translation>
+    </message>
+    <message>
         <source>Auto Resistance enabled</source>
         <translation>Resistência automática ativada</translation>
     </message>
@@ -4528,12 +4540,44 @@ Deseja mudar para a conexão Bluetooth clássica nesta sessão?</translation>
         <translation>Os blocos estão bloqueados agora</translation>
     </message>
     <message>
+        <source>Load settings</source>
+        <translation>Carregar configurações</translation>
+    </message>
+    <message>
         <source>Search settings</source>
         <translation>Buscar configurações</translation>
     </message>
     <message>
+        <source>Save settings</source>
+        <translation>Salvar configurações</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>Mapa</translation>
+    </message>
+    <message>
+        <source>Chart</source>
+        <translation>Gráfico</translation>
+    </message>
+    <message>
         <source>Share FIT file</source>
         <translation>Compartilhar arquivo FIT</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Bloquear blocos</translation>
+    </message>
+    <message>
+        <source>Unlock tiles</source>
+        <translation>Desbloquear blocos</translation>
+    </message>
+    <message>
+        <source>Disable auto resistance</source>
+        <translation>Desativar resistência automática</translation>
+    </message>
+    <message>
+        <source>Enable auto resistance</source>
+        <translation>Ativar resistência automática</translation>
     </message>
     <message>
         <source>Profile: </source>
@@ -4664,6 +4708,34 @@ Não: o QZ o mantém como esteira e não pergunta de novo (uma bicicleta ainda p
     <message>
         <source>Please choose a file</source>
         <translation>Por favor, escolha um arquivo</translation>
+    </message>
+    <message>
+        <source>Disconnect from Strava</source>
+        <translation>Desconectar do Strava</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>Conectar ao Strava</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>Desconectar do Peloton</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>Conectar ao Peloton</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Configurações do Garmin Connect</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>Desconectar do Intervals.icu</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>Conectar ao Intervals.icu</translation>
     </message>
     <message>
         <source>Workout</source>
@@ -5682,6 +5754,22 @@ Na próxima janela, permita o acesso à pasta QZ.</translation>
         <translation>Taxa de transmissão (baud):</translation>
     </message>
     <message>
+        <source>Daum Bike Options</source>
+        <translation>Opções da bicicleta Daum</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>Porta série utilizada por ergómetros Daum clássicos, como o 8008 TRS 3. No Android, com um adaptador USB-série, utiliza &apos;usb&apos;. COM1, COM2, etc. são aceites como nomes alternativos para procurar o adaptador USB, mas não são nomes de portas Android. No Windows utiliza COM1 ou COM3; no Linux/macOS, o caminho do dispositivo série, por exemplo /dev/ttyUSB0.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Intervalo de consulta da resistência:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>Utiliza a definição Atraso de inclinação para limitar a frequência com que o QZ envia atualizações de resistência e potência ao Daum. Predefinição: 0 segundos.</translation>
+    </message>
+    <message>
         <source>Freebeat Bike Options</source>
         <translation>Opções da bicicleta Freebeat</translation>
     </message>
@@ -5992,6 +6080,14 @@ Na próxima janela, permita o acesso à pasta QZ.</translation>
     <message>
         <source>Increases the resistance that QZ displays in the Peloton Resistance tile. If QZ’s calculated conversion from your bike’s resistance scale to Peloton’s seems too low, the number you enter here will be added to the calculated resistance without increasing your effort or actual resistance. (Example: If QZ displays Peloton resistance of 30 and you enter 5, QZ will display 35.)</source>
         <translation>Aumenta a resistência que o QZ exibe no bloco de Resistência Peloton. Se a conversão calculada do QZ da escala de resistência da sua bicicleta para a da Peloton parecer muito baixa, o número que você inserir aqui será adicionado à resistência calculada sem aumentar seu esforço ou resistência real. (Exemplo: Se o QZ exibir resistência Peloton de 30 e você inserir 5, o QZ exibirá 35.)</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Filtro de inclinação (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>Nos treinos GPX, ignora alterações de inclinação inferiores a este valor e só envia um novo comando quando a diferença relativamente ao último valor enviado atinge o limite configurado. Predefinição: 0 (desativado).</translation>
     </message>
     <message>
         <source>Life Fitness Options</source>
