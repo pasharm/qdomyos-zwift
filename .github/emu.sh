@@ -222,20 +222,16 @@ drag_up() { adb shell input swipe 700 1800 700 $((1800 - $1)) 1500 || true; slee
 drag_down() { adb shell input swipe 700 900 700 $((900 + $1)) 1500 || true; sleep 3; }
 to_end() { local i; for i in 1 2 3 4 5 6; do adb shell input swipe 700 2000 700 600 150 || true; done; sleep 4; }
 
-# T-441: the drag handle of the chart under the tiles. The test build (test/t441) shows the chart
-# from the start and logs "T441 footer h <px> page h <px> handle <w>x<h>" on every height change.
-# The handle sits right above the chart (a WebView in the dump): modern 16 dp = 56 px, classic
-# 10 dp = 35 px. A drag either changes the footer height (a new log line) or does not.
-footer_h() { grep -a "T441 footer h" full_logcat.txt | tail -n 1 | sed 's/.*T441 footer h \([0-9]*\).*/\1/'; }
-# chart_ready LABEL: before a frame, wait until the chart (a WebView) is in the dump. homeform
-# turns the footer off when a program without a target chart loads (lesson 2 of T-441); the
-# test hook turns it back on every 2 s. No chart within 30 s - the frame proves nothing
+# T-494: the chart under the tiles (a native WebView) drawn over the open drawer. The test build
+# keeps the chart on (homeform turns it off when a program without a target chart loads) and logs
+# "T494 chart footer on". The same steps run on the master build (before) and on the fix (after).
+# chart_ready LABEL: wait until the chart (a WebView) is in the dump; without it the frame proves nothing
 chart_ready() {
   local i
   for i in 1 2 3 4 5 6; do
     dump
     if python3 .github/webtop.py ui.xml > /dev/null 2>&1; then
-      echo "$1: chart on screen (last switch: $(grep -a 'T441 chart footer on\|T441 footer visible' full_logcat.txt | tail -n 1 | sed 's/.*T441/T441/'))" >> $STEPLOG
+      echo "$1: chart on screen, top $(python3 .github/webtop.py ui.xml) (last switch: $(grep -a 'chart footer on' full_logcat.txt | tail -n 1 | sed 's/.*T4/T4/'))" >> $STEPLOG
       return 0
     fi
     sleep 5
@@ -243,63 +239,40 @@ chart_ready() {
   echo "!! $1: no chart (WebView) on screen for 30 s - the frame proves nothing" >> $STEPLOG
   return 1
 }
-# drag LABEL X DY_ABOVE_CHART EXPECT(yes|no): press DY px above the top of the chart, pull 500 px up
-drag() {
-  local label="$1" x="$2" dy="$3" expect="$4" top h0 h1 y
-  sleep 2
-  dump
-  top=$(python3 .github/webtop.py ui.xml) || top=""
-  if [ -z "$top" ]; then
-    echo "!! $label: no WebView in the dump - drag skipped" >> $STEPLOG
-    return 1
-  fi
-  h0=$(footer_h)
-  # without the beacon line both heights are empty and "not resized" would pass unseen
-  if [ -z "$h0" ]; then
-    echo "!! $label: no 'T441 footer h' line in logcat (log_debug off or not the test build) - the run proves nothing" >> $STEPLOG
-    return 1
-  fi
-  y=$((top - dy))
-  echo "$label: chart top $top, press at $x $y, footer h before '$h0'" >> $STEPLOG
-  adb shell input swipe $x $y $x $((y - 500)) 1500 || true
+# open_drawer LABEL: the menu button at the left of the toolbar (both looks put it there; the dump
+# has no name for it in the classic look), then the frame. A point inside the drawer and inside the
+# chart is compared with the home frame: unchanged means the WebView stayed on top of the drawer
+drawer_steps() {
+  local p="$1" top y
+  chart_ready "$p-home" || return 1
+  top=$(python3 .github/webtop.py ui.xml)
+  shot $p-01-home
+  echo "$p: menu button at 84 166" >> $STEPLOG
+  adb shell input tap 84 166 || true
   sleep 3
-  h1=$(footer_h)
-  if [ "$h1" != "$h0" ]; then got=yes; else got=no; fi
-  if [ "$got" = "$expect" ]; then
-    echo "$label: footer h '$h0' -> '$h1', resized=$got: OK" >> $STEPLOG
-  else
-    echo "!! $label: footer h '$h0' -> '$h1', resized=$got, expected $expect" >> $STEPLOG
-  fi
+  shot $p-02-drawer-open
+  # x 300: inside the drawer of both looks (classic 66 % of 1440, modern up to 340 dp); y: 150 px into the chart
+  y=$((top + 150))
+  echo "$p: drawer open, $(python3 .github/drawercheck.py $p-01-home.png $p-02-drawer-open.png 300 $y)" >> $STEPLOG
+  # x 1300 is outside the drawer: the chart there is only dimmed (QML) or unchanged (WebView on top)
+  echo "$p: outside the drawer, $(python3 .github/drawercheck.py $p-01-home.png $p-02-drawer-open.png 1300 $y)" >> $STEPLOG
+  # close by a tap outside the drawer, above the chart
+  adb shell input tap 1350 700 || true
+  sleep 3
+  chart_ready "$p-closed"
+  shot $p-03-closed
+  echo "$p: drawer closed, $(python3 .github/drawercheck.py $p-01-home.png $p-03-closed.png 300 $y) - expected yes: the chart is back" >> $STEPLOG
 }
 echo "== API $(adb shell getprop ro.build.version.sdk | tr -d '\r')" >> $STEPLOG
 
-restart_with ui_modern=true
-sleep 5
-step m-light "modern, light: strip 16 dp surfaceHigh with rounded top corners (16 dp) and a soft shadow above, grey pill 48x5 dp in the middle, chart right below"
-chart_ready m-light
-shot m-01-light
-# x 150: left of where the old 1/5-width bar was (576..864 on 1440 px) - only the new strip is there
-drag "modern drag at the left edge" 150 28 yes
-step m-dragged "modern after the drag: chart taller, strip and pill above it"
-shot m-02-dragged
-# the theme switched before a restart: QZ does not recreate its window on a uimode change
-adb shell cmd uimode night yes || true
-restart_with ui_modern=true
-sleep 5
-step m-dark "modern, dark: strip surfaceHigh (lighter than the page) with rounded top corners and a shadow above, pill light grey"
-chart_ready m-dark
-shot m-03-dark
-adb shell cmd uimode night no || true
-
 restart_with ui_modern=false
 sleep 5
-step c-light "classic: purple bar 1/5 width with three white lines, as in master"
-chart_ready c-light
-shot c-01-light
-drag "classic drag at the left edge (no handle there)" 150 18 no
-drag "classic drag at the bar" 720 18 yes
-step c-dragged "classic after the drag at the bar: chart taller"
-shot c-02-dragged
+step c "classic: home with the chart; the drawer open - before the fix the chart stays over it (chart over drawer: yes), after the fix the drawer covers it (no); closed - the chart is back"
+drawer_steps c
+restart_with ui_modern=true
+sleep 5
+step m "modern (master has none - the same classic look there): the same three frames"
+drawer_steps m
 adb shell pidof $PKG > /dev/null && echo "app alive at the end: OK" >> $STEPLOG || echo "!! app not running at the end" >> $STEPLOG
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
