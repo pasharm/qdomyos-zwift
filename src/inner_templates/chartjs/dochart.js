@@ -325,6 +325,13 @@ function process_arr(arr) {
             },
             responsive: true,
             aspectRatio: 1.5,
+            // the time labels are pulled into the chart (x ticks padding -20) and the y axis has no bottom
+            // label to leave room under them, so without this the digits are cut at the bottom edge
+            layout: {
+                padding: {
+                    bottom: 6
+                }
+            },
             grid: {
                 zeroLineColor: 'rgba(0,255,0,1)'
             },
@@ -535,6 +542,13 @@ function process_arr(arr) {
             },
             responsive: true,
             aspectRatio: 1.5,
+            // the time labels are pulled into the chart (x ticks padding -20) and the y axis has no bottom
+            // label to leave room under them, so without this the digits are cut at the bottom edge
+            layout: {
+                padding: {
+                    bottom: 6
+                }
+            },
             grid: {
                 zeroLineColor: 'rgba(0,255,0,1)'
             },
