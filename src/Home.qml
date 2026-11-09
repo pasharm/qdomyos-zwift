@@ -715,7 +715,7 @@ HomeForm {
 
         // TEST ONLY (T-496, T-497): the emulator has no workout with speed rows. Once the fake treadmill is
         // connected, load files/t496.xml (emu.sh puts it there), keep the chart under the tiles open, and after
-        // 20 s stretch it to the top height. Every step is a "T496 hook:" line in the log for emu.sh.
+        // 30 s stretch it to the top height. Every step is a "T496 hook:" line in the log for emu.sh.
         Timer {
             interval: 2000
             repeat: true
@@ -734,12 +734,20 @@ HomeForm {
                 }
                 if (!rootItem.chartFooterVisible)
                     rootItem.chartFooterVisible = true;
+                // rootItem.device turns true some seconds before the fake treadmill connects (run 42696624480):
+                // a program loaded then is "NOT associated to a device" and the chart stays the bike one.
+                // Load it again until homeform picks the treadmill chart (at most 10 times)
+                if (phase === 1 && !rootItem.chartTreadmillMode && ticks < 10) {
+                    console.log("T496 hook: not the treadmill chart yet, loading the program again");
+                    rootItem.trainprogram_open_clicked("file:///data/user/0/org.cagnulen.qdomyoszwift/files/t496.xml");
+                    return;
+                }
                 if (phase === 1) {
                     console.log("T496 hook: chart shown, treadmillMode=" + rootItem.chartTreadmillMode
                                 + " height=" + footerItem.height);
                     phase = 2;
                     ticks = 0;
-                } else if (phase === 2 && ticks >= 10) {
+                } else if (phase === 2 && ticks >= 15) {
                     footerItem.footerHeight = footerItem.maxHeight;
                     console.log("T496 hook: chart tall, height=" + footerItem.maxHeight);
                     phase = 3;
