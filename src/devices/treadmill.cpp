@@ -390,6 +390,7 @@ void treadmill::cadenceSensor(uint8_t cadence) {
     if (Cadence.value() > 0 || cadence > 0) {
         evaluateStepCount();
     }
+    lastCadenceSensorMs = QDateTime::currentMSecsSinceEpoch();
     // A running power sensor is a treadmill object too: keep track of whether its cadence came from RSC.
     treadmill *source = qobject_cast<treadmill *>(sender());
     if (source && source->cadenceFromRsc()) {
