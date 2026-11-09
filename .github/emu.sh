@@ -43,12 +43,14 @@ install_apk() {
   for p in EXERCISE DISTANCE TOTAL_CALORIES_BURNED HEART_RATE POWER SPEED CYCLING_PEDALING_CADENCE ELEVATION_GAINED STEPS STEPS_CADENCE HEART_RATE_VARIABILITY; do
     adb shell pm grant $PKG android.permission.health.WRITE_$p || true
   done
-  # Files for the two list pages, made by the app itself (run-as): QZ has no MANAGE_EXTERNAL_STORAGE,
-  # and on API 30+ an app sees in Documents only the files it owns - files of the shell stay hidden
-  adb shell "run-as $PKG sh -c 'mkdir -p $DOCS/settings $DOCS/profiles; for n in t498-a t498-b; do echo General > $DOCS/settings/\$n.qzs; echo General > $DOCS/profiles/\$n.qzs; done' < /dev/null" || true
-  adb shell ls -ln $DOCS/settings $DOCS/profiles >> $STEPLOG 2>&1
-  # what the app sees, not what the shell sees
-  if [ "$(adb shell "run-as $PKG ls $DOCS/profiles $DOCS/settings < /dev/null" | grep -c t498)" != 4 ]; then
+  # Files for the two list pages. QZ has no MANAGE_EXTERNAL_STORAGE: on API 30+ it sees in Documents
+  # only the files it owns, and run-as has no shared storage. The shell makes them and hands them to
+  # the app in the media store (owner_package_name)
+  adb shell "mkdir -p $DOCS/settings $DOCS/profiles && for n in t498-a t498-b; do echo General > $DOCS/settings/\$n.qzs; echo General > $DOCS/profiles/\$n.qzs; done"
+  adb shell "content update --uri content://media/external/file --bind owner_package_name:s:$PKG --where \"_data LIKE '%t498-%'\"" >> $STEPLOG 2>&1 || true
+  adb shell "content query --uri content://media/external/file --projection _data:owner_package_name --where \"_data LIKE '%t498-%'\"" > owners.txt 2>&1 || true
+  cat owners.txt >> $STEPLOG
+  if [ "$(grep -c "owner_package_name=$PKG" owners.txt)" != 4 ]; then
     echo "!! list files not put - the list checks prove nothing" >> $STEPLOG; FAILED=1
   fi
   echo "== installed $1" >> $STEPLOG
@@ -195,7 +197,8 @@ scroll_to() {
       y=${xy#* }
       [ "$y" -lt 2000 ] && { echo "scrolled to '$1' ($i): at $xy" >> $STEPLOG; return 0; }
     fi
-    adb shell input swipe 720 1900 720 900 400 || true
+    # by the left edge: the controls of an open section in the middle took the swipe
+    adb shell input swipe 150 1900 150 900 400 || true
     sleep 1
   done
   echo "!! '$1' not reached by scrolling" >> $STEPLOG
@@ -293,6 +296,8 @@ frames_side() {
     if settings_open; then
       shot c-$side-1-settings
       tap_ui '^General Options$' '^App Language:$' && shot c-$side-2-general
+      back_to "$HOME_RX"
+      settings_open
       scroll_to '^Experimental Features$' 60 && tap_ui '^Experimental Features$' '^Enable Virtual Device$' && {
         scroll_to '^Enable Virtual Device$'; shot c-$side-3-experimental; }
       back_to "$HOME_RX"
@@ -337,6 +342,8 @@ modern_head() {
       shot m-head-4-sticky
       n=$(count_top dumps/m-head-4-sticky.xml 'General UI Options')
       echo "record m-head-4-sticky: 'General UI Options' nodes at the top: $n (the sticky copy over the page)" >> $STEPLOG
+      back_to "$HOME_RX"
+      settings_open
       scroll_to '^Experimental Features$' 60 && tap_ui '^Experimental Features$' '^Enable Virtual Device$' && {
         scroll_to '^Enable Virtual Device$'
         shot m-head-5-experimental
