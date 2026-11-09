@@ -16,7 +16,9 @@ ColumnLayout {
         anchors.fill: parent
         url: "http://localhost:" + settings.value("template_inner_QZWS_port") + "/chartjs/" +
              (rootItem.chartTreadmillMode ? "treadmillchartlive.htm" : "chartlive.htm")
-        visible: rootItem.chartFooterVisible
+        // Hidden while the drawer is open or being dragged: the native WebView of Android and iOS
+        // is drawn over everything in the QML scene, the drawer included (QTBUG-58365, QTBUG-98574)
+        visible: rootItem.chartFooterVisible && drawer.position === 0
         onLoadingChanged: {
             if (loadRequest.errorString) {
                 console.error(loadRequest.errorString);
@@ -28,9 +30,16 @@ ColumnLayout {
         }
         onVisibleChanged: {
             console.log("onVisibleChanged" + visible)
-            if(visible === true) {
-                reload();
-            }
+        }
+    }
+
+    // Reload when the chart button shows the chart, not when the drawer closes: the page is kept
+    // while the WebView is hidden
+    Connections {
+        target: rootItem
+        function onChartFooterVisibleChanged() {
+            if (rootItem.chartFooterVisible)
+                webView.reload();
         }
     }
     
