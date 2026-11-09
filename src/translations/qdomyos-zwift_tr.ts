@@ -4488,6 +4488,10 @@ Do you want to start it now?</source>
         <translation>Harita</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Grafik</translation>
     </message>

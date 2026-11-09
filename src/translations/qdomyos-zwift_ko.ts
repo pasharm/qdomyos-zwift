@@ -4485,6 +4485,10 @@ Do you want to start it now?</source>
         <translation>지도</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>동영상</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>그래프</translation>
     </message>

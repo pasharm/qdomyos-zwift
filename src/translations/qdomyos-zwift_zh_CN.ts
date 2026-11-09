@@ -4560,6 +4560,10 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>地图</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>视频</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>图表</translation>
     </message>

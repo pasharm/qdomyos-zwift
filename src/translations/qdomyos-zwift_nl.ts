@@ -4488,6 +4488,10 @@ Wil je die nu starten?</translation>
         <translation>Kaart</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Grafiek</translation>
     </message>

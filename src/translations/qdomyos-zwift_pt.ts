@@ -4556,6 +4556,10 @@ Deseja mudar para a conexão Bluetooth clássica nesta sessão?</translation>
         <translation>Mapa</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Vídeo</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Gráfico</translation>
     </message>

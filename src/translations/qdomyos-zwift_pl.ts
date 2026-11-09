@@ -4485,6 +4485,10 @@ Rozpocząć go teraz?</translation>
         <translation>Mapa</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Wideo</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Wykres</translation>
     </message>

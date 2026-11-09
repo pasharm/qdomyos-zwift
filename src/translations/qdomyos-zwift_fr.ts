@@ -4559,6 +4559,10 @@ Voulez-vous passer à l&apos;appareil Bluetooth virtuel classique pour cette ses
         <translation>Carte</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Vidéo</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Graphique</translation>
     </message>

@@ -4488,6 +4488,10 @@ Spustit ho nyní?</translation>
         <translation>Mapa</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Graf</translation>
     </message>

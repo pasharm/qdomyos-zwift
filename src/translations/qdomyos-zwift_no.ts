@@ -4585,6 +4585,10 @@ Nei: QZ beholder den som tredemølle og spør ikke igjen (du kan fortsatt velge 
         <translation>Kart</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Diagram</translation>
     </message>

@@ -4581,6 +4581,10 @@ Nej: QZ behåller den som löpband och frågar inte igen (du kan fortfarande vä
         <translation>Karta</translation>
     </message>
     <message>
+        <source>Video</source>
+        <translation>Video</translation>
+    </message>
+    <message>
         <source>Chart</source>
         <translation>Diagram</translation>
     </message>
