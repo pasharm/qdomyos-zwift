@@ -175,9 +175,9 @@ UiPopup {
 
             UiButton {
                 anchors.right: parent.right
-                // the OK of the question cards, already translated
-                text: qsTranslate("UiMessageDialog", "OK")
-                // the only button: a grey pill, as the negative ones of the question cards (T-479)
+                // the OK of the settings pages, already translated
+                text: qsTranslate("settings", "OK")
+                // the only button: a grey pill, as the negative ones of the question cards
                 cardSurface: true
                 onClicked: control.close()
             }
