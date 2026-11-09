@@ -386,6 +386,13 @@ function process_arr(arr) {
         options: {           
             responsive: true,
             aspectRatio: div.width / div.height,
+            // the time labels are pulled into the chart (x ticks padding -20) and the y axis has no bottom
+            // label to leave room under them, so without this the digits are cut at the bottom edge
+            layout: {
+                padding: {
+                    bottom: 6
+                }
+            },
             grid: {
                 zeroLineColor: 'rgba(0,255,0,1)'
             },
