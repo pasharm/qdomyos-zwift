@@ -43,10 +43,12 @@ install_apk() {
   for p in EXERCISE DISTANCE TOTAL_CALORIES_BURNED HEART_RATE POWER SPEED CYCLING_PEDALING_CADENCE ELEVATION_GAINED STEPS STEPS_CADENCE HEART_RATE_VARIABILITY; do
     adb shell pm grant $PKG android.permission.health.WRITE_$p || true
   done
-  # Files for the two list pages (shared storage: by the shell, not run-as)
-  adb shell "mkdir -p $DOCS/settings $DOCS/profiles && for n in t498-a t498-b; do echo '[General]' > $DOCS/settings/\$n.qzs; echo '[General]' > $DOCS/profiles/\$n.qzs; done"
-  adb shell ls $DOCS/settings $DOCS/profiles >> $STEPLOG 2>&1
-  if [ "$(adb shell ls $DOCS/profiles | grep -c t498)" != 2 ]; then
+  # Files for the two list pages, made by the app itself (run-as): QZ has no MANAGE_EXTERNAL_STORAGE,
+  # and on API 30+ an app sees in Documents only the files it owns - files of the shell stay hidden
+  adb shell "run-as $PKG sh -c 'mkdir -p $DOCS/settings $DOCS/profiles; for n in t498-a t498-b; do echo General > $DOCS/settings/\$n.qzs; echo General > $DOCS/profiles/\$n.qzs; done' < /dev/null" || true
+  adb shell ls -ln $DOCS/settings $DOCS/profiles >> $STEPLOG 2>&1
+  # what the app sees, not what the shell sees
+  if [ "$(adb shell "run-as $PKG ls $DOCS/profiles $DOCS/settings < /dev/null" | grep -c t498)" != 4 ]; then
     echo "!! list files not put - the list checks prove nothing" >> $STEPLOG; FAILED=1
   fi
   echo "== installed $1" >> $STEPLOG
@@ -187,7 +189,7 @@ tap_ui() {
 # scroll_to 'regex': swipe the page up until the control is on the screen, above the navigation bar
 scroll_to() {
   local i xy y
-  for i in $(seq 1 25); do
+  for i in $(seq 1 ${2:-25}); do
     dump
     if [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$1"); then
       y=${xy#* }
@@ -199,6 +201,39 @@ scroll_to() {
   echo "!! '$1' not reached by scrolling" >> $STEPLOG
   FAILED=1
   return 1
+}
+# tap_dot <case> <y from>: the classic StaticAccordionElement header (a Text, not in the dump) found by
+# its grey dot (x 16..24 dp) on the raw frame below <y from>, tapped in the middle of the row
+tap_dot() {
+  local y
+  adb exec-out screencap > raw.bin
+  y=$(python3 - raw.bin $2 << 'EOF'
+import sys
+d = open(sys.argv[1], 'rb').read()
+w = int.from_bytes(d[0:4], 'little'); h = int.from_bytes(d[4:8], 'little')
+off = len(d) - w * h * 4
+ys = []
+for y in range(int(sys.argv[2]), h - 300):
+    row = off + y * w * 4
+    hit = False
+    for x in range(40, 110):
+        r, g, b = d[row + x * 4], d[row + x * 4 + 1], d[row + x * 4 + 2]
+        if r > 120 and abs(r - g) < 12 and abs(r - b) < 12:
+            hit = True; break
+    if hit:
+        ys.append(y)
+    elif ys:
+        break
+if 15 <= len(ys) <= 45:
+    print((ys[0] + ys[-1]) // 2)
+EOF
+)
+  if [ -n "$y" ]; then
+    echo "tap_dot $1: header dot at y $y, tap 400 $y" >> $STEPLOG
+    adb shell input tap 400 $y || true
+  else
+    echo "!! tap_dot $1: header dot not found below $2" >> $STEPLOG; FAILED=1
+  fi
 }
 # checked_of <xml> 'name': the checked attribute of the first node with that content-desc or text
 checked_of() {
@@ -258,7 +293,7 @@ frames_side() {
     if settings_open; then
       shot c-$side-1-settings
       tap_ui '^General Options$' '^App Language:$' && shot c-$side-2-general
-      scroll_to '^Experimental Features$' && tap_ui '^Experimental Features$' '^Enable Virtual Device$' && {
+      scroll_to '^Experimental Features$' 60 && tap_ui '^Experimental Features$' '^Enable Virtual Device$' && {
         scroll_to '^Enable Virtual Device$'; shot c-$side-3-experimental; }
       back_to "$HOME_RX"
     fi
@@ -268,11 +303,11 @@ frames_side() {
       echo "tap Load settings $LOAD" >> $STEPLOG
       adb shell input tap $LOAD || true
       if wait_ui '^Other folders$' 30; then
-        # its section starts closed: open it (the header by its title)
-        tap_ui '^Settings folder$' '.*' 3
+        # its section starts closed: open it; the file names are plain Text, not in the dump - by the frame
+        tap_dot c-$side-5 260
         sleep 2
         shot c-$side-5-settingslist
-        expect c-$side-5-settingslist '^t498-a$' "settings folder: the list shows its files"
+        echo "record c-$side-5-settingslist: the list of t498-a, t498-b - compare the frames base/head" >> $STEPLOG
         back_to '^General Options$'
       else
         echo "!! Load settings: settings folder page not shown" >> $STEPLOG; FAILED=1
@@ -280,8 +315,8 @@ frames_side() {
       back_to "$HOME_RX"
     fi
     if open_drawer '^Profile: .*'; then
-      tap_ui '^Profile: .*' '^Profiles$' && { sleep 2; shot c-$side-6-profiles
-        expect c-$side-6-profiles '^t498-a$' "profiles: the list shows its files"; }
+      tap_ui '^Profile: .*' '^Profile name$' && { sleep 2; tap_dot c-$side-6 430; sleep 2; shot c-$side-6-profiles
+        echo "record c-$side-6-profiles: the list of t498-a, t498-b - compare the frames base/head" >> $STEPLOG; }
       back_to "$HOME_RX"
     fi
   fi
@@ -302,7 +337,7 @@ modern_head() {
       shot m-head-4-sticky
       n=$(count_top dumps/m-head-4-sticky.xml 'General UI Options')
       echo "record m-head-4-sticky: 'General UI Options' nodes at the top: $n (the sticky copy over the page)" >> $STEPLOG
-      scroll_to '^Experimental Features$' && tap_ui '^Experimental Features$' '^Enable Virtual Device$' && {
+      scroll_to '^Experimental Features$' 60 && tap_ui '^Experimental Features$' '^Enable Virtual Device$' && {
         scroll_to '^Enable Virtual Device$'
         shot m-head-5-experimental
         before=$(checked_of dumps/m-head-5-experimental.xml 'Enable Virtual Device')
@@ -327,14 +362,16 @@ modern_head() {
     if settings_open; then
       scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' '^Speed$' && shot m-head-7-tiles
       back_to '^General Options$'
-      tap_ui '^Load settings$' '^Other folders$' && { tap_ui '^Settings folder$' '.*' 3; sleep 2; shot m-head-8-settingslist
-        expect m-head-8-settingslist '^t498-a$' "settings folder: the list shows its files"
+      tap_ui '^Load settings$' '^Other folders$' && { sleep 2; shot m-head-8a-settingslist-before
+        tap_ui '^Settings folder$' '.*' 3; sleep 2; shot m-head-8-settingslist
+        echo "record m-head-8-settingslist: the list of t498-a, t498-b - by the frame" >> $STEPLOG
         back_to '^General Options$'; }
       back_to "$HOME_RX"
     fi
     if open_drawer '^Profile: .*'; then
-      tap_ui '^Profile: .*' '^Profiles$' && { sleep 2; shot m-head-9-profiles
-        expect m-head-9-profiles '^t498-a$' "profiles: the list shows its files"; }
+      tap_ui '^Profile: .*' '^Profiles$' && { sleep 2; shot m-head-9a-profiles-before
+        tap_ui '^Profiles$' '.*' 3; sleep 2; shot m-head-9-profiles
+        echo "record m-head-9-profiles: the list of t498-a, t498-b - by the frame (9a before the tap)" >> $STEPLOG; }
       back_to "$HOME_RX"
     fi
   fi
