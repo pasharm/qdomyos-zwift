@@ -1,6 +1,7 @@
 # test branch: run two APKs that were already built on one emulator and keep logcat and
-# screenshots (no build). T-487, PR-4: header and side menu of the modern look - the classic look
-# of the PR head against origin/master of the same commit, the modern look of the head.
+# screenshots (no build). T-498, PR-5: settings sections of the modern look - the classic look
+# of the PR head against origin/master of the same commit, the modern look of the head; mode
+# timing: the open time of the settings and tiles pages (builds with a test only QZ-TIMING line).
 name: CI
 
 on:
@@ -16,6 +17,10 @@ on:
         description: log_debug for the run
         required: false
         default: 'true'
+      mode:
+        description: frames or timing
+        required: false
+        default: 'frames'
 
 jobs:
   emulator-logcat:
@@ -62,6 +67,7 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2
         env:
           LOG_DEBUG: ${{ inputs.log_debug }}
+          MODE: ${{ inputs.mode }}
         with:
           api-level: 35
           target: google_apis
@@ -74,7 +80,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.head }}-t487
+          name: emulator-logcat-${{ inputs.head }}-t498-${{ inputs.mode }}
           path: |
             *.png
             full_logcat.txt

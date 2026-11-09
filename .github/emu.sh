@@ -1,19 +1,24 @@
 #!/bin/bash
-# Test only (T-487, PR-4: header and side menu of the modern look). Two APKs on one emulator:
-# apk-base - origin/master of the same commit, apk-head - the PR. Cases:
-#  c-<apk>: classic look with a fake treadmill: home, open drawer, the Settings page from the drawer -
-#           frames compared base against head afterwards (the classic look must not change);
-#  b-<apk>-<look>: no equipment (wizard closed by bluetooth_lastdevice_name): the Bluetooth icon of the
-#           home page must keep blinking - its screen reader name, read from 8 dumps, shows both states
-#           (homeform::getDevice flips on every read: one more binding reading rootItem.device froze it);
-#  m-head: modern look of the PR: header names (Main menu, Lock tiles), the drawer with its entries,
-#           Settings reached from a drawer entry (the header shows Load/Save settings), Auto resistance
-#           hidden with no equipment (b-head-modern).
-#  popups (review of the PR): the tile lock notice, the Save settings toast (classic: base against head;
-#           modern: their cards) and the native Peloton question (p-<apk>: peloton_password set, the
-#           question opens 1 s after the start; answered No, it must go away).
+# Test only (T-498, PR-5: settings sections of the modern look). Two APKs on one emulator:
+# apk-base - origin/master of the same commit, apk-head - the PR. MODE=frames (default):
+#  c-<side>: classic look with a fake treadmill - the settings page (closed, General Options open,
+#            Experimental Features open with the Enable Virtual Device switch section), the tiles page,
+#            the settings folder (Load settings) and the profiles page - frames compared base against
+#            head afterwards (the classic look must not change). The two list pages give their only
+#            section the rest of the page for a list without a height of its own: the list must show
+#            its files (t498-a, t498-b put there by the run);
+#  m-head:   modern look of the PR: section cards, a nested section, the sticky copy of an open
+#            section header while scrolling, the switch section (Enable Virtual Device) turned by a
+#            tap on its row and back, the tiles page, the two list pages;
+#  t-head:   the real TalkBack (image API 35) on the modern section headers: name, state said
+#            (Collapsed / Expanded), double tap opens the section.
+# MODE=timing: the settings and the tiles page opened 3 times per side and look; the builds carry a
+# test only log line QZ-TIMING at the tap and at the end of the page creation - the deltas are put
+# into steps.log (the classic look of head against base: the hidden parts of the modern look must
+# not make the page slower).
 PKG=org.cagnulen.qdomyoszwift
 LOG_DEBUG=${LOG_DEBUG:-true}
+MODE=${MODE:-frames}
 STEPLOG=steps.log
 CONF='files/.config/Roberto Viola/qDomyos-Zwift.conf'
 : > $STEPLOG
@@ -21,13 +26,14 @@ mkdir -p dumps
 FAILED=0
 # Toolbar menu / back button by its place (Nexus 6, 3.5 px per dp): classic buttons have no names
 MENU="84 168"
-# Classic tile lock (home page) and Save settings (settings page), the two rightmost buttons
-LOCK="1187 168"
+# Classic Load settings and Save settings on the settings page, the two rightmost buttons
+LOAD="1187 168"
 SAVE="1354 168"
+DOCS=/sdcard/Documents/QZ
 
 install_apk() {
   adb uninstall $PKG > /dev/null 2>&1 || true
-  adb shell rm -rf /sdcard/Documents/QZ || true
+  adb shell rm -rf $DOCS || true
   adb install "$1"
   adb shell pm path $PKG > /dev/null || { echo "!! $1 not installed - the run proves nothing" >> $STEPLOG; cat $STEPLOG; exit 1; }
   for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN POST_NOTIFICATIONS; do
@@ -37,18 +43,19 @@ install_apk() {
   for p in EXERCISE DISTANCE TOTAL_CALORIES_BURNED HEART_RATE POWER SPEED CYCLING_PEDALING_CADENCE ELEVATION_GAINED STEPS STEPS_CADENCE HEART_RATE_VARIABILITY; do
     adb shell pm grant $PKG android.permission.health.WRITE_$p || true
   done
+  # Files for the two list pages (shared storage: by the shell, not run-as)
+  adb shell "mkdir -p $DOCS/settings $DOCS/profiles && for n in t498-a t498-b; do echo '[General]' > $DOCS/settings/\$n.qzs; echo '[General]' > $DOCS/profiles/\$n.qzs; done"
+  adb shell ls $DOCS/settings $DOCS/profiles >> $STEPLOG 2>&1
+  if [ "$(adb shell ls $DOCS/profiles | grep -c t498)" != 2 ]; then
+    echo "!! list files not put - the list checks prove nothing" >> $STEPLOG; FAILED=1
+  fi
   echo "== installed $1" >> $STEPLOG
 }
 adb shell settings put global hide_error_dialogs 1 || true
 
-# put_conf <ui_modern> <equipment: fake|none> [extra line of the conf]
+# put_conf <ui_modern>: fake treadmill (no wizard), the journal for the timing lines
 put_conf() {
-  if [ "$2" = fake ]; then
-    printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\n' "$LOG_DEBUG" "$1" > qz.conf
-  else
-    printf '[General]\nlog_debug=%s\nui_modern=%s\nbluetooth_lastdevice_name=NO-SUCH-DEVICE\n' "$LOG_DEBUG" "$1" > qz.conf
-  fi
-  [ -n "$3" ] && printf '%s\n' "$3" >> qz.conf
+  printf '[General]\nlog_debug=%s\nui_modern=%s\nfakedevice_treadmill=true\n' "$LOG_DEBUG" "$1" > qz.conf
   adb push qz.conf /data/local/tmp/qz.conf
   adb shell "run-as $PKG mkdir -p 'files/.config/Roberto Viola' < /dev/null"
   adb shell "run-as $PKG cp /data/local/tmp/qz.conf '$CONF' < /dev/null"
@@ -114,21 +121,12 @@ expect() {
     FAILED=1
   fi
 }
-# expect_not <shot> 'regex' <what>
-expect_not() {
-  if [ -f dumps/$1.xml ] && ! python3 .github/uitap.py dumps/$1.xml "$2" > /dev/null; then
-    echo "check $1: $3: OK" >> $STEPLOG
-  else
-    echo "!! check $1: $3: '$2' is in the dump" >> $STEPLOG
-    FAILED=1
-  fi
-}
-# start_case <name> <ui_modern> <fake|none>
+# start_case <name> <ui_modern>
 start_case() {
-  echo "== $1: start (ui_modern=$2, equipment $3)" >> $STEPLOG
+  echo "== $1: start (ui_modern=$2)" >> $STEPLOG
   adb shell am force-stop $PKG || true
   sleep 2
-  put_conf "$2" "$3"
+  put_conf "$2"
   adb shell am start -n $PKG/$PKG.CustomQtActivity
   if ! wait_home; then
     echo "!! $1: home page not shown in 120 s" >> $STEPLOG
@@ -146,7 +144,7 @@ start_case() {
   fi
   return 0
 }
-# open_drawer <shot> 'regex of an entry': menu button, then the entry shows (the drawer is open)
+# open_drawer 'regex of an entry': menu button (by its place in both looks), then the entry shows
 open_drawer() {
   local i
   for i in 1 2 3; do
@@ -154,90 +152,75 @@ open_drawer() {
     echo "tap menu $MENU" >> $STEPLOG
     adb shell input tap $MENU || true
     sleep 3
-    if wait_ui "$2" 9; then
+    if wait_ui "$1" 9; then
       sleep 1
-      shot $1
-      echo "drawer open ('$2' shown)" >> $STEPLOG
+      echo "drawer open ('$1' shown)" >> $STEPLOG
       return 0
     fi
     adb shell input keyevent KEYCODE_BACK || true
     sleep 2
   done
-  echo "!! $1: drawer did not open ('$2' not shown)" >> $STEPLOG
+  echo "!! drawer did not open ('$1' not shown)" >> $STEPLOG
   FAILED=1
   return 1
 }
-# tap_entry 'regex' 'landing regex': an entry of the open drawer, then the page shows its own control
-tap_entry() {
+# tap_ui 'regex' 'landing regex' [seconds]: a control (waited for), then the next screen shows its own control
+tap_ui() {
   local xy=""
-  dump
-  [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$1")
-  if [ -z "$xy" ]; then
-    echo "!! entry '$1': NOT FOUND" >> $STEPLOG
+  if ! wait_ui "$1" 15; then
+    echo "!! '$1': NOT FOUND" >> $STEPLOG
     FAILED=1
     return 1
   fi
+  xy=$(python3 .github/uitap.py ui.xml "$1")
   echo "tap '$1': at $xy" >> $STEPLOG
   adb shell input tap $xy || true
-  if wait_ui "$2" 30; then
-    echo "page of '$1' open ('$2' shown)" >> $STEPLOG
+  if wait_ui "$2" ${3:-30}; then
+    echo "after '$1': '$2' shown" >> $STEPLOG
     sleep 2
     return 0
   fi
-  echo "!! page of '$1': '$2' not shown" >> $STEPLOG
+  echo "!! after '$1': '$2' not shown" >> $STEPLOG
   FAILED=1
   return 1
 }
-# quick_shot <shot> <x y>: tap, then the frame at once (the notices close by themselves after 2 s)
-quick_shot() {
-  echo "tap $2 for $1" >> $STEPLOG
-  adb shell input tap $2 || true
-  sleep 0.7
-  shot $1
-}
-# peloton <case> <ui_modern>: the Peloton question at start, answered No
-peloton() {
-  local xy=""
-  echo "== $1: start (ui_modern=$2, peloton_password set)" >> $STEPLOG
-  adb shell am force-stop $PKG || true
-  sleep 2
-  put_conf "$2" none "peloton_password=secret"
-  adb shell am start -n $PKG/$PKG.CustomQtActivity
-  if ! wait_ui '^Peloton Authentication Change$' 60; then
-    shot $1-1-question
-    echo "!! $1: Peloton question not shown in 60 s" >> $STEPLOG
-    FAILED=1
-    return 1
-  fi
-  sleep 2
-  shot $1-1-question
-  expect $1-1-question '^No$' "Peloton question: the No button"
-  dump
-  [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml '^No$')
-  [ -n "$xy" ] && { echo "tap No at $xy" >> $STEPLOG; adb shell input tap $xy || true; }
-  sleep 3
-  shot $1-2-answered
-  expect_not $1-2-answered '^Peloton Authentication Change$' "Peloton question gone after No"
-}
-# blink <case>: the Bluetooth icon of the home page names both states over 8 dumps
-blink() {
-  local i s seen_on=0 seen_off=0
-  for i in 1 2 3 4 5 6 7 8; do
+# scroll_to 'regex': swipe the page up until the control is on the screen, above the navigation bar
+scroll_to() {
+  local i xy y
+  for i in $(seq 1 25); do
     dump
-    s=$(grep -o 'Bluetooth connection: Device [a-z ]*connected' ui.xml 2>/dev/null | head -n 1)
-    echo "blink $1 $i: '$s'" >> $STEPLOG
-    case "$s" in
-      *"Device connected") seen_on=1 ;;
-      *"Device not connected") seen_off=1 ;;
-    esac
+    if [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$1"); then
+      y=${xy#* }
+      [ "$y" -lt 2000 ] && { echo "scrolled to '$1' ($i): at $xy" >> $STEPLOG; return 0; }
+    fi
+    adb shell input swipe 720 1900 720 900 400 || true
     sleep 1
   done
-  if [ $seen_on = 1 ] && [ $seen_off = 1 ]; then
-    echo "check $1: Bluetooth icon blinks with no equipment: OK" >> $STEPLOG
-  else
-    echo "!! check $1: Bluetooth icon frozen (connected seen $seen_on, not connected seen $seen_off)" >> $STEPLOG
-    FAILED=1
-  fi
+  echo "!! '$1' not reached by scrolling" >> $STEPLOG
+  FAILED=1
+  return 1
+}
+# checked_of <xml> 'name': the checked attribute of the first node with that content-desc or text
+checked_of() {
+  python3 - "$1" "$2" << 'EOF'
+import sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).iter('node'):
+    if sys.argv[2] in (n.get('content-desc'), n.get('text')) and n.get('bounds') != '[0,0][0,0]':
+        print(n.get('checked')); break
+EOF
+}
+# count_top <xml> 'name': nodes with that name whose top lies in the upper part of the screen
+count_top() {
+  python3 - "$1" "$2" << 'EOF'
+import sys, xml.etree.ElementTree as ET
+c = 0
+for n in ET.parse(sys.argv[1]).iter('node'):
+    if sys.argv[2] in (n.get('content-desc'), n.get('text')):
+        b = n.get('bounds').replace('][', ',').strip('[]').split(',')
+        if b != ['0', '0', '0', '0'] and int(b[1]) < 600:
+            c += 1
+print(c)
+EOF
 }
 
 adb logcat -c || true
@@ -245,104 +228,160 @@ adb logcat -v threadtime -b main,system,crash > full_logcat.txt 2>/dev/null &
 LOGCAT_PID=$!
 adb shell settings put system accelerometer_rotation 0 || true
 adb shell settings put system user_rotation 0 || true
-echo "== API $(adb shell getprop ro.build.version.sdk | tr -d '\r')" >> $STEPLOG
+echo "== API $(adb shell getprop ro.build.version.sdk | tr -d '\r') mode $MODE" >> $STEPLOG
 
-for side in base head; do
-  install_apk apk-$side/android-debug.apk
-  # Classic look, fake treadmill: frames for the base/head comparison
-  if start_case c-$side false fake; then
-    shot c-$side-1-home
-    quick_shot c-$side-2-lock "$LOCK"
-    expect c-$side-2-lock '^You can move the tiles!$|^The tiles are locked now$' "tile lock notice"
-    sleep 3
-    adb shell input tap $LOCK || true
-    sleep 3
-    if open_drawer c-$side-3-drawer '^Settings$'; then
-      if tap_entry '^Settings$' '^General Options$|^Search settings$'; then
-        shot c-$side-4-settings
-        quick_shot c-$side-5-save "$SAVE"
-        expect c-$side-5-save '^Saved!.*' "Save settings toast"
+# settings_open <modern>: the settings page from the drawer
+settings_open() {
+  open_drawer '^Settings$' || return 1
+  tap_ui '^Settings$' '^General Options$'
+}
+# back_to <regex>: the back arrow of the app (menu place in the classic look, "Back" in the modern)
+back_to() {
+  local i xy
+  for i in 1 2 3; do
+    dump
+    if [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml '^Back$'); then
+      adb shell input tap $xy || true
+    else
+      adb shell input tap $MENU || true
+    fi
+    wait_ui "$1" 15 && return 0
+  done
+  echo "!! back: '$1' not shown" >> $STEPLOG
+  FAILED=1
+  return 1
+}
+
+frames_side() {
+  local side=$1
+  if start_case c-$side false; then
+    if settings_open; then
+      shot c-$side-1-settings
+      tap_ui '^General Options$' '^App Language:$' && shot c-$side-2-general
+      scroll_to '^Experimental Features$' && tap_ui '^Experimental Features$' '^Enable Virtual Device$' && {
+        scroll_to '^Enable Virtual Device$'; shot c-$side-3-experimental; }
+      back_to "$HOME_RX"
+    fi
+    if settings_open; then
+      scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' '^Speed$' && shot c-$side-4-tiles
+      back_to '^General Options$'
+      echo "tap Load settings $LOAD" >> $STEPLOG
+      adb shell input tap $LOAD || true
+      if wait_ui '^Other folders$' 30; then
+        # its section starts closed: open it (the header by its title)
+        tap_ui '^Settings folder$' '.*' 3
+        sleep 2
+        shot c-$side-5-settingslist
+        expect c-$side-5-settingslist '^t498-a$' "settings folder: the list shows its files"
+        back_to '^General Options$'
+      else
+        echo "!! Load settings: settings folder page not shown" >> $STEPLOG; FAILED=1
       fi
+      back_to "$HOME_RX"
+    fi
+    if open_drawer '^Profile: .*'; then
+      tap_ui '^Profile: .*' '^Profiles$' && { sleep 2; shot c-$side-6-profiles
+        expect c-$side-6-profiles '^t498-a$' "profiles: the list shows its files"; }
+      back_to "$HOME_RX"
     fi
   fi
   adb shell am force-stop $PKG || true
-  # Classic look, no equipment: the Bluetooth icon keeps blinking
-  if start_case b-$side-classic false none; then
-    shot b-$side-classic-1-home
-    blink b-$side-classic
-  fi
-  adb shell am force-stop $PKG || true
-  peloton p-$side false
-  adb shell am force-stop $PKG || true
-done
+}
 
-# Modern look of the PR (apk-head is installed last)
-if start_case m-head true fake; then
-  # the tile lock shows once the help text is gone (equipment connected, tiles on the page)
-  wait_ui '^Lock tiles$|^Unlock tiles$' 60 || echo "!! m-head: no tile lock in 60 s" >> $STEPLOG
-  sleep 2
-  shot m-head-1-home
-  expect m-head-1-home '^Main menu$' "header: the menu button has its name"
-  expect m-head-1-home '^Lock tiles$|^Unlock tiles$' "header: the tiles lock has its name"
-  expect m-head-1-home '^Disable auto resistance$|^Enable auto resistance$' "header: auto resistance shown with the equipment"
-  dump
-  if [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml '^Lock tiles$|^Unlock tiles$'); then
-    quick_shot m-head-1b-lock "$xy"
-    expect m-head-1b-lock '^You can move the tiles!$|^The tiles are locked now$' "tile lock notice"
-    sleep 3
-    adb shell input tap $xy || true
-    sleep 3
-  fi
-  if open_drawer m-head-2-drawer '^Settings$'; then
-    expect m-head-2-drawer '^Workouts History$' "drawer: a workout entry"
-    expect m-head-2-drawer '^Workout$' "drawer: the Workout group"
-    tap_entry '^Settings$' '^Save settings$' && shot m-head-3-settings
-    expect m-head-3-settings '^Load settings$' "settings page: Load settings in the header"
-    expect m-head-3-settings '^Back$' "settings page: the arrow is named Back"
-    if xy=$(python3 .github/uitap.py dumps/m-head-3-settings.xml '^Save settings$'); then
-      quick_shot m-head-4-save "$xy"
-      expect m-head-4-save '^Saved!.*' "Save settings toast"
+modern_head() {
+  local before after n
+  if start_case m-head true; then
+    if settings_open; then
+      shot m-head-1-settings
+      tap_ui '^General UI Options$' '^Workout History Charts$' && shot m-head-2-ui-open
+      tap_ui '^Workout History Charts$' '.*' 5 && { sleep 2; shot m-head-3-nested; }
+      adb shell input swipe 720 1700 720 1100 600 || true
+      sleep 2
+      adb shell input swipe 720 1700 720 1100 600 || true
+      sleep 2
+      shot m-head-4-sticky
+      n=$(count_top dumps/m-head-4-sticky.xml 'General UI Options')
+      echo "record m-head-4-sticky: 'General UI Options' nodes at the top: $n (the sticky copy over the page)" >> $STEPLOG
+      scroll_to '^Experimental Features$' && tap_ui '^Experimental Features$' '^Enable Virtual Device$' && {
+        scroll_to '^Enable Virtual Device$'
+        shot m-head-5-experimental
+        before=$(checked_of dumps/m-head-5-experimental.xml 'Enable Virtual Device')
+        xy=$(python3 .github/uitap.py ui.xml '^Enable Virtual Device$')
+        echo "tap the row Enable Virtual Device at $xy (checked $before)" >> $STEPLOG
+        adb shell input tap $xy || true
+        sleep 3
+        shot m-head-6-toggled
+        after=$(checked_of dumps/m-head-6-toggled.xml 'Enable Virtual Device')
+        if [ -n "$before" ] && [ -n "$after" ] && [ "$before" != "$after" ]; then
+          echo "check m-head-6-toggled: switch section turned by a tap on its row ($before -> $after): OK" >> $STEPLOG
+        else
+          echo "!! check m-head-6-toggled: switch section not turned ($before -> $after)" >> $STEPLOG; FAILED=1
+        fi
+        adb shell input tap $xy || true
+        sleep 3
+        dump; cp ui.xml dumps/m-head-6b-back.xml 2>/dev/null
+        echo "record: back to $(checked_of dumps/m-head-6b-back.xml 'Enable Virtual Device')" >> $STEPLOG
+      }
+      back_to "$HOME_RX"
+    fi
+    if settings_open; then
+      scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' '^Speed$' && shot m-head-7-tiles
+      back_to '^General Options$'
+      tap_ui '^Load settings$' '^Other folders$' && { tap_ui '^Settings folder$' '.*' 3; sleep 2; shot m-head-8-settingslist
+        expect m-head-8-settingslist '^t498-a$' "settings folder: the list shows its files"
+        back_to '^General Options$'; }
+      back_to "$HOME_RX"
+    fi
+    if open_drawer '^Profile: .*'; then
+      tap_ui '^Profile: .*' '^Profiles$' && { sleep 2; shot m-head-9-profiles
+        expect m-head-9-profiles '^t498-a$' "profiles: the list shows its files"; }
+      back_to "$HOME_RX"
     fi
   fi
-fi
-adb shell am force-stop $PKG || true
-if start_case b-head-modern true none; then
-  shot b-head-modern-1-home
-  expect_not b-head-modern-1-home '.*auto resistance' "no equipment: Auto resistance hidden"
-  blink b-head-modern
-fi
-adb shell am force-stop $PKG || true
-peloton p-head-modern true
-adb shell am force-stop $PKG || true
-# A long text in the modern card: the largest font scale and a doubled density (QZ keeps portrait,
-# user_rotation did not turn it), so the text of the question scrolls - its lines must end before
-# the scroll bar (UiMessageDialog rightPadding)
-adb shell settings put system font_scale 2.0 || true
-adb shell wm density 1120 || true
-sleep 3
-peloton p-head-modern-big true
-adb shell am force-stop $PKG || true
-adb shell settings put system font_scale 1.0 || true
-adb shell wm density reset || true
-adb shell am force-stop $PKG || true
+  adb shell am force-stop $PKG || true
+}
 
-# The real TalkBack on the modern look (T-322 in this PR): recipe and traps -
+# timing_case <case> <ui_modern>: settings 3 times, tiles 3 times
+timing_case() {
+  local i
+  start_case $1 $2 || return 1
+  for i in 1 2 3; do
+    echo "-- $1 settings $i" >> $STEPLOG
+    settings_open && back_to "$HOME_RX"
+  done
+  settings_open
+  scroll_to '^Tiles Options$'
+  for i in 1 2 3; do
+    echo "-- $1 tiles $i" >> $STEPLOG
+    tap_ui '^Tiles Options$' '^Speed$' && back_to '^General Options$'
+  done
+  adb shell am force-stop $PKG || true
+}
+
+if [ "$MODE" = timing ]; then
+  for side in base head; do
+    install_apk apk-$side/android-debug.apk
+    timing_case tc-$side false
+  done
+  timing_case tm-head true
+else
+  for side in base head; do
+    install_apk apk-$side/android-debug.apk
+    frames_side $side
+  done
+  modern_head
+fi
+
+if [ "$MODE" != timing ]; then
+# The real TalkBack on the modern section headers: recipe and traps -
 # notes/talkback-in-emulator-2026-10-15.md of the work folder; the driver is the one of T-199.
 # Last stage: adb root restarts adbd and ends the logcat above; uiautomator dumps switch TalkBack
-# off, so from here on only the driver ("focused '<name>'" after each gesture) and screencap.
+# off, so from here on only the driver ("focused '<name>'", "said:" after each gesture) and screencap.
 tb_check() {
-  if grep -q -E "^$1: focused '$2" drv/$3.txt; then
-    echo "check $1: $4: OK" >> $STEPLOG
-  else
-    echo "!! check $1: $4: no \"focused '$2\" in drv/$3.txt" >> $STEPLOG
-    FAILED=1
-  fi
-}
-tb_any() {
-  if grep -q -E "focused '($1)" drv/$2.txt; then
+  if grep -q -E "$1" drv/$2.txt; then
     echo "check $2: $3: OK" >> $STEPLOG
   else
-    echo "!! check $2: $3: no \"focused '$1\" in drv/$2.txt" >> $STEPLOG
+    echo "!! check $2: $3: no /$1/ in drv/$2.txt" >> $STEPLOG
     FAILED=1
   fi
 }
@@ -358,8 +397,7 @@ elif ! adb shell pm path $TBPKG > /dev/null 2>&1; then
 elif ! { javac -source 8 -target 8 -bootclasspath $JAR -d drv .github/A11yDriver.java >> $STEPLOG 2>&1 \
          && ${BT}d8 --lib $JAR --output a11y.jar drv/*.class >> $STEPLOG 2>&1; }; then
   echo "!! talkback: driver not built" >> $STEPLOG; FAILED=1
-elif start_case t-head-modern true fake; then
-  wait_ui '^Lock tiles$|^Unlock tiles$' 60 || echo "!! t-head-modern: no tile lock in 60 s" >> $STEPLOG
+elif start_case t-head true && settings_open; then
   adb push a11y.jar /data/local/tmp/a11y.jar > /dev/null
   drv() {
     local name=$1 args="" a
@@ -398,27 +436,15 @@ elif start_case t-head-modern true fake; then
   # the notification question of the suite comes over the app: bring QZ back
   adb shell am start -n $PKG/$PKG.CustomQtActivity >> $STEPLOG 2>&1 || true
   sleep 6
-  adb shell screencap -p /sdcard/t-head-modern-0-on.png && adb pull /sdcard/t-head-modern-0-on.png >> $STEPLOG 2>&1 || true
+  adb shell screencap -p /sdcard/t-head-0-on.png && adb pull /sdcard/t-head-0-on.png >> $STEPLOG 2>&1 || true
   drv t-list --keep list
-  # Header: a finger on the menu button, then swipes to the right along the header
-  drv t-head --keep 'touch:Main menu' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right'
-  tb_check 'touch:Main menu' 'Main menu' t-head "talkback: the menu button read by its name"
-  tb_any 'Lock tiles|Unlock tiles' t-head "talkback: the tiles lock reached by swipes"
-  # Double tap on the menu button opens the drawer; swipes go along its entries
-  # focus by the accessibility action: a second touch by the driver left the focus on Pause (run
-  # 42521352123), and the double tap then paused the workout
-  drv t-drawer --keep 'focus:Main menu' 'sleep:1500' 'focused' 'dtap' 'sleep:2000' 'swipe:right' 'swipe:right' 'swipe:right' \
-    'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right'
-  adb shell screencap -p /sdcard/t-head-modern-1-drawer.png && adb pull /sdcard/t-head-modern-1-drawer.png >> $STEPLOG 2>&1 || true
-  tb_check 'focused' 'Main menu' t-drawer "talkback: the focus is on the menu button before the double tap"
-  # run 42522512090: the drawer opened, but the swipes after it went along the page under it
-  # (open item of T-322) - recorded, not a check. An entry by touch, then a double tap opens its page
-  drv t-entry --keep 'find:Settings' 'touch:Settings' 'dtap' 'sleep:4000' 'find:Save settings' 'find:Load settings'
-  adb shell screencap -p /sdcard/t-head-modern-2-entry.png && adb pull /sdcard/t-head-modern-2-entry.png >> $STEPLOG 2>&1 || true
-  # Run 42523869022: the entries are visible=false with empty bounds, the touch focuses the tile under
-  # the menu (T-265, the same on the classic master) - recorded, not a check. "find:Save settings"
-  # alone proves nothing: the hidden header button is in the tree too, look at visible=true
-  echo "== record t-entry (T-265, not a check of this PR): $(grep -E '^touch:Settings: focused' drv/t-entry.txt | cut -c1-80)" >> $STEPLOG
+  # A section header by touch: its name and its state; a double tap opens it, the state is said again
+  drv t-section --keep 'touch:General Options' 'sleep:1500' 'focused' 'dtap' 'sleep:2500' 'focused' 'find:App Language'
+  adb shell screencap -p /sdcard/t-head-1-open.png && adb pull /sdcard/t-head-1-open.png >> $STEPLOG 2>&1 || true
+  tb_check "^touch:General Options: focused 'General Options" t-section "talkback: the section header read by its name"
+  # the speech overlay came empty in the runs of T-487 ("said []"): the state is recorded, not checked
+  echo "== record t-section said: $(grep -E ': said ' drv/t-section.txt | tr '\n' ' ' | cut -c1-300)" >> $STEPLOG
+  tb_check "^find:App Language.*visible=true" t-section "talkback: the double tap opened the section (its first setting visible)"
   mkdir -p drv/shots
   adb pull /data/local/tmp/tbshots/. drv/shots >> $STEPLOG 2>&1 || true
   echo "== talkback off" >> $STEPLOG
@@ -427,19 +453,50 @@ elif start_case t-head-modern true fake; then
   adb shell settings put secure accessibility_enabled 0 >> $STEPLOG 2>&1
   adb shell am force-stop $PKG || true
 fi
+fi
 
 kill $LOGCAT_PID 2>/dev/null || true
 wait $LOGCAT_PID 2>/dev/null || true
 [ -f tb_logcat.txt ] && cat tb_logcat.txt >> full_logcat.txt
-echo "== QML errors of main.qml / UiDrawerItem.qml (for reading):" >> $STEPLOG
-grep -a -E "(main|UiDrawerItem)\.qml.*(TypeError|ReferenceError|Error)" full_logcat.txt | sed 's/.*qDomyos-Zwift: //' | sort | uniq -c | head -n 20 >> $STEPLOG || true
+if [ "$MODE" = timing ]; then
+  echo "== timing (ms from the tap to the end of the page creation, per process):" >> $STEPLOG
+  python3 - full_logcat.txt >> $STEPLOG << 'EOF'
+import sys
+rows = {}
+start = {}
+for line in open(sys.argv[1], errors='replace'):
+    i = line.find('QZ-TIMING ')
+    if i < 0:
+        continue
+    f = line.split()
+    pid = f[2] if len(f) > 2 else '?'
+    w = line[i + 10:].split()
+    if len(w) < 3:
+        continue
+    what, page, ms = w[0], w[1], w[-1]
+    try:
+        ms = int(ms)
+    except ValueError:
+        continue
+    if what == 'push':
+        start[(pid, page)] = ms
+    elif what == 'done' and (pid, page) in start:
+        rows.setdefault((pid, page), []).append(ms - start.pop((pid, page)))
+if not rows:
+    print('!! no QZ-TIMING pairs - the timing run proves nothing')
+for (pid, page), v in sorted(rows.items()):
+    print('pid %s %s: %s' % (pid, page, ' '.join(str(x) for x in v)))
+EOF
+  grep -q -E "^pid [0-9]+ (settings|tiles):" $STEPLOG || FAILED=1
+fi
+echo "== QML errors of the section files (for reading):" >> $STEPLOG
+grep -a -E "(AccordionElement|AccordionCheckElement|StaticAccordionElement|NewPageElement|UiSectionHeader|UiStickyHeader|UiSettingFrames|settings|settings-tiles|profiles|SettingsList)\.qml.*(TypeError|ReferenceError|Error|Binding loop)" full_logcat.txt | sed 's/.*qDomyos-Zwift: //' | sort | uniq -c | head -n 30 >> $STEPLOG || true
 echo "== ANR / crash in the whole log:" >> $STEPLOG
-# QZ only: an ANR of the launcher before the start (run 42517980949) is not the app's
 if grep -a -E "ANR in $PKG|Process: $PKG,|Fatal signal.*qdomyoszwift" full_logcat.txt >> $STEPLOG; then
   echo "!! check log: ANR or crash" >> $STEPLOG; FAILED=1
 else
   echo "none" >> $STEPLOG
 fi
-grep -q "^check " $STEPLOG || { echo "!! no check ran: the run proves nothing" >> $STEPLOG; FAILED=1; }
+grep -q -E "^check |^pid .*: [0-9]" $STEPLOG || { echo "!! no check ran: the run proves nothing" >> $STEPLOG; FAILED=1; }
 cat $STEPLOG
 exit $FAILED
