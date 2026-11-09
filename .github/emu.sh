@@ -1,15 +1,15 @@
 #!/bin/bash
 # Test only (T-498, PR-5: settings sections of the modern look). Two APKs on one emulator:
 # apk-base - origin/master of the same commit, apk-head - the PR. MODE=frames (default):
-#  c-<side>: classic look with a fake treadmill - the settings page (closed, General Options open,
-#            Experimental Features open with the Enable Virtual Device switch section), the tiles page,
+#  c-<side>: classic look with a fake treadmill - the settings page (closed, General Options open),
+#            the tiles page (91 switch sections),
 #            the settings folder (Load settings) and the profiles page - frames compared base against
 #            head afterwards (the classic look must not change). The two list pages give their only
 #            section the rest of the page for a list without a height of its own: the list must show
 #            its files (t498-a, t498-b put there by the run);
 #  m-head:   modern look of the PR: section cards, a nested section, the sticky copy of an open
-#            section header while scrolling, the switch section (Enable Virtual Device) turned by a
-#            tap on its row and back, the tiles page, the two list pages;
+#            section header while scrolling, the tiles page with a switch section (Speed) turned by
+#            a tap on its row and back, the two list pages;
 #  t-head:   the real TalkBack (image API 35) on the modern section headers: name, state said
 #            (Collapsed / Expanded), double tap opens the section.
 # MODE=timing: the settings and the tiles page opened 3 times per side and look; the builds carry a
@@ -287,10 +287,6 @@ frames_side() {
       shot c-$side-1-settings
       tap_ui '^General Options$' '^App Language:$' && shot c-$side-2-general
       back_to "$HOME_RX"
-      settings_open
-      scroll_to '^Experimental Features$' 60 && tap_ui '^Experimental Features$' '^Enable Virtual Device$' && {
-        scroll_to '^Enable Virtual Device$'; shot c-$side-3-experimental; }
-      back_to "$HOME_RX"
     fi
     if settings_open; then
       scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' '^Speed$' && shot c-$side-4-tiles
@@ -343,17 +339,16 @@ modern_head() {
       n=$(count_top dumps/m-head-4-sticky.xml 'General UI Options')
       echo "record m-head-4-sticky: 'General UI Options' nodes at the top: $n (the sticky copy over the page)" >> $STEPLOG
       back_to "$HOME_RX"
-      settings_open
-      scroll_to '^Experimental Features$' 60 && tap_ui '^Experimental Features$' '^Enable Virtual Device$' && {
-        scroll_to '^Enable Virtual Device$'
-        shot m-head-5-experimental
-        before=$(checked_of dumps/m-head-5-experimental.xml 'Enable Virtual Device')
-        xy=$(python3 .github/uitap.py ui.xml '^Enable Virtual Device$')
-        echo "tap the row Enable Virtual Device at $xy (checked $before)" >> $STEPLOG
+    fi
+    if settings_open; then
+      scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' '^Speed$' && { shot m-head-7-tiles
+        before=$(checked_of dumps/m-head-7-tiles.xml 'Speed')
+        xy=$(python3 .github/uitap.py ui.xml '^Speed$')
+        echo "tap the row Speed at $xy (checked $before)" >> $STEPLOG
         adb shell input tap $xy || true
         sleep 3
         shot m-head-6-toggled
-        after=$(checked_of dumps/m-head-6-toggled.xml 'Enable Virtual Device')
+        after=$(checked_of dumps/m-head-6-toggled.xml 'Speed')
         if [ -n "$before" ] && [ -n "$after" ] && [ "$before" != "$after" ]; then
           echo "check m-head-6-toggled: switch section turned by a tap on its row ($before -> $after): OK" >> $STEPLOG
         else
@@ -362,12 +357,8 @@ modern_head() {
         adb shell input tap $xy || true
         sleep 3
         dump; cp ui.xml dumps/m-head-6b-back.xml 2>/dev/null
-        echo "record: back to $(checked_of dumps/m-head-6b-back.xml 'Enable Virtual Device')" >> $STEPLOG
+        echo "record: back to $(checked_of dumps/m-head-6b-back.xml 'Speed')" >> $STEPLOG
       }
-      back_to "$HOME_RX"
-    fi
-    if settings_open; then
-      scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' '^Speed$' && shot m-head-7-tiles
       back_to '^General Options$'
       tap_ui '^Load settings$' '^Other folders$' && { sleep 2; shot m-head-8a-settingslist-before
         tap_ui '^Settings folder$' '.*' 3; sleep 2; shot m-head-8-settingslist
