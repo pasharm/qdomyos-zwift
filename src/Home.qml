@@ -712,6 +712,21 @@ HomeForm {
         anchors.bottom: parent.bottom
         clip: true
         visible: rootItem.chartFooterVisible || rootItem.videoVisible
+        // TEST ONLY (T-494): keep the chart under the tiles on (homeform turns it off when a
+        // program without a target chart loads), log every switch
+        Timer {
+            interval: 2000
+            running: true
+            repeat: true
+            onTriggered: {
+                if (typeof rootItem === "undefined" || !rootItem)
+                    return
+                if (!rootItem.chartFooterVisible) {
+                    rootItem.chartFooterVisible = true
+                    console.log("T494 chart footer on")
+                }
+            }
+        }
 
         Rectangle {
             id: dragHandle
