@@ -4500,6 +4500,18 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
 아니요: QZ가 계속 트레드밀로 사용하며 다시 묻지 않습니다(자전거는 [Fitplus 자전거 옵션]의 [Fit Plus 자전거]에서 직접 설정할 수 있습니다).</translation>
     </message>
     <message>
+        <source>Back</source>
+        <translation>뒤로</translation>
+    </message>
+    <message>
+        <source>Main menu</source>
+        <translation>메인 메뉴</translation>
+    </message>
+    <message>
+        <source>Floating window</source>
+        <translation>플로팅 창</translation>
+    </message>
+    <message>
         <source>Auto Resistance enabled</source>
         <translation>자동 저항 켜짐</translation>
     </message>
@@ -4516,12 +4528,44 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>타일이 고정되었습니다</translation>
     </message>
     <message>
+        <source>Load settings</source>
+        <translation>설정 불러오기</translation>
+    </message>
+    <message>
         <source>Search settings</source>
         <translation>설정 검색</translation>
     </message>
     <message>
+        <source>Save settings</source>
+        <translation>설정 저장</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>지도</translation>
+    </message>
+    <message>
+        <source>Chart</source>
+        <translation>그래프</translation>
+    </message>
+    <message>
         <source>Share FIT file</source>
         <translation>FIT 파일 공유</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>타일 고정</translation>
+    </message>
+    <message>
+        <source>Unlock tiles</source>
+        <translation>타일 고정 해제</translation>
+    </message>
+    <message>
+        <source>Disable auto resistance</source>
+        <translation>자동 저항 끄기</translation>
+    </message>
+    <message>
+        <source>Enable auto resistance</source>
+        <translation>자동 저항 켜기</translation>
     </message>
     <message>
         <source>Profile: </source>
@@ -4582,6 +4626,34 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <source>Quit</source>
         <translation>종료</translation>
+    </message>
+    <message>
+        <source>Disconnect from Strava</source>
+        <translation>Strava 연결 해제</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>Strava 연결</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>Peloton 연결 해제</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>Peloton 연결</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Garmin Connect 설정</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>Intervals.icu 연결 해제</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>Intervals.icu 연결</translation>
     </message>
     <message>
         <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
@@ -5996,6 +6068,22 @@ QZ가 이 값을 변경하도록 허용하시겠습니까?
         <translation>통신 속도(보드레이트):</translation>
     </message>
     <message>
+        <source>Daum Bike Options</source>
+        <translation>Daum 자전거 옵션</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>8008 TRS 3 같은 기존 Daum 에르고미터에 사용하는 직렬 포트입니다. Android에서 USB-직렬 어댑터를 사용할 경우 &apos;usb&apos;를 입력하세요. COM1, COM2 등은 Android에서 USB 어댑터 검색을 위한 별칭으로 허용되지만 Android 포트 이름은 아닙니다. Windows에서는 COM1 또는 COM3을, Linux/macOS에서는 /dev/ttyUSB0 같은 직렬 장치 경로를 사용하세요.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>저항 조회 지연:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>경사 지연 설정을 사용해 QZ가 Daum에 저항 및 파워 업데이트를 보내는 빈도를 제한합니다. 기본값: 0초.</translation>
+    </message>
+    <message>
         <source>Freebeat Bike Options</source>
         <translation>Freebeat 자전거 옵션</translation>
     </message>
@@ -7065,6 +7153,14 @@ Please enter it below:</source>
     <message>
         <source>Speed</source>
         <translation>속도</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>경사 필터 (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>GPX 운동에서 이 값보다 작은 경사 변화는 무시하고, 마지막으로 전송한 값과의 차이가 설정된 임계값에 도달했을 때만 새 경사 명령을 보냅니다. 기본값: 0(비활성화).</translation>
     </message>
     <message>
         <source>Echelon Options</source>

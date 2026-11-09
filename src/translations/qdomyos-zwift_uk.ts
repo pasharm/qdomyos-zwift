@@ -4503,6 +4503,18 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
 Ні: QZ залишить його біговою доріжкою й більше не питатиме (велотренажер можна задати вручну: «Велотренажер Fit Plus» у «Параметри велотренажера Fitplus»).</translation>
     </message>
     <message>
+        <source>Back</source>
+        <translation>Назад</translation>
+    </message>
+    <message>
+        <source>Main menu</source>
+        <translation>Головне меню</translation>
+    </message>
+    <message>
+        <source>Floating window</source>
+        <translation>Плаваюче вікно</translation>
+    </message>
+    <message>
         <source>Auto Resistance enabled</source>
         <translation>Автоопір увімкнено</translation>
     </message>
@@ -4519,12 +4531,44 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>Плитки закріплено</translation>
     </message>
     <message>
+        <source>Load settings</source>
+        <translation>Завантажити налаштування</translation>
+    </message>
+    <message>
         <source>Search settings</source>
         <translation>Пошук налаштувань</translation>
     </message>
     <message>
+        <source>Save settings</source>
+        <translation>Зберегти налаштування</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>Карта</translation>
+    </message>
+    <message>
+        <source>Chart</source>
+        <translation>Графік</translation>
+    </message>
+    <message>
         <source>Share FIT file</source>
         <translation>Поділитися файлом FIT</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Закріпити плитки</translation>
+    </message>
+    <message>
+        <source>Unlock tiles</source>
+        <translation>Відкріпити плитки</translation>
+    </message>
+    <message>
+        <source>Disable auto resistance</source>
+        <translation>Вимкнути автоопір</translation>
+    </message>
+    <message>
+        <source>Enable auto resistance</source>
+        <translation>Увімкнути автоопір</translation>
     </message>
     <message>
         <source>Profile: </source>
@@ -4585,6 +4629,34 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <message>
         <source>Quit</source>
         <translation>Вийти</translation>
+    </message>
+    <message>
+        <source>Disconnect from Strava</source>
+        <translation>Від’єднати Strava</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>Під’єднати Strava</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>Від’єднати Peloton</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>Під’єднати Peloton</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Налаштування Garmin Connect</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>Від’єднати Intervals.icu</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>Під’єднати Intervals.icu</translation>
     </message>
     <message>
         <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
@@ -5923,6 +5995,22 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
         <translation>Швидкість порту (бод):</translation>
     </message>
     <message>
+        <source>Daum Bike Options</source>
+        <translation>Параметри велосипеда Daum</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>Послідовний порт для класичних велоергометрів Daum, наприклад 8008 TRS 3. На Android з перехідником USB–послідовний порт використовуйте &apos;usb&apos;. COM1, COM2 тощо приймаються як псевдоніми для пошуку USB-адаптера, але це не назви портів Android. На Windows використовуйте COM1 або COM3, на Linux/macOS — шлях до послідовного пристрою, наприклад /dev/ttyUSB0.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Затримка опитування опору:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>Використовує налаштування затримки нахилу, щоб обмежити частоту надсилання оновлень опору й потужності до Daum. Типово: 0 секунд.</translation>
+    </message>
+    <message>
         <source>Freebeat Bike Options</source>
         <translation>Параметри велотренажера Freebeat</translation>
     </message>
@@ -7184,6 +7272,14 @@ Please enter it below:</source>
     <message>
         <source>During the first 5 minutes after the fitness machine connects, while no heart rate comes, QZ searches for a heart rate sensor once a minute: it connects the chosen heart belt as soon as it is found or, with none chosen, offers one found nearby. A tap on the heart rate tile or the Bluetooth icon on the home page searches at any time.</source>
         <translation>У перші 5 хвилин після під’єднання тренажера, поки пульсу немає, QZ раз на хвилину шукає пульсометр: вибраний під’єднує, щойно знайде, а якщо пульсометр не вибрано, пропонує знайдений поруч. Натискання на плитку пульсу або значок Bluetooth на головній запускає пошук будь-коли.</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Фільтр нахилу (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>У тренуваннях GPX зміни нахилу, менші за це значення, ігноруються. Нова команда надсилається лише тоді, коли різниця від останнього надісланого значення досягає встановленого порога. Типово: 0 (вимкнено).</translation>
     </message>
     <message>
         <source>RunnerT Options</source>

@@ -4477,6 +4477,18 @@ Möchten Sie für diese Sitzung zur klassischen Bluetooth-Brücke wechseln?</tra
         <translation>Sie sind bereits mit Intervals.icu verbunden. Möchten Sie sich abmelden?</translation>
     </message>
     <message>
+        <source>Back</source>
+        <translation>Zurück</translation>
+    </message>
+    <message>
+        <source>Main menu</source>
+        <translation>Hauptmenü</translation>
+    </message>
+    <message>
+        <source>Floating window</source>
+        <translation>Schwebendes Fenster</translation>
+    </message>
+    <message>
         <source>Auto Resistance enabled</source>
         <translation>Auto-Widerstand aktiviert</translation>
     </message>
@@ -4493,12 +4505,44 @@ Möchten Sie für diese Sitzung zur klassischen Bluetooth-Brücke wechseln?</tra
         <translation>Die Kacheln sind jetzt gesperrt</translation>
     </message>
     <message>
+        <source>Load settings</source>
+        <translation>Einstellungen laden</translation>
+    </message>
+    <message>
         <source>Search settings</source>
         <translation>Einstellungen suchen</translation>
     </message>
     <message>
+        <source>Save settings</source>
+        <translation>Einstellungen speichern</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>Karte</translation>
+    </message>
+    <message>
+        <source>Chart</source>
+        <translation>Diagramm</translation>
+    </message>
+    <message>
         <source>Share FIT file</source>
         <translation>FIT-Datei teilen</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Kacheln sperren</translation>
+    </message>
+    <message>
+        <source>Unlock tiles</source>
+        <translation>Kacheln entsperren</translation>
+    </message>
+    <message>
+        <source>Disable auto resistance</source>
+        <translation>Auto-Widerstand deaktivieren</translation>
+    </message>
+    <message>
+        <source>Enable auto resistance</source>
+        <translation>Auto-Widerstand aktivieren</translation>
     </message>
     <message>
         <source>Profile: </source>
@@ -4643,6 +4687,34 @@ Nein: QZ behandelt es weiter als Laufband und fragt nicht erneut (ein Fahrrad l�
     <message>
         <source>Please choose a file</source>
         <translation>Bitte wählen Sie eine Datei</translation>
+    </message>
+    <message>
+        <source>Disconnect from Strava</source>
+        <translation>Von Strava trennen</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>Mit Strava verbinden</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>Von Peloton trennen</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>Mit Peloton verbinden</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Garmin Connect-Einstellungen</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>Von Intervals.icu trennen</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>Mit Intervals.icu verbinden</translation>
     </message>
     <message>
         <source>Workout</source>
@@ -5629,6 +5701,22 @@ Darf QZ diesen Wert ändern?
     <message>
         <source>Baudrate:</source>
         <translation>Baudrate:</translation>
+    </message>
+    <message>
+        <source>Daum Bike Options</source>
+        <translation>Daum-Fahrradoptionen</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>Serieller Anschluss für klassische Daum-Ergometer wie das 8008 TRS 3. Unter Android mit USB-Seriell-Adapter &apos;usb&apos; verwenden. COM1, COM2 usw. werden unter Android als Aliase für die USB-Adaptersuche akzeptiert, sind aber keine Android-Portnamen. Unter Windows COM1 oder COM3 verwenden; unter Linux/macOS den Gerätepfad, z. B. /dev/ttyUSB0.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Abfrageintervall für Widerstand:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>Verwendet die Einstellung für die Steigungsverzögerung, um die Häufigkeit der Widerstands- und Leistungsaktualisierungen an Daum zu begrenzen. Standard: 0 Sekunden.</translation>
     </message>
     <message>
         <source>Freebeat Bike Options</source>
@@ -7592,6 +7680,14 @@ Bitte geben Sie ihn unten ein:</translation>
     <message>
         <source>Off</source>
         <translation>Aus</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Steigungsfilter (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>Bei GPX-Trainings werden Steigungsänderungen unter diesem Wert ignoriert. Ein neuer Steigungsbefehl wird erst gesendet, wenn die Abweichung vom zuletzt gesendeten Wert den festgelegten Schwellenwert erreicht. Standard: 0 (deaktiviert).</translation>
     </message>
     <message>
         <source>3 seconds</source>

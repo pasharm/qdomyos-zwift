@@ -4503,6 +4503,18 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
 Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog steeds handmatig instellen: ‘Fit Plus-fiets’ in ‘Fitplus-fietsopties’).</translation>
     </message>
     <message>
+        <source>Back</source>
+        <translation>Terug</translation>
+    </message>
+    <message>
+        <source>Main menu</source>
+        <translation>Hoofdmenu</translation>
+    </message>
+    <message>
+        <source>Floating window</source>
+        <translation>Zwevend venster</translation>
+    </message>
+    <message>
         <source>Auto Resistance enabled</source>
         <translation>Automatische weerstand ingeschakeld</translation>
     </message>
@@ -4519,12 +4531,44 @@ Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog 
         <translation>De tegels zijn nu vergrendeld</translation>
     </message>
     <message>
+        <source>Load settings</source>
+        <translation>Instellingen laden</translation>
+    </message>
+    <message>
         <source>Search settings</source>
         <translation>Instellingen zoeken</translation>
     </message>
     <message>
+        <source>Save settings</source>
+        <translation>Instellingen opslaan</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>Kaart</translation>
+    </message>
+    <message>
+        <source>Chart</source>
+        <translation>Grafiek</translation>
+    </message>
+    <message>
         <source>Share FIT file</source>
         <translation>FIT-bestand delen</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Tegels vergrendelen</translation>
+    </message>
+    <message>
+        <source>Unlock tiles</source>
+        <translation>Tegels ontgrendelen</translation>
+    </message>
+    <message>
+        <source>Disable auto resistance</source>
+        <translation>Automatische weerstand uitschakelen</translation>
+    </message>
+    <message>
+        <source>Enable auto resistance</source>
+        <translation>Automatische weerstand inschakelen</translation>
     </message>
     <message>
         <source>Profile: </source>
@@ -4585,6 +4629,34 @@ Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog 
     <message>
         <source>Quit</source>
         <translation>Afsluiten</translation>
+    </message>
+    <message>
+        <source>Disconnect from Strava</source>
+        <translation>Verbinding met Strava verbreken</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>Verbinden met Strava</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>Verbinding met Peloton verbreken</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>Verbinden met Peloton</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Garmin Connect-instellingen</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>Verbinding met Intervals.icu verbreken</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>Verbinden met Intervals.icu</translation>
     </message>
     <message>
         <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
@@ -5999,6 +6071,22 @@ Mag QZ deze waarde wijzigen?
         <translation>Baudrate:</translation>
     </message>
     <message>
+        <source>Daum Bike Options</source>
+        <translation>Daum-fietsopties</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>Seriële poort voor klassieke Daum-ergometers, zoals de 8008 TRS 3. Gebruik op Android met een USB-naar-serieel-adapter &apos;usb&apos;. COM1, COM2 enzovoort worden op Android geaccepteerd als aliassen voor het zoeken naar de USB-adapter, maar zijn geen Android-poortnamen. Gebruik op Windows COM1 of COM3; op Linux/macOS het pad naar het seriële apparaat, bijvoorbeeld /dev/ttyUSB0.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Vertraging tussen weerstandsmetingen:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>Gebruikt de instelling Hellingvertraging om te beperken hoe vaak QZ weerstands- en vermogensupdates naar Daum stuurt. Standaard: 0 seconden.</translation>
+    </message>
+    <message>
         <source>Freebeat Bike Options</source>
         <translation>Freebeat-fietsopties</translation>
     </message>
@@ -7068,6 +7156,14 @@ Voer de code hieronder in:</translation>
     <message>
         <source>Speed</source>
         <translation>Snelheid</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Hellingsfilter (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>Negeert bij GPX-trainingen hellingsveranderingen kleiner dan deze waarde. Een nieuwe opdracht wordt pas verzonden wanneer het verschil met de laatst verzonden waarde de ingestelde drempel bereikt. Standaard: 0 (uitgeschakeld).</translation>
     </message>
     <message>
         <source>Echelon Options</source>

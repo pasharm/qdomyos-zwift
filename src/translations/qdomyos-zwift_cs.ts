@@ -4503,6 +4503,18 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
 Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nastavit ručně: „Kolo Fit Plus“ v části „Možnosti kola Fitplus“).</translation>
     </message>
     <message>
+        <source>Back</source>
+        <translation>Zpět</translation>
+    </message>
+    <message>
+        <source>Main menu</source>
+        <translation>Hlavní nabídka</translation>
+    </message>
+    <message>
+        <source>Floating window</source>
+        <translation>Plovoucí okno</translation>
+    </message>
+    <message>
         <source>Auto Resistance enabled</source>
         <translation>Automatický odpor zapnut</translation>
     </message>
@@ -4519,12 +4531,44 @@ Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nasta
         <translation>Dlaždice jsou nyní uzamčeny</translation>
     </message>
     <message>
+        <source>Load settings</source>
+        <translation>Načíst nastavení</translation>
+    </message>
+    <message>
         <source>Search settings</source>
         <translation>Hledat v nastavení</translation>
     </message>
     <message>
+        <source>Save settings</source>
+        <translation>Uložit nastavení</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>Mapa</translation>
+    </message>
+    <message>
+        <source>Chart</source>
+        <translation>Graf</translation>
+    </message>
+    <message>
         <source>Share FIT file</source>
         <translation>Sdílet soubor FIT</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Zamknout dlaždice</translation>
+    </message>
+    <message>
+        <source>Unlock tiles</source>
+        <translation>Odemknout dlaždice</translation>
+    </message>
+    <message>
+        <source>Disable auto resistance</source>
+        <translation>Vypnout automatický odpor</translation>
+    </message>
+    <message>
+        <source>Enable auto resistance</source>
+        <translation>Zapnout automatický odpor</translation>
     </message>
     <message>
         <source>Profile: </source>
@@ -4585,6 +4629,34 @@ Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nasta
     <message>
         <source>Quit</source>
         <translation>Ukončit</translation>
+    </message>
+    <message>
+        <source>Disconnect from Strava</source>
+        <translation>Odpojit Stravu</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>Připojit Stravu</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>Odpojit Peloton</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>Připojit Peloton</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Nastavení Garmin Connect</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>Odpojit Intervals.icu</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>Připojit Intervals.icu</translation>
     </message>
     <message>
         <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
@@ -5999,6 +6071,22 @@ Povolit QZ tuto hodnotu měnit?
         <translation>Přenosová rychlost (Bd):</translation>
     </message>
     <message>
+        <source>Daum Bike Options</source>
+        <translation>Možnosti kola Daum</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>Sériový port používaný klasickými ergometry Daum, například 8008 TRS 3. V Androidu s adaptérem USB–sériový port použijte &apos;usb&apos;. COM1, COM2 atd. fungují v Androidu jako aliasy pro vyhledání USB adaptéru, nejsou to však názvy portů Androidu. Ve Windows použijte COM1 nebo COM3; v Linuxu/macOS cestu k sériovému zařízení, například /dev/ttyUSB0.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Interval dotazování na odpor:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>Používá nastavení Zpoždění sklonu k omezení četnosti odesílání aktualizací odporu a výkonu zařízení Daum. Výchozí hodnota: 0 sekund.</translation>
+    </message>
+    <message>
         <source>Freebeat Bike Options</source>
         <translation>Možnosti kola Freebeat</translation>
     </message>
@@ -7068,6 +7156,14 @@ Zadejte ho níže:</translation>
     <message>
         <source>Speed</source>
         <translation>Rychlost</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Filtr sklonu (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>Při trénincích GPX ignoruje změny sklonu menší než tato hodnota a nový příkaz odešle až tehdy, když rozdíl oproti poslední odeslané hodnotě dosáhne nastaveného prahu. Výchozí hodnota: 0 (vypnuto).</translation>
     </message>
     <message>
         <source>Echelon Options</source>

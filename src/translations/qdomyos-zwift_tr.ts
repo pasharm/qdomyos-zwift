@@ -4503,6 +4503,18 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
 Hayır: QZ cihazı koşu bandı olarak tutar ve bir daha sormaz (bisiklet yine elle ayarlanabilir: &quot;Fitplus bisiklet seçenekleri&quot; bölümündeki &quot;Fit Plus bisiklet&quot;).</translation>
     </message>
     <message>
+        <source>Back</source>
+        <translation>Geri</translation>
+    </message>
+    <message>
+        <source>Main menu</source>
+        <translation>Ana menü</translation>
+    </message>
+    <message>
+        <source>Floating window</source>
+        <translation>Kayan pencere</translation>
+    </message>
+    <message>
         <source>Auto Resistance enabled</source>
         <translation>Otomatik direnç açıldı</translation>
     </message>
@@ -4519,12 +4531,44 @@ Hayır: QZ cihazı koşu bandı olarak tutar ve bir daha sormaz (bisiklet yine e
         <translation>Kutucuklar artık kilitli</translation>
     </message>
     <message>
+        <source>Load settings</source>
+        <translation>Ayarları yükle</translation>
+    </message>
+    <message>
         <source>Search settings</source>
         <translation>Ayarlarda ara</translation>
     </message>
     <message>
+        <source>Save settings</source>
+        <translation>Ayarları kaydet</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>Harita</translation>
+    </message>
+    <message>
+        <source>Chart</source>
+        <translation>Grafik</translation>
+    </message>
+    <message>
         <source>Share FIT file</source>
         <translation>FIT dosyasını paylaş</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Kutucukları kilitle</translation>
+    </message>
+    <message>
+        <source>Unlock tiles</source>
+        <translation>Kutucukların kilidini aç</translation>
+    </message>
+    <message>
+        <source>Disable auto resistance</source>
+        <translation>Otomatik direnci kapat</translation>
+    </message>
+    <message>
+        <source>Enable auto resistance</source>
+        <translation>Otomatik direnci aç</translation>
     </message>
     <message>
         <source>Profile: </source>
@@ -4585,6 +4629,34 @@ Hayır: QZ cihazı koşu bandı olarak tutar ve bir daha sormaz (bisiklet yine e
     <message>
         <source>Quit</source>
         <translation>Çıkış</translation>
+    </message>
+    <message>
+        <source>Disconnect from Strava</source>
+        <translation>Strava bağlantısını kes</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>Strava&apos;ya bağlan</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>Peloton bağlantısını kes</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>Peloton&apos;a bağlan</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Garmin Connect ayarları</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>Intervals.icu bağlantısını kes</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>Intervals.icu&apos;ya bağlan</translation>
     </message>
     <message>
         <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
@@ -5999,6 +6071,22 @@ QZ&apos;nin bu değeri değiştirmesine izin verilsin mi?
         <translation>Baud hızı:</translation>
     </message>
     <message>
+        <source>Daum Bike Options</source>
+        <translation>Daum Bisiklet Seçenekleri</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>8008 TRS 3 gibi klasik Daum ergometreleri için kullanılan seri bağlantı noktası. Android&apos;de USB-seri adaptörü ile &apos;usb&apos; kullanın. COM1, COM2 vb. Android&apos;de USB adaptörünü taramak için takma ad olarak kabul edilir ancak Android bağlantı noktası adları değildir. Windows&apos;ta COM1 veya COM3; Linux/macOS&apos;te /dev/ttyUSB0 gibi seri aygıt yolu kullanın.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Direnç sorgulama gecikmesi:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>QZ&apos;nin Daum&apos;a direnç ve güç güncellemelerini gönderme sıklığını sınırlamak için Eğim Gecikmesi ayarını kullanır. Varsayılan: 0 saniye.</translation>
+    </message>
+    <message>
         <source>Freebeat Bike Options</source>
         <translation>Freebeat bisiklet seçenekleri</translation>
     </message>
@@ -7068,6 +7156,14 @@ Kodu aşağıya girin:</translation>
     <message>
         <source>Speed</source>
         <translation>Hız</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Eğim Filtresi (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>GPX antrenmanlarında bu değerden küçük eğim değişikliklerini yok sayar ve yalnızca son gönderilen değere göre fark ayarlanan eşiğe ulaştığında yeni eğim komutu gönderir. Varsayılan: 0 (devre dışı).</translation>
     </message>
     <message>
         <source>Echelon Options</source>

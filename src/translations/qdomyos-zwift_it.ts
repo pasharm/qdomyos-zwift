@@ -4473,6 +4473,18 @@ Vuoi passare al bridge Bluetooth classico per questa sessione?</translation>
         <translation>Sei già connesso a Intervals.icu. Vuoi effettuare il logout?</translation>
     </message>
     <message>
+        <source>Back</source>
+        <translation>Indietro</translation>
+    </message>
+    <message>
+        <source>Main menu</source>
+        <translation>Menu principale</translation>
+    </message>
+    <message>
+        <source>Floating window</source>
+        <translation>Finestra flottante</translation>
+    </message>
+    <message>
         <source>Auto Resistance enabled</source>
         <translation>Resistenza automatica attivata</translation>
     </message>
@@ -4489,12 +4501,44 @@ Vuoi passare al bridge Bluetooth classico per questa sessione?</translation>
         <translation>Le piastrelle sono bloccate ora</translation>
     </message>
     <message>
+        <source>Load settings</source>
+        <translation>Carica impostazioni</translation>
+    </message>
+    <message>
         <source>Search settings</source>
         <translation>Cerca impostazioni</translation>
     </message>
     <message>
+        <source>Save settings</source>
+        <translation>Salva impostazioni</translation>
+    </message>
+    <message>
+        <source>Map</source>
+        <translation>Mappa</translation>
+    </message>
+    <message>
+        <source>Chart</source>
+        <translation>Grafico</translation>
+    </message>
+    <message>
         <source>Share FIT file</source>
         <translation>Condividi file FIT</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Blocca piastrelle</translation>
+    </message>
+    <message>
+        <source>Unlock tiles</source>
+        <translation>Sblocca piastrelle</translation>
+    </message>
+    <message>
+        <source>Disable auto resistance</source>
+        <translation>Disattiva resistenza automatica</translation>
+    </message>
+    <message>
+        <source>Enable auto resistance</source>
+        <translation>Attiva resistenza automatica</translation>
     </message>
     <message>
         <source>Profile: </source>
@@ -4643,6 +4687,34 @@ No: QZ lo mantiene come tapis roulant e non lo chiederà più (la bici si può c
     <message>
         <source>Please choose a file</source>
         <translation>Scegli un file</translation>
+    </message>
+    <message>
+        <source>Disconnect from Strava</source>
+        <translation>Disconnetti da Strava</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>Connetti con Strava</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>Disconnetti da Peloton</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>Connetti con Peloton</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Impostazioni Garmin Connect</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>Disconnetti da Intervals.icu</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>Connetti con Intervals.icu</translation>
     </message>
     <message>
         <source>Workout</source>
@@ -6352,6 +6424,22 @@ Consentire a QZ di modificare questo valore?
         <translation>Baudrate:</translation>
     </message>
     <message>
+        <source>Daum Bike Options</source>
+        <translation>Opzioni bici Daum</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>Porta seriale utilizzata dagli ergometri Daum classici, come l&apos;8008 TRS 3. Su Android, con un adattatore USB-seriale, usa &apos;usb&apos;. COM1, COM2 ecc. sono accettati su Android come alias per la ricerca dell&apos;adattatore USB, ma non sono nomi di porte Android. Su Windows usa COM1 o COM3; su Linux/macOS usa il percorso del dispositivo seriale, ad esempio /dev/ttyUSB0.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Intervallo di aggiornamento della resistenza:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>Usa l&apos;impostazione Ritardo inclinazione per limitare la frequenza con cui QZ invia aggiornamenti di resistenza e potenza a Daum. Predefinito: 0 secondi.</translation>
+    </message>
+    <message>
         <source>Freebeat Bike Options</source>
         <translation>Opzioni bici Freebeat</translation>
     </message>
@@ -7396,6 +7484,14 @@ NOTE IMPORTANTI:
     <message>
         <source>Default: 200. Change this only if you have random issues with speed or inclination (try to put 300)</source>
         <translation>Predefinito: 200. Cambia questo solo se hai problemi casuali di velocità o inclinazione (prova a mettere 300)</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Filtro inclinazione (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>Negli allenamenti GPX, ignora le variazioni di inclinazione inferiori a questo valore e invia un nuovo comando di inclinazione solo quando la differenza rispetto all&apos;ultimo valore inviato raggiunge la soglia impostata. Predefinito: 0 (disattivato).</translation>
     </message>
     <message>
         <source>Sole Treadmill Options</source>
