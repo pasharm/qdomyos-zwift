@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha 83c49f87910c - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha bac82c6ad2cd - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -68,11 +68,24 @@ logcat_stop() {
 # failed dump must not leave the tree of the screen before (T-181)
 dump() {
   rm -f ui.xml
-  adb shell rm -f /sdcard/ui.xml < /dev/null > /dev/null 2>&1
-  timeout 25 adb shell uiautomator dump /sdcard/ui.xml < /dev/null > /dev/null 2>&1
-  adb pull /sdcard/ui.xml ui.xml < /dev/null > /dev/null 2>&1
+  # /data/local/tmp, not /sdcard: /sdcard is not writable on the API 21/23 images (see shot)
+  adb shell rm -f /data/local/tmp/ui.xml < /dev/null > /dev/null 2>&1
+  timeout 25 adb shell uiautomator dump /data/local/tmp/ui.xml < /dev/null > /dev/null 2>&1
+  adb pull /data/local/tmp/ui.xml ui.xml < /dev/null > /dev/null 2>&1
   [ -s ui.xml ]
 }
+
+# app_alive: a process of PKG is running. By ps, not pidof: API 21 has no pidof, and before API 24 adb
+# shell sends "pidof: not found" to stdout - it would read as a pid. `ps -A` lists all processes on API
+# 26+, plain `ps` - on the older ones; the name is the last column
+app_alive() {
+  { adb shell ps -A < /dev/null 2>/dev/null; adb shell ps < /dev/null 2>/dev/null; } | tr -d '\r' \
+    | awk -v p="$PKG" '$NF == p || index($NF, p ":") == 1 { f = 1 } END { exit !f }'
+}
+
+# EMU_ROWS: the rows of a frame compared by tap_ui and still - without the status bar (its clock turns
+# a minute: "nothing changed" became wrong-screen, a still screen "moving"); 84 px on the CI Nexus 6
+EMU_ROWS="${EMU_STATUS_BAR:-84},100000"
 
 # frame <file>: the raw frame (no PNG coding - for emu_frame.py)
 frame() {
@@ -154,11 +167,11 @@ hide_keyboard() {
 }
 
 # ensure_app: the app on top. A box "… isn't responding": Wait first (the box of the app itself is
-# package android too - Close app would kill the app), Close app only for another app's box on a later
-# try; any other window - back key. The app's own boxes - the hook qz_dialogs (qz.sh), if defined:
+# package android too - Close app would kill the app), Close app only for another app's box after Wait
+# was tried; any other window - back key; the app's process gone (app_alive) - a failure, no keys. The app's own boxes - the hook qz_dialogs (qz.sh), if defined:
 # it closes one and returns 0, or returns 1
 ensure_app() {
-  local i pkg title
+  local i pkg title anr_seen=""
   for i in 1 2 3 4 5 6; do
     dump || return 0
     pkg=$(uifind ui.xml --package)
@@ -170,15 +183,17 @@ ensure_app() {
     fi
     # the app is gone (a crash): no back key on the launcher - the cause is in the log, not on the screen
     # (T-505 pilot 42860387276: six back keys on the launcher after QZ fell)
-    if [ -z "$(adb shell pidof "$PKG" < /dev/null 2>/dev/null | tr -d '\r')" ]; then
+    if ! app_alive; then
       fail "the app is not running ($pkg on top) - crashed? see the AndroidRuntime lines of the log"
       return 1
     fi
     if grep -q "t responding" ui.xml; then
       title=$(grep -o 'text="[^"]*t responding"' ui.xml | head -n 1)
-      if [ "$i" -gt 1 ] && ! echo "$title" | grep -q -i -E "${EMU_APP_RX:-$PKG}" && find_ui '^Close app$'; then
+      # Close app only after Wait was given a chance (anr_seen), not by the try number: a QZ box closed
+      # on try 1 must not make the first ANR box of try 2 a "later" one
+      if [ -n "$anr_seen" ] && ! echo "$title" | grep -q -i -E "${EMU_APP_RX:-$PKG}" && find_ui '^Close app$'; then
         near anr "$title: Close app"
-      elif find_ui '^Wait$'; then
+      elif anr_seen=1 && find_ui '^Wait$'; then
         near anr "$title: Wait"
       else
         near anr "$title: no button, back key"
@@ -210,7 +225,8 @@ still() {
     dump || return 1
     frame .emu_f2
     if "$EMU_PY" "$EMU_GH/emu_frame.py" layout .emu_a.xml ui.xml \
-       && "$EMU_PY" "$EMU_GH/emu_frame.py" diff .emu_f1 .emu_f2 --dumps .emu_a.xml ui.xml $(emu_mask_args) > .emu_diff 2>&1; then
+       && "$EMU_PY" "$EMU_GH/emu_frame.py" diff .emu_f1 .emu_f2 --dumps .emu_a.xml ui.xml --rows "$EMU_ROWS" \
+          $(emu_mask_args) > .emu_diff 2>&1; then
       [ "$i" -gt 1 ] && near moving "the screen was still only after $i looks"
       return 0
     fi
@@ -265,9 +281,11 @@ drv() {
 #          accessibility click on the node instead (the way to the screen under test, not the action
 #          under test: it does not go through the touch screen); no driver or no such node - a touch
 #  after:  the landing control in [seconds] (30); outcome ok, else no-effect (the frame did not change)
-#          or wrong-screen. Landing '.*' is refused: it matches any screen and proves nothing
+#          or wrong-screen (frames compared below the status bar, EMU_ROWS). A landing that matches any
+#          label ('.*', '.+', '^.*$') is refused: it proves nothing; a landing already on the screen
+#          before the tap - "~~ near land"
 tap_ui() {
-  local rx=$1 land=$2 secs=30 a11y="" opts=() rc x y how
+  local rx=$1 land=$2 secs=30 a11y="" opts=() rc x y how endx=ui.xml
   shift 2
   if [ $# -gt 0 ] && [ "${1#-}" = "$1" ]; then secs=$1; shift; fi
   while [ $# -gt 0 ]; do
@@ -278,7 +296,9 @@ tap_ui() {
     esac
     shift
   done
-  if [ "$land" = ".*" ] || [ -z "$land" ]; then
+  # not only '.*': '.+', '^.*$', '(.*)' match any label too - a pattern that takes an empty or a
+  # random label takes any screen
+  if [ -z "$land" ] || printf '\n' | grep -q -E "$land" || printf '%s\n' '~#@!' | grep -q -E "$land"; then
     fail "tap '$rx': landing '$land' proves nothing - name a control of the next screen"
     return 1
   fi
@@ -298,6 +318,11 @@ tap_ui() {
   set -- $EMU_AT
   x=$1; y=$2
   cp .emu_f2 .emu_before 2>/dev/null
+  cp ui.xml .emu_before.xml
+  # the landing already shown: "ok" would not prove the tap did anything
+  if find_ui "$land"; then
+    near land "'$land' is on the screen before the tap on '$rx': ok proves nothing"
+  fi
   how=touch
   if [ -n "$a11y" ]; then
     if a11y_build && a11y_click "$rx"; then
@@ -314,7 +339,14 @@ tap_ui() {
     say "outcome '$rx': ok ('$land' shown)"
     return 0
   fi
-  if "$EMU_PY" "$EMU_GH/emu_frame.py" diff .emu_before .emu_after $(emu_mask_args) > /dev/null 2>&1; then
+  # no-effect: the frame right after the tap and the last one (with the last dump of wait_ui) both
+  # equal the one before, outside the status bar and the nodes whose text changed (a field's cursor)
+  frame .emu_end
+  [ -s ui.xml ] || endx=.emu_before.xml   # the last dump failed: no text masks, the frames alone
+  if "$EMU_PY" "$EMU_GH/emu_frame.py" diff .emu_before .emu_after --rows "$EMU_ROWS" $(emu_mask_args) \
+       > /dev/null 2>&1 \
+     && "$EMU_PY" "$EMU_GH/emu_frame.py" diff .emu_before .emu_end --dumps .emu_before.xml "$endx" \
+          --rows "$EMU_ROWS" $(emu_mask_args) > /dev/null 2>&1; then
     say "outcome '$rx': no-effect"
     fail "after '$rx': nothing changed on the screen, '$land' not shown"
   else

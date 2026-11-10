@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# emu-lib: tools/emu/emu_frame.py sha a9fe2366a873 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/emu_frame.py sha 613ad0d44845 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): compare two raw frames of `adb exec-out screencap` (no -p) outside masks, and the
 # layout of two uiautomator dumps. Delivered with lib.sh by tools/emu/sync.py as .github/emu_frame.py.
 #
@@ -188,39 +188,49 @@ def diff(fa, fb, masks=(), rows=None, tol=0):
     return count, box
 
 
+USAGE = "usage: emu_frame.py diff a.raw b.raw [...] | layout a.xml b.xml | same a.xml b.xml"
+
+
 def main(argv):
     if not argv:
-        print("usage: emu_frame.py diff a.raw b.raw [...] | layout a.xml b.xml", file=sys.stderr)
+        print(USAGE, file=sys.stderr)
         return 2
     if argv[0] == "layout":
         return 0 if layout_same(argv[1], argv[2]) else 1
     if argv[0] == "same":
         return 0 if layout_same(argv[1], argv[2], label_of) else 1
     if argv[0] != "diff" or len(argv) < 3:
-        print("usage: emu_frame.py diff a.raw b.raw [...] | layout a.xml b.xml", file=sys.stderr)
+        print(USAGE, file=sys.stderr)
         return 2
     opts = argv[3:]
     masks = []
     rows = None
     tol = 0
     i = 0
-    while i < len(opts):
-        if opts[i] == "--mask":
-            r = tuple(int(v) for v in opts[i + 1].split(","))
-            masks.append(r)
-            i += 2
-        elif opts[i] == "--dumps":
-            masks += dump_masks(opts[i + 1], opts[i + 2])
-            i += 3
-        elif opts[i] == "--rows":
-            rows = tuple(int(v) for v in opts[i + 1].split(","))
-            i += 2
-        elif opts[i] == "--tol":
-            tol = int(opts[i + 1])
-            i += 2
-        else:
-            print("unknown option %s" % opts[i], file=sys.stderr)
-            return 2
+    try:
+        while i < len(opts):
+            if opts[i] == "--mask":
+                m = tuple(int(v) for v in opts[i + 1].split(","))
+                if len(m) != 4:
+                    raise ValueError("a mask is x1,y1,x2,y2")
+                masks.append(m)
+                i += 2
+            elif opts[i] == "--dumps":
+                masks += dump_masks(opts[i + 1], opts[i + 2])
+                i += 3
+            elif opts[i] == "--rows":
+                rows = tuple(int(v) for v in opts[i + 1].split(","))
+                i += 2
+            elif opts[i] == "--tol":
+                tol = int(opts[i + 1])
+                i += 2
+            else:
+                print("unknown option %s\n%s" % (opts[i], USAGE), file=sys.stderr)
+                return 2
+    except (ValueError, IndexError) as e:
+        # a bad --mask must not read as "the frames differ" (1)
+        print("bad option %s: %s\n%s" % (opts[i], e, USAGE), file=sys.stderr)
+        return 2
     r = diff(read_raw(argv[1]), read_raw(argv[2]), masks, rows, tol)
     if r is None:
         print("frames not comparable", file=sys.stderr)
