@@ -161,6 +161,10 @@
             if (scale.title && scale.title.display)
                 setPath(options, ['scales', id, 'title', 'font', 'size'], tick);
         });
+        // the room under the time labels pulled into the chart (T-497) grows with them
+        var layoutPadding = options.layout && options.layout.padding;
+        if (layoutPadding && typeof layoutPadding.bottom === 'number')
+            setPath(options, ['layout', 'padding', 'bottom'], Math.round(layoutPadding.bottom * tick / BASE_FONT_PX));
         setPath(options, ['plugins', 'title', 'font', 'size'], Math.round(tick * 1.2));
         setPath(options, ['plugins', 'legend', 'labels', 'font', 'size'], tick);
         // the values under a held finger, readable as the axes
@@ -176,7 +180,10 @@
         else {
             if (!options.layout)
                 options.layout = {};
-            options.layout.padding = { top: BUTTON_ROW_PX };
+            // only the top: a chart may keep room at the bottom for its time labels (T-497)
+            var padding = options.layout.padding;
+            options.layout.padding = { top: BUTTON_ROW_PX,
+                                       bottom: padding && typeof padding === 'object' ? padding.bottom : padding };
         }
     }
 
