@@ -293,7 +293,7 @@ back_to() {
 }
 
 frames_side() {
-  local side=$1
+  local side=$1 before after xy
   if start_case c-$side false; then
     if settings_open; then
       shot c-$side-1-settings
@@ -301,7 +301,25 @@ frames_side() {
       back_to "$HOME_RX"
     fi
     if settings_open; then
-      scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' '^Speed$' && shot c-$side-4-tiles
+      scroll_to '^Tiles Options$' && tap_ui '^Tiles Options$' '^Speed$' && { shot c-$side-4-tiles
+        # the classic switch section (AccordionCheckElement): off by a tap, on again - base and head alike
+        before=$(checked_of dumps/c-$side-4-tiles.xml 'Speed')
+        xy=$(python3 .github/uitap.py ui.xml '^Speed$')
+        echo "tap the classic row Speed at $xy (checked $before)" >> $STEPLOG
+        adb shell input tap $xy || true
+        sleep 3
+        shot c-$side-4b-off
+        after=$(checked_of dumps/c-$side-4b-off.xml 'Speed')
+        if [ -n "$before" ] && [ -n "$after" ] && [ "$before" != "$after" ]; then
+          echo "check c-$side-4b-off: classic switch section turned by a tap ($before -> $after): OK" >> $STEPLOG
+        else
+          echo "!! check c-$side-4b-off: classic switch section not turned ($before -> $after)" >> $STEPLOG; FAILED=1
+        fi
+        adb shell input tap $xy || true
+        sleep 3
+        shot c-$side-4c-on
+        echo "record c-$side-4c-on: back to $(checked_of dumps/c-$side-4c-on.xml 'Speed') - compare the frames base/head" >> $STEPLOG
+      }
       back_to '^General Options$'
       # Files for the lists made by the app itself (QZ sees in Documents only its own files on
       # API 30+): Save settings here, Save on the profiles page below; m-head reuses them
@@ -345,6 +363,18 @@ modern_head() {
       shot m-head-1-settings
       tap_ui '^General UI Options$' '^Workout History Charts$' && shot m-head-2-ui-open
       tap_ui '^Workout History Charts$' '.*' 5 && { sleep 2; shot m-head-3-nested; }
+      # close the section by its header: the section inside goes away; then open it again
+      xy=$(python3 .github/uitap.py ui.xml '^General UI Options$')
+      echo "tap header General UI Options at $xy (close)" >> $STEPLOG
+      adb shell input tap $xy || true
+      sleep 3
+      shot m-head-3c-closed
+      if python3 .github/uitap.py dumps/m-head-3c-closed.xml '^Workout History Charts$' > /dev/null; then
+        echo "!! check m-head-3c-closed: 'Workout History Charts' still shown after closing" >> $STEPLOG; FAILED=1
+      else
+        echo "check m-head-3c-closed: section closed, 'Workout History Charts' gone: OK" >> $STEPLOG
+      fi
+      tap_ui '^General UI Options$' '^Workout History Charts$' && shot m-head-3d-reopened
       adb shell input swipe 720 1700 720 1100 600 || true
       sleep 2
       adb shell input swipe 720 1700 720 1100 600 || true
