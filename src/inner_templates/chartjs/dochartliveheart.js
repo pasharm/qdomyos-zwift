@@ -425,6 +425,10 @@ function process_arr_heart(arr) {
                         //stepSize: 300,
                         align: "end",
                     },
+                    // points below the heart zones (0 before the first reading or without a sensor) are left out
+                    // of the time range, so without this the axis shrinks to its last second and the tilted
+                    // labels go under the bottom edge
+                    suggestedMin: 0,
                     //max: maxEl,
                 },
                 y: {

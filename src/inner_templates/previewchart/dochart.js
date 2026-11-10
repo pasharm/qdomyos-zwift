@@ -650,6 +650,9 @@ function process_arr(arr) {
                         stepSize: timeStep(maxEl),
                         align: "end",
                     },
+                    // points below the heart zones (no reading) are left out of the time range: without this
+                    // the axis starts at the first reading or, with none, shrinks to its last second
+                    suggestedMin: 0,
                     max: maxEl,
                 },
                 y: {
