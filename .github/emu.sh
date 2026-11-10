@@ -180,12 +180,15 @@ tap_ui() {
 }
 # scroll_to 'regex': swipe the page up until the control is on the screen, above the navigation bar
 scroll_to() {
-  local i xy y
+  local i xy y last=""
   for i in $(seq 1 ${2:-25}); do
     dump
     if [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$1"); then
       y=${xy#* }
       [ "$y" -lt 2000 ] && { echo "scrolled to '$1' ($i): at $xy" >> $STEPLOG; return 0; }
+      # the end of the page: the control did not move since the last swipe, above the navigation bar
+      [ "$xy" = "$last" ] && [ "$y" -lt 2420 ] && { echo "scrolled to '$1' ($i, end of page): at $xy" >> $STEPLOG; return 0; }
+      last=$xy
     fi
     # by the left edge: the controls of an open section in the middle took the swipe
     adb shell input swipe ${3:-150} 1900 ${3:-150} 900 400 || true
@@ -207,7 +210,7 @@ d = open(sys.argv[1], 'rb').read()
 w = int.from_bytes(d[0:4], 'little'); h = int.from_bytes(d[4:8], 'little')
 off = len(d) - w * h * 4
 ys = []
-for y in range(int(sys.argv[2]), h - 300):
+for y in range(int(sys.argv[2]), h - 140):
     row = off + y * w * 4
     hit = False
     for x in range(40, 110):
@@ -331,13 +334,13 @@ frames_side() {
     fi
     if settings_open; then
       # Experimental Features: its classic header is a Text (not in the dump) - by its dot below Video
-      if scroll_to '^Video.*' 40 720; then
-        xy=$(python3 .github/uitap.py ui.xml '^Video.*')
+      if scroll_to '^Maps.*' 40 720; then
+        xy=$(python3 .github/uitap.py ui.xml '^Maps.*')
         if [ "${xy#* }" -gt 1300 ]; then
           adb shell input swipe 150 1700 150 1100 600 || true
-          sleep 2; dump; xy=$(python3 .github/uitap.py ui.xml '^Video.*')
+          sleep 2; dump; xy=$(python3 .github/uitap.py ui.xml '^Maps.*')
         fi
-        echo "Video header at $xy" >> $STEPLOG
+        echo "Maps header at $xy" >> $STEPLOG
         tap_dot c-$side-3 $(( ${xy#* } + 60 ))
         sleep 3
         if wait_ui '^Enable Virtual Device$' 9; then
