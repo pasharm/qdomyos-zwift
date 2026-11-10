@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha 1b578435f0c4 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha e82aaf3d1da3 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -167,6 +167,12 @@ ensure_app() {
         continue
       fi
       return 0
+    fi
+    # the app is gone (a crash): no back key on the launcher - the cause is in the log, not on the screen
+    # (T-505 pilot 42860387276: six back keys on the launcher after QZ fell)
+    if [ -z "$(adb shell pidof "$PKG" < /dev/null 2>/dev/null | tr -d '\r')" ]; then
+      fail "the app is not running ($pkg on top) - crashed? see the AndroidRuntime lines of the log"
+      return 1
     fi
     if grep -q "t responding" ui.xml; then
       title=$(grep -o 'text="[^"]*t responding"' ui.xml | head -n 1)
@@ -421,6 +427,7 @@ scroll_top() {
 # check_emu_script.py --dumps <dir> checks the regexes of a scenario against them
 survey_page() {
   local i
+  ensure_app || { fail "survey $1: the app is not on top"; return 1; }
   scroll_top
   for i in $(seq -w 1 "${2:-30}"); do
     shot "survey-$1-$i"
@@ -431,15 +438,27 @@ survey_page() {
   near survey "$1: not at the end after ${2:-30} screens"
 }
 
+# app_frame <shot> <what>: the frame has a dump, and it is a screen of the app - a check on the launcher
+# or another window proves nothing ("not on the screen" passed there: T-505 pilot 42860387276)
+app_frame() {
+  local pkg
+  if [ ! -s "dumps/$1.xml" ]; then
+    fail "check $1: $2: no dump of the frame"
+    return 1
+  fi
+  pkg=$(uifind "dumps/$1.xml" --package)
+  if [ -n "$pkg" ] && [ "$pkg" != "$PKG" ]; then
+    fail "check $1: $2: the frame is not of the app ($pkg on top)"
+    return 1
+  fi
+}
+
 # expect <shot> <regex> <what> [uifind options]: the control is on the screen in the dump of that frame -
 # not only in the tree (a page kept under the next one, the header copy under the menu: T-392, T-487)
 expect() {
   local s=$1 rx=$2 what=$3 n
   shift 3
-  if [ ! -s "dumps/$s.xml" ]; then
-    fail "check $s: $what: no dump of the frame"
-    return 1
-  fi
+  app_frame "$s" "$what" || return 1
   n=$(uifind "dumps/$s.xml" --count "$rx" "$@")
   if [ "${n:-0}" -ge 1 ]; then
     say "check $s: $what: OK"
@@ -452,10 +471,7 @@ expect() {
 # expect_not <shot> <regex> <what>: no such control on the screen of that frame
 expect_not() {
   local n
-  if [ ! -s "dumps/$1.xml" ]; then
-    fail "check $1: $3: no dump of the frame"
-    return 1
-  fi
+  app_frame "$1" "$3" || return 1
   n=$(uifind "dumps/$1.xml" --count "$2")
   if [ "${n:-1}" = 0 ]; then
     say "check $1: $3: OK"

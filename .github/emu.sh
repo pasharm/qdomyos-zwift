@@ -1,7 +1,8 @@
 #!/bin/bash
 # Test only (T-505): the pilot of the emulator library (tools/emu/lib.sh, qz.sh of the QZ work folder) on a
-# ready APK - the a11y driver built on the runner, ACTION_CLICK on a Qt control, tap_ui with its outcome,
-# scroll_to, survey_page, expect by the dump of the frame. APK: the input head (fdroid-android-trial).
+# ready APK - tap_ui with its outcome, scroll_to, survey_page, expect by the dump of the frame (ACTION_CLICK
+# was checked by run 42860387276: the driver builds on the runner, Qt takes it, QZ then crashes - T-508).
+# APK: the input head (fdroid-android-trial).
 . .github/lib.sh
 . .github/qz.sh
 
@@ -15,8 +16,8 @@ if start_case p ui_modern=false fakedevice_treadmill=true; then
   if settings_open; then
     shot p-2-settings
     expect p-2-settings '^General Options$' 'the settings page'
-    # ACTION_CLICK on the accordion of the classic look (Qt 5.15 accessibility bridge)
-    tap_ui '^General Options$' '^App Language:$' 15 --a11y
+    # a touch: ACTION_CLICK on an accordion crashes QZ (afterClick, T-508; pilot run 42860387276)
+    tap_ui '^General Options$' '^App Language:$' 15
     shot p-3-general
     expect p-3-general '^App Language:$' 'General Options open'
     # a touch on a section below the screen: brought in by swipes, the outcome by its own row
@@ -36,7 +37,7 @@ if start_case m ui_modern=true fakedevice_treadmill=true; then
   if settings_open; then
     shot m-2-settings
     expect m-2-settings '^General Options$' 'the settings page (modern)'
-    tap_ui '^General Options$' '^App Language:$' 15 --a11y
+    tap_ui '^General Options$' '^App Language:$' 15
     shot m-3-general
     expect m-3-general '^App Language:$' 'General Options open (modern)'
     survey_page settings-modern 40
