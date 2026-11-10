@@ -292,12 +292,59 @@ back_to() {
   return 1
 }
 
+# exp_toggle <shot prefix>: Enable Virtual Device (a switch section inside the switch-less section
+# Experimental Features, with a switch section inside it) off by a tap on its row, then on again
+exp_toggle() {
+  local p=$1 b a xy
+  scroll_to '^Enable Virtual Device$' 8 || return 1
+  shot $p-exp
+  b=$(checked_of dumps/$p-exp.xml 'Enable Virtual Device')
+  xy=$(python3 .github/uitap.py ui.xml '^Enable Virtual Device$')
+  echo "tap Enable Virtual Device at $xy (checked $b)" >> $STEPLOG
+  adb shell input tap $xy || true
+  sleep 3
+  shot $p-exp-off
+  a=$(checked_of dumps/$p-exp-off.xml 'Enable Virtual Device')
+  adb shell input tap $xy || true
+  sleep 3
+  shot $p-exp-on
+  if [ -n "$b" ] && [ -n "$a" ] && [ "$b" != "$a" ] && [ "$(checked_of dumps/$p-exp-on.xml 'Enable Virtual Device')" = "$b" ]; then
+    echo "check $p-exp-on: nested switch section off and on again ($b -> $a -> $b): OK" >> $STEPLOG
+  else
+    echo "!! check $p-exp-on: nested switch section: $b -> $a -> $(checked_of dumps/$p-exp-on.xml 'Enable Virtual Device')" >> $STEPLOG; FAILED=1
+  fi
+}
+
 frames_side() {
   local side=$1 before after xy
   if start_case c-$side false; then
     if settings_open; then
       shot c-$side-1-settings
       tap_ui '^General Options$' '^App Language:$' && shot c-$side-2-general
+      back_to "$HOME_RX"
+    fi
+    if settings_open; then
+      # the same section as the modern frame m-head-2-ui-open, for the pair in the PR image
+      tap_ui '^General UI Options$' '^Workout History Charts$' && shot c-$side-2b-ui-open
+      back_to "$HOME_RX"
+    fi
+    if settings_open; then
+      # Experimental Features: its classic header is a Text (not in the dump) - by its dot below Video
+      if scroll_to '^Video.*'; then
+        xy=$(python3 .github/uitap.py ui.xml '^Video.*')
+        if [ "${xy#* }" -gt 1300 ]; then
+          adb shell input swipe 150 1700 150 1100 600 || true
+          sleep 2; dump; xy=$(python3 .github/uitap.py ui.xml '^Video.*')
+        fi
+        echo "Video header at $xy" >> $STEPLOG
+        tap_dot c-$side-3 $(( ${xy#* } + 60 ))
+        sleep 3
+        if wait_ui '^Enable Virtual Device$' 9; then
+          exp_toggle c-$side-3
+        else
+          echo "!! Experimental Features: 'Enable Virtual Device' not shown" >> $STEPLOG; FAILED=1
+        fi
+      fi
       back_to "$HOME_RX"
     fi
     if settings_open; then
@@ -368,6 +415,11 @@ modern_head() {
   if start_case m-head true; then
     if settings_open; then
       shot m-head-1-settings
+      # Experimental Features: a section with no switch holding switch sections inside switch sections
+      scroll_to '^Experimental Features$' && tap_ui '^Experimental Features$' '^Enable Virtual Device$' && exp_toggle m-head-5
+      back_to "$HOME_RX"
+    fi
+    if settings_open; then
       tap_ui '^General UI Options$' '^Workout History Charts$' && shot m-head-2-ui-open
       tap_ui '^Workout History Charts$' '.*' 5 && { sleep 2; shot m-head-3-nested; }
       # close the section by its header: the section inside goes away; then open it again
@@ -563,6 +615,18 @@ elif start_case t-head true && settings_open; then
   # the speech overlay came empty in the runs of T-487 ("said []"): the state is recorded, not checked
   echo "== record t-section said: $(grep -E ': said ' drv/t-section.txt | tr '\n' ' ' | cut -c1-300)" >> $STEPLOG
   tb_check "^find:App Language.*visible=true" t-section "talkback: the double tap opened the section (its first setting visible)"
+  # A switch row with TalkBack: close the section again, the tiles page, then Speed by touch and two
+  # double taps - the checked state of the row from the tree (the speech is not recorded)
+  drv t-switch --keep 'dtap' 'sleep:2500' 'touch:Tiles Options' 'sleep:1500' 'dtap' 'sleep:5000' \
+    'touch:Speed' 'sleep:1500' 'focused' 'find:Speed' 'dtap' 'sleep:2500' 'find:Speed' 'dtap' 'sleep:2500' 'find:Speed'
+  adb shell screencap -p /sdcard/t-head-2-switch.png && adb pull /sdcard/t-head-2-switch.png >> $STEPLOG 2>&1 || true
+  tb_check "^touch:Speed: focused 'Speed" t-switch "talkback: the switch row read by its name"
+  states=$(grep -E "^find:Speed: 'Speed' .*checkable=true" drv/t-switch.txt | sed 's/.* checked=\([a-z]*\).*/\1/' | tr '\n' ' ')
+  if [ "$states" = "true false true " ]; then
+    echo "check t-switch: talkback: double taps on the switch row turn it off and on ($states): OK" >> $STEPLOG
+  else
+    echo "!! check t-switch: talkback: switch row states '$states' (want true false true)" >> $STEPLOG; FAILED=1
+  fi
   mkdir -p drv/shots
   adb pull /data/local/tmp/tbshots/. drv/shots >> $STEPLOG 2>&1 || true
   echo "== talkback off" >> $STEPLOG
