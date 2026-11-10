@@ -185,6 +185,16 @@ scroll_to() {
     dump
     if [ -f ui.xml ] && xy=$(python3 .github/uitap.py ui.xml "$1"); then
       y=${xy#* }
+      # under the header (the dump keeps such nodes with their real place; 42819262998: Template
+      # Settings at y 48, Enable Virtual Device at y 310 - the tap went to the header): a short
+      # swipe down brings it into the band
+      if [ "$y" -lt 350 ]; then
+        echo "'$1' under the header at $xy: swipe down" >> $STEPLOG
+        adb shell input swipe ${3:-150} 900 ${3:-150} 1300 400 || true
+        sleep 1
+        last=""
+        continue
+      fi
       [ "$y" -lt 2000 ] && { echo "scrolled to '$1' ($i): at $xy" >> $STEPLOG; return 0; }
       # the end of the page: the control did not move since the last swipe, above the navigation bar
       [ "$xy" = "$last" ] && [ "$y" -lt 2420 ] && { echo "scrolled to '$1' ($i, end of page): at $xy" >> $STEPLOG; return 0; }
