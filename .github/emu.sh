@@ -409,6 +409,35 @@ modern_head() {
         sleep 3
         dump; cp ui.xml dumps/m-head-6b-back.xml 2>/dev/null
         echo "record: back to $(checked_of dumps/m-head-6b-back.xml 'Speed')" >> $STEPLOG
+        # the switch itself (170 px in from the right end of the row), then the row: after a tap on
+        # the switch it must follow the open state again, so the tap on the row moves it back
+        sxy=$(python3 - dumps/m-head-6b-back.xml << 'EOF'
+import sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).iter('node'):
+    if 'Speed' in (n.get('content-desc'), n.get('text')) and n.get('checkable') == 'true':
+        b = n.get('bounds').replace('][', ',').strip('[]').split(',')
+        print(int(b[2]) - 170, (int(b[1]) + int(b[3])) // 2); break
+EOF
+)
+        if [ -n "$sxy" ]; then
+          echo "tap the switch of Speed at $sxy" >> $STEPLOG
+          adb shell input tap $sxy || true
+          sleep 3
+          shot m-head-6c-switch-off
+          after=$(checked_of dumps/m-head-6c-switch-off.xml 'Speed')
+          echo "tap the row Speed at $xy" >> $STEPLOG
+          adb shell input tap $xy || true
+          sleep 3
+          shot m-head-6d-row-on
+          before=$(checked_of dumps/m-head-6d-row-on.xml 'Speed')
+          if [ "$after" = false ] && [ "$before" = true ]; then
+            echo "check m-head-6d-row-on: switch tap off, then row tap on ($after -> $before): OK" >> $STEPLOG
+          else
+            echo "!! check m-head-6d-row-on: switch then row: $after -> $before (want false -> true)" >> $STEPLOG; FAILED=1
+          fi
+        else
+          echo "!! switch of Speed: row bounds not found" >> $STEPLOG; FAILED=1
+        fi
       }
       back_to '^General Options$'
       tap_ui '^Load settings$' '^Other folders$' && { sleep 2; shot m-head-8a-settingslist-before
