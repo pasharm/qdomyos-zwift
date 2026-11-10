@@ -253,7 +253,8 @@ public class A11yDriver {
             return null;
         }
         CharSequence desc = node.getContentDescription();
-        if (desc != null && desc.toString().startsWith(start)) {
+        // only a node on the screen: a hidden page keeps its nodes (the home tile "Speed (km/h): 0.0")
+        if (desc != null && node.isVisibleToUser() && desc.toString().startsWith(start)) {
             return node;
         }
         for (int i = 0; i < node.getChildCount(); i++) {

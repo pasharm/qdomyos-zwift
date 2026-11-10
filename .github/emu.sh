@@ -188,10 +188,11 @@ scroll_to() {
       [ "$y" -lt 2000 ] && { echo "scrolled to '$1' ($i): at $xy" >> $STEPLOG; return 0; }
     fi
     # by the left edge: the controls of an open section in the middle took the swipe
-    adb shell input swipe 150 1900 150 900 400 || true
+    adb shell input swipe ${3:-150} 1900 ${3:-150} 900 400 || true
     sleep 1
   done
   echo "!! '$1' not reached by scrolling" >> $STEPLOG
+  shot not-reached-$(date +%s)
   FAILED=1
   return 1
 }
@@ -296,7 +297,7 @@ back_to() {
 # Experimental Features, with a switch section inside it) off by a tap on its row, then on again
 exp_toggle() {
   local p=$1 b a xy
-  scroll_to '^Enable Virtual Device$' 8 || return 1
+  scroll_to '^Enable Virtual Device$' 8 720 || return 1
   shot $p-exp
   b=$(checked_of dumps/$p-exp.xml 'Enable Virtual Device')
   xy=$(python3 .github/uitap.py ui.xml '^Enable Virtual Device$')
@@ -330,7 +331,7 @@ frames_side() {
     fi
     if settings_open; then
       # Experimental Features: its classic header is a Text (not in the dump) - by its dot below Video
-      if scroll_to '^Video.*'; then
+      if scroll_to '^Video.*' 40 720; then
         xy=$(python3 .github/uitap.py ui.xml '^Video.*')
         if [ "${xy#* }" -gt 1300 ]; then
           adb shell input swipe 150 1700 150 1100 600 || true
@@ -416,7 +417,7 @@ modern_head() {
     if settings_open; then
       shot m-head-1-settings
       # Experimental Features: a section with no switch holding switch sections inside switch sections
-      scroll_to '^Experimental Features$' && tap_ui '^Experimental Features$' '^Enable Virtual Device$' && exp_toggle m-head-5
+      scroll_to '^Experimental Features$' 40 720 && tap_ui '^Experimental Features$' '^Enable Virtual Device$' && exp_toggle m-head-5
       back_to "$HOME_RX"
     fi
     if settings_open; then
