@@ -400,7 +400,20 @@ search_step() {
   adb shell input text 'Race%sMode' || true
   sleep 4
   shot $p-s1-results
-  r=$(python3 .github/uipick.py dumps/$p-s1-results.xml '^Race Mode.*' --not-edit --below 300) \
+  # the keyboard covers the lower results and is not in the dump (42815311112: the middle of the
+  # Race Mode card was under it, the tap typed the suggestion "Model"): hide it first - with the
+  # keyboard shown, back only closes the keyboard
+  echo "record $p ime: $(adb shell dumpsys input_method | grep -o -E 'mInputShown=[a-z]+|isInputShown=[a-z]+' | head -2 | tr '\n' ' ')" >> $STEPLOG
+  if adb shell dumpsys input_method | grep -q 'mInputShown=true'; then
+    echo "keyboard shown: back to hide it" >> $STEPLOG
+    adb shell input keyevent 4 || true
+    sleep 2
+  fi
+  if adb shell dumpsys input_method | grep -q 'mInputShown=true'; then
+    echo "!! $p: the keyboard is still shown" >> $STEPLOG; FAILED=1; return 1
+  fi
+  shot $p-s1b-nokeyboard
+  r=$(python3 .github/uipick.py dumps/$p-s1b-nokeyboard.xml '^Race Mode$' --not-edit --below 300) \
     || { echo "!! $p: no result 'Race Mode' below the field" >> $STEPLOG; FAILED=1; return 1; }
   set -- $r
   echo "tap the result at $1 $2" >> $STEPLOG
