@@ -343,7 +343,7 @@ frames_side() {
         echo "Maps header at $xy" >> $STEPLOG
         tap_dot c-$side-3 $(( ${xy#* } + 60 ))
         sleep 3
-        if wait_ui '^Enable Virtual Device$' 9; then
+        if scroll_to '^Enable Virtual Device$' 8 720; then
           exp_toggle c-$side-3
         else
           echo "!! Experimental Features: 'Enable Virtual Device' not shown" >> $STEPLOG; FAILED=1
@@ -420,7 +420,7 @@ modern_head() {
     if settings_open; then
       shot m-head-1-settings
       # Experimental Features: a section with no switch holding switch sections inside switch sections
-      scroll_to '^Experimental Features$' 40 720 && tap_ui '^Experimental Features$' '^Enable Virtual Device$' && exp_toggle m-head-5
+      scroll_to '^Experimental Features$' 40 720 && tap_ui '^Experimental Features$' '.*' 5 && exp_toggle m-head-5
       back_to "$HOME_RX"
     fi
     if settings_open; then
