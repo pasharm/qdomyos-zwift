@@ -319,6 +319,101 @@ exp_toggle() {
   fi
 }
 
+# row_toggle <shot> 'regex': the topmost switch row matching it (uipick --checkable) off by a tap, on again
+row_toggle() {
+  local p=$1 rx=$2 r x y b a c
+  r=$(python3 .github/uipick.py ui.xml "$rx" --checkable) || { echo "!! $p: no switch row '$rx'" >> $STEPLOG; shot $p-none; FAILED=1; return 1; }
+  shot $p
+  set -- $r
+  x=$1; y=$2; b=$4
+  echo "tap row '$rx' at $x $y (checked $b)" >> $STEPLOG
+  adb shell input tap $x $y || true
+  sleep 3
+  shot $p-off
+  a=$(python3 .github/uipick.py dumps/$p-off.xml "$rx" --checkable | cut -d' ' -f4)
+  adb shell input tap $x $y || true
+  sleep 3
+  shot $p-on
+  c=$(python3 .github/uipick.py dumps/$p-on.xml "$rx" --checkable | cut -d' ' -f4)
+  if [ -n "$b" ] && [ -n "$a" ] && [ "$b" != "$a" ] && [ "$c" = "$b" ]; then
+    echo "check $p-on: switch row '$rx' off and on again ($b -> $a -> $c): OK" >> $STEPLOG
+  else
+    echo "!! check $p-on: switch row '$rx': $b -> $a -> $c" >> $STEPLOG; FAILED=1
+  fi
+}
+# template_toggle <shot>: Template Settings in the open Experimental Features, a template switch
+# section made at run time (createTemplates: AccordionCheckElement by createObject) off and on
+template_toggle() {
+  scroll_to '^Template Settings$' 10 720 || return 1
+  tap_ui '^Template Settings$' '.*' 5 || return 1
+  scroll_to '^user_.*' 8 720 || { shot $1-no-template; return 1; }
+  row_toggle $1 '^user_.*'
+}
+# hdr_nodes <dump>: "x1 y1 x2 y2" of every on-screen 'General UI Options' node
+hdr_nodes() {
+  python3 - "$1" << 'EOF'
+import sys, xml.etree.ElementTree as ET
+for n in ET.parse(sys.argv[1]).iter('node'):
+    if 'General UI Options' in ((n.get('text') or '').strip(), (n.get('content-desc') or '').strip()):
+        b = [int(v) for v in n.get('bounds').replace('][', ',').strip('[]').split(',')]
+        if b[2] > b[0] and b[3] > b[1]:
+            print(*b)
+EOF
+}
+# sticky_step <shot>: General UI Options open, scrolled until only the sticky copy is left on the
+# screen (the real header went above it), then a tap on the copy brings the real header back
+sticky_step() {
+  local p=$1 i nodes sx sy x1
+  for i in 1 2 3 4 5; do
+    dump
+    nodes=$(hdr_nodes ui.xml)
+    [ "$(echo "$nodes" | grep -c .)" = 1 ] && break
+    adb shell input swipe 720 1700 720 1100 600 || true
+    sleep 2
+  done
+  shot $p-sticky-only
+  nodes=$(hdr_nodes dumps/$p-sticky-only.xml)
+  echo "record $p-sticky-only: header nodes: $(echo $nodes)" >> $STEPLOG
+  if [ "$(echo "$nodes" | grep -c .)" != 1 ]; then
+    echo "!! $p: not one header node after scrolling" >> $STEPLOG; FAILED=1; return 1
+  fi
+  set -- $nodes
+  x1=$1; sx=$(( ($1 + $3) / 2 )); sy=$(( ($2 + $4) / 2 ))
+  echo "tap the sticky copy at $sx $sy" >> $STEPLOG
+  adb shell input tap $sx $sy || true
+  sleep 3
+  shot $p-sticky-tapped
+  nodes=$(hdr_nodes dumps/$p-sticky-tapped.xml)
+  echo "record $p-sticky-tapped: header nodes: $(echo $nodes)" >> $STEPLOG
+  if echo "$nodes" | awk -v s=$x1 '$1 != s && $2 >= 200 { f = 1 } END { exit !f }'; then
+    echo "check $p-sticky-tapped: the real header back on the screen: OK" >> $STEPLOG
+  else
+    echo "!! check $p-sticky-tapped: the real header not on the screen after the tap on the copy" >> $STEPLOG; FAILED=1
+  fi
+}
+# search_step <shot>: the search of the settings page finds Race Mode (in Experimental Features,
+# a section with the new content holder) and the tap on the result opens the page at its switch
+search_step() {
+  local p=$1 r
+  tap_ui '^Search settings$' '.*' 5 || return 1
+  sleep 2
+  adb shell input text 'Race%sMode' || true
+  sleep 4
+  shot $p-s1-results
+  r=$(python3 .github/uipick.py dumps/$p-s1-results.xml '^Race Mode.*' --not-edit --below 300) \
+    || { echo "!! $p: no result 'Race Mode' below the field" >> $STEPLOG; FAILED=1; return 1; }
+  set -- $r
+  echo "tap the result at $1 $2" >> $STEPLOG
+  adb shell input tap $1 $2 || true
+  sleep 5
+  shot $p-s2-found
+  if python3 .github/uipick.py dumps/$p-s2-found.xml '^Race Mode$' --checkable > /dev/null; then
+    echo "check $p-s2-found: the search opened the page at the switch Race Mode: OK" >> $STEPLOG
+  else
+    echo "!! check $p-s2-found: the switch Race Mode not on the screen after the result" >> $STEPLOG; FAILED=1
+  fi
+}
+
 frames_side() {
   local side=$1 before after xy
   if start_case c-$side false; then
@@ -345,10 +440,15 @@ frames_side() {
         sleep 3
         if scroll_to '^Enable Virtual Device$' 8 720; then
           exp_toggle c-$side-3
+          template_toggle c-$side-3t
         else
           echo "!! Experimental Features: 'Enable Virtual Device' not shown" >> $STEPLOG; FAILED=1
         fi
       fi
+      back_to "$HOME_RX"
+    fi
+    if settings_open; then
+      search_step c-$side-3s
       back_to "$HOME_RX"
     fi
     if settings_open; then
@@ -420,7 +520,12 @@ modern_head() {
     if settings_open; then
       shot m-head-1-settings
       # Experimental Features: a section with no switch holding switch sections inside switch sections
-      scroll_to '^Experimental Features$' 40 720 && tap_ui '^Experimental Features$' '.*' 5 && exp_toggle m-head-5
+      scroll_to '^Experimental Features$' 40 720 && tap_ui '^Experimental Features$' '.*' 5 && exp_toggle m-head-5 \
+        && template_toggle m-head-5t
+      back_to "$HOME_RX"
+    fi
+    if settings_open; then
+      search_step m-head-5s
       back_to "$HOME_RX"
     fi
     if settings_open; then
@@ -445,6 +550,7 @@ modern_head() {
       shot m-head-4-sticky
       n=$(count_top dumps/m-head-4-sticky.xml 'General UI Options')
       echo "record m-head-4-sticky: 'General UI Options' nodes at the top: $n (the sticky copy over the page)" >> $STEPLOG
+      sticky_step m-head-4
       back_to "$HOME_RX"
     fi
     if settings_open; then
