@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha e82aaf3d1da3 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha 83c49f87910c - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -528,8 +528,9 @@ install_apk() {
   for p in ACCESS_FINE_LOCATION ACCESS_COARSE_LOCATION; do
     adb shell pm grant "$PKG" "android.permission.$p" < /dev/null > /dev/null 2>&1
   done
-  # API 23-29: the box "access photos, media, and files" over the app (T-415)
-  [ "$api" -lt 30 ] && for p in READ_EXTERNAL_STORAGE WRITE_EXTERNAL_STORAGE; do
+  # API 23-32: the box "access photos, media, and files" over the app (T-415; on API 30 too - the STORAGE box
+  # of the T-505 pilot 42862769060); from API 33 READ_MEDIA_* replace them
+  [ "$api" -lt 33 ] && for p in READ_EXTERNAL_STORAGE WRITE_EXTERNAL_STORAGE; do
     adb shell pm grant "$PKG" "android.permission.$p" < /dev/null > /dev/null 2>&1
   done
   [ "$api" -ge 31 ] && for p in BLUETOOTH_ADVERTISE BLUETOOTH_CONNECT BLUETOOTH_SCAN; do
