@@ -1,32 +1,26 @@
-# test branch: run two APKs that were already built on one emulator and keep logcat and
-# screenshots (no build). T-498, PR-5: settings sections of the modern look - the classic look
-# of the PR head against origin/master of the same commit, the modern look of the head; mode
-# timing: the open time of the settings and tiles pages (builds with a test only QZ-TIMING line).
+# Test only (T-505): the pilot of the emulator library on a ready APK, API 30 and 35
 name: CI
 
 on:
   workflow_dispatch:
     inputs:
       head:
-        description: run id of the build of the PR head
-        required: true
-      base:
-        description: run id of the build of origin/master (same commit as the PR base)
+        description: run id of a build with the fdroid-android-trial artifact
         required: true
       log_debug:
         description: log_debug for the run
         required: false
         default: 'true'
-      mode:
-        description: frames or timing
-        required: false
-        default: 'frames'
 
 jobs:
   emulator-logcat:
     # ubuntu-latest of the upstream repository (T-272)
     runs-on: ubuntu-26.04
     timeout-minutes: 55
+    strategy:
+      fail-fast: false
+      matrix:
+        api: [30, 35]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -39,20 +33,12 @@ jobs:
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
 
-      - name: Download APK of the PR head
+      - name: Download APK
         uses: actions/download-artifact@v4
         with:
           name: fdroid-android-trial
           path: apk-head
           run-id: ${{ inputs.head }}
-          github-token: ${{ github.token }}
-
-      - name: Download APK of the base
-        uses: actions/download-artifact@v4
-        with:
-          name: fdroid-android-trial
-          path: apk-base
-          run-id: ${{ inputs.base }}
           github-token: ${{ github.token }}
 
       - name: Setup Java for Android Emulator
@@ -67,9 +53,8 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2
         env:
           LOG_DEBUG: ${{ inputs.log_debug }}
-          MODE: ${{ inputs.mode }}
         with:
-          api-level: 35
+          api-level: ${{ matrix.api }}
           target: google_apis
           arch: x86_64
           profile: Nexus 6
@@ -80,7 +65,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.head }}-t498-${{ inputs.mode }}
+          name: emulator-logcat-${{ inputs.head }}-t505-api${{ matrix.api }}
           path: |
             *.png
             full_logcat.txt

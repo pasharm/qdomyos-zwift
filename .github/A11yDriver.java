@@ -1,12 +1,16 @@
-// Test only (T-222; here T-487): send the app the accessibility actions TalkBack sends, without TalkBack
-// (or with it on, see --keep; the image has Google TalkBack 15). Runs through app_process as
-// the shell, with the UiAutomation connection uiautomator uses, so only one may run at a time
+// emu-lib: tools/emu/A11yDriver.java sha 6edaaa5963a4 - edit there, then tools/emu/sync.py (T-505)
+// Test only (T-222, T-487; one source since T-505: tools/emu/A11yDriver.java of the work folder, copied
+// into .github/ of a branch by tools/emu/sync.py): send the app the accessibility actions TalkBack sends,
+// without TalkBack (or with it on, see --keep; the image has Google TalkBack 15). Runs through app_process
+// as the shell, with the UiAutomation connection uiautomator uses, so only one may run at a time
 // and no dump meanwhile.
 //
 //   CLASSPATH=/data/local/tmp/a11y.jar app_process / A11yDriver [--keep] step [step ...]
 //   step: list | sleep:<ms> | find:<desc> | focus:<desc> | click:<desc> | fwd:<desc> | back:<desc>
-//         | swipe:right|left|up|down | dtap | touch:<desc> | focused | mark:<text>
+//         | swipe:right|left|up|down | dtap | touch:<desc> | focused | mark:<text> | click=<name>
 // <desc> is the start of a content description; the first node in tree order that matches is used.
+// click=<name>: ACTION_CLICK on the one node on the screen whose content description or text is exactly
+// <name> (lib.sh tap_ui --a11y); none - "NOT FOUND", two or more - "AMBIGUOUS", no click.
 // --keep: connect without switching the other accessibility services off, for a run with the
 // real TalkBack; then the gesture steps go to its touch explorer, as a finger would, and after
 // each gesture the text of TalkBack's speech overlay (its "display speech output") is printed
@@ -67,6 +71,10 @@ public class A11yDriver {
     }
 
     private static void run(String step) throws Exception {
+        if (step.startsWith("click=")) {
+            clickExact(step, step.substring("click=".length()));
+            return;
+        }
         int colon = step.indexOf(':');
         String verb = colon < 0 ? step : step.substring(0, colon);
         String arg = colon < 0 ? "" : step.substring(colon + 1);
@@ -246,6 +254,58 @@ public class A11yDriver {
             automation.injectInputEvent(event, true);
         }
         event.recycle();
+    }
+
+    // click=<name>: the exact name, only nodes on the screen, refused when not one
+    private static void clickExact(String step, String name) throws Exception {
+        java.util.ArrayList<AccessibilityNodeInfo> found = new java.util.ArrayList<>();
+        exact(automation.getRootInActiveWindow(), name, found);
+        if (found.isEmpty()) {
+            System.out.println(step + ": NOT FOUND");
+            return;
+        }
+        if (found.size() > 1) {
+            System.out.println(step + ": AMBIGUOUS " + found.size());
+            for (AccessibilityNodeInfo n : found) {
+                System.out.println(step + ":   " + describe(n));
+            }
+            return;
+        }
+        AccessibilityNodeInfo node = found.get(0);
+        System.out.println(step + ": before " + describe(node));
+        boolean result = node.performAction(AccessibilityNodeInfo.ACTION_CLICK);
+        Log.i("A11yDriver", step + " returned " + result);
+        System.out.println(step + ": returned " + result);
+    }
+
+    private static void exact(AccessibilityNodeInfo node, String name, java.util.List<AccessibilityNodeInfo> out) {
+        if (node == null) {
+            return;
+        }
+        CharSequence desc = node.getContentDescription();
+        CharSequence text = node.getText();
+        boolean named = (desc != null && desc.toString().trim().equals(name))
+                || (text != null && text.toString().trim().equals(name));
+        if (named && node.isVisibleToUser()) {
+            // the label inside its own control (the same name on the item and its text) is one control
+            boolean inner = false;
+            for (AccessibilityNodeInfo o : out) {
+                Rect a = new Rect();
+                Rect b = new Rect();
+                o.getBoundsInScreen(a);
+                node.getBoundsInScreen(b);
+                if (a.contains(b)) {
+                    inner = true;
+                    break;
+                }
+            }
+            if (!inner) {
+                out.add(node);
+            }
+        }
+        for (int i = 0; i < node.getChildCount(); i++) {
+            exact(node.getChild(i), name, out);
+        }
     }
 
     private static AccessibilityNodeInfo find(AccessibilityNodeInfo node, String start) {
