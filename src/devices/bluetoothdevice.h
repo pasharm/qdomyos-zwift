@@ -855,8 +855,10 @@ class bluetoothdevice : public QObject {
 
     /**
      * @brief update_hr_from_external Updates heart rate from Garmin Companion App or Apple Watch
+     * @param updateHeart false keeps the current heart rate (the device sent a recent one): on iOS the workout values
+     * are still sent to the watch, nothing else is done.
      */
-    void update_hr_from_external();
+    void update_hr_from_external(bool updateHeart = true);
 
     /**
      * @brief update_ios_live_activity Updates iOS Live Activity with throttling (max 1 update per second)

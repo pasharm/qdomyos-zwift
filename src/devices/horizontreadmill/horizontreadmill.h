@@ -78,6 +78,9 @@ class horizontreadmill : public treadmill {
     // Time (ms) of the last non-zero cadence from the treadmill (FTMS or RSC). RSC and FTMS arrive in separate packets,
     // so the cadence estimated from speed must not overwrite it while it is recent.
     qint64 lastDeviceCadenceMs = 0;
+    // Time (ms) of the last non-zero heart rate from the treadmill. Packets without it (RSC) must not replace it with
+    // the external heart rate (watch, or 0 when there is none) while it is recent.
+    qint64 lastDeviceHeartMs = 0;
     QDateTime lastDirectDistanceChanged;
     uint8_t firstStateChanged = 0;
     double lastSpeed = 0.0;

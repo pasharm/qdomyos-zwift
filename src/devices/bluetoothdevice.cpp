@@ -340,9 +340,12 @@ void bluetoothdevice::update_metrics(bool watt_calc, const double watts, const b
         update_ios_live_activity();
 }
 
-void bluetoothdevice::update_hr_from_external() {
+void bluetoothdevice::update_hr_from_external(bool updateHeart) {
     QSettings settings;
     if(settings.value(QZSettings::garmin_companion, QZSettings::default_garmin_companion).toBool()) {
+        if (!updateHeart) {
+            return;
+        }
 #ifdef Q_OS_ANDROID
         Heart = QAndroidJniObject::callStaticMethod<jint>("org/cagnulen/qdomyoszwift/Garmin", "getHR", "()I");
         heartRateFromHealthKit = false;
@@ -377,14 +380,16 @@ void bluetoothdevice::update_hr_from_external() {
             h.setCadence(Cadence.value());
             h.setSteps(StepCount.value());
             h.setElevationGain(elevationGain().value());
-            Heart = appleWatchHeartRate;
-            heartRateFromHealthKit = appleWatchHeartRate > 0;
-            healthKitHeartUpdateSequence = Heart.updateSequence();
-            qDebug() << "Current Heart from Apple Watch: " << QString::number(appleWatchHeartRate);
+            if (updateHeart) {
+                Heart = appleWatchHeartRate;
+                heartRateFromHealthKit = appleWatchHeartRate > 0;
+                healthKitHeartUpdateSequence = Heart.updateSequence();
+                qDebug() << "Current Heart from Apple Watch: " << QString::number(appleWatchHeartRate);
+            }
 #endif
 #endif
 #ifdef Q_OS_ANDROID
-    if (!settings.value(QZSettings::ant_heart, QZSettings::default_ant_heart).toBool()) {
+    if (updateHeart && !settings.value(QZSettings::ant_heart, QZSettings::default_ant_heart).toBool()) {
         Heart = QAndroidJniObject::callStaticMethod<jint>("org/cagnulen/qdomyoszwift/WearableController", "getHeart", "()I");
         heartRateFromHealthKit = false;
         qDebug() << "WearOS Companion Heart:" << Heart.value();

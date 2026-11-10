@@ -1901,13 +1901,13 @@ void horizontreadmill::characteristicChanged(const QLowEnergyCharacteristic &cha
 #endif
         {
             if (Flags.heartRate && !disable_hr_frommachinery && newValue.length() > index) {
-                Heart = ((double)(((uint8_t)newValue.at(index))));
+                // Heart is set at the end of the function, as for 0x2ACD
+                heart = ((double)(((uint8_t)newValue.at(index))));
                 // index += 1; // NOTE: clang-analyzer-deadcode.DeadStores
-                emit debug(QStringLiteral("Current Heart: ") + QString::number(Heart.value()));
+                emit debug(QStringLiteral("Current Heart: ") + QString::number(heart));
             } else {
                 Flags.heartRate = false;
             }
-            heart = Flags.heartRate;
         }
 
         if (Flags.metabolic) {
@@ -2319,13 +2319,13 @@ void horizontreadmill::characteristicChanged(const QLowEnergyCharacteristic &cha
 #endif
         {
             if (Flags.heartRate && !disable_hr_frommachinery && newValue.length() > index) {
-                Heart = ((double)(((uint8_t)newValue.at(index))));
+                // Heart is set at the end of the function, as for 0x2ACD
+                heart = ((double)(((uint8_t)newValue.at(index))));
                 // index += 1; // NOTE: clang-analyzer-deadcode.DeadStores
-                emit debug(QStringLiteral("Current Heart: ") + QString::number(Heart.value()));
+                emit debug(QStringLiteral("Current Heart: ") + QString::number(heart));
             } else {
                 Flags.heartRate = false;
             }
-            heart = Flags.heartRate;
         }
 
         if (Flags.metabolicEq) {
@@ -2380,13 +2380,17 @@ void horizontreadmill::characteristicChanged(const QLowEnergyCharacteristic &cha
         emit debug(QStringLiteral("Current Cadence: ") + QString::number(cadence));
     }
 
+    qint64 nowMs = QDateTime::currentMSecsSinceEpoch();
     if (heartRateBeltName.startsWith(QStringLiteral("Disabled"))) {
-        if (heart == 0.0 ||
-            settings.value(QZSettings::heart_ignore_builtin, QZSettings::default_heart_ignore_builtin).toBool()) {
-            update_hr_from_external();
-        } else {
-
+        if (heart > 0 && !disable_hr_frommachinery) {
             Heart = heart;
+            lastDeviceHeartMs = nowMs;
+        } else {
+            // The treadmill heart rate comes only in some packets (not in RSC): a value received in the last 3
+            // seconds is still current, the external one is used only without it.
+            bool deviceHeartRecent = !disable_hr_frommachinery && lastDeviceHeartMs > 0 &&
+                                     nowMs - lastDeviceHeartMs < 3000;
+            update_hr_from_external(!deviceHeartRecent);
         }
     }
 
@@ -2394,7 +2398,6 @@ void horizontreadmill::characteristicChanged(const QLowEnergyCharacteristic &cha
 
     // Calculate cadence from speed if not available from FTMS/RSC or an external cadence sensor and no external
     // power sensor. They come in separate packets: a cadence received in the last 3 seconds is still current.
-    qint64 nowMs = QDateTime::currentMSecsSinceEpoch();
     bool deviceCadenceRecent = lastDeviceCadenceMs > 0 && nowMs - lastDeviceCadenceMs < 3000;
     bool sensorCadenceRecent = lastCadenceSensorMs > 0 && nowMs - lastCadenceSensorMs < 3000;
     if (!cadenceAvailable && !deviceCadenceRecent && !sensorCadenceRecent && Speed.value() > 0) {
