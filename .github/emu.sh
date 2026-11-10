@@ -344,7 +344,8 @@ frames_side() {
     fi
     if open_drawer '^Profile: .*'; then
       tap_ui '^Profile: .*' '^Profile name$' && { sleep 2
-        tap_ui '^Save$' '.*' 2; sleep 3
+        # landing on anything: wait_ui polls every 3 s, so less than 3 s would never look
+        tap_ui '^Save$' '.*' 6; sleep 3
         close_ok save-profile
         adb shell ls $DOCS/profiles >> $STEPLOG 2>&1 || echo "!! Save made no profile" >> $STEPLOG
         # the section of the profiles is open from the start (isOpen: true)
