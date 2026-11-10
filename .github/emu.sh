@@ -348,8 +348,14 @@ frames_side() {
         tap_ui '^Save$' '.*' 6; sleep 3
         close_ok save-profile
         adb shell ls $DOCS/profiles >> $STEPLOG 2>&1 || echo "!! Save made no profile" >> $STEPLOG
+        # the classic page goes back to the home page after the OK of the save box: open it again
+        if wait_ui "$HOME_RX" 9; then
+          echo "after the save box: home page, open the profiles again" >> $STEPLOG
+          open_drawer '^Profile: .*' && tap_ui '^Profile: .*' '^Profile name$' && sleep 2
+        fi
         # the section of the profiles is open from the start (isOpen: true)
         shot c-$side-6-profiles
+        expect c-$side-6-profiles '^Profile name$' 'the profiles page is on the screen'
         echo "record c-$side-6-profiles: the list (default) - compare the frames base/head" >> $STEPLOG; }
       back_to "$HOME_RX"
     fi
