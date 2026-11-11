@@ -99,6 +99,8 @@ jobs:
           modules: 'qtcharts qtnetworkauth qtpurchasing'
           dir: '${{ github.workspace }}/output/android/'
           cache: 'false'
+          # test only: its apt-get of the host packages hangs (Ubuntu mirrors, 11.11); Qt for Android needs none
+          install-deps: 'false'
 
       - name: Install custom 16K-page-size Qt (overlay onto stock Qt install)
         run: |
