@@ -1,5 +1,5 @@
-# Test only (T-514): the modern file lists and pages - frames of master (base) and the branch (head),
-# classic and modern look, API 30 and 35
+# Test only (T-495): the program preview with a folded description - frames of the PR 6a-1 branch (base)
+# and of T-495 on it (head), classic and modern look, portrait and landscape, API 30 and 35
 name: CI
 
 on:
@@ -9,7 +9,7 @@ on:
         description: run id of the branch build with the fdroid-android-trial artifact
         required: true
       base:
-        description: run id of the clean master build with the fdroid-android-trial artifact
+        description: run id of the build before the change with the fdroid-android-trial artifact
         required: true
       pages:
         description: lists (PR 6a-1) or service (PR 6a-2)
@@ -82,7 +82,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.head }}-t514-${{ inputs.pages }}-api${{ matrix.api }}
+          name: emulator-logcat-${{ inputs.head }}-t495-api${{ matrix.api }}
           path: |
             *.png
             raw-?c-*

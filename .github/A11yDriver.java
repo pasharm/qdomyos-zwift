@@ -1,4 +1,4 @@
-// emu-lib: tools/emu/A11yDriver.java sha a04967a68028 - edit there, then tools/emu/sync.py (T-505)
+// emu-lib: tools/emu/A11yDriver.java sha 88bcd73d9116 - edit there, then tools/emu/sync.py (T-505)
 // Test only (T-222, T-487; one source since T-505: tools/emu/A11yDriver.java of the work folder, copied
 // into .github/ of a branch by tools/emu/sync.py): send the app the accessibility actions TalkBack sends,
 // without TalkBack (or with it on, see --keep; the image has Google TalkBack 15). Runs through app_process
@@ -244,11 +244,11 @@ public class A11yDriver {
     }
 
     // drag@<x>,<y1>,<y2>: one finger from y1 to y2 at x the way UiAutomator swipes - all events from this one
-    // process (lib.sh swipe_page … exact, T-505). A move every 5 ms by at most 10 px: the first one comes
-    // before Qt's 200 ms and under its drag threshold, so the part of the way Flickable does not go
-    // (dragStartOffset, qquickflickable.cpp:1130-1137 v5.15.0) is the same every time - with `input
-    // motionevent` (a process per event) the first move came 0.3-1 s late and 370 px long. Then the finger
-    // stands 300 ms: Flickable flicks only when the last move is less than 100 ms before the release
+    // process (lib.sh swipe_page … exact, T-505). Still 250 ms, one jump of 60 px past the drag threshold
+    // and 200 ms still - the part of the way Flickable does not go (dragStartOffset,
+    // qquickflickable.cpp:1130-1137 v5.15.0) is that jump every time (why - inside); then a move every 5 ms
+    // by at most 10 px (`input motionevent`, a process per event, gave the first move 0.3-1 s late and
+    // 370 px long). Then the finger stands 300 ms: Flickable flicks only when the last move is less than 100 ms before the release
     // (:1348-1367). Straight to the input system, not to TalkBack's filter: a drag of the page, not a gesture
     private static void drag(String step, String args) throws Exception {
         String[] p = args.split(",");
@@ -259,12 +259,25 @@ public class A11yDriver {
         int x = Integer.parseInt(p[0].trim());
         int y1 = Integer.parseInt(p[1].trim());
         int y2 = Integer.parseInt(p[2].trim());
-        int moves = Math.max(1, (Math.abs(y2 - y1) + 9) / 10);
         long down = SystemClock.uptimeMillis();
         plain(MotionEvent.obtain(down, down, MotionEvent.ACTION_DOWN, x, y1, 0));
-        for (int i = 1; i <= moves; i++) {
+        // Repeatable run by run. QQuickWindow joins the touch updates of one frame (compressTouchEvent,
+        // qquickwindow.cpp:2169-2229 v5.15.0; a frame of the CI emulator may be longer than 30 ms), so the
+        // move that crosses the drag threshold must come alone: 250 ms still (Flickable takes the first
+        // move after 200 ms into dragStartOffset, qquickflickable.cpp:1130-1137), one jump of JUMP px - past
+        // the threshold, the same offset each time - and 200 ms still; then fast, the page follows the last
+        // point. Every 5 ms from the press the page moved +-30 px per swipe, up to 360 px by the 8th screen;
+        // the first 200 px one move per 30 ms - still up to 70 px (T-505 pilots 10-13)
+        final int JUMP = 60;
+        int dir = y2 >= y1 ? 1 : -1;
+        int y0 = Math.abs(y2 - y1) > JUMP ? y1 + dir * JUMP : y2;
+        Thread.sleep(250);
+        plain(MotionEvent.obtain(down, SystemClock.uptimeMillis(), MotionEvent.ACTION_MOVE, x, y0, 0));
+        Thread.sleep(200);
+        int moves = 1 + Math.max(0, (Math.abs(y2 - y0) + 9) / 10);
+        for (int i = 1; i < moves; i++) {
             Thread.sleep(5);
-            float y = y1 + (y2 - y1) * i / (float) moves;
+            float y = y0 + (y2 - y0) * i / (float) (moves - 1);
             plain(MotionEvent.obtain(down, SystemClock.uptimeMillis(), MotionEvent.ACTION_MOVE, x, y, 0));
         }
         Thread.sleep(300);
