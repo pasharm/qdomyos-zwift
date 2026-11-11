@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/qz.sh sha 5e78ce7e29dd - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/qz.sh sha d8af0a191fba - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): QZ screens and settings for the emulator scenarios, on top of lib.sh (source lib.sh
 # first). One source: tools/emu/qz.sh of the work folder, copied into .github/ by tools/emu/sync.py.
 # Base: the T-498 scenario (test/t498-emu, c4c75732f); defects of the old copies - notes/emu-lib-2026-11-10.md.
@@ -45,9 +45,11 @@ qz_dialogs() {
     emu_sleep 3
     return 0
   fi
-  # "New QZ build": Later
-  if find_ui '^Later$'; then
-    near dialog "new build box: Later"
+  # "New QZ build" (UiBetaUpdate, builds of the beta): Later in the modern look; the classic one shows it as
+  # the native box of Android with No/Yes (T-505 pilot 42995009143) - Yes would download the APK
+  # (Later alone, as before: whether the modern box puts its title into the dump is not seen in any run)
+  if find_ui '^Later$' || { grep -q "New QZ build" ui.xml && find_ui '^No$'; }; then
+    near dialog "new build box: $(uifind ui.xml '^(Later|No)$' --name 2>/dev/null)"
     set -- $EMU_AT
     adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
     emu_sleep 2

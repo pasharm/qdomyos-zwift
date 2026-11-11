@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha a88a03fe7f67 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha 4fa8db086de9 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -321,14 +321,17 @@ drv() {
 #  after:  the landing control in [seconds] (30); outcome ok, else no-effect (the frame did not change)
 #          or wrong-screen (frames compared below the status bar, EMU_ROWS). A landing that matches any
 #          label ('.*', '.+', '^.*$') is refused: it proves nothing; a landing already on the screen
-#          before the tap - "~~ near land"
+#          before the tap - "~~ near land". --land-any: the landing may be anywhere in the tree, below
+#          the page too (an accordion section at the end of the page opens below the edge, T-498: its
+#          rows are not in the tree while it is closed); then "already there" is looked for in the tree
 tap_ui() {
-  local rx=$1 land=$2 secs=30 a11y="" opts=() rc x y how endx=ui.xml
+  local rx=$1 land=$2 secs=30 a11y="" opts=() lopts=() rc x y how endx=ui.xml
   shift 2
   if [ $# -gt 0 ] && [ "${1#-}" = "$1" ]; then secs=$1; shift; fi
   while [ $# -gt 0 ]; do
     case $1 in
       --a11y) a11y=1 ;;
+      --land-any) lopts=(--any) ;;
       --right|--below|--min) opts+=("$1" "$2"); shift ;;
       *) opts+=("$1") ;;
     esac
@@ -358,7 +361,7 @@ tap_ui() {
   cp .emu_f2 .emu_before 2>/dev/null
   cp ui.xml .emu_before.xml
   # the landing already shown: "ok" would not prove the tap did anything
-  if find_ui "$land"; then
+  if find_ui "$land" "${lopts[@]}"; then
     near land "'$land' is on the screen before the tap on '$rx': ok proves nothing"
   fi
   how=touch
@@ -373,7 +376,7 @@ tap_ui() {
   say "tap '$rx': $how at $x $y"
   emu_sleep 1
   frame .emu_after
-  if wait_ui "$land" "$secs"; then
+  if wait_ui "$land" "$secs" "${lopts[@]}"; then
     say "outcome '$rx': ok ('$land' shown)"
     return 0
   fi
