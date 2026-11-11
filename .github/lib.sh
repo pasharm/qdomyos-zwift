@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha 426537871c72 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha 2165a6359d81 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -321,17 +321,18 @@ drv() {
 #  after:  the landing control in [seconds] (30); outcome ok, else no-effect (the frame did not change)
 #          or wrong-screen (frames compared below the status bar, EMU_ROWS). A landing that matches any
 #          label ('.*', '.+', '^.*$') is refused: it proves nothing; a landing already on the screen
-#          before the tap - "~~ near land". --land-any: the landing may be anywhere in the tree, below
-#          the page too (an accordion section at the end of the page opens below the edge, T-498: its
-#          rows are not in the tree while it is closed); then "already there" is looked for in the tree
+#          before the tap - "~~ near land". --land-below: the landing may open below the page (an
+#          accordion section at the end of the page, T-498 Experimental Features): not shown - up to 4 short
+#          swipes up looking for it. Qt puts no node outside the window into the dump, --any does not see
+#          it (T-505 step 16, 42997238198). no-effect / wrong-screen are judged before the swipes
 tap_ui() {
-  local rx=$1 land=$2 secs=30 a11y="" opts=() lopts=() rc x y how name endx=ui.xml
+  local rx=$1 land=$2 secs=30 a11y="" opts=() below="" rc x y how name endx=ui.xml verdict i
   shift 2
   if [ $# -gt 0 ] && [ "${1#-}" = "$1" ]; then secs=$1; shift; fi
   while [ $# -gt 0 ]; do
     case $1 in
       --a11y) a11y=1 ;;
-      --land-any) lopts=(--any) ;;
+      --land-below) below=1 ;;
       --right|--below|--min) opts+=("$1" "$2"); shift ;;
       *) opts+=("$1") ;;
     esac
@@ -364,8 +365,8 @@ tap_ui() {
   cp .emu_f2 .emu_before 2>/dev/null
   cp ui.xml .emu_before.xml
   # the landing already shown: "ok" would not prove the tap did anything
-  if find_ui "$land" "${lopts[@]}"; then
-    near land "'$land' is $([ ${#lopts[@]} -gt 0 ] && echo 'in the tree' || echo 'on the screen') before the tap on '$rx': ok proves nothing"
+  if find_ui "$land"; then
+    near land "'$land' is on the screen before the tap on '$rx': ok proves nothing"
   fi
   how=touch
   if [ -n "$a11y" ]; then
@@ -379,7 +380,9 @@ tap_ui() {
   say "tap '$rx' = '$name': $how at $x $y"
   emu_sleep 1
   frame .emu_after
-  if wait_ui "$land" "$secs" "${lopts[@]}"; then
+  # --land-below: the landing is not on the screen before the swipes - no long wait for it
+  [ -n "$below" ] && [ "$secs" -gt 6 ] && secs=6
+  if wait_ui "$land" "$secs"; then
     say "outcome '$rx': ok ('$land' shown)"
     return 0
   fi
@@ -387,10 +390,21 @@ tap_ui() {
   # equal the one before, outside the status bar and the nodes whose text changed (a field's cursor)
   frame .emu_end
   [ -s ui.xml ] || endx=.emu_before.xml   # the last dump failed: no text masks, the frames alone
-  if "$EMU_PY" "$EMU_GH/emu_frame.py" diff .emu_before .emu_after --rows "$EMU_ROWS" $(emu_mask_args) \
+  verdict=wrong-screen
+  "$EMU_PY" "$EMU_GH/emu_frame.py" diff .emu_before .emu_after --rows "$EMU_ROWS" $(emu_mask_args) \
        > /dev/null 2>&1 \
      && "$EMU_PY" "$EMU_GH/emu_frame.py" diff .emu_before .emu_end --dumps .emu_before.xml "$endx" \
-          --rows "$EMU_ROWS" $(emu_mask_args) > /dev/null 2>&1; then
+          --rows "$EMU_ROWS" $(emu_mask_args) > /dev/null 2>&1 && verdict=no-effect
+  if [ -n "$below" ]; then
+    for i in 1 2 3 4; do
+      swipe_page up short
+      if dump && find_ui "$land"; then
+        say "outcome '$rx': ok ('$land' shown after $i swipes up)"
+        return 0
+      fi
+    done
+  fi
+  if [ "$verdict" = no-effect ]; then
     say "outcome '$rx': no-effect"
     fail "after '$rx': nothing changed on the screen, '$land' not shown"
   else
@@ -452,7 +466,10 @@ swipe_page() {
   else
     a=$(( bot - (bot - top) / 6 )); b=$(( top + (bot - top) / 6 ))
   fi
-  if [ "$2" = exact ] && [ "${EMU_API:-35}" -ge 30 ]; then
+  # API 35: exact no more than API 30-34 - the first move ~1 s after the press, a switch row kept the drag
+  # and the survey ended at 9 of 24 screens (T-505 pilots 8-9); the old swipe there: a full survey, its
+  # frames not comparable run by run
+  if [ "$2" = exact ] && [ "${EMU_API:-35}" -ge 30 ] && [ "${EMU_API:-35}" -le 34 ]; then
     [ "$1" = up ] || { local t=$a; a=$b; b=$t; }
     cmd="input motionevent DOWN $x $a"
     for i in $(seq 1 $n); do cmd="$cmd; input motionevent MOVE $x $(( a + (b - a) * i / n ))"; done
