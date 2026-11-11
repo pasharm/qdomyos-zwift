@@ -536,11 +536,14 @@ ColumnLayout {
                         ColumnLayout {
                             id: descriptionBlock
                             property bool expanded: false
-                            // side by side: the column less the own margins (20), the tags and the
-                            // spacing before the filler under them
+                            // side by side: the page below the buttons less the margins of the buttons
+                            // row (10), the spacing under it, the own margins (20), the tags and the
+                            // spacing before the filler under them. Not from textColumn.height: the
+                            // column grows to its content, and the text pushed the tags and the chart
+                            // past the bottom of the page
                             readonly property real sideRoom: Math.max(descriptionMetrics.lineSpacing,
-                                textColumn.height - 20 - (tagsText.visible ? tagsText.height + textColumn.spacing : 0)
-                                - textColumn.spacing)
+                                pageBelowButtons - 10 - detailColumn.spacing - 20
+                                - (tagsText.visible ? tagsText.height + textColumn.spacing : 0) - textColumn.spacing)
                             readonly property real pageBelowButtons: Math.max(0, detailColumn.height - detailHeader.height)
                             // the page below the buttons less all but the text: the margins of the buttons row (10),
                             // the spacing of the page, the own margins (20), the button (48), the tags, the chart
