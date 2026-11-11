@@ -211,9 +211,12 @@ profile_actions() {
     fail "$c: the saved profile 'default' not in the list"
     return 1
   fi
-  tap_ui '^default$' '^Load$' || return 1
+  # the active profile comes selected, with its Load (onStatusChanged of folderModel picks the profile of
+  # profile_name, as the classic list of master does) - a tap on it would load it (run 43090670187)
   emu_sleep 1
   snap "$c-5c-selected"
+  expect "$c-5c-selected" '^Load$' 'the active profile selected, with Load'
+  expect "$c-5c-selected" '^Active$' 'the active profile marked'
   dump
   find_ui '^default$' || { fail "$c: the profile card gone after the selection"; return 1; }
   set -- $EMU_AT
@@ -256,13 +259,19 @@ service() {
       # OK of the save box closes the page too (onOkClicked: stackView.pop())
       close_ok "$c save"
       wait_gone '.*Profile saved correctly.*' 10 || fail "$c: the save box still open after OK"
+      # OK closed the page: home is on the screen without a back press (a back press there went past
+      # home, run 43090670187)
+      wait_ui "$HOME_RX" 20 --first || fail "$c: home not shown after OK of the save box"
+    else
+      back_to "$HOME_RX" 20
     fi
     if [ "$c" = hm ]; then
-      back_to "$HOME_RX" 20
       open_drawer '^Profile:.*' && tap_ui '^Profile:.*' '^Other folders$' && profile_actions "$c"
+      back_to "$HOME_RX" 20
     fi
+  else
+    back_to "$HOME_RX" 20
   fi
-  back_to "$HOME_RX" 20
 
   # the classic text starts with "<b>Credits</b><br><br>A very big thanks" (run 43021078003), the modern one
   # with the thanks; the whole name is matched (fullmatch), hence both ends
