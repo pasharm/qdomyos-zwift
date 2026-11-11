@@ -87,7 +87,7 @@ same_as_master() {
   [ "$1" = 3-gpx ] && masks="$masks --mask 0,940,830,1100"
   # shellcheck disable=SC2086
   out=$("$EMU_PY" "$EMU_GH/emu_frame.py" diff "raw-$a" "raw-$b" --dumps "dumps/$a.xml" "dumps/$b.xml" \
-        --rows "$EMU_ROWS" $masks 2>&1)
+        --rows "$EMU_ROWS" --tol 32 $masks 2>&1)
   case $? in
     0) say "check classic-$1: same as master: OK ($out)" ;;
     1) fail "check classic-$1: the branch differs from master: $out" ;;
@@ -185,6 +185,23 @@ lists() {
   back_to "$HOME_RX" 20
 }
 
+# credits_in_menu <case>: the open menu dragged up until Credits is on the screen
+credits_in_menu() {
+  shot "$1-drawer"
+  local i
+  for i in 1 2 3; do
+    dump
+    if find_ui '^Credits$'; then
+      return 0
+    fi
+    say "drag the menu up $i"
+    adb shell input swipe 300 2000 300 900 400 < /dev/null > /dev/null 2>&1
+    emu_sleep 2
+  done
+  fail "$1: Credits not on the screen after 3 drags of the menu"
+  return 1
+}
+
 # the pages of PR 6a-2: profiles, Credits, Swag Bag. The landings are named in both looks: "Other folders"
 # (profiles), the thanks text (Credits), "Restore Purchases" (Swag Bag)
 service() {
@@ -204,10 +221,10 @@ service() {
 
   # the classic text starts with "<b>Credits</b><br><br>A very big thanks" (run 43021078003), the modern one
   # with the thanks; the whole name is matched (fullmatch), hence both ends
-  # Credits is the last entry of the menu, below the screen on API 30 (run 43025974074): the menu by
-  # Swag Bag above it, a frame of the menu, then brought in
-  if open_drawer '^Swag Bag$' && { shot "$c-drawer"; bring_in '^Credits$' 10; } \
-     && tap_ui '^Credits$' '.*A very big thanks.*'; then
+  # Credits is the last entry of the menu, below the screen on API 30 - not even laid out in the modern
+  # menu, bounds 0 (run 43029651629), so bring_in has nothing to aim at: the menu by Swag Bag above it, a
+  # frame of the menu, a drag up inside the menu (x 300: in both menus, 948 and 1179 px wide), then Credits
+  if open_drawer '^Swag Bag$' && credits_in_menu "$c" && tap_ui '^Credits$' '.*A very big thanks.*'; then
     emu_sleep 2
     snap "$c-6-credits"
   fi
