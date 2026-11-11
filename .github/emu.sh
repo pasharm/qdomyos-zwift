@@ -167,6 +167,29 @@ preview() {
   back_to "$HOME_RX" 20
 }
 
+# qml_quiet: no QML warning of the changed file from the head processes (pid lines of start_case); turning
+# upright once warned "Layout: column (1) should be less than the number of columns (1)" and every check
+# was green (T-495)
+qml_quiet() {
+  local pid n=0 found
+  logcat_stop
+  for pid in $(grep -a '^pid h' "$STEPLOG" | cut -d' ' -f3); do
+    n=$(( n + 1 ))
+    found=$(awk -v p="$pid" '$3 == p' full_logcat.txt | grep -a 'TrainingProgramsListJS.qml:' | head -5)
+    if [ -n "$found" ]; then
+      echo "$found" >> "$STEPLOG"
+      fail "check qml: pid $pid: QML warnings of TrainingProgramsListJS.qml"
+    fi
+  done
+  if [ "$n" = 0 ]; then
+    fail "check qml: no head pid in steps.log - QML warnings not checked"
+  elif [ ! -s full_logcat.txt ]; then
+    fail "check qml: full_logcat.txt is empty"
+  else
+    grep -q '^!! check qml' "$STEPLOG" || say "check qml: no TrainingProgramsListJS.qml warning from $n head processes: OK"
+  fi
+}
+
 emu_init
 logcat_start
 
@@ -179,4 +202,5 @@ for side in b h; do
   preview "${side}m" true
 done
 
+qml_quiet
 finish
