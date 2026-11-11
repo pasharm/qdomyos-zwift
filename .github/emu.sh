@@ -60,21 +60,32 @@ webview_of() {
   say "chart $1: ${b:-no WebView in the dump}"
 }
 
-# chart_right <shot>: side by side the chart WebView starts past a third of the screen width and is
-# taller than a third of its height (the base has no WebView or a strip under the text)
+# bounds_of <shot> <what>: "x1 y1 x2 y2" of the chart WebView (what=chart) or of the screen root (screen)
+bounds_of() {
+  if [ "$2" = chart ]; then
+    grep -o 'class="android.webkit.WebView"[^>]*bounds="[^"]*"' "dumps/$1.xml" 2>/dev/null | grep -o 'bounds="[^"]*"' | head -1 | tr -c '0-9\n' ' '
+  else
+    grep -o 'bounds="\[0,0\]\[[0-9]*,[0-9]*\]"' "dumps/$1.xml" 2>/dev/null | head -1 | tr -c '0-9\n' ' '
+  fi
+}
+
+# chart_right <shot> <upright shot>: side by side the chart WebView starts past a third of the screen
+# width, is taller than a third of its height (the base has no WebView or a strip under the text) and
+# ends no lower than the page: the upright chart reaches the page bottom, so the gap under it there is
+# the bar at the bottom (run 43079787273: the text column pushed the chart 85 px under the bar, API 35)
 chart_right() {
-  local s=$1 b sw sh
-  b=$(grep -o 'class="android.webkit.WebView"[^>]*bounds="[^"]*"' "dumps/$s.xml" 2>/dev/null | grep -o 'bounds="[^"]*"' | head -1 | tr -c '0-9\n' ' ')
-  sw=$(grep -o 'bounds="\[0,0\]\[[0-9]*,[0-9]*\]"' "dumps/$s.xml" 2>/dev/null | head -1 | tr -c '0-9\n' ' ')
-  set -- $sw
-  sw=$3; sh=$4
+  local s=$1 up=$2 b sw sh inset
+  set -- $(bounds_of "$up" screen); inset=$4
+  set -- $(bounds_of "$up" chart); inset=$(( ${inset:-0} - ${4:-0} ))
+  set -- $(bounds_of "$s" screen); sw=$3; sh=$4
+  b=$(bounds_of "$s" chart)
   set -- $b
   if [ -z "$4" ] || [ -z "$sw" ]; then
     fail "$s: side by side: no WebView or no screen bounds in the dump"
-  elif [ "$1" -gt $(( sw / 3 )) ] && [ $(( $4 - $2 )) -gt $(( sh / 3 )) ]; then
-    say "check $s: side by side, the chart on the right $1..$3 x $2..$4: OK"
+  elif [ "$1" -gt $(( sw / 3 )) ] && [ $(( $4 - $2 )) -gt $(( sh / 3 )) ] && [ "$4" -le $(( sh - inset + 2 )) ]; then
+    say "check $s: side by side, the chart on the right $1..$3 x $2..$4, the page bottom $(( sh - inset )): OK"
   else
-    fail "$s: side by side: the chart at $1..$3 x $2..$4 of ${sw}x$sh"
+    fail "$s: side by side: the chart at $1..$3 x $2..$4 of ${sw}x$sh, the page bottom $(( sh - inset ))"
   fi
 }
 
@@ -135,7 +146,7 @@ preview() {
       if [ $head = 1 ]; then
         # side by side: the whole text scrolls in its column, no button; the chart on the right half
         expect_not "$c-3-long-land" '^Show more$' 'landscape: side by side, no Show more'
-        chart_right "$c-3-long-land"
+        chart_right "$c-3-long-land" "$c-1-long"
       fi
     fi
     if rotate 0 && [ $head = 1 ]; then
