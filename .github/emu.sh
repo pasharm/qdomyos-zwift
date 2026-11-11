@@ -17,10 +17,13 @@ wipe_files() {
   local uid
   uid=$(app_uid)
   if [ -n "$uid" ]; then
+    # a running QZ writes there (run 43023667230: "Directory not empty")
+    adb shell am force-stop "$PKG" < /dev/null > /dev/null 2>&1
     adb shell "su $uid,$uid,9997 sh -c 'rm -rf $QZDIR'" < /dev/null >> "$STEPLOG" 2>&1
   fi
   adb uninstall "$PKG" < /dev/null > /dev/null 2>&1
   if adb shell "ls -d $QZDIR" < /dev/null > /dev/null 2>&1; then
+    adb shell "su 0 ls -lnR $QZDIR" < /dev/null >> "$STEPLOG" 2>&1
     proves_nothing "$QZDIR left from the previous side (uid ${uid:-none})"
   fi
 }
@@ -185,8 +188,8 @@ service() {
   local c=$1 modern=$2
   start_case "$c" ui_modern=$modern fakedevice_treadmill=true android_documents_folder=true || return 1
 
-  # "Profile: " + the profile name, empty on a fresh install - the dump has "Profile:" (run 43021078003)
-  if open_drawer '^Profile:' && tap_ui '^Profile:' '^Other folders$'; then
+  # "Profile: " + the profile name; uifind matches the whole name (fullmatch), hence the tail
+  if open_drawer '^Profile:.*' && tap_ui '^Profile:.*' '^Other folders$'; then
     emu_sleep 3
     snap "$c-5-profiles"
     if [ "$c" = hm ]; then
@@ -197,8 +200,8 @@ service() {
   back_to "$HOME_RX" 20
 
   # the classic text starts with "<b>Credits</b><br><br>A very big thanks" (run 43021078003), the modern one
-  # with the thanks
-  if open_drawer '^Credits$' && tap_ui '^Credits$' 'A very big thanks'; then
+  # with the thanks; the whole name is matched (fullmatch), hence both ends
+  if open_drawer '^Credits$' && tap_ui '^Credits$' '.*A very big thanks.*'; then
     emu_sleep 2
     snap "$c-6-credits"
   fi
