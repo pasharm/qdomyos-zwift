@@ -1,11 +1,15 @@
-# Test only (T-505): the pilot of the emulator library on a ready APK, API 30 and 35
+# Test only (T-514): the modern file lists and pages - frames of master (base) and the branch (head),
+# classic and modern look, API 30 and 35
 name: CI
 
 on:
   workflow_dispatch:
     inputs:
       head:
-        description: run id of a build with the fdroid-android-trial artifact
+        description: run id of the branch build with the fdroid-android-trial artifact
+        required: true
+      base:
+        description: run id of the clean master build with the fdroid-android-trial artifact
         required: true
       log_debug:
         description: log_debug for the run
@@ -41,6 +45,14 @@ jobs:
           run-id: ${{ inputs.head }}
           github-token: ${{ github.token }}
 
+      - name: Download the master APK
+        uses: actions/download-artifact@v4
+        with:
+          name: fdroid-android-trial
+          path: apk-base
+          run-id: ${{ inputs.base }}
+          github-token: ${{ github.token }}
+
       - name: Setup Java for Android Emulator
         uses: actions/setup-java@v3
         with:
@@ -65,7 +77,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.head }}-t505-api${{ matrix.api }}
+          name: emulator-logcat-${{ inputs.head }}-t514-api${{ matrix.api }}
           path: |
             *.png
             full_logcat.txt
