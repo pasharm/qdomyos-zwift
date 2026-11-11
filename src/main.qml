@@ -472,10 +472,36 @@ ApplicationWindow {
         readonly property string accentName: settings.ui_accent
 
         function alpha(c, a) { return Qt.rgba(c.r, c.g, c.b, a) }
-        // A title without its emoji ("Maps 🗺️", "Video 🎥"): Qt 5 on Android draws no colour
-        // emoji with the app font, they showed as boxes. Titles of the modern look only
+        // A title without its emoji ("Maps 🗺️", "Video 🎥"): Qt 5 on Android draws no colour emoji
+        // with the app font, they showed as boxes. For the headers of the modern look and the
+        // toast and search results of the settings page. Drops a
+        // pictograph (a surrogate pair in U+1F000-1FBFF, or U+2300-23FF, U+2600-27BF) with the
+        // spaces before it and the emoji style mark (U+FE0F) after it
         function plainTitle(text) {
-            return String(text).replace(/\s*(?:[\uD83C-\uD83E][\uDC00-\uDFFF]|[⌀-⏿☀-➿])️?/g, "").trim()
+            var s = String(text)
+            var out = ""
+            var gap = ""
+            for (var i = 0; i < s.length; i++) {
+                var c = s.charCodeAt(i)
+                var n = 0
+                if (c >= 0xD83C && c <= 0xD83E && i + 1 < s.length
+                        && s.charCodeAt(i + 1) >= 0xDC00 && s.charCodeAt(i + 1) <= 0xDFFF)
+                    n = 2
+                else if ((c >= 0x2300 && c <= 0x23FF) || (c >= 0x2600 && c <= 0x27BF))
+                    n = 1
+                if (n > 0) {
+                    gap = ""
+                    i += n - 1
+                    if (i + 1 < s.length && s.charCodeAt(i + 1) === 0xFE0F)
+                        i++
+                } else if (s[i].trim() === "") {
+                    gap += s[i]
+                } else {
+                    out += gap + s[i]
+                    gap = ""
+                }
+            }
+            return (out + gap).trim()
         }
         // The settings page has its own Settings object, which the window's does not hear
         // about until a restart: it writes through here, so the look changes at once

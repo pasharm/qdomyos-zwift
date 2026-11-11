@@ -6,8 +6,8 @@ import QtQuick.Layouts 1.3
 // lives on the flickable, not in its content, and goes up with the end of the section; a tap
 // on it scrolls back to the real header. It appears as soon as the real header starts going up
 // and shrinks with the scroll from the height of the real one to its compact height.
-// Goes into the section (AccordionElement, StaticAccordionElement) as an invisible item: the
-// column of the section leaves it out of the layout.
+// Goes into the header of the section (AccordionElement, StaticAccordionElement) as an
+// invisible item.
 Item {
     id: sticky
 
@@ -68,7 +68,7 @@ Item {
 
     Connections {
         target: sticky.pageFlickable
-        enabled: sticky.section !== null && sticky.section.isOpen && sticky.section.depth === 1
+        enabled: window.ui.modern && sticky.section !== null && sticky.section.isOpen && sticky.section.depth === 1
         function onContentYChanged() { sticky.update() }
         function onHeightChanged() { sticky.update() }
     }
@@ -77,6 +77,11 @@ Item {
         function onIsOpenChanged() { sticky.update() }
         function onHeightChanged() { if (sticky.section.isOpen) sticky.update() }
         function onVisibleChanged() { sticky.update() }
+    }
+    // The look switched over: in the classic look the copy goes away at once, not at the next scroll
+    Connections {
+        target: window.ui
+        function onModernChanged() { sticky.update() }
     }
     Component.onDestruction: if (copy) copy.destroy()
 
