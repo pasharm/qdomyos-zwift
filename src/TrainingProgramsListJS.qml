@@ -552,8 +552,14 @@ ColumnLayout {
                                 - (tagsText.visible ? tagsText.height : 0) - 80)
                             readonly property int foldedLines: Math.max(1, Math.min(8,
                                 Math.floor(Math.min(pageBelowButtons * 0.3, textRoom) / Math.max(1, descriptionMetrics.lineSpacing))))
+                            // the height of the whole lines that fit in h: the line pitch as the text
+                            // lays it out (lineSpacing is a little off, and over ten lines the top of
+                            // the next one showed under the last)
                             function wholeLines(h) {
-                                var line = Math.max(1, descriptionMetrics.lineSpacing)
+                                var line = descriptionText.lineCount > 0
+                                    ? descriptionText.contentHeight / descriptionText.lineCount
+                                    : descriptionMetrics.lineSpacing
+                                line = Math.max(1, line)
                                 return Math.max(1, Math.floor(h / line)) * line
                             }
                             Layout.fillWidth: true
