@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/qz.sh sha 18fd52f98a35 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/qz.sh sha b671c6a23fd4 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): QZ screens and settings for the emulator scenarios, on top of lib.sh (source lib.sh
 # first). One source: tools/emu/qz.sh of the work folder, copied into .github/ by tools/emu/sync.py.
 # Base: the T-498 scenario (test/t498-emu, c4c75732f); defects of the old copies - notes/emu-lib-2026-11-10.md.
@@ -74,7 +74,7 @@ start_case() {
   adb shell am start -n "$PKG/$PKG.CustomQtActivity" < /dev/null > /dev/null 2>&1
   if ! wait_home; then
     fail "$name: home page not shown"
-    shot "$name-0-no-home"
+    shot "$name-0-no-home" now
     return 1
   fi
   say "pid $name $(adb shell pidof "$PKG" < /dev/null | tr -d '\r')"

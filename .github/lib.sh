@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha d9e1560d4966 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha a69afa08f2c7 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -99,15 +99,19 @@ frame() {
 # a value that changed in between (a timer tile) is told only by the two dumps around the frame -
 # review_run.py --baseline masks what differs between them (T-505 pilot 4: Elapsed 0:00:12 on the
 # frame, 0:00:14 in the dumps of both runs). A subfolder: a11y.py counts every dumps/*.xml as a screen
-# (check_emu_script.py --dumps reads the subfolders too - only the set of labels, the same either way)
+# (check_emu_script.py --dumps reads the subfolders too - only the set of labels, the same either way).
+# shot <name> now: the frame first, no dump before - the frame of a failure must hold what is on the
+# screen at once (an ANR window, a toast), not 1-25 s later after a dump
 shot() {
   say "-- shot $1"
   mkdir -p dumps/pre
-  if dump; then
-    cp ui.xml "dumps/pre/$1.xml"
-  else
-    rm -f "dumps/pre/$1.xml"
-    near shot "$1: no dump before the frame"
+  rm -f "dumps/pre/$1.xml"
+  if [ "$2" != now ]; then
+    if dump; then
+      cp ui.xml "dumps/pre/$1.xml"
+    else
+      near shot "$1: no dump before the frame"
+    fi
   fi
   adb exec-out screencap -p < /dev/null > "$1.png" 2>/dev/null
   [ -s "$1.png" ] || near shot "$1: no frame"
@@ -317,7 +321,7 @@ tap_ui() {
   hide_keyboard || return 1
   if ! bring_in "$rx" 15 "${opts[@]}"; then
     fail "tap '$rx': $EMU_WHY"
-    shot "fail-$(date +%s)"
+    shot "fail-$(date +%s)" now
     return 1
   fi
   still
@@ -364,7 +368,7 @@ tap_ui() {
     say "outcome '$rx': wrong-screen"
     fail "after '$rx': '$land' not shown ($EMU_WHY)"
   fi
-  shot "fail-$(date +%s)"
+  shot "fail-$(date +%s)" now
   return 1
 }
 
@@ -446,12 +450,12 @@ scroll_to() {
     # whole rows would look like the end)
     if dump && "$EMU_PY" "$EMU_GH/emu_frame.py" same .emu_s.xml ui.xml; then
       fail "scroll to '$rx': end of the page, not found"
-      shot "not-reached-$(date +%s)"
+      shot "not-reached-$(date +%s)" now
       return 1
     fi
   done
   fail "scroll to '$rx': not reached in $max swipes ($EMU_WHY)"
-  shot "not-reached-$(date +%s)"
+  shot "not-reached-$(date +%s)" now
   return 1
 }
 
@@ -539,7 +543,7 @@ row_toggle() {
   local s=$1 rx=$2 b a c x y
   shift 2
   if ! bring_in "$rx" 15 --checkable; then
-    fail "$s: no switch row '$rx' ($EMU_WHY)"; shot "$s-none"; return 1
+    fail "$s: no switch row '$rx' ($EMU_WHY)"; shot "$s-none" now; return 1
   fi
   still
   shot "$s"
