@@ -1,4 +1,4 @@
-// emu-lib: tools/emu/A11yDriver.java sha 6edaaa5963a4 - edit there, then tools/emu/sync.py (T-505)
+// emu-lib: tools/emu/A11yDriver.java sha 1e136ba45522 - edit there, then tools/emu/sync.py (T-505)
 // Test only (T-222, T-487; one source since T-505: tools/emu/A11yDriver.java of the work folder, copied
 // into .github/ of a branch by tools/emu/sync.py): send the app the accessibility actions TalkBack sends,
 // without TalkBack (or with it on, see --keep; the image has Google TalkBack 15). Runs through app_process
@@ -8,6 +8,7 @@
 //   CLASSPATH=/data/local/tmp/a11y.jar app_process / A11yDriver [--keep] step [step ...]
 //   step: list | sleep:<ms> | find:<desc> | focus:<desc> | click:<desc> | fwd:<desc> | back:<desc>
 //         | swipe:right|left|up|down | dtap | touch:<desc> | focused | mark:<text> | click=<name>
+//         | fwd@<x>,<y>
 // <desc> is the start of a content description; the first node in tree order that matches is used.
 // click=<name>: ACTION_CLICK on the one node on the screen whose content description or text is exactly
 // <name> (lib.sh tap_ui --a11y); none - "NOT FOUND", two or more - "AMBIGUOUS", no click.
@@ -73,6 +74,10 @@ public class A11yDriver {
     private static void run(String step) throws Exception {
         if (step.startsWith("click=")) {
             clickExact(step, step.substring("click=".length()));
+            return;
+        }
+        if (step.startsWith("fwd@")) {
+            forwardAt(step, step.substring("fwd@".length()));
             return;
         }
         int colon = step.indexOf(':');
@@ -257,6 +262,48 @@ public class A11yDriver {
     }
 
     // click=<name>: the exact name, only nodes on the screen, refused when not one
+    // fwd@<x>,<y>: ACTION_SCROLL_FORWARD on the deepest node on the screen at that point that has the
+    // action (a node without a name: the scroll bar of a page); answers at once, as click= does, so the
+    // next step - or the disconnect at the end - follows right away (T-508: the app's delayed work after
+    // the action must survive accessibility going off)
+    private static void forwardAt(String step, String point) throws Exception {
+        int comma = point.indexOf(',');
+        int x = Integer.parseInt(point.substring(0, comma).trim());
+        int y = Integer.parseInt(point.substring(comma + 1).trim());
+        AccessibilityNodeInfo node = deepestScrollable(automation.getRootInActiveWindow(), x, y);
+        if (node == null) {
+            System.out.println(step + ": NOT FOUND");
+            return;
+        }
+        System.out.println(step + ": before " + describe(node));
+        boolean result = node.performAction(AccessibilityNodeInfo.ACTION_SCROLL_FORWARD);
+        Log.i("A11yDriver", step + " returned " + result);
+        System.out.println(step + ": returned " + result);
+    }
+
+    private static AccessibilityNodeInfo deepestScrollable(AccessibilityNodeInfo node, int x, int y) {
+        if (node == null || !node.isVisibleToUser()) {
+            return null;
+        }
+        Rect bounds = new Rect();
+        node.getBoundsInScreen(bounds);
+        if (!bounds.contains(x, y)) {
+            return null;
+        }
+        for (int i = node.getChildCount() - 1; i >= 0; i--) {
+            AccessibilityNodeInfo found = deepestScrollable(node.getChild(i), x, y);
+            if (found != null) {
+                return found;
+            }
+        }
+        for (AccessibilityNodeInfo.AccessibilityAction a : node.getActionList()) {
+            if (a.getId() == AccessibilityNodeInfo.ACTION_SCROLL_FORWARD) {
+                return node;
+            }
+        }
+        return null;
+    }
+
     private static void clickExact(String step, String name) throws Exception {
         java.util.ArrayList<AccessibilityNodeInfo> found = new java.util.ArrayList<>();
         exact(automation.getRootInActiveWindow(), name, found);

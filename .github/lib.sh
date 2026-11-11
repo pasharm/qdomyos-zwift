@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha bac82c6ad2cd - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha 2cd7055101ca - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -363,7 +363,9 @@ a11y_click() {
   local name
   find_ui "$1" || return 1
   name=$(uifind ui.xml "$1" --name 2>/dev/null) || return 1
-  drv click "click=$name"
+  # connected 1 s more: the driver's disconnect turns accessibility off, and QZ builds before T-508 crash
+  # when that comes within 150 ms of the click (afterClick asks Qt for a node of the removed view)
+  drv click "click=$name" "sleep:1000"
   grep -q "returned true" drv/click.txt
 }
 
@@ -623,7 +625,10 @@ tb_check() {
 finish() {
   logcat_stop
   say "== ANR / crash in the whole log:"
-  if [ -s full_logcat.txt ] && grep -a -E "ANR in $PKG|Process: $PKG,|Fatal signal.*${PKG##*.}" full_logcat.txt >> "$STEPLOG"; then
+  if [ ! -s full_logcat.txt ]; then
+    # no log is not "no crash": the logcat died (adb root restarts adbd) or was never started
+    fail "check log: full_logcat.txt is empty or missing - ANR and crashes not checked"
+  elif grep -a -E "ANR in $PKG|Process: $PKG,|Fatal signal.*${PKG##*.}" full_logcat.txt >> "$STEPLOG"; then
     fail "check log: ANR or crash"
   else
     say "none"
