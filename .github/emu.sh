@@ -11,8 +11,11 @@ QZDIR=/sdcard/Documents/QZ
 # wipe: Documents/QZ of the previous side. A file left by an uninstalled app belongs to another uid, the new
 # install does not see it and asks about "programs of a previous installation" (run 43015224696: the native
 # box over the classic list, the modern list empty)
+# The app goes first (a running QZ writes the folder again), then root removes it: the shell may not
+# remove files of the app (run 43019114307: the folder stayed)
 wipe_files() {
-  adb shell "rm -rf $QZDIR" < /dev/null > /dev/null 2>&1
+  adb uninstall "$PKG" < /dev/null > /dev/null 2>&1
+  adb shell "su 0 rm -rf $QZDIR" < /dev/null >> "$STEPLOG" 2>&1
   if adb shell "ls -d $QZDIR" < /dev/null > /dev/null 2>&1; then
     proves_nothing "$QZDIR left from the previous side"
   fi
@@ -64,6 +67,9 @@ same_as_master() {
     return 1
   fi
   masks="$(webview_masks "dumps/$a.xml") $(webview_masks "dumps/$b.xml")"
+  # the classic GPX list scrolls a name longer than 30 characters (GPXList.qml of master: "Italy - Passo
+  # dello Stelvio", the 5th row) - its row moves by itself; Nexus 6 1440x2560 of the CI image
+  [ "$1" = 3-gpx ] && masks="$masks --mask 0,940,830,1100"
   # shellcheck disable=SC2086
   out=$("$EMU_PY" "$EMU_GH/emu_frame.py" diff "raw-$a" "raw-$b" --dumps "dumps/$a.xml" "dumps/$b.xml" \
         --rows "$EMU_ROWS" $masks 2>&1)
