@@ -59,10 +59,12 @@ seed_files() {
   fi
 }
 
-# snap <name>: the frame with its dumps and the raw frame for the comparison of the sides
+# snap <name>: the raw frame for the comparison of the sides, then the frame with its dumps. The raw one
+# right before the PNG: taken after the dumps it differed from the other side in 820 rows where the PNGs
+# differed only by one button (run 43025955339)
 snap() {
-  shot "$1"
   frame "raw-$1" || near frame "$1: no raw frame"
+  shot "$1"
 }
 
 # webview_masks <dump>: the WebView rectangles as --mask options - the map tiles and the chart load from
@@ -170,7 +172,8 @@ lists() {
   if open_drawer '^Open GPX$' && tap_ui '^Open GPX$' '^Other folders$'; then
     emu_sleep 5
     snap "$c-3-gpx"
-    [ "$c" = hm ] && expect "$c-3-gpx" '^test-route' 'the seeded GPX as a card'
+    # the first card: test-route is below the list area, under the map (run 43025955339)
+    [ "$c" = hm ] && expect "$c-3-gpx" '^Box Hill$' 'the GPX routes as named cards'
   fi
   back_to "$HOME_RX" 20
 
@@ -201,7 +204,10 @@ service() {
 
   # the classic text starts with "<b>Credits</b><br><br>A very big thanks" (run 43021078003), the modern one
   # with the thanks; the whole name is matched (fullmatch), hence both ends
-  if open_drawer '^Credits$' && tap_ui '^Credits$' '.*A very big thanks.*'; then
+  # Credits is the last entry of the menu, below the screen on API 30 (run 43025974074): the menu by
+  # Swag Bag above it, a frame of the menu, then brought in
+  if open_drawer '^Swag Bag$' && { shot "$c-drawer"; bring_in '^Credits$' 10; } \
+     && tap_ui '^Credits$' '.*A very big thanks.*'; then
     emu_sleep 2
     snap "$c-6-credits"
   fi

@@ -85,6 +85,7 @@ jobs:
           name: emulator-logcat-${{ inputs.head }}-t514-${{ inputs.pages }}-api${{ matrix.api }}
           path: |
             *.png
+            raw-?c-*
             full_logcat.txt
             steps.log
             dumps/
