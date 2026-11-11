@@ -111,11 +111,23 @@ Page {
                     // the classic look too - more reads would stop the blinking there
                     color: window.equipmentConnected ? window.ui.alpha(window.ui.ok, 0.16) : window.ui.surfaceHigh
                     UiIcon {
+                        id: modernBtIcon
                         anchors.centerIn: parent
                         width: 24
                         height: 24
                         name: window.equipmentConnected ? "bluetooth_connected" : "bluetooth"
                         color: window.equipmentConnected ? window.ui.ok : window.ui.textMuted
+
+                        // Searching for the equipment: the icon pulses, as the classic icon blinks. Only while
+                        // the card is on the screen (visible follows the look and the page on top), so the
+                        // classic look and a covered home page run no animation
+                        SequentialAnimation on opacity {
+                            running: modernBtIcon.visible && !window.equipmentConnected
+                            loops: Animation.Infinite
+                            NumberAnimation { to: 0.4; duration: 600; easing.type: Easing.InOutSine }
+                            NumberAnimation { to: 1; duration: 600; easing.type: Easing.InOutSine }
+                            onRunningChanged: if (!running) modernBtIcon.opacity = 1
+                        }
                     }
                     // No device yet: a tap searches right away instead of waiting for the next search
                     // (with a device connected bluetoothSearchNow() does nothing). With a device connected the tap
