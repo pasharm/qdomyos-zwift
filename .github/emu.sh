@@ -221,18 +221,20 @@ service() {
 
   # the classic text starts with "<b>Credits</b><br><br>A very big thanks" (run 43021078003), the modern one
   # with the thanks; the whole name is matched (fullmatch), hence both ends
+  # Swag Bag before Credits: the menu keeps the place it was dragged to, and Swag Bag at its top was
+  # not on the screen after Credits (API 30, run 43032577399)
+  if open_drawer '^Swag Bag$' && tap_ui '^Swag Bag$' '^Restore Purchases$'; then
+    emu_sleep 2
+    snap "$c-7-swagbag"
+  fi
+  back_to "$HOME_RX" 20
+
   # Credits is the last entry of the menu, below the screen on API 30 - not even laid out in the modern
   # menu, bounds 0 (run 43029651629), so bring_in has nothing to aim at: the menu by Swag Bag above it, a
   # frame of the menu, a drag up inside the menu (x 300: in both menus, 948 and 1179 px wide), then Credits
   if open_drawer '^Swag Bag$' && credits_in_menu "$c" && tap_ui '^Credits$' '.*A very big thanks.*'; then
     emu_sleep 2
     snap "$c-6-credits"
-  fi
-  back_to "$HOME_RX" 20
-
-  if open_drawer '^Swag Bag$' && tap_ui '^Swag Bag$' '^Restore Purchases$'; then
-    emu_sleep 2
-    snap "$c-7-swagbag"
   fi
   back_to "$HOME_RX" 20
 }
