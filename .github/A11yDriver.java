@@ -1,4 +1,4 @@
-// emu-lib: tools/emu/A11yDriver.java sha 1e136ba45522 - edit there, then tools/emu/sync.py (T-505)
+// emu-lib: tools/emu/A11yDriver.java sha a04967a68028 - edit there, then tools/emu/sync.py (T-505)
 // Test only (T-222, T-487; one source since T-505: tools/emu/A11yDriver.java of the work folder, copied
 // into .github/ of a branch by tools/emu/sync.py): send the app the accessibility actions TalkBack sends,
 // without TalkBack (or with it on, see --keep; the image has Google TalkBack 15). Runs through app_process
@@ -8,7 +8,7 @@
 //   CLASSPATH=/data/local/tmp/a11y.jar app_process / A11yDriver [--keep] step [step ...]
 //   step: list | sleep:<ms> | find:<desc> | focus:<desc> | click:<desc> | fwd:<desc> | back:<desc>
 //         | swipe:right|left|up|down | dtap | touch:<desc> | focused | mark:<text> | click=<name>
-//         | fwd@<x>,<y>
+//         | fwd@<x>,<y> | drag@<x>,<y1>,<y2>
 // <desc> is the start of a content description; the first node in tree order that matches is used.
 // click=<name>: ACTION_CLICK on the one node on the screen whose content description or text is exactly
 // <name> (lib.sh tap_ui --a11y); none - "NOT FOUND", two or more - "AMBIGUOUS", no click.
@@ -78,6 +78,10 @@ public class A11yDriver {
         }
         if (step.startsWith("fwd@")) {
             forwardAt(step, step.substring("fwd@".length()));
+            return;
+        }
+        if (step.startsWith("drag@")) {
+            drag(step, step.substring("drag@".length()));
             return;
         }
         int colon = step.indexOf(':');
@@ -237,6 +241,41 @@ public class A11yDriver {
             inject(MotionEvent.obtain(down, SystemClock.uptimeMillis(), MotionEvent.ACTION_MOVE, x, y, 0));
         }
         inject(MotionEvent.obtain(down, SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, x2, y2, 0));
+    }
+
+    // drag@<x>,<y1>,<y2>: one finger from y1 to y2 at x the way UiAutomator swipes - all events from this one
+    // process (lib.sh swipe_page … exact, T-505). A move every 5 ms by at most 10 px: the first one comes
+    // before Qt's 200 ms and under its drag threshold, so the part of the way Flickable does not go
+    // (dragStartOffset, qquickflickable.cpp:1130-1137 v5.15.0) is the same every time - with `input
+    // motionevent` (a process per event) the first move came 0.3-1 s late and 370 px long. Then the finger
+    // stands 300 ms: Flickable flicks only when the last move is less than 100 ms before the release
+    // (:1348-1367). Straight to the input system, not to TalkBack's filter: a drag of the page, not a gesture
+    private static void drag(String step, String args) throws Exception {
+        String[] p = args.split(",");
+        if (p.length != 3) {
+            System.out.println(step + ": BAD ARGS");
+            return;
+        }
+        int x = Integer.parseInt(p[0].trim());
+        int y1 = Integer.parseInt(p[1].trim());
+        int y2 = Integer.parseInt(p[2].trim());
+        int moves = Math.max(1, (Math.abs(y2 - y1) + 9) / 10);
+        long down = SystemClock.uptimeMillis();
+        plain(MotionEvent.obtain(down, down, MotionEvent.ACTION_DOWN, x, y1, 0));
+        for (int i = 1; i <= moves; i++) {
+            Thread.sleep(5);
+            float y = y1 + (y2 - y1) * i / (float) moves;
+            plain(MotionEvent.obtain(down, SystemClock.uptimeMillis(), MotionEvent.ACTION_MOVE, x, y, 0));
+        }
+        Thread.sleep(300);
+        plain(MotionEvent.obtain(down, SystemClock.uptimeMillis(), MotionEvent.ACTION_UP, x, y2, 0));
+        System.out.println(step + ": done (" + moves + " moves)");
+    }
+
+    private static void plain(MotionEvent event) {
+        event.setSource(InputDevice.SOURCE_TOUCHSCREEN);
+        automation.injectInputEvent(event, true);
+        event.recycle();
     }
 
     private static Method toFilter;

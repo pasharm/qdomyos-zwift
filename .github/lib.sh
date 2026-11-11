@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha 2165a6359d81 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha cc580ccbd5b2 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -456,7 +456,7 @@ bring_in() {
 # on a page with onPressAndHold (800 ms: Home.qml, profiles.qml - delete a profile, WorkoutsHistory.qml)
 # the drag may be a long press - exact only on pages without one (the settings pages)
 swipe_page() {
-  local band top bot x a b i n=6 cmd
+  local band top bot x a b i n=6 cmd out
   band=$(uifind ui.xml --band 2>/dev/null) || band="252 2390"
   set -- "$1" "$2" $band
   top=$3; bot=$4
@@ -466,15 +466,24 @@ swipe_page() {
   else
     a=$(( bot - (bot - top) / 6 )); b=$(( top + (bot - top) / 6 ))
   fi
-  # API 35: exact no more than API 30-34 - the first move ~1 s after the press, a switch row kept the drag
-  # and the survey ended at 9 of 24 screens (T-505 pilots 8-9); the old swipe there: a full survey, its
-  # frames not comparable run by run
+  [ "$2" = exact ] && [ "$1" != up ] && { local t=$a; a=$b; b=$t; }
+  # exact: by the driver (A11yDriver drag@ - all events from one process, as UiAutomator swipes; T-505 decision
+  # 11.11). Fallbacks: no driver or its drag failed - `input motionevent` on API 30-34 (a process per event:
+  # on API 35 the first move came ~1 s late, the page went another way run by run and stood still on a
+  # switch row, the survey ended at 9 of 24 screens - pilots 8-9), else the old swipe (frames not comparable)
+  if [ "$2" = exact ] && a11y_build 2>/dev/null; then
+    out=$(timeout 60 adb shell "CLASSPATH=/data/local/tmp/a11y.jar app_process / A11yDriver drag@$x,$a,$b" \
+          < /dev/null 2>&1)
+    case $out in
+      *"drag@$x,$a,$b: done"*) emu_sleep 1; return 0 ;;
+    esac
+    near swipe "the drag of the driver failed: $(echo "$out" | tr '\r\n' '  ' | cut -c1-200)"
+  fi
   if [ "$2" = exact ] && [ "${EMU_API:-35}" -ge 30 ] && [ "${EMU_API:-35}" -le 34 ]; then
-    [ "$1" = up ] || { local t=$a; a=$b; b=$t; }
     cmd="input motionevent DOWN $x $a"
     for i in $(seq 1 $n); do cmd="$cmd; input motionevent MOVE $x $(( a + (b - a) * i / n ))"; done
     adb shell "$cmd; sleep 0.3; input motionevent UP $x $b" < /dev/null > /dev/null 2>&1
-  elif [ "$1" = up ]; then
+  elif [ "$1" = up ] || [ "$2" = exact ]; then
     adb shell input swipe "$x" "$a" "$x" "$b" 400 < /dev/null > /dev/null 2>&1
   else
     adb shell input swipe "$x" "$b" "$x" "$a" 400 < /dev/null > /dev/null 2>&1
