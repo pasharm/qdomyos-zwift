@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# emu-lib: tools/emu/uifind.py sha b421c95fdf4a - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/uifind.py sha 88d6d91d94fb - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): find a control of a uiautomator dump the way the user sees it - only the part
 # of it that is on the screen, not under the app header, not under a popup or the side menu.
 # One file for every emu branch, delivered by tools/emu/sync.py as .github/uifind.py.
@@ -15,6 +15,9 @@
 #   uifind.py dump.xml --count 'regex' [--any]   number of controls (on the screen; --any - all)
 #   uifind.py dump.xml --band                    "top bottom" of the page area between the app
 #                                                header and the navigation bar
+#   uifind.py dump.xml --free-y X Y              the y nearest to Y (up to 200 px away, in the
+#                                                band) where no switch row, text field or clickable
+#                                                node is under X - the start of an exact drag
 #   uifind.py dump.xml --package                 package of the window on top
 #
 # The regex must match the whole text or content-desc, case-insensitively.
@@ -353,6 +356,45 @@ def find(scr, pattern, checkable=False, not_edit=False, below=None, any_place=Fa
     return on, off
 
 
+FREE_REACH = 200  # px up and down from the wanted start of a drag
+FREE_STEP = 10
+FREE_EDGE = 50  # px kept from the edges of the page band
+FREE_MARGIN = 10  # px around the start kept clear of taking nodes
+
+
+def taking(n):
+    """A node that may take a drag started on it: a switch row (the whole row is the control), a text
+    field, anything marked clickable."""
+    return (n.get("checkable") == "true" or n.get("clickable") == "true"
+            or "EditText" in (n.get("class") or ""))
+
+
+def free_y(scr, x, y):
+    """The y nearest to y (FREE_STEP apart, at most FREE_REACH away, inside the page band) where no
+    taking() node of the page on the screen is under (x, y): a drag started on a switch row went
+    another way run by run (T-505 pilots 16-17: up to 67 px at one swipe); None - none such."""
+    band = scr.band()
+    lo, hi = (band[0] + FREE_EDGE, band[1] - FREE_EDGE) if band else (None, None)
+    rects = []
+    # the page layer only: an Android container over the window (the systemui scrim, clickable, full
+    # screen) would take every y
+    for n in (scr.page.iter("node") if scr.page is not None else scr.nodes):
+        if taking(n):
+            vis, _ = scr.visible(n)
+            if vis is not None:
+                rects.append(vis)
+    for d in range(0, FREE_REACH + 1, FREE_STEP):
+        for c in ((y,) if d == 0 else (y + d, y - d)):
+            if lo is not None and not lo <= c <= hi:
+                continue
+            # FREE_MARGIN px clear both ways: two switch rows [..,1994] [1995,..] leave a seam of 1 px
+            # that is a switch row on the screen (Qt rows are of fractional height)
+            if not any(r[0] <= x < r[2] and r[1] <= c + FREE_MARGIN and c - FREE_MARGIN < r[3]
+                       for r in rects):
+                return c
+    return None
+
+
 def main(argv):
     if len(argv) < 2:
         print(__doc__ or "usage: uifind.py dump.xml 'regex' [options]", file=sys.stderr)
@@ -373,6 +415,17 @@ def main(argv):
         if not b:
             return 1
         print(b[0], b[1])
+        return 0
+    if opts[0] == "--free-y":
+        try:
+            x, y = int(opts[1]), int(opts[2])
+        except (IndexError, ValueError):
+            print("--free-y X Y", file=sys.stderr)
+            return 1
+        free = free_y(scr, x, y)
+        if free is None:
+            return 1
+        print(free)
         return 0
 
     def val(name, kind=int):

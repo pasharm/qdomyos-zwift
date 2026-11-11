@@ -202,6 +202,38 @@ credits_in_menu() {
   return 1
 }
 
+# profile_actions <case>: the modern profile cards after a save - a tap selects the profile and shows Load,
+# a long press asks to delete it (Cancel / Delete, UiMessageDialog), Cancel keeps it. The card carries the
+# profile name (Accessible.name); no long press in the library: a swipe in place, 1.2 s
+profile_actions() {
+  local c=$1
+  if ! wait_ui '^default$' 15; then
+    fail "$c: the saved profile 'default' not in the list"
+    return 1
+  fi
+  tap_ui '^default$' '^Load$' || return 1
+  emu_sleep 1
+  snap "$c-5c-selected"
+  dump
+  find_ui '^default$' || { fail "$c: the profile card gone after the selection"; return 1; }
+  set -- $EMU_AT
+  say "long press the profile card at $1 $2"
+  adb shell input swipe "$1" "$2" "$1" "$2" 1200 < /dev/null > /dev/null 2>&1
+  if wait_ui '^Delete$' 10; then
+    say "outcome 'long press': ok"
+    emu_sleep 1
+    snap "$c-5d-delete"
+    expect "$c-5d-delete" '^Cancel$' 'the delete question keeps a Cancel'
+    expect "$c-5d-delete" '^Delete$' 'the delete question names its action'
+    tap_ui '^Cancel$' '^Saved profiles$' || return 1
+    wait_gone '^Delete$' 10 || fail "$c: the delete question still open after Cancel"
+    wait_ui '^default$' 5 || fail "$c: the profile gone after Cancel"
+  else
+    say "outcome 'long press': no-effect"
+    fail "$c: no delete question after a long press on the profile card"
+  fi
+}
+
 # the pages of PR 6a-2: profiles, Credits, Swag Bag. The landings are named in both looks: "Other folders"
 # (profiles), the thanks text (Credits), "Restore Purchases" (Swag Bag)
 service() {
@@ -215,6 +247,19 @@ service() {
     if [ "$c" = hm ]; then
       expect "$c-5-profiles" '^Saved profiles$' 'the saved profiles header'
       expect "$c-5-profiles" '^New profile$' 'the new profile button'
+    fi
+    # Save: the box of the save (UiMessageDialog on the branch - the native dialog in the classic look,
+    # a card in the modern one; MessageDialog on master), then the saved profile in the list
+    if tap_ui '^Save$' '.*Profile saved correctly.*'; then
+      emu_sleep 2
+      snap "$c-5b-saved"
+      # OK of the save box closes the page too (onOkClicked: stackView.pop())
+      close_ok "$c save"
+      wait_gone '.*Profile saved correctly.*' 10 || fail "$c: the save box still open after OK"
+    fi
+    if [ "$c" = hm ]; then
+      back_to "$HOME_RX" 20
+      open_drawer '^Profile:.*' && tap_ui '^Profile:.*' '^Other folders$' && profile_actions "$c"
     fi
   fi
   back_to "$HOME_RX" 20
@@ -241,7 +286,7 @@ service() {
 
 case ${PAGES:-lists} in
   lists) SHOTS="1-programs 2-preview 3-gpx 4-settings-files" ;;
-  service) SHOTS="5-profiles 6-credits 7-swagbag" ;;
+  service) SHOTS="5-profiles 5b-saved 6-credits 7-swagbag" ;;
   *) echo "PAGES=$PAGES: lists or service" >&2; exit 1 ;;
 esac
 

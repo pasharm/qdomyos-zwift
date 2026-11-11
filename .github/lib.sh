@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha cc580ccbd5b2 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha 89c3d8facddf - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -39,8 +39,16 @@ near() { local kind=$1; shift; echo "~~ near $kind: $*" >> "$STEPLOG"; }
 proves_nothing() { echo "!! $* - the run proves nothing" >> "$STEPLOG"; cat "$STEPLOG"; exit 1; }
 uifind() { "$EMU_PY" "$EMU_GH/uifind.py" "$@"; }
 
-# emu_init: a new steps.log, the frames as the user sees them, the API in the log
+# emu_init: a new steps.log, the frames as the user sees them, the API in the log. Only an emulator: the
+# settings below and install_apk (adb uninstall) went once to the user's phone over Wi-Fi from the tests
+# (T-505, lesson 1) - a run on the PC by hand with the phone connected would do the same
 emu_init() {
+  local serial
+  serial=$(adb get-serialno < /dev/null 2>&1 | tr -d '\r')
+  case $serial in
+    emulator-*) ;;
+    *) echo "!! lib.sh: not an emulator ($serial) - refused (T-505, lesson 1)"; exit 2 ;;
+  esac
   : > "$STEPLOG"
   mkdir -p dumps
   FAILED=0
@@ -179,6 +187,44 @@ hide_keyboard() {
   emu_sleep 2
   ime_shown && { fail "the keyboard is still shown"; return 1; }
   return 0
+}
+
+# type_text <text> <taken regex> [<landing regex> [seconds]]: the text into the focused field. API 30/31
+# lose the first keys after the field took the focus (T-286; T-510, lesson 3: "Race" gave no results on
+# API 30, 42982308271): the first letter again, up to 5 times, until <taken regex> is on the screen (the
+# field read with it, "Searching..."), then the rest and wait for <landing regex> (default: taken). Both
+# match the whole name, as wait_ui. A first letter taken late may be taken twice ("RRace"): only a landing
+# that tells the whole text (the field with it, the number of results) catches that - the default one
+# does not. A space goes as %s (adb input text ends the text at a space). Only letters, digits, inner
+# spaces and ". _ -": adb shell joins the words for sh of the device, where "(" is a syntax error and ";"
+# runs the rest as a command - such a text is refused. Call after the sign that the field is open
+type_text() {
+  local text=$1 taken=$2 land=${3:-$2} secs=${4:-20} i first rest
+  case $text in
+    ''|' '*|*[!abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789\ ._-]*)
+      fail "type '$text': not typed - only letters, digits, inner spaces and . _ - (adb shell gives the text to sh of the device)"
+      return 1 ;;
+  esac
+  first=${text:0:1}; rest=${text:1}; rest=${rest// /%s}
+  for i in 1 2 3 4 5; do
+    adb shell input text "$first" < /dev/null > /dev/null 2>&1
+    if wait_ui "$taken" 6; then
+      say "type '$text': the first letter taken at try $i"
+      [ "$i" -gt 1 ] && near input "the first letter of '$text' taken at try $i"
+      break
+    fi
+    if [ "$i" = 5 ]; then
+      shot "type-lost-$(date +%s)" now
+      fail "type '$text': the first letter never reached the field ('$taken' not shown: $EMU_WHY)"
+      return 1
+    fi
+  done
+  [ -n "$rest" ] && adb shell input text "$rest" < /dev/null > /dev/null 2>&1
+  if ! wait_ui "$land" "$secs"; then
+    fail "type '$text': '$land' not shown ($EMU_WHY)"
+    return 1
+  fi
+  say "type '$text': '$land' shown"
 }
 
 # ensure_app: the app on top. A box "… isn't responding": Wait first (the box of the app itself is
@@ -461,12 +507,20 @@ swipe_page() {
   set -- "$1" "$2" $band
   top=$3; bot=$4
   x=${EMU_SWIPE_X:-720}
+  # exact: by the label column - at x 720 the finger fell on the left edge of an "order index" box of the
+  # tiles page or beside it run by run, the page went 50-70 px another way (T-505 pilots 14-15)
+  [ "$2" = exact ] && x=${EMU_SWIPE_X:-300}
   if [ "$2" = short ]; then
     a=$(( (top + bot) / 2 + 200 )); b=$(( (top + bot) / 2 - 200 ))
   else
     a=$(( bot - (bot - top) / 6 )); b=$(( top + (bot - top) / 6 ))
   fi
   [ "$2" = exact ] && [ "$1" != up ] && { local t=$a; a=$b; b=$t; }
+  # exact: the start not on a switch row, a field or a clickable node (the drag the same length): from a
+  # switch row the page went up to 67 px another way run by run (T-505 pilots 16-17)
+  if [ "$2" = exact ] && i=$(uifind ui.xml --free-y "$x" "$a" 2>/dev/null); then
+    b=$(( b + i - a )); a=$i
+  fi
   # exact: by the driver (A11yDriver drag@ - all events from one process, as UiAutomator swipes; T-505 decision
   # 11.11). Fallbacks: no driver or its drag failed - `input motionevent` on API 30-34 (a process per event:
   # on API 35 the first move came ~1 s late, the page went another way run by run and stood still on a
@@ -552,12 +606,27 @@ survey_page() {
     cp "dumps/survey-$1-$i.xml" .emu_s.xml 2>/dev/null || { fail "survey $1: no dump of screen $i"; return 1; }
     swipe_page up exact
     if dump && "$EMU_PY" "$EMU_GH/emu_frame.py" same .emu_s.xml ui.xml; then
-      # not moved is not yet the end: the drag starts ~1 s before its first move (an `input` process each) and
-      # a field under the finger may take it (T-505 pilot 8, API 35: x 720 on "order index" of the tiles page,
-      # the survey ended at 5 of 24 screens) - once more by the label column, where no fields are
-      EMU_SWIPE_X=300 swipe_page up exact
-      dump && "$EMU_PY" "$EMU_GH/emu_frame.py" same .emu_s.xml ui.xml && { say "survey $1: end of the page at $i"; return 0; }
-      near survey "$1: the page did not move at $i, moved by x 300"
+      # not moved is not yet the end: a control under the finger may take the drag (T-505 pilot 8, API 35:
+      # x 720 on "order index" of the tiles page, the survey ended at 5 of 24 screens) - once more by the
+      # middle of the screen (exact goes by the label column x 300)
+      EMU_SWIPE_X=720 swipe_page up exact
+      if dump && "$EMU_PY" "$EMU_GH/emu_frame.py" same .emu_s.xml ui.xml; then
+        # the end is proved by a move back: a page that goes neither way is a swipe that does not work
+        # (T-505, lesson 2: pilot 9 "ended" at 9 of 24 screens on a switch row), not its end
+        swipe_page down exact
+        if dump && ! "$EMU_PY" "$EMU_GH/emu_frame.py" same .emu_s.xml ui.xml; then
+          say "survey $1: end of the page at $i"
+          return 0
+        fi
+        if [ "$i" -eq 1 ]; then
+          near survey "$1: one screen - the page moves neither way"
+          return 0
+        fi
+        fail "survey $1: the page moves neither way at $i - the swipe does not work, not the end"
+        shot "survey-$1-stuck" now
+        return 1
+      fi
+      near survey "$1: the page did not move at $i, moved by x 720"
     fi
   done
   near survey "$1: not at the end after ${2:-30} screens"
