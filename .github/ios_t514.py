@@ -111,15 +111,42 @@ def wait_for(label, timeout=90):
     return False
 
 
+def on_home():
+    """The home page: its Lap button. Not "Start": the fake device starts a workout by itself, and the
+    button reads Pause then (43036999474); not the menu button either - in the classic look the arrow of
+    a page is the same "◄", and a tap on it at home opens the menu."""
+    return find("Lap") is not None
+
+
 def home():
-    """Back to the home page: the arrow until the menu button shows (two pages deep at most)."""
+    """Back to the home page: the arrow until the home page shows (two pages deep at most)."""
     for _ in range(3):
-        if find(MENU) and find("Start"):
+        if on_home():
             return True
         if not tap(BACK):
             return False
         time.sleep(3)
-    return bool(find("Start"))
+    return on_home()
+
+
+def open_first_program():
+    """The preview of the first program. The modern cards are named; the classic rows have no name for
+    the screen reader (as on master), so the classic look taps the first row, one row below the "←"
+    button of the filter row (rows of 50 pt at 100 %)."""
+    if LOOK == "modern":
+        return tap("Easy intervals")
+    e = find("←")
+    if not e:
+        print("not found: '←'")
+        return False
+    global tapped_at
+    fr = e["frame"]
+    x, y = 200, fr["y"] + fr["height"] + 40
+    print(f"{time.strftime('%H:%M:%S', time.gmtime())} tap the first program row at {x},{y:.0f}")
+    run("ui", "tap", str(x), str(round(y)))
+    tapped_at = time.time()
+    time.sleep(3)
+    return True
 
 
 # (menu entry, landing label on the page, frame name); "Profile: " + the profile name, "A very big thanks" -
@@ -147,7 +174,7 @@ for entry, landing, name in PAGES:
                 ok = wait_for(landing, 120)
             time.sleep(5)
             shot(name)
-            if ok and name == "programs" and tap("Easy intervals") and wait_for("Start Workout", 60):
+            if ok and name == "programs" and open_first_program() and wait_for("Start Workout", 60):
                 time.sleep(8)
                 shot("program-preview")
     (reached if ok else missed).append(name)
