@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha 0140f7b954bd - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha a88a03fe7f67 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -426,10 +426,14 @@ bring_in() {
   return $rc
 }
 
-# swipe_page up|down [short]: a finger up (the page goes on) or down, in the page band of the last dump,
-# in the middle of the screen (by the left edge the page did not move, 42711319419; x by EMU_SWIPE_X)
+# swipe_page up|down [short|exact]: a finger up (the page goes on) or down, in the page band of the last
+# dump, in the middle of the screen (by the left edge the page did not move, 42711319419; x by EMU_SWIPE_X).
+# exact: the page goes by the finger only, no flick - the same rows run by run (T-505: the survey frames of
+# two runs were other rows): a drag held still 0.3 s before release - Qt 5.15 Flickable flicks only when
+# the last move is less than 100 ms before the release (qquickflickable.cpp:1348-1367, v5.15.0;
+# lastPosTime is set by move events, :1306). input motionevent is in Android 11+ (API 30); below - a swipe
 swipe_page() {
-  local band top bot x a b
+  local band top bot x a b i n=6 cmd
   band=$(uifind ui.xml --band 2>/dev/null) || band="252 2390"
   set -- "$1" "$2" $band
   top=$3; bot=$4
@@ -439,7 +443,12 @@ swipe_page() {
   else
     a=$(( bot - (bot - top) / 6 )); b=$(( top + (bot - top) / 6 ))
   fi
-  if [ "$1" = up ]; then
+  if [ "$2" = exact ] && [ "${EMU_API:-35}" -ge 30 ]; then
+    [ "$1" = up ] || { local t=$a; a=$b; b=$t; }
+    cmd="input motionevent DOWN $x $a"
+    for i in $(seq 1 $n); do cmd="$cmd; input motionevent MOVE $x $(( a + (b - a) * i / n ))"; done
+    adb shell "$cmd; sleep 0.3; input motionevent UP $x $b" < /dev/null > /dev/null 2>&1
+  elif [ "$1" = up ]; then
     adb shell input swipe "$x" "$a" "$x" "$b" 400 < /dev/null > /dev/null 2>&1
   else
     adb shell input swipe "$x" "$b" "$x" "$a" 400 < /dev/null > /dev/null 2>&1
@@ -506,7 +515,7 @@ survey_page() {
     settle
     shot "survey-$1-$i"
     cp "dumps/survey-$1-$i.xml" .emu_s.xml 2>/dev/null || { fail "survey $1: no dump of screen $i"; return 1; }
-    swipe_page up
+    swipe_page up exact
     dump && "$EMU_PY" "$EMU_GH/emu_frame.py" same .emu_s.xml ui.xml && { say "survey $1: end of the page at $i"; return 0; }
   done
   near survey "$1: not at the end after ${2:-30} screens"
