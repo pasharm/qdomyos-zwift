@@ -521,7 +521,9 @@ ColumnLayout {
                         // the two columns share the width equally
                         Layout.preferredWidth: 1
                         spacing: detailColumn.spacing
-                        visible: descriptionBlock.visible || tagsText.visible
+                        // from the data, not from the children: their visibility follows this one
+                        visible: !window.ui.modern || rootItem.previewWorkoutDescription !== ""
+                            || rootItem.previewWorkoutTags !== ""
 
                         // Descrizione workout
                         // Upright: folded to at most 8 lines, and to no more than 30 % of the page below the
@@ -534,9 +536,11 @@ ColumnLayout {
                         ColumnLayout {
                             id: descriptionBlock
                             property bool expanded: false
-                            // side by side: the column less the own margins (20) and the tags
+                            // side by side: the column less the own margins (20), the tags and the
+                            // spacing before the filler under them
                             readonly property real sideRoom: Math.max(descriptionMetrics.lineSpacing,
-                                textColumn.height - 20 - (tagsText.visible ? tagsText.height + textColumn.spacing : 0))
+                                textColumn.height - 20 - (tagsText.visible ? tagsText.height + textColumn.spacing : 0)
+                                - textColumn.spacing)
                             readonly property real pageBelowButtons: Math.max(0, detailColumn.height - detailHeader.height)
                             // the page below the buttons less all but the text: the margins of the buttons row (10),
                             // the spacing of the page, the own margins (20), the button (48), the tags, the chart
