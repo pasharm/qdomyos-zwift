@@ -69,6 +69,7 @@ ColumnLayout {
             Layout.fillWidth: true
             text: qsTr("Tap a file to select it, then Load.")
             color: window.ui.textMuted
+            font.pixelSize: window.ui.fontCaption
             wrapMode: Text.WordWrap
         }
 
@@ -133,7 +134,7 @@ ColumnLayout {
                 Rectangle {
                     id: settingsAvatar
                     anchors.left: parent.left
-                    anchors.leftMargin: 10
+                    anchors.leftMargin: 12
                     anchors.verticalCenter: parent.verticalCenter
                     width: 40
                     height: 40

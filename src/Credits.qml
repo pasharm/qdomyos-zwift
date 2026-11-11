@@ -49,6 +49,7 @@ ScrollView {
             Layout.fillWidth: true
             text: qsTr("A very big thanks to<br>all the developers<br>(alphabetical sorted):").split("<br>").join(" ")
             color: window.ui.textMuted
+            font.pixelSize: window.ui.fontCaption
             wrapMode: Text.WordWrap
         }
 
@@ -56,7 +57,7 @@ ScrollView {
             Layout.fillWidth: true
             Layout.topMargin: 4
             implicitHeight: developerList.implicitHeight + 16
-            radius: 20
+            radius: 16
             color: window.ui.surface
 
             Column {
@@ -74,7 +75,9 @@ ScrollView {
                         Rectangle {
                             id: developerAvatar
                             anchors.left: parent.left
-                            anchors.leftMargin: 8
+                            // 12 from the card edge with the margin of the list, and 12 to the
+                            // name, as on the list cards of the other pages
+                            anchors.leftMargin: 4
                             anchors.verticalCenter: parent.verticalCenter
                             width: 40
                             height: 40
@@ -90,7 +93,7 @@ ScrollView {
                         }
                         Label {
                             anchors.left: developerAvatar.right
-                            anchors.leftMargin: 16
+                            anchors.leftMargin: 12
                             anchors.right: parent.right
                             anchors.verticalCenter: parent.verticalCenter
                             text: modelData
