@@ -10,15 +10,25 @@ QZDIR=/sdcard/Documents/QZ
 
 # wipe: Documents/QZ of the previous side. A file left by an uninstalled app belongs to another uid, the new
 # install does not see it and asks about "programs of a previous installation" (run 43015224696: the native
-# box over the classic list, the modern list empty)
-# The app goes first (a running QZ writes the folder again), then root removes it: the shell may not
-# remove files of the app (run 43019114307: the folder stayed)
+# box over the classic list, the modern list empty). Removed by the app uid while the app is still installed:
+# MediaProvider forgets the files then. The shell may not remove them (run 43019114307), and after a removal
+# by root MediaProvider kept them - the next app got "File exists" (run 43021054533)
 wipe_files() {
-  adb uninstall "$PKG" < /dev/null > /dev/null 2>&1
-  adb shell "su 0 rm -rf $QZDIR" < /dev/null >> "$STEPLOG" 2>&1
-  if adb shell "ls -d $QZDIR" < /dev/null > /dev/null 2>&1; then
-    proves_nothing "$QZDIR left from the previous side"
+  local uid
+  uid=$(app_uid)
+  if [ -n "$uid" ]; then
+    adb shell "su $uid,$uid,9997 sh -c 'rm -rf $QZDIR'" < /dev/null >> "$STEPLOG" 2>&1
   fi
+  adb uninstall "$PKG" < /dev/null > /dev/null 2>&1
+  if adb shell "ls -d $QZDIR" < /dev/null > /dev/null 2>&1; then
+    proves_nothing "$QZDIR left from the previous side (uid ${uid:-none})"
+  fi
+}
+
+# app_uid: the uid of the installed app - the owner of its data folder; empty without the app
+# (run 43021054533: `cmd package list packages -U` gave 10205 for an app of uid 10209)
+app_uid() {
+  adb shell "su 0 stat -c %u /data/data/$PKG" < /dev/null 2>/dev/null | tr -d '\r'
 }
 
 # seed: a GPX route and a saved settings file, written as the app (run-as): from API 30 the app lists in
@@ -32,7 +42,7 @@ seed_files() {
     '</trkseg></trk></gpx>' > test-route.gpx
   printf '[General]\nftp=210\n' > saved-setup.qzs
   local uid as
-  uid=$(adb shell cmd package list packages -U "$PKG" < /dev/null | tr -d '\r' | sed -n 's/.*uid://p' | head -1)
+  uid=$(app_uid)
   [ -n "$uid" ] || proves_nothing "seed: no uid of $PKG"
   # run-as is shut out of /sdcard from API 30 (check_emu_script run-as-shared); the app uid with the
   # external storage group 9997 writes there as the app
