@@ -129,56 +129,68 @@ ColumnLayout {
             anchors.topMargin: rootElement.modernCard ? 4 : 0
             anchors.bottomMargin: rootElement.modernCard ? 12 : 0
 
-            // Modern look: a plain switch row like the other switches of the settings (no
-            // accent: a page of tiles has dozens of them); a tap anywhere on the row switches it
-            Rectangle {
+            // Modern look: a plain switch row with the switch of the modern look (no accent: a page
+            // of tiles has dozens of them); a tap anywhere on the row switches it. Made only while
+            // the look is on (as the header of AccordionElement): the classic page of tiles does not
+            // carry a hidden switch in every section
+            Loader {
                 id: modernHeader
-                visible: window.ui.modern
+                active: window.ui.modern
+                visible: active
                 Layout.fillWidth: true
-                implicitHeight: Math.max(48, modernTitle.implicitHeight + 16)
-                radius: 12
-                color: modernArea.pressed ? window.ui.surfaceHigh : "transparent"
+                readonly property real radius: item ? item.radius : 0
+                sourceComponent: Rectangle {
+                    implicitHeight: Math.max(48, modernTitle.implicitHeight + 16)
+                    radius: 12
+                    color: modernArea.pressed ? window.ui.surfaceHigh : "transparent"
 
-                Accessible.role: Accessible.CheckBox
-                Accessible.name: rootElement.title
-                Accessible.checked: rootElement.isOpen
-                Accessible.onPressAction: rootElement.toggle(!rootElement.isOpen)
+                    Accessible.role: Accessible.CheckBox
+                    Accessible.name: rootElement.title
+                    Accessible.checkable: true
+                    Accessible.checked: rootElement.isOpen
+                    Accessible.onPressAction: rootElement.toggle(!rootElement.isOpen)
 
-                MouseArea {
-                    id: modernArea
-                    anchors.fill: parent
-                    onClicked: rootElement.toggle(!rootElement.isOpen)
-                }
+                    MouseArea {
+                        id: modernArea
+                        anchors.fill: parent
+                        onClicked: rootElement.toggle(!rootElement.isOpen)
+                    }
 
-                Label {
-                    id: modernTitle
-                    // settings.qml (search): a result named as the title lights the element
-                    objectName: "accordionTitle"
-                    anchors.left: parent.left
-                    // Open, the element is a block out to the edges of the setting frames: the
-                    // title as far in as the text of a setting in its frame. Closed, it is a
-                    // setting in a frame itself: no room of its own, as the other switches
-                    anchors.leftMargin: rootElement.modernCard ? 4 : rootElement.isOpen ? settingFrames.framePadH : 0
-                    anchors.right: modernSwitch.left
-                    anchors.rightMargin: 8
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: rootElement.title
-                    wrapMode: Text.WordWrap
-                    color: rootElement.modernCard && rootElement.isOpen ? window.ui.accent : window.ui.textMain
-                    font.weight: rootElement.modernCard ? Font.DemiBold : Font.Normal
-                    // The size as well: in Qt 5 a write of the weight alone keeps the size the
-                    // label inherits at that moment, and a change of the text size missed it
-                    font.pixelSize: window.ui.fontBase
-                }
+                    Label {
+                        id: modernTitle
+                        // settings.qml (search): a result named as the title lights the element
+                        objectName: "accordionTitle"
+                        anchors.left: parent.left
+                        // Open, the element is a block out to the edges of the setting frames: the
+                        // title as far in as the text of a setting in its frame. Closed, it is a
+                        // setting in a frame itself: no room of its own, as the other switches
+                        anchors.leftMargin: rootElement.modernCard ? 4 : rootElement.isOpen ? settingFrames.framePadH : 0
+                        anchors.right: modernSwitch.left
+                        anchors.rightMargin: 8
+                        anchors.verticalCenter: parent.verticalCenter
+                        text: rootElement.title
+                        wrapMode: Text.WordWrap
+                        color: rootElement.modernCard && rootElement.isOpen ? window.ui.accent : window.ui.textMain
+                        font.weight: rootElement.modernCard ? Font.DemiBold : Font.Normal
+                        // The size as well: in Qt 5 a write of the weight alone keeps the size the
+                        // label inherits at that moment, and a change of the text size missed it
+                        font.pixelSize: window.ui.fontBase
+                    }
 
-                UiSwitch {
-                    id: modernSwitch
-                    anchors.right: parent.right
-                    anchors.rightMargin: !rootElement.modernCard && rootElement.isOpen ? settingFrames.framePadH : 0
-                    anchors.verticalCenter: parent.verticalCenter
-                    checked: rootElement.isOpen
-                    onClicked: rootElement.toggle(checked)
-                    Accessible.ignored: true
+                    UiSwitch {
+                        id: modernSwitch
+                        anchors.right: parent.right
+                        anchors.rightMargin: !rootElement.modernCard && rootElement.isOpen ? settingFrames.framePadH : 0
+                        anchors.verticalCenter: parent.verticalCenter
+                        checked: rootElement.isOpen
+                        onClicked: {
+                            rootElement.toggle(checked)
+                            // A tap set checked and broke the binding: follow isOpen again, so a later
+                            // toggle by the row or the screen reader still moves the switch
+                            checked = Qt.binding(function() { return rootElement.isOpen })
+                        }
+                        Accessible.ignored: true
+                    }
                 }
             }
 
@@ -257,14 +269,30 @@ ColumnLayout {
                 // Under the switch row: the block frame starts behind it
                 z: -1
 
-                UiSettingFrames {
+                // Modern look: made the first time the section is framed, and kept - back in the
+                // classic look it gives the settings their own margins again (a tile card is never
+                // framed, so it gets none)
+                Loader {
                     id: settingFrames
+                    property bool used: false
+                    active: contentBox.framed || used
+                    onLoaded: used = true
                     z: -1
                     visible: contentBox.framed
-                    content: contentBox.framed && contentPlaceholder.children.length > 0
-                             ? contentPlaceholder.children[0] : null
-                    header: modernHeader
-                    depth: rootElement.depth
+                    readonly property int insetLeft: item ? item.insetLeft : 0
+                    readonly property int insetRight: item ? item.insetRight : 0
+                    readonly property int insetTop: item ? item.insetTop : 0
+                    readonly property int insetBottom: item ? item.insetBottom : 0
+                    readonly property int framePadH: item ? item.framePadH : 0
+                    sourceComponent: UiSettingFrames {
+                        holder: contentBox
+                        // Not tied to the look: in the classic look the frames still see the
+                        // settings, to give them their own margins back
+                        content: !rootElement.modernCard && contentPlaceholder.children.length > 0
+                                 ? contentPlaceholder.children[0] : null
+                        header: modernHeader
+                        depth: rootElement.depth
+                    }
                 }
 
                 ColumnLayout {

@@ -8,7 +8,8 @@ import QtQuick.Layouts 1.3
 // frame drawn by the geometry of its first and last item. Sections inside are left out: they draw
 // their own block. The block of the section itself (the header on top of it) is drawn here too.
 // Goes into the item that holds the content at its (0, 0) - the Loader of AccordionElement, the
-// box of StaticAccordionElement - which is laid out in the column of the section under its header.
+// box of StaticAccordionElement and AccordionCheckElement - which is laid out in the column of
+// the section under its header; made by a Loader of its own there, it is told that item by holder.
 // On a settings page without sections (TTS, the inclination overrides) it is the first item of
 // the column itself, of no height: it stands at (0, 0) of the column as well.
 Item {
@@ -22,6 +23,8 @@ Item {
     property int depth: 1
     // Items of the column left without a frame (the title of a settings page)
     property var exclude: []
+    // The item that holds the content and these frames at its (0, 0)
+    property Item holder: parent
 
     readonly property int framePadH: 10
     readonly property int framePadV: 8
@@ -45,6 +48,9 @@ Item {
     property var itemFrames: []
     // The layout margins of the content as settings.qml set them, to add to and to give back
     property var baseMargins: []
+    // Some margin of the content differs from its own: set by the modern look, to give back once
+    // the look is classic again. While false, the classic look has nothing to do here
+    property bool touched: false
 
     // A section inside draws its own block; a switch section (AccordionCheckElement) only while
     // it is on - switched off it is a switch row like the others
@@ -94,7 +100,8 @@ Item {
             c.Layout[key] = v
     }
     function regroup() {
-        if (!content) {
+        // Classic look with the margins as they came: no frames, nothing to give back
+        if (!content || (!window.ui.modern && !touched)) {
             if (itemFrames.length)
                 itemFrames = []
             return
@@ -164,6 +171,8 @@ Item {
             setMargin(entries[i].item, "leftMargin", entries[i].left)
             setMargin(entries[i].item, "rightMargin", entries[i].right)
         }
+        // Classic: every margin is its own again
+        touched = window.ui.modern
         var same = list.length === itemFrames.length
         for (i = 0; same && i < list.length; i++)
             same = list[i].first === itemFrames[i].first && list[i].last === itemFrames[i].last
@@ -178,6 +187,10 @@ Item {
         baseMargins = []
         Qt.callLater(frames.regroup)
     }
+    // Made by a Loader once the look turns modern, the content is often there already: the frames
+    // are laid out when made as well, not only on a change of it (a second call on the same turn
+    // is merged into one)
+    Component.onCompleted: Qt.callLater(frames.regroup)
     // A section opened again (StaticAccordionElement keeps its content while closed): the
     // settings are visible again, the groups are made anew
     onVisibleChanged: if (visible) Qt.callLater(frames.regroup)
@@ -193,7 +206,7 @@ Item {
 
     // The block of an open section: its header is the top of it
     UiFrame {
-        readonly property Item holder: frames.parent
+        readonly property Item holder: frames.holder
         visible: window.ui.modern && frames.header !== null && holder !== null
         z: -2
         x: frames.header ? frames.header.x - holder.x - 1 : 0
@@ -213,7 +226,7 @@ Item {
         UiFrame {
             z: -1
             x: -frames.framePadH
-            width: (frames.parent ? frames.parent.width : 0) + 2 * frames.framePadH
+            width: (frames.holder ? frames.holder.width : 0) + 2 * frames.framePadH
             y: modelData.first.y - frames.framePadV
             height: modelData.last.y + modelData.last.height - modelData.first.y + 2 * frames.framePadV
             radius: 14
