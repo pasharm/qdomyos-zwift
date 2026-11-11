@@ -106,13 +106,16 @@ Page {
                     width: 48
                     height: 48
                     radius: 24
-                    color: rootItem.device ? window.ui.alpha(window.ui.ok, 0.16) : window.ui.surfaceHigh
+                    // window.equipmentConnected, not rootItem.device: with no equipment that getter flips on
+                    // every read to blink the classic Bluetooth icon below, and these bindings are evaluated in
+                    // the classic look too - more reads would stop the blinking there
+                    color: window.equipmentConnected ? window.ui.alpha(window.ui.ok, 0.16) : window.ui.surfaceHigh
                     UiIcon {
                         anchors.centerIn: parent
                         width: 24
                         height: 24
-                        name: rootItem.device ? "bluetooth_connected" : "bluetooth"
-                        color: rootItem.device ? window.ui.ok : window.ui.textMuted
+                        name: window.equipmentConnected ? "bluetooth_connected" : "bluetooth"
+                        color: window.equipmentConnected ? window.ui.ok : window.ui.textMuted
                     }
                     // No device yet: a tap searches right away instead of waiting for the next search
                     // (with a device connected bluetoothSearchNow() does nothing). With a device connected the tap
@@ -125,8 +128,8 @@ Page {
                         // VoiceOver/TalkBack: a button that searches. The state is in the name: TalkBack (Qt 5.15)
                         // reads no description when the name is set
                         Accessible.role: Accessible.Button
-                        Accessible.name: qsTr("Bluetooth connection") + ": " + (rootItem.device ? qsTr("Device connected") : qsTr("Device not connected"))
-                        Accessible.description: rootItem.device ? qsTr("Device connected") : qsTr("Device not connected")
+                        Accessible.name: qsTr("Bluetooth connection") + ": " + (window.equipmentConnected ? qsTr("Device connected") : qsTr("Device not connected"))
+                        Accessible.description: window.equipmentConnected ? qsTr("Device connected") : qsTr("Device not connected")
                         Accessible.focusable: true
                         Accessible.onPressAction: { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt(); }
                     }
