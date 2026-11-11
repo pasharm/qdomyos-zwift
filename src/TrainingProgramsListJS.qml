@@ -456,10 +456,12 @@ ColumnLayout {
             id: detailView
 
             ColumnLayout {
+                id: detailColumn
                 spacing: 10
 
                 // Header con pulsanti
                 RowLayout {
+                    id: detailHeader
                     Layout.fillWidth: true
                     Layout.margins: 5
                     Layout.leftMargin: window.ui.modern ? programsPage.modernMargin - 8 : 5
@@ -500,20 +502,123 @@ ColumnLayout {
                 }
 
                 // Descrizione workout
-                Text {
+                // Folded to at most 8 lines, and to no more than 30 % of the page below the buttons,
+                // with "Show more" under its right end: the chart below is a native view that takes
+                // only the height left, and a long description (the bundled programs cite their
+                // sources) left it none in landscape. Unfolded, the text scrolls in at most half of
+                // the page below the buttons. Either way it keeps to textRoom: on a low page (a small
+                // phone in landscape) the button and the tags stay on the page and the chart keeps 80
+                ColumnLayout {
+                    id: descriptionBlock
+                    property bool expanded: false
+                    readonly property real pageBelowButtons: Math.max(0, detailColumn.height - detailHeader.height)
+                    // the page below the buttons less all but the text: the margins of the buttons row (10),
+                    // the spacing of the page, the own margins (20), the button (48), the tags, the chart
+                    readonly property real textRoom: Math.max(descriptionMetrics.lineSpacing,
+                        pageBelowButtons - 10 - 3 * detailColumn.spacing - 20 - 48
+                        - (tagsText.visible ? tagsText.height : 0) - 80)
+                    readonly property int foldedLines: Math.max(1, Math.min(8,
+                        Math.floor(Math.min(pageBelowButtons * 0.3, textRoom) / Math.max(1, descriptionMetrics.lineSpacing))))
                     Layout.fillWidth: true
                     Layout.margins: 10
-                    text: rootItem.previewWorkoutDescription
+                    spacing: 0
                     // Modern look: an empty line kept its height and margins, a gap above the chart
-                    visible: !window.ui.modern || text !== ""
-                    font.pixelSize: window.ui.modern ? window.ui.fontBody : window.fontPx(14)
-                    font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
-                    color: window.ui.ink("white")
-                    wrapMode: Text.WordWrap
-                    horizontalAlignment: Text.AlignHCenter
+                    visible: !window.ui.modern || rootItem.previewWorkoutDescription !== ""
+
+                    Flickable {
+                        id: descriptionFlick
+                        Layout.fillWidth: true
+                        Layout.preferredHeight: descriptionBlock.expanded
+                            ? Math.min(contentHeight, descriptionBlock.pageBelowButtons / 2, descriptionBlock.textRoom)
+                            : contentHeight
+                        contentHeight: descriptionText.height
+                        interactive: contentHeight > height
+                        clip: true
+                        boundsBehavior: Flickable.StopAtBounds
+                        ScrollIndicator.vertical: ScrollIndicator { }
+
+                        Text {
+                            id: descriptionText
+                            width: descriptionFlick.width
+                            text: rootItem.previewWorkoutDescription
+                            font.pixelSize: window.ui.modern ? window.ui.fontBody : window.fontPx(14)
+                            font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
+                            color: window.ui.ink("white")
+                            // Wrap, not WordWrap: a word wider than the column (a link) is broken, not
+                            // cut on one line - that cut set truncated, and "Show more" unfolded nothing
+                            wrapMode: Text.Wrap
+                            maximumLineCount: descriptionBlock.expanded ? 100000 : descriptionBlock.foldedLines
+                            elide: Text.ElideRight
+                            horizontalAlignment: Text.AlignLeft
+                        }
+
+                        FontMetrics {
+                            id: descriptionMetrics
+                            font: descriptionText.font
+                        }
+                    }
+
+                    // Shown only when the folded text is really cut. Modern look: a tonal pill (the
+                    // accent at 16 %, 28 % pressed, as the profile chip of the drawer) ending at the
+                    // right edge of the text; classic: the bare label, its touch area past the text
+                    AbstractButton {
+                        id: moreButton
+                        Layout.alignment: Qt.AlignRight
+                        Layout.rightMargin: window.ui.modern ? 0 : -8
+                        visible: descriptionBlock.expanded || descriptionText.truncated
+                        implicitHeight: 48
+                        leftPadding: window.ui.modern ? 12 : 8
+                        rightPadding: 8
+                        implicitWidth: moreRow.implicitWidth + leftPadding + rightPadding
+                        text: descriptionBlock.expanded ? qsTr("Show less") : qsTr("Show more")
+                        onClicked: {
+                            descriptionBlock.expanded = !descriptionBlock.expanded
+                            if (!descriptionBlock.expanded)
+                                descriptionFlick.contentY = 0
+                        }
+
+                        background: Item {
+                            Rectangle {
+                                visible: window.ui.modern
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: parent.width
+                                height: 32
+                                radius: height / 2
+                                color: window.ui.alpha(window.ui.accent, moreButton.pressed ? 0.28 : 0.16)
+                            }
+                        }
+
+                        contentItem: Row {
+                            id: moreRow
+                            spacing: 4
+                            opacity: !window.ui.modern && moreButton.pressed ? 0.6 : 1
+
+                            Label {
+                                anchors.verticalCenter: parent.verticalCenter
+                                // the button carries the name; the label is no second node for TalkBack
+                                Accessible.ignored: true
+                                text: moreButton.text
+                                font.pixelSize: window.ui.modern ? window.ui.fontLabel : window.fontPx(14)
+                                font.weight: Font.Medium
+                                color: window.ui.modern ? window.ui.accent : Material.accent
+                            }
+
+                            // turned over when unfolded, as the chevron of a settings section
+                            UiIcon {
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: 20
+                                height: 20
+                                name: "expand_more"
+                                color: window.ui.modern ? window.ui.accent : Material.accent
+                                rotation: descriptionBlock.expanded ? 180 : 0
+                                Behavior on rotation { NumberAnimation { duration: 150; easing.type: Easing.OutQuad } }
+                            }
+                        }
+                    }
                 }
 
                 Text {
+                    id: tagsText
                     Layout.fillWidth: true
                     Layout.leftMargin: 10
                     Layout.rightMargin: 10
@@ -522,7 +627,7 @@ ColumnLayout {
                     font.pixelSize: window.ui.modern ? window.ui.fontCaption : window.fontPx(12)
                     wrapMode: Text.WordWrap
                     color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey, Material.Shade400)
-                    horizontalAlignment: Text.AlignHCenter
+                    horizontalAlignment: Text.AlignLeft
                 }
 
                 // WebView con grafico
