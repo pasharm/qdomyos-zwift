@@ -131,8 +131,8 @@ load_settings_open() {
   fi
 }
 
-# one side (b - master, h - branch) in one look (c - classic, m - modern)
-pages() {
+# the lists of PR 6a-1 for one side (b - master, h - branch) in one look (c - classic, m - modern)
+lists() {
   local c=$1 modern=$2
   start_case "$c" ui_modern=$modern fakedevice_treadmill=true android_documents_folder=true || return 1
 
@@ -163,8 +163,44 @@ pages() {
   back_to "$HOME_RX" 20
 }
 
+# the pages of PR 6a-2: profiles, Credits, Swag Bag. The landings are named in both looks: "Other folders"
+# (profiles), the thanks text (Credits), "Restore Purchases" (Swag Bag)
+service() {
+  local c=$1 modern=$2
+  start_case "$c" ui_modern=$modern fakedevice_treadmill=true android_documents_folder=true || return 1
+
+  if open_drawer '^Profile: ' && tap_ui '^Profile: ' '^Other folders$'; then
+    emu_sleep 3
+    snap "$c-5-profiles"
+    if [ "$c" = hm ]; then
+      expect "$c-5-profiles" '^Saved profiles$' 'the saved profiles header'
+      expect "$c-5-profiles" '^New profile$' 'the new profile button'
+    fi
+  fi
+  back_to "$HOME_RX" 20
+
+  if open_drawer '^Credits$' && tap_ui '^Credits$' '^A very big thanks'; then
+    emu_sleep 2
+    snap "$c-6-credits"
+  fi
+  back_to "$HOME_RX" 20
+
+  if open_drawer '^Swag Bag$' && tap_ui '^Swag Bag$' '^Restore Purchases$'; then
+    emu_sleep 2
+    snap "$c-7-swagbag"
+  fi
+  back_to "$HOME_RX" 20
+}
+
+case ${PAGES:-lists} in
+  lists) SHOTS="1-programs 2-preview 3-gpx 4-settings-files" ;;
+  service) SHOTS="5-profiles 6-credits 7-swagbag" ;;
+  *) echo "PAGES=$PAGES: lists or service" >&2; exit 1 ;;
+esac
+
 emu_init
 logcat_start
+say "== pages: ${PAGES:-lists}"
 
 for side in b h; do
   if [ "$side" = b ]; then apk=apk-base/android-debug.apk; else apk=apk-head/android-debug.apk; fi
@@ -172,12 +208,12 @@ for side in b h; do
   wipe_files
   install_apk "$apk"
   seed_files
-  pages "${side}c" false
-  pages "${side}m" true
+  "${PAGES:-lists}" "${side}c" false
+  "${PAGES:-lists}" "${side}m" true
 done
 
 say "== classic: the branch against master"
-for p in 1-programs 2-preview 3-gpx 4-settings-files; do
+for p in $SHOTS; do
   same_as_master "$p"
 done
 

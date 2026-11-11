@@ -11,6 +11,10 @@ on:
       base:
         description: run id of the clean master build with the fdroid-android-trial artifact
         required: true
+      pages:
+        description: lists (PR 6a-1) or service (PR 6a-2)
+        required: false
+        default: lists
       log_debug:
         description: log_debug for the run
         required: false
@@ -65,6 +69,7 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2
         env:
           LOG_DEBUG: ${{ inputs.log_debug }}
+          PAGES: ${{ inputs.pages }}
         with:
           api-level: ${{ matrix.api }}
           target: google_apis
@@ -77,7 +82,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.head }}-t514-api${{ matrix.api }}
+          name: emulator-logcat-${{ inputs.head }}-t514-${{ inputs.pages }}-api${{ matrix.api }}
           path: |
             *.png
             full_logcat.txt
