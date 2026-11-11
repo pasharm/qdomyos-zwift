@@ -659,8 +659,8 @@ import QtQuick 2.12 as Quick212
         }
 
         // A text field keeps the focus (the cursor and the keyboard) until another control
-        // takes it; empty space of the page never does. A tap on it or the start of a scroll
-        // drops the focus, as in other Android apps.
+        // takes it; empty space of the page never does. A tap on it drops the focus, as in
+        // other Android apps; a drag of the page does while the keyboard is up (below).
         function dropTextFocus() {
             var item = window.activeFocusItem
             if (item && item.cursorPosition !== undefined) {
@@ -671,10 +671,16 @@ import QtQuick 2.12 as Quick212
             }
         }
 
+        // A drag of the page puts the on-screen keyboard away: it covers the lower search results. A
+        // tap on the field brings it back. A drag starts even when the results are shorter than the
+        // page (it overshoots), while a mouse wheel or a contentY set by the code starts none. Only
+        // while the keyboard is up: a trackpad scroll on a Mac is a drag too, and there the field
+        // keeps its focus.
         Connections {
             target: settingsPane.contentItem
-            function onMovementStarted() {
-                settingsPane.dropTextFocus()
+            function onDragStarted() {
+                if (Qt.inputMethod.visible)
+                    settingsPane.dropTextFocus()
             }
         }
 
