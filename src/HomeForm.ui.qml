@@ -116,17 +116,18 @@ Page {
                         width: 24
                         height: 24
                         name: window.equipmentConnected ? "bluetooth_connected" : "bluetooth"
-                        color: window.equipmentConnected ? window.ui.ok : window.ui.textMuted
+                        color: (window.equipmentConnected || blinkOn) ? window.ui.ok : window.ui.textMuted
 
-                        // Searching for the equipment: the icon pulses, as the classic icon blinks. Only while
-                        // the card is on the screen (visible follows the look and the page on top), so the
-                        // classic look and a covered home page run no animation
-                        SequentialAnimation on opacity {
-                            running: modernBtIcon.visible && !window.equipmentConnected
-                            loops: Animation.Infinite
-                            NumberAnimation { to: 0.4; duration: 600; easing.type: Easing.InOutSine }
-                            NumberAnimation { to: 1; duration: 600; easing.type: Easing.InOutSine }
-                            onRunningChanged: if (!running) modernBtIcon.opacity = 1
+                        // Searching for the equipment: the icon blinks green, in step with the classic icon -
+                        // it flips on changeOfdevice (once a second), so no timer and no animation run, and one
+                        // repaint a second at most. Only while the card is on the screen (visible follows the
+                        // look and the page on top): the classic look and a covered home page do not repaint
+                        property bool blinkOn: false
+                        Connections {
+                            target: rootItem
+                            function onChangeOfdevice() {
+                                modernBtIcon.blinkOn = modernBtIcon.visible && !window.equipmentConnected && !modernBtIcon.blinkOn
+                            }
                         }
                     }
                     // No device yet: a tap searches right away instead of waiting for the next search
