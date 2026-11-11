@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha 2cd7055101ca - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha d9e1560d4966 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -14,7 +14,8 @@
 #   outcome <step>: ok|no-effect|wrong-screen   what a tap did: the landing shown / nothing changed on
 #                                  the screen / the screen changed, but not to the landing
 #   check <shot>: <what>: OK       a check passed; `finish` wants at least one
-#   -- shot <name>                 a frame <name>.png with its dump dumps/<name>.xml
+#   -- shot <name>                 a frame <name>.png with its dumps: dumps/<name>.xml after the frame,
+#                                  dumps/pre/<name>.xml before it
 # Rules for every function here: all variables local, a failure says "!!" and sets FAILED, the
 # return code is 0/1 (wait_ui and find also 2 - two controls, 3 - hidden), no "|| true" on a step a
 # conclusion rests on.
@@ -93,13 +94,23 @@ frame() {
   [ -s "$1" ]
 }
 
-# shot <name>: <name>.png, then the dump of the same screen as dumps/<name>.xml (exec-out: /sdcard is not
-# writable on API 21/23)
+# shot <name>: a dump as dumps/pre/<name>.xml, <name>.png, then the dump of the same screen as
+# dumps/<name>.xml (exec-out: /sdcard is not writable on API 21/23). The dump comes 1-2 s after the frame:
+# a value that changed in between (a timer tile) is told only by the two dumps around the frame -
+# review_run.py --baseline masks what differs between them (T-505 pilot 4: Elapsed 0:00:12 on the
+# frame, 0:00:14 in the dumps of both runs). A subfolder: a11y.py counts every dumps/*.xml as a screen
+# (check_emu_script.py --dumps reads the subfolders too - only the set of labels, the same either way)
 shot() {
   say "-- shot $1"
+  mkdir -p dumps/pre
+  if dump; then
+    cp ui.xml "dumps/pre/$1.xml"
+  else
+    rm -f "dumps/pre/$1.xml"
+    near shot "$1: no dump before the frame"
+  fi
   adb exec-out screencap -p < /dev/null > "$1.png" 2>/dev/null
   [ -s "$1.png" ] || near shot "$1: no frame"
-  mkdir -p dumps
   if dump; then
     cp ui.xml "dumps/$1.xml"
   else
