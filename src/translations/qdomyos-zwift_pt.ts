@@ -1452,14 +1452,6 @@ Deseja atualizar as configurações do QZ?</translation>
         <translation>← Voltar</translation>
     </message>
     <message>
-        <source>Show less</source>
-        <translation>Mostrar menos</translation>
-    </message>
-    <message>
-        <source>Show more</source>
-        <translation>Mostrar mais</translation>
-    </message>
-    <message>
         <source>Delete</source>
         <translation>Excluir</translation>
     </message>
