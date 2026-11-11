@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha a69afa08f2c7 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha ca5b99f56a25 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -254,6 +254,27 @@ still() {
 }
 emu_mask_args() { local m; for m in $EMU_MASKS; do printf -- '--mask %s ' "$m"; done; }
 
+# settle [tries]: the frame stops changing - two raw frames a second apart equal below the status bar
+# outside EMU_MASKS. Frames only: a dump takes ~5 s on CI, `still` after every swipe of a survey would
+# add minutes; this is for what changes the frame but not the layout - the scroll indicator fading out
+# after a swipe (T-505 pilot 5: survey-settings-modern-04 with and without it run by run). A screen with
+# a ticking value never settles - use still there. Not settled after the tries - a near miss, 0 anyway
+settle() {
+  local tries=${1:-5} i
+  frame .emu_g1 || return 0
+  for i in $(seq 1 "$tries"); do
+    emu_sleep 1
+    frame .emu_g2 || return 0
+    if "$EMU_PY" "$EMU_GH/emu_frame.py" diff .emu_g1 .emu_g2 --rows "$EMU_ROWS" $(emu_mask_args) \
+         > .emu_diff 2>&1; then
+      return 0
+    fi
+    mv -f .emu_g2 .emu_g1
+  done
+  near moving "the frame did not settle in $tries looks: $(cat .emu_diff 2>/dev/null)"
+  return 0
+}
+
 # a11y_build: the TalkBack and ACTION_CLICK driver (A11yDriver.java) as a11y.jar on the device; once
 a11y_build() {
   [ -n "$EMU_A11Y" ] && { [ "$EMU_A11Y" = ok ]; return; }
@@ -479,6 +500,8 @@ survey_page() {
   ensure_app || { fail "survey $1: the app is not on top"; return 1; }
   scroll_top
   for i in $(seq -w 1 "${2:-30}"); do
+    # the flick and the scroll indicator after the swipe: the frame of the same rows run by run
+    settle
     shot "survey-$1-$i"
     cp "dumps/survey-$1-$i.xml" .emu_s.xml 2>/dev/null || { fail "survey $1: no dump of screen $i"; return 1; }
     swipe_page up
