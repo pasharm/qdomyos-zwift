@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/qz.sh sha 73a06a4b1340 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/qz.sh sha 5e78ce7e29dd - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): QZ screens and settings for the emulator scenarios, on top of lib.sh (source lib.sh
 # first). One source: tools/emu/qz.sh of the work folder, copied into .github/ by tools/emu/sync.py.
 # Base: the T-498 scenario (test/t498-emu, c4c75732f); defects of the old copies - notes/emu-lib-2026-11-10.md.
@@ -11,7 +11,7 @@ LOG_DEBUG=${LOG_DEBUG:-true}
 MENU=${MENU:-84 168}
 # The home page in both looks: a treadmill shows one Pause instead of Start/Stop (T-461)
 HOME_RX=${HOME_RX:-'^Start$|^Stop$|^Pause$'}
-# The home page is ready (start_case waits for it up to 25 s): the support button shows on a home page with
+# The home page is ready (start_case waits for it: 25 s of looks): the support button shows on a home page with
 # no speed and power (SupportHelpButton.qml). A case with a running workout never gets it - HOME_READY_RX=
 # (empty) before start_case turns the wait off
 HOME_READY_RX=${HOME_READY_RX-'^Contact QZ support$'}
@@ -85,8 +85,10 @@ start_case() {
   # the home page is ready, not only shown: the support button comes after 10 s of zero speed (5 s with no
   # device, SupportHelpButton.qml) - the fixed sleep of 10 s raced it, the frame of the home page had it
   # or not run by run (T-505 pilots 3-5); then a still screen
+  # (25 s of looks: a look is a dump, ~5 s on CI - without the button the case loses up to ~55 s; the
+  # message without the time and the reason - one step for review_run --summary)
   if [ -n "$HOME_READY_RX" ] && ! wait_ui "$HOME_READY_RX" 25; then
-    near home "'$HOME_READY_RX' not shown in 25 s ($EMU_WHY)"
+    near home "'$HOME_READY_RX' not shown"
   fi
   ensure_app
   still

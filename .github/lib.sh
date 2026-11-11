@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha ca5b99f56a25 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha 0140f7b954bd - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -258,14 +258,16 @@ emu_mask_args() { local m; for m in $EMU_MASKS; do printf -- '--mask %s ' "$m"; 
 # outside EMU_MASKS. Frames only: a dump takes ~5 s on CI, `still` after every swipe of a survey would
 # add minutes; this is for what changes the frame but not the layout - the scroll indicator fading out
 # after a swipe (T-505 pilot 5: survey-settings-modern-04 with and without it run by run). A screen with
-# a ticking value never settles - use still there. Not settled after the tries - a near miss, 0 anyway
+# a ticking value never settles - use still there. The text fields and the focused field of the last dump
+# (ui.xml) are masked, as in still: a cursor blinks there. Not settled after the tries - a near miss, 0 anyway
 settle() {
-  local tries=${1:-5} i
+  local tries=${1:-5} i fields=""
+  [ -s ui.xml ] && cp ui.xml .emu_g.xml && fields="--dumps .emu_g.xml .emu_g.xml"
   frame .emu_g1 || return 0
   for i in $(seq 1 "$tries"); do
     emu_sleep 1
     frame .emu_g2 || return 0
-    if "$EMU_PY" "$EMU_GH/emu_frame.py" diff .emu_g1 .emu_g2 --rows "$EMU_ROWS" $(emu_mask_args) \
+    if "$EMU_PY" "$EMU_GH/emu_frame.py" diff .emu_g1 .emu_g2 --rows "$EMU_ROWS" $fields $(emu_mask_args) \
          > .emu_diff 2>&1; then
       return 0
     fi
