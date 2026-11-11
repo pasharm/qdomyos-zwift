@@ -2,8 +2,8 @@
 # Test only (T-495): the program preview with a long description (HIIT Aerobic) and a short one (HIIT
 # Neuromuscular), before (base: the branch of PR 6a-1) and after (head: + T-495), classic and modern look,
 # portrait and landscape. After: the long description folded with "Show more" (named, in the dump), unfolded
-# with "Show less" and folded back; the short one without the button; in landscape the chart below keeps
-# some height (WebView in the dump, its bounds in steps.log).
+# with "Show less" and folded back; the short one without the button; in landscape side by side: no button,
+# the chart WebView on the right half (bounds in steps.log); upright again folded.
 . .github/lib.sh
 . .github/qz.sh
 
@@ -58,6 +58,24 @@ webview_of() {
   local b
   b=$(grep -o 'class="android.webkit.WebView"[^>]*bounds="[^"]*"' "dumps/$1.xml" 2>/dev/null | grep -o 'bounds="[^"]*"' | head -1)
   say "chart $1: ${b:-no WebView in the dump}"
+}
+
+# chart_right <shot>: side by side the chart WebView starts past a third of the screen width and is
+# taller than a third of its height (the base has no WebView or a strip under the text)
+chart_right() {
+  local s=$1 b sw sh
+  b=$(grep -o 'class="android.webkit.WebView"[^>]*bounds="[^"]*"' "dumps/$s.xml" 2>/dev/null | grep -o 'bounds="[^"]*"' | head -1 | tr -c '0-9\n' ' ')
+  sw=$(grep -o 'bounds="\[0,0\]\[[0-9]*,[0-9]*\]"' "dumps/$s.xml" 2>/dev/null | head -1 | tr -c '0-9\n' ' ')
+  set -- $sw
+  sw=$3; sh=$4
+  set -- $b
+  if [ -z "$4" ] || [ -z "$sw" ]; then
+    fail "$s: side by side: no WebView or no screen bounds in the dump"
+  elif [ "$1" -gt $(( sw / 3 )) ] && [ $(( $4 - $2 )) -gt $(( sh / 3 )) ]; then
+    say "check $s: side by side, the chart on the right $1..$3 x $2..$4: OK"
+  else
+    fail "$s: side by side: the chart at $1..$3 x $2..$4 of ${sw}x$sh"
+  fi
 }
 
 # open_program <case> <name> <row>: the program from the list. Modern cards are named; the classic rows
@@ -115,16 +133,17 @@ preview() {
       shot "$c-3-long-land"
       webview_of "$c-3-long-land"
       if [ $head = 1 ]; then
-        expect "$c-3-long-land" '^Show more$' 'landscape: folded, Show more'
-        if tap_ui '^Show more$' '^Show less$' 10; then
-          emu_sleep 2
-          shot "$c-4-long-land-open"
-          webview_of "$c-4-long-land-open"
-          tap_ui '^Show less$' '^Show more$' 10 || fail "$c: landscape: Show less did not fold"
-        fi
+        # side by side: the whole text scrolls in its column, no button; the chart on the right half
+        expect_not "$c-3-long-land" '^Show more$' 'landscape: side by side, no Show more'
+        chart_right "$c-3-long-land"
       fi
     fi
-    rotate 0
+    if rotate 0 && [ $head = 1 ]; then
+      emu_sleep 4
+      shot "$c-4-long-back"
+      webview_of "$c-4-long-back"
+      expect "$c-4-long-back" '^Show more$' 'upright again: folded, Show more'
+    fi
   fi
   back_to "$HOME_RX" 20
 
