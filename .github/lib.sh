@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha 4fa8db086de9 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha 426537871c72 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -325,7 +325,7 @@ drv() {
 #          the page too (an accordion section at the end of the page opens below the edge, T-498: its
 #          rows are not in the tree while it is closed); then "already there" is looked for in the tree
 tap_ui() {
-  local rx=$1 land=$2 secs=30 a11y="" opts=() lopts=() rc x y how endx=ui.xml
+  local rx=$1 land=$2 secs=30 a11y="" opts=() lopts=() rc x y how name endx=ui.xml
   shift 2
   if [ $# -gt 0 ] && [ "${1#-}" = "$1" ]; then secs=$1; shift; fi
   while [ $# -gt 0 ]; do
@@ -358,11 +358,14 @@ tap_ui() {
   fi
   set -- $EMU_AT
   x=$1; y=$2
+  # the name found, not only the pattern: a pattern with .* may take another row on the other side
+  # (T-498 lesson 6: '^user_.*' - QZWS on master, qz on the branch, steps.log did not tell)
+  name=$(uifind ui.xml "$rx" "${opts[@]}" --name 2>/dev/null)
   cp .emu_f2 .emu_before 2>/dev/null
   cp ui.xml .emu_before.xml
   # the landing already shown: "ok" would not prove the tap did anything
   if find_ui "$land" "${lopts[@]}"; then
-    near land "'$land' is on the screen before the tap on '$rx': ok proves nothing"
+    near land "'$land' is $([ ${#lopts[@]} -gt 0 ] && echo 'in the tree' || echo 'on the screen') before the tap on '$rx': ok proves nothing"
   fi
   how=touch
   if [ -n "$a11y" ]; then
@@ -373,7 +376,7 @@ tap_ui() {
     fi
   fi
   [ "$how" = touch ] && adb shell input tap "$x" "$y" < /dev/null > /dev/null 2>&1
-  say "tap '$rx': $how at $x $y"
+  say "tap '$rx' = '$name': $how at $x $y"
   emu_sleep 1
   frame .emu_after
   if wait_ui "$land" "$secs" "${lopts[@]}"; then
@@ -434,7 +437,10 @@ bring_in() {
 # exact: the page goes by the finger only, no flick - the same rows run by run (T-505: the survey frames of
 # two runs were other rows): a drag held still 0.3 s before release - Qt 5.15 Flickable flicks only when
 # the last move is less than 100 ms before the release (qquickflickable.cpp:1348-1367, v5.15.0;
-# lastPosTime is set by move events, :1306). input motionevent is in Android 11+ (API 30); below - a swipe
+# lastPosTime is set by move events, :1306). input motionevent is in Android 11+ (API 30); below - a swipe.
+# The time from DOWN to the first MOVE is the start of another `input` process (0.3-1 s on the emulator):
+# on a page with onPressAndHold (800 ms: Home.qml, profiles.qml - delete a profile, WorkoutsHistory.qml)
+# the drag may be a long press - exact only on pages without one (the settings pages)
 swipe_page() {
   local band top bot x a b i n=6 cmd
   band=$(uifind ui.xml --band 2>/dev/null) || band="252 2390"
@@ -519,7 +525,14 @@ survey_page() {
     shot "survey-$1-$i"
     cp "dumps/survey-$1-$i.xml" .emu_s.xml 2>/dev/null || { fail "survey $1: no dump of screen $i"; return 1; }
     swipe_page up exact
-    dump && "$EMU_PY" "$EMU_GH/emu_frame.py" same .emu_s.xml ui.xml && { say "survey $1: end of the page at $i"; return 0; }
+    if dump && "$EMU_PY" "$EMU_GH/emu_frame.py" same .emu_s.xml ui.xml; then
+      # not moved is not yet the end: the drag starts ~1 s before its first move (an `input` process each) and
+      # a field under the finger may take it (T-505 pilot 8, API 35: x 720 on "order index" of the tiles page,
+      # the survey ended at 5 of 24 screens) - once more by the label column, where no fields are
+      EMU_SWIPE_X=300 swipe_page up exact
+      dump && "$EMU_PY" "$EMU_GH/emu_frame.py" same .emu_s.xml ui.xml && { say "survey $1: end of the page at $i"; return 0; }
+      near survey "$1: the page did not move at $i, moved by x 300"
+    fi
   done
   near survey "$1: not at the end after ${2:-30} screens"
 }
@@ -577,7 +590,7 @@ checked_of() {
 # row_toggle <shot> <regex> [--right N]: the switch row off by a tap and on again - frames <shot>,
 # <shot>-off, <shot>-on and a check that the state went b -> !b -> b
 row_toggle() {
-  local s=$1 rx=$2 b a c x y
+  local s=$1 rx=$2 b a c x y name
   shift 2
   if ! bring_in "$rx" 15 --checkable; then
     fail "$s: no switch row '$rx' ($EMU_WHY)"; shot "$s-none" now; return 1
@@ -585,9 +598,11 @@ row_toggle() {
   still
   shot "$s"
   find_ui "$rx" --checkable "$@" || { fail "$s: '$rx' gone ($EMU_WHY)"; return 1; }
+  # the name found, not only the pattern (T-498 lesson 6: '^user_.*' took QZWS on master, qz on the branch)
+  name=$(uifind ui.xml "$rx" --checkable "$@" --name 2>/dev/null)
   set -- $EMU_AT
   x=$1; y=$2; b=$4
-  say "tap row '$rx' at $x $y (checked $b)"
+  say "tap row '$rx' = '$name' at $x $y (checked $b)"
   adb shell input tap "$x" "$y" < /dev/null > /dev/null 2>&1
   emu_sleep 3
   shot "$s-off"
