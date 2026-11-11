@@ -76,11 +76,22 @@ def dismiss_alerts():
 tapped_at = time.time()
 
 
+def screen_h():
+    """The height of the screen in points: the frame of the app element, the first of the tree."""
+    t = tree()
+    return t[0]["frame"]["height"] if t else 874
+
+
 def tap(label, scrolls=0):
     global tapped_at
     dismiss_alerts()
     for i in range(scrolls + 1):
         e = find(label)
+        # an entry under the bottom edge is in the tree with its frame below the screen: the modern
+        # menu put Credits at y 867 of 874, and the tap there hit nothing (43063540344, 43099685765)
+        if e and e["frame"]["y"] + e["frame"]["height"] / 2 > screen_h() - 40 and i < scrolls:
+            print(f"{label!r} under the bottom edge (y {e['frame']['y']:.0f}): scroll")
+            e = None
         if e:
             fr = e["frame"]
             x = fr["x"] + fr["width"] / 2
@@ -157,7 +168,9 @@ PAGES = [
     ("Open GPX", "Other folders", "gpx"),
     ("Profile:", "Other folders", "profiles"),
     ("Swag Bag", "Restore Purchases", "swagbag"),
-    ("Credits", None, "credits"),
+    # the classic page is one label that starts with the bold title; the modern one has a row per developer.
+    # Not None: without a landing a tap that hit nothing was counted as reached (all runs before 43099685765)
+    ("Credits", "ben75020" if LOOK == "modern" else "<b>Credits</b>", "credits"),
 ]
 
 dismiss_alerts()
