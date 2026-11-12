@@ -407,10 +407,14 @@ grep -a -E "T518|restored|previous install|handleRestoreFolderResult|restoreFold
 # error master has too is not the branch's. Master's list - .github/t518_qml_master.txt, the master side of
 # run 43186663417 (GPXList.qml "mainRect is not defined", main.qml rootItem at start - T-213)
 QML_RX="(GPXList|SettingsList|profiles|TrainingProgramsList|TrainingProgramsListJS|main)\.qml.*(Error|Unable to assign|undefined)"
-grep -a -o -E "$QML_RX.*" full_logcat.txt | sed -e 's/[.]qml\(:[0-9]*\)*/.qml/g' | tr -d '\r' | sort -u > qml_side.txt
+# The type in "QML <type>: Detected anchors on an item that is managed by a layout" left out: the branch keeps
+# the anchors of master's button on the row that holds it now (RowLayout instead of Button, run 43202263306) -
+# without them the row left the bottom of the page (run 43198926517)
+qml_norm() { sed -e 's/[.]qml\(:[0-9]*\)*/.qml/g' -e 's/QML [A-Za-z]*: Detected anchors/QML item: Detected anchors/' | tr -d '\r' | sort -u; }
+grep -a -o -E "$QML_RX.*" full_logcat.txt | qml_norm > qml_side.txt
 say "== QML errors of the changed files ($SIDE): $(wc -l < qml_side.txt)"
 cat qml_side.txt >> "$STEPLOG"
-sort -u .github/t518_qml_master.txt > qml_master.txt
+qml_norm < .github/t518_qml_master.txt > qml_master.txt
 comm -13 qml_master.txt qml_side.txt > qml_new.txt
 if [ -s qml_new.txt ]; then
   say "not on master (run 43186663417):"

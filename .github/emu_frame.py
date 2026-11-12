@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# emu-lib: tools/emu/emu_frame.py sha 0f3761d5bfd5 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/emu_frame.py sha 25045e18ed33 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): compare two raw frames of `adb exec-out screencap` (no -p) outside masks, and the
 # layout of two uiautomator dumps. Delivered with lib.sh by tools/emu/sync.py as .github/emu_frame.py.
 #
@@ -20,7 +20,9 @@
 #   emu_frame.py page a1.xml [a2.xml ...] -- b1.xml [b2.xml ...] [--rows y1,y2]
 #       the whole page from the dumps of its screens, without positions (class, text, name, checked,
 #       enabled), screens glued by their overlap; exit 0 when both pages have the same nodes in the same
-#       order - "the same page" when the swipes stopped at other places (T-513)
+#       order - "the same page" when the swipes stopped at other places (T-513); rows that repeat one
+#       another (the same "On" rows) are glued as an overlap - a row lost among them is not seen
+#   shift also reads the PNG frames of the evidence of a run (bc-NN.png) when pngread.py is next to it
 #
 # Masks: the --mask rectangles, and with --dumps every node whose text or name differs between the
 # two dumps (a clock, the value of a tile, a timer), every text field and the deepest focused node
@@ -32,6 +34,7 @@
 # that changed nothing at all on the screen is told from one that opened the wrong screen
 # (notes/emu-tools-research-2026-11-10.md: UI Automator waitForStable, Maestro settle - only by the
 # frame is not enough, a shimmer of 0.6 % fooled Maestro, so moving texts are masked by the dumps).
+import os
 import sys
 import xml.etree.ElementTree as ET
 
@@ -221,6 +224,28 @@ def diff_shifted(fa, fb, s, rows, tol):
     return n
 
 
+def read_frame(path):
+    """A raw frame, or a PNG of the evidence of a run (bc-NN.png) through pngread.py next to this file -
+    present in tools/emu, not in the copies sync.py puts into a branch (there the frames are raw)."""
+    f = read_raw(path)
+    if f is not None:
+        return f
+    try:
+        with open(path, "rb") as fh:
+            png = fh.read(8) == b"\x89PNG\r\n\x1a\n"
+    except OSError:
+        return None
+    if not png:
+        return None
+    try:
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import pngread
+    except ImportError:
+        print("%s: a PNG, and pngread.py is not next to emu_frame.py" % path, file=sys.stderr)
+        return None
+    return pngread.read_png(path)
+
+
 def best_shift(fa, fb, rows=None, max_shift=120, tol=RENDER_NOISE, tries=5):
     """(shift, rows that still differ, rows compared): b row y shows what a row y - shift shows. Two frames
     of one page that a swipe stopped at other places (T-513: swipe_page exact stopped up to 60 px apart on
@@ -234,6 +259,10 @@ def best_shift(fa, fb, rows=None, max_shift=120, tol=RENDER_NOISE, tries=5):
     w, h, oa, da = fa
     _, _, ob, db = fb
     y1, y2 = (STATUS_BAR, h) if rows is None else (max(0, rows[0]), min(h, rows[1]))
+    if y2 - y1 <= max_shift:
+        # rows out of the frame, the wrong way round or fewer than the shift: nothing would be compared,
+        # and "0 rows differ" would read as the same page
+        return None
     where = {}
     for y in range(y1, y2):
         row = da[oa + y * w * 4:oa + (y + 1) * w * 4].translate(COARSE)
@@ -261,7 +290,8 @@ def page_nodes(paths, rows=None):
     """The whole page from the dumps of its screens, top to bottom, without positions: (class, text,
     content-desc, checked, enabled) of every node with a text or a name, screens glued by the longest
     overlap. None when a dump cannot be read. rows - only nodes whose top is within y1..y2 (no toolbar,
-    no navigation bar)."""
+    no navigation bar). Limit: rows that repeat one another (a list of the same "On" rows, or ABAB) are glued
+    over as an overlap, so a row lost there is not seen - for such a page compare the counts of its screens."""
     page = []
     for path in paths:
         ns = nodes(path)
@@ -322,10 +352,11 @@ def main(argv):
         except (ValueError, IndexError) as e:
             print("bad option: %s\n%s" % (e, USAGE), file=sys.stderr)
             return 2
-        r = best_shift(read_raw(argv[1]), read_raw(argv[2]), o.get("--rows"), o.get("--max", 120),
+        r = best_shift(read_frame(argv[1]), read_frame(argv[2]), o.get("--rows"), o.get("--max", 120),
                        o.get("--tol", RENDER_NOISE))
         if r is None:
-            print("frames not comparable", file=sys.stderr)
+            print("frames not comparable (unreadable, other sizes, or --rows not more than --max rows "
+                  "inside the frame)", file=sys.stderr)
             return 2
         print("shift %+d rows %d of %d" % r)
         return 0 if r[1] == 0 else 1
