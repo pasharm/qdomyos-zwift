@@ -200,16 +200,19 @@ for entry, landing, name in PAGES:
                 ok = True
             else:
                 ok = wait_for(landing, 120)
-            time.sleep(5)
+            # the settings files page was still sliding in 10 s after the tap (43254897285): longer there
+            time.sleep(20 if name == "settings-files" else 5)
             shot(name)
             elements(name)
             if ok and name == "settings-files":
-                # "Settings folder" is an accordion: a frame with it toggled as well, in case the
-                # button moves with the list
-                if tap("Settings folder"):
-                    time.sleep(8)
-                    shot(name + "-toggled")
-                    elements(name + "-toggled")
+                # "Settings folder" is an accordion, closed at the start; its title has no accessible
+                # name (not in the tree of 43254897285/43254905366), the row is at y 290 of the settled
+                # page (base frame 05 of 43254905366): open it by place, a frame with the list shown
+                print(f"{time.strftime('%H:%M:%S', time.gmtime())} tap the Settings folder row at 200,290")
+                run("ui", "tap", "200", "290")
+                time.sleep(15)
+                shot(name + "-open")
+                elements(name + "-open")
     (reached if ok else missed).append(name)
     if not home():
         print("not back on the home page after", name)
