@@ -180,7 +180,9 @@ beside() {
 }
 
 # gpx_open / profiles_open: the pages from the menu
-gpx_open() { open_drawer '^Open GPX$' && tap_ui '^Open GPX$' '^Other folders$'; }
+# the branch asks the question at once on the GPX page, the box over the list (run 43189333683): its No is a
+# landing too
+gpx_open() { open_drawer '^Open GPX$' && tap_ui '^Open GPX$' '^Other folders$|^&?No$'; }
 profiles_open() { open_drawer '^Profile:.*' && tap_ui '^Profile:.*' '^Other folders$'; }
 
 # the question of the restore: the native box (classic) or UiMessageDialog (modern); No/Yes
