@@ -427,6 +427,9 @@ if [ "${PAGES:-lists}" = tb ]; then
   emu_sleep 3
   logcat_start
   a11y_build || proves_nothing "no A11yDriver"
+  # TalkBack 15 of the image asks for the notifications on every start (REQUEST_PERMISSIONS from its uid):
+  # the system box over QZ took the active window, the driver saw no node of the page (run 43174169392)
+  adb shell pm grant com.google.android.marvin.talkback android.permission.POST_NOTIFICATIONS < /dev/null >> "$STEPLOG" 2>&1
   wipe_files
   install_apk apk-head/android-debug.apk
   seed_files
