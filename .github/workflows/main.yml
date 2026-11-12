@@ -61,7 +61,7 @@ jobs:
           github-token: ${{ github.token }}
 
       - name: Download the master APK
-        if: matrix.side == 'b'
+        if: matrix.side == 'b' || matrix.side == 'q'
         uses: actions/download-artifact@v4
         with:
           name: fdroid-android-trial
