@@ -559,7 +559,71 @@ side_g() {
   wrap_up
 }
 
+# ---- r: copies a restore left under the temporary name (.restore_<name>; the app stopped between the copy and
+# the rename) take their real name on the next visit of a list, in gpx/, settings/ and profiles/ too
+# (CustomQtActivity.recoverRestoreCopies, no folder grant needed). Written as the new install:
+#   gpx/.restore_R1.gpx, R1.gpx free                     -> R1.gpx
+#   settings/.restore_S2.qzs, S2.qzs with the same bytes -> the copy dropped
+#   profiles/.restore_P3.qzs, P3.qzs with other bytes    -> P3_1.qzs, both kept
+#   settings/.restore_t518-setup.qzs, the target a file of the previous install -> the copy stays
+own_put() { adb shell "su $NEW_UID,$NEW_UID,9997 sh -c 'printf \"$2\" > \"$QZDIR/$1\"'" < /dev/null >> "$STEPLOG" 2>&1; }
+has() { adb shell "ls '$QZDIR/$1'" < /dev/null > /dev/null 2>&1; }
+own_cat() { adb shell "su $NEW_UID,$NEW_UID,9997 cat '$QZDIR/$1'" < /dev/null 2>/dev/null | tr -d '\r'; }
+side_r() {
+  local n
+  previous_install r apk-head/android-debug.apk
+  own_put "gpx/.restore_R1.gpx" "r1"
+  own_put "settings/S2.qzs" "same"
+  own_put "settings/.restore_S2.qzs" "same"
+  own_put "profiles/P3.qzs" "old"
+  own_put "profiles/.restore_P3.qzs" "new"
+  own_put "settings/.restore_t518-setup.qzs" "copy"
+  for f in gpx/.restore_R1.gpx settings/.restore_S2.qzs profiles/.restore_P3.qzs settings/.restore_t518-setup.qzs; do
+    has "$f" || proves_nothing "r: $f not written"
+  done
+  adb shell "su 0 ls -laR $LOWER/gpx $LOWER/settings $LOWER/profiles" < /dev/null >> "$STEPLOG" 2>&1
+  conf r-2
+  mark "r: GPX page"
+  if gpx_open; then
+    emu_sleep 4
+    question_shown 6 && tap_ui '^&?No$' '^Other folders$' 20
+    shot r-1-gpx
+  fi
+  back_to "$HOME_RX" 20
+  adb shell "su 0 ls -laR $LOWER/gpx $LOWER/settings $LOWER/profiles" < /dev/null >> "$STEPLOG" 2>&1
+  n=$(grep -a "recovered from temporary copies:" full_logcat.txt | tail -n 1 | sed 's/.*copies: *//' | tr -d '\r ')
+  say "recovered (log): ${n:-none}"
+  if [ "$n" = 2 ]; then
+    say "check r-count: 2 copies took a name (R1.gpx, P3_1.qzs): OK"
+  else
+    fail "check r-count: recovered '${n:-no line}', expected 2"
+  fi
+  if has gpx/R1.gpx && ! has gpx/.restore_R1.gpx && [ "$(own_cat gpx/R1.gpx)" = r1 ]; then
+    say "check r-free: .restore_R1.gpx took the free name R1.gpx: OK"
+  else
+    fail "check r-free: R1.gpx not made from its copy"
+  fi
+  if has settings/S2.qzs && ! has settings/.restore_S2.qzs; then
+    say "check r-same: the copy with the same bytes dropped, S2.qzs kept: OK"
+  else
+    fail "check r-same: .restore_S2.qzs left or S2.qzs gone"
+  fi
+  if ! has profiles/.restore_P3.qzs && [ "$(own_cat profiles/P3.qzs)" = old ] \
+     && [ "$(own_cat profiles/P3_1.qzs)" = new ]; then
+    say "check r-other: other bytes under P3_1.qzs, P3.qzs kept: OK"
+  else
+    fail "check r-other: P3.qzs / P3_1.qzs not as expected"
+  fi
+  if has settings/.restore_t518-setup.qzs && ! reads "$NEW_UID" "settings/t518-setup.qzs"; then
+    say "check r-foreign: the copy beside a file of the previous install stays: OK"
+  else
+    fail "check r-foreign: .restore_t518-setup.qzs gone or the old file taken over without a pass"
+  fi
+  wrap_up
+}
+
 case "$SIDE" in
+  r) side_r ;;
   b) side_b ;;
   o) side_o ;;
   d) DOCS=true side_h ;;
