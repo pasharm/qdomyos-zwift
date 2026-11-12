@@ -25,21 +25,24 @@ QUESTION_RX='(?s).*GPX routes.*previous installation.*'
 app_uid() {
   adb shell "su 0 stat -c %u /data/data/$PKG" < /dev/null 2>/dev/null | tr -d '\r'
 }
-# owner <path in Documents/QZ>: the uid owning the file, empty if there is none - on the lower file system
-# (/data/media/0): through FUSE root got no app uid (run 43184104603: the file seeded as the app, not its uid)
+# reads <uid> <path in Documents/QZ>: the app of that uid reads the file through FUSE - a file of its own
+# does, a file of a previous install does not (Permission denied, T-195 run 41909273758). The owner is not
+# in the file system: every file of Documents/QZ is uid 10201 there, those of the app itself too (run
+# 43184819969) - MediaProvider keeps it (owner_package_name, see owners)
 LOWER=/data/media/0/Documents/QZ
-owner() {
-  adb shell "su 0 stat -c %u '$LOWER/$1'" < /dev/null 2>/dev/null | tr -d '\r'
+reads() {
+  adb shell "su $1,$1,9997 cat '$QZDIR/$2' > /dev/null" < /dev/null > /dev/null 2>&1
 }
-# owners <dir...>: what the shell and root see, for steps.log
+# owners <dir...>: the files and their owner package by MediaProvider, for steps.log
 owners() {
   local d
   for d in "$@"; do
     say "-- $d: shell"
     adb shell "ls -ln '$QZDIR/$d'" < /dev/null >> "$STEPLOG" 2>&1
-    say "-- $d: root, lower"
-    adb shell "su 0 ls -ln '$LOWER/$d'" < /dev/null >> "$STEPLOG" 2>&1
   done
+  say "-- MediaProvider owners in Documents/QZ:"
+  adb shell "content query --uri content://media/external/file --projection _data:owner_package_name --where \"_data LIKE '%/Documents/QZ/%'\"" \
+    < /dev/null 2>&1 | grep -v -E '[.](zwo|fit|log)' >> "$STEPLOG"
 }
 mark() { say "== $1"; adb shell log -t T518 "mark $1" < /dev/null > /dev/null 2>&1; }
 
@@ -89,7 +92,7 @@ seed_files() {
   adb shell "$as 'cat > \"$QZDIR/profiles/$PROFILE\"'" < profile.qzs >> "$STEPLOG" 2>&1
   owners gpx settings profiles
   for f in "gpx/$ROUTE" "settings/$SETUP" "profiles/$PROFILE"; do
-    [ "$(owner "$f")" = "$uid" ] || proves_nothing "seed: $f not written as the app (uid $uid, owner '$(owner "$f")')"
+    reads "$uid" "$f" || proves_nothing "seed: $f not readable by the app (uid $uid)"
   done
   say "seeded as uid $uid: $ROUTE, $SETUP, $PROFILE"
 }
@@ -114,8 +117,13 @@ previous_install() {
   say "uid: previous install $old, this one $new"
   [ -n "$new" ] && [ "$new" != "$old" ] || proves_nothing "$1: the reinstall kept the uid ($old)"
   for f in "gpx/$ROUTE" "settings/$SETUP" "profiles/$PROFILE"; do
-    [ "$(owner "$f")" = "$old" ] || proves_nothing "$1: $f is not a file of the previous install"
+    adb shell "ls '$QZDIR/$f'" < /dev/null > /dev/null 2>&1 || proves_nothing "$1: $f gone with the uninstall"
+    if reads "$new" "$f"; then
+      proves_nothing "$1: the new install reads $f - not a foreign file"
+    fi
   done
+  owners gpx settings profiles
+  say "the new install does not read the seeded files: the case of a reinstall is there"
   OLD_UID=$old
   NEW_UID=$new
 }
@@ -190,10 +198,10 @@ if [ -s apk-base/android-debug.apk ]; then
   if load_settings_open; then emu_sleep 3; shot b-3-settings-files; fi
   back_to "$HOME_RX" 20
   for f in "gpx/$ROUTE" "settings/$SETUP" "profiles/$PROFILE"; do
-    if [ "$(owner "$f")" = "$OLD_UID" ]; then
-      say "check b-files: $f still of the previous install (master does not restore): OK"
+    if reads "$NEW_UID" "$f"; then
+      fail "check b-files: master reads $f - the case of a reinstall is not there"
     else
-      fail "check b-files: $f owner $(owner "$f"), expected the old $OLD_UID"
+      say "check b-files: $f still foreign to master (master does not restore): OK"
     fi
   done
 fi
@@ -285,10 +293,10 @@ fi
 
 # 4. Every file of the previous install is the app's own now, no temporary copies left
 for f in "gpx/$ROUTE" "settings/$SETUP" "profiles/$PROFILE"; do
-  if [ "$(owner "$f")" = "$NEW_UID" ]; then
-    say "check h-files: $f owned by the app ($NEW_UID): OK"
+  if reads "$NEW_UID" "$f"; then
+    say "check h-files: $f read by the app ($NEW_UID): OK"
   else
-    fail "check h-files: $f owner '$(owner "$f")', expected $NEW_UID"
+    fail "check h-files: the app ($NEW_UID) still does not read $f"
   fi
 done
 LEFT=$(adb shell "su 0 ls -aR $LOWER" < /dev/null 2>/dev/null | tr -d '\r' | grep -c '^[.]restore_')
@@ -297,8 +305,16 @@ if [ "${LEFT:-0}" = 0 ]; then
 else
   fail "check h-files: $LEFT .restore_ copies left"
 fi
-FOREIGN=$(adb shell "su 0 find $LOWER/training $LOWER/gpx $LOWER/settings $LOWER/profiles -type f -user $OLD_UID" \
-  < /dev/null 2>/dev/null | tr -d '\r')
+# every file of the four folders, the bundled programs and routes too
+FOREIGN=""
+for d in training gpx settings profiles; do
+  while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    reads "$NEW_UID" "$d/$f" || FOREIGN="$FOREIGN$d/$f
+"
+  done < <(adb shell "ls '$QZDIR/$d'" < /dev/null 2>/dev/null | tr -d '\r')
+done
+FOREIGN=$(printf '%s' "$FOREIGN" | sed '/^$/d')
 if [ -z "$FOREIGN" ]; then
   say "check h-files: no file of the previous install left in the four folders: OK"
 else

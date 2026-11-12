@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha 89c3d8facddf - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha 37f15631742d - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -762,6 +762,9 @@ tb_on() {
       && chmod 660 $dir/shared_prefs/${TB_PKG}_preferences.xml && restorecon -R $dir/shared_prefs" < /dev/null >> "$STEPLOG" 2>&1
   done
   adb shell "rm -rf /data/local/tmp/tbshots; mkdir -p /data/local/tmp/tbshots" < /dev/null > /dev/null 2>&1
+  # TalkBack 15 asks POST_NOTIFICATIONS on each start; its box becomes the active window and the driver
+  # then sees no tree of the app (T-514, lesson 11)
+  [ "${EMU_API:-35}" -ge 33 ] && adb shell pm grant "$TB_PKG" android.permission.POST_NOTIFICATIONS < /dev/null >> "$STEPLOG" 2>&1
   adb shell settings put secure enabled_accessibility_services "$TB_PKG/$TB_PKG.TalkBackService" < /dev/null >> "$STEPLOG" 2>&1
   adb shell settings put secure accessibility_enabled 1 < /dev/null >> "$STEPLOG" 2>&1
   adb shell settings put secure touch_exploration_enabled 1 < /dev/null >> "$STEPLOG" 2>&1
