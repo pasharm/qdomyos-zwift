@@ -135,8 +135,14 @@ def home():
         if on_home():
             return True
         if not tap(BACK):
-            return False
-        time.sleep(3)
+            # the page may still be sliding out: the home page came a moment later without an arrow
+            # to find (43116037373, after the program preview)
+            return wait_for("Lap", 30)
+        # the home page or the page under it: wait for the home page before the next arrow, which
+        # on the home page of the classic look would open the menu
+        end = time.time() + 15
+        while time.time() < end and not on_home():
+            time.sleep(2)
     return on_home()
 
 
