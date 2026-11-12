@@ -966,6 +966,66 @@ side_u() {
   wrap_up
 }
 
+# ---- w: the modern look, German, text at 170 %: the longest label of the button ("Dateien wiederherstellen")
+# does not fit one line beside "Andere Ordner" and wraps (wrapsText) instead of eliding; both pills stay in
+# one row inside the screen. The GPX, profiles and settings file pages
+# wrapped <shot>: Restore files taller than Other folders (two lines), the same row, inside the screen
+wrapped() {
+  local a b ha hb
+  a=$(uifind "dumps/$1.xml" '^Andere Ordner$' 2>/dev/null) || { fail "check $1: no 'Andere Ordner'"; return 1; }
+  b=$(uifind "dumps/$1.xml" '^Dateien wiederherstellen$' 2>/dev/null) \
+    || { fail "check $1: no 'Dateien wiederherstellen'"; return 1; }
+  set -- "$1" $a $b
+  # "x y checkable checked x1 y1 x2 y2" twice: Other folders $2..$9, Restore files ${10}..${17}
+  ha=$(( $9 - $7 ))
+  hb=$(( ${17} - ${15} ))
+  say "check $1: Andere Ordner $6..$8 h $ha, Dateien wiederherstellen ${14}..${16} h $hb"
+  if [ "$hb" -lt $(( ha + 30 )) ]; then
+    fail "!! check $1: 'Dateien wiederherstellen' in one line (h $hb, Andere Ordner $ha) - the run proves nothing"
+    return 1
+  fi
+  say "check $1: the label wrapped (h $hb > $ha): OK"
+  if [ "$6" -lt "${14}" ] && [ "$6" -ge 0 ] && [ "${16}" -le 1440 ] && [ "$3" -ge "${15}" ] && [ "$3" -le "${17}" ]; then
+    say "check $1: one row inside the screen: OK"
+  else
+    fail "check $1: not one row inside the screen"
+  fi
+}
+
+side_w() {
+  local de='ui_modern=true fakedevice_treadmill=true app_language=de ui_text_scale_system=false ui_text_scale=170'
+  previous_install w apk-head/android-debug.apk
+  HOME_READY_RX='^QZ-Support kontaktieren$' start_case w $de
+  mark "w: GPX page"
+  # the question is a Popup over the page: Nein alone is the landing
+  if open_drawer '^Öffne GPX$' && tap_ui '^Öffne GPX$' '^&?Nein$'; then
+    tap_ui '^&?Nein$' '^Andere Ordner$' 20
+    emu_sleep 3
+    still
+    shot w-1-gpx
+    wrapped w-1-gpx
+  fi
+  back_to "$HOME_RX|^Stopp$" 20
+  mark "w: profiles page"
+  if open_drawer '^Profil:.*' && tap_ui '^Profil:.*' '^Andere Ordner$'; then
+    emu_sleep 4
+    still
+    shot w-2-profiles
+    wrapped w-2-profiles
+  fi
+  back_to "$HOME_RX|^Stopp$" 20
+  mark "w: settings file page"
+  if open_drawer '^Einstellungen$' && tap_ui '^Einstellungen$' '^Allgemeine Optionen$' \
+      && tap_ui '^Einstellungen laden$' '^Andere Ordner$'; then
+    emu_sleep 3
+    still
+    shot w-3-settings
+    wrapped w-3-settings
+  fi
+  back_to "$HOME_RX|^Stopp$" 20
+  wrap_up
+}
+
 case "$SIDE" in
   t) side_t ;;
   s) side_s ;;
@@ -973,6 +1033,7 @@ case "$SIDE" in
   c) side_c ;;
   u) side_u ;;
   m) UI_MODERN=true side_h ;;
+  w) side_w ;;
   p) side_p ;;
   r) side_r ;;
   b) side_b ;;
