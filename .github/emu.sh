@@ -177,6 +177,13 @@ beside() {
   else
     fail "check $1: Restore files not beside Other folders ($2,$3 / ${10},${11})"
   fi
+  # at the bottom of the page as Other folders on master (y 2390 on Nexus 6, T-514 run 43062774035
+  # hc-4-settings-files): without the anchors of the row it stood at y 1928 (run 43198926517)
+  if [ "$3" -ge 2250 ]; then
+    say "check $1: the button row at the bottom of the page (y $3): OK"
+  else
+    fail "check $1: the button row is not at the bottom of the page (y $3, master 2390)"
+  fi
 }
 
 # gpx_open / profiles_open: the pages from the menu

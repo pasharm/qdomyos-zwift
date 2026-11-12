@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# emu-lib: tools/emu/emu_frame.py sha 613ad0d44845 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/emu_frame.py sha 0f3761d5bfd5 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): compare two raw frames of `adb exec-out screencap` (no -p) outside masks, and the
 # layout of two uiautomator dumps. Delivered with lib.sh by tools/emu/sync.py as .github/emu_frame.py.
 #
@@ -12,6 +12,15 @@
 #   emu_frame.py same a.xml b.xml
 #       exit 0 when the dumps are the same with texts and names too - the end of a page after a swipe: a
 #       list of rows of one height scrolled by whole rows has the same layout, only other texts (T-505)
+#   emu_frame.py shift a.raw b.raw [--rows y1,y2] [--max N] [--tol N]
+#       two frames of one page scrolled to other places (base and head, a swipe stops a few px apart):
+#       prints "shift S rows N of M" - b is a moved by S px and still differs in N of the M rows compared
+#       (tol 32 by default); exit 0 when N is 0. A row between pixels differs only by anti-aliasing: N > 0
+#       there is not a layout change by itself - look at the frames or compare the page by `page` (T-513)
+#   emu_frame.py page a1.xml [a2.xml ...] -- b1.xml [b2.xml ...] [--rows y1,y2]
+#       the whole page from the dumps of its screens, without positions (class, text, name, checked,
+#       enabled), screens glued by their overlap; exit 0 when both pages have the same nodes in the same
+#       order - "the same page" when the swipes stopped at other places (T-513)
 #
 # Masks: the --mask rectangles, and with --dumps every node whose text or name differs between the
 # two dumps (a clock, the value of a tile, a timer), every text field and the deepest focused node
@@ -188,13 +197,161 @@ def diff(fa, fb, masks=(), rows=None, tol=0):
     return count, box
 
 
-USAGE = "usage: emu_frame.py diff a.raw b.raw [...] | layout a.xml b.xml | same a.xml b.xml"
+# Rows vote for a shift by their pixels in 4 levels per channel: render noise below RENDER_NOISE moves a
+# value across a level only near its edge, so most rows of another build still match (exact bytes did not:
+# with noise in every row no row voted)
+COARSE = bytes(v >> 6 for v in range(256))
+
+
+def _row_differs(da, db, ra, rb, w, tol):
+    if da[ra:ra + w * 4] == db[rb:rb + w * 4]:
+        return False
+    return not tol or _noisy_span(da, db, ra, rb, 0, w, tol) is not None
+
+
+def diff_shifted(fa, fb, s, rows, tol):
+    """Rows y of b (within rows) that differ from rows y - s of a; rows of a out of the frame are skipped."""
+    w, h, oa, da = fa
+    _, _, ob, db = fb
+    y1, y2 = rows
+    n = 0
+    for y in range(max(y1, y1 + s), min(y2, y2 + s)):
+        if _row_differs(da, db, oa + (y - s) * w * 4, ob + y * w * 4, w, tol):
+            n += 1
+    return n
+
+
+def best_shift(fa, fb, rows=None, max_shift=120, tol=RENDER_NOISE, tries=5):
+    """(shift, rows that still differ, rows compared): b row y shows what a row y - shift shows. Two frames
+    of one page that a swipe stopped at other places (T-513: swipe_page exact stopped up to 60 px apart on
+    two APKs, and "screen N against screen N" turned red on a page that had not changed). The shift is
+    voted by rows that match in coarse levels (COARSE) and are not one plain colour (a background row
+    matches at any shift), then the best few are compared with tol; ties go to the smaller shift. A
+    pixel differs when R, G or B moves by more than tol - stricter than a grey average: a row of a
+    frame between pixels (anti-aliasing) counts here more often than in a greyscale compare."""
+    if fa is None or fb is None or fa[:2] != fb[:2]:
+        return None
+    w, h, oa, da = fa
+    _, _, ob, db = fb
+    y1, y2 = (STATUS_BAR, h) if rows is None else (max(0, rows[0]), min(h, rows[1]))
+    where = {}
+    for y in range(y1, y2):
+        row = da[oa + y * w * 4:oa + (y + 1) * w * 4].translate(COARSE)
+        if row.count(row[:4]) * 4 != len(row):
+            where.setdefault(row, []).append(y)
+    votes = {}
+    for y in range(y1, y2):
+        for ya in where.get(db[ob + y * w * 4:ob + (y + 1) * w * 4].translate(COARSE), ()):
+            s = y - ya
+            if -max_shift <= s <= max_shift:
+                votes[s] = votes.get(s, 0) + 1
+    cands = sorted(votes, key=lambda s: (-votes[s], abs(s)))[:tries]
+    if 0 not in cands:
+        cands.append(0)
+    best = None
+    for s in cands:
+        n = diff_shifted(fa, fb, s, (y1, y2), tol)
+        if best is None or (n, abs(s)) < (best[1], abs(best[0])):
+            best = (s, n)
+    s, n = best
+    return s, n, min(y2, y2 + s) - max(y1, y1 + s)
+
+
+def page_nodes(paths, rows=None):
+    """The whole page from the dumps of its screens, top to bottom, without positions: (class, text,
+    content-desc, checked, enabled) of every node with a text or a name, screens glued by the longest
+    overlap. None when a dump cannot be read. rows - only nodes whose top is within y1..y2 (no toolbar,
+    no navigation bar)."""
+    page = []
+    for path in paths:
+        ns = nodes(path)
+        if ns is None:
+            return None
+        screen = []
+        for n in ns:
+            t, cd = n.get("text") or "", n.get("content-desc") or ""
+            r = parse_bounds(n.get("bounds"))
+            if not (t or cd) or not r or (rows and not rows[0] <= r[1] <= rows[1]):
+                continue
+            screen.append((r[1], r[0], (n.get("class") or "", t, cd, n.get("checked") or "",
+                                        n.get("enabled") or "")))
+        screen = [k for _, _, k in sorted(screen)]
+        k = min(len(page), len(screen))
+        while k > 0 and page[-k:] != screen[:k]:
+            k -= 1
+        page += screen[k:]
+    return page
+
+
+def page_diff(a, b):
+    """First place where two pages differ: (index, node of a or None, node of b or None), or None."""
+    for i in range(max(len(a), len(b))):
+        x = a[i] if i < len(a) else None
+        y = b[i] if i < len(b) else None
+        if x != y:
+            return i, x, y
+    return None
+
+
+USAGE = ("usage: emu_frame.py diff a.raw b.raw [...] | layout a.xml b.xml | same a.xml b.xml\n"
+         "       | shift a.raw b.raw [--rows y1,y2] [--max N] [--tol N]\n"
+         "       | page a1.xml [a2.xml ...] -- b1.xml [b2.xml ...] [--rows y1,y2]")
+
+
+def _opts(opts, allowed):
+    out = {}
+    i = 0
+    while i < len(opts):
+        if opts[i] not in allowed:
+            raise ValueError("unknown option " + opts[i])
+        v = opts[i + 1]
+        out[opts[i]] = tuple(int(p) for p in v.split(",")) if opts[i] == "--rows" else int(v)
+        if opts[i] == "--rows" and len(out["--rows"]) != 2:
+            raise ValueError("--rows is y1,y2")
+        i += 2
+    return out
 
 
 def main(argv):
     if not argv:
         print(USAGE, file=sys.stderr)
         return 2
+    if argv[0] == "shift" and len(argv) >= 3:
+        try:
+            o = _opts(argv[3:], ("--rows", "--max", "--tol"))
+        except (ValueError, IndexError) as e:
+            print("bad option: %s\n%s" % (e, USAGE), file=sys.stderr)
+            return 2
+        r = best_shift(read_raw(argv[1]), read_raw(argv[2]), o.get("--rows"), o.get("--max", 120),
+                       o.get("--tol", RENDER_NOISE))
+        if r is None:
+            print("frames not comparable", file=sys.stderr)
+            return 2
+        print("shift %+d rows %d of %d" % r)
+        return 0 if r[1] == 0 else 1
+    if argv[0] == "page":
+        args = argv[1:]
+        rows = None
+        if "--rows" in args:
+            i = args.index("--rows")
+            try:
+                rows = _opts(args[i:i + 2], ("--rows",))["--rows"]
+            except (ValueError, IndexError) as e:
+                print("bad option: %s\n%s" % (e, USAGE), file=sys.stderr)
+                return 2
+            args = args[:i] + args[i + 2:]
+        if "--" not in args or not args[:args.index("--")] or not args[args.index("--") + 1:]:
+            print(USAGE, file=sys.stderr)
+            return 2
+        a = page_nodes(args[:args.index("--")], rows)
+        b = page_nodes(args[args.index("--") + 1:], rows)
+        if a is None or b is None:
+            print("dump not readable", file=sys.stderr)
+            return 2
+        d = page_diff(a, b)
+        print("nodes %d / %d" % (len(a), len(b)) + ("" if d is None else
+              ", first difference at %d: %r / %r" % d))
+        return 0 if d is None else 1
     if argv[0] == "layout":
         return 0 if layout_same(argv[1], argv[2]) else 1
     if argv[0] == "same":
