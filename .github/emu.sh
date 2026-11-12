@@ -216,7 +216,7 @@ profile_actions() {
   emu_sleep 1
   snap "$c-5c-selected"
   expect "$c-5c-selected" '^Load$' 'the active profile selected, with Load'
-  expect "$c-5c-selected" '^Active$' 'the active profile marked'
+  expect "$c-5c-selected" '^default, Active$' 'the active profile marked (its label is ignored by accessibility since 043f90e29, the card name carries it)'
   dump
   find_ui '^default(, Active)?$' || { fail "$c: the profile card gone after the selection"; return 1; }
   set -- $EMU_AT
