@@ -389,6 +389,30 @@ tb_lists() {
   back_to "$HOME_RX" 20
 }
 
+# PAGES=tbc: the classic programs list with the real TalkBack, apk-base (master) and apk-head (the lists
+# branch): a touch on a program name, a double tap - does it open the preview as a tap does? The row has no
+# name of its own (an empty delegate text), the touch goes to the name Text; the review of 6a-1 asked whether
+# the press action handler of the branch row takes the double tap
+tb_classic() {
+  local c=$1
+  start_case "$c" ui_modern=false fakedevice_treadmill=true android_documents_folder=true || return 1
+  if open_drawer '^Open Train Program$' && tap_ui '^Open Train Program$' '^Other folders$' \
+     && wait_ui '^Easy intervals$' 15; then
+    tb_run "$c-programs" 'Easy intervals' 'touch:Easy intervals' 'dtap' 'sleep:4000' 'find:Start Workout'
+    # no tb_check: the result of each side is the finding - both written to the log
+    if grep -a -q "^find:Start Workout: 'Start Workout'" "drv/$c-programs.txt"; then
+      say "result $c-programs: a double tap opened the program preview"
+    else
+      say "result $c-programs: a double tap did NOT open the program preview"
+    fi
+    grep -a "^touch:" "drv/$c-programs.txt" | sed "s/^/  $c: /" >> "$STEPLOG"
+    emu_sleep 3
+  else
+    fail "$c: the classic programs list did not open"
+  fi
+  back_to "$HOME_RX" 20
+}
+
 tb_service() {
   local c=ts
   start_case "$c" ui_modern=true fakedevice_treadmill=true android_documents_folder=true || return 1
@@ -413,12 +437,30 @@ tb_service() {
 case ${PAGES:-lists} in
   lists) SHOTS="1-programs 2-preview 3-gpx 4-settings-files" ;;
   service) SHOTS="5-profiles 5b-saved 6-credits 7-swagbag" ;;
-  tb) SHOTS="" ;;
-  *) echo "PAGES=$PAGES: lists, service or tb" >&2; exit 1 ;;
+  tb|tbc) SHOTS="" ;;
+  *) echo "PAGES=$PAGES: lists, service, tb or tbc" >&2; exit 1 ;;
 esac
 
 emu_init
 say "== pages: ${PAGES:-lists}"
+if [ "${PAGES:-lists}" = tbc ]; then
+  [ "$EMU_API" -ge 34 ] || proves_nothing "PAGES=tbc on API $EMU_API: the driver injects TalkBack gestures from API 34"
+  adb root >> "$STEPLOG" 2>&1
+  adb wait-for-device
+  emu_sleep 3
+  logcat_start
+  a11y_build || proves_nothing "no A11yDriver"
+  adb shell pm grant com.google.android.marvin.talkback android.permission.POST_NOTIFICATIONS < /dev/null >> "$STEPLOG" 2>&1
+  wipe_files
+  install_apk apk-base/android-debug.apk
+  seed_files
+  tb_classic tcb
+  wipe_files
+  install_apk apk-head/android-debug.apk
+  seed_files
+  tb_classic tch
+  finish
+fi
 if [ "${PAGES:-lists}" = tb ]; then
   [ "$EMU_API" -ge 34 ] || proves_nothing "PAGES=tb on API $EMU_API: the driver injects TalkBack gestures from API 34"
   # adb root restarts adbd and cuts the logcat: once, before the log (tb_on asks again - already root)

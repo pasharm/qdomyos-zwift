@@ -12,7 +12,7 @@ on:
         description: run id of the clean master build with the fdroid-android-trial artifact
         required: true
       pages:
-        description: lists (PR 6a-1), service (PR 6a-2) or tb (TalkBack on both; head - lists build, base - service build; apis '[35]')
+        description: lists (PR 6a-1), service (PR 6a-2), tb (TalkBack on both; head - lists build, base - service build; apis '[35]') or tbc (TalkBack on the classic programs list; base - master, head - lists)
         required: false
         default: lists
       apis:
