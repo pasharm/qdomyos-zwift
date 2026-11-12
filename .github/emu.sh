@@ -183,7 +183,9 @@ beside() {
 # the branch asks the question at once on the GPX page, the box over the list (run 43189333683): its No is a
 # landing too
 gpx_open() { open_drawer '^Open GPX$' && tap_ui '^Open GPX$' '^Other folders$|^&?No$'; }
-profiles_open() { open_drawer '^Profile:.*' && tap_ui '^Profile:.*' '^Other folders$'; }
+profiles_open() { open_drawer '^Profile:.*' && tap_ui '^Profile:.*' '^Other folders$|^&?No$'; }
+# picker_on: the folder picker of the system has the focus
+picker_on() { adb shell dumpsys window < /dev/null 2>/dev/null | grep mCurrentFocus | grep -q documentsui; }
 
 # the question of the restore: the native box (classic) or UiMessageDialog (modern); No/Yes
 question_shown() { wait_ui "$QUESTION_RX" "${1:-20}" --any; }
@@ -270,24 +272,47 @@ if load_settings_open; then
     shot h-5-question
     expect h-5-question "$QUESTION_RX" 'the question by the button' --any
     mark "h: yes"
-    tap_ui '^&?Yes$' '^use this folder$' 30
-    shot h-6-picker
-    # the picker is another app: no tap_ui here (its ensure_app would press back on it)
-    if wait_ui '^use this folder$' 15; then
+    # The picker is another app (no tap_ui: its ensure_app would press back on it), and uiautomator gets no
+    # dump of it here - the image previews of Documents/QZ keep loading (run 43191860819, frame h-6-picker:
+    # Documents > QZ with USE THIS FOLDER at the bottom). The window by dumpsys, the buttons by their label if
+    # a dump comes, else by their place (Nexus 6: USE THIS FOLDER 720 2391 - that frame and T-195 run
+    # 38488133337; Allow 1174 1488 - T-195 run 41909273758). The proof is the restore line in the log below
+    if find_ui '^&?Yes$'; then
       set -- $EMU_AT
-      say "tap 'Use this folder' at $1 $2"
+      say "tap 'Yes' at $1 $2"
       adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
     else
-      fail "h: the folder picker has no 'Use this folder'"
+      fail "h: no Yes in the question"
     fi
-    if wait_ui '^allow$' 20; then
-      shot h-7-allow
-      set -- $EMU_AT
-      say "tap 'Allow' at $1 $2"
-      adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
+    for i in $(seq 1 10); do
+      picker_on && break
+      emu_sleep 2
+    done
+    if picker_on; then
+      say "picker on top: $(adb shell dumpsys window < /dev/null | grep mCurrentFocus | tr -d '\r')"
     else
-      fail "h: no 'Allow' after the folder"
+      fail "h: the folder picker did not open"
     fi
+    emu_sleep 3
+    shot h-6-picker now
+    if [ -s dumps/h-6-picker.xml ] && find_ui '^use this folder$'; then
+      set -- $EMU_AT
+      say "tap 'Use this folder' by label at $1 $2"
+    else
+      set -- 720 2391
+      near picker "no dump of the picker: 'Use this folder' by its place $1 $2"
+    fi
+    adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
+    emu_sleep 4
+    shot h-7-allow now
+    if [ -s dumps/h-7-allow.xml ] && find_ui '^allow$'; then
+      set -- $EMU_AT
+      say "tap 'Allow' by label at $1 $2"
+    else
+      set -- 1174 1488
+      near picker "no dump of the Allow box: 'Allow' by its place $1 $2"
+    fi
+    adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
     mark "h: allowed"
     # the pass runs in a thread: its line in the log (qDebug, log_debug)
     for i in $(seq 1 20); do
