@@ -980,16 +980,50 @@ wrapped() {
   ha=$(( $9 - $7 ))
   hb=$(( ${17} - ${15} ))
   say "check $1: Andere Ordner $6..$8 h $ha, Dateien wiederherstellen ${14}..${16} h $hb"
-  if [ "$hb" -lt $(( ha + 30 )) ]; then
-    fail "!! check $1: 'Dateien wiederherstellen' in one line (h $hb, Andere Ordner $ha) - the run proves nothing"
+  # both pills take the height of the taller one (Layout.fillHeight): one line at 170 % is about 165 px on
+  # Nexus 6, two lines 251 (run 43315331781, frame w-1-gpx)
+  if [ "$hb" -lt 210 ]; then
+    fail "!! check $1: 'Dateien wiederherstellen' in one line (h $hb) - the run proves nothing"
     return 1
   fi
-  say "check $1: the label wrapped (h $hb > $ha): OK"
+  say "check $1: the label wrapped (h $hb): OK"
+  if [ "$ha" -eq "$hb" ]; then
+    say "check $1: both pills one height: OK"
+  else
+    fail "check $1: the pills differ in height ($ha / $hb)"
+  fi
   if [ "$6" -lt "${14}" ] && [ "$6" -ge 0 ] && [ "${16}" -le 1440 ] && [ "$3" -ge "${15}" ] && [ "$3" -le "${17}" ]; then
     say "check $1: one row inside the screen: OK"
   else
     fail "check $1: not one row inside the screen"
   fi
+}
+
+# ---- q: "profiles.qml:20: TypeError: Cannot read property 'top' of null" came in side h after the restart, on
+# the profiles page (run 43315331781, 22:07:39), and side b of master has no restart: the same steps on the
+# master APK and on the branch APK - profiles, back, restart, profiles, back - and the count by process
+side_q() {
+  local x apk pid n
+  for x in base head; do
+    apk=apk-$x/android-debug.apk
+    [ -s "$apk" ] || proves_nothing "side q without $apk"
+    previous_install "q-$x" "$apk"
+    conf "q-$x"
+    if profiles_open; then
+      question_shown 6 && tap_ui '^&?No$' '^Other folders$' 20
+      emu_sleep 3
+    fi
+    back_to "$HOME_RX" 20
+    conf "q-$x-restart"
+    pid=$(adb shell pidof "$PKG" < /dev/null | tr -d '\r')
+    if profiles_open; then emu_sleep 3; shot "q-$x-profiles-restart"; fi
+    back_to "$HOME_RX" 20
+    emu_sleep 2
+    adb logcat -d -b all < /dev/null > ".q-$x.txt" 2>/dev/null
+    n=$(grep -a " $pid " ".q-$x.txt" | grep -a -c "profiles.qml:20: TypeError")
+    say "check q-$x: profiles.qml:20 TypeError after the restart (pid $pid): $n"
+  done
+  wrap_up
 }
 
 side_w() {
@@ -1034,6 +1068,7 @@ case "$SIDE" in
   u) side_u ;;
   m) UI_MODERN=true side_h ;;
   w) side_w ;;
+  q) side_q ;;
   p) side_p ;;
   r) side_r ;;
   b) side_b ;;
