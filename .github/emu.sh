@@ -524,7 +524,9 @@ side_g() {
   fi
   back_to "$HOME_RX" 20
   mark "g: history page"
-  if open_drawer '^Workouts History$' && tap_ui '^Workouts History$' '^Workout History$|^&?Yes$'; then
+  # landing: Yes of the question alone - with the page title too the pattern takes two controls, and two
+  # are a failure of find (run 43224306787: the question was there)
+  if open_drawer '^Workouts History$' && tap_ui '^Workouts History$' '^&?Yes$' 40; then
     if wait_ui "$HISTORY_RX" 40 --any; then
       shot g-3-history-question
       expect g-3-history-question "$HISTORY_RX" 'the recovery question of the history' --any
