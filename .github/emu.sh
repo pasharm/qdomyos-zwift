@@ -11,6 +11,11 @@
 #  h (branch, input head): the question on the GPX page, No; the button on the GPX, profiles and settings
 #    file pages; Restore files on the settings file page, Yes, the picker, Allow; every file owned by the
 #    new uid, no .restore_ copies; the button gone; no question after a restart
+#  more sides of the branch (each on a clean emulator; the input sides): d - h on API 30 with the "Documents
+#    folder" option, o - API 30 without it, g - the grant from the history recovery, r - .restore_ copies, p - a
+#    restore under the open profiles list, t - under the open programs list, s - under the open settings file
+#    list, k - the question by a .deleted_ marker alone, c - the picker cancelled, u - one subfolder picked,
+#    m - h in the modern look
 . .github/lib.sh
 . .github/qz.sh
 
@@ -91,7 +96,7 @@ conf() {
 # seed_files: the files a user had made, written as the app (the app uid with the storage group 9997;
 # run-as is shut out of /sdcard from API 30)
 seed_files() {
-  local uid as
+  local uid as f
   printf '%s\n' '<?xml version="1.0" encoding="UTF-8"?>' \
     '<gpx version="1.1" creator="t518" xmlns="http://www.topografix.com/GPX/1/1"><trk><name>T518 route</name><trkseg>' \
     '<trkpt lat="45.4642" lon="9.1900"><ele>120</ele></trkpt>' \
@@ -115,7 +120,7 @@ seed_files() {
 
 # previous_install <side> <apk>: the files of a previous install, then the app installed again
 previous_install() {
-  local old new bundled
+  local old new bundled f
   mark "$1: previous install"
   wipe_files
   install_case "$2"
@@ -124,6 +129,8 @@ previous_install() {
   say "bundled routes after the first start: $bundled"
   [ "${bundled:-0}" -ge 1 ] || proves_nothing "$1: no bundled GPX routes in $QZDIR/gpx"
   seed_files
+  # BEFORE_REINSTALL: a function of the side that changes the files of the previous install (side k)
+  [ -n "$BEFORE_REINSTALL" ] && "$BEFORE_REINSTALL"
   old=$(app_uid)
   mark "$1: reinstall"
   adb shell am force-stop "$PKG" < /dev/null > /dev/null 2>&1
@@ -197,7 +204,9 @@ beside() {
 # gpx_open / profiles_open: the pages from the menu
 # the branch asks the question at once on the GPX page, the box over the list (run 43189333683): its No is a
 # landing too
-gpx_open() { open_drawer '^Open GPX$' && tap_ui '^Open GPX$' '^Other folders$|^&?No$'; }
+# [landing]: in the modern look the question is a Popup over the page, Other folders stays in the dump - the
+# landing of a visit with the question is No alone there (two matches are a failure of find)
+gpx_open() { open_drawer '^Open GPX$' && tap_ui '^Open GPX$' "${1:-^Other folders$|^&?No$}"; }
 profiles_open() { open_drawer '^Profile:.*' && tap_ui '^Profile:.*' '^Other folders$|^&?No$'; }
 # picker_on: the folder picker of the system has the focus
 picker_on() { adb shell dumpsys window < /dev/null 2>/dev/null | grep mCurrentFocus | grep -q documentsui; }
@@ -232,6 +241,14 @@ yes_picker_allow() {
   fi
   emu_sleep 3
   shot "$1" now
+  # PICK_INTO "x y": open a subfolder of Documents/QZ first (side u; Nexus 6, frame h-6-picker of run
+  # 43229195069: gpx at 930 726 in the grid of folders)
+  if [ -n "$PICK_INTO" ]; then
+    say "open the subfolder at $PICK_INTO"
+    adb shell input tap $PICK_INTO < /dev/null > /dev/null 2>&1
+    emu_sleep 4
+    shot "$1-into" now
+  fi
   if [ -s "dumps/$1.xml" ] && find_ui '^use this folder$'; then
     set -- "$1" "$2" $EMU_AT
     say "tap 'Use this folder' by label at $3 $4"
@@ -345,7 +362,8 @@ conf h
 
 # 1. The GPX page asks (bundled routes of the previous install); No
 mark "h: GPX page"
-if gpx_open; then
+if [ "$UI_MODERN" = true ]; then H_LAND='^&?No$'; else H_LAND=''; fi
+if gpx_open $H_LAND; then
   if question_shown 20; then
     shot h-1-question
     expect h-1-question "$QUESTION_RX" 'the question on the GPX page' --any
@@ -622,8 +640,8 @@ side_r() {
   wrap_up
 }
 
-# ---- p: Restore files pressed on the profiles page - the restore runs under the open profiles list (a component
-# of the accordion, its Connections inside the ListView), which reloads after it; the GPX question answered No
+# ---- p: Restore files pressed on the profiles page - the restore runs under the open profiles list (its
+# Connections inside the ListView, next to the model), which reloads after it; the GPX question answered No
 side_p() {
   previous_install p apk-head/android-debug.apk
   conf p
@@ -655,7 +673,306 @@ side_p() {
   wrap_up
 }
 
+# ---- t: the training programs page (TrainingProgramsListJS.qml - CHARTJS on Android): the question there
+# (the first page), No; its Restore files (was "Restore programs" of T-195) - the restore runs under the open
+# programs list, which reloads; the page stays, the button goes
+programs_open() { open_drawer '^Open Train Program$' && tap_ui '^Open Train Program$' '^Other folders$|^&?No$'; }
+side_t() {
+  previous_install t apk-head/android-debug.apk
+  conf t
+  mark "t: programs page"
+  if programs_open; then
+    if question_shown 20; then
+      shot t-1-question
+      expect t-1-question "$QUESTION_RX" 'the question on the programs page' --any
+      tap_ui '^&?No$' '^Other folders$' 20
+    else
+      fail "t: no question on the programs page"
+    fi
+    emu_sleep 3
+    still
+    shot t-2-programs-button
+    expect t-2-programs-button '^Restore files$' 'the restore button on the programs page'
+    expect_not t-2-programs-button '^Restore programs$' 'no button of T-195 left'
+    if tap_ui '^Restore files$' '^&?Yes$' 20; then
+      mark "t: yes"
+      yes_picker_allow t-3-picker t-4-allow
+      mark "t: allowed"
+      restored_check t-restore
+      emu_sleep 3
+      ensure_app
+      still
+      shot t-5-programs-after
+      expect_not t-5-programs-after '^Restore files$' 'the button gone, the programs page still open'
+      expect t-5-programs-after '^Other folders$' 'the programs page still open'
+    fi
+  fi
+  files_own t-files
+  back_to "$HOME_RX" 20
+  wrap_up
+}
+
+# ---- s: the settings file page with its "Settings folder" section open (closed by default; on h it stayed
+# closed): Restore files reloads the open list, the restored settings file shows in it.
+# The header and the rows have no node in the dump (Text without an accessible name, run 43229195069
+# h-4-settings-button.xml), so: the header by its place (Nexus 6, frame h-4: "Settings folder" at 255 789),
+# the section open by the frame - the page changes by the tap (the header moves, its arrow turns:
+# StaticAccordionElement); the restored row by the frame - the open list changes after the restore.
+# The log line "<file> selected" of onCurrentItemChanged is no proof: it comes with the section closed too
+# (side h, full logcat of 43229195069, 13:47:07)
+SET_HEADER="300 789"
+# rows between the top bar (y 251, frame h-4) and the button row (Other folders from y 2307, h-4-settings-button.xml)
+S_ROWS=260,2290
+# frames_differ <a.raw> <b.raw> <y1,y2>: 0 - the rows differ, 1 - the same; a frame that cannot be read
+# (emu_frame.py exit 2) is no answer either way
+frames_differ() {
+  local r
+  "$EMU_PY" "$EMU_GH/emu_frame.py" diff "$1" "$2" --rows "$3" >> "$STEPLOG" 2>&1
+  r=$?
+  [ "$r" = 2 ] && proves_nothing "s: the frames $1 $2 cannot be read"
+  [ "$r" = 1 ]
+}
+side_s() {
+  previous_install s apk-head/android-debug.apk
+  conf s
+  # the question comes on the first page of a run, and with its box on screen the dump holds the box alone (run
+  # 43229195069 h-1-question.xml): load_settings_open lands on Other folders - so the question is answered on
+  # the GPX page first, as on h
+  mark "s: GPX page"
+  if gpx_open; then
+    question_shown 20 && tap_ui '^&?No$' '^Other folders$' 20
+  fi
+  back_to "$HOME_RX" 20
+  mark "s: settings file page"
+  if load_settings_open; then
+    emu_sleep 3
+    still
+    frame s_closed.raw
+    shot s-1-closed
+    say "tap the header 'Settings folder' at $SET_HEADER"
+    adb shell input tap $SET_HEADER < /dev/null > /dev/null 2>&1
+    emu_sleep 3
+    still
+    frame s_open.raw
+    shot s-2-open
+    # the page between the top bar and the button row (S_ROWS): the open section moves the header and shows its
+    # list there; nothing else on the page changes by the tap
+    if frames_differ s_closed.raw s_open.raw "$S_ROWS"; then
+      say "check s-open: the page changed by the tap on the header - the section is open: OK"
+    else
+      fail "check s-open: the page did not change - the section is not open"
+    fi
+    expect s-2-open '^Restore files$' 'the restore button with the section open'
+    if tap_ui '^Restore files$' '^&?Yes$' 20; then
+      mark "s: yes"
+      yes_picker_allow s-3-picker s-4-allow
+      mark "s: allowed"
+      restored_check s-restore
+      emu_sleep 3
+      ensure_app
+      still
+      frame s_after.raw
+      shot s-5-after
+      expect_not s-5-after '^Restore files$' 'the button gone after the restore'
+      # the header row itself stays (the section still open); the rows under it get the restored file
+      expect s-5-after '^Other folders$' 'the settings file page still open'
+      # the open list was empty (its only file foreign); after the restore the row of t518-setup shows in it.
+      # The toast of the restore is gone by now (3 s, restored_check + emu_sleep 3 + still before the frame)
+      if frames_differ s_open.raw s_after.raw "$S_ROWS"; then
+        say "check s-row: the open list changed after the restore - the restored row shows (frame s-5-after): OK"
+      else
+        fail "check s-row: the page as before the restore - the open list did not reload"
+      fi
+    fi
+  fi
+  files_own s-files
+  back_to "$HOME_RX" 20
+  wrap_up
+}
+
+# ---- k: the previous install deleted a bundled route (its .deleted_ marker left) and nothing else of the
+# bundled files is foreign: the question comes by the marker alone (qzFolderHasLockedFiles). Before the
+# reinstall the old app removes its bundled programs and routes (the new install copies them again as its
+# own) and writes .deleted_<route>; that route is not copied again (the marker exists, homeform.cpp)
+k_marker_only() {
+  local uid f
+  uid=$(app_uid)
+  KNAME=$(adb shell "ls $QZDIR/gpx" < /dev/null 2>/dev/null | tr -d '\r' | grep '[.]gpx$' | grep -v -x -F "$ROUTE" | head -n 1)
+  [ -n "$KNAME" ] || proves_nothing "k: no bundled route to mark deleted"
+  while IFS= read -r f; do
+    [ -n "$f" ] && adb shell "su $uid,$uid,9997 rm -f '$QZDIR/training/$f'" < /dev/null >> "$STEPLOG" 2>&1
+  done < <(adb shell "ls $QZDIR/training" < /dev/null 2>/dev/null | tr -d '\r')
+  while IFS= read -r f; do
+    [ -n "$f" ] && [ "$f" != "$ROUTE" ] && adb shell "su $uid,$uid,9997 rm -f '$QZDIR/gpx/$f'" < /dev/null >> "$STEPLOG" 2>&1
+  done < <(adb shell "ls $QZDIR/gpx" < /dev/null 2>/dev/null | tr -d '\r' | grep '[.]gpx$')
+  adb shell "su $uid,$uid,9997 sh -c ': > \"$QZDIR/gpx/.deleted_$KNAME\"'" < /dev/null >> "$STEPLOG" 2>&1
+  adb shell "ls -a '$QZDIR/training' '$QZDIR/gpx'" < /dev/null >> "$STEPLOG" 2>&1
+  adb shell "ls '$QZDIR/gpx/.deleted_$KNAME'" < /dev/null > /dev/null 2>&1 \
+    || proves_nothing "k: the marker .deleted_$KNAME not written"
+  say "k: the previous install keeps only $ROUTE and the marker .deleted_$KNAME in gpx/, nothing in training/"
+}
+side_k() {
+  BEFORE_REINSTALL=k_marker_only previous_install k apk-head/android-debug.apk
+  # the marker must be foreign to the new install, else no question can come by it and k-marker-own proves
+  # nothing
+  if reads "$NEW_UID" "gpx/.deleted_$KNAME"; then
+    proves_nothing "k: the marker .deleted_$KNAME is readable by the new install - not a file of the previous one"
+  fi
+  conf k
+  if has "gpx/$KNAME"; then
+    proves_nothing "k: $KNAME copied again in spite of its marker"
+  fi
+  # the bundled programs and the other routes are the new app's own: only the marker can show the case
+  local f n=0
+  while IFS= read -r f; do
+    [ -n "$f" ] || continue
+    reads "$NEW_UID" "training/$f" || { n=$((n + 1)); say "foreign: training/$f"; }
+  done < <(adb shell "ls $QZDIR/training" < /dev/null 2>/dev/null | tr -d '\r')
+  [ "$n" = 0 ] || proves_nothing "k: $n bundled programs still foreign - the question would not come by the marker alone"
+  mark "k: GPX page"
+  if gpx_open; then
+    if question_shown 20; then
+      shot k-1-question
+      expect k-1-question "$QUESTION_RX" 'the question by the marker of a deleted route' --any
+    else
+      fail "k: no question with only the marker of the previous install"
+    fi
+    if grep -a "file of a previous install" full_logcat.txt | grep -a -q -F ".deleted_$KNAME"; then
+      say "check k-marker: found by the marker .deleted_$KNAME: OK"
+    else
+      fail "check k-marker: the log does not name the marker ($(grep -a 'file of a previous install' full_logcat.txt | tail -n 1))"
+    fi
+    if question_shown 3; then
+      mark "k: yes"
+      yes_picker_allow k-2-picker k-3-allow
+      mark "k: allowed"
+      restored_check k-restore
+      emu_sleep 3
+      ensure_app
+    fi
+  fi
+  if reads "$NEW_UID" "gpx/.deleted_$KNAME"; then
+    say "check k-marker-own: the marker is the app's own now: OK"
+  else
+    fail "check k-marker-own: the marker is still foreign"
+  fi
+  files_own k-files
+  back_to "$HOME_RX" 20
+  wrap_up
+}
+
+# ---- c: the folder picker cancelled (Back): no pass, no grant, the button stays, the files stay foreign. The
+# cancel writes no line (CustomQtActivity.handleRestoreFolderResult, nativeOnDocumentPicked return at once):
+# the proof is the picker seen, then gone, and no line of a pass after it
+side_c() {
+  local i f
+  previous_install c apk-head/android-debug.apk
+  conf c
+  mark "c: GPX page"
+  if gpx_open; then
+    if question_shown 20 && find_ui '^&?Yes$'; then
+      set -- $EMU_AT
+      say "tap 'Yes' at $1 $2"
+      adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
+      for i in $(seq 1 10); do
+        picker_on && break
+        emu_sleep 2
+      done
+      if picker_on; then
+        emu_sleep 3
+        shot c-1-picker now
+        mark "c: back in the picker"
+        # Back may first go up a folder in the picker: again while it is on top, never more than 4 times
+        for i in 1 2 3 4; do
+          picker_on || break
+          adb shell input keyevent 4 < /dev/null > /dev/null 2>&1
+          emu_sleep 3
+        done
+        if picker_on; then
+          fail "c: the picker still on top after Back"
+        else
+          say "check c-cancel: the picker gone after Back ($i): OK"
+        fi
+      else
+        fail "c: the folder picker did not open"
+      fi
+      emu_sleep 6
+      still
+      shot c-2-gpx-after
+      expect c-2-gpx-after '^Other folders$' 'back on the GPX page'
+      expect c-2-gpx-after '^Restore files$' 'the button stays after a cancel'
+    else
+      fail "c: no question with Yes on the GPX page"
+    fi
+  fi
+  if grep -a -q -E "files of a previous install restored:|handleRestoreFolderResult root=" full_logcat.txt; then
+    fail "check c-pass: a restore pass after the cancel"
+  else
+    say "check c-pass: no restore pass after the cancel: OK"
+  fi
+  for f in "gpx/$ROUTE" "settings/$SETUP" "profiles/$PROFILE"; do
+    if reads "$NEW_UID" "$f"; then
+      fail "check c-files: $f became the app's own after a cancel"
+    else
+      say "check c-files: $f still foreign: OK"
+    fi
+  done
+  back_to "$HOME_RX" 20
+  wrap_up
+}
+
+# ---- u: one subfolder picked instead of Documents/QZ (gpx): only gpx/ is restored, the grant is not on the QZ
+# folder, so the button stays; settings/ and profiles/ stay foreign
+side_u() {
+  local f
+  previous_install u apk-head/android-debug.apk
+  conf u
+  mark "u: GPX page"
+  if gpx_open; then
+    question_shown 20 && tap_ui '^&?No$' '^Other folders$' 20
+    emu_sleep 3
+    if tap_ui '^Restore files$' '^&?Yes$' 20; then
+      mark "u: yes"
+      PICK_INTO="930 726" yes_picker_allow u-1-picker u-2-allow
+      mark "u: allowed"
+      restored_check u-restore
+      emu_sleep 3
+      ensure_app
+      still
+      shot u-3-gpx-after
+      expect u-3-gpx-after '^Restore files$' 'the button stays with a grant on a subfolder'
+    else
+      fail "u: no question by Restore files"
+    fi
+  fi
+  if grep -a -q "handleRestoreFolderResult root=primary:Documents/QZ/gpx gpx=" full_logcat.txt; then
+    say "check u-root: the grant is on Documents/QZ/gpx: OK"
+  else
+    fail "check u-root: the pass did not run on Documents/QZ/gpx ($(grep -a 'handleRestoreFolderResult root=' full_logcat.txt | head -n 1))"
+  fi
+  if reads "$NEW_UID" "gpx/$ROUTE"; then
+    say "check u-gpx: gpx/$ROUTE restored: OK"
+  else
+    fail "check u-gpx: gpx/$ROUTE still foreign"
+  fi
+  for f in "settings/$SETUP" "profiles/$PROFILE"; do
+    if reads "$NEW_UID" "$f"; then
+      fail "check u-other: $f restored though only gpx was picked"
+    else
+      say "check u-other: $f left foreign: OK"
+    fi
+  done
+  back_to "$HOME_RX" 20
+  wrap_up
+}
+
 case "$SIDE" in
+  t) side_t ;;
+  s) side_s ;;
+  k) side_k ;;
+  c) side_c ;;
+  u) side_u ;;
+  m) UI_MODERN=true side_h ;;
   p) side_p ;;
   r) side_r ;;
   b) side_b ;;
