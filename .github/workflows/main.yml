@@ -34,6 +34,8 @@ jobs:
       fail-fast: false
       matrix:
         api: ${{ fromJSON(inputs.apis) }}
+        # b - master, h - the branch, each on its own emulator (emu.sh, SIDE)
+        side: ${{ fromJSON(inputs.base != '' && '["b", "h"]' || '["h"]') }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -55,7 +57,7 @@ jobs:
           github-token: ${{ github.token }}
 
       - name: Download the master APK
-        if: inputs.base != ''
+        if: matrix.side == 'b'
         uses: actions/download-artifact@v4
         with:
           name: fdroid-android-trial
@@ -76,6 +78,7 @@ jobs:
         env:
           LOG_DEBUG: ${{ inputs.log_debug }}
           UI_MODERN: ${{ inputs.modern }}
+          SIDE: ${{ matrix.side }}
         with:
           api-level: ${{ matrix.api }}
           target: google_apis
@@ -88,7 +91,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.head }}-t518-api${{ matrix.api }}
+          name: emulator-logcat-${{ inputs.head }}-t518-${{ matrix.side }}-api${{ matrix.api }}
           path: |
             *.png
             full_logcat.txt

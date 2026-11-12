@@ -189,8 +189,15 @@ question_shown() { wait_ui "$QUESTION_RX" "${1:-20}" --any; }
 emu_init
 logcat_start
 
+# SIDE (matrix): b - master, h - the branch, each on a clean emulator: a second side after the first left
+# files the app may not remove, and after a wipe by root the new install wrote nothing (runs 43185579383,
+# 43186663417)
+SIDE=${SIDE:-h}
+say "side $SIDE"
+
 # ---- b: master
-if [ -s apk-base/android-debug.apk ]; then
+side_b() {
+  [ -s apk-base/android-debug.apk ] || proves_nothing "side b without the master APK (input base)"
   previous_install b apk-base/android-debug.apk
   conf b
   mark "b: GPX page"
@@ -212,9 +219,11 @@ if [ -s apk-base/android-debug.apk ]; then
       say "check b-files: $f still foreign to master (master does not restore): OK"
     fi
   done
-fi
+  wrap_up
+}
 
 # ---- h: the branch
+side_h() {
 previous_install h apk-head/android-debug.apk
 conf h
 
@@ -352,29 +361,31 @@ if profiles_open; then
   expect_not h-10-profiles-restart '^Restore files$' 'no restore button after a restart'
 fi
 back_to "$HOME_RX" 20
+wrap_up
+}
 
+# wrap_up: the lines of the fix, the QML check, the end of the run (finish exits)
+wrap_up() {
 logcat_stop
 grep -a -E "T518|restored|previous install|handleRestoreFolderResult|restoreFolderFiles|openRestoreFolderPicker|recoverRestoreCopies|recovered from temporary|hasQzFolderGrant|deleteTreeDocument|takePersistableUriPermission" \
   full_logcat.txt > t518_logcat.txt
-# QML errors of the changed files by side, the text after the file name (no time, no pid): an error master
-# has too (T-514 run 43062774035: "mainRect is not defined" at GPXList.qml:95 on master) is not the branch's
+# QML errors of the changed files on this side, the text after the file name (no time, pid, line): an
+# error master has too is not the branch's. Master's list - .github/t518_qml_master.txt, the master side of
+# run 43186663417 (GPXList.qml "mainRect is not defined", main.qml rootItem at start - T-213)
 QML_RX="(GPXList|SettingsList|profiles|TrainingProgramsList|TrainingProgramsListJS|main)\.qml.*(Error|Unable to assign|undefined)"
-qml_errs() {
-  awk -v a="$1" -v b="$2" 'index($0, a) { on = 1 } b != "" && index($0, b) { on = 0 } on' full_logcat.txt \
-    | grep -a -o -E "$QML_RX.*" | sed -e 's/[.]qml:[0-9]*/.qml/g' | sort -u
-}
-qml_errs "mark b: previous install" "mark h: previous install" > qml_b.txt
-qml_errs "mark h: previous install" "" > qml_h.txt
-say "== QML errors of the changed files - master: $(wc -l < qml_b.txt), branch: $(wc -l < qml_h.txt)"
-cat qml_h.txt >> "$STEPLOG"
-comm -13 qml_b.txt qml_h.txt > qml_new.txt
-if [ ! -s apk-base/android-debug.apk ]; then
-  say "check qml: no master side - the errors above are not compared (read them)"
-elif [ -s qml_new.txt ]; then
-  say "only on the branch:"
+grep -a -o -E "$QML_RX.*" full_logcat.txt | sed -e 's/[.]qml\(:[0-9]*\)*/.qml/g' | tr -d '\r' | sort -u > qml_side.txt
+say "== QML errors of the changed files ($SIDE): $(wc -l < qml_side.txt)"
+cat qml_side.txt >> "$STEPLOG"
+sort -u .github/t518_qml_master.txt > qml_master.txt
+comm -13 qml_master.txt qml_side.txt > qml_new.txt
+if [ -s qml_new.txt ]; then
+  say "not on master (run 43186663417):"
   cat qml_new.txt >> "$STEPLOG"
-  fail "check qml: errors of the changed QML files only on the branch"
+  fail "check qml: errors of the changed QML files that master does not have"
 else
   say "check qml: no QML error of the changed files that master does not have: OK"
 fi
 finish
+}
+
+if [ "$SIDE" = b ]; then side_b; else side_h; fi

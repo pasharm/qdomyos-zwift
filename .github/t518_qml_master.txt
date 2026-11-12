@@ -1,0 +1,7 @@
+GPXList.qml ReferenceError: mainRect is not defined
+SettingsList.qml QML Button: Detected anchors on an item that is managed by a layout. This is undefined behavior; use Layout.alignment instead.
+SettingsList.qml QML ListView: Detected anchors on an item that is managed by a layout. This is undefined behavior; use Layout.alignment instead.
+main.qml ReferenceError: rootItem is not defined
+main.qml Unable to assign [undefined] to QString
+profiles.qml QML Button: Detected anchors on an item that is managed by a layout. This is undefined behavior; use Layout.alignment instead.
+profiles.qml QML ListView: Detected anchors on an item that is managed by a layout. This is undefined behavior; use Layout.alignment instead.
