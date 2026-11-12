@@ -394,18 +394,21 @@ tb_lists() {
 # name of its own (an empty delegate text), the touch goes to the name Text; the review of 6a-1 asked whether
 # the press action handler of the branch row takes the double tap
 tb_classic() {
-  local c=$1
+  local c=$1 y
   start_case "$c" ui_modern=false fakedevice_treadmill=true android_documents_folder=true || return 1
+  # the row names are not in the tree (run 43186852880): the first row by its place, as first_program
   if open_drawer '^Open Train Program$' && tap_ui '^Open Train Program$' '^Other folders$' \
-     && wait_ui '^Easy intervals$' 15; then
-    tb_run "$c-programs" 'Easy intervals' 'touch:Easy intervals' 'dtap' 'sleep:4000' 'find:Start Workout'
+     && emu_sleep 3 && dump && find_ui '^Search \(recursive\)\.\.\.$'; then
+    set -- $EMU_AT
+    y=$(( $8 + 170 ))
+    tb_run "$c-programs" 'Other folders' "touchat:720,$y" 'dtap' 'sleep:4000' 'find:Start Workout'
     # no tb_check: the result of each side is the finding - both written to the log
     if grep -a -q "^find:Start Workout: 'Start Workout'" "drv/$c-programs.txt"; then
       say "result $c-programs: a double tap opened the program preview"
     else
       say "result $c-programs: a double tap did NOT open the program preview"
     fi
-    grep -a "^touch:" "drv/$c-programs.txt" | sed "s/^/  $c: /" >> "$STEPLOG"
+    grep -a -E "^(touchat|dtap|find):" "drv/$c-programs.txt" | sed "s/^/  $c: /" >> "$STEPLOG"
     emu_sleep 3
   else
     fail "$c: the classic programs list did not open"
@@ -459,6 +462,9 @@ if [ "${PAGES:-lists}" = tbc ]; then
   install_apk apk-head/android-debug.apk
   seed_files
   tb_classic tch
+  # the finding is the result line of each side; the checks only say both sides got to the double tap
+  tb_check '^dtap: focused' tcb-programs 'master: the double tap given'
+  tb_check '^dtap: focused' tch-programs 'branch: the double tap given'
   finish
 fi
 if [ "${PAGES:-lists}" = tb ]; then
