@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# emu-lib: tools/emu/uifind.py sha 88d6d91d94fb - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/uifind.py sha d39e05722dce - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): find a control of a uiautomator dump the way the user sees it - only the part
 # of it that is on the screen, not under the app header, not under a popup or the side menu.
 # One file for every emu branch, delivered by tools/emu/sync.py as .github/uifind.py.
@@ -211,6 +211,15 @@ class Screen:
             if a is top:
                 break
             a = self.parent.get(a)
+        # below the page is the navigation bar for every layer: the side menu and popups reach the
+        # window bottom (y 2558), but the bar is drawn over them (T-514, 43205779665: "Settings" of
+        # the menu at 170 % text was tapped at y 2534 in the bar instead of scrolling the menu)
+        if vis is not None and self.page is not None:
+            band = self.band()
+            if band and vis[1] < band[1] < vis[3]:
+                vis = (vis[0], vis[1], vis[2], band[1])
+            elif band and vis[1] >= band[1]:
+                vis = None
         if vis is None:
             band = self.band()
             mid = (raw[1] + raw[3]) // 2
