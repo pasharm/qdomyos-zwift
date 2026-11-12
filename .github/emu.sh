@@ -207,7 +207,7 @@ credits_in_menu() {
 # profile name (Accessible.name); no long press in the library: a swipe in place, 1.2 s
 profile_actions() {
   local c=$1
-  if ! wait_ui '^default$' 15; then
+  if ! wait_ui '^default(, Active)?$' 15; then
     fail "$c: the saved profile 'default' not in the list"
     return 1
   fi
@@ -218,7 +218,7 @@ profile_actions() {
   expect "$c-5c-selected" '^Load$' 'the active profile selected, with Load'
   expect "$c-5c-selected" '^Active$' 'the active profile marked'
   dump
-  find_ui '^default$' || { fail "$c: the profile card gone after the selection"; return 1; }
+  find_ui '^default(, Active)?$' || { fail "$c: the profile card gone after the selection"; return 1; }
   set -- $EMU_AT
   say "long press the profile card at $1 $2"
   adb shell input swipe "$1" "$2" "$1" "$2" 1200 < /dev/null > /dev/null 2>&1
@@ -230,7 +230,7 @@ profile_actions() {
     expect "$c-5d-delete" '^Delete$' 'the delete question names its action'
     tap_ui '^Cancel$' '^Saved profiles$' || return 1
     wait_gone '^Delete$' 10 || fail "$c: the delete question still open after Cancel"
-    wait_ui '^default$' 5 || fail "$c: the profile gone after Cancel"
+    wait_ui '^default(, Active)?$' 5 || fail "$c: the profile gone after Cancel"
   else
     say "outcome 'long press': no-effect"
     fail "$c: no delete question after a long press on the profile card"
@@ -299,11 +299,29 @@ bounds_of() {
   grep -a -F "$2: '" "drv/$1.txt" | head -n 1 | sed -n 's/.* bounds=\[\([0-9-]*\),\([0-9-]*\)\]\[\([0-9-]*\),\([0-9-]*\)\] .*/\1 \2 \3 \4/p'
 }
 
-# tb_card <drv name> <card name> <what>: the real TalkBack (on) - the card found by touch, spoken under
-# its name and holding the TalkBack focus. The speech is TalkBack's on-screen overlay (pref_tts_overlay)
+# tb_card <drv name> <card name> <what>: the real TalkBack (on) - a touch at the middle of the card puts the
+# TalkBack focus on the card node, whose name starts with <card name>. The speech is not checked: its overlay
+# stayed empty in every step of run 43167343525, the profile card that took the focus as well
 tb_card() {
-  tb_check "^touch:$2: focused '$2' " "$1" "$3: the TalkBack focus on the card by touch"
-  tb_check "^touch:$2: said \[.*$2" "$1" "$3: spoken under its name"
+  tb_check "^touch:$2: focused '$2[',]" "$1" "$3: the TalkBack focus on the card by touch"
+}
+
+# tb_run <drv name> <node> <step...>: TalkBack on, the driver waits for <node> in the tree (run 43167343525:
+# right after the first TalkBack on, the tree had no node of the page), the steps, the TalkBack frames of the
+# steps kept (tb_on empties their folder), TalkBack off
+tb_run() {
+  local name=$1 node=$2 i
+  shift 2
+  mkdir -p tbshots
+  tb_on
+  for i in 1 2 3 4; do
+    drv "$name-wait$i" --keep 'sleep:3000' "find:$node"
+    grep -a -q "^find:$node: '" "drv/$name-wait$i.txt" && break
+    near tree "$name: '$node' not in the TalkBack tree, look $i"
+  done
+  drv "$name" --keep "$@"
+  adb pull /data/local/tmp/tbshots "tbshots/$name" < /dev/null >> "$STEPLOG" 2>&1
+  tb_off
 }
 
 # PAGES=tb (API 35 only - the image with Google TalkBack): the modern cards of both PRs with the real
@@ -317,10 +335,8 @@ tb_lists() {
   # training programs: the up button, then the first program opened by a double tap
   if open_drawer '^Open Train Program$' && tap_ui '^Open Train Program$' '^Other folders$' \
      && wait_ui '^Easy intervals$' 15; then
-    tb_on
-    drv tb-programs --keep 'touch:Parent folder' 'touch:Easy intervals' 'dtap' 'sleep:4000' 'find:Start Workout'
-    tb_off
-    tb_check "^touch:Parent folder: said \[.*Parent folder" tb-programs 'programs: the up button spoken as Parent folder'
+    tb_run tb-programs 'Easy intervals' 'touch:Parent folder' 'touch:Easy intervals' 'dtap' 'sleep:4000' 'find:Start Workout'
+    tb_check "^touch:Parent folder: focused 'Parent folder'" tb-programs 'programs: the up button found by touch as Parent folder'
     tb_card tb-programs 'Easy intervals' 'programs'
     tb_check "^find:Start Workout: 'Start Workout'" tb-programs 'programs: a double tap opened the program preview'
     emu_sleep 3
@@ -331,11 +347,9 @@ tb_lists() {
   # GPX: the first route comes selected (its Open on the card); a double tap on the second one selects it -
   # the Open button moves into its card
   if open_drawer '^Open GPX$' && tap_ui '^Open GPX$' '^Other folders$' && wait_ui '^Butterfield Canyon Road$' 15; then
-    tb_on
-    drv tb-gpx --keep 'touch:Parent folder' 'touch:Butterfield Canyon Road' 'dtap' 'sleep:3000' \
+    tb_run tb-gpx 'Butterfield Canyon Road' 'touch:Parent folder' 'touch:Butterfield Canyon Road' 'dtap' 'sleep:3000' \
       'find:Butterfield Canyon Road' 'find:Open'
-    tb_off
-    tb_check "^touch:Parent folder: said \[.*Parent folder" tb-gpx 'GPX: the up button spoken as Parent folder'
+    tb_check "^touch:Parent folder: focused 'Parent folder'" tb-gpx 'GPX: the up button found by touch as Parent folder'
     tb_card tb-gpx 'Butterfield Canyon Road' 'GPX'
     set -- $(bounds_of tb-gpx 'find:Butterfield Canyon Road')
     t=$2 b=$4
@@ -352,9 +366,7 @@ tb_lists() {
 
   # settings files: the seeded file, not selected; a double tap selects it - its Load shows
   if load_settings_open m && wait_ui '^saved-setup$' 15; then
-    tb_on
-    drv tb-settings --keep 'find:Load' 'touch:saved-setup' 'dtap' 'sleep:3000' 'find:Load'
-    tb_off
+    tb_run tb-settings 'saved-setup' 'find:Load' 'touch:saved-setup' 'dtap' 'sleep:3000' 'find:Load'
     tb_card tb-settings 'saved-setup' 'settings files'
     # the first find:Load runs before the double tap, the second after it
     if grep -a '^find:Load: ' drv/tb-settings.txt | sed -n 1p | grep -q 'NOT FOUND' \
@@ -377,10 +389,8 @@ tb_service() {
     wait_ui "$HOME_RX" 20 --first || back_to "$HOME_RX" 20
   fi
   # the active profile comes selected: a double tap on it loads it - the "Profile loaded" question
-  if open_drawer '^Profile:.*' && tap_ui '^Profile:.*' '^Other folders$' && wait_ui '^default$' 15; then
-    tb_on
-    drv tb-profiles --keep 'touch:default' 'dtap' 'sleep:3000' 'find:Profile loaded' 'find:Would you like to quit'
-    tb_off
+  if open_drawer '^Profile:.*' && tap_ui '^Profile:.*' '^Other folders$' && wait_ui '^default(, Active)?$' 15; then
+    tb_run tb-profiles 'default' 'touch:default' 'dtap' 'sleep:3000' 'find:Profile loaded' 'find:Would you like to quit'
     tb_card tb-profiles 'default' 'profiles'
     tb_check "^find:(Profile loaded|Would you like to quit): '" tb-profiles 'profiles: a double tap on the selected card loaded it'
     emu_sleep 3
@@ -416,7 +426,6 @@ if [ "${PAGES:-lists}" = tb ]; then
   install_apk apk-base/android-debug.apk
   seed_files
   tb_service
-  adb pull /data/local/tmp/tbshots tbshots < /dev/null >> "$STEPLOG" 2>&1
   finish
 fi
 logcat_start
