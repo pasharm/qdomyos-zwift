@@ -1471,6 +1471,14 @@ Vuoi aggiornare le impostazioni di QZ?</translation>
         <translation>← Indietro</translation>
     </message>
     <message>
+        <source>Show less</source>
+        <translation>Mostra meno</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>Mostra di più</translation>
+    </message>
+    <message>
         <source>Start Workout</source>
         <translation>Avvia allenamento</translation>
     </message>
