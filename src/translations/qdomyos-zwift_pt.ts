@@ -6355,7 +6355,7 @@ Permitir que o QZ altere esse valor?
     </message>
     <message>
         <source>Open</source>
-        <translation>Abrir</translation>
+        <translation type="vanished">Abrir</translation>
     </message>
     <message>
         <source>Tile size:</source>
@@ -8599,7 +8599,7 @@ Padrão: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Oculta na própria página no momento: altere-a aqui</translation>
+        <translation type="vanished">Oculta na própria página no momento: altere-a aqui</translation>
     </message>
     <message>
         <source>On</source>

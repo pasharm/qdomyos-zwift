@@ -6439,7 +6439,7 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     </message>
     <message>
         <source>Open</source>
-        <translation>打开</translation>
+        <translation type="vanished">打开</translation>
     </message>
     <message>
         <source>Tile size:</source>
@@ -8623,7 +8623,7 @@ Default: A = -0.96, B = 1.33</source>
     </message>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>当前在其所在页面中隐藏：请在此处更改</translation>
+        <translation type="vanished">当前在其所在页面中隐藏：请在此处更改</translation>
     </message>
     <message>
         <source>On</source>

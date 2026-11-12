@@ -6318,7 +6318,7 @@ Autoriser QZ à modifier cette valeur ?
     </message>
     <message>
         <source>Open</source>
-        <translation>Ouvrir</translation>
+        <translation type="vanished">Ouvrir</translation>
     </message>
     <message>
         <source>App Language:</source>
@@ -8618,7 +8618,7 @@ Par défaut : A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Masqué sur sa page pour l’instant : modifiez-le ici</translation>
+        <translation type="vanished">Masqué sur sa page pour l’instant : modifiez-le ici</translation>
     </message>
     <message>
         <source>On</source>

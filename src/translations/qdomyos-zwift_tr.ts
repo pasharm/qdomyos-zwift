@@ -4207,7 +4207,7 @@ This may take a few moments on first startup.</source>
     </message>
     <message>
         <source>Debug log disabled. Enable debug logging and restart QZ before reproducing.</source>
-        <translation>Hata ayıklama günlüğü devre dışı. Sorunu yeniden oluşturmadan önce günlük kaydını etkinleştirip QZ'yi yeniden başlatın.</translation>
+        <translation>Hata ayıklama günlüğü devre dışı. Sorunu yeniden oluşturmadan önce günlük kaydını etkinleştirip QZ&apos;yi yeniden başlatın.</translation>
     </message>
     <message>
         <source>Debug log not found.</source>
@@ -4885,7 +4885,7 @@ QZ&apos;nin bu değeri değiştirmesine izin verilsin mi?
     <name>settings</name>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Şu anda kendi sayfasında gizli: buradan değiştirin</translation>
+        <translation type="vanished">Şu anda kendi sayfasında gizli: buradan değiştirin</translation>
     </message>
     <message>
         <source>On</source>
@@ -5065,7 +5065,7 @@ QZ&apos;nin bu değeri değiştirmesine izin verilsin mi?
     </message>
     <message>
         <source>Open</source>
-        <translation>Aç</translation>
+        <translation type="vanished">Aç</translation>
     </message>
     <message>
         <source>General Options</source>

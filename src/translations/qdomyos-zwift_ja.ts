@@ -6231,7 +6231,7 @@ QZ がこの値を変更することを許可しますか？
     </message>
     <message>
         <source>Open</source>
-        <translation>開く</translation>
+        <translation type="vanished">開く</translation>
     </message>
     <message>
         <source>App Language:</source>
@@ -8631,7 +8631,7 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
     </message>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>現在、元のページでは非表示です：ここで変更してください</translation>
+        <translation type="vanished">現在、元のページでは非表示です：ここで変更してください</translation>
     </message>
     <message>
         <source>On</source>

@@ -6370,7 +6370,7 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     </message>
     <message>
         <source>Open</source>
-        <translation>Abrir</translation>
+        <translation type="vanished">Abrir</translation>
     </message>
     <message>
         <source>App Language:</source>
@@ -8606,7 +8606,7 @@ Predeterminado: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Oculta en su página ahora mismo: cámbiala aquí</translation>
+        <translation type="vanished">Oculta en su página ahora mismo: cámbiala aquí</translation>
     </message>
     <message>
         <source>On</source>

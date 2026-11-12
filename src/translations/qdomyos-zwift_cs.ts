@@ -4885,7 +4885,7 @@ Povolit QZ tuto hodnotu měnit?
     <name>settings</name>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Na své stránce je teď skryto: změňte to zde</translation>
+        <translation type="vanished">Na své stránce je teď skryto: změňte to zde</translation>
     </message>
     <message>
         <source>On</source>
@@ -5065,7 +5065,7 @@ Povolit QZ tuto hodnotu měnit?
     </message>
     <message>
         <source>Open</source>
-        <translation>Otevřít</translation>
+        <translation type="vanished">Otevřít</translation>
     </message>
     <message>
         <source>General Options</source>

@@ -4882,7 +4882,7 @@ QZ가 이 값을 변경하도록 허용하시겠습니까?
     <name>settings</name>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>현재 원래 페이지에서 숨겨져 있습니다: 여기에서 변경하세요</translation>
+        <translation type="vanished">현재 원래 페이지에서 숨겨져 있습니다: 여기에서 변경하세요</translation>
     </message>
     <message>
         <source>On</source>
@@ -5062,7 +5062,7 @@ QZ가 이 값을 변경하도록 허용하시겠습니까?
     </message>
     <message>
         <source>Open</source>
-        <translation>열기</translation>
+        <translation type="vanished">열기</translation>
     </message>
     <message>
         <source>General Options</source>

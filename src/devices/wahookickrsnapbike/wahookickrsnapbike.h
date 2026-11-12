@@ -138,6 +138,7 @@ class wahookickrsnapbike : public bike {
     bool waitForWheelQuestion(bool withoutWheelDiameter);
     
     bool lastCommandErgMode = false;
+    bool lastCommandResistanceMode = false;
 
     volatile int notificationSubscribed = 0;
 

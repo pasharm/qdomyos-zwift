@@ -906,15 +906,15 @@ Vil du opdatere QZ-indstillingerne?</translation>
     </message>
     <message>
         <source>Searching for %1 (HR sensor)...</source>
-        <translation>Søger efter %1 (pulsmåler)...</translation>
+        <translation>Søger efter %1 (pulssensor)...</translation>
     </message>
     <message>
         <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
-        <translation>%1 (pulsmåler) blev ikke fundet. Sørg for, at den er tændt og sender puls.</translation>
+        <translation>%1 (pulssensor) blev ikke fundet. Sørg for, at den er tændt og udsender pulsmålinger.</translation>
     </message>
     <message>
         <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
-        <translation>%1 (pulsmåler): ingen puls. Sørg for, at den sender puls.</translation>
+        <translation>%1 (pulssensor): ingen puls. Sørg for, at sensoren udsender pulsmålinger.</translation>
     </message>
     <message>
         <source>%1 (cadence sensor) connected!</source>
@@ -4885,7 +4885,7 @@ Må QZ ændre værdien?
     <name>settings</name>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Skjult på sin egen side lige nu: skift den her</translation>
+        <translation type="vanished">Skjult på sin egen side lige nu: skift den her</translation>
     </message>
     <message>
         <source>On</source>
@@ -5065,7 +5065,7 @@ Må QZ ændre værdien?
     </message>
     <message>
         <source>Open</source>
-        <translation>Åbn</translation>
+        <translation type="vanished">Åbn</translation>
     </message>
     <message>
         <source>General Options</source>

@@ -50,8 +50,8 @@ public:
     // Night mode of the system (Configuration.uiMode), for the modern look. Read on demand: QML asks
     // again when the app comes back to the foreground and on systemThemeChanged().
     // iOS: the dark appearance of the system (iOS 13+), read the same way.
-    // Android before 10 (API 29, no dark theme in the system), iOS before 13 and other systems:
-    // true (the app is dark by default).
+    // Android before 10 (API 29, no dark theme in the system), iOS before 13, the iOS qmake build
+    // (IO_UNDER_QT) and other systems: true (the app is dark by default).
     Q_INVOKABLE bool systemDarkMode() const;
     // iOS: the window of Qt covers only the safe area, and the system paints the areas under the
     // status bar and the home indicator black, with light status bar text. This gives them a colour

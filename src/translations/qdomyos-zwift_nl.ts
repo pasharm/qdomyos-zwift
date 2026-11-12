@@ -4885,7 +4885,7 @@ Mag QZ deze waarde wijzigen?
     <name>settings</name>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Nu verborgen op de eigen pagina: hier wijzigen</translation>
+        <translation type="vanished">Nu verborgen op de eigen pagina: hier wijzigen</translation>
     </message>
     <message>
         <source>On</source>
@@ -5065,7 +5065,7 @@ Mag QZ deze waarde wijzigen?
     </message>
     <message>
         <source>Open</source>
-        <translation>Openen</translation>
+        <translation type="vanished">Openen</translation>
     </message>
     <message>
         <source>General Options</source>

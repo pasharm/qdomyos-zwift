@@ -4885,7 +4885,7 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     <name>settings</name>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Зараз приховане на своїй сторінці – змінюйте його тут</translation>
+        <translation type="vanished">Зараз приховане на своїй сторінці – змінюйте його тут</translation>
     </message>
     <message>
         <source>On</source>
@@ -5065,7 +5065,7 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     </message>
     <message>
         <source>Open</source>
-        <translation>Відкрити</translation>
+        <translation type="vanished">Відкрити</translation>
     </message>
     <message>
         <source>General Options</source>

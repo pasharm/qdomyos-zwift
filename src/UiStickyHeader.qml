@@ -19,7 +19,7 @@ Item {
     visible: false
     readonly property int compactHeight: 44
     // The rows fade out under the copy instead of being cut through a line of text by its edge
-    readonly property int fadeHeight: Math.round(16 * window.ui.textScale)
+    readonly property int fadeHeight: Math.round(16 * window.textScale)
     property Item copy: null
     readonly property Item pageFlickable: {
         for (var p = section ? section.parent : null; p; p = p.parent)

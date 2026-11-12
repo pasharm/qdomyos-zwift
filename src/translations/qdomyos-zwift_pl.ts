@@ -4882,7 +4882,7 @@ Zezwolić QZ na zmianę tej wartości?
     <name>settings</name>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Obecnie ukryte na swojej stronie: zmień tutaj</translation>
+        <translation type="vanished">Obecnie ukryte na swojej stronie: zmień tutaj</translation>
     </message>
     <message>
         <source>On</source>
@@ -5062,7 +5062,7 @@ Zezwolić QZ na zmianę tej wartości?
     </message>
     <message>
         <source>Open</source>
-        <translation>Otwórz</translation>
+        <translation type="vanished">Otwórz</translation>
     </message>
     <message>
         <source>General Options</source>

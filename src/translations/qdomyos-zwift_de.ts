@@ -6214,7 +6214,7 @@ Darf QZ diesen Wert ändern?
     </message>
     <message>
         <source>Open</source>
-        <translation>Öffnen</translation>
+        <translation type="vanished">Öffnen</translation>
     </message>
     <message>
         <source>UI Zoom:</source>
@@ -8598,7 +8598,7 @@ Standard: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Auf ihrer Seite gerade ausgeblendet: hier ändern</translation>
+        <translation type="vanished">Auf ihrer Seite gerade ausgeblendet: hier ändern</translation>
     </message>
     <message>
         <source>On</source>

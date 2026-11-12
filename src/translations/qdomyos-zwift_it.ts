@@ -7193,7 +7193,7 @@ NOTE IMPORTANTI:
     </message>
     <message>
         <source>Open</source>
-        <translation>Apri</translation>
+        <translation type="vanished">Apri</translation>
     </message>
     <message>
         <source>Tile size:</source>
@@ -8614,7 +8614,7 @@ Predefinito: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Al momento nascosta nella sua pagina: modificala qui</translation>
+        <translation type="vanished">Al momento nascosta nella sua pagina: modificala qui</translation>
     </message>
     <message>
         <source>On</source>
