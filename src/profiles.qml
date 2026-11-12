@@ -212,7 +212,8 @@ ColumnLayout {
         // on the page margin, as the card above and the headers of the other list pages
         Layout.leftMargin: profilesPage.modernMargin
         Layout.rightMargin: profilesPage.modernMargin
-        Layout.topMargin: 12
+        // a new section: 24 below the name card
+        Layout.topMargin: 24
         text: qsTr("Saved profiles")
         color: window.ui.textMain
         font.pixelSize: window.ui.fontBody
@@ -237,7 +238,8 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.leftMargin: profilesPage.modernMargin
         Layout.rightMargin: profilesPage.modernMargin
-        Layout.topMargin: 4
+        // 12 from the hint, as on the settings file page
+        Layout.topMargin: 12
         clip: true
         spacing: 8
         currentIndex: -1
@@ -251,7 +253,9 @@ ColumnLayout {
             readonly property string profileName: fileName.substring(0, fileName.length-4)
             readonly property bool active: profileName === settings.profile_name
             width: ListView.view.width
-            height: 64
+            // Material 3 list item: two lines (name, "Active") at least 72, the icon and the button 16
+            // from the edges, the text 16 after the icon; a bigger text grows it, 8 above and below
+            height: Math.max(72, Math.max(40, cardText.implicitHeight) + 16)
             radius: 16
             fill: selected ? window.ui.alpha(window.ui.accent, 0.14)
                            : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
@@ -274,14 +278,16 @@ ColumnLayout {
                 onClicked: profileCard.activate()
                 onPressAndHold: askDeleteProfileAt(index)
                 Accessible.role: Accessible.Button
-                Accessible.name: profileCard.profileName
+                // the labels of the card are ignored (below), so "Active" is read with the name
+                Accessible.name: profileCard.active ? profileCard.profileName + ", " + qsTr("Active")
+                                                    : profileCard.profileName
                 Accessible.onPressAction: profileCard.activate()
             }
 
             Rectangle {
                 id: avatar
                 anchors.left: parent.left
-                anchors.leftMargin: 12
+                anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
                 width: 40
                 height: 40
@@ -297,13 +303,18 @@ ColumnLayout {
             }
 
             Column {
+                id: cardText
                 anchors.left: avatar.right
-                anchors.leftMargin: 12
+                anchors.leftMargin: 16
                 anchors.right: loadButton.visible ? loadButton.left : parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 2
+                // the card is read through cardArea: a touch of the screen reader goes to the deepest
+                // accessible item under the finger, and these labels, drawn above cardArea, would take
+                // it from the card (the focus went to the whole window)
                 Label {
+                    Accessible.ignored: true
                     width: parent.width
                     text: profileCard.profileName
                     color: profileCard.selected ? window.ui.accent : window.ui.textMain
@@ -312,6 +323,7 @@ ColumnLayout {
                     elide: Text.ElideRight
                 }
                 Label {
+                    Accessible.ignored: true
                     visible: profileCard.active
                     text: qsTr("Active")
                     color: window.ui.textMuted
@@ -323,7 +335,7 @@ ColumnLayout {
                 id: loadButton
                 visible: profileCard.selected
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
                 text: qsTr("Load")
                 highlighted: true
@@ -337,7 +349,8 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.leftMargin: profilesPage.modernMargin
         Layout.rightMargin: profilesPage.modernMargin
-        Layout.bottomMargin: 8
+        // 16 to the pill: UiButton has a 6 inset below it
+        Layout.bottomMargin: 10
         text: qsTr("Other folders")
         onClicked: {
             if (Qt.platform.os === "android") {
