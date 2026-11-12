@@ -528,9 +528,10 @@ ColumnLayout {
                     id: detailBody
                     Layout.fillWidth: true
                     Layout.fillHeight: true
-                    // side by side only with a text column: without it the chart takes the page under the
-                    // buttons, as upright
-                    readonly property bool split: detailColumn.sideBySide && textColumn.visible
+                    // side by side only with a text to show: without it the chart takes the page under the
+                    // buttons, as upright (the classic look keeps its empty lines above it, as on master)
+                    readonly property bool split: detailColumn.sideBySide
+                        && (rootItem.previewWorkoutDescription !== "" || rootItem.previewWorkoutTags !== "")
                     // the cells are placed in order, the text first: an explicit Layout.column 1 was
                     // warned about for a moment on turning upright, the columns already 1
                     columns: split ? 2 : 1
@@ -540,7 +541,7 @@ ColumnLayout {
                     ColumnLayout {
                         id: textColumn
                         Layout.fillWidth: true
-                        Layout.fillHeight: detailColumn.sideBySide
+                        Layout.fillHeight: detailBody.split
                         // the two columns share the width equally
                         Layout.preferredWidth: 1
                         spacing: detailColumn.spacing
@@ -727,7 +728,7 @@ ColumnLayout {
                         // side by side: the rest of the column, so the tags stay under the text
                         Item {
                             Layout.fillHeight: true
-                            visible: detailColumn.sideBySide
+                            visible: detailBody.split
                         }
                     }
 
