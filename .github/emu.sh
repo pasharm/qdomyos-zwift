@@ -332,6 +332,15 @@ tb_lists() {
   local c=tl y1 y2 t b
   start_case "$c" ui_modern=true fakedevice_treadmill=true android_documents_folder=true || return 1
 
+  # warm-up: right after the first TalkBack on in the app, the tree of the page had no node for 12 s and
+  # more (runs 43167343525, 43172694569: the programs page, its frame drawn), the next pages had theirs.
+  # Once on the home page, its tree listed for the record
+  mkdir -p tbshots
+  tb_on
+  drv tb-warmup --keep 'sleep:5000' 'list' 'sleep:5000' 'list'
+  tb_off
+  emu_sleep 3
+
   # training programs: the up button, then the first program opened by a double tap
   if open_drawer '^Open Train Program$' && tap_ui '^Open Train Program$' '^Other folders$' \
      && wait_ui '^Easy intervals$' 15; then
