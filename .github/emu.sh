@@ -56,6 +56,14 @@ wipe_files() {
     adb shell "su $uid,$uid,9997 sh -c 'rm -rf $QZDIR'" < /dev/null >> "$STEPLOG" 2>&1
   fi
   adb uninstall "$PKG" < /dev/null > /dev/null 2>&1
+  # files of a previous install of this side the app may not remove (run 43185579383: "Directory not
+  # empty" after the reinstall of master): through MediaProvider, which forgets them with the files
+  if adb shell "ls -d $QZDIR" < /dev/null > /dev/null 2>&1; then
+    say "wipe: $QZDIR still there - delete through MediaProvider"
+    adb shell "su 0 content delete --uri content://media/external/file --where \"_data LIKE '$QZDIR/%' OR _data LIKE '/storage/emulated/0/Documents/QZ/%'\"" \
+      < /dev/null >> "$STEPLOG" 2>&1
+    adb shell "su 0 rm -rf /storage/emulated/0/Documents/QZ" < /dev/null >> "$STEPLOG" 2>&1
+  fi
   if adb shell "ls -d $QZDIR" < /dev/null > /dev/null 2>&1; then
     adb shell "su 0 ls -lnR $QZDIR" < /dev/null >> "$STEPLOG" 2>&1
     proves_nothing "$QZDIR left from the previous side (uid ${uid:-none})"
