@@ -96,18 +96,25 @@ open_program() {
   local c=$1 name=$2 row=$3 x y
   open_drawer '^Open Train Program$' && tap_ui '^Open Train Program$' '^Other folders$' || return 1
   emu_sleep 3
-  if [ "${c#?}" = m ]; then
+  dump
+  # modern look: the card by its name; the beta has no names on the cards (6a-1 added them), so
+  # there by the row, as in the classic one, with the card pitch of the frame (1440 px wide)
+  if [ "${c#?}" = m ] && find_ui "^$name\$"; then
     tap_ui "^$name\$" '^Start Workout$' 20
     return
   fi
-  dump
   if ! find_ui '^Search \(recursive\)\.\.\.$'; then
     fail "$c: the filter field not on the screen"
     return 1
   fi
   set -- $EMU_AT
   x=720
-  y=$(( $8 + 170 + (row - 1) * 175 ))
+  if [ "${c#?}" = m ]; then
+    # beta 2348, API 35: the field bottom 447, the card centres 581, 819 ... 1533
+    y=$(( $8 + 134 + (row - 1) * 238 ))
+  else
+    y=$(( $8 + 170 + (row - 1) * 175 ))
+  fi
   say "tap the program row $row ($name) at $x $y"
   adb shell input tap "$x" "$y" < /dev/null > /dev/null 2>&1
   if wait_ui '^Start Workout$' 20; then
