@@ -523,7 +523,7 @@ Vil du slå på de nødvendige tjenestene?</translation>
     </message>
     <message>
         <source>50%</source>
-        <translation>50 %</translation>
+        <translation>50&#xa0;%</translation>
     </message>
     <message>
         <source>Player Weight (kg):</source>
@@ -918,15 +918,15 @@ Vil du oppdatere QZ-innstillingene?</translation>
     </message>
     <message>
         <source>Searching for %1 (HR sensor)...</source>
-        <translation>Søker etter %1 (pulsmåler) …</translation>
+        <translation>Søker etter %1 (pulssensor)...</translation>
     </message>
     <message>
         <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
-        <translation>Finner ikke %1 (pulsmåler). Kontroller at den er på og sender puls.</translation>
+        <translation>Fant ikke %1 (pulssensor). Kontroller at den er på og sender pulsdata.</translation>
     </message>
     <message>
         <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
-        <translation>%1 (pulsmåler): ingen puls. Kontroller at den sender puls.</translation>
+        <translation>%1 (pulssensor): ingen pulsdata. Kontroller at sensoren sender pulsdata.</translation>
     </message>
     <message>
         <source>%1 (cadence sensor) connected!</source>
@@ -1042,7 +1042,7 @@ Vil du oppdatere QZ-innstillingene?</translation>
     </message>
     <message>
         <source>Treadmill initialization in progress...%1%</source>
-        <translation>Klargjør tredemøllen … %1 %</translation>
+        <translation>Klargjør tredemøllen … %1&#xa0;%</translation>
     </message>
     <message>
         <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
@@ -1066,7 +1066,7 @@ Vil du oppdatere QZ-innstillingene?</translation>
     </message>
     <message>
         <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
-        <translation>Nåværende SmO2: %1 %, forrige SmO2: %2 %, THb: %3 g/dL</translation>
+        <translation>Nåværende SmO2: %1&#xa0;%, forrige SmO2: %2&#xa0;%, THb: %3 g/dL</translation>
     </message>
     <message>
         <source>SE7i init completed!</source>
@@ -4794,6 +4794,22 @@ I neste vindu gir du tilgang til QZ-mappen.</translation>
         <source>Don&apos;t ask again</source>
         <translation>Ikke spør igjen</translation>
     </message>
+    <message>
+        <source>Wahoo Virtual Gears</source>
+        <translation>Virtuelle gir på Wahoo</translation>
+    </message>
+    <message>
+        <source>To simulate virtual gears, QZ changes the wheel circumference stored in your trainer. This value may stay in the trainer after you close QZ and affect it in other apps.
+
+Allow QZ to change it?
+
+No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt; Wahoo Options), and virtual gears work through the grade. With Yes you can undo it later there: turn on that option and, with the trainer connected, tap Restore Default Setting to the Trainer.</source>
+        <translation>For å simulere virtuelle gir endrer QZ hjulomkretsen som er lagret i sykkelrullen. Verdien kan bli værende i sykkelrullen etter at du lukker QZ, og påvirke sykkelrullen i andre apper.
+
+Skal QZ få endre denne verdien?
+
+«Nei»: QZ slår på «Uten hjuldiameterprotokoll» (Innstillinger &gt; Sykkelalternativer &gt; Alternativer for Wahoo), og virtuelle gir virker via stigningen. Med «Ja» kan du angre dette senere samme sted: slå på dette alternativet og trykk på «Gjenopprett standardinnstilling på sykkelrullen» mens sykkelrullen er tilkoblet.</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -4905,7 +4921,7 @@ I neste vindu gir du tilgang til QZ-mappen.</translation>
     <name>settings</name>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Skjult på sin egen side akkurat nå: endre den her</translation>
+        <translation type="vanished">Skjult på sin egen side akkurat nå: endre den her</translation>
     </message>
     <message>
         <source>On</source>
@@ -5085,7 +5101,7 @@ I neste vindu gir du tilgang til QZ-mappen.</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Åpne</translation>
+        <translation type="vanished">Åpne</translation>
     </message>
     <message>
         <source>General Options</source>
@@ -5381,19 +5397,19 @@ I neste vindu gir du tilgang til QZ-mappen.</translation>
     </message>
     <message>
         <source>Zone 1 %:</source>
-        <translation>Sone 1 %:</translation>
+        <translation>Sone 1&#xa0;%:</translation>
     </message>
     <message>
         <source>Zone 2 %:</source>
-        <translation>Sone 2 %:</translation>
+        <translation>Sone 2&#xa0;%:</translation>
     </message>
     <message>
         <source>Zone 3 %:</source>
-        <translation>Sone 3 %:</translation>
+        <translation>Sone 3&#xa0;%:</translation>
     </message>
     <message>
         <source>Zone 4 %:</source>
-        <translation>Sone 4 %:</translation>
+        <translation>Sone 4&#xa0;%:</translation>
     </message>
     <message>
         <source>Zone 5 will be calculated automatically based on Zone 4 end percentage and max HR.</source>
@@ -7064,7 +7080,7 @@ Skriv den inn nedenfor:</translation>
     </message>
     <message>
         <source>Target Speed and Target Incline tile offer a way to increase/decrease the current difficulty with the plus/minus buttons. By default, with this setting disabled, the speed and the inclination change with a 3% gain for every pressure. Switching this ON, QZ will add a 0.1 speed offset or a 0.5 incline offset instead.</source>
-        <translation>Flisene Målfart og Målstigning gjør det mulig å øke eller redusere gjeldende vanskelighetsgrad med pluss- og minusknappene. Som standard, med denne innstillingen av, endres fart og stigning med 3 % per trykk. Når innstillingen er på, legger QZ i stedet til en justering på 0.1 for fart eller 0.5 for stigning.</translation>
+        <translation>Flisene Målfart og Målstigning gjør det mulig å øke eller redusere gjeldende vanskelighetsgrad med pluss- og minusknappene. Som standard, med denne innstillingen av, endres fart og stigning med 3&#xa0;% per trykk. Når innstillingen er på, legger QZ i stedet til en justering på 0.1 for fart eller 0.5 for stigning.</translation>
     </message>
     <message>
         <source>Speed Step:</source>
@@ -7177,7 +7193,7 @@ Skriv den inn nedenfor:</translation>
     </message>
     <message>
         <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
-        <translation>Endrer størrelsen på flisene som viser måleverdiene. Standard: 100 %. Velg en lavere prosent for å få plass til flere fliser på skjermen, og en prosent over 100 % for å gjøre dem større. Ikke skriv inn prosenttegnet. Het tidligere «UI Zoom».</translation>
+        <translation>Endrer størrelsen på flisene som viser måleverdiene. Standard: 100&#xa0;%. Velg en lavere prosent for å få plass til flere fliser på skjermen, og en prosent over 100&#xa0;% for å gjøre dem større. Ikke skriv inn prosenttegnet. Het tidligere «UI Zoom».</translation>
     </message>
     <message>
         <source>Use System Text Size</source>
@@ -7185,7 +7201,7 @@ Skriv den inn nedenfor:</translation>
     </message>
     <message>
         <source>The text of the app follows the text size of the phone or tablet settings, up to 150%. Turn off to choose the size below, for example for a screen you read from a distance during a workout. Default is on.</source>
-        <translation>Teksten i appen følger tekststørrelsen i innstillingene på telefonen eller nettbrettet, opptil 150 %. Slå av for å velge størrelsen nedenfor, for eksempel for en skjerm du leser på avstand under treningsøkten. Standard: på.</translation>
+        <translation>Teksten i appen følger tekststørrelsen i innstillingene på telefonen eller nettbrettet, opptil 150&#xa0;%. Slå av for å velge størrelsen nedenfor, for eksempel for en skjerm du leser på avstand under treningsøkten. Standard: på.</translation>
     </message>
     <message>
         <source>Text size:</source>
@@ -7813,7 +7829,7 @@ VIKTIG:
     </message>
     <message>
         <source>Inclination Offset and Gain are used to adjust the incline set by Zwift instead of, or in addition to, using the QZ Zwift Gain setting. For example, when Zwift changes the incline to 1%, you can have your treadmill change to 2%. The number you enter as an offset adds to the inclination sent from Zwift or any other 3rd party app. Default is 0.</source>
-        <translation>Stigningsjustering og stigningsfaktor brukes til å tilpasse stigningen som Zwift setter, i stedet for eller i tillegg til innstillingen Zwift-motstandsfaktor i QZ. Når Zwift for eksempel endrer stigningen til 1 %, kan tredemøllen gå til 2 %. Tallet du skriver inn som justering (offset), legges til stigningen som sendes fra Zwift eller en annen tredjepartsapp. Standard: 0.</translation>
+        <translation>Stigningsjustering og stigningsfaktor brukes til å tilpasse stigningen som Zwift setter, i stedet for eller i tillegg til innstillingen Zwift-motstandsfaktor i QZ. Når Zwift for eksempel endrer stigningen til 1&#xa0;%, kan tredemøllen gå til 2&#xa0;%. Tallet du skriver inn som justering (offset), legges til stigningen som sendes fra Zwift eller en annen tredjepartsapp. Standard: 0.</translation>
     </message>
     <message>
         <source>Zwift Inclination Gain:</source>
@@ -8013,7 +8029,7 @@ VIKTIG:
     </message>
     <message>
         <source>Maximum allowed difference between power sensor speed and treadmill speed before QZ stops applying the relative correction. Default: 20%.</source>
-        <translation>Største tillatte forskjell mellom farten fra effektsensoren og farten på tredemøllen før QZ slutter å bruke den relative korrigeringen. Standard: 20 %.</translation>
+        <translation>Største tillatte forskjell mellom farten fra effektsensoren og farten på tredemøllen før QZ slutter å bruke den relative korrigeringen. Standard: 20&#xa0;%.</translation>
     </message>
     <message>
         <source>Use inclination from the power sensor</source>
@@ -8064,8 +8080,8 @@ Default: A = -0.96, B = 1.33</source>
 For Stryd-sensorer: A = -0.96, B = 1.33
 
 Eksempler med disse verdiene:
-• 8 km/h, 10 % stigning: (-0.96 + 1.33×8) × 10 = 97 W lagt til
-• 11 km/h, 10 % stigning: (-0.96 + 1.33×11) × 10 = 137 W lagt til
+• 8 km/h, 10&#xa0;% stigning: (-0.96 + 1.33×8) × 10 = 97 W lagt til
+• 11 km/h, 10&#xa0;% stigning: (-0.96 + 1.33×11) × 10 = 137 W lagt til
 
 Hvis både A og B er 0, bruker QZ standardformelen: 9.8 × vekt × (stigning/100).
 
@@ -9647,157 +9663,157 @@ Standard: A = -0.96, B = 1.33</translation>
     <message>
         <source>Override 0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 0 %:</translation>
+        <translation>I stedet for 0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 0.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 0.5 %:</translation>
+        <translation>I stedet for 0.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 1.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 1.0 %:</translation>
+        <translation>I stedet for 1.0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 1.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 1.5 %:</translation>
+        <translation>I stedet for 1.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 2.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 2.0 %:</translation>
+        <translation>I stedet for 2.0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 2.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 2.5 %:</translation>
+        <translation>I stedet for 2.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 3.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 3.0 %:</translation>
+        <translation>I stedet for 3.0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 3.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 3.5 %:</translation>
+        <translation>I stedet for 3.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 4.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 4.0 %:</translation>
+        <translation>I stedet for 4.0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 4.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 4.5 %:</translation>
+        <translation>I stedet for 4.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 5.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 5.0 %:</translation>
+        <translation>I stedet for 5.0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 5.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 5.5 %:</translation>
+        <translation>I stedet for 5.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 6.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 6.0 %:</translation>
+        <translation>I stedet for 6.0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 6.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 6.5 %:</translation>
+        <translation>I stedet for 6.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 7.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 7.0 %:</translation>
+        <translation>I stedet for 7.0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 7.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 7.5 %:</translation>
+        <translation>I stedet for 7.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 8.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 8.0 %:</translation>
+        <translation>I stedet for 8.0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 8.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 8.5 %:</translation>
+        <translation>I stedet for 8.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 9.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 9.0 %:</translation>
+        <translation>I stedet for 9.0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 9.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 9.5 %:</translation>
+        <translation>I stedet for 9.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 10.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 10.0 %:</translation>
+        <translation>I stedet for 10.0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 10.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 10.5 %:</translation>
+        <translation>I stedet for 10.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 11.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 11.0 %:</translation>
+        <translation>I stedet for 11.0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 11.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 11.5 %:</translation>
+        <translation>I stedet for 11.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 12.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 12.0 %:</translation>
+        <translation>I stedet for 12.0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 12.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 12.5 %:</translation>
+        <translation>I stedet for 12.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 13.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 13.0 %:</translation>
+        <translation>I stedet for 13.0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 13.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 13.5 %:</translation>
+        <translation>I stedet for 13.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 14.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 14.0 %:</translation>
+        <translation>I stedet for 14.0&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 14.5%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 14.5 %:</translation>
+        <translation>I stedet for 14.5&#xa0;%:</translation>
     </message>
     <message>
         <source>Override 15.0%:</source>
         <extracomment>Row label in the incline replacement table: the value entered next to it is sent to the treadmill instead of this incline.</extracomment>
-        <translation>I stedet for 15.0 %:</translation>
+        <translation>I stedet for 15.0&#xa0;%:</translation>
     </message>
 </context>
 <context>

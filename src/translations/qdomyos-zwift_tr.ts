@@ -4246,7 +4246,7 @@ This may take a few moments on first startup.</source>
     </message>
     <message>
         <source>Debug log disabled. Enable debug logging and restart QZ before reproducing.</source>
-        <translation>Hata ayıklama günlüğü devre dışı. Sorunu yeniden oluşturmadan önce günlük kaydını etkinleştirip QZ'yi yeniden başlatın.</translation>
+        <translation>Hata ayıklama günlüğü devre dışı. Sorunu yeniden oluşturmadan önce günlük kaydını etkinleştirip QZ&apos;yi yeniden başlatın.</translation>
     </message>
     <message>
         <source>Debug log not found.</source>
@@ -4797,6 +4797,22 @@ Hayır: QZ cihazı koşu bandı olarak tutar ve bir daha sormaz (bisiklet yine e
         <source>Don&apos;t ask again</source>
         <translation>Bir daha sorma</translation>
     </message>
+    <message>
+        <source>Wahoo Virtual Gears</source>
+        <translation>Wahoo sanal vitesleri</translation>
+    </message>
+    <message>
+        <source>To simulate virtual gears, QZ changes the wheel circumference stored in your trainer. This value may stay in the trainer after you close QZ and affect it in other apps.
+
+Allow QZ to change it?
+
+No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt; Wahoo Options), and virtual gears work through the grade. With Yes you can undo it later there: turn on that option and, with the trainer connected, tap Restore Default Setting to the Trainer.</source>
+        <translation>Sanal vitesleri simüle etmek için QZ, antrenman cihazınızda kayıtlı tekerlek çevresini değiştirir. Bu değer QZ kapatıldıktan sonra cihazda kalabilir ve cihazın diğer uygulamalardaki davranışını etkileyebilir.
+
+QZ&apos;nin bu değeri değiştirmesine izin verilsin mi?
+
+“Hayır”: QZ, “Tekerlek çapı protokolü olmadan” seçeneğini açar (Ayarlar &gt; Bisiklet seçenekleri &gt; Wahoo seçenekleri) ve sanal vitesler eğim üzerinden çalışır. “Evet” derseniz bunu daha sonra aynı yerden geri alabilirsiniz: bu seçeneği açın ve cihaz bağlıyken “Antrenman cihazının varsayılan ayarını geri yükle” düğmesine dokunun.</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -4908,7 +4924,7 @@ Hayır: QZ cihazı koşu bandı olarak tutar ve bir daha sormaz (bisiklet yine e
     <name>settings</name>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Şu anda kendi sayfasında gizli: buradan değiştirin</translation>
+        <translation type="vanished">Şu anda kendi sayfasında gizli: buradan değiştirin</translation>
     </message>
     <message>
         <source>On</source>
@@ -5088,7 +5104,7 @@ Hayır: QZ cihazı koşu bandı olarak tutar ve bir daha sormaz (bisiklet yine e
     </message>
     <message>
         <source>Open</source>
-        <translation>Aç</translation>
+        <translation type="vanished">Aç</translation>
     </message>
     <message>
         <source>General Options</source>

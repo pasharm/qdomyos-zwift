@@ -918,15 +918,15 @@ Vil du opdatere QZ-indstillingerne?</translation>
     </message>
     <message>
         <source>Searching for %1 (HR sensor)...</source>
-        <translation>Søger efter %1 (pulsmåler)...</translation>
+        <translation>Søger efter %1 (pulssensor)...</translation>
     </message>
     <message>
         <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
-        <translation>%1 (pulsmåler) blev ikke fundet. Sørg for, at den er tændt og sender puls.</translation>
+        <translation>%1 (pulssensor) blev ikke fundet. Sørg for, at den er tændt og udsender pulsmålinger.</translation>
     </message>
     <message>
         <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
-        <translation>%1 (pulsmåler): ingen puls. Sørg for, at den sender puls.</translation>
+        <translation>%1 (pulssensor): ingen puls. Sørg for, at sensoren udsender pulsmålinger.</translation>
     </message>
     <message>
         <source>%1 (cadence sensor) connected!</source>
@@ -4794,6 +4794,22 @@ Giv adgang til QZ-mappen i det næste vindue.</translation>
         <source>Don&apos;t ask again</source>
         <translation>Spørg ikke igen</translation>
     </message>
+    <message>
+        <source>Wahoo Virtual Gears</source>
+        <translation>Virtuelle gear på Wahoo</translation>
+    </message>
+    <message>
+        <source>To simulate virtual gears, QZ changes the wheel circumference stored in your trainer. This value may stay in the trainer after you close QZ and affect it in other apps.
+
+Allow QZ to change it?
+
+No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt; Wahoo Options), and virtual gears work through the grade. With Yes you can undo it later there: turn on that option and, with the trainer connected, tap Restore Default Setting to the Trainer.</source>
+        <translation>For at simulere virtuelle gear ændrer QZ den hjulomkreds, der er gemt i hometraineren. Værdien kan blive i hometraineren, efter at QZ er lukket, og påvirke hometraineren i andre apps.
+
+Må QZ ændre værdien?
+
+»Nej«: QZ slår »Uden hjuldiameterprotokol« til (Indstillinger &gt; Cykelindstillinger &gt; Wahoo-indstillinger), og virtuelle gear virker via stigningen. Med »Ja« kan du senere fortryde det samme sted: slå denne indstilling til, og tryk, mens hometraineren er forbundet, på »Gendan hometrainerens standardindstilling«.</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -4905,7 +4921,7 @@ Giv adgang til QZ-mappen i det næste vindue.</translation>
     <name>settings</name>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Skjult på sin egen side lige nu: skift den her</translation>
+        <translation type="vanished">Skjult på sin egen side lige nu: skift den her</translation>
     </message>
     <message>
         <source>On</source>
@@ -5085,7 +5101,7 @@ Giv adgang til QZ-mappen i det næste vindue.</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Åbn</translation>
+        <translation type="vanished">Åbn</translation>
     </message>
     <message>
         <source>General Options</source>

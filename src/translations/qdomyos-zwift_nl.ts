@@ -4797,6 +4797,22 @@ Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog 
         <source>Don&apos;t ask again</source>
         <translation>Niet meer vragen</translation>
     </message>
+    <message>
+        <source>Wahoo Virtual Gears</source>
+        <translation>Virtuele versnellingen van Wahoo</translation>
+    </message>
+    <message>
+        <source>To simulate virtual gears, QZ changes the wheel circumference stored in your trainer. This value may stay in the trainer after you close QZ and affect it in other apps.
+
+Allow QZ to change it?
+
+No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt; Wahoo Options), and virtual gears work through the grade. With Yes you can undo it later there: turn on that option and, with the trainer connected, tap Restore Default Setting to the Trainer.</source>
+        <translation>Om virtuele versnellingen te simuleren, wijzigt QZ de wielomtrek die in de trainer is opgeslagen. Deze waarde kan in de trainer blijven staan nadat je QZ hebt gesloten en de trainer in andere apps beïnvloeden.
+
+Mag QZ deze waarde wijzigen?
+
+‘Nee’: QZ schakelt ‘Zonder wieldiameterprotocol’ in (Instellingen &gt; Fietsopties &gt; Wahoo-opties) en virtuele versnellingen werken via het hellingspercentage. Met ‘Ja’ kun je dit later daar ongedaan maken: schakel die optie in en tik, terwijl de trainer verbonden is, op ‘Standaardinstelling van de trainer herstellen’.</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -4908,7 +4924,7 @@ Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog 
     <name>settings</name>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Nu verborgen op de eigen pagina: hier wijzigen</translation>
+        <translation type="vanished">Nu verborgen op de eigen pagina: hier wijzigen</translation>
     </message>
     <message>
         <source>On</source>
@@ -5088,7 +5104,7 @@ Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog 
     </message>
     <message>
         <source>Open</source>
-        <translation>Openen</translation>
+        <translation type="vanished">Openen</translation>
     </message>
     <message>
         <source>General Options</source>

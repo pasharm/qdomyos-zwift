@@ -2548,6 +2548,9 @@ class QZSettings {
     static const QString proform_treadmill_sport_55;
     static constexpr bool default_proform_treadmill_sport_55 = false;
 
+    static const QString proform_treadmill_sport_6_0;
+    static constexpr bool default_proform_treadmill_sport_6_0 = false;
+
     static const QString zwift_play_emulator;
     static constexpr bool default_zwift_play_emulator = false;
 
@@ -3510,6 +3513,12 @@ class QZSettings {
     // the day the first-setup log was turned on (ISO date), for the 7 days
     static const QString log_debug_first_setup_since;
     static const QString default_log_debug_first_setup_since;
+
+    // The user answered whether QZ may write the wheel circumference of a Wahoo trainer (asked at the
+    // first connection). Written at the first discovery of a Wahoo trainer: true when that trainer
+    // already was the last device, so it was connected before the question existed
+    static const QString wahoo_wheel_question_answered;
+    static constexpr bool default_wahoo_wheel_question_answered = false;
 
     /**
      * @brief Write the QSettings values using the constants from this namespace.

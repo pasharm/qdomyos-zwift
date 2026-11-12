@@ -4806,6 +4806,22 @@ Dans la fenêtre suivante, autorisez l&apos;accès au dossier QZ.</translation>
         <source>Don&apos;t ask again</source>
         <translation>Ne plus demander</translation>
     </message>
+    <message>
+        <source>Wahoo Virtual Gears</source>
+        <translation>Vitesses virtuelles Wahoo</translation>
+    </message>
+    <message>
+        <source>To simulate virtual gears, QZ changes the wheel circumference stored in your trainer. This value may stay in the trainer after you close QZ and affect it in other apps.
+
+Allow QZ to change it?
+
+No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt; Wahoo Options), and virtual gears work through the grade. With Yes you can undo it later there: turn on that option and, with the trainer connected, tap Restore Default Setting to the Trainer.</source>
+        <translation>Pour simuler des vitesses virtuelles, QZ modifie la circonférence de roue enregistrée dans le home trainer. Cette valeur peut rester dans le home trainer après la fermeture de QZ et affecter son fonctionnement dans d&apos;autres applications.
+
+Autoriser QZ à modifier cette valeur ?
+
+« Non » : QZ active « Sans protocole de diamètre de roue » (Paramètres &gt; Options de vélo &gt; Options Wahoo) et les vitesses virtuelles passent par la pente. Avec « Oui », vous pourrez l&apos;annuler plus tard au même endroit : activez cette option puis, avec le home trainer connecté, appuyez sur « Restaurer les réglages par défaut du home trainer ».</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -6338,7 +6354,7 @@ Dans la fenêtre suivante, autorisez l&apos;accès au dossier QZ.</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Ouvrir</translation>
+        <translation type="vanished">Ouvrir</translation>
     </message>
     <message>
         <source>App Language:</source>
@@ -8642,7 +8658,7 @@ Par défaut : A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Masqué sur sa page pour l’instant : modifiez-le ici</translation>
+        <translation type="vanished">Masqué sur sa page pour l’instant : modifiez-le ici</translation>
     </message>
     <message>
         <source>On</source>

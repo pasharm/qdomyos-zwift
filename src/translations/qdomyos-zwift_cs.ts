@@ -4797,6 +4797,22 @@ Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nasta
         <source>Don&apos;t ask again</source>
         <translation>Už se neptat</translation>
     </message>
+    <message>
+        <source>Wahoo Virtual Gears</source>
+        <translation>Virtuální převody Wahoo</translation>
+    </message>
+    <message>
+        <source>To simulate virtual gears, QZ changes the wheel circumference stored in your trainer. This value may stay in the trainer after you close QZ and affect it in other apps.
+
+Allow QZ to change it?
+
+No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt; Wahoo Options), and virtual gears work through the grade. With Yes you can undo it later there: turn on that option and, with the trainer connected, tap Restore Default Setting to the Trainer.</source>
+        <translation>Pro simulaci virtuálních převodů QZ mění obvod kola uložený v trenažéru. Tato hodnota může v trenažéru zůstat i po zavření QZ a ovlivňovat jeho chování v jiných aplikacích.
+
+Povolit QZ tuto hodnotu měnit?
+
+„Ne“: QZ zapne „Bez protokolu průměru kola“ (Nastavení &gt; Možnosti kola &gt; Možnosti Wahoo) a virtuální převody budou fungovat přes stoupání. Při volbě „Ano“ to můžete později vrátit tamtéž: zapněte tuto možnost a při připojeném trenažéru klepněte na „Obnovit výchozí nastavení trenažéru“.</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -4908,7 +4924,7 @@ Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nasta
     <name>settings</name>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Na své stránce je teď skryto: změňte to zde</translation>
+        <translation type="vanished">Na své stránce je teď skryto: změňte to zde</translation>
     </message>
     <message>
         <source>On</source>
@@ -5088,7 +5104,7 @@ Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nasta
     </message>
     <message>
         <source>Open</source>
-        <translation>Otevřít</translation>
+        <translation type="vanished">Otevřít</translation>
     </message>
     <message>
         <source>General Options</source>

@@ -2371,6 +2371,7 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                         (b.name().toUpper().startsWith(QStringLiteral("PM5")) && !b.name().toUpper().endsWith(QStringLiteral("SKI")) && !b.name().toUpper().endsWith(QStringLiteral("ROW"))) || 
                         (b.name().toUpper().startsWith("L-") && b.name().length() == 11) ||
                         (b.name().toUpper().startsWith("DMASUN-") && b.name().toUpper().endsWith("-BIKE")) ||
+                        (b.name().toUpper().startsWith(QStringLiteral("JOROTO-JH30PRO"))) || // Joroto JH30 PRO FTMS, with optional serial suffix
                         (b.name().toUpper().startsWith(QStringLiteral("FIT-BK-"))) ||
                         (b.name().toUpper().startsWith("VFSPINBIKE")) ||
                         (b.name().toUpper().startsWith("RIVO COG")) ||
@@ -2427,6 +2428,16 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                         (b.name().toUpper().startsWith("HAMMER ") && saris_trainer) ||
                         (b.name().toUpper().startsWith("WAHOO KICKR"))) &&
                        !wahooKickrSnapBike && !ftmsBike && filter) {
+                // the wheel circumference question (homeform::wahooWheelQuestionPending) is only for the first
+                // connection. The key is written here, at the first discovery of a Wahoo trainer, before the last
+                // device is: if this trainer already was the last device, the user connected it before the
+                // question existed and is not asked; otherwise QZ asks, also after a connection that failed
+                if (!settings.contains(QZSettings::wahoo_wheel_question_answered)) {
+                    settings.setValue(QZSettings::wahoo_wheel_question_answered,
+                                      settings.value(QZSettings::bluetooth_lastdevice_name,
+                                                     QZSettings::default_bluetooth_lastdevice_name)
+                                              .toString() == b.name());
+                }
                 this->setLastBluetoothDevice(b);
                 this->stopDiscovery();
                 wahooKickrSnapBike =

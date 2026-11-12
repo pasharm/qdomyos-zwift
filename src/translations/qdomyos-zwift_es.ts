@@ -4806,6 +4806,22 @@ En la siguiente ventana, permite el acceso a la carpeta QZ.</translation>
         <source>Don&apos;t ask again</source>
         <translation>No volver a preguntar</translation>
     </message>
+    <message>
+        <source>Wahoo Virtual Gears</source>
+        <translation>Marchas virtuales de Wahoo</translation>
+    </message>
+    <message>
+        <source>To simulate virtual gears, QZ changes the wheel circumference stored in your trainer. This value may stay in the trainer after you close QZ and affect it in other apps.
+
+Allow QZ to change it?
+
+No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt; Wahoo Options), and virtual gears work through the grade. With Yes you can undo it later there: turn on that option and, with the trainer connected, tap Restore Default Setting to the Trainer.</source>
+        <translation>Para simular marchas virtuales, QZ cambia la circunferencia de rueda guardada en el rodillo. Este valor puede permanecer en el rodillo después de cerrar QZ y afectar a su funcionamiento en otras aplicaciones.
+
+¿Permitir que QZ cambie este valor?
+
+«No»: QZ activa «Sin cambio de diámetro de rueda» (Ajustes &gt; Opciones de bicicleta &gt; Opciones de Wahoo) y las marchas virtuales funcionan a través de la pendiente. Con «Sí» puedes deshacerlo más tarde allí mismo: activa esa opción y, con el rodillo conectado, pulsa «Restaurar la configuración predeterminada del rodillo».</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -6390,7 +6406,7 @@ En la siguiente ventana, permite el acceso a la carpeta QZ.</translation>
     </message>
     <message>
         <source>Open</source>
-        <translation>Abrir</translation>
+        <translation type="vanished">Abrir</translation>
     </message>
     <message>
         <source>App Language:</source>
@@ -8630,7 +8646,7 @@ Predeterminado: A = -0.96, B = 1.33</translation>
     </message>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>Oculta en su página ahora mismo: cámbiala aquí</translation>
+        <translation type="vanished">Oculta en su página ahora mismo: cámbiala aquí</translation>
     </message>
     <message>
         <source>On</source>

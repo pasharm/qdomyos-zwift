@@ -4794,6 +4794,22 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <source>Don&apos;t ask again</source>
         <translation>다시 묻지 않음</translation>
     </message>
+    <message>
+        <source>Wahoo Virtual Gears</source>
+        <translation>Wahoo 가상 기어</translation>
+    </message>
+    <message>
+        <source>To simulate virtual gears, QZ changes the wheel circumference stored in your trainer. This value may stay in the trainer after you close QZ and affect it in other apps.
+
+Allow QZ to change it?
+
+No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt; Wahoo Options), and virtual gears work through the grade. With Yes you can undo it later there: turn on that option and, with the trainer connected, tap Restore Default Setting to the Trainer.</source>
+        <translation>가상 기어를 구현하기 위해 QZ는 트레이너에 저장된 휠 둘레를 변경합니다. 이 값은 QZ를 닫은 후에도 트레이너에 남아 있을 수 있으며, 다른 앱에서 트레이너 동작에 영향을 줄 수 있습니다.
+
+QZ가 이 값을 변경하도록 허용하시겠습니까?
+
+[아니요]: QZ가 [휠 지름 없는 프로토콜]을 켜고([설정] &gt; [자전거 옵션] &gt; [Wahoo 옵션]), 가상 기어는 경사를 통해 작동합니다. [예]를 선택하면 나중에 같은 곳에서 되돌릴 수 있습니다. 이 옵션을 켜고 트레이너가 연결된 상태에서 [트레이너 기본 설정 복원]을 누르세요.</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -4905,7 +4921,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     <name>settings</name>
     <message>
         <source>Hidden on its page right now: change it here</source>
-        <translation>현재 원래 페이지에서 숨겨져 있습니다: 여기에서 변경하세요</translation>
+        <translation type="vanished">현재 원래 페이지에서 숨겨져 있습니다: 여기에서 변경하세요</translation>
     </message>
     <message>
         <source>On</source>
@@ -5085,7 +5101,7 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
     </message>
     <message>
         <source>Open</source>
-        <translation>열기</translation>
+        <translation type="vanished">열기</translation>
     </message>
     <message>
         <source>General Options</source>
