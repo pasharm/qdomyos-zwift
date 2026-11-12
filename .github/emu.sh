@@ -416,6 +416,58 @@ tb_classic() {
   back_to "$HOME_RX" 20
 }
 
+# PAGES=big: the modern look with the app text at 170 % (ui_text_scale, the system size off): a list
+# card is at least 56 / 72 and grows with its content, 8 above and below (Material 3, the review of
+# 12.11). apk-head - the lists build: programs, GPX, settings files framed; apk-base - the service
+# build: the profile card (two lines) must be taller than 72 dp; its node bounds are in the dump
+big_lists() {
+  local c=gl
+  start_case "$c" ui_modern=true ui_text_scale_system=false ui_text_scale=170 fakedevice_treadmill=true     android_documents_folder=true || return 1
+  if open_drawer '^Open Train Program$' && tap_ui '^Open Train Program$' '^Other folders$'; then
+    emu_sleep 3
+    snap "$c-1-programs"
+    expect "$c-1-programs" '^Easy intervals$' 'big text: the program cards'
+  fi
+  back_to "$HOME_RX" 20
+  if open_drawer '^Open GPX$' && tap_ui '^Open GPX$' '^Other folders$'; then
+    emu_sleep 5
+    snap "$c-3-gpx"
+    expect "$c-3-gpx" '^Butterfield Canyon Road$' 'big text: the GPX cards'
+  fi
+  back_to "$HOME_RX" 20
+  if load_settings_open m && wait_ui '^saved-setup$' 15; then
+    snap "$c-4-settings-files"
+  fi
+  back_to "$HOME_RX" 20
+}
+
+big_service() {
+  local c=gs h
+  start_case "$c" ui_modern=true ui_text_scale_system=false ui_text_scale=170 fakedevice_treadmill=true     android_documents_folder=true || return 1
+  if open_drawer '^Profile:.*' && tap_ui '^Profile:.*' '^Other folders$' && tap_ui '^Save$' '.*Profile saved correctly.*'; then
+    close_ok "$c save"
+    wait_ui "$HOME_RX" 20 --first || back_to "$HOME_RX" 20
+  fi
+  if open_drawer '^Profile:.*' && tap_ui '^Profile:.*' '^Other folders$' && wait_ui '^default, Active$' 15; then
+    emu_sleep 2
+    snap "$c-5-profiles"
+    dump
+    if find_ui '^default, Active$'; then
+      set -- $EMU_AT
+      h=$(( $8 - $6 ))
+      # 72 dp = 252 px on the 3.5 px/dp image; the content at 170 % is about 76 dp
+      if [ "$h" -gt 259 ]; then
+        say "check $c-5-profiles: big text: the profile card grew past 72 dp ($h px): OK"
+      else
+        fail "check $c-5-profiles: big text: the profile card did not grow ($h px, 72 dp = 252)"
+      fi
+    else
+      fail "check $c-5-profiles: big text: no profile card node"
+    fi
+  fi
+  back_to "$HOME_RX" 20
+}
+
 tb_service() {
   local c=ts
   start_case "$c" ui_modern=true fakedevice_treadmill=true android_documents_folder=true || return 1
@@ -440,12 +492,24 @@ tb_service() {
 case ${PAGES:-lists} in
   lists) SHOTS="1-programs 2-preview 3-gpx 4-settings-files" ;;
   service) SHOTS="5-profiles 5b-saved 6-credits 7-swagbag" ;;
-  tb|tbc) SHOTS="" ;;
-  *) echo "PAGES=$PAGES: lists, service, tb or tbc" >&2; exit 1 ;;
+  tb|tbc|big) SHOTS="" ;;
+  *) echo "PAGES=$PAGES: lists, service, tb, tbc or big" >&2; exit 1 ;;
 esac
 
 emu_init
 say "== pages: ${PAGES:-lists}"
+if [ "${PAGES:-lists}" = big ]; then
+  logcat_start
+  wipe_files
+  install_apk apk-head/android-debug.apk
+  seed_files
+  big_lists
+  wipe_files
+  install_apk apk-base/android-debug.apk
+  seed_files
+  big_service
+  finish
+fi
 if [ "${PAGES:-lists}" = tbc ]; then
   [ "$EMU_API" -ge 34 ] || proves_nothing "PAGES=tbc on API $EMU_API: the driver injects TalkBack gestures from API 34"
   adb root >> "$STEPLOG" 2>&1
