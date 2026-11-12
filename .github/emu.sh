@@ -78,7 +78,15 @@ install_case() {
   say "appops MANAGE_EXTERNAL_STORAGE: $(adb shell appops get "$PKG" MANAGE_EXTERNAL_STORAGE < /dev/null 2>&1 | tr -d '\r')"
 }
 
-conf() { start_case "$1" ui_modern=$UI_MODERN fakedevice_treadmill=true; }
+# DOCS=true: the "Documents folder" option (android_documents_folder) - below Android 14 the QZ folder is
+# Documents/QZ only with it (homeform::getWritableAppDir), else it is in Android/data
+conf() {
+  if [ "$DOCS" = true ]; then
+    start_case "$1" ui_modern=$UI_MODERN fakedevice_treadmill=true android_documents_folder=true
+  else
+    start_case "$1" ui_modern=$UI_MODERN fakedevice_treadmill=true
+  fi
+}
 
 # seed_files: the files a user had made, written as the app (the app uid with the storage group 9997;
 # run-as is shut out of /sdcard from API 30)
@@ -197,6 +205,103 @@ picker_on() { adb shell dumpsys window < /dev/null 2>/dev/null | grep mCurrentFo
 # the question of the restore: the native box (classic) or UiMessageDialog (modern); No/Yes
 question_shown() { wait_ui "$QUESTION_RX" "${1:-20}" --any; }
 
+# yes_picker_allow <picker shot> <allow shot>: Yes of the question on screen, then the folder picker of the
+# system on Documents/QZ - Use this folder, Allow.
+# The picker is another app (no tap_ui: its ensure_app would press back on it), and uiautomator gets no
+# dump of it here - the image previews of Documents/QZ keep loading (run 43191860819, frame h-6-picker:
+# Documents > QZ with USE THIS FOLDER at the bottom). The window by dumpsys, the buttons by their label if
+# a dump comes, else by their place (Nexus 6: USE THIS FOLDER 720 2391 - that frame and T-195 run
+# 38488133337; Allow 1174 1488 - T-195 run 41909273758). The proof is the line in the log after it
+yes_picker_allow() {
+  local i
+  if find_ui '^&?Yes$'; then
+    set -- "$1" "$2" $EMU_AT
+    say "tap 'Yes' at $3 $4"
+    adb shell input tap "$3" "$4" < /dev/null > /dev/null 2>&1
+  else
+    fail "$1: no Yes in the question"
+  fi
+  for i in $(seq 1 10); do
+    picker_on && break
+    emu_sleep 2
+  done
+  if picker_on; then
+    say "picker on top: $(adb shell dumpsys window < /dev/null | grep mCurrentFocus | tr -d '\r')"
+  else
+    fail "$1: the folder picker did not open"
+  fi
+  emu_sleep 3
+  shot "$1" now
+  if [ -s "dumps/$1.xml" ] && find_ui '^use this folder$'; then
+    set -- "$1" "$2" $EMU_AT
+    say "tap 'Use this folder' by label at $3 $4"
+  else
+    set -- "$1" "$2" 720 2391
+    near picker "no dump of the picker: 'Use this folder' by its place $3 $4"
+  fi
+  adb shell input tap "$3" "$4" < /dev/null > /dev/null 2>&1
+  emu_sleep 4
+  shot "$2" now
+  if [ -s "dumps/$2.xml" ] && find_ui '^allow$'; then
+    set -- "$1" "$2" $EMU_AT
+    say "tap 'Allow' by label at $3 $4"
+  else
+    set -- "$1" "$2" 1174 1488
+    near picker "no dump of the Allow box: 'Allow' by its place $3 $4"
+  fi
+  adb shell input tap "$3" "$4" < /dev/null > /dev/null 2>&1
+}
+
+# restored_check <check name>: the line of the folder pass (it runs in a thread; qDebug, log_debug), three
+# seeded files at least
+restored_check() {
+  local i
+  for i in $(seq 1 20); do
+    grep -a -q "files of a previous install restored:" full_logcat.txt && break
+    emu_sleep 3
+  done
+  RESTORED=$(grep -a "files of a previous install restored:" full_logcat.txt | tail -n 1 | sed 's/.*restored: *//' | tr -d '\r ')
+  say "restored (log): ${RESTORED:-none}"
+  if [ -n "$RESTORED" ] && [ "$RESTORED" -ge 3 ] 2>/dev/null; then
+    say "check $1: $RESTORED files restored in one pass: OK"
+  else
+    fail "check $1: restored '${RESTORED:-no line}', expected 3 or more"
+  fi
+}
+
+# files_own <check prefix>: the seeded files read by the new install, no .restore_ copies, no file of the
+# previous install left in the four folders
+files_own() {
+  local f d left foreign
+  for f in "gpx/$ROUTE" "settings/$SETUP" "profiles/$PROFILE"; do
+    if reads "$NEW_UID" "$f"; then
+      say "check $1: $f read by the app ($NEW_UID): OK"
+    else
+      fail "check $1: the app ($NEW_UID) still does not read $f"
+    fi
+  done
+  left=$(adb shell "su 0 ls -aR $LOWER" < /dev/null 2>/dev/null | tr -d '\r' | grep -c '^[.]restore_')
+  if [ "${left:-0}" = 0 ]; then
+    say "check $1: no .restore_ copies left: OK"
+  else
+    fail "check $1: $left .restore_ copies left"
+  fi
+  foreign=""
+  for d in training gpx settings profiles; do
+    while IFS= read -r f; do
+      [ -n "$f" ] || continue
+      reads "$NEW_UID" "$d/$f" || foreign="$foreign$d/$f
+"
+    done < <(adb shell "ls '$QZDIR/$d'" < /dev/null 2>/dev/null | tr -d '\r')
+  done
+  foreign=$(printf '%s' "$foreign" | sed '/^$/d')
+  if [ -z "$foreign" ]; then
+    say "check $1: no file of the previous install left in the four folders: OK"
+  else
+    fail "check $1: files of the previous install left: $(echo "$foreign" | tr '\n' ';')"
+  fi
+}
+
 emu_init
 logcat_start
 
@@ -279,60 +384,9 @@ if load_settings_open; then
     shot h-5-question
     expect h-5-question "$QUESTION_RX" 'the question by the button' --any
     mark "h: yes"
-    # The picker is another app (no tap_ui: its ensure_app would press back on it), and uiautomator gets no
-    # dump of it here - the image previews of Documents/QZ keep loading (run 43191860819, frame h-6-picker:
-    # Documents > QZ with USE THIS FOLDER at the bottom). The window by dumpsys, the buttons by their label if
-    # a dump comes, else by their place (Nexus 6: USE THIS FOLDER 720 2391 - that frame and T-195 run
-    # 38488133337; Allow 1174 1488 - T-195 run 41909273758). The proof is the restore line in the log below
-    if find_ui '^&?Yes$'; then
-      set -- $EMU_AT
-      say "tap 'Yes' at $1 $2"
-      adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
-    else
-      fail "h: no Yes in the question"
-    fi
-    for i in $(seq 1 10); do
-      picker_on && break
-      emu_sleep 2
-    done
-    if picker_on; then
-      say "picker on top: $(adb shell dumpsys window < /dev/null | grep mCurrentFocus | tr -d '\r')"
-    else
-      fail "h: the folder picker did not open"
-    fi
-    emu_sleep 3
-    shot h-6-picker now
-    if [ -s dumps/h-6-picker.xml ] && find_ui '^use this folder$'; then
-      set -- $EMU_AT
-      say "tap 'Use this folder' by label at $1 $2"
-    else
-      set -- 720 2391
-      near picker "no dump of the picker: 'Use this folder' by its place $1 $2"
-    fi
-    adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
-    emu_sleep 4
-    shot h-7-allow now
-    if [ -s dumps/h-7-allow.xml ] && find_ui '^allow$'; then
-      set -- $EMU_AT
-      say "tap 'Allow' by label at $1 $2"
-    else
-      set -- 1174 1488
-      near picker "no dump of the Allow box: 'Allow' by its place $1 $2"
-    fi
-    adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
+    yes_picker_allow h-6-picker h-7-allow
     mark "h: allowed"
-    # the pass runs in a thread: its line in the log (qDebug, log_debug)
-    for i in $(seq 1 20); do
-      grep -a -q "files of a previous install restored:" full_logcat.txt && break
-      emu_sleep 3
-    done
-    RESTORED=$(grep -a "files of a previous install restored:" full_logcat.txt | tail -n 1 | sed 's/.*restored: *//' | tr -d '\r ')
-    say "restored (log): ${RESTORED:-none}"
-    if [ -n "$RESTORED" ] && [ "$RESTORED" -ge 3 ] 2>/dev/null; then
-      say "check h-restore: $RESTORED files restored in one pass: OK"
-    else
-      fail "check h-restore: restored '${RESTORED:-no line}', expected 3 or more"
-    fi
+    restored_check h-restore
     emu_sleep 3
     ensure_app
     still
@@ -343,34 +397,7 @@ if load_settings_open; then
 fi
 
 # 4. Every file of the previous install is the app's own now, no temporary copies left
-for f in "gpx/$ROUTE" "settings/$SETUP" "profiles/$PROFILE"; do
-  if reads "$NEW_UID" "$f"; then
-    say "check h-files: $f read by the app ($NEW_UID): OK"
-  else
-    fail "check h-files: the app ($NEW_UID) still does not read $f"
-  fi
-done
-LEFT=$(adb shell "su 0 ls -aR $LOWER" < /dev/null 2>/dev/null | tr -d '\r' | grep -c '^[.]restore_')
-if [ "${LEFT:-0}" = 0 ]; then
-  say "check h-files: no .restore_ copies left: OK"
-else
-  fail "check h-files: $LEFT .restore_ copies left"
-fi
-# every file of the four folders, the bundled programs and routes too
-FOREIGN=""
-for d in training gpx settings profiles; do
-  while IFS= read -r f; do
-    [ -n "$f" ] || continue
-    reads "$NEW_UID" "$d/$f" || FOREIGN="$FOREIGN$d/$f
-"
-  done < <(adb shell "ls '$QZDIR/$d'" < /dev/null 2>/dev/null | tr -d '\r')
-done
-FOREIGN=$(printf '%s' "$FOREIGN" | sed '/^$/d')
-if [ -z "$FOREIGN" ]; then
-  say "check h-files: no file of the previous install left in the four folders: OK"
-else
-  fail "check h-files: files of the previous install left: $(echo "$FOREIGN" | tr '\n' ';')"
-fi
+files_own h-files
 owners gpx settings profiles
 back_to "$HOME_RX" 20
 
@@ -426,4 +453,114 @@ fi
 finish
 }
 
-if [ "$SIDE" = b ]; then side_b; else side_h; fi
+# ---- o: the branch with the QZ folder in Android/data (API 30, no "Documents folder" option)
+# The previous install had the option (its files in Documents/QZ, foreign now), this start has not: the QZ
+# folder is Android/data, so no question, no button, no pass - a restore would copy Documents/QZ into a folder
+# that goes away with the app (qzFolderRestorable)
+side_o() {
+  DOCS=true previous_install o apk-head/android-debug.apk
+  DOCS=false conf o
+  mark "o: GPX page"
+  if gpx_open; then
+    emu_sleep 4
+    question_shown 6 && fail "o: the question with the folder in Android/data"
+    shot o-1-gpx
+    expect_not o-1-gpx '^Restore files$' 'no restore button with the folder in Android/data'
+    expect o-1-gpx '^Other folders$' 'the GPX page is open'
+  fi
+  back_to "$HOME_RX" 20
+  mark "o: profiles page"
+  if profiles_open; then
+    emu_sleep 4
+    question_shown 3 && fail "o: the question on the profiles page"
+    shot o-2-profiles
+    expect_not o-2-profiles '^Restore files$' 'no restore button on the profiles page'
+  fi
+  back_to "$HOME_RX" 20
+  mark "o: settings file page"
+  if load_settings_open; then
+    emu_sleep 3
+    question_shown 3 && fail "o: the question on the settings file page"
+    shot o-3-settings-files
+    expect_not o-3-settings-files '^Restore files$' 'no restore button on the settings file page'
+  fi
+  back_to "$HOME_RX" 20
+  if grep -a -q "files of a previous install restored:" full_logcat.txt; then
+    fail "check o-pass: a restore pass ran with the folder in Android/data"
+  else
+    say "check o-pass: no restore pass: OK"
+  fi
+  for f in "gpx/$ROUTE" "settings/$SETUP" "profiles/$PROFILE"; do
+    if reads "$NEW_UID" "$f"; then
+      fail "check o-files: $f became the app's own - something restored it"
+    else
+      say "check o-files: $f left as it was in Documents/QZ: OK"
+    fi
+  done
+  wrap_up
+}
+
+# ---- g: the grant on the QZ folder given by the workout history recovery (#5233), not by Restore files.
+# The GPX page asks, No; the history page offers its recovery (the database of the previous install is in
+# Documents/QZ), Yes, the same folder picker, Allow; then the GPX page restores quietly - no question, no
+# button, every file the app's own
+HISTORY_RX='(?s).*Workouts of a previous installation.*'
+side_g() {
+  previous_install g apk-head/android-debug.apk
+  adb shell "ls '$QZDIR/ddb.sqlite'" < /dev/null > /dev/null 2>&1 \
+    || proves_nothing "g: no ddb.sqlite of the previous install - the history offers no recovery"
+  conf g
+  mark "g: GPX page"
+  if gpx_open; then
+    if question_shown 20; then
+      shot g-1-question
+      tap_ui '^&?No$' '^Other folders$' 20
+    else
+      fail "g: no question on the GPX page"
+    fi
+    emu_sleep 3
+    shot g-2-gpx-button
+    expect g-2-gpx-button '^Restore files$' 'the restore button before the grant'
+  fi
+  back_to "$HOME_RX" 20
+  mark "g: history page"
+  if open_drawer '^Workouts History$' && tap_ui '^Workouts History$' '^Workout History$|^&?Yes$'; then
+    if wait_ui "$HISTORY_RX" 40 --any; then
+      shot g-3-history-question
+      expect g-3-history-question "$HISTORY_RX" 'the recovery question of the history' --any
+      mark "g: history yes"
+      yes_picker_allow g-4-picker g-5-allow
+      mark "g: history allowed"
+      emu_sleep 6
+      ensure_app
+    else
+      shot g-3-no-history-question now
+      proves_nothing "g: the history page offered no recovery"
+    fi
+  fi
+  back_to "$HOME_RX" 20
+  # restored_check reads the last restore line: one before the GPX page would pass for the pass of the page
+  grep -a -q "files of a previous install restored:" full_logcat.txt \
+    && fail "g: a restore line before the GPX page - the pass of the page cannot be told from it"
+  mark "g: GPX page after the grant"
+  if gpx_open; then
+    restored_check g-restore
+    emu_sleep 3
+    question_shown 3 && fail "g: the question after the grant"
+    still
+    shot g-6-gpx-after
+    expect_not g-6-gpx-after '^Restore files$' 'no restore button after the grant of the history'
+  fi
+  files_own g-files
+  owners gpx settings profiles
+  back_to "$HOME_RX" 20
+  wrap_up
+}
+
+case "$SIDE" in
+  b) side_b ;;
+  o) side_o ;;
+  d) DOCS=true side_h ;;
+  g) side_g ;;
+  *) side_h ;;
+esac

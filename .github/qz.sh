@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/qz.sh sha d8af0a191fba - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/qz.sh sha b3007678ca1e - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): QZ screens and settings for the emulator scenarios, on top of lib.sh (source lib.sh
 # first). One source: tools/emu/qz.sh of the work folder, copied into .github/ by tools/emu/sync.py.
 # Base: the T-498 scenario (test/t498-emu, c4c75732f); defects of the old copies - notes/emu-lib-2026-11-10.md.
@@ -106,7 +106,10 @@ open_drawer() {
     say "tap menu $MENU"
     adb shell input tap $MENU < /dev/null > /dev/null 2>&1
     emu_sleep 3
-    if wait_ui "$1" 9; then
+    # --any: the entry in the tree, on the screen or not - the entries of a closed menu are not in the tree
+    # (18 home dumps of notes/emu, none with "Settings"); at 170 % text "Settings" lies in the navigation
+    # bar, tap_ui brings it in by a swipe (T-514, 43209989589)
+    if wait_ui "$1" 9 --any; then
       say "outcome 'menu': ok ('$1' shown)"
       return 0
     fi

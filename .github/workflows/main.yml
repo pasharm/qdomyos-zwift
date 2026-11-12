@@ -24,6 +24,10 @@ on:
         description: log_debug for the run
         required: false
         default: 'true'
+      sides:
+        description: 'sides as a JSON list (b h o d g, see emu.sh); empty - b and h with base, else h'
+        required: false
+        default: ''
 
 jobs:
   emulator-logcat:
@@ -34,8 +38,8 @@ jobs:
       fail-fast: false
       matrix:
         api: ${{ fromJSON(inputs.apis) }}
-        # b - master, h - the branch, each on its own emulator (emu.sh, SIDE)
-        side: ${{ fromJSON(inputs.base != '' && '["b", "h"]' || '["h"]') }}
+        # b - master, h - the branch, o/d/g - the branch in other cases; each on its own emulator (emu.sh, SIDE)
+        side: ${{ fromJSON(inputs.sides != '' && inputs.sides || (inputs.base != '' && '["b", "h"]' || '["h"]')) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
