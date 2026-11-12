@@ -135,10 +135,12 @@ def on_home():
 
 
 def back_to_list():
-    """From the preview back to the program list: one arrow, then its "Other folders"."""
-    if not tap(BACK):
+    """From the preview back to the program list, then its "Other folders". Modern look: the toolbar arrow steps
+    back inside the page (handleBack). Classic look: the toolbar "◄" pops the whole page to the home page
+    (main.qml navigateBack(false); seen in 43246979788), so the "← Back" button of the preview itself."""
+    if not tap(BACK if LOOK == "modern" else "← Back", exact=True):
         return False
-    return wait_for("Other folders", 30)
+    return wait_for("Other folders", 60)
 
 
 def open_list():
@@ -159,7 +161,8 @@ def open_program(name, row):
         if not tap(name, scrolls=2, exact=True):
             return False
     else:
-        e = find("←")
+        # exact: a prefix would also take "← Back" of a preview still sliding out
+        e = find("←", exact=True)
         if not e:
             print("not found: '←'")
             return False
@@ -178,21 +181,23 @@ if open_list():
         time.sleep(8)
         shot("long")
         reached.append("long")
-        more = find("Show more", exact=True) is not None
         if SIDE == "head":
+            # the description comes asynchronously and the fold is laid out after it; the iOS tree lags
+            # 6-12 s behind a tap: wait for the labels (wait_for returns as soon as one shows)
+            more = wait_for("Show more", 60, exact=True)
             check(more, "the long description folded, Show more")
             if more and tap("Show more", exact=True):
-                ok = wait_for("Show less", 15, exact=True)
+                ok = wait_for("Show less", 60, exact=True)
                 time.sleep(2)
                 shot("long-unfolded")
                 check(ok, "Show more unfolds, Show less")
                 if ok and tap("Show less", exact=True):
-                    ok = wait_for("Show more", 15, exact=True)
+                    ok = wait_for("Show more", 60, exact=True)
                     time.sleep(2)
                     shot("long-folded-again")
                     check(ok, "Show less folds again, Show more")
         else:
-            check(not more, "master: no Show more")
+            check(find("Show more", exact=True) is None, "master: no Show more")
         if back_to_list() and open_program("HIIT Neuromuscular", 5):
             time.sleep(8)
             shot("short")
