@@ -174,6 +174,12 @@ def open_load_settings():
     "Search settings" and is as wide (main.qml: toolButtonSettingsSearch anchors.right =
     toolButtonLoadSettings.left), so the tap goes one button width right of its centre."""
     global tapped_at
+    if LOOK == "modern":
+        # the modern header names it (T-514)
+        ok = tap("Load settings")
+        tapped_at = time.time()
+        time.sleep(3)
+        return ok
     if not wait_for("Search settings", 150):
         return False
     e = find("Search settings")
@@ -204,7 +210,7 @@ for entry, landing, name in PAGES:
             time.sleep(20 if name == "settings-files" else 5)
             shot(name)
             elements(name)
-            if ok and name == "settings-files":
+            if ok and name == "settings-files" and LOOK != "modern":
                 # "Settings folder" is an accordion, closed at the start; its title has no accessible
                 # name (not in the tree of 43254897285/43254905366), the row is at y 290 of the settled
                 # page (base frame 05 of 43254905366): open it by place, a frame with the list shown

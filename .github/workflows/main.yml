@@ -158,8 +158,8 @@ jobs:
           FAIL=0
           xcrun simctl ui "$UDID" appearance light
           # each look from a clean install: the settings before the first start
-          for LOOK in classic; do
-            MODERN=false
+          for LOOK in classic modern; do
+            if [ "$LOOK" = modern ]; then MODERN=true; else MODERN=false; fi
             xcrun simctl uninstall "$UDID" "$BID" || true
             xcrun simctl install "$UDID" "$APP"
             # QSettings on iOS = CFPreferences "com.<organizationDomain, dots as dashes>.<applicationName>" (main.cpp),
@@ -189,7 +189,7 @@ jobs:
           xcrun simctl spawn "$UDID" log show --last 30m --style compact --predicate "process CONTAINS[c] 'qdomyos'" > out/syslog.txt 2>&1 || true
           ls ~/Library/Logs/DiagnosticReports/ > out/crash-list.txt 2>&1 || true
           cp ~/Library/Logs/DiagnosticReports/*qdomyos* out/ 2>/dev/null || true
-          for LOOK in classic; do
+          for LOOK in classic modern; do
             cat out/logs-$LOOK/debug-*.log 2>/dev/null | grep -a -i -E "qml|ReferenceError|TypeError|Unable to assign" | head -600 > "out/qml-log-$LOOK.txt" || true
           done
           ls out/*.png
