@@ -622,7 +622,41 @@ side_r() {
   wrap_up
 }
 
+# ---- p: Restore files pressed on the profiles page - the restore runs under the open profiles list (a component
+# of the accordion, its Connections inside the ListView), which reloads after it; the GPX question answered No
+side_p() {
+  previous_install p apk-head/android-debug.apk
+  conf p
+  mark "p: GPX page"
+  if gpx_open; then
+    question_shown 20 && tap_ui '^&?No$' '^Other folders$' 20
+  fi
+  back_to "$HOME_RX" 20
+  mark "p: profiles page"
+  if profiles_open; then
+    emu_sleep 3
+    shot p-1-profiles-button
+    expect p-1-profiles-button '^Restore files$' 'the restore button on the profiles page'
+    if tap_ui '^Restore files$' '^&?Yes$' 20; then
+      mark "p: yes"
+      yes_picker_allow p-2-picker p-3-allow
+      mark "p: allowed"
+      restored_check p-restore
+      emu_sleep 3
+      ensure_app
+      still
+      shot p-4-profiles-after
+      expect_not p-4-profiles-after '^Restore files$' 'the button gone after the restore, the profiles page still open'
+      expect p-4-profiles-after '^Other folders$' 'the profiles page still open'
+    fi
+  fi
+  files_own p-files
+  back_to "$HOME_RX" 20
+  wrap_up
+}
+
 case "$SIDE" in
+  p) side_p ;;
   r) side_r ;;
   b) side_b ;;
   o) side_o ;;
