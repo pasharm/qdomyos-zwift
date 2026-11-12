@@ -50,17 +50,21 @@ ScrollView {
         anchors.left: parent.left
         anchors.right: parent.right
 
-        // Modern look: a page title like the TTS and shortcut pages (classic had none)
-        Label {
-            visible: window.ui.modern
+        // Modern look: a page title like the TTS and shortcut pages (classic had none). Made only
+        // while the look is on: the classic page carries no hidden parts of it
+        Loader {
+            active: window.ui.modern
+            visible: active
             Layout.fillWidth: true
-            text: qsTr("Tiles Options")
-            wrapMode: Text.WordWrap
-            color: window.ui.textMain
-            font.pixelSize: window.ui.fontHeadline
-            font.weight: Font.DemiBold
-            topPadding: 12
-            bottomPadding: 8
+            sourceComponent: Label {
+                text: qsTr("Tiles Options")
+                wrapMode: Text.WordWrap
+                color: window.ui.textMain
+                font.pixelSize: window.ui.fontHeadline
+                font.weight: Font.DemiBold
+                topPadding: 12
+                bottomPadding: 8
+            }
         }
 
         NewPageElement {
@@ -185,7 +189,7 @@ ScrollView {
                     text: qsTr("Bike pedal cadence changes color to indicate how your cadence compares to the cadence called out in Peloton classes. The tile displays the following colors: white if there is no target cadence in the program, red if your cadence is lower than the target, green if your cadence matches the target, and orange if your cadence is higher than the target.")
                     font.bold: !window.ui.modern
                     font.italic: !window.ui.modern
-                    font.pixelSize: window.ui.fontHint
+                    font.pixelSize: window.fontHint
                     bottomPadding: window.hintGap
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
@@ -476,8 +480,7 @@ ScrollView {
             linkedBoolSetting: "tile_grade_adjusted_pace_enabled"
             settings: settingsTilesPane.settings
             card: true
-            // Modern look: the Minetti label below goes into the card
-            description: window.ui.modern ? qsTr("Flat-equivalent pace computed from treadmill incline using the Minetti cost model.") : ""
+            description: qsTr("Flat-equivalent pace computed from treadmill incline using the Minetti cost model.")
             accordionContent: RowLayout {
                 spacing: 10
                 Label {
@@ -506,21 +509,6 @@ ScrollView {
                     onClicked: {settings.tile_grade_adjusted_pace_order = gradeAdjustedPaceOrderTextField.displayText; toast.show(qsTr("Setting saved!")); }
                 }
             }
-        }
-
-        Label {
-            visible: !window.ui.modern
-            text: qsTr("Flat-equivalent pace computed from treadmill incline using the Minetti cost model.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: window.ui.fontHint
-            bottomPadding: window.hintGap
-            textFormat: Text.PlainText
-            wrapMode: Text.WordWrap
-            verticalAlignment: Text.AlignVCenter
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillWidth: true
-            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
         }
 
         AccordionCheckElement {
@@ -807,7 +795,7 @@ ScrollView {
                     text: qsTr("When enabled, displays heart rate as percentage of maximum heart rate (%FC Max) instead of BPM. AVG and MAX values will also show percentages.")
                     font.bold: !window.ui.modern
                     font.italic: !window.ui.modern
-                    font.pixelSize: window.ui.fontHint
+                    font.pixelSize: window.fontHint
                     bottomPadding: window.hintGap
                     textFormat: Text.PlainText
                     wrapMode: Text.WordWrap
@@ -4183,7 +4171,7 @@ ScrollView {
                     Label {
                         id: labelPresetPowerzone1Color
                         text: qsTr("color:")
-                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4297,7 +4285,7 @@ ScrollView {
                     Label {
                         id: labelPresetPowerzone2Color
                         text: qsTr("color:")
-                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4411,7 +4399,7 @@ ScrollView {
                     Label {
                         id: labelPresetPowerzone3Color
                         text: qsTr("color:")
-                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4525,7 +4513,7 @@ ScrollView {
                     Label {
                         id: labelPresetPowerzone4Color
                         text: qsTr("color:")
-                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4639,7 +4627,7 @@ ScrollView {
                     Label {
                         id: labelPresetPowerzone5Color
                         text: qsTr("color:")
-                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4753,7 +4741,7 @@ ScrollView {
                     Label {
                         id: labelPresetPowerzone6Color
                         text: qsTr("color:")
-                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -4868,7 +4856,7 @@ ScrollView {
                     Label {
                         id: labelPresetPowerzone7Color
                         text: qsTr("color:")
-                        wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                        wrapMode: window.ui.modern ? Text.WordWrap : Text.NoWrap
                         Layout.fillWidth: true
                         horizontalAlignment: Text.AlignRight
                     }
@@ -5088,15 +5076,21 @@ ScrollView {
         }
 
         // Modern look: a card with a switch like the tiles around it (the checkbox and the note
-        // below lay on the page with no frame, the title cut short)
-        AccordionCheckElement {
-            id: hrTimeInZoneIndividualModeAccordion
-            visible: window.ui.modern
-            title: qsTr("Show individual zone times (instead of cumulative)")
-            linkedBoolSetting: "tile_hr_time_in_zone_individual_mode"
-            settings: settingsTilesPane.settings
-            card: true
-            description: qsTr("When enabled, each zone shows only the time spent in that specific zone. When disabled (default), each zone shows cumulative time spent in that zone or higher.")
+        // below lay on the page with no frame, the title cut short). Made only while the look is on;
+        // the margins of a card are set here, a Loader does not pass on those of its item
+        Loader {
+            active: window.ui.modern
+            visible: active
+            Layout.fillWidth: true
+            Layout.topMargin: 4
+            Layout.bottomMargin: 4
+            sourceComponent: AccordionCheckElement {
+                title: qsTr("Show individual zone times (instead of cumulative)")
+                linkedBoolSetting: "tile_hr_time_in_zone_individual_mode"
+                settings: settingsTilesPane.settings
+                card: true
+                description: qsTr("When enabled, each zone shows only the time spent in that specific zone. When disabled (default), each zone shows cumulative time spent in that zone or higher.")
+            }
         }
 
         RowLayout {
@@ -5119,16 +5113,16 @@ ScrollView {
         Label {
             visible: !window.ui.modern
             text: qsTr("When enabled, each zone shows only the time spent in that specific zone. When disabled (default), each zone shows cumulative time spent in that zone or higher.")
-            font.bold: !window.ui.modern
-            font.italic: !window.ui.modern
-            font.pixelSize: window.ui.fontHint
+            font.bold: true
+            font.italic: true
+            font.pixelSize: window.fontHint
             bottomPadding: window.hintGap
             textFormat: Text.PlainText
             wrapMode: Text.WordWrap
             verticalAlignment: Text.AlignVCenter
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
             Layout.fillWidth: true
-            color: window.ui.inkMuted(Material.color(Material.Orange))
+            color: Material.color(Material.Orange)
         }
 
         AccordionCheckElement {
