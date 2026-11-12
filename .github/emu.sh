@@ -197,6 +197,40 @@ preview() {
   back_to "$HOME_RX" 20
 }
 
+# nodesc <case> <modern>: head only - a program of the user with no description and no tags ("Anodesc", the
+# first file of the list), in landscape: no side by side, the chart over the page width under the buttons,
+# as upright (the classic look kept its empty text column and put the chart on the right half - review of
+# the PR draft, 13.11)
+nodesc() {
+  local c=$1 modern=$2 uid sw
+  start_case "$c" ui_modern=$modern fakedevice_treadmill=true android_documents_folder=true || return 1
+  uid=$(app_uid)
+  printf '<?xml version="1.0" encoding="UTF-8"?>\n<rows>\n<row duration="00:05:00" speed="5"/>\n<row duration="00:05:00" speed="8"/>\n</rows>\n' > Anodesc.xml
+  adb push Anodesc.xml /data/local/tmp/Anodesc.xml < /dev/null > /dev/null 2>&1
+  adb shell "su $uid,$uid,9997 sh -c 'cp /data/local/tmp/Anodesc.xml $QZDIR/training/Anodesc.xml'" < /dev/null >> "$STEPLOG" 2>&1
+  adb shell "ls -l $QZDIR/training/Anodesc.xml" < /dev/null >> "$STEPLOG" 2>&1 || proves_nothing "$c: Anodesc.xml not in the training folder"
+  if open_program "$c" 'Anodesc' 1; then
+    emu_sleep 5
+    if rotate 1; then
+      emu_sleep 4
+      shot "$c-6-nodesc-land"
+      webview_of "$c-6-nodesc-land"
+      expect_not "$c-6-nodesc-land" '^Show more$' 'no description: no Show more'
+      set -- $(bounds_of "$c-6-nodesc-land" screen); sw=$3
+      set -- $(bounds_of "$c-6-nodesc-land" chart)
+      if [ -z "$3" ] || [ -z "$sw" ]; then
+        fail "$c-6-nodesc-land: no WebView or no screen bounds in the dump"
+      elif [ "$1" -lt $(( sw / 10 )) ] && [ "$3" -gt $(( sw * 9 / 10 )) ]; then
+        say "check $c-6-nodesc-land: no description, the chart over the width $1..$3 of $sw: OK"
+      else
+        fail "$c-6-nodesc-land: no description, the chart at $1..$3 of $sw - not over the page width"
+      fi
+    fi
+    rotate 0
+  fi
+  back_to "$HOME_RX" 20
+}
+
 # qml_quiet: no QML warning of the changed file from the head processes (pid lines of start_case); turning
 # upright once warned "Layout: column (1) should be less than the number of columns (1)" and every check
 # was green (T-495)
@@ -230,6 +264,10 @@ for side in b h; do
   install_apk "$apk"
   preview "${side}c" false
   preview "${side}m" true
+  if [ "$side" = h ]; then
+    nodesc hc false
+    nodesc hm true
+  fi
 done
 
 qml_quiet
