@@ -45,8 +45,9 @@ ScrollView {
 
         Label {
             Layout.fillWidth: true
-            text: qsTr("A very big thanks to<br>all the developers<br>(alphabetical sorted):").replace(/<br>/g, " ")
+            text: qsTr("A very big thanks to<br>all the developers<br>(alphabetical sorted):").split("<br>").join(" ")
             color: window.ui.textMuted
+            font.pixelSize: window.ui.fontCaption
             wrapMode: Text.WordWrap
         }
 
@@ -54,7 +55,7 @@ ScrollView {
             Layout.fillWidth: true
             Layout.topMargin: 4
             implicitHeight: developerList.implicitHeight + 16
-            radius: 20
+            radius: 16
             color: window.ui.surface
 
             Column {
@@ -68,7 +69,10 @@ ScrollView {
                     model: creditsPage.developers
                     Item {
                         width: developerList.width
-                        height: 56
+                        // Material 3 list item: one line at least 56, the initial 16 from the card
+                        // edge (with the 8 of the list) and the name 16 after it; a bigger text
+                        // grows the row, 8 above and below
+                        height: Math.max(56, Math.max(40, developerName.implicitHeight) + 16)
                         Rectangle {
                             id: developerAvatar
                             anchors.left: parent.left
@@ -87,9 +91,11 @@ ScrollView {
                             }
                         }
                         Label {
+                            id: developerName
                             anchors.left: developerAvatar.right
                             anchors.leftMargin: 16
                             anchors.right: parent.right
+                            anchors.rightMargin: 8
                             anchors.verticalCenter: parent.verticalCenter
                             text: modelData
                             color: window.ui.textMain

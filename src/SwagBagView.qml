@@ -49,6 +49,7 @@
 ****************************************************************************/
 
 import QtQuick 2.7
+import QtQml 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.3
 import org.cagnulein.qdomyoszwift 1.0
@@ -77,10 +78,17 @@ Item {
             width: parent.width
             anchors.horizontalCenter: parent.horizontalCenter
             color: window.ui.ink("white")
-            // already large: it grows at half the rate, so it stays above the body text
-            // without filling the screen (about 30 pt at 170 %)
-            font.pointSize: window.ui.modern ? 15 * window.textScale : 22 * (1 + (window.textScale - 1) / 2)
+            // Classic look: already large, it grows at half the rate, so it stays above the body text
+            // without filling the screen (about 30 pt at 170 %). Modern look: the body text size of
+            // the type scale, in pixels as on the other pages. Each look sets its own property (QFont
+            // drops the point size when given a pixel size and the other way round), so a change of
+            // the look takes effect both ways
+            Binding on font.pointSize { when: !window.ui.modern; value: 22 * (1 + (window.textScale - 1) / 2); restoreMode: Binding.RestoreNone }
+            Binding on font.pixelSize { when: window.ui.modern; value: window.ui.fontBody; restoreMode: Binding.RestoreNone }
             topPadding: window.ui.modern ? 16 : 5
+            // Modern look: the text on the page margin, as on the other pages
+            leftPadding: window.ui.modern ? 0 : 5
+            rightPadding: window.ui.modern ? 0 : 5
             lineHeight: window.ui.modern ? 1.15 : 1
             wrapMode: TextArea.Wrap
             text: qsTr("Hi! Do you know that QZ is just an Open Source Indie App?<br><br>No Big Companies are running this!<br>The \"Swag Bag\" is a way to support the ongoing development, maintenance and support of QZ Fitness!")
@@ -108,9 +116,15 @@ Item {
             id: appleDescription
             width: parent.width
             topPadding: window.ui.modern ? 16 : 5
+            leftPadding: window.ui.modern ? 0 : 5
+            rightPadding: window.ui.modern ? 0 : 5
+            // the default link blue is hard to read on the dark modern page ("blue" is the default)
             linkColor: window.ui.modern ? window.ui.accent : "blue"
             color: window.ui.inkMuted("white")
-            font.pointSize: (window.ui.modern ? 11 : 8) * window.textScale
+            // Modern look: the caption size of the hints on the other pages; the classic look in
+            // points as before (see the description above)
+            Binding on font.pointSize { when: !window.ui.modern; value: 8 * window.textScale; restoreMode: Binding.RestoreNone }
+            Binding on font.pixelSize { when: window.ui.modern; value: window.ui.fontCaption; restoreMode: Binding.RestoreNone }
             wrapMode: TextArea.Wrap
             text: qsTr("<html><style type='text/css'></style>Swag bag feature:<br>• an auto-renewable subscription<br>• 1 month ($1.99)<br>• Your subscription will be charged to your iTunes account at confirmation of purchase and will automatically renew (at the duration selected) unless auto-renew is turned off at least 24 hours before the end of the current period.<br>• Current subscription may not be cancelled during the active subscription period; however, you can manage your subscription and/or turn off auto-renewal by visiting your iTunes Account Settings after purchase.<br>• Privacy policy: <a href='https://robertoviola.cloud/privacy-policy-qdomyos-zwift/'>https://robertoviola.cloud/privacy-policy-qdomyos-zwift/</a><br>• Licensed Application end user license agreement: <a href='https://www.apple.com/legal/internet-services/itunes/dev/stdeula/'>https://www.apple.com/legal/internet-services/itunes/dev/stdeula/</a><br></html>")
             onLinkActivated: Qt.openUrlExternally(link)
@@ -121,9 +135,10 @@ Item {
         id: restoreButton
         wrapsText: true
         anchors.bottom: parent.bottom
-        anchors.bottomMargin: window.ui.modern ? 16 : 0
+        anchors.bottomMargin: window.ui.modern ? 8 : 0
         anchors.horizontalCenter: parent.horizontalCenter
-        width: parent.width * .5
+        // Modern look: the full width between the page margins, as Other folders on the list pages
+        width: window.ui.modern ? parent.width - 2 * window.ui.pageMargin : parent.width * .5
         text: qsTr("Restore Purchases")
         onClicked: {
             console.log("restoring...");

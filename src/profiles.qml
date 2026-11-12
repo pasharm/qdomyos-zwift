@@ -1,4 +1,5 @@
 import QtQuick 2.12
+import QtQml 2.15
 import QtQuick.Layouts 1.3
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.12
@@ -8,6 +9,10 @@ import Qt.labs.settings 1.0
 import QtQuick.Dialogs 1.0 as FileDialogClass
 
 ColumnLayout {
+    // Modern look: no spacing, each item gives its own gap. The default spacing of a layout is
+    // per platform (8 dp scaled by the dpi: 6 on Android and iOS, 5 on the desktop), so a margin
+    // written on top of it would differ by platform; the classic look keeps it, as before
+    Binding on spacing { when: window.ui.modern; value: 0; restoreMode: Binding.RestoreBindingOrValue }
 
     anchors.top: parent.top
     anchors.fill: parent
@@ -156,7 +161,7 @@ ColumnLayout {
         Layout.rightMargin: window.ui.pageMargin
         Layout.topMargin: 12
         implicitHeight: modernNameColumn.implicitHeight + 32
-        radius: 20
+        radius: 16
         color: window.ui.surface
 
         ColumnLayout {
@@ -173,6 +178,7 @@ ColumnLayout {
             UiTextField {
                 id: modernNameField
                 Layout.fillWidth: true
+                Accessible.name: qsTr("Profile name") + ": " + text
                 text: settings.profile_name
                 font.pixelSize: window.ui.fontTitleSmall
                 onAccepted: settings.profile_name = text
@@ -205,9 +211,11 @@ ColumnLayout {
     Label {
         visible: window.ui.modern
         Layout.fillWidth: true
-        Layout.leftMargin: window.ui.pageMargin + 4
+        // on the page margin, as the card above and the headers of the other list pages
+        Layout.leftMargin: window.ui.pageMargin
         Layout.rightMargin: window.ui.pageMargin
-        Layout.topMargin: 12
+        // a new section: 24 below the name card
+        Layout.topMargin: 24
         text: qsTr("Saved profiles")
         color: window.ui.textMain
         font.pixelSize: window.ui.fontBody
@@ -217,8 +225,10 @@ ColumnLayout {
     Label {
         visible: window.ui.modern
         Layout.fillWidth: true
-        Layout.leftMargin: window.ui.pageMargin + 4
+        Layout.leftMargin: window.ui.pageMargin
         Layout.rightMargin: window.ui.pageMargin
+        // the hint of the header above: one group, 4 below it
+        Layout.topMargin: 4
         text: qsTr("Tap a profile to select it, then Load. Long press to delete it.")
         color: window.ui.textMuted
         font.pixelSize: window.ui.fontCaption
@@ -232,7 +242,10 @@ ColumnLayout {
         Layout.fillHeight: true
         Layout.leftMargin: window.ui.pageMargin
         Layout.rightMargin: window.ui.pageMargin
-        Layout.topMargin: 4
+        // 12 from the hint, as on the settings file page; 6 above the pill below (12 seen with
+        // its inset), the gap it had with the page spacing
+        Layout.topMargin: 12
+        Layout.bottomMargin: 6
         clip: true
         spacing: 8
         currentIndex: -1
@@ -246,31 +259,41 @@ ColumnLayout {
             readonly property string profileName: fileName.substring(0, fileName.length-4)
             readonly property bool active: profileName === settings.profile_name
             width: ListView.view.width
-            height: 64
+            // Material 3 list item: two lines (name, "Active") at least 72, the icon and the button 16
+            // from the edges, the text 16 after the icon; a bigger text grows it, 8 above and below
+            height: Math.max(72, Math.max(40, cardText.implicitHeight) + 16)
             radius: window.ui.radius
             fill: selected ? window.ui.alpha(window.ui.accent, 0.14)
                            : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
             strokeWidth: selected ? 1 : 0
             stroke: window.ui.alpha(window.ui.accent, 0.6)
 
+            // a tap selects a profile, a second tap loads it
+            function activate() {
+                // as in the classic list: the user picked, a rescan must not reset it
+                list.clicked = true
+                if (index === modernList.currentIndex)
+                    loadProfileAt(index)
+                else
+                    modernList.currentIndex = index
+            }
+
             MouseArea {
                 id: cardArea
                 anchors.fill: parent
-                onClicked: {
-                    // as in the classic list: the user picked, a rescan must not reset it
-                    list.clicked = true
-                    if (index === modernList.currentIndex)
-                        loadProfileAt(index)
-                    else
-                        modernList.currentIndex = index
-                }
+                onClicked: profileCard.activate()
                 onPressAndHold: askDeleteProfileAt(index)
+                Accessible.role: Accessible.Button
+                // the labels of the card are ignored (below), so "Active" is read with the name
+                Accessible.name: profileCard.active ? profileCard.profileName + ", " + qsTr("Active")
+                                                    : profileCard.profileName
+                Accessible.onPressAction: profileCard.activate()
             }
 
             Rectangle {
                 id: avatar
                 anchors.left: parent.left
-                anchors.leftMargin: 12
+                anchors.leftMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
                 width: 40
                 height: 40
@@ -286,13 +309,18 @@ ColumnLayout {
             }
 
             Column {
+                id: cardText
                 anchors.left: avatar.right
-                anchors.leftMargin: 12
+                anchors.leftMargin: 16
                 anchors.right: loadButton.visible ? loadButton.left : parent.right
-                anchors.rightMargin: 12
+                anchors.rightMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: 2
+                // the card is read through cardArea: a touch of the screen reader goes to the deepest
+                // accessible item under the finger, and these labels, drawn above cardArea, would take
+                // it from the card (the focus went to the whole window)
                 Label {
+                    Accessible.ignored: true
                     width: parent.width
                     text: profileCard.profileName
                     color: profileCard.selected ? window.ui.accent : window.ui.textMain
@@ -301,6 +329,7 @@ ColumnLayout {
                     elide: Text.ElideRight
                 }
                 Label {
+                    Accessible.ignored: true
                     visible: profileCard.active
                     text: qsTr("Active")
                     color: window.ui.textMuted
@@ -312,7 +341,7 @@ ColumnLayout {
                 id: loadButton
                 visible: profileCard.selected
                 anchors.right: parent.right
-                anchors.rightMargin: 8
+                anchors.rightMargin: 16
                 anchors.verticalCenter: parent.verticalCenter
                 text: qsTr("Load")
                 highlighted: true
@@ -326,7 +355,8 @@ ColumnLayout {
         Layout.fillWidth: true
         Layout.leftMargin: window.ui.pageMargin
         Layout.rightMargin: window.ui.pageMargin
-        Layout.bottomMargin: 8
+        // 16 to the pill: UiButton has a 6 inset below it
+        Layout.bottomMargin: 10
         text: qsTr("Other folders")
         onClicked: {
             if (Qt.platform.os === "android") {
