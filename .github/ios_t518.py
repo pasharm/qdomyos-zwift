@@ -153,7 +153,40 @@ PAGES = [
     ("Open Train Program", "Other folders", "programs"),
     ("Open GPX", "Other folders", "gpx"),
     ("Profile:", "Other folders", "profiles"),
+    # the settings files (SettingsList.qml): the settings page, then its Load settings button
+    ("Settings", "Other folders", "settings-files"),
 ]
+
+
+def elements(name):
+    """The frames of the button and of any "Restore ..." element in the tree, for the head/base compare."""
+    for e in tree():
+        text = e.get("AXLabel") or ""
+        if text.startswith("Other folders") or text.startswith("Restore"):
+            fr = e["frame"]
+            print(f"element {name}: {text!r} {e.get('type')} x {fr['x']:.1f} y {fr['y']:.1f}"
+                  f" w {fr['width']:.1f} h {fr['height']:.1f}")
+
+
+def open_load_settings():
+    """The classic Load settings button of the settings page has no accessible name (iOS tree of
+    42850014352: only '◄' and 'Search settings' 258,62 48x48 in the header); it stands right of
+    "Search settings" and is as wide (main.qml: toolButtonSettingsSearch anchors.right =
+    toolButtonLoadSettings.left), so the tap goes one button width right of its centre."""
+    global tapped_at
+    if not wait_for("Search settings", 150):
+        return False
+    e = find("Search settings")
+    fr = e["frame"]
+    x = fr["x"] + fr["width"] * 1.5
+    y = fr["y"] + fr["height"] / 2
+    print(f"{time.strftime('%H:%M:%S', time.gmtime())} tap classic Load settings at {x:.0f},{y:.0f}"
+          " (right of Search settings)")
+    run("ui", "tap", str(round(x)), str(round(y)))
+    tapped_at = time.time()
+    time.sleep(3)
+    return True
+
 
 dismiss_alerts()
 shot("home")
@@ -161,7 +194,7 @@ reached, missed = [], []
 for entry, landing, name in PAGES:
     ok = False
     if tap(MENU) and wait_for(entry, 30):
-        if tap(entry, scrolls=3):
+        if tap(entry, scrolls=3) and (name != "settings-files" or open_load_settings()):
             if landing is None:
                 time.sleep(15)
                 ok = True
@@ -169,13 +202,14 @@ for entry, landing, name in PAGES:
                 ok = wait_for(landing, 120)
             time.sleep(5)
             shot(name)
-            # the frames of the button and of any "Restore ..." element in the tree, for the head/base compare
-            for e in tree():
-                text = e.get("AXLabel") or ""
-                if text.startswith("Other folders") or text.startswith("Restore"):
-                    fr = e["frame"]
-                    print(f"element {name}: {text!r} {e.get('type')} x {fr['x']:.1f} y {fr['y']:.1f}"
-                          f" w {fr['width']:.1f} h {fr['height']:.1f}")
+            elements(name)
+            if ok and name == "settings-files":
+                # "Settings folder" is an accordion: a frame with it toggled as well, in case the
+                # button moves with the list
+                if tap("Settings folder"):
+                    time.sleep(8)
+                    shot(name + "-toggled")
+                    elements(name + "-toggled")
     (reached if ok else missed).append(name)
     if not home():
         print("not back on the home page after", name)
