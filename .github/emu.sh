@@ -89,6 +89,28 @@ chart_right() {
   fi
 }
 
+# text_beside_buttons <shot>: side by side the buttons are over the chart only, so the description
+# starts at the top of the page, beside them. The text has no node of its own; its scroll bar (a node
+# under 40 px wide in the left half, as tall as the text block) gives the block top, and it must be
+# above the bottom of "Start Workout" (beta 2374: bar from 525, the button row 270..437, API 35)
+text_beside_buttons() {
+  local s=$1 sw btn bar
+  set -- $(bounds_of "$s" screen); sw=$3
+  btn=$(grep -o 'content-desc="Start Workout"[^>]*bounds="[^"]*"' "dumps/$s.xml" 2>/dev/null | grep -o 'bounds="[^"]*"' | head -1 | tr -c '0-9\n' ' ')
+  bar=$(grep -o 'bounds="\[[0-9]*,[0-9]*\]\[[0-9]*,[0-9]*\]"' "dumps/$s.xml" 2>/dev/null | tr -c '0-9\n' ' ' \
+    | awk -v w="${sw:-0}" '$3 - $1 > 0 && $3 - $1 < 40 && $3 < w / 2 && $4 - $2 > 100 { print; exit }')
+  set -- $btn
+  local by2=$4
+  set -- $bar
+  if [ -z "$by2" ] || [ -z "$2" ]; then
+    fail "$s: text beside the buttons: no Start Workout or no scroll bar of the text in the dump"
+  elif [ "$2" -lt "$by2" ]; then
+    say "check $s: the text from y $2, beside the buttons (their bottom $by2): OK"
+  else
+    fail "$s: the text from y $2, under the buttons (their bottom $by2)"
+  fi
+}
+
 # open_program <case> <name> <row>: the program from the list. Modern cards are named; the classic rows
 # have no name - the row <row> below the filter field (50 dp = 175 px rows on the CI Nexus 6, the first one
 # 170 px below the field: T-514)
@@ -154,6 +176,7 @@ preview() {
         # side by side: the whole text scrolls in its column, no button; the chart on the right half
         expect_not "$c-3-long-land" '^Show more$' 'landscape: side by side, no Show more'
         chart_right "$c-3-long-land" "$c-1-long"
+        text_beside_buttons "$c-3-long-land"
       fi
     fi
     if rotate 0 && [ $head = 1 ]; then
