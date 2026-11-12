@@ -293,15 +293,133 @@ service() {
   back_to "$HOME_RX" 20
 }
 
+# bounds_of <drv name> <step>: "l t r b" of the node the driver printed for <step>
+# ("<step>: '...' class=... bounds=[l,t][r,b] visible=...", Rect.toShortString)
+bounds_of() {
+  grep -a -F "$2: '" "drv/$1.txt" | head -n 1 | sed -n 's/.* bounds=\[\([0-9-]*\),\([0-9-]*\)\]\[\([0-9-]*\),\([0-9-]*\)\] .*/\1 \2 \3 \4/p'
+}
+
+# tb_card <drv name> <card name> <what>: the real TalkBack (on) - the card found by touch, spoken under
+# its name and holding the TalkBack focus. The speech is TalkBack's on-screen overlay (pref_tts_overlay)
+tb_card() {
+  tb_check "^touch:$2: focused '$2' " "$1" "$3: the TalkBack focus on the card by touch"
+  tb_check "^touch:$2: said \[.*$2" "$1" "$3: spoken under its name"
+}
+
+# PAGES=tb (API 35 only - the image with Google TalkBack): the modern cards of both PRs with the real
+# TalkBack - found by touch under their name, a double tap does what a tap does. apk-head - the lists branch
+# (6a-1), apk-base - the service branch (6a-2): the inputs head and base carry the two builds.
+# Between tb_on and tb_off no uiautomator dump (it switches TalkBack off) - only the driver
+tb_lists() {
+  local c=tl y1 y2 t b
+  start_case "$c" ui_modern=true fakedevice_treadmill=true android_documents_folder=true || return 1
+
+  # training programs: the up button, then the first program opened by a double tap
+  if open_drawer '^Open Train Program$' && tap_ui '^Open Train Program$' '^Other folders$' \
+     && wait_ui '^Easy intervals$' 15; then
+    tb_on
+    drv tb-programs --keep 'touch:Parent folder' 'touch:Easy intervals' 'dtap' 'sleep:4000' 'find:Start Workout'
+    tb_off
+    tb_check "^touch:Parent folder: said \[.*Parent folder" tb-programs 'programs: the up button spoken as Parent folder'
+    tb_card tb-programs 'Easy intervals' 'programs'
+    tb_check "^find:Start Workout: 'Start Workout'" tb-programs 'programs: a double tap opened the program preview'
+    emu_sleep 3
+  fi
+  # from the preview the Back goes to the list first: back_to taps it again (3 tries)
+  back_to "$HOME_RX" 20
+
+  # GPX: the first route comes selected (its Open on the card); a double tap on the second one selects it -
+  # the Open button moves into its card
+  if open_drawer '^Open GPX$' && tap_ui '^Open GPX$' '^Other folders$' && wait_ui '^Butterfield Canyon Road$' 15; then
+    tb_on
+    drv tb-gpx --keep 'touch:Parent folder' 'touch:Butterfield Canyon Road' 'dtap' 'sleep:3000' \
+      'find:Butterfield Canyon Road' 'find:Open'
+    tb_off
+    tb_check "^touch:Parent folder: said \[.*Parent folder" tb-gpx 'GPX: the up button spoken as Parent folder'
+    tb_card tb-gpx 'Butterfield Canyon Road' 'GPX'
+    set -- $(bounds_of tb-gpx 'find:Butterfield Canyon Road')
+    t=$2 b=$4
+    set -- $(bounds_of tb-gpx 'find:Open')
+    y1=$2 y2=$4
+    if [ -n "$t" ] && [ -n "$y1" ] && [ "$y1" -ge "$t" ] && [ "$y2" -le "$b" ]; then
+      say "check tb-gpx: GPX: a double tap selected the route - Open in its card ($y1-$y2 in $t-$b): OK"
+    else
+      fail "check tb-gpx: GPX: Open not in the card of the route after the double tap (Open '$y1-$y2', card '$t-$b')"
+    fi
+    emu_sleep 3
+  fi
+  back_to "$HOME_RX" 20
+
+  # settings files: the seeded file, not selected; a double tap selects it - its Load shows
+  if load_settings_open m && wait_ui '^saved-setup$' 15; then
+    tb_on
+    drv tb-settings --keep 'find:Load' 'touch:saved-setup' 'dtap' 'sleep:3000' 'find:Load'
+    tb_off
+    tb_card tb-settings 'saved-setup' 'settings files'
+    # the first find:Load runs before the double tap, the second after it
+    if grep -a '^find:Load: ' drv/tb-settings.txt | sed -n 1p | grep -q 'NOT FOUND' \
+       && grep -a '^find:Load: ' drv/tb-settings.txt | sed -n 2p | grep -q "^find:Load: 'Load'"; then
+      say "check tb-settings: settings files: no Load before, Load after the double tap: OK"
+    else
+      fail "check tb-settings: settings files: Load not shown by the double tap (see drv/tb-settings.txt)"
+    fi
+    emu_sleep 3
+  fi
+  back_to "$HOME_RX" 20
+}
+
+tb_service() {
+  local c=ts
+  start_case "$c" ui_modern=true fakedevice_treadmill=true android_documents_folder=true || return 1
+  # a saved profile first: Save, OK of the box closes the page (as in service())
+  if open_drawer '^Profile:.*' && tap_ui '^Profile:.*' '^Other folders$' && tap_ui '^Save$' '.*Profile saved correctly.*'; then
+    close_ok "$c save"
+    wait_ui "$HOME_RX" 20 --first || back_to "$HOME_RX" 20
+  fi
+  # the active profile comes selected: a double tap on it loads it - the "Profile loaded" question
+  if open_drawer '^Profile:.*' && tap_ui '^Profile:.*' '^Other folders$' && wait_ui '^default$' 15; then
+    tb_on
+    drv tb-profiles --keep 'touch:default' 'dtap' 'sleep:3000' 'find:Profile loaded' 'find:Would you like to quit'
+    tb_off
+    tb_card tb-profiles 'default' 'profiles'
+    tb_check "^find:(Profile loaded|Would you like to quit): '" tb-profiles 'profiles: a double tap on the selected card loaded it'
+    emu_sleep 3
+    if dump && find_ui '^No$'; then
+      tap_ui '^No$' '^Saved profiles$' 10
+    fi
+  fi
+  back_to "$HOME_RX" 20
+}
+
 case ${PAGES:-lists} in
   lists) SHOTS="1-programs 2-preview 3-gpx 4-settings-files" ;;
   service) SHOTS="5-profiles 5b-saved 6-credits 7-swagbag" ;;
-  *) echo "PAGES=$PAGES: lists or service" >&2; exit 1 ;;
+  tb) SHOTS="" ;;
+  *) echo "PAGES=$PAGES: lists, service or tb" >&2; exit 1 ;;
 esac
 
 emu_init
-logcat_start
 say "== pages: ${PAGES:-lists}"
+if [ "${PAGES:-lists}" = tb ]; then
+  [ "$EMU_API" -ge 34 ] || proves_nothing "PAGES=tb on API $EMU_API: the driver injects TalkBack gestures from API 34"
+  # adb root restarts adbd and cuts the logcat: once, before the log (tb_on asks again - already root)
+  adb root >> "$STEPLOG" 2>&1
+  adb wait-for-device
+  emu_sleep 3
+  logcat_start
+  a11y_build || proves_nothing "no A11yDriver"
+  wipe_files
+  install_apk apk-head/android-debug.apk
+  seed_files
+  tb_lists
+  wipe_files
+  install_apk apk-base/android-debug.apk
+  seed_files
+  tb_service
+  adb pull /data/local/tmp/tbshots tbshots < /dev/null >> "$STEPLOG" 2>&1
+  finish
+fi
+logcat_start
 
 for side in b h; do
   if [ "$side" = b ]; then apk=apk-base/android-debug.apk; else apk=apk-head/android-debug.apk; fi

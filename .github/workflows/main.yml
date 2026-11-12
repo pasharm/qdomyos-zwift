@@ -12,9 +12,13 @@ on:
         description: run id of the clean master build with the fdroid-android-trial artifact
         required: true
       pages:
-        description: lists (PR 6a-1) or service (PR 6a-2)
+        description: lists (PR 6a-1), service (PR 6a-2) or tb (TalkBack on both; head - lists build, base - service build; apis '[35]')
         required: false
         default: lists
+      apis:
+        description: API levels as a JSON list
+        required: false
+        default: '[30, 35]'
       log_debug:
         description: log_debug for the run
         required: false
@@ -28,7 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        api: [30, 35]
+        api: ${{ fromJSON(inputs.apis) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -88,6 +92,8 @@ jobs:
             raw-?c-*
             full_logcat.txt
             steps.log
+            drv/*.txt
+            tbshots/
             dumps/
             drv/
           if-no-files-found: warn
