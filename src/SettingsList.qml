@@ -68,6 +68,7 @@ ColumnLayout {
             Layout.fillWidth: true
             text: qsTr("Tap a file to select it, then Load.")
             color: window.ui.textMuted
+            font.pixelSize: window.ui.fontCaption
             wrapMode: Text.WordWrap
         }
 
@@ -105,28 +106,36 @@ ColumnLayout {
                 id: settingsCard
                 readonly property bool selected: ListView.isCurrentItem
                 width: ListView.view.width
-                height: 60
+                // Material 3 list item: one line at least 56, the icon and the button 16 from the
+                // edges, the text 16 after the icon; a bigger text grows it, 8 above and below
+                height: Math.max(56, Math.max(40, settingsName.implicitHeight) + 16)
                 radius: window.ui.radius
                 fill: selected ? window.ui.alpha(window.ui.accent, 0.14)
                                : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
                 strokeWidth: selected ? 1 : 0
                 stroke: window.ui.alpha(window.ui.accent, 0.6)
 
+                // a tap selects a file, a second tap loads it
+                function activate() {
+                    if (index === modernList.currentIndex)
+                        modernList.loadAt(index)
+                    else
+                        modernList.currentIndex = index
+                }
+
                 MouseArea {
                     id: cardArea
                     anchors.fill: parent
-                    onClicked: {
-                        if (index === modernList.currentIndex)
-                            modernList.loadAt(index)
-                        else
-                            modernList.currentIndex = index
-                    }
+                    onClicked: settingsCard.activate()
+                    Accessible.role: Accessible.Button
+                    Accessible.name: settingsName.text
+                    Accessible.onPressAction: settingsCard.activate()
                 }
 
                 Rectangle {
                     id: settingsAvatar
                     anchors.left: parent.left
-                    anchors.leftMargin: 10
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
                     width: 40
                     height: 40
@@ -142,10 +151,15 @@ ColumnLayout {
                 }
 
                 Label {
+                    id: settingsName
+                    // the card is read through its MouseArea: a touch of the screen reader goes to
+                    // the deepest accessible item under the finger, and this label, drawn above it,
+                    // would take it from the card (the focus went to the whole window)
+                    Accessible.ignored: true
                     anchors.left: settingsAvatar.right
-                    anchors.leftMargin: 12
+                    anchors.leftMargin: 16
                     anchors.right: loadButton.visible ? loadButton.left : parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
                     text: fileName.substring(0, fileName.length-4)
                     color: settingsCard.selected ? window.ui.accent : window.ui.textMain
@@ -158,7 +172,7 @@ ColumnLayout {
                     id: loadButton
                     visible: settingsCard.selected
                     anchors.right: parent.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
                     text: qsTr("Load")
                     highlighted: true
@@ -262,7 +276,8 @@ ColumnLayout {
         Layout.fillWidth: window.ui.modern
         Layout.leftMargin: window.ui.modern ? window.ui.pageMargin : 0
         Layout.rightMargin: window.ui.modern ? window.ui.pageMargin : 0
-        Layout.bottomMargin: window.ui.modern ? 8 : 0
+        // 16 to the pill: UiButton has a 6 inset below it
+        Layout.bottomMargin: window.ui.modern ? 10 : 0
         text: qsTr("Other folders")
         Layout.alignment: Qt.AlignCenter | Qt.AlignVCenter
         onClicked: {
@@ -273,8 +288,10 @@ ColumnLayout {
                 fileDialogLoader.active = true
             }
         }
+        // Modern look: placed by the layout (the list above fills the height), so its bottom
+        // margin takes effect - an anchor would override it
         anchors {
-            bottom: parent.bottom
+            bottom: window.ui.modern ? undefined : parent.bottom
         }
     }
 }
