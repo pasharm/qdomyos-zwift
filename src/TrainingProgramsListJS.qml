@@ -282,7 +282,7 @@ ColumnLayout {
                         id: workoutDelegate
                         width: ListView.view.width
                         // a bigger text: the row grows with the name and the path of a search result
-                        height: window.ui.modern ? 60 : (window.textScale !== 1 ? Math.max(50, implicitContentHeight + topPadding + bottomPadding) : 50)
+                        height: window.ui.modern ? Math.max(itemRelativePath !== "" ? 72 : 56, implicitContentHeight + topPadding + bottomPadding) : (window.textScale !== 1 ? Math.max(50, implicitContentHeight + topPadding + bottomPadding) : 50)
 
                         // Determine item properties based on which model is active
                         property bool isItemFolder: isSearching ? model.isFolder : folderModel.isFolder(index)
@@ -292,14 +292,14 @@ ColumnLayout {
                         property string itemFileUrl: isSearching ? model.filePath : (folderModel.get(index, 'fileUrl') || folderModel.get(index, 'fileURL') || "")
                         property string itemRelativePath: isSearching ? model.relativePath : ""
 
-                        // Modern look: the card is read and opened by the screen reader (contentItem
-                        // replaces the label, so the delegate text is empty; a double tap of Qt 5.15
-                        // sends no clicked() to a delegate). The classic row as before
-                        Accessible.name: window.ui.modern ? fileName.text : text
-                        Accessible.onPressAction: {
-                            if (window.ui.modern)
-                                workoutDelegate.clicked()
-                        }
+                        // Modern look: the card is read under its name, with the folder of a search
+                        // result (contentItem replaces the label, so the delegate text is empty).
+                        // Both looks: a connected press action makes the row clickable for the screen
+                        // reader, and Qt 5.15 then only emits it, so it opens the row as a tap does
+                        Accessible.name: window.ui.modern
+                                         ? (itemRelativePath !== "" ? fileName.text + ", " + itemRelativePath : fileName.text)
+                                         : text
+                        Accessible.onPressAction: workoutDelegate.clicked()
 
                         background: Rectangle {
                             radius: window.ui.modern ? 16 : 0
@@ -307,12 +307,13 @@ ColumnLayout {
                                          : (ListView.isCurrentItem ? Material.color(Material.Green, Material.Shade800) : Material.backgroundColor)
                         }
 
-                        // Modern look: the icon 12 from the card edge and 12 from the text, as on the
+                        // Modern look (Material 3 list item: one line at least 56, a search result with its
+                        // folder two lines at least 72, a bigger text grows it): the icon 16 from the card edge and 16 from the text, as on the
                         // GPX, settings file and profile cards; the classic row as before
-                        leftPadding: window.ui.modern ? 12 : horizontalPadding
+                        leftPadding: window.ui.modern ? 16 : horizontalPadding
 
                         contentItem: RowLayout {
-                            spacing: window.ui.modern ? 12 : 10
+                            spacing: window.ui.modern ? 16 : 10
 
                             // hidden, not zero-wide, in the modern look: a visible empty item still
                             // takes the spacing of the row
@@ -350,6 +351,11 @@ ColumnLayout {
 
                                 Text {
                                     id: fileName
+                                    // modern look: the card is read through the delegate; a touch of
+                                    // the screen reader goes to the deepest accessible item under the
+                                    // finger, and the texts would take it from the card. The classic
+                                    // row as before
+                                    Accessible.ignored: window.ui.modern
                                     Layout.fillWidth: true
                                     text: !isItemFolder ?
                                           itemFileName.substring(0, itemFileName.lastIndexOf(".")) :
@@ -363,6 +369,7 @@ ColumnLayout {
                                 }
 
                                 Text {
+                                    Accessible.ignored: window.ui.modern
                                     Layout.fillWidth: true
                                     text: itemRelativePath
                                     color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey)
@@ -420,7 +427,8 @@ ColumnLayout {
                     Layout.fillWidth: true
                     Layout.leftMargin: window.ui.modern ? programsPage.modernMargin : 0
                     Layout.rightMargin: window.ui.modern ? programsPage.modernMargin : 0
-                    Layout.bottomMargin: window.ui.modern ? 8 : 0
+                    // 16 to the pill: UiButton has a 6 inset below it
+                    Layout.bottomMargin: window.ui.modern ? 10 : 0
                     // Classic look: the platform default spacing, as before (8 dp on Android and
                     // iOS, 5 px elsewhere) - a written value would replace it everywhere
                     Binding on spacing { when: window.ui.modern; value: 8; restoreMode: Binding.RestoreBindingOrValue }

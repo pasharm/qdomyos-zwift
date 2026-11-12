@@ -190,7 +190,9 @@ ColumnLayout {
                 readonly property bool selected: ListView.isCurrentItem
                 readonly property bool folder: folderModel.isFolder(index)
                 width: ListView.view.width
-                height: 60
+                // Material 3 list item: one line at least 56, the icon and the button 16 from the
+                // edges, the text 16 after the icon; a bigger text grows it, 8 above and below
+                height: Math.max(56, Math.max(40, gpxName.implicitHeight) + 16)
                 radius: 16
                 fill: selected && !folder ? window.ui.alpha(window.ui.accent, 0.14)
                                           : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
@@ -217,7 +219,7 @@ ColumnLayout {
                 Rectangle {
                     id: gpxAvatar
                     anchors.left: parent.left
-                    anchors.leftMargin: 12
+                    anchors.leftMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
                     width: 40
                     height: 40
@@ -234,10 +236,14 @@ ColumnLayout {
 
                 Label {
                     id: gpxName
+                    // the card is read through cardArea: a touch of the screen reader goes to the
+                    // deepest accessible item under the finger, and this label, drawn above
+                    // cardArea, would take it from the card (the focus went to the whole window)
+                    Accessible.ignored: true
                     anchors.left: gpxAvatar.right
-                    anchors.leftMargin: 12
+                    anchors.leftMargin: 16
                     anchors.right: openButton.visible ? openButton.left : parent.right
-                    anchors.rightMargin: 12
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
                     text: gpxCard.folder ? fileName : fileName.substring(0, fileName.length-4)
                     color: gpxCard.selected && !gpxCard.folder ? window.ui.accent : window.ui.textMain
@@ -250,7 +256,7 @@ ColumnLayout {
                     id: openButton
                     visible: gpxCard.selected && !gpxCard.folder
                     anchors.right: parent.right
-                    anchors.rightMargin: 8
+                    anchors.rightMargin: 16
                     anchors.verticalCenter: parent.verticalCenter
                     text: qsTr("Open")
                     highlighted: true
@@ -547,7 +553,8 @@ ColumnLayout {
             Layout.preferredWidth: 100
             Layout.leftMargin: gpxPage.modernMargin
             Layout.rightMargin: gpxPage.sideBySide ? 4 : gpxPage.modernMargin
-            Layout.bottomMargin: 8
+            // 16 to the pill: UiButton has a 6 inset below it
+            Layout.bottomMargin: 10
             text: qsTr("Other folders")
             onClicked: gpxPage.openOtherFolders()
         }
