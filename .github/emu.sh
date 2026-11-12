@@ -25,9 +25,21 @@ QUESTION_RX='(?s).*GPX routes.*previous installation.*'
 app_uid() {
   adb shell "su 0 stat -c %u /data/data/$PKG" < /dev/null 2>/dev/null | tr -d '\r'
 }
-# owner <path in Documents/QZ>: the uid owning the file, empty if there is none
+# owner <path in Documents/QZ>: the uid owning the file, empty if there is none - on the lower file system
+# (/data/media/0): through FUSE root got no app uid (run 43184104603: the file seeded as the app, not its uid)
+LOWER=/data/media/0/Documents/QZ
 owner() {
-  adb shell "su 0 stat -c %u '$QZDIR/$1'" < /dev/null 2>/dev/null | tr -d '\r'
+  adb shell "su 0 stat -c %u '$LOWER/$1'" < /dev/null 2>/dev/null | tr -d '\r'
+}
+# owners <dir...>: what the shell and root see, for steps.log
+owners() {
+  local d
+  for d in "$@"; do
+    say "-- $d: shell"
+    adb shell "ls -ln '$QZDIR/$d'" < /dev/null >> "$STEPLOG" 2>&1
+    say "-- $d: root, lower"
+    adb shell "su 0 ls -ln '$LOWER/$d'" < /dev/null >> "$STEPLOG" 2>&1
+  done
 }
 mark() { say "== $1"; adb shell log -t T518 "mark $1" < /dev/null > /dev/null 2>&1; }
 
@@ -75,8 +87,9 @@ seed_files() {
   adb shell "$as 'cat > \"$QZDIR/gpx/$ROUTE\"'" < route.gpx >> "$STEPLOG" 2>&1
   adb shell "$as 'cat > \"$QZDIR/settings/$SETUP\"'" < setup.qzs >> "$STEPLOG" 2>&1
   adb shell "$as 'cat > \"$QZDIR/profiles/$PROFILE\"'" < profile.qzs >> "$STEPLOG" 2>&1
+  owners gpx settings profiles
   for f in "gpx/$ROUTE" "settings/$SETUP" "profiles/$PROFILE"; do
-    [ "$(owner "$f")" = "$uid" ] || proves_nothing "seed: $f not written as the app (uid $uid)"
+    [ "$(owner "$f")" = "$uid" ] || proves_nothing "seed: $f not written as the app (uid $uid, owner '$(owner "$f")')"
   done
   say "seeded as uid $uid: $ROUTE, $SETUP, $PROFILE"
 }
@@ -278,20 +291,20 @@ for f in "gpx/$ROUTE" "settings/$SETUP" "profiles/$PROFILE"; do
     fail "check h-files: $f owner '$(owner "$f")', expected $NEW_UID"
   fi
 done
-LEFT=$(adb shell "su 0 ls -aR $QZDIR" < /dev/null 2>/dev/null | tr -d '\r' | grep -c '^[.]restore_')
+LEFT=$(adb shell "su 0 ls -aR $LOWER" < /dev/null 2>/dev/null | tr -d '\r' | grep -c '^[.]restore_')
 if [ "${LEFT:-0}" = 0 ]; then
   say "check h-files: no .restore_ copies left: OK"
 else
   fail "check h-files: $LEFT .restore_ copies left"
 fi
-FOREIGN=$(adb shell "su 0 find $QZDIR/training $QZDIR/gpx $QZDIR/settings $QZDIR/profiles -type f -user $OLD_UID" \
+FOREIGN=$(adb shell "su 0 find $LOWER/training $LOWER/gpx $LOWER/settings $LOWER/profiles -type f -user $OLD_UID" \
   < /dev/null 2>/dev/null | tr -d '\r')
 if [ -z "$FOREIGN" ]; then
   say "check h-files: no file of the previous install left in the four folders: OK"
 else
   fail "check h-files: files of the previous install left: $(echo "$FOREIGN" | tr '\n' ';')"
 fi
-adb shell "su 0 ls -lnR $QZDIR/gpx $QZDIR/settings $QZDIR/profiles" < /dev/null >> "$STEPLOG" 2>&1
+owners gpx settings profiles
 back_to "$HOME_RX" 20
 
 # 5. The GPX page again: the restored route, no button, no question
