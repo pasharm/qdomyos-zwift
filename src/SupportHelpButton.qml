@@ -1,6 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.12
+import QtGraphicalEffects 1.12
 
 // Only appears on the Home page if a device is missing or no activity metrics
 // have arrived. Never blocks or changes the training state.
@@ -65,21 +66,30 @@ Item {
         Accessible.description: qsTr("Prepare a support email with diagnostics")
     }
 
-    // Modern look: a 48 dp circle like Bluetooth and Lap of the Start row, in the 56 dp the
-    // finger can hit; flat, with the outline of the theme instead of the Material shadow
+    // Modern look: the small floating action button of Material 3 - 40 dp, corners 12, an accent
+    // tinted container with the icon in the accent and a shadow, as it floats over the tiles -
+    // in the 56 dp the finger can hit
     AbstractButton {
         id: modernHelpButton
         anchors.fill: parent
         visible: support.modern && support.shown
         onClicked: supportDialog.open()
-        background: UiFrame {
+        background: Rectangle {
             anchors.centerIn: parent
-            width: 48
-            height: 48
-            radius: 24
-            fill: modernHelpButton.down ? window.ui.surfaceHigh : window.ui.surfaceHighest
-            stroke: window.ui.outline
-            strokeWidth: 1
+            width: 40
+            height: 40
+            radius: 12
+            color: Qt.tint(window.ui.surface, window.ui.alpha(window.ui.accent,
+                                                             modernHelpButton.down ? 0.28 : 0.16))
+            layer.enabled: modernHelpButton.visible
+            layer.effect: DropShadow {
+                transparentBorder: true
+                horizontalOffset: 0
+                verticalOffset: 2
+                radius: 8
+                samples: 17
+                color: Qt.rgba(0, 0, 0, window.ui.dark ? 0.5 : 0.25)
+            }
         }
         contentItem: Item {
             UiIcon {
@@ -87,7 +97,7 @@ Item {
                 width: 24
                 height: 24
                 name: "help"
-                color: window.ui.textMain
+                color: window.ui.accent
             }
         }
         Accessible.role: Accessible.Button
