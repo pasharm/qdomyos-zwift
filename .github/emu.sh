@@ -44,7 +44,7 @@ programs() {
   [ "$i" -ge 30 ] || proves_nothing "programs: $i of 30 in the training folder"
 }
 
-# bar <case> <modern>: the list at rest, then while a finger drags it slowly (2.5 s), a frame at ~1.2 s
+# bar <case> <modern>: the list at rest, then while a finger drags it slowly (3 s), a frame at 1.5 s
 bar() {
   local c=$1 modern=$2
   start_case "$c" ui_modern=$modern fakedevice_treadmill=true android_documents_folder=true || return 1
@@ -52,11 +52,11 @@ bar() {
   emu_sleep 4
   shot "$c-1-rest"
   say "drag the list up slowly"
-  adb shell input swipe 700 2300 700 1100 2500 < /dev/null > /dev/null 2>&1 &
-  sleep 1.2
-  adb exec-out screencap -p < /dev/null > "$c-2-moving.png" 2>/dev/null
+  # the drag and the frame in one device shell: from the host, adb starts the swipe a second or more late
+  # and the frame at 1.2 s showed the list not yet moving (run 43482740649)
+  adb shell "input swipe 700 2000 700 900 3000 & sleep 1.5; screencap -p /data/local/tmp/moving.png; wait"     < /dev/null >> "$STEPLOG" 2>&1
+  adb exec-out cat /data/local/tmp/moving.png < /dev/null > "$c-2-moving.png" 2>/dev/null
   [ -s "$c-2-moving.png" ] || fail "$c: no frame while moving"
-  wait
   sleep 0.3
   adb exec-out screencap -p < /dev/null > "$c-3-after.png" 2>/dev/null
   emu_sleep 3
