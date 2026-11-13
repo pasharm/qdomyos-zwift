@@ -339,3 +339,71 @@ jobs:
           name: qz-library-with-debug-info
           path: ${{ github.workspace }}/symbols/
           retention-days: 14
+
+  start-emulator:
+    # trim_ci.py --then-emu (T-551): the emulator of the emu branch on the APK of this run, only after a green build
+    needs: android-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      # gh workflow run with GITHUB_TOKEN: a workflow_dispatch of this token does start a run (T-551)
+      actions: write
+    steps:
+      - name: Start emulator (main.yml of test/t550-emu)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REF: 'test/t550-emu'
+          WHAT: 'emulator'
+          IN1: 'classic/hc'
+          IN2: '[30]'
+        run: |
+          since=$(date -u -d '-30 seconds' +%Y-%m-%dT%H:%M:%SZ)
+          gh workflow run main.yml --repo "$GITHUB_REPOSITORY" --ref "$REF" -f "head=${{ github.run_id }}" -f "cases=$IN1" -f "apis=$IN2"
+          url=''
+          for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+            sleep 5
+            url=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow main.yml --branch "$REF" \
+              --event workflow_dispatch --limit 20 --json url,createdAt \
+              --jq "[.[] | select(.createdAt >= \"$since\")] | last | .url // empty")
+            [ -n "$url" ] && break
+          done
+          if [ -n "$url" ]; then
+            echo "$WHAT run: $url"
+            echo "$WHAT run (branch $REF): $url" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::$WHAT started on $REF, but its run was not found within a minute: gh run list --branch $REF"
+            echo "$WHAT started on branch $REF, run not found within a minute" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  start-ios:
+    # trim_ci.py --then-ios (T-551): the iOS simulator builds QZ from its own branch - started at once, in parallel with the build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      # gh workflow run with GITHUB_TOKEN: a workflow_dispatch of this token does start a run (T-551)
+      actions: write
+    steps:
+      - name: Start iOS simulator (main.yml of test/t550-ios)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REF: 'test/t550-ios'
+          WHAT: 'iOS simulator'
+          IN0: 'head'
+        run: |
+          since=$(date -u -d '-30 seconds' +%Y-%m-%dT%H:%M:%SZ)
+          gh workflow run main.yml --repo "$GITHUB_REPOSITORY" --ref "$REF" -f "side=$IN0"
+          url=''
+          for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+            sleep 5
+            url=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow main.yml --branch "$REF" \
+              --event workflow_dispatch --limit 20 --json url,createdAt \
+              --jq "[.[] | select(.createdAt >= \"$since\")] | last | .url // empty")
+            [ -n "$url" ] && break
+          done
+          if [ -n "$url" ]; then
+            echo "$WHAT run: $url"
+            echo "$WHAT run (branch $REF): $url" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::$WHAT started on $REF, but its run was not found within a minute: gh run list --branch $REF"
+            echo "$WHAT started on branch $REF, run not found within a minute" >> "$GITHUB_STEP_SUMMARY"
+          fi
