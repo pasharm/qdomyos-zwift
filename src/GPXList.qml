@@ -613,6 +613,9 @@ ColumnLayout {
                 Layout.fillHeight: true
                 wrapsText: true
                 visible: rootItem.qzFolderRestorable && !rootItem.qzFolderGrantSaved
+                // greyed out while a restore runs: a second one is refused
+                // (CustomQtActivity.openRestoreFolderPicker); hidden after it, with the grant
+                enabled: rootItem.folderRestoreTotal === 0
                 text: qsTr("Restore files")
                 onClicked: rootItem.offerFolderRestore()
             }
@@ -638,6 +641,9 @@ ColumnLayout {
             Layout.fillWidth: true
             Layout.preferredHeight: 50
             visible: rootItem.qzFolderRestorable && !rootItem.qzFolderGrantSaved
+            // greyed out while a restore runs: a second one is refused
+            // (CustomQtActivity.openRestoreFolderPicker); hidden after it, with the grant
+            enabled: rootItem.folderRestoreTotal === 0
             text: qsTr("Restore files")
             onClicked: rootItem.offerFolderRestore()
         }
