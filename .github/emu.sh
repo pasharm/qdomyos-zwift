@@ -337,6 +337,32 @@ progress_watch() {
   say "progress_watch $1: $(ls dumps/$1-d*.xml 2>/dev/null | wc -l) dumps, $(ls $1-f*.png 2>/dev/null | wc -l) frames"
 }
 
+# button_check <prefix>: "Restore files" is grey while the pass runs (enabled: rootItem.folderRestoreTotal === 0,
+# 717777efd) - in each dump of the burst with the progress node its enabled is false; enabled true there
+# fails (the build of run 43452662472 had it true, t528_enabled.py on ms-3-pass-d2, ps-3-pass-d2)
+button_check() {
+  local i f e grey=0 live=0
+  for i in $(seq 1 "$PW_DUMPS"); do
+    f="dumps/$1-d$i.xml"
+    [ -s "$f" ] || continue
+    uifind "$f" "$PROGRESS_RX" --any > /dev/null 2>&1 || continue
+    e=$("$EMU_PY" .github/t528_enabled.py "$f" "Restore files")
+    say "  $1-d$i: progress on, 'Restore files' enabled: ${e:-no node}"
+    case "$e" in
+      *true*) live=$((live + 1)) ;;
+      *false*) grey=$((grey + 1)) ;;
+    esac
+  done
+  say "button_check $1: grey in $grey dumps with the progress, enabled in $live"
+  if [ "$live" -gt 0 ]; then
+    fail "check $1-grey: 'Restore files' enabled while the restore runs ($live dumps)"
+  elif [ "$grey" -gt 0 ]; then
+    say "check $1-grey: 'Restore files' grey (enabled=false) while the restore runs: OK"
+  elif [ -n "$SLOW_MS" ]; then
+    fail "check $1-grey: no dump with the progress and the button"
+  fi
+}
+
 # toast_watch <prefix>: the frames of the burst at the end of the pass (progress_watch), the dark band counted
 toast_watch() {
   local i
@@ -471,6 +497,7 @@ side_t528() {
   mark "$p: allowed"
   pass_log "$p"
   progress_check "$p-3-pass" "${SLOW_MS:+yes}"
+  button_check "$p-3-pass"
   toast_watch "$p-3-pass"
   emu_sleep 3
   ensure_app
