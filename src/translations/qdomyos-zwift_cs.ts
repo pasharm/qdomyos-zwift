@@ -76,6 +76,10 @@
         <translation>Další složky</translation>
     </message>
     <message>
+        <source>Restore files</source>
+        <translation>Obnovit soubory</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>Otevřít</translation>
     </message>
@@ -1262,6 +1266,10 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Další složky</translation>
     </message>
     <message>
+        <source>Restore files</source>
+        <translation>Obnovit soubory</translation>
+    </message>
+    <message>
         <source>Tap a file to select it, then Load.</source>
         <translation>Klepnutím vyberte soubor a pak zvolte Načíst.</translation>
     </message>
@@ -1435,8 +1443,12 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Další složky</translation>
     </message>
     <message>
+        <source>Restore files</source>
+        <translation>Obnovit soubory</translation>
+    </message>
+    <message>
         <source>Restore programs</source>
-        <translation>Obnovit programy</translation>
+        <translation type="vanished">Obnovit programy</translation>
     </message>
     <message>
         <source>← Back</source>
@@ -3909,6 +3921,14 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>rychlost změněna na </translation>
     </message>
     <message>
+        <source>Files of a previous installation restored: %1.</source>
+        <translation>Obnoveno souborů: %1.</translation>
+    </message>
+    <message>
+        <source>No files of a previous installation were found.</source>
+        <translation>Soubory z předchozí instalace nebyly nalezeny.</translation>
+    </message>
+    <message>
         <source>JSON parser error</source>
         <translation>Chyba při zpracování JSON</translation>
     </message>
@@ -3946,11 +3966,11 @@ Při prvním spuštění to může chvíli trvat.</translation>
     </message>
     <message>
         <source>Training programs restored: %1.</source>
-        <translation>Obnoveno tréninkových programů: %1.</translation>
+        <translation type="vanished">Obnoveno tréninkových programů: %1.</translation>
     </message>
     <message>
         <source>No training programs of a previous installation were found.</source>
-        <translation>Tréninkové programy z předchozí instalace nebyly nalezeny.</translation>
+        <translation type="vanished">Tréninkové programy z předchozí instalace nebyly nalezeny.</translation>
     </message>
     <message>
         <source>Already in the history: %1.</source>
@@ -4325,6 +4345,20 @@ restartujte aplikaci.</translation>
     <message>
         <source>Saved! Look in the app&apos;s private folder.</source>
         <translation>Uloženo! Podívejte se do soukromé složky aplikace.</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Obnovit soubory</translation>
+    </message>
+    <message>
+        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Tréninkové programy, trasy GPX, soubory nastavení a profily z předchozí instalace mohou být stále ve složce QZ.
+Vyhledat je?
+
+V dalším okně povolte přístup ke složce QZ.</translation>
     </message>
     <message>
         <source>Saved! Check your private folder (Android)&lt;br&gt;or Files App (iOS)</source>
@@ -4718,14 +4752,14 @@ V dalším okně povolte přístup ke složce QZ.</translation>
     </message>
     <message>
         <source>Training Programs</source>
-        <translation>Tréninkové programy</translation>
+        <translation type="vanished">Tréninkové programy</translation>
     </message>
     <message>
         <source>Training programs of a previous installation may still be in the QZ folder.
 Do you want to look for them?
 
 In the next window, allow access to the QZ folder.</source>
-        <translation>Tréninkové programy z předchozí instalace mohou být stále ve složce QZ.
+        <translation type="vanished">Tréninkové programy z předchozí instalace mohou být stále ve složce QZ.
 Vyhledat je?
 
 V dalším okně povolte přístup ke složce QZ.</translation>
@@ -4851,6 +4885,10 @@ Povolit QZ tuto hodnotu měnit?
     <message>
         <source>Profiles</source>
         <translation>Profily</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Obnovit soubory</translation>
     </message>
     <message>
         <source>Other folders</source>

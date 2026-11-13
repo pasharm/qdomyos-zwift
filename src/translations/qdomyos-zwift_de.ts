@@ -95,6 +95,10 @@
         <source>Other folders</source>
         <translation>Andere Ordner</translation>
     </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Dateien wiederherstellen</translation>
+    </message>
 </context>
 <context>
     <name>HeartRateSuggestion</name>
@@ -1273,6 +1277,10 @@ Möchten Sie die QZ-Einstellungen aktualisieren?</translation>
         <source>Other folders</source>
         <translation>Andere Ordner</translation>
     </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Dateien wiederherstellen</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNumberField</name>
@@ -1451,8 +1459,12 @@ Möchten Sie die QZ-Einstellungen aktualisieren?</translation>
         <translation>Andere Ordner</translation>
     </message>
     <message>
+        <source>Restore files</source>
+        <translation>Dateien wiederherstellen</translation>
+    </message>
+    <message>
         <source>Restore programs</source>
-        <translation>Programme wiederherstellen</translation>
+        <translation type="vanished">Programme wiederherstellen</translation>
     </message>
     <message>
         <source>← Back</source>
@@ -3783,6 +3795,14 @@ Beim ersten Start kann dies einen Moment dauern.</translation>
         <translation>Geschwindigkeit geändert zu</translation>
     </message>
     <message>
+        <source>Files of a previous installation restored: %1.</source>
+        <translation>Wiederhergestellte Dateien: %1.</translation>
+    </message>
+    <message>
+        <source>No files of a previous installation were found.</source>
+        <translation>Keine Dateien einer früheren Installation gefunden.</translation>
+    </message>
+    <message>
         <source>JSON parser error</source>
         <translation>JSON-Parserfehler</translation>
     </message>
@@ -3828,11 +3848,11 @@ Beim ersten Start kann dies einen Moment dauern.</translation>
     </message>
     <message>
         <source>Training programs restored: %1.</source>
-        <translation>Wiederhergestellte Trainingsprogramme: %1.</translation>
+        <translation type="vanished">Wiederhergestellte Trainingsprogramme: %1.</translation>
     </message>
     <message>
         <source>No training programs of a previous installation were found.</source>
-        <translation>Keine Trainingsprogramme einer früheren Installation gefunden.</translation>
+        <translation type="vanished">Keine Trainingsprogramme einer früheren Installation gefunden.</translation>
     </message>
     <message>
         <source>Already in the history: %1.</source>
@@ -4652,14 +4672,14 @@ Erlauben Sie im nächsten Fenster den Zugriff auf den QZ-Ordner.</translation>
     </message>
     <message>
         <source>Training Programs</source>
-        <translation>Trainingsprogramme</translation>
+        <translation type="vanished">Trainingsprogramme</translation>
     </message>
     <message>
         <source>Training programs of a previous installation may still be in the QZ folder.
 Do you want to look for them?
 
 In the next window, allow access to the QZ folder.</source>
-        <translation>Trainingsprogramme einer früheren Installation können noch im QZ-Ordner liegen.
+        <translation type="vanished">Trainingsprogramme einer früheren Installation können noch im QZ-Ordner liegen.
 Möchten Sie danach suchen?
 
 Erlauben Sie im nächsten Fenster den Zugriff auf den QZ-Ordner.</translation>
@@ -4679,6 +4699,20 @@ Erlauben Sie im nächsten Fenster den Zugriff auf den QZ-Ordner.</translation>
     <message>
         <source>Saved! Look in the app&apos;s private folder.</source>
         <translation>Gespeichert! Siehe privaten Ordner der App.</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Dateien wiederherstellen</translation>
+    </message>
+    <message>
+        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Trainingsprogramme, GPX-Routen, Einstellungsdateien und Profile einer früheren Installation können noch im QZ-Ordner liegen.
+Möchten Sie danach suchen?
+
+Erlauben Sie im nächsten Fenster den Zugriff auf den QZ-Ordner.</translation>
     </message>
     <message>
         <source>QZ has detected the data format of this bike. Enable &quot;Virtufit Etappe 2.0 Bike&quot;?</source>
@@ -4867,6 +4901,10 @@ Darf QZ diesen Wert ändern?
     <message>
         <source>Other folders</source>
         <translation>Andere Ordner</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Dateien wiederherstellen</translation>
     </message>
     <message>
         <source>Profiles</source>

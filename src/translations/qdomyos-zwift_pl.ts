@@ -76,6 +76,10 @@
         <translation>Inne foldery</translation>
     </message>
     <message>
+        <source>Restore files</source>
+        <translation>Przywróć pliki</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>Otwórz</translation>
     </message>
@@ -1262,6 +1266,10 @@ Zaktualizować ustawienia QZ?</translation>
         <translation>Inne foldery</translation>
     </message>
     <message>
+        <source>Restore files</source>
+        <translation>Przywróć pliki</translation>
+    </message>
+    <message>
         <source>Tap a file to select it, then Load.</source>
         <translation>Dotknij pliku, aby go wybrać, a potem „Wczytaj”.</translation>
     </message>
@@ -1435,8 +1443,12 @@ Zaktualizować ustawienia QZ?</translation>
         <translation>Inne foldery</translation>
     </message>
     <message>
+        <source>Restore files</source>
+        <translation>Przywróć pliki</translation>
+    </message>
+    <message>
         <source>Restore programs</source>
-        <translation>Przywróć programy</translation>
+        <translation type="vanished">Przywróć programy</translation>
     </message>
     <message>
         <source>← Back</source>
@@ -3906,6 +3918,14 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
         <translation>prędkość zmieniona na </translation>
     </message>
     <message>
+        <source>Files of a previous installation restored: %1.</source>
+        <translation>Przywrócone pliki: %1.</translation>
+    </message>
+    <message>
+        <source>No files of a previous installation were found.</source>
+        <translation>Nie znaleziono plików z poprzedniej instalacji.</translation>
+    </message>
+    <message>
         <source>JSON parser error</source>
         <translation>Błąd analizatora JSON</translation>
     </message>
@@ -3943,11 +3963,11 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
     </message>
     <message>
         <source>Training programs restored: %1.</source>
-        <translation>Przywrócone programy treningowe: %1.</translation>
+        <translation type="vanished">Przywrócone programy treningowe: %1.</translation>
     </message>
     <message>
         <source>No training programs of a previous installation were found.</source>
-        <translation>Nie znaleziono programów treningowych z poprzedniej instalacji.</translation>
+        <translation type="vanished">Nie znaleziono programów treningowych z poprzedniej instalacji.</translation>
     </message>
     <message>
         <source>Already in the history: %1.</source>
@@ -4322,6 +4342,20 @@ uruchom ponownie aplikację.</translation>
     <message>
         <source>Saved! Look in the app&apos;s private folder.</source>
         <translation>Zapisano! Szukaj w prywatnym folderze aplikacji.</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Przywróć pliki</translation>
+    </message>
+    <message>
+        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Programy treningowe, trasy GPX, pliki ustawień i profile z poprzedniej instalacji mogą nadal znajdować się w folderze QZ.
+Poszukać ich?
+
+W następnym oknie zezwól na dostęp do folderu QZ.</translation>
     </message>
     <message>
         <source>Saved! Check your private folder (Android)&lt;br&gt;or Files App (iOS)</source>
@@ -4715,14 +4749,14 @@ W następnym oknie zezwól na dostęp do folderu QZ.</translation>
     </message>
     <message>
         <source>Training Programs</source>
-        <translation>Programy treningowe</translation>
+        <translation type="vanished">Programy treningowe</translation>
     </message>
     <message>
         <source>Training programs of a previous installation may still be in the QZ folder.
 Do you want to look for them?
 
 In the next window, allow access to the QZ folder.</source>
-        <translation>Programy treningowe z poprzedniej instalacji mogą nadal znajdować się w folderze QZ.
+        <translation type="vanished">Programy treningowe z poprzedniej instalacji mogą nadal znajdować się w folderze QZ.
 Poszukać ich?
 
 W następnym oknie zezwól na dostęp do folderu QZ.</translation>
@@ -4848,6 +4882,10 @@ Zezwolić QZ na zmianę tej wartości?
     <message>
         <source>Profiles</source>
         <translation>Profile</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Przywróć pliki</translation>
     </message>
     <message>
         <source>Other folders</source>
