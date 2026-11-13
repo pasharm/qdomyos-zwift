@@ -769,7 +769,16 @@ public class CustomQtActivity extends QtActivity {
         return (window.getDecorView().getSystemUiVisibility() & flag) != 0;
     }
 
+    // API 30-34 take both ways: on API 30 the appearance of the controller alone left the icons light
+    // on a light page (emulator, T-544), and androidx WindowInsetsControllerCompat sets the old flag
+    // there as well (b/180881870); API 35+ the controller alone, the old flags are deprecated
     private static void setLightBar(Window window, boolean status, boolean light) {
+        if (Build.VERSION.SDK_INT < 35) {
+            View decor = window.getDecorView();
+            int flag = status ? View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR : View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
+            int visibility = decor.getSystemUiVisibility();
+            decor.setSystemUiVisibility(light ? (visibility | flag) : (visibility & ~flag));
+        }
         if (Build.VERSION.SDK_INT >= 30) {
             WindowInsetsController controller = window.getInsetsController();
             if (controller == null)
@@ -777,12 +786,7 @@ public class CustomQtActivity extends QtActivity {
             int flag = status ? WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS
                               : WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS;
             controller.setSystemBarsAppearance(light ? flag : 0, flag);
-            return;
         }
-        View decor = window.getDecorView();
-        int flag = status ? View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR : View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR;
-        int visibility = decor.getSystemUiVisibility();
-        decor.setSystemUiVisibility(light ? (visibility | flag) : (visibility & ~flag));
     }
 
     private boolean isDocumentPickerRequest(int requestCode) {
