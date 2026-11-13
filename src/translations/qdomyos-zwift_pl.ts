@@ -1502,8 +1502,12 @@ Zaktualizować ustawienia QZ?</translation>
 <context>
     <name>UiProgress</name>
     <message>
-        <source>Restoring files: %1 of %2</source>
-        <translation>Przywracanie plików: %1 z %2</translation>
+        <source>Restoring files of the previous installation</source>
+        <translation>Przywracanie plików z poprzedniej instalacji</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>Przywracanie plików z poprzedniej instalacji: %1 z %2</translation>
     </message>
 </context>
 <context>

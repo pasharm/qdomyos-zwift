@@ -1486,8 +1486,12 @@ Vil du opdatere QZ-indstillingerne?</translation>
 <context>
     <name>UiProgress</name>
     <message>
-        <source>Restoring files: %1 of %2</source>
-        <translation>Gendanner filer: %1 af %2</translation>
+        <source>Restoring files of the previous installation</source>
+        <translation>Gendanner filer fra den tidligere installation</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>Gendanner filer fra den tidligere installation: %1 af %2</translation>
     </message>
 </context>
 <context>
