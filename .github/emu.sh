@@ -155,7 +155,10 @@ pick() {
   from=$(log_lines)
   if [ "$MODERN" = true ]; then
     if [ "$route" = "$LONG" ]; then km='^16\.[0-9] km$'; else km='^9\.[0-9] km$'; fi
-    tap_ui "^$route\$" "$km" 20 || return 1
+    # the accessibility click (Accessible.onPressAction -> gpxCard.activate, GPXList.qml:224) - the way to the
+    # state under test, not the action: in landscape the dump gives the cards below the clipped list their full
+    # bounds, a touch there went to Other folders (review: dump n-2-gpx-landscape of run 43369666871)
+    tap_ui "^$route\$" "$km" 20 --a11y || return 1
   else
     tap_row_classic "$n" "$route" || return 1
   fi
@@ -194,8 +197,8 @@ gpx() {
   say "== $c: GPX page"
   if open_drawer '^Open GPX$' && tap_ui '^Open GPX$' '^Other folders$'; then
     frame_route "$c-1-long-open" "$LONG" "$from"
-    pick "$c-2-short" "$SHORT" 4
-    pick "$c-3-long" "$LONG" 1
+    # Box Hill again only after Govi to Hood is selected: a tap on the selected row opens the route
+    pick "$c-2-short" "$SHORT" 4 && pick "$c-3-long" "$LONG" 1
   fi
   back_to "$HOME_RX" 20
   [ "$3" = 1 ] && rotate 0
@@ -203,12 +206,12 @@ gpx() {
 }
 
 # qml_side: the messages of GPXList.qml by side (pid lines of start_case, the 3rd field of threadtime), the
-# text without time and pid; a message of the head side the base side has not is the change's
+# text without time, pid and the line number (the change moves the lines below it); a message of the head side the base side has not is the change's
 qml_side() {
   local side=$1 pid
   : > "qml_$side.txt"
   for pid in $(grep -a "^pid $side" "$STEPLOG" | cut -d' ' -f3); do
-    awk -v p="$pid" '$3 == p' full_logcat.txt | grep -a 'GPXList.qml' | sed 's/^.*GPXList\.qml/GPXList.qml/' | tr -d '\r' >> "qml_$side.txt"
+    awk -v p="$pid" '$3 == p' full_logcat.txt | grep -a 'GPXList.qml' | sed 's/^.*GPXList\.qml:[0-9]*:\{0,1\}[0-9]*:\{0,1\} */GPXList.qml: /' | tr -d '\r' >> "qml_$side.txt"
   done
   sort -u -o "qml_$side.txt" "qml_$side.txt"
 }
