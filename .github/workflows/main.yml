@@ -1,5 +1,5 @@
-# Test only (T-495): the program preview with a folded description - frames of the PR 6a-1 branch (base)
-# and of T-495 on it (head), classic and modern look, portrait and landscape, API 30 and 35
+# Test only (T-537): the scroll bar of the training program list - frames of feat/modern-ui (base) and of
+# T-537 on it (head), classic and modern look, at rest and while dragged, API 30 and 35
 name: CI
 
 on:
@@ -82,7 +82,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.head }}-t495-api${{ matrix.api }}
+          name: emulator-logcat-${{ inputs.head }}-t537-api${{ matrix.api }}
           path: |
             *.png
             raw-?c-*

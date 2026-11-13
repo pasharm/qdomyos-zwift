@@ -1,9 +1,7 @@
 #!/bin/bash
-# Test only (T-495): the program preview with a long description (HIIT Aerobic) and a short one (HIIT
-# Neuromuscular), before (base: the branch of PR 6a-1) and after (head: + T-495), classic and modern look,
-# portrait and landscape. After: the long description folded with "Show more" (named, in the dump), unfolded
-# with "Show less" and folded back; the short one without the button; in landscape side by side: no button,
-# the chart WebView on the right half (bounds in steps.log); upright again folded.
+# Test only (T-537): the scroll bar of the training program list, before (base: feat/modern-ui) and after
+# (head: + T-537), classic and modern look. A frame at rest and a frame while a finger drags the list (the
+# bar shows only while it moves); the bar width is measured from the frames after the run.
 . .github/lib.sh
 . .github/qz.sh
 
@@ -30,253 +28,51 @@ wipe_files() {
   fi
 }
 
-# rotate <0|1>: portrait or landscape, then a check by the root bounds of a dump that the app turned
-# (T-487, lesson 2: user_rotation once left QZ in portrait and the run proved nothing)
-rotate() {
-  local want=$1 b w h i
-  adb shell settings put system accelerometer_rotation 0 < /dev/null > /dev/null 2>&1
-  adb shell settings put system user_rotation "$want" < /dev/null > /dev/null 2>&1
-  for i in 1 2 3 4 5 6; do
-    emu_sleep 3
-    dump || continue
-    b=$(grep -o 'bounds="\[0,0\]\[[0-9]*,[0-9]*\]"' ui.xml | head -1 | tr -c '0-9\n' ' ')
-    set -- $b
-    w=$3; h=$4
-    [ -n "$w" ] || continue
-    if { [ "$want" = 1 ] && [ "$w" -gt "$h" ]; } || { [ "$want" = 0 ] && [ "$w" -lt "$h" ]; }; then
-      say "rotation $want: ${w}x$h"
-      emu_sleep 3
-      return 0
-    fi
+# programs: 30 small programs of its own, so the list scrolls in both looks whatever the app brings
+programs() {
+  local uid i
+  uid=$(app_uid)
+  for i in $(seq -w 1 30); do
+    printf '<workout_file>\n<author>QZ emu</author>\n<name>Emu %s</name>\n<description>Program %s</description>\n<sportType>bike</sportType>\n<workout>\n<SteadyState Duration="300" Power="0.6"/>\n</workout>\n</workout_file>\n' "$i" "$i" > "Emu$i.zwo"
+    adb push "Emu$i.zwo" "/data/local/tmp/Emu$i.zwo" < /dev/null > /dev/null 2>&1
   done
-  fail "rotation $want: the screen is ${w:-?}x${h:-?}"
-  return 1
+  adb shell "su $uid,$uid,9997 sh -c 'cp /data/local/tmp/Emu*.zwo $QZDIR/training/'" < /dev/null >> "$STEPLOG" 2>&1
+  i=$(adb shell "ls $QZDIR/training" < /dev/null 2>/dev/null | grep -c '^Emu')
+  say "programs pushed: $i"
+  [ "$i" -ge 30 ] || proves_nothing "programs: $i of 30 in the training folder"
 }
 
-# webview_of <shot>: the bounds of the chart WebView in the dump of that frame, to steps.log
-webview_of() {
-  local b
-  b=$(grep -o 'class="android.webkit.WebView"[^>]*bounds="[^"]*"' "dumps/$1.xml" 2>/dev/null | grep -o 'bounds="[^"]*"' | head -1)
-  say "chart $1: ${b:-no WebView in the dump}"
-}
-
-# bounds_of <shot> <what>: "x1 y1 x2 y2" of the chart WebView (what=chart) or of the screen root (screen)
-bounds_of() {
-  if [ "$2" = chart ]; then
-    grep -o 'class="android.webkit.WebView"[^>]*bounds="[^"]*"' "dumps/$1.xml" 2>/dev/null | grep -o 'bounds="[^"]*"' | head -1 | tr -c '0-9\n' ' '
-  else
-    grep -o 'bounds="\[0,0\]\[[0-9]*,[0-9]*\]"' "dumps/$1.xml" 2>/dev/null | head -1 | tr -c '0-9\n' ' '
-  fi
-}
-
-# chart_right <shot> <upright shot>: side by side the chart WebView starts past a third of the screen
-# width, is taller than a third of its height (the base has no WebView or a strip under the text) and
-# ends no lower than the page: the upright chart reaches the page bottom, so the gap under it there is
-# the bar at the bottom (run 43079787273: the text column pushed the chart 85 px under the bar, API 35)
-chart_right() {
-  local s=$1 up=$2 b sw sh inset
-  set -- $(bounds_of "$up" screen); inset=$4
-  set -- $(bounds_of "$up" chart); inset=$(( ${inset:-0} - ${4:-0} ))
-  set -- $(bounds_of "$s" screen); sw=$3; sh=$4
-  b=$(bounds_of "$s" chart)
-  set -- $b
-  if [ -z "$4" ] || [ -z "$sw" ]; then
-    fail "$s: side by side: no WebView or no screen bounds in the dump"
-  elif [ "$1" -gt $(( sw / 3 )) ] && [ $(( $4 - $2 )) -gt $(( sh / 3 )) ] && [ "$4" -le $(( sh - inset + 2 )) ]; then
-    say "check $s: side by side, the chart on the right $1..$3 x $2..$4, the page bottom $(( sh - inset )): OK"
-  else
-    fail "$s: side by side: the chart at $1..$3 x $2..$4 of ${sw}x$sh, the page bottom $(( sh - inset ))"
-  fi
-}
-
-# text_beside_buttons <shot>: side by side the buttons are over the chart only, so the description
-# starts at the top of the page, beside them. The text has no node of its own; its scroll bar (a node
-# under 40 px wide in the left half, as tall as the text block) gives the block top, and it must be
-# above the bottom of "Start Workout" (beta 2374: bar from 525, the button row 270..437, API 35)
-text_beside_buttons() {
-  local s=$1 sw btn bar
-  set -- $(bounds_of "$s" screen); sw=$3
-  btn=$(grep -o 'content-desc="Start Workout"[^>]*bounds="[^"]*"' "dumps/$s.xml" 2>/dev/null | grep -o 'bounds="[^"]*"' | head -1 | tr -c '0-9\n' ' ')
-  bar=$(grep -o 'bounds="\[[0-9]*,[0-9]*\]\[[0-9]*,[0-9]*\]"' "dumps/$s.xml" 2>/dev/null | tr -c '0-9\n' ' ' \
-    | awk -v w="${sw:-0}" '$3 - $1 > 0 && $3 - $1 < 40 && $3 < w / 2 && $4 - $2 > 100 { print; exit }')
-  set -- $btn
-  local by2=$4
-  set -- $bar
-  if [ -z "$by2" ] || [ -z "$2" ]; then
-    fail "$s: text beside the buttons: no Start Workout or no scroll bar of the text in the dump"
-  elif [ "$2" -lt "$by2" ]; then
-    say "check $s: the text from y $2, beside the buttons (their bottom $by2): OK"
-  else
-    fail "$s: the text from y $2, under the buttons (their bottom $by2)"
-  fi
-}
-
-# open_program <case> <name> <row>: the program from the list. Modern cards are named; the classic rows
-# have no name - the row <row> below the filter field (50 dp = 175 px rows on the CI Nexus 6, the first one
-# 170 px below the field: T-514)
-open_program() {
-  local c=$1 name=$2 row=$3 x y
+# bar <case> <modern>: the list at rest, then while a finger drags it slowly (2.5 s), a frame at ~1.2 s
+bar() {
+  local c=$1 modern=$2
+  start_case "$c" ui_modern=$modern fakedevice_treadmill=true android_documents_folder=true || return 1
   open_drawer '^Open Train Program$' && tap_ui '^Open Train Program$' '^Other folders$' || return 1
+  emu_sleep 4
+  shot "$c-1-rest"
+  say "drag the list up slowly"
+  adb shell input swipe 700 2300 700 1100 2500 < /dev/null > /dev/null 2>&1 &
+  sleep 1.2
+  adb exec-out screencap -p < /dev/null > "$c-2-moving.png" 2>/dev/null
+  [ -s "$c-2-moving.png" ] || fail "$c: no frame while moving"
+  wait
+  sleep 0.3
+  adb exec-out screencap -p < /dev/null > "$c-3-after.png" 2>/dev/null
   emu_sleep 3
-  dump
-  # modern look: the card by its name; the beta has no names on the cards (6a-1 added them), so
-  # there by the row, as in the classic one, with the card pitch of the frame (1440 px wide)
-  if [ "${c#?}" = m ] && find_ui "^$name\$"; then
-    tap_ui "^$name\$" '^Start Workout$' 20
-    return
-  fi
-  if ! find_ui '^Search \(recursive\)\.\.\.$'; then
-    fail "$c: the filter field not on the screen"
-    return 1
-  fi
-  set -- $EMU_AT
-  x=720
-  if [ "${c#?}" = m ]; then
-    # beta 2348, API 35: the field bottom 447, the card centres 581, 819 ... 1533
-    y=$(( $8 + 134 + (row - 1) * 238 ))
-  else
-    y=$(( $8 + 170 + (row - 1) * 175 ))
-  fi
-  say "tap the program row $row ($name) at $x $y"
-  adb shell input tap "$x" "$y" < /dev/null > /dev/null 2>&1
-  if wait_ui '^Start Workout$' 20; then
-    say "outcome 'program $name': ok"
-  else
-    say "outcome 'program $name': no-effect"
-    fail "$c: the preview of $name did not open"
-    return 1
-  fi
-}
-
-# preview <case> <modern>: the two programs in one look; the checks of the button only on the head side
-preview() {
-  local c=$1 modern=$2 head=0
-  [ "${c%?}" = h ] && head=1
-  start_case "$c" ui_modern=$modern fakedevice_treadmill=true android_documents_folder=true || return 1
-
-  if open_program "$c" 'HIIT Aerobic' 2; then
-    emu_sleep 5
-    shot "$c-1-long"
-    webview_of "$c-1-long"
-    if [ $head = 1 ]; then
-      expect "$c-1-long" '^Show more$' 'the long description folded, Show more'
-      if tap_ui '^Show more$' '^Show less$' 10; then
-        emu_sleep 2
-        shot "$c-2-long-open"
-        webview_of "$c-2-long-open"
-        expect "$c-2-long-open" '^Show less$' 'unfolded, Show less'
-        tap_ui '^Show less$' '^Show more$' 10 || fail "$c: Show less did not fold the description"
-      fi
-    fi
-    if rotate 1; then
-      emu_sleep 4
-      shot "$c-3-long-land"
-      webview_of "$c-3-long-land"
-      if [ $head = 1 ]; then
-        # side by side: the whole text scrolls in its column, no button; the chart on the right half
-        expect_not "$c-3-long-land" '^Show more$' 'landscape: side by side, no Show more'
-        chart_right "$c-3-long-land" "$c-1-long"
-        text_beside_buttons "$c-3-long-land"
-      fi
-    fi
-    if rotate 0 && [ $head = 1 ]; then
-      emu_sleep 4
-      shot "$c-4-long-back"
-      webview_of "$c-4-long-back"
-      expect "$c-4-long-back" '^Show more$' 'upright again: folded, Show more'
-    fi
-  fi
-  back_to "$HOME_RX" 20
-
-  if open_program "$c" 'HIIT Neuromuscular' 5; then
-    emu_sleep 5
-    shot "$c-5-short"
-    webview_of "$c-5-short"
-    [ $head = 1 ] && expect_not "$c-5-short" '^Show more$' 'a short description has no button'
-  fi
+  shot "$c-4-stopped"
+  find_ui '^Other folders$' || fail "$c: the list page left during the drag"
   back_to "$HOME_RX" 20
 }
 
-# nodesc <case> <modern>: head only - a program of the user with no description and no tags ("Anodesc", the
-# first file of the list), in landscape: no side by side, the chart over the page width under the buttons,
-# as upright (the classic look kept its empty text column and put the chart on the right half - review of
-# the PR draft, 13.11)
-nodesc() {
-  local c=$1 modern=$2 uid sw
-  start_case "$c" ui_modern=$modern fakedevice_treadmill=true android_documents_folder=true || return 1
-  uid=$(app_uid)
-  printf '<?xml version="1.0" encoding="UTF-8"?>\n<rows>\n<row duration="00:05:00" speed="5"/>\n<row duration="00:05:00" speed="8"/>\n</rows>\n' > Anodesc.xml
-  adb push Anodesc.xml /data/local/tmp/Anodesc.xml < /dev/null > /dev/null 2>&1
-  adb shell "su $uid,$uid,9997 sh -c 'cp /data/local/tmp/Anodesc.xml $QZDIR/training/Anodesc.xml'" < /dev/null >> "$STEPLOG" 2>&1
-  adb shell "ls -l $QZDIR/training/Anodesc.xml" < /dev/null >> "$STEPLOG" 2>&1 || proves_nothing "$c: Anodesc.xml not in the training folder"
-  if open_program "$c" 'Anodesc' 1; then
-    emu_sleep 5
-    if rotate 1; then
-      emu_sleep 4
-      shot "$c-6-nodesc-land"
-      webview_of "$c-6-nodesc-land"
-      expect_not "$c-6-nodesc-land" '^Show more$' 'no description: no Show more'
-      set -- $(bounds_of "$c-6-nodesc-land" screen); sw=$3
-      set -- $(bounds_of "$c-6-nodesc-land" chart)
-      if [ -z "$3" ] || [ -z "$sw" ]; then
-        fail "$c-6-nodesc-land: no WebView or no screen bounds in the dump"
-      elif [ "$1" -lt $(( sw / 10 )) ] && [ "$3" -gt $(( sw * 9 / 10 )) ]; then
-        say "check $c-6-nodesc-land: no description, the chart over the width $1..$3 of $sw: OK"
-      else
-        fail "$c-6-nodesc-land: no description, the chart at $1..$3 of $sw - not over the page width"
-      fi
-    fi
-    rotate 0
-  fi
-  back_to "$HOME_RX" 20
-}
-
-# landopen <case> <modern>: head only - the program opened right in landscape, not turned to it after
-# opening upright. A layout 0 high lays out no children in Qt 5.15 (QTBUG-112740): the description block
-# was 0 high, its text got no width and no height, and only the tags were seen (beta 2492, phone of the
-# user; every run before opened upright and turned). The text block is seen by its scroll bar beside the
-# buttons (text_beside_buttons), as in the turned case
-landopen() {
-  local c=$1 modern=$2 uid i long=''
-  start_case "$c" ui_modern=$modern fakedevice_treadmill=true android_documents_folder=true || return 1
-  # a program of its own, first in the list ("Alongtext" < "Anodesc"): the classic rows have no names, and
-  # in landscape row 2 opened "Easy intervals" (short text, no scroll bar - run 43448013450); a short text
-  # here fails text_beside_buttons, so a wrong row is not a pass
-  uid=$(app_uid)
-  for i in 1 2 3 4 5 6 7 8; do
-    long="$long Paragraph $i of a long description: warm up well, keep the cadence high and do not chase the power of the first interval in the last one."
-  done
-  printf '<workout_file>\n<author>QZ emu</author>\n<name>Alongtext</name>\n<description>%s</description>\n<sportType>bike</sportType>\n<tags><tag name="EMU"/></tags>\n<workout>\n<SteadyState Duration="300" Power="0.6"/>\n<SteadyState Duration="300" Power="0.8"/>\n</workout>\n</workout_file>\n' "$long" > Alongtext.zwo
-  adb push Alongtext.zwo /data/local/tmp/Alongtext.zwo < /dev/null > /dev/null 2>&1
-  adb shell "su $uid,$uid,9997 sh -c 'cp /data/local/tmp/Alongtext.zwo $QZDIR/training/Alongtext.zwo'" < /dev/null >> "$STEPLOG" 2>&1
-  adb shell "ls -l $QZDIR/training/Alongtext.zwo" < /dev/null >> "$STEPLOG" 2>&1 || proves_nothing "$c: Alongtext.zwo not in the training folder"
-  if rotate 1; then
-    if open_program "$c" 'Alongtext' 1; then
-      emu_sleep 5
-      shot "$c-7-long-land-open"
-      webview_of "$c-7-long-land-open"
-      expect_not "$c-7-long-land-open" '^Show more$' 'opened in landscape: side by side, no Show more'
-      text_beside_buttons "$c-7-long-land-open"
-    fi
-    back_to "$HOME_RX" 20
-  fi
-  # upright for the next case; no back after it: the home page is on top already, and a back there
-  # (the modern home not yet found right after turning) left the app (run 43443942683)
-  rotate 0
-}
-
-# qml_quiet: no QML warning of the changed file from the head processes (pid lines of start_case); turning
-# upright once warned "Layout: column (1) should be less than the number of columns (1)" and every check
-# was green (T-495)
+# qml_quiet: no QML warning of the changed files from the head processes (pid lines of start_case)
 qml_quiet() {
   local pid n=0 found
   logcat_stop
   for pid in $(grep -a '^pid h' "$STEPLOG" | cut -d' ' -f3); do
     n=$(( n + 1 ))
-    found=$(awk -v p="$pid" '$3 == p' full_logcat.txt | grep -a 'TrainingProgramsListJS.qml:' | head -5)
+    found=$(awk -v p="$pid" '$3 == p' full_logcat.txt | grep -a 'TrainingProgramsList\(JS\)\?.qml:' | head -5)
     if [ -n "$found" ]; then
       echo "$found" >> "$STEPLOG"
-      fail "check qml: pid $pid: QML warnings of TrainingProgramsListJS.qml"
+      fail "check qml: pid $pid: QML warnings of TrainingProgramsList*.qml"
     fi
   done
   if [ "$n" = 0 ]; then
@@ -284,7 +80,7 @@ qml_quiet() {
   elif [ ! -s full_logcat.txt ]; then
     fail "check qml: full_logcat.txt is empty"
   else
-    grep -q '^!! check qml' "$STEPLOG" || say "check qml: no TrainingProgramsListJS.qml warning from $n head processes: OK"
+    grep -q '^!! check qml' "$STEPLOG" || say "check qml: no TrainingProgramsList*.qml warning from $n head processes: OK"
   fi
 }
 
@@ -296,14 +92,10 @@ for side in b h; do
   say "== $side: start"
   wipe_files
   install_apk "$apk"
-  preview "${side}c" false
-  preview "${side}m" true
-  if [ "$side" = h ]; then
-    nodesc hc false
-    nodesc hm true
-    landopen hc false
-    landopen hm true
-  fi
+  start_case "${side}0" ui_modern=false fakedevice_treadmill=true android_documents_folder=true
+  programs
+  bar "${side}c" false
+  bar "${side}m" true
 done
 
 qml_quiet
