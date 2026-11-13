@@ -122,13 +122,24 @@ bool AndroidStatusBar::systemDarkMode() const
 #endif
 }
 
-void AndroidStatusBar::setSystemBarsColor(const QColor &color, bool dark) const
+void AndroidStatusBar::setSystemBarsColor(const QColor &color, bool dark, bool modern) const
 {
 #if defined(Q_OS_IOS) && !defined(IO_UNDER_QT)
+    Q_UNUSED(modern)
     lockscreen::setSystemBarsColor(color.redF(), color.greenF(), color.blueF(), dark);
+#elif defined(Q_OS_ANDROID)
+    QAndroidJniObject::callStaticMethod<void>("org/cagnulen/qdomyoszwift/CustomQtActivity", "setSystemBars",
+                                              "(IZZ)V", static_cast<jint>(color.rgba()),
+                                              static_cast<jboolean>(modern), static_cast<jboolean>(dark));
+    QAndroidJniEnvironment env;
+    if (env->ExceptionCheck()) {
+        env->ExceptionDescribe();
+        env->ExceptionClear();
+    }
 #else
     Q_UNUSED(color)
     Q_UNUSED(dark)
+    Q_UNUSED(modern)
 #endif
 }
 

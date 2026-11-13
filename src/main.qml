@@ -580,12 +580,15 @@ ApplicationWindow {
     // iOS: around a window in the safe area the system paints the areas under the status bar and
     // the home indicator black. The modern look gives them the page colour (seen until its window
     // takes the whole screen) and the status bar text its contrast; the classic look keeps them as
-    // they are, unless the modern one was on
+    // they are, unless the modern one was on.
+    // Android: the theme Qt 5.15 sets paints the status bar black over the app. The modern look
+    // makes it transparent (the page and the drawer sheet reach the top of the screen) with icons in
+    // the contrast of the page; the classic look keeps the black bar, as before
     property bool systemBarsColored: false
     function applySystemBars() {
-        if (Qt.platform.os !== "ios" || (!ui.modern && !systemBarsColored))
+        if ((Qt.platform.os !== "ios" && Qt.platform.os !== "android") || (!ui.modern && !systemBarsColored))
             return
-        AndroidStatusBar.setSystemBarsColor(ui.modern ? ui.bg : "black", ui.dark)
+        AndroidStatusBar.setSystemBarsColor(ui.modern ? ui.bg : "black", ui.dark, ui.modern)
         systemBarsColored = ui.modern
     }
     Connections {
@@ -1685,10 +1688,12 @@ ApplicationWindow {
         bottomInset: barHidden - contentHeight
         // The buttons fade out as the bar goes and are hidden once it is gone, from TalkBack as
         // well; the background goes then too. Folded for a chart it stays under the status bar,
-        // in the colour of the bar
+        // in the colour of the bar. Android, modern look: it stays as well – the status bar is
+        // transparent there (applySystemBars), and the tiles would slide under its icons
         contentItem.opacity: 1 - barHidden / contentHeight
         contentItem.visible: barHidden < contentHeight
         background.visible: folded || barHidden < contentHeight
+                            || (window.ui.modern && Qt.platform.os === "android")
 
         // The bar takes the touches on it, as a toolbar the height of its content did: drawn
         // past the height of the header, it would let a tap on the title reach the tiles below
@@ -2265,7 +2270,9 @@ ApplicationWindow {
         background.visible: !window.ui.modern
 
         // Modern: a sheet with rounded outer corners, over the whole drawer (paddings too). It
-        // runs past the left edge, so only the right-hand corners show
+        // runs past the left edge, so only the right-hand corners show. 16: the corner of the
+        // Material 3 navigation drawer (shape Corner Large). On Android the top one shows through
+        // the transparent status bar (applySystemBars)
         Rectangle {
             visible: window.ui.modern
             anchors.fill: parent
@@ -2273,7 +2280,7 @@ ApplicationWindow {
             anchors.bottomMargin: -drawer.bottomPadding
             anchors.leftMargin: -drawer.leftPadding - radius
             anchors.rightMargin: -drawer.rightPadding
-            radius: 20
+            radius: 16
             color: window.ui.surface
         }
 
