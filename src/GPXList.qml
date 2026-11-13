@@ -525,6 +525,7 @@ ColumnLayout {
                     Component.onCompleted: {
                         console.log("Dimensions: ", width, height)
                     }
+                    onMapReadyChanged: row.fitRoute()
                 }
 
                 function loadPath(){
@@ -542,12 +543,21 @@ ColumnLayout {
                     return lines;
                 }
 
-                // Show the whole route: the map takes the bounding box of the track, with a small
-                // margin, instead of a fixed zoom level. visibleRegion waits for the map to get a
-                // size (QDeclarativeGeoMap::setVisibleRegion), so it also works when the page opens.
+                // Room around the route, in pixels: the copyright notice of the map covers its bottom
+                // edge. fitViewportToGeoShape takes one margin for all four sides.
+                readonly property int routeMargin: 24
+
+                // Show the whole route: the map takes the bounding box of the track instead of a fixed
+                // zoom level. fitViewportToGeoShape does nothing before the map is ready, so until then
+                // visibleRegion is set: it waits for the map size (QDeclarativeGeoMap::setVisibleRegion),
+                // with the default margin only; onMapReadyChanged fits again with routeMargin.
                 // Not fitViewportToMapItems: it fits the on-screen size of the items (QTBUG-65646).
                 function fitRoute() {
-                    if (pathController.geopath.size() > 1)
+                    if (pathController.geopath.size() < 2)
+                        return
+                    if (map.mapReady)
+                        map.fitViewportToGeoShape(pathController.geopath, routeMargin)
+                    else
                         map.visibleRegion = pathController.geopath
                 }
 
