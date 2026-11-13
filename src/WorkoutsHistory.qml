@@ -992,15 +992,46 @@ Page {
         }
     }
 
-    // Modern look: the same two items on a UiPopup card under the button, the pressed item
-    // a rounded block inset from the edges (as the UiComboBox list)
+    // Modern look: the same two items in a Material 3 menu under the button (UiMenuBackground,
+    // as the UiComboBox list): as wide as the longest item, 112 to 280 with the padding of 8,
+    // the pressed item a rounded block inset from the edges. It was 240 wide, and the longer
+    // translations ("Імпортувати з папки QZ...") filled it to the edge
     UiPopup {
         id: modernImportMenu
         padding: 8
         modal: false
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
+        readonly property var items: [
+            { label: qsTr("Import FIT File..."), folder: false },
+            { label: qsTr("Import from QZ Folder..."), folder: true }
+        ]
+        // Item width: the longest label with 8 on both sides (16 from the menu edge, as in the
+        // UiComboBox list), within the 112..280 of a menu less the padding, and never past the
+        // page. Measured when the menu opens (as the UiComboBox list), not in a binding: the
+        // binding would change the text it reads
+        property real itemWidth: 240
+        // Given, not from the content: the Column takes its new width only at the next polish,
+        // and openUnder() placed the menu by the old one
+        width: itemWidth + leftPadding + rightPadding
+        TextMetrics {
+            id: importMenuMetrics
+            font.pixelSize: window.ui.fontBody
+        }
+        function measureItems() {
+            var widest = 0
+            for (var i = 0; i < items.length; ++i) {
+                importMenuMetrics.text = items[i].label
+                widest = Math.max(widest, importMenuMetrics.advanceWidth)
+            }
+            itemWidth = Math.min(Math.max(Math.ceil(widest) + 16, 112 - 16), 280 - 16,
+                                 workoutHistoryPage.width - 32)
+        }
+
+        background: UiMenuBackground { }
+
         function openUnder(item) {
+            measureItems()
             var p = item.mapToItem(workoutHistoryPage, 0, item.height)
             x = Math.max(8, Math.min(p.x + item.width - width, workoutHistoryPage.width - width - 8))
             y = p.y + 4
@@ -1008,23 +1039,21 @@ Page {
         }
 
         contentItem: Column {
-            width: 240
+            width: modernImportMenu.itemWidth
             Repeater {
-                model: [
-                    { label: qsTr("Import FIT File..."), folder: false },
-                    { label: qsTr("Import from QZ Folder..."), folder: true }
-                ]
+                model: modernImportMenu.items
                 delegate: AbstractButton {
                     id: modernImportItem
-                    width: 240
+                    width: modernImportMenu.itemWidth
                     height: 48
+                    // Pressed: the state layer of the text colour (Material 3, 10 %)
                     background: Rectangle {
-                        radius: 10
-                        color: modernImportItem.down ? window.ui.surfaceHighest : "transparent"
+                        radius: 12
+                        color: modernImportItem.down ? window.ui.alpha(window.ui.textMain, 0.10) : "transparent"
                     }
                     contentItem: Text {
-                        leftPadding: 12
-                        rightPadding: 12
+                        leftPadding: 8
+                        rightPadding: 8
                         text: modelData.label
                         font.pixelSize: window.ui.fontBody
                         color: window.ui.textMain
