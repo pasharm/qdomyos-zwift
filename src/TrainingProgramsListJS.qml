@@ -597,6 +597,9 @@ ColumnLayout {
                             }
                             Layout.fillWidth: true
                             Layout.margins: 10
+                            // side by side the scroll bar ends the column: no margin after it, the column
+                            // spacing and the frame of the chart are the gap to the chart (16 with the modern frame)
+                            Layout.rightMargin: detailBody.split ? 0 : 10
                             spacing: 0
                             // An empty line kept its height and margins: a gap above the chart
                             visible: rootItem.previewWorkoutDescription !== ""
@@ -619,6 +622,7 @@ ColumnLayout {
                                 // it moves (an active binding is overwritten after every move), the Material
                                 // ScrollBar keeps showing for AlwaysOn
                                 ScrollBar.vertical: ScrollBar {
+                                    id: descriptionBar
                                     z: 1
                                     interactive: false
                                     policy: descriptionFlick.interactive ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
@@ -644,6 +648,11 @@ ColumnLayout {
                                 Text {
                                     id: descriptionText
                                     width: descriptionFlick.width
+                                    // where the text may scroll (side by side, unfolded), room for the bar on
+                                    // its right: the lines ran under it. Not by interactive: that follows the
+                                    // height of the text, and the height this width
+                                    rightPadding: detailColumn.sideBySide || descriptionBlock.expanded
+                                        ? descriptionBar.width + 6 : 0
                                     text: rootItem.previewWorkoutDescription
                                     font.pixelSize: window.ui.modern ? window.ui.fontBody : window.fontPx(14)
                                     font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
