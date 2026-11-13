@@ -231,6 +231,28 @@ nodesc() {
   back_to "$HOME_RX" 20
 }
 
+# landopen <case> <modern>: head only - the program opened right in landscape, not turned to it after
+# opening upright. A layout 0 high lays out no children in Qt 5.15 (QTBUG-112740): the description block
+# was 0 high, its text got no width and no height, and only the tags were seen (beta 2492, phone of the
+# user; every run before opened upright and turned). The text block is seen by its scroll bar beside the
+# buttons (text_beside_buttons), as in the turned case
+landopen() {
+  local c=$1 modern=$2
+  start_case "$c" ui_modern=$modern fakedevice_treadmill=true android_documents_folder=true || return 1
+  if rotate 1; then
+    if open_program "$c" 'HIIT Aerobic' 2; then
+      emu_sleep 5
+      shot "$c-7-long-land-open"
+      webview_of "$c-7-long-land-open"
+      expect_not "$c-7-long-land-open" '^Show more$' 'opened in landscape: side by side, no Show more'
+      text_beside_buttons "$c-7-long-land-open"
+    fi
+    back_to "$HOME_RX" 20
+    rotate 0
+  fi
+  back_to "$HOME_RX" 20
+}
+
 # qml_quiet: no QML warning of the changed file from the head processes (pid lines of start_case); turning
 # upright once warned "Layout: column (1) should be less than the number of columns (1)" and every check
 # was green (T-495)
@@ -267,6 +289,8 @@ for side in b h; do
   if [ "$side" = h ]; then
     nodesc hc false
     nodesc hm true
+    landopen hc false
+    landopen hm true
   fi
 done
 
