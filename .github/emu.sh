@@ -288,6 +288,46 @@ seed_extra() {
   say "files of the previous install in the four folders: $(adb shell "ls -R $QZDIR/training $QZDIR/gpx $QZDIR/settings $QZDIR/profiles" < /dev/null 2>/dev/null | tr -d '\r' | grep -c '[.][a-zA-Z]*$')"
 }
 
+# seed_root: BIG_ROOT=true - ROOT_FILES empty chart-NNNN.png in the root of the QZ folder, as the app (the phone
+# of the user: 1442 files there, chart images and logs; the pass listed the root once per subfolder - 9.2 s
+# before the bar, T-528); counted after, a shortfall ends the run
+ROOT_FILES=${ROOT_FILES:-1500}
+seed_root() {
+  local uid n
+  uid=$(app_uid)
+  adb shell "su $uid,$uid,9997 sh -c 'cd $QZDIR && i=1; while [ \$i -le $ROOT_FILES ]; do : > chart-\$i.png; i=\$((i + 1)); done'" \
+    < /dev/null >> "$STEPLOG" 2>&1
+  n=$(adb shell "ls $QZDIR" < /dev/null 2>/dev/null | tr -d '\r' | grep -c '^chart-[0-9]*[.]png$')
+  say "files in the root of the QZ folder: $n chart-*.png of $ROOT_FILES"
+  [ "$n" = "$ROOT_FILES" ] || proves_nothing "seed_root: $n of $ROOT_FILES files in $QZDIR"
+}
+seed_all() {
+  seed_extra
+  [ "$BIG_ROOT" = true ] && seed_root
+  return 0
+}
+
+# root_gap <side>: seconds from the return to QZ after Allow (wm_on_resume_called, events buffer) to the line
+# "handleRestoreFolderResult files to restore N"; GAP_MAX set (the side after the change) - more is a failure
+root_gap() {
+  local g
+  adb logcat -d -b events -v threadtime < /dev/null > events_logcat.txt 2>/dev/null
+  g=$("$EMU_PY" .github/t528_gap.py events_logcat.txt full_logcat.txt "$PKG")
+  if [ -z "$g" ]; then
+    fail "check $1-gap: no resume or no 'files to restore' line ($(grep -c wm_on_resume_called events_logcat.txt) resumes)"
+    return
+  fi
+  set -- "$1" $g
+  say "big root: $2 s from the return to QZ ($3) to 'files to restore' ($4)"
+  if [ -n "$GAP_MAX" ]; then
+    if awk -v g="$2" -v m="$GAP_MAX" 'BEGIN { exit !(g < m) }'; then
+      say "check $1-gap: $2 s to the count with $ROOT_FILES files in the root, under $GAP_MAX s: OK"
+    else
+      fail "check $1-gap: $2 s to the count with $ROOT_FILES files in the root, $GAP_MAX s or more"
+    fi
+  fi
+}
+
 # slow_on <ms>: the test only pause after each file of the pass (CustomQtActivity.t528Pause)
 slow_on() {
   adb shell "run-as $PKG sh -c 'echo $1 > files/t528_slow_ms'" < /dev/null >> "$STEPLOG" 2>&1
@@ -528,7 +568,9 @@ row_rx() {
 
 side_t528() {
   local p=$SIDE rows
-  previous_install "$p" apk-head/android-debug.apk
+  # APK: the base side of the big root (rb) takes the APK of the input base
+  [ -s "${APK:-apk-head/android-debug.apk}" ] || proves_nothing "$p: no APK ${APK:-apk-head/android-debug.apk}"
+  previous_install "$p" "${APK:-apk-head/android-debug.apk}"
   conf "$p" || proves_nothing "$p: the start after the reinstall did not reach home"
   [ -n "$SLOW_MS" ] && slow_on "$SLOW_MS"
   # LAND: the page and the question in landscape; the folder picker of the system is tapped by its upright
@@ -571,6 +613,7 @@ side_t528() {
   fi
   mark "$p: allowed"
   pass_log "$p"
+  [ "$BIG_ROOT" = true ] && root_gap "$p"
   progress_check "$p-3-pass" "${SLOW_MS:+yes}"
   button_check "$p-3-pass"
   toast_watch "$p-3-pass"
@@ -631,7 +674,7 @@ wrap_up() {
 
 emu_init
 logcat_start
-BEFORE_REINSTALL=seed_extra
+BEFORE_REINSTALL=seed_all
 SIDE=${SIDE:-h}
 say "side $SIDE"
 case "$SIDE" in
@@ -650,5 +693,8 @@ case "$SIDE" in
   mr) PAGE=gpx UI_MODERN=true SLOW_MS=800 ROT=true side_t528 ;;
   pl) PAGE=profiles UI_MODERN=false SLOW_MS=800 LAND=true side_t528 ;;
   pr) PAGE=profiles UI_MODERN=false SLOW_MS=800 ROT=true side_t528 ;;
+  # a big root of the QZ folder (T-528, the user 13.11): rb - the APK without db61038c3 (input base), ra - the head
+  rb) PAGE=gpx UI_MODERN=false BIG_ROOT=true APK=apk-base/android-debug.apk side_t528 ;;
+  ra) PAGE=gpx UI_MODERN=false BIG_ROOT=true GAP_MAX=2 side_t528 ;;
   *) proves_nothing "unknown side $SIDE" ;;
 esac

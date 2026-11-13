@@ -17,12 +17,16 @@ on:
         description: run id with the fdroid-android-trial artifact of this branch (empty - build it in this run)
         required: false
         default: ''
+      base:
+        description: run id with the fdroid-android-trial artifact for the side rb (the APK before a change)
+        required: false
+        default: ''
       apis:
         description: API levels as a JSON list
         required: false
         default: '[35]'
       sides:
-        description: 'sides as a JSON list (h m hs ms ss sm ps pm hl ml hr mr pl pr, see emu.sh)'
+        description: 'sides as a JSON list (h m hs ms ss sm ps pm hl ml hr mr pl pr ra rb, see emu.sh)'
         required: false
         default: '["hl", "ml", "hr", "mr", "pl", "pr"]'
 
@@ -365,6 +369,15 @@ jobs:
           run-id: ${{ inputs.head || github.run_id }}
           github-token: ${{ github.token }}
 
+      - name: Download the base APK
+        if: matrix.side == 'rb'
+        uses: actions/download-artifact@v4
+        with:
+          name: fdroid-android-trial
+          path: apk-base
+          run-id: ${{ inputs.base }}
+          github-token: ${{ github.token }}
+
       - name: Setup Java for Android Emulator
         uses: actions/setup-java@v3
         with:
@@ -395,6 +408,7 @@ jobs:
             *.png
             full_logcat.txt
             t528_logcat.txt
+            events_logcat.txt
             steps.log
             dumps/
             drv/
