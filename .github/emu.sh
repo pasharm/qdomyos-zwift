@@ -170,7 +170,9 @@ load_settings_open() {
   y=$2
   say "tap classic Load settings at $x $y (right of Search settings)"
   adb shell input tap "$x" "$y" < /dev/null > /dev/null 2>&1
-  if wait_ui '^Other folders$' 15; then
+  # the question of a restore may come at once: a native box, its dump is the box alone - its No is a
+  # landing too (run 43523520888, ss: the box with No, 'Other folders' under it not in the dump)
+  if wait_ui '^Other folders$|^&?No$' 15; then
     say "outcome 'Load settings': ok"
   else
     say "outcome 'Load settings': no-effect"
@@ -206,7 +208,7 @@ beside() {
 # [landing]: in the modern look the question is a Popup over the page, Other folders stays in the dump - the
 # landing of a visit with the question is No alone there (two matches are a failure of find)
 gpx_open() { open_drawer '^Open GPX$' && tap_ui '^Open GPX$' "${1:-^Other folders$|^&?No$}"; }
-profiles_open() { open_drawer '^Profile:.*' && tap_ui '^Profile:.*' '^Other folders$|^&?No$'; }
+profiles_open() { open_drawer '^Profile:.*' && tap_ui '^Profile:.*' "${1:-^Other folders$|^&?No$}"; }
 # picker_on: the folder picker of the system has the focus
 picker_on() { adb shell dumpsys window < /dev/null 2>/dev/null | grep mCurrentFocus | grep -q documentsui; }
 
@@ -682,6 +684,23 @@ after_check() {
       near back "$1: the list starts at $y after the pass, the first node under the question at $pre (an empty list has no node at its top)"
     fi
   fi
+  # against a run known good, not only against this one: a gap that stays the same before and after the pass
+  # passes -back-pre (run 43523520888, ml: 781 before and after the pass; -back caught it there only because the
+  # progress shown during the pass started at 490), and the list itself moved down would pass both; the list at
+  # 490 in run 43489689380 on 82da00a41 (a hidden progress in its own row of the grid under the map)
+  if [ -n "$LIST_TOP" ]; then
+    if [ "${DP:-}" != 3.5 ] || [ "${EMU_API:-}" != 35 ]; then
+      near top "$1: the reference $LIST_TOP is for API 35 at 3.5 px per dp (1440 x 2560), here API ${EMU_API:-unknown} at ${DP:-unknown} - not compared"
+    elif [ $(( y - LIST_TOP )) -le 2 ] && [ $(( LIST_TOP - y )) -le 2 ]; then
+      say "check $1-top: the list starts at $y after the pass, $LIST_TOP in run 43489689380: OK"
+    else
+      fail "check $1-top: the list starts at $y after the pass, at $LIST_TOP in run 43489689380 ($(( y - LIST_TOP )) px)"
+    fi
+    # under the question the first node may be the box of the question, not a row: a near only
+    if [ "${DP:-}" = 3.5 ] && [ "${EMU_API:-}" = 35 ] && [ -n "$pre" ] && { [ $(( pre - LIST_TOP )) -gt 2 ] || [ $(( LIST_TOP - pre )) -gt 2 ]; }; then
+      near top "$1: the first node under the question at $pre, the list at $LIST_TOP in run 43489689380"
+    fi
+  fi
 }
 
 # pass_log <prefix>: the pass in logcat - files to restore, the first and the last step, the restored line,
@@ -712,7 +731,8 @@ page_open() {
     # (T-518 side m); the other pages land on Other folders, a question there is caught by question_shown
     gpx) if [ "$UI_MODERN" = true ]; then gpx_open '^&?No$'; else gpx_open; fi ;;
     settings) load_settings_open ;;
-    profiles) profiles_open ;;
+    # modern: the same Popup over the page, both in the dump after Profile: (run 43523520888, pm)
+    profiles) if [ "$UI_MODERN" = true ]; then profiles_open '^&?No$'; else profiles_open; fi ;;
   esac
 }
 row_rx() {
@@ -785,6 +805,13 @@ side_t528() {
   toast_watch "$p-3-pass"
   emu_sleep 3
   ensure_app
+  # landscape, modern GPX: the restored route sorts under the bundled ones and the shorter list has no row
+  # for it on the screen (runs 43482214843, 43523520888: Box Hill … Crater Lake) - filter by its name.
+  # The keyboard of a Qt field never takes the whole landscape screen (IME_FLAG_NO_EXTRACT_UI, Qt 5.15.0
+  # QtEditText.java:100), the first row under the filter stays above it
+  if [ "$LAND" = true ] && [ "$UI_MODERN" = true ] && [ "$PAGE" = gpx ]; then
+    filter_rows "T518" '^Filter: T$' "$(row_rx)"
+  fi
   still
   shot "$p-4-after"
   expect_not "$p-4-after" "$PROGRESS_RX" 'no progress node after the pass' --any
@@ -801,6 +828,31 @@ side_t528() {
   fi
   back_to "$HOME_RX" 20
   wrap_up
+}
+
+# filter_rows <text> <taken regex> <landing regex>: the text into the Filter field of the modern GPX page
+# (its name is "Filter: " and the text; the dump trims the space of the empty one), then the keyboard away
+# (a back key while it is shown only closes it)
+filter_rows() {
+  local x y
+  dump
+  if ! find_ui '^Filter:$'; then
+    fail "filter: no empty Filter field ($EMU_WHY)"
+    return 1
+  fi
+  set -- "$@" $EMU_AT
+  x=$4; y=$5
+  say "tap Filter at $x $y"
+  adb shell input tap "$x" "$y" < /dev/null > /dev/null 2>&1
+  emu_sleep 1
+  type_text "$1" "$2" "$3" || return 1
+  # not hide_keyboard: the keyboard is expected here, not a near
+  if ime_shown; then
+    adb shell input keyevent 4 < /dev/null > /dev/null 2>&1
+    emu_sleep 2
+  fi
+  ime_shown && near keyboard "filter: still shown after the back key"
+  return 0
 }
 
 # land_watch <prefix>: AFTER_ALLOW of LAND - landscape again at once, then the burst
@@ -844,17 +896,17 @@ SIDE=${SIDE:-h}
 say "side $SIDE"
 case "$SIDE" in
   h) PAGE=gpx UI_MODERN=false side_t528 ;;
-  m) PAGE=gpx UI_MODERN=true side_t528 ;;
+  m) PAGE=gpx UI_MODERN=true LIST_TOP=490 side_t528 ;;
   hs) PAGE=gpx UI_MODERN=false SLOW_MS=800 side_t528 ;;
   # ms: also the frames of the end of the pass one after another (END_BURST - the hold and the closing)
-  ms) PAGE=gpx UI_MODERN=true SLOW_MS=800 END_BURST=true END_FRAMES=30 side_t528 ;;
+  ms) PAGE=gpx UI_MODERN=true SLOW_MS=800 END_BURST=true END_FRAMES=30 LIST_TOP=490 side_t528 ;;
   ss) PAGE=settings UI_MODERN=false SLOW_MS=800 side_t528 ;;
   sm) PAGE=settings UI_MODERN=true SLOW_MS=800 side_t528 ;;
   ps) PAGE=profiles UI_MODERN=false SLOW_MS=800 side_t528 ;;
   pm) PAGE=profiles UI_MODERN=true SLOW_MS=800 side_t528 ;;
   # landscape (T-528, the user 13.11): l - the pass in landscape, r - a turn to landscape at the 10th file and back
   hl) PAGE=gpx UI_MODERN=false SLOW_MS=800 LAND=true side_t528 ;;
-  ml) PAGE=gpx UI_MODERN=true SLOW_MS=800 LAND=true side_t528 ;;
+  ml) PAGE=gpx UI_MODERN=true SLOW_MS=800 LAND=true LIST_TOP=490 side_t528 ;;
   hr) PAGE=gpx UI_MODERN=false SLOW_MS=800 ROT=true side_t528 ;;
   mr) PAGE=gpx UI_MODERN=true SLOW_MS=800 ROT=true side_t528 ;;
   pl) PAGE=profiles UI_MODERN=false SLOW_MS=800 LAND=true side_t528 ;;
