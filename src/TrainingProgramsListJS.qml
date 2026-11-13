@@ -610,6 +610,13 @@ ColumnLayout {
                             Flickable {
                                 id: descriptionFlick
                                 Layout.fillWidth: true
+                                // never 0 high: Qt 5.15 lays out no children of a layout with a zero
+                                // width or height (QTBUG-112740, fixed in 6.5.2). Opened right in landscape
+                                // the text had no height yet, the block was 0 high and left this view at
+                                // width 0, so the text never got a width and a height - the description
+                                // was not shown. Not by the width of the text from the block: that made a
+                                // binding loop on turning
+                                Layout.minimumHeight: 1
                                 // whole lines, so the last one shown is not cut in half
                                 Layout.preferredHeight: detailColumn.sideBySide
                                     ? Math.min(contentHeight, descriptionBlock.wholeLines(descriptionBlock.sideRoom))
@@ -650,13 +657,7 @@ ColumnLayout {
 
                                 Text {
                                     id: descriptionText
-                                    // the width of the block, not of the Flickable: Qt 5.15 lays out no
-                                    // children of a layout with a zero height (QTBUG-112740, fixed in 6.5.2).
-                                    // Opened right in landscape, the block was 0 high, the Flickable kept
-                                    // width 0, the text then had no height, and the block stayed 0 - the
-                                    // description was not shown. Keep the size of this text off the items
-                                    // the block lays out
-                                    width: descriptionBlock.width
+                                    width: descriptionFlick.width
                                     // where the text may scroll (side by side, unfolded), room for the bar on
                                     // its right: the lines ran under it. Not by interactive: that follows the
                                     // height of the text, and the height this width
