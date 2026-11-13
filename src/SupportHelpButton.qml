@@ -181,7 +181,17 @@ Item {
             }
             ToolButton {
                 id: closeDialogButton
-                text: "\u2715"
+                // Modern look: the close icon of the icon font, as the other icons there; the system
+                // font of an older Android may have no U+2715 (the Android emulator of CI draws a box)
+                text: support.modern ? "" : "\u2715"
+                UiIcon {
+                    visible: support.modern
+                    anchors.centerIn: parent
+                    width: 24
+                    height: 24
+                    name: "close"
+                    color: window.ui.textMain
+                }
                 anchors.right: parent.right
                 anchors.rightMargin: 8 + window.getRightPadding()
                 anchors.verticalCenter: parent.verticalCenter
