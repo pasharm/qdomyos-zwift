@@ -355,7 +355,7 @@ ColumnLayout {
         }
     }
 
-    // Other folders and, while files of a previous install are found, Restore files in one row
+    // Other folders and, until QZ has a grant on the QZ folder, Restore files in one row
     // (as on the training programs page); a long label wraps instead of eliding
     RowLayout {
         visible: window.ui.modern
@@ -364,8 +364,8 @@ ColumnLayout {
         Layout.rightMargin: profilesPage.modernMargin
         // 16 to the pill: UiButton has a 6 inset below it
         Layout.bottomMargin: 10
-        // a layout takes fillHeight from its children by default: the row would take the height
-        // of the page; the pills fill only the height of the taller one
+        // a layout in a layout fills the height by default, and the fillHeight of the pills lifts its
+        // maximum: the row would take the height of the page; the pills fill the height of the taller one
         Layout.fillHeight: false
         spacing: 8
 
