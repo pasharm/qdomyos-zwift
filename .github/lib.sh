@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha 89c3d8facddf - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha 820c5ffdd7f1 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -24,8 +24,8 @@
 # where uifind.py and the others are), EMU_PY (python3), EMU_POLL (3 - seconds of one look at the
 # screen: a dump takes ~2.3 s on API 35), EMU_FAST (tests: no sleep), EMU_MASKS ("x1,y1,x2,y2 ..." -
 # frame areas that change by themselves: clocks, charts), EMU_APP_RX (regex of the app name in an
-# "isn't responding" box; default the package).
-EMU_LIB_VERSION=1
+# "isn't responding" box; default the package), EMU_CASES (the cases of a partial run - case_on below).
+EMU_LIB_VERSION=2
 : "${STEPLOG:=steps.log}" "${EMU_GH:=.github}" "${EMU_PY:=python3}" "${EMU_POLL:=3}"
 FAILED=${FAILED:-0}
 EMU_AT=""     # the last find: "x y checkable checked x1 y1 x2 y2"
@@ -38,6 +38,63 @@ near() { local kind=$1; shift; echo "~~ near $kind: $*" >> "$STEPLOG"; }
 # proves_nothing <what>: the run cannot check what it is for - red at once
 proves_nothing() { echo "!! $* - the run proves nothing" >> "$STEPLOG"; cat "$STEPLOG"; exit 1; }
 uifind() { "$EMU_PY" "$EMU_GH/uifind.py" "$@"; }
+
+# A partial run (T-534): an intermediate check of a new case after a fix needs a part of the 20-30 min of a
+# full run. EMU_CASES (the input `cases` of tools/emu/workflow.yml): patterns split by spaces or commas, empty
+# - every case. A pattern is a glob of <case> (the name start_case gets: hc, bm) or <function>/<case> (the
+# scenario function that called start_case: landopen/hc, landopen/*). A pattern that selected no case by
+# `finish` is red: a typo must not give a green run of nothing. A partial run says so in steps.log
+# ("== partial run: ..."); the last run before the beta and a PR is a full one (qz-ci-build).
+EMU_CASES_HIT=" "
+EMU_PARTIAL=""
+emu_cases() { printf '%s' "$EMU_CASES" | tr ',\r\n' '   '; }
+
+# case_on <case> [function]: 0 - EMU_CASES selects the case (or is empty); the patterns that did are noted
+# for finish. read -a, not `for p in $(...)`: a glob there would expand to the files of the folder
+case_on() {
+  local name=$1 fn=${2:-} p cp fp ok=1
+  local -a pats
+  read -r -a pats <<< "$(emu_cases)"
+  [ ${#pats[@]} -gt 0 ] || return 0
+  for p in "${pats[@]}"; do
+    cp=$p
+    if [ "${p#*/}" != "$p" ]; then
+      fp=${p%%/*}
+      cp=${p#*/}
+      # shellcheck disable=SC2254
+      case $fn in $fp) ;; *) continue ;; esac
+    fi
+    # shellcheck disable=SC2254
+    case $name in
+      $cp)
+        ok=0
+        case $EMU_CASES_HIT in *" $p "*) ;; *) EMU_CASES_HIT="$EMU_CASES_HIT$p " ;; esac ;;
+    esac
+  done
+  return $ok
+}
+
+# side_on <letter> <apk>: the side of the run (b - before, h - after) goes: its APK is there (the input base
+# of the workflow may be empty) and a pattern of EMU_CASES can select a case of it (its case part begins with
+# the letter or with a glob character). Otherwise "== side <letter>: skipped (...)", the run partial, 1 -
+# the scenario skips the install and the cases of the side: for side in b h; do side_on $side "$apk" || continue
+side_on() {
+  local s=$1 apk=$2 p cp want=1
+  local -a pats
+  if [ ! -s "$apk" ]; then
+    say "== side $s: skipped (no $apk)"
+    EMU_PARTIAL="$EMU_PARTIAL side $s skipped (no APK);"
+    return 1
+  fi
+  read -r -a pats <<< "$(emu_cases)"
+  [ ${#pats[@]} -gt 0 ] || return 0
+  for p in "${pats[@]}"; do
+    cp=${p#*/}
+    case $cp in "$s"*|\**|\?*|\[*) want=0 ;; esac
+  done
+  [ $want = 0 ] || say "== side $s: skipped (cases: $EMU_CASES)"
+  return $want
+}
 
 # emu_init: a new steps.log, the frames as the user sees them, the API in the log. Only an emulator: the
 # settings below and install_apk (adb uninstall) went once to the user's phone over Wi-Fi from the tests
@@ -57,6 +114,12 @@ emu_init() {
   adb shell settings put system user_rotation 0 < /dev/null > /dev/null 2>&1
   EMU_API=$(adb shell getprop ro.build.version.sdk < /dev/null | tr -d '\r')
   say "== API $EMU_API lib $EMU_LIB_VERSION"
+  EMU_CASES_HIT=" "
+  EMU_PARTIAL=""
+  if [ -n "$(emu_cases | tr -d ' ')" ]; then
+    say "== cases: $EMU_CASES"
+    EMU_PARTIAL=" cases $EMU_CASES;"
+  fi
 }
 
 # logcat_start / logcat_stop: the whole log in full_logcat.txt, buffers as separate -b (API 21/23 do not
@@ -762,6 +825,9 @@ tb_on() {
       && chmod 660 $dir/shared_prefs/${TB_PKG}_preferences.xml && restorecon -R $dir/shared_prefs" < /dev/null >> "$STEPLOG" 2>&1
   done
   adb shell "rm -rf /data/local/tmp/tbshots; mkdir -p /data/local/tmp/tbshots" < /dev/null > /dev/null 2>&1
+  # TalkBack 15 asks POST_NOTIFICATIONS on each start; its box becomes the active window and the driver
+  # then sees no tree of the app (T-514, lesson 11)
+  [ "${EMU_API:-35}" -ge 33 ] && adb shell pm grant "$TB_PKG" android.permission.POST_NOTIFICATIONS < /dev/null >> "$STEPLOG" 2>&1
   adb shell settings put secure enabled_accessibility_services "$TB_PKG/$TB_PKG.TalkBackService" < /dev/null >> "$STEPLOG" 2>&1
   adb shell settings put secure accessibility_enabled 1 < /dev/null >> "$STEPLOG" 2>&1
   adb shell settings put secure touch_exploration_enabled 1 < /dev/null >> "$STEPLOG" 2>&1
@@ -795,6 +861,17 @@ finish() {
   else
     say "none"
   fi
+  local p
+  local -a pats
+  read -r -a pats <<< "$(emu_cases)"
+  for p in "${pats[@]}"; do
+    case $EMU_CASES_HIT in
+      *" $p "*) ;;
+      *) fail "cases: '$p' selected no case - a typo, a case of a skipped side, or no such function/case" ;;
+    esac
+  done
+  [ -z "$EMU_PARTIAL" ] || say "== partial run:$EMU_PARTIAL the last run before the beta and a PR is a full one"
+  say "== time: $SECONDS s"
   grep -q -E "^check " "$STEPLOG" || fail "no check ran: the run proves nothing"
   say "== near misses: $(grep -c '^~~ near' "$STEPLOG"), failures: $(grep -c '^!! ' "$STEPLOG")"
   cat "$STEPLOG"

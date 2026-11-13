@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# emu-lib: tools/emu/uifind.py sha 88d6d91d94fb - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/uifind.py sha 34a5a4fe8bd3 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): find a control of a uiautomator dump the way the user sees it - only the part
 # of it that is on the screen, not under the app header, not under a popup or the side menu.
 # One file for every emu branch, delivered by tools/emu/sync.py as .github/uifind.py.
@@ -89,7 +89,8 @@ class Screen:
                     self.parent[c] = n
         first = self.nodes[0] if self.nodes else None
         self.screen = parse_bounds(first.get("bounds")) if first is not None else None
-        self.layer = {}       # top-level QML child -> "header" | "page" | "over"
+        self.layer = {}       # top-level QML child -> "header" | "page" | "over" | "full"
+        self.under = {}       # top-level QML child -> the full-window layer drawn over it
         self.cover = {}       # top-level QML child -> the rect it paints over
         self.top_of = {}      # node -> its top-level QML child
         self.page = None
@@ -139,6 +140,24 @@ class Screen:
         counts = [sum(1 for _ in t.iter("node")) for t in tops]
         return max(range(len(tops)), key=lambda i: (counts[i], -i))
 
+    @staticmethod
+    def _full_window_index(tops):
+        # A window over the whole page (Dialog in the overlay: the support window of SupportHelpButton,
+        # [0,0][1438,2558]): the last top-level child, and it holds every other one, the header included.
+        # The largest child, it was taken for the page, and the page under it for an over layer that
+        # covered it (T-516, 43395468125). Not the side menu of API 30 (it holds the page and the header,
+        # but is not the last) - and at least one child below it besides the header
+        if len(tops) < 3:
+            return None
+        last = parse_bounds(tops[-1].get("bounds"))
+        if empty(last):
+            return None
+        for t in tops[:-1]:
+            r = parse_bounds(t.get("bounds"))
+            if not empty(r) and not inside(r, last):
+                return None
+        return len(tops) - 1
+
     def _layers(self):
         for v in self.nodes:
             if v.get("class") != "android.view.View":
@@ -146,9 +165,12 @@ class Screen:
             tops = [c for c in v if c.tag == "node" and c.get("class") == QT_NODE]
             if not tops:
                 continue
-            page = self._page_index(tops)
+            full = self._full_window_index(tops)
+            page = self._page_index(tops if full is None else tops[:full])
             for i, t in enumerate(tops):
-                if i == page:
+                if i == full:
+                    kind = "full"
+                elif i == page:
                     kind = "page"
                     self.page = t
                 elif i == 0:
@@ -156,6 +178,8 @@ class Screen:
                 else:
                     kind = "over"
                 self.layer[t] = kind
+                if full is not None and i < full:
+                    self.under[t] = tops[full]
                 r = parse_bounds(t.get("bounds"))
                 if self._is_trusted(t) and not empty(r):
                     self.cover[t] = r
@@ -211,6 +235,15 @@ class Screen:
             if a is top:
                 break
             a = self.parent.get(a)
+        # below the page is the navigation bar for every layer: the side menu and popups reach the
+        # window bottom (y 2558), but the bar is drawn over them (T-514, 43205779665: "Settings" of
+        # the menu at 170 % text was tapped at y 2534 in the bar instead of scrolling the menu)
+        if vis is not None and self.page is not None:
+            band = self.band()
+            if band and vis[1] < band[1] < vis[3]:
+                vis = (vis[0], vis[1], vis[2], band[1])
+            elif band and vis[1] >= band[1]:
+                vis = None
         if vis is None:
             band = self.band()
             mid = (raw[1] + raw[3]) // 2
@@ -220,7 +253,9 @@ class Screen:
         # drawn over: every over layer covers the page and the header. Over layers do not cut each
         # other - their drawing order is not in the dump (T-473: the round help button comes after
         # the heart rate card in the tree, but the card hides it on the frame)
-        if self.layer.get(top) == "over":
+        if top in self.under:
+            return None, "covered by '%s'" % (self._name_in(self.under[top]) or self.under[top].get("bounds"))
+        if self.layer.get(top) in ("over", "full"):
             return vis, ""
         for r, name in self.over_areas:
             vis = self._cut(vis, r)

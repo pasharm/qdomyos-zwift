@@ -1,89 +1,65 @@
 #!/bin/bash
-# Test only (T-537): the scroll bar of the training program list, before (base: feat/modern-ui) and after
-# (head: + T-537), classic and modern look. A frame at rest and a frame while a finger drags the list (the
-# bar shows only while it moves); the bar width is measured from the frames after the run.
+# Test only (T-550): drop-down lists and menus of the modern look by Material 3 - before (base:
+# feat/modern-ui 3e6d74e6b) and after (head: + T-550). Cases of each side:
+#   <side>l - modern, light (ui_theme_mode=light): the App Language list open (UiComboBox.qml) and the
+#             import menu of Workouts History open (WorkoutsHistory.qml, modernImportMenu)
+#   <side>d - the same, dark (ui_theme_mode=dark)
+#   <side>c - classic: the App Language list - it must look as before (the change is modern only)
+# Expected (head): the list on window.ui.surfaceHigh with a shadow, corner 16, the chosen item in an accent
+# block (UiComboBox.qml, delegate background; UiMenuBackground.qml); the import menu as wide as its
+# longest item, shadow, no outline. The look is judged on the frames; the run checks the screens.
 . .github/lib.sh
 . .github/qz.sh
 
-QZDIR=/sdcard/Documents/QZ
-
-# app_uid: the uid of the installed app - the owner of its data folder; empty without the app (T-514)
-app_uid() {
-  adb shell "su 0 stat -c %u /data/data/$PKG" < /dev/null 2>/dev/null | tr -d '\r'
-}
-
-# wipe_files: Documents/QZ of the previous side removed by the app uid while it is installed - files of an
-# uninstalled app belong to another uid and bring the "previous installation" box (T-514, run 43015224696)
-wipe_files() {
-  local uid
-  uid=$(app_uid)
-  if [ -n "$uid" ]; then
-    adb shell am force-stop "$PKG" < /dev/null > /dev/null 2>&1
-    adb shell "su $uid,$uid,9997 sh -c 'rm -rf $QZDIR'" < /dev/null >> "$STEPLOG" 2>&1
+# lang <case>: General Options -> the App Language list open and closed again
+lang() {
+  local c=$1
+  settings_open || return 1
+  tap_ui '^General Options$' '^App Language:$' || return 1
+  emu_sleep 2
+  shot "$c-1-general"
+  # the field reads its value: Auto (System) with no saved language (dump of t508 42890148192)
+  tap_ui '^Auto \(System\)$' '^Italian$' --first || return 1
+  emu_sleep 2
+  shot "$c-2-list"
+  # the list is open: items the field alone does not show
+  expect "$c-2-list" '^Italian$' "list open (Italian)" --any
+  expect "$c-2-list" '^Japanese$' "list open (Japanese)" --any
+  adb shell input keyevent KEYCODE_BACK < /dev/null > /dev/null 2>&1
+  emu_sleep 2
+  if ! wait_gone '^Japanese$' 10; then
+    fail "$c: the list did not close on back"
+    shot "$c-2-not-closed" now
+    return 1
   fi
-  adb uninstall "$PKG" < /dev/null > /dev/null 2>&1
-  if adb shell "ls -d $QZDIR" < /dev/null > /dev/null 2>&1; then
-    adb shell "su 0 ls -lnR $QZDIR" < /dev/null >> "$STEPLOG" 2>&1
-    proves_nothing "$QZDIR left from the previous side (uid ${uid:-none})"
-  fi
+  say "$c: list closed"
 }
 
-# programs: 30 small programs of its own, so the list scrolls in both looks whatever the app brings
-programs() {
-  local uid i files
-  uid=$(app_uid)
-  for i in $(seq -w 1 30); do
-    printf '<workout_file>\n<author>QZ emu</author>\n<name>Emu %s</name>\n<description>Program %s</description>\n<sportType>bike</sportType>\n<workout>\n<SteadyState Duration="300" Power="0.6"/>\n</workout>\n</workout_file>\n' "$i" "$i" > "Emu$i.zwo"
-    adb push "Emu$i.zwo" "/data/local/tmp/Emu$i.zwo" < /dev/null > /dev/null 2>&1
-  done
-  # by name: the app uid cannot list /data/local/tmp, a glob there stays as it is (run 43481969174)
-  files=$(for i in $(seq -w 1 30); do printf '/data/local/tmp/Emu%s.zwo ' "$i"; done)
-  adb shell "su $uid,$uid,9997 sh -c 'cp $files $QZDIR/training/'" < /dev/null >> "$STEPLOG" 2>&1
-  i=$(adb shell "ls $QZDIR/training" < /dev/null 2>/dev/null | grep -c '^Emu')
-  say "programs pushed: $i"
-  [ "$i" -ge 30 ] || proves_nothing "programs: $i of 30 in the training folder"
+# import <case>: Workouts History -> the import button (named "Import FIT File...",
+# WorkoutsHistory.qml:281) -> the menu with "Import from QZ Folder..."
+import() {
+  local c=$1
+  back_to "$HOME_RX" 20 || return 1
+  open_drawer '^Workouts History$' || return 1
+  tap_ui '^Workouts History$' '^Calendar$' || return 1
+  emu_sleep 2
+  tap_ui '^Import FIT File\.\.\.$' '^Import from QZ Folder\.\.\.$' || return 1
+  emu_sleep 1
+  shot "$c-3-import"
+  expect "$c-3-import" '^Import from QZ Folder\.\.\.$' "import menu open"
+  adb shell input keyevent KEYCODE_BACK < /dev/null > /dev/null 2>&1
+  emu_sleep 2
 }
 
-# bar <case> <modern>: the list at rest, then while a finger drags it slowly (3 s), a frame at 1.5 s
-bar() {
-  local c=$1 modern=$2
-  start_case "$c" ui_modern=$modern fakedevice_treadmill=true android_documents_folder=true || return 1
-  open_drawer '^Open Train Program$' && tap_ui '^Open Train Program$' '^Other folders$' || return 1
-  emu_sleep 4
-  shot "$c-1-rest"
-  say "drag the list up slowly"
-  # the drag and the frame in one device shell: from the host, adb starts the swipe a second or more late
-  # and the frame at 1.2 s showed the list not yet moving (run 43482740649)
-  adb shell "input swipe 700 2000 700 900 3000 & sleep 1.5; screencap -p /data/local/tmp/moving.png; wait"     < /dev/null >> "$STEPLOG" 2>&1
-  adb exec-out cat /data/local/tmp/moving.png < /dev/null > "$c-2-moving.png" 2>/dev/null
-  [ -s "$c-2-moving.png" ] || fail "$c: no frame while moving"
-  sleep 0.3
-  adb exec-out screencap -p < /dev/null > "$c-3-after.png" 2>/dev/null
-  emu_sleep 3
-  shot "$c-4-stopped"
-  find_ui '^Other folders$' || fail "$c: the list page left during the drag"
-  back_to "$HOME_RX" 20
+# modern <case> <theme>
+modern() {
+  start_case "$1" ui_modern=true ui_theme_mode="$2" fakedevice_treadmill=true || return 1
+  lang "$1" && import "$1"
 }
 
-# qml_quiet: no QML warning of the changed files from the head processes (pid lines of start_case)
-qml_quiet() {
-  local pid n=0 found
-  logcat_stop
-  for pid in $(grep -a '^pid h' "$STEPLOG" | cut -d' ' -f3); do
-    n=$(( n + 1 ))
-    found=$(awk -v p="$pid" '$3 == p' full_logcat.txt | grep -a 'TrainingProgramsList\(JS\)\?.qml:' | head -5)
-    if [ -n "$found" ]; then
-      echo "$found" >> "$STEPLOG"
-      fail "check qml: pid $pid: QML warnings of TrainingProgramsList*.qml"
-    fi
-  done
-  if [ "$n" = 0 ]; then
-    fail "check qml: no head pid in steps.log - QML warnings not checked"
-  elif [ ! -s full_logcat.txt ]; then
-    fail "check qml: full_logcat.txt is empty"
-  else
-    grep -q '^!! check qml' "$STEPLOG" || say "check qml: no TrainingProgramsList*.qml warning from $n head processes: OK"
-  fi
+classic() {
+  start_case "$1" ui_modern=false fakedevice_treadmill=true || return 1
+  lang "$1"
 }
 
 emu_init
@@ -91,14 +67,30 @@ logcat_start
 
 for side in b h; do
   if [ "$side" = b ]; then apk=apk-base/android-debug.apk; else apk=apk-head/android-debug.apk; fi
+  side_on "$side" "$apk" || continue
   say "== $side: start"
-  wipe_files
-  install_apk "$apk"
-  start_case "${side}0" ui_modern=false fakedevice_treadmill=true android_documents_folder=true
-  programs
-  bar "${side}c" false
-  bar "${side}m" true
+  install_apk "$apk" || continue
+  modern "${side}l" light
+  modern "${side}d" dark
+  classic "${side}c"
 done
 
-qml_quiet
+# no QML warning of the changed files from the head processes (pid lines of start_case)
+logcat_stop
+n=0
+for pid in $(grep -a '^pid h' "$STEPLOG" | cut -d' ' -f3); do
+  n=$(( n + 1 ))
+  found=$(awk -v p="$pid" '$3 == p' full_logcat.txt | grep -a -E '(UiComboBox|UiMenuBackground|WorkoutsHistory)\.qml:' | head -5)
+  if [ -n "$found" ]; then
+    echo "$found" >> "$STEPLOG"
+    fail "check qml: pid $pid: QML warnings of the changed files"
+  fi
+done
+if [ "$n" = 0 ]; then
+  grep -q '== partial run' "$STEPLOG" || fail "check qml: no head pid in steps.log - QML warnings not checked"
+elif [ ! -s full_logcat.txt ]; then
+  fail "check qml: full_logcat.txt is empty"
+else
+  grep -q '^!! check qml' "$STEPLOG" || say "check qml: no warning of the changed files from $n head processes: OK"
+fi
 finish

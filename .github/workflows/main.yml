@@ -1,20 +1,34 @@
-# Test only (T-537): the scroll bar of the training program list - frames of feat/modern-ui (base) and of
-# T-537 on it (head), classic and modern look, at rest and while dragged, API 30 and 35
+# emu-lib: tools/emu/workflow.yml sha 902e23f65e81 - edit there, then tools/emu/sync.py (T-505)
+# Test only: the emulator scenario .github/emu.sh of an emu branch on the APK of two builds (T-505, T-534).
+# One source: tools/emu/workflow.yml of the work folder; `tools/emu/sync.py wt/<name> --workflow` writes it as
+# .github/workflows/main.yml of the branch. A task input of its own (PAGES of test/t495-emu): edit the copy -
+# sync then keeps it (edited) and says so.
+#
+# A full run: head and base, cases and apis by default. An intermediate run after a fix (T-534): only the new
+# cases (cases), one API (apis: [30]), no side before (base empty) - minutes instead of 20-30; the run says
+# "== partial run" in steps.log and its artifact ends in -part. The last run before the beta and a PR is a
+# full one (qz-ci-build).
 name: CI
+run-name: emu ${{ inputs.cases || 'all cases' }}, API ${{ inputs.apis }}${{ inputs.base == '' && ', no base' || '' }}
 
 on:
   workflow_dispatch:
     inputs:
       head:
-        description: run id of the branch build with the fdroid-android-trial artifact
+        description: run id of the build after the change, with the fdroid-android-trial artifact
         required: true
       base:
-        description: run id of the build before the change with the fdroid-android-trial artifact
-        required: true
-      pages:
-        description: lists (PR 6a-1) or service (PR 6a-2)
+        description: run id of the build before the change (fdroid-android-trial); empty - no side before
         required: false
-        default: lists
+        default: ''
+      cases:
+        description: "cases of emu.sh: globs of <case> or <function>/<case>, by spaces or commas (landopen/hc); empty - all"
+        required: false
+        default: ''
+      apis:
+        description: API levels, a JSON list ([30] for an intermediate run)
+        required: false
+        default: '[30, 35]'
       log_debug:
         description: log_debug for the run
         required: false
@@ -28,7 +42,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        api: [30, 35]
+        api: ${{ fromJSON(inputs.apis) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -49,7 +63,8 @@ jobs:
           run-id: ${{ inputs.head }}
           github-token: ${{ github.token }}
 
-      - name: Download the master APK
+      - name: Download the APK before the change
+        if: ${{ inputs.base != '' }}
         uses: actions/download-artifact@v4
         with:
           name: fdroid-android-trial
@@ -69,7 +84,7 @@ jobs:
         uses: ReactiveCircus/android-emulator-runner@v2
         env:
           LOG_DEBUG: ${{ inputs.log_debug }}
-          PAGES: ${{ inputs.pages }}
+          EMU_CASES: ${{ inputs.cases }}
         with:
           api-level: ${{ matrix.api }}
           target: google_apis
@@ -82,7 +97,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.head }}-t537-api${{ matrix.api }}
+          name: emulator-logcat-${{ inputs.head }}-api${{ matrix.api }}${{ (inputs.cases != '' || inputs.base == '' || inputs.apis != '[30, 35]') && '-part' || '' }}
           path: |
             *.png
             raw-?c-*

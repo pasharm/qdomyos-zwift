@@ -1,4 +1,4 @@
-// emu-lib: tools/emu/A11yDriver.java sha 88bcd73d9116 - edit there, then tools/emu/sync.py (T-505)
+// emu-lib: tools/emu/A11yDriver.java sha a1d9b259d646 - edit there, then tools/emu/sync.py (T-505)
 // Test only (T-222, T-487; one source since T-505: tools/emu/A11yDriver.java of the work folder, copied
 // into .github/ of a branch by tools/emu/sync.py): send the app the accessibility actions TalkBack sends,
 // without TalkBack (or with it on, see --keep; the image has Google TalkBack 15). Runs through app_process
@@ -7,8 +7,9 @@
 //
 //   CLASSPATH=/data/local/tmp/a11y.jar app_process / A11yDriver [--keep] step [step ...]
 //   step: list | sleep:<ms> | find:<desc> | focus:<desc> | click:<desc> | fwd:<desc> | back:<desc>
-//         | swipe:right|left|up|down | dtap | touch:<desc> | focused | mark:<text> | click=<name>
-//         | fwd@<x>,<y> | drag@<x>,<y1>,<y2>
+//         | swipe:right|left|up|down | dtap | touch:<desc> | touchat:<x>,<y> | focused | mark:<text>
+//         | click=<name> | fwd@<x>,<y> | drag@<x>,<y1>,<y2>
+// touchat: a resting finger at a point, for a node with no description in the tree.
 // <desc> is the start of a content description; the first node in tree order that matches is used.
 // click=<name>: ACTION_CLICK on the one node on the screen whose content description or text is exactly
 // <name> (lib.sh tap_ui --a11y); none - "NOT FOUND", two or more - "AMBIGUOUS", no click.
@@ -115,6 +116,19 @@ public class A11yDriver {
             return;
         }
         if (verb.equals("focused")) {
+            printFocused(step);
+            return;
+        }
+        if (verb.equals("touchat")) {
+            // touch exploration at a point: for a row with no name in the tree (T-514: the classic
+            // program rows - an empty delegate text, the name Text not in the tree)
+            int comma = arg.indexOf(',');
+            int x = Integer.parseInt(arg.substring(0, comma).trim());
+            int y = Integer.parseInt(arg.substring(comma + 1).trim());
+            Log.i("A11yDriver", step);
+            System.out.println(step + ": at " + x + "," + y);
+            stroke(x, y, x + 4, y + 4, 600);
+            listen(step, 2500);
             printFocused(step);
             return;
         }
