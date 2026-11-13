@@ -1,26 +1,70 @@
-# Test only (T-551): a stand-in for an iOS branch - its concurrency cancels runs in progress, like test/t550-ios.
-# Started by hand it holds the branch busy; the start-ios job of a trim_ci.py --then-ios build must then refuse
-# and leave this run alive.
+# Test only (T-551, after review): no QZ build - android-build is a stub; start-ios of trim_ci.py --then-ios
+# starts the stand-in test/t551-ios. The first run must start it and take the run URL from gh's output, the
+# second (stand-in still busy, cancel-in-progress) must refuse.
 name: CI
 
+# test branch: android-build only, manual trigger (trimmed from upstream main.yml)
 on:
   workflow_dispatch:
-    inputs:
-      side:
-        description: base or head
-        required: true
-        default: head
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
-  hold:
+  android-build:
     runs-on: ubuntu-latest
-    timeout-minutes: 40
     steps:
-      - name: Hold the branch busy
+      - run: echo stub build
+
+  start-ios:
+    # trim_ci.py --then-ios (T-551): the iOS simulator builds QZ from its own branch - started at once, in parallel with the build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      # gh workflow run with GITHUB_TOKEN: a workflow_dispatch of this token does start a run (T-551)
+      actions: write
+      # main.yml of the target branch: does it cancel runs in progress (BUSY_GUARD)
+      contents: read
+    steps:
+      - name: Start iOS simulator (main.yml of test/t551-ios)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REF: 'test/t551-ios'
+          WHAT: 'iOS simulator'
+          IN0: 'head'
         run: |
-          echo "side=${{ inputs.side }}"
-          sleep 1800
+          set -o pipefail
+          busy=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow main.yml --branch "$REF" --limit 20 \
+            --json url,status --jq '[.[] | select(.status != "completed") | .url] | join(" ")')
+          if [ -n "$busy" ]; then
+            wf=$(gh api "repos/$GITHUB_REPOSITORY/contents/.github/workflows/main.yml?ref=$REF" --jq .content | base64 -d)
+            if [ -z "$wf" ]; then
+              echo "::error::$WHAT not started: $REF has an unfinished run ($busy) and its main.yml could not be read"
+              exit 1
+            fi
+            cancels=$(printf '%s\n' "$wf" | grep -E 'cancel-in-progress:' | grep -Ev 'cancel-in-progress: *false' || true)
+            if [ -n "$cancels" ]; then
+              echo "::error::$WHAT not started: $REF has an unfinished run ($busy) and its main.yml cancels runs in progress - wait for it or start by hand"
+              echo "$WHAT NOT started: branch $REF busy ($busy), its main.yml has cancel-in-progress" >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
+            echo "$WHAT: unfinished run(s) on $REF, its main.yml does not cancel them - starting alongside: $busy"
+          fi
+          since=$(date -u -d '-30 seconds' +%Y-%m-%dT%H:%M:%SZ)
+          started=$(gh workflow run main.yml --repo "$GITHUB_REPOSITORY" --ref "$REF" -f "side=$IN0" 2>&1) || { echo "$started"; exit 1; }
+          echo "$started"
+          url=$(printf '%s\n' "$started" | grep -o 'https://[^ ]*/actions/runs/[0-9]*' | head -n 1 || true)
+          for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+            [ -n "$url" ] && break
+            sleep 5
+            url=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow main.yml --branch "$REF" \
+              --event workflow_dispatch --limit 20 --json url,createdAt \
+              --jq "[.[] | select(.createdAt >= \"$since\")] | first | .url // empty")
+          done
+          if [ -n "$url" ]; then
+            echo "$WHAT run: $url"
+            echo "$WHAT run (branch $REF): $url" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::$WHAT started on $REF, but its run was not found within a minute: gh run list --branch $REF"
+            echo "$WHAT started on branch $REF, run not found within a minute" >> "$GITHUB_STEP_SUMMARY"
+          fi
