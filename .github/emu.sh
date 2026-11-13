@@ -273,15 +273,18 @@ qml_side() {
   sort -u -o "qml_$side.txt" "qml_$side.txt"
 }
 qml_compare() {
+  local o
   logcat_stop
   qml_side b
+  qml_side o
   qml_side h
-  say "== GPXList.qml messages: base $(wc -l < qml_b.txt) kinds, head $(wc -l < qml_h.txt) kinds"
-  cat qml_b.txt | sed 's/^/  b: /' >> "$STEPLOG"
-  cat qml_h.txt | sed 's/^/  h: /' >> "$STEPLOG"
+  say "== GPXList.qml messages: base $(wc -l < qml_b.txt) kinds, old head $(wc -l < qml_o.txt), head $(wc -l < qml_h.txt)"
+  for o in b o h; do sed "s/^/  $o: /" "qml_$o.txt" >> "$STEPLOG"; done
   comm -13 qml_b.txt qml_h.txt > qml_new.txt
   if ! grep -a -q '^pid h' "$STEPLOG"; then
     fail "check qml: no head pid in steps.log - not checked"
+  elif ! grep -a -q '^pid b' "$STEPLOG"; then
+    fail "check qml: no base pid in steps.log - nothing to compare with"
   elif [ -s qml_new.txt ]; then
     sed 's/^/  new: /' qml_new.txt >> "$STEPLOG"
     fail "check qml: GPXList.qml messages on the head side the base has not ($(wc -l < qml_new.txt))"
@@ -290,11 +293,95 @@ qml_compare() {
   fi
 }
 
+# ---- T-530, second round: the page opened a second time in the same process, and a turn
+# (review of dfc9fee42: Component.onCompleted of the second page finds the old path and a map not ready ->
+# map.visibleRegion = path; Qt 5.15.0 qdeclarativegeomap.cpp:2283-2284 mapReadyChanged -> our fit with 24 px,
+# then :2317-2319 the queued fitViewportToGeoShape(m_visibleRegion) with the default 10 px; the head without
+# visibleRegion waits for onMapReadyChanged alone)
+
+# open_gpx <case>: the page from the menu, the restore question answered
+open_gpx() {
+  local land
+  if [ "$MODERN" = true ]; then land="^$LONG\$"; else land='^Other folders$|^&?No$'; fi
+  open_drawer '^Open GPX$' && tap_ui '^Open GPX$' "$land" && no_restore "$1"
+}
+
+# shot_at <shot> <route> <from> <seconds>: the frame of the page that just opened after <seconds> (no still:
+# the queued fit is what is looked for), the line measured; the route by the log
+shot_at() {
+  local s=$1 route=$2 from=$3
+  emu_sleep "$4"
+  shot "$s" now
+  line_of "$s"
+  selected_by_log "$s" "$route" "$from"
+}
+
+# reopen <case> <modern>: first open (Box Hill at once) - frame 1; back home, open again (Box Hill again,
+# the same path) - frames 2 at 3 s and 2b at 8 s; Govi to Hood picked - frame 3; back, open again (Box Hill
+# after another path) - frames 4 at 3 s and 4b at 8 s
+reopen() {
+  local c=$1 from
+  MODERN=$2
+  if [ "$MODERN" = true ]; then EMU_MASKS=""; else EMU_MASKS="0,975,2560,1080"; fi
+  start_case "$c" ui_modern="$MODERN" fakedevice_treadmill=true || return 1
+  SCR_W=1440; SCR_H=2560
+  rotate 0
+  from=$(log_lines)
+  say "== $c: first open"
+  open_gpx "$c" || { back_to "$HOME_RX" 20; return 1; }
+  emu_sleep 3
+  still
+  shot_at "$c-1-first" "$LONG" "$from" 0
+  back_to "$HOME_RX" 20 || return 1
+  from=$(log_lines)
+  say "== $c: second open, the same route"
+  open_gpx "$c" || { back_to "$HOME_RX" 20; return 1; }
+  shot_at "$c-2-second" "$LONG" "$from" 3
+  shot_at "$c-2b-second-8s" "$LONG" "$from" 5
+  pick "$c-3-short" "$SHORT" 4 || { back_to "$HOME_RX" 20; return 1; }
+  back_to "$HOME_RX" 20 || return 1
+  from=$(log_lines)
+  say "== $c: third open, after Govi to Hood"
+  open_gpx "$c" || { back_to "$HOME_RX" 20; return 1; }
+  shot_at "$c-4-after-short" "$LONG" "$from" 3
+  shot_at "$c-4b-after-short-8s" "$LONG" "$from" 5
+  back_to "$HOME_RX" 20
+  return 0
+}
+
+# turn <case> <modern>: Box Hill upright, then the phone turned with the route on the map - what the map does
+# (no fit on a turn in the code: onMapReadyChanged comes once)
+turn() {
+  local c=$1 from
+  MODERN=$2
+  if [ "$MODERN" = true ]; then EMU_MASKS=""; else EMU_MASKS="0,975,2560,1080"; fi
+  start_case "$c" ui_modern="$MODERN" fakedevice_treadmill=true || return 1
+  SCR_W=1440; SCR_H=2560
+  rotate 0
+  from=$(log_lines)
+  open_gpx "$c" || { back_to "$HOME_RX" 20; return 1; }
+  emu_sleep 3
+  still
+  shot_at "$c-1-upright" "$LONG" "$from" 0
+  if rotate 1; then
+    still
+    shot_at "$c-2-turned" "$LONG" "$from" 0
+    rotate 0 && { still; shot_at "$c-3-upright-again" "$LONG" "$from" 0; }
+  fi
+  back_to "$HOME_RX" 20
+  rotate 0
+  return 0
+}
+
 emu_init
 logcat_start
 
-for side in b h; do
-  if [ "$side" = b ]; then apk=apk-base/android-debug.apk; else apk=apk-head/android-debug.apk; fi
+for side in b o h; do
+  case $side in
+    b) apk=apk-base/android-debug.apk ;;
+    o) apk=apk-old/android-debug.apk ;;
+    h) apk=apk-head/android-debug.apk ;;
+  esac
   side_on "$side" "$apk" || continue
   say "== $side: start"
   wipe_files
@@ -303,6 +390,10 @@ for side in b h; do
   gpx "${side}mp" true 0
   gpx "${side}cl" false 1
   gpx "${side}ml" true 1
+  reopen "${side}c2" false
+  reopen "${side}m2" true
+  turn "${side}ct" false
+  turn "${side}mt" true
 done
 
 qml_compare
