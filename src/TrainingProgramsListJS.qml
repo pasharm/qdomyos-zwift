@@ -590,6 +590,9 @@ ColumnLayout {
                             }
                             Layout.fillWidth: true
                             Layout.margins: 10
+                            // side by side the scroll bar ends the column: no margin after it, the column
+                            // spacing and the frame of the chart are the gap to the chart (16 with the modern frame)
+                            Layout.rightMargin: detailBody.split ? 0 : 10
                             spacing: 0
                             // Modern look: an empty line kept its height and margins, a gap above the chart
                             visible: !window.ui.modern || rootItem.previewWorkoutDescription !== ""
