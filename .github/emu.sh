@@ -1338,7 +1338,9 @@ side_x() {
   fi
   back_to "$HOME_RX" 20
   mark "x: history page"
-  if open_drawer '^Workouts History$' && tap_ui '^Workouts History$' '^Import workouts$' 40; then
+  # landing: No of the recovery question - with the grant released, the import that found nothing asks it
+  # (homeform::importFitFilesToHistory, master; run 43371580509, frame fail-1794547845)
+  if open_drawer '^Workouts History$' && tap_ui '^Workouts History$' '^&?No$' 60; then
     for i in $(seq 1 20); do
       grep -a -q "handleFitFolderResult requestCode=.* savedGrant=true" full_logcat.txt && break
       emu_sleep 3
@@ -1350,7 +1352,14 @@ side_x() {
       "") fail "!! check x-release: no quiet import by the saved grant - the run proves nothing" ;;
       *) fail "!! check x-release: the quiet import found workouts ($line), the grant stays - the run proves nothing" ;;
     esac
-    shot x-4-history
+    shot x-4-history-question
+    expect x-4-history-question "$HISTORY_RX" 'the recovery question of the history after the release' --any
+    if find_ui '^&?No$'; then
+      set -- $EMU_AT
+      say "tap 'No' at $1 $2"
+      adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
+      emu_sleep 3
+    fi
   fi
   back_to "$HOME_RX" 20
   mark "x: GPX page after the release"
