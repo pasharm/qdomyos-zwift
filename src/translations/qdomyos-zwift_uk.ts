@@ -1502,8 +1502,12 @@ Do you want to update QZ settings?</source>
 <context>
     <name>UiProgress</name>
     <message>
-        <source>Restoring files: %1 of %2</source>
-        <translation>Відновлення файлів: %1 з %2</translation>
+        <source>Restoring files of the previous installation</source>
+        <translation>Відновлення файлів попереднього встановлення</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>Відновлення файлів попереднього встановлення: %1 з %2</translation>
     </message>
 </context>
 <context>
