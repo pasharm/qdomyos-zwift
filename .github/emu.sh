@@ -30,13 +30,15 @@ wipe_files() {
 
 # programs: 30 small programs of its own, so the list scrolls in both looks whatever the app brings
 programs() {
-  local uid i
+  local uid i files
   uid=$(app_uid)
   for i in $(seq -w 1 30); do
     printf '<workout_file>\n<author>QZ emu</author>\n<name>Emu %s</name>\n<description>Program %s</description>\n<sportType>bike</sportType>\n<workout>\n<SteadyState Duration="300" Power="0.6"/>\n</workout>\n</workout_file>\n' "$i" "$i" > "Emu$i.zwo"
     adb push "Emu$i.zwo" "/data/local/tmp/Emu$i.zwo" < /dev/null > /dev/null 2>&1
   done
-  adb shell "su $uid,$uid,9997 sh -c 'cp /data/local/tmp/Emu*.zwo $QZDIR/training/'" < /dev/null >> "$STEPLOG" 2>&1
+  # by name: the app uid cannot list /data/local/tmp, a glob there stays as it is (run 43481969174)
+  files=$(for i in $(seq -w 1 30); do printf '/data/local/tmp/Emu%s.zwo ' "$i"; done)
+  adb shell "su $uid,$uid,9997 sh -c 'cp $files $QZDIR/training/'" < /dev/null >> "$STEPLOG" 2>&1
   i=$(adb shell "ls $QZDIR/training" < /dev/null 2>/dev/null | grep -c '^Emu')
   say "programs pushed: $i"
   [ "$i" -ge 30 ] || proves_nothing "programs: $i of 30 in the training folder"
