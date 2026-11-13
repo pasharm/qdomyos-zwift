@@ -253,6 +253,17 @@ ColumnLayout {
                     }
                 }
 
+                // the restore of a previous install: above the list, which moves down for that time
+                UiProgress {
+                    id: restoreProgress
+                    Layout.fillWidth: true
+                    Layout.leftMargin: window.ui.modern ? window.ui.pageMargin : 16
+                    Layout.rightMargin: window.ui.modern ? window.ui.pageMargin : 16
+                    topPadding: window.ui.modern ? 0 : 8
+                    done: rootItem.folderRestoreDone
+                    total: rootItem.folderRestoreTotal
+                }
+
                 // The list in a box of the full page width: in the modern look the cards keep the page
                 // margin and the scroll bar goes into it, at the screen edge as on the settings page,
                 // not over the right edge of the cards
@@ -260,6 +271,8 @@ ColumnLayout {
                     id: listBox
                     Layout.fillWidth: true
                     Layout.fillHeight: true
+                    // the gap above the list is in the progress while it shows (UiProgress)
+                    Layout.topMargin: restoreProgress.visible ? -parent.spacing : 0
 
                     ListView {
                         anchors.fill: parent
@@ -438,17 +451,6 @@ ColumnLayout {
                             color: window.ui.textMuted
                         }
 
-                        UiProgress {
-                            parent: list
-                            // in the middle of an empty list, on its top edge once it shows rows
-                            compact: list.count > 0
-                            width: compact ? parent.width : parent.width - 32
-                            x: Math.round((parent.width - width) / 2)
-                            y: compact ? 0 : Math.round((parent.height - height) / 2)
-                            z: 4
-                            done: rootItem.folderRestoreDone
-                            total: rootItem.folderRestoreTotal
-                        }
                     }
                 }
 

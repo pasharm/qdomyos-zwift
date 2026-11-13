@@ -1517,8 +1517,12 @@ QZ ayarları güncellensin mi?</translation>
 <context>
     <name>UiProgress</name>
     <message>
-        <source>Restoring files: %1 of %2</source>
-        <translation>Dosyalar geri yükleniyor: %1 / %2</translation>
+        <source>Restoring files of the previous installation</source>
+        <translation>Önceki kurulumun dosyaları geri yükleniyor</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>Önceki kurulumun dosyaları geri yükleniyor: %1 / %2</translation>
     </message>
 </context>
 <context>

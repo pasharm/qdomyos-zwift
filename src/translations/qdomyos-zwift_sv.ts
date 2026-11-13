@@ -1513,8 +1513,12 @@ Vill du uppdatera QZ-inställningarna?</translation>
 <context>
     <name>UiProgress</name>
     <message>
-        <source>Restoring files: %1 of %2</source>
-        <translation>Återställer filer: %1 av %2</translation>
+        <source>Restoring files of the previous installation</source>
+        <translation>Återställer filer från den tidigare installationen</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>Återställer filer från den tidigare installationen: %1 av %2</translation>
     </message>
 </context>
 <context>

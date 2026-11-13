@@ -160,6 +160,20 @@ ColumnLayout {
             }
         }
 
+        // the restore of a previous install: above the list, which moves down for that time
+        UiProgress {
+            id: modernRestoreProgress
+            shown: window.ui.modern
+            Layout.row: 1
+            Layout.column: 0
+            Layout.fillWidth: true
+            Layout.preferredWidth: 100
+            Layout.leftMargin: window.ui.pageMargin
+            Layout.rightMargin: gpxPage.sideBySide ? 4 : window.ui.pageMargin
+            done: rootItem.folderRestoreDone
+            total: rootItem.folderRestoreTotal
+        }
+
         // Modern look: cards like the profile list. A tap on a folder opens it; a tap on a
         // route selects it and shows it on the map, a second tap or Open loads it.
         // A box of the list cell without the side margins: the cards keep them and the scroll
@@ -168,8 +182,12 @@ ColumnLayout {
         Item {
             id: modernListBox
             visible: window.ui.modern
-            Layout.row: 1
+            Layout.row: 2
             Layout.column: 0
+            // the gap above the list is in the progress while it shows (UiProgress). Side by
+            // side the map spans the row of the progress, so the row is kept with its spacing
+            // even while the progress is hidden: take that spacing back too
+            Layout.topMargin: modernRestoreProgress.visible || gpxPage.sideBySide ? -parent.rowSpacing : 0
             Layout.fillWidth: true
             Layout.fillHeight: gpxPage.sideBySide
             Layout.preferredWidth: 100
@@ -295,17 +313,6 @@ ColumnLayout {
                     text: qsTr("No GPX files here")
                     color: window.ui.textMuted
                 }
-
-                UiProgress {
-                    parent: modernList
-                    // in the middle of an empty list, on its top edge once it shows rows
-                    compact: modernList.count > 0
-                    width: compact ? parent.width : parent.width - 32
-                    x: Math.round((parent.width - width) / 2)
-                    y: compact ? 0 : Math.round((parent.height - height) / 2)
-                    done: rootItem.folderRestoreDone
-                    total: rootItem.folderRestoreTotal
-                }
             }
         }
 
@@ -341,6 +348,17 @@ ColumnLayout {
                      text: "←"
                      onClicked: folderModel.folder = folderModel.parentFolder
                 }
+            }
+
+            // the restore of a previous install: above the list, which moves down for that time
+            UiProgress {
+                shown: !window.ui.modern
+                Layout.fillWidth: true
+                Layout.leftMargin: 16
+                Layout.rightMargin: 16
+                topPadding: 8
+                done: rootItem.folderRestoreDone
+                total: rootItem.folderRestoreTotal
             }
 
             ListView {
@@ -445,18 +463,6 @@ ColumnLayout {
                 Component.onCompleted: {
 
                 }
-
-                UiProgress {
-                    parent: list
-                    // in the middle of an empty list, on its top edge once it shows rows
-                    compact: list.count > 0
-                    width: compact ? parent.width : parent.width - 32
-                    x: Math.round((parent.width - width) / 2)
-                    y: compact ? 0 : Math.round((parent.height - height) / 2)
-                    z: 4
-                    done: rootItem.folderRestoreDone
-                    total: rootItem.folderRestoreTotal
-                }
             }
         }
 
@@ -467,9 +473,9 @@ ColumnLayout {
             // Padding, not a margin: the content moves in, the scroll bar stays at the edge
             rightPadding: window.ui.modern && !gpxPage.sideBySide ? window.ui.pageMargin : window.contentSideMargin
             leftPadding: window.ui.modern && !gpxPage.sideBySide ? window.ui.pageMargin : 0
-            Layout.row: window.ui.modern && !gpxPage.sideBySide ? 2 : 0
+            Layout.row: window.ui.modern && !gpxPage.sideBySide ? 3 : 0
             Layout.column: gpxPage.sideBySide ? 1 : 0
-            Layout.rowSpan: window.ui.modern && gpxPage.sideBySide ? 3 : 1
+            Layout.rowSpan: window.ui.modern && gpxPage.sideBySide ? 4 : 1
             Layout.topMargin: window.ui.modern && gpxPage.sideBySide ? 8 : 0
             Layout.bottomMargin: window.ui.modern && gpxPage.sideBySide ? 8 : 0
             Layout.fillHeight: true
@@ -623,7 +629,7 @@ ColumnLayout {
         // (as on the training programs page); a long label wraps instead of eliding
         RowLayout {
             visible: window.ui.modern
-            Layout.row: gpxPage.sideBySide ? 2 : 3
+            Layout.row: gpxPage.sideBySide ? 3 : 4
             Layout.column: 0
             Layout.fillWidth: true
             Layout.preferredWidth: 100

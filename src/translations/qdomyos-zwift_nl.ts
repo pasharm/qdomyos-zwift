@@ -1517,8 +1517,12 @@ Wil je de QZ-instellingen bijwerken?</translation>
 <context>
     <name>UiProgress</name>
     <message>
-        <source>Restoring files: %1 of %2</source>
-        <translation>Bestanden worden hersteld: %1 van %2</translation>
+        <source>Restoring files of the previous installation</source>
+        <translation>Bestanden van de eerdere installatie worden hersteld</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>Bestanden van de eerdere installatie worden hersteld: %1 van %2</translation>
     </message>
 </context>
 <context>
