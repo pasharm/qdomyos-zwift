@@ -22,6 +22,11 @@ HomeForm {
             return true
         if (typeof rootItem === "undefined" || !rootItem || !rootItem.info)
             return false
+        // "Connecting..." is the start value of homeform::m_info, kept by equipment that does not
+        // write its own status (the fake devices): connected, the drawer header says "Device
+        // connected", and the line would read "Searching for the device..." beside the green card
+        if (rootItem.info === "Connecting..." && window.equipmentConnected)
+            return false
         return !rootItem.infoDeviceFound
     }
     background: Rectangle {
