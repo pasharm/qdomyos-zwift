@@ -15,7 +15,8 @@
 #    folder" option, o - API 30 without it, g - the grant from the history recovery, r - .restore_ copies, p - a
 #    restore under the open profiles list, t - under the open programs list, s - under the open settings file
 #    list, k - the question by a .deleted_ marker alone, c - the picker cancelled, u - one subfolder picked,
-#    m - h in the modern look
+#    m - h in the modern look, n - a first install in the modern look: Other folders of the new rows, the GPX
+#    page in landscape, Restore files with nothing to restore (the toast "No files...")
 . .github/lib.sh
 . .github/qz.sh
 
@@ -267,6 +268,8 @@ yes_picker_allow() {
     near picker "no dump of the Allow box: 'Allow' by its place $3 $4"
   fi
   adb shell input tap "$3" "$4" < /dev/null > /dev/null 2>&1
+  # AFTER_ALLOW: a function of the side to run at once after Allow (side n: the toast)
+  if [ -n "$AFTER_ALLOW" ]; then $AFTER_ALLOW; fi
 }
 
 # restored_check <check name>: the line of the folder pass (it runs in a thread; qDebug, log_debug), three
@@ -1069,7 +1072,222 @@ side_w() {
   wrap_up
 }
 
+# ---- n: a first install, no previous one, the modern look. No question; the button is there until a grant
+# (qzFolderRestorable, no grant yet). "Other folders" of the new rows opens the picker of the system on every
+# page (the handlers of master); the GPX page in landscape (sideBySide: the row under the list, left of the
+# map); Restore files, Yes, Documents/QZ, Allow - nothing of a previous install there: the pass restores 0 and,
+# asked by the user, says so ("No files of a previous installation were found."); the button goes
+NOFILES_RX='^No files of a previous installation were found[.]$'
+
+# other_folders <shot>: Other folders on the open page - the picker of the system on top, Back, the page again
+other_folders() {
+  local i
+  # no tap_ui: its landing is a control of QZ, and the picker is another app (see yes_picker_allow)
+  still
+  dump
+  if find_ui '^Other folders$'; then
+    set -- "$1" $EMU_AT
+    say "tap 'Other folders' at $2 $3"
+    adb shell input tap "$2" "$3" < /dev/null > /dev/null 2>&1
+  else
+    fail "check $1: no Other folders on the page ($EMU_WHY)"
+    return 1
+  fi
+  for i in $(seq 1 10); do
+    picker_on && break
+    emu_sleep 2
+  done
+  if picker_on; then
+    emu_sleep 3
+    shot "$1" now
+    say "check $1: Other folders opened the picker of the system: OK"
+  else
+    fail "check $1: Other folders did not open the picker"
+    return 1
+  fi
+  # Back may first go up a folder in the picker: again while it is on top, never more than 4 times
+  for i in 1 2 3 4; do
+    picker_on || break
+    adb shell input keyevent 4 < /dev/null > /dev/null 2>&1
+    emu_sleep 3
+  done
+  picker_on && { fail "check $1: the picker still on top after Back"; return 1; }
+  if wait_ui '^Other folders$' 15; then
+    say "check $1: back on the page after the picker: OK"
+  else
+    fail "check $1: not back on the page after the picker"
+  fi
+}
+
+# png_width <shot>: the width of the frame (PNG header) - 2560 in landscape on Nexus 6, 1440 upright
+png_width() {
+  od -An -tu1 -j16 -N4 "$1.png" 2>/dev/null | awk '{ print $1 * 16777216 + $2 * 65536 + $3 * 256 + $4 }'
+}
+
+# dump_wh <dump>: "width height" of the screen by the first node of a dump (its bounds are the window)
+dump_wh() {
+  grep -o 'bounds="\[0,0\]\[[0-9]*,[0-9]*\]"' "$1" 2>/dev/null | head -n 1 | tr -c '0-9\n' ' ' | awk '{ print $3, $4 }'
+}
+
+# landscape_row <shot>: the page side by side (GPXList sideBySide: two columns, the map on the right) - the
+# row of Other folders and Restore files in the left column, one row; the screen in landscape by the dump
+# and by the frame
+landscape_row() {
+  local a b wd wh
+  wd=$(png_width "$1")
+  wh=$(dump_wh "dumps/$1.xml")
+  set -- "$1" $wh
+  say "check $1: frame ${wd:-?} wide, dump window ${2:-?} x ${3:-?}"
+  if [ -z "$3" ] || [ "$2" -le "$3" ]; then
+    fail "!! check $1: the dump is not landscape - the run proves nothing"
+    return 1
+  fi
+  say "check $1: the screen is landscape: OK"
+  a=$(uifind "dumps/$1.xml" '^Other folders$' 2>/dev/null) || { fail "check $1: no Other folders"; return 1; }
+  b=$(uifind "dumps/$1.xml" '^Restore files$' 2>/dev/null) || { fail "check $1: no Restore files"; return 1; }
+  set -- "$1" $a $b "$2"
+  # "x y checkable checked x1 y1 x2 y2" twice: Other folders $2..$9, Restore files ${10}..${17}; ${18} - the
+  # width of the screen. One column (no sideBySide) puts the row under the list across the whole width;
+  # side by side the left column is about a third (preferredWidth 100 against the map's 200)
+  say "check $1: Other folders $6,$7..$8,$9, Restore files ${14},${15}..${16},${17}"
+  if [ "$2" -lt "${10}" ] && [ $(( $3 - ${11} )) -le 20 ] && [ $(( ${11} - $3 )) -le 20 ]; then
+    say "check $1: Restore files beside Other folders: OK"
+  else
+    fail "check $1: Restore files not beside Other folders"
+  fi
+  if [ "${16}" -lt $(( ${18} / 2 )) ]; then
+    say "check $1: the row in the left column (right edge ${16} of ${18}): OK"
+  else
+    fail "check $1: the row is not in the left column (right edge ${16} of ${18}) - not side by side"
+  fi
+}
+
+# toast_watch <prefix>: dumps one after another on the device and a frame a second, for ~16 s - the toast
+# lasts 3 s (Toast.qml), one look of wait_ui (dump, pull, sleep) takes longer; the dumps pulled as
+# dumps/<prefix>-<n>.xml, the frames as <prefix>-<n>.png
+toast_watch() {
+  local p i
+  adb shell rm -f "/data/local/tmp/$1-*" < /dev/null > /dev/null 2>&1
+  adb shell "for i in 1 2 3 4 5 6 7; do uiautomator dump /data/local/tmp/$1-\$i.xml; done" < /dev/null > /dev/null 2>&1 &
+  p=$!
+  adb shell "for i in 1 2 3 4 5 6 7 8 9 10 11 12; do screencap -p /data/local/tmp/$1-\$i.png; sleep 1; done" \
+    < /dev/null > /dev/null 2>&1
+  wait "$p"
+  mkdir -p dumps
+  for i in 1 2 3 4 5 6 7; do
+    adb pull "/data/local/tmp/$1-$i.xml" "dumps/$1-$i.xml" < /dev/null > /dev/null 2>&1
+  done
+  for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+    adb pull "/data/local/tmp/$1-$i.png" "$1-$i.png" < /dev/null > /dev/null 2>&1
+  done
+  say "toast_watch $1: $(ls dumps/$1-*.xml 2>/dev/null | wc -l) dumps, $(ls $1-*.png 2>/dev/null | wc -l) frames"
+}
+
+side_n() {
+  local i restored
+  UI_MODERN=true
+  mark "n: first install"
+  wipe_files
+  install_case apk-head/android-debug.apk
+  conf n || proves_nothing "n: the first start did not reach home"
+  NEW_UID=$(app_uid)
+
+  mark "n: GPX page"
+  if gpx_open '^Other folders$'; then
+    emu_sleep 4
+    question_shown 4 && fail "n: a question on a first install"
+    still
+    shot n-1-gpx
+    expect n-1-gpx '^Restore files$' 'the button on a first install (no grant yet)'
+    beside n-1-gpx
+    mark "n: GPX landscape"
+    adb shell settings put system accelerometer_rotation 0 < /dev/null > /dev/null 2>&1
+    adb shell settings put system user_rotation 1 < /dev/null > /dev/null 2>&1
+    emu_sleep 8
+    still
+    shot n-2-gpx-landscape
+    landscape_row n-2-gpx-landscape
+    adb shell settings put system user_rotation 0 < /dev/null > /dev/null 2>&1
+    emu_sleep 8
+    # upright again: the picker steps tap by upright places (yes_picker_allow)
+    dump
+    set -- $(dump_wh ui.xml)
+    if [ -n "$2" ] && [ "$1" -lt "$2" ]; then
+      say "check n-upright: the screen upright again ($1 x $2): OK"
+    else
+      fail "check n-upright: the screen not upright after user_rotation 0 (${1:-?} x ${2:-?})"
+    fi
+    mark "n: GPX other folders"
+    other_folders n-3-gpx-picker
+  fi
+  back_to "$HOME_RX" 20
+
+  mark "n: profiles page"
+  if profiles_open; then
+    emu_sleep 4
+    question_shown 3 && fail "n: a question on the profiles page"
+    other_folders n-4-profiles-picker
+  fi
+  back_to "$HOME_RX" 20
+
+  mark "n: programs page"
+  if programs_open; then
+    emu_sleep 4
+    other_folders n-5-programs-picker
+  fi
+  back_to "$HOME_RX" 20
+
+  mark "n: settings file page"
+  if load_settings_open; then
+    emu_sleep 3
+    other_folders n-6-settings-picker
+    still
+    shot n-7-settings-button
+    expect n-7-settings-button '^Restore files$' 'the restore button on the settings file page'
+    if tap_ui '^Restore files$' '^&?Yes$' 20; then
+      shot n-8-question
+      expect n-8-question "$QUESTION_RX" 'the question by the button' --any
+      mark "n: yes"
+      AFTER_ALLOW="toast_watch n-11-toast" yes_picker_allow n-9-picker n-10-allow
+      mark "n: allowed"
+      i=$(for f in dumps/n-11-toast-*.xml; do [ -s "$f" ] && uifind "$f" --count "$NOFILES_RX" --any 2>/dev/null; done \
+        | awk '$1 > 0 { n++ } END { print n + 0 }')
+      if [ "$i" -ge 1 ]; then
+        say "check n-toast: 'No files of a previous installation were found.' in $i dumps after Allow: OK"
+      else
+        fail "check n-toast: no 'No files of a previous installation were found.' toast in the dumps after Allow"
+      fi
+      if grep -a -q "handleRestoreFolderResult root=primary:Documents/QZ training=" full_logcat.txt; then
+        say "check n-root: the pass ran on Documents/QZ: OK"
+      else
+        fail "check n-root: no pass on Documents/QZ ($(grep -a 'handleRestoreFolderResult root=' full_logcat.txt | head -n 1))"
+      fi
+      for i in $(seq 1 10); do
+        grep -a -q "files of a previous install restored:" full_logcat.txt && break
+        emu_sleep 2
+      done
+      restored=$(grep -a "files of a previous install restored:" full_logcat.txt | tail -n 1 | sed 's/.*restored: *//' | tr -d '\r ')
+      if [ "$restored" = 0 ]; then
+        say "check n-restore: the pass ran and restored 0: OK"
+      else
+        fail "check n-restore: restored '${restored:-no line}', expected 0"
+      fi
+      emu_sleep 3
+      ensure_app
+      still
+      shot n-12-settings-after
+      expect n-12-settings-after '^Other folders$' 'back on the settings file page'
+      expect_not n-12-settings-after '^Restore files$' 'the button gone after the grant'
+    else
+      fail "n: no question by Restore files"
+    fi
+  fi
+  back_to "$HOME_RX" 20
+  wrap_up
+}
+
 case "$SIDE" in
+  n) side_n ;;
   t) side_t ;;
   s) side_s ;;
   k) side_k ;;
