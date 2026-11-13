@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/qz.sh sha e967f630e4d1 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/qz.sh sha 8d06a1eb3a75 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): QZ screens and settings for the emulator scenarios, on top of lib.sh (source lib.sh
 # first). One source: tools/emu/qz.sh of the work folder, copied into .github/ by tools/emu/sync.py.
 # Base: the T-498 scenario (test/t498-emu, c4c75732f); defects of the old copies - notes/emu-lib-2026-11-10.md.
@@ -73,11 +73,17 @@ wait_home() {
 }
 
 # start_case <name> [key=value ...]: QZ stopped, qz.conf written, started, the home page; the pid of the
-# case in steps.log (for js_errors by side). Home not shown - "!!", a frame <name>-0-no-home, 1
+# case in steps.log (for js_errors by side). Home not shown - "!!", a frame <name>-0-no-home, 1.
+# A case EMU_CASES does not select (by <name> or <calling function>/<name> - case_on in lib.sh): "skipped",
+# 1 and nothing done - the scenario function stops at its `start_case ... || return 1` (T-534)
 start_case() {
-  local name=$1
+  local name=$1 fn=${FUNCNAME[1]:-main}
   shift
-  say "== $name: start ($*)"
+  if ! case_on "$name" "$fn"; then
+    say "== $name: skipped ($fn; cases: $EMU_CASES)"
+    return 1
+  fi
+  say "== $name: start ($*) in $fn at $SECONDS s"
   adb shell am force-stop "$PKG" < /dev/null > /dev/null 2>&1
   emu_sleep 2
   put_conf "$@"
