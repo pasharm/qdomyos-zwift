@@ -160,158 +160,161 @@ ColumnLayout {
             }
         }
 
-        // the restore of a previous install: above the list, which moves down for that time
-        UiProgress {
-            id: modernRestoreProgress
-            shown: window.ui.modern
+        // The restore of a previous install above the list, which moves down for that time: one
+        // cell of the grid with the list, not a row of its own. Side by side the map spans the
+        // rows on the left, and a row it spans is kept and given a share of its height even with
+        // nothing else in it (QGridLayoutEngine::fillRowData), so a hidden progress there left
+        // an empty gap above the list.
+        ColumnLayout {
+            visible: window.ui.modern
             Layout.row: 1
             Layout.column: 0
             Layout.fillWidth: true
-            Layout.preferredWidth: 100
-            Layout.leftMargin: window.ui.pageMargin
-            Layout.rightMargin: gpxPage.sideBySide ? 4 : window.ui.pageMargin
-            done: rootItem.folderRestoreDone
-            total: rootItem.folderRestoreTotal
-        }
-
-        // Modern look: cards like the profile list. A tap on a folder opens it; a tap on a
-        // route selects it and shows it on the map, a second tap or Open loads it.
-        // A box of the list cell without the side margins: the cards keep them and the scroll
-        // indicator goes into the right one, at the screen edge as on the settings page (beside the
-        // map when side by side), not over the right edge of the cards
-        Item {
-            id: modernListBox
-            visible: window.ui.modern
-            Layout.row: 2
-            Layout.column: 0
-            // the gap above the list is in the progress while it shows (UiProgress). Side by
-            // side the map spans the row of the progress, so the row is kept with its spacing
-            // even while the progress is hidden: take that spacing back too
-            Layout.topMargin: modernRestoreProgress.visible || gpxPage.sideBySide ? -parent.rowSpacing : 0
-            Layout.fillWidth: true
             Layout.fillHeight: gpxPage.sideBySide
             Layout.preferredWidth: 100
-            Layout.preferredHeight: gpxPage.sideBySide ? -1 : gpxPage.height * 0.4
+            // the gap under the progress is its own (UiProgress)
+            spacing: 0
 
-            ListView {
-                id: modernList
-                anchors.fill: parent
-                anchors.leftMargin: window.ui.pageMargin
-                anchors.rightMargin: gpxPage.sideBySide ? 4 : window.ui.pageMargin
-                clip: true
-                spacing: 8
-                boundsBehavior: Flickable.StopAtBounds
-                model: window.ui.modern ? folderModel : null
-                // with another parent Qt does not place it (QQuickScrollIndicatorAttachedPrivate::layoutVertical)
-                ScrollIndicator.vertical: ScrollIndicator {
-                    parent: modernListBox
-                    x: mirrored ? 0 : modernListBox.width - width
-                    y: modernList.y
-                    height: modernList.height
-                }
+            UiProgress {
+                shown: window.ui.modern
+                Layout.fillWidth: true
+                Layout.leftMargin: window.ui.pageMargin
+                Layout.rightMargin: gpxPage.sideBySide ? 4 : window.ui.pageMargin
+                done: rootItem.folderRestoreDone
+                total: rootItem.folderRestoreTotal
+            }
 
-                // The item, not the index, as in the classic list: a folder change or a new filter
-                // rebuilds the rows and can leave the index number as it was over another file
-                onCurrentItemChanged: {
-                    if (currentIndex < 0 || folderModel.isFolder(currentIndex))
-                        return
-                    let fileUrl = folderModel.get(currentIndex, 'fileUrl') || folderModel.get(currentIndex, 'fileURL');
-                    if (fileUrl) {
-                        console.log(fileUrl + ' selected');
-                        trainprogram_preview(fileUrl)
-                    }
-                }
+            // Modern look: cards like the profile list. A tap on a folder opens it; a tap on a
+            // route selects it and shows it on the map, a second tap or Open loads it.
+            // A box of the list cell without the side margins: the cards keep them and the scroll
+            // indicator goes into the right one, at the screen edge as on the settings page (beside the
+            // map when side by side), not over the right edge of the cards
+            Item {
+                id: modernListBox
+                Layout.fillWidth: true
+                Layout.fillHeight: gpxPage.sideBySide
+                Layout.preferredHeight: gpxPage.sideBySide ? -1 : gpxPage.height * 0.4
 
-                // UiFrame, not Rectangle.border: a thin border breaks up on Android
-                delegate: UiFrame {
-                    id: gpxCard
-                    readonly property bool selected: ListView.isCurrentItem
-                    readonly property bool folder: folderModel.isFolder(index)
-                    width: ListView.view.width
-                    // Material 3 list item: one line at least 56, the icon and the button 16 from the
-                    // edges, the text 16 after the icon; a bigger text grows it, 8 above and below
-                    height: Math.max(56, Math.max(40, gpxName.implicitHeight) + 16)
-                    radius: window.ui.radius
-                    fill: selected && !folder ? window.ui.alpha(window.ui.accent, 0.14)
-                                              : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
-                    strokeWidth: selected && !folder ? 1 : 0
-                    stroke: window.ui.alpha(window.ui.accent, 0.6)
-
-                    // a tap selects a file, a second tap (or a tap on a folder) opens it
-                    function activate() {
-                        if (gpxCard.folder || index === modernList.currentIndex)
-                            gpxPage.openFileAt(index)
-                        else
-                            modernList.currentIndex = index
+                ListView {
+                    id: modernList
+                    anchors.fill: parent
+                    anchors.leftMargin: window.ui.pageMargin
+                    anchors.rightMargin: gpxPage.sideBySide ? 4 : window.ui.pageMargin
+                    clip: true
+                    spacing: 8
+                    boundsBehavior: Flickable.StopAtBounds
+                    model: window.ui.modern ? folderModel : null
+                    // with another parent Qt does not place it (QQuickScrollIndicatorAttachedPrivate::layoutVertical)
+                    ScrollIndicator.vertical: ScrollIndicator {
+                        parent: modernListBox
+                        x: mirrored ? 0 : modernListBox.width - width
+                        y: modernList.y
+                        height: modernList.height
                     }
 
-                    MouseArea {
-                        id: cardArea
-                        anchors.fill: parent
-                        onClicked: gpxCard.activate()
-                        Accessible.role: Accessible.Button
-                        Accessible.name: gpxName.text
-                        Accessible.onPressAction: gpxCard.activate()
+                    // The item, not the index, as in the classic list: a folder change or a new filter
+                    // rebuilds the rows and can leave the index number as it was over another file
+                    onCurrentItemChanged: {
+                        if (currentIndex < 0 || folderModel.isFolder(currentIndex))
+                            return
+                        let fileUrl = folderModel.get(currentIndex, 'fileUrl') || folderModel.get(currentIndex, 'fileURL');
+                        if (fileUrl) {
+                            console.log(fileUrl + ' selected');
+                            trainprogram_preview(fileUrl)
+                        }
                     }
 
-                    Rectangle {
-                        id: gpxAvatar
-                        anchors.left: parent.left
-                        anchors.leftMargin: 16
-                        anchors.verticalCenter: parent.verticalCenter
-                        width: 40
-                        height: 40
-                        radius: 20
-                        color: window.ui.surfaceHighest
-                        UiIcon {
-                            anchors.centerIn: parent
-                            width: 22
-                            height: 22
-                            name: gpxCard.folder ? "folder" : "route"
-                            color: gpxCard.selected && !gpxCard.folder ? window.ui.accent : window.ui.textMuted
+                    // UiFrame, not Rectangle.border: a thin border breaks up on Android
+                    delegate: UiFrame {
+                        id: gpxCard
+                        readonly property bool selected: ListView.isCurrentItem
+                        readonly property bool folder: folderModel.isFolder(index)
+                        width: ListView.view.width
+                        // Material 3 list item: one line at least 56, the icon and the button 16 from the
+                        // edges, the text 16 after the icon; a bigger text grows it, 8 above and below
+                        height: Math.max(56, Math.max(40, gpxName.implicitHeight) + 16)
+                        radius: window.ui.radius
+                        fill: selected && !folder ? window.ui.alpha(window.ui.accent, 0.14)
+                                                  : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
+                        strokeWidth: selected && !folder ? 1 : 0
+                        stroke: window.ui.alpha(window.ui.accent, 0.6)
+
+                        // a tap selects a file, a second tap (or a tap on a folder) opens it
+                        function activate() {
+                            if (gpxCard.folder || index === modernList.currentIndex)
+                                gpxPage.openFileAt(index)
+                            else
+                                modernList.currentIndex = index
+                        }
+
+                        MouseArea {
+                            id: cardArea
+                            anchors.fill: parent
+                            onClicked: gpxCard.activate()
+                            Accessible.role: Accessible.Button
+                            Accessible.name: gpxName.text
+                            Accessible.onPressAction: gpxCard.activate()
+                        }
+
+                        Rectangle {
+                            id: gpxAvatar
+                            anchors.left: parent.left
+                            anchors.leftMargin: 16
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 40
+                            height: 40
+                            radius: 20
+                            color: window.ui.surfaceHighest
+                            UiIcon {
+                                anchors.centerIn: parent
+                                width: 22
+                                height: 22
+                                name: gpxCard.folder ? "folder" : "route"
+                                color: gpxCard.selected && !gpxCard.folder ? window.ui.accent : window.ui.textMuted
+                            }
+                        }
+
+                        Label {
+                            id: gpxName
+                            // the card is read through cardArea: a touch of the screen reader goes to the
+                            // deepest accessible item under the finger, and this label, drawn above
+                            // cardArea, would take it from the card (the focus went to the whole window)
+                            Accessible.ignored: true
+                            anchors.left: gpxAvatar.right
+                            anchors.leftMargin: 16
+                            anchors.right: openButton.visible ? openButton.left : parent.right
+                            anchors.rightMargin: 16
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: gpxCard.folder ? fileName : fileName.substring(0, fileName.length-4)
+                            color: gpxCard.selected && !gpxCard.folder ? window.ui.accent : window.ui.textMain
+                            font.pixelSize: window.ui.fontBody
+                            font.weight: Font.DemiBold
+                            elide: Text.ElideRight
+                        }
+
+                        UiButton {
+                            id: openButton
+                            visible: gpxCard.selected && !gpxCard.folder
+                            anchors.right: parent.right
+                            anchors.rightMargin: 16
+                            anchors.verticalCenter: parent.verticalCenter
+                            text: qsTr("Open")
+                            highlighted: true
+                            onClicked: gpxPage.openFileAt(index)
                         }
                     }
 
                     Label {
-                        id: gpxName
-                        // the card is read through cardArea: a touch of the screen reader goes to the
-                        // deepest accessible item under the finger, and this label, drawn above
-                        // cardArea, would take it from the card (the focus went to the whole window)
-                        Accessible.ignored: true
-                        anchors.left: gpxAvatar.right
-                        anchors.leftMargin: 16
-                        anchors.right: openButton.visible ? openButton.left : parent.right
-                        anchors.rightMargin: 16
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: gpxCard.folder ? fileName : fileName.substring(0, fileName.length-4)
-                        color: gpxCard.selected && !gpxCard.folder ? window.ui.accent : window.ui.textMain
-                        font.pixelSize: window.ui.fontBody
-                        font.weight: Font.DemiBold
-                        elide: Text.ElideRight
+                        // On the list itself: children of a ListView land in its content item, empty here
+                        parent: modernList
+                        anchors.centerIn: parent
+                        // only once the folder is read: the model fills in asynchronously; not while a
+                        // restore copies the files of a previous install into it
+                        visible: modernList.count === 0 && folderModel.status === FolderListModel.Ready
+                                 && rootItem.folderRestoreTotal === 0
+                        text: qsTr("No GPX files here")
+                        color: window.ui.textMuted
                     }
-
-                    UiButton {
-                        id: openButton
-                        visible: gpxCard.selected && !gpxCard.folder
-                        anchors.right: parent.right
-                        anchors.rightMargin: 16
-                        anchors.verticalCenter: parent.verticalCenter
-                        text: qsTr("Open")
-                        highlighted: true
-                        onClicked: gpxPage.openFileAt(index)
-                    }
-                }
-
-                Label {
-                    // On the list itself: children of a ListView land in its content item, empty here
-                    parent: modernList
-                    anchors.centerIn: parent
-                    // only once the folder is read: the model fills in asynchronously; not while a
-                    // restore copies the files of a previous install into it
-                    visible: modernList.count === 0 && folderModel.status === FolderListModel.Ready
-                             && rootItem.folderRestoreTotal === 0
-                    text: qsTr("No GPX files here")
-                    color: window.ui.textMuted
                 }
             }
         }
@@ -473,9 +476,9 @@ ColumnLayout {
             // Padding, not a margin: the content moves in, the scroll bar stays at the edge
             rightPadding: window.ui.modern && !gpxPage.sideBySide ? window.ui.pageMargin : window.contentSideMargin
             leftPadding: window.ui.modern && !gpxPage.sideBySide ? window.ui.pageMargin : 0
-            Layout.row: window.ui.modern && !gpxPage.sideBySide ? 3 : 0
+            Layout.row: window.ui.modern && !gpxPage.sideBySide ? 2 : 0
             Layout.column: gpxPage.sideBySide ? 1 : 0
-            Layout.rowSpan: window.ui.modern && gpxPage.sideBySide ? 4 : 1
+            Layout.rowSpan: window.ui.modern && gpxPage.sideBySide ? 3 : 1
             Layout.topMargin: window.ui.modern && gpxPage.sideBySide ? 8 : 0
             Layout.bottomMargin: window.ui.modern && gpxPage.sideBySide ? 8 : 0
             Layout.fillHeight: true
@@ -629,7 +632,7 @@ ColumnLayout {
         // (as on the training programs page); a long label wraps instead of eliding
         RowLayout {
             visible: window.ui.modern
-            Layout.row: gpxPage.sideBySide ? 3 : 4
+            Layout.row: gpxPage.sideBySide ? 2 : 3
             Layout.column: 0
             Layout.fillWidth: true
             Layout.preferredWidth: 100
