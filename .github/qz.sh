@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/qz.sh sha b3007678ca1e - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/qz.sh sha e967f630e4d1 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): QZ screens and settings for the emulator scenarios, on top of lib.sh (source lib.sh
 # first). One source: tools/emu/qz.sh of the work folder, copied into .github/ by tools/emu/sync.py.
 # Base: the T-498 scenario (test/t498-emu, c4c75732f); defects of the old copies - notes/emu-lib-2026-11-10.md.
@@ -9,6 +9,10 @@ LOG_DEBUG=${LOG_DEBUG:-true}
 # The menu button / back arrow by its place (Nexus 6, 3.5 px per dp): the classic header buttons have no
 # names. Both looks put it there
 MENU=${MENU:-84 168}
+# The menu is open: one of its entries in the tree (the labels of the drawer in main.qml, both looks; none
+# of them elsewhere on the home page - Workout Editor and Credits are page titles too, hence not here). Checked on the dumps of
+# notes/emu (13.11): 0 of 263 home dumps, 107 of 122 drawer dumps (the rest: the menu closed, or the Ukrainian UI - there open_drawer does as before)
+MENU_RX=${MENU_RX:-'^(Settings|Charts|Profile: .*|Open Train Program|Open GPX|Save FIT|Save GPX|Workouts History|Swag Bag|Wizard|Community|Quit)$'}
 # The home page in both looks: a treadmill shows one Pause instead of Start/Stop (T-461)
 HOME_RX=${HOME_RX:-'^Start$|^Stop$|^Pause$'}
 # The home page is ready (start_case waits for it: 25 s of looks): the support button shows on a home page with
@@ -113,12 +117,42 @@ open_drawer() {
       say "outcome 'menu': ok ('$1' shown)"
       return 0
     fi
+    # The menu is open, the entry not in the tree: the menu keeps the place it was dragged to (API 30:
+    # after Credits its top entries are not in the tree), closing and opening it again shows the same -
+    # drag it down to its top (T-526; T-525, lesson 3, 43310802748)
+    # (no dump: uifind prints nothing - not "open", the old retry below)
+    if n=$(uifind ui.xml --count "$MENU_RX" 2>/dev/null) && [ "${n:-0}" -gt 0 ]; then
+      menu_to_top "$1" && return 0
+      say "outcome 'menu': no-effect"
+      fail "the menu is open, '$1' not in the tree after dragging the menu down ($EMU_WHY)"
+      return 1
+    fi
     near drawer "'$1' not shown after the menu tap $i"
     adb shell input keyevent 4 < /dev/null > /dev/null 2>&1
     emu_sleep 2
   done
   say "outcome 'menu': no-effect"
   fail "the menu did not open ('$1' not shown)"
+}
+
+# menu_to_top <regex of an entry>: the open menu dragged down (a finger down, in the menu column) until the
+# entry is in the tree or the menu stops moving (its top); EMU_WHY - why it stopped
+menu_to_top() {
+  local i
+  for i in 1 2 3 4; do
+    cp ui.xml .emu_m.xml
+    say "drag the menu down $i"
+    adb shell input swipe 300 900 300 2000 400 < /dev/null > /dev/null 2>&1
+    emu_sleep 2
+    dump || { EMU_WHY="no dump after drag $i"; return 1; }
+    if find_ui "$1" --any; then
+      say "outcome 'menu': ok ('$1' shown after dragging the menu down $i)"
+      return 0
+    fi
+    "$EMU_PY" "$EMU_GH/emu_frame.py" same .emu_m.xml ui.xml && { EMU_WHY="its top: drag $i did not move it"; return 1; }
+  done
+  EMU_WHY="still moving after 4 drags"
+  return 1
 }
 
 # settings_open: the settings page from the menu

@@ -1,4 +1,4 @@
-# Test only (T-514): the modern file lists and pages - frames of master (base) and the branch (head),
+# Test only (T-531): the Swag Bag page - frames of master (base) and the branch (head),
 # classic and modern look, API 30 and 35
 name: CI
 
@@ -12,9 +12,9 @@ on:
         description: run id of the clean master build with the fdroid-android-trial artifact
         required: true
       pages:
-        description: lists (PR 6a-1), service (PR 6a-2), tb (TalkBack on both; head - lists build, base - service build; apis '[35]') or tbc (TalkBack on the classic programs list; base - master, head - lists)
+        description: swagbag (the only case of this branch; kept for the artifact name)
         required: false
-        default: lists
+        default: swagbag
       apis:
         description: API levels as a JSON list
         required: false
@@ -86,7 +86,7 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: emulator-logcat-${{ inputs.head }}-t514-${{ inputs.pages }}-api${{ matrix.api }}
+          name: emulator-logcat-${{ inputs.head }}-t531-${{ inputs.pages }}-api${{ matrix.api }}
           path: |
             *.png
             raw-?c-*
