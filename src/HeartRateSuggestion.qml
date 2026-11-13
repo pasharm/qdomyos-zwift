@@ -146,7 +146,21 @@ UiFrame {
 
             // the strongest signal first: most likely the user's own sensor. A gym may have many: it scrolls
             ListView {
+                id: sensorList
                 width: parent.width
+                // Modern look: a thin bar while the list moves, in the right padding of the card, not
+                // over the signal bars at the right end of the rows. Qt places the bar only when its
+                // parent is the list, and a Column would place a child itself: it goes on the content
+                // item of the popup (inside the padding, qquickpane.cpp v5.15.0:146), just past its
+                // edge, x, y and height set here. Classic look: no bar, as before
+                ScrollIndicator.vertical: ScrollIndicator {
+                    visible: window.ui.modern
+                    parent: list.contentItem
+                    x: mirrored ? -Math.round((list.leftPadding + width) / 2)
+                                : parent.width + Math.round((list.rightPadding - width) / 2)
+                    y: listColumn.y + sensorList.y
+                    height: sensorList.height
+                }
                 // Modern look: what the card leaves after its padding, the title and Cancel (a gym with many
                 // sensors, a phone in landscape); classic: the limit as before
                 height: Math.min(contentHeight, window.ui.modern
