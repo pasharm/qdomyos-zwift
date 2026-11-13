@@ -159,6 +159,18 @@ ColumnLayout {
                 Layout.fillHeight: true
                 ScrollBar.vertical: ScrollBar {}
                 id: list
+
+                UiProgress {
+                    parent: list
+                    // in the middle of an empty list, on its top edge once it shows rows
+                    compact: list.count > 0
+                    width: compact ? parent.width : parent.width - 32
+                    x: Math.round((parent.width - width) / 2)
+                    y: compact ? 0 : Math.round((parent.height - height) / 2)
+                    z: 4
+                    done: rootItem.folderRestoreDone
+                    total: rootItem.folderRestoreTotal
+                }
                 FolderListModel {
                     id: folderModel
                     nameFilters: ["*.xml", "*.zwo", "*.mrc", "*.erg", "*.json", "*.xsr"]
