@@ -549,17 +549,15 @@ ColumnLayout {
                 readonly property int routeMargin: 24
 
                 // Show the whole route: the map takes the bounding box of the track instead of a fixed
-                // zoom level. fitViewportToGeoShape does nothing before the map is ready, so until then
-                // visibleRegion is set: it waits for the map size (QDeclarativeGeoMap::setVisibleRegion),
-                // with the default margin only; onMapReadyChanged fits again with routeMargin.
-                // Not fitViewportToMapItems: it fits the on-screen size of the items (QTBUG-65646).
+                // zoom level. Before the map is ready (mapReady) it has no size to fit into, and
+                // onMapReadyChanged does the fit. Not visibleRegion for that: its queued fit runs after
+                // mapReadyChanged and would replace routeMargin with the default margin
+                // (QDeclarativeGeoMap::geometryChanged). Not fitViewportToMapItems: it fits the on-screen
+                // size of the items (QTBUG-65646).
                 function fitRoute() {
-                    if (pathController.geopath.size() < 2)
+                    if (!map.mapReady || pathController.geopath.size() < 2)
                         return
-                    if (map.mapReady)
-                        map.fitViewportToGeoShape(pathController.geopath, routeMargin)
-                    else
-                        map.visibleRegion = pathController.geopath
+                    map.fitViewportToGeoShape(pathController.geopath, routeMargin)
                 }
 
                 Connections{
@@ -568,8 +566,8 @@ ColumnLayout {
                         pl.path = row.loadPath();
                         row.fitRoute();
                     }
-                    // the new center comes after the new path (homeform::gpxpreview_open_clicked): fit again,
-                    // or the center alone would stay at the old zoom level
+                    // the new center comes after the new path (homeform::gpxpreview_open_clicked) and moves
+                    // the map off the fitted view: fit again
                     onCenterChanged: {
                         map.center = pathController.center;
                         row.fitRoute();
