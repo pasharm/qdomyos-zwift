@@ -949,6 +949,23 @@ public class CustomQtActivity extends QtActivity {
     // real name. A failure before the removal leaves the old file in place; a copy left under
     // the temporary name after it is finished by recoverRestoreCopies() on the next pass or
     // the next visit of the list.
+    // test only (T-528): files/t528_slow_ms with a number of ms - a pause after each file of the restore, so the
+    // emulator scenario catches the middle of the pass on frames; no file - no pause
+    private void t528Pause() {
+        java.io.File f = new java.io.File(getFilesDir(), "t528_slow_ms");
+        if (!f.exists()) {
+            return;
+        }
+        try {
+            java.io.BufferedReader r = new java.io.BufferedReader(new java.io.FileReader(f));
+            String line = r.readLine();
+            r.close();
+            Thread.sleep(Long.parseLong(line.trim()));
+        } catch (Exception e) {
+            Log.d(TAG, "t528Pause " + e);
+        }
+    }
+
     private void restoreFolderFiles(Uri treeUri, String parentId, java.io.File localDir, StringBuilder restored) {
         recoverRestoreCopies(localDir, false, restored);
         Uri childrenUri = android.provider.DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, parentId);
@@ -974,6 +991,9 @@ public class CustomQtActivity extends QtActivity {
                 if (local.exists() && ContentHelper.isReadable(local)) {
                     continue;
                 }
+                // test only (T-528, the "before" of master): each file in the log and the same pause as on the branch
+                Log.d(TAG, "T528 file " + name);
+                t528Pause();
                 if (!localDir.exists() && !localDir.mkdirs()) {
                     Log.d(TAG, "restoreFolderFiles could not create " + localDir);
                     return;
