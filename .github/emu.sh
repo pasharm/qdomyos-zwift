@@ -135,6 +135,10 @@ line_of() {
   set -- $out
   if [ "${2:-0}" -ge 200 ]; then
     say "check $s: the route line on the map ($2 px of $col): OK"
+  elif [ "${s#b}" != "$s" ]; then
+    # the side before: at zoom level 14 the line may be out of the view altogether (bcl Box Hill, run
+    # 43478663497) - that is the defect, a line for the frame only
+    say "before: no route line on the frame $s (${2:-?} px of $col) - out of the view at zoom 14"
   else
     fail "check $s: no route line on the frame (${2:-?} px of $col)"
   fi
@@ -232,6 +236,9 @@ no_restore() {
 gpx() {
   local c=$1 from land
   MODERN=$2
+  # the classic rows scroll a name longer than 30 characters (GPXList.qml:360-369, "Italy - Passo dello
+  # Stelvio", row 5): the screen never stood still - masked (run 43478663497: rows 994-1059, 12 min a case)
+  if [ "$MODERN" = true ]; then EMU_MASKS=""; else EMU_MASKS="0,975,2560,1080"; fi
   start_case "$c" ui_modern="$MODERN" fakedevice_treadmill=true || return 1
   SCR_W=1440; SCR_H=2560
   if [ "$3" = 1 ]; then
@@ -241,9 +248,10 @@ gpx() {
   fi
   from=$(log_lines)
   say "== $c: GPX page"
-  # landing: Other folders, or No of the restore question at once (modern: a popup over the page, Other folders
-  # stays in the dump - two matches would fail; test/t528-emu)
-  if [ "$MODERN" = true ]; then land='^&?No$'; else land='^Other folders$|^&?No$'; fi
+  # landing: Other folders, or No of the restore question at once (classic: the native box)
+  # the question comes or not run by run (run 43478663497: none) - modern: the first card, on the screen with
+  # the question popup too
+  if [ "$MODERN" = true ]; then land="^$LONG\$"; else land='^Other folders$|^&?No$'; fi
   if open_drawer '^Open GPX$' && tap_ui '^Open GPX$' "$land" && no_restore "$c"; then
     frame_route "$c-1-long-open" "$LONG" "$from"
     # Box Hill again only after Govi to Hood is selected: a tap on the selected row opens the route
