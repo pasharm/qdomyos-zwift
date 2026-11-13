@@ -14,8 +14,9 @@ HomeForm {
     // drew the classic help text and the unstyled buttons over the searching state. The
     // content waits for it, the background is drawn at once
     contentItem.visible: !window.ui.modern || typeof rootItem !== "undefined"
-    // Modern look: the line under Start/Stop only while it names a loaded workout. "<device>
-    // found" (homeform.cpp) and the signal are in the drawer header already
+    // Modern look: the line under Start/Stop only while it names a loaded workout or the search.
+    // "<device> found" (homeform.cpp) is in the drawer header already; the signal bars go with
+    // the line
     modernInfoShown: {
         // The search for the equipment ("Next search in 12 s") is not in the drawer
         if (searchStatus !== "")

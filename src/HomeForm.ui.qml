@@ -31,8 +31,9 @@ Page {
     property alias homeFormSettings: settings
     // Modern look, for the grid of tiles in Home.qml: where the first row starts below the top of
     // the Start/Stop row - 16 dp under the letters of the status line, or under the buttons without
-    // it. One line of the status counts: two lines come only before the first connection, when the
-    // grid is empty, and they grow down
+    // it. One line of the status counts (a long workout name is elided to one): two lines come
+    // only while searching ("<device> found" and the countdown), mostly before the first
+    // connection when the grid is empty, and they grow down
     // The top bar can be turned off (top_bar_enabled: topBarHeight 0, no labels): no controls then,
     // the grid and the status line as before
     readonly property bool modernControlsShown: window.ui.modern && topBar.height > 0
@@ -538,6 +539,12 @@ Page {
                 // "Connecting..." is the untranslated start value of homeform::m_info: before the
                 // first search it means the same as the search status
                 text: page.searchStatus !== "" ? page.searchStatus : (rootItem.info === "Connecting..." ? qsTranslate("homeform", "Searching for the device...") : rootItem.info)
+                // A long workout name stays one line (the tiles start under one line) and
+                // ends with "…" inside the page margins, the signal bars (and the Bluetooth-off
+                // mark) beside it. Qt elides one-line text only, so the two short lines of the
+                // search stay as they are
+                width: Math.min(implicitWidth, page.width - 2 * window.contentSideMargin - 28 - (modernInfo.bluetoothOff ? 24 : 0))
+                elide: Text.ElideRight
                 horizontalAlignment: Text.AlignHCenter
                 // two lines ("<device> found" and the countdown) grow down, set closer
                 lineHeight: text.indexOf("\n") >= 0 ? 0.8 : 1
