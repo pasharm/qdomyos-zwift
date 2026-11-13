@@ -276,10 +276,23 @@ ColumnLayout {
                 // On the list itself: children of a ListView land in its content item, empty here
                 parent: modernList
                 anchors.centerIn: parent
-                // only once the folder is read: the model fills in asynchronously
+                // only once the folder is read: the model fills in asynchronously; not while a
+                // restore copies the files of a previous install into it
                 visible: modernList.count === 0 && folderModel.status === FolderListModel.Ready
+                         && rootItem.folderRestoreTotal === 0
                 text: qsTr("No GPX files here")
                 color: window.ui.textMuted
+            }
+
+            UiProgress {
+                parent: modernList
+                // in the middle of an empty list, on its top edge once it shows rows
+                compact: modernList.count > 0
+                width: compact ? parent.width : parent.width - 32
+                x: Math.round((parent.width - width) / 2)
+                y: compact ? 0 : Math.round((parent.height - height) / 2)
+                done: rootItem.folderRestoreDone
+                total: rootItem.folderRestoreTotal
             }
         }
 
@@ -418,6 +431,18 @@ ColumnLayout {
                 }
                 Component.onCompleted: {
 
+                }
+
+                UiProgress {
+                    parent: list
+                    // in the middle of an empty list, on its top edge once it shows rows
+                    compact: list.count > 0
+                    width: compact ? parent.width : parent.width - 32
+                    x: Math.round((parent.width - width) / 2)
+                    y: compact ? 0 : Math.round((parent.height - height) / 2)
+                    z: 4
+                    done: rootItem.folderRestoreDone
+                    total: rootItem.folderRestoreTotal
                 }
             }
         }
@@ -589,6 +614,12 @@ ColumnLayout {
                 Layout.fillHeight: true
                 wrapsText: true
                 visible: rootItem.qzFolderRestorable && !rootItem.qzFolderGrantSaved
+                // greyed out while a restore runs: a second one is refused
+                // (CustomQtActivity.openRestoreFolderPicker); hidden after it, with the grant
+                enabled: rootItem.folderRestoreTotal === 0
+                // Qt 5.15 does not report a disabled item to TalkBack (fixed in Qt 6 by
+                // qtdeclarative 20fd2902a6): left in, it would be read as a button that works
+                Accessible.ignored: !enabled
                 text: qsTr("Restore files")
                 onClicked: rootItem.offerFolderRestore()
             }
@@ -614,6 +645,12 @@ ColumnLayout {
             Layout.fillWidth: true
             Layout.preferredHeight: 50
             visible: rootItem.qzFolderRestorable && !rootItem.qzFolderGrantSaved
+            // greyed out while a restore runs: a second one is refused
+            // (CustomQtActivity.openRestoreFolderPicker); hidden after it, with the grant
+            enabled: rootItem.folderRestoreTotal === 0
+            // Qt 5.15 does not report a disabled item to TalkBack (fixed in Qt 6 by
+            // qtdeclarative 20fd2902a6): left in, it would be read as a button that works
+            Accessible.ignored: !enabled
             text: qsTr("Restore files")
             onClicked: rootItem.offerFolderRestore()
         }
