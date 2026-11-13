@@ -348,6 +348,8 @@ jobs:
     permissions:
       # gh workflow run with GITHUB_TOKEN: a workflow_dispatch of this token does start a run (T-551)
       actions: write
+      # main.yml of the target branch: does it cancel runs in progress (BUSY_GUARD)
+      contents: read
     steps:
       - name: Start emulator (main.yml of test/t550-emu)
         env:
@@ -357,6 +359,17 @@ jobs:
           IN1: 'classic/hc'
           IN2: '[30]'
         run: |
+          busy=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow main.yml --branch "$REF" --limit 20 \
+            --json url,status --jq '[.[] | select(.status != "completed") | .url] | join(" ")')
+          if [ -n "$busy" ]; then
+            if gh api "repos/$GITHUB_REPOSITORY/contents/.github/workflows/main.yml?ref=$REF" --jq .content \
+                | base64 -d | grep -Eq 'cancel-in-progress: *true'; then
+              echo "::error::$WHAT not started: $REF has an unfinished run ($busy) and its main.yml cancels runs in progress - wait for it or start by hand"
+              echo "$WHAT NOT started: branch $REF busy ($busy), its main.yml has cancel-in-progress" >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
+            echo "$WHAT: unfinished run(s) on $REF, its main.yml does not cancel them - starting alongside: $busy"
+          fi
           since=$(date -u -d '-30 seconds' +%Y-%m-%dT%H:%M:%SZ)
           gh workflow run main.yml --repo "$GITHUB_REPOSITORY" --ref "$REF" -f "head=${{ github.run_id }}" -f "cases=$IN1" -f "apis=$IN2"
           url=''
@@ -382,14 +395,27 @@ jobs:
     permissions:
       # gh workflow run with GITHUB_TOKEN: a workflow_dispatch of this token does start a run (T-551)
       actions: write
+      # main.yml of the target branch: does it cancel runs in progress (BUSY_GUARD)
+      contents: read
     steps:
-      - name: Start iOS simulator (main.yml of test/t550-ios)
+      - name: Start iOS simulator (main.yml of test/t551-ios)
         env:
           GH_TOKEN: ${{ github.token }}
-          REF: 'test/t550-ios'
+          REF: 'test/t551-ios'
           WHAT: 'iOS simulator'
           IN0: 'head'
         run: |
+          busy=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow main.yml --branch "$REF" --limit 20 \
+            --json url,status --jq '[.[] | select(.status != "completed") | .url] | join(" ")')
+          if [ -n "$busy" ]; then
+            if gh api "repos/$GITHUB_REPOSITORY/contents/.github/workflows/main.yml?ref=$REF" --jq .content \
+                | base64 -d | grep -Eq 'cancel-in-progress: *true'; then
+              echo "::error::$WHAT not started: $REF has an unfinished run ($busy) and its main.yml cancels runs in progress - wait for it or start by hand"
+              echo "$WHAT NOT started: branch $REF busy ($busy), its main.yml has cancel-in-progress" >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
+            echo "$WHAT: unfinished run(s) on $REF, its main.yml does not cancel them - starting alongside: $busy"
+          fi
           since=$(date -u -d '-30 seconds' +%Y-%m-%dT%H:%M:%SZ)
           gh workflow run main.yml --repo "$GITHUB_REPOSITORY" --ref "$REF" -f "side=$IN0"
           url=''
