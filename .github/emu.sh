@@ -1170,17 +1170,27 @@ toast_watch() {
   adb shell rm -f "/data/local/tmp/$1-*" < /dev/null > /dev/null 2>&1
   adb shell "for i in 1 2 3 4 5 6 7; do uiautomator dump /data/local/tmp/$1-\$i.xml; done" < /dev/null > /dev/null 2>&1 &
   p=$!
-  adb shell "for i in 1 2 3 4 5 6 7 8 9 10 11 12; do screencap -p /data/local/tmp/$1-\$i.png; sleep 1; done" \
+  # raw frames (no -p: no PNG coding on the device, more frames a second); raw_frame.py writes the PNG
+  adb shell "for i in 1 2 3 4 5 6 7 8 9 10 11 12; do screencap /data/local/tmp/$1-\$i.raw; sleep 1; done" \
     < /dev/null > /dev/null 2>&1
   wait "$p"
   mkdir -p dumps
   for i in 1 2 3 4 5 6 7; do
     adb pull "/data/local/tmp/$1-$i.xml" "dumps/$1-$i.xml" < /dev/null > /dev/null 2>&1
   done
+  # the toast by its dark band over the button row (Nexus 6: the toast at y ~2330-2410, the navigation bar
+  # from ~2490 - frame n-11-toast-2 of run 43368164916): ~110000 dark pixels with it, ~2000 without
+  TOAST_FRAMES=0
   for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
-    adb pull "/data/local/tmp/$1-$i.png" "$1-$i.png" < /dev/null > /dev/null 2>&1
+    adb pull "/data/local/tmp/$1-$i.raw" "$1-$i.raw" < /dev/null > /dev/null 2>&1
+    [ -s "$1-$i.raw" ] || continue
+    set -- "$1" $("$EMU_PY" .github/raw_frame.py "$1-$i.raw" "$1-$i.png" 2250 2450)
+    rm -f "${1}-$i.raw"
+    say "toast_watch $1-$i: ${2:-?} dark pixels in rows 2250-2450 (${3:-?} x ${4:-?})"
+    [ "${2:-0}" -ge 50000 ] && TOAST_FRAMES=$((TOAST_FRAMES + 1))
+    set -- "$1"
   done
-  say "toast_watch $1: $(ls dumps/$1-*.xml 2>/dev/null | wc -l) dumps, $(ls $1-*.png 2>/dev/null | wc -l) frames"
+  say "toast_watch $1: $(ls dumps/$1-*.xml 2>/dev/null | wc -l) dumps, $(ls $1-*.png 2>/dev/null | wc -l) frames, the dark band on $TOAST_FRAMES"
 }
 
 side_n() {
@@ -1252,10 +1262,14 @@ side_n() {
       mark "n: allowed"
       i=$(for f in dumps/n-11-toast-*.xml; do [ -s "$f" ] && uifind "$f" --count "$NOFILES_RX" --any 2>/dev/null; done \
         | awk '$1 > 0 { n++ } END { print n + 0 }')
-      if [ "$i" -ge 1 ]; then
-        say "check n-toast: 'No files of a previous installation were found.' in $i dumps after Allow: OK"
+      # the text of the toast is a plain Text without Accessible (Toast.qml): no dump has it (run 43368164916,
+      # where frames n-11-toast-2 and -3 show it) - the check is the dark band on the frames; the text is
+      # read from those frames by eye, the count in the dumps stays for a later Toast with a name
+      say "toast text in the dumps after Allow: $i"
+      if [ "${TOAST_FRAMES:-0}" -ge 1 ]; then
+        say "check n-toast: the toast band on $TOAST_FRAMES frames after Allow (the pass restored 0, asked by the user): OK"
       else
-        fail "check n-toast: no 'No files of a previous installation were found.' toast in the dumps after Allow"
+        fail "check n-toast: no toast on the frames after Allow"
       fi
       if grep -a -q "handleRestoreFolderResult root=primary:Documents/QZ training=" full_logcat.txt; then
         say "check n-root: the pass ran on Documents/QZ: OK"
