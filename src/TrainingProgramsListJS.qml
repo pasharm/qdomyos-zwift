@@ -766,6 +766,9 @@ ColumnLayout {
                             Layout.margins: 5
                             Layout.leftMargin: 5
                             Layout.rightMargin: window.ui.modern ? window.ui.pageMargin : 5
+                            // modern look: the chart card right under the buttons (15 to the pill: the
+                            // inset of the pill in its button and the spacing), not 28 with this margin
+                            Layout.bottomMargin: window.ui.modern ? 0 : 5
                             sourceComponent: detailButtons
                         }
 

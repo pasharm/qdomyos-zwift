@@ -76,14 +76,15 @@
         html.modern body {
             background: var(--qz-bg);
             color: var(--qz-text);
-            /* 8 at the sides, as the frame in the program preview PR: 16 left a wide gap between the
-               description scroll bar and the chart side by side */
-            padding: 8px 8px;
+            /* 8 at the sides and none above and below, as the frame in the program preview PR: 16 at
+               the sides left a wide gap between the description scroll bar and the chart side by
+               side, 8 above a wide gap under the buttons */
+            padding: 0 8px;
             font-family: Roboto, 'Segoe UI', sans-serif;
         }
 
         html.modern #chart-container {
-            min-height: calc(100vh - 16px);
+            min-height: 100vh;
             color: var(--qz-text);
             border-radius: 20px;
             padding: 12px;
