@@ -1393,6 +1393,14 @@ Do you want to update QZ settings?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Show less</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>

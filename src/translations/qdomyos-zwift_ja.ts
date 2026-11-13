@@ -1471,6 +1471,14 @@ QZの設定を更新しますか?</translation>
         <translation>← 戻る</translation>
     </message>
     <message>
+        <source>Show less</source>
+        <translation>折りたたむ</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>もっと見る</translation>
+    </message>
+    <message>
         <source>Start Workout</source>
         <translation>ワークアウトを開始</translation>
     </message>

@@ -1471,6 +1471,14 @@ Do you want to update QZ settings?</source>
         <translation>← 返回</translation>
     </message>
     <message>
+        <source>Show less</source>
+        <translation>收起</translation>
+    </message>
+    <message>
+        <source>Show more</source>
+        <translation>展开</translation>
+    </message>
+    <message>
         <source>Start Workout</source>
         <translation>开始训练</translation>
     </message>
