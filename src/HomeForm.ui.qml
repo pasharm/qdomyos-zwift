@@ -143,8 +143,13 @@ Page {
                         // VoiceOver/TalkBack: a button that searches. The state is in the name: TalkBack (Qt 5.15)
                         // reads no description when the name is set
                         Accessible.role: Accessible.Button
-                        Accessible.name: qsTr("Bluetooth connection") + ": " + (window.equipmentConnected ? qsTr("Device connected") : qsTr("Device not connected"))
-                        Accessible.description: window.equipmentConnected ? qsTr("Device connected") : qsTr("Device not connected")
+                        // qsTr inside an expression takes the context "HomeForm" (the file name up to
+                        // the first dot), lupdate writes "HomeForm.ui": the context is given explicitly
+                        Accessible.name: qsTranslate("HomeForm.ui", "Bluetooth connection") + ": "
+                                         + (window.equipmentConnected ? qsTranslate("HomeForm.ui", "Device connected")
+                                                                      : qsTranslate("HomeForm.ui", "Device not connected"))
+                        Accessible.description: window.equipmentConnected ? qsTranslate("HomeForm.ui", "Device connected")
+                                                                          : qsTranslate("HomeForm.ui", "Device not connected")
                         Accessible.focusable: true
                         Accessible.onPressAction: { rootItem.bluetoothSearchNow(); rootItem.reconnectHeartRateBelt(); }
                     }
