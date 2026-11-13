@@ -510,6 +510,9 @@ Page {
             // Modern look: the gap between cards is only the card's own margins (2 x 6 = 12 px)
             spacing: workoutHistoryPage.modern ? 0 : 8
             clip: true
+            // Modern look: a thin bar while the list moves, as in the other lists of the modern look; the
+            // classic look has none, as in master
+            ScrollIndicator.vertical: ScrollIndicator { visible: workoutHistoryPage.modern }
 
             // Modern look: an empty list says so, instead of a blank page
             Column {
