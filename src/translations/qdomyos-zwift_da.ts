@@ -76,6 +76,10 @@
         <translation>Andre mapper</translation>
     </message>
     <message>
+        <source>Restore files</source>
+        <translation>Gendan filer</translation>
+    </message>
+    <message>
         <source>Open</source>
         <translation>Åbn</translation>
     </message>
@@ -1274,6 +1278,10 @@ Vil du opdatere QZ-indstillingerne?</translation>
         <translation>Andre mapper</translation>
     </message>
     <message>
+        <source>Restore files</source>
+        <translation>Gendan filer</translation>
+    </message>
+    <message>
         <source>Tap a file to select it, then Load.</source>
         <translation>Tryk på en fil for at vælge den, og tryk derefter på "Indlæs".</translation>
     </message>
@@ -1447,8 +1455,12 @@ Vil du opdatere QZ-indstillingerne?</translation>
         <translation>Andre mapper</translation>
     </message>
     <message>
+        <source>Restore files</source>
+        <translation>Gendan filer</translation>
+    </message>
+    <message>
         <source>Restore programs</source>
-        <translation>Gendan programmer</translation>
+        <translation type="vanished">Gendan programmer</translation>
     </message>
     <message>
         <source>← Back</source>
@@ -3921,6 +3933,14 @@ Det kan tage et øjeblik ved første start.</translation>
         <translation>hastighed ændret til </translation>
     </message>
     <message>
+        <source>Files of a previous installation restored: %1.</source>
+        <translation>Gendannede filer: %1.</translation>
+    </message>
+    <message>
+        <source>No files of a previous installation were found.</source>
+        <translation>Der blev ikke fundet filer fra en tidligere installation.</translation>
+    </message>
+    <message>
         <source>Start pressed</source>
         <extracomment>Text-to-speech: spoken when the workout is started or resumed with the Start button.</extracomment>
         <translation>Start-knappen er trykket</translation>
@@ -3982,11 +4002,11 @@ Det kan tage et øjeblik ved første start.</translation>
     </message>
     <message>
         <source>Training programs restored: %1.</source>
-        <translation>Træningsprogrammer gendannet: %1.</translation>
+        <translation type="vanished">Gendannede træningsprogrammer: %1.</translation>
     </message>
     <message>
         <source>No training programs of a previous installation were found.</source>
-        <translation>Der blev ikke fundet træningsprogrammer fra en tidligere installation.</translation>
+        <translation type="vanished">Der blev ikke fundet træningsprogrammer fra en tidligere installation.</translation>
     </message>
     <message>
         <source>Already in the history: %1.</source>
@@ -4361,6 +4381,20 @@ genstarte appen.</translation>
     <message>
         <source>Saved! Look in the app&apos;s private folder.</source>
         <translation>Gemt! Se i appens private mappe.</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Gendan filer</translation>
+    </message>
+    <message>
+        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Træningsprogrammer, GPX-ruter, indstillingsfiler og profiler fra en tidligere installation ligger muligvis stadig i QZ-mappen.
+Vil du søge efter dem?
+
+Tillad adgang til QZ-mappen i det næste vindue.</translation>
     </message>
     <message>
         <source>Saved! Check your private folder (Android)&lt;br&gt;or Files App (iOS)</source>
@@ -4754,17 +4788,17 @@ Tillad adgang til QZ-mappen i det næste vindue.</translation>
     </message>
     <message>
         <source>Training Programs</source>
-        <translation>Træningsprogrammer</translation>
+        <translation type="vanished">Træningsprogrammer</translation>
     </message>
     <message>
         <source>Training programs of a previous installation may still be in the QZ folder.
 Do you want to look for them?
 
 In the next window, allow access to the QZ folder.</source>
-        <translation>Træningsprogrammer fra en tidligere installation ligger muligvis stadig i QZ-mappen.
+        <translation type="vanished">Træningsprogrammer fra en tidligere installation ligger muligvis stadig i QZ-mappen.
 Vil du søge efter dem?
 
-Giv adgang til QZ-mappen i det næste vindue.</translation>
+Tillad adgang til QZ-mappen i det næste vindue.</translation>
     </message>
     <message>
         <source>Connection lost in the background</source>
@@ -4887,6 +4921,10 @@ Må QZ ændre værdien?
     <message>
         <source>Profiles</source>
         <translation>Profiler</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Gendan filer</translation>
     </message>
     <message>
         <source>Other folders</source>

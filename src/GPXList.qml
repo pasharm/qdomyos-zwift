@@ -50,7 +50,15 @@ ColumnLayout {
                 trainprogram_open_clicked(localUrl)
             }
         }
+        // files of a previous install were copied back into the QZ folder
+        function onFolderFilesRestored() {
+            var currentFolder = folderModel.folder
+            folderModel.folder = ""
+            folderModel.folder = currentFolder
+        }
     }
+
+    Component.onCompleted: rootItem.folderPageOpened()
 
     Loader {
         id: fileDialogLoader
@@ -329,7 +337,9 @@ ColumnLayout {
                 delegate: Component {
                     Rectangle {
                         property alias textColor: fileTextBox.color
-                        width: parent.width
+                        // not parent.width: while the folder is set again (onFolderFilesRestored)
+                        // the rows go and have no parent for a moment
+                        width: ListView.view.width
                         height: window.textScale !== 1 ? Math.max(40, fileTextBox.implicitHeight) : 40
                         color: Material.backgroundColor
                         z: 1
@@ -398,7 +408,9 @@ ColumnLayout {
                 onCurrentItemChanged: {
                     let fileUrl = folderModel.get(list.currentIndex, 'fileUrl') || folderModel.get(list.currentIndex, 'fileURL');
                     if (fileUrl) {
-                        list.currentItem.textColor = window.ui.modern && !window.ui.dark ? window.ui.accent : Material.color(Material.Yellow)
+                        // no current row for a moment while a restore renames files under the open page
+                        if (list.currentItem)
+                            list.currentItem.textColor = window.ui.modern && !window.ui.dark ? window.ui.accent : Material.color(Material.Yellow)
                         console.log(fileUrl + ' selected');
                         trainprogram_preview(fileUrl)
                     }
@@ -544,7 +556,9 @@ ColumnLayout {
             }
         }
 
-        UiButton {
+        // Other folders and, until QZ has a grant on the QZ folder, Restore files in one row
+        // (as on the training programs page); a long label wraps instead of eliding
+        RowLayout {
             visible: window.ui.modern
             Layout.row: gpxPage.sideBySide ? 2 : 3
             Layout.column: 0
@@ -554,17 +568,53 @@ ColumnLayout {
             Layout.rightMargin: gpxPage.sideBySide ? 4 : window.ui.pageMargin
             // 16 to the pill: UiButton has a 6 inset below it
             Layout.bottomMargin: 10
-            text: qsTr("Other folders")
-            onClicked: gpxPage.openOtherFolders()
+            // a layout in a layout fills the height by default, and the fillHeight of the pills lifts its
+            // maximum: the row would take the height of the page; the pills fill the height of the taller one
+            Layout.fillHeight: false
+            spacing: 8
+
+            UiButton {
+                Layout.fillWidth: true
+                // one height for both pills when only one label wraps
+                Layout.fillHeight: true
+                wrapsText: true
+                text: qsTr("Other folders")
+                onClicked: gpxPage.openOtherFolders()
+            }
+
+            UiButton {
+                Layout.fillWidth: true
+                // one height for both pills when only one label wraps
+                Layout.fillHeight: true
+                wrapsText: true
+                visible: rootItem.qzFolderRestorable && !rootItem.qzFolderGrantSaved
+                text: qsTr("Restore files")
+                onClicked: rootItem.offerFolderRestore()
+            }
         }
     }
 
-    UiButton {
-        id: searchButton
+    RowLayout {
         visible: !window.ui.modern
         Layout.fillWidth: true
         Layout.preferredHeight: 50
-        text: qsTr("Other folders")
-        onClicked: gpxPage.openOtherFolders()
+
+        UiButton {
+            id: searchButton
+            Layout.fillWidth: true
+            Layout.preferredHeight: 50
+            text: qsTr("Other folders")
+            onClicked: gpxPage.openOtherFolders()
+        }
+
+        // files of a previous install that no bundled file points to are found only on
+        // request; with a saved grant on the QZ folder the page restores them by itself
+        UiButton {
+            Layout.fillWidth: true
+            Layout.preferredHeight: 50
+            visible: rootItem.qzFolderRestorable && !rootItem.qzFolderGrantSaved
+            text: qsTr("Restore files")
+            onClicked: rootItem.offerFolderRestore()
+        }
     }
 }

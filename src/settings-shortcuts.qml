@@ -11,7 +11,6 @@ ScrollView {
     // end of the page was cut off). The classic look keeps the plain height
     contentHeight: mainLayout.implicitHeight + (window.ui.modern ? 20 : 0)
     focus: true
-    anchors.horizontalCenter: parent.horizontalCenter
     anchors.fill: parent
     id: settingsShortcutsPane
     objectName: "settingsShortcutsPane"

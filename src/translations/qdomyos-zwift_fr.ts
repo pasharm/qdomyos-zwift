@@ -95,6 +95,10 @@
         <source>Other folders</source>
         <translation>Autres dossiers</translation>
     </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Restaurer les fichiers</translation>
+    </message>
 </context>
 <context>
     <name>HeartRateSuggestion</name>
@@ -1285,6 +1289,10 @@ Voulez-vous mettre à jour les paramètres de QZ ?</translation>
         <source>Other folders</source>
         <translation>Autres dossiers</translation>
     </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Restaurer les fichiers</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNumberField</name>
@@ -1463,8 +1471,12 @@ Voulez-vous mettre à jour les paramètres de QZ ?</translation>
         <translation>Autres dossiers</translation>
     </message>
     <message>
+        <source>Restore files</source>
+        <translation>Restaurer les fichiers</translation>
+    </message>
+    <message>
         <source>Restore programs</source>
-        <translation>Restaurer les programmes</translation>
+        <translation type="vanished">Restaurer les programmes</translation>
     </message>
     <message>
         <source>← Back</source>
@@ -3803,6 +3815,14 @@ Cela peut prendre quelques instants au premier démarrage.</translation>
         <translation>vitesse réglée sur</translation>
     </message>
     <message>
+        <source>Files of a previous installation restored: %1.</source>
+        <translation>Fichiers restaurés : %1.</translation>
+    </message>
+    <message>
+        <source>No files of a previous installation were found.</source>
+        <translation>Aucun fichier d&apos;une installation précédente n&apos;a été trouvé.</translation>
+    </message>
+    <message>
         <source>Start pressed</source>
         <extracomment>Text-to-speech: spoken when the workout is started or resumed with the Start button.</extracomment>
         <translation>Bouton Démarrer appuyé</translation>
@@ -3958,11 +3978,11 @@ Cela peut prendre quelques instants au premier démarrage.</translation>
     </message>
     <message>
         <source>Training programs restored: %1.</source>
-        <translation>Programmes d&apos;entraînement restaurés : %1.</translation>
+        <translation type="vanished">Programmes d&apos;entraînement restaurés : %1.</translation>
     </message>
     <message>
         <source>No training programs of a previous installation were found.</source>
-        <translation>Aucun programme d&apos;entraînement d&apos;une installation précédente n&apos;a été trouvé.</translation>
+        <translation type="vanished">Aucun programme d&apos;entraînement d&apos;une installation précédente n&apos;a été trouvé.</translation>
     </message>
     <message>
         <source>T.Pace(m/500m)</source>
@@ -4703,6 +4723,20 @@ Dans la fenêtre suivante, autorisez l&apos;accès au dossier QZ.</translation>
         <translation>Enregistré ! Regardez dans le dossier privé de l’app.</translation>
     </message>
     <message>
+        <source>Restore files</source>
+        <translation>Restaurer les fichiers</translation>
+    </message>
+    <message>
+        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Les programmes d&apos;entraînement, les parcours GPX, les fichiers de paramètres et les profils d&apos;une installation précédente peuvent encore se trouver dans le dossier QZ.
+Voulez-vous les rechercher ?
+
+Dans la fenêtre suivante, autorisez l&apos;accès au dossier QZ.</translation>
+    </message>
+    <message>
         <source>QZ has detected the data format of this bike. Enable &quot;Virtufit Etappe 2.0 Bike&quot;?</source>
         <translation>QZ a détecté le format de données de ce vélo. Activer « Virtufit Etappe 2.0 Bike » ?</translation>
     </message>
@@ -4766,14 +4800,14 @@ Non : QZ le garde comme tapis de course et ne redemandera plus (un vélo peut to
     </message>
     <message>
         <source>Training Programs</source>
-        <translation>Programmes d&apos;entraînement</translation>
+        <translation type="vanished">Programmes d&apos;entraînement</translation>
     </message>
     <message>
         <source>Training programs of a previous installation may still be in the QZ folder.
 Do you want to look for them?
 
 In the next window, allow access to the QZ folder.</source>
-        <translation>Les programmes d&apos;entraînement d&apos;une installation précédente peuvent encore se trouver dans le dossier QZ.
+        <translation type="vanished">Les programmes d&apos;entraînement d&apos;une installation précédente peuvent encore se trouver dans le dossier QZ.
 Voulez-vous les rechercher ?
 
 Dans la fenêtre suivante, autorisez l&apos;accès au dossier QZ.</translation>
@@ -4903,6 +4937,10 @@ Autoriser QZ à modifier cette valeur ?
     <message>
         <source>Other folders</source>
         <translation>Autres dossiers</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Restaurer les fichiers</translation>
     </message>
     <message>
         <source>Profiles</source>

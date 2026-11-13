@@ -95,6 +95,10 @@
         <source>Other folders</source>
         <translation>Altre cartelle</translation>
     </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Ripristina file</translation>
+    </message>
 </context>
 <context>
     <name>HeartRateSuggestion</name>
@@ -1285,6 +1289,10 @@ Vuoi aggiornare le impostazioni di QZ?</translation>
         <source>Other folders</source>
         <translation>Altre cartelle</translation>
     </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Ripristina file</translation>
+    </message>
 </context>
 <context>
     <name>SettingsNumberField</name>
@@ -1463,8 +1471,12 @@ Vuoi aggiornare le impostazioni di QZ?</translation>
         <translation>Altre cartelle</translation>
     </message>
     <message>
+        <source>Restore files</source>
+        <translation>Ripristina file</translation>
+    </message>
+    <message>
         <source>Restore programs</source>
-        <translation>Ripristina programmi</translation>
+        <translation type="vanished">Ripristina programmi</translation>
     </message>
     <message>
         <source>← Back</source>
@@ -3803,6 +3815,14 @@ Al primo avvio potrebbe richiedere qualche istante.</translation>
         <translation>velocità cambiata in</translation>
     </message>
     <message>
+        <source>Files of a previous installation restored: %1.</source>
+        <translation>File ripristinati: %1.</translation>
+    </message>
+    <message>
+        <source>No files of a previous installation were found.</source>
+        <translation>Nessun file di un&apos;installazione precedente trovato.</translation>
+    </message>
+    <message>
         <source>Start pressed</source>
         <extracomment>Text-to-speech: spoken when the workout is started or resumed with the Start button.</extracomment>
         <translation>Premuto Inizia</translation>
@@ -3958,11 +3978,11 @@ Al primo avvio potrebbe richiedere qualche istante.</translation>
     </message>
     <message>
         <source>Training programs restored: %1.</source>
-        <translation>Programmi di allenamento ripristinati: %1.</translation>
+        <translation type="vanished">Programmi di allenamento ripristinati: %1.</translation>
     </message>
     <message>
         <source>No training programs of a previous installation were found.</source>
-        <translation>Nessun programma di allenamento di un&apos;installazione precedente trovato.</translation>
+        <translation type="vanished">Nessun programma di allenamento di un&apos;installazione precedente trovato.</translation>
     </message>
     <message>
         <source>T.Pace(m/500m)</source>
@@ -4421,6 +4441,20 @@ Vuoi avviarlo ora?</translation>
         <translation>Peloton</translation>
     </message>
     <message>
+        <source>Restore files</source>
+        <translation>Ripristina file</translation>
+    </message>
+    <message>
+        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>I programmi di allenamento, i percorsi GPX, i file delle impostazioni e i profili di un&apos;installazione precedente potrebbero trovarsi ancora nella cartella QZ.
+Vuoi cercarli?
+
+Nella finestra successiva, consenti l&apos;accesso alla cartella QZ.</translation>
+    </message>
+    <message>
         <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
         <translation>Ricordati di salvare il profilo &quot;%1&quot; se vuoi mantenere queste modifiche in questo profilo.</translation>
     </message>
@@ -4766,14 +4800,14 @@ No: QZ lo mantiene come tapis roulant e non lo chiederà più (la bici si può c
     </message>
     <message>
         <source>Training Programs</source>
-        <translation>Programmi di allenamento</translation>
+        <translation type="vanished">Programmi di allenamento</translation>
     </message>
     <message>
         <source>Training programs of a previous installation may still be in the QZ folder.
 Do you want to look for them?
 
 In the next window, allow access to the QZ folder.</source>
-        <translation>I programmi di allenamento di un&apos;installazione precedente potrebbero trovarsi ancora nella cartella QZ.
+        <translation type="vanished">I programmi di allenamento di un&apos;installazione precedente potrebbero trovarsi ancora nella cartella QZ.
 Vuoi cercarli?
 
 Nella finestra successiva, consenti l&apos;accesso alla cartella QZ.</translation>
@@ -4903,6 +4937,10 @@ Consentire a QZ di modificare questo valore?
     <message>
         <source>Other folders</source>
         <translation>Altre cartelle</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Ripristina file</translation>
     </message>
     <message>
         <source>Profiles</source>
