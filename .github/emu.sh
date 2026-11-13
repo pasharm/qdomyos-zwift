@@ -312,6 +312,7 @@ progress_watch() {
   adb shell "timeout 120 logcat -m 1 -e 'files of a previous install restored' > /dev/null; log -t T528 \"toast burst $1\"; for i in 1 2 3 4 5 6 7 8; do screencap /data/local/tmp/$1-t\$i.raw; done" \
     < /dev/null > /dev/null 2>&1 &
   TOAST_PID=$!
+  [ "$ROT" = true ] && rot_job "$1"
   # raw frames (no -p: no PNG coding on the device, more frames a second); raw_frame.py writes the PNG
   adb shell "for i in $(seq -s ' ' 1 "$PW_FRAMES"); do log -t T528 \"frame $1-f\$i\"; screencap /data/local/tmp/$1-f\$i.raw; done" \
     < /dev/null > /dev/null 2>&1
@@ -330,11 +331,32 @@ progress_watch() {
     [ -s "$1-f$i.raw" ] || continue
     set -- "$1" $("$EMU_PY" .github/raw_frame.py "$1-f$i.raw" "$1-f$i.png" 2250 2450)
     rm -f "$1-f$i.raw"
-    say "  $1-f$i: ${2:-?} dark pixels in rows 2250-2450"
+    say "  $1-f$i: ${2:-?} dark pixels in rows 2250-2450, ${3:-?} x ${4:-?}$([ "${3:-0}" -gt "${4:-0}" ] && echo ' landscape')"
     [ "${2:-0}" -ge 50000 ] && TOAST_FRAMES=$((TOAST_FRAMES + 1))
     set -- "$1"
   done
   say "progress_watch $1: $(ls dumps/$1-d*.xml 2>/dev/null | wc -l) dumps, $(ls $1-f*.png 2>/dev/null | wc -l) frames"
+  if [ "$ROT" = true ]; then
+    wait "$ROT_PID"
+    ROT_LAND=0
+    for i in $(seq 1 16); do
+      raw_pull "$1-r$i" && ROT_LAND=$((ROT_LAND + 1))
+    done
+    say "rotation frames $1-r1..r16: $ROT_LAND landscape (r1-r8 after the turn to landscape, r9-r16 after the turn back)"
+    if [ "$ROT_LAND" -ge 1 ] && [ "$ROT_LAND" -lt 16 ]; then
+      say "check $1-turned: landscape and upright frames in the middle of the pass: OK"
+    else
+      fail "check $1-turned: $ROT_LAND of 16 rotation frames in landscape - the turn did not happen as planned"
+    fi
+  fi
+  if [ "$LAND" = true ]; then
+    LAND_N=$(grep -c "^  $1-f[0-9]*: .*landscape" "$STEPLOG")
+    if [ "$LAND_N" -ge 1 ]; then
+      say "check $1-landscape: $LAND_N frames of the pass in landscape: OK"
+    else
+      proves_nothing "$1: no frame of the pass in landscape"
+    fi
+  fi
 }
 
 # button_check <prefix>: "Restore files" is grey while the pass runs (enabled: rootItem.folderRestoreTotal === 0,
@@ -382,7 +404,10 @@ toast_watch() {
     set -- "$1"
   done
   say "toast_watch $1: $(ls $1-t*.png 2>/dev/null | wc -l) frames at the end of the pass, the dark band on $TOAST_FRAMES"
-  if [ "$UI_MODERN" = true ]; then
+  if [ "$LAND" = true ]; then
+    # rows 2250-2450 are the bottom of the upright Nexus 6 screen; in landscape it is 1440 high
+    say "landscape: the toast on the frames $1-t* by eye"
+  elif [ "$UI_MODERN" = true ]; then
     if [ "$TOAST_FRAMES" -ge 1 ]; then
       say "check $1-toast: the toast band on $TOAST_FRAMES frames at the end of the pass: OK"
     else
@@ -391,6 +416,32 @@ toast_watch() {
   else
     say "classic: the page is dark itself - the toast on the frames $1-t* by eye"
   fi
+}
+
+# turn_to <0|1> <why>: the screen upright (0) or in landscape (1); emu_init turned auto-rotation off
+turn_to() {
+  adb shell settings put system user_rotation "$1" < /dev/null > /dev/null 2>&1
+  adb shell log -t T528 "\"turn $1: $2\"" < /dev/null > /dev/null 2>&1
+  say "turn the screen to $1 ($2)"
+}
+
+# rot_job <prefix>: ROT=true - on the device, by the line of the 10th file of the pass: landscape, frames
+# <prefix>-r1..r8 one after another, upright again, frames r9..r16; each frame and turn in logcat (tag T528)
+rot_job() {
+  adb shell "timeout 120 logcat -m 1 -e 'T528 progress 10/' > /dev/null; log -t T528 'turn 1: the middle of the pass'; settings put system user_rotation 1; for i in 1 2 3 4 5 6 7 8; do log -t T528 \"frame $1-r\$i\"; screencap /data/local/tmp/$1-r\$i.raw; sleep 0.3; done; log -t T528 'turn 0: back upright'; settings put system user_rotation 0; for i in 9 10 11 12 13 14 15 16; do log -t T528 \"frame $1-r\$i\"; screencap /data/local/tmp/$1-r\$i.raw; sleep 0.3; done" \
+    < /dev/null > /dev/null 2>&1 &
+  ROT_PID=$!
+}
+
+# raw_pull <name>: /data/local/tmp/<name>.raw to <name>.png; says the size (landscape - width > height)
+raw_pull() {
+  adb pull "/data/local/tmp/$1.raw" "$1.raw" < /dev/null > /dev/null 2>&1
+  adb shell "rm -f /data/local/tmp/$1.raw" < /dev/null > /dev/null 2>&1
+  [ -s "$1.raw" ] || return 1
+  set -- "$1" $("$EMU_PY" .github/raw_frame.py "$1.raw" "$1.png" 0 0)
+  rm -f "$1.raw"
+  say "  $1: ${3:-?} x ${4:-?}$([ "${3:-0}" -gt "${4:-0}" ] && echo ' landscape')"
+  [ "${3:-0}" -gt "${4:-0}" ]
 }
 
 # progress_check <prefix> <required>: the node in each dump of the burst - its name, how many on the screen;
@@ -410,7 +461,7 @@ progress_check() {
     if [ -n "$name" ]; then
       seen=$((seen + 1))
       set -- "$1" "$2" $(echo "$name" | tr -cs '0-9' ' ')
-      say "  $1-d$i: N=$3 M=$4"
+      say "  $1-d$i: N=$3 M=$4, at $(uifind "$f" "$PROGRESS_RX" 2>/dev/null) (x y - - x1 y1 x2 y2), screen $(dump_size "$f")"
       if [ "$last" -ge 0 ]; then
         [ "$3" -gt "$last" ] && grew=1
         [ "$3" -lt "$last" ] && shrank=1
@@ -480,6 +531,12 @@ side_t528() {
   previous_install "$p" apk-head/android-debug.apk
   conf "$p" || proves_nothing "$p: the start after the reinstall did not reach home"
   [ -n "$SLOW_MS" ] && slow_on "$SLOW_MS"
+  # LAND: the page and the question in landscape; the folder picker of the system is tapped by its upright
+  # places (yes_picker_allow), so upright for it and landscape again at once after Allow - the pass in landscape
+  if [ "$LAND" = true ]; then
+    turn_to 1 "$p: the page in landscape"
+    emu_sleep 6
+  fi
   mark "$p: $PAGE page"
   page_open || near page "$p: the landing of the $PAGE page not seen - the question or the button decides"
   if question_shown 15; then
@@ -495,8 +552,23 @@ side_t528() {
   expect "$p-2-question" "$QUESTION_RX" 'the question of the restore' --any
   rows=$(uifind "dumps/$p-2-question.xml" --count "$(row_rx)" --any 2>/dev/null)
   say "restored rows ($(row_rx)) under the question, before the pass: ${rows:-0}"
+  if [ "$LAND" = true ]; then
+    set -- $(dump_size "dumps/$p-2-question.xml")
+    if [ -n "$2" ] && [ "$1" -gt "$2" ]; then
+      say "check $p-question-landscape: the page with the question in landscape ($1 x $2): OK"
+    else
+      fail "check $p-question-landscape: the page not in landscape (${1:-?} x ${2:-?})"
+    fi
+    turn_to 0 "$p: upright for the folder picker"
+    emu_sleep 6
+    dump
+  fi
   mark "$p: yes"
-  AFTER_ALLOW="progress_watch $p-3-pass" yes_picker_allow "$p-2-picker" "$p-2-allow"
+  if [ "$LAND" = true ]; then
+    AFTER_ALLOW="land_watch $p-3-pass" yes_picker_allow "$p-2-picker" "$p-2-allow"
+  else
+    AFTER_ALLOW="progress_watch $p-3-pass" yes_picker_allow "$p-2-picker" "$p-2-allow"
+  fi
   mark "$p: allowed"
   pass_log "$p"
   progress_check "$p-3-pass" "${SLOW_MS:+yes}"
@@ -515,8 +587,28 @@ side_t528() {
   fi
   say "rows of the list after the pass: $(uifind "dumps/$p-4-after.xml" --count "$(row_rx)" --any 2>/dev/null) ($(row_rx))"
   expect_not "$p-4-after" '^Restore files$' 'the button gone after the grant'
+  if [ "$LAND" = true ]; then
+    turn_to 0 "$p: upright after the pass"
+    emu_sleep 6
+  fi
   back_to "$HOME_RX" 20
   wrap_up
+}
+
+# land_watch <prefix>: AFTER_ALLOW of LAND - landscape again at once, then the burst
+land_watch() {
+  turn_to 1 "$1: landscape at once after Allow"
+  progress_watch "$1"
+}
+
+# dump_size <dump>: "width height" of the screen by the root node of a dump
+dump_size() {
+  "$EMU_PY" - "$1" <<'PY' 2>/dev/null
+import sys, xml.etree.ElementTree as ET
+n = ET.parse(sys.argv[1]).getroot().find("node")
+b = n.get("bounds").replace("][", ",").strip("[]").split(",")
+print(b[2], b[3])
+PY
 }
 
 # wrap_up: the lines of the change and the QML errors of the changed files (listed; one naming UiProgress
@@ -551,5 +643,12 @@ case "$SIDE" in
   sm) PAGE=settings UI_MODERN=true SLOW_MS=800 side_t528 ;;
   ps) PAGE=profiles UI_MODERN=false SLOW_MS=800 side_t528 ;;
   pm) PAGE=profiles UI_MODERN=true SLOW_MS=800 side_t528 ;;
+  # landscape (T-528, the user 13.11): l - the pass in landscape, r - a turn to landscape at the 10th file and back
+  hl) PAGE=gpx UI_MODERN=false SLOW_MS=800 LAND=true side_t528 ;;
+  ml) PAGE=gpx UI_MODERN=true SLOW_MS=800 LAND=true side_t528 ;;
+  hr) PAGE=gpx UI_MODERN=false SLOW_MS=800 ROT=true side_t528 ;;
+  mr) PAGE=gpx UI_MODERN=true SLOW_MS=800 ROT=true side_t528 ;;
+  pl) PAGE=profiles UI_MODERN=false SLOW_MS=800 LAND=true side_t528 ;;
+  pr) PAGE=profiles UI_MODERN=false SLOW_MS=800 ROT=true side_t528 ;;
   *) proves_nothing "unknown side $SIDE" ;;
 esac

@@ -22,9 +22,9 @@ on:
         required: false
         default: '[35]'
       sides:
-        description: 'sides as a JSON list (h m hs ms ss sm ps pm, see emu.sh)'
+        description: 'sides as a JSON list (h m hs ms ss sm ps pm hl ml hr mr pl pr, see emu.sh)'
         required: false
-        default: '["h", "m", "hs", "ms", "ss", "sm", "ps", "pm"]'
+        default: '["hl", "ml", "hr", "mr", "pl", "pr"]'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
