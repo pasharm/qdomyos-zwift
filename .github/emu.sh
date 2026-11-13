@@ -16,7 +16,8 @@
 #    restore under the open profiles list, t - under the open programs list, s - under the open settings file
 #    list, k - the question by a .deleted_ marker alone, c - the picker cancelled, u - one subfolder picked,
 #    m - h in the modern look, n - a first install in the modern look: Other folders of the new rows, the GPX
-#    page in landscape, Restore files with nothing to restore (the toast "No files...")
+#    page in landscape, Restore files with nothing to restore (the toast "No files..."), x - the grant released by
+#    the quiet history import (no .fit of the previous install): the button back
 . .github/lib.sh
 . .github/qz.sh
 
@@ -1300,7 +1301,72 @@ side_n() {
   wrap_up
 }
 
+# ---- x: the grant taken back inside QZ. After Restore files the history page (a spare database: ddb.sqlite of the
+# previous install is foreign) imports the workouts quietly through the same grant; with no .fit of the previous
+# install it finds nothing and releases the grant (CustomQtActivity.handleFitFolderResult, releaseFolderGrant -
+# master, #5233). The next visit of a list sees no grant: the button is back, no question, no pass
+side_x() {
+  local line i
+  previous_install x apk-head/android-debug.apk
+  adb shell "ls '$QZDIR/ddb.sqlite'" < /dev/null > /dev/null 2>&1 \
+    || proves_nothing "x: no ddb.sqlite of the previous install - the history imports nothing quietly"
+  if adb shell "ls '$QZDIR/fit'" < /dev/null 2>/dev/null | tr -d '\r' | grep -q '[.]fit$'; then
+    proves_nothing "x: .fit files of the previous install - the quiet import finds them and keeps the grant"
+  fi
+  conf x
+  mark "x: GPX page"
+  if gpx_open; then
+    question_shown 20 && tap_ui '^&?No$' '^Other folders$' 20
+  fi
+  back_to "$HOME_RX" 20
+  mark "x: settings file page"
+  if load_settings_open; then
+    emu_sleep 3
+    if tap_ui '^Restore files$' '^&?Yes$' 20; then
+      mark "x: yes"
+      yes_picker_allow x-1-picker x-2-allow
+      mark "x: allowed"
+      restored_check x-restore
+      emu_sleep 3
+      ensure_app
+      still
+      shot x-3-settings-after
+      expect_not x-3-settings-after '^Restore files$' 'the button gone after the grant'
+    else
+      fail "x: no question by Restore files"
+    fi
+  fi
+  back_to "$HOME_RX" 20
+  mark "x: history page"
+  if open_drawer '^Workouts History$' && tap_ui '^Workouts History$' '^Import workouts$' 40; then
+    for i in $(seq 1 20); do
+      grep -a -q "handleFitFolderResult requestCode=.* savedGrant=true" full_logcat.txt && break
+      emu_sleep 3
+    done
+    line=$(grep -a "handleFitFolderResult requestCode=.* savedGrant=true" full_logcat.txt | tail -n 1 | sed 's/.*handleFitFolderResult //' | tr -d '\r')
+    say "history import: ${line:-no line}"
+    case "$line" in
+      *" files=0") say "check x-release: the quiet import by the grant found no workout (the grant released): OK" ;;
+      "") fail "!! check x-release: no quiet import by the saved grant - the run proves nothing" ;;
+      *) fail "!! check x-release: the quiet import found workouts ($line), the grant stays - the run proves nothing" ;;
+    esac
+    shot x-4-history
+  fi
+  back_to "$HOME_RX" 20
+  mark "x: GPX page after the release"
+  if gpx_open; then
+    emu_sleep 4
+    question_shown 3 && fail "x: a question after the release (the files are the app's own)"
+    still
+    shot x-5-gpx-after
+    expect x-5-gpx-after '^Restore files$' 'the button back once the grant is gone'
+  fi
+  back_to "$HOME_RX" 20
+  wrap_up
+}
+
 case "$SIDE" in
+  x) side_x ;;
   n) side_n ;;
   t) side_t ;;
   s) side_s ;;
