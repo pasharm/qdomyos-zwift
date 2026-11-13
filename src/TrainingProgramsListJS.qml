@@ -415,11 +415,25 @@ ColumnLayout {
                     Label {
                         parent: list
                         anchors.centerIn: parent
-                        // only once the folder is read: the model fills in asynchronously
+                        // only once the folder is read: the model fills in asynchronously; not while
+                        // a restore copies the files of a previous install into it
                         visible: window.ui.modern && list.count === 0
                                  && (isSearching || folderModel.status === FolderListModel.Ready)
+                                 && rootItem.folderRestoreTotal === 0
                         text: isSearching ? qsTr("No workouts found") : qsTr("No workouts here")
                         color: window.ui.textMuted
+                    }
+
+                    UiProgress {
+                        parent: list
+                        // in the middle of an empty list, on its top edge once it shows rows
+                        compact: list.count > 0
+                        width: compact ? parent.width : parent.width - 32
+                        x: Math.round((parent.width - width) / 2)
+                        y: compact ? 0 : Math.round((parent.height - height) / 2)
+                        z: 4
+                        done: rootItem.folderRestoreDone
+                        total: rootItem.folderRestoreTotal
                     }
                 }
 

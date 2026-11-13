@@ -187,10 +187,23 @@ ColumnLayout {
             Label {
                 parent: modernList
                 anchors.centerIn: parent
-                // only once the folder is read: the model fills in asynchronously
+                // only once the folder is read: the model fills in asynchronously; not while a
+                // restore copies the files of a previous install into it
                 visible: modernList.count === 0 && modernFolderModel.status === FolderListModel.Ready
+                         && rootItem.folderRestoreTotal === 0
                 text: qsTr("No saved settings")
                 color: window.ui.textMuted
+            }
+
+            UiProgress {
+                parent: modernList
+                // in the middle of an empty list, on its top edge once it shows rows
+                compact: modernList.count > 0
+                width: compact ? parent.width : parent.width - 32
+                x: Math.round((parent.width - width) / 2)
+                y: compact ? 0 : Math.round((parent.height - height) / 2)
+                done: rootItem.folderRestoreDone
+                total: rootItem.folderRestoreTotal
             }
         }
     }
@@ -289,6 +302,17 @@ ColumnLayout {
         }
     }
     spacing: 10
+
+    // Classic look: under the folder list, which takes the height it needs (the modern one has
+    // it on the list itself)
+    UiProgress {
+        visible: !window.ui.modern && total > 0
+        Layout.fillWidth: true
+        Layout.leftMargin: 16
+        Layout.rightMargin: 16
+        done: rootItem.folderRestoreDone
+        total: rootItem.folderRestoreTotal
+    }
 
     RowLayout {
         Layout.fillWidth: window.ui.modern
