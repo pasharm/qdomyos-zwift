@@ -20,7 +20,6 @@ import QtQuick 2.12 as Quick212
         // Modern look: a little air after the last section, so it does not touch the screen edge
         contentHeight: column1.implicitHeight + (window.ui.modern ? 12 : 0)
         focus: true
-        anchors.horizontalCenter: parent.horizontalCenter
         anchors.fill: parent
         anchors.leftMargin: (Qt.platform.os === "android" && AndroidStatusBar.hasWaterfallDisplay) ?
                             AndroidStatusBar.waterfallLeftInset : 0
