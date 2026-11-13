@@ -34,6 +34,14 @@ wipe_files() {
     adb shell "su $uid,$uid,9997 sh -c 'rm -rf $QZDIR'" < /dev/null >> "$STEPLOG" 2>&1
   fi
   adb uninstall "$PKG" < /dev/null > /dev/null 2>&1
+  # files the app may not remove (run 43474879038: "training: Directory not empty", a file of uid 10190):
+  # through MediaProvider, which forgets them with the files (test/t528-emu, run 43185579383)
+  if adb shell "ls -d $QZDIR" < /dev/null > /dev/null 2>&1; then
+    say "wipe: $QZDIR still there - delete through MediaProvider"
+    adb shell "su 0 content delete --uri content://media/external/file --where \"_data LIKE '$QZDIR/%' OR _data LIKE '/storage/emulated/0/Documents/QZ/%'\"" \
+      < /dev/null >> "$STEPLOG" 2>&1
+    adb shell "su 0 rm -rf /storage/emulated/0/Documents/QZ" < /dev/null >> "$STEPLOG" 2>&1
+  fi
   if adb shell "ls -d $QZDIR" < /dev/null > /dev/null 2>&1; then
     adb shell "su 0 ls -lnR $QZDIR" < /dev/null >> "$STEPLOG" 2>&1
     proves_nothing "$QZDIR left from the previous side (uid ${uid:-none})"
@@ -87,8 +95,9 @@ selected_by_log() {
 # has it, GPXList.qml:265), the centre of Open within the card height
 open_beside() {
   local a o
-  a=$(uifind "dumps/$1.xml" "^$2\$" 2>/dev/null) || { fail "check $1: no card '$2' on the screen"; return 1; }
-  o=$(uifind "dumps/$1.xml" '^Open$' 2>/dev/null) || { fail "check $1: no Open button on the screen"; return 1; }
+  # --any: the real bounds - in landscape uifind took a card below the clipped list as covered (run 43474879038)
+  a=$(uifind "dumps/$1.xml" "^$2\$" --any 2>/dev/null) || { fail "check $1: no card '$2' in the dump"; return 1; }
+  o=$(uifind "dumps/$1.xml" '^Open$' --any 2>/dev/null) || { fail "check $1: no Open button in the dump"; return 1; }
   set -- "$1" "$2" $a $o
   # uifind gives 8 numbers each (x y checkable checked x1 y1 x2 y2): $4 - centre y of the name, ${12} - of Open
   if [ $(( $4 - ${12} )) -le 60 ] && [ $(( ${12} - $4 )) -le 60 ]; then
@@ -151,14 +160,21 @@ tap_row_classic() {
 # pick <shot> <route> <row>: the route tapped (modern: the card by its name, the km chip as the landing;
 # classic: the row by its place), then 3 s for the tiles, a still screen, the frame and its checks
 pick() {
-  local s=$1 route=$2 n=$3 from km
+  local s=$1 route=$2 n=$3 from
   from=$(log_lines)
   if [ "$MODERN" = true ]; then
-    if [ "$route" = "$LONG" ]; then km='^16\.[0-9] km$'; else km='^9\.[0-9] km$'; fi
-    # the accessibility click (Accessible.onPressAction -> gpxCard.activate, GPXList.qml:224) - the way to the
-    # state under test, not the action: in landscape the dump gives the cards below the clipped list their full
-    # bounds, a touch there went to Other folders (review: dump n-2-gpx-landscape of run 43369666871)
-    tap_ui "^$route\$" "$km" 20 --a11y || return 1
+    # the accessibility click (Accessible.onPressAction -> gpxCard.activate, GPXList.qml:224) straight by the
+    # driver - the way to the state under test, not the action: the list clips the cards, and tap_ui refused
+    # Govi to Hood upright ("only 28 px on the screen") and took the km chip as covered in landscape (run
+    # 43474879038); the selection is proved by the log, the Open button and the km chip after it
+    a11y_build || { fail "$s: no a11y driver"; return 1; }
+    drv "pick-$s" "click=$route" "sleep:1000"
+    if grep -q "returned true" "drv/pick-$s.txt"; then
+      say "outcome 'pick $route': a11y click returned true"
+    else
+      fail "$s: the accessibility click on '$route' did not work"
+      return 1
+    fi
   else
     tap_row_classic "$n" "$route" || return 1
   fi
@@ -167,7 +183,7 @@ pick() {
 
 # frame_route <shot> <route> <from line>: the frame of the selected route and its checks
 frame_route() {
-  local s=$1 route=$2 from=$3
+  local s=$1 route=$2 from=$3 km
   emu_sleep 3
   still
   shot "$s"
@@ -175,6 +191,12 @@ frame_route() {
   selected_by_log "$s" "$route" "$from"
   if [ "$MODERN" = true ]; then
     open_beside "$s" "$route"
+    if [ "$route" = "$LONG" ]; then km='^16\.[0-9] km$'; else km='^9\.[0-9] km$'; fi
+    if [ "$(uifind "dumps/$s.xml" --count "$km" --any 2>/dev/null)" -ge 1 ] 2>/dev/null; then
+      say "check $s: the km chip of '$route' ($km): OK"
+    else
+      fail "check $s: no km chip '$km' of '$route' in the dump"
+    fi
   else
     # the distance text over the map (GPXList.qml:542) - its node, if Qt gives one
     say "  classic distance text: $(uifind "dumps/$s.xml" '^Distance .*' --name --any 2>/dev/null || echo 'no node')"
@@ -182,9 +204,33 @@ frame_route() {
   expect "$s" '^Other folders$' 'still the GPX page (the route not opened)'
 }
 
+# no_restore <case>: the restore question master asks on the GPX page of a fresh install too ("Restore files",
+# run 43474879038: over the frames of every case) - answered No; not shown in 15 s - on
+QUESTION_RX='(?s).*previous installation.*'
+no_restore() {
+  if ! wait_ui "$QUESTION_RX" 15 --any; then
+    near question "$1: no restore question on the GPX page"
+    return 0
+  fi
+  if find_ui '^&?No$'; then
+    set -- "$1" $EMU_AT
+    say "restore question: No at $2 $3"
+    adb shell input tap "$2" "$3" < /dev/null > /dev/null 2>&1
+  else
+    fail "$1: the restore question without a No ($EMU_WHY)"
+    return 1
+  fi
+  if wait_gone "$QUESTION_RX" 15; then
+    say "outcome 'No': the question closed"
+  else
+    fail "$1: the restore question still there after No"
+    return 1
+  fi
+}
+
 # gpx <case> <modern> <landscape>: the page, Box Hill at once, Govi to Hood, Box Hill again
 gpx() {
-  local c=$1 from
+  local c=$1 from land
   MODERN=$2
   start_case "$c" ui_modern="$MODERN" fakedevice_treadmill=true || return 1
   SCR_W=1440; SCR_H=2560
@@ -195,7 +241,10 @@ gpx() {
   fi
   from=$(log_lines)
   say "== $c: GPX page"
-  if open_drawer '^Open GPX$' && tap_ui '^Open GPX$' '^Other folders$'; then
+  # landing: Other folders, or No of the restore question at once (modern: a popup over the page, Other folders
+  # stays in the dump - two matches would fail; test/t528-emu)
+  if [ "$MODERN" = true ]; then land='^&?No$'; else land='^Other folders$|^&?No$'; fi
+  if open_drawer '^Open GPX$' && tap_ui '^Open GPX$' "$land" && no_restore "$c"; then
     frame_route "$c-1-long-open" "$LONG" "$from"
     # Box Hill again only after Govi to Hood is selected: a tap on the selected row opens the route
     pick "$c-2-short" "$SHORT" 4 && pick "$c-3-long" "$LONG" 1
