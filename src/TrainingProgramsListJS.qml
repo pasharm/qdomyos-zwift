@@ -612,6 +612,7 @@ ColumnLayout {
                                 // it moves (an active binding is overwritten after every move), the Material
                                 // ScrollBar keeps showing for AlwaysOn
                                 ScrollBar.vertical: ScrollBar {
+                                    id: descriptionBar
                                     z: 1
                                     interactive: false
                                     policy: descriptionFlick.interactive ? ScrollBar.AlwaysOn : ScrollBar.AlwaysOff
@@ -637,6 +638,11 @@ ColumnLayout {
                                 Text {
                                     id: descriptionText
                                     width: descriptionFlick.width
+                                    // where the text may scroll (side by side, unfolded), room for the bar on
+                                    // its right: the lines ran under it. Not by interactive: that follows the
+                                    // height of the text, and the height this width
+                                    rightPadding: detailColumn.sideBySide || descriptionBlock.expanded
+                                        ? descriptionBar.width + 6 : 0
                                     text: rootItem.previewWorkoutDescription
                                     font.pixelSize: window.ui.modern ? window.ui.fontBody : window.fontPx(14)
                                     font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
@@ -770,7 +776,10 @@ ColumnLayout {
                                 id: previewWebView
                                 anchors.fill: parent
                                 visible: !window.ui.modern || (pageLoaded && !deleteDialog.visible)
+                                // modern look: the page colour for the frame around the chart, so it merges
+                                // with the page; the classic look keeps the dark frame of the page
                                 url: "http://localhost:" + settings.value("template_inner_QZWS_port") + "/workoutpreview/preview.html"
+                                    + (window.ui.modern ? "?bg=" + encodeURIComponent(String(window.ui.bg)) : "")
                                 property bool pageLoaded: false
                                 // a failed load is shown too: the page tells why, not an endless spinner
                                 onLoadingChanged: {
