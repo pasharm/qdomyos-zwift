@@ -1513,8 +1513,12 @@ Szeretné frissíteni a QZ beállításait?</translation>
 <context>
     <name>UiProgress</name>
     <message>
-        <source>Restoring files: %1 of %2</source>
-        <translation>Fájlok visszaállítása folyamatban: %1 / %2</translation>
+        <source>Restoring files of the previous installation</source>
+        <translation>A korábbi telepítés fájljainak visszaállítása</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>A korábbi telepítés fájljainak visszaállítása: %1 / %2</translation>
     </message>
 </context>
 <context>

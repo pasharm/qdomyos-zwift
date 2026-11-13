@@ -236,6 +236,18 @@ ColumnLayout {
         wrapMode: Text.WordWrap
     }
 
+    // the restore of a previous install: above the list, which moves down for that time
+    UiProgress {
+        id: modernRestoreProgress
+        shown: window.ui.modern
+        Layout.fillWidth: true
+        Layout.leftMargin: window.ui.pageMargin
+        Layout.rightMargin: window.ui.pageMargin
+        Layout.topMargin: 12
+        done: rootItem.folderRestoreDone
+        total: rootItem.folderRestoreTotal
+    }
+
     ListView {
         id: modernList
         visible: window.ui.modern
@@ -247,8 +259,9 @@ ColumnLayout {
         // settings page, not over the cards
         ScrollIndicator.vertical: ScrollIndicator {}
         // 12 from the hint, as on the settings file page; 6 above the pill below (12 seen with
-        // its inset), the gap it had with the page spacing
-        Layout.topMargin: 12
+        // its inset), the gap it had with the page spacing. While the restore progress shows,
+        // the 12 are above it and the gap below it is its own (UiProgress)
+        Layout.topMargin: modernRestoreProgress.visible ? 0 : 12
         Layout.bottomMargin: 6
         clip: true
         spacing: 8
@@ -351,19 +364,6 @@ ColumnLayout {
                 highlighted: true
                 onClicked: loadProfileAt(index)
             }
-        }
-
-        UiProgress {
-            parent: modernList
-            // in the middle of an empty list, on its top edge once it shows rows
-            compact: modernList.count > 0
-            // over the cards: the list goes on to the screen edge on the right, the cards stop a
-            // page margin before it
-            width: (compact ? parent.width : parent.width - 32) - window.ui.pageMargin
-            x: Math.round((parent.width - window.ui.pageMargin - width) / 2)
-            y: compact ? 0 : Math.round((parent.height - height) / 2)
-            done: rootItem.folderRestoreDone
-            total: rootItem.folderRestoreTotal
         }
     }
 
@@ -579,9 +579,9 @@ ColumnLayout {
     }
 
     // Classic look: under the profile list, which takes the height it needs (the modern one has
-    // it on the list itself)
+    // it above its list)
     UiProgress {
-        visible: !window.ui.modern && total > 0
+        shown: !window.ui.modern
         Layout.fillWidth: true
         Layout.leftMargin: 16
         Layout.rightMargin: 16

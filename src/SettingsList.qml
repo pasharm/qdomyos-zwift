@@ -77,11 +77,23 @@ ColumnLayout {
             wrapMode: Text.WordWrap
         }
 
+        // the restore of a previous install: above the list, which moves down for that time
+        UiProgress {
+            id: modernRestoreProgress
+            Layout.fillWidth: true
+            Layout.leftMargin: window.ui.pageMargin
+            Layout.rightMargin: window.ui.pageMargin
+            Layout.topMargin: 4
+            done: rootItem.folderRestoreDone
+            total: rootItem.folderRestoreTotal
+        }
+
         ListView {
             id: modernList
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.topMargin: 4
+            // the gap above the list is in the progress while it shows (UiProgress)
+            Layout.topMargin: modernRestoreProgress.visible ? -parent.spacing : 4
             // To the screen edge on the right: the cards keep the page margin (their width), and
             // the scroll indicator, placed by Qt at the right edge of the list, goes into it as on
             // the settings page, not over the cards
@@ -200,19 +212,6 @@ ColumnLayout {
                 text: qsTr("No saved settings")
                 color: window.ui.textMuted
             }
-
-            UiProgress {
-                parent: modernList
-                // in the middle of an empty list, on its top edge once it shows rows
-                compact: modernList.count > 0
-                // over the cards: the list goes on to the screen edge on the right, the cards
-                // stop a page margin before it
-                width: (compact ? parent.width : parent.width - 32) - window.ui.pageMargin
-                x: Math.round((parent.width - window.ui.pageMargin - width) / 2)
-                y: compact ? 0 : Math.round((parent.height - height) / 2)
-                done: rootItem.folderRestoreDone
-                total: rootItem.folderRestoreTotal
-            }
         }
     }
 
@@ -312,9 +311,9 @@ ColumnLayout {
     spacing: 10
 
     // Classic look: under the folder list, which takes the height it needs (the modern one has
-    // it on the list itself)
+    // it above its list)
     UiProgress {
-        visible: !window.ui.modern && total > 0
+        shown: !window.ui.modern
         Layout.fillWidth: true
         Layout.leftMargin: 16
         Layout.rightMargin: 16
