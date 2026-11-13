@@ -307,6 +307,11 @@ progress_watch() {
   adb shell "for i in $(seq -s ' ' 1 "$PW_DUMPS"); do log -t T528 \"dump $1-d\$i\"; uiautomator dump /data/local/tmp/$1-d\$i.xml; done" \
     < /dev/null > /dev/null 2>&1 &
   p=$!
+  # the toast comes when the pass ends (9-33 s after Allow, run 43444695400 - after the burst): a burst of its
+  # own, started on the device by the line of the end of the pass (logcat -m 1 waits for it), 3 s of toast
+  adb shell "timeout 120 logcat -m 1 -e 'files of a previous install restored' > /dev/null; log -t T528 \"toast burst $1\"; for i in 1 2 3 4 5 6 7 8; do screencap /data/local/tmp/$1-t\$i.raw; done" \
+    < /dev/null > /dev/null 2>&1 &
+  TOAST_PID=$!
   # raw frames (no -p: no PNG coding on the device, more frames a second); raw_frame.py writes the PNG
   adb shell "for i in $(seq -s ' ' 1 "$PW_FRAMES"); do log -t T528 \"frame $1-f\$i\"; screencap /data/local/tmp/$1-f\$i.raw; done" \
     < /dev/null > /dev/null 2>&1
@@ -330,6 +335,33 @@ progress_watch() {
     set -- "$1"
   done
   say "progress_watch $1: $(ls dumps/$1-d*.xml 2>/dev/null | wc -l) dumps, $(ls $1-f*.png 2>/dev/null | wc -l) frames"
+}
+
+# toast_watch <prefix>: the frames of the burst at the end of the pass (progress_watch), the dark band counted
+toast_watch() {
+  local i
+  wait "$TOAST_PID"
+  TOAST_FRAMES=0
+  for i in 1 2 3 4 5 6 7 8; do
+    adb pull "/data/local/tmp/$1-t$i.raw" "$1-t$i.raw" < /dev/null > /dev/null 2>&1
+    adb shell "rm -f /data/local/tmp/$1-t$i.raw" < /dev/null > /dev/null 2>&1
+    [ -s "$1-t$i.raw" ] || continue
+    set -- "$1" $("$EMU_PY" .github/raw_frame.py "$1-t$i.raw" "$1-t$i.png" 2250 2450)
+    rm -f "$1-t$i.raw"
+    say "  $1-t$i: ${2:-?} dark pixels in rows 2250-2450"
+    [ "${2:-0}" -ge 50000 ] && TOAST_FRAMES=$((TOAST_FRAMES + 1))
+    set -- "$1"
+  done
+  say "toast_watch $1: $(ls $1-t*.png 2>/dev/null | wc -l) frames at the end of the pass, the dark band on $TOAST_FRAMES"
+  if [ "$UI_MODERN" = true ]; then
+    if [ "$TOAST_FRAMES" -ge 1 ]; then
+      say "check $1-toast: the toast band on $TOAST_FRAMES frames at the end of the pass: OK"
+    else
+      fail "check $1-toast: no toast band on the frames at the end of the pass"
+    fi
+  else
+    say "classic: the page is dark itself - the toast on the frames $1-t* by eye"
+  fi
 }
 
 # progress_check <prefix> <required>: the node in each dump of the burst - its name, how many on the screen;
@@ -407,7 +439,8 @@ page_open() {
 }
 row_rx() {
   case "$PAGE" in
-    gpx) echo '^T528 route 09.*' ;;
+    # the list makes rows only on the screen: the seeded route sorts above the extra ones (run 43444695400)
+    gpx) echo '^T518 route$' ;;
     settings) echo '^t518-setup.*' ;;
     profiles) echo '^T518 profile.*' ;;
   esac
@@ -438,13 +471,18 @@ side_t528() {
   mark "$p: allowed"
   pass_log "$p"
   progress_check "$p-3-pass" "${SLOW_MS:+yes}"
-  say "toast: the dark band on ${TOAST_FRAMES:-0} frames of the burst"
+  toast_watch "$p-3-pass"
   emu_sleep 3
   ensure_app
   still
   shot "$p-4-after"
   expect_not "$p-4-after" "$PROGRESS_RX" 'no progress node after the pass' --any
-  expect "$p-4-after" "$(row_rx)" 'the restored row in the list after the pass' --any
+  if [ "$UI_MODERN" = true ]; then
+    expect "$p-4-after" "$(row_rx)" 'the restored row in the list after the pass' --any
+  else
+    # the rows of the classic lists have no name in the dump (run 43444695400) - the frame by eye
+    say "classic: the rows have no name in the dump - the list on the frame $p-4-after by eye"
+  fi
   say "rows of the list after the pass: $(uifind "dumps/$p-4-after.xml" --count "$(row_rx)" --any 2>/dev/null) ($(row_rx))"
   expect_not "$p-4-after" '^Restore files$' 'the button gone after the grant'
   back_to "$HOME_RX" 20
