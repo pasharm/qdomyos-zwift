@@ -237,10 +237,21 @@ nodesc() {
 # user; every run before opened upright and turned). The text block is seen by its scroll bar beside the
 # buttons (text_beside_buttons), as in the turned case
 landopen() {
-  local c=$1 modern=$2
+  local c=$1 modern=$2 uid i long=''
   start_case "$c" ui_modern=$modern fakedevice_treadmill=true android_documents_folder=true || return 1
+  # a program of its own, first in the list ("Alongtext" < "Anodesc"): the classic rows have no names, and
+  # in landscape row 2 opened "Easy intervals" (short text, no scroll bar - run 43448013450); a short text
+  # here fails text_beside_buttons, so a wrong row is not a pass
+  uid=$(app_uid)
+  for i in 1 2 3 4 5 6 7 8; do
+    long="$long Paragraph $i of a long description: warm up well, keep the cadence high and do not chase the power of the first interval in the last one."
+  done
+  printf '<workout_file>\n<author>QZ emu</author>\n<name>Alongtext</name>\n<description>%s</description>\n<sportType>bike</sportType>\n<tags><tag name="EMU"/></tags>\n<workout>\n<SteadyState Duration="300" Power="0.6"/>\n<SteadyState Duration="300" Power="0.8"/>\n</workout>\n</workout_file>\n' "$long" > Alongtext.zwo
+  adb push Alongtext.zwo /data/local/tmp/Alongtext.zwo < /dev/null > /dev/null 2>&1
+  adb shell "su $uid,$uid,9997 sh -c 'cp /data/local/tmp/Alongtext.zwo $QZDIR/training/Alongtext.zwo'" < /dev/null >> "$STEPLOG" 2>&1
+  adb shell "ls -l $QZDIR/training/Alongtext.zwo" < /dev/null >> "$STEPLOG" 2>&1 || proves_nothing "$c: Alongtext.zwo not in the training folder"
   if rotate 1; then
-    if open_program "$c" 'HIIT Aerobic' 2; then
+    if open_program "$c" 'Alongtext' 1; then
       emu_sleep 5
       shot "$c-7-long-land-open"
       webview_of "$c-7-long-land-open"
