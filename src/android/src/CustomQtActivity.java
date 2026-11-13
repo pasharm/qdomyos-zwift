@@ -941,6 +941,13 @@ public class CustomQtActivity extends QtActivity {
     }
 
     private String findChildDocument(Uri treeUri, String parentId, String childName) {
+        // The external storage provider names a document by its path under the parent, so the
+        // child is looked up first as one document: listing the parent costs seconds when the QZ
+        // folder holds a thousand charts and logs. The listing stays for other providers.
+        String directId = findDocumentByPath(treeUri, parentId + "/" + childName, childName);
+        if (directId != null) {
+            return directId;
+        }
         Uri childrenUri = android.provider.DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, parentId);
         android.database.Cursor cursor = null;
         try {
@@ -954,6 +961,26 @@ public class CustomQtActivity extends QtActivity {
             }
         } catch (Exception e) {
             Log.d(TAG, "findChildDocument failed " + e);
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return null;
+    }
+
+    // documentId when the tree has a document with this id and this name, otherwise null
+    private String findDocumentByPath(Uri treeUri, String documentId, String name) {
+        android.database.Cursor cursor = null;
+        try {
+            Uri documentUri = android.provider.DocumentsContract.buildDocumentUriUsingTree(treeUri, documentId);
+            cursor = getContentResolver().query(documentUri, new String[] {
+                android.provider.DocumentsContract.Document.COLUMN_DISPLAY_NAME}, null, null, null);
+            if (cursor != null && cursor.moveToFirst() && name.equals(cursor.getString(0))) {
+                return documentId;
+            }
+        } catch (Exception e) {
+            // no such document, or a provider with other ids: the caller lists the parent
         } finally {
             if (cursor != null) {
                 cursor.close();
