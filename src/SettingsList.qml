@@ -53,12 +53,12 @@ ColumnLayout {
         visible: window.ui.modern
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Layout.leftMargin: window.ui.pageMargin
-        Layout.rightMargin: window.ui.pageMargin
         spacing: 8
 
         Label {
             Layout.fillWidth: true
+            Layout.leftMargin: window.ui.pageMargin
+            Layout.rightMargin: window.ui.pageMargin
             text: qsTr("Settings folder")
             color: window.ui.textMain
             font.pixelSize: window.ui.fontHeadline
@@ -69,6 +69,8 @@ ColumnLayout {
 
         Label {
             Layout.fillWidth: true
+            Layout.leftMargin: window.ui.pageMargin
+            Layout.rightMargin: window.ui.pageMargin
             text: qsTr("Tap a file to select it, then Load.")
             color: window.ui.textMuted
             font.pixelSize: window.ui.fontCaption
@@ -80,6 +82,10 @@ ColumnLayout {
             Layout.fillWidth: true
             Layout.fillHeight: true
             Layout.topMargin: 4
+            // To the screen edge on the right: the cards keep the page margin (their width), and
+            // the scroll indicator, placed by Qt at the right edge of the list, goes into it as on
+            // the settings page, not over the cards
+            Layout.leftMargin: window.ui.pageMargin
             clip: true
             spacing: 8
             currentIndex: -1
@@ -108,7 +114,7 @@ ColumnLayout {
             delegate: UiFrame {
                 id: settingsCard
                 readonly property bool selected: ListView.isCurrentItem
-                width: ListView.view.width
+                width: ListView.view.width - window.ui.pageMargin
                 // Material 3 list item: one line at least 56, the icon and the button 16 from the
                 // edges, the text 16 after the icon; a bigger text grows it, 8 above and below
                 height: Math.max(56, Math.max(40, settingsName.implicitHeight) + 16)
@@ -186,6 +192,7 @@ ColumnLayout {
             Label {
                 parent: modernList
                 anchors.centerIn: parent
+                anchors.horizontalCenterOffset: -window.ui.pageMargin / 2
                 // only once the folder is read: the model fills in asynchronously; not while a
                 // restore copies the files of a previous install into it
                 visible: modernList.count === 0 && modernFolderModel.status === FolderListModel.Ready
@@ -198,8 +205,10 @@ ColumnLayout {
                 parent: modernList
                 // in the middle of an empty list, on its top edge once it shows rows
                 compact: modernList.count > 0
-                width: compact ? parent.width : parent.width - 32
-                x: Math.round((parent.width - width) / 2)
+                // over the cards: the list goes on to the screen edge on the right, the cards
+                // stop a page margin before it
+                width: (compact ? parent.width : parent.width - 32) - window.ui.pageMargin
+                x: Math.round((parent.width - window.ui.pageMargin - width) / 2)
                 y: compact ? 0 : Math.round((parent.height - height) / 2)
                 done: rootItem.folderRestoreDone
                 total: rootItem.folderRestoreTotal
