@@ -76,11 +76,21 @@ ColumnLayout {
             wrapMode: Text.WordWrap
         }
 
+        // the restore of a previous install: above the list, which moves down for that time
+        UiProgress {
+            id: modernRestoreProgress
+            Layout.fillWidth: true
+            Layout.topMargin: 4
+            done: rootItem.folderRestoreDone
+            total: rootItem.folderRestoreTotal
+        }
+
         ListView {
             id: modernList
             Layout.fillWidth: true
             Layout.fillHeight: true
-            Layout.topMargin: 4
+            // the gap above the list is in the progress while it shows (UiProgress)
+            Layout.topMargin: modernRestoreProgress.visible ? -parent.spacing : 4
             clip: true
             spacing: 8
             currentIndex: -1
@@ -194,17 +204,6 @@ ColumnLayout {
                 text: qsTr("No saved settings")
                 color: window.ui.textMuted
             }
-
-            UiProgress {
-                parent: modernList
-                // in the middle of an empty list, on its top edge once it shows rows
-                compact: modernList.count > 0
-                width: compact ? parent.width : parent.width - 32
-                x: Math.round((parent.width - width) / 2)
-                y: compact ? 0 : Math.round((parent.height - height) / 2)
-                done: rootItem.folderRestoreDone
-                total: rootItem.folderRestoreTotal
-            }
         }
     }
 
@@ -304,9 +303,9 @@ ColumnLayout {
     spacing: 10
 
     // Classic look: under the folder list, which takes the height it needs (the modern one has
-    // it on the list itself)
+    // it above its list)
     UiProgress {
-        visible: !window.ui.modern && total > 0
+        shown: !window.ui.modern
         Layout.fillWidth: true
         Layout.leftMargin: 16
         Layout.rightMargin: 16

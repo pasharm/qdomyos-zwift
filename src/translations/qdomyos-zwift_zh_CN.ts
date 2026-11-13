@@ -1502,8 +1502,12 @@ Do you want to update QZ settings?</source>
 <context>
     <name>UiProgress</name>
     <message>
-        <source>Restoring files: %1 of %2</source>
-        <translation>正在恢复文件：%1/%2</translation>
+        <source>Restoring files of the previous installation</source>
+        <translation>正在恢复以前安装的文件</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>正在恢复以前安装的文件：%1/%2</translation>
     </message>
 </context>
 <context>

@@ -1502,8 +1502,12 @@ Aktualizovat nastavení QZ?</translation>
 <context>
     <name>UiProgress</name>
     <message>
-        <source>Restoring files: %1 of %2</source>
-        <translation>Obnovování souborů: %1 z %2</translation>
+        <source>Restoring files of the previous installation</source>
+        <translation>Obnovování souborů z předchozí instalace</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>Obnovování souborů z předchozí instalace: %1 z %2</translation>
     </message>
 </context>
 <context>
