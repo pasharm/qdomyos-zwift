@@ -341,27 +341,28 @@ progress_watch() {
 # 717777efd) - in each dump of the burst with the progress node its enabled is false; enabled true there
 # fails (the build of run 43452662472 had it true, t528_enabled.py on ms-3-pass-d2, ps-3-pass-d2)
 button_check() {
-  local i f e grey=0 live=0
+  local i f e hidden=0 shown=0
+  # Qt 5.15.0 gives every node enabled=true: QAccessibleQuickItem::state() never sets disabled from
+  # item()->isEnabled() (qtdeclarative v5.15.0 qaccessiblequickitem.cpp:179-201), the delegate passes
+  # !state.disabled (qtbase androidjniaccessibility.cpp:262) - run 43462330183: enabled=true in every dump while
+  # the frames show the button grey. The branch hides the grey button from the tree (Accessible.ignored:
+  # !enabled, 11bd9757f): in each dump of the pass with the progress node there is no "Restore files" node;
+  # the grey itself - on the frames
   for i in $(seq 1 "$PW_DUMPS"); do
     f="dumps/$1-d$i.xml"
     [ -s "$f" ] || continue
     uifind "$f" "$PROGRESS_RX" --any > /dev/null 2>&1 || continue
     e=$("$EMU_PY" .github/t528_enabled.py "$f" "Restore files")
-    say "  $1-d$i: progress on, 'Restore files' enabled: ${e:-no node}"
-    case "$e" in
-      *true*) live=$((live + 1)) ;;
-      *false*) grey=$((grey + 1)) ;;
-    esac
+    say "  $1-d$i: progress on, 'Restore files' node: ${e:+there (enabled $e)}${e:-none}"
+    if [ -n "$e" ]; then shown=$((shown + 1)); else hidden=$((hidden + 1)); fi
   done
-  say "button_check $1: grey in $grey dumps with the progress, enabled in $live"
-  # Qt 5.15.0 gives every node enabled=true: QAccessibleQuickItem::state() never sets disabled from
-  # item()->isEnabled() (qtdeclarative v5.15.0 qaccessiblequickitem.cpp:179-201), the delegate passes
-  # !state.disabled (qtbase androidjniaccessibility.cpp:262). Run 43462330183: enabled=true in every dump while
-  # the frames ms-3-pass-f8, ps-3-pass-f8 show the button grey - the dump cannot tell, the frame does
-  if [ "$live" -gt 0 ]; then
-    near grey "$1: 'Restore files' enabled=true in the dump - Qt 5.15 does not pass disabled, the frames tell"
-  elif [ "$grey" -gt 0 ]; then
-    say "check $1-grey: 'Restore files' grey (enabled=false) while the restore runs: OK"
+  say "button_check $1: dumps with the progress - without the button $hidden, with it $shown"
+  if [ "$shown" -gt 0 ]; then
+    fail "check $1-hidden: 'Restore files' in the tree while the restore runs ($shown dumps)"
+  elif [ "$hidden" -gt 0 ]; then
+    say "check $1-hidden: no 'Restore files' node while the restore runs ($hidden dumps): OK"
+  elif [ -n "$SLOW_MS" ]; then
+    fail "check $1-hidden: no dump with the progress node"
   fi
 }
 
