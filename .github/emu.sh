@@ -35,10 +35,24 @@ snap() {
 bar_share() {
   local n=$1 out
   shift
+  BAR_S= BAR_D= BAR_L=
   out=$("$EMU_PY" "$EMU_GH/t544_bar.py" "raw-$n" "$@" --bar "$BAR" 2>&1)
   say "bar $n: $out"
   BAR_S=$(echo "$out" | awk '/^share/ {print $2}')
+  BAR_D=$(echo "$out" | awk '/^share/ {print $12}')
+  BAR_L=$(echo "$out" | awk '/^share/ {print $14}')
   [ -n "$BAR_S" ]
+}
+
+# icons <name> <light|dark>: the icons of the bar in the contrast of the page - dark ones on a light page
+# (BAR_D, the part darker than 180), light ones on a dark page (BAR_L, lighter than 120). The first run
+# (43510037607): API 30, light page - dark 0.000, the icons stayed white; API 35 - dark 0.068
+icons() {
+  local v=$BAR_D tone=dark ok
+  [ "$2" = dark ] && { v=$BAR_L; tone=light; }
+  ok=$(awk -v s="$v" 'BEGIN {print (s >= 0.02) ? 1 : 0}')
+  if [ "$ok" = 1 ]; then say "check $1: $tone icons on the bar: OK ($tone $v)"
+  else fail "check $1: no $tone icons on the bar ($tone $v)"; fi
 }
 
 # want <name> <min|max> <limit> <what>: BAR_S at least / at most the limit, or a failure
@@ -52,13 +66,15 @@ want() {
 
 # modern <case> <light|dark> <side>: home, the drawer, the tiles scrolled up
 modern() {
-  local c=$1 mode=$2 side=$3
+  local c=$1 mode=$2 side=$3 what
   start_case "$c" ui_modern=true ui_theme_mode=$mode fakedevice_treadmill=true || return 1
   emu_sleep 2
   snap "$c-1-home"
   if bar_share "$c-1-home" $HEADER_PT; then
-    if [ "$side" = h ]; then want "$c-1-home" min 0.6 "the status bar in the colour of the header"
-    else say "base $c-1-home: share $BAR_S (the black bar: low on a light page)"; fi
+    if [ "$side" = h ]; then
+      want "$c-1-home" min 0.6 "the status bar in the colour of the header"
+      icons "$c-1-home" "$mode"
+    else say "base $c-1-home: share $BAR_S (the black bar)"; fi
   else
     fail "$c-1-home: the bar not measured"
   fi
@@ -67,8 +83,18 @@ modern() {
   if open_drawer '^Settings$'; then
     emu_sleep 2
     snap "$c-2-drawer"
-    if bar_share "$c-2-drawer" $SHEET_PT 0 1100; then
-      if [ "$side" = h ]; then want "$c-2-drawer" min 0.6 "the drawer sheet under the status bar"
+    # API 31+: the window under the bar, the sheet shows through it (main.qml Drawer, topMargin
+    # -topPadding); below 31 the window keeps below the bar, which has the page colour
+    # (CustomQtActivity.setSystemBars) - the sheet starts under it, as on the first run (43510037607, API 30)
+    if [ "${EMU_API:-35}" -ge 31 ]; then
+      bar_share "$c-2-drawer" $SHEET_PT 0 1100; what="the drawer sheet under the status bar"
+    else
+      bar_share "$c-2-drawer" $HEADER_PT 0 1100 --ref-frame "raw-$c-1-home"; what="the bar in the page colour (API < 31)"
+    fi
+    if [ -n "$BAR_S" ]; then
+      if [ "$side" = h ]; then
+        want "$c-2-drawer" min 0.6 "$what"
+        icons "$c-2-drawer" "$mode"
       else say "base $c-2-drawer: share $BAR_S"; fi
     else
       fail "$c-2-drawer: the bar not measured"
@@ -91,7 +117,9 @@ modern() {
     say "!! $c-3-scrolled: the header did not go - the run proves nothing for the scrolled bar"
     FAILED=1
   elif bar_share "$c-3-scrolled" $HEADER_PT --ref-frame "raw-$c-1-home"; then
-    if [ "$side" = h ]; then want "$c-3-scrolled" min 0.6 "the header colour under the status bar after the scroll"
+    if [ "$side" = h ]; then
+      want "$c-3-scrolled" min 0.6 "the header colour under the status bar after the scroll"
+      icons "$c-3-scrolled" "$mode"
     else say "base $c-3-scrolled: share $BAR_S"; fi
   else
     fail "$c-3-scrolled: the bar not measured"

@@ -5,8 +5,9 @@
 # The raw frame of `adb exec-out screencap` (no -p): width, height, format (4 bytes each), on API 28+ a
 # colour space too, then RGBA rows - the header is what is left before width*height*4 bytes. Rows 4..bar-8
 # (the bar is 84 px on the CI Nexus 6), columns x0..x1 (the whole width by default). Prints
-# "share S ref R G B bar R G B": S - the part of those pixels within 8 of the colour at (ref x, ref y), then
-# the mean colour of the bar. Exit 0, 2 when the frame cannot be read.
+# "share S ref R G B bar R G B dark D light L": S - the part of those pixels within 8 of the colour at
+# (ref x, ref y), the mean colour of the bar, the parts darker than 180 and lighter than 120 (the icons; both on a mid grey).
+# Exit 0, 2 when the frame cannot be read.
 import struct
 import sys
 
@@ -51,7 +52,7 @@ def main(argv):
         except Exception as e:
             print("cannot read %s: %s" % (ref_frame, e))
             return 2
-    near = total = 0
+    near = total = dark = light = 0
     sums = [0, 0, 0]
     for y in range(4, max(5, bar - 8)):
         for x in range(x0, x1, 2):
@@ -61,9 +62,17 @@ def main(argv):
                 sums[k] += c[k]
             if abs(c[0] - ref[0]) <= 8 and abs(c[1] - ref[1]) <= 8 and abs(c[2] - ref[2]) <= 8:
                 near += 1
+            luma = (299 * c[0] + 587 * c[1] + 114 * c[2]) // 1000
+            if luma < 180:
+                dark += 1
+            if luma > 120:
+                light += 1
     mean = [s // max(1, total) for s in sums]
-    print("share %.2f ref %d %d %d bar %d %d %d" % (near / max(1, total), ref[0], ref[1], ref[2],
-                                                    mean[0], mean[1], mean[2]))
+    n = max(1, total)
+    # dark / light: the part of the bar pixels darker than 180 / lighter than 120 - the icons on a page
+    # of the other tone (dark icons on a light page: dark > 0)
+    print("share %.2f ref %d %d %d bar %d %d %d dark %.3f light %.3f" % (
+        near / n, ref[0], ref[1], ref[2], mean[0], mean[1], mean[2], dark / n, light / n))
     return 0
 
 
