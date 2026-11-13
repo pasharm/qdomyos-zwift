@@ -248,9 +248,10 @@ landopen() {
       text_beside_buttons "$c-7-long-land-open"
     fi
     back_to "$HOME_RX" 20
-    rotate 0
   fi
-  back_to "$HOME_RX" 20
+  # upright for the next case; no back after it: the home page is on top already, and a back there
+  # (the modern home not yet found right after turning) left the app (run 43443942683)
+  rotate 0
 }
 
 # qml_quiet: no QML warning of the changed file from the head processes (pid lines of start_case); turning
