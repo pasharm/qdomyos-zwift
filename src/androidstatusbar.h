@@ -56,8 +56,13 @@ public:
     // iOS: the window of Qt covers only the safe area, and the system paints the areas under the
     // status bar and the home indicator black, with light status bar text. This gives them a colour
     // and the status bar text for a dark (light text) or light page, and from then on keeps the
-    // status bar for a full screen window, which Qt would hide. Nothing elsewhere.
-    Q_INVOKABLE void setSystemBarsColor(const QColor &color, bool dark) const;
+    // status bar for a full screen window, which Qt would hide.
+    // Android 6+ (API 23): modern true – the status and navigation bars without the black background
+    // of the Qt 5.15 theme: transparent from API 31 (the window is under them), the page colour
+    // below; icons dark on a light page (dark false). modern false puts back the bars of the window
+    // as they were before the first modern call (color is then not used).
+    // Nothing elsewhere.
+    Q_INVOKABLE void setSystemBarsColor(const QColor &color, bool dark, bool modern = true) const;
     // iOS 11+: the safe area of the screen (status bar and cutout, home indicator, sides held
     // sideways) in points, as { top, bottom, left, right }. Zeros elsewhere.
     Q_INVOKABLE QVariantMap safeAreaInsets() const;
