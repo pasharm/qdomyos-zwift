@@ -650,7 +650,13 @@ ColumnLayout {
 
                                 Text {
                                     id: descriptionText
-                                    width: descriptionFlick.width
+                                    // the width of the block, not of the Flickable: Qt 5.15 lays out no
+                                    // children of a layout with a zero height (QTBUG-112740, fixed in 6.5.2).
+                                    // Opened right in landscape, the block was 0 high, the Flickable kept
+                                    // width 0, the text then had no height, and the block stayed 0 - the
+                                    // description was not shown. Keep the size of this text off the items
+                                    // the block lays out
+                                    width: descriptionBlock.width
                                     // where the text may scroll (side by side, unfolded), room for the bar on
                                     // its right: the lines ran under it. Not by interactive: that follows the
                                     // height of the text, and the height this width
