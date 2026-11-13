@@ -6,7 +6,6 @@ import QtQuick.Controls.Material 2.12
 // filled part over a pale track of the same colour (no gap, no end dot). Shown only while
 // total > 0. In an empty list it sits in the middle with its text; over a list that already
 // shows rows it is the bar alone (compact) on the top edge, not over the rows.
-// The text defaults to the restore of the QZ folder; other processes pass their own.
 Item {
     id: control
 

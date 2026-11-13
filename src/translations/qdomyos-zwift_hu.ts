@@ -1514,7 +1514,7 @@ Szeretné frissíteni a QZ beállításait?</translation>
     <name>UiProgress</name>
     <message>
         <source>Restoring files: %1 of %2</source>
-        <translation>Fájlok visszaállítása: %1 / %2</translation>
+        <translation>Fájlok visszaállítása folyamatban: %1 / %2</translation>
     </message>
 </context>
 <context>

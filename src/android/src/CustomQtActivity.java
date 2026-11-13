@@ -927,7 +927,7 @@ public class CustomQtActivity extends QtActivity {
                     for (int i = 0; i < RESTORE_FOLDERS.length; i++) {
                         if (folderIds[i] != null && !destinationDir.isEmpty()) {
                             progress[1] += countRestoreFiles(treeUri, folderIds[i],
-                                                             new java.io.File(destinationDir, RESTORE_FOLDERS[i]));
+                                                             new java.io.File(destinationDir, RESTORE_FOLDERS[i]), restored);
                         }
                     }
                     Log.d(TAG, "handleRestoreFolderResult files to restore " + progress[1]);
@@ -1050,7 +1050,10 @@ public class CustomQtActivity extends QtActivity {
 
     // The files restoreFolderFiles() would copy from the folder and its subfolders: the ones the
     // app cannot read under the same name. Only the folder listing is read, no file content.
-    private int countRestoreFiles(Uri treeUri, String parentId, java.io.File localDir) {
+    // Copies left under the temporary name are finished first (as restoreFolderFiles() does), so
+    // a file they bring back is not counted.
+    private int countRestoreFiles(Uri treeUri, String parentId, java.io.File localDir, StringBuilder restored) {
+        recoverRestoreCopies(localDir, false, restored);
         int count = 0;
         Uri childrenUri = android.provider.DocumentsContract.buildChildDocumentsUriUsingTree(treeUri, parentId);
         android.database.Cursor cursor = null;
@@ -1067,7 +1070,7 @@ public class CustomQtActivity extends QtActivity {
                 }
                 java.io.File local = new java.io.File(localDir, name);
                 if (android.provider.DocumentsContract.Document.MIME_TYPE_DIR.equals(cursor.getString(2))) {
-                    count += countRestoreFiles(treeUri, documentId, local);
+                    count += countRestoreFiles(treeUri, documentId, local, restored);
                 } else if (!local.exists() || !ContentHelper.isReadable(local)) {
                     count++;
                 }
