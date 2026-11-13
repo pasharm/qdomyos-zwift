@@ -2537,7 +2537,8 @@ ApplicationWindow {
                             color: window.equipmentConnected ? window.ui.ok : window.ui.textMuted
                         }
                         Label {
-                            width: parent.width - 14
+                            // the dot and its gap; with the bars also their 13 and the gap before them
+                            width: parent.width - 14 - (drawerSignal.visible ? 13 + 6 : 0)
                             // "Connecting..." - the untranslated start value of homeform::m_info, kept until the
                             // equipment writes its own status: shown as the search, or as connected next to the green dot
                             text: (typeof rootItem !== "undefined" && rootItem) ? (rootItem.info !== "Connecting..." ? rootItem.info
@@ -2546,6 +2547,23 @@ ApplicationWindow {
                             font.pixelSize: window.ui.fontCaption
                             color: window.ui.textMuted
                             elide: Text.ElideRight
+                        }
+                        // The signal of the connected equipment at the end of the line, as a trailing icon:
+                        // the home page shows it only with its status line, which is hidden while connected.
+                        // The bars of the home status line (signal-1..3, the RSSI of the search)
+                        Image {
+                            id: drawerSignal
+                            visible: window.equipmentConnected
+                            anchors.verticalCenter: parent.verticalCenter
+                            width: 13
+                            height: 13
+                            fillMode: Image.PreserveAspectFit
+                            source: visible ? rootItem.signal : ""
+                            smooth: true
+                            Accessible.ignored: true
+                            // The bars are white: on a light page paint them in the text colour
+                            layer.enabled: !window.ui.dark
+                            layer.effect: ColorOverlay { color: window.ui.textMuted }
                         }
                     }
 
