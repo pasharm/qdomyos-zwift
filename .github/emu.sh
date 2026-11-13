@@ -42,6 +42,13 @@ import() {
   back_to "$HOME_RX" 20 || return 1
   open_drawer '^Workouts History$' || return 1
   tap_ui '^Workouts History$' '^Calendar$' || return 1
+  # a clean install asks once over the page whether to look for workouts of a previous installation
+  # (popupHistoryRecovery, main.qml:1256; "No" hides it - onNoClicked); the import button is under it
+  # (run 43524060119: wrong-screen / no-effect on all four modern cases)
+  if wait_ui '^&?No$' 6; then
+    tap_ui '^&?No$' '^Calendar$' || return 1
+    wait_gone '^&?No$' 10 || { fail "$c: the question about a previous installation did not close"; return 1; }
+  fi
   emu_sleep 2
   tap_ui '^Import FIT File\.\.\.$' '^Import from QZ Folder\.\.\.$' || return 1
   emu_sleep 1
