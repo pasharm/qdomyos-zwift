@@ -50,10 +50,28 @@ import() {
     wait_gone '^&?No$' 10 || { fail "$c: the question about a previous installation did not close"; return 1; }
   fi
   emu_sleep 2
-  tap_ui '^Import FIT File\.\.\.$' '^Import from QZ Folder\.\.\.$' || return 1
-  emu_sleep 1
+  # the items of a QML Menu are not in the uiautomator dump (T-182, 41751759800; again run 43527738307: the
+  # menu open on the frame, the dump has only the button) - the button by its node, the menu on the frame only
+  dump
+  if ! find_ui '^Import FIT File\.\.\.$'; then
+    fail "$c: no import button ($EMU_WHY)"
+    shot "$c-3-no-button" now
+    return 1
+  fi
+  set -- $EMU_AT
+  shot "$c-3-before" now
+  adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
+  emu_sleep 2
   shot "$c-3-import"
-  expect "$c-3-import" '^Import from QZ Folder\.\.\.$' "import menu open"
+  # a coarse no-effect check: the frame must change (the menu is judged by eye on $c-3-import.png)
+  if cmp -s "$c-3-before.png" "$c-3-import.png"; then
+    fail "$c: the frame did not change after the tap on the import button"
+  else
+    say "$c: import menu - the frame changed, the menu is judged on $c-3-import.png"
+  fi
+  if ! find_ui '^Calendar$'; then
+    fail "$c: the history page left after the tap on the import button"
+  fi
   adb shell input keyevent KEYCODE_BACK < /dev/null > /dev/null 2>&1
   emu_sleep 2
 }
