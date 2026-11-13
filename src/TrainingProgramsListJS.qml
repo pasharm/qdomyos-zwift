@@ -476,6 +476,9 @@ ColumnLayout {
                         // greyed out while a restore runs: a second one is refused
                         // (CustomQtActivity.openRestoreFolderPicker); hidden after it, with the grant
                         enabled: rootItem.folderRestoreTotal === 0
+                        // Qt 5.15 does not report a disabled item to TalkBack (fixed in Qt 6 by
+                        // qtdeclarative 20fd2902a6): left in, it would be read as a button that works
+                        Accessible.ignored: !enabled
                         text: qsTr("Restore files")
                         onClicked: rootItem.offerFolderRestore()
                     }
