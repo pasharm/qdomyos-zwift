@@ -542,17 +542,33 @@ ColumnLayout {
                     return lines;
                 }
 
+                // Show the whole route: the map takes the bounding box of the track, with a small
+                // margin, instead of a fixed zoom level. visibleRegion waits for the map to get a
+                // size (QDeclarativeGeoMap::setVisibleRegion), so it also works when the page opens.
+                // Not fitViewportToMapItems: it fits the on-screen size of the items (QTBUG-65646).
+                function fitRoute() {
+                    if (pathController.geopath.size() > 1)
+                        map.visibleRegion = pathController.geopath
+                }
+
                 Connections{
                     target: pathController
                     onGeopathChanged: {
                         pl.path = row.loadPath();
+                        row.fitRoute();
                     }
+                    // the new center comes after the new path (homeform::gpxpreview_open_clicked): fit again,
+                    // or the center alone would stay at the old zoom level
                     onCenterChanged: {
                         map.center = pathController.center;
+                        row.fitRoute();
                     }
                 }
 
-                Component.onCompleted: pl.path = loadPath()
+                Component.onCompleted: {
+                    pl.path = loadPath()
+                    fitRoute()
+                }
             }
         }
 
