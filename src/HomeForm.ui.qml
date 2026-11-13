@@ -73,9 +73,10 @@ Page {
             visible: page.modernControlsShown
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
-            // 12 dp under the toolbar: the top bar starts 8 dp above its edge. The row scrolls
-            // with the tiles (Home.qml), the toolbar slides over it
-            anchors.topMargin: 20
+            // 6 dp under the toolbar: the top bar starts 8 dp above its edge. With the toolbar
+            // icons the space above the pills looks about 28 dp, near the 16 dp under them. The
+            // row scrolls with the tiles (Home.qml), the toolbar slides over it
+            anchors.topMargin: 14
             spacing: 8
 
             readonly property bool byState: window.ui.stateButtons
