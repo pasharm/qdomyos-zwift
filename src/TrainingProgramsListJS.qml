@@ -260,7 +260,9 @@ ColumnLayout {
                     Layout.rightMargin: window.ui.modern ? window.ui.pageMargin : 0
                     spacing: window.ui.modern ? 8 : 0
                     clip: window.ui.modern
-                    ScrollBar.vertical: ScrollBar {}
+                    // Modern look: a thin bar while the list moves, as in the other lists of the modern look; the
+                    // Material bar that can be dragged is 13 dp with a 16 dp track
+                    ScrollBar.vertical: ScrollBar { interactive: !window.ui.modern }
                     id: list
 
                     FolderListModel {
