@@ -458,11 +458,30 @@ toast_watch() {
   fi
 }
 
-# turn_to <0|1> <why>: the screen upright (0) or in landscape (1); emu_init turned auto-rotation off
+# screen_wh: "width height" of the screen now, by the header of a raw frame
+screen_wh() {
+  adb exec-out "screencap | head -c 8" < /dev/null 2>/dev/null | od -An -tu4 | tr -s ' ' | sed 's/^ //'
+}
+
+# turn_to <0|1> <why>: the screen upright (0) or in landscape (1); emu_init turned auto-rotation off.
+# The turn is waited for by the frame size, the setting given again on each look: in run 43476967975 the screen
+# did not follow it (hl, pl stayed upright; ml stayed in landscape for the folder picker, its Allow missed) and
+# went back by itself 1-2 s after a turn in the middle of the pass (hr, mr, pr frames r2-r4 only)
 turn_to() {
-  adb shell settings put system user_rotation "$1" < /dev/null > /dev/null 2>&1
+  local i w h
   adb shell log -t T528 "\"turn $1: $2\"" < /dev/null > /dev/null 2>&1
-  say "turn the screen to $1 ($2)"
+  for i in $(seq 1 12); do
+    adb shell settings put system accelerometer_rotation 0 < /dev/null > /dev/null 2>&1
+    adb shell settings put system user_rotation "$1" < /dev/null > /dev/null 2>&1
+    emu_sleep 2
+    set -- "$1" "$2" $(screen_wh)
+    if [ -n "$4" ] && { { [ "$1" = 1 ] && [ "$3" -gt "$4" ]; } || { [ "$1" = 0 ] && [ "$3" -lt "$4" ]; }; }; then
+      say "turn the screen to $1 ($2): $3 x $4 after $i looks"
+      return 0
+    fi
+  done
+  fail "turn the screen to $1 ($2): still ${3:-?} x ${4:-?} after 12 looks"
+  return 1
 }
 
 # rot_job <prefix>: ROT=true - on the device, by the line of the 10th file of the pass: landscape, frames
@@ -576,8 +595,7 @@ side_t528() {
   # LAND: the page and the question in landscape; the folder picker of the system is tapped by its upright
   # places (yes_picker_allow), so upright for it and landscape again at once after Allow - the pass in landscape
   if [ "$LAND" = true ]; then
-    turn_to 1 "$p: the page in landscape"
-    emu_sleep 6
+    turn_to 1 "$p: the page in landscape" || proves_nothing "$p: the screen did not turn to landscape"
   fi
   mark "$p: $PAGE page"
   page_open || near page "$p: the landing of the $PAGE page not seen - the question or the button decides"
@@ -595,14 +613,16 @@ side_t528() {
   rows=$(uifind "dumps/$p-2-question.xml" --count "$(row_rx)" --any 2>/dev/null)
   say "restored rows ($(row_rx)) under the question, before the pass: ${rows:-0}"
   if [ "$LAND" = true ]; then
-    set -- $(dump_size "dumps/$p-2-question.xml")
+    # by the frame: the root of a dump with the native question of the classic look is the dialog (1403 x 1717,
+    # run 43476967975), not the screen
+    set -- $(screen_wh)
     if [ -n "$2" ] && [ "$1" -gt "$2" ]; then
       say "check $p-question-landscape: the page with the question in landscape ($1 x $2): OK"
     else
       fail "check $p-question-landscape: the page not in landscape (${1:-?} x ${2:-?})"
     fi
-    turn_to 0 "$p: upright for the folder picker"
-    emu_sleep 6
+    turn_to 0 "$p: upright for the folder picker" || proves_nothing "$p: not upright for the folder picker"
+    emu_sleep 3
     dump
   fi
   mark "$p: yes"
@@ -632,7 +652,6 @@ side_t528() {
   expect_not "$p-4-after" '^Restore files$' 'the button gone after the grant'
   if [ "$LAND" = true ]; then
     turn_to 0 "$p: upright after the pass"
-    emu_sleep 6
   fi
   back_to "$HOME_RX" 20
   wrap_up
@@ -640,7 +659,7 @@ side_t528() {
 
 # land_watch <prefix>: AFTER_ALLOW of LAND - landscape again at once, then the burst
 land_watch() {
-  turn_to 1 "$1: landscape at once after Allow"
+  turn_to 1 "$1: landscape at once after Allow" || fail "$1: the pass not in landscape"
   progress_watch "$1"
 }
 
