@@ -2535,8 +2535,10 @@ ApplicationWindow {
                             color: window.equipmentConnected ? window.ui.ok : window.ui.textMuted
                         }
                         Label {
-                            // the dot and its gap; with the bars also their 13 and the gap before them
-                            width: parent.width - 14 - (drawerSignal.visible ? 13 + 6 : 0)
+                            // the dot and its gap; with the bars also their 13 and the gap before them.
+                            // Their own condition, not drawerSignal.visible: that one is false while the
+                            // drawer is closed, and Row places what is not hidden by itself (explicitVisible)
+                            width: parent.width - 14 - (window.equipmentConnected ? 13 + 6 : 0)
                             // "Connecting..." - the untranslated start value of homeform::m_info, kept until the
                             // equipment writes its own status: shown as the search, or as connected next to the green dot
                             text: (typeof rootItem !== "undefined" && rootItem) ? (rootItem.info !== "Connecting..." ? rootItem.info
