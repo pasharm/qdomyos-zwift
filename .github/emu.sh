@@ -968,8 +968,8 @@ side_u() {
 
 # ---- w: the modern look, German, text at 170 %: the longest label of the button ("Dateien wiederherstellen")
 # does not fit one line beside "Andere Ordner" and wraps (wrapsText) instead of eliding; both pills stay in
-# one row inside the screen. The GPX, profiles and settings file pages
-# wrapped <shot>: Restore files taller than Other folders (two lines), the same row, inside the screen
+# one row inside the screen. The GPX, profiles, settings file and training programs pages
+# wrapped <shot>: Restore files in two lines, both pills one height, the same row, inside the screen
 wrapped() {
   local a b ha hb
   a=$(uifind "dumps/$1.xml" '^Andere Ordner$' 2>/dev/null) || { fail "check $1: no 'Andere Ordner'"; return 1; }
@@ -1055,6 +1055,15 @@ side_w() {
     still
     shot w-3-settings
     wrapped w-3-settings
+  fi
+  back_to "$HOME_RX|^Stopp$" 20
+  # the training programs page (TrainingProgramsListJS.qml): the same row since e0e88d645
+  mark "w: programs page"
+  if open_drawer '^Trainingsprogramm öffnen$' && tap_ui '^Trainingsprogramm öffnen$' '^Andere Ordner$'; then
+    emu_sleep 4
+    still
+    shot w-4-programs
+    wrapped w-4-programs
   fi
   back_to "$HOME_RX|^Stopp$" 20
   wrap_up
