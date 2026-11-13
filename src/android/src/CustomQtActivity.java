@@ -717,12 +717,18 @@ public class CustomQtActivity extends QtActivity {
             public void run() {
                 Window window = activity.getWindow();
                 final int drawsBars = WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS;
+                // Android 15+ (the app targets 35+, edge to edge enforced): the system keeps the bars
+                // transparent and ignores their colours, the flag alone takes the black away; the colour
+                // calls are deprecated there and not made, as in Qt 6 (QtWindowInsetsController, 5472ad6adf)
+                final boolean colors = Build.VERSION.SDK_INT < 35;
                 if (!systemBarsSaved) {
                     if (!modern)
                         return;
                     savedDrawsBars = (window.getAttributes().flags & drawsBars) != 0;
-                    savedStatusBarColor = window.getStatusBarColor();
-                    savedNavigationBarColor = window.getNavigationBarColor();
+                    if (colors) {
+                        savedStatusBarColor = window.getStatusBarColor();
+                        savedNavigationBarColor = window.getNavigationBarColor();
+                    }
                     savedLightStatus = lightBar(window, true);
                     savedLightNavigation = lightBar(window, false);
                     systemBarsSaved = true;
@@ -730,17 +736,21 @@ public class CustomQtActivity extends QtActivity {
                 if (modern) {
                     int bars = Build.VERSION.SDK_INT >= 31 ? Color.TRANSPARENT : (color | 0xFF000000);
                     window.addFlags(drawsBars);
-                    window.setStatusBarColor(bars);
+                    if (colors)
+                        window.setStatusBarColor(bars);
                     setLightBar(window, true, !dark);
                     if (Build.VERSION.SDK_INT >= 26) {
-                        window.setNavigationBarColor(bars);
+                        if (colors)
+                            window.setNavigationBarColor(bars);
                         setLightBar(window, false, !dark);
                     }
                 } else {
                     if (!savedDrawsBars)
                         window.clearFlags(drawsBars);
-                    window.setStatusBarColor(savedStatusBarColor);
-                    window.setNavigationBarColor(savedNavigationBarColor);
+                    if (colors) {
+                        window.setStatusBarColor(savedStatusBarColor);
+                        window.setNavigationBarColor(savedNavigationBarColor);
+                    }
                     setLightBar(window, true, savedLightStatus);
                     if (Build.VERSION.SDK_INT >= 26)
                         setLightBar(window, false, savedLightNavigation);
