@@ -1,6 +1,6 @@
 #!/bin/bash
 # Test only (T-528): the progress of the folder restore. After Allow in the folder picker the pass copies the
-# files of a previous install one by one; the list pages show "Restoring files: N of M" over a flat bar
+# files of a previous install one by one; the list pages show the progress above the list (c8925db6c): "Restoring files of the previous installation" and "N / M" over a flat bar
 # (UiProgress, Accessible.ProgressBar) until the pass ends, then the list is filled and the toast
 # "Files of a previous installation restored: N." comes.
 #
@@ -24,7 +24,7 @@ SETUP="t518-setup.qzs"
 PROFILE="T518 profile.qzs"
 EXTRA_ROUTES=16
 QUESTION_RX='(?s).*GPX routes.*previous installation.*'
-PROGRESS_RX='^Restoring files: [0-9]+ of [0-9]+$'
+PROGRESS_RX='^Restoring files of the previous installation: [0-9]+ of [0-9]+$'
 
 app_uid() {
   adb shell "su 0 stat -c %u /data/data/$PKG" < /dev/null 2>/dev/null | tr -d '\r'
@@ -344,13 +344,24 @@ PW_FRAMES=${PW_FRAMES:-24}
 progress_watch() {
   local p i
   adb shell "rm -f /data/local/tmp/$1-*" < /dev/null > /dev/null 2>&1
-  adb shell "for i in $(seq -s ' ' 1 "$PW_DUMPS"); do log -t T528 \"dump $1-d\$i\"; uiautomator dump /data/local/tmp/$1-d\$i.xml; done" \
+  # after the dumps of the pass: one more 1.5 s after the line of the end of the pass (dumps/<prefix>-e.xml) -
+  # UiProgress holds the count 1 s and closes in 200 ms (c8925db6c), so the node is gone there and the list back
+  # (one uiautomator at a time: in the same loop, not a job of its own; on the fast sides the dumps of the pass
+  # may end after the pass - then later than 1.5 s, the log lines tell)
+  adb shell "for i in $(seq -s ' ' 1 "$PW_DUMPS"); do log -t T528 \"dump $1-d\$i\"; uiautomator dump /data/local/tmp/$1-d\$i.xml; done; timeout 120 logcat -m 1 -e 'files of a previous install restored' > /dev/null; sleep 1.5; log -t T528 \"dump $1-e\"; uiautomator dump /data/local/tmp/$1-e.xml" \
     < /dev/null > /dev/null 2>&1 &
   p=$!
-  # the toast comes when the pass ends (9-33 s after Allow, run 43444695400 - after the burst): a burst of its
-  # own, started on the device by the line of the end of the pass (logcat -m 1 waits for it), 3 s of toast
-  adb shell "timeout 120 logcat -m 1 -e 'files of a previous install restored' > /dev/null; log -t T528 \"toast burst $1\"; for i in 1 2 3 4 5 6 7 8; do screencap /data/local/tmp/$1-t\$i.raw; done" \
-    < /dev/null > /dev/null 2>&1 &
+  if [ "$END_BURST" = true ]; then
+    # END_BURST: frames one after another from the start of the last but one file (T528 progress 37/) - the
+    # last count held ~1 s after the pass and the closing (200 ms); they hold the toast too (toast_watch)
+    adb shell "timeout 120 logcat -m 1 -e 'T528 progress 37/' > /dev/null; log -t T528 \"end burst $1\"; for i in $(seq -s ' ' 1 "$END_FRAMES"); do log -t T528 \"frame $1-e\$i\"; screencap /data/local/tmp/$1-e\$i.raw; done" \
+      < /dev/null > /dev/null 2>&1 &
+  else
+    # the toast comes when the pass ends (9-33 s after Allow, run 43444695400 - after the burst): a burst of its
+    # own, started on the device by the line of the end of the pass (logcat -m 1 waits for it), 3 s of toast
+    adb shell "timeout 120 logcat -m 1 -e 'files of a previous install restored' > /dev/null; log -t T528 \"toast burst $1\"; for i in 1 2 3 4 5 6 7 8; do screencap /data/local/tmp/$1-t\$i.raw; done" \
+      < /dev/null > /dev/null 2>&1 &
+  fi
   TOAST_PID=$!
   [ "$ROT" = true ] && rot_job "$1"
   # raw frames (no -p: no PNG coding on the device, more frames a second); raw_frame.py writes the PNG
@@ -361,6 +372,7 @@ progress_watch() {
   for i in $(seq 1 "$PW_DUMPS"); do
     adb pull "/data/local/tmp/$1-d$i.xml" "dumps/$1-d$i.xml" < /dev/null > /dev/null 2>&1
   done
+  adb pull "/data/local/tmp/$1-e.xml" "dumps/$1-e.xml" < /dev/null > /dev/null 2>&1
   # the toast by its dark band (Toast.qml: #222222 at 0.9) in rows 2250-2450 (Nexus 6, T-518 run
   # 43368164916: ~110000 dark pixels with it, ~2000 without on the modern page); the classic page is dark
   # itself - there the frames by eye
@@ -430,20 +442,22 @@ button_check() {
 
 # toast_watch <prefix>: the frames of the burst at the end of the pass (progress_watch), the dark band counted
 toast_watch() {
-  local i
+  local i k=t n=8
   wait "$TOAST_PID"
+  # END_BURST: the frames of the end of the pass (progress_watch) hold the toast
+  [ "$END_BURST" = true ] && { k=e; n=$END_FRAMES; }
   TOAST_FRAMES=0
-  for i in 1 2 3 4 5 6 7 8; do
-    adb pull "/data/local/tmp/$1-t$i.raw" "$1-t$i.raw" < /dev/null > /dev/null 2>&1
-    adb shell "rm -f /data/local/tmp/$1-t$i.raw" < /dev/null > /dev/null 2>&1
-    [ -s "$1-t$i.raw" ] || continue
-    set -- "$1" $("$EMU_PY" .github/raw_frame.py "$1-t$i.raw" "$1-t$i.png" 2250 2450)
-    rm -f "$1-t$i.raw"
-    say "  $1-t$i: ${2:-?} dark pixels in rows 2250-2450"
+  for i in $(seq 1 "$n"); do
+    adb pull "/data/local/tmp/$1-$k$i.raw" "$1-$k$i.raw" < /dev/null > /dev/null 2>&1
+    adb shell "rm -f /data/local/tmp/$1-$k$i.raw" < /dev/null > /dev/null 2>&1
+    [ -s "$1-$k$i.raw" ] || continue
+    set -- "$1" $("$EMU_PY" .github/raw_frame.py "$1-$k$i.raw" "$1-$k$i.png" 2250 2450)
+    rm -f "$1-$k$i.raw"
+    say "  $1-$k$i: ${2:-?} dark pixels in rows 2250-2450"
     [ "${2:-0}" -ge 50000 ] && TOAST_FRAMES=$((TOAST_FRAMES + 1))
     set -- "$1"
   done
-  say "toast_watch $1: $(ls $1-t*.png 2>/dev/null | wc -l) frames at the end of the pass, the dark band on $TOAST_FRAMES"
+  say "toast_watch $1: $(ls $1-$k*.png 2>/dev/null | wc -l) frames at the end of the pass, the dark band on $TOAST_FRAMES"
   if [ "$LAND" = true ]; then
     # rows 2250-2450 are the bottom of the upright Nexus 6 screen; in landscape it is 1440 high
     say "landscape: the toast on the frames $1-t* by eye"
@@ -532,7 +546,7 @@ progress_check() {
   say "progress_check $1: the node in $seen dumps, N grew: $grew, N fell back: $shrank"
   [ "$shrank" = 1 ] && fail "check $1: N fell back between dumps"
   if [ "$seen" -ge 1 ]; then
-    say "check $1-node: 'Restoring files: N of M' on the page after Allow: OK"
+    say "check $1-node: 'Restoring files of the previous installation: N of M' on the page after Allow: OK"
   elif [ "$2" = yes ]; then
     fail "check $1-node: no progress node in the dumps after Allow"
   else
@@ -542,6 +556,131 @@ progress_check() {
     say "check $1-grows: N grows over the dumps: OK"
   elif [ "$2" = yes ]; then
     fail "check $1-grows: N did not grow over the dumps (seen in $seen)"
+  fi
+}
+
+# density: px per dp of the screen (wm density / 160; Nexus 6 - 560, 3.5)
+density() {
+  adb shell wm density < /dev/null 2>/dev/null | tr -d '\r' | awk '{ d = $NF } END { if (d > 0) printf "%g", d / 160 }'
+}
+
+# geom_check <prefix>: c8925db6c puts the progress above the list (PLACE=above; the classic settings file and
+# profile pages keep it under their list - PLACE=below) and moves the list down by its height. In each dump of
+# the pass with the node: the node, the node above it, the first node under its top (a row of the list or the
+# scroll bar of the list - the classic rows have no node), the nodes crossing it; the bar bottom on the frames
+# of the burst (t528_geom.py). Checks on the last such dump: (a) no node crosses the progress, the first node
+# under it starts at its bottom or lower; (b) the gap from the bar to that node ~12 dp (UiProgress bottomPadding
+# 12; numbers only - +-2 px is a near, not a failure); GEOM_P, GEOM_A for after_check
+geom_check() {
+  local i f g last="" dp
+  GEOM_P=""
+  GEOM_A=""
+  dp=${DP:-3.5}
+  for i in $(seq 1 "$PW_DUMPS"); do
+    f="dumps/$1-d$i.xml"
+    [ -s "$f" ] || continue
+    uifind "$f" "$PROGRESS_RX" > /dev/null 2>&1 || continue
+    g=$("$EMU_PY" .github/t528_geom.py pass "$f" "$PROGRESS_RX" "$dp" $(ls "$1"-f*.png 2>/dev/null | sort -V))
+    say "  geom $1-d$i: $g"
+    last=$g
+  done
+  if [ -z "$last" ]; then
+    near geom "$1: no dump of the pass with the node - the place not measured"
+    return
+  fi
+  say "geom $1 ($PLACE the list, the last dump with the node): $last"
+  set -- "$1" $last
+  local kv p a r gap_node gap_bar bar cross
+  for kv in "${@:2}"; do
+    case "$kv" in
+      p=*) p=${kv#p=} ;;
+      a=*) a=${kv#a=} ;;
+      r=*) r=${kv#r=} ;;
+      gap_node=*) gap_node=${kv#gap_node=} ;;
+      gap_bar=*) gap_bar=${kv#gap_bar=} ;;
+      bar=*) bar=${kv#bar=} ;;
+      cross=*) cross=${kv#cross=} ;;
+    esac
+  done
+  GEOM_P=$p
+  GEOM_A=$a
+  if [ "$cross" = none ]; then
+    say "check $1-overlap: no node crosses the progress ($p): OK"
+  else
+    fail "check $1-overlap: nodes cross the progress ($p): $cross"
+  fi
+  if [ "$gap_node" = "?" ]; then
+    near geom "$1: no node under the progress"
+  elif [ "$gap_node" -ge 0 ]; then
+    say "check $1-under: the first node under the progress ($r) starts $gap_node px below its bottom: OK"
+  else
+    fail "check $1-under: the first node under the progress ($r) starts $(( -gap_node )) px above its bottom"
+  fi
+  if [ "$gap_bar" = "?" ]; then
+    near geom "$1: the bar not found on the frames inside $p - the gap not measured"
+  else
+    local want
+    want=$(awk -v d="$dp" 'BEGIN { printf "%d", 12 * d + 0.5 }')
+    say "gap $1: the bar bottom y $bar, the first node under it at y $(echo "$r" | cut -d, -f2); bar to node $gap_bar px = $(awk -v g="$gap_bar" -v d="$dp" 'BEGIN { printf "%.1f", g / d }') dp (12 dp = $want px)"
+    if [ "$PLACE" = above ]; then
+      if [ $(( gap_bar - want )) -le 2 ] && [ $(( want - gap_bar )) -le 2 ]; then
+        say "check $1-gap: $gap_bar px from the bar to the list, 12 dp = $want: OK"
+      else
+        near gap "$1: $gap_bar px from the bar to the list, 12 dp = $want"
+      fi
+    fi
+  fi
+}
+
+# after_check <prefix>: the dump 1.5 s after the line of the end of the pass (progress_watch, dumps/<prefix>-e.xml):
+# (c) no node of the progress; PLACE=above - the first node under the node above the progress is back where the
+# progress started (the list takes its place, c8925db6c: the list topMargin back from -spacing) and, in the
+# modern look, where it was under the question before the pass (the question there is a Popup over the page)
+after_check() {
+  local f="dumps/$1-e.xml" x1 x2 ya py y pre="" t0 t1
+  t0=$(grep -a "files of a previous install restored:" full_logcat.txt | tail -n 1 | awk '{ print $2 }')
+  t1=$(grep -a "T528.*dump $1-e" full_logcat.txt | tail -n 1 | awk '{ print $2 }')
+  say "after $1: the pass ended $t0, the dump $1-e started $t1"
+  if [ ! -s "$f" ]; then
+    fail "check $1-after: no dump after the pass"
+    return
+  fi
+  if [ "$(uifind "$f" --count "$PROGRESS_RX" --any 2>/dev/null)" = 0 ]; then
+    say "check $1-after: no progress node 1.5 s after the pass: OK"
+  else
+    fail "check $1-after: the progress node still there 1.5 s after the pass ($(uifind "$f" "$PROGRESS_RX" --any --name 2>/dev/null))"
+  fi
+  [ "$PLACE" = above ] || return 0
+  if [ -z "$GEOM_P" ] || [ -z "$GEOM_A" ] || [ "$GEOM_A" = none ]; then
+    near geom "$1: no place of the progress from the pass - the list after it not measured"
+    return
+  fi
+  set -- "$1" $(echo "$GEOM_P" | tr ',' ' ')
+  x1=$2; py=$3; x2=$4
+  ya=$(echo "$GEOM_A" | cut -d: -f1 | cut -d, -f4)
+  set -- "$1" $("$EMU_PY" .github/t528_geom.py after "$f" "$x1" "$x2" "$ya" "${DP:-3.5}")
+  y=$2
+  # QDUMP: the dump of the question (side_t528); the classic question is a native box - its dump is the box
+  if [ "$UI_MODERN" = true ] && [ -s "$QDUMP" ]; then
+    pre=$("$EMU_PY" .github/t528_geom.py after "$QDUMP" "$x1" "$x2" "$ya" "${DP:-3.5}" | cut -d' ' -f1)
+  fi
+  say "after $1: the first node under the node above (bottom $ya): ${2:-none} ${3:-} - the progress started at $py, before the pass (the question) ${pre:-not measured}; the gap above the list $(( ${y:-0} - ya )) px"
+  if [ -z "$y" ]; then
+    near geom "$1: no node under the node above after the pass"
+    return
+  fi
+  if [ $(( y - py )) -le 2 ] && [ $(( py - y )) -le 2 ]; then
+    say "check $1-back: the list starts at $y, where the progress started ($py): OK"
+  else
+    fail "check $1-back: the list starts at $y after the pass, the progress started at $py"
+  fi
+  if [ -n "$pre" ]; then
+    if [ $(( y - pre )) -le 2 ] && [ $(( pre - y )) -le 2 ]; then
+      say "check $1-back-pre: the list starts at $y after the pass, at $pre before it: OK"
+    else
+      # an empty list under the question has no node at its top: the first node there is the box itself
+      near back "$1: the list starts at $y after the pass, the first node under the question at $pre (an empty list has no node at its top)"
+    fi
   fi
 }
 
@@ -592,6 +731,11 @@ side_t528() {
   previous_install "$p" "${APK:-apk-head/android-debug.apk}"
   conf "$p" || proves_nothing "$p: the start after the reinstall did not reach home"
   [ -n "$SLOW_MS" ] && slow_on "$SLOW_MS"
+  DP=$(density)
+  say "density: ${DP:-unknown, 3.5 taken} px per dp"
+  # PLACE: above the list (c8925db6c) - the GPX pages, the modern settings file and profile pages; under the
+  # list - the classic settings file and profile pages (SettingsList.qml, profiles.qml: "under the folder list")
+  if [ "$PAGE" != gpx ] && [ "$UI_MODERN" != true ]; then PLACE=below; else PLACE=above; fi
   # LAND: the page and the question in landscape; the folder picker of the system is tapped by its upright
   # places (yes_picker_allow), so upright for it and landscape again at once after Allow - the pass in landscape
   if [ "$LAND" = true ]; then
@@ -636,6 +780,8 @@ side_t528() {
   [ "$BIG_ROOT" = true ] && root_gap "$p"
   progress_check "$p-3-pass" "${SLOW_MS:+yes}"
   button_check "$p-3-pass"
+  geom_check "$p-3-pass"
+  QDUMP="dumps/$p-2-question.xml" after_check "$p-3-pass"
   toast_watch "$p-3-pass"
   emu_sleep 3
   ensure_app
@@ -700,7 +846,8 @@ case "$SIDE" in
   h) PAGE=gpx UI_MODERN=false side_t528 ;;
   m) PAGE=gpx UI_MODERN=true side_t528 ;;
   hs) PAGE=gpx UI_MODERN=false SLOW_MS=800 side_t528 ;;
-  ms) PAGE=gpx UI_MODERN=true SLOW_MS=800 side_t528 ;;
+  # ms: also the frames of the end of the pass one after another (END_BURST - the hold and the closing)
+  ms) PAGE=gpx UI_MODERN=true SLOW_MS=800 END_BURST=true END_FRAMES=30 side_t528 ;;
   ss) PAGE=settings UI_MODERN=false SLOW_MS=800 side_t528 ;;
   sm) PAGE=settings UI_MODERN=true SLOW_MS=800 side_t528 ;;
   ps) PAGE=profiles UI_MODERN=false SLOW_MS=800 side_t528 ;;
