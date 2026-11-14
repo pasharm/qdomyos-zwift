@@ -65,9 +65,15 @@ void DirconLoopbackTestSuite::test_fakebike_dircon_server_accepts_wahoodirconbik
                                                              static_cast<quint16>(kServerBasePort), false);
 
     wahoodirconbike clientBike(deviceInfo, true, true, 4, 1.0);
+    int readySignalCount = 0;
+    QObject::connect(&clientBike, &bluetoothdevice::connectedAndDiscovered, &clientBike,
+                     [&readySignalCount]() { ++readySignalCount; });
 
     const bool connected = waitForCondition([&clientBike]() { return clientBike.connected(); }, 5000);
     EXPECT_TRUE(connected) << "DirCon client failed to complete handshake against local fakebike DirCon server";
+    EXPECT_EQ(readySignalCount, 1) << "DirCon bike must report readiness exactly once";
+    EXPECT_EQ(clientBike.VirtualDevice(), nullptr)
+        << "Virtual bike must remain disabled when the virtual-device setting is off";
 
     // Drive the fakebike with target power to force metric updates on the DirCon server side,
     // then verify the client receives non-zero telemetry through notifications.
@@ -105,7 +111,7 @@ void DirconLoopbackTestSuite::test_faketreadmill_dircon_server_accepts_wahoodirc
 
     const bool connected = waitForCondition([&clientTreadmill]() { return clientTreadmill.connected(); }, 5000);
     EXPECT_TRUE(connected) << "DirCon treadmill client failed to complete handshake against local fake treadmill";
-    EXPECT_FALSE(clientTreadmill.hasVirtualDevice())
+    EXPECT_EQ(clientTreadmill.VirtualDevice(), nullptr)
         << "Virtual treadmill must remain disabled when the virtual-device setting is off";
 
     serverTreadmill.changeSpeed(8.5);
@@ -157,6 +163,44 @@ void DirconLoopbackTestSuite::test_wahoodircontreadmill_creates_virtual_treadmil
         << "The DirCon client must continue receiving telemetry with the virtual treadmill enabled";
     EXPECT_EQ(clientTreadmill.VirtualDevice(), virtualTreadmill)
         << "Repeated telemetry must not replace the already-created virtual treadmill";
+
+    testSettings.deactivate();
+}
+
+void DirconLoopbackTestSuite::test_wahoodirconbike_creates_virtual_bike_when_enabled() {
+    TestSettings testSettings(QStringLiteral("qz-test-org"), QStringLiteral("qz-test-dircon-virtual-bike"));
+    testSettings.activate();
+
+    constexpr int kServerBasePort = 46400;
+    configureDirconSettings(testSettings, kServerBasePort, 19);
+
+    fakebike serverBike(true, true, true);
+    DirconManager dirconServer(&serverBike, 4, 1.0);
+
+    // Exercise the FTMS virtual-bike bridge without BLE advertising or a second DirCon listener.
+    testSettings.qsettings.setValue(QZSettings::dircon_yes, false);
+    testSettings.qsettings.setValue(QZSettings::virtual_device_enabled, true);
+    testSettings.qsettings.setValue(QZSettings::virtual_device_bluetooth, false);
+
+    const DirconDeviceInfo deviceInfo =
+        makeDirconDeviceInfo(QStringLiteral("Wahoo KICKR 0019"), static_cast<quint16>(kServerBasePort), false);
+    wahoodirconbike clientBike(deviceInfo, true, true, 4, 1.0);
+
+    int readySignalCount = 0;
+    QObject::connect(&clientBike, &bluetoothdevice::connectedAndDiscovered, &clientBike,
+                     [&readySignalCount]() { ++readySignalCount; });
+
+    EXPECT_TRUE(waitForCondition([&clientBike]() { return clientBike.connected(); }, 5000))
+        << "DirCon bike client failed to initialize";
+    auto *virtualBike = qobject_cast<virtualbike *>(clientBike.VirtualDevice());
+    EXPECT_NE(virtualBike, nullptr) << "DirCon bike must expose an FTMS virtual bike when enabled";
+    EXPECT_EQ(readySignalCount, 1) << "DirCon bike must report readiness exactly once";
+
+    serverBike.changePower(170);
+    EXPECT_TRUE(waitForCondition([&clientBike]() { return clientBike.wattsMetric().value() > 0; }, 8000))
+        << "DirCon bike must keep receiving telemetry with its virtual bike enabled";
+    EXPECT_EQ(clientBike.VirtualDevice(), virtualBike)
+        << "Repeated bike telemetry must not replace the virtual bike";
 
     testSettings.deactivate();
 }
