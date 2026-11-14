@@ -162,7 +162,7 @@ ColumnLayout {
 
         // The restore of a previous install above the list, which moves down for that time: one
         // cell of the grid with the list, not a row of its own. Side by side the map spans the
-        // rows on the left, and a row it spans is kept and given a share of its height even with
+        // rows on the right, and a row it spans is kept and given a share of its height even with
         // nothing else in it (QGridLayoutEngine::fillRowData), so a hidden progress there left
         // an empty gap above the list.
         ColumnLayout {
