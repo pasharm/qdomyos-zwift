@@ -56,6 +56,10 @@ T.ComboBox {
     // Width of the widest item, measured when the list opens (#5236)
     property real widestItem: 0
 
+    // Modern: the item of the list pressed last while it is open (-1 - none) - it keeps the rounded
+    // mask of its ripple (see the delegate)
+    property int pressedItemIndex: -1
+
     TextMetrics {
         id: itemMetrics
         font: control.font
@@ -113,6 +117,10 @@ T.ComboBox {
                                             : control.currentIndex === index ? ListView.view.contentItem.Material.accent : ListView.view.contentItem.Material.foreground
         highlighted: control.highlightedIndex === index
         hoverEnabled: control.hoverEnabled
+        onPressedChanged: {
+            if (pressed)
+                control.pressedItemIndex = index
+        }
 
         // Material's MenuItem background; modern (Material 3 menu): a rounded block inset from
         // the edges, not a square bar across the whole list - the chosen item a tint of the
@@ -142,15 +150,17 @@ T.ComboBox {
             // Qt 5.15 clips the ripple wave by its bounding rectangle - clipRadius rounds only the
             // pressed tint (qquickmaterialripple.cpp:360, clipNode->setRadius commented out; fixed
             // in Qt 6): an item held by a finger showed the wave with square corners. Modern: the
-            // wave is cut by the rounded block with a layer, only on the item under the finger
-            // and on the highlighted one (old exercise bike consoles). The released wave fades
-            // while the list closes: the picked item stays highlighted until the list is hidden
-            // (QQuickComboBox::itemClicked, the index is reset on visibleChanged after the exit
-            // transition), so the layer is kept and the corners stay round
+            // wave is cut by the rounded block with a layer, only on the item pressed last and on
+            // the highlighted one (old exercise bike consoles). A released wave still grows and
+            // fades for 333 ms, so the layer stays after the press: on a pick the item stays
+            // highlighted until the list is hidden (QQuickComboBox::itemClicked, the index is reset
+            // on visibleChanged after the exit transition); a press taken over by a drag of the
+            // list keeps it as the item pressed last, until the list closes
             Item {
                 width: parent.width
                 height: parent.height
-                layer.enabled: control.modern && (menuItem.down || menuItem.highlighted)
+                layer.enabled: control.modern
+                               && (menuItem.down || menuItem.highlighted || control.pressedItemIndex === index)
                 layer.effect: OpacityMask {
                     maskSource: rippleMask
                 }
@@ -255,6 +265,7 @@ T.ComboBox {
     }
 
     popup: T.Popup {
+        onClosed: control.pressedItemIndex = -1
         y: control.editable ? control.height - 5 : 0
         // As wide as the longest item (long labels were cut off), not narrower than the field
         // and kept inside the window; the height from the item count, the ListView builds its
