@@ -21,6 +21,9 @@ ColumnLayout {
     readonly property bool sideBySide: !window.ui.modern || width > height
     // Modern look: side margin of the filter row, the list and the button
     readonly property int modernMargin: Math.max(16, window.contentSideMargin)
+    // ...and on the right: side by side 8 to the map - the scroll indicator of the list is 8 wide
+    // with its 4 dp bar in the middle (padding 2), so the bar stays 2 off the cards and 4 off the map
+    readonly property int modernRightMargin: sideBySide ? 8 : modernMargin
 
     // Case-insensitive name filter shared by the classic and the modern filter field
     function applyFilter(text) {
@@ -123,7 +126,7 @@ ColumnLayout {
             Layout.fillWidth: true
             Layout.preferredWidth: 100
             Layout.leftMargin: gpxPage.modernMargin
-            Layout.rightMargin: gpxPage.sideBySide ? 4 : gpxPage.modernMargin
+            Layout.rightMargin: gpxPage.modernRightMargin
             Layout.topMargin: 8
 
             UiTextField {
@@ -180,9 +183,7 @@ ColumnLayout {
                 id: modernList
                 anchors.fill: parent
                 anchors.leftMargin: gpxPage.modernMargin
-                // side by side 8: the indicator is 8 wide with its 4 dp bar in the middle
-                // (padding 2), so the bar stays 2 off the cards and 4 off the map
-                anchors.rightMargin: gpxPage.sideBySide ? 8 : gpxPage.modernMargin
+                anchors.rightMargin: gpxPage.modernRightMargin
                 clip: true
                 spacing: 8
                 boundsBehavior: Flickable.StopAtBounds
@@ -582,7 +583,7 @@ ColumnLayout {
             Layout.fillWidth: true
             Layout.preferredWidth: 100
             Layout.leftMargin: gpxPage.modernMargin
-            Layout.rightMargin: gpxPage.sideBySide ? 4 : gpxPage.modernMargin
+            Layout.rightMargin: gpxPage.modernRightMargin
             // 16 to the pill: UiButton has a 6 inset below it
             Layout.bottomMargin: 10
             // a layout in a layout fills the height by default, and the fillHeight of the pills lifts its
