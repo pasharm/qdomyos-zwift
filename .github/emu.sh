@@ -85,7 +85,8 @@ install_case() {
 # DOCS=true: the "Documents folder" option (android_documents_folder) - below Android 14 the QZ folder is
 # Documents/QZ only with it (homeform::getWritableAppDir), else it is in Android/data
 conf() {
-  if [ "$DOCS" = true ]; then
+  # below Android 14 (API 34) always: without it nothing of a previous install is in Documents/QZ
+  if [ "$DOCS" = true ] || [ "${EMU_API:-35}" -lt 34 ]; then
     start_case "$1" ui_modern=$UI_MODERN fakedevice_treadmill=true android_documents_folder=true
   else
     start_case "$1" ui_modern=$UI_MODERN fakedevice_treadmill=true
