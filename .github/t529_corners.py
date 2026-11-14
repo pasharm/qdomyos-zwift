@@ -16,8 +16,10 @@
 #       radius r covers the diagonal up to r (1 - 1/sqrt 2): 16 at r = 56 px (16 dp at 3.5 px/dp)
 #   out - the two pixels 3 px outside the edges, 20 px from the corner, are the page colour: the edge found is
 #       the edge of the map, not a cut inside it
-#   round: kmin <= k <= kmax and out; square: k <= 2 and out. kmin/kmax always: k 41 - a whole diagonal of
-#   the page colour - is a tile not drawn, not a round corner (finding 4).
+#   round and square alike: kmin <= k <= kmax and out (the scenario: round 12 24, square 0 7 - a light tile
+#   pixel close to the page colour at the very corner gives a square corner k of a few px, run 43587868726:
+#   k 3 and 5 under a map label; a round one is 16). kmin/kmax always: k 41 - a whole diagonal of the page
+#   colour - is a tile not drawn, not a round corner (finding 4). mode only names the verdict.
 # Prints "bg R G B map mx1 my1 mx2 my2 tl K/out ..." and a verdict line. Exit 0 - as expected, 1 - not,
 # 2 - no frame or no map found.
 import os
@@ -27,6 +29,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from emu_frame import read_raw  # noqa: E402
 
 TOL = 6
+# 4, not 3: with 3 a light strip inside the map cut its bottom edge 9-11 px short (replay of run 43587868726).
+# A gap narrower than this beside the map (the classic "<-" button, 3 px) is left to x1: the scan stops at the
+# edge of the area and gives the last map pixel before the page colour there
 GAP = 4
 
 
@@ -115,7 +120,7 @@ def main(argv):
     bad = []
     for n in judged:
         k, out = res[n]
-        ok = (kmin <= k <= kmax) if mode == "round" else (k <= 2)
+        ok = kmin <= k <= kmax
         if not ok or not out:
             bad.append("%s k %d%s" % (n, k, "" if out else ", outside not the page colour"))
     if bad:

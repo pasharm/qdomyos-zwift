@@ -11,7 +11,7 @@
 # fitRoute of the beta, already on both sides), frame 2 and the corners; the map dragged (adb swipe of 2.5 s, a frame in the middle of the
 # drag and one after) - the corners stay covered while the map pans.
 # Expected: head modern - round (k 12..24; dark: 13..20), base modern and classic on both sides - square
-# (k <= 2); the page colour just outside the edges in both.
+# (k <= 7); the page colour just outside the edges in both.
 . .github/lib.sh
 . .github/qz.sh
 
@@ -129,7 +129,9 @@ area() {
     if [ "$MODERN" = true ]; then rx='^Parent folder$'; else rx='^←$'; fi
     if of=$(uifind "$1" "$rx" 2>/dev/null); then
       set -- $of
-      x1=$(( $7 + 3 ))
+      # +4: the classic button ends 7 px before the map, its last pixel is not the page colour (run
+      # 43587868726: x1 +3 took the button for the map)
+      x1=$(( $7 + 4 ))
     else
       fail "area: no '$rx' in $1 - the left edge of the map area unknown"
       return 1
@@ -151,7 +153,8 @@ corners() {
   if [ "$MODERN" = true ] && [ "$SIDE" = h ]; then
     if [ "$DARK" = true ]; then mode="round 13 20"; else mode="round 12 24"; fi
   else
-    mode="square 0 2"
+    # a light tile pixel at the corner: k 3-5 on a square corner (run 43587868726), 16 on a round one
+    mode="square 0 7"
   fi
   out=$("$EMU_PY" .github/t529_corners.py "raw-$s" $AREA $mode "$which")
   rc=$?
