@@ -657,7 +657,10 @@ after_check() {
   # 1513 on master). The map is not in the dump - measured on the frame of the pass (t528_map_top.py)
   if [ -n "$MAP_TOP" ]; then
     local mf mt
-    mf=$(ls "$1"-f8.png "$1"-f*.png 2>/dev/null | head -n 1)
+    # f8, as the PR picture: ls sorts its output, so "ls f8 f*" gave f1 - the first frame, the map tiles not
+    # loaded yet (run 43544585237); without f8 the last frame of the burst
+    mf="$1-f8.png"
+    [ -s "$mf" ] || mf=$(ls "$1"-f*.png 2>/dev/null | sort -V | tail -n 1)
     if [ "${DP:-}" != 3.5 ] || [ "${EMU_API:-}" != 35 ]; then
       near map "$1: the reference $MAP_TOP is for API 35 at 3.5 px per dp, here API ${EMU_API:-unknown} - not compared"
     elif [ -z "$mf" ]; then
