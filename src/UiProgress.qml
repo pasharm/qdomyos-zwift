@@ -31,21 +31,26 @@ Item {
     readonly property bool open: shown && active
     readonly property color barColor: window.ui.modern ? window.ui.accent : Material.accent
 
-    // done and total change with one signal of homeform: read both once it has been delivered,
-    // so a half updated pair (total 0, done 38 or the other way round) is never shown
+    // done and total change with one signal of homeform, and the two bindings are updated one after
+    // the other: in between the pair is half new (done 0 with the old total at the end of the pass).
+    // Within a pass the count only grows, so the shown count never goes back - the half new pair
+    // changes nothing on the screen, whichever of the two comes first. A pass starts from 0 again.
     function sync() {
         if (total > 0) {
+            if (!active || holdTimer.running)
+                shownDone = 0
             holdTimer.stop()
-            shownDone = Math.min(done, total)
+            shownDone = Math.max(shownDone, Math.min(done, total))
             shownTotal = total
             active = true
         } else if (active && !holdTimer.running) {
             holdTimer.start()
         }
     }
-    onDoneChanged: Qt.callLater(sync)
-    onTotalChanged: Qt.callLater(sync)
+    onDoneChanged: sync()
+    onTotalChanged: sync()
 
+    // not a sync of state: only how long the last count stays on the screen after the pass
     Timer {
         id: holdTimer
         interval: 1000
