@@ -316,3 +316,110 @@ jobs:
         with:
           name: fdroid-android-trial
           path: ${{ github.workspace }}/output/android/build/outputs/apk/debug/android-debug.apk
+
+  start-emulator:
+    # trim_ci.py --then-emu (T-551): the emulator of the emu branch on the APK of this run, only after a green build
+    needs: android-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      # gh workflow run with GITHUB_TOKEN: a workflow_dispatch of this token does start a run (T-551)
+      actions: write
+      # main.yml of the target branch: does it cancel runs in progress (BUSY_GUARD)
+      contents: read
+    steps:
+      - name: Start emulator (main.yml of test/t529-emu)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REF: 'test/t529-emu'
+          WHAT: 'emulator'
+          IN1: '43637811316'
+        run: |
+          set -o pipefail
+          busy=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow main.yml --branch "$REF" --limit 20 \
+            --json url,status --jq '[.[] | select(.status != "completed") | .url] | join(" ")')
+          if [ -n "$busy" ]; then
+            wf=$(gh api "repos/$GITHUB_REPOSITORY/contents/.github/workflows/main.yml?ref=$REF" --jq .content | base64 -d)
+            if [ -z "$wf" ]; then
+              echo "::error::$WHAT not started: $REF has an unfinished run ($busy) and its main.yml could not be read"
+              exit 1
+            fi
+            cancels=$(printf '%s\n' "$wf" | grep -E 'cancel-in-progress:' | grep -Ev 'cancel-in-progress: *false' || true)
+            if [ -n "$cancels" ]; then
+              echo "::error::$WHAT not started: $REF has an unfinished run ($busy) and its main.yml cancels runs in progress - wait for it or start by hand"
+              echo "$WHAT NOT started: branch $REF busy ($busy), its main.yml has cancel-in-progress" >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
+            echo "$WHAT: unfinished run(s) on $REF, its main.yml does not cancel them - starting alongside: $busy"
+          fi
+          since=$(date -u -d '-30 seconds' +%Y-%m-%dT%H:%M:%SZ)
+          started=$(gh workflow run main.yml --repo "$GITHUB_REPOSITORY" --ref "$REF" -f "head=${{ github.run_id }}" -f "base=$IN1" 2>&1) || { echo "$started"; exit 1; }
+          echo "$started"
+          url=$(printf '%s\n' "$started" | grep -o 'https://[^ ]*/actions/runs/[0-9]*' | head -n 1 || true)
+          for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+            [ -n "$url" ] && break
+            sleep 5
+            url=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow main.yml --branch "$REF" \
+              --event workflow_dispatch --limit 20 --json url,createdAt \
+              --jq "[.[] | select(.createdAt >= \"$since\")] | first | .url // empty")
+          done
+          if [ -n "$url" ]; then
+            echo "$WHAT run: $url"
+            echo "$WHAT run (branch $REF): $url" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::$WHAT started on $REF, but its run was not found within a minute: gh run list --branch $REF"
+            echo "$WHAT started on branch $REF, run not found within a minute" >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+  start-ios:
+    # trim_ci.py --then-ios (T-551): the iOS simulator builds QZ from its own branch - started at once, in parallel with the build
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      # gh workflow run with GITHUB_TOKEN: a workflow_dispatch of this token does start a run (T-551)
+      actions: write
+      # main.yml of the target branch: does it cancel runs in progress (BUSY_GUARD)
+      contents: read
+    steps:
+      - name: Start iOS simulator (main.yml of test/t529-ios-pr)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REF: 'test/t529-ios-pr'
+          WHAT: 'iOS simulator'
+          IN0: 'head'
+        run: |
+          set -o pipefail
+          busy=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow main.yml --branch "$REF" --limit 20 \
+            --json url,status --jq '[.[] | select(.status != "completed") | .url] | join(" ")')
+          if [ -n "$busy" ]; then
+            wf=$(gh api "repos/$GITHUB_REPOSITORY/contents/.github/workflows/main.yml?ref=$REF" --jq .content | base64 -d)
+            if [ -z "$wf" ]; then
+              echo "::error::$WHAT not started: $REF has an unfinished run ($busy) and its main.yml could not be read"
+              exit 1
+            fi
+            cancels=$(printf '%s\n' "$wf" | grep -E 'cancel-in-progress:' | grep -Ev 'cancel-in-progress: *false' || true)
+            if [ -n "$cancels" ]; then
+              echo "::error::$WHAT not started: $REF has an unfinished run ($busy) and its main.yml cancels runs in progress - wait for it or start by hand"
+              echo "$WHAT NOT started: branch $REF busy ($busy), its main.yml has cancel-in-progress" >> "$GITHUB_STEP_SUMMARY"
+              exit 1
+            fi
+            echo "$WHAT: unfinished run(s) on $REF, its main.yml does not cancel them - starting alongside: $busy"
+          fi
+          since=$(date -u -d '-30 seconds' +%Y-%m-%dT%H:%M:%SZ)
+          started=$(gh workflow run main.yml --repo "$GITHUB_REPOSITORY" --ref "$REF" -f "side=$IN0" 2>&1) || { echo "$started"; exit 1; }
+          echo "$started"
+          url=$(printf '%s\n' "$started" | grep -o 'https://[^ ]*/actions/runs/[0-9]*' | head -n 1 || true)
+          for i in 1 2 3 4 5 6 7 8 9 10 11 12; do
+            [ -n "$url" ] && break
+            sleep 5
+            url=$(gh run list --repo "$GITHUB_REPOSITORY" --workflow main.yml --branch "$REF" \
+              --event workflow_dispatch --limit 20 --json url,createdAt \
+              --jq "[.[] | select(.createdAt >= \"$since\")] | first | .url // empty")
+          done
+          if [ -n "$url" ]; then
+            echo "$WHAT run: $url"
+            echo "$WHAT run (branch $REF): $url" >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "::warning::$WHAT started on $REF, but its run was not found within a minute: gh run list --branch $REF"
+            echo "$WHAT started on branch $REF, run not found within a minute" >> "$GITHUB_STEP_SUMMARY"
+          fi
