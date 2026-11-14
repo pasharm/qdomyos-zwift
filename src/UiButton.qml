@@ -207,7 +207,10 @@ T.Button {
             clipRadius: control.modern ? height / 2 : 2
             width: parent.width
             height: parent.height
-            pressed: control.pressed
+            // Modern: no wave, only the pressed tint. Qt 5.15 clips the wave by the bounding
+            // rectangle (qquickmaterialripple.cpp, clipNode->setRadius is commented out; fixed in
+            // Qt 6) - clipRadius rounds the tint, not the wave, and a pill showed square corners
+            pressed: control.modern ? false : control.pressed
             anchor: control
             active: control.down || control.visualFocus || control.hovered
             // on an inverse surface the ripple of the page theme (light on a light bar) is not seen
