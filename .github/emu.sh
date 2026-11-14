@@ -652,6 +652,25 @@ after_check() {
   else
     fail "check $1-after: the progress node still there 1.5 s after the pass ($(uifind "$f" "$PROGRESS_RX" --any --name 2>/dev/null))"
   fi
+  # the map under the list (modern GPX, portrait) stays where it is on master while the progress shows: the
+  # progress takes its height from the list, not from the map (the map took it in run 43541767718: 1643 against
+  # 1513 on master). The map is not in the dump - measured on the frame of the pass (t528_map_top.py)
+  if [ -n "$MAP_TOP" ]; then
+    local mf mt
+    mf=$(ls "$1"-f8.png "$1"-f*.png 2>/dev/null | head -n 1)
+    if [ "${DP:-}" != 3.5 ] || [ "${EMU_API:-}" != 35 ]; then
+      near map "$1: the reference $MAP_TOP is for API 35 at 3.5 px per dp, here API ${EMU_API:-unknown} - not compared"
+    elif [ -z "$mf" ]; then
+      fail "check $1-map: no frame of the pass"
+    else
+      mt=$("$EMU_PY" .github/t528_map_top.py "$mf" 720 700 2250)
+      if [ -n "$mt" ] && [ $(( mt - MAP_TOP )) -le 3 ] && [ $(( MAP_TOP - mt )) -le 3 ]; then
+        say "check $1-map: the map starts at $mt during the pass ($mf), at $MAP_TOP on master (run 43461222005): OK"
+      else
+        fail "check $1-map: the map starts at ${mt:-not found} during the pass ($mf), at $MAP_TOP on master (run 43461222005)"
+      fi
+    fi
+  fi
   [ "$PLACE" = above ] || return 0
   if [ -z "$GEOM_P" ] || [ -z "$GEOM_A" ] || [ "$GEOM_A" = none ]; then
     near geom "$1: no place of the progress from the pass - the list after it not measured"
@@ -899,7 +918,7 @@ case "$SIDE" in
   m) PAGE=gpx UI_MODERN=true LIST_TOP=490 side_t528 ;;
   hs) PAGE=gpx UI_MODERN=false SLOW_MS=800 side_t528 ;;
   # ms: also the frames of the end of the pass one after another (END_BURST - the hold and the closing)
-  ms) PAGE=gpx UI_MODERN=true SLOW_MS=800 END_BURST=true END_FRAMES=30 LIST_TOP=490 side_t528 ;;
+  ms) PAGE=gpx UI_MODERN=true SLOW_MS=800 END_BURST=true END_FRAMES=30 LIST_TOP=490 MAP_TOP=1513 side_t528 ;;
   ss) PAGE=settings UI_MODERN=false SLOW_MS=800 side_t528 ;;
   sm) PAGE=settings UI_MODERN=true SLOW_MS=800 side_t528 ;;
   ps) PAGE=profiles UI_MODERN=false SLOW_MS=800 side_t528 ;;
