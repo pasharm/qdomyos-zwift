@@ -179,7 +179,9 @@ ColumnLayout {
                 id: modernList
                 anchors.fill: parent
                 anchors.leftMargin: window.ui.pageMargin
-                anchors.rightMargin: gpxPage.sideBySide ? 4 : window.ui.pageMargin
+                // side by side 8: the indicator is 8 wide with its 4 dp bar in the middle
+                // (padding 2), so the bar stays 2 off the cards and 4 off the map
+                anchors.rightMargin: gpxPage.sideBySide ? 8 : window.ui.pageMargin
                 clip: true
                 spacing: 8
                 boundsBehavior: Flickable.StopAtBounds
