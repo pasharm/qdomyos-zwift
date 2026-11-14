@@ -502,8 +502,10 @@ turn_to() {
 
 # rot_job <prefix>: ROT=true - on the device, by the line of the 10th file of the pass: landscape, frames
 # <prefix>-r1..r8 one after another, upright again, frames r9..r16; each frame and turn in logcat (tag T528)
+# The setting is given again before each frame, as in turn_to: in run 43548052415 one setting left all
+# 16 frames of hr, mr, pr upright (run 43489689380 turned by r2 with the same timing)
 rot_job() {
-  adb shell "timeout 120 logcat -m 1 -e 'T528 progress 10/' > /dev/null; log -t T528 'turn 1: the middle of the pass'; settings put system user_rotation 1; for i in 1 2 3 4 5 6 7 8; do log -t T528 \"frame $1-r\$i\"; screencap /data/local/tmp/$1-r\$i.raw; sleep 0.3; done; log -t T528 'turn 0: back upright'; settings put system user_rotation 0; for i in 9 10 11 12 13 14 15 16; do log -t T528 \"frame $1-r\$i\"; screencap /data/local/tmp/$1-r\$i.raw; sleep 0.3; done" \
+  adb shell "timeout 120 logcat -m 1 -e 'T528 progress 10/' > /dev/null; log -t T528 'turn 1: the middle of the pass'; settings put system accelerometer_rotation 0; settings put system user_rotation 1; for i in 1 2 3 4 5 6 7 8; do settings put system user_rotation 1; log -t T528 \"frame $1-r\$i\"; screencap /data/local/tmp/$1-r\$i.raw; sleep 0.3; done; log -t T528 'turn 0: back upright'; settings put system user_rotation 0; for i in 9 10 11 12 13 14 15 16; do settings put system user_rotation 0; log -t T528 \"frame $1-r\$i\"; screencap /data/local/tmp/$1-r\$i.raw; sleep 0.3; done" \
     < /dev/null > /dev/null 2>&1 &
   ROT_PID=$!
 }
