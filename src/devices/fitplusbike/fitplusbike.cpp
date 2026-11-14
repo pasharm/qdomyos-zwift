@@ -373,8 +373,10 @@ void fitplusbike::update() {
         // The bike can ignore the start sent by btinit (the FS-495B40 does while it still releases the resistance
         // after a quick reopen): it keeps reporting stopped and never runs. Send the start again every 5 s, but
         // only for 30 s after the init and only while the bike has not run yet: no reconnection, no restart later.
-        // The same for 30 s after a stop from the console (the restart below in characteristicChanged ignored).
-        if ((!workoutEverRunning || !appStopped) && workoutStatus == 0x00) {
+        // The same for 30 s after a stop from the console (the restart below in characteristicChanged ignored):
+        // right after the start always, later in the ride only with fitplus_restart_stopped_workout.
+        if (workoutStatus == 0x00 &&
+            (!workoutEverRunning || (!appStopped && (earlyWorkoutStop || restartStoppedWorkoutEnabled())))) {
             qint64 nowMs = QDateTime::currentMSecsSinceEpoch();
             if (nowMs - qMax(initDoneMs, workoutStoppedSinceMs) < 30000) {
                 if (nowMs - workoutStoppedSinceMs >= 5000 && nowMs - lastStartSentMs >= 5000) {
@@ -643,13 +645,15 @@ void fitplusbike::characteristicChanged(const QLowEnergyCharacteristic &characte
             } else if (status == 0x00 && workoutStatus == 0x02 && initDone) {
                 // Right after QZ reopens, the bike can stop the workout it has just started, then it acks the level
                 // commands without applying them: up to 3 restarts within 30 s of the start.
-                // A stop from the console later in the ride: the workout in QZ goes on, so the bike has to run too,
-                // or it ignores the levels. Only QZ stops the workout; while it is stopped or paused in QZ, the bike
-                // is left alone.
-                if (nowMs - workoutRunningSinceMs >= 30000 && !appStopped) {
+                // A stop later in the ride (the stop key of the console, or the console restarting itself): the
+                // workout in QZ goes on, so the bike has to run too, or it ignores the levels. Restarted only with
+                // fitplus_restart_stopped_workout. Only QZ stops the workout; while it is stopped or paused in QZ,
+                // the bike is left alone.
+                earlyWorkoutStop = nowMs - workoutRunningSinceMs < 30000;
+                if (!earlyWorkoutStop && !appStopped) {
                     workoutRestarts = 0;
                 }
-                if (!appStopped && workoutRestarts < 3) {
+                if (!appStopped && workoutRestarts < 3 && (earlyWorkoutStop || restartStoppedWorkoutEnabled())) {
                     workoutRestarts++;
                     workoutRestartRequest = true;
                     qDebug() << QStringLiteral("the bike stopped the workout, starting it again (attempt ") +
@@ -657,7 +661,7 @@ void fitplusbike::characteristicChanged(const QLowEnergyCharacteristic &characte
                 } else {
                     qDebug() << QStringLiteral("the bike stopped the workout");
                     // the restarts did not help: without a word QZ looks connected while the bike ignores the levels
-                    if (nowMs - workoutRunningSinceMs < 30000 && !appStopped && homeform::singleton())
+                    if (earlyWorkoutStop && !appStopped && homeform::singleton())
                         homeform::singleton()->setToastRequested(
                             tr("The bike keeps stopping the workout: turn the bike off and on again"));
                 }
@@ -872,9 +876,22 @@ void fitplusbike::noteWorkoutStatus(int status, qint64 nowMs) {
         workoutEverRunning = true;
         unstartedWorkoutWarned = false;
     }
-    if (status == 0x00 && workoutStatus != 0x00)
+    if (status == 0x02 && workoutStatus != 0x02)
+        workoutRunningSinceMs = nowMs;
+    // any stop (also 02 01 00, and the FitShow bikes without the Etappe layout): a quick stop is restarted by
+    // the start repeat in update() even with fitplus_restart_stopped_workout off
+    if (status == 0x00 && workoutStatus != 0x00) {
         workoutStoppedSinceMs = nowMs;
+        earlyWorkoutStop = workoutEverRunning && nowMs - workoutRunningSinceMs < 30000;
+    }
     workoutStatus = status;
+}
+
+bool fitplusbike::restartStoppedWorkoutEnabled() {
+    QSettings settings;
+    return settings
+        .value(QZSettings::fitplus_restart_stopped_workout, QZSettings::default_fitplus_restart_stopped_workout)
+        .toBool();
 }
 
 void fitplusbike::btinit() {
@@ -882,6 +899,7 @@ void fitplusbike::btinit() {
     // a new connection: the init below starts a new workout on the bike
     workoutStatus = -1;
     workoutRestarts = 0;
+    earlyWorkoutStop = false;
     workoutEverRunning = false;
     unstartedWorkoutWarned = false;
     workoutRestartRequest = false;

@@ -3189,6 +3189,13 @@ Při prvním spuštění to může chvíli trvat.</translation>
     </message>
 </context>
 <context>
+    <name>fitplusbike</name>
+    <message>
+        <source>The bike keeps stopping the workout: turn the bike off and on again</source>
+        <translation>Kolo opakovaně zastavuje trénink: vypněte kolo a znovu ho zapněte</translation>
+    </message>
+</context>
+<context>
     <name>gears</name>
     <message>
         <source>Without Wheel Diameter Protocol</source>
@@ -5697,6 +5704,14 @@ Povolit QZ tuto hodnotu měnit?
     <message>
         <source>Virtufit Etappe 2.0 Bike</source>
         <translation>Kolo Virtufit Etappe 2.0</translation>
+    </message>
+    <message>
+        <source>Restart the workout if the bike stops it</source>
+        <translation>Znovu spustit trénink, pokud ho kolo zastaví</translation>
+    </message>
+    <message>
+        <source>If the bike stops its workout during a ride (the stop key on the console, or the console restarting) while the workout in QZ goes on, QZ starts it again; otherwise the bike ignores the resistance until it is reconnected. Pause or stop the workout in QZ to stop the bike.</source>
+        <translation>Pokud kolo během jízdy zastaví svůj trénink (tlačítko stop na konzoli nebo restart konzole), zatímco trénink v QZ pokračuje, QZ ho spustí znovu; jinak kolo ignoruje odpor, dokud nebude znovu připojeno. Chcete-li kolo zastavit, pozastavte nebo zastavte trénink v QZ.</translation>
     </message>
     <message>
         <source>Sportstech SX600 bike</source>

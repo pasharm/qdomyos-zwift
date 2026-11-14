@@ -3189,6 +3189,13 @@ Al primo avvio potrebbe richiedere qualche istante.</translation>
     </message>
 </context>
 <context>
+    <name>fitplusbike</name>
+    <message>
+        <source>The bike keeps stopping the workout: turn the bike off and on again</source>
+        <translation>La bici continua a interrompere l&apos;allenamento: spegnila e riaccendila</translation>
+    </message>
+</context>
+<context>
     <name>gears</name>
     <message>
         <source>Wahoo Options</source>
@@ -6247,6 +6254,14 @@ Consentire a QZ di modificare questo valore?
     <message>
         <source>Enable this for Skandika X-2000 bikes. Disable for other Skandika models (e.g., HT211212095)</source>
         <translation>Attiva questo per le bici Skandika X-2000. Disattiva per altri modelli Skandika (es. HT211212095)</translation>
+    </message>
+    <message>
+        <source>Restart the workout if the bike stops it</source>
+        <translation>Riavvia l&apos;allenamento se la bici lo interrompe</translation>
+    </message>
+    <message>
+        <source>If the bike stops its workout during a ride (the stop key on the console, or the console restarting) while the workout in QZ goes on, QZ starts it again; otherwise the bike ignores the resistance until it is reconnected. Pause or stop the workout in QZ to stop the bike.</source>
+        <translation>Se la bici interrompe il suo allenamento durante un&apos;uscita (il tasto di stop sulla console o il riavvio della console) mentre l&apos;allenamento in QZ continua, QZ lo riavvia; altrimenti la bici ignora la resistenza finché non viene ricollegata. Per fermare la bici, metti in pausa o interrompi l&apos;allenamento in QZ.</translation>
     </message>
     <message>
         <source>Sportstech ESX500 bike</source>

@@ -3189,6 +3189,13 @@ Cela peut prendre quelques instants au premier démarrage.</translation>
     </message>
 </context>
 <context>
+    <name>fitplusbike</name>
+    <message>
+        <source>The bike keeps stopping the workout: turn the bike off and on again</source>
+        <translation>Le vélo arrête sans cesse l&apos;entraînement : éteignez puis rallumez le vélo</translation>
+    </message>
+</context>
+<context>
     <name>gears</name>
     <message>
         <source>Wahoo Options</source>
@@ -5569,6 +5576,14 @@ Autoriser QZ à modifier cette valeur ?
     <message>
         <source>Virtufit Etappe 2.0 Bike</source>
         <translation>Virtufit Etappe 2.0 Vélo</translation>
+    </message>
+    <message>
+        <source>Restart the workout if the bike stops it</source>
+        <translation>Relancer l&apos;entraînement si le vélo l&apos;arrête</translation>
+    </message>
+    <message>
+        <source>If the bike stops its workout during a ride (the stop key on the console, or the console restarting) while the workout in QZ goes on, QZ starts it again; otherwise the bike ignores the resistance until it is reconnected. Pause or stop the workout in QZ to stop the bike.</source>
+        <translation>Si le vélo arrête son entraînement pendant une sortie (touche d&apos;arrêt de la console ou redémarrage de la console) alors que l&apos;entraînement continue dans QZ, QZ le relance ; sinon le vélo ignore la résistance jusqu&apos;à sa reconnexion. Pour arrêter le vélo, mettez en pause ou arrêtez l&apos;entraînement dans QZ.</translation>
     </message>
     <message>
         <source>Sportstech SX600 bike</source>

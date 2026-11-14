@@ -872,6 +872,13 @@ class QZSettings {
     static const QString virtufit_etappe;
     static constexpr bool default_virtufit_etappe = false;
 
+    /**
+     * @brief FitPlus bikes with FitShow status frames: start the workout again when the bike stops it later in the
+     * ride (stop key of the console, the console restarting) while the workout in QZ goes on.
+     */
+    static const QString fitplus_restart_stopped_workout;
+    static constexpr bool default_fitplus_restart_stopped_workout = true;
+
     static const QString flywheel_filter;
     static constexpr int default_flywheel_filter = 2;
 

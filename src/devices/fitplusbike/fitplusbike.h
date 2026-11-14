@@ -47,6 +47,8 @@ class fitplusbike : public bike {
     resistance_t max_resistance = 24;
     void btinit();
     void noteWorkoutStatus(int status, qint64 nowMs);
+    // fitplus_restart_stopped_workout: restart a workout the bike stops later in the ride
+    bool restartStoppedWorkoutEnabled();
     void writeCharacteristic(uint8_t *data, uint8_t data_len, const QString &info, bool disable_log = false,
                              bool wait_for_response = false);
     void startDiscover();
@@ -91,6 +93,8 @@ class fitplusbike : public bike {
     int workoutStatus = -1;
     qint64 workoutRunningSinceMs = 0;
     uint8_t workoutRestarts = 0;
+    // the last stop came within 30 s of the start (quick reopen): restarted without the setting
+    bool earlyWorkoutStop = false;
     bool workoutRestartRequest = false;
     // the start repeat while the bike has not run since the init (any mode with FitShow status frames)
     bool workoutEverRunning = false;

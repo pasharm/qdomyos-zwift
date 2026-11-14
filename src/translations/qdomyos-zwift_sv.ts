@@ -3173,6 +3173,13 @@ Det kan ta en stund vid första starten.</translation>
     </message>
 </context>
 <context>
+    <name>fitplusbike</name>
+    <message>
+        <source>The bike keeps stopping the workout: turn the bike off and on again</source>
+        <translation>Cykeln stoppar träningspasset gång på gång: stäng av cykeln och slå på den igen</translation>
+    </message>
+</context>
+<context>
     <name>gears</name>
     <message>
         <source>Without Wheel Diameter Protocol</source>
@@ -5673,6 +5680,14 @@ Vill du tillåta att QZ ändrar värdet?
     <message>
         <source>Virtufit Etappe 2.0 Bike</source>
         <translation>Virtufit Etappe 2.0-cykel</translation>
+    </message>
+    <message>
+        <source>Restart the workout if the bike stops it</source>
+        <translation>Starta om träningspasset om cykeln stoppar det</translation>
+    </message>
+    <message>
+        <source>If the bike stops its workout during a ride (the stop key on the console, or the console restarting) while the workout in QZ goes on, QZ starts it again; otherwise the bike ignores the resistance until it is reconnected. Pause or stop the workout in QZ to stop the bike.</source>
+        <translation>Om cykeln stoppar sitt träningspass under en tur (stoppknappen på konsolen eller att konsolen startar om) medan träningspasset i QZ fortsätter, startar QZ det igen; annars ignorerar cykeln motståndet tills den ansluts igen. Pausa eller stoppa träningspasset i QZ för att stoppa cykeln.</translation>
     </message>
     <message>
         <source>Sportstech SX600 bike</source>

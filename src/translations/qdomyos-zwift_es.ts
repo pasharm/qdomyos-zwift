@@ -3189,6 +3189,13 @@ Esto puede tardar un poco en el primer inicio.</translation>
     </message>
 </context>
 <context>
+    <name>fitplusbike</name>
+    <message>
+        <source>The bike keeps stopping the workout: turn the bike off and on again</source>
+        <translation>La bicicleta detiene el entrenamiento una y otra vez: apágala y vuelve a encenderla</translation>
+    </message>
+</context>
+<context>
     <name>gears</name>
     <message>
         <source>Wahoo Options</source>
@@ -5617,6 +5624,14 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     <message>
         <source>Fitplus Bike Options</source>
         <translation>Opciones de Bicicleta Fitplus</translation>
+    </message>
+    <message>
+        <source>Restart the workout if the bike stops it</source>
+        <translation>Reiniciar el entrenamiento si la bicicleta lo detiene</translation>
+    </message>
+    <message>
+        <source>If the bike stops its workout during a ride (the stop key on the console, or the console restarting) while the workout in QZ goes on, QZ starts it again; otherwise the bike ignores the resistance until it is reconnected. Pause or stop the workout in QZ to stop the bike.</source>
+        <translation>Si la bicicleta detiene su entrenamiento durante una sesión (la tecla de parada de la consola o un reinicio de la consola) mientras el entrenamiento en QZ continúa, QZ lo vuelve a iniciar; de lo contrario, la bicicleta ignora la resistencia hasta que se vuelva a conectar. Para detener la bicicleta, pausa o detén el entrenamiento en QZ.</translation>
     </message>
     <message>
         <source>Sportstech SX600 bike</source>

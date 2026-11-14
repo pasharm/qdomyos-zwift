@@ -3189,6 +3189,13 @@ Isso pode levar alguns instantes na primeira inicialização.</translation>
     </message>
 </context>
 <context>
+    <name>fitplusbike</name>
+    <message>
+        <source>The bike keeps stopping the workout: turn the bike off and on again</source>
+        <translation>A bicicleta continua a parar o treino: desligue-a e ligue-a novamente</translation>
+    </message>
+</context>
+<context>
     <name>gears</name>
     <message>
         <source>Wahoo Options</source>
@@ -5589,6 +5596,14 @@ Permitir que o QZ altere esse valor?
     <message>
         <source>Fit Plus Bike</source>
         <translation>Bicicleta Fit Plus</translation>
+    </message>
+    <message>
+        <source>Restart the workout if the bike stops it</source>
+        <translation>Reiniciar o treino se a bicicleta o parar</translation>
+    </message>
+    <message>
+        <source>If the bike stops its workout during a ride (the stop key on the console, or the console restarting) while the workout in QZ goes on, QZ starts it again; otherwise the bike ignores the resistance until it is reconnected. Pause or stop the workout in QZ to stop the bike.</source>
+        <translation>Se a bicicleta parar o seu treino durante um passeio (a tecla de parar no console ou o reinício do console) enquanto o treino no QZ continua, o QZ inicia-o novamente; caso contrário, a bicicleta ignora a resistência até ser reconectada. Para parar a bicicleta, pause ou pare o treino no QZ.</translation>
     </message>
     <message>
         <source>Sportstech SX600 bike</source>

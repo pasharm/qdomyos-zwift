@@ -3189,6 +3189,13 @@ This may take a few moments on first startup.</source>
     </message>
 </context>
 <context>
+    <name>fitplusbike</name>
+    <message>
+        <source>The bike keeps stopping the workout: turn the bike off and on again</source>
+        <translation>Велотренажер раз у раз зупиняє тренування: вимкніть і знову увімкніть його</translation>
+    </message>
+</context>
+<context>
     <name>gears</name>
     <message>
         <source>Wahoo Options</source>
@@ -5629,6 +5636,14 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     <message>
         <source>Virtufit Etappe 2.0 Bike</source>
         <translation>Велотренажер Virtufit Etappe 2.0</translation>
+    </message>
+    <message>
+        <source>Restart the workout if the bike stops it</source>
+        <translation>Перезапускати тренування, якщо велотренажер його зупинив</translation>
+    </message>
+    <message>
+        <source>If the bike stops its workout during a ride (the stop key on the console, or the console restarting) while the workout in QZ goes on, QZ starts it again; otherwise the bike ignores the resistance until it is reconnected. Pause or stop the workout in QZ to stop the bike.</source>
+        <translation>Якщо велотренажер зупинить своє тренування під час заїзду (кнопка «Стоп» на консолі або перезавантаження консолі), а тренування в QZ триває, QZ запустить його знову; інакше велотренажер не змінюватиме опір, доки його не перепідключать. Щоб зупинити велотренажер, поставте тренування в QZ на паузу або зупиніть його.</translation>
     </message>
     <message>
         <source>Sportstech SX600 bike</source>

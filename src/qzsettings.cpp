@@ -314,6 +314,7 @@ const QString QZSettings::m3i_bike_kcal = QStringLiteral("m3i_bike_kcal");
 const QString QZSettings::snode_bike = QStringLiteral("snode_bike");
 const QString QZSettings::fitplus_bike = QStringLiteral("fitplus_bike");
 const QString QZSettings::virtufit_etappe = QStringLiteral("virtufit_etappe");
+const QString QZSettings::fitplus_restart_stopped_workout = QStringLiteral("fitplus_restart_stopped_workout");
 const QString QZSettings::flywheel_filter = QStringLiteral("flywheel_filter");
 const QString QZSettings::flywheel_life_fitness_ic8 = QStringLiteral("flywheel_life_fitness_ic8");
 const QString QZSettings::life_fitness_ic5 = QStringLiteral("life_fitness_ic5");
@@ -1368,7 +1369,7 @@ const QString QZSettings::default_ui_theme_mode = QStringLiteral("auto");
 
 const QString QZSettings::wahoo_wheel_question_answered = QStringLiteral("wahoo_wheel_question_answered");
 
-const uint32_t allSettingsCount = 1056;
+const uint32_t allSettingsCount = 1057;
 
 QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::cryptoKeySettingsProfiles, QZSettings::default_cryptoKeySettingsProfiles},
@@ -2451,6 +2452,7 @@ QVariant allSettings[allSettingsCount][2] = {
     {QZSettings::ui_theme_mode, QZSettings::default_ui_theme_mode},
     {QZSettings::wahoo_wheel_question_answered, QZSettings::default_wahoo_wheel_question_answered},
     {QZSettings::proform_use_console_gears, QZSettings::default_proform_use_console_gears},
+    {QZSettings::fitplus_restart_stopped_workout, QZSettings::default_fitplus_restart_stopped_workout},
 };
 
 void QZSettings::qDebugAllSettings(bool showDefaults) {

@@ -3189,6 +3189,13 @@ This may take a few moments on first startup.</source>
     </message>
 </context>
 <context>
+    <name>fitplusbike</name>
+    <message>
+        <source>The bike keeps stopping the workout: turn the bike off and on again</source>
+        <translation>バイクがワークアウトを何度も停止します：バイクの電源を一度切ってから入れ直してください</translation>
+    </message>
+</context>
+<context>
     <name>gears</name>
     <message>
         <source>Wahoo Options</source>
@@ -5617,6 +5624,14 @@ QZ がこの値を変更することを許可しますか？
     <message>
         <source>Fitplus Bike Options</source>
         <translation>Fitplusバイク設定</translation>
+    </message>
+    <message>
+        <source>Restart the workout if the bike stops it</source>
+        <translation>バイクが停止したワークアウトを再スタートする</translation>
+    </message>
+    <message>
+        <source>If the bike stops its workout during a ride (the stop key on the console, or the console restarting) while the workout in QZ goes on, QZ starts it again; otherwise the bike ignores the resistance until it is reconnected. Pause or stop the workout in QZ to stop the bike.</source>
+        <translation>ライド中にバイクが自身のワークアウトを停止した場合（コンソールの停止キー、またはコンソールの再起動）、QZ のワークアウトが続いていれば QZ がそれを再スタートします。そうしないと、再接続するまでバイクは負荷の変更を無視します。バイクを止めるには、QZ でワークアウトを一時停止または停止してください。</translation>
     </message>
     <message>
         <source>Sportstech SX600 bike</source>

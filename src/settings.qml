@@ -2504,6 +2504,7 @@ import AndroidStatusBar 1.0
             property string ui_theme_mode: "auto"
             property bool proform_treadmill_cst_505_pftl59420_2026: false
             property bool proform_use_console_gears: false
+            property bool fitplus_restart_stopped_workout: true
 
         }
 
@@ -6010,6 +6011,32 @@ import AndroidStatusBar 1.0
                             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                             Layout.fillWidth: true
                             onClicked: { settings.virtufit_etappe = checked; window.settings_restart_to_apply = true; }
+                        }
+                        IndicatorOnlySwitch {
+                            id: fitplusRestartStoppedWorkoutDelegate
+                            text: qsTr("Restart the workout if the bike stops it")
+                            spacing: 0
+                            bottomPadding: 0
+                            topPadding: 0
+                            rightPadding: 0
+                            leftPadding: 0
+                            clip: false
+                            checked: settings.fitplus_restart_stopped_workout
+                            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                            Layout.fillWidth: true
+                            onClicked: settings.fitplus_restart_stopped_workout = checked
+                        }
+                        Label {
+                            text: qsTr("If the bike stops its workout during a ride (the stop key on the console, or the console restarting) while the workout in QZ goes on, QZ starts it again; otherwise the bike ignores the resistance until it is reconnected. Pause or stop the workout in QZ to stop the bike.")
+                            font.bold: true
+                            font.italic: true
+                            font.pixelSize: Qt.application.font.pixelSize - 2
+                            textFormat: Text.PlainText
+                            wrapMode: Text.WordWrap
+                            verticalAlignment: Text.AlignVCenter
+                            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                            Layout.fillWidth: true
+                            color: Material.color(Material.Lime)
                         }
                         IndicatorOnlySwitch {
                             id: sportstechSx600BikeDelegate

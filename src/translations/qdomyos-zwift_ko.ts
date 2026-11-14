@@ -3189,6 +3189,13 @@ This may take a few moments on first startup.</source>
     </message>
 </context>
 <context>
+    <name>fitplusbike</name>
+    <message>
+        <source>The bike keeps stopping the workout: turn the bike off and on again</source>
+        <translation>자전거가 운동을 계속 중지합니다: 자전거를 껐다가 다시 켜세요</translation>
+    </message>
+</context>
+<context>
     <name>gears</name>
     <message>
         <source>Without Wheel Diameter Protocol</source>
@@ -5697,6 +5704,14 @@ QZ가 이 값을 변경하도록 허용하시겠습니까?
     <message>
         <source>Virtufit Etappe 2.0 Bike</source>
         <translation>Virtufit Etappe 2.0 자전거</translation>
+    </message>
+    <message>
+        <source>Restart the workout if the bike stops it</source>
+        <translation>자전거가 운동을 중지하면 다시 시작</translation>
+    </message>
+    <message>
+        <source>If the bike stops its workout during a ride (the stop key on the console, or the console restarting) while the workout in QZ goes on, QZ starts it again; otherwise the bike ignores the resistance until it is reconnected. Pause or stop the workout in QZ to stop the bike.</source>
+        <translation>라이딩 중 자전거가 자체 운동을 중지하고(콘솔의 정지 키 또는 콘솔 재시작) QZ의 운동은 계속되는 경우, QZ가 운동을 다시 시작합니다. 그렇지 않으면 다시 연결될 때까지 자전거가 저항을 무시합니다. 자전거를 멈추려면 QZ에서 운동을 일시 정지하거나 중지하세요.</translation>
     </message>
     <message>
         <source>Sportstech SX600 bike</source>
