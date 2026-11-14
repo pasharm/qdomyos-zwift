@@ -170,7 +170,8 @@ T.ComboBox {
                     // the list was open (it opens with the chosen item highlighted, a touch does
                     // not move that)
                     active: menuItem.down || (!control.modern && menuItem.highlighted)
-                    color: menuItem.Material.rippleColor
+                    // Modern: the Material 3 state layer, the text colour at 10 % (as UiButton)
+                    color: control.modern ? window.ui.alpha(window.ui.textMain, 0.10) : menuItem.Material.rippleColor
                 }
             }
 
@@ -252,7 +253,7 @@ T.ComboBox {
             pressed: control.modern ? false : control.pressed
             anchor: control.editable && control.indicator ? control.indicator : control
             active: control.pressed || control.visualFocus || control.hovered
-            color: control.Material.rippleColor
+            color: control.modern ? window.ui.alpha(window.ui.textMain, 0.10) : control.Material.rippleColor
         }
     }
 

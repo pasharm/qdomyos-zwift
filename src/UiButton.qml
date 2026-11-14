@@ -213,8 +213,10 @@ T.Button {
             pressed: control.modern ? false : control.pressed
             anchor: control
             active: control.down || control.visualFocus || control.hovered
-            // on an inverse surface the ripple of the page theme (light on a light bar) is not seen
-            color: control.modernInverse ? window.ui.alpha(window.ui.bg, 0.16)
+            // Modern: the Material 3 state layer - the label colour at 10 %, so a dark label darkens
+            // the pill and a light one lightens it on any fill, the inverse surface too (the Qt 5
+            // ripple is black 6 % or white 12.5 % by the theme alone, whatever the pill)
+            color: control.modern ? window.ui.alpha(control.labelColor, 0.10)
                  : control.flat && control.highlighted ? control.Material.highlightedRippleColor : control.Material.rippleColor
         }
     }
