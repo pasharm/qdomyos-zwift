@@ -242,7 +242,9 @@ T.ComboBox {
             x: control.editable && control.indicator ? control.indicator.x : 0
             width: control.editable && control.indicator ? control.indicator.width : parent.width
             height: parent.height
-            pressed: control.pressed
+            // Modern: no wave, only the pressed tint - Qt 5.15 does not round the wave (see the
+            // items of the list)
+            pressed: control.modern ? false : control.pressed
             anchor: control.editable && control.indicator ? control.indicator : control
             active: control.pressed || control.visualFocus || control.hovered
             color: control.Material.rippleColor
