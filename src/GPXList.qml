@@ -176,6 +176,7 @@ ColumnLayout {
             spacing: 0
 
             UiProgress {
+                id: modernProgress
                 shown: window.ui.modern
                 Layout.fillWidth: true
                 Layout.leftMargin: window.ui.pageMargin
@@ -193,7 +194,9 @@ ColumnLayout {
                 id: modernListBox
                 Layout.fillWidth: true
                 Layout.fillHeight: gpxPage.sideBySide
-                Layout.preferredHeight: gpxPage.sideBySide ? -1 : gpxPage.height * 0.4
+                // the map below takes the rest of the page: while the progress shows, its height
+                // comes out of the list, so the map does not move
+                Layout.preferredHeight: gpxPage.sideBySide ? -1 : gpxPage.height * 0.4 - modernProgress.height
 
                 ListView {
                     id: modernList
