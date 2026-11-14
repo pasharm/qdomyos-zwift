@@ -404,7 +404,8 @@ void wahoodircontreadmill::parseTreadmillData(const QByteArray &value) {
 
     flags Flags;
     int index = 0;
-    Flags.word_flags = (value.at(1) << 8) | value.at(0);
+    Flags.word_flags = static_cast<uint16_t>(static_cast<uint8_t>(value.at(0))) |
+                       (static_cast<uint16_t>(static_cast<uint8_t>(value.at(1))) << 8);
     index += 2;
 
     // Instant Speed
