@@ -741,17 +741,19 @@ HomeForm {
                     font.pointSize: settings.theme_tile_secondline_textsize * modernTile.zoom
                     fontSizeMode: Text.Fit
                     minimumPointSize: 7
-                    visible: !largeButton
+                    // T.Zone: "Return to app" takes the place of its "min-max W %" line
+                    visible: !largeButton && !modernRelease.visible
                     Accessible.ignored: true
                 }
 
-                // "Return to app" in the empty second line of T.Power(W), as on the classic tile
+                // "Return to app" in the second line of T.Power(W) (empty) and T.Zone, as on the classic tile
                 RoundButton {
                     id: modernRelease
                     objectName: "target_power_release"
                     text: qsTr("Return to app")
                     onClicked: rootItem.releaseTargetPower()
-                    visible: identificator === "target_power" && rootItem.targetPowerReleaseVisible && !largeButton
+                    visible: (identificator === "target_power" || identificator === "target_zone") &&
+                             rootItem.targetPowerReleaseVisible && !largeButton
                     anchors.top: modernValue.bottom
                     anchors.horizontalCenter: modernCard.horizontalCenter
                     height: 32 * modernTile.zoom
@@ -989,17 +991,20 @@ HomeForm {
                 fontSizeMode: Text.Fit
                 minimumPointSize: 7
                 font.bold: false
-                visible: !largeButton
+                // T.Zone: "Return to app" takes the place of its "min-max W %" line
+                visible: !largeButton && !classicRelease.visible
 
                 // Ignore for VoiceOver - parent Item handles accessibility
                 Accessible.ignored: true
             }
-            // shown in the empty second line of T.Power(W) while the tile overrides the app's resistance
+            // shown in the second line of T.Power(W) (empty) and T.Zone while the tile overrides the app's resistance
             RoundButton {
+                id: classicRelease
                 objectName: "target_power_release"
                 text: qsTr("Return to app")
                 onClicked: rootItem.releaseTargetPower()
-                visible: identificator === "target_power" && rootItem.targetPowerReleaseVisible && !largeButton
+                visible: (identificator === "target_power" || identificator === "target_zone") &&
+                         rootItem.targetPowerReleaseVisible && !largeButton
                 anchors.verticalCenter: secondLineText.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: 42 * settings.ui_zoom / 100
