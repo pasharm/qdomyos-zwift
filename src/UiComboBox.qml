@@ -6,6 +6,7 @@ import QtQuick.Templates 2.15 as T
 import QtQuick.Controls.Material 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Controls.Material.impl 2.15
+import QtGraphicalEffects 1.12
 
 // ComboBox of the settings pages and the wizard: the Qt 5.15 Material ComboBox, copied as
 // is (qtquickcontrols2 5.15, src/imports/controls/material/ComboBox.qml), so nothing changes
@@ -129,18 +130,43 @@ T.ComboBox {
                  : menuItem.highlighted ? window.ui.alpha(window.ui.textMain, 0.08)
                  : "transparent"
 
-            Ripple {
+            // Modern: the mask of the rounded block for the ripple below
+            Rectangle {
+                id: rippleMask
+                visible: false
                 width: parent.width
                 height: parent.height
-                clip: visible
-                clipRadius: parent.radius
-                pressed: menuItem.pressed
-                anchor: menuItem
-                // Modern: only while pressed - the block of the chosen or highlighted item is its
-                // colour already, the held ripple laid a grey veil over it the whole time the list
-                // was open (it opens with the chosen item highlighted, a touch does not move that)
-                active: menuItem.down || (!control.modern && menuItem.highlighted)
-                color: menuItem.Material.rippleColor
+                radius: parent.radius
+            }
+
+            // Qt 5.15 clips the ripple wave by its bounding rectangle - clipRadius rounds only the
+            // pressed tint (qquickmaterialripple.cpp:360, clipNode->setRadius commented out; fixed
+            // in Qt 6): an item held by a finger showed the wave with square corners. Modern: the
+            // wave is cut by the rounded block with a layer, only on the item under the finger and
+            // only while it is pressed - the release picks the item and closes the list, so the
+            // layer costs nothing the rest of the time (old exercise bike consoles)
+            Item {
+                width: parent.width
+                height: parent.height
+                layer.enabled: control.modern && menuItem.down
+                layer.effect: OpacityMask {
+                    maskSource: rippleMask
+                }
+
+                Ripple {
+                    width: parent.width
+                    height: parent.height
+                    clip: visible
+                    clipRadius: rippleMask.radius
+                    pressed: menuItem.pressed
+                    anchor: menuItem
+                    // Modern: only while pressed - the block of the chosen or highlighted item is
+                    // its colour already, the held ripple laid a grey veil over it the whole time
+                    // the list was open (it opens with the chosen item highlighted, a touch does
+                    // not move that)
+                    active: menuItem.down || (!control.modern && menuItem.highlighted)
+                    color: menuItem.Material.rippleColor
+                }
             }
 
             // Modern: a thin line under the item, inset like the highlight, so the items of a long
