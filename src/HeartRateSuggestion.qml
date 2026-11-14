@@ -1,4 +1,6 @@
 import QtQuick 2.12
+// Binding.restoreMode below: the classic look keeps the inherited font and colour
+import QtQml 2.15
 import QtQuick.Controls 2.5
 import QtQuick.Controls.Material 2.12
 
@@ -22,11 +24,12 @@ UiFrame {
     anchors.left: parent.left
     anchors.right: parent.right
     anchors.bottom: parent.bottom
-    // clear of the system bars and the cutout in any orientation, as the pages
-    anchors.leftMargin: window.getLeftPadding() + 10
-    anchors.rightMargin: window.getRightPadding() + 10
-    anchors.bottomMargin: window.getBottomPadding() + 10
-    height: content.implicitHeight + 24
+    // clear of the system bars and the cutout in any orientation, as the pages. Modern look: 16 from the edges, the
+    // margin of the pages, and the padding of the bottom bars (UiNotice: 20 at the sides, 14 at the top and bottom)
+    anchors.leftMargin: window.getLeftPadding() + (window.ui.modern ? 16 : 10)
+    anchors.rightMargin: window.getRightPadding() + (window.ui.modern ? 16 : 10)
+    anchors.bottomMargin: window.getBottomPadding() + (window.ui.modern ? 16 : 10)
+    height: content.implicitHeight + content.anchors.topMargin + content.anchors.bottomMargin
     radius: window.ui.modern ? 14 : 8
     fill: window.ui.modern ? window.ui.textMain : Material.background
     stroke: window.ui.modern ? window.ui.outline : Material.accent
@@ -49,14 +52,20 @@ UiFrame {
         anchors.right: parent.right
         anchors.top: parent.top
         anchors.margins: 12
+        anchors.leftMargin: window.ui.modern ? 20 : 12
+        anchors.rightMargin: window.ui.modern ? 20 : 12
+        anchors.topMargin: window.ui.modern ? 14 : 12
+        anchors.bottomMargin: window.ui.modern ? 14 : 12
         spacing: 8
 
+        // Modern look: the text of UiNotice (fontLabel, regular); classic: the bold app font, as before
         Label {
             width: parent.width
             text: bar.sensors.length === 1 ? qsTr("Heart rate sensor found: %1").arg(bar.sensors[0].name)
                                            : qsTr("Heart rate sensors found: %1").arg(bar.sensors.length)
             color: window.ui.modern ? window.ui.bg : window.ui.ink(Material.foreground)
-            font.bold: true
+            font.weight: window.ui.modern ? Font.Normal : Font.Bold
+            Binding on font.pixelSize { when: window.ui.modern; value: window.ui.fontLabel; restoreMode: Binding.RestoreBindingOrValue }
             wrapMode: Text.WordWrap
         }
 
@@ -133,14 +142,16 @@ UiFrame {
         Column {
             id: listColumn
             width: parent.width
-            spacing: 8
+            // Modern look: the gaps, title and rows of the question cards (UiMessageDialog); classic: as before
+            spacing: window.ui.modern ? 12 : 8
 
             Label {
                 id: listTitle
                 width: parent.width
                 text: qsTr("Choose a heart rate sensor")
                 color: window.ui.ink(Material.foreground)
-                font.bold: true
+                font.weight: window.ui.modern ? Font.DemiBold : Font.Bold
+                Binding on font.pixelSize { when: window.ui.modern; value: window.ui.fontTitle; restoreMode: Binding.RestoreBindingOrValue }
                 wrapMode: Text.WordWrap
             }
 
@@ -175,8 +186,11 @@ UiFrame {
                     readonly property int level: list.signalLevel(modelData.rssi)
                     width: ListView.view.width
                     // Modern look: the name in line with the title, the signal as bars on the right, a divider
-                    // between the rows; classic: the stock row with the dBm in the text, as before
-                    height: window.ui.modern ? 56 : implicitHeight
+                    // between the rows, the text of the lists (fontBody, textMain), 56 high or more with a bigger
+                    // text (modern-ui-style-guide); classic: the stock row with the dBm in the text, as before
+                    height: window.ui.modern ? Math.max(56, Math.max(40, contentItem.implicitHeight) + 16) : implicitHeight
+                    Binding on font.pixelSize { when: window.ui.modern; value: window.ui.fontBody; restoreMode: Binding.RestoreBindingOrValue }
+                    Binding { target: sensorRow.contentItem; property: "color"; when: window.ui.modern; value: window.ui.textMain; restoreMode: Binding.RestoreBindingOrValue }
                     leftPadding: window.ui.modern ? 0 : padding
                     rightPadding: window.ui.modern ? signalBars.width + 12 : padding
                     // 0 or more: the platform did not give the signal
