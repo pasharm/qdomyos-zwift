@@ -124,6 +124,23 @@ modern() {
   else
     fail "$c-3-scrolled: the bar not measured"
   fi
+
+  # the window loses and gets back the focus (the notification shade): Qt 5.15.0 calls updateFullScreen ->
+  # setFullScreen(true) -> decorView.setSystemUiVisibility(immersive flags) on every focus gain
+  # (QtActivityDelegate.java:864-871 v5.15.0; main.qml visibility: Qt.WindowFullScreen) - the call writes
+  # the whole flag set, SYSTEM_UI_FLAG_LIGHT_STATUS_BAR included; QZ does not apply the bars again there
+  adb shell cmd statusbar expand-notifications < /dev/null > /dev/null 2>&1
+  emu_sleep 2
+  adb shell cmd statusbar collapse < /dev/null > /dev/null 2>&1
+  emu_sleep 3
+  snap "$c-4-shade"
+  if bar_share "$c-4-shade" $HEADER_PT --ref-frame "raw-$c-1-home"; then
+    if [ "$side" = h ]; then
+      icons "$c-4-shade" "$mode"
+    else say "base $c-4-shade: share $BAR_S"; fi
+  else
+    fail "$c-4-shade: the bar not measured"
+  fi
 }
 
 # classic <case> <side>: the classic home page; the bar stays black on both sides
