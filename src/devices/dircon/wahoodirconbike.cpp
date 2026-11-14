@@ -317,6 +317,20 @@ void wahoodirconbike::handleDiscoverCharacteristicsResponse(const DirconPacket &
 
     initDone = true;
     qDebug() << "WahooDirconBike: initialization complete";
+
+    // Match other bike drivers: publish a virtual FTMS bike only when enabled.
+    // The DirCon client still operates normally when virtual devices are off.
+    QSettings settings;
+    if (!hasVirtualDevice() &&
+        settings.value(QZSettings::virtual_device_enabled, QZSettings::default_virtual_device_enabled).toBool()) {
+        emit debug(QStringLiteral("creating virtual bike interface for DirCon..."));
+        auto *virtualBike = new virtualbike(this, noWriteResistance, noHeartService,
+                                            bikeResistanceOffset, bikeResistanceGain);
+        connect(virtualBike, &virtualbike::changeInclination, this, &wahoodirconbike::changeInclination);
+        setVirtualDevice(virtualBike, VIRTUAL_DEVICE_MODE::PRIMARY);
+    }
+
+    emit connectedAndDiscovered();
 }
 
 void wahoodirconbike::handleReadCharacteristicResponse(const DirconPacket &packet) {
@@ -377,7 +391,8 @@ void wahoodirconbike::parseIndoorBikeData(const QByteArray &value) {
 
     flags Flags;
     int index = 0;
-    Flags.word_flags = (value.at(1) << 8) | value.at(0);
+    Flags.word_flags = static_cast<uint16_t>(static_cast<uint8_t>(value.at(0))) |
+                       (static_cast<uint16_t>(static_cast<uint8_t>(value.at(1))) << 8);
     index += 2;
 
     // Instant Speed
