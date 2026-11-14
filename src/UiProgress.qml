@@ -49,6 +49,8 @@ Item {
     }
     onDoneChanged: sync()
     onTotalChanged: sync()
+    // a page opened in the middle of a pass: the handlers above do not run for the first values
+    Component.onCompleted: sync()
 
     // not a sync of state: only how long the last count stays on the screen after the pass
     Timer {
