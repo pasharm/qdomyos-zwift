@@ -101,7 +101,7 @@ modern() {
   n1=$(grep -a -c "T-473 test: fake sensor 1" full_logcat.txt)
   n2=$(grep -a -c "T-473 test: fake sensor 2" full_logcat.txt)
   start_case "$c" ui_modern=true ui_theme_mode="$2" app_language=uk fakedevice_treadmill=true \
-    heart_rate_belt_suggest=true t473_fake_sensors=true ${scale:+ui_text_scale=$scale} || return 1
+    heart_rate_belt_suggest=true t473_fake_sensors=true ${scale:+ui_text_scale_system=false ui_text_scale=$scale} || return 1
   wait_log "$c" "T-473 test: fake sensor 1" "$n1" && wait_ui "$BAR1" 20 && shot "$c-1-one"
   wait_log "$c" "T-473 test: fake sensor 2" "$n2" || return 1
   if ! wait_ui "$BAR2" 20; then
@@ -129,7 +129,19 @@ modern() {
   expect "$c-3-list" "$ROW1" "row 1 with the signal in words"
   expect "$c-3-list" "$ROW2" "row 2 with the signal in words"
   expect "$c-3-list" '^Скасувати$' "Cancel"
-  geom_must "$c-3-list" title "$LIST"
+  if b=$(geom "$c-3-list" title "$LIST"); then
+    set -- $b
+    # the text scale took effect: the title at 100 % is 52 px (base) / 83 px (head) high - run 43590701420,
+    # where ui_text_scale without ui_text_scale_system=false changed nothing (main.qml:602)
+    if [ -n "$scale" ]; then
+      local min=120
+      [ "$side" = b ] && min=75
+      if [ $(( $4 - $2 )) -ge $min ]; then say "check $c-3-list text scale took effect: title $(( $4 - $2 )) px: OK"
+      else proves_nothing "$c: ui_text_scale=$scale did not change the title ($(( $4 - $2 )) px)"; fi
+    fi
+  else
+    fail "geom $c-3-list: title not in the dump"
+  fi
   if row1=$(geom "$c-3-list" row1 "$ROW1") && row2=$(geom "$c-3-list" row2 "$ROW2"); then
     set -- $row1
     local h1=$(( $4 - $2 )) y1=$2
