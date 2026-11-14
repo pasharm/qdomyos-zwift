@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# emu-lib: tools/emu/uifind.py sha 34a5a4fe8bd3 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/uifind.py sha 32991f748e39 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): find a control of a uiautomator dump the way the user sees it - only the part
 # of it that is on the screen, not under the app header, not under a popup or the side menu.
 # One file for every emu branch, delivered by tools/emu/sync.py as .github/uifind.py.
@@ -26,6 +26,11 @@
 # N px in from the right end (the indicator of a switch row that only turns by its indicator),
 # --any takes hidden controls too (their real bounds, as the old uitap.py), --min PX - the
 # smallest visible height and width that is still tapped (default 40, about 11 dp on Nexus 6).
+#
+# Visible here is both the place to tap and, for some callers, a sign of state: open_drawer
+# (qz.sh), wait_ui/find_ui without --any. Changing what "on the screen" means - grep every caller
+# in lib.sh and qz.sh, decide for each one, and run the whole test_lib.py, not only
+# test_uifind.py (T-514, lesson 15: open_drawer waited for a visible entry, red run 43209989589).
 #
 # Why (notes/emu-lib-2026-11-10.md, T-505): Qt gives uiautomator the real place of a QML item
 # even when it is scrolled under the header or below the page (42819262998: Template Settings
