@@ -6224,10 +6224,17 @@ void homeform::Plus(const QString &name) {
         double currentFtp = settings.value(QZSettings::ftp, QZSettings::default_ftp).toDouble();
         if (currentFtp > 0 && bluetoothManager->device() && 
             bluetoothManager->device()->deviceType() == BIKE) {
-            double currentTargetPower = ((bike *)bluetoothManager->device())->lastRequestedPower().value();
-            double powerIncrement = currentFtp * 0.01; // 1% of FTP
-            double newTargetPower = currentTargetPower + powerIncrement;
+            // 1% of FTP in whole watts, as the training program offset below is in whole watts
+            const int32_t powerIncrement = qMax(1, qRound(currentFtp * 0.01));
+            const int32_t currentTargetPower = qRound(((bike *)bluetoothManager->device())->lastRequestedPower().value());
+            const int32_t newTargetPower = currentTargetPower + powerIncrement;
+            // as T.Power(W): the tile loop in update() keeps the target over the app's commands, and a running
+            // training program keeps the change, which it would otherwise replace at its next tick
+            m_overridePower = true;
             ((bike *)bluetoothManager->device())->changePower(newTargetPower);
+            if (trainProgram) {
+                trainProgram->adjustPowerOffsetForTrainingProgram(powerIncrement);
+            }
             qDebug() << "Target power increased by" << powerIncrement << "W (1% of FTP) from" << currentTargetPower << "to" << newTargetPower;
         }
     } else {
@@ -6542,11 +6549,17 @@ void homeform::Minus(const QString &name) {
         double currentFtp = settings.value(QZSettings::ftp, QZSettings::default_ftp).toDouble();
         if (currentFtp > 0 && bluetoothManager->device() && 
             bluetoothManager->device()->deviceType() == BIKE) {
-            double currentTargetPower = ((bike *)bluetoothManager->device())->lastRequestedPower().value();
-            double powerDecrement = currentFtp * 0.01; // 1% of FTP
-            double newTargetPower = currentTargetPower - powerDecrement;
-            if (newTargetPower < 0) newTargetPower = 0; // Prevent negative power
+            // 1% of FTP in whole watts, as the training program offset below is in whole watts
+            const int32_t powerDecrement = qMax(1, qRound(currentFtp * 0.01));
+            const int32_t currentTargetPower = qRound(((bike *)bluetoothManager->device())->lastRequestedPower().value());
+            // as T.Power(W): not below 1 W, so the tile loop in update() (target > 0) keeps running
+            const int32_t newTargetPower = currentTargetPower > 0 ? qMax(1, currentTargetPower - powerDecrement) : 0;
+            if (newTargetPower == currentTargetPower) return;
+            m_overridePower = true;
             ((bike *)bluetoothManager->device())->changePower(newTargetPower);
+            if (trainProgram) {
+                trainProgram->adjustPowerOffsetForTrainingProgram(-powerDecrement);
+            }
             qDebug() << "Target power decreased by" << powerDecrement << "W (1% of FTP) from" << currentTargetPower << "to" << newTargetPower;
         }
     } else {
