@@ -76,10 +76,12 @@ def dismiss_alerts():
 
 def on_screen(e):
     # describe-all lists controls outside the screen too, with their layout coordinates (T-502, lesson 2):
-    # 393 x 852 points, below the header
+    # 393 x 852 points, below the status bar (54 points with the Dynamic Island). Not 90 (below the header, as
+    # in the list walks): the header buttons are tapped here - Main menu at y 62 was "off the screen" in run
+    # 43523164213, the walk stopped at its first tap in all three looks
     fr = e["frame"]
     y = fr["y"] + fr["height"] / 2
-    return 90 < y < 840
+    return 54 < y < 840
 
 
 def tap(label):
