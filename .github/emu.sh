@@ -8,9 +8,10 @@
 # In each: the page opened (Box Hill selected at once, GPXList.qml list currentIndex 0), frame 1 and the
 # corners measured (t529_corners.py: the diagonal from each corner into the map, k - the first pixel off the
 # page colour; 16 dp at 3.5 px/dp: k 16); modern: Govi to Hood picked (the map fits a new route - another zoom,
-# T-530 fitRoute), frame 2 and the corners; the map dragged (adb swipe of 2.5 s, a frame in the middle of the
+# fitRoute of the beta, already on both sides), frame 2 and the corners; the map dragged (adb swipe of 2.5 s, a frame in the middle of the
 # drag and one after) - the corners stay covered while the map pans.
-# Expected: head modern - round (k >= 8; dark: 13..20), base modern and classic on both sides - square (k <= 2).
+# Expected: head modern - round (k 12..24; dark: 13..20), base modern and classic on both sides - square
+# (k <= 2); the page colour just outside the edges in both.
 . .github/lib.sh
 . .github/qz.sh
 
@@ -138,14 +139,21 @@ area() {
   AREA="$x1 $y1 $x2 $y2"
 }
 
-# corners <shot> [now]: a raw frame now, the corners measured and judged by the side and the look
+# corners <shot> [<corners>]: a raw frame now, the corners measured and judged by the side and the look.
+# <corners> - which ones are judged (t529_corners.py): the classic look - tl only (its ScrollView keeps a
+# scroll bar right beside the map, the buttons under it); in the middle of a drag - tl only (the drag left
+# opens the right side of the map, tiles not loaded yet are the page colour)
 corners() {
-  local s=$1 mode out rc
+  local s=$1 which=${2:-tl,tr,br} mode out rc
   frame "raw-$s" || { fail "$s: no raw frame"; return 1; }
-  if [ "$MODERN" = true ] && [ "$SIDE" = h ]; then mode="round"; else mode="square"; fi
-  # dark: the light tiles against the dark page - the edge of the arc is sharp, k 16 for 16 dp at 3.5 px/dp
-  [ "$mode" = round ] && [ "$DARK" = true ] && mode="round 13 20"
-  out=$("$EMU_PY" .github/t529_corners.py "raw-$s" $AREA $mode)
+  [ "$MODERN" = true ] || which=tl
+  # k by the diagonal: 16 for 16 dp at 3.5 px/dp; dark - the light tiles against the dark page, a sharp arc
+  if [ "$MODERN" = true ] && [ "$SIDE" = h ]; then
+    if [ "$DARK" = true ]; then mode="round 13 20"; else mode="round 12 24"; fi
+  else
+    mode="square 0 2"
+  fi
+  out=$("$EMU_PY" .github/t529_corners.py "raw-$s" $AREA $mode "$which")
   rc=$?
   rm -f "raw-$s"
   echo "$s: $AREA $mode: $out" | tr '\n' ' ' >> corners.txt
@@ -168,7 +176,7 @@ drag() {
   adb shell input swipe "$x" "$y" "$(( x - 300 ))" "$y" 2500 < /dev/null > /dev/null 2>&1 &
   sw=$!
   emu_sleep 1
-  corners "$s-during"
+  corners "$s-during" tl
   # only the swipe: a bare wait would wait for the logcat of logcat_start too
   wait "$sw"
   emu_sleep 2
