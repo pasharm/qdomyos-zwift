@@ -1,7 +1,8 @@
 #!/bin/bash
 # Test only (T-529): rounded corners of the map on the GPX page, modern look.
-# Base: feat/modern-beta de352844c (the map square). Head: the same + T-529 (GPXList.qml: a frame in the page
-# colour, ui.bg, over the map with an inner radius of ui.radius = 16 dp; the map notice above it).
+# Base: the build of the input base (the map square) - first feat/modern-beta de352844c, for the PR the clean
+# origin/master c9426b7cd (test/t529-master). Head: the same + T-529 (GPXList.qml: a frame in the page colour,
+# ui.bg, over the map with an inner radius of 16 dp; the map notice above it) - for the PR test/t529-pr.
 # Cases <side><case>: mp - modern upright, light; ml - modern landscape (turned before the page is opened);
 # md - modern upright, dark (ui_theme_mode=dark: the frame takes the dark ui.bg); cp - classic upright (the
 # frame is visible: window.ui.modern only - square on both sides).
