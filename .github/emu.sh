@@ -9,6 +9,10 @@
 # Expectations - src/HeartRateSuggestion.qml of the head (9285fa6fc): bar 16 dp from the screen edges
 # (:29-31), text 20 dp inside the bar (:55-58), list rows 56 dp or more (:191), title fontTitle (:154);
 # base 10 / 12 dp (feat/modern-ui 10f14b93f :26-28, :51). Nexus 6: 3.5 px per dp.
+# The modern cases run in Ukrainian: the home page and its support button by their Ukrainian names too (run
+# 43588494286: every uk case "home page not shown" while the frame had Пауза/Стоп; uk.ts of feat/modern-ui)
+HOME_RX='^(Start|Stop|Pause|Старт|Стоп|Пауза)$'
+HOME_READY_RX='^(Contact QZ support|Зв’язатися зі службою підтримки QZ)$'
 . .github/lib.sh
 . .github/qz.sh
 
