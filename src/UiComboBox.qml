@@ -147,13 +147,15 @@ T.ComboBox {
             // Qt 5.15 clips the ripple wave by its bounding rectangle - clipRadius rounds only the
             // pressed tint (qquickmaterialripple.cpp:360, clipNode->setRadius commented out; fixed
             // in Qt 6): an item held by a finger showed the wave with square corners. Modern: the
-            // wave is cut by the rounded block with a layer, only on the item under the finger and
-            // only while it is pressed - the release picks the item and closes the list, so the
-            // layer costs nothing the rest of the time (old exercise bike consoles)
+            // wave is cut by the rounded block with a layer, only on the item under the finger
+            // and on the highlighted one (old exercise bike consoles). The released wave fades
+            // while the list closes: the picked item stays highlighted until the list is hidden
+            // (QQuickComboBox::itemClicked, the index is reset on visibleChanged after the exit
+            // transition), so the layer is kept and the corners stay round
             Item {
                 width: parent.width
                 height: parent.height
-                layer.enabled: control.modern && menuItem.down
+                layer.enabled: control.modern && (menuItem.down || menuItem.highlighted)
                 layer.effect: OpacityMask {
                     maskSource: rippleMask
                 }
