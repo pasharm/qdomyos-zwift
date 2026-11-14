@@ -1,17 +1,16 @@
 #!/bin/bash
-# Test only (T-530): frames for the "before/after" image of the PR - the GPX page with a route selected.
-# Before (base: origin/master 3f1945fe7): the map at a fixed zoom level 14 around the centre of the track, a
-# long track (Box Hill, 16.8 km) does not fit. After (head: + T-530): the map fits the whole track with a
-# margin of 24 px (GPXList.qml fitRoute).
-# Cases <side><look><orientation>: side b/h, look c (classic) / m (modern, ui_modern=true), orientation
-# p (portrait) / l (landscape: turned before the page is opened). In each: the page opened - the first route,
-# Box Hill, is selected at once (ListView currentIndex 0 -> trainprogram_preview, GPXList.qml:409-417 and
-# 187-192), frame 1; a tap on Govi to Hood (the shortest bundled route, 9.2 km) - frame 2; a tap on Box Hill
-# again - frame 3 (a second tap on the selected row would open the route: GPXList.qml:212, 383).
-# Checks: the selected route by the log (homeform::gpxpreview_open_clicked "<name>.gpx" after the tap) and, in
-# the modern look, by the dump (the Open button on the row of the route, the km chip); the line of the route
-# on the frame (t530_map.py: pixels of its colour, where, the gap to the light map area); no new QML message
-# of GPXList.qml on the head side against the base.
+# Test only (T-529): rounded corners of the map on the GPX page, modern look.
+# Base: feat/modern-beta de352844c (the map square). Head: the same + T-529 (GPXList.qml: a frame in the page
+# colour, ui.bg, over the map with an inner radius of ui.radius = 16 dp; the map notice above it).
+# Cases <side><case>: mp - modern upright, light; ml - modern landscape (turned before the page is opened);
+# md - modern upright, dark (ui_theme_mode=dark: the frame takes the dark ui.bg); cp - classic upright (the
+# frame is visible: window.ui.modern only - square on both sides).
+# In each: the page opened (Box Hill selected at once, GPXList.qml list currentIndex 0), frame 1 and the
+# corners measured (t529_corners.py: the diagonal from each corner into the map, k - the first pixel off the
+# page colour; 16 dp at 3.5 px/dp: k 16); modern: Govi to Hood picked (the map fits a new route - another zoom,
+# T-530 fitRoute), frame 2 and the corners; the map dragged (adb swipe of 2.5 s, a frame in the middle of the
+# drag and one after) - the corners stay covered while the map pans.
+# Expected: head modern - round (k >= 8; dark: 13..20), base modern and classic on both sides - square (k <= 2).
 . .github/lib.sh
 . .github/qz.sh
 
@@ -25,7 +24,7 @@ app_uid() {
 
 # wipe_files: Documents/QZ of the previous side removed by the app uid while it is installed - files of an
 # uninstalled app belong to another uid and bring the "previous installation" box on the GPX page (T-514,
-# run 43015224696; the same as test/t534-emu)
+# run 43015224696; from test/t530-emu)
 wipe_files() {
   local uid
   uid=$(app_uid)
@@ -34,8 +33,6 @@ wipe_files() {
     adb shell "su $uid,$uid,9997 sh -c 'rm -rf $QZDIR'" < /dev/null >> "$STEPLOG" 2>&1
   fi
   adb uninstall "$PKG" < /dev/null > /dev/null 2>&1
-  # files the app may not remove (run 43474879038: "training: Directory not empty", a file of uid 10190):
-  # through MediaProvider, which forgets them with the files (test/t528-emu, run 43185579383)
   if adb shell "ls -d $QZDIR" < /dev/null > /dev/null 2>&1; then
     say "wipe: $QZDIR still there - delete through MediaProvider"
     adb shell "su 0 content delete --uri content://media/external/file --where \"_data LIKE '$QZDIR/%' OR _data LIKE '/storage/emulated/0/Documents/QZ/%'\"" \
@@ -48,8 +45,7 @@ wipe_files() {
   fi
 }
 
-# rotate <0|1>: portrait or landscape, then a check by the root bounds of a dump that the app turned (T-487,
-# lesson 2; test/t534-emu)
+# rotate <0|1>: portrait or landscape, checked by the root bounds of a dump (from test/t530-emu)
 rotate() {
   local want=$1 b w h i
   adb shell settings put system accelerometer_rotation 0 < /dev/null > /dev/null 2>&1
@@ -72,11 +68,9 @@ rotate() {
   return 1
 }
 
-# log_lines: lines of full_logcat.txt now (the log of the run grows while it runs)
 log_lines() { wc -l < full_logcat.txt | tr -d ' '; }
 
-# selected_by_log <shot> <route> <from line>: the preview of that route asked after the line <from>
-# (homeform.cpp gpxpreview_open_clicked: qDebug of the file URL; log_debug=true in qz.conf by put_conf)
+# selected_by_log <shot> <route> <from line>: homeform gpxpreview_open_clicked of that route after <from>
 selected_by_log() {
   local s=$1 route=$2 from=$3 i got
   for i in 1 2 3 4 5; do
@@ -84,132 +78,13 @@ selected_by_log() {
     case $got in *"$route.gpx"*) break ;; esac
     emu_sleep 2
   done
-  say "  log after line $from: ${got:-no gpxpreview_open_clicked}"
   case $got in
     *"$route.gpx"*) say "check $s: '$route' selected (gpxpreview_open_clicked in the log): OK" ;;
-    *) fail "check $s: '$route' not the last gpxpreview_open_clicked after the tap" ;;
+    *) fail "check $s: '$route' not the last gpxpreview_open_clicked after the tap (${got:-none})" ;;
   esac
 }
 
-# open_beside <shot> <route>: modern look - the Open button on the card of the route (only the selected card
-# has it, GPXList.qml:265), the centre of Open within the card height
-open_beside() {
-  local a o
-  # --any: the real bounds - in landscape uifind took a card below the clipped list as covered (run 43474879038)
-  a=$(uifind "dumps/$1.xml" "^$2\$" --any 2>/dev/null) || { fail "check $1: no card '$2' in the dump"; return 1; }
-  o=$(uifind "dumps/$1.xml" '^Open$' --any 2>/dev/null) || { fail "check $1: no Open button in the dump"; return 1; }
-  set -- "$1" "$2" $a $o
-  # uifind gives 8 numbers each (x y checkable checked x1 y1 x2 y2): $4 - centre y of the name, ${12} - of Open
-  if [ $(( $4 - ${12} )) -le 60 ] && [ $(( ${12} - $4 )) -le 60 ]; then
-    say "check $1: Open on the card of '$2' (y $4 / ${12}): the route is selected: OK"
-  else
-    fail "check $1: Open not on the card of '$2' (y $4 / ${12})"
-  fi
-}
-
-# line_of <shot>: the route line on a raw frame taken right after the shot (t530_map.py), the area without
-# the list: side by side the right part of the screen, the modern look upright - under the list (the list is
-# 0.4 of the page high) and above Other folders
-line_of() {
-  local s=$1 x1 y1 x2 y2 col of out
-  frame "raw-$s" || { fail "$s: no raw frame"; return 1; }
-  x2=$SCR_W; y2=$SCR_H
-  if [ "$MODERN" = true ] && [ "$SCR_W" -lt "$SCR_H" ]; then
-    x1=0
-    # the list ends at ~0.54 H (0.4 of the page under the filter row, GPXList.qml:174): the selected card is in the
-    # accent too
-    y1=$(( SCR_H * 56 / 100 ))
-    of=$(uifind "dumps/$s.xml" '^Other folders$' 2>/dev/null) && { set -- $of; y2=$6; }
-  else
-    # the list column ends at the right edge of the filter row: the "<-" button (classic; its right edge 815,
-    # the map from 822 - frame h-4-after of run 43462330183) or "Parent folder" (modern); not found - 0.4 W
-    x1=$(( SCR_W * 40 / 100 ))
-    if [ "$MODERN" = true ]; then of='^Parent folder$'; else of='^←$'; fi
-    of=$(uifind "dumps/$s.xml" "$of" 2>/dev/null) && { set -- $of; x1=$(( $7 + 6 )); }
-    y1=252
-  fi
-  if [ "$MODERN" = true ]; then col=B69DF8,6444BE; else col=red; fi
-  out=$("$EMU_PY" .github/t530_map.py "raw-$s" "$x1" "$y1" "$x2" "$y2" "$col")
-  rm -f "raw-$s"
-  say "  map $s: area $x1 $y1 $x2 $y2: $out"
-  set -- $out
-  if [ "${2:-0}" -ge 200 ]; then
-    say "check $s: the route line on the map ($2 px of $col): OK"
-  elif [ "${s#b}" != "$s" ]; then
-    # the side before: at zoom level 14 the line may be out of the view altogether (bcl Box Hill, run
-    # 43478663497) - that is the defect, a line for the frame only
-    say "before: no route line on the frame $s (${2:-?} px of $col) - out of the view at zoom 14"
-  else
-    fail "check $s: no route line on the frame (${2:-?} px of $col)"
-  fi
-}
-
-# tap_row_classic <n> <route>: the classic rows have no names in the dump (GPXList.qml:355 Text in a
-# clipped Item) - the row n by its place: 40 dp = 140 px rows on the CI Nexus 6 right under the filter row,
-# whose bottom is the bottom of its "<-" button (GPXList.qml:312, 344)
-tap_row_classic() {
-  local n=$1 route=$2 y
-  dump
-  if ! find_ui '^←$'; then
-    fail "classic: the '<-' button of the filter row not on the screen"
-    return 1
-  fi
-  set -- "$1" "$2" $EMU_AT
-  # ${10} - the bottom of the button (x y checkable checked x1 y1 x2 y2 after the two arguments)
-  y=$(( ${10} + 70 + (n - 1) * 140 ))
-  say "tap classic row $n ($route) at 200 $y"
-  adb shell input tap 200 "$y" < /dev/null > /dev/null 2>&1
-}
-
-# pick <shot> <route> <row>: the route tapped (modern: the card by its name, the km chip as the landing;
-# classic: the row by its place), then 3 s for the tiles, a still screen, the frame and its checks
-pick() {
-  local s=$1 route=$2 n=$3 from
-  from=$(log_lines)
-  if [ "$MODERN" = true ]; then
-    # the accessibility click (Accessible.onPressAction -> gpxCard.activate, GPXList.qml:224) straight by the
-    # driver - the way to the state under test, not the action: the list clips the cards, and tap_ui refused
-    # Govi to Hood upright ("only 28 px on the screen") and took the km chip as covered in landscape (run
-    # 43474879038); the selection is proved by the log, the Open button and the km chip after it
-    a11y_build || { fail "$s: no a11y driver"; return 1; }
-    drv "pick-$s" "click=$route" "sleep:1000"
-    if grep -q "returned true" "drv/pick-$s.txt"; then
-      say "outcome 'pick $route': a11y click returned true"
-    else
-      fail "$s: the accessibility click on '$route' did not work"
-      return 1
-    fi
-  else
-    tap_row_classic "$n" "$route" || return 1
-  fi
-  frame_route "$s" "$route" "$from"
-}
-
-# frame_route <shot> <route> <from line>: the frame of the selected route and its checks
-frame_route() {
-  local s=$1 route=$2 from=$3 km
-  emu_sleep 3
-  still
-  shot "$s"
-  line_of "$s"
-  selected_by_log "$s" "$route" "$from"
-  if [ "$MODERN" = true ]; then
-    open_beside "$s" "$route"
-    if [ "$route" = "$LONG" ]; then km='^16\.[0-9] km$'; else km='^9\.[0-9] km$'; fi
-    if [ "$(uifind "dumps/$s.xml" --count "$km" --any 2>/dev/null)" -ge 1 ] 2>/dev/null; then
-      say "check $s: the km chip of '$route' ($km): OK"
-    else
-      fail "check $s: no km chip '$km' of '$route' in the dump"
-    fi
-  else
-    # the distance text over the map (GPXList.qml:542) - its node, if Qt gives one
-    say "  classic distance text: $(uifind "dumps/$s.xml" '^Distance .*' --name --any 2>/dev/null || echo 'no node')"
-  fi
-  expect "$s" '^Other folders$' 'still the GPX page (the route not opened)'
-}
-
-# no_restore <case>: the restore question master asks on the GPX page of a fresh install too ("Restore files",
-# run 43474879038: over the frames of every case) - answered No; not shown in 15 s - on
+# no_restore <case>: the restore question on the GPX page of a fresh install answered No (from test/t530-emu)
 QUESTION_RX='(?s).*previous installation.*'
 no_restore() {
   if ! wait_ui "$QUESTION_RX" 15 --any; then
@@ -232,14 +107,88 @@ no_restore() {
   fi
 }
 
-# gpx <case> <modern> <landscape>: the page, Box Hill at once, Govi to Hood, Box Hill again
+open_gpx() {
+  local land
+  if [ "$MODERN" = true ]; then land="^$LONG\$"; else land='^Other folders$|^&?No$'; fi
+  open_drawer '^Open GPX$' && tap_ui '^Open GPX$' "$land" && no_restore "$1"
+}
+
+# area <dump>: the part of the screen with the map, AREA="x1 y1 x2 y2"; x1 in the page margin or the gap left
+# of the map (t529_corners.py takes the page colour from the column x1+1). Modern upright: under the list
+# (0.4 of the page, GPXList.qml modernListBox) and above Other folders, x1 0 - the page margin. Side by side:
+# right of the filter row ("Parent folder" in the modern look, "<-" in the classic one) - 3 px into the gap
+# (classic: the button ends at 815, the map from 822 - frame h-4-after of run 43462330183)
+area() {
+  local x1=0 y1 x2=$SCR_W y2=$SCR_H of
+  if [ "$MODERN" = true ] && [ "$SCR_W" -lt "$SCR_H" ]; then
+    y1=$(( SCR_H * 56 / 100 ))
+    of=$(uifind "$1" '^Other folders$' 2>/dev/null) && { set -- $of; y2=$6; }
+  else
+    local rx
+    if [ "$MODERN" = true ]; then rx='^Parent folder$'; else rx='^←$'; fi
+    if of=$(uifind "$1" "$rx" 2>/dev/null); then
+      set -- $of
+      x1=$(( $7 + 3 ))
+    else
+      fail "area: no '$rx' in $1 - the left edge of the map area unknown"
+      return 1
+    fi
+    y1=252
+  fi
+  AREA="$x1 $y1 $x2 $y2"
+}
+
+# corners <shot> [now]: a raw frame now, the corners measured and judged by the side and the look
+corners() {
+  local s=$1 mode out rc
+  frame "raw-$s" || { fail "$s: no raw frame"; return 1; }
+  if [ "$MODERN" = true ] && [ "$SIDE" = h ]; then mode="round"; else mode="square"; fi
+  # dark: the light tiles against the dark page - the edge of the arc is sharp, k 16 for 16 dp at 3.5 px/dp
+  [ "$mode" = round ] && [ "$DARK" = true ] && mode="round 13 20"
+  out=$("$EMU_PY" .github/t529_corners.py "raw-$s" $AREA $mode)
+  rc=$?
+  rm -f "raw-$s"
+  echo "$s: $AREA $mode: $out" | tr '\n' ' ' >> corners.txt
+  echo >> corners.txt
+  say "  corners $s ($AREA, $mode): $(echo "$out" | tr '\n' ' ')"
+  case $rc in
+    0) say "check $s: corners ${mode%% *}: OK" ;;
+    1) fail "check $s: corners not ${mode%% *}" ;;
+    *) fail "check $s: the map not found on the frame" ;;
+  esac
+}
+
+# drag <shot>: the map dragged left over 2.5 s from its middle; a frame in the middle of the drag (the corners
+# while the map pans) and one after it
+drag() {
+  local s=$1 x y sw
+  set -- $AREA
+  x=$(( ($1 + $3) / 2 )); y=$(( ($2 + $4) / 2 ))
+  say "drag the map from $x $y by 300 px left"
+  adb shell input swipe "$x" "$y" "$(( x - 300 ))" "$y" 2500 < /dev/null > /dev/null 2>&1 &
+  sw=$!
+  emu_sleep 1
+  corners "$s-during"
+  # only the swipe: a bare wait would wait for the logcat of logcat_start too
+  wait "$sw"
+  emu_sleep 2
+  still
+  shot "$s-after"
+  corners "$s-after"
+}
+
+# gpx <case> <modern> <landscape> <dark>
 gpx() {
-  local c=$1 from land
-  MODERN=$2
-  # the classic rows scroll a name longer than 30 characters (GPXList.qml:360-369, "Italy - Passo dello
-  # Stelvio", row 5): the screen never stood still - masked (run 43478663497: rows 994-1059, 12 min a case)
-  if [ "$MODERN" = true ]; then EMU_MASKS=""; else EMU_MASKS="0,975,2560,1080"; fi
-  start_case "$c" ui_modern="$MODERN" fakedevice_treadmill=true || return 1
+  local c=$1 from
+  MODERN=$2; DARK=$4
+  EMU_MASKS=""
+  if [ "$MODERN" = true ]; then
+    start_case "$c" ui_modern=true ui_theme_mode="$( [ "$DARK" = true ] && echo dark || echo light )" fakedevice_treadmill=true || return 1
+  else
+    # the classic rows scroll a long name: the screen never stood still (test/t530-emu)
+    EMU_MASKS="0,975,2560,1080"
+    start_case "$c" ui_modern=false fakedevice_treadmill=true || return 1
+  fi
   SCR_W=1440; SCR_H=2560
   if [ "$3" = 1 ]; then
     rotate 1 || { rotate 0; return 1; }
@@ -248,153 +197,53 @@ gpx() {
   fi
   from=$(log_lines)
   say "== $c: GPX page"
-  # landing: Other folders, or No of the restore question at once (classic: the native box)
-  # the question comes or not run by run (run 43478663497: none) - modern: the first card, on the screen with
-  # the question popup too
-  if [ "$MODERN" = true ]; then land="^$LONG\$"; else land='^Other folders$|^&?No$'; fi
-  if open_drawer '^Open GPX$' && tap_ui '^Open GPX$' "$land" && no_restore "$c"; then
-    frame_route "$c-1-long-open" "$LONG" "$from"
-    # Box Hill again only after Govi to Hood is selected: a tap on the selected row opens the route
-    pick "$c-2-short" "$SHORT" 4 && pick "$c-3-long" "$LONG" 1
+  if open_gpx "$c"; then
+    emu_sleep 3
+    still
+    shot "$c-1-long"
+    selected_by_log "$c-1-long" "$LONG" "$from"
+    if area "dumps/$c-1-long.xml"; then
+      corners "$c-1-long"
+      if [ "$MODERN" = true ]; then
+        from=$(log_lines)
+        a11y_build || fail "$c: no a11y driver"
+        drv "pick-$c" "click=$SHORT" "sleep:1000"
+        if grep -q "returned true" "drv/pick-$c.txt"; then
+          emu_sleep 3
+          still
+          shot "$c-2-short"
+          selected_by_log "$c-2-short" "$SHORT" "$from"
+          corners "$c-2-short"
+          drag "$c-3-drag"
+        else
+          fail "$c: the accessibility click on '$SHORT' did not work"
+        fi
+      fi
+    fi
   fi
   back_to "$HOME_RX" 20
   [ "$3" = 1 ] && rotate 0
   return 0
 }
 
-# qml_side: the messages of GPXList.qml by side (pid lines of start_case, the 3rd field of threadtime), the
-# text without time, pid and the line number (the change moves the lines below it); a message of the head side the base side has not is the change's
-qml_side() {
-  local side=$1 pid
-  : > "qml_$side.txt"
-  for pid in $(grep -a "^pid $side" "$STEPLOG" | cut -d' ' -f3); do
-    awk -v p="$pid" '$3 == p' full_logcat.txt | grep -a 'GPXList.qml' | sed 's/^.*GPXList\.qml:[0-9]*:\{0,1\}[0-9]*:\{0,1\} */GPXList.qml: /' | tr -d '\r' >> "qml_$side.txt"
-  done
-  sort -u -o "qml_$side.txt" "qml_$side.txt"
-}
-qml_compare() {
-  local o
-  logcat_stop
-  qml_side b
-  qml_side o
-  qml_side h
-  say "== GPXList.qml messages: base $(wc -l < qml_b.txt) kinds, old head $(wc -l < qml_o.txt), head $(wc -l < qml_h.txt)"
-  for o in b o h; do sed "s/^/  $o: /" "qml_$o.txt" >> "$STEPLOG"; done
-  comm -13 qml_b.txt qml_h.txt > qml_new.txt
-  if ! grep -a -q '^pid h' "$STEPLOG"; then
-    fail "check qml: no head pid in steps.log - not checked"
-  elif ! grep -a -q '^pid b' "$STEPLOG"; then
-    fail "check qml: no base pid in steps.log - nothing to compare with"
-  elif [ -s qml_new.txt ]; then
-    sed 's/^/  new: /' qml_new.txt >> "$STEPLOG"
-    fail "check qml: GPXList.qml messages on the head side the base has not ($(wc -l < qml_new.txt))"
-  else
-    say "check qml: no GPXList.qml message on the head side the base has not: OK"
-  fi
-}
-
-# ---- T-530, second round: the page opened a second time in the same process, and a turn
-# (review of dfc9fee42: Component.onCompleted of the second page finds the old path and a map not ready ->
-# map.visibleRegion = path; Qt 5.15.0 qdeclarativegeomap.cpp:2283-2284 mapReadyChanged -> our fit with 24 px,
-# then :2317-2319 the queued fitViewportToGeoShape(m_visibleRegion) with the default 10 px; the head without
-# visibleRegion waits for onMapReadyChanged alone)
-
-# open_gpx <case>: the page from the menu, the restore question answered
-open_gpx() {
-  local land
-  if [ "$MODERN" = true ]; then land="^$LONG\$"; else land='^Other folders$|^&?No$'; fi
-  open_drawer '^Open GPX$' && tap_ui '^Open GPX$' "$land" && no_restore "$1"
-}
-
-# shot_at <shot> <route> <from> <seconds>: the frame of the page that just opened after <seconds> (no still:
-# the queued fit is what is looked for), the line measured; the route by the log
-shot_at() {
-  local s=$1 route=$2 from=$3
-  emu_sleep "$4"
-  shot "$s" now
-  line_of "$s"
-  selected_by_log "$s" "$route" "$from"
-}
-
-# reopen <case> <modern>: first open (Box Hill at once) - frame 1; back home, open again (Box Hill again,
-# the same path) - frames 2 at 3 s and 2b at 8 s; Govi to Hood picked - frame 3; back, open again (Box Hill
-# after another path) - frames 4 at 3 s and 4b at 8 s
-reopen() {
-  local c=$1 from
-  MODERN=$2
-  if [ "$MODERN" = true ]; then EMU_MASKS=""; else EMU_MASKS="0,975,2560,1080"; fi
-  start_case "$c" ui_modern="$MODERN" fakedevice_treadmill=true || return 1
-  SCR_W=1440; SCR_H=2560
-  rotate 0
-  from=$(log_lines)
-  say "== $c: first open"
-  open_gpx "$c" || { back_to "$HOME_RX" 20; return 1; }
-  emu_sleep 3
-  still
-  shot_at "$c-1-first" "$LONG" "$from" 0
-  back_to "$HOME_RX" 20 || return 1
-  from=$(log_lines)
-  say "== $c: second open, the same route"
-  open_gpx "$c" || { back_to "$HOME_RX" 20; return 1; }
-  shot_at "$c-2-second" "$LONG" "$from" 3
-  shot_at "$c-2b-second-8s" "$LONG" "$from" 5
-  pick "$c-3-short" "$SHORT" 4 || { back_to "$HOME_RX" 20; return 1; }
-  back_to "$HOME_RX" 20 || return 1
-  from=$(log_lines)
-  say "== $c: third open, after Govi to Hood"
-  open_gpx "$c" || { back_to "$HOME_RX" 20; return 1; }
-  shot_at "$c-4-after-short" "$LONG" "$from" 3
-  shot_at "$c-4b-after-short-8s" "$LONG" "$from" 5
-  back_to "$HOME_RX" 20
-  return 0
-}
-
-# turn <case> <modern>: Box Hill upright, then the phone turned with the route on the map - what the map does
-# (no fit on a turn in the code: onMapReadyChanged comes once)
-turn() {
-  local c=$1 from
-  MODERN=$2
-  if [ "$MODERN" = true ]; then EMU_MASKS=""; else EMU_MASKS="0,975,2560,1080"; fi
-  start_case "$c" ui_modern="$MODERN" fakedevice_treadmill=true || return 1
-  SCR_W=1440; SCR_H=2560
-  rotate 0
-  from=$(log_lines)
-  open_gpx "$c" || { back_to "$HOME_RX" 20; return 1; }
-  emu_sleep 3
-  still
-  shot_at "$c-1-upright" "$LONG" "$from" 0
-  if rotate 1; then
-    still
-    shot_at "$c-2-turned" "$LONG" "$from" 0
-    rotate 0 && { still; shot_at "$c-3-upright-again" "$LONG" "$from" 0; }
-  fi
-  back_to "$HOME_RX" 20
-  rotate 0
-  return 0
-}
-
 emu_init
 logcat_start
+: > corners.txt
 
-for side in b o h; do
-  case $side in
+for SIDE in b h; do
+  case $SIDE in
     b) apk=apk-base/android-debug.apk ;;
-    o) apk=apk-old/android-debug.apk ;;
     h) apk=apk-head/android-debug.apk ;;
   esac
-  side_on "$side" "$apk" || continue
-  say "== $side: start"
+  side_on "$SIDE" "$apk" || continue
+  say "== $SIDE: start"
   wipe_files
   install_apk "$apk"
-  gpx "${side}cp" false 0
-  gpx "${side}mp" true 0
-  gpx "${side}cl" false 1
-  gpx "${side}ml" true 1
-  reopen "${side}c2" false
-  reopen "${side}m2" true
-  turn "${side}ct" false
-  turn "${side}mt" true
+  gpx "${SIDE}mp" true 0 false
+  gpx "${SIDE}ml" true 1 false
+  gpx "${SIDE}md" true 0 true
+  gpx "${SIDE}cp" false 0 false
 done
 
-qml_compare
+logcat_stop
 finish

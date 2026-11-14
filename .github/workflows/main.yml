@@ -21,10 +21,6 @@ on:
         description: run id of the build before the change (fdroid-android-trial); empty - no side before
         required: false
         default: ''
-      old:
-        description: "T-530: run id of the old head (dfc9fee42 - visibleRegion before the map is ready), side o; empty - no side o"
-        required: false
-        default: ''
       cases:
         description: "cases of emu.sh: globs of <case> or <function>/<case>, by spaces or commas (landopen/hc); empty - all"
         required: false
@@ -76,15 +72,6 @@ jobs:
           run-id: ${{ inputs.base }}
           github-token: ${{ github.token }}
 
-      - name: Download the APK of the old head (T-530)
-        if: ${{ inputs.old != '' }}
-        uses: actions/download-artifact@v4
-        with:
-          name: fdroid-android-trial
-          path: apk-old
-          run-id: ${{ inputs.old }}
-          github-token: ${{ github.token }}
-
       - name: Setup Java for Android Emulator
         uses: actions/setup-java@v3
         with:
@@ -113,7 +100,7 @@ jobs:
           name: emulator-logcat-${{ inputs.head }}-api${{ matrix.api }}${{ (inputs.cases != '' || inputs.base == '' || inputs.apis != '[30, 35]') && '-part' || '' }}
           path: |
             *.png
-            raw-?c-*
+            corners.txt
             full_logcat.txt
             steps.log
             dumps/
