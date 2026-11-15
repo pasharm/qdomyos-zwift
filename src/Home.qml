@@ -921,8 +921,9 @@ HomeForm {
                 objectName: "target_power_release"
                 text: qsTr("Return to app")
                 onClicked: rootItem.releaseTargetPower()
+                // TEST ONLY (T-475): always shown, the emulator has no FitPlus bike; not for the PR
                 visible: (identificator === "target_power" || identificator === "target_zone") &&
-                         rootItem.targetPowerReleaseVisible && !largeButton
+                         true && !largeButton
                 anchors.verticalCenter: secondLineText.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
                 height: 42 * settings.ui_zoom / 100
