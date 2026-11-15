@@ -5858,15 +5858,16 @@ bool homeform::handleKeyboardShortcut(const QString &sequence) {
 // T.Zone +/-: the watts the 1% FTP step starts from (bike::targetZoneStartPower), 0 when there is nothing to
 // start from. The program row sets the power with the same check as
 // trainprogram::adjustPowerOffsetForTrainingProgram; the app sends its own target power (ERG) with the same
-// check as bike::targetPowerOverridesExternalApp.
-static int32_t targetZoneBasePower(bike *dev, bool overridePower, trainprogram *program, double ftp) {
+// check as bike::targetPowerOverridesExternalApp. appErgMode is zwift_erg as it was before this press:
+// Plus/Minus set it to true for T.Zone first, and then it no longer tells what the app sends.
+static int32_t targetZoneBasePower(bike *dev, bool overridePower, trainprogram *program, double ftp,
+                                   bool appErgMode) {
     const bool programStarted = program && program->isStarted();
     const bool programPower = programStarted && program->currentRow().power != -1;
     virtualbike *virtualBike = dev->VirtualBike();
     const qint64 lastAppFrame = virtualBike ? virtualBike->whenLastFTMSFrameReceived() : 0;
     const bool appActive = lastAppFrame > 0 && QDateTime::currentMSecsSinceEpoch() <= lastAppFrame + 2000;
-    QSettings settings;
-    const bool appErg = appActive && settings.value(QZSettings::zwift_erg, QZSettings::default_zwift_erg).toBool();
+    const bool appErg = appActive && appErgMode;
     return bike::targetZoneStartPower(overridePower, programStarted, programPower, appErg,
                                       dev->lastRequestedPower().value(), dev->wattsMetric().average5s(), ftp);
 }
@@ -5876,6 +5877,8 @@ void homeform::Plus(const QString &name) {
 
     bool miles = settings.value(QZSettings::miles_unit, QZSettings::default_miles_unit).toBool();
     qDebug() << QStringLiteral("Plus") << name;
+    // what the app was sending before this press, for the T.Zone start below
+    const bool appErgMode = settings.value(QZSettings::zwift_erg, QZSettings::default_zwift_erg).toBool();
     if (name.contains(QStringLiteral("target_power")) || name.contains(QStringLiteral("target_zone"))) {
         settings.setValue(QZSettings::zwift_erg, true);
     } else if (name.contains(QStringLiteral("resistance")) || name.contains(QStringLiteral("inclination"))) {
@@ -6152,7 +6155,8 @@ void homeform::Plus(const QString &name) {
             // 1% of FTP in whole watts, as the training program offset below is in whole watts
             const int32_t powerIncrement = qMax(1, qRound(currentFtp * 0.01));
             const int32_t currentTargetPower =
-                targetZoneBasePower((bike *)bluetoothManager->device(), m_overridePower, trainProgram, currentFtp);
+                targetZoneBasePower((bike *)bluetoothManager->device(), m_overridePower, trainProgram, currentFtp,
+                                    appErgMode);
             if (currentTargetPower <= 0) {
                 // no target and almost no power ridden: the tile would hold almost no load
                 qDebug() << "Target zone plus ignored: no target and under 10% of FTP ridden";
@@ -6202,6 +6206,8 @@ void homeform::Minus(const QString &name) {
     QSettings settings;
     bool miles = settings.value(QZSettings::miles_unit, QZSettings::default_miles_unit).toBool();
     qDebug() << QStringLiteral("Minus") << name;
+    // what the app was sending before this press, for the T.Zone start below
+    const bool appErgMode = settings.value(QZSettings::zwift_erg, QZSettings::default_zwift_erg).toBool();
     if (name.contains(QStringLiteral("target_power")) || name.contains(QStringLiteral("target_zone"))) {
         settings.setValue(QZSettings::zwift_erg, true);
     } else if (name.contains(QStringLiteral("resistance")) || name.contains(QStringLiteral("inclination"))) {
@@ -6482,7 +6488,8 @@ void homeform::Minus(const QString &name) {
             // 1% of FTP in whole watts, as the training program offset below is in whole watts
             const int32_t powerDecrement = qMax(1, qRound(currentFtp * 0.01));
             const int32_t currentTargetPower =
-                targetZoneBasePower((bike *)bluetoothManager->device(), m_overridePower, trainProgram, currentFtp);
+                targetZoneBasePower((bike *)bluetoothManager->device(), m_overridePower, trainProgram, currentFtp,
+                                    appErgMode);
             // as T.Power(W): not below 1 W, so the tile loop in update() (target > 0) keeps running
             const int32_t newTargetPower = currentTargetPower > 0 ? qMax(1, currentTargetPower - powerDecrement) : 0;
             if (newTargetPower == currentTargetPower) return;
