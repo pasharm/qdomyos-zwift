@@ -60,6 +60,13 @@ T.ComboBox {
     // rounded mask of their ripple (see the delegate)
     property int pressedItemIndex: -1
     property int previousPressedItemIndex: -1
+    // Modern: the item under the finger now (-1 - none), it has a rounded block while held
+    property int downItemIndex: -1
+
+    // Modern: the tone of the open list. A list on a popup of the surfaceHigh tone (the RPE
+    // popup) takes surface, one tone below it as a Material 3 menu in a dialog - with the
+    // default it was one colour with the popup
+    property color menuColor: window.ui.surfaceHigh
 
     TextMetrics {
         id: itemMetrics
@@ -100,9 +107,11 @@ T.ComboBox {
     Material.background: modern ? window.ui.surfaceHighest : (flat ? "transparent" : undefined)
     Material.foreground: flat ? undefined : Material.primaryTextColor
 
-    // Modern: the item has a rounded block - it is the chosen one or the one highlighted
+    // Modern: the item has a rounded block - it is the chosen one, the one highlighted or the
+    // one held by a finger
     function hasBlock(i) {
         return i === control.currentIndex || i === control.highlightedIndex
+            || i === control.downItemIndex
     }
 
     delegate: MenuItem {
@@ -123,6 +132,12 @@ T.ComboBox {
                 control.previousPressedItemIndex = control.pressedItemIndex
                 control.pressedItemIndex = index
             }
+        }
+        onDownChanged: {
+            if (down)
+                control.downItemIndex = index
+            else if (control.downItemIndex === index)
+                control.downItemIndex = -1
         }
 
         // Material's MenuItem background; modern (Material 3 menu): a rounded block inset from
@@ -187,7 +202,7 @@ T.ComboBox {
 
             // Modern: a thin line under the item, inset like the highlight, so the items of a long
             // list (heart rate belts with similar names) do not run together. None under the last
-            // item and none around a rounded block (the chosen or the highlighted item), it is not cut
+            // item and none around a rounded block (the chosen, the highlighted or the pressed item), it is not cut
             Rectangle {
                 visible: control.modern && index < control.count - 1
                          && !control.hasBlock(index) && !control.hasBlock(index + 1)
@@ -271,6 +286,7 @@ T.ComboBox {
         onClosed: {
             control.pressedItemIndex = -1
             control.previousPressedItemIndex = -1
+            control.downItemIndex = -1
         }
         y: control.editable ? control.height - 5 : 0
         // As wide as the longest item (long labels were cut off), not narrower than the field
@@ -344,6 +360,7 @@ T.ComboBox {
             UiMenuBackground {
                 visible: control.modern
                 anchors.fill: parent
+                color: control.menuColor
             }
         }
     }
