@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha 820c5ffdd7f1 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha 4a12137fac1b - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -431,8 +431,8 @@ drv() {
 #          or wrong-screen (frames compared below the status bar, EMU_ROWS). A landing that matches any
 #          label ('.*', '.+', '^.*$') is refused: it proves nothing; a landing already on the screen
 #          before the tap - "~~ near land". --land-below: the landing may open below the page (an
-#          accordion section at the end of the page, T-498 Experimental Features): not shown - up to 4 short
-#          swipes up looking for it. Qt puts no node outside the window into the dump, --any does not see
+#          accordion section at the end of the page, T-498 Experimental Features): not shown - short swipes up
+#          looking for it until it shows or the page stops (two equal dumps), at most 12 (T-554). Qt puts no node outside the window into the dump, --any does not see
 #          it (T-505 step 16, 42997238198). no-effect / wrong-screen are judged before the swipes
 tap_ui() {
   local rx=$1 land=$2 secs=30 a11y="" opts=() below="" rc x y how name endx=ui.xml verdict i
@@ -505,12 +505,24 @@ tap_ui() {
      && "$EMU_PY" "$EMU_GH/emu_frame.py" diff .emu_before .emu_end --dumps .emu_before.xml "$endx" \
           --rows "$EMU_ROWS" $(emu_mask_args) > /dev/null 2>&1 && verdict=no-effect
   if [ -n "$below" ]; then
-    for i in 1 2 3 4; do
+    # short swipes until the landing shows or the page stops (two equal dumps in a row - its end), at
+    # most 12: a section opened at the end of a long page lies more than 4 short swipes below (T-554,
+    # lesson 5: the scenario replaced tap_ui with a bare tap to get past the 4)
+    local i=0
+    cp ui.xml .emu_land_prev.xml 2>/dev/null || : > .emu_land_prev.xml
+    while [ "$i" -lt 12 ]; do
+      i=$((i + 1))
       swipe_page up short
-      if dump && find_ui "$land"; then
+      dump || continue
+      if find_ui "$land"; then
         say "outcome '$rx': ok ('$land' shown after $i swipes up)"
         return 0
       fi
+      if cmp -s ui.xml .emu_land_prev.xml; then
+        say "~~ '$land' not shown, the page stopped after $i swipes up"
+        break
+      fi
+      cp ui.xml .emu_land_prev.xml
     done
   fi
   if [ "$verdict" = no-effect ]; then

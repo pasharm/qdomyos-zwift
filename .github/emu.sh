@@ -1,31 +1,47 @@
 #!/bin/bash
-# Test only (T-475): "Return to app" on the T.Zone tile (Ц.зона) in place of its "min-max W %" line, both looks.
-# Base (b): beta-2660, run 43646406211 - no button anywhere, T.Zone shows its second line.
-# Head (h): feat/modern-beta efcc83a20 + the T.Zone button (t475-beta) + the test hook of test/t475-apk:
-# rootItem.targetPowerReleaseVisible replaced by true in both looks, so the button shows on T.Power(W) and
-# T.Zone without a bike (as test/t403-emu-apk did for T.Power(W)).
-# Code of the head (src/Home.qml of t475-beta): modern look - RoundButton modernRelease visible on
-# identificator target_power or target_zone, the second line Text visible: !largeButton && !modernRelease.visible;
-# classic look - RoundButton classicRelease, secondLineText visible: !largeButton && !classicRelease.visible.
-# The second line text is Accessible.ignored (not in the dump): its absence on h and presence on b are
-# told by the frames (review by eye), the scenario checks the button and its place inside the T.Zone tile.
-# Cases <side><case>: m - modern uk, c - classic uk. Fake bike (applewatch_fakedevice): T.Zone shows Z1.0 and
-# "0-110 Вт 0%" with the default FTP (homeform.cpp, the BIKE branch of the zone tiles).
-HOME_RX='^(Start|Stop|Pause|Старт|Стоп|Пауза)$'
-HOME_READY_RX='^(Contact QZ support|Зв’язатися зі службою підтримки QZ)$'
+# Test only (T-475, PR): "Return to app" on the T.Zone tile in place of its "min-max W %" line, classic look
+# (master has no modern tile button), languages en, ru, de.
+# Base (b): origin/master e5d634d73 (with PR 5648), branch test/t475-master - the button only on T.Power(W),
+# T.Zone shows its second line.
+# Head (h): fix/target-zone-hold 57f263787 + the test hook of test/t475-pr-apk: rootItem.targetPowerReleaseVisible
+# replaced by true (src/Home.qml, the classic RoundButton targetPowerRelease), so the button shows on T.Power(W)
+# and T.Zone without a FitPlus bike.
+# Code of the head (src/Home.qml): RoundButton targetPowerRelease visible on identificator target_power or
+# target_zone; secondLineText visible: !largeButton && !targetPowerRelease.visible.
+# The second line text is Accessible.ignored (not in the dump): its absence on h and presence on b are told by
+# the frames (review by eye), the scenario checks the button and its place inside the T.Zone tile.
+# Cases <side><lang>: e - en, r - ru, d - de. Fake bike (applewatch_fakedevice): T.Zone shows Z1.0 and
+# "0-110 W 0%" with the default FTP (homeform.cpp, the BIKE branch of the zone tiles).
+HOME_RX='^(Start|Stop|Pause|Старт|Стоп|Пауза|Stopp)$'
+HOME_READY_RX='^(Contact QZ support|Связаться со службой поддержки QZ|QZ-Support kontaktieren)$'
 . .github/lib.sh
 . .github/qz.sh
 
-ZONE='^Ц\.зона: .*'
-BTN='^Повернути застосунку$'
+# zone_rx / btn_rx <lang>: the T.Zone tile name and the button text (src/translations/qdomyos-zwift_<lang>.ts of
+# origin/master: "T.Zone" -> ru "Ц.зона", de "Z.Zone"; "Return to app" -> ru "Вернуть приложению",
+# de "Zurück an die App")
+zone_rx() {
+  case $1 in
+    en) echo '^T\.Zone: .*' ;;
+    ru) echo '^Ц\.зона: .*' ;;
+    de) echo '^Z\.Zone: .*' ;;
+  esac
+}
+btn_rx() {
+  case $1 in
+    en) echo '^Return to app$' ;;
+    ru) echo '^Вернуть приложению$' ;;
+    de) echo '^Zurück an die App$' ;;
+  esac
+}
 
-# in_tile <shot>: the topmost button below the top of the T.Zone tile lies inside that tile (T.Power(W) is
-# put later in the order, so its button is in a lower row)
+# in_tile <shot> <zone rx> <button rx>: the topmost button below the top of the T.Zone tile lies inside that
+# tile (T.Power(W) is put later in the order, so its button is in a lower row)
 in_tile() {
-  local s=$1 z b zx1 zy1 zx2 zy2 bx by
-  z=$(uifind "dumps/$s.xml" "$ZONE") || { fail "check $s: T.Zone tile not on the screen"; return 1; }
+  local s=$1 zrx=$2 brx=$3 z b zx1 zy1 zx2 zy2 bx by
+  z=$(uifind "dumps/$s.xml" "$zrx") || { fail "check $s: T.Zone tile not on the screen"; return 1; }
   set -- $z; zx1=$5; zy1=$6; zx2=$7; zy2=$8
-  b=$(uifind "dumps/$s.xml" "$BTN" --below "$zy1" --first) || { fail "check $s: no button below the T.Zone top $zy1"; return 1; }
+  b=$(uifind "dumps/$s.xml" "$brx" --below "$zy1" --first) || { fail "check $s: no button below the T.Zone top $zy1"; return 1; }
   set -- $b; bx=$1; by=$2
   if [ "$bx" -ge "$zx1" ] && [ "$bx" -le "$zx2" ] && [ "$by" -ge "$zy1" ] && [ "$by" -le "$zy2" ]; then
     say "check $s: the button inside the T.Zone tile ($bx $by in $zx1 $zy1 $zx2 $zy2): OK"
@@ -35,19 +51,32 @@ in_tile() {
 }
 
 zone_case() {
-  local c=$1 side=$2
-  start_case "$c" ui_modern="$3" app_language=uk applewatch_fakedevice=true \
+  local c=$1 side=$2 lang=$3 zrx brx
+  zrx=$(zone_rx "$lang"); brx=$(btn_rx "$lang")
+  start_case "$c" ui_modern=false app_language="$lang" applewatch_fakedevice=true \
     tile_target_zone_enabled=true tile_target_zone_order=0 \
     tile_target_power_enabled=true tile_target_power_order=8 || return 1
-  scroll_to "$ZONE" || return 1
+  scroll_to "$zrx" || return 1
   settle
   shot "$c-1-zone"
-  expect "$c-1-zone" "$ZONE" "the T.Zone tile"
+  expect "$c-1-zone" "$zrx" "the T.Zone tile"
   if [ "$side" = h ]; then
-    expect "$c-1-zone" "$BTN" "Return to app on the screen"
-    in_tile "$c-1-zone"
+    expect "$c-1-zone" "$brx" "Return to app on the screen"
+    in_tile "$c-1-zone" "$zrx" "$brx"
   else
-    expect_not "$c-1-zone" "$BTN" "no Return to app before the change"
+    # master: the button only on T.Power(W), never inside the T.Zone tile
+    if b=$(uifind "dumps/$c-1-zone.xml" "$brx" --first); then
+      local z zy1 zy2 by
+      z=$(uifind "dumps/$c-1-zone.xml" "$zrx"); set -- $z; zy1=$6; zy2=$8
+      set -- $b; by=$2
+      if [ "$by" -ge "$zy1" ] && [ "$by" -le "$zy2" ]; then
+        fail "check $c: a button inside the T.Zone tile on master"
+      else
+        say "check $c: no button in the T.Zone tile on master: OK"
+      fi
+    else
+      say "check $c: no button in the T.Zone tile on master: OK"
+    fi
   fi
 }
 
@@ -59,8 +88,9 @@ for side in b h; do
   side_on $side "$apk" || continue
   say "== $side: start"
   install_apk "$apk"
-  zone_case "${side}m" $side true
-  zone_case "${side}c" $side false
+  zone_case "${side}e" $side en
+  zone_case "${side}r" $side ru
+  zone_case "${side}d" $side de
   adb shell am force-stop "$PKG" < /dev/null > /dev/null 2>&1
 done
 

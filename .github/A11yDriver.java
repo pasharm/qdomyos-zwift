@@ -1,4 +1,4 @@
-// emu-lib: tools/emu/A11yDriver.java sha a1d9b259d646 - edit there, then tools/emu/sync.py (T-505)
+// emu-lib: tools/emu/A11yDriver.java sha be1ff42d8e45 - edit there, then tools/emu/sync.py (T-505)
 // Test only (T-222, T-487; one source since T-505: tools/emu/A11yDriver.java of the work folder, copied
 // into .github/ of a branch by tools/emu/sync.py): send the app the accessibility actions TalkBack sends,
 // without TalkBack (or with it on, see --keep; the image has Google TalkBack 15). Runs through app_process
@@ -7,12 +7,17 @@
 //
 //   CLASSPATH=/data/local/tmp/a11y.jar app_process / A11yDriver [--keep] step [step ...]
 //   step: list | sleep:<ms> | find:<desc> | focus:<desc> | click:<desc> | fwd:<desc> | back:<desc>
-//         | swipe:right|left|up|down | dtap | touch:<desc> | touchat:<x>,<y> | focused | mark:<text>
+//         | swipe:right|left|up|down | dtap | dtap:<desc> | touch:<desc> | touchat:<x>,<y> | focused | mark:<text>
 //         | click=<name> | fwd@<x>,<y> | drag@<x>,<y1>,<y2>
 // touchat: a resting finger at a point, for a node with no description in the tree.
+// dtap:<desc>: the double tap only if the focus is on a node whose description starts with <desc>, else
+// "NOT FOCUSED (focused ...)" and no tap - a touch on the node that already has the focus gives TalkBack no
+// new event, and a plain dtap presses whatever kept the focus (T-552 lesson 7).
 // <desc> is the start of a content description; the first node in tree order that matches is used.
 // click=<name>: ACTION_CLICK on the one node on the screen whose content description or text is exactly
 // <name> (lib.sh tap_ui --a11y); none - "NOT FOUND", two or more - "AMBIGUOUS", no click.
+// After any "NO ROOT" / "NOT FOUND": "<step>: active window <package>" and "<step>: windows [...]" -
+// whose window was on top (lesson 11 of T-514). Tests: python -m unittest tools/emu/test_a11ydriver.py
 // --keep: connect without switching the other accessibility services off, for a run with the
 // real TalkBack; then the gesture steps go to its touch explorer, as a finger would, and after
 // each gesture the text of TalkBack's speech overlay (its "display speech output") is printed
@@ -107,6 +112,19 @@ public class A11yDriver {
             return;
         }
         if (verb.equals("dtap")) {
+            // dtap:<desc> - only while the accessibility focus is on a node whose description starts with
+            // <desc>: a double tap presses whatever has the focus (T-552 lesson 7: a second touch on the same
+            // button gave TalkBack no new event, the focus stayed on another button and dtap pressed it -
+            // 10 of 11 reds of the run were that cascade)
+            if (!arg.isEmpty()) {
+                AccessibilityNodeInfo top = automation.getRootInActiveWindow();
+                AccessibilityNodeInfo has = top == null ? null : top.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY);
+                CharSequence hasDesc = has == null ? null : has.getContentDescription();
+                if (hasDesc == null || !hasDesc.toString().startsWith(arg)) {
+                    System.out.println(step + ": NOT FOCUSED (focused " + (has == null ? "NONE" : describe(has)) + ")");
+                    return;
+                }
+            }
             Log.i("A11yDriver", step);
             stroke(720, 1300, 720, 1300, 50);
             Thread.sleep(80);
@@ -135,6 +153,7 @@ public class A11yDriver {
         AccessibilityNodeInfo root = automation.getRootInActiveWindow();
         if (root == null) {
             System.out.println(step + ": NO ROOT");
+            printWindows(step);
             return;
         }
         if (verb.equals("list")) {
@@ -144,6 +163,7 @@ public class A11yDriver {
         AccessibilityNodeInfo node = find(root, arg);
         if (node == null) {
             System.out.println(step + ": NOT FOUND");
+            printWindows(step);
             return;
         }
         if (verb.equals("find")) {
@@ -339,6 +359,7 @@ public class A11yDriver {
         AccessibilityNodeInfo node = deepestScrollable(automation.getRootInActiveWindow(), x, y);
         if (node == null) {
             System.out.println(step + ": NOT FOUND");
+            printWindows(step);
             return;
         }
         System.out.println(step + ": before " + describe(node));
@@ -375,6 +396,7 @@ public class A11yDriver {
         exact(automation.getRootInActiveWindow(), name, found);
         if (found.isEmpty()) {
             System.out.println(step + ": NOT FOUND");
+            printWindows(step);
             return;
         }
         if (found.size() > 1) {
@@ -389,6 +411,69 @@ public class A11yDriver {
         boolean result = node.performAction(AccessibilityNodeInfo.ACTION_CLICK);
         Log.i("A11yDriver", step + " returned " + result);
         System.out.println(step + ": returned " + result);
+    }
+
+    // After NO ROOT / NOT FOUND: whose window is on top - QZ, or a system dialog, the launcher, the
+    // Health Connect onboarding (lesson 11 of T-514: the bare answer read as a QZ defect). One line
+    // "<step>: active window <package>" and one "<step>: windows [...]" (type, package, title, flags).
+    // getWindows() is empty without FLAG_RETRIEVE_INTERACTIVE_WINDOWS (UiAutomation.getWindows); the
+    // flag is set here, only on a failure, and taken back after: the other steps see the same tree.
+    private static void printWindows(String step) {
+        String active = "?";
+        StringBuilder all = new StringBuilder();
+        AccessibilityServiceInfo info = null;
+        int flags = 0;
+        try {
+            info = automation.getServiceInfo();
+            flags = info.flags;
+            if ((flags & AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS) == 0) {
+                info.flags = flags | AccessibilityServiceInfo.FLAG_RETRIEVE_INTERACTIVE_WINDOWS;
+                automation.setServiceInfo(info);
+                Thread.sleep(300);
+            } else {
+                info = null;  // nothing to take back
+            }
+            for (AccessibilityWindowInfo w : automation.getWindows()) {
+                AccessibilityNodeInfo r = w.getRoot();
+                String pkg = r == null || r.getPackageName() == null ? "no-root" : r.getPackageName().toString();
+                String title = "";
+                try {
+                    // API 24+; the emulator may run API 21/23
+                    CharSequence t = w.getTitle();
+                    title = t == null ? "" : t.toString();
+                } catch (Throwable e) {
+                    title = "";
+                }
+                if (w.isActive() && "?".equals(active)) {
+                    active = pkg;
+                }
+                if (all.length() > 0) {
+                    all.append("; ");
+                }
+                all.append("type=").append(w.getType()).append(' ').append(pkg)
+                        .append(" '").append(title).append('\'')
+                        .append(w.isActive() ? " active" : "").append(w.isFocused() ? " focused" : "");
+            }
+        } catch (Throwable e) {
+            all.append("error ").append(e);
+        }
+        if (info != null) {
+            try {
+                info.flags = flags;
+                automation.setServiceInfo(info);
+            } catch (Throwable e) {
+                all.append(" (flags not restored: ").append(e).append(')');
+            }
+        }
+        if ("?".equals(active)) {
+            AccessibilityNodeInfo root = automation.getRootInActiveWindow();
+            if (root != null && root.getPackageName() != null) {
+                active = root.getPackageName().toString();
+            }
+        }
+        System.out.println(step + ": active window " + active);
+        System.out.println(step + ": windows [" + all + "]");
+        Log.i("A11yDriver", step + ": active window " + active + ", windows [" + all + "]");
     }
 
     private static void exact(AccessibilityNodeInfo node, String name, java.util.List<AccessibilityNodeInfo> out) {

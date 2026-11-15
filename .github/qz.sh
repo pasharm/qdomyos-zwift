@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/qz.sh sha 19931910054e - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/qz.sh sha b6afe2dedbf3 - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): QZ screens and settings for the emulator scenarios, on top of lib.sh (source lib.sh
 # first). One source: tools/emu/qz.sh of the work folder, copied into .github/ by tools/emu/sync.py.
 # Base: the T-498 scenario (test/t498-emu, c4c75732f); defects of the old copies - notes/emu-lib-2026-11-10.md.
@@ -13,17 +13,28 @@ MENU=${MENU:-84 168}
 # of them elsewhere on the home page - Workout Editor and Credits are page titles too, hence not here). Checked on the dumps of
 # notes/emu (13.11): 0 of 263 home dumps, 107 of 122 drawer dumps (the rest: the menu closed, or the Ukrainian UI - there open_drawer does as before)
 MENU_RX=${MENU_RX:-'^(Settings|Charts|Profile: .*|Open Train Program|Open GPX|Save FIT|Save GPX|Workouts History|Swag Bag|Wizard|Community|Quit)$'}
-# The home page in both looks: a treadmill shows one Pause instead of Start/Stop (T-461)
-HOME_RX=${HOME_RX:-'^Start$|^Stop$|^Pause$'}
+# The home page in both looks: a treadmill shows one Pause instead of Start/Stop (T-461). In the languages of the
+# scenarios too (en, uk, ru, de - words from src/translations/*.ts): T-552 lesson 2 - a case with app_language=uk
+# and the English words only, all 12 uk cases "home page not shown", ~22 min
+HOME_RX=${HOME_RX:-'^(Start|Stop|Pause|Старт|Стоп|Пауза|Stopp)$'}
 # The home page is ready (start_case waits for it: 25 s of looks): the support button shows on a home page with
 # no speed and power (SupportHelpButton.qml). A case with a running workout never gets it - HOME_READY_RX=
-# (empty) before start_case turns the wait off
-HOME_READY_RX=${HOME_READY_RX-'^Contact QZ support$'}
+# (empty) before start_case turns the wait off. The same languages (uk, ru, de)
+HOME_READY_RX=${HOME_READY_RX-'^(Contact QZ support|Зв’язатися зі службою підтримки QZ|Связаться со службой поддержки QZ|QZ-Support kontaktieren)$'}
 
 # put_conf key=value ...: qz.conf of the app (log_debug and, below API 30, skipLocationServicesDialog
-# added unless given); not written - red at once (T-346: the file did not arrive, the run went on)
+# added unless given); not written - red at once (T-346: the file did not arrive, the run went on).
+# ui_text_scale=N alone does nothing where the system size is read: main.qml textScale takes the system size while
+# ui_text_scale_system is true (its default) - red at once (T-552 lesson 3: a case at 170 % ran green at 100 %)
 put_conf() {
   local kv
+  case " $* " in
+    *" ui_text_scale="*)
+      case " $* " in
+        *" ui_text_scale_system=false "*) ;;
+        *) proves_nothing "put_conf ui_text_scale=... without ui_text_scale_system=false: main.qml textScale takes the system size" ;;
+      esac ;;
+  esac
   {
     printf '[General]\n'
     case " $* " in *" log_debug="*) ;; *) printf 'log_debug=%s\n' "$LOG_DEBUG" ;; esac
