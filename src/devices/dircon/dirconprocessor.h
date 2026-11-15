@@ -116,6 +116,7 @@ class DirconProcessor : public QObject {
     // Rebuild the server and the mDNS announcement of every DirCon device. Not called since the tap on
     // the Bluetooth icon no longer restarts DirCon. Returns how many there are: 0 means DirCon is off.
     static int restartAll();
+    bool hasClients() const { return !clientsMap.isEmpty(); }
   private slots:
     void tcpDataAvailable();
     void tcpDisconnected();
@@ -125,6 +126,7 @@ class DirconProcessor : public QObject {
     void onCharacteristicRead(quint16 uuid);
     void onCharacteristicWrite(quint16 uuid, QByteArray data);
     void onCharacteristicNotificationSwitch(quint16 uuid, char switchval);
+    void clientDisconnected();
 };
 
 #endif // DIRCONPROCESSOR_H
