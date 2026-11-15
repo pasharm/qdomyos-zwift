@@ -5855,12 +5855,10 @@ bool homeform::handleKeyboardShortcut(const QString &sequence) {
 
  
 
-// T.Zone +/-: the watts the 1% FTP step starts from, 0 when there is nothing to start from.
-// The last requested power, when it is a real target: the tile holds it (free ride), the program step sets the
-// power (same check as trainprogram::adjustPowerOffsetForTrainingProgram), or the app is sending its own target
-// power (ERG, same check as bike::targetPowerOverridesExternalApp). Otherwise the power ridden now: in free ride
-// the app may send only a grade, the last requested power is then 0 or an old value, and the tile would hold
-// that. Below 10% of FTP (coasting) there is no start: the tile would hold almost no load.
+// T.Zone +/-: the watts the 1% FTP step starts from (bike::targetZoneStartPower), 0 when there is nothing to
+// start from. The program row sets the power with the same check as
+// trainprogram::adjustPowerOffsetForTrainingProgram; the app sends its own target power (ERG) with the same
+// check as bike::targetPowerOverridesExternalApp.
 static int32_t targetZoneBasePower(bike *dev, bool overridePower, trainprogram *program, double ftp) {
     const bool programStarted = program && program->isStarted();
     const bool programPower = programStarted && program->currentRow().power != -1;
@@ -5869,12 +5867,8 @@ static int32_t targetZoneBasePower(bike *dev, bool overridePower, trainprogram *
     const bool appActive = lastAppFrame > 0 && QDateTime::currentMSecsSinceEpoch() <= lastAppFrame + 2000;
     QSettings settings;
     const bool appErg = appActive && settings.value(QZSettings::zwift_erg, QZSettings::default_zwift_erg).toBool();
-    const int32_t requested = qRound(dev->lastRequestedPower().value());
-    if ((overridePower && !programStarted) || programPower || (appErg && requested > 0)) {
-        return requested;
-    }
-    const int32_t ridden = qRound(dev->wattsMetric().average5s());
-    return ridden >= qMax(1, qRound(ftp * 0.10)) ? ridden : 0;
+    return bike::targetZoneStartPower(overridePower, programStarted, programPower, appErg,
+                                      dev->lastRequestedPower().value(), dev->wattsMetric().average5s(), ftp);
 }
 
 void homeform::Plus(const QString &name) {
@@ -6172,6 +6166,7 @@ void homeform::Plus(const QString &name) {
             if (trainProgram) {
                 trainProgram->adjustPowerOffsetForTrainingProgram(powerIncrement);
             }
+            updateTargetPowerOverride((bike *)bluetoothManager->device());
             qDebug() << "Target power increased by" << powerIncrement << "W (1% of FTP) from" << currentTargetPower << "to" << newTargetPower;
         }
     } else {
@@ -6496,6 +6491,7 @@ void homeform::Minus(const QString &name) {
             if (trainProgram) {
                 trainProgram->adjustPowerOffsetForTrainingProgram(-powerDecrement);
             }
+            updateTargetPowerOverride((bike *)bluetoothManager->device());
             qDebug() << "Target power decreased by" << powerDecrement << "W (1% of FTP) from" << currentTargetPower << "to" << newTargetPower;
         }
     } else {
