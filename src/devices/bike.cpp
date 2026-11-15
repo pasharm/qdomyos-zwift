@@ -65,7 +65,9 @@ int bike::targetZoneStartPower(bool tileHoldsTarget, bool programStarted, bool p
     // grade, the last requested power is then 0 or an old value, and the tile would hold that.
     // Below 10% of FTP (coasting) there is no start: the tile would hold almost no load.
     const int requested = qRound(lastRequestedPower);
-    if ((tileHoldsTarget && !programStarted) || programRowHasPower || (appSendsPower && requested > 0)) {
+    // a held target is above 0, as the loop needs (homeform::updateTargetPowerOverride)
+    if ((tileHoldsTarget && !programStarted && requested > 0) || programRowHasPower ||
+        (appSendsPower && requested > 0)) {
         return requested;
     }
     const int ridden = qRound(ridden5s);

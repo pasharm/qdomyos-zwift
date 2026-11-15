@@ -41,6 +41,11 @@ TEST(TargetZoneStart, TileHoldingATargetStepsFromIt) {
     EXPECT_EQ(start(true, false, false, false, 39, 0), 39);
 }
 
+TEST(TargetZoneStart, HeldTargetOfZeroIsNoTarget) {
+    // the tile loop needs a target above 0, so there is nothing held
+    EXPECT_EQ(start(true, false, false, false, 0, 120), 120);
+}
+
 TEST(TargetZoneStart, ProgramRowWithPowerStepsFromTheRow) {
     // the row power with the program offset, which is what the program sends every second
     EXPECT_EQ(start(false, true, true, false, 140, 128), 140);
@@ -53,9 +58,9 @@ TEST(TargetZoneStart, ProgramRowWithoutPowerIgnoresTheOldTileTarget) {
 }
 
 TEST(TargetZoneStart, AppErgTargetStepsFromTheAppTarget) {
-    // the bike still ramps toward the app's 200 W
+    // appSendsPower: the app's ERG frame came in the last 2 s (homeform). The bike still ramps toward 200 W
     EXPECT_EQ(start(false, false, false, true, 200, 150), 200);
-    // not pedaling yet, the app's target is known
+    // not pedaling yet, the app's target just came
     EXPECT_EQ(start(false, false, false, true, 200, 0), 200);
 }
 
