@@ -30,6 +30,10 @@ tb_start() {
     near tree "$c: no tile in the TalkBack tree, look $i"
   done
   fail "$c: the home page did not reach the TalkBack tree"
+  # the frame without a dump (a dump would switch TalkBack off), then TalkBack off: the next case starts
+  # with dumps, and a tap under touch exploration presses nothing
+  adb exec-out screencap -p > "$c-no-tree.png" 2>> "$STEPLOG"
+  tb_end "$c"
   return 1
 }
 
@@ -48,28 +52,41 @@ back_key() {
   emu_sleep 3
 }
 
-# side_flow <b|h>: the cases of one side
+# side_flow <b|h>: the cases of one side. A partial run names the warm-up too: cases "h-warm h-menu"
+# (the warm-up is a start_case of its own, and without it the side stops)
 side_flow() {
-  local s=$1 c open_menu
+  local s=$1 c xy
+  local -a open_menu
   # warm-up without TalkBack: the first-run boxes closed, weight 85 kg to hear in the field (case 3)
   start_case "${s}-warm" fakedevice_treadmill=true weight=85 || return 1
   shot "${s}-warm-home" now
 
-  # The menu button: by name on head (main.qml:1392 "Main menu"), by place on master (no name, MENU of qz.sh)
+  # The menu button: by name on head (main.qml:1392 "Main menu"), by place on master (no name, MENU of qz.sh).
+  # An array: each step one argument of drv, a step with a space stays whole
   if [ "$s" = h ]; then
-    open_menu="'touch:Main menu' 'dtap:Main menu'"
+    open_menu=('touch:Main menu' 'dtap:Main menu')
   else
-    open_menu="'touchat:${MENU// /,}' 'dtap'"
+    open_menu=("touchat:${MENU// /,}" 'dtap')
   fi
 
   # 1. header and 2. menu -> Settings -> a field (3.)
   c=${s}-menu
-  if case_on "$c" side_flow; then
-    tb_start "$c" || return 1
-    eval drv "$c-home" --keep 'list' "$open_menu"
+  if case_on "$c" side_flow && tb_start "$c"; then
+    drv "$c-home" --keep 'list' "${open_menu[@]}"
     drv "$c-swipe" --keep 'focused' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right'
     drv "$c-settings" --keep 'touch:Settings' 'dtap:Settings' 'sleep:4000' 'find:General Options' \
-      'touch:General Options' 'dtap:General Options' 'sleep:3000' 'list' 'touch:Player Weight'
+      'touch:General Options' 'dtap:General Options' 'sleep:3000' 'list'
+    # The field by its own place: touch:Player Weight would take the label before it, "Player Weight (kg)"
+    # (settings.qml:2925-2930, a node of the tree; the field, settings.qml:2943, comes after it)
+    xy=$(grep -a -m1 -E "^ *'Player Weight' class=" "drv/$c-settings.txt" \
+      | sed -E 's/.* bounds=\[([0-9]+),([0-9]+)\]\[([0-9]+),([0-9]+)\].*/\1 \2 \3 \4/')
+    if [ -n "$xy" ]; then
+      set -- $xy
+      drv "$c-weight" --keep "touchat:$(( ($1 + $3) / 2 )),$(( ($2 + $4) / 2 ))"
+    else
+      : > "drv/$c-weight.txt"
+      say "== $c: no node 'Player Weight' in the list of the open General Options"
+    fi
     tb_end "$c"
     if [ "$s" = h ]; then
       # main.qml:1392, 1405, 1689 (lockTiles false at start, main.qml:158), 1717
@@ -83,41 +100,44 @@ side_flow() {
       tb_check "^swipe:right: focused '(Profile: |Settings|Workouts History|Swag Bag|Charts)" "$c-swipe" \
         "$c: the swipe goes over the menu entries"
       tb_check "^touch:Settings: focused 'Settings'" "$c-settings" "$c: Settings in the menu by touch"
+      # AccordionElement.qml:72 the section header; no such node on the home page
       tb_check "^find:General Options: '" "$c-settings" "$c: Settings opened by a double tap"
-      tb_check "^touch:Player Weight: focused 'Player Weight" "$c-settings" "$c: the weight field by touch"
+      tb_check "^touchat:[0-9,]+: focused 'Player Weight' class=" "$c-weight" "$c: the weight field by touch"
     else
+      # the detector: the tree is there (the tiles), and the menu button has no name on master (e5d634d73:1373)
+      tb_check "^ *'Speed" "$c-home" "$c: the tree of master is read"
       if grep -a -q -E "^ *'Main menu'" "drv/$c-home.txt"; then
         fail "$c: 'Main menu' in the tree of master - the detector of the head checks is wrong"
       else
         say "check $c: no 'Main menu' on master (the detector): OK"
       fi
     fi
-    say "== $c: what TalkBack said (the '<step>: said' lines of drv/$c-*.txt):"
-    grep -a -h -E ": (said|focused) " drv/"$c"-home.txt drv/"$c"-swipe.txt drv/"$c"-settings.txt >> "$STEPLOG" 2>&1
+    # the "said" lines are empty on this image (the speech overlay is not in getWindows): the speech is on
+    # the frames tbshots/<case>/*
+    say "== $c: the focus after each gesture:"
+    grep -a -h -E ": focused " drv/"$c"-home.txt drv/"$c"-swipe.txt drv/"$c"-settings.txt drv/"$c"-weight.txt >> "$STEPLOG" 2>&1
   fi
 
   # 2. menu -> Workout Editor
   c=${s}-editor
-  if case_on "$c" side_flow; then
-    tb_start "$c" || return 1
-    eval drv "$c-open" --keep "$open_menu" 'touch:Workout Editor' 'dtap:Workout Editor' 'sleep:5000' 'find:Back' 'list'
+  if case_on "$c" side_flow && tb_start "$c"; then
+    drv "$c-open" --keep "${open_menu[@]}" 'touch:Workout Editor' 'dtap:Workout Editor' 'sleep:5000' 'find:Back' 'list'
     tb_end "$c"
     if [ "$s" = h ]; then
-      # main.qml:2088 the entry; main.qml:1392 the menu button is "Back" on a pushed page
+      # main.qml:2088 the entry; main.qml:1392 the menu button is "Back" on a pushed page (its name only)
       tb_check "^touch:Workout Editor: focused 'Workout Editor'" "$c-open" "$c: Workout Editor in the menu by touch"
-      tb_check "^find:Back: '" "$c-open" "$c: a page opened by a double tap (the menu button is Back)"
+      tb_check "^find:Back: 'Back' class=" "$c-open" "$c: a page opened by a double tap (the menu button is Back)"
     fi
   fi
 
   # 4. menu -> Workouts History: the recovery box and the folder picker - survey
   c=${s}-history
-  if case_on "$c" side_flow; then
-    tb_start "$c" || return 1
-    eval drv "$c-open" --keep "$open_menu" 'touch:Workouts History' 'dtap:Workouts History' 'sleep:5000' 'list' \
+  if case_on "$c" side_flow && tb_start "$c"; then
+    drv "$c-open" --keep "${open_menu[@]}" 'touch:Workouts History' 'dtap:Workouts History' 'sleep:5000' 'list' \
       'touch:Yes' 'dtap:Yes' 'sleep:6000' 'focused' 'list' 'swipe:right' 'swipe:right' 'swipe:right'
     tb_end "$c"
-    say "== $c: survey (no check): focus and speech"
-    grep -a -h -E ": (said|focused) |NOT " "drv/$c-open.txt" >> "$STEPLOG" 2>&1
+    say "== $c: survey (no check): focus"
+    grep -a -h -E ": focused |NOT " "drv/$c-open.txt" >> "$STEPLOG" 2>&1
   fi
   return 0
 }
