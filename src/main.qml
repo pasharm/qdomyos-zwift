@@ -1050,6 +1050,8 @@ ApplicationWindow {
                 displayText: popupGymMode.pickedDevice !== "" ? popupGymMode.pickedDevice : qsTr("Select a device")
                 currentIndex: -1
                 font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 8)
+                // Modern: the popup is surfaceHigh, the list one tone below it (as the RPE list)
+                menuColor: window.ui.surface
 
                 onActivated: {
                     // The name straight from the list: the list is rebuilt on every search
