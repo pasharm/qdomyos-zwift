@@ -56,15 +56,18 @@ back_key() {
 # side_flow <b|h>: the cases of one side. A partial run names the warm-up too: cases "h-warm h-menu"
 # (the warm-up is a start_case of its own, and without it the side stops)
 side_flow() {
-  local s=$1 c xy
+  local s=$1 c xy look=false
   local -a open_menu
+  # side m: the head APK in the modern look (c5a6c2690 and 4283c8dc9 change mostly the modern tile and
+  # the modern Start/Stop/Lap and Bluetooth icon - HomeForm.ui.qml, Home.qml): the menu case only
+  [ "$s" = m ] && look=true
   # warm-up without TalkBack: the first-run boxes closed, weight 85 kg to hear in the field (case 3)
-  start_case "${s}-warm" fakedevice_treadmill=true weight=85 || return 1
+  start_case "${s}-warm" ui_modern=$look fakedevice_treadmill=true weight=85 || return 1
   shot "${s}-warm-home" now
 
-  # The menu button: by name on head (main.qml:1392 "Main menu"), by place on master (no name, MENU of qz.sh).
-  # An array: each step one argument of drv, a step with a space stays whole
-  if [ "$s" = h ]; then
+  # The menu button: by name on head (main.qml:1392 "Main menu", one button for both looks), by place on
+  # master (no name, MENU of qz.sh). An array: each step one argument of drv, a step with a space stays whole
+  if [ "$s" != b ]; then
     open_menu=('touch:Main menu' 'dtap:Main menu')
   else
     open_menu=("touchat:${MENU// /,}" 'dtap')
@@ -91,13 +94,24 @@ side_flow() {
       say "== $c: no node 'Player Weight' in the list of the open General Options"
     fi
     tb_end "$c"
-    if [ "$s" = h ]; then
+    if [ "$s" != b ]; then
       # main.qml:1392, 1405, 1689 (lockTiles false at start, main.qml:158), 1717
       # list lines are indented by depth: "^ *'<name>'" is a node of the tree, not a step line
       tb_check "^ *'Main menu'" "$c-home" "$c: the menu button by name"
-      tb_check "^ *'Floating window'" "$c-home" "$c: Floating window by name"
-      tb_check "^ *'(Lock|Unlock) tiles'" "$c-home" "$c: the tile lock by name"
-      tb_check "^ *'(Enable|Disable) auto resistance'" "$c-home" "$c: auto resistance by name"
+      if [ "$s" = h ]; then
+        tb_check "^ *'Floating window'" "$c-home" "$c: Floating window by name"
+        tb_check "^ *'(Lock|Unlock) tiles'" "$c-home" "$c: the tile lock by name"
+        tb_check "^ *'(Enable|Disable) auto resistance'" "$c-home" "$c: auto resistance by name"
+      else
+        # the modern tile (Home.qml:696 the value text of a writable tile, 755/799 -/+ with the value):
+        # visible nodes - a hidden copy keeps its name with empty bounds (T-487, lesson 3)
+        tb_check "^ *'Speed \(km/h\): [0-9.]+' class=[^ ]+ bounds=[^ ]+ visible=true" "$c-home" \
+          "$c: the modern Speed tile read with its value"
+        tb_check "^ *'Increase Speed \(km/h\), current value [0-9.]+' class=[^ ]+ bounds=[^ ]+ visible=true" \
+          "$c-home" "$c: the modern + of Speed named with the value"
+        tb_check "^ *'Decrease Speed \(km/h\), current value [0-9.]+' class=[^ ]+ bounds=[^ ]+ visible=true" \
+          "$c-home" "$c: the modern - of Speed named with the value"
+      fi
       tb_check "^touch:Main menu: focused 'Main menu'" "$c-home" "$c: the menu button by touch"
       # main.qml:1960 the drawer, 2042 Settings: the swipe in the open menu reaches its entries
       tb_check "^swipe:right: focused '(Profile: |Settings|Workouts History|Swag Bag|Charts)" "$c-swipe" \
@@ -114,6 +128,12 @@ side_flow() {
         fail "$c: no swipe line in drv/$c-swipe.txt - nothing proves the menu hides the page"
       fi
       tb_check "^touch:Settings: focused 'Settings'" "$c-settings" "$c: Settings in the menu by touch"
+    fi
+    if [ "$s" = m ]; then
+      say "== $c: modern settings - survey (no check):"
+      grep -a -h -E "^find:General Options|Player Weight|Player Height|'Gender" drv/"$c"-settings.txt \
+        drv/"$c"-weight.txt 2>/dev/null | cut -c1-160 >> "$STEPLOG"
+    elif [ "$s" = h ]; then
       # AccordionElement.qml:72 the section header; no such node on the home page
       tb_check "^find:General Options: '" "$c-settings" "$c: Settings opened by a double tap"
       # name-no-value: Qt 5.15 on Android reads only the name, so the value is in it (weight=85 of the
@@ -135,6 +155,8 @@ side_flow() {
     say "== $c: the focus after each gesture:"
     grep -a -h -E ": focused " drv/"$c"-home.txt drv/"$c"-swipe.txt drv/"$c"-settings.txt drv/"$c"-weight.txt >> "$STEPLOG" 2>&1
   fi
+
+  [ "$s" = m ] && return 0
 
   # 2. menu -> Workout Editor
   c=${s}-editor
@@ -169,7 +191,8 @@ emu_sleep 3
 logcat_start
 a11y_build || proves_nothing "no A11yDriver"
 
-for side in b h; do
+# m: the head APK again, modern look (side_flow); a fresh install, so no state of side h
+for side in b h m; do
   if [ "$side" = b ]; then apk=apk-base/android-debug.apk; else apk=apk-head/android-debug.apk; fi
   [ -f "$apk" ] || { say "== $side: no APK ($apk), skipped"; continue; }
   say "== $side: start"
