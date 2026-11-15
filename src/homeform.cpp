@@ -5843,15 +5843,26 @@ bool homeform::handleKeyboardShortcut(const QString &sequence) {
 
  
 
-// T.Zone +/-: the watts the 1% FTP step starts from. While the tile holds a target, or a running training program
-// step sets the power, it is the last requested power. Otherwise it is the power ridden now: in free ride the app
-// may send only a grade, the last requested power is then 0 or an old value, and the tile would hold that.
-static int32_t targetZoneBasePower(bike *dev, bool overridePower, trainprogram *program) {
-    const bool programPower = program && program->isStarted() && program->currentRow().power > 0;
-    if (overridePower || programPower) {
-        return qRound(dev->lastRequestedPower().value());
+// T.Zone +/-: the watts the 1% FTP step starts from, 0 when there is nothing to start from.
+// The last requested power, when it is a real target: the tile holds it (free ride), the program step sets the
+// power (same check as trainprogram::adjustPowerOffsetForTrainingProgram), or the app is sending its own target
+// power (ERG, same check as bike::targetPowerOverridesExternalApp). Otherwise the power ridden now: in free ride
+// the app may send only a grade, the last requested power is then 0 or an old value, and the tile would hold
+// that. Below 10% of FTP (coasting) there is no start: the tile would hold almost no load.
+static int32_t targetZoneBasePower(bike *dev, bool overridePower, trainprogram *program, double ftp) {
+    const bool programStarted = program && program->isStarted();
+    const bool programPower = programStarted && program->currentRow().power != -1;
+    virtualbike *virtualBike = dev->VirtualBike();
+    const qint64 lastAppFrame = virtualBike ? virtualBike->whenLastFTMSFrameReceived() : 0;
+    const bool appActive = lastAppFrame > 0 && QDateTime::currentMSecsSinceEpoch() <= lastAppFrame + 2000;
+    QSettings settings;
+    const bool appErg = appActive && settings.value(QZSettings::zwift_erg, QZSettings::default_zwift_erg).toBool();
+    const int32_t requested = qRound(dev->lastRequestedPower().value());
+    if ((overridePower && !programStarted) || programPower || (appErg && requested > 0)) {
+        return requested;
     }
-    return qRound(dev->wattsMetric().value());
+    const int32_t ridden = qRound(dev->wattsMetric().average5s());
+    return ridden >= qMax(1, qRound(ftp * 0.10)) ? ridden : 0;
 }
 
 void homeform::Plus(const QString &name) {
@@ -6134,10 +6145,10 @@ void homeform::Plus(const QString &name) {
             // 1% of FTP in whole watts, as the training program offset below is in whole watts
             const int32_t powerIncrement = qMax(1, qRound(currentFtp * 0.01));
             const int32_t currentTargetPower =
-                targetZoneBasePower((bike *)bluetoothManager->device(), m_overridePower, trainProgram);
+                targetZoneBasePower((bike *)bluetoothManager->device(), m_overridePower, trainProgram, currentFtp);
             if (currentTargetPower <= 0) {
-                // not pedaling and no target yet: holding 1% of FTP would load the bike with almost nothing
-                qDebug() << "Target zone plus ignored: no target and no power yet";
+                // no target and almost no power ridden: the tile would hold almost no load
+                qDebug() << "Target zone plus ignored: no target and under 10% of FTP ridden";
                 return;
             }
             const int32_t newTargetPower = currentTargetPower + powerIncrement;
@@ -6462,7 +6473,7 @@ void homeform::Minus(const QString &name) {
             // 1% of FTP in whole watts, as the training program offset below is in whole watts
             const int32_t powerDecrement = qMax(1, qRound(currentFtp * 0.01));
             const int32_t currentTargetPower =
-                targetZoneBasePower((bike *)bluetoothManager->device(), m_overridePower, trainProgram);
+                targetZoneBasePower((bike *)bluetoothManager->device(), m_overridePower, trainProgram, currentFtp);
             // as T.Power(W): not below 1 W, so the tile loop in update() (target > 0) keeps running
             const int32_t newTargetPower = currentTargetPower > 0 ? qMax(1, currentTargetPower - powerDecrement) : 0;
             if (newTargetPower == currentTargetPower) return;
