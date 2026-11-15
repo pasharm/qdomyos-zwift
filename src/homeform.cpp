@@ -6180,6 +6180,7 @@ void homeform::Plus(const QString &name) {
                 if (trainProgram) {
                     trainProgram->adjustPowerOffsetForTrainingProgram(powerJog);
                 }
+                updateTargetPowerOverride((bike *)bluetoothManager->device());
             } else if (bluetoothManager->device()->deviceType() == TREADMILL) {
                 m_overridePower = true;
                 ((treadmill *)bluetoothManager->device())
@@ -6500,6 +6501,7 @@ void homeform::Minus(const QString &name) {
                 if (trainProgram) {
                     trainProgram->adjustPowerOffsetForTrainingProgram(-powerJog);
                 }
+                updateTargetPowerOverride((bike *)bluetoothManager->device());
             } else if (bluetoothManager->device()->deviceType() == TREADMILL) {
                 const int32_t currentPower = qRound(((treadmill *)bluetoothManager->device())->lastRequestedPower().value());
                 const int32_t nextPower = currentPower > 0 ? qMax(1, currentPower - qRound(powerJog)) : 0;
@@ -6576,6 +6578,16 @@ void homeform::setTargetPowerReleaseVisible(bool value) {
     }
     m_targetPowerReleaseVisible = value;
     emit targetPowerReleaseVisibleChanged(value);
+}
+
+bool homeform::updateTargetPowerOverride(bike *device) {
+    // the condition of the T.Power(W) loop in update(); also called right after +/- on the tile, so the app's
+    // resistance is held from the first press and not only from the next update() tick
+    const bool loop = (!trainProgram || !trainProgram->isStarted()) && !device->ergModeSupportedAvailableBySoftware() &&
+                      device->lastRequestedPower().value() > 0 && m_overridePower;
+    device->setTargetPowerOverrideActive(loop);
+    setTargetPowerReleaseVisible(device->targetPowerReleaseAvailable());
+    return loop;
 }
 
 void homeform::clearTargetPowerOverride() {
@@ -7859,13 +7871,7 @@ void homeform::update() {
             this->steeringAngle->setValue(
                 QString::number(((bike *)bluetoothManager->device())->currentSteeringAngle().value(), 'f', 1));
 
-            const bool targetPowerTileLoop =
-                (!trainProgram || (trainProgram && !trainProgram->isStarted())) &&
-                !((bike *)bluetoothManager->device())->ergModeSupportedAvailableBySoftware() &&
-                ((bike *)bluetoothManager->device())->lastRequestedPower().value() > 0 && m_overridePower;
-            ((bike *)bluetoothManager->device())->setTargetPowerOverrideActive(targetPowerTileLoop);
-            setTargetPowerReleaseVisible(((bike *)bluetoothManager->device())->targetPowerReleaseAvailable());
-            if (targetPowerTileLoop) {
+            if (updateTargetPowerOverride((bike *)bluetoothManager->device())) {
                 qDebug() << QStringLiteral("using target power tile for ERG workout manually");
                 ((bike *)bluetoothManager->device())
                     ->changePower(((bike *)bluetoothManager->device())->lastRequestedPower().value());

@@ -1320,6 +1320,8 @@ public:
     bool m_overridePowerWarned = false;
     bool m_targetPowerReleaseVisible = false;
     void setTargetPowerReleaseVisible(bool value);
+    // sets the bike's override state from the T.Power(W) loop condition; true while the loop runs
+    bool updateTargetPowerOverride(bike *device);
     void clearTargetPowerOverride();
     bool m_nativeShortcutCaptureSuspended = false;
 

@@ -1,6 +1,9 @@
 #include <gtest/gtest.h>
 
 #include "Tools/testsettings.h"
+#include "characteristics/characteristicnotifier0002.h"
+#include "characteristics/characteristicnotifier0004.h"
+#include "characteristics/characteristicwriteprocessor0003.h"
 #include "characteristics/characteristicwriteprocessor2ad9.h"
 #include "characteristics/characteristicwriteprocessore005.h"
 #include "devices/bike.h"
@@ -234,6 +237,37 @@ TEST_F(TargetPowerReleaseTest, WahooGradeAndErgOverDircon) {
 
     tilePlus(250);
     ASSERT_EQ(wahoo.writeProcess(0xE005, QByteArray::fromHex("42c800"), reply), CP_OK); // setErgMode 200 W
+    EXPECT_DOUBLE_EQ(device.lastRequestedPower().value(), 200);
+    tilePlus(300);
+    EXPECT_TRUE(device.releaseTargetPowerToApp());
+    EXPECT_DOUBLE_EQ(device.lastRequestedPower().value(), 200);
+}
+
+TEST_F(TargetPowerReleaseTest, ZwiftHubGradeAndErg) {
+    CharacteristicNotifier0002 notifier0002(&device);
+    CharacteristicNotifier0004 notifier0004(&device);
+    CharacteristicWriteProcessor0003 hub(1, 0, &device, &notifier0002, &notifier0004);
+    QByteArray reply;
+    // slope change: field 0x22, length 3, inner 0x10, zigzag varint of 500 (5.00 %) = 1000 = e8 07
+    const QByteArray grade5 = QByteArray::fromHex("04220310e807");
+    // power request: 0x18, varint 200 = c8 01
+    const QByteArray power200 = QByteArray::fromHex("0418c801");
+
+    ReleaseTestBike reference;
+    CharacteristicNotifier0002 referenceNotifier0002(&reference);
+    CharacteristicNotifier0004 referenceNotifier0004(&reference);
+    CharacteristicWriteProcessor0003 referenceHub(1, 0, &reference, &referenceNotifier0002, &referenceNotifier0004);
+    referenceHub.writeProcess(0x0003, grade5, reply);
+    ASSERT_GT(reference.rawResistance(), 0);
+
+    tilePlus(250);
+    ASSERT_EQ(hub.writeProcess(0x0003, grade5, reply), CP_OK);
+    EXPECT_EQ(device.rawResistance(), 25);
+    EXPECT_TRUE(device.releaseTargetPowerToApp());
+    EXPECT_EQ(device.rawResistance(), reference.rawResistance());
+
+    tilePlus(250);
+    ASSERT_EQ(hub.writeProcess(0x0003, power200, reply), CP_OK);
     EXPECT_DOUBLE_EQ(device.lastRequestedPower().value(), 200);
     tilePlus(300);
     EXPECT_TRUE(device.releaseTargetPowerToApp());
