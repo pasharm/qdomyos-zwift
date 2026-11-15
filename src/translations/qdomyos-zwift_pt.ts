@@ -120,6 +120,22 @@
         <translation>Não perguntar novamente</translation>
     </message>
     <message>
+        <source>Strong signal</source>
+        <translation>Sinal forte</translation>
+    </message>
+    <message>
+        <source>Good signal</source>
+        <translation>Sinal bom</translation>
+    </message>
+    <message>
+        <source>Fair signal</source>
+        <translation>Sinal razoável</translation>
+    </message>
+    <message>
+        <source>Weak signal</source>
+        <translation>Sinal fraco</translation>
+    </message>
+    <message>
         <source>Choose a heart rate sensor</source>
         <translation>Escolha um sensor de FC</translation>
     </message>
@@ -307,6 +323,14 @@ Pretende ativar os serviços necessários?</translation>
     <message>
         <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
         <translation>Gostaria de receber um lembrete para ativar o Bluetooth ou os serviços de localização na próxima vez?</translation>
+    </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Devolver ao aplicativo</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Devolve o controle da carga ao aplicativo</translation>
     </message>
 </context>
 <context>
@@ -1517,6 +1541,17 @@ Deseja atualizar as configurações do QZ?</translation>
     <message>
         <source>Cancel</source>
         <translation>Cancelar</translation>
+    </message>
+</context>
+<context>
+    <name>UiProgress</name>
+    <message>
+        <source>Restoring files of the previous installation</source>
+        <translation>Restaurando arquivos da instalação anterior</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>Restaurando arquivos da instalação anterior: %1 de %2</translation>
     </message>
 </context>
 <context>
@@ -8593,6 +8628,10 @@ Padrão: A = -0.96, B = 1.33</translation>
     <message>
         <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
         <translation>Nos treinos GPX, ignora alterações de inclinação inferiores a este valor e só envia um novo comando quando a diferença relativamente ao último valor enviado atinge o limite configurado. Predefinição: 0 (desativado).</translation>
+    </message>
+    <message>
+        <source>Use Console Gears</source>
+        <translation>Usar mudanças da consola</translation>
     </message>
 </context>
 <context>

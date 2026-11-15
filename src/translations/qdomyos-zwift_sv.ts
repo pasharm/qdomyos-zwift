@@ -120,6 +120,22 @@
         <translation>Fråga inte igen</translation>
     </message>
     <message>
+        <source>Strong signal</source>
+        <translation>Starkt signal</translation>
+    </message>
+    <message>
+        <source>Good signal</source>
+        <translation>Bra signal</translation>
+    </message>
+    <message>
+        <source>Fair signal</source>
+        <translation>Medelstarkt signal</translation>
+    </message>
+    <message>
+        <source>Weak signal</source>
+        <translation>Svag signal</translation>
+    </message>
+    <message>
         <source>Choose a heart rate sensor</source>
         <translation>Välj en pulsmätare</translation>
     </message>
@@ -291,6 +307,14 @@ Vill du aktivera de tjänster som krävs?</translation>
     <message>
         <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
         <translation>Vill du bli påmind om att aktivera Bluetooth eller platstjänster nästa gång?</translation>
+    </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Tillbaka till appen</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Lämnar tillbaka styrningen av belastningen till appen</translation>
     </message>
 </context>
 <context>
@@ -1501,6 +1525,17 @@ Vill du uppdatera QZ-inställningarna?</translation>
     <message>
         <source>Cancel</source>
         <translation>Avbryt</translation>
+    </message>
+</context>
+<context>
+    <name>UiProgress</name>
+    <message>
+        <source>Restoring files of the previous installation</source>
+        <translation>Återställer filer från den tidigare installationen</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>Återställer filer från den tidigare installationen: %1 av %2</translation>
     </message>
 </context>
 <context>
@@ -8545,6 +8580,10 @@ Standard: A = -0.96, B = 1.33</translation>
     <message>
         <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
         <translation>Vid GPX-träning ignoreras lutningsändringar som är mindre än detta värde. Ett nytt kommando skickas först när skillnaden från senast skickat värde når den angivna tröskeln. Standard: 0 (inaktiverat).</translation>
+    </message>
+    <message>
+        <source>Use Console Gears</source>
+        <translation>Använd konsolens växlar</translation>
     </message>
 </context>
 <context>

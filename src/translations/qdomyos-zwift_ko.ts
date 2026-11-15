@@ -120,6 +120,22 @@
         <translation>다시 묻지 않음</translation>
     </message>
     <message>
+        <source>Strong signal</source>
+        <translation>강한 신호</translation>
+    </message>
+    <message>
+        <source>Good signal</source>
+        <translation>양호한 신호</translation>
+    </message>
+    <message>
+        <source>Fair signal</source>
+        <translation>보통 신호</translation>
+    </message>
+    <message>
+        <source>Weak signal</source>
+        <translation>약한 신호</translation>
+    </message>
+    <message>
         <source>Choose a heart rate sensor</source>
         <translation>심박 센서 선택</translation>
     </message>
@@ -307,6 +323,14 @@ Would you like to enable the required services?</source>
     <message>
         <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
         <translation>다음에 Bluetooth 또는 위치 서비스를 켜도록 알림을 받으시겠습니까?</translation>
+    </message>
+    <message>
+        <source>Return to app</source>
+        <translation>앱에 돌려주기</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>부하 제어를 앱에 돌려줍니다</translation>
     </message>
 </context>
 <context>
@@ -1517,6 +1541,17 @@ QZ 설정을 업데이트하시겠습니까?</translation>
     <message>
         <source>Cancel</source>
         <translation>취소</translation>
+    </message>
+</context>
+<context>
+    <name>UiProgress</name>
+    <message>
+        <source>Restoring files of the previous installation</source>
+        <translation>이전 설치의 파일 복원 중</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>이전 설치의 파일 복원 중: %1/%2</translation>
     </message>
 </context>
 <context>
@@ -8569,6 +8604,10 @@ A와 B가 모두 0이면 QZ는 기본 공식 9.8 × 체중 × (경사도/100)을
     <message>
         <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
         <translation>GPX 운동에서 이 값보다 작은 경사 변화는 무시하고, 마지막으로 전송한 값과의 차이가 설정된 임계값에 도달했을 때만 새 경사 명령을 보냅니다. 기본값: 0(비활성화).</translation>
+    </message>
+    <message>
+        <source>Use Console Gears</source>
+        <translation>콘솔 기어 사용</translation>
     </message>
 </context>
 <context>

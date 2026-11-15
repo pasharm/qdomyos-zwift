@@ -120,6 +120,22 @@
         <translation>Більше не питати</translation>
     </message>
     <message>
+        <source>Strong signal</source>
+        <translation>Сильний сигнал</translation>
+    </message>
+    <message>
+        <source>Good signal</source>
+        <translation>Добрий сигнал</translation>
+    </message>
+    <message>
+        <source>Fair signal</source>
+        <translation>Середній сигнал</translation>
+    </message>
+    <message>
+        <source>Weak signal</source>
+        <translation>Слабкий сигнал</translation>
+    </message>
+    <message>
         <source>Choose a heart rate sensor</source>
         <translation>Виберіть пульсометр</translation>
     </message>
@@ -307,6 +323,14 @@ Would you like to enable the required services?</source>
     <message>
         <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
         <translation>Нагадати про ввімкнення Bluetooth або служб геолокації наступного разу?</translation>
+    </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Повернути застосунку</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Повертає керування навантаженням застосунку</translation>
     </message>
 </context>
 <context>
@@ -1517,6 +1541,17 @@ Do you want to update QZ settings?</source>
     <message>
         <source>Cancel</source>
         <translation>Скасувати</translation>
+    </message>
+</context>
+<context>
+    <name>UiProgress</name>
+    <message>
+        <source>Restoring files of the previous installation</source>
+        <translation>Відновлення файлів попереднього встановлення</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>Відновлення файлів попереднього встановлення: %1 з %2</translation>
     </message>
 </context>
 <context>
@@ -8573,6 +8608,10 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
         <translation>У тренуваннях GPX зміни нахилу, менші за це значення, ігноруються. Нова команда надсилається лише тоді, коли різниця від останнього надісланого значення досягає встановленого порога. Типово: 0 (вимкнено).</translation>
+    </message>
+    <message>
+        <source>Use Console Gears</source>
+        <translation>Використовувати передачі консолі</translation>
     </message>
 </context>
 <context>

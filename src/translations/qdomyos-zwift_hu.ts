@@ -120,6 +120,22 @@
         <translation>Ne kérdezze újra</translation>
     </message>
     <message>
+        <source>Strong signal</source>
+        <translation>Erős jel</translation>
+    </message>
+    <message>
+        <source>Good signal</source>
+        <translation>Jó jel</translation>
+    </message>
+    <message>
+        <source>Fair signal</source>
+        <translation>Közepes jel</translation>
+    </message>
+    <message>
+        <source>Weak signal</source>
+        <translation>Gyenge jel</translation>
+    </message>
+    <message>
         <source>Choose a heart rate sensor</source>
         <translation>Válasszon pulzusmérőt</translation>
     </message>
@@ -291,6 +307,14 @@ Szeretné bekapcsolni a szükséges szolgáltatásokat?</translation>
     <message>
         <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
         <translation>Szeretne a következő alkalommal emlékeztetőt kapni a Bluetooth vagy a helyszolgáltatások bekapcsolásáról?</translation>
+    </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Vissza az alkalmazásnak</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Visszaadja a terhelés vezérlését az alkalmazásnak</translation>
     </message>
 </context>
 <context>
@@ -1501,6 +1525,17 @@ Szeretné frissíteni a QZ beállításait?</translation>
     <message>
         <source>Cancel</source>
         <translation>Mégse</translation>
+    </message>
+</context>
+<context>
+    <name>UiProgress</name>
+    <message>
+        <source>Restoring files of the previous installation</source>
+        <translation>A korábbi telepítés fájljainak visszaállítása</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>A korábbi telepítés fájljainak visszaállítása: %1 / %2</translation>
     </message>
 </context>
 <context>
@@ -8545,6 +8580,10 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
     <message>
         <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
         <translation>GPX-edzéseknél az ennél kisebb dőlésszög-változásokat figyelmen kívül hagyja. Új parancsot csak akkor küld, ha az utoljára küldött értékhez képest a változás eléri a megadott küszöböt. Alapértelmezés: 0 (kikapcsolva).</translation>
+    </message>
+    <message>
+        <source>Use Console Gears</source>
+        <translation>Konzol fokozatainak használata</translation>
     </message>
 </context>
 <context>

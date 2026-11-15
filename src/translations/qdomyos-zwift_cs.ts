@@ -120,6 +120,22 @@
         <translation>Už se neptat</translation>
     </message>
     <message>
+        <source>Strong signal</source>
+        <translation>Silný signál</translation>
+    </message>
+    <message>
+        <source>Good signal</source>
+        <translation>Dobrý signál</translation>
+    </message>
+    <message>
+        <source>Fair signal</source>
+        <translation>Střední signál</translation>
+    </message>
+    <message>
+        <source>Weak signal</source>
+        <translation>Slabý signál</translation>
+    </message>
+    <message>
         <source>Choose a heart rate sensor</source>
         <translation>Vyberte snímač tepu</translation>
     </message>
@@ -307,6 +323,14 @@ Chcete zapnout požadované služby?</translation>
     <message>
         <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
         <translation>Chcete příště připomenout zapnutí Bluetooth nebo služeb určování polohy?</translation>
+    </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Vrátit aplikaci</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Vrátí řízení zátěže aplikaci</translation>
     </message>
 </context>
 <context>
@@ -1517,6 +1541,17 @@ Aktualizovat nastavení QZ?</translation>
     <message>
         <source>Cancel</source>
         <translation>Zrušit</translation>
+    </message>
+</context>
+<context>
+    <name>UiProgress</name>
+    <message>
+        <source>Restoring files of the previous installation</source>
+        <translation>Obnovování souborů z předchozí instalace</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>Obnovování souborů z předchozí instalace: %1 z %2</translation>
     </message>
 </context>
 <context>
@@ -8569,6 +8604,10 @@ Výchozí: A = -0.96, B = 1.33</translation>
     <message>
         <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
         <translation>Při trénincích GPX ignoruje změny sklonu menší než tato hodnota a nový příkaz odešle až tehdy, když rozdíl oproti poslední odeslané hodnotě dosáhne nastaveného prahu. Výchozí hodnota: 0 (vypnuto).</translation>
+    </message>
+    <message>
+        <source>Use Console Gears</source>
+        <translation>Použít převody z konzole</translation>
     </message>
 </context>
 <context>

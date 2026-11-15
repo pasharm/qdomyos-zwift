@@ -1387,6 +1387,18 @@ Java_org_cagnulen_qdomyoszwift_CustomQtActivity_nativeOnOAuthCallback(JNIEnv *en
     }
 }
 
+// a restore of the QZ folder is copying file done of total: the list pages show how far it is
+JNIEXPORT void JNICALL
+Java_org_cagnulen_qdomyoszwift_CustomQtActivity_nativeOnFolderRestoreProgress(JNIEnv *env, jclass clazz, jint done,
+                                                                              jint total) {
+    Q_UNUSED(env)
+    Q_UNUSED(clazz)
+    if (homeform::singleton()) {
+        QMetaObject::invokeMethod(homeform::singleton(), "setFolderRestoreProgress", Qt::QueuedConnection,
+                                  Q_ARG(int, done), Q_ARG(int, total));
+    }
+}
+
 // a workout import was picked: the copy is about to start, show it is running
 JNIEXPORT void JNICALL
 Java_org_cagnulen_qdomyoszwift_CustomQtActivity_nativeOnFitImportStarted(JNIEnv *env, jclass clazz) {
@@ -6098,6 +6110,7 @@ void homeform::Plus(const QString &name) {
                 if (trainProgram) {
                     trainProgram->adjustPowerOffsetForTrainingProgram(powerJog);
                 }
+                updateTargetPowerOverride((bike *)bluetoothManager->device());
             } else if (bluetoothManager->device()->deviceType() == TREADMILL) {
                 m_overridePower = true;
                 ((treadmill *)bluetoothManager->device())
@@ -6421,6 +6434,7 @@ void homeform::Minus(const QString &name) {
                 if (trainProgram) {
                     trainProgram->adjustPowerOffsetForTrainingProgram(-powerJog);
                 }
+                updateTargetPowerOverride((bike *)bluetoothManager->device());
             } else if (bluetoothManager->device()->deviceType() == TREADMILL) {
                 const int32_t currentPower = qRound(((treadmill *)bluetoothManager->device())->lastRequestedPower().value());
                 const int32_t nextPower = currentPower > 0 ? qMax(1, currentPower - qRound(powerJog)) : 0;
@@ -6492,12 +6506,47 @@ void homeform::Minus(const QString &name) {
 
 void homeform::Start() { Start_inner(true); }
 
+void homeform::setTargetPowerReleaseVisible(bool value) {
+    if (m_targetPowerReleaseVisible == value) {
+        return;
+    }
+    m_targetPowerReleaseVisible = value;
+    emit targetPowerReleaseVisibleChanged(value);
+}
+
+bool homeform::updateTargetPowerOverride(bike *device) {
+    // the condition of the T.Power(W) loop in update(); also called right after +/- on the tile, so the app's
+    // resistance is held from the first press and not only from the next update() tick
+    const bool loop = (!trainProgram || !trainProgram->isStarted()) && !device->ergModeSupportedAvailableBySoftware() &&
+                      device->lastRequestedPower().value() > 0 && m_overridePower;
+    device->setTargetPowerOverrideActive(loop);
+    setTargetPowerReleaseVisible(device->targetPowerReleaseAvailable());
+    return loop;
+}
+
+void homeform::clearTargetPowerOverride() {
+    m_overridePower = false;
+    m_overridePowerWarned = false;
+    if (bluetoothManager && bluetoothManager->device() && bluetoothManager->device()->deviceType() == BIKE) {
+        ((bike *)bluetoothManager->device())->setTargetPowerOverrideActive(false);
+    }
+    setTargetPowerReleaseVisible(false);
+}
+
+void homeform::releaseTargetPower() {
+    qDebug() << QStringLiteral("Return to app pressed");
+    // unlike Start/Pause/Stop, the app's last command is applied now, not at its next frame
+    clearTargetPowerOverride();
+    if (bluetoothManager && bluetoothManager->device() && bluetoothManager->device()->deviceType() == BIKE) {
+        ((bike *)bluetoothManager->device())->releaseTargetPowerToApp();
+    }
+}
+
 void homeform::Start_inner(bool send_event_to_device) {
     QSettings settings;
     qDebug() << QStringLiteral("Start pressed - paused") << paused << QStringLiteral("stopped") << stopped;
 
-    m_overridePower = false;
-    m_overridePowerWarned = false;
+    clearTargetPowerOverride();
 
     if (settings.value(QZSettings::tts_enabled, QZSettings::default_tts_enabled).toBool())
         m_speech.say("Start pressed");
@@ -6635,8 +6684,7 @@ void homeform::Stop() {
 
     m_startRequested = false;
     // like Start/Pause, Stop gives the load back to the external app or the bike
-    m_overridePower = false;
-    m_overridePowerWarned = false;
+    clearTargetPowerOverride();
 
 #ifdef Q_OS_IOS
 #ifndef IO_UNDER_QT
@@ -7736,9 +7784,7 @@ void homeform::update() {
             this->steeringAngle->setValue(
                 QString::number(((bike *)bluetoothManager->device())->currentSteeringAngle().value(), 'f', 1));
 
-            if ((!trainProgram || (trainProgram && !trainProgram->isStarted())) &&
-                !((bike *)bluetoothManager->device())->ergModeSupportedAvailableBySoftware() &&
-                ((bike *)bluetoothManager->device())->lastRequestedPower().value() > 0 && m_overridePower) {
+            if (updateTargetPowerOverride((bike *)bluetoothManager->device())) {
                 qDebug() << QStringLiteral("using target power tile for ERG workout manually");
                 ((bike *)bluetoothManager->device())
                     ->changePower(((bike *)bluetoothManager->device())->lastRequestedPower().value());
@@ -9697,6 +9743,8 @@ void homeform::handleAndroidDocumentPicked(int requestCode, const QString &local
         return;
     }
     if (requestCode == AndroidDocumentPickerRestoreFolderRequestCode) {
+        // the pass is over: the progress the Java side passed before this result goes away
+        setFolderRestoreProgress(0, 0);
         const int restored = restoredFileCount(localPath);
         qDebug() << "files of a previous install restored:" << restored;
         const bool quiet = m_folderRestoreQuiet;

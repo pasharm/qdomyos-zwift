@@ -120,6 +120,22 @@
         <translation>Niet meer vragen</translation>
     </message>
     <message>
+        <source>Strong signal</source>
+        <translation>Sterk signaal</translation>
+    </message>
+    <message>
+        <source>Good signal</source>
+        <translation>Goed signaal</translation>
+    </message>
+    <message>
+        <source>Fair signal</source>
+        <translation>Redelijk signaal</translation>
+    </message>
+    <message>
+        <source>Weak signal</source>
+        <translation>Zwak signaal</translation>
+    </message>
+    <message>
         <source>Choose a heart rate sensor</source>
         <translation>Kies een hartslagsensor</translation>
     </message>
@@ -307,6 +323,14 @@ Wil je de vereiste voorzieningen inschakelen?</translation>
     <message>
         <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
         <translation>Wil je de volgende keer herinnerd worden aan het inschakelen van Bluetooth of locatievoorzieningen?</translation>
+    </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Terug naar app</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Geeft de besturing van de belasting terug aan de app</translation>
     </message>
 </context>
 <context>
@@ -1517,6 +1541,17 @@ Wil je de QZ-instellingen bijwerken?</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuleren</translation>
+    </message>
+</context>
+<context>
+    <name>UiProgress</name>
+    <message>
+        <source>Restoring files of the previous installation</source>
+        <translation>Bestanden van de eerdere installatie worden hersteld</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>Bestanden van de eerdere installatie worden hersteld: %1 van %2</translation>
     </message>
 </context>
 <context>
@@ -8569,6 +8604,10 @@ Standaard: A = -0.96, B = 1.33</translation>
     <message>
         <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
         <translation>Negeert bij GPX-trainingen hellingsveranderingen kleiner dan deze waarde. Een nieuwe opdracht wordt pas verzonden wanneer het verschil met de laatst verzonden waarde de ingestelde drempel bereikt. Standaard: 0 (uitgeschakeld).</translation>
+    </message>
+    <message>
+        <source>Use Console Gears</source>
+        <translation>Versnellingen van de console gebruiken</translation>
     </message>
 </context>
 <context>

@@ -120,6 +120,22 @@
         <translation>今後表示しない</translation>
     </message>
     <message>
+        <source>Strong signal</source>
+        <translation>強い信号</translation>
+    </message>
+    <message>
+        <source>Good signal</source>
+        <translation>良好な信号</translation>
+    </message>
+    <message>
+        <source>Fair signal</source>
+        <translation>普通の信号</translation>
+    </message>
+    <message>
+        <source>Weak signal</source>
+        <translation>弱い信号</translation>
+    </message>
+    <message>
         <source>Choose a heart rate sensor</source>
         <translation>心拍センサーを選択</translation>
     </message>
@@ -307,6 +323,14 @@ Would you like to enable the required services?</source>
     <message>
         <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
         <translation>次回、Bluetoothまたは位置情報サービスを有効にするよう通知しますか？</translation>
+    </message>
+    <message>
+        <source>Return to app</source>
+        <translation>アプリに戻す</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>負荷の制御をアプリに戻します</translation>
     </message>
 </context>
 <context>
@@ -1517,6 +1541,17 @@ QZの設定を更新しますか?</translation>
     <message>
         <source>Cancel</source>
         <translation>キャンセル</translation>
+    </message>
+</context>
+<context>
+    <name>UiProgress</name>
+    <message>
+        <source>Restoring files of the previous installation</source>
+        <translation>以前のインストールのファイルを復元中</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>以前のインストールのファイルを復元中: %1 / %2</translation>
     </message>
 </context>
 <context>
@@ -8633,6 +8668,10 @@ AとBの両方が0の場合、QZはデフォルトの計算式（9.8 × 体重 �
     <message>
         <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
         <translation>GPX ワークアウトでは、この値より小さい傾斜の変化を無視します。最後に送信した値との差が設定したしきい値に達した場合のみ、新しい傾斜コマンドを送信します。初期値: 0（無効）。</translation>
+    </message>
+    <message>
+        <source>Use Console Gears</source>
+        <translation>コンソールのギアを使用</translation>
     </message>
 </context>
 <context>

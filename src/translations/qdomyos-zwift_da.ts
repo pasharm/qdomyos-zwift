@@ -120,6 +120,22 @@
         <translation>Spørg ikke igen</translation>
     </message>
     <message>
+        <source>Strong signal</source>
+        <translation>Stærkt signal</translation>
+    </message>
+    <message>
+        <source>Good signal</source>
+        <translation>Godt signal</translation>
+    </message>
+    <message>
+        <source>Fair signal</source>
+        <translation>Middel signal</translation>
+    </message>
+    <message>
+        <source>Weak signal</source>
+        <translation>Svagt signal</translation>
+    </message>
+    <message>
         <source>Choose a heart rate sensor</source>
         <translation>Vælg en pulsmåler</translation>
     </message>
@@ -291,6 +307,14 @@ Vil du aktivere de nødvendige tjenester?</translation>
     <message>
         <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
         <translation>Vil du have en påmindelse om at aktivere Bluetooth eller placeringstjenester næste gang?</translation>
+    </message>
+    <message>
+        <source>Return to app</source>
+        <translation>Tilbage til appen</translation>
+    </message>
+    <message>
+        <source>Give load control back to the app</source>
+        <translation>Giver styringen af belastningen tilbage til appen</translation>
     </message>
 </context>
 <context>
@@ -1216,7 +1240,7 @@ Vil du opdatere QZ-indstillingerne?</translation>
     </message>
     <message>
         <source>Tap a file to select it, then Load.</source>
-        <translation>Tryk på en fil for at vælge den, og tryk derefter på "Indlæs".</translation>
+        <translation>Tryk på en fil for at vælge den, og tryk derefter på &quot;Indlæs&quot;.</translation>
     </message>
     <message>
         <source>Load</source>
@@ -1501,6 +1525,17 @@ Vil du opdatere QZ-indstillingerne?</translation>
     <message>
         <source>Cancel</source>
         <translation>Annuller</translation>
+    </message>
+</context>
+<context>
+    <name>UiProgress</name>
+    <message>
+        <source>Restoring files of the previous installation</source>
+        <translation>Gendanner filer fra den tidligere installation</translation>
+    </message>
+    <message>
+        <source>Restoring files of the previous installation: %1 of %2</source>
+        <translation>Gendanner filer fra den tidligere installation: %1 af %2</translation>
     </message>
 </context>
 <context>
@@ -4781,7 +4816,7 @@ Må QZ ændre værdien?
     </message>
     <message>
         <source>Tap a profile to select it, then Load. Long press to delete it.</source>
-        <translation>Tryk på en profil for at vælge den, og tryk derefter på "Indlæs". Hold nede for at slette den.</translation>
+        <translation>Tryk på en profil for at vælge den, og tryk derefter på &quot;Indlæs&quot;. Hold nede for at slette den.</translation>
     </message>
     <message>
         <source>Active</source>
@@ -8545,6 +8580,10 @@ Standard: A = -0.96, B = 1.33</translation>
     <message>
         <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
         <translation>Ved GPX-træning ignoreres ændringer i hældning under denne værdi, og en ny kommando sendes først, når forskellen fra den sidst sendte værdi når den angivne grænse. Standard: 0 (deaktiveret).</translation>
+    </message>
+    <message>
+        <source>Use Console Gears</source>
+        <translation>Brug gear fra konsollen</translation>
     </message>
 </context>
 <context>
