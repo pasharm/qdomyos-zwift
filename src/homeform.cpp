@@ -5944,7 +5944,7 @@ bool homeform::handleKeyboardShortcut(const QString &sequence) {
 
  
 
-// T.Zone +/-: the watts the 1% FTP step starts from, 0 when there is nothing to start from.
+// T.Zone +/-: the watts the step starts from, 0 when there is nothing to start from.
 // The last requested power, when it is a real target: the tile holds it (free ride), the program step sets the
 // power (same check as trainprogram::adjustPowerOffsetForTrainingProgram), or the app is sending its own target
 // power (ERG, same check as bike::targetPowerOverridesExternalApp). Otherwise the power ridden now: in free ride
@@ -5964,6 +5964,48 @@ static int32_t targetZoneBasePower(bike *dev, bool overridePower, trainprogram *
     }
     const int32_t ridden = qRound(dev->wattsMetric().average5s());
     return ridden >= qMax(1, qRound(ftp * 0.10)) ? ridden : 0;
+}
+
+// T.Zone tile scale, as update() shows the target: zone N starts at targetZoneStartPerc[N-1] % of FTP and runs
+// to the next start, 151% and above is a flat Z7
+static const double targetZoneStartPerc[] = {0, 56, 76, 91, 106, 121, 151};
+
+static double targetZoneFromPerc(double perc) {
+    if (perc >= targetZoneStartPerc[6]) {
+        return 7;
+    }
+    int i = 5;
+    while (i > 0 && perc < targetZoneStartPerc[i]) {
+        i--;
+    }
+    const double zone =
+        (i + 1) + (perc - targetZoneStartPerc[i]) / (targetZoneStartPerc[i + 1] - targetZoneStartPerc[i]);
+    return qMin(zone, i + 1.9999);
+}
+
+static double targetZonePerc(double zone) {
+    if (zone >= 7) {
+        return targetZoneStartPerc[6];
+    }
+    const int i = qBound(0, int(zone) - 1, 5);
+    return targetZoneStartPerc[i] + (zone - (i + 1)) * (targetZoneStartPerc[i + 1] - targetZoneStartPerc[i]);
+}
+
+// T.Zone +/-: the new target for one press, 0.1 of a zone up (direction 1) or down (-1) from the value the tile
+// shows for base, so every press moves the shown zone by 0.1. In the flat Z7 a press is 1% of FTP. Not below 1 W.
+static int32_t targetZoneStepWatts(int32_t base, double ftp, int direction) {
+    // the same percent and the same rounding as the tile text in update()
+    const double shown = QString::number(targetZoneFromPerc((base / ftp) * 100.0), 'f', 1).toDouble();
+    int32_t watts;
+    if (direction > 0 && shown >= 7) {
+        watts = base + qMax(1, qRound(ftp * 0.01));
+    } else {
+        const double zone = qMax(1.0, shown + 0.1 * direction);
+        watts = qRound(ftp * targetZonePerc(zone) / 100.0);
+        // a press always moves the target, even when rounding lands on the same watts
+        watts = direction > 0 ? qMax(watts, base + 1) : qMin(watts, base - 1);
+    }
+    return qMax(1, watts);
 }
 
 void homeform::Plus(const QString &name) {
@@ -6247,8 +6289,6 @@ void homeform::Plus(const QString &name) {
         double currentFtp = settings.value(QZSettings::ftp, QZSettings::default_ftp).toDouble();
         if (currentFtp > 0 && bluetoothManager->device() && 
             bluetoothManager->device()->deviceType() == BIKE) {
-            // 1% of FTP in whole watts, as the training program offset below is in whole watts
-            const int32_t powerIncrement = qMax(1, qRound(currentFtp * 0.01));
             const int32_t currentTargetPower =
                 targetZoneBasePower((bike *)bluetoothManager->device(), m_overridePower, trainProgram, currentFtp);
             if (currentTargetPower <= 0) {
@@ -6256,7 +6296,9 @@ void homeform::Plus(const QString &name) {
                 qDebug() << "Target zone plus ignored: no target and under 10% of FTP ridden";
                 return;
             }
-            const int32_t newTargetPower = currentTargetPower + powerIncrement;
+            // 0.1 of a zone in whole watts, as the training program offset below is in whole watts
+            const int32_t newTargetPower = targetZoneStepWatts(currentTargetPower, currentFtp, 1);
+            const int32_t powerIncrement = newTargetPower - currentTargetPower;
             // as T.Power(W): the tile loop in update() keeps the target over the app's commands, and a running
             // training program keeps the change, which it would otherwise replace at its next tick
             m_overridePower = true;
@@ -6264,7 +6306,7 @@ void homeform::Plus(const QString &name) {
             if (trainProgram) {
                 trainProgram->adjustPowerOffsetForTrainingProgram(powerIncrement);
             }
-            qDebug() << "Target power increased by" << powerIncrement << "W (1% of FTP) from" << currentTargetPower << "to" << newTargetPower;
+            qDebug() << "Target power increased by" << powerIncrement << "W (0.1 zone) from" << currentTargetPower << "to" << newTargetPower;
         }
     } else {
         qDebug() << name << QStringLiteral("not handled");
@@ -6579,19 +6621,20 @@ void homeform::Minus(const QString &name) {
         double currentFtp = settings.value(QZSettings::ftp, QZSettings::default_ftp).toDouble();
         if (currentFtp > 0 && bluetoothManager->device() && 
             bluetoothManager->device()->deviceType() == BIKE) {
-            // 1% of FTP in whole watts, as the training program offset below is in whole watts
-            const int32_t powerDecrement = qMax(1, qRound(currentFtp * 0.01));
             const int32_t currentTargetPower =
                 targetZoneBasePower((bike *)bluetoothManager->device(), m_overridePower, trainProgram, currentFtp);
-            // as T.Power(W): not below 1 W, so the tile loop in update() (target > 0) keeps running
-            const int32_t newTargetPower = currentTargetPower > 0 ? qMax(1, currentTargetPower - powerDecrement) : 0;
+            // 0.1 of a zone in whole watts; as T.Power(W): not below 1 W, so the tile loop in update() (target > 0)
+            // keeps running
+            const int32_t newTargetPower =
+                currentTargetPower > 0 ? targetZoneStepWatts(currentTargetPower, currentFtp, -1) : 0;
             if (newTargetPower == currentTargetPower) return;
+            const int32_t powerDecrement = currentTargetPower - newTargetPower;
             m_overridePower = true;
             ((bike *)bluetoothManager->device())->changePower(newTargetPower);
             if (trainProgram) {
                 trainProgram->adjustPowerOffsetForTrainingProgram(-powerDecrement);
             }
-            qDebug() << "Target power decreased by" << powerDecrement << "W (1% of FTP) from" << currentTargetPower << "to" << newTargetPower;
+            qDebug() << "Target power decreased by" << powerDecrement << "W (0.1 zone) from" << currentTargetPower << "to" << newTargetPower;
         }
     } else {
         qDebug() << name << QStringLiteral("not handled");
