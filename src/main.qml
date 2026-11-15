@@ -770,7 +770,7 @@ ApplicationWindow {
 
             ValueComboBox {
                 id: gymModeDeviceComboBox
-                Accessible.name: qsTr("Select Your Gym Device")
+                Accessible.name: qsTr("Select Your Gym Device") + ": " + displayText
                 width: parent.width
                 model: rootItem.bluetoothDevices
                 labels: ({ "Disabled": qsTr("Disabled") })
@@ -1959,7 +1959,6 @@ ApplicationWindow {
         bottomPadding: getBottomPadding()
         leftPadding: getLeftPadding()
         rightPadding: window.ui.modern ? 0 : getRightPadding()
-        Accessible.ignored: !drawer.opened
         onOpened: {
             console.log("[VoiceOver drawer] opened; stack enabled before blocker=" + stackView.enabled)
             forceActiveFocus()
