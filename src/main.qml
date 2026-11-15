@@ -434,6 +434,8 @@ ApplicationWindow {
         readonly property color textMain: t.textMain
         readonly property color textMuted: t.textMuted
         readonly property color accent: accentOf(settings.ui_accent)
+        // the name of the accent: UiButton.inverse takes the one of the opposite theme
+        readonly property string accentName: settings.ui_accent
         readonly property color accentInk: dark ? "#12101A" : "#FFFFFF"
         readonly property color danger: dark ? "#FF8A80" : "#C62828"
         readonly property color ok: dark ? "#7EDC8A" : "#2E7D32"
@@ -469,7 +471,6 @@ ApplicationWindow {
         readonly property int pageMargin: Math.max(16, window.contentSideMargin)
 
         readonly property string themeName: settings.ui_theme
-        readonly property string accentName: settings.ui_accent
 
         function alpha(c, a) { return Qt.rgba(c.r, c.g, c.b, a) }
         // A title without its emoji ("Maps 🗺️", "Video 🎥"): Qt 5 on Android draws no colour emoji
