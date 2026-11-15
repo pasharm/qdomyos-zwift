@@ -96,7 +96,7 @@ T.Button {
     property bool wrapsScaled: false
     // Modern look: a button on an inverse surface - the textMain fill of UiNotice and of the heart
     // rate sensor bar (HeartRateSuggestion). The accent of the page reads poorly there (violet
-    // #B69DF8 on #E4E6EB is about 1.9 : 1), so it takes the accent of the opposite theme, which
+    // #B69DF8 on #E4E6EB is about 1.8 : 1), so it takes the accent of the opposite theme, which
     // is made to read on that kind of surface; the tonal pill is the page colour at 12 %.
     // The classic look ignores it
     property bool inverse: false
@@ -105,8 +105,8 @@ T.Button {
     // is about 1.1 : 1 there and the pill is not seen, so it takes textMain at 10 % (12 % in the
     // dark), like the danger pill takes the danger colour at 16 %. The classic look ignores it
     property bool cardSurface: false
-    // The wallpaper accent of the opposite theme is taken as it is: unlike accentOf() it is not checked for
-    // contrast here (Material You pairs read on their surfaces)
+    // the accent of the same name in the opposite theme. The wallpaper accent of the opposite theme is taken
+    // as it is: unlike accentOf() it is not checked for contrast here (Material You pairs read on their surfaces)
     readonly property color inverseAccent: {
         const u = window.ui
         if (!modernInverse)

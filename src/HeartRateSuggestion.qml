@@ -10,8 +10,8 @@ import QtQuick.Controls.Material 2.12
 // Several sensors: "Choose" opens the list. It stays until answered or the heart rate comes: on a phone left on the
 // handlebar the user is busy with the sensor, and a bar that went away by itself was missed.
 // Classic look: a Rectangle in the Material colours with an accent outline (UiFrame draws it so); modern look: the
-// inverse colours of the other bottom bars (UiNotice, the download bar of the beta) - light on a dark page, dark on a
-// light one: a card in the page colours hardly stood out from the tiles under it (1.11 : 1 in the dark theme, T-473).
+// inverse colours of the other bottom bars (UiNotice) - light on a dark page, dark on a light one: a card in the page
+// colours hardly stood out from the tiles under it (1.11 : 1 in the dark theme).
 UiFrame {
     id: bar
 
@@ -75,7 +75,7 @@ UiFrame {
             spacing: 8
             layoutDirection: Qt.RightToLeft
 
-            // Modern look: the one action filled with the accent, the others tonal pills (decision of 08.11)
+            // Modern look: the one action filled with the accent, the others tonal pills
             UiButton {
                 highlighted: window.ui.modern
                 inverse: true
@@ -128,7 +128,7 @@ UiFrame {
         }
 
         // Modern look: the signal as 4 bars (TalkBack reads it in words); the offer starts at -80 dBm
-        // (homeform), so the steps split -80..-55. 0: the platform did not give the signal
+        // (bluetooth::heartRateSensorSuggestMinRssi), so -74, -67 and -60 split it in steps of about 7 dB. 0: the platform did not give the signal
         function signalLevel(rssi) {
             if (rssi >= 0)
                 return 0
@@ -162,7 +162,7 @@ UiFrame {
                 // Modern look: a thin bar while the list moves, in the right padding of the card, not
                 // over the signal bars at the right end of the rows. Qt places the bar only when its
                 // parent is the list, and a Column would place a child itself: it goes on the content
-                // item of the popup (inside the padding, qquickpane.cpp v5.15.0:146), just past its
+                // item of the popup (inside the padding), just past its
                 // edge, x, y and height set here. Classic look: no bar, as before
                 ScrollIndicator.vertical: ScrollIndicator {
                     visible: window.ui.modern
@@ -187,7 +187,7 @@ UiFrame {
                     width: ListView.view.width
                     // Modern look: the name in line with the title, the signal as bars on the right, a divider
                     // between the rows, the text of the lists (fontBody, textMain), 56 high or more with a bigger
-                    // text (modern-ui-style-guide); classic: the stock row with the dBm in the text, as before
+                    // text (Material 3 lists); classic: the stock row with the dBm in the text, as before
                     height: window.ui.modern ? Math.max(56, Math.max(40, contentItem.implicitHeight) + 16) : implicitHeight
                     Binding on font.pixelSize { when: window.ui.modern; value: window.ui.fontBody; restoreMode: Binding.RestoreBindingOrValue }
                     Binding { target: sensorRow.contentItem; property: "color"; when: window.ui.modern; value: window.ui.textMain; restoreMode: Binding.RestoreBindingOrValue }
@@ -234,7 +234,7 @@ UiFrame {
             }
 
             // Modern look: a visible way out without a choice (the bar stays); classic: a tap outside, as before.
-            // A tonal pill, as Not now on the bar (decision of 08.11); the text is the Cancel of the question cards,
+            // A tonal pill, as Not now on the bar; the text is the Cancel of the question cards,
             // already translated
             Item {
                 id: cancelRow
