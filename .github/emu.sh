@@ -74,7 +74,8 @@ side_flow() {
   c=${s}-menu
   if case_on "$c" side_flow && tb_start "$c"; then
     drv "$c-home" --keep 'list' "${open_menu[@]}"
-    drv "$c-swipe" --keep 'focused' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right'
+    drv "$c-swipe" --keep 'focused' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right' 'swipe:right' \
+      'swipe:right' 'swipe:right' 'swipe:right'
     drv "$c-settings" --keep 'touch:Settings' 'dtap:Settings' 'sleep:4000' 'find:General Options' \
       'touch:General Options' 'dtap:General Options' 'sleep:3000' 'list'
     # The field by its own place: touch:Player Weight would take the label before it, "Player Weight (kg)"
@@ -101,6 +102,17 @@ side_flow() {
       # main.qml:1960 the drawer, 2042 Settings: the swipe in the open menu reaches its entries
       tb_check "^swipe:right: focused '(Profile: |Settings|Workouts History|Swag Bag|Charts)" "$c-swipe" \
         "$c: the swipe goes over the menu entries"
+      # and not over the page under the open menu (HomeForm.ui.qml: Bluetooth icon, Start/Pause/Stop/Lap;
+      # Home.qml: tiles and their -/+). Run 43745581466 (0f7b0da7d): the third swipe focused
+      # 'Bluetooth connection: Device connected' under the menu - this check is red there
+      if grep -a -E "^swipe:right: focused '(Bluetooth connection|Start|Pause|Stop|Lap|Increase|Decrease|Speed|Inclination)" \
+          "drv/$c-swipe.txt" > /dev/null; then
+        fail "$c: the swipe in the open menu reached the page under it: $(grep -a -m1 -E "^swipe:right: focused '(Bluetooth connection|Start|Pause|Stop|Lap|Increase|Decrease|Speed|Inclination)" "drv/$c-swipe.txt" | cut -c1-120)"
+      elif grep -a -q "^swipe:right: focused " "drv/$c-swipe.txt"; then
+        say "check $c-swipe: $c: no node of the page under the open menu: OK"
+      else
+        fail "$c: no swipe line in drv/$c-swipe.txt - nothing proves the menu hides the page"
+      fi
       tb_check "^touch:Settings: focused 'Settings'" "$c-settings" "$c: Settings in the menu by touch"
       # AccordionElement.qml:72 the section header; no such node on the home page
       tb_check "^find:General Options: '" "$c-settings" "$c: Settings opened by a double tap"
