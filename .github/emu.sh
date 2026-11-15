@@ -6,7 +6,8 @@
 #   2. the menu opens, the swipe goes over its entries and not the page under it, Settings and Workout
 #      Editor open from it;
 #   3. a settings field is read with its value (check_accessibility name-no-value: PR 4645 names the
-#      fields without the value - by T-245 Qt 5.15 on Android then does not read it);
+#      fields without the value - by T-245 Qt 5.15 on Android then does not read it; the first head build
+#      read "Player Weight" without 85, run 43737877684, so the head build now has the value in the name);
 #   4. Workouts History: the recovery box ("Workout History", Yes/No) and the system folder picker -
 #      a survey only (tree and speech), no check.
 # The base side has no checks of its own but one of the detector: no "Main menu" in its tree (master has no
@@ -78,7 +79,8 @@ side_flow() {
       'touch:General Options' 'dtap:General Options' 'sleep:3000' 'list'
     # The field by its own place: touch:Player Weight would take the label before it, "Player Weight (kg)"
     # (settings.qml:2925-2930, a node of the tree; the field, settings.qml:2943, comes after it)
-    xy=$(grep -a -m1 -E "^ *'Player Weight' class=" "drv/$c-settings.txt" \
+    # the name with the value (name-no-value fix, settings.qml) or without it (the first head build)
+    xy=$(grep -a -m1 -E "^ *'Player Weight(: [0-9.]+)?' class=" "drv/$c-settings.txt" \
       | sed -E 's/.* bounds=\[([0-9]+),([0-9]+)\]\[([0-9]+),([0-9]+)\].*/\1 \2 \3 \4/')
     if [ -n "$xy" ]; then
       set -- $xy
@@ -102,7 +104,11 @@ side_flow() {
       tb_check "^touch:Settings: focused 'Settings'" "$c-settings" "$c: Settings in the menu by touch"
       # AccordionElement.qml:72 the section header; no such node on the home page
       tb_check "^find:General Options: '" "$c-settings" "$c: Settings opened by a double tap"
-      tb_check "^touchat:[0-9,]+: focused 'Player Weight' class=" "$c-weight" "$c: the weight field by touch"
+      # name-no-value: Qt 5.15 on Android reads only the name, so the value is in it (weight=85 of the
+      # warm-up; height 175 and gender Male are the defaults): a text field, a list
+      tb_check "^touchat:[0-9,]+: focused 'Player Weight: 85' class=" "$c-weight" "$c: the weight field by touch, with its value"
+      tb_check "^ *'Player Height: 175' class=" "$c-settings" "$c: a text field named with its value"
+      tb_check "^ *'Gender: Male' class=" "$c-settings" "$c: a list named with its value"
     else
       # the detector: the tree is there (the tiles), and the menu button has no name on master (e5d634d73:1373)
       tb_check "^ *'Speed" "$c-home" "$c: the tree of master is read"
