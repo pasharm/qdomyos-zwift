@@ -11,7 +11,7 @@ import sys
 import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from iosnav import init, say, tree, find_in, middle, wait_for, shot, page, summary, dismiss_alerts  # noqa: E402
+from iosnav import init, say, tree, find_in, middle, place, wait_for, shot, page, summary, dismiss_alerts, _swipe  # noqa: E402
 
 init(*sys.argv[1:5])
 ZONE = "T.Zone"
@@ -22,14 +22,26 @@ home = page("home", wait_for("Lap", 120, exact=True))
 if home:
     time.sleep(5)
     shot("home")
+    # the tree lists only the tiles the grid has made (run 43724917440: up to Clock), and T.Zone comes after the
+    # default tiles: swipe up until its middle is on the screen
+    zone, t = None, []
+    for _ in range(10):
+        t = tree()
+        zone = find_in(t, ZONE)
+        if zone is not None and place(zone, t) == "on":
+            break
+        say("T.Zone", "not in the tree" if zone is None else f"at y {middle(zone)[1]:.0f}", "- swipe up")
+        _swipe("up")
+    time.sleep(3)
+    shot("zone")
     t = tree()
     zone = find_in(t, ZONE)
     buttons = [e for e in t if isinstance(e, dict) and (e.get("AXLabel") or "") == BUTTON]
     say("zone tile:", zone and zone.get("AXLabel"), zone and zone.get("frame"))
     for b in buttons:
         say("button at", b.get("frame"))
-    page("zone tile", zone is not None)
-    page("two buttons", len(buttons) >= 2)
+    page("zone tile", zone is not None and place(zone, t) == "on")
+    page("button on the screen", len(buttons) >= 1)
     inside = False
     if zone is not None:
         fr = zone["frame"]
