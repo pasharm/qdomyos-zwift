@@ -208,8 +208,9 @@ T.Button {
             width: parent.width
             height: parent.height
             // Modern: no wave, only the pressed tint. Qt 5.15 clips the wave by the bounding
-            // rectangle (qquickmaterialripple.cpp, clipNode->setRadius is commented out; fixed in
-            // Qt 6) - clipRadius rounds the tint, not the wave, and a pill showed square corners
+            // rectangle (qquickmaterialripple.cpp, clipNode->setRadius is commented out, QTBUG-51894;
+            // fixed in Qt 6.5) - clipRadius rounds the tint, not the wave, and a pill showed square
+            // corners
             pressed: control.modern ? false : control.pressed
             anchor: control
             active: control.down || control.visualFocus || control.hovered
