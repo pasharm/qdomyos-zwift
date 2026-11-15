@@ -5843,6 +5843,17 @@ bool homeform::handleKeyboardShortcut(const QString &sequence) {
 
  
 
+// T.Zone +/-: the watts the 1% FTP step starts from. While the tile holds a target, or a running training program
+// step sets the power, it is the last requested power. Otherwise it is the power ridden now: in free ride the app
+// may send only a grade, the last requested power is then 0 or an old value, and the tile would hold that.
+static int32_t targetZoneBasePower(bike *dev, bool overridePower, trainprogram *program) {
+    const bool programPower = program && program->isStarted() && program->currentRow().power > 0;
+    if (overridePower || programPower) {
+        return qRound(dev->lastRequestedPower().value());
+    }
+    return qRound(dev->wattsMetric().value());
+}
+
 void homeform::Plus(const QString &name) {
     QSettings settings;
 
@@ -6122,7 +6133,13 @@ void homeform::Plus(const QString &name) {
             bluetoothManager->device()->deviceType() == BIKE) {
             // 1% of FTP in whole watts, as the training program offset below is in whole watts
             const int32_t powerIncrement = qMax(1, qRound(currentFtp * 0.01));
-            const int32_t currentTargetPower = qRound(((bike *)bluetoothManager->device())->lastRequestedPower().value());
+            const int32_t currentTargetPower =
+                targetZoneBasePower((bike *)bluetoothManager->device(), m_overridePower, trainProgram);
+            if (currentTargetPower <= 0) {
+                // not pedaling and no target yet: holding 1% of FTP would load the bike with almost nothing
+                qDebug() << "Target zone plus ignored: no target and no power yet";
+                return;
+            }
             const int32_t newTargetPower = currentTargetPower + powerIncrement;
             // as T.Power(W): the tile loop in update() keeps the target over the app's commands, and a running
             // training program keeps the change, which it would otherwise replace at its next tick
@@ -6444,7 +6461,8 @@ void homeform::Minus(const QString &name) {
             bluetoothManager->device()->deviceType() == BIKE) {
             // 1% of FTP in whole watts, as the training program offset below is in whole watts
             const int32_t powerDecrement = qMax(1, qRound(currentFtp * 0.01));
-            const int32_t currentTargetPower = qRound(((bike *)bluetoothManager->device())->lastRequestedPower().value());
+            const int32_t currentTargetPower =
+                targetZoneBasePower((bike *)bluetoothManager->device(), m_overridePower, trainProgram);
             // as T.Power(W): not below 1 W, so the tile loop in update() (target > 0) keeps running
             const int32_t newTargetPower = currentTargetPower > 0 ? qMax(1, currentTargetPower - powerDecrement) : 0;
             if (newTargetPower == currentTargetPower) return;
