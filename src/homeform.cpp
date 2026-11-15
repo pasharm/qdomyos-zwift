@@ -5961,7 +5961,9 @@ static int32_t targetZoneBasePower(bike *dev, bool overridePower, trainprogram *
     const bool appActive = lastAppFrame > 0 && QDateTime::currentMSecsSinceEpoch() <= lastAppFrame + 2000;
     const bool appErg = appActive && appErgMode;
     const int32_t requested = qRound(dev->lastRequestedPower().value());
-    if ((overridePower && !programStarted) || programPower || (appErg && requested > 0)) {
+    // the tile holds a target only where the T.Power(W) loop in update() runs: no ERG of the bike, target above 0
+    const bool tileHolds = overridePower && !dev->ergModeSupportedAvailableBySoftware() && requested > 0;
+    if ((tileHolds && !programStarted) || programPower || (appErg && requested > 0)) {
         return requested;
     }
     const int32_t ridden = qRound(dev->wattsMetric().average5s());
@@ -6017,7 +6019,8 @@ void homeform::Plus(const QString &name) {
     qDebug() << QStringLiteral("Plus") << name;
     // what the app was sending before this press, for the T.Zone start below
     const bool appErgMode = settings.value(QZSettings::zwift_erg, QZSettings::default_zwift_erg).toBool();
-    if (name.contains(QStringLiteral("target_power")) || name.contains(QStringLiteral("target_zone"))) {
+    // T.Zone sets it below, only when the press is applied
+    if (name.contains(QStringLiteral("target_power"))) {
         settings.setValue(QZSettings::zwift_erg, true);
     } else if (name.contains(QStringLiteral("resistance")) || name.contains(QStringLiteral("inclination"))) {
         settings.setValue(QZSettings::zwift_erg, false);
@@ -6306,6 +6309,7 @@ void homeform::Plus(const QString &name) {
             const int32_t powerIncrement = newTargetPower - currentTargetPower;
             // as T.Power(W): the tile loop in update() keeps the target over the app's commands, and a running
             // training program keeps the change, which it would otherwise replace at its next tick
+            settings.setValue(QZSettings::zwift_erg, true);
             m_overridePower = true;
             ((bike *)bluetoothManager->device())->changePower(newTargetPower);
             if (trainProgram) {
@@ -6348,7 +6352,8 @@ void homeform::Minus(const QString &name) {
     qDebug() << QStringLiteral("Minus") << name;
     // what the app was sending before this press, for the T.Zone start below
     const bool appErgMode = settings.value(QZSettings::zwift_erg, QZSettings::default_zwift_erg).toBool();
-    if (name.contains(QStringLiteral("target_power")) || name.contains(QStringLiteral("target_zone"))) {
+    // T.Zone sets it below, only when the press is applied
+    if (name.contains(QStringLiteral("target_power"))) {
         settings.setValue(QZSettings::zwift_erg, true);
     } else if (name.contains(QStringLiteral("resistance")) || name.contains(QStringLiteral("inclination"))) {
         settings.setValue(QZSettings::zwift_erg, false);
@@ -6637,6 +6642,7 @@ void homeform::Minus(const QString &name) {
                 currentTargetPower > 0 ? targetZoneStepWatts(currentTargetPower, currentFtp, -1) : 0;
             if (newTargetPower == currentTargetPower) return;
             const int32_t powerDecrement = currentTargetPower - newTargetPower;
+            settings.setValue(QZSettings::zwift_erg, true);
             m_overridePower = true;
             ((bike *)bluetoothManager->device())->changePower(newTargetPower);
             if (trainProgram) {
