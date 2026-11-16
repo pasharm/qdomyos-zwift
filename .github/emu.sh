@@ -55,6 +55,24 @@ tb_window() {
   fail "$1: the box of TalkBack stays over the app"
 }
 
+# tb_start <case>: TalkBack on, then up to 60 s for its tutorial (TrainingActivity) to come up and closed
+# by back before the first pass: it came a few seconds into a pass (run 43802917884). Disabled by
+# pm disable, TalkBack spoke and moved nothing (run 43804496166: focus NONE on every touch, base too).
+tb_start() {
+  local i top
+  tb_on
+  for i in $(seq 1 30); do
+    top=$(adb shell dumpsys activity activities < /dev/null 2>/dev/null | grep -a -m1 -E "mResumedActivity|topResumedActivity")
+    if echo "$top" | grep -q "$TB_PKG"; then
+      say "$1: the tutorial of TalkBack after $((i * 2)) s"
+      tb_window "$1"
+      return 0
+    fi
+    sleep 2
+  done
+  say "$1: no tutorial of TalkBack in 60 s"
+}
+
 # results of the base, per case letter: R_<what>_<case>
 declare -A R
 
@@ -83,7 +101,7 @@ talkback() {
   start_case "$c" ui_modern=$modern app_language=en fakedevice_treadmill=true \
     heart_rate_belt_suggest=true t473_fake_sensors=true || return 1
   wait_log "$c" "T-473 test: fake sensor 2" "$n2" || return 1
-  tb_on
+  tb_start "$c"
   # the menu: opened by a double tap on its button; the tree with it open; a touch on Settings and a double
   # tap on it (in the menu just opened: after swipes it scrolls and a touch misses - run 43793272467, bm-menu2);
   # the settings page shows the header button Search settings, named in both looks (hidden on the home page, main.qml ~1459)
@@ -148,7 +166,7 @@ focusback() {
   start_case "$c" ui_modern=true app_language=en fakedevice_treadmill=true \
     heart_rate_belt_suggest=true t473_fake_sensors=true || return 1
   wait_log "$c" "T-473 test: fake sensor 2" "$n2" || return 1
-  tb_on
+  tb_start "$c"
   for i in 1 2 3 4; do
     tb_window "$c"
     drv "$c-wait$i" --keep 'sleep:3000' 'find:Heart rate sensors found'
@@ -193,11 +211,6 @@ adb wait-for-device
 emu_sleep 3
 logcat_start
 a11y_build || proves_nothing "no A11yDriver"
-# TalkBack 15's tutorial "Welcome to the updated TalkBack" (TrainingActivity) came over the app a few
-# seconds into a pass, and the swipes walked it (runs 43799153429, 43801005217, 43802917884): off for the
-# run (adb root); tb_window before each pass stays as a guard
-adb shell pm disable "$TB_PKG/com.google.android.accessibility.talkback.trainingcommon.TrainingActivity" \
-  < /dev/null >> "$STEPLOG" 2>&1 || near tbwindow "TrainingActivity of TalkBack not disabled"
 mkdir -p tbshots
 for side in b h; do
   if [ "$side" = b ]; then apk=apk-base/android-debug.apk; else apk=apk-head/android-debug.apk; fi
