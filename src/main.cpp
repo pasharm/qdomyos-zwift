@@ -1220,20 +1220,51 @@ static bool accessibleIgnored(QObject *object) {
     return false;
 }
 
+// The first object in a popup, in TalkBack's order, that TalkBack stops on (focusable, or pressed by a
+// double tap): where TalkBack's focus goes when a modal popup opens; -1 (View.NO_ID) when there is none
+static jint firstStop(QAccessibleInterface *iface, int depth = 0) {
+    if (!iface || !iface->isValid() || depth > 32)
+        return -1;
+    const int count = iface->childCount();
+    for (int i = 0; i < count; ++i) {
+        QAccessibleInterface *child = iface->child(i);
+        if (!child || !child->isValid())
+            continue;
+        const QQuickItem *item = qobject_cast<QQuickItem *>(child->object());
+        if (item && !item->isVisible())
+            continue;
+        if (child->state().focusable || clickKind(child) != ClickKind::None)
+            return jint(QAccessible::uniqueId(child));
+        const jint inner = firstStop(child, depth + 1);
+        if (inner != -1)
+            return inner;
+    }
+    return -1;
+}
+
 static void androidAccessibilityUpdate(QAccessibleEvent *event) {
     if (event->type() != QAccessible::ObjectShow && event->type() != QAccessible::ObjectHide)
         return;
     if (!event->object() || accessibleIgnored(event->object()))
         return;
     // A popup (its item: QQuickPopup shows and hides it, qquickpopup.cpp:441, 484): CustomQtActivity
-    // keeps TalkBack's focus when it shows and gives it back when it hides. The key is the item's
-    // accessible id, the same for the show and the hide
+    // keeps TalkBack's focus when it shows and gives it back when it hides, and moves the focus into a
+    // modal one (a side menu, a dialog) as it opens, as TalkBack does with a dialog of Android: else the
+    // focus stays on the button that opened it, under the popup. A popup that is not modal (a notice)
+    // leaves the focus where it is. The key is the item's accessible id, the same for the show and the
+    // hide; the item's QObject parent is its popup (qquickpopupitem.cpp:164)
     if (event->object()->inherits("QQuickPopupItem") && event->accessibleInterface()) {
-        const jint key = jint(QAccessible::uniqueId(event->accessibleInterface()));
-        QAndroidJniObject::callStaticMethod<void>(
-            "org/cagnulen/qdomyoszwift/CustomQtActivity",
-            event->type() == QAccessible::ObjectShow ? "accessibilityPopupShown" : "accessibilityPopupHidden", "(I)V",
-            key);
+        QAccessibleInterface *iface = event->accessibleInterface();
+        const jint key = jint(QAccessible::uniqueId(iface));
+        if (event->type() == QAccessible::ObjectShow) {
+            const QObject *popup = event->object()->parent();
+            const jint first = popup && popup->property("modal").toBool() ? firstStop(iface) : jint(-1);
+            QAndroidJniObject::callStaticMethod<void>("org/cagnulen/qdomyoszwift/CustomQtActivity",
+                                                      "accessibilityPopupShown", "(II)V", key, first);
+        } else {
+            QAndroidJniObject::callStaticMethod<void>("org/cagnulen/qdomyoszwift/CustomQtActivity",
+                                                      "accessibilityPopupHidden", "(I)V", key);
+        }
     }
     QTimer *timer = accessibilityRefreshTimer();
     if (QThread::currentThread() == timer->thread())

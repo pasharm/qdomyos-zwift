@@ -243,7 +243,8 @@ public class CustomQtActivity extends QtActivity {
     // qtbase f6ddb3e921, QTBUG-93386; QQuickPopup does not keep its opener, QTBUG-80709), so TalkBack
     // shows no frame and the place on the screen is lost. The node TalkBack had focused when a popup
     // showed is kept, and once the popup hid, if the focused node went with it, the focus is put back
-    // there (when it is still on the screen), as a dialog of Android does.
+    // there (when it is still on the screen), as a dialog of Android does. A modal popup that opens
+    // takes the focus to its first stop, as TalkBack does with a dialog of Android.
     private static final class ScrollToFocusProvider extends AccessibilityNodeProvider {
         private static final long VALUE_ANNOUNCE_DELAY_MS = 150;
         // Qt never gives an object this id (its ids start at 0x80000000, qaccessiblecache.cpp)
@@ -353,8 +354,22 @@ public class CustomQtActivity extends QtActivity {
             }, VALUE_ANNOUNCE_DELAY_MS);
         }
 
-        void popupShown(int popup) {
+        // first - the first stop of TalkBack in a modal popup (main.cpp, firstStop), NO_FOCUS for a popup
+        // that is not modal: the focus goes there after the clicked event of the press that opened it
+        // (afterClick, posted earlier with the same delay), so TalkBack says what was pressed first
+        void popupShown(int popup, final int first) {
             popupOpeners.put(popup, focusedId);
+            if (first == NO_FOCUS) {
+                return;
+            }
+            host.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (onScreen(first)) {
+                        performAction(first, AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
+                    }
+                }
+            }, VALUE_ANNOUNCE_DELAY_MS);
         }
 
         // After the clicked event of the press that closed the popup (afterClick, posted earlier with the
@@ -428,12 +443,13 @@ public class CustomQtActivity extends QtActivity {
     }
 
     // Called by Qt from its own thread when a popup shows or hides (ScrollToFocusProvider: TalkBack's
-    // focus given back to its opener); popup - a key of the popup, the same for its show and its hide
-    public static void accessibilityPopupShown(final int popup) {
+    // focus moved into a modal popup and given back to its opener); popup - a key of the popup, the same
+    // for its show and its hide; first - the node the focus goes to, View.NO_ID for none
+    public static void accessibilityPopupShown(final int popup, final int first) {
         onAccessibilityProvider(new ProviderCall() {
             @Override
             public void run(ScrollToFocusProvider provider) {
-                provider.popupShown(popup);
+                provider.popupShown(popup, first);
             }
         });
     }
