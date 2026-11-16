@@ -643,6 +643,66 @@ static void pressWithSpace(QQuickItem *button) {
     QCoreApplication::sendEvent(button, &release);
 }
 
+// A modal popup (a side menu, a dialog) takes the presses below it, but Qt still gives a screen reader
+// all the window: TalkBack's swipes walk the page under the open menu, and a touch on a menu entry finds
+// the page (Qt 5.15.0 QAccessibleQuickWindow::childAt, qaccessiblequickview.cpp:128-140; still so in
+// Qt 6.9, QTBUG-138496). As a dialog of Android is a window of its own, while a modal popup is open the
+// window's children a screen reader gets are that popup and the popups opened after it (a notice over
+// a dialog); without one - all of them, as before. QQuickPopup puts the item of a popup it opens in
+// the window's overlay (qquickpopup.cpp:434) and shows it (:441, ObjectShow), and hides it when it
+// closed (:484, ObjectHide), so a shown popup item is an open popup, in the order they opened. Shown
+// is QQuickItem::isVisible(), not the invisible state: that one is set at opacity 0 too
+// (qaccessiblequickitem.cpp:190), and a dialog that fades in is at 0 when ObjectShow has TalkBack
+// read the tree again - nothing tells it when the fade ends.
+static bool isPopupItem(QAccessibleInterface *iface) {
+    QObject *object = iface ? iface->object() : nullptr;
+    return object && object->inherits("QQuickPopupItem");
+}
+
+static QVector<QAccessibleInterface *> reachableChildren(QAccessibleInterface *iface) {
+    QVector<QAccessibleInterface *> children;
+    int modal = -1;
+    const bool window = iface->role() == QAccessible::Window;
+    const int count = iface->childCount();
+    for (int i = 0; i < count; ++i) {
+        QAccessibleInterface *child = iface->child(i);
+        if (!child || !child->isValid())
+            continue;
+        children.append(child);
+        if (!window || !isPopupItem(child))
+            continue;
+        const QQuickItem *item = qobject_cast<QQuickItem *>(child->object());
+        // the item's QObject parent is its popup (qquickpopupitem.cpp:164)
+        const QObject *popup = child->object()->parent();
+        if (item && item->isVisible() && popup && popup->property("modal").toBool())
+            modal = children.size() - 1;
+    }
+    if (modal < 0)
+        return children;
+    QVector<QAccessibleInterface *> above;
+    for (int i = modal; i < children.size(); ++i) {
+        if (isPopupItem(children.at(i)))
+            above.append(children.at(i));
+    }
+    return above;
+}
+
+// Whether a screen reader may act on this object: it lies in a child of the window that
+// reachableChildren() gives. TalkBack's focus stays where it was when a menu opens over it (the menu
+// button), and a double tap or a scroll there would press or move what is under the modal popup.
+static bool isReachable(QAccessibleInterface *iface) {
+    QAccessibleInterface *top = iface;
+    QAccessibleInterface *parent = top ? top->parent() : nullptr;
+    while (parent && parent->isValid() && parent->role() != QAccessible::Window &&
+           parent->role() != QAccessible::Application) {
+        top = parent;
+        parent = top->parent();
+    }
+    if (!top || !parent || !parent->isValid() || parent->role() != QAccessible::Window)
+        return true;
+    return reachableChildren(parent).contains(top);
+}
+
 // How TalkBack's double tap presses an accessible object (Qt thread). A Qt Quick Controls button
 // gets the space key a keyboard presses it with (nextCheckState() with exclusive groups, clicked(),
 // its Action): QQuickAbstractButton has no accessible press in Qt 5.15, and Qt's press action
@@ -656,10 +716,12 @@ static void pressWithSpace(QQuickItem *button) {
 // press to TalkBack's tap. As in Qt 6, a role that has a press of its own (Button, CheckBox,
 // RadioButton) lists it without a handler too, and such an object is "pressed" with no handler
 // run: any other item given such a role needs Accessible.onPressAction (or onToggleAction).
+// Nothing under an open modal popup is pressed (isReachable()): TalkBack then taps the node, and the
+// popup takes that tap as a finger's.
 enum class ClickKind { None, Key, Press, Toggle };
 
 static ClickKind clickKind(QAccessibleInterface *iface) {
-    if (!iface || !iface->isValid() || !iface->actionInterface())
+    if (!iface || !iface->isValid() || !iface->actionInterface() || !isReachable(iface))
         return ClickKind::None;
     QQuickItem *item = qobject_cast<QQuickItem *>(iface->object());
     if (item && item->inherits("QQuickAbstractButton"))
@@ -912,8 +974,13 @@ static NodeData nodeData(jint objectId) {
     data.valid = true;
     const QAccessible::State state = iface->state();
     const QStringList actions = effectiveActionNames(iface);
+    // A Qt Quick Controls button whose role has no press (an ItemDelegate is a ListItem, still so in
+    // Qt 6.11, QTBUG-146871) is pressed by a double tap all the same (clickKind(): the space key), so
+    // it is clickable for TalkBack too: else TalkBack neither stops on it nor lets a touch focus it
+    // (the entries of the classic side menu)
     data.clickable = actions.contains(QAccessibleActionInterface::pressAction()) ||
-                     actions.contains(QAccessibleActionInterface::toggleAction());
+                     actions.contains(QAccessibleActionInterface::toggleAction()) ||
+                     clickKind(iface) == ClickKind::Key;
     data.increase = actions.contains(QAccessibleActionInterface::increaseAction());
     data.decrease = actions.contains(QAccessibleActionInterface::decreaseAction());
     data.description = accessibleDescription(iface);
@@ -983,12 +1050,9 @@ static jintArray childIdListForAccessibleObject(JNIEnv *env, jclass, jint object
         QVector<jint> ids;
         QAccessibleInterface *iface = interfaceFromId(objectId);
         if (iface && iface->isValid()) {
-            const int count = iface->childCount();
-            for (int i = 0; i < count; ++i) {
-                QAccessibleInterface *child = iface->child(i);
-                if (child && child->isValid())
-                    ids.append(jint(QAccessible::uniqueId(child)));
-            }
+            const QVector<QAccessibleInterface *> children = reachableChildren(iface);
+            for (QAccessibleInterface *child : children)
+                ids.append(jint(QAccessible::uniqueId(child)));
         }
         return ids;
     });
@@ -1033,7 +1097,19 @@ static jint hitTest(JNIEnv *, jclass, jfloat x, jfloat y) {
         QAccessibleInterface *root = interfaceFromId(-1);
         if (root && root->isValid()) {
             const QPoint pos = QHighDpi::fromNativePixels(QPoint(int(x), int(y)), root->window());
-            QAccessibleInterface *child = root->childAt(pos.x(), pos.y());
+            // QAccessibleQuickWindow::childAt (qaccessiblequickview.cpp:128-140) over the children a
+            // screen reader may reach (reachableChildren): with a modal popup open, a touch beside it
+            // finds nothing rather than the page under it
+            const QVector<QAccessibleInterface *> children = reachableChildren(root);
+            QAccessibleInterface *child = nullptr;
+            for (int i = children.size() - 1; i >= 0 && !child; --i) {
+                QAccessibleInterface *candidate = children.at(i);
+                if (candidate->state().invisible)
+                    continue;
+                child = candidate->childAt(pos.x(), pos.y());
+                if (!child && candidate->rect().contains(pos))
+                    child = candidate;
+            }
             QAccessibleInterface *lastChild = nullptr;
             while (child && child != lastChild) {
                 lastChild = child;
@@ -1066,7 +1142,7 @@ static jboolean clickAction(JNIEnv *, jclass, jint objectId) {
 static jboolean scroll(jint objectId, const QString &actionName) {
     const bool scrollable = runOnQtThread(false, [objectId, actionName] {
         QAccessibleInterface *iface = interfaceFromId(objectId);
-        return iface && iface->isValid() && effectiveActionNames(iface).contains(actionName);
+        return iface && iface->isValid() && isReachable(iface) && effectiveActionNames(iface).contains(actionName);
     });
     if (scrollable)
         performLater(objectId, actionName);
