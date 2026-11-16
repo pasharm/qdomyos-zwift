@@ -412,6 +412,8 @@ HomeForm {
         width: tileColumns * cellWidth
         anchors.horizontalCenterOffset: tileGap / 2
         cellHeight: 130 * settings.ui_zoom / 100
+        // The gap between two rows of tiles: a tile is drawn 123 high at the top of its cell
+        readonly property real rowGap: cellHeight - 123 * settings.ui_zoom / 100
         focus: true
         model: appModel
         // While the tiles are being moved the gap above the first row is part of the content,
@@ -533,31 +535,17 @@ HomeForm {
                 barSnap.to = bTo
                 barSnap.start()
             }
-            // Deeper in the list (Settings, ui.tileSnap) the scroll settles on the nearest whole
-            // row at the edge of the shown area, under the toolbar or under the status bar (no
-            // tile cut in half), or on the end of the list, whichever is nearer; above the first
-            // row, on the nearer of it and the Start/Stop row. It runs once the movement has
-            // ended, so a flick settles by the row where it stopped by itself. Moving a tile
-            // scrolls the grid by contentY, which ends no movement, so it does not snap
-            if (!window.ui.tileSnap || s <= 0)
+            // The Start/Stop row does not come to rest cut either: a list that stopped between
+            // the row at the top of the shown area (under the toolbar or under the status bar)
+            // and the first row of tiles goes on to the nearer of them, the first row with the
+            // same gap above it as between two rows. The end of a list a little longer than the
+            // page takes the place of the first row if it comes before it, so the last row
+            // stays in view. Deeper in the list it stays where it stopped (as in the upstream
+            // PR; the snap to every row is kept aside, T-570)
+            var first = Math.min(rowsRoom - barRoom + bTo - rowGap, maxS)
+            if (s <= bTo || s >= first)
                 return
-            // In scrolledNow: the Start/Stop row at the edge is bTo, the first row is below it
-            var first = -originY - (barRoom - bTo)
-            var to
-            if (s < first) {
-                to = s - bTo < first - s ? bTo : first
-            } else {
-                var row = first + Math.round((s - first) / cellHeight) * cellHeight
-                to = row > maxS || Math.abs(maxS - s) < Math.abs(row - s) ? maxS : row
-            }
-            to = Math.min(to, maxS)
-            // With the top bar off the first row under the toolbar is only the gap below the top:
-            // the top then, not a rest inside the toolbar's room
-            if (to > 0 && to < h)
-                to = 0
-            if (Math.abs(to - s) < 1)
-                return
-            listSnap.to = originY + to
+            listSnap.to = originY + (s - bTo < first - s ? bTo : first)
             listSnap.start()
         }
         // Moving the tiles shows the toolbar (main.qml); after it the toolbar starts shown again
