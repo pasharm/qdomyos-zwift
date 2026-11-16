@@ -81,6 +81,20 @@ drv_tb() {
   if grep -a -q -E "updated TalkBack|Close tutorial" "drv/$name.txt"; then
     fail "$name: the tutorial of TalkBack came in the second pass too"
   fi
+  tb_no_markup "$name"
+}
+
+# tb_no_markup <name>: no stop of TalkBack in the pass says rich text markup (T-560: a text of the bar came
+# to TalkBack as raw HTML, "<b>..." read out, and no check saw it). The head fails, the base is noted.
+tb_no_markup() {
+  local name=$1 bad
+  bad=$(grep -a -E ": focused '.*[<>].*' class=" "drv/$name.txt" | head -n 1)
+  [ -z "$bad" ] && return 0
+  if [ "${name:0:1}" = h ]; then
+    fail "$name: a stop with markup: $bad"
+  else
+    near markup "$name: a stop with markup on the base: $bad"
+  fi
 }
 
 # results of the base, per case letter: R_<what>_<case>
