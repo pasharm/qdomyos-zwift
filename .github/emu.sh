@@ -10,7 +10,8 @@
 # the menu entries of the classic look - ItemDelegate (main.qml ~1930-2010), of the modern look - UiDrawerItem.
 # The bar: HeartRateSuggestion.qml, the Label of the text and the buttons Choose / Not now / Don't ask again;
 # with t473_fake_sensors homeform "finds" two sensors 30 s and 45 s after it starts (hook b99a71cb5).
-# Cases <side><case>: side b/h; c - classic en, m - modern en (both: menu, then the bar).
+# Cases <side><case>: side b/h; c - classic en, m - modern en (both: menu, then the bar); f - T-503, the focus
+# after Cancel of the sensor list (head: a build of fix/talkback-focus-after-popup + the hook).
 HOME_RX='^(Start|Stop|Pause)$'
 HOME_READY_RX='^Contact QZ support$'
 . .github/lib.sh
@@ -91,6 +92,35 @@ talkback() {
   tb_check "^touch:Choose: focused 'Choose'" "$c-bar" "Choose by touch (as before)"
 }
 
+# focusback <case> (T-503): the list of sensors opened by a double tap on Choose, closed by a double tap on Cancel -
+# where TalkBack's focus is then (base master: lost, head test/t503: back on Choose); then the list again and a
+# sensor chosen (the bar goes away - the focus recorded only). Modern en (the list has Cancel in the modern look).
+focusback() {
+  local c=$1 n2
+  n2=$(grep -a -c "T-473 test: fake sensor 2" full_logcat.txt)
+  start_case "$c" ui_modern=true app_language=en fakedevice_treadmill=true \
+    heart_rate_belt_suggest=true t473_fake_sensors=true || return 1
+  wait_log "$c" "T-473 test: fake sensor 2" "$n2" || return 1
+  tb_on
+  for i in 1 2 3 4; do
+    drv "$c-wait$i" --keep 'sleep:3000' 'find:Heart rate sensors found'
+    grep -a -q "^find:Heart rate sensors found: '" "drv/$c-wait$i.txt" && break
+    near tree "$c: no bar in the TalkBack tree, look $i"
+  done
+  drv "$c-cancel" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'find:Cancel' 'touch:Cancel' 'dtap:Cancel' \
+    'sleep:3000' 'find:Cancel' 'focused'
+  drv "$c-choose" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'touch:Forerunner 965' 'dtap:Forerunner 965' \
+    'sleep:3000' 'find:Heart rate sensors found' 'focused'
+  adb pull /data/local/tmp/tbshots "tbshots/$c" < /dev/null >> "$STEPLOG" 2>&1
+  tb_off
+  tb_check "^dtap:Choose: focused 'Choose'" "$c-cancel" "Choose pressed by a double tap"
+  tb_check "^dtap:Cancel: focused 'Cancel'" "$c-cancel" "Cancel pressed by a double tap"
+  tb_check "^find:Cancel: NOT FOUND" "$c-cancel" "the list closed"
+  say "talkback $c: after Cancel: $(grep -a '^focused' "drv/$c-cancel.txt" | tail -n 1)"
+  say "talkback $c: after a sensor chosen: $(grep -a '^focused' "drv/$c-choose.txt" | tail -n 1)"
+  compare "$c" "focus-back-on-choose" "$(yn "^focused: focused 'Choose'" "$c-cancel")"
+}
+
 emu_init
 [ "$EMU_API" -ge 34 ] || proves_nothing "TalkBack cases on API $EMU_API: the driver injects TalkBack gestures from API 34"
 adb shell pm list packages < /dev/null | grep -q "$TB_PKG" || proves_nothing "no TalkBack in the image"
@@ -107,6 +137,7 @@ for side in b h; do
   install_apk "$apk"
   talkback "${side}c" false
   talkback "${side}m" true
+  focusback "${side}f"
   adb uninstall "$PKG" < /dev/null > /dev/null 2>&1
 done
 finish
