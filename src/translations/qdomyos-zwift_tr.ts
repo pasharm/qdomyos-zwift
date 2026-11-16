@@ -2991,9 +2991,13 @@ Aşağıdaki sorular QZ&apos;yi ekipmanınıza ve hedeflerinize göre özelleşt
         <translation>Filtreyi temizle</translation>
     </message>
     <message>
+        <source>Importing workouts...</source>
+        <translation type="vanished">Antrenmanlar içe aktarılıyor…</translation>
+    </message>
+    <message>
         <source>Processing workout files...
 This may take a few moments on first startup.</source>
-        <translation>Antrenman dosyaları işleniyor…
+        <translation type="vanished">Antrenman dosyaları işleniyor…
 İlk açılışta bu biraz zaman alabilir.</translation>
     </message>
     <message>
@@ -3113,6 +3117,26 @@ This may take a few moments on first startup.</source>
         <translation>Bu gün antrenman yok</translation>
     </message>
     <message>
+        <source>Adding workouts to the history</source>
+        <translation>Antrenmanlar geçmişe ekleniyor</translation>
+    </message>
+    <message>
+        <source>Copying workout files</source>
+        <translation>Antrenman dosyaları kopyalanıyor</translation>
+    </message>
+    <message>
+        <source>Adding workouts to the history: %1 of %2</source>
+        <translation>Antrenmanlar geçmişe ekleniyor: %1 / %2</translation>
+    </message>
+    <message>
+        <source>Copying workout files: %1 of %2</source>
+        <translation>Antrenman dosyaları kopyalanıyor: %1 / %2</translation>
+    </message>
+    <message>
+        <source>Open on Peloton</source>
+        <translation>Peloton&apos;da aç</translation>
+    </message>
+    <message>
         <source>Finished workouts appear here: open one to see its charts.</source>
         <translation>Tamamlanan antrenmanlar burada görünür: grafiklerini görmek için birini açın.</translation>
     </message>
@@ -3149,10 +3173,6 @@ This may take a few moments on first startup.</source>
         <translation>FIT dosyasını paylaş</translation>
     </message>
     <message>
-        <source>Importing workouts...</source>
-        <translation>Antrenmanlar içe aktarılıyor…</translation>
-    </message>
-    <message>
         <source>Filter by date</source>
         <translation>Tarihe göre filtrele</translation>
     </message>
@@ -3163,10 +3183,6 @@ This may take a few moments on first startup.</source>
     <message>
         <source>Load training program</source>
         <translation>Antrenman programını yükle</translation>
-    </message>
-    <message>
-        <source>Open on Peloton</source>
-        <translation>Peloton&apos;da aç</translation>
     </message>
     <message>
         <source>has a workout</source>

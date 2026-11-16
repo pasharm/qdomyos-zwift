@@ -2991,9 +2991,13 @@ Následující otázky přizpůsobí QZ vašemu trenažéru a cílům.</translat
         <translation>Zrušit filtr</translation>
     </message>
     <message>
+        <source>Importing workouts...</source>
+        <translation type="vanished">Importování tréninků…</translation>
+    </message>
+    <message>
         <source>Processing workout files...
 This may take a few moments on first startup.</source>
-        <translation>Zpracování souborů tréninků…
+        <translation type="vanished">Zpracování souborů tréninků…
 Při prvním spuštění to může chvíli trvat.</translation>
     </message>
     <message>
@@ -3113,6 +3117,26 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>V tento den žádné tréninky</translation>
     </message>
     <message>
+        <source>Adding workouts to the history</source>
+        <translation>Přidávání tréninků do historie</translation>
+    </message>
+    <message>
+        <source>Copying workout files</source>
+        <translation>Kopírování souborů tréninků</translation>
+    </message>
+    <message>
+        <source>Adding workouts to the history: %1 of %2</source>
+        <translation>Přidávání tréninků do historie: %1 z %2</translation>
+    </message>
+    <message>
+        <source>Copying workout files: %1 of %2</source>
+        <translation>Kopírování souborů tréninků: %1 z %2</translation>
+    </message>
+    <message>
+        <source>Open on Peloton</source>
+        <translation>Otevřít v Pelotonu</translation>
+    </message>
+    <message>
         <source>Finished workouts appear here: open one to see its charts.</source>
         <translation>Zde se objeví dokončené tréninky: otevřete kterýkoli a zobrazte jeho grafy.</translation>
     </message>
@@ -3149,10 +3173,6 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Sdílet soubor FIT</translation>
     </message>
     <message>
-        <source>Importing workouts...</source>
-        <translation>Importování tréninků…</translation>
-    </message>
-    <message>
         <source>Filter by date</source>
         <translation>Filtrovat podle data</translation>
     </message>
@@ -3163,10 +3183,6 @@ Při prvním spuštění to může chvíli trvat.</translation>
     <message>
         <source>Load training program</source>
         <translation>Načíst tréninkový program</translation>
-    </message>
-    <message>
-        <source>Open on Peloton</source>
-        <translation>Otevřít v Pelotonu</translation>
     </message>
     <message>
         <source>has a workout</source>

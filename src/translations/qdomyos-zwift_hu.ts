@@ -2987,9 +2987,13 @@ A következő kérdésekkel a QZ-t az edzőgépéhez és a céljaihoz szabhatja.
         <translation>Szűrő törlése</translation>
     </message>
     <message>
+        <source>Importing workouts...</source>
+        <translation type="vanished">Edzések importálása...</translation>
+    </message>
+    <message>
         <source>Processing workout files...
 This may take a few moments on first startup.</source>
-        <translation>Edzésfájlok feldolgozása...
+        <translation type="vanished">Edzésfájlok feldolgozása...
 Az első indításkor ez eltarthat néhány pillanatig.</translation>
     </message>
     <message>
@@ -3109,6 +3113,26 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <translation>Ezen a napon nincs edzés</translation>
     </message>
     <message>
+        <source>Adding workouts to the history</source>
+        <translation>Edzések hozzáadása az előzményekhez</translation>
+    </message>
+    <message>
+        <source>Copying workout files</source>
+        <translation>Edzésfájlok másolása</translation>
+    </message>
+    <message>
+        <source>Adding workouts to the history: %1 of %2</source>
+        <translation>Edzések hozzáadása az előzményekhez: %1 / %2</translation>
+    </message>
+    <message>
+        <source>Copying workout files: %1 of %2</source>
+        <translation>Edzésfájlok másolása: %1 / %2</translation>
+    </message>
+    <message>
+        <source>Open on Peloton</source>
+        <translation>Megnyitás a Pelotonban</translation>
+    </message>
+    <message>
         <source>Finished workouts appear here: open one to see its charts.</source>
         <translation>A befejezett edzések itt jelennek meg: nyisson meg egyet a diagramjai megtekintéséhez.</translation>
     </message>
@@ -3145,10 +3169,6 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <translation>FIT-fájl megosztása</translation>
     </message>
     <message>
-        <source>Importing workouts...</source>
-        <translation>Edzések importálása...</translation>
-    </message>
-    <message>
         <source>Filter by date</source>
         <translation>Szűrés dátum szerint</translation>
     </message>
@@ -3159,10 +3179,6 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
     <message>
         <source>Load training program</source>
         <translation>Edzésprogram betöltése</translation>
-    </message>
-    <message>
-        <source>Open on Peloton</source>
-        <translation>Megnyitás a Pelotonban</translation>
     </message>
     <message>
         <source>has a workout</source>
