@@ -32,6 +32,7 @@ import android.view.WindowInsetsController;
 import android.view.DisplayCutout;
 import android.graphics.Insets;
 import org.qtproject.qt5.android.bindings.QtActivity;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -247,13 +248,15 @@ public class CustomQtActivity extends QtActivity {
     // takes the focus to its first stop, as TalkBack does with a dialog of Android.
     private static final class ScrollToFocusProvider extends AccessibilityNodeProvider {
         private static final long VALUE_ANNOUNCE_DELAY_MS = 150;
-        // Qt never gives an object this id (its ids start at 0x80000000, qaccessiblecache.cpp)
+        // Qt never gives an object this id (-1: QAccessibleCache::acquireId skips it,
+        // qaccessiblecache.cpp:89-95)
         private static final int NO_FOCUS = View.NO_ID;
         private final AccessibilityNodeProvider qt;
         private final View host;
         // the node with TalkBack's focus, as TalkBack asked for it through this provider
         private int focusedId = NO_FOCUS;
-        // the focused node when each open popup showed, by the popup (main.cpp, popupKey)
+        // the focused node when each open popup showed, by the key of the popup (main.cpp,
+        // androidAccessibilityUpdate)
         private final HashMap<Integer, Integer> popupOpeners = new HashMap<>();
 
         ScrollToFocusProvider(AccessibilityNodeProvider qt, View host) {
@@ -329,7 +332,35 @@ public class CustomQtActivity extends QtActivity {
             return qt.createAccessibilityNodeInfo(virtualViewId);
         }
 
+        // A focus move of a popup (into it, back to its opener) waits for the clicked events of the presses
+        // before it (afterClick), so TalkBack says what was pressed first, then where the focus went;
+        // with none waiting it is made at once
+        private int clicksWaiting = 0;
+        private final ArrayList<Runnable> afterClicks = new ArrayList<>();
+
+        private void afterTheClicks(Runnable move) {
+            if (clicksWaiting > 0) {
+                afterClicks.add(move);
+            } else {
+                move.run();
+            }
+        }
+
+        private void clickSent() {
+            if (clicksWaiting > 0) {
+                clicksWaiting--;
+            }
+            if (clicksWaiting == 0) {
+                ArrayList<Runnable> moves = new ArrayList<>(afterClicks);
+                afterClicks.clear();
+                for (Runnable move : moves) {
+                    move.run();
+                }
+            }
+        }
+
         private void afterClick(final int virtualViewId) {
+            clicksWaiting++;
             host.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -350,36 +381,33 @@ public class CustomQtActivity extends QtActivity {
                         node.recycle();
                     }
                     accessibilityTreeChanged();
+                    clickSent();
                 }
             }, VALUE_ANNOUNCE_DELAY_MS);
         }
 
-        // first - the first stop of TalkBack in a modal popup (main.cpp, firstStop), NO_FOCUS for a popup
-        // that is not modal: the focus goes there after the clicked event of the press that opened it
-        // (afterClick, posted earlier with the same delay), so TalkBack says what was pressed first
-        void popupShown(int popup, final int first) {
+        void popupShown(int popup) {
             popupOpeners.put(popup, focusedId);
-            if (first == NO_FOCUS) {
-                return;
-            }
-            host.postDelayed(new Runnable() {
+        }
+
+        // A modal popup opened (main.cpp, popupsOpened): the focus to first, its title or its first stop
+        void popupOpened(int popup, final int first) {
+            afterTheClicks(new Runnable() {
                 @Override
                 public void run() {
                     if (onScreen(first)) {
                         performAction(first, AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
                     }
                 }
-            }, VALUE_ANNOUNCE_DELAY_MS);
+            });
         }
 
-        // After the clicked event of the press that closed the popup (afterClick, posted earlier with the
-        // same delay), so TalkBack says the opener after what was pressed
         void popupHidden(int popup) {
             final Integer opener = popupOpeners.remove(popup);
             if (opener == null || opener == NO_FOCUS) {
                 return;
             }
-            host.postDelayed(new Runnable() {
+            afterTheClicks(new Runnable() {
                 @Override
                 public void run() {
                     // the focus is on a node still on the screen (outside the popup, or moved there by
@@ -391,7 +419,7 @@ public class CustomQtActivity extends QtActivity {
                         performAction(opener, AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
                     }
                 }
-            }, VALUE_ANNOUNCE_DELAY_MS);
+            });
         }
 
         private boolean onScreen(int virtualViewId) {
@@ -442,14 +470,24 @@ public class CustomQtActivity extends QtActivity {
         });
     }
 
-    // Called by Qt from its own thread when a popup shows or hides (ScrollToFocusProvider: TalkBack's
-    // focus moved into a modal popup and given back to its opener); popup - a key of the popup, the same
-    // for its show and its hide; first - the node the focus goes to, View.NO_ID for none
-    public static void accessibilityPopupShown(final int popup, final int first) {
+    // Called by Qt from its own thread when a popup shows, a modal one opened (its enter transition
+    // finished) and a popup hides (ScrollToFocusProvider: TalkBack's focus moved into a modal popup and
+    // given back to its opener); popup - a key of the popup, the same for its show, its opening and its
+    // hide; first - the node the focus goes to
+    public static void accessibilityPopupShown(final int popup) {
         onAccessibilityProvider(new ProviderCall() {
             @Override
             public void run(ScrollToFocusProvider provider) {
-                provider.popupShown(popup, first);
+                provider.popupShown(popup);
+            }
+        });
+    }
+
+    public static void accessibilityPopupOpened(final int popup, final int first) {
+        onAccessibilityProvider(new ProviderCall() {
+            @Override
+            public void run(ScrollToFocusProvider provider) {
+                provider.popupOpened(popup, first);
             }
         });
     }
