@@ -1877,7 +1877,6 @@ ApplicationWindow {
         bottomPadding: getBottomPadding()
         leftPadding: getLeftPadding()
         rightPadding: window.ui.modern ? 0 : getRightPadding()
-        Accessible.ignored: !drawer.opened
 
         // Classic look: the background of the style, untouched. Modern look: it is hidden (with
         // it its shadow) and the sheet below takes its place

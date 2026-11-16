@@ -926,7 +926,9 @@ static NodeData nodeData(jint objectId) {
     data.enabled = !state.disabled;
     data.checkable = state.checkable;
     data.checked = state.checked;
-    data.focusable = state.focusable;
+    // test only (T-560): a text block is focusable for TalkBack, as Qt does since 5.15.9 / 6.2.5
+    // (qtdeclarative 9c5f772b5e, QTBUG-77371)
+    data.focusable = state.focusable || iface->role() == QAccessible::StaticText;
     data.focused = state.focused;
     data.visible = !state.invisible;
     return data;
