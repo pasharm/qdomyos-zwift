@@ -2,7 +2,8 @@
 # Test only (T-265, T-560): what the real TalkBack (Google TalkBack 15, image API 35) finds in the side menu
 # and in the heart rate sensor bar - before (base: test/t265-master = origin/master fb8bd3a22 + the T-473 hook)
 # and after (head: test/t265-diag = the same + no Accessible.ignored on the Drawer + a StaticText node
-# focusable, as Qt does since 5.15.9 - QTBUG-77371). A diagnostic run: the tree with the menu open ('list'),
+# focusable, as Qt does since 5.15.9 - QTBUG-77371; or test/t265-fix = the fix of fix/talkback-modal-popups:
+# a modal popup is all a screen reader reaches, an ItemDelegate is clickable). The tree with the menu open ('list'),
 # a touch on a menu entry, swipes from the menu button, a double tap on Settings; the bar text by touch and
 # by a swipe left from Choose. The head is red only where it is not better than the base; the findings are in
 # the "talkback <case>:" lines.
@@ -123,13 +124,23 @@ focusback() {
   done
   drv "$c-cancel" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'find:Cancel' 'touch:Cancel' 'dtap:Cancel' \
     'sleep:3000' 'find:Cancel' 'focused'
+  # T-265: the list fades in (the Material Popup's enter: opacity 0 -> 1) - swipes from Choose once it
+  # opened stay in the modal list, not on the bar and the page under it
+  drv "$c-modal" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'swipe:right' 'swipe:right' 'swipe:right' \
+    'swipe:right' 'touch:Cancel' 'dtap:Cancel' 'sleep:3000'
   drv "$c-choose" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'touch:Forerunner 965' 'dtap:Forerunner 965' \
     'sleep:3000' 'find:Heart rate sensors found' 'focused'
   adb pull /data/local/tmp/tbshots "tbshots/$c" < /dev/null >> "$STEPLOG" 2>&1
   tb_off
   tb_check "^dtap:Choose: focused 'Choose'" "$c-cancel" "Choose pressed by a double tap"
-  tb_check "^dtap:Cancel: focused 'Cancel'" "$c-cancel" "Cancel pressed by a double tap"
-  tb_check "^find:Cancel: NOT FOUND" "$c-cancel" "the list closed"
+  # Cancel's press is the list closing: after the double tap the focus is no longer on Cancel, it is gone
+  tb_check "^find:Cancel: NOT FOUND" "$c-cancel" "the list closed by Cancel"
+  local inlist=no onpage
+  grep -a -q "^swipe:right: focused " "drv/$c-modal.txt" && inlist=yes
+  onpage=$(yn "^swipe:right: focused '(Choose|Not now|Don't ask again|Heart rate sensors found.*|Main menu|Floating window|Pause|Stop|Start|Lap|)' " "$c-modal")
+  [ "$onpage" = yes ] && inlist=no
+  say "talkback $c: a swipe in the open list reached the page under it: $onpage"
+  compare "$c" "dialog-swipe-in-dialog" "$inlist"
   say "talkback $c: after Cancel: $(grep -a '^focused' "drv/$c-cancel.txt" | tail -n 1)"
   say "talkback $c: after a sensor chosen: $(grep -a '^focused' "drv/$c-choose.txt" | tail -n 1)"
   compare "$c" "focus-back-on-choose" "$(yn "^focused: focused 'Choose'" "$c-cancel")"
