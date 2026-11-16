@@ -1225,6 +1225,16 @@ static void androidAccessibilityUpdate(QAccessibleEvent *event) {
         return;
     if (!event->object() || accessibleIgnored(event->object()))
         return;
+    // A popup (its item: QQuickPopup shows and hides it, qquickpopup.cpp:441, 484): CustomQtActivity
+    // keeps TalkBack's focus when it shows and gives it back when it hides. The key is the item's
+    // accessible id, the same for the show and the hide
+    if (event->object()->inherits("QQuickPopupItem") && event->accessibleInterface()) {
+        const jint key = jint(QAccessible::uniqueId(event->accessibleInterface()));
+        QAndroidJniObject::callStaticMethod<void>(
+            "org/cagnulen/qdomyoszwift/CustomQtActivity",
+            event->type() == QAccessible::ObjectShow ? "accessibilityPopupShown" : "accessibilityPopupHidden", "(I)V",
+            key);
+    }
     QTimer *timer = accessibilityRefreshTimer();
     if (QThread::currentThread() == timer->thread())
         timer->start();

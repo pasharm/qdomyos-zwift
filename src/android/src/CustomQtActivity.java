@@ -33,6 +33,7 @@ import android.view.DisplayCutout;
 import android.graphics.Insets;
 import org.qtproject.qt5.android.bindings.QtActivity;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.WeakHashMap;
@@ -237,10 +238,22 @@ public class CustomQtActivity extends QtActivity {
     // is a View to TalkBack, which lets only a seek bar change its value with a swipe up or down;
     // it is called one, the swipe sends the scroll actions Qt handles, and the new name, which
     // ends with the value, is announced, as Qt 5.15 sends nothing. The rest goes to Qt unchanged.
+    // A popup that closes takes TalkBack's focus with it (a double tap on its Cancel): Qt 5.15.0 neither
+    // tells TalkBack the focused node is gone nor gives the focus back (Qt 6 clears it on a hide,
+    // qtbase f6ddb3e921, QTBUG-93386; QQuickPopup does not keep its opener, QTBUG-80709), so TalkBack
+    // shows no frame and the place on the screen is lost. The node TalkBack had focused when a popup
+    // showed is kept, and once the popup hid, if the focused node went with it, the focus is put back
+    // there (when it is still on the screen), as a dialog of Android does.
     private static final class ScrollToFocusProvider extends AccessibilityNodeProvider {
         private static final long VALUE_ANNOUNCE_DELAY_MS = 150;
+        // Qt never gives an object this id (its ids start at 0x80000000, qaccessiblecache.cpp)
+        private static final int NO_FOCUS = View.NO_ID;
         private final AccessibilityNodeProvider qt;
         private final View host;
+        // the node with TalkBack's focus, as TalkBack asked for it through this provider
+        private int focusedId = NO_FOCUS;
+        // the focused node when each open popup showed, by the popup (main.cpp, popupKey)
+        private final HashMap<Integer, Integer> popupOpeners = new HashMap<>();
 
         ScrollToFocusProvider(AccessibilityNodeProvider qt, View host) {
             this.qt = qt;
@@ -282,6 +295,11 @@ public class CustomQtActivity extends QtActivity {
                 return pressed;
             }
             boolean handled = qt.performAction(virtualViewId, action, arguments);
+            if (action == AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS) {
+                focusedId = virtualViewId;
+            } else if (action == AccessibilityNodeInfo.ACTION_CLEAR_ACCESSIBILITY_FOCUS && focusedId == virtualViewId) {
+                focusedId = NO_FOCUS;
+            }
             if (action == AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS && virtualViewId != View.NO_ID) {
                 try {
                     nativeScrollToAccessibleObject(virtualViewId);
@@ -335,6 +353,42 @@ public class CustomQtActivity extends QtActivity {
             }, VALUE_ANNOUNCE_DELAY_MS);
         }
 
+        void popupShown(int popup) {
+            popupOpeners.put(popup, focusedId);
+        }
+
+        // After the clicked event of the press that closed the popup (afterClick, posted earlier with the
+        // same delay), so TalkBack says the opener after what was pressed
+        void popupHidden(int popup) {
+            final Integer opener = popupOpeners.remove(popup);
+            if (opener == null || opener == NO_FOCUS) {
+                return;
+            }
+            host.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // the focus is on a node still on the screen (outside the popup, or moved there by
+                    // the user meanwhile): left where it is
+                    if (focusedId != NO_FOCUS && onScreen(focusedId)) {
+                        return;
+                    }
+                    if (onScreen(opener)) {
+                        performAction(opener, AccessibilityNodeInfo.ACTION_ACCESSIBILITY_FOCUS, null);
+                    }
+                }
+            }, VALUE_ANNOUNCE_DELAY_MS);
+        }
+
+        private boolean onScreen(int virtualViewId) {
+            AccessibilityNodeInfo node = delayedNode(virtualViewId);
+            if (node == null) {
+                return false;
+            }
+            boolean shown = node.isVisibleToUser();
+            node.recycle();
+            return shown;
+        }
+
         private void announceValue(final int virtualViewId) {
             host.postDelayed(new Runnable() {
                 @Override
@@ -369,6 +423,51 @@ public class CustomQtActivity extends QtActivity {
             @Override
             public void run() {
                 activity.sendAccessibilityTreeChanged();
+            }
+        });
+    }
+
+    // Called by Qt from its own thread when a popup shows or hides (ScrollToFocusProvider: TalkBack's
+    // focus given back to its opener); popup - a key of the popup, the same for its show and its hide
+    public static void accessibilityPopupShown(final int popup) {
+        onAccessibilityProvider(new ProviderCall() {
+            @Override
+            public void run(ScrollToFocusProvider provider) {
+                provider.popupShown(popup);
+            }
+        });
+    }
+
+    public static void accessibilityPopupHidden(final int popup) {
+        onAccessibilityProvider(new ProviderCall() {
+            @Override
+            public void run(ScrollToFocusProvider provider) {
+                provider.popupHidden(popup);
+            }
+        });
+    }
+
+    private interface ProviderCall {
+        void run(ScrollToFocusProvider provider);
+    }
+
+    // The call on the Android UI thread, with the provider that wraps Qt's (none while accessibility is off)
+    private static void onAccessibilityProvider(final ProviderCall call) {
+        final CustomQtActivity activity = accessibilityActivity;
+        if (activity == null) {
+            return;
+        }
+        activity.accessibilityHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (!activity.accessibilityEnabled()) {
+                    return;
+                }
+                View view = activity.qtAccessibilityView();
+                AccessibilityNodeProvider provider = view != null ? view.getAccessibilityNodeProvider() : null;
+                if (provider instanceof ScrollToFocusProvider) {
+                    call.run((ScrollToFocusProvider) provider);
+                }
             }
         });
     }
