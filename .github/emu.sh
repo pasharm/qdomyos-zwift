@@ -191,8 +191,9 @@ focusback() {
   # T-265: the list fades in (the Material Popup's enter: opacity 0 -> 1) - swipes from Choose once it
   # opened stay in the modal list, not on the bar and the page under it
   tb_window "$c"
-  drv_tb "$c-modal" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'swipe:right' 'swipe:right' 'swipe:right' \
-    'swipe:right' 'touch:Cancel' 'dtap:Cancel' 'sleep:3000'
+  # 'focused' right after the list opened: T-503 moves TalkBack's focus to its first row, as a dialog of Android
+  drv_tb "$c-modal" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'focused' 'swipe:right' 'swipe:right' \
+    'swipe:right' 'swipe:right' 'touch:Cancel' 'dtap:Cancel' 'sleep:3000'
   tb_window "$c"
   drv_tb "$c-choose" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'touch:Forerunner 965' 'dtap:Forerunner 965' \
     'sleep:3000' 'find:Heart rate sensors found' 'focused'
@@ -210,6 +211,8 @@ focusback() {
   [ "$onpage" = yes ] && inlist=no
   say "talkback $c: a swipe in the open list reached the page under it: $onpage"
   compare "$c" "dialog-swipe-in-dialog" "$inlist"
+  say "talkback $c: the list just opened: $(grep -a -m1 '^focused' "drv/$c-modal.txt")"
+  compare "$c" "focus-into-list" "$(yn "^focused: focused '(.*signal|Cancel)'" "$c-modal")"
   say "talkback $c: after Cancel: $(grep -a '^focused' "drv/$c-cancel.txt" | tail -n 1)"
   say "talkback $c: after a sensor chosen: $(grep -a '^focused' "drv/$c-choose.txt" | tail -n 1)"
   compare "$c" "focus-back-on-choose" "$(yn "^focused: focused 'Choose'" "$c-cancel")"
