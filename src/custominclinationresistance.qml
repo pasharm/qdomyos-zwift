@@ -7,8 +7,7 @@ import QtQuick.Controls.Material 2.0
 ScrollView {
     id: customInclinationResistanceWindow
     contentWidth: -1
-    // The column with its top and bottom margins, which are not in its implicit height (the
-    // end of the page was cut off)
+    // The column with its top and bottom margins, which are not in its implicit height
     contentHeight: inclinationColumn.implicitHeight + 2 * inclinationColumn.anchors.topMargin
     focus: true
     // No anchors: the page is pushed on the StackView, which sizes it to fill and warned about
@@ -16,7 +15,8 @@ ScrollView {
     clip: true
 
     property string defaultInclinationResistanceTable: "0|4\n1|6\n2|8\n3|10\n4|11\n5|11.5\n6|12\n8|13\n10|14\n12|15\n15|16"
-    property int rowHeight: 55
+    // Modern look: the +/- fields 52 high, 8 between them (4 above and 4 below each)
+    property int rowHeight: window.ui.modern ? 60 : 55
     property int controlHeight: 43
 
     // Modern look: a +/- field of the table, as on the Wahoo Options page. The classic one is a
@@ -25,8 +25,16 @@ ScrollView {
     component Stepper: Rectangle {
         id: stepper
         property alias text: stepperInput.text
+        // The column title, for a screen reader: the field and its - and + say what they change
+        property string label
         signal step(real delta)
         signal edited(string value)
+        // A number typed but not confirmed is applied first: a MouseArea does not take the focus
+        // from the field, so its editing does not finish before the step (the classic buttons do)
+        function stepBy(delta) {
+            stepper.edited(stepperInput.text)
+            stepper.step(delta)
+        }
         radius: 12
         color: window.ui.surfaceHighest
 
@@ -35,10 +43,12 @@ ScrollView {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            width: height
-            onClicked: stepper.step(-0.5)
+            // Not square: at 52 high, a 360 dp screen left 28 dp for the number between them
+            width: 44
+            onClicked: stepper.stepBy(-0.5)
             Accessible.role: Accessible.Button
-            Accessible.name: "-"
+            Accessible.name: qsTr("Decrease %1").arg(stepper.label)
+            Accessible.onPressAction: stepper.stepBy(-0.5)
             Rectangle { anchors.fill: parent; radius: 12; color: window.ui.surfaceHigh; visible: stepperMinus.pressed }
             Rectangle { anchors.centerIn: parent; width: 12; height: 2; radius: 1; color: window.ui.textMain }
         }
@@ -47,10 +57,11 @@ ScrollView {
             anchors.right: parent.right
             anchors.top: parent.top
             anchors.bottom: parent.bottom
-            width: height
-            onClicked: stepper.step(0.5)
+            width: 44
+            onClicked: stepper.stepBy(0.5)
             Accessible.role: Accessible.Button
-            Accessible.name: "+"
+            Accessible.name: qsTr("Increase %1").arg(stepper.label)
+            Accessible.onPressAction: stepper.stepBy(0.5)
             Rectangle { anchors.fill: parent; radius: 12; color: window.ui.surfaceHigh; visible: stepperPlus.pressed }
             Rectangle { anchors.centerIn: parent; width: 12; height: 2; radius: 1; color: window.ui.textMain }
             Rectangle { anchors.centerIn: parent; width: 2; height: 12; radius: 1; color: window.ui.textMain }
@@ -66,6 +77,7 @@ ScrollView {
             selectionColor: window.ui.accent
             selectedTextColor: window.ui.accentInk
             inputMethodHints: Qt.ImhFormattedNumbersOnly
+            Accessible.name: stepper.label + ": " + text
             onAccepted: stepper.edited(text)
             onEditingFinished: stepper.edited(text)
         }
@@ -256,8 +268,8 @@ ScrollView {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.topMargin: 10
-        anchors.leftMargin: window.contentSideMargin
-        anchors.rightMargin: window.contentSideMargin
+        anchors.leftMargin: window.ui.modern ? Math.max(16, window.contentSideMargin) : window.contentSideMargin
+        anchors.rightMargin: window.ui.modern ? Math.max(16, window.contentSideMargin) : window.contentSideMargin
         spacing: 10
 
         IndicatorOnlySwitch {
@@ -278,9 +290,9 @@ ScrollView {
             text: qsTr("Set the resistance QZ should target at each incline. QZ interpolates automatically between points and uses the nearest endpoint outside the configured range. Changes are saved automatically.")
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
-            font.pixelSize: window.ui.fontHint
+            font.pixelSize: window.ui.modern ? window.ui.fontCaption : window.fontHint
             bottomPadding: window.hintGap
-            color: window.ui.inkMuted(Material.accent)
+            color: window.ui.modern ? window.ui.textMuted : Material.accent
         }
 
         // Modern look: the column titles over the fields, no grid
@@ -295,7 +307,7 @@ ScrollView {
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: Text.WordWrap
             }
             Label {
                 text: qsTr("Resistance")
@@ -303,18 +315,18 @@ ScrollView {
                 horizontalAlignment: Text.AlignHCenter
                 Layout.fillWidth: true
                 Layout.preferredWidth: 1
-                wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
+                wrapMode: Text.WordWrap
             }
-            Item { Layout.preferredWidth: 44 }
+            Item { Layout.preferredWidth: 48 }
         }
 
         Rectangle {
             visible: !window.ui.modern
             Layout.fillWidth: true
             Layout.preferredHeight: 40
-            color: window.ui.modern ? window.ui.surfaceHigh : "#f0f0f0"
+            color: "#f0f0f0"
             border.width: 1
-            border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+            border.color: "#cccccc"
 
             Row {
                 anchors.fill: parent
@@ -323,7 +335,7 @@ ScrollView {
                     width: parent.width * 0.43
                     height: parent.height
                     border.width: 1
-                    border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                    border.color: "#cccccc"
                     color: "transparent"
 
                     Text {
@@ -332,7 +344,7 @@ ScrollView {
                         anchors.centerIn: parent
                         text: qsTr("Inclination (%)")
                         font.bold: true
-                        color: window.ui.ink("black")
+                        color: "black"
                     }
                 }
 
@@ -340,7 +352,7 @@ ScrollView {
                     width: parent.width * 0.43
                     height: parent.height
                     border.width: 1
-                    border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                    border.color: "#cccccc"
                     color: "transparent"
 
                     Text {
@@ -348,7 +360,7 @@ ScrollView {
                         anchors.centerIn: parent
                         text: qsTr("Resistance")
                         font.bold: true
-                        color: window.ui.ink("black")
+                        color: "black"
                     }
                 }
 
@@ -356,7 +368,7 @@ ScrollView {
                     width: parent.width * 0.14
                     height: parent.height
                     border.width: 1
-                    border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                    border.color: "#cccccc"
                     color: "transparent"
                 }
             }
@@ -378,20 +390,25 @@ ScrollView {
                 RowLayout {
                     visible: window.ui.modern
                     anchors.fill: parent
-                    anchors.topMargin: 5
-                    anchors.bottomMargin: 6
+                    anchors.topMargin: 4
+                    anchors.bottomMargin: 4
                     spacing: 8
 
                     Stepper {
                         Layout.fillWidth: true
                         Layout.preferredWidth: 1
                         Layout.fillHeight: true
+                        label: qsTr("Inclination (%)")
                         text: formatNumber(inclination)
                         onStep: {
                             text = adjustPoint(index, "inclination", delta)
                             Qt.callLater(sortPointsAndSave)
                         }
+                        // index -1: the row is going away - sortPointsAndSave rebuilds the model,
+                        // and the field that had the focus finishes its editing once more
                         onEdited: {
+                            if (index < 0)
+                                return
                             text = updatePoint(index, "inclination", value)
                             Qt.callLater(sortPointsAndSave)
                         }
@@ -401,19 +418,25 @@ ScrollView {
                         Layout.fillWidth: true
                         Layout.preferredWidth: 1
                         Layout.fillHeight: true
+                        label: qsTr("Resistance")
                         text: formatNumber(resistance)
                         onStep: text = adjustPoint(index, "resistance", delta)
-                        onEdited: text = updatePoint(index, "resistance", value)
+                        onEdited: if (index >= 0) text = updatePoint(index, "resistance", value)
                     }
 
                     MouseArea {
                         id: removeButton
-                        Layout.preferredWidth: 44
+                        Layout.preferredWidth: 48
                         Layout.fillHeight: true
                         enabled: pointListModel.count > 1
                         onClicked: removePoint(index)
                         Accessible.role: Accessible.Button
-                        Accessible.name: qsTr("Remove")
+                        // Several rows: the name says which point goes
+                        Accessible.name: qsTr("Remove the point at inclination %1").arg(formatNumber(inclination))
+                        Accessible.onPressAction: {
+                            if (enabled)
+                                removePoint(index)
+                        }
                         Rectangle {
                             anchors.fill: parent
                             radius: 12
@@ -438,7 +461,7 @@ ScrollView {
                         width: parent.width * 0.43
                         height: parent.height
                         border.width: 1
-                        border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                        border.color: "#cccccc"
                         color: "transparent"
 
                         RowLayout {
@@ -462,14 +485,14 @@ ScrollView {
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
                                 text: formatNumber(inclination)
-                                color: window.ui.ink("black")
-                                selectedTextColor: window.ui.modern ? window.ui.accentInk : "white"
+                                color: "black"
+                                selectedTextColor: "white"
                                 selectionColor: Material.accent
                                 horizontalAlignment: Text.AlignHCenter
                                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                                 background: Rectangle {
-                                    color: window.ui.modern ? window.ui.surfaceHighest : "white"
-                                    border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                                    color: "white"
+                                    border.color: "#cccccc"
                                     radius: 2
                                 }
                                 function applyValue() {
@@ -496,7 +519,7 @@ ScrollView {
                         width: parent.width * 0.43
                         height: parent.height
                         border.width: 1
-                        border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                        border.color: "#cccccc"
                         color: "transparent"
 
                         RowLayout {
@@ -517,14 +540,14 @@ ScrollView {
                                 Layout.fillWidth: true
                                 Layout.fillHeight: true
                                 text: formatNumber(resistance)
-                                color: window.ui.ink("black")
-                                selectedTextColor: window.ui.modern ? window.ui.accentInk : "white"
+                                color: "black"
+                                selectedTextColor: "white"
                                 selectionColor: Material.accent
                                 horizontalAlignment: Text.AlignHCenter
                                 inputMethodHints: Qt.ImhFormattedNumbersOnly
                                 background: Rectangle {
-                                    color: window.ui.modern ? window.ui.surfaceHighest : "white"
-                                    border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                                    color: "white"
+                                    border.color: "#cccccc"
                                     radius: 2
                                 }
                                 function applyValue() {
@@ -547,7 +570,7 @@ ScrollView {
                         width: parent.width * 0.14
                         height: parent.height
                         border.width: 1
-                        border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
+                        border.color: "#cccccc"
                         color: "transparent"
 
                         UiButton {
@@ -570,7 +593,7 @@ ScrollView {
                 wrapsText: true
                 text: qsTr("Add Point")
                 Layout.fillWidth: true
-                Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 24) : 40
+                Layout.preferredHeight: window.ui.modern ? Math.max(48, contentItem.implicitHeight + 24) : 40
                 onClicked: addPoint()
             }
 
@@ -578,7 +601,7 @@ ScrollView {
                 wrapsText: true
                 text: qsTr("Reset Example")
                 Layout.fillWidth: true
-                Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 24) : 40
+                Layout.preferredHeight: window.ui.modern ? Math.max(48, contentItem.implicitHeight + 24) : 40
                 onClicked: {
                     setPoints(defaultPoints())
                     savePoints()
