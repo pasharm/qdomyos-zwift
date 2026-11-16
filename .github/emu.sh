@@ -55,22 +55,31 @@ tb_window() {
   fail "$1: the box of TalkBack stays over the app"
 }
 
-# tb_start <case>: TalkBack on, then up to 60 s for its tutorial (TrainingActivity) to come up and closed
-# by back before the first pass: it came a few seconds into a pass (run 43802917884). Disabled by
-# pm disable, TalkBack spoke and moved nothing (run 43804496166: focus NONE on every touch, base too).
+# tb_start <case>: TalkBack on, its box closed if it is up already
 tb_start() {
-  local i top
   tb_on
-  for i in $(seq 1 30); do
-    top=$(adb shell dumpsys activity activities < /dev/null 2>/dev/null | grep -a -m1 -E "mResumedActivity|topResumedActivity")
-    if echo "$top" | grep -q "$TB_PKG"; then
-      say "$1: the tutorial of TalkBack after $((i * 2)) s"
-      tb_window "$1"
-      return 0
-    fi
-    sleep 2
-  done
-  say "$1: no tutorial of TalkBack in 60 s"
+  tb_window "$1"
+}
+
+# drv_tb <name> <driver args...>: a pass of the driver, once more when TalkBack's tutorial ("Welcome to the
+# updated TalkBack", TrainingActivity) came over the app during it - it comes on one of the first gestures,
+# not after a time (none in 60 s after TalkBack on, then up in a pass: run 43806680584). Disabled by pm
+# disable, TalkBack spoke and moved nothing (run 43804496166). Before the second pass: the box closed by
+# back, a menu left open closed by back, the app brought back.
+drv_tb() {
+  local name=$1
+  drv "$@"
+  grep -a -q -E "updated TalkBack|Close tutorial" "drv/$name.txt" || return 0
+  near tbwindow "$name: the tutorial of TalkBack came during the pass, the pass once more"
+  mv "drv/$name.txt" "drv/$name-tutorial.txt"
+  tb_window "$name"
+  adb shell input keyevent 4 < /dev/null > /dev/null 2>&1
+  emu_sleep 3
+  ensure_app
+  drv "$@"
+  if grep -a -q -E "updated TalkBack|Close tutorial" "drv/$name.txt"; then
+    fail "$name: the tutorial of TalkBack came in the second pass too"
+  fi
 }
 
 # results of the base, per case letter: R_<what>_<case>
@@ -106,7 +115,7 @@ talkback() {
   # tap on it (in the menu just opened: after swipes it scrolls and a touch misses - run 43793272467, bm-menu2);
   # the settings page shows the header button Search settings, named in both looks (hidden on the home page, main.qml ~1459)
   tb_window "$c"
-  drv "$c-menu" --keep "focus:$menu" 'sleep:1500' "dtap:$menu" 'sleep:3000' 'list' 'find:Settings' \
+  drv_tb "$c-menu" --keep "focus:$menu" 'sleep:1500' "dtap:$menu" 'sleep:3000' 'list' 'find:Settings' \
     'touch:Settings' 'dtap:Settings' 'sleep:4000' 'find:Search settings'
   # the settings page, if it opened, back to the home page (the system back closes a page of QZ); the menu
   # left open by a failed press is closed by it too
@@ -115,20 +124,20 @@ talkback() {
   ensure_app
   # swipes right from the menu button once the menu opened: in the menu, not on the page under it
   tb_window "$c"
-  drv "$c-swipe" --keep "focus:$menu" 'sleep:1500' "dtap:$menu" 'sleep:3000' 'swipe:right' 'swipe:right' \
+  drv_tb "$c-swipe" --keep "focus:$menu" 'sleep:1500' "dtap:$menu" 'sleep:3000' 'swipe:right' 'swipe:right' \
     'swipe:right' 'swipe:right'
   adb shell input keyevent 4 < /dev/null > /dev/null 2>&1
   emu_sleep 3
   ensure_app
   for i in 1 2 3 4; do
     tb_window "$c"
-    drv "$c-wait$i" --keep 'sleep:3000' 'find:Heart rate sensors found'
+    drv_tb "$c-wait$i" --keep 'sleep:3000' 'find:Heart rate sensors found'
     grep -a -q "^find:Heart rate sensors found: '" "drv/$c-wait$i.txt" && break
     near tree "$c: no bar in the TalkBack tree, look $i"
   done
   # first a touch at another point: a second touch at the same point gives TalkBack no new event
   tb_window "$c"
-  drv "$c-bar" --keep 'touch:Choose' 'touch:Heart rate sensors found' 'touch:Choose' 'swipe:left' 'focused'
+  drv_tb "$c-bar" --keep 'touch:Choose' 'touch:Heart rate sensors found' 'touch:Choose' 'swipe:left' 'focused'
   adb pull /data/local/tmp/tbshots "tbshots/$c" < /dev/null >> "$STEPLOG" 2>&1
   tb_off
   entry=$(grep -a -m1 "^find:Settings: '" "drv/$c-menu.txt")
@@ -140,11 +149,14 @@ talkback() {
   compare "$c" "menu-swipe-in-menu" \
     "$(yn "^swipe:right: focused '(Profile: .*|Settings|Charts|Open Train Program|Open GPX|Save FIT|Save GPX|Workouts History|Swag Bag|Wizard|Community|Quit|Help|Credits|Training programs|Workouts)'" "$c-swipe")"
   # a swipe that lands on the header or the page under the menu: compared with the base (a head without the
-  # modality fix, test/t560-fix, does as master does)
-  local onpage=$(yn "^swipe:right: focused '(◄|Main menu|Floating window|Lock tiles|Unlock tiles|Pause|Stop|Start|Lap|QZ Fitness|.*Bluetooth.*|)' " "$c-swipe")
+  # modality fix, test/t560-fix, does as master does). The menu button is left out: TalkBack's focus stays on
+  # it when the menu opens, and the first swipe may stay there too (run 43806680584 hc, hm: the button, the
+  # window, then the entries)
+  local onpage=$(yn "^swipe:right: focused '(Floating window|Lock tiles|Unlock tiles|Pause|Stop|Start|Lap|QZ Fitness|.*Bluetooth.*|)' " "$c-swipe")
   say "talkback $c: a swipe from the menu button reached the page under the menu: $onpage"
   local menu_ok=no
-  tb_has "^swipe:right: focused '" "$c-swipe" && [ "$onpage" = no ] && ! tb_has "^swipe:right: focused 'null'" "$c-swipe" && menu_ok=yes
+  [ "$onpage" = no ] && tb_has "^swipe:right: focused '(Profile: .*|Settings|Charts|Open Train Program|Workouts)'" "$c-swipe" &&
+    menu_ok=yes
   compare "$c" "menu-swipe-not-on-page" "$menu_ok"
   # T-560: a text inside a menu entry is not a second stop (Qt's focusable text alone gave 'Wizard'
   # twice in a row, run 43793272467 hm)
@@ -169,20 +181,20 @@ focusback() {
   tb_start "$c"
   for i in 1 2 3 4; do
     tb_window "$c"
-    drv "$c-wait$i" --keep 'sleep:3000' 'find:Heart rate sensors found'
+    drv_tb "$c-wait$i" --keep 'sleep:3000' 'find:Heart rate sensors found'
     grep -a -q "^find:Heart rate sensors found: '" "drv/$c-wait$i.txt" && break
     near tree "$c: no bar in the TalkBack tree, look $i"
   done
   tb_window "$c"
-  drv "$c-cancel" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'find:Cancel' 'touch:Cancel' 'dtap:Cancel' \
+  drv_tb "$c-cancel" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'find:Cancel' 'touch:Cancel' 'dtap:Cancel' \
     'sleep:3000' 'find:Cancel' 'focused'
   # T-265: the list fades in (the Material Popup's enter: opacity 0 -> 1) - swipes from Choose once it
   # opened stay in the modal list, not on the bar and the page under it
   tb_window "$c"
-  drv "$c-modal" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'swipe:right' 'swipe:right' 'swipe:right' \
+  drv_tb "$c-modal" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'swipe:right' 'swipe:right' 'swipe:right' \
     'swipe:right' 'touch:Cancel' 'dtap:Cancel' 'sleep:3000'
   tb_window "$c"
-  drv "$c-choose" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'touch:Forerunner 965' 'dtap:Forerunner 965' \
+  drv_tb "$c-choose" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'touch:Forerunner 965' 'dtap:Forerunner 965' \
     'sleep:3000' 'find:Heart rate sensors found' 'focused'
   adb pull /data/local/tmp/tbshots "tbshots/$c" < /dev/null >> "$STEPLOG" 2>&1
   tb_off
