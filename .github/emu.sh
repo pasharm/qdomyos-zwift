@@ -70,7 +70,10 @@ tb_start() {
 drv_tb() {
   local name=$1
   drv "$@"
-  grep -a -q -E "updated TalkBack|Close tutorial" "drv/$name.txt" || return 0
+  if ! grep -a -q -E "updated TalkBack|Close tutorial" "drv/$name.txt"; then
+    tb_no_markup "$name"
+    return 0
+  fi
   near tbwindow "$name: the tutorial of TalkBack came during the pass, the pass once more"
   mv "drv/$name.txt" "drv/$name-tutorial.txt"
   tb_window "$name"
