@@ -121,9 +121,13 @@ talkback() {
   # a swipe that lands on an entry of the menu (MENU_RX of qz.sh plus the modern ones) / on the page or header
   compare "$c" "menu-swipe-in-menu" \
     "$(yn "^swipe:right: focused '(Profile: .*|Settings|Charts|Open Train Program|Open GPX|Save FIT|Save GPX|Workouts History|Swag Bag|Wizard|Community|Quit|Help|Credits|Training programs|Workouts)'" "$c-swipe")"
-  local onpage=$(yn "^swipe:right: focused '(◄|Main menu|Floating window|Lock tiles|Unlock tiles|Pause|Stop|Start|Lap|.*Bluetooth.*|)' " "$c-swipe")
+  # a swipe that lands on the header or the page under the menu: compared with the base (a head without the
+  # modality fix, test/t560-fix, does as master does)
+  local onpage=$(yn "^swipe:right: focused '(◄|Main menu|Floating window|Lock tiles|Unlock tiles|Pause|Stop|Start|Lap|QZ Fitness|.*Bluetooth.*|)' " "$c-swipe")
   say "talkback $c: a swipe from the menu button reached the page under the menu: $onpage"
-  if [ "$side" = h ] && [ "$onpage" = yes ]; then fail "check $c: a swipe from the menu button went to the page under the open menu"; fi
+  local menu_ok=no
+  tb_has "^swipe:right: focused '" "$c-swipe" && [ "$onpage" = no ] && ! tb_has "^swipe:right: focused 'null'" "$c-swipe" && menu_ok=yes
+  compare "$c" "menu-swipe-not-on-page" "$menu_ok"
   # T-560: a text inside a menu entry is not a second stop (Qt's focusable text alone gave 'Wizard'
   # twice in a row, run 43793272467 hm)
   local twice
@@ -189,6 +193,11 @@ adb wait-for-device
 emu_sleep 3
 logcat_start
 a11y_build || proves_nothing "no A11yDriver"
+# TalkBack 15's tutorial "Welcome to the updated TalkBack" (TrainingActivity) came over the app a few
+# seconds into a pass, and the swipes walked it (runs 43799153429, 43801005217, 43802917884): off for the
+# run (adb root); tb_window before each pass stays as a guard
+adb shell pm disable "$TB_PKG/com.google.android.accessibility.talkback.trainingcommon.TrainingActivity" \
+  < /dev/null >> "$STEPLOG" 2>&1 || near tbwindow "TrainingActivity of TalkBack not disabled"
 mkdir -p tbshots
 for side in b h; do
   if [ "$side" = b ]; then apk=apk-base/android-debug.apk; else apk=apk-head/android-debug.apk; fi
