@@ -8256,6 +8256,8 @@ import AndroidStatusBar 1.0
                             width: parent.width
                         }
                         Layout.fillWidth: true
+                        // the image only: the name a screen reader reads (a brand, as on the image)
+                        Accessible.name: "Peloton"
                         onClicked: {
                             peloton_connect_clicked()
                         }

@@ -1877,7 +1877,9 @@ ApplicationWindow {
         bottomPadding: getBottomPadding()
         leftPadding: getLeftPadding()
         rightPadding: window.ui.modern ? 0 : getRightPadding()
-        Accessible.ignored: !drawer.opened
+        // No Accessible.ignored here: a Drawer is not an Item, and Qt 5.15.0 (Android) writes it into
+        // the popup's private data (QTBUG-83738, fixed in 5.15.1). A closed drawer is out of the
+        // accessibility tree anyway (QQuickPopup takes its item off the window when it closes)
 
         // Classic look: the background of the style, untouched. Modern look: it is hidden (with
         // it its shadow) and the sheet below takes its place
@@ -2022,6 +2024,8 @@ ApplicationWindow {
                         width: parent.width
                     }
                     width: parent.width
+                    // the image only: the name a screen reader reads (a brand, as on the image)
+                    Accessible.name: "Strava"
                     onClicked: drawerAction("strava")
                 }
 
@@ -2035,6 +2039,7 @@ ApplicationWindow {
                         width: parent.width
                     }
                     width: parent.width
+                    Accessible.name: "Peloton"
                     onClicked: drawerAction("peloton")
                 }
 
@@ -2049,6 +2054,7 @@ ApplicationWindow {
                         height: 48
                     }
                     width: parent.width
+                    Accessible.name: "Garmin Connect"
                     onClicked: drawerAction("garmin")
                 }
 
@@ -2062,6 +2068,7 @@ ApplicationWindow {
                         width: parent.width
                     }
                     width: parent.width
+                    Accessible.name: "Intervals.icu"
                     onClicked: drawerAction("intervals")
                 }
 
