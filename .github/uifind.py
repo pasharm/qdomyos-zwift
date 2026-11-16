@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# emu-lib: tools/emu/uifind.py sha 32991f748e39 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/uifind.py sha 33792ccf5bfe - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): find a control of a uiautomator dump the way the user sees it - only the part
 # of it that is on the screen, not under the app header, not under a popup or the side menu.
 # One file for every emu branch, delivered by tools/emu/sync.py as .github/uifind.py.
@@ -41,6 +41,8 @@
 # nodes (its bounds are the band between the header and the navigation bar), and everything
 # else - side menu, popups, cards, the round help button - drawn over both; which of those is
 # over which the dump does not tell (the card of T-473 hides the help button that comes after it).
+# Inside the page: the pinned header of an expanded section (modern view of master) is drawn over the
+# rows scrolled under it - those are "above" (T-561, lesson 6; Screen._pinned).
 # Two controls of the same name on the screen are an error, not "take the topmost": the result
 # of a tap must not depend on which one the dump lists first (--first only when meant).
 import re
@@ -50,6 +52,7 @@ import xml.etree.ElementTree as ET
 QT_NODE = "android.view.View$VirtualChild"
 MIN_VISIBLE = 40
 MERGE_GAP = 60  # px: over layers closer than this are one panel (card title and its buttons: 29 px)
+PIN_OVERLAP = 10  # px: a pinned section header lies at least this much over a row scrolled under it
 
 
 def parse_bounds(s):
@@ -198,6 +201,50 @@ class Screen:
             break  # one QML window per dump
         self.over_areas = self._merge([(r, self._name_in(t) or t.get("bounds"))
                                        for t, r in self.cover.items() if self.layer.get(t) == "over"])
+        self.pinned = self._pinned()
+
+    def _lineage(self, n):
+        """The node, its ancestors and its descendants."""
+        out = set(n.iter("node"))
+        a = self.parent.get(n)
+        while a is not None:
+            out.add(a)
+            a = self.parent.get(a)
+        return out
+
+    def _pinned(self):
+        # A pinned section header of the page (the modern view of master: an expanded section scrolled up
+        # keeps its header at the top of the band, drawn over the rows of the section - T-561, lesson 6,
+        # 43787869713: "Wahoo Options" under "Bike Options" was tapped at y 297, the tap went to the
+        # header). Its top is the top of the band (2 px), it is lower than half the band (the vertical scroll
+        # bar from the band top is not one), and it lies at least PIN_OVERLAP px over a page node that is not
+        # its ancestor or descendant, starts above it and does not hold it - a row scrolled under it. A plain
+        # first row at the band top lies over nothing. [(node, rect, name, its lineage)]
+        if self.page is None:
+            return []
+        band = self.band()
+        if not band:
+            return []
+        nodes = [d for d in self.page.iter("node") if d is not self.page]
+        out = []
+        for h in nodes:
+            r = parse_bounds(h.get("bounds"))
+            if empty(r) or abs(r[1] - band[0]) > 2 or r[3] - r[1] >= (band[1] - band[0]) / 2:
+                continue
+            lineage = self._lineage(h)
+            for m in nodes:
+                mr = parse_bounds(m.get("bounds"))
+                if m in lineage or empty(mr) or mr[1] >= r[1] - 2:
+                    continue
+                # h inside m: m is the panel h sits on, not a row under it (the tool bar of the Qt file
+                # dialog [0,242][1438,416] with its buttons "←" [550,252][773,419] as siblings - 43535379515)
+                if inside(r, (mr[0] - PIN_OVERLAP, mr[1] - PIN_OVERLAP, mr[2] + PIN_OVERLAP, mr[3] + PIN_OVERLAP)):
+                    continue
+                both = meet(mr, r)
+                if both is not None and both[3] - both[1] >= PIN_OVERLAP:
+                    out.append((h, r, label_of(h)[:40] or h.get("bounds"), lineage))
+                    break
+        return out
 
     @staticmethod
     def _merge(areas):
@@ -262,6 +309,15 @@ class Screen:
             return None, "covered by '%s'" % (self._name_in(self.under[top]) or self.under[top].get("bounds"))
         if self.layer.get(top) in ("over", "full"):
             return vis, ""
+        if self.layer.get(top) == "page":
+            for h, r, name, lineage in self.pinned:
+                if n in lineage:
+                    continue
+                vis = self._cut(vis, r)
+                if vis is None:
+                    # "above": the row is scrolled up under the header - bring_in and scroll_to of lib.sh swipe
+                    # down for it (for "covered by" scroll_to swipes up, away from it)
+                    return None, "above, under the pinned header '%s'" % name
         for r, name in self.over_areas:
             vis = self._cut(vis, r)
             if vis is None:
@@ -402,11 +458,19 @@ FREE_EDGE = 50  # px kept from the edges of the page band
 FREE_MARGIN = 10  # px around the start kept clear of taking nodes
 
 
-def taking(n):
+def taking(n, band=None):
     """A node that may take a drag started on it: a switch row (the whole row is the control), a text
-    field, anything marked clickable."""
-    return (n.get("checkable") == "true" or n.get("clickable") == "true"
-            or "EditText" in (n.get("class") or ""))
+    field, anything marked clickable, and a scrollable node lower than half the page band (band - its
+    (top, bottom)): a SpinBox or a Slider of Qt 5.15 is a SeekBar, scrollable, not clickable - the survey
+    drag at x 720 started on the "+" of a SpinBox and changed the number (T-561, lesson 3, 43725870970).
+    A taller one is the page itself (a WebView page, an Android ScrollView) or its vertical scroll bar."""
+    if (n.get("checkable") == "true" or n.get("clickable") == "true"
+            or "EditText" in (n.get("class") or "")):
+        return True
+    if n.get("scrollable") != "true" or not band:
+        return False
+    r = parse_bounds(n.get("bounds"))
+    return not empty(r) and r[3] - r[1] < (band[1] - band[0]) / 2
 
 
 def free_y(scr, x, y):
@@ -419,7 +483,7 @@ def free_y(scr, x, y):
     # the page layer only: an Android container over the window (the systemui scrim, clickable, full
     # screen) would take every y
     for n in (scr.page.iter("node") if scr.page is not None else scr.nodes):
-        if taking(n):
+        if taking(n, band):
             vis, _ = scr.visible(n)
             if vis is not None:
                 rects.append(vis)

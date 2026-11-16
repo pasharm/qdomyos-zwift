@@ -1,4 +1,4 @@
-// emu-lib: tools/emu/A11yDriver.java sha be1ff42d8e45 - edit there, then tools/emu/sync.py (T-505)
+// emu-lib: tools/emu/A11yDriver.java sha f6393f1f6c5a - edit there, then tools/emu/sync.py (T-505)
 // Test only (T-222, T-487; one source since T-505: tools/emu/A11yDriver.java of the work folder, copied
 // into .github/ of a branch by tools/emu/sync.py): send the app the accessibility actions TalkBack sends,
 // without TalkBack (or with it on, see --keep; the image has Google TalkBack 15). Runs through app_process
@@ -8,8 +8,10 @@
 //   CLASSPATH=/data/local/tmp/a11y.jar app_process / A11yDriver [--keep] step [step ...]
 //   step: list | sleep:<ms> | find:<desc> | focus:<desc> | click:<desc> | fwd:<desc> | back:<desc>
 //         | swipe:right|left|up|down | dtap | dtap:<desc> | touch:<desc> | touchat:<x>,<y> | focused | mark:<text>
-//         | click=<name> | fwd@<x>,<y> | drag@<x>,<y1>,<y2>
+//         | click=<name> | fwd@<x>,<y> | drag@<x>,<y1>,<y2> | tswipe:right|left|up|down
 // touchat: a resting finger at a point, for a node with no description in the tree.
+// tswipe:<dir>: a swipe timed - "moved after <ms> ms" from the end of the stroke to TalkBack's focus on
+// another node (polled every 20 ms), or "no change in 5000 ms" (T-560: the cost of the app's node answers).
 // dtap:<desc>: the double tap only if the focus is on a node whose description starts with <desc>, else
 // "NOT FOCUSED (focused ...)" and no tap - a touch on the node that already has the focus gives TalkBack no
 // new event, and a plain dtap presses whatever kept the focus (T-552 lesson 7).
@@ -109,6 +111,26 @@ public class A11yDriver {
             stroke(720 - dx * 350, 1300 - dy * 350, 720 + dx * 350, 1300 + dy * 350, 200);
             listen(step, 2500);
             printFocused(step);
+            return;
+        }
+        if (verb.equals("tswipe")) {
+            // tswipe:<dir> (T-560): the time from the end of the swipe to TalkBack's focus on another node -
+            // how long TalkBack took to find the next stop (the app answers its node requests); 5 s at most
+            Log.i("A11yDriver", step);
+            String before = focusedText();
+            int dx = arg.equals("right") ? 1 : arg.equals("left") ? -1 : 0;
+            int dy = arg.equals("down") ? 1 : arg.equals("up") ? -1 : 0;
+            stroke(720 - dx * 350, 1300 - dy * 350, 720 + dx * 350, 1300 + dy * 350, 200);
+            long start = SystemClock.uptimeMillis();
+            String now = before;
+            while (now.equals(before) && SystemClock.uptimeMillis() - start < 5000) {
+                Thread.sleep(20);
+                now = focusedText();
+            }
+            long took = SystemClock.uptimeMillis() - start;
+            System.out.println(step + ": " + (now.equals(before) ? "no change in 5000 ms" : "moved after " + took + " ms"));
+            printFocused(step);
+            Thread.sleep(500);
             return;
         }
         if (verb.equals("dtap")) {
@@ -255,6 +277,12 @@ public class A11yDriver {
         } catch (Exception e) {
             System.out.println("screenshot: " + e);
         }
+    }
+
+    private static String focusedText() {
+        AccessibilityNodeInfo root = automation.getRootInActiveWindow();
+        AccessibilityNodeInfo focused = root == null ? null : root.findFocus(AccessibilityNodeInfo.FOCUS_ACCESSIBILITY);
+        return focused == null ? "NONE" : describe(focused);
     }
 
     private static void printFocused(String step) {

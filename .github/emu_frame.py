@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# emu-lib: tools/emu/emu_frame.py sha 25045e18ed33 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/emu_frame.py sha 292a1b549c3b - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): compare two raw frames of `adb exec-out screencap` (no -p) outside masks, and the
 # layout of two uiautomator dumps. Delivered with lib.sh by tools/emu/sync.py as .github/emu_frame.py.
 #
@@ -380,8 +380,16 @@ def main(argv):
             print("dump not readable", file=sys.stderr)
             return 2
         d = page_diff(a, b)
+        pa, pb = args[:args.index("--")], args[args.index("--") + 1:]
+
+        def names(ps):
+            first, last = os.path.basename(ps[0]), os.path.basename(ps[-1])
+            return first if len(ps) == 1 else "%s..%s" % (first, last)
+        # the line repeats itself: which dumps and rows gave the numbers (T-561, lesson 7: 54/75/81 not reproduced)
         print("nodes %d / %d" % (len(a), len(b)) + ("" if d is None else
-              ", first difference at %d: %r / %r" % d))
+              ", first difference at %d: %r / %r" % d)
+              + " – %d + %d dumps (%s -- %s), rows %s" % (len(pa), len(pb), names(pa), names(pb),
+                                                           "%d,%d" % rows if rows else "all"))
         return 0 if d is None else 1
     if argv[0] == "layout":
         return 0 if layout_same(argv[1], argv[2]) else 1

@@ -13,7 +13,8 @@
 # The bar: HeartRateSuggestion.qml, the Label of the text and the buttons Choose / Not now / Don't ask again;
 # with t473_fake_sensors homeform "finds" two sensors 30 s and 45 s after it starts (hook b99a71cb5).
 # Cases <side><case>: side b/h; c - classic en, m - modern en (both: menu, then the bar); f - T-503, the focus
-# after Cancel of the sensor list (head: a build of fix/talkback-focus-after-popup + the hook).
+# after Cancel of the sensor list (head: a build of fix/talkback-focus-after-popup + the hook); s - T-560, how long
+# TalkBack takes per swipe on the settings page (classic en).
 HOME_RX='^(Start|Stop|Pause)$'
 HOME_READY_RX='^Contact QZ support$'
 . .github/lib.sh
@@ -104,7 +105,7 @@ compare() {
 
 # talkback <case> <ui_modern>: the menu and the bar with TalkBack on
 talkback() {
-  local c=$1 modern=$2 n2 menu entry side=${1:0:1}
+  local c=$1 modern=$2 n2 menu entry i side=${1:0:1}
   if [ "$modern" = true ]; then menu='Main menu'; else menu='◄'; fi
   n2=$(grep -a -c "T-473 test: fake sensor 2" full_logcat.txt)
   start_case "$c" ui_modern=$modern app_language=en fakedevice_treadmill=true \
@@ -219,6 +220,43 @@ focusback() {
   compare "$c" "focus-back-on-choose" "$(yn "^focused: focused 'Choose'" "$c-cancel")"
 }
 
+# settingstime <case> (T-560, a finding of the reviewer: a text node asks for the node under its centre -
+# coveredByActionable, a walk from the root - each time TalkBack asks for it): the settings page of the
+# classic look, its many texts and rows, opened without TalkBack; then TalkBack on and swipes right, each
+# timed from the end of the swipe to the focus on another node (tswipe of the driver). The head is red when
+# its median is above 1.5 times the base's and 150 ms more, or it moved fewer times than the base.
+settingstime() {
+  local c=$1 side=${1:0:1} steps="" i ms moved med max
+  start_case "$c" ui_modern=false app_language=en fakedevice_treadmill=true || return 1
+  settings_open || return 1
+  tb_start "$c"
+  tb_window "$c"
+  for i in $(seq 1 25); do steps="$steps tswipe:right"; done
+  # shellcheck disable=SC2086
+  drv_tb "$c-time" --keep 'touch:General Options' 'sleep:1500' $steps
+  tb_off
+  ms=$(grep -a "^tswipe:right: moved after " "drv/$c-time.txt" | cut -d' ' -f4 | sort -n)
+  moved=$(printf '%s\n' "$ms" | grep -c .)
+  med=$(printf '%s\n' "$ms" | awk 'NF { a[n++] = $1 } END { print n ? a[int(n / 2)] : -1 }')
+  max=$(printf '%s\n' "$ms" | tail -n 1)
+  say "talkback $c: settings, 25 swipes: moved $moved, median ${med} ms, max ${max:-?} ms"
+  if [ "$side" = b ]; then
+    R[time.med]=$med
+    R[time.moved]=$moved
+    return 0
+  fi
+  local bmed=${R[time.med]:--1} bmoved=${R[time.moved]:-0}
+  if [ "$bmed" -lt 0 ]; then
+    near settingstime "$c: no base to compare with"
+  elif [ "$med" -lt 0 ] || [ "$med" -gt $(( bmed * 3 / 2 + 150 )) ]; then
+    fail "check $c: settings-swipe-time: median $med ms, base $bmed ms"
+  elif [ "$moved" -lt "$bmoved" ]; then
+    fail "check $c: settings-swipe-time: moved $moved times, base $bmoved"
+  else
+    say "check $c: settings-swipe-time: median $med ms (base $bmed ms): OK"
+  fi
+}
+
 emu_init
 [ "$EMU_API" -ge 34 ] || proves_nothing "TalkBack cases on API $EMU_API: the driver injects TalkBack gestures from API 34"
 adb shell pm list packages < /dev/null | grep -q "$TB_PKG" || proves_nothing "no TalkBack in the image"
@@ -236,6 +274,7 @@ for side in b h; do
   talkback "${side}c" false
   talkback "${side}m" true
   focusback "${side}f"
+  settingstime "${side}s"
   adb uninstall "$PKG" < /dev/null > /dev/null 2>&1
 done
 finish
