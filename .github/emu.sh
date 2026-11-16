@@ -199,7 +199,8 @@ focusback() {
     'sleep:3000' 'find:Heart rate sensors found' 'focused'
   adb pull /data/local/tmp/tbshots "tbshots/$c" < /dev/null >> "$STEPLOG" 2>&1
   tb_off
-  tb_check "^dtap:Choose: focused 'Choose'" "$c-cancel" "Choose pressed by a double tap"
+  # Choose's press is the list opening (with T-503 the focus moves into it, run 43809823579 hf)
+  tb_check "^find:Cancel: 'Cancel' " "$c-cancel" "Choose pressed by a double tap: the list opened"
   # Cancel's press is the list closing: after the double tap the focus is no longer on Cancel, it is gone
   tb_check "^find:Cancel: NOT FOUND" "$c-cancel" "the list closed by Cancel"
   # in the list: a swipe reaches a row or Cancel; on the page: a swipe reaches the bar or the page. Choose is
