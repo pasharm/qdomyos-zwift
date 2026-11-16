@@ -58,21 +58,29 @@ compare() {
 
 # talkback <case> <ui_modern>: the menu and the bar with TalkBack on
 talkback() {
-  local c=$1 modern=$2 n2 menu entry
+  local c=$1 modern=$2 n2 menu entry side=${1:0:1}
   if [ "$modern" = true ]; then menu='Main menu'; else menu='◄'; fi
   n2=$(grep -a -c "T-473 test: fake sensor 2" full_logcat.txt)
   start_case "$c" ui_modern=$modern app_language=en fakedevice_treadmill=true \
     heart_rate_belt_suggest=true t473_fake_sensors=true || return 1
   wait_log "$c" "T-473 test: fake sensor 2" "$n2" || return 1
   tb_on
-  # the menu: opened by a double tap on its button; the tree with it open; a touch on Settings and swipes
+  # the menu: opened by a double tap on its button; the tree with it open; a touch on Settings and a double
+  # tap on it (in the menu just opened: after swipes it scrolls and a touch misses - run 43793272467, bm-menu2);
+  # the settings page shows the header button Search settings, named in both looks (hidden on the home page, main.qml ~1459)
   drv "$c-menu" --keep "focus:$menu" 'sleep:1500' "dtap:$menu" 'sleep:3000' 'list' 'find:Settings' \
-    'touch:Settings' 'swipe:right' 'swipe:right' 'swipe:right'
-  # from the menu button with the menu open: what a swipe right reaches next
-  drv "$c-menu2" --keep 'touch:Settings' "dtap:Settings" 'sleep:4000' 'find:Settings' 'focused'
-  # the settings page, if it opened, back to the home page (the system back closes a page of QZ)
+    'touch:Settings' 'dtap:Settings' 'sleep:4000' 'find:Search settings'
+  # the settings page, if it opened, back to the home page (the system back closes a page of QZ); the menu
+  # left open by a failed press is closed by it too
   adb shell input keyevent 4 < /dev/null > /dev/null 2>&1
   emu_sleep 3
+  ensure_app
+  # swipes right from the menu button once the menu opened: in the menu, not on the page under it
+  drv "$c-swipe" --keep "focus:$menu" 'sleep:1500' "dtap:$menu" 'sleep:3000' 'swipe:right' 'swipe:right' \
+    'swipe:right' 'swipe:right'
+  adb shell input keyevent 4 < /dev/null > /dev/null 2>&1
+  emu_sleep 3
+  ensure_app
   for i in 1 2 3 4; do
     drv "$c-wait$i" --keep 'sleep:3000' 'find:Heart rate sensors found'
     grep -a -q "^find:Heart rate sensors found: '" "drv/$c-wait$i.txt" && break
@@ -86,7 +94,13 @@ talkback() {
   say "talkback $c: Settings node with the menu open: ${entry:-NOT FOUND}"
   compare "$c" "menu-entry-visible" "$(yn "^find:Settings: 'Settings' .* visible=true" "$c-menu")"
   compare "$c" "menu-entry-by-touch" "$(yn "^touch:Settings: focused 'Settings'" "$c-menu")"
-  compare "$c" "menu-entry-opens-settings" "$(yn "^dtap:Settings: focused 'Settings'" "$c-menu2")"
+  compare "$c" "menu-entry-opens-settings" "$(yn "^find:Search settings: 'Search settings' .* visible=true" "$c-menu")"
+  # a swipe that lands on an entry of the menu (MENU_RX of qz.sh plus the modern ones) / on the page or header
+  compare "$c" "menu-swipe-in-menu" \
+    "$(yn "^swipe:right: focused '(Profile: .*|Settings|Charts|Open Train Program|Open GPX|Save FIT|Save GPX|Workouts History|Swag Bag|Wizard|Community|Quit|Help|Credits|Training programs|Workouts)'" "$c-swipe")"
+  local onpage=$(yn "^swipe:right: focused '(◄|Main menu|Floating window|Lock tiles|Unlock tiles|Pause|Stop|Start|Lap|.*Bluetooth.*|)' " "$c-swipe")
+  say "talkback $c: a swipe from the menu button reached the page under the menu: $onpage"
+  if [ "$side" = h ] && [ "$onpage" = yes ]; then fail "check $c: a swipe from the menu button went to the page under the open menu"; fi
   compare "$c" "bar-text-by-touch" "$(yn "^touch:Heart rate sensors found: focused 'Heart rate sensors found: 2'" "$c-bar")"
   compare "$c" "bar-text-by-swipe-left" "$(yn "^swipe:left: focused 'Heart rate sensors found: 2'" "$c-bar")"
   tb_check "^touch:Choose: focused 'Choose'" "$c-bar" "Choose by touch (as before)"
