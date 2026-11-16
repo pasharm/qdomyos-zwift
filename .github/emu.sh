@@ -38,6 +38,16 @@ tb_has() { grep -q -E "$1" "drv/$2.txt"; }
 # yn <regex> <drv name>: yes / no
 yn() { if tb_has "$1" "$2"; then echo yes; else echo no; fi; }
 
+# tb_window: TalkBack's own box over the app ("Welcome to the updated TalkBack", run 43799153429: it came
+# up between two passes, and the swipes walked it) is closed by the back key
+tb_window() {
+  if adb shell dumpsys window < /dev/null 2>/dev/null | grep -a "mCurrentFocus" | grep -q "$TB_PKG"; then
+    near tbwindow "$1: a box of TalkBack over the app, closed by back"
+    adb shell input keyevent 4 < /dev/null > /dev/null 2>&1
+    emu_sleep 2
+  fi
+}
+
 # results of the base, per case letter: R_<what>_<case>
 declare -A R
 
@@ -70,6 +80,7 @@ talkback() {
   # the menu: opened by a double tap on its button; the tree with it open; a touch on Settings and a double
   # tap on it (in the menu just opened: after swipes it scrolls and a touch misses - run 43793272467, bm-menu2);
   # the settings page shows the header button Search settings, named in both looks (hidden on the home page, main.qml ~1459)
+  tb_window "$c"
   drv "$c-menu" --keep "focus:$menu" 'sleep:1500' "dtap:$menu" 'sleep:3000' 'list' 'find:Settings' \
     'touch:Settings' 'dtap:Settings' 'sleep:4000' 'find:Search settings'
   # the settings page, if it opened, back to the home page (the system back closes a page of QZ); the menu
@@ -78,17 +89,20 @@ talkback() {
   emu_sleep 3
   ensure_app
   # swipes right from the menu button once the menu opened: in the menu, not on the page under it
+  tb_window "$c"
   drv "$c-swipe" --keep "focus:$menu" 'sleep:1500' "dtap:$menu" 'sleep:3000' 'swipe:right' 'swipe:right' \
     'swipe:right' 'swipe:right'
   adb shell input keyevent 4 < /dev/null > /dev/null 2>&1
   emu_sleep 3
   ensure_app
   for i in 1 2 3 4; do
+    tb_window "$c"
     drv "$c-wait$i" --keep 'sleep:3000' 'find:Heart rate sensors found'
     grep -a -q "^find:Heart rate sensors found: '" "drv/$c-wait$i.txt" && break
     near tree "$c: no bar in the TalkBack tree, look $i"
   done
   # first a touch at another point: a second touch at the same point gives TalkBack no new event
+  tb_window "$c"
   drv "$c-bar" --keep 'touch:Choose' 'touch:Heart rate sensors found' 'touch:Choose' 'swipe:left' 'focused'
   adb pull /data/local/tmp/tbshots "tbshots/$c" < /dev/null >> "$STEPLOG" 2>&1
   tb_off
@@ -125,16 +139,20 @@ focusback() {
   wait_log "$c" "T-473 test: fake sensor 2" "$n2" || return 1
   tb_on
   for i in 1 2 3 4; do
+    tb_window "$c"
     drv "$c-wait$i" --keep 'sleep:3000' 'find:Heart rate sensors found'
     grep -a -q "^find:Heart rate sensors found: '" "drv/$c-wait$i.txt" && break
     near tree "$c: no bar in the TalkBack tree, look $i"
   done
+  tb_window "$c"
   drv "$c-cancel" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'find:Cancel' 'touch:Cancel' 'dtap:Cancel' \
     'sleep:3000' 'find:Cancel' 'focused'
   # T-265: the list fades in (the Material Popup's enter: opacity 0 -> 1) - swipes from Choose once it
   # opened stay in the modal list, not on the bar and the page under it
+  tb_window "$c"
   drv "$c-modal" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'swipe:right' 'swipe:right' 'swipe:right' \
     'swipe:right' 'touch:Cancel' 'dtap:Cancel' 'sleep:3000'
+  tb_window "$c"
   drv "$c-choose" --keep 'touch:Choose' 'dtap:Choose' 'sleep:3000' 'touch:Forerunner 965' 'dtap:Forerunner 965' \
     'sleep:3000' 'find:Heart rate sensors found' 'focused'
   adb pull /data/local/tmp/tbshots "tbshots/$c" < /dev/null >> "$STEPLOG" 2>&1
@@ -142,9 +160,12 @@ focusback() {
   tb_check "^dtap:Choose: focused 'Choose'" "$c-cancel" "Choose pressed by a double tap"
   # Cancel's press is the list closing: after the double tap the focus is no longer on Cancel, it is gone
   tb_check "^find:Cancel: NOT FOUND" "$c-cancel" "the list closed by Cancel"
+  # in the list: a swipe reaches a row or Cancel; on the page: a swipe reaches the bar or the page. Choose is
+  # left out: TalkBack's focus stays on it when the list opens, and the first swipe may stay there too
+  # (run 43799153429 hf: Choose, the window, then the rows)
   local inlist=no onpage
-  grep -a -q "^swipe:right: focused " "drv/$c-modal.txt" && inlist=yes
-  onpage=$(yn "^swipe:right: focused '(Choose|Not now|Don't ask again|Heart rate sensors found.*|Main menu|Floating window|Pause|Stop|Start|Lap|)' " "$c-modal")
+  grep -a -q -E "^swipe:right: focused '(.*signal|Cancel)'" "drv/$c-modal.txt" && inlist=yes
+  onpage=$(yn "^swipe:right: focused '(Not now|Don't ask again|Heart rate sensors found.*|Main menu|Floating window|Pause|Stop|Start|Lap|)' " "$c-modal")
   [ "$onpage" = yes ] && inlist=no
   say "talkback $c: a swipe in the open list reached the page under it: $onpage"
   compare "$c" "dialog-swipe-in-dialog" "$inlist"
