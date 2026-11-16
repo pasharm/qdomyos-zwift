@@ -2995,9 +2995,13 @@ Odpowiedzi na poniższe pytania pozwolą dostosować QZ do Twojego sprzętu i ce
         <translation>Wyczyść filtr</translation>
     </message>
     <message>
+        <source>Importing workouts...</source>
+        <translation type="vanished">Importowanie treningów…</translation>
+    </message>
+    <message>
         <source>Processing workout files...
 This may take a few moments on first startup.</source>
-        <translation>Przetwarzanie plików treningów…
+        <translation type="vanished">Przetwarzanie plików treningów…
 Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
     </message>
     <message>
@@ -3121,6 +3125,26 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
         <translation>Brak treningów tego dnia</translation>
     </message>
     <message>
+        <source>Adding workouts to the history</source>
+        <translation>Dodawanie treningów do historii</translation>
+    </message>
+    <message>
+        <source>Copying workout files</source>
+        <translation>Kopiowanie plików treningów</translation>
+    </message>
+    <message>
+        <source>Adding workouts to the history: %1 of %2</source>
+        <translation>Dodawanie treningów do historii: %1 z %2</translation>
+    </message>
+    <message>
+        <source>Copying workout files: %1 of %2</source>
+        <translation>Kopiowanie plików treningów: %1 z %2</translation>
+    </message>
+    <message>
+        <source>Open on Peloton</source>
+        <translation>Otwórz w Peloton</translation>
+    </message>
+    <message>
         <source>Finished workouts appear here: open one to see its charts.</source>
         <translation>Tu pojawią się ukończone treningi: otwórz dowolny, aby zobaczyć jego wykresy.</translation>
     </message>
@@ -3153,10 +3177,6 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
         <translation>Wszystkie pliki (*)</translation>
     </message>
     <message>
-        <source>Importing workouts...</source>
-        <translation>Importowanie treningów…</translation>
-    </message>
-    <message>
         <source>Filter by date</source>
         <translation>Filtruj według daty</translation>
     </message>
@@ -3167,10 +3187,6 @@ Przy pierwszym uruchomieniu może to chwilę potrwać.</translation>
     <message>
         <source>Load training program</source>
         <translation>Wczytaj program treningowy</translation>
-    </message>
-    <message>
-        <source>Open on Peloton</source>
-        <translation>Otwórz w Peloton</translation>
     </message>
     <message>
         <source>has a workout</source>

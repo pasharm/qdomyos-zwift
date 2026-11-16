@@ -2995,9 +2995,13 @@ Met de volgende vragen stem je QZ af op je apparatuur en doelen.</translation>
         <translation>Filter wissen</translation>
     </message>
     <message>
+        <source>Importing workouts...</source>
+        <translation type="vanished">Trainingen importeren…</translation>
+    </message>
+    <message>
         <source>Processing workout files...
 This may take a few moments on first startup.</source>
-        <translation>Trainingsbestanden verwerken…
+        <translation type="vanished">Trainingsbestanden verwerken…
 Bij de eerste start kan dit even duren.</translation>
     </message>
     <message>
@@ -3121,6 +3125,26 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Geen trainingen op deze dag</translation>
     </message>
     <message>
+        <source>Adding workouts to the history</source>
+        <translation>Trainingen worden aan de geschiedenis toegevoegd</translation>
+    </message>
+    <message>
+        <source>Copying workout files</source>
+        <translation>Trainingsbestanden worden gekopieerd</translation>
+    </message>
+    <message>
+        <source>Adding workouts to the history: %1 of %2</source>
+        <translation>Trainingen worden aan de geschiedenis toegevoegd: %1 van %2</translation>
+    </message>
+    <message>
+        <source>Copying workout files: %1 of %2</source>
+        <translation>Trainingsbestanden worden gekopieerd: %1 van %2</translation>
+    </message>
+    <message>
+        <source>Open on Peloton</source>
+        <translation>Openen in Peloton</translation>
+    </message>
+    <message>
         <source>Finished workouts appear here: open one to see its charts.</source>
         <translation>Afgeronde trainingen verschijnen hier: open er een om de grafieken te bekijken.</translation>
     </message>
@@ -3153,10 +3177,6 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Alle bestanden (*)</translation>
     </message>
     <message>
-        <source>Importing workouts...</source>
-        <translation>Trainingen importeren…</translation>
-    </message>
-    <message>
         <source>Filter by date</source>
         <translation>Filteren op datum</translation>
     </message>
@@ -3167,10 +3187,6 @@ Bij de eerste start kan dit even duren.</translation>
     <message>
         <source>Load training program</source>
         <translation>Trainingsprogramma laden</translation>
-    </message>
-    <message>
-        <source>Open on Peloton</source>
-        <translation>Openen in Peloton</translation>
     </message>
     <message>
         <source>has a workout</source>

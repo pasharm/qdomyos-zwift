@@ -2991,9 +2991,13 @@ Med följande frågor anpassas QZ efter din utrustning och dina mål.</translati
         <translation>Rensa filter</translation>
     </message>
     <message>
+        <source>Importing workouts...</source>
+        <translation type="vanished">Importerar träningspass…</translation>
+    </message>
+    <message>
         <source>Processing workout files...
 This may take a few moments on first startup.</source>
-        <translation>Bearbetar träningsfiler…
+        <translation type="vanished">Bearbetar träningsfiler…
 Det kan ta en stund vid första starten.</translation>
     </message>
     <message>
@@ -3117,6 +3121,26 @@ Det kan ta en stund vid första starten.</translation>
         <translation>Inga träningspass den här dagen</translation>
     </message>
     <message>
+        <source>Adding workouts to the history</source>
+        <translation>Lägger till träningspass i historiken</translation>
+    </message>
+    <message>
+        <source>Copying workout files</source>
+        <translation>Kopierar träningsfiler</translation>
+    </message>
+    <message>
+        <source>Adding workouts to the history: %1 of %2</source>
+        <translation>Lägger till träningspass i historiken: %1 av %2</translation>
+    </message>
+    <message>
+        <source>Copying workout files: %1 of %2</source>
+        <translation>Kopierar träningsfiler: %1 av %2</translation>
+    </message>
+    <message>
+        <source>Open on Peloton</source>
+        <translation>Öppna i Peloton</translation>
+    </message>
+    <message>
         <source>Finished workouts appear here: open one to see its charts.</source>
         <translation>Avslutade träningspass visas här: öppna ett om du vill se diagrammen.</translation>
     </message>
@@ -3149,10 +3173,6 @@ Det kan ta en stund vid första starten.</translation>
         <translation>Alla filer (*)</translation>
     </message>
     <message>
-        <source>Importing workouts...</source>
-        <translation>Importerar träningspass…</translation>
-    </message>
-    <message>
         <source>Filter by date</source>
         <translation>Filtrera efter datum</translation>
     </message>
@@ -3163,10 +3183,6 @@ Det kan ta en stund vid första starten.</translation>
     <message>
         <source>Load training program</source>
         <translation>Läs in träningsprogram</translation>
-    </message>
-    <message>
-        <source>Open on Peloton</source>
-        <translation>Öppna i Peloton</translation>
     </message>
     <message>
         <source>has a workout</source>

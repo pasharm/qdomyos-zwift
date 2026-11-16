@@ -2995,9 +2995,13 @@ The following questions will customize QZ for your equipment and goals.</source>
         <translation>필터 지우기</translation>
     </message>
     <message>
+        <source>Importing workouts...</source>
+        <translation type="vanished">운동을 가져오는 중…</translation>
+    </message>
+    <message>
         <source>Processing workout files...
 This may take a few moments on first startup.</source>
-        <translation>운동 파일을 처리하는 중…
+        <translation type="vanished">운동 파일을 처리하는 중…
 처음 실행할 때는 시간이 조금 걸릴 수 있습니다.</translation>
     </message>
     <message>
@@ -3121,6 +3125,26 @@ This may take a few moments on first startup.</source>
         <translation>이 날에는 운동이 없습니다</translation>
     </message>
     <message>
+        <source>Adding workouts to the history</source>
+        <translation>운동을 기록에 추가하는 중</translation>
+    </message>
+    <message>
+        <source>Copying workout files</source>
+        <translation>운동 파일 복사 중</translation>
+    </message>
+    <message>
+        <source>Adding workouts to the history: %1 of %2</source>
+        <translation>운동을 기록에 추가하는 중: %1/%2</translation>
+    </message>
+    <message>
+        <source>Copying workout files: %1 of %2</source>
+        <translation>운동 파일 복사 중: %1/%2</translation>
+    </message>
+    <message>
+        <source>Open on Peloton</source>
+        <translation>Peloton에서 열기</translation>
+    </message>
+    <message>
         <source>Finished workouts appear here: open one to see its charts.</source>
         <translation>완료한 운동이 여기에 표시됩니다. 운동을 열면 그래프를 볼 수 있습니다.</translation>
     </message>
@@ -3153,10 +3177,6 @@ This may take a few moments on first startup.</source>
         <translation>모든 파일 (*)</translation>
     </message>
     <message>
-        <source>Importing workouts...</source>
-        <translation>운동을 가져오는 중…</translation>
-    </message>
-    <message>
         <source>Filter by date</source>
         <translation>날짜로 필터</translation>
     </message>
@@ -3167,10 +3187,6 @@ This may take a few moments on first startup.</source>
     <message>
         <source>Load training program</source>
         <translation>훈련 프로그램 불러오기</translation>
-    </message>
-    <message>
-        <source>Open on Peloton</source>
-        <translation>Peloton에서 열기</translation>
     </message>
     <message>
         <source>has a workout</source>

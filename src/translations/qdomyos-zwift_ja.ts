@@ -3004,7 +3004,7 @@ The following questions will customize QZ for your equipment and goals.</source>
     </message>
     <message>
         <source>Importing workouts...</source>
-        <translation>ワークアウトをインポート中...</translation>
+        <translation type="vanished">ワークアウトをインポート中...</translation>
     </message>
     <message>
         <source>Workout History</source>
@@ -3029,7 +3029,7 @@ The following questions will customize QZ for your equipment and goals.</source>
     <message>
         <source>Processing workout files...
 This may take a few moments on first startup.</source>
-        <translation>ワークアウトファイルを処理しています...
+        <translation type="vanished">ワークアウトファイルを処理しています...
 初回起動時はしばらく時間がかかる場合があります。</translation>
     </message>
     <message>
@@ -3171,6 +3171,22 @@ This may take a few moments on first startup.</source>
     <message>
         <source>Open on Peloton</source>
         <translation>Pelotonで開く</translation>
+    </message>
+    <message>
+        <source>Adding workouts to the history</source>
+        <translation>ワークアウトを履歴に追加中</translation>
+    </message>
+    <message>
+        <source>Copying workout files</source>
+        <translation>ワークアウトファイルをコピー中</translation>
+    </message>
+    <message>
+        <source>Adding workouts to the history: %1 of %2</source>
+        <translation>ワークアウトを履歴に追加中: %1 / %2</translation>
+    </message>
+    <message>
+        <source>Copying workout files: %1 of %2</source>
+        <translation>ワークアウトファイルをコピー中: %1 / %2</translation>
     </message>
     <message>
         <source>has a workout</source>
