@@ -6,14 +6,12 @@ import QtQuick.Controls.Material 2.0
 
 ScrollView {
     contentWidth: -1
-    // The column with its margins, which are not in its implicit height (the end of the gear
-    // table was cut off)
+    // The column with its margins, which are not in its implicit height
     contentHeight: chainringColumn.implicitHeight + 2 * chainringColumn.anchors.margins
     focus: true
     // No anchors: the page is pushed on the StackView, which sizes it to fill and warned about
     // conflicting anchors
     id: gearSettingsWindow
-
     visible: true
     clip: true
 
@@ -341,7 +339,7 @@ ScrollView {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.right: parent.right
-        anchors.margins: window.ui.modern ? window.contentSideMargin : 20
+        anchors.margins: window.ui.modern ? Math.max(16, window.contentSideMargin) : 20
         spacing: window.ui.modern ? 12 : 20
         id: chainringColumn
 
@@ -387,9 +385,9 @@ ScrollView {
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                     Layout.maximumWidth: chainringColumn.width - 20
-                    font.pixelSize: window.ui.fontHint
+                    font.pixelSize: window.ui.modern ? window.ui.fontCaption : window.fontHint
                     bottomPadding: window.hintGap
-                    color: window.ui.inkMuted(Material.accent)
+                    color: window.ui.modern ? window.ui.textMuted : Material.accent
                 }
             }
         }
@@ -408,7 +406,7 @@ ScrollView {
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                     Layout.maximumWidth: chainringColumn.width - 20
-                    color: window.ui.inkMuted(Material.foreground)
+                    color: window.ui.modern ? window.ui.textMuted : Material.foreground
                 }
 
                 SpinBox {
@@ -464,7 +462,7 @@ ScrollView {
                     wrapMode: Text.WordWrap
                     Layout.fillWidth: true
                     Layout.maximumWidth: chainringColumn.width - 20
-                    color: window.ui.inkMuted(Material.foreground)
+                    color: window.ui.modern ? window.ui.textMuted : Material.foreground
                 }
                 SpinBox {
                     visible: !window.ui.modern
@@ -632,7 +630,7 @@ ScrollView {
                     // Modern look: a long label at a large text size takes two lines, not the
                     // width of the page
                     // with a bigger text the label wraps in two lines
-                    Layout.preferredHeight: window.ui.modern ? Math.max(50, contentItem.implicitHeight + 16) : (window.textScale !== 1 ? Math.max(50, contentItem.implicitHeight + 16) : 50)
+                    Layout.preferredHeight: window.ui.modern ? Math.max(48, contentItem.implicitHeight + 24) : (window.textScale !== 1 ? Math.max(50, contentItem.implicitHeight + 16) : 50)
                     font.bold: true
                     background: Rectangle {
                         // Modern look: the tonal pill of the other buttons, the bright purple
@@ -722,7 +720,7 @@ ScrollView {
                         wrapsText: true
                         text: qsTr("Add Gear")
                         Layout.fillWidth: true
-                        Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 24) : window.fontPx(40)
+                        Layout.preferredHeight: window.ui.modern ? Math.max(48, contentItem.implicitHeight + 24) : window.fontPx(40)
                         onClicked: addNewGear()
                     }
 
@@ -730,7 +728,7 @@ ScrollView {
                         wrapsText: true
                         text: qsTr("Clear Selected Gear and Following")
                         Layout.fillWidth: true
-                        Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 24) : window.fontPx(40)
+                        Layout.preferredHeight: window.ui.modern ? Math.max(48, contentItem.implicitHeight + 24) : window.fontPx(40)
                         onClicked: {
                             if (gearTable.currentRow >= 0) {
                                 clearGearsFromIndex(gearTable.currentRow)
@@ -742,7 +740,7 @@ ScrollView {
                         wrapsText: true
                         text: qsTr("Reset All Gears")
                         Layout.fillWidth: true
-                        Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 24) : window.fontPx(40)
+                        Layout.preferredHeight: window.ui.modern ? Math.max(48, contentItem.implicitHeight + 24) : window.fontPx(40)
                         onClicked: initializeGearRows()
                     }
                 }
@@ -773,11 +771,11 @@ ScrollView {
                                 anchors.centerIn: parent
                                 // Modern look: one line inside its column, smaller if it does not fit
                                 width: window.ui.modern ? parent.width - 8 : implicitWidth
-                                horizontalAlignment: Text.AlignHCenter
+                                horizontalAlignment: window.ui.modern ? Text.AlignHCenter : Text.AlignLeft
                                 fontSizeMode: window.ui.modern ? Text.HorizontalFit : Text.FixedSize
                                 // A shrunk text keeps the height of the full size: it fills the cell and stays in the middle
                                 height: window.ui.modern ? parent.height : implicitHeight
-                                verticalAlignment: Text.AlignVCenter
+                                verticalAlignment: window.ui.modern ? Text.AlignVCenter : Text.AlignTop
                                 minimumPixelSize: 9
                                 text: qsTr("Gear")
                                 font.bold: true
@@ -797,11 +795,11 @@ ScrollView {
                                 anchors.centerIn: parent
                                 // Modern look: one line inside its column, smaller if it does not fit
                                 width: window.ui.modern ? parent.width - 8 : implicitWidth
-                                horizontalAlignment: Text.AlignHCenter
+                                horizontalAlignment: window.ui.modern ? Text.AlignHCenter : Text.AlignLeft
                                 fontSizeMode: window.ui.modern ? Text.HorizontalFit : Text.FixedSize
                                 // A shrunk text keeps the height of the full size: it fills the cell and stays in the middle
                                 height: window.ui.modern ? parent.height : implicitHeight
-                                verticalAlignment: Text.AlignVCenter
+                                verticalAlignment: window.ui.modern ? Text.AlignVCenter : Text.AlignTop
                                 minimumPixelSize: 9
                                 text: qsTr("Chainring")
                                 font.bold: true
@@ -821,11 +819,11 @@ ScrollView {
                                 anchors.centerIn: parent
                                 // Modern look: one line inside its column, smaller if it does not fit
                                 width: window.ui.modern ? parent.width - 8 : implicitWidth
-                                horizontalAlignment: Text.AlignHCenter
+                                horizontalAlignment: window.ui.modern ? Text.AlignHCenter : Text.AlignLeft
                                 fontSizeMode: window.ui.modern ? Text.HorizontalFit : Text.FixedSize
                                 // A shrunk text keeps the height of the full size: it fills the cell and stays in the middle
                                 height: window.ui.modern ? parent.height : implicitHeight
-                                verticalAlignment: Text.AlignVCenter
+                                verticalAlignment: window.ui.modern ? Text.AlignVCenter : Text.AlignTop
                                 minimumPixelSize: 9
                                 text: qsTr("Rear Cog")
                                 font.bold: true
@@ -845,7 +843,7 @@ ScrollView {
                     interactive: false
                     clip: true
                     // Modern look: rounded rows apart from each other
-                    spacing: window.ui.modern ? 4 : 0
+                    spacing: window.ui.modern ? 8 : 0
                     property int currentRow: -1
                     model: ListModel {
                         id: gearListModel
@@ -895,7 +893,7 @@ ScrollView {
                     delegate: Rectangle {
                         width: gearTable.width
                         // the rows, the fields and their -/+ grow with the text
-                        height: window.ui.modern ? 48 : window.fontPx(40)
+                        height: window.ui.modern ? 52 : window.fontPx(40)
                         radius: window.ui.modern ? 12 : 0
                         color: window.ui.modern ? (gearTable.currentRow === index ? window.ui.alpha(window.ui.accent, 0.14) : window.ui.surface) : (gearTable.currentRow === index ? "#e0e0e0" : "white")
 
@@ -970,13 +968,13 @@ ScrollView {
                                     // "undefined" in the classic look reset them to the Qt defaults, not to the
                                     // Material ones the classic field had
                                     // with a bigger text the field takes the cell and grows with the row
-                                    // Material pads 8 above and 16 below: the number sat 4 px over the middle
                                     width: window.textScale !== 1 ? parent.width - 8 : parent.width * 0.8
                                     height: window.ui.modern ? 36 : window.fontPx(30)
                                     Binding on topPadding { when: window.ui.modern; value: 0; restoreMode: Binding.RestoreBindingOrValue }
                                     Binding on bottomPadding { when: window.ui.modern; value: 0; restoreMode: Binding.RestoreBindingOrValue }
                                     Binding on topInset { when: window.ui.modern; value: 0; restoreMode: Binding.RestoreBindingOrValue }
                                     Binding on bottomInset { when: window.ui.modern; value: 0; restoreMode: Binding.RestoreBindingOrValue }
+                                    // Material pads 8 above and 16 below: the number sat 4 px over the middle
                                     topPadding: window.textScale !== 1 ? 0 : 8
                                     bottomPadding: window.textScale !== 1 ? 0 : 16
                                     from: 1

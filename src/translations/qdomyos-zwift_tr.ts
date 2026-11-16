@@ -3230,9 +3230,25 @@ This may take a few moments on first startup.</source>
         <source>Offset</source>
         <translation>Ofset</translation>
     </message>
+    <message>
+        <source>Decrease the offset of gear %1</source>
+        <translation>%1. vitesin ofsetini azalt</translation>
+    </message>
+    <message>
+        <source>Increase the offset of gear %1</source>
+        <translation>%1. vitesin ofsetini artır</translation>
+    </message>
 </context>
 <context>
     <name>custominclinationresistance</name>
+    <message>
+        <source>Decrease %1</source>
+        <translation>Azalt: %1</translation>
+    </message>
+    <message>
+        <source>Increase %1</source>
+        <translation>Artır: %1</translation>
+    </message>
     <message>
         <source>Enable Custom Inclination to Resistance Table</source>
         <translation>Özel eğim/direnç tablosunu etkinleştir</translation>
@@ -3250,16 +3266,16 @@ This may take a few moments on first startup.</source>
         <translation>Direnç</translation>
     </message>
     <message>
+        <source>Remove the point at inclination %1</source>
+        <translation>Eğimi %1 olan noktayı sil</translation>
+    </message>
+    <message>
         <source>Add Point</source>
         <translation>Nokta ekle</translation>
     </message>
     <message>
         <source>Reset Example</source>
         <translation>Örneğe sıfırla</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Kaldır</translation>
     </message>
 </context>
 <context>

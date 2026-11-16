@@ -3230,9 +3230,25 @@ This may take a few moments on first startup.</source>
         <source>Offset</source>
         <translation>Смещение</translation>
     </message>
+    <message>
+        <source>Decrease the offset of gear %1</source>
+        <translation>Уменьшить смещение передачи %1</translation>
+    </message>
+    <message>
+        <source>Increase the offset of gear %1</source>
+        <translation>Увеличить смещение передачи %1</translation>
+    </message>
 </context>
 <context>
     <name>custominclinationresistance</name>
+    <message>
+        <source>Decrease %1</source>
+        <translation>Уменьшить: %1</translation>
+    </message>
+    <message>
+        <source>Increase %1</source>
+        <translation>Увеличить: %1</translation>
+    </message>
     <message>
         <source>Enable Custom Inclination to Resistance Table</source>
         <translation>Включить свою таблицу «наклон – сопротивление»</translation>
@@ -3250,16 +3266,16 @@ This may take a few moments on first startup.</source>
         <translation>Сопротивление</translation>
     </message>
     <message>
+        <source>Remove the point at inclination %1</source>
+        <translation>Удалить точку с наклоном %1</translation>
+    </message>
+    <message>
         <source>Add Point</source>
         <translation>Добавить точку</translation>
     </message>
     <message>
         <source>Reset Example</source>
         <translation>Сбросить к примеру</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Удалить</translation>
     </message>
 </context>
 <context>

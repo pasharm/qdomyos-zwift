@@ -6,8 +6,7 @@ import QtQuick.Controls.Material 2.0
 
 ScrollView {
     contentWidth: -1
-    // The column with its top and bottom margins, which are not in its implicit height (the
-    // end of the page was cut off)
+    // The column with its top and bottom margins, which are not in its implicit height
     contentHeight: customGearsColumn.implicitHeight + 2 * customGearsColumn.anchors.topMargin
     focus: true
     // No anchors: the page is pushed on the StackView, which sizes it to fill and warned about
@@ -115,8 +114,8 @@ ScrollView {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.topMargin: 10
-        anchors.leftMargin: window.contentSideMargin
-        anchors.rightMargin: window.contentSideMargin
+        anchors.leftMargin: window.ui.modern ? Math.max(16, window.contentSideMargin) : window.contentSideMargin
+        anchors.rightMargin: window.ui.modern ? Math.max(16, window.contentSideMargin) : window.contentSideMargin
         spacing: 10
 
         IndicatorOnlySwitch {
@@ -137,16 +136,16 @@ ScrollView {
             text: qsTr("Each gear uses the offset below instead of the raw gear value. QZ applies it automatically to resistance, inclination, or slope depending on the trainer path. Default is linear.")
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
-            font.pixelSize: window.ui.fontHint
+            font.pixelSize: window.ui.modern ? window.ui.fontCaption : window.fontHint
             bottomPadding: window.hintGap
-            color: window.ui.inkMuted(Material.accent)
+            color: window.ui.modern ? window.ui.textMuted : Material.accent
         }
 
         UiButton {
             wrapsText: true
             text: qsTr("Reset to Linear Defaults")
             Layout.fillWidth: true
-            Layout.preferredHeight: window.ui.modern ? Math.max(40, contentItem.implicitHeight + 24) : window.fontPx(40)
+            Layout.preferredHeight: window.ui.modern ? Math.max(48, contentItem.implicitHeight + 24) : window.fontPx(40)
             onClicked: {
                 gearRows = defaultGearRows()
                 updateGearListModel()
@@ -180,11 +179,11 @@ ScrollView {
                         anchors.centerIn: parent
                         // Modern look: one line inside its column, smaller if it does not fit
                         width: window.ui.modern ? parent.width - 8 : implicitWidth
-                        horizontalAlignment: Text.AlignHCenter
+                        horizontalAlignment: window.ui.modern ? Text.AlignHCenter : Text.AlignLeft
                         fontSizeMode: window.ui.modern ? Text.HorizontalFit : Text.FixedSize
                         // A shrunk text keeps the height of the full size: it fills the cell and stays in the middle
                         height: window.ui.modern ? parent.height : implicitHeight
-                        verticalAlignment: Text.AlignVCenter
+                        verticalAlignment: window.ui.modern ? Text.AlignVCenter : Text.AlignTop
                         minimumPixelSize: 9
                         text: qsTr("Gear")
                         font.bold: true
@@ -203,11 +202,11 @@ ScrollView {
                         Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         anchors.centerIn: parent
                         width: window.ui.modern ? parent.width - 8 : implicitWidth
-                        horizontalAlignment: Text.AlignHCenter
+                        horizontalAlignment: window.ui.modern ? Text.AlignHCenter : Text.AlignLeft
                         fontSizeMode: window.ui.modern ? Text.HorizontalFit : Text.FixedSize
                         // A shrunk text keeps the height of the full size: it fills the cell and stays in the middle
                         height: window.ui.modern ? parent.height : implicitHeight
-                        verticalAlignment: Text.AlignVCenter
+                        verticalAlignment: window.ui.modern ? Text.AlignVCenter : Text.AlignTop
                         minimumPixelSize: 9
                         text: qsTr("Offset")
                         font.bold: true
@@ -227,7 +226,7 @@ ScrollView {
             interactive: !window.ui.modern
             clip: true
             // Modern look: rounded rows apart from each other
-            spacing: window.ui.modern ? 4 : 0
+            spacing: window.ui.modern ? 8 : 0
             model: gearListModel
 
             Component.onCompleted: {
@@ -240,7 +239,7 @@ ScrollView {
 
             delegate: Rectangle {
                 width: gearTable.width
-                height: window.ui.modern ? 48 : rowHeight
+                height: window.ui.modern ? 52 : rowHeight
                 radius: window.ui.modern ? 12 : 0
                 color: window.ui.modern ? window.ui.surface : (index % 2 === 0 ? "white" : "#fafafa")
 
@@ -270,7 +269,11 @@ ScrollView {
                         border.color: window.ui.modern ? window.ui.alpha(window.ui.outline, 0.4) : "#cccccc"
                         color: "transparent"
 
+                        // A number typed but not confirmed is applied first: the -/+ of the modern
+                        // look are MouseAreas, they do not take the focus from the field
                         function stepOffset(delta) {
+                            if (window.ui.modern)
+                                offsetTextField.applyOffset()
                             gearRows[index].offset = clampOffset(parseOffset(gearRows[index].offset) + delta)
                             offsetTextField.text = gearRows[index].offset
                             saveGearRows()
@@ -315,7 +318,8 @@ ScrollView {
                                     id: minusArea
                                     anchors.fill: parent
                                     Accessible.role: Accessible.Button
-                                    Accessible.name: "-"
+                                    Accessible.name: qsTr("Decrease the offset of gear %1").arg(gear)
+                                    Accessible.onPressAction: offsetCell.stepOffset(-0.5)
                                     onClicked: offsetCell.stepOffset(-0.5)
                                 }
                             }
@@ -333,7 +337,8 @@ ScrollView {
                                 // well over the middle of the field
                                 topPadding: window.textScale !== 1 ? 0 : 8
                                 bottomPadding: window.textScale !== 1 ? 0 : 16
-                                inputMethodHints: Qt.ImhFormattedNumbersOnly
+                                // Modern look: the number keyboard, as the inclination table fields
+                                inputMethodHints: window.ui.modern ? Qt.ImhFormattedNumbersOnly : Qt.ImhNone
                                 // Modern look: no Material paddings and insets, they differ above
                                 // and below and the number sat high in the low field. Bindings that
                                 // act only then: "undefined" in the classic look reset them to the Qt
@@ -389,7 +394,8 @@ ScrollView {
                                     id: plusArea
                                     anchors.fill: parent
                                     Accessible.role: Accessible.Button
-                                    Accessible.name: "+"
+                                    Accessible.name: qsTr("Increase the offset of gear %1").arg(gear)
+                                    Accessible.onPressAction: offsetCell.stepOffset(0.5)
                                     onClicked: offsetCell.stepOffset(0.5)
                                 }
                             }

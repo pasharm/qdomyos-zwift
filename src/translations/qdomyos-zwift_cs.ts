@@ -3230,9 +3230,25 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <source>Offset</source>
         <translation>Korekce</translation>
     </message>
+    <message>
+        <source>Decrease the offset of gear %1</source>
+        <translation>Snížit korekci převodu %1</translation>
+    </message>
+    <message>
+        <source>Increase the offset of gear %1</source>
+        <translation>Zvýšit korekci převodu %1</translation>
+    </message>
 </context>
 <context>
     <name>custominclinationresistance</name>
+    <message>
+        <source>Decrease %1</source>
+        <translation>Snížit: %1</translation>
+    </message>
+    <message>
+        <source>Increase %1</source>
+        <translation>Zvýšit: %1</translation>
+    </message>
     <message>
         <source>Enable Custom Inclination to Resistance Table</source>
         <translation>Zapnout vlastní tabulku „sklon – odpor“</translation>
@@ -3250,16 +3266,16 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Odpor</translation>
     </message>
     <message>
+        <source>Remove the point at inclination %1</source>
+        <translation>Odebrat bod se sklonem %1</translation>
+    </message>
+    <message>
         <source>Add Point</source>
         <translation>Přidat bod</translation>
     </message>
     <message>
         <source>Reset Example</source>
         <translation>Obnovit příklad</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Odebrat</translation>
     </message>
 </context>
 <context>

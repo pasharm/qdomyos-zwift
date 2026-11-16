@@ -3226,9 +3226,25 @@ Det kan ta en stund vid första starten.</translation>
         <source>Offset</source>
         <translation>Justering</translation>
     </message>
+    <message>
+        <source>Decrease the offset of gear %1</source>
+        <translation>Minska justering för växel %1</translation>
+    </message>
+    <message>
+        <source>Increase the offset of gear %1</source>
+        <translation>Öka justering för växel %1</translation>
+    </message>
 </context>
 <context>
     <name>custominclinationresistance</name>
+    <message>
+        <source>Decrease %1</source>
+        <translation>Minska: %1</translation>
+    </message>
+    <message>
+        <source>Increase %1</source>
+        <translation>Öka: %1</translation>
+    </message>
     <message>
         <source>Enable Custom Inclination to Resistance Table</source>
         <translation>Aktivera egen tabell för lutning till motstånd</translation>
@@ -3246,16 +3262,16 @@ Det kan ta en stund vid första starten.</translation>
         <translation>Motstånd</translation>
     </message>
     <message>
+        <source>Remove the point at inclination %1</source>
+        <translation>Ta bort punkten vid lutning %1</translation>
+    </message>
+    <message>
         <source>Add Point</source>
         <translation>Lägg till punkt</translation>
     </message>
     <message>
         <source>Reset Example</source>
         <translation>Återställ exempel</translation>
-    </message>
-    <message>
-        <source>Remove</source>
-        <translation>Ta bort</translation>
     </message>
 </context>
 <context>
