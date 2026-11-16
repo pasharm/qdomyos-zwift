@@ -3,7 +3,8 @@
 # and in the heart rate sensor bar - before (base: test/t265-master = origin/master fb8bd3a22 + the T-473 hook)
 # and after (head: test/t265-diag = the same + no Accessible.ignored on the Drawer + a StaticText node
 # focusable, as Qt does since 5.15.9 - QTBUG-77371; or test/t265-fix = the fix of fix/talkback-modal-popups:
-# a modal popup is all a screen reader reaches, an ItemDelegate is clickable). The tree with the menu open ('list'),
+# a modal popup is all a screen reader reaches, an ItemDelegate is clickable; or test/t560-fix = the fix of
+# fix/talkback-static-text: a text focusable unless inside a focusable or pressable item). The tree with the menu open ('list'),
 # a touch on a menu entry, swipes from the menu button, a double tap on Settings; the bar text by touch and
 # by a swipe left from Choose. The head is red only where it is not better than the base; the findings are in
 # the "talkback <case>:" lines.
@@ -102,6 +103,12 @@ talkback() {
   local onpage=$(yn "^swipe:right: focused '(◄|Main menu|Floating window|Lock tiles|Unlock tiles|Pause|Stop|Start|Lap|.*Bluetooth.*|)' " "$c-swipe")
   say "talkback $c: a swipe from the menu button reached the page under the menu: $onpage"
   if [ "$side" = h ] && [ "$onpage" = yes ]; then fail "check $c: a swipe from the menu button went to the page under the open menu"; fi
+  # T-560: a text inside a menu entry is not a second stop (Qt's focusable text alone gave 'Wizard'
+  # twice in a row, run 43793272467 hm)
+  local twice
+  twice=$(grep -a "^swipe:right: focused '" "drv/$c-swipe.txt" | cut -d"'" -f2 | uniq -d | head -n 1)
+  say "talkback $c: the same stop twice in a row: ${twice:-none}"
+  compare "$c" "menu-swipe-no-double-stop" "$([ -z "$twice" ] && echo yes || echo no)"
   compare "$c" "bar-text-by-touch" "$(yn "^touch:Heart rate sensors found: focused 'Heart rate sensors found: 2'" "$c-bar")"
   compare "$c" "bar-text-by-swipe-left" "$(yn "^swipe:left: focused 'Heart rate sensors found: 2'" "$c-bar")"
   tb_check "^touch:Choose: focused 'Choose'" "$c-bar" "Choose by touch (as before)"
