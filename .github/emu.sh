@@ -233,7 +233,10 @@ settingstime() {
   tb_window "$c"
   for i in $(seq 1 25); do steps="$steps tswipe:right"; done
   # shellcheck disable=SC2086
-  drv_tb "$c-time" --keep 'touch:General Options' 'sleep:1500' $steps
+  # inside an open section: its rows have labels of their own beside the fields (texts outside a pressable
+  # item - the path of coveredByActionable); on the section list every text is inside a section's button
+  # (run 43840993097: both sides 18 equal stops, the path not taken)
+  drv_tb "$c-time" --keep 'touch:General Options' 'dtap:General Options' 'sleep:2500' $steps
   tb_off
   ms=$(grep -a "^tswipe:right: moved after " "drv/$c-time.txt" | cut -d' ' -f4 | sort -n)
   moved=$(printf '%s\n' "$ms" | grep -c .)
