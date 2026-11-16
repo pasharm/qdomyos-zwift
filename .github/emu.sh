@@ -41,11 +41,18 @@ yn() { if tb_has "$1" "$2"; then echo yes; else echo no; fi; }
 # tb_window: TalkBack's own box over the app ("Welcome to the updated TalkBack", run 43799153429: it came
 # up between two passes, and the swipes walked it) is closed by the back key
 tb_window() {
-  if adb shell dumpsys window < /dev/null 2>/dev/null | grep -a "mCurrentFocus" | grep -q "$TB_PKG"; then
-    near tbwindow "$1: a box of TalkBack over the app, closed by back"
+  # an activity of TalkBack (the box is window type 1, an application's), not the window focus of the window
+  # manager: mCurrentFocus did not show it (run 43801005217)
+  local top i
+  for i in 1 2 3; do
+    top=$(adb shell dumpsys activity activities < /dev/null 2>/dev/null | grep -a -m1 -E "mResumedActivity|topResumedActivity")
+    say "$1: on top: ${top:-?}"
+    echo "$top" | grep -q "$TB_PKG" || return 0
+    near tbwindow "$1: a box of TalkBack over the app, back key $i"
     adb shell input keyevent 4 < /dev/null > /dev/null 2>&1
     emu_sleep 2
-  fi
+  done
+  fail "$1: the box of TalkBack stays over the app"
 }
 
 # results of the base, per case letter: R_<what>_<case>
