@@ -1028,17 +1028,25 @@ static QAccessibleInterface *accessibleAt(const QPoint &pos) {
     return lastChild;
 }
 
-// Whether a touch on the middle of this text finds another object, focusable or pressable, laid over it
-// (a MouseArea with a name of its own over a Row with the Label: the profile chip of the side menu).
-// That object is the stop, with the same words; the text is none, so a swipe stops where a touch does.
-static bool coveredByActionable(QAccessibleInterface *iface) {
+// Whether a touch on the middle of this text finds another object, focusable or pressable (or inside
+// one), laid over it and saying the same words (a MouseArea named as the Label it covers: the profile
+// chip of the side menu). That object is the stop; the text is none, so a swipe stops where a touch
+// does. Another text that a control merely covers (a page under the heart rate sensor bar) stays one.
+static bool coveredByActionable(QAccessibleInterface *iface, const QString &text) {
     const QRect rect = iface->rect();
     if (rect.isEmpty())
         return false;
     QAccessibleInterface *hit = accessibleAt(rect.center());
     if (!hit || hit == iface || !hit->isValid())
         return false;
-    return hit->state().focusable || clickKind(hit) != ClickKind::None || insideActionable(hit);
+    for (QAccessibleInterface *node = hit; node && node->isValid(); node = node->parent()) {
+        const QAccessible::Role role = node->role();
+        if (role == QAccessible::Window || role == QAccessible::Application)
+            return false;
+        if (node->state().focusable || clickKind(node) != ClickKind::None)
+            return accessibleDescription(node).contains(text);
+    }
+    return false;
 }
 
 static NodeData nodeData(jint objectId) {
@@ -1077,7 +1085,7 @@ static NodeData nodeData(jint objectId) {
     // passed over takes Accessible.ignored: true. An empty text (a value before the first data) is no stop,
     // nor a text a touch would not find, under a pressable object of its own (coveredByActionable()).
     data.focusable = state.focusable || (iface->role() == QAccessible::StaticText && !data.description.isEmpty() &&
-                                         !insideActionable(iface) && !coveredByActionable(iface));
+                                         !insideActionable(iface) && !coveredByActionable(iface, data.description));
     data.focused = state.focused;
     data.visible = !state.invisible;
     return data;
