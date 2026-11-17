@@ -308,7 +308,7 @@ ColumnLayout {
                     id: date
                     width: parent.width
                     text: rootItem.previewWorkoutDescription
-                    font.pixelSize: window.ui.fontPx(14)
+                    font.pixelSize: window.fontPx(14)
                     color: window.ui.ink("white")
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignHCenter
@@ -321,9 +321,9 @@ ColumnLayout {
                     id: description
                     width: parent.width
                     text: rootItem.previewWorkoutTags
-                    font.pixelSize: window.ui.fontPx(10)
+                    font.pixelSize: window.fontPx(10)
                     wrapMode: Text.WordWrap
-                    color: window.ui.inkMuted("white")
+                    color: window.ui.modern ? window.ui.textMuted : "white"
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     anchors.horizontalCenter: parent.horizontalCenter
@@ -343,7 +343,7 @@ ColumnLayout {
                         height: 400
                         width: parent.width
                         title: qsTr("Power")
-                        titleFont.pixelSize: window.ui.fontPx(20)
+                        titleFont.pixelSize: window.fontPx(20)
 
                         DateTimeAxis {
                             id: valueAxisX
@@ -354,7 +354,7 @@ ColumnLayout {
                             //labelsVisible: false
                             gridVisible: false
                             //lineVisible: false
-                            labelsFont.pixelSize: window.ui.fontPx(10)
+                            labelsFont.pixelSize: window.fontPx(10)
                         }
 
                         ValueAxis {
@@ -367,7 +367,7 @@ ColumnLayout {
                             //labelsVisible: false
                             //gridVisible: false
                             //lineVisible: false
-                            labelsFont.pixelSize: window.ui.fontPx(10)
+                            labelsFont.pixelSize: window.fontPx(10)
                         }
 
                         LineSeries {

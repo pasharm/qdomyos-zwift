@@ -108,7 +108,7 @@ Rectangle {
         anchors.rightMargin: storeItem.pad
         anchors.topMargin: window.ui.modern ? 4 : 0
         wrapMode: Text.WordWrap
-        color: !window.ui.modern ? window.ui.inkMuted("black")
+        color: !window.ui.modern ? "black"
             : storeItem.purchaseState === "failed" && storeItem.modernStatus ? window.ui.danger
             : storeItem.purchaseState === "done" && storeItem.modernStatus ? window.ui.ok
             : window.ui.textMuted
