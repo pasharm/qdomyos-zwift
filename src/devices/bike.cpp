@@ -68,8 +68,8 @@ int bike::targetZoneStartPower(bool tileHoldsTarget, bool programStarted, bool p
                                bool appSendsPower, double lastRequestedPower, double ridden5s, double ftp) {
     // T.Zone +/-: the watts the step starts from, 0 when there is nothing to start from (the press is ignored).
     // The last requested power, when it is a real target: the tile holds it (free ride: the T.Power(W) loop in
-    // homeform::update() runs only without a started program), the program row sets the power, or the app is
-    // sending its own target power (ERG). Otherwise the power ridden now: in free ride the app may send only a
+    // homeform::update() runs only without a started program), the program row sets the power, or the app is in
+    // ERG and QZ keeps that power on the bike. Otherwise the power ridden now: in free ride the app may send only a
     // grade, the last requested power is then 0 or an old value, and the tile would hold that.
     // Below 10% of FTP (coasting) there is no start: the tile would hold almost no load.
     const int requested = qRound(lastRequestedPower);

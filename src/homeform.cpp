@@ -5857,11 +5857,11 @@ bool homeform::handleKeyboardShortcut(const QString &sequence) {
 
 // T.Zone +/-: the watts the 1% FTP step starts from (bike::targetZoneStartPower), 0 when there is nothing to
 // start from. The program row sets the power with the same check as
-// trainprogram::adjustPowerOffsetForTrainingProgram; the app sends its own target power (ERG) with the same
-// check as bike::targetPowerOverridesExternalApp (its frame comes only when the target changes, so this sees the
-// app's target only within 2 s of it; later the power ridden is close to it). appErgMode is zwift_erg as it was
-// before this press, as an applied T.Zone press sets it to true. Whether the tile holds a target:
-// bike::targetZoneTileHoldsTarget.
+// trainprogram::adjustPowerOffsetForTrainingProgram. With an app in ERG the last requested power is what QZ keeps
+// on the bike: the app sends its target only when it changes, and virtualbike::bikeProvider re-sends the last
+// requested power with the same check (virtualbike::resendLastTargetPower), also after Pause/Start or a power
+// zone preset. appErgMode is zwift_erg as it was before this press, as an applied T.Zone press sets it to true.
+// Whether the tile holds a target: bike::targetZoneTileHoldsTarget.
 static int32_t targetZoneBasePower(bike *dev, bool overridePower, trainprogram *program, double ftp,
                                    bool appErgMode) {
     const bool programStarted = program && program->isStarted();
@@ -5869,7 +5869,7 @@ static int32_t targetZoneBasePower(bike *dev, bool overridePower, trainprogram *
     virtualbike *virtualBike = dev->VirtualBike();
     const qint64 lastAppFrame = virtualBike ? virtualBike->whenLastFTMSFrameReceived() : 0;
     const bool appActive = lastAppFrame > 0 && QDateTime::currentMSecsSinceEpoch() <= lastAppFrame + 2000;
-    const bool appErg = appActive && appErgMode;
+    const bool appErg = lastAppFrame > 0 && appErgMode;
     const bool tileHolds =
         bike::targetZoneTileHoldsTarget(overridePower, dev->ergModeSupportedAvailableBySoftware(), appActive);
     return bike::targetZoneStartPower(tileHolds, programStarted, programPower, appErg,

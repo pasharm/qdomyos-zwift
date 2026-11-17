@@ -3,7 +3,8 @@
 #include "devices/bike.h"
 
 // T.Zone +/- holds its target like T.Power(W). The first press needs a start: the last requested power
-// when it is a real target, otherwise the power ridden now. A start from 0 W made the tile hold
+// when it is a real target (the tile's own, a program row's, or the one QZ keeps on the bike for an app in
+// ERG), otherwise the power ridden now. A start from 0 W made the tile hold
 // 1% of FTP (2 W at FTP 200): resistance level 1 on a FitPlus bike, whose console then stopped the workout.
 
 namespace {
@@ -58,10 +59,13 @@ TEST(TargetZoneStart, ProgramRowWithoutPowerIgnoresTheOldTileTarget) {
 }
 
 TEST(TargetZoneStart, AppErgTargetStepsFromTheAppTarget) {
-    // appSendsPower: the app's ERG frame came in the last 2 s (homeform). The bike still ramps toward 200 W
+    // appSendsPower: the app is in ERG and QZ keeps the last requested power on the bike (homeform). The bike
+    // still ramps toward 200 W
     EXPECT_EQ(start(false, false, false, true, 200, 150), 200);
     // not pedaling yet, the app's target just came
     EXPECT_EQ(start(false, false, false, true, 200, 0), 200);
+    // after Pause/Start the bike still gets the tile's 230 W until the app's next target
+    EXPECT_EQ(start(false, false, false, true, 230, 195), 230);
 }
 
 TEST(TargetZoneStart, AppErgWithoutTargetStartsFromPowerRidden) {
