@@ -238,7 +238,6 @@ class homeform : public QObject {
     Q_PROPERTY(QVariantList heartRateSensorSuggestions READ heartRateSensorSuggestions NOTIFY
                    heartRateSensorSuggestionsChanged)
     Q_PROPERTY(bool heartRateSensorOfferOnTap READ heartRateSensorOfferOnTap NOTIFY heartRateSensorSuggestionsChanged)
-    Q_PROPERTY(bool targetPowerReleaseVisible READ targetPowerReleaseVisible NOTIFY targetPowerReleaseVisibleChanged)
 
     // workout preview
     Q_PROPERTY(int preview_workout_points READ preview_workout_points NOTIFY previewWorkoutPointsChanged)
@@ -1623,7 +1622,6 @@ public:
     // Settings copy of these keys, which does not read QSettings again, so it takes the new value from these
     void heartRateSensorChosenFromOffer(const QString &name);
     void heartRateSensorOfferTurnedOff();
-    void targetPowerReleaseVisibleChanged(bool value);
     void generalPopupVisibleChanged(bool value);
     void pelotonPopupVisibleChanged(bool value);
     void licensePopupVisibleChanged(bool value);
