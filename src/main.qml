@@ -443,39 +443,31 @@ ApplicationWindow {
         readonly property color dangerInk: dark ? "#000000" : "#FFFFFF"
         // Dimming behind a modal popup
         readonly property color scrim: Qt.rgba(0, 0, 0, dark ? 0.6 : 0.4)
-        readonly property int radius: 16
 
-        // Type scale (T-078): the role sizes at 100 %, times the text size of the app
-        // (window.textScale: the system one or the one picked in Settings > General UI Options).
+        // Type scale: the role sizes at 100 %, times the text size of the app (window.textScale).
         // Pages and Ui* components take a role, not a number, so the text of the modern look grows as one
-        readonly property real textScale: window.textScale
-        function fontPx(base) { return Math.round(base * textScale) }
+        function fontPx(base) { return window.fontPx(base) }
         // The font f with another size (and weight): Qt.font() alone keeps nothing but what it is given
         function fontOf(f, px, weight) {
             return Qt.font({ family: f.family, pixelSize: px, weight: weight === undefined ? f.weight : weight,
                              italic: f.italic, capitalization: f.capitalization, letterSpacing: f.letterSpacing,
                              hintingPreference: f.hintingPreference })
         }
-        readonly property int fontHeadline: fontPx(22)     // page titles
-        readonly property int fontTitle: fontPx(20)        // dialog titles, empty states
-        readonly property int fontTitleSmall: fontPx(18)   // toolbar title
-        readonly property int fontBody: fontPx(16)         // dialog text, list titles, fields
-        readonly property int fontLabel: fontPx(15)        // drawer entries, group titles
+        readonly property int fontHeadline: fontPx(22) // page titles
+        readonly property int fontTitle: fontPx(20)    // dialog titles, empty states
+        readonly property int fontTitleSmall: fontPx(18) // toolbar title
+        readonly property int fontBody: fontPx(16)     // dialog text, list titles, fields
+        readonly property int fontLabel: fontPx(15)    // drawer entries, group titles
+        readonly property int fontCaption: fontPx(13)  // secondary lines, chips, captions
         // The app font (12 on the emulator, not the Material 14): labels, fields, buttons, lists
         readonly property int fontBase: fontPx(window.appFontPx)
-        readonly property int fontCaption: fontPx(13)      // secondary lines, chips, captions
-        // Hints under the settings: the same size as in the classic look
-        readonly property int fontHint: window.fontHint
-
-        // Side margin of the list pages: at least 16, more where the screen cutout needs it
-        readonly property int pageMargin: Math.max(16, window.contentSideMargin)
 
         readonly property string themeName: settings.ui_theme
 
         function alpha(c, a) { return Qt.rgba(c.r, c.g, c.b, a) }
         // A title without its emoji ("Maps 🗺️", "Video 🎥"): Qt 5 on Android draws no colour emoji
         // with the app font, they showed as boxes. For the headers of the modern look and the
-        // toast and search results of the settings page. Drops a
+        // toast and search results of the settings page (its plainTitle() calls this). Drops a
         // pictograph (a surrogate pair in U+1F000-1FBFF, or U+2300-23FF, U+2600-27BF) with the
         // spaces before it and the emoji style mark (U+FE0F) after it
         function plainTitle(text) {
@@ -514,8 +506,6 @@ ApplicationWindow {
         // Text that the classic look paints in a fixed colour (mostly white) on the page
         // background: the theme text colour in the modern look, the old colour otherwise
         function ink(classic) { return modern ? textMain : classic }
-        // ...and the same for secondary text
-        function inkMuted(classic) { return modern ? textMuted : classic }
         // Zone colours of the tiles are made for a dark page: darker ones on a light page
         function zoneInk(c) { return dark ? c : Qt.darker(c, 1.7) }
 
@@ -565,17 +555,6 @@ ApplicationWindow {
     Connections {
         target: AndroidStatusBar
         function onSystemThemeChanged() { window.ui.refreshSystemTheme() }
-    }
-    Connections {
-        target: Qt.application
-        function onStateChanged() {
-            if (Qt.application.state === Qt.ApplicationActive) {
-                window.ui.refreshSystemTheme()
-                // the first time at start-up, when the native window is there
-                window.applySystemBars()
-                window.refreshIosSafeArea()
-            }
-        }
     }
 
     // iOS: around a window in the safe area the system paints the areas under the status bar and
@@ -662,8 +641,13 @@ ApplicationWindow {
     Connections {
         target: Qt.application
         function onStateChanged() {
-            if (Qt.application.state === Qt.ApplicationActive)
+            if (Qt.application.state === Qt.ApplicationActive) {
                 window.systemTextScale = AndroidStatusBar.systemFontScale()
+                window.ui.refreshSystemTheme()
+                // the first time at start-up, when the native window is there
+                window.applySystemBars()
+                window.refreshIosSafeArea()
+            }
         }
     }
 
@@ -743,7 +727,7 @@ ApplicationWindow {
             text: window.lapPromptText
             color: "white"
             font.bold: true
-            font.pixelSize: window.ui.fontPx(26)
+            font.pixelSize: window.fontPx(26)
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
             wrapMode: Text.WordWrap
@@ -1022,7 +1006,7 @@ ApplicationWindow {
                         anchors.centerIn: parent
                         text: "!"
                         color: window.ui.dangerInk
-                        font.pixelSize: window.ui.fontPx(16)
+                        font.pixelSize: window.fontPx(16)
                         font.bold: true
                     }
                 }
@@ -1030,7 +1014,7 @@ ApplicationWindow {
                 Label {
                     width: Math.min(implicitWidth, gymModeColumn.width - (popupGymMode.bluetoothOff ? 30 : 0))
                     // Bluetooth is off: the one thing to do here, so larger and bold
-                    font.pixelSize: window.ui.fontPx(popupGymMode.bluetoothOff ? Qt.application.font.pixelSize + 6 : Qt.application.font.pixelSize)
+                    font.pixelSize: window.fontPx(popupGymMode.bluetoothOff ? Qt.application.font.pixelSize + 6 : Qt.application.font.pixelSize)
                     font.bold: popupGymMode.bluetoothOff
                     text: popupGymMode.bluetoothOff ? qsTranslate("homeform", "Bluetooth is off")
                           : popupGymMode.devices.length === 0 ? qsTranslate("homeform", "Searching for the device...")
@@ -1049,7 +1033,7 @@ ApplicationWindow {
                 model: popupGymMode.devices
                 displayText: popupGymMode.pickedDevice !== "" ? popupGymMode.pickedDevice : qsTr("Select a device")
                 currentIndex: -1
-                font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 8)
+                font.pixelSize: window.fontPx(Qt.application.font.pixelSize + 8)
                 // Modern: the popup is surfaceHigh, the list one tone below it (as the RPE list)
                 menuColor: window.ui.surface
 
@@ -1070,7 +1054,7 @@ ApplicationWindow {
                 text: qsTranslate("homeform", "Next search in %1 s").arg(popupGymMode.secondsLeft)
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
-                color: window.ui.inkMuted(Material.color(Material.Grey))
+                color: popupGymMode.modern ? window.ui.textMuted : Material.color(Material.Grey)
             }
 
             // Skip on the left, Next on the right: Next stays grey until a trainer is marked
@@ -1456,7 +1440,7 @@ ApplicationWindow {
                 width: parent.width
                 text: qsTr("Echelon Locked Bike")
                 font.bold: true
-                font.pixelSize: window.ui.fontPx(20)
+                font.pixelSize: window.fontPx(20)
                 wrapMode: Text.WordWrap
             }
 
@@ -1529,7 +1513,7 @@ ApplicationWindow {
                 width: parent.width
                 text: qsTr("Connection lost in the background")
                 font.bold: true
-                font.pixelSize: window.ui.fontPx(20)
+                font.pixelSize: window.fontPx(20)
                 wrapMode: Text.WordWrap
             }
 

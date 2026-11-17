@@ -12,6 +12,7 @@ ColumnLayout {
 
     // Modern look: a page title, a hint and the saved settings as cards (like the profile
     // list); a tap selects a file, a second tap or Load loads it
+    readonly property int modernMargin: Math.max(16, window.contentSideMargin)
 
     Connections {
         target: rootItem
@@ -57,8 +58,8 @@ ColumnLayout {
 
         Label {
             Layout.fillWidth: true
-            Layout.leftMargin: window.ui.pageMargin
-            Layout.rightMargin: window.ui.pageMargin
+            Layout.leftMargin: settingsListPage.modernMargin
+            Layout.rightMargin: settingsListPage.modernMargin
             text: qsTr("Settings folder")
             color: window.ui.textMain
             font.pixelSize: window.ui.fontHeadline
@@ -69,8 +70,8 @@ ColumnLayout {
 
         Label {
             Layout.fillWidth: true
-            Layout.leftMargin: window.ui.pageMargin
-            Layout.rightMargin: window.ui.pageMargin
+            Layout.leftMargin: settingsListPage.modernMargin
+            Layout.rightMargin: settingsListPage.modernMargin
             text: qsTr("Tap a file to select it, then Load.")
             color: window.ui.textMuted
             font.pixelSize: window.ui.fontCaption
@@ -81,8 +82,8 @@ ColumnLayout {
         UiProgress {
             id: modernRestoreProgress
             Layout.fillWidth: true
-            Layout.leftMargin: window.ui.pageMargin
-            Layout.rightMargin: window.ui.pageMargin
+            Layout.leftMargin: settingsListPage.modernMargin
+            Layout.rightMargin: settingsListPage.modernMargin
             Layout.topMargin: 4
             done: rootItem.folderRestoreDone
             total: rootItem.folderRestoreTotal
@@ -97,7 +98,7 @@ ColumnLayout {
             // To the screen edge on the right: the cards keep the page margin (their width), and
             // the scroll indicator, placed by Qt at the right edge of the list, goes into it as on
             // the settings page, not over the cards
-            Layout.leftMargin: window.ui.pageMargin
+            Layout.leftMargin: settingsListPage.modernMargin
             clip: true
             spacing: 8
             currentIndex: -1
@@ -126,11 +127,11 @@ ColumnLayout {
             delegate: UiFrame {
                 id: settingsCard
                 readonly property bool selected: ListView.isCurrentItem
-                width: ListView.view.width - window.ui.pageMargin
+                width: ListView.view.width - settingsListPage.modernMargin
                 // Material 3 list item: one line at least 56, the icon and the button 16 from the
                 // edges, the text 16 after the icon; a bigger text grows it, 8 above and below
                 height: Math.max(56, Math.max(40, settingsName.implicitHeight) + 16)
-                radius: window.ui.radius
+                radius: 16
                 fill: selected ? window.ui.alpha(window.ui.accent, 0.14)
                                : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
                 strokeWidth: selected ? 1 : 0
@@ -204,7 +205,7 @@ ColumnLayout {
             Label {
                 parent: modernList
                 anchors.centerIn: parent
-                anchors.horizontalCenterOffset: -window.ui.pageMargin / 2
+                anchors.horizontalCenterOffset: -settingsListPage.modernMargin / 2
                 // only once the folder is read: the model fills in asynchronously; not while a
                 // restore copies the files of a previous install into it
                 visible: modernList.count === 0 && modernFolderModel.status === FolderListModel.Ready
@@ -323,8 +324,8 @@ ColumnLayout {
 
     RowLayout {
         Layout.fillWidth: window.ui.modern
-        Layout.leftMargin: window.ui.modern ? window.ui.pageMargin : 0
-        Layout.rightMargin: window.ui.modern ? window.ui.pageMargin : 0
+        Layout.leftMargin: window.ui.modern ? settingsListPage.modernMargin : 0
+        Layout.rightMargin: window.ui.modern ? settingsListPage.modernMargin : 0
         // 16 to the pill: UiButton has a 6 inset below it
         Layout.bottomMargin: window.ui.modern ? 10 : 0
         // a layout in a layout fills the height by default, and the fillHeight of the pills lifts its

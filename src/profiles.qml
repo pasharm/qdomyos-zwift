@@ -9,6 +9,9 @@ import Qt.labs.settings 1.0
 import QtQuick.Dialogs 1.0 as FileDialogClass
 
 ColumnLayout {
+    id: profilesPage
+    // Modern look: side margin of the cards and the buttons
+    readonly property int modernMargin: Math.max(16, window.contentSideMargin)
     // Modern look: no spacing, each item gives its own gap. The default spacing of a layout is
     // per platform (8 dp scaled by the dpi: 6 on Android and iOS, 5 on the desktop), so a margin
     // written on top of it would differ by platform; the classic look keeps it, as before
@@ -158,8 +161,8 @@ ColumnLayout {
     Rectangle {
         visible: window.ui.modern
         Layout.fillWidth: true
-        Layout.leftMargin: window.ui.pageMargin
-        Layout.rightMargin: window.ui.pageMargin
+        Layout.leftMargin: profilesPage.modernMargin
+        Layout.rightMargin: profilesPage.modernMargin
         Layout.topMargin: 12
         implicitHeight: modernNameColumn.implicitHeight + 32
         radius: 16
@@ -213,8 +216,8 @@ ColumnLayout {
         visible: window.ui.modern
         Layout.fillWidth: true
         // on the page margin, as the card above and the headers of the other list pages
-        Layout.leftMargin: window.ui.pageMargin
-        Layout.rightMargin: window.ui.pageMargin
+        Layout.leftMargin: profilesPage.modernMargin
+        Layout.rightMargin: profilesPage.modernMargin
         // a new section: 24 below the name card
         Layout.topMargin: 24
         text: qsTr("Saved profiles")
@@ -226,8 +229,8 @@ ColumnLayout {
     Label {
         visible: window.ui.modern
         Layout.fillWidth: true
-        Layout.leftMargin: window.ui.pageMargin
-        Layout.rightMargin: window.ui.pageMargin
+        Layout.leftMargin: profilesPage.modernMargin
+        Layout.rightMargin: profilesPage.modernMargin
         // the hint of the header above: one group, 4 below it
         Layout.topMargin: 4
         text: qsTr("Tap a profile to select it, then Load. Long press to delete it.")
@@ -241,8 +244,8 @@ ColumnLayout {
         id: modernRestoreProgress
         shown: window.ui.modern
         Layout.fillWidth: true
-        Layout.leftMargin: window.ui.pageMargin
-        Layout.rightMargin: window.ui.pageMargin
+        Layout.leftMargin: profilesPage.modernMargin
+        Layout.rightMargin: profilesPage.modernMargin
         Layout.topMargin: 12
         done: rootItem.folderRestoreDone
         total: rootItem.folderRestoreTotal
@@ -253,7 +256,7 @@ ColumnLayout {
         visible: window.ui.modern
         Layout.fillWidth: true
         Layout.fillHeight: true
-        Layout.leftMargin: window.ui.pageMargin
+        Layout.leftMargin: profilesPage.modernMargin
         // To the screen edge on the right: the cards keep the page margin (their width), and the
         // scroll indicator, placed by Qt at the right edge of the list, goes into it as on the
         // settings page, not over the cards
@@ -275,11 +278,11 @@ ColumnLayout {
             readonly property bool selected: ListView.isCurrentItem
             readonly property string profileName: fileName.substring(0, fileName.length-4)
             readonly property bool active: profileName === settings.profile_name
-            width: ListView.view.width - window.ui.pageMargin
+            width: ListView.view.width - profilesPage.modernMargin
             // Material 3 list item: two lines (name, "Active") at least 72, the icon and the button 16
             // from the edges, the text 16 after the icon; a bigger text grows it, 8 above and below
             height: Math.max(72, Math.max(40, cardText.implicitHeight) + 16)
-            radius: window.ui.radius
+            radius: 16
             fill: selected ? window.ui.alpha(window.ui.accent, 0.14)
                            : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
             strokeWidth: selected ? 1 : 0
@@ -372,8 +375,8 @@ ColumnLayout {
     RowLayout {
         visible: window.ui.modern
         Layout.fillWidth: true
-        Layout.leftMargin: window.ui.pageMargin
-        Layout.rightMargin: window.ui.pageMargin
+        Layout.leftMargin: profilesPage.modernMargin
+        Layout.rightMargin: profilesPage.modernMargin
         // 16 to the pill: UiButton has a 6 inset below it
         Layout.bottomMargin: 10
         // a layout in a layout fills the height by default, and the fillHeight of the pills lifts its

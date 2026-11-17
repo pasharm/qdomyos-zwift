@@ -29,6 +29,7 @@ ColumnLayout {
 
     // Modern look: a filled search field, the workouts as cards, pill buttons and the
     // preview page in the app theme; the classic look keeps its list and buttons
+    readonly property int modernMargin: Math.max(16, window.contentSideMargin)
 
     Connections {
         target: rootItem
@@ -170,8 +171,8 @@ ColumnLayout {
                     Layout.fillWidth: true
                     Layout.topMargin: window.ui.modern ? 8 : 0
                     spacing: window.ui.modern ? 8 : 5
-                    leftPadding: window.ui.modern ? window.ui.pageMargin : 0
-                    rightPadding: window.ui.modern ? window.ui.pageMargin : 0
+                    leftPadding: window.ui.modern ? programsPage.modernMargin : 0
+                    rightPadding: window.ui.modern ? programsPage.modernMargin : 0
 
                     Text {
                         // a plain Text does not inherit the window font: the text size while it is not 100 %
@@ -258,8 +259,8 @@ ColumnLayout {
                 UiProgress {
                     id: restoreProgress
                     Layout.fillWidth: true
-                    Layout.leftMargin: window.ui.modern ? window.ui.pageMargin : 16
-                    Layout.rightMargin: window.ui.modern ? window.ui.pageMargin : 16
+                    Layout.leftMargin: window.ui.modern ? programsPage.modernMargin : 16
+                    Layout.rightMargin: window.ui.modern ? programsPage.modernMargin : 16
                     topPadding: window.ui.modern ? 0 : 8
                     done: rootItem.folderRestoreDone
                     total: rootItem.folderRestoreTotal
@@ -277,8 +278,8 @@ ColumnLayout {
 
                     ListView {
                         anchors.fill: parent
-                        anchors.leftMargin: window.ui.modern ? window.ui.pageMargin : 0
-                        anchors.rightMargin: window.ui.modern ? window.ui.pageMargin : 0
+                        anchors.leftMargin: window.ui.modern ? programsPage.modernMargin : 0
+                        anchors.rightMargin: window.ui.modern ? programsPage.modernMargin : 0
                         spacing: window.ui.modern ? 8 : 0
                         clip: window.ui.modern
                         // Modern look: a thin bar while the list moves, as in the other lists of the modern look (the
@@ -330,7 +331,7 @@ ColumnLayout {
                             Accessible.onPressAction: workoutDelegate.clicked()
 
                             background: Rectangle {
-                                radius: window.ui.modern ? window.ui.radius : 0
+                                radius: window.ui.modern ? 16 : 0
                                 color: window.ui.modern ? (workoutDelegate.pressed ? window.ui.surfaceHigh : window.ui.surface)
                                              : (ListView.isCurrentItem ? Material.color(Material.Green, Material.Shade800) : Material.backgroundColor)
                             }
@@ -355,7 +356,7 @@ ColumnLayout {
                                     id: fileIcon
                                     visible: !window.ui.modern
                                     text: isItemFolder ? "📁" : "📄"
-                                    font.pixelSize: window.ui.fontPx(24)
+                                    font.pixelSize: window.fontPx(24)
                                 }
 
                                 Rectangle {
@@ -400,8 +401,8 @@ ColumnLayout {
                                         Accessible.ignored: window.ui.modern
                                         Layout.fillWidth: true
                                         text: itemRelativePath
-                                        color: window.ui.inkMuted(Material.color(Material.Grey))
-                                        font.pixelSize: window.ui.modern ? window.ui.fontCaption : window.ui.fontPx(12)
+                                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey)
+                                        font.pixelSize: window.ui.modern ? window.ui.fontCaption : window.fontPx(12)
                                         elide: Text.ElideMiddle
                                         visible: isSearching && itemRelativePath !== ""
                                     }
@@ -409,7 +410,7 @@ ColumnLayout {
 
                                 Text {
                                     text: "›"
-                                    font.pixelSize: window.ui.fontPx(24)
+                                    font.pixelSize: window.fontPx(24)
                                     color: Material.color(Material.Grey)
                                     visible: !window.ui.modern && !ListView.isCurrentItem
                                 }
@@ -456,8 +457,8 @@ ColumnLayout {
 
                 RowLayout {
                     Layout.fillWidth: true
-                    Layout.leftMargin: window.ui.modern ? window.ui.pageMargin : 0
-                    Layout.rightMargin: window.ui.modern ? window.ui.pageMargin : 0
+                    Layout.leftMargin: window.ui.modern ? programsPage.modernMargin : 0
+                    Layout.rightMargin: window.ui.modern ? programsPage.modernMargin : 0
                     // 16 to the pill: UiButton has a 6 inset below it
                     Layout.bottomMargin: window.ui.modern ? 10 : 0
                     // Classic look: the platform default spacing, as before (8 dp on Android and
@@ -569,8 +570,8 @@ ColumnLayout {
                     visible: active
                     Layout.fillWidth: true
                     Layout.margins: 5
-                    Layout.leftMargin: window.ui.modern ? window.ui.pageMargin - 8 : 5
-                    Layout.rightMargin: window.ui.modern ? window.ui.pageMargin : 5
+                    Layout.leftMargin: window.ui.modern ? programsPage.modernMargin - 8 : 5
+                    Layout.rightMargin: window.ui.modern ? programsPage.modernMargin : 5
                     sourceComponent: detailButtons
                 }
 
@@ -787,7 +788,7 @@ ColumnLayout {
                             visible: text !== ""
                             font.pixelSize: window.ui.fontPx(12)
                             wrapMode: Text.WordWrap
-                            color: window.ui.inkMuted(Material.color(Material.Grey, Material.Shade400))
+                            color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey, Material.Shade400)
                             horizontalAlignment: Text.AlignLeft
                         }
 
@@ -812,7 +813,7 @@ ColumnLayout {
                             Layout.fillWidth: true
                             Layout.margins: 5
                             Layout.leftMargin: 5
-                            Layout.rightMargin: window.ui.modern ? window.ui.pageMargin : 5
+                            Layout.rightMargin: window.ui.modern ? programsPage.modernMargin : 5
                             // modern look: the chart card right under the buttons (15 to the pill: the
                             // inset of the pill in its button and the spacing), not 28 with this margin
                             Layout.bottomMargin: window.ui.modern ? 0 : 5

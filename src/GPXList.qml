@@ -20,10 +20,11 @@ ColumnLayout {
     // Modern look: the list on top and the map below on a phone held upright, side by side
     // otherwise (the classic look is always side by side)
     readonly property bool sideBySide: !window.ui.modern || width > height
-    // Modern look, the right edge of the filter, the list and the button: side by side 8 to the map -
-    // the scroll indicator of the list is 8 wide with its 4 dp bar in the middle (padding 2), so the
-    // bar stays 2 off the cards and 4 off the map
-    readonly property int modernRightMargin: sideBySide ? 8 : window.ui.pageMargin
+    // Modern look: side margin of the filter row, the list and the button
+    readonly property int modernMargin: Math.max(16, window.contentSideMargin)
+    // ...and on the right: side by side 8 to the map - the scroll indicator of the list is 8 wide
+    // with its 4 dp bar in the middle (padding 2), so the bar stays 2 off the cards and 4 off the map
+    readonly property int modernRightMargin: sideBySide ? 8 : modernMargin
 
     // Case-insensitive name filter shared by the classic and the modern filter field
     function applyFilter(text) {
@@ -125,7 +126,7 @@ ColumnLayout {
             spacing: 8
             Layout.fillWidth: true
             Layout.preferredWidth: 100
-            Layout.leftMargin: window.ui.pageMargin
+            Layout.leftMargin: gpxPage.modernMargin
             Layout.rightMargin: gpxPage.modernRightMargin
             Layout.topMargin: 8
 
@@ -190,7 +191,7 @@ ColumnLayout {
                 anchors.top: parent.top
                 anchors.left: parent.left
                 anchors.right: parent.right
-                anchors.leftMargin: window.ui.pageMargin
+                anchors.leftMargin: gpxPage.modernMargin
                 anchors.rightMargin: gpxPage.modernRightMargin
                 done: rootItem.folderRestoreDone
                 total: rootItem.folderRestoreTotal
@@ -201,7 +202,7 @@ ColumnLayout {
                 anchors.fill: parent
                 // the gap under the progress is its own (UiProgress)
                 anchors.topMargin: modernProgress.height
-                anchors.leftMargin: window.ui.pageMargin
+                anchors.leftMargin: gpxPage.modernMargin
                 anchors.rightMargin: gpxPage.modernRightMargin
                 clip: true
                 spacing: 8
@@ -236,7 +237,7 @@ ColumnLayout {
                     // Material 3 list item: one line at least 56, the icon and the button 16 from the
                     // edges, the text 16 after the icon; a bigger text grows it, 8 above and below
                     height: Math.max(56, Math.max(40, gpxName.implicitHeight) + 16)
-                    radius: window.ui.radius
+                    radius: 16
                     fill: selected && !folder ? window.ui.alpha(window.ui.accent, 0.14)
                                               : (cardArea.pressed ? window.ui.surfaceHigh : window.ui.surface)
                     strokeWidth: selected && !folder ? 1 : 0
@@ -476,8 +477,8 @@ ColumnLayout {
             // would only be a grey stripe next to the map
             ScrollBar.vertical.policy: window.ui.modern ? ScrollBar.AlwaysOff : ScrollBar.AlwaysOn
             // Padding, not a margin: the content moves in, the scroll bar stays at the edge
-            rightPadding: window.ui.modern && !gpxPage.sideBySide ? window.ui.pageMargin : window.contentSideMargin
-            leftPadding: window.ui.modern && !gpxPage.sideBySide ? window.ui.pageMargin : 0
+            rightPadding: window.ui.modern && !gpxPage.sideBySide ? gpxPage.modernMargin : window.contentSideMargin
+            leftPadding: window.ui.modern && !gpxPage.sideBySide ? gpxPage.modernMargin : 0
             Layout.row: window.ui.modern && !gpxPage.sideBySide ? 2 : 0
             Layout.column: gpxPage.sideBySide ? 1 : 0
             Layout.rowSpan: window.ui.modern && gpxPage.sideBySide ? 3 : 1
@@ -503,7 +504,7 @@ ColumnLayout {
                     height: row.chips ? routeChips.height + 8 : implicitHeight
                     text: rootItem.previewWorkoutDescription
                     font.pixelSize: window.ui.modern ? window.ui.fontLabel : window.fontPx(16)
-                    color: window.ui.inkMuted("white")
+                    color: window.ui.modern ? window.ui.textMuted : "white"
                     bottomPadding: window.ui.modern ? 8 : 0
                     wrapMode: Text.WordWrap
                     horizontalAlignment: Text.AlignHCenter
@@ -585,7 +586,7 @@ ColumnLayout {
                         // 8 is enough: the outer arc (radius 24) still covers the corner of the map
                         border.width: 8
                         border.color: window.ui.bg
-                        radius: window.ui.radius + border.width
+                        radius: 16 + border.width
                         color: "transparent"
                     }
                     Component.onCompleted: {
@@ -654,7 +655,7 @@ ColumnLayout {
             Layout.column: 0
             Layout.fillWidth: true
             Layout.preferredWidth: 100
-            Layout.leftMargin: window.ui.pageMargin
+            Layout.leftMargin: gpxPage.modernMargin
             Layout.rightMargin: gpxPage.modernRightMargin
             // 16 to the pill: UiButton has a 6 inset below it
             Layout.bottomMargin: 10

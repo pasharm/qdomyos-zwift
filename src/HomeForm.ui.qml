@@ -642,7 +642,7 @@ Page {
                 Rectangle {
                     width: parent.width
                     height: helpColumn.height + 32
-                    radius: window.ui.radius
+                    radius: 16
                     color: window.ui.surface
 
                     // [checks, rest]

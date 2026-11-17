@@ -73,7 +73,7 @@ ColumnLayout {
         text: ipsLabel.text
         textFormat: Text.PlainText
         wrapMode: Text.WordWrap
-        font.pixelSize: window.ui.fontHint
+        font.pixelSize: window.fontHint
         color: window.ui.textMuted
     }
 }

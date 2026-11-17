@@ -3103,7 +3103,7 @@ import QtQuick 2.12 as Quick212
                           filteredSettings.length === 0 ? qsTr("No settings found") :
                           qsTr("Search results") + " (" + filteredSettings.length + ")"
                     // A status line, not an error: plain muted text in the modern look
-                    color: window.ui.inkMuted(Material.color(Material.Red))
+                    color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Red)
                     font.bold: true
                     Layout.fillWidth: true
                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -3184,7 +3184,7 @@ import QtQuick 2.12 as Quick212
                                                     : (resultArea.pressed ? Qt.rgba(0.5, 0.5, 0.5, 0.2) : "transparent")
                             border.color: Material.color(Material.Grey)
                             border.width: window.ui.modern ? 0 : 1
-                            radius: window.ui.modern ? window.ui.radius : 2
+                            radius: window.ui.modern ? 16 : 2
                         }
 
                         function open() {
@@ -3247,7 +3247,7 @@ import QtQuick 2.12 as Quick212
                                         text: window.ui.modern ? window.ui.plainTitle(settingsPane.sectionOf(entry))
                                                                : settingsPane.parentDisplayName(entry)
                                         color: window.ui.modern ? window.ui.accent : Material.color(Material.Grey)
-                                        font.pixelSize: window.ui.fontHint
+                                        font.pixelSize: window.fontHint
                                         bottomPadding: window.hintGap
                                         wrapMode: Text.WordWrap
                                         Layout.fillWidth: true
@@ -3307,7 +3307,7 @@ import QtQuick 2.12 as Quick212
                                 color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -3384,7 +3384,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Choose Auto to follow your device language, or pick a specific language for QZ.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3426,7 +3426,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enter your weight in kilograms so QZ can more accurately calculate calories burned. NOTE: If you choose to use miles as the unit for distance traveled, you will be asked to enter your weight in pounds (lbs) unless you enable 'Use kg for weight'.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3490,7 +3490,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enter your height for more accurate BMR and active calories calculation. Use centimeters for metric or feet'inches\" format (e.g., 5'10\") for imperial units.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3534,7 +3534,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enter your age so that calories burned can be more accurately calculated.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3577,7 +3577,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Select your gender so that calories burned can be more accurately calculated.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3621,7 +3621,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("If you train to specific output (or watts) levels, for example in Peloton Power Zone classes,and have taken an FTP test (Functional Threshold Power), enter your FTP here. This number is used to calculate your Power Zones (Zones 1 to 7 for Peloton and 1 to 6 for Zwift).")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3662,7 +3662,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("If you train to specific output (or watts) levels, for example with Stryd,and have taken an CP test (Critical Power Test), enter your CP here. This number is used to calculate your RSS.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3702,7 +3702,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("No need to enter data here. It is for a possible future QZ feature.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3744,7 +3744,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enter your email address to receive an automated email with stats and charts when you hit STOP at the end of each workout. Make sure there are no spaces before or after the email address; this is the most common reason the automated email is not sent. Privacy Note: Email addresses are not collected by the developer and are only saved locally on your device.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3775,7 +3775,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn on if you want QZ to display distance traveled in miles. Default is off and set to kilometers.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3805,7 +3805,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn on if you want to use kilograms (kg) for weight instead of pounds (lbs). Useful for UK users who use miles for distance but kg for weight.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3835,7 +3835,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn on to set QZ to always open in PAUSE mode. This is important for Peloton classes so that you can sync the start of your QZ workout with the start of the Peloton class. Turn off to have QZ start tracking and timing your workout as soon as it opens.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3864,7 +3864,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn this on for: - Peloton Bootcamp classes or other workouts that are on and off the bike or treadmill. QZ will continue to track your workout even when you step away from your equipment. - Capturing non-equipment-based workouts, such as yoga or strength training. NOTE: All such workouts are labeled as “Rides” in Strava, but you can edit the label in Strava.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3881,7 +3881,7 @@ import QtQuick 2.12 as Quick212
                 text: qsTr("Zwift users: keep this setting off")
                 font.bold: yes
                 font.italic: yes
-                font.pixelSize: window.ui.fontHint
+                font.pixelSize: window.fontHint
                 bottomPadding: window.hintGap
                 textFormat: Text.PlainText
                 wrapMode: Text.WordWrap
@@ -3915,7 +3915,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("(For Android Version 10 and above, this setting cannot be changed. This setting can be changed for Android Version 9 and below and for iOS.) When this setting is turned off, QZ sends heart rate data in a format designed to improve compatibility with third-party apps, such as Zwift and Peloton. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3944,7 +3944,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn this on to prevent a built-in heart rate monitor (HRM) on your exercise equipment from sending that data to QZ. This allows QZ to connect to your external HRM, such as a chest band or Apple Watch.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -3973,7 +3973,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("This prevents your bike or treadmill from sending its calories-burned calculation to QZ and defaults to QZ's more accurate calculation.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -4002,7 +4002,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enable to calculate only active calories (excluding basal metabolic rate) similar to Apple Watch. When disabled, total calories including BMR are calculated. This affects both display and Apple Health integration.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -4031,7 +4031,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enable to calculate calories based on heart rate data instead of power. Requires heart rate sensor connection for accurate calorie estimation.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -4079,7 +4079,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Apple Watch users: leave it disabled! Just open the app on your watch")
                         font.bold: true
                         font.italic: true
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -4122,7 +4122,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("During the first 5 minutes after the fitness machine connects, while no heart rate comes, QZ searches for a heart rate sensor once a minute: it connects the chosen heart belt as soon as it is found or, with none chosen, offers one found nearby. A tap on the heart rate tile or the Bluetooth icon on the home page searches at any time.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -4256,7 +4256,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Zone 5 will be calculated automatically based on Zone 4 end percentage and max HR.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -4270,7 +4270,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Choose the percentages for where you want your zones 1-4 to end and click OK.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -4336,7 +4336,7 @@ import QtQuick 2.12 as Quick212
                                         text: qsTr("QZ uses a standard age-based calculation for maximum heart rate and then sets the heart rate zones based on that max heart rate. If you know your actual max heart rate (the highest your heart rate is known to reach), turn this option on and enter your actual max heart rate. Then click OK.")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
-                                        font.pixelSize: window.ui.fontHint
+                                        font.pixelSize: window.fontHint
                                         bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
@@ -4380,7 +4380,7 @@ import QtQuick 2.12 as Quick212
                                         text: qsTr("Enter your resting heart rate (the lowest your heart rate reaches when fully rested). This is used for accurate training load calculations. Default is 60 bpm.")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
-                                        font.pixelSize: window.ui.fontHint
+                                        font.pixelSize: window.fontHint
                                         bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
@@ -4521,7 +4521,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Expand the bars to the right to display the options under this setting. These settings are used to calculate power (watts) for bikes that do not have power meters. Instead QZ estimates power from your cadence and heart rate. You can calibrate how QZ calculates your power from heart rate as follows: If you know that at a stable pace you produce 100W of power at a heart rate of 150 BPM and 150W at 170 BPM, you can add these values under Sessions 1 and 2 Watt and HR and QZ will calculate your power based on that trend line.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -4564,7 +4564,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("QZ calculates speed based on your pedal cadence (RPMs). Enable this setting if you want your speed to be calculated based on your power output (watts), as Zwift and some other apps do. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -4592,7 +4592,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Bikes that report their resistance back take about a second to confirm a new level, so several quick taps on the resistance +/- buttons change it by only one. Enable this setting to add the taps up: 3 quick taps change the resistance by 3. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -4622,7 +4622,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("QZ will remember the last Gears value and it will restore on startup")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -4691,7 +4691,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Specify a particular gear value to be restored at startup. This will override the 'Restore Gears on Startup' setting.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -4731,7 +4731,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("0.005 = Clinchers\n0.004 = Tubulars\n0.012 = MTB")
                         font.italic: true
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         color: "steelblue"
                     }
@@ -4766,7 +4766,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enables QZ to include the weight of your bike when calculating speed. For example, if you are competing against yourself on VZfit, adding bike weight will 'level the playing field' against your virtual self. If you have set QZ to calculate distance in miles, enter the bike weight in pounds (lbs) unless you enable 'Use kg for weight'. Default unit is kilograms (kgs).")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -4847,7 +4847,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enable this setting ONLY when using Zwift in ERG (workout) Mode. QZ will communicate the target resistance (or automatically adjust your resistance if your bike has this capability) to match the target watts based on your cadence (RPM). In ERG Mode, the changes in road slope will not affect target resistance, as is the case in Simulation Mode. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -4887,7 +4887,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enable TCP server on port 21587 to send control commands using the OpenBikeControl link protocol")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
@@ -4908,7 +4908,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("When enabled, gear shift commands go only to OpenBikeControl clients. When disabled, they go to both OpenBikeControl clients and the local gear system")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
@@ -5093,12 +5093,12 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Note: Left and Right paddles are fixed to Steer Left/Right and cannot be configured")
                                 font.bold: true
                                 font.italic: true
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
                                 Layout.topMargin: 10
-                                color: window.ui.inkMuted(Material.color(Material.Orange))
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Orange)
                             }
                         }
                     }
@@ -5138,7 +5138,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("This setting sets your “flat road” in Zwift. All communicated resistance changes will be based on this setting. The value entered is personal preference and will be dependent on your level of fitness. The suggested value for Echelon bikes is between 18 and 20. Default is 4.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -5181,7 +5181,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Add an offset in watts to the requested power from apps like Zwift. Positive values increase power, negative values decrease it. Default is 0.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -5222,7 +5222,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("(for bikes and treadmills when using “treadmill as a bike” setting). This setting scales the resistance from your bike or the speed from your treadmill before sending it to Zwift. Default is 1.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -5263,7 +5263,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("In ERG Mode or during a Power Zone workout on Peloton, the app sends a “target output” request. If the output requested doesn’t match your current output (calculated using cadence and resistance level), your target resistance will change to help you get closer to the target output. If the filter is set to higher values, you will get less adjustment of the target resistance and you will have to increase your cadence to match the target output. The Up and Down Watt Filter settings are the upper and lower margin before the adjustment of resistance is communicated. Example: if the up and down filters are set to 10 and the target output is 100 watts, a change of your resistance will only be communicated if your bike produces less than 90 watts or more than 110 watts. Default is 10.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -5304,7 +5304,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("See above. Default is 10.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -5345,7 +5345,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Use this setting to set a minimum target resistance. For example, if you do not want to ride at a resistance below 25, enter a value of 25 and QZ will not set a target resistance below 25. Default is 0.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -5386,7 +5386,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Similar to the above, but sets a maximum target resistance. Default is 999.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -5428,7 +5428,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("(only for bikes with electronically-controlled resistance): Enter the resistance level you want QZ to set at startup. Default is 1.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -5467,7 +5467,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Applies a multiplier to the gears. Default is 1.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -5525,7 +5525,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Applies an offset to the gears. Default is 0.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -5563,7 +5563,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enable automatic gear shifting based on cadence thresholds. When enabled, QZ will automatically shift gears up or down based on your pedaling cadence.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -5994,7 +5994,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("If you have a generic FTMS bike and the tiles don't appear on the main QZ screen, select here the Bluetooth name of your bike.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -6008,7 +6008,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Expand the bars to the right to display the options under this setting. Select your specific model (if it is listed) and leave all other settings on default. If you encounter problems or have a question about the QZ settings for your equipment, open a support ticket on GitHub or ask the QZ community on the QZ Facebook Group.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -6107,7 +6107,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Since this bike doesn't send resistance over Bluetooth, QZ is calculating it using cadence and wattage. The result could be a little 'jumpy' and so, with this setting, you can filter the resistance tile value. The unit is a pure resistance level, so putting 5 means that you will see a resistance changes only when the resistance is changing by 5 levels.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -6484,7 +6484,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enable this for Skandika X-2000 bikes. Disable for other Skandika models (e.g., HT211212095)")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -6777,7 +6777,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enabling this QZ will ignore changing gears if the value is too low for this trainer. Default: disabled.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -7252,7 +7252,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use 'usb'. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -7291,7 +7291,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -7565,7 +7565,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enable the special SPORT01 instant power formula only for the Toputure TEB1 bike. Leave disabled to use the standard FTMS instant power reported by the device.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -7596,7 +7596,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Set 100mm as wheel circumference in settings of ant+ speed sensor")
                         font.bold: true
                         font.italic: true
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -7624,7 +7624,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn this on if you need to use ANT+ along with Bluetooth. Power is also sent.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -7664,7 +7664,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("You can increase/decrease your speed sent over ANT+. The number you enter as an Offset adds that amount to your speed.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -7704,7 +7704,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("You can increase/decrease your speed output sent over ANT+. For example, to use a rower to cycle in Zwift, you could double your speed output to better match your cycling speed. The number you enter is a multiplier applied to your actual speed.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -7762,7 +7762,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("This setting enables receiving the heart rate from an external HRM over ANT+ instead of from QZ.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -7790,7 +7790,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Use this to connect to your bike using ANT+ instead of Bluetooth. Default: Disabled")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -7857,7 +7857,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("New look of the main screen, the side menu, the settings and the wizard. Turn it off to get the classic look back.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8011,7 +8011,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8051,7 +8051,7 @@ import QtQuick 2.12 as Quick212
                         visible: window.systemTextScaleAvailable
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8104,7 +8104,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Size of the text of the app (settings, menus, dialogs), in percent, from 80 to 170. The default is 100. The tiles keep their own size setting.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8150,7 +8150,7 @@ import QtQuick 2.12 as Quick212
                         visible: Qt.platform.os === "android"
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8191,7 +8191,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Choose the floating window layout type. Classic uses the standard floating.htm file, while Horizontal uses the hfloating.htm file for horizontal layout.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8205,7 +8205,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Allows continuous display of the Start/Pause and Stop buttons across the top of the screen during your workouts. Default is on.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8247,7 +8247,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Android Only: width of the floating window.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8289,7 +8289,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Android Only: height of the floating window.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8331,7 +8331,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Android Only: transparency percentage of the floating window.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8360,7 +8360,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Android Only: if enabled the floating window will start as soon as the fitness devices is connected.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8414,7 +8414,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Choose which charts to display in the footer: both heart rate and power charts, only heart rate chart, or only power chart.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8444,7 +8444,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("The Charts page adds the new data every second while a workout is running. Also switched on the Charts page itself. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8628,7 +8628,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("iOS only: choose which two metrics are shown in the compact Dynamic Island bar for Live Activities. Default is Heart Rate on the left and Watt on the right.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8887,7 +8887,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enter the email address you use to login to Peloton (NOT your leaderboard name). Ensure there are no spaces before or after your email. Click OK.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8938,7 +8938,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enter the password you use to login to Peloton. Click OK. If you have entered the correct login credentials and the QZ is able to access your account, you will see a when you reopen QZ. This is a secure login, not accessible by anyone but you.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -8997,7 +8997,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Typically, Peloton coaches call out a range for target incline, resistance and/or speed. Use this setting to choose the difficulty of the target QZ communicates. Difficulty level can be set to lower, upper or average. Click OK.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9038,7 +9038,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Difficulty level for Peloton treadmill classes. 1 is easy 10 is hard.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9079,7 +9079,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Difficulty level for Peloton treadmill walking classes. 1 is easy 10 is hard.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9116,7 +9116,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Minimum speed for Peloton walking sessions. Set to 0 to disable. Applied to all speed targets in walking workouts.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9153,7 +9153,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Minimum speed for Peloton running sessions. Set to 0 to disable. Applied to all speed targets in running workouts.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9194,7 +9194,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Difficulty level for Peloton rower classes. 1 is easy 10 is hard.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9234,7 +9234,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("As of 4/1/2022, this feature is broken due to a Power Zone Pack (PZP) website change. Leave (or change back to) the default of “username” (without quotation marks, all lowercase and all one word) until further notice.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9285,7 +9285,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("As of 4/1/2022, this feature is broken due to a Power Zone Pack (PZP) website change. Leave this setting blank until further notice.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9326,7 +9326,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Conversion gain is a multiplier. Use this setting to align the Peloton resistance calculated by QZ with the relative effort required by your bike. In most cases the default values will be correct.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9368,7 +9368,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Increases the resistance that QZ displays in the Peloton Resistance tile. If QZ’s calculated conversion from your bike’s resistance scale to Peloton’s seems too low, the number you enter here will be added to the calculated resistance without increasing your effort or actual resistance. (Example: If QZ displays Peloton resistance of 30 and you enter 5, QZ will display 35.)")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9397,7 +9397,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn this on compatibility to Peloton over Bluetooth. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9425,7 +9425,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn this on to start a workout automatically when you start a workout on Peloton (waiting the intro). Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9453,7 +9453,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn this on to start a workout automatically when you start a workout on Peloton (skipping the intro). Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9526,7 +9526,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("By default, QZ communicates heart rate to Peloton. Use this setting to change the metric that appears on the Peloton screen.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9569,7 +9569,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Allows you to choose whether you would like the Peloton class air date to display before or after the class title on Strava.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9625,7 +9625,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn this on if you want QZ to capture a link to the Peloton class and display it in Strava.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9653,7 +9653,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("By default, QZ treats Spin-UPS in Power Zone rides as an increasing ramp to warm you up. You can disable this, to leave the resistance up to you.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9682,7 +9682,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Only for Android where QZ is running on the same Peloton device. This setting enables the AI (Artificial Intelligence) on QZ that will read the Peloton workout screen and will adjust the Peloton offset in order to stay in sync in realtime with your Peloton workout. A popup about screen recording will appear in order to notify this.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9710,7 +9710,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("This setting enables the AI (Artificial Intelligence) on the QZ Companion AI app that will read the Peloton workout screen and will adjust the Peloton offset in order to stay in sync in realtime with your Peloton workout.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9739,7 +9739,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Only if you are on a real Peloton Bike/Bike+! This will allow QZ to collect metrics from your Bike/Bike+ and send it to Zwift. Peloton Free ride must running.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9789,7 +9789,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enter the email address you use to login to Zwift. Ensure there are no spaces before or after your email. Click OK.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9841,7 +9841,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enter the password you use to login to Zwift. Click OK.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9892,7 +9892,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("This setting bring virtual gearing from zwift to all the bikes directly from the Zwift interface. You have to configure Zwift: Wahoo virtual device from QZ as for power and cadence, and your QZ device as resistance. MUST be disabled for Mywhoosh app. Default: disabled.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9920,7 +9920,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("This setting shows the actual gear from QZ to Zwift. Negative values are not displayed on Zwift and it could have also limitation to higher gain value. Default: disabled.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9949,7 +9949,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("By default QZ is showing the actual gears from the bike. Enabling this, QZ will show the same gears that you see on Zwift. This doesn't affect the real gear value one the bike. Default: disabled.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -9990,7 +9990,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Define the number of delay seconds between each inclination change from Zwift. This value can't be less than 5. Default: 5")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -10018,7 +10018,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Only for Android and iOS: QZ will read the inclination in real time from the Zwift app and will adjust the inclination on your treadmill. It doesn't work on workout")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -10046,7 +10046,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Only for PC where QZ is running on the same Zwift device. This setting enables the AI (Artificial Intelligence) on QZ that will read the Zwift inclination from the Zwift app and will adjust the inclination on your treadmill. A popup about screen recording will appear in order to notify this.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -10088,7 +10088,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Only for PC where QZ is running on the same Zwift device. This setting enables the AI (Artificial Intelligence) on QZ that will read the Zwift inclination and speed from the Zwift app during a workout and will adjust the inclination and the speed on your treadmill. A popup about screen recording will appear in order to notify this.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -10126,7 +10126,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Wifi Compatibility for Rouvy")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -10165,7 +10165,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("If you want to send metrics to your Garmin device from your Mac, enable this. Otherwise leave it disabled.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -10193,7 +10193,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("You have to install the QZ Companion App on your Garmin Watch/Computer first.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -10221,7 +10221,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Use your garmin watch to get the ANT+ metrics from a bike")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -10257,7 +10257,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enable automatic upload of FIT files to Garmin Connect after workouts.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -10285,7 +10285,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Show a popup after Stop to rate perceived exertion (RPE) and how you felt; the values are saved into the FIT file and shown in Garmin Connect.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -10313,7 +10313,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enable automatic download of today's Garmin workout when QZ starts. Default: enabled.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -10457,7 +10457,7 @@ import QtQuick 2.12 as Quick212
                                 horizontalAlignment: Text.AlignHCenter
                                 font.pixelSize: window.ui.modern ? window.ui.fontLabel : window.fontPx(12)
                                 font.italic: !window.ui.modern
-                                color: window.ui.inkMuted(Material.color(Material.Grey))
+                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey)
                             }
 
                             UiTextField {
@@ -10522,7 +10522,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enter your Garmin Connect credentials to enable automatic upload. Your password is stored locally and securely.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -10550,7 +10550,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("With this enabled, QZ will write the FIT file as a Garmin device so Garmin will consider this fit file for the training effect. Default: disabled.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11303,7 +11303,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("IMPORTANT: You must set your real Garmin device UNIT ID here to see your actual device in Garmin Connect. You can find your device UNIT ID in the Garmin Connect app. The default value (3313379353) is just a placeholder. If you want to see also the Acute load in Garmin Connect leave the default Unit ID here.")
                         font.bold: true
                         font.italic: true
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11347,7 +11347,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Treadmill only: enabling this if you want that QZ will stop the tape at the end of the current train program.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11375,7 +11375,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enable detection of ZWO/XML workouts copied to the clipboard. Default: disabled.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11403,7 +11403,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Play a short sound when a training program starts a new row. Default: disabled.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11432,7 +11432,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Automatically trigger a lap when completing each workout segment/row. For ramp segments, lap is triggered only at the end of the ramp to avoid creating a lap every second.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11460,7 +11460,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Treadmill only: Automatically adjusts speed to maintain consistent power output. Speed adjustments occur on incline changes and adapt to manual speed modifications.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11531,7 +11531,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. The global PID HR actuator setting selects speed or inclination for treadmills; a workout interval can override it in the Workout Editor. The PID HR tile changes only the target HR zone.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11599,7 +11599,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Alternatively to 'PID on Heart Zone' setting you can use this couple of settings in order to specify a HR range.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11627,7 +11627,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enabling this the PID is trying to motivate yourself to always increase a little the effort trying anyway to keep you in the zone. Default: Enabled.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11665,7 +11665,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Lower HR boundary (% of max HR) that defines the bottom of Zone 1 for 'Pushy' mode. Below this percentage the treadmill is at the bottom of the recovery area. Default: 60.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11702,7 +11702,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Fraction of zone above the target zone where 'Pushy' mode stops pushing. 0.8 means the PID stops pushing at zone+0.8. Default: 0.8.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11730,7 +11730,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enabling this the PID will ignore the inclination changes. Default: Disabled.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11771,7 +11771,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enter your 1 mile time goal, click OK. This setting will be used when you’re following a training program with the speed control. These settings should also match the Zwift app settings. More info: https://github.com/cagnulein/qdomyos-zwift/issues/609.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11812,7 +11812,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("See 1 Mile Pace above; same except 5 km instead of 1 mile.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11853,7 +11853,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("See 1 Mile Pace above; same except 10 km instead of 1 mile.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11894,7 +11894,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("See 1 Mile Pace above; same except half marathon distance instead of 1 mile.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -11935,7 +11935,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("See 1 Mile Pace above; same except marathon distance instead of 1 mile.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12056,7 +12056,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Select the default Pace to be used when the ZWO file does not indicate a precise pace.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12097,7 +12097,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Set the wattage step increment for ERG mode heart rate zone training. Default: 5 watts.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12317,7 +12317,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12385,7 +12385,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn on and enter your choices for workout time (in minutes and seconds) and the maximum and minimum speed, incline (treadmill), and resistance (bike) and QZ will randomly change your speed and resistance or incline accordingly for the period of time you have selected.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12423,7 +12423,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn on to convert your treadmill output to bike output when riding on Zwift. QZ sends your treadmill metrics to Zwift over Bluetooth so that you can participate as a bike rider. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12452,7 +12452,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn this on to have QZ control the speed of your treadmill during, for example, Peloton classes based on the coach’s speed callouts. Your speed will be in the low, upper or average range based on your Peloton Options > Difficulty setting. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12481,7 +12481,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn this on to write treadmill FIT files as running activities even when the average speed is below 6.5 km/h. This can help Garmin calculate Training Effect for high-incline treadmill workouts. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12510,7 +12510,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12539,7 +12539,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn this on to read the distance directly from the treadmill instead of calculating it from speed. Some treadmills report distance more accurately than the speed-based calculation. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12571,7 +12571,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Works with Direct Distance from Treadmill. Turn this on if the distance counter of your treadmill keeps running between workouts or starts again from 0 when the treadmill is switched off: only the distance walked during the workout is added, not what the treadmill counted before QZ connected. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12600,7 +12600,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Target Speed and Target Incline tile offer a way to increase/decrease the current difficulty with the plus/minus buttons. By default, with this setting disabled, the speed and the inclination change with a 3% gain for every pressure. Switching this ON, QZ will add a 0.1 speed offset or a 0.5 incline offset instead.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12641,7 +12641,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("(Speed Tile) This controls the amount of the increase or decrease in the speed (in kph/mph) when you press the plus or minus button in the Speed Tile. Default is 0.5 kph.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12684,7 +12684,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("This overrides the minimum inclination value of your treadmill (in order to reduce the inclination movement). Default is -100")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12725,7 +12725,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("This overrides the maximum inclination value of your treadmill (in order to reduce the inclination movement). Default is -100")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12764,7 +12764,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("This overrides the maximum speed value of your treadmill (in order to limit the max speed). Default is 100 km/h (62.1 mph)")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12803,7 +12803,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("This overrides the minimum speed value of your treadmill (in order to limit the min speed). Default is 0 km/h (0 mph)")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12844,7 +12844,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Multiplier applied to the step count calculated from cadence for calibration. Increase above 1.0 to count more steps, decrease below 1.0 to count fewer steps. Default is 1.0.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12868,7 +12868,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Overrides the default inclination values sent from the treadmill")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12896,7 +12896,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("For treadmills without inclination: turning this on and QZ will transform inclination requests into speed changes.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12941,7 +12941,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("If you have a generic FTMS bike and the tiles doesn't appear on the main QZ screen, select here the Bluetooth name of your bike.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -12955,7 +12955,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Expand the bars to the right to display the options under this setting. Select your specific model (if it is listed) and leave all other settings on default. If you encounter problems or have a question about settings for your specific equipment with QZ, click here to open a support ticket on GitHub or ask the QZ community on the QZ Facebook Group.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -13561,7 +13561,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enable handling of physical Start/Pause/Stop buttons on the treadmill hardware")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -13639,7 +13639,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -13942,7 +13942,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Default: 200. Change this only if you have random issues with speed or inclination (try to put 300)")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -14517,7 +14517,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -14985,7 +14985,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Allows you to force QZ to connect to your FTMS Rower. If you are in doubt, leave this Disabled and send an email to the QZ support. Default is “Disabled.”")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15228,7 +15228,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Allows you to force QZ to connect to your FTMS Elliptical. If you are in doubt, leave this Disabled and send an email to the QZ support. Default is Disabled.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15486,7 +15486,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Allows you to force QZ to connect to your equipment (see “Bluetooth Troubleshooting” below). Default is “Disabled.”")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15514,7 +15514,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Shows a confirmation popup before stopping the workout from the UI.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15556,7 +15556,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("You can increase/decrease your watt output for moving your avatar faster/slower in Zwift or other similar apps as a way of calibrating your equipment. The number you enter as an Offset adds that amount to your watts.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15597,7 +15597,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("You can increase/decrease your watt output for moving your avatar faster/slower in Zwift or other similar apps as a way of calibrating your equipment. For example, to use a rower to cycle in Zwift, you could double your watt output to better match your cycling speed by entering 2. The number you enter is a multiplier applied to your actual watts.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15637,7 +15637,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Limits the watt output sent by QZ. Set to 0 to disable the limit. Default is 9999 W.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15679,7 +15679,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("You can increase/decrease your speed for moving your avatar faster/slower in Zwift if your equipment outputs speed but not watts. The number you enter as an Offset adds that amount to your speed.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15721,7 +15721,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("You can increase/decrease your speed output for moving your avatar faster/slower in Zwift or other apps as a way of calibrating your equipment if your equipment outputs speed but not watts. For example, to use a rower to cycle in Zwift, you could double your speed output to better match your cycling speed. The number you enter is a multiplier applied to your actual speed.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15763,7 +15763,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("You can increase/decrease your cadence output. The number you enter as an Offset adds that amount to your cadence.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15804,7 +15804,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("You can increase/decrease your cadence output as a way of calibrating your equipment if your equipment outputs cadence but not watts. The number you enter is a multiplier applied to your actual cadence.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15879,7 +15879,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Default is “QZ.” Please leave this set to default so that other Strava users will see the QZ; a tiny bit of advertising that helps promote the app and support its development. If you choose to remove it, please consider contributing to the developer’s Patreon or Buy Me a Coffee accounts or just subscribe to the Swag bag in the left side bar to allow me to continue developing and supporting the app.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15907,7 +15907,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("QZ can open an external browser to authorize Strava. Default: disabled.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15936,7 +15936,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Append the Virtual Tag to the Strava Activity")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15964,7 +15964,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Append the Treadmill Tag to the Strava Activity when you are using a treadmill. If you want to see the elevation on Strava, you need to disable this.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -15992,7 +15992,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Append the Date to the Strava Activity as a prefix only for non-Peloton workout")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16021,7 +16021,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Allows you to change resistance during auto-follow mode using the volume buttons of the device running QZ, Bluetooth headphones or a Bluetooth remote. Changes made using these external controls will be visible in the Gears tile. This is a VERY USEFUL feature! Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16049,7 +16049,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Debounce the volume buttons, so you will only see 1 gear step if there are 2 or more volume near steps.  Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16096,7 +16096,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("If the power output/watts your equipment sends to QZ is quite variable, this setting will result in smoother Power Zone graphs. This is also helpful for use with Power Meter Pedals. Uses harmonic averaging which smooths power spikes better than arithmetic averaging. If any reading is 0, power immediately becomes 0. Default is Off.\n\nIMPORTANT NOTES:\n- No Average/smooth in Hometrainer config for standard home trainers which work at 1hz (No race mode available)\n- Disable Average on 3rd party apps (Rouvy/Zwift/MyWhoosh etc) or select 1sec in the app!\n- Need to use QZ in bridge mode!\n- For Elite home trainers or those who have a race mode (10hz), if it's not sufficient for some users, using Elite/Hometrainer smoothing in addition to QZ smoothing will improve it.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16125,7 +16125,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Enables the calculation of watts, even while in Pause mode. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16154,7 +16154,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn this on if you have a bike with inclination capabilities to fix Zwift’s bug that sends half-negative downhill inclination")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16196,7 +16196,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Inclination Offset and Gain are used to adjust the incline set by Zwift instead of, or in addition to, using the QZ Zwift Gain setting. For example, when Zwift changes the incline to 1%, you can have your treadmill change to 2%. The number you enter as an offset adds to the inclination sent from Zwift or any other 3rd party app. Default is 0.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16237,7 +16237,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("The number you enter as a Gain is a multiplier applied to the inclination sent from Zwift or any other 3rd party app. Default is 1.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16277,7 +16277,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("If you don't want to go below a certain inclination value for bikes and treadmill set the min. value here. Default: -999.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16318,7 +16318,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("(Incline Tile) This controls the amount of the increase or decrease in the inclination when you press the plus or minus button in the Incline Tile for both treadmills and bikes. Default is 0.5.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16346,7 +16346,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("By default QZ sends to the virtual Bluetooth/DIRCON bridge the current inclination of the treadmill. Enabling this, it will send instead the one wihtout considering inclination gain or offset. Default: False.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16375,7 +16375,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("This prevents your fitness device from sending its wattage calculation to QZ and defaults to QZ’s more accurate calculation.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16403,7 +16403,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("For the smart trainers, use resistance instead of inclination. This should help if you don't want to have the Wahoo Climb or similar to change inclination when you change gears. Default: disabled")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16433,7 +16433,7 @@ import QtQuick 2.12 as Quick212
                         visible: settings.force_resistance_instead_inclination
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16472,7 +16472,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).").arg(settings.miles_unit ? qsTr("Mi") : qsTr("KM"))
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16511,7 +16511,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("This slow down the inclination changes adding a delay between each change. This is not applied to all the model of treadmill/bike. Default is 0.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -16546,7 +16546,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Don't touch these settings if your bike works properly!")
                                 font.bold: true
                                 font.italic: true
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -16599,7 +16599,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("If your equipment doesn’t have Bluetooth, these settings allow you to use a cadence sensor so it will work with QZ as a bike or treadmill. Default is off.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -16656,7 +16656,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Use this setting to connect QZ to your cadence sensor. Default is Disabled.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -16697,7 +16697,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Wheel ratio is the multiplier used by QZ to calculate your speed based on your cadence. For example, if you enter 1 for your wheel ratio and you are riding at a cadence of 30, QZ will display your speed as 30 km/h. The default of 0.33 is correct for most bikes.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -16725,7 +16725,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enable special wattage calculation for Rogue Echo Bike: m_watt = 0.000602337 * pow(rpm, 3.11762) + 32.6404. Default is off.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -16753,7 +16753,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enable a custom linear resistance/watt table for CSC bikes. Joroto bikes keep using their dedicated resistance power profile. Resistance is clamped using the existing Min. Resistance and Max. Resistance settings.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -16867,7 +16867,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("QZ will build a linear equation from the two resistance/watt points and clamp the effective resistance using the existing Min. Resistance and Max. Resistance settings.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -16906,7 +16906,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("If your bike doesn’t have Bluetooth, this setting allows you to use a power meter pedal sensor so your bike will work with QZ. Default is off.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -16935,7 +16935,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("If your treadmill doesn’t have Bluetooth, this setting allows you to use a Stryde sensor (or similar) so your treadmill will work with QZ. Default is off.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -16964,7 +16964,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Some power sensors send cadence divided by 2. This setting will fix this behavior.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -16993,7 +16993,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Divide the cadence sent to Strava by 2.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -17021,7 +17021,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("If you have a Bluetooth treadmill and also a Stryd device connected to QZ and you want to use the speed from the stryd instead of the speed of the treadmill, enable this. Default: disabled.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -17049,7 +17049,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Experimental: gradually correct QZ-controlled treadmill speed using Runn/Stryd feedback, when the driver provides independent machine speed measurements. Requires 'Use speed from the power sensor'. Disabled by default.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -17088,7 +17088,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Maximum allowed difference between power sensor speed and treadmill speed before QZ stops applying the relative correction. Default: 20%.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -17116,7 +17116,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("If you have a Bluetooth treadmill and also a Runn device connected to QZ and you want to use the inclination from the RUNN instead of the inclination of the treadmill, enable this. Default: disabled.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -17144,7 +17144,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("If you have a Bluetooth treadmill and also a power sensor (like Stryd) connected to QZ and you want to use the cadence from the power sensor instead of the cadence of the treadmill, enable this. This is useful when the treadmill cadence sensor is unreliable at low speeds (walking/jogging). Default: disabled.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -17172,7 +17172,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("If you have a Bluetooth treadmill and also a Stryd device connected to QZ, by default Stryd can't get the inclination from the treadmill. Enabling this and QZ will add an inclination gain to the power read from the Stryd. Default: disabled.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -17234,7 +17234,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Custom coefficients for power sensor inclination calculation using formula: vwatts = (A + B × speed) × inclination.\n\nFor Stryd sensors use: A = -0.96, B = 1.33\n\nExamples with these values:\n• 8 km/h, 10% incline: (-0.96 + 1.33×8) × 10 = 97W added\n• 11 km/h, 10% incline: (-0.96 + 1.33×11) × 10 = 137W added\n\nIf both A and B are 0, QZ will use the default formula: 9.8 × weight × (inclination/100).\n\nDefault: A = -0.96, B = 1.33")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -17291,7 +17291,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Leave on Disabled or select from list of found Bluetooth devices.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -18151,7 +18151,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Use it to change the gears on QZ!")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -18189,7 +18189,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Thinkrider VS200 remote controller. Use it to change gears on QZ!")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -18227,7 +18227,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("CYCPLUS BC2 virtual shifter. Use it to change gears on QZ!")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -18265,7 +18265,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Use it to change the gears on QZ!")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -18293,7 +18293,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Also for Elite Square. Use it to change the gears on QZ!")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -18321,7 +18321,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enable vibration feedback on Zwift Play controllers when changing gears. Default: enabled.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -18349,7 +18349,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Debounce the buttons, so you will only see 1 gear step even if you are keep pressing the buttons.  Default is off.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -18377,7 +18377,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("You can swap the left to the right controller and viceversa.  Default is off.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -18405,7 +18405,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Use the zwift gears table instead of the QZ classic gears algorithm.  Default is off.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -18428,7 +18428,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Assign each physical button to Gear Up, Gear Down or Disabled. Applies before the Swap sides option above.")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -18572,7 +18572,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Default: 200ms. Lower it if you want to improve the gear reactivity. Warning: lowering this value will cause more power used on the QZ device")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -18725,7 +18725,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Useful in gyms with multiple similar machines. When enabled, QZ scans nearby equipment at startup and asks you which trainer to use before opening any Bluetooth connection.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -18753,7 +18753,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -18782,7 +18782,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Leave this setting off unless the Support staff asks you to turn it on during troubleshooting. Can improve the Android Bluetooth connection to Zwift. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -18811,7 +18811,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Same as “Relaxed Bluetooth for mad devices”. Leave off unless the Support staff asks you to turn it on. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -18840,7 +18840,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Leave this off unless the Support staff asks you to turn it on. Enables a new Bluetooth service, indicating the battery level of your device. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -18896,7 +18896,7 @@ import QtQuick 2.12 as Quick212
                                         text: qsTr("Forces QZ to communicate ONLY the Heart Rate metric to third-party apps. Default is off.")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
-                                        font.pixelSize: window.ui.fontHint
+                                        font.pixelSize: window.fontHint
                                         bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
@@ -18925,7 +18925,7 @@ import QtQuick 2.12 as Quick212
                                         text: qsTr("Enables QZ to communicate with the Echelon app. This setting can only be used with iOS running QZ and iOS running the Echelon app. Default is off.")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
-                                        font.pixelSize: window.ui.fontHint
+                                        font.pixelSize: window.fontHint
                                         bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
@@ -18954,7 +18954,7 @@ import QtQuick 2.12 as Quick212
                                         text: qsTr("Enables QZ to send a rower Bluetooth profile instead of a bike profile to third party apps that support rowing (examples: Kinomap and BitGym). This should be off for Zwift. Default is off.")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
-                                        font.pixelSize: window.ui.fontHint
+                                        font.pixelSize: window.fontHint
                                         bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
@@ -18984,7 +18984,7 @@ import QtQuick 2.12 as Quick212
                                         text: qsTr("When enabled, the virtual rower will use the Concept2 PM5 protocol instead of FTMS. This provides compatibility with apps like Mywhoosh that only support PM5 rowers. Default is off.")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
-                                        font.pixelSize: window.ui.fontHint
+                                        font.pixelSize: window.fontHint
                                         bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
@@ -19033,7 +19033,7 @@ import QtQuick 2.12 as Quick212
                                                 text: qsTr("Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.")
                                                 font.bold: !window.ui.modern
                                                 font.italic: !window.ui.modern
-                                                font.pixelSize: window.ui.fontHint
+                                                font.pixelSize: window.fontHint
                                                 bottomPadding: window.hintGap
                                                 textFormat: Text.PlainText
                                                 wrapMode: Text.WordWrap
@@ -19072,7 +19072,7 @@ import QtQuick 2.12 as Quick212
                                                 text: qsTr("Offset added after the gain. Default is 0.0. QZ's internal cadence display and workout metrics remain unchanged.")
                                                 font.bold: !window.ui.modern
                                                 font.italic: !window.ui.modern
-                                                font.pixelSize: window.ui.fontHint
+                                                font.pixelSize: window.fontHint
                                                 bottomPadding: window.hintGap
                                                 textFormat: Text.PlainText
                                                 wrapMode: Text.WordWrap
@@ -19104,7 +19104,7 @@ import QtQuick 2.12 as Quick212
                                         text: qsTr("When enabled, forces QZ to impersonate a virtual treadmill regardless of the original device type. This allows any device (bike, rower, elliptical, etc.) to appear as a treadmill to third party apps. Default is off.")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
-                                        font.pixelSize: window.ui.fontHint
+                                        font.pixelSize: window.fontHint
                                         bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
@@ -19133,7 +19133,7 @@ import QtQuick 2.12 as Quick212
                                         text: qsTr("Enables third-party apps to change the resistance of your equipment. Default is on.")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
-                                        font.pixelSize: window.ui.fontHint
+                                        font.pixelSize: window.fontHint
                                         bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
@@ -19163,7 +19163,7 @@ import QtQuick 2.12 as Quick212
                                         text: qsTr("This changes the virtual Bluetooth bridge from the standard FTMS to the Power Sensor interface. Default is off.")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
-                                        font.pixelSize: window.ui.fontHint
+                                        font.pixelSize: window.fontHint
                                         bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
@@ -19192,7 +19192,7 @@ import QtQuick 2.12 as Quick212
                                         text: qsTr("Enables a virtual Bluetooth bridge to the iFit App. This setting requires that at least one device be Android. For example, this setting does NOT work with QZ on iOS and iFit to iOS, but DOES work with QZ on iOS and iFit to Android. On Android remember to rename your device into I_EL into the android settings and reboot your device.")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
-                                        font.pixelSize: window.ui.fontHint
+                                        font.pixelSize: window.fontHint
                                         bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
@@ -19259,7 +19259,7 @@ import QtQuick 2.12 as Quick212
                                         text: qsTr("Enables the compatibility of the Wahoo KICKR protocol to MyWhoosh app. Leave the MyWhoosh compatibility disabled in order to use Zwift.")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
-                                        font.pixelSize: window.ui.fontHint
+                                        font.pixelSize: window.fontHint
                                         bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
@@ -19299,7 +19299,7 @@ import QtQuick 2.12 as Quick212
                                         text: qsTr("If you have multiple QZ instances, you can change the id of the virtual wahoo device. Default: 0")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
-                                        font.pixelSize: window.ui.fontHint
+                                        font.pixelSize: window.fontHint
                                         bottomPadding: window.hintGap
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
@@ -19379,7 +19379,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enter the MQTT broker hostname or IP address")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -19421,7 +19421,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enter the MQTT broker port (default: 1883)")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -19460,7 +19460,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enter the MQTT broker username (if required)")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -19500,7 +19500,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enter the MQTT broker password (if required)")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -19539,7 +19539,7 @@ import QtQuick 2.12 as Quick212
                                 text: qsTr("Enter a unique device identifier for MQTT client")
                                 font.bold: !window.ui.modern
                                 font.italic: !window.ui.modern
-                                font.pixelSize: window.ui.fontHint
+                                font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
@@ -19635,7 +19635,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("By default QZ sends the info to Zwift or any other 3rd party apps with a 1000ms interval rate. Enabling the Race Mode setting will cause QZ to send them to 100ms (10hz). Of course the bottleneck will be always your bike/treadmill.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -19664,7 +19664,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Forces the virtual Bluetooth bridge to send only the cadence information instead of the full FTMS metrics. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -19755,7 +19755,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Forces Android devices to remain awake while QZ is running. Default is on.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -19784,7 +19784,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("This MUST be always ON on an iOS device. Turning it OFF will lead to unexpected crashes of QZ. Default is on.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -19812,7 +19812,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("If you are experiencing crash on iOS midride, try to turn this on. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -19843,7 +19843,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don't freeze. It uses a silent audio track mixed with your music, so nothing you're listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -19872,7 +19872,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Simulates QZ being connected to a bike. When this is turned on QZ will calculate KCal based on your heart rate. Examples of when to use this setting: ○ To capture Peloton class data for classes without connected equipment (e.g., a strength or yoga workout).. ○ To arrange tiles on the QZ dashboard without connecting to your equipment. ○ To use the QZ Apple Watch app without connecting to your equipment.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -19901,7 +19901,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Same as Fake Device but instead of simulating a bike it simulates a treadmill.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -19930,7 +19930,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("iOS only. For Fake Treadmill mode: when no physical treadmill is connected, derives Speed from Apple Watch step cadence using the Wheel Ratio under Accessories > Cadence Sensor Options. The cycling default is far too high for running - try 0.04-0.15 depending on pace, from walking to running, and tune to taste. Useful with apps like Kinomap or Zwift. Default is off.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -19959,7 +19959,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Same as Fake Device but instead of simulating a bike it simulates an elliptical.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -19987,7 +19987,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Same as Fake Device but instead of simulating a bike it simulates a rower.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -20016,7 +20016,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Leave this on unless you have issues connecting your Bluetooth HRM to QZ. If turning this off does not solve the connection issue, open a support ticket on GitHub. Default is on.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -20046,7 +20046,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Android Only: enable this to force Android to don't kill QZ when it's running on background")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -20074,7 +20074,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Android Only: force QZ to use the /Documents/QZ folder for debug log and fit files")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -20103,7 +20103,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Turn this on to save a debug log to your device for use when requesting help with a bug.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
@@ -20142,7 +20142,7 @@ import QtQuick 2.12 as Quick212
                         text: qsTr("Clears all the QZ logs, QZ .fit files and QZ images (these files are saved by QZ for every session) from your device while maintaining your saved Profiles and Settings.")
                         font.bold: !window.ui.modern
                         font.italic: !window.ui.modern
-                        font.pixelSize: window.ui.fontHint
+                        font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap

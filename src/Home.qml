@@ -637,7 +637,7 @@ HomeForm {
                     id: modernCard
                     width: modernTile.width - 2 * modernTile.zoom
                     height: 123 * modernTile.zoom
-                    radius: window.ui.radius * modernTile.zoom
+                    radius: 16 * modernTile.zoom
                     fill: window.ui.surface
                     stroke: window.ui.alpha(window.ui.textMain, 0.06)
                     strokeWidth: 1
@@ -855,7 +855,7 @@ HomeForm {
                     height: 123 * modernTile.zoom
                     onClicked: largeButton_clicked(objectName)
                     background: Rectangle {
-                        radius: window.ui.radius * modernTile.zoom
+                        radius: 16 * modernTile.zoom
                         color: largeButtonColor
                         opacity: modernLargeButton.down ? 0.75 : 1
                     }

@@ -55,8 +55,10 @@ import QtQuick.Layouts 1.3
 import org.cagnulein.qdomyoszwift 1.0
 
 Item {
+    id: swagBagPage
     // Modern look: side margins like the other pages, a readable text size instead of the
     // poster-size one, the product as a card and a pill button
+    readonly property int modernMargin: Math.max(16, window.contentSideMargin)
 
     // the intro and the terms grow with the text size: scroll them above the button
     // when they no longer fit (at 100 % they fit and nothing moves)
@@ -66,8 +68,8 @@ Item {
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: restoreButton.top
-        anchors.leftMargin: window.ui.modern ? window.ui.pageMargin : 0
-        anchors.rightMargin: window.ui.modern ? window.ui.pageMargin : 0
+        anchors.leftMargin: window.ui.modern ? swagBagPage.modernMargin : 0
+        anchors.rightMargin: window.ui.modern ? swagBagPage.modernMargin : 0
         contentHeight: appleDescription.y + appleDescription.height
         interactive: contentHeight > height
         clip: interactive
@@ -131,7 +133,7 @@ Item {
             rightPadding: window.ui.modern ? 0 : 5
             // the default link blue is hard to read on the dark modern page ("blue" is the default)
             linkColor: window.ui.modern ? window.ui.accent : "blue"
-            color: window.ui.inkMuted("white")
+            color: window.ui.modern ? window.ui.textMuted : "white"
             // Modern look: the caption size of the hints on the other pages; the classic look in
             // points as before (see the description above)
             Binding on font.pointSize { when: !window.ui.modern; value: 8 * window.textScale; restoreMode: Binding.RestoreNone }
@@ -149,7 +151,7 @@ Item {
         anchors.bottomMargin: window.ui.modern ? 8 : 0
         anchors.horizontalCenter: parent.horizontalCenter
         // Modern look: the full width between the page margins, as Other folders on the list pages
-        width: window.ui.modern ? parent.width - 2 * window.ui.pageMargin : parent.width * .5
+        width: window.ui.modern ? parent.width - 2 * swagBagPage.modernMargin : parent.width * .5
         text: qsTr("Restore Purchases")
         onClicked: {
             console.log("restoring...");
