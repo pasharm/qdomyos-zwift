@@ -68,6 +68,27 @@ TEST(TargetZoneStart, AppErgWithoutTargetStartsFromPowerRidden) {
     EXPECT_EQ(start(false, false, false, true, 0, 90), 90);
 }
 
+TEST(TargetZoneStart, TileHoldsWithoutOwnErgOverTheApp) {
+    // the T.Power(W) loop re-sends the tile's target over the app's commands
+    EXPECT_TRUE(bike::targetZoneTileHoldsTarget(true, false, false));
+    EXPECT_TRUE(bike::targetZoneTileHoldsTarget(true, false, true));
+    EXPECT_FALSE(bike::targetZoneTileHoldsTarget(false, false, false));
+}
+
+TEST(TargetZoneStart, OwnErgBikeKeepsTheTargetWhileTheAppIsSilent) {
+    // free ride without an app: quick presses add up, as on T.Power(W)
+    EXPECT_TRUE(bike::targetZoneTileHoldsTarget(true, true, false));
+    // the app's frame in the last 2 s: the bike may follow the app's grade, the old target is not held
+    EXPECT_FALSE(bike::targetZoneTileHoldsTarget(true, true, true));
+    EXPECT_FALSE(bike::targetZoneTileHoldsTarget(false, true, false));
+}
+
+TEST(TargetZoneStart, OwnErgBikeQuickPressesStepFromTheTarget) {
+    // target 200 W, the bike still ramps up, 170 W ridden: "-" lowers the target, not the power ridden
+    const bool holds = bike::targetZoneTileHoldsTarget(true, true, false);
+    EXPECT_EQ(start(holds, false, false, false, 200, 170), 200);
+}
+
 TEST(TargetZoneStart, SmallFtpStillNeedsSomePower) {
     EXPECT_EQ(bike::targetZoneStartPower(false, false, false, false, 0, 0, 5), 0);
     EXPECT_EQ(bike::targetZoneStartPower(false, false, false, false, 0, 1, 5), 1);

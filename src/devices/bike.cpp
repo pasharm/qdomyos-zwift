@@ -56,6 +56,14 @@ bool bike::targetPowerOverridesExternalApp(qint64 lastAppFrame, qint64 now, bool
     return autoResistance && externalControllerActive && !appErgMode;
 }
 
+bool bike::targetZoneTileHoldsTarget(bool overridePower, bool bikeHasOwnErg, bool appActive) {
+    // T.Zone +/-: whether the last requested power is the target the tile set. Without its own ERG the
+    // T.Power(W) loop in homeform::update() re-sends it over the app's commands. A bike with its own ERG keeps
+    // the last power it was asked for, as T.Power(W) steps from it there, until the app sends a command: within
+    // 2 s of the app's frame the bike may be following the app's grade instead.
+    return overridePower && (!bikeHasOwnErg || !appActive);
+}
+
 int bike::targetZoneStartPower(bool tileHoldsTarget, bool programStarted, bool programRowHasPower,
                                bool appSendsPower, double lastRequestedPower, double ridden5s, double ftp) {
     // T.Zone +/-: the watts the step starts from, 0 when there is nothing to start from (the press is ignored).

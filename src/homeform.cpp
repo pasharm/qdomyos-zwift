@@ -5860,8 +5860,8 @@ bool homeform::handleKeyboardShortcut(const QString &sequence) {
 // trainprogram::adjustPowerOffsetForTrainingProgram; the app sends its own target power (ERG) with the same
 // check as bike::targetPowerOverridesExternalApp (its frame comes only when the target changes, so this sees the
 // app's target only within 2 s of it; later the power ridden is close to it). appErgMode is zwift_erg as it was
-// before this press, as an applied T.Zone press sets it to true. The tile holds a target only where the
-// T.Power(W) loop in update() runs: not on bikes with their own ERG (ergModeSupportedAvailableBySoftware).
+// before this press, as an applied T.Zone press sets it to true. Whether the tile holds a target:
+// bike::targetZoneTileHoldsTarget.
 static int32_t targetZoneBasePower(bike *dev, bool overridePower, trainprogram *program, double ftp,
                                    bool appErgMode) {
     const bool programStarted = program && program->isStarted();
@@ -5870,7 +5870,8 @@ static int32_t targetZoneBasePower(bike *dev, bool overridePower, trainprogram *
     const qint64 lastAppFrame = virtualBike ? virtualBike->whenLastFTMSFrameReceived() : 0;
     const bool appActive = lastAppFrame > 0 && QDateTime::currentMSecsSinceEpoch() <= lastAppFrame + 2000;
     const bool appErg = appActive && appErgMode;
-    const bool tileHolds = overridePower && !dev->ergModeSupportedAvailableBySoftware();
+    const bool tileHolds =
+        bike::targetZoneTileHoldsTarget(overridePower, dev->ergModeSupportedAvailableBySoftware(), appActive);
     return bike::targetZoneStartPower(tileHolds, programStarted, programPower, appErg,
                                       dev->lastRequestedPower().value(), dev->wattsMetric().average5s(), ftp);
 }
