@@ -16,16 +16,6 @@ Page {
     // this page; the classic look keeps them
     readonly property bool modern: window.ui.modern
 
-    function sportIconName(sport) {
-        switch(parseInt(sport)) {
-            case 1: return "directions_run"
-            case 11: return "directions_walk"
-            case 2: return "pedal_bike"
-            case 15: return "rowing"
-            default: return "fitness_center"
-        }
-    }
-
 
     Settings {
         id: settings
@@ -163,7 +153,8 @@ Page {
                     // elided text, and measuring by it would loop
                     width: Math.min(implicitWidth, parent.width)
                     implicitWidth: 24 + 2 * 18 + 2 * filterChipRow.spacing + filterChipText.implicitWidth
-                    height: 32
+                    // 32 as an M3 chip, taller with a bigger text
+                    height: Math.max(32, filterChipText.implicitHeight + 12)
                     onClicked: workoutModel.clearDateFilter()
                     background: Rectangle {
                         radius: 16
@@ -200,7 +191,8 @@ Page {
                                     var f = d.getFullYear() === new Date().getFullYear() ? "ddd, d MMM" : "ddd, d MMM yyyy"
                                     return d.toLocaleDateString(Qt.locale(), f)
                                 }
-                                font.pixelSize: window.ui.fontCaption
+                                // chips: fontLabel (notes/modern-ui-style-guide.md)
+                                font.pixelSize: window.ui.fontLabel
                                 font.weight: Font.DemiBold
                                 color: window.ui.accent
                                 elide: Text.ElideRight
@@ -223,7 +215,7 @@ Page {
                     // The height of the filter chip in the same place: switching between them
                     // keeps the header still
                     width: streakChipRow.implicitWidth + 24
-                    height: 32
+                    height: Math.max(32, streakChipRow.implicitHeight + 12)
                     radius: 16
                     color: window.ui.alpha(window.ui.accent, 0.16)
 
@@ -241,7 +233,7 @@ Page {
                         Text {
                             anchors.verticalCenter: parent.verticalCenter
                             text: (modernHeader.streak !== 1 ? qsTr("%1 days streak") : qsTr("%1 day streak")).arg(modernHeader.streak)
-                            font.pixelSize: window.ui.fontCaption
+                            font.pixelSize: window.ui.fontLabel
                             font.weight: Font.DemiBold
                             color: window.ui.accent
                         }
@@ -277,10 +269,17 @@ Page {
                     id: modernImportButton
                     anchors.verticalCenter: parent.verticalCenter
                     implicitWidth: 48
+                    // one import at a time, as the classic button: a second copy would report
+                    // its count into the same block; a disabled item is left out for a screen
+                    // reader (Qt 5.15 does not report it as disabled)
+                    enabled: !(rootItem && rootItem.fitImportRunning)
+                    opacity: enabled ? 1 : 0.4
+                    Accessible.ignored: !enabled
                     leftPadding: 0
                     rightPadding: 0
                     onClicked: modernImportMenu.openUnder(modernImportButton)
-                    Accessible.name: qsTr("Import FIT File...")
+                    // the button opens the menu of both imports: the name of the classic button, not of an item
+                    Accessible.name: qsTr("Import workouts")
                     // The icon of loading settings from a file in the toolbar: both take a file
                     // from the phone
                     UiIcon {
@@ -299,10 +298,10 @@ Page {
             visible: !workoutHistoryPage.modern
             Layout.fillWidth: true
             height: 60
-            color: workoutHistoryPage.modern ? "transparent" : "#f5f5f5"
             // a bigger text: the title and the filter line keep inside the header (the layout reads
             // the height only once, a preferred height it follows)
             Layout.preferredHeight: window.textScale !== 1 ? Math.max(60, headerTitle.height + 12) : -1
+            color: "#f5f5f5"
 
             // Calendar Icon Button - positioned absolutely on the left
             Button {
@@ -315,29 +314,18 @@ Page {
                 height: 48
                 
                 background: Rectangle {
-                    radius: workoutHistoryPage.modern ? 24 : 8
-                    color: workoutHistoryPage.modern ? (calendarButton.pressed ? window.ui.surfaceHighest : window.ui.surfaceHigh)
-                                 : (calendarButton.pressed ? "#e0e0e0" : "#f0f0f0")
+                    radius: 8
+                    color: calendarButton.pressed ? "#e0e0e0" : "#f0f0f0"
                     border.color: "#d0d0d0"
-                    border.width: workoutHistoryPage.modern ? 0 : 1
+                    border.width: 1
                 }
-
-                UiIcon {
-                    anchors.centerIn: parent
-                    visible: workoutHistoryPage.modern
-                    width: 22
-                    height: 22
-                    name: "calendar_month"
-                    color: window.ui.textMain
-                }
-
+                
                 contentItem: Item {
-                    visible: !workoutHistoryPage.modern
                     Text {
                         anchors.fill: parent
                         visible: Qt.platform.os !== "android"
                         text: "📅"
-                        font.pixelSize: window.ui.fontPx(26)
+                        font.pixelSize: 26
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
@@ -371,16 +359,15 @@ Page {
 
                 background: Rectangle {
                     radius: 16
-                    color: workoutHistoryPage.modern ? window.ui.alpha(window.ui.danger, clearFilterButton.pressed ? 0.28 : 0.16)
-                                 : (clearFilterButton.pressed ? "#ff6666" : "#ff8888")
+                    color: clearFilterButton.pressed ? "#ff6666" : "#ff8888"
                     border.color: "#ff4444"
-                    border.width: workoutHistoryPage.modern ? 0 : 1
+                    border.width: 1
                 }
 
                 contentItem: Text {
                     text: "×"
-                    color: workoutHistoryPage.modern ? window.ui.danger : "white"
-                    font.pixelSize: window.ui.fontPx(20)
+                    color: "white"
+                    font.pixelSize: 20
                     font.bold: true
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
@@ -404,9 +391,8 @@ Page {
                     width: parent.width
                     horizontalAlignment: Text.AlignHCenter
                     text: qsTr("Workout History")
-                    font.pixelSize: workoutHistoryPage.modern ? 22 : window.fontPx(24)
-                    font.weight: workoutHistoryPage.modern ? Font.DemiBold : Font.Bold
-                    color: window.ui.ink("black")
+                    font.pixelSize: window.fontPx(24)
+                    font.bold: true
                     fontSizeMode: Text.HorizontalFit
                     minimumPixelSize: 14
                     elide: Text.ElideRight
@@ -417,8 +403,8 @@ Page {
                     horizontalAlignment: Text.AlignHCenter
                     text: workoutModel && workoutModel.isDateFiltered ?
                           qsTr("Filtered: %1").arg(workoutModel.filteredDate.toLocaleDateString()) : ""
-                    font.pixelSize: window.ui.fontPx(12)
-                    color: window.ui.inkMuted("#666666")
+                    font.pixelSize: window.fontPx(12)
+                    color: "#666666"
                     elide: Text.ElideRight
                     visible: workoutModel && workoutModel.isDateFiltered
                 }
@@ -452,7 +438,7 @@ Page {
                         anchors.fill: parent
                         visible: Qt.platform.os !== "android"
                         text: "📥"
-                        font.pixelSize: window.ui.fontPx(26)
+                        font.pixelSize: 26
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
                     }
@@ -508,7 +494,7 @@ Page {
             Layout.topMargin: importProgress.visible ? -parent.spacing : 0
             Layout.bottomMargin: streakBanner.visible ? streakBanner.height + 10 : 10
             model: workoutModel
-            // Modern look: the gap between cards is only the card's own margins (2 x 6 = 12 px)
+            // Modern look: the gap between cards is only the card's own margins (2 x 4 = 8)
             spacing: workoutHistoryPage.modern ? 0 : 8
             clip: true
             // Modern look: a thin bar while the list moves, as in the other lists of the modern look; the
@@ -577,10 +563,14 @@ Page {
                 // The row has no text of its own: without a name a screen reader stops on the texts
                 // inside it, which cannot be pressed, and the workout cannot be opened
                 Accessible.name: title + ", " + date + ", " + duration
-                width: parent.width
-                // Modern look: three lines (the calories join the stats), the card is 92 px high.
+                // The width of the list: a row filtered out or deleted is destroyed with no parent, and
+                // parent.width then logged "Cannot read property 'width' of null"
+                width: ListView.view ? ListView.view.width : 0
+                // Modern look: three lines (the calories join the stats), a list item of three lines:
+                // the card at least 88 high, growing with a bigger text (the lines + 8 above and
+                // below), and the gap of 8 between the cards.
                 // Classic with a bigger text: the card grows with its lines (margins 8 + 12 on each side)
-                height: workoutHistoryPage.modern ? 104
+                height: workoutHistoryPage.modern ? Math.max(88, workoutInfo.implicitHeight + 16) + 8
                     : window.textScale !== 1 ? Math.max(135, workoutInfo.implicitHeight + 40) : 135
 
                 Component.onCompleted: {
@@ -618,7 +608,7 @@ Page {
                         Text {
                             text: Qt.platform.os === "android" ? qsTr("Delete") : "🗑️ " + qsTr("Delete")
                             color: "white"
-                            font.pixelSize: window.ui.fontPx(16)
+                            font.pixelSize: window.fontPx(16)
                             anchors.verticalCenter: parent.verticalCenter
                         }
                     }
@@ -646,9 +636,10 @@ Page {
                 Rectangle {
                     id: rowCard
                     anchors.fill: parent
-                    anchors.margins: workoutHistoryPage.modern ? 6 : 8
-                    anchors.leftMargin: window.contentSideMargin
-                    anchors.rightMargin: window.contentSideMargin
+                    anchors.margins: workoutHistoryPage.modern ? 4 : 8
+                    // Modern look: the page margin of the header, so the column has one edge
+                    anchors.leftMargin: workoutHistoryPage.modern ? Math.max(16, window.contentSideMargin) : window.contentSideMargin
+                    anchors.rightMargin: workoutHistoryPage.modern ? Math.max(16, window.contentSideMargin) : window.contentSideMargin
                     radius: workoutHistoryPage.modern ? 16 : 10
                     // Modern look: the workout of the open long press card is tinted with the accent
                     color: !workoutHistoryPage.modern ? "white"
@@ -659,9 +650,10 @@ Page {
 
                     // Workout Type Tag - positioned absolutely in top-right
                     WorkoutTypeTag {
+                        id: sourceTag
                         anchors.right: parent.right
                         anchors.top: parent.top
-                        anchors.margins: 12
+                        anchors.margins: workoutHistoryPage.modern ? 16 : 12
                         workoutSource: workoutModel ? workoutModel.getWorkoutSource(model.id) : "QZ"
                     }
 
@@ -671,38 +663,58 @@ Page {
                         anchors.right: parent.right
                         anchors.bottom: parent.bottom
                         anchors.margins: 12
-                        spacing: 8
-                        
+                        // Modern look: 48 x 48 to touch, inside it a tonal pill 40 x 24 of the
+                        // source colour, as the tag above (insets 4 and 12): the pill is 16 from the
+                        // right edge of the card, under the tag, and 16 from its bottom; pills 8 apart
+                        anchors.bottomMargin: workoutHistoryPage.modern ? 4 : 12
+                        spacing: workoutHistoryPage.modern ? 0 : 8
+
                         // Peloton URL button
                         Button {
                             Accessible.name: qsTr("Open on Peloton")
-                            width: workoutHistoryPage.modern ? 36 : 40
-                            height: workoutHistoryPage.modern ? 36 : 45
+                            width: workoutHistoryPage.modern ? 48 : 40
+                            height: workoutHistoryPage.modern ? 48 : 45
                             visible: workoutModel && workoutModel.getWorkoutSource(model.id) === "PELOTON" && 
                                     workoutModel.getPelotonUrl(model.id) !== ""
+                            // the modern pill 40 x 24 (Material Button default: 0 and 6)
+                            topInset: workoutHistoryPage.modern ? 12 : 6
+                            bottomInset: workoutHistoryPage.modern ? 12 : 6
+                            leftInset: workoutHistoryPage.modern ? 4 : 0
+                            rightInset: workoutHistoryPage.modern ? 4 : 0
                             
                             background: Rectangle {
-                                color: workoutHistoryPage.modern ? (parent.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest)
+                                color: workoutHistoryPage.modern ? (parent.pressed ? window.ui.alpha(sourceTag.inkColor, 0.28) : sourceTag.color)
                                              : (parent.pressed ? "#ff8855" : "#ff6b35")
-                                radius: workoutHistoryPage.modern ? 18 : 6
+                                radius: workoutHistoryPage.modern ? 12 : 6
                                 border.color: "#cc5529"
                                 border.width: workoutHistoryPage.modern ? 0 : 1
                             }
                             
                             contentItem: Item {
                                 Text {
-                                    visible: Qt.platform.os !== "android"
+                                    visible: !workoutHistoryPage.modern && Qt.platform.os !== "android"
                                     text: "🌐"
-                                    font.pixelSize: window.ui.fontPx(16)
+                                    font.pixelSize: 16
                                     color: "white"
                                     anchors.centerIn: parent
                                 }
 
                                 ShapeIcon {
-                                    visible: Qt.platform.os === "android"
+                                    visible: !workoutHistoryPage.modern && Qt.platform.os === "android"
                                     name: "language"
                                     size: 20
-                                    color: workoutHistoryPage.modern ? window.ui.textMain : "white"
+                                    color: "white"
+                                    anchors.centerIn: parent
+                                }
+
+                                // the new look: "open outside" of the icon font on every platform
+                                // (the classic draws an emoji off Android)
+                                UiIcon {
+                                    visible: workoutHistoryPage.modern
+                                    name: "open_in_new"
+                                    width: 16
+                                    height: 16
+                                    color: sourceTag.inkColor
                                     anchors.centerIn: parent
                                 }
                             }
@@ -715,32 +727,46 @@ Page {
                         // Training Program button
                         Button {
                             Accessible.name: qsTr("Load training program")
-                            width: workoutHistoryPage.modern ? 36 : 40
-                            height: workoutHistoryPage.modern ? 36 : 45
+                            width: workoutHistoryPage.modern ? 48 : 40
+                            height: workoutHistoryPage.modern ? 48 : 45
                             visible: workoutModel && workoutModel.hasTrainingProgram(model.id)
+                            // the modern pill 40 x 24, as the Peloton button
+                            topInset: workoutHistoryPage.modern ? 12 : 6
+                            bottomInset: workoutHistoryPage.modern ? 12 : 6
+                            leftInset: workoutHistoryPage.modern ? 4 : 0
+                            rightInset: workoutHistoryPage.modern ? 4 : 0
                             
                             background: Rectangle {
-                                color: workoutHistoryPage.modern ? (parent.pressed ? window.ui.surfaceHigh : window.ui.surfaceHighest)
+                                color: workoutHistoryPage.modern ? (parent.pressed ? window.ui.alpha(sourceTag.inkColor, 0.28) : sourceTag.color)
                                              : (parent.pressed ? "#1976d2" : "#2196f3")
-                                radius: workoutHistoryPage.modern ? 18 : 6
+                                radius: workoutHistoryPage.modern ? 12 : 6
                                 border.color: "#1565c0"
                                 border.width: workoutHistoryPage.modern ? 0 : 1
                             }
                             
                             contentItem: Item {
                                 Text {
-                                    visible: Qt.platform.os !== "android"
+                                    visible: !workoutHistoryPage.modern && Qt.platform.os !== "android"
                                     text: "📋"
-                                    font.pixelSize: window.ui.fontPx(16)
+                                    font.pixelSize: 16
                                     color: "white"
                                     anchors.centerIn: parent
                                 }
 
                                 ShapeIcon {
-                                    visible: Qt.platform.os === "android"
+                                    visible: !workoutHistoryPage.modern && Qt.platform.os === "android"
                                     name: "list_alt"
                                     size: 20
-                                    color: workoutHistoryPage.modern ? window.ui.textMain : "white"
+                                    color: "white"
+                                    anchors.centerIn: parent
+                                }
+
+                                UiIcon {
+                                    visible: workoutHistoryPage.modern
+                                    name: "list_alt"
+                                    width: 16
+                                    height: 16
+                                    color: sourceTag.inkColor
                                     anchors.centerIn: parent
                                 }
                             }
@@ -767,6 +793,14 @@ Page {
                     RowLayout {
                         anchors.fill: parent
                         anchors.margins: 12
+                        // Modern look: the icon 16 from the card edge, the lines centred in a card
+                        // that leaves them 8 above and below at least. Centred, not on top as in other
+                        // three-line items: a workout always has exactly three lines, so they line up
+                        // from card to card either way, and centred looked better
+                        anchors.leftMargin: workoutHistoryPage.modern ? 16 : 12
+                        anchors.rightMargin: workoutHistoryPage.modern ? 16 : 12
+                        anchors.topMargin: workoutHistoryPage.modern ? 8 : 12
+                        anchors.bottomMargin: workoutHistoryPage.modern ? 8 : 12
                         spacing: 16
 
                         // Sport icon
@@ -774,22 +808,22 @@ Page {
                             Layout.alignment: Qt.AlignVCenter
                             Rectangle {
                                 visible: workoutHistoryPage.modern
-                                width: 44
-                                height: 44
-                                radius: 22
+                                width: 40
+                                height: 40
+                                radius: 20
                                 color: window.ui.surfaceHighest
                                 UiIcon {
                                     anchors.centerIn: parent
-                                    width: 24
-                                    height: 24
-                                    name: workoutHistoryPage.sportIconName(sport)
+                                    width: 22
+                                    height: 22
+                                    name: workoutHistoryPage.getSportIconName(sport)
                                     color: window.ui.accent
                                 }
                             }
                             Text {
                                 visible: !workoutHistoryPage.modern && Qt.platform.os !== "android"
                                 text: getSportIcon(sport)
-                                font.pixelSize: window.ui.fontPx(32)
+                                font.pixelSize: 32
                             }
 
                             // Android shows an emoji only with a downloaded font, so the icon is drawn
@@ -811,15 +845,17 @@ Page {
                             Rectangle {
                                 Layout.fillWidth: true
                                 Layout.rightMargin: window.fontPx(80) // Reserve space for tag
-                                Layout.preferredHeight: window.textScale !== 1 ? Math.max(24, titleText.implicitHeight) : 24
+                                Layout.preferredHeight: workoutHistoryPage.modern ? titleText.implicitHeight
+                                    : window.textScale !== 1 ? Math.max(24, titleText.implicitHeight) : 24
                                 clip: true
                                 color: "transparent"
                                 
                                 Text {
                                     id: titleText
                                     text: title
-                                    font.bold: true
-                                    font.pixelSize: window.ui.fontPx(18)
+                                    // Modern look: the first line of a list item (fontBody, DemiBold)
+                                    font.weight: workoutHistoryPage.modern ? Font.DemiBold : Font.Bold
+                                    font.pixelSize: workoutHistoryPage.modern ? window.ui.fontBody : window.fontPx(18)
                                     color: window.ui.ink("black")
                                     anchors.verticalCenter: parent.verticalCenter
                                     
@@ -869,15 +905,16 @@ Page {
 
                             Text {
                                 // a plain Text does not inherit the window font: the text size while it is not 100 %
-                                Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                                // (modern look: the second line of a list item, fontCaption, scaled already)
+                                Binding on font.pixelSize { when: workoutHistoryPage.modern || window.scaledFontPx > 0; value: workoutHistoryPage.modern ? window.ui.fontCaption : window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                                 text: date
-                                color: window.ui.inkMuted("#666666")
+                                color: workoutHistoryPage.modern ? window.ui.textMuted : "#666666"
                             }
 
                             // Modern look: one stats line, the calories included; it stops short
                             // of the action buttons in the bottom-right corner when they are shown
                             Text {
-                                Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                                font.pixelSize: window.ui.fontCaption
                                 visible: workoutHistoryPage.modern
                                 Layout.fillWidth: true
                                 Layout.rightMargin: actionRow.width > 0 ? actionRow.width + 8 : 0
@@ -888,7 +925,7 @@ Page {
                                     return duration + " · " + displayDistance.toFixed(2) + " " + (useMiles ? qsTr("mi") : qsTr("km"))
                                            + " · " + Math.round(calories) + " " + qsTr("kcal")
                                 }
-                                color: window.ui.textMain
+                                color: window.ui.textMuted
                             }
 
                             // Stats row; with a bigger text one under the other, clear of the action
@@ -901,9 +938,8 @@ Page {
 
                                 Text {
                                     Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
-                                    text: (workoutHistoryPage.modern ? "" : wrapEmoji("⏱ ")) + duration
+                                    text: wrapEmoji("⏱ ") + duration
                                     textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
-                                    color: window.ui.ink("black")
                                 }
 
                                 Text {
@@ -911,10 +947,9 @@ Page {
                                     text: {
                                         var useMiles = settings && settings.miles_unit
                                         var displayDistance = useMiles ? (distance / 1.60934) : distance
-                                        return (workoutHistoryPage.modern ? "" : wrapEmoji("📏 ")) + displayDistance.toFixed(2) + " " + (useMiles ? qsTr("mi") : qsTr("km"))
+                                        return wrapEmoji("📏 ") + displayDistance.toFixed(2) + " " + (useMiles ? qsTr("mi") : qsTr("km"))
                                     }
                                     textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
-                                    color: window.ui.ink("black")
                                 }
                             }
 
@@ -923,12 +958,11 @@ Page {
                                 spacing: 16
 
                                 Text {
-                                    text: workoutHistoryPage.modern ? Math.round(calories) + " " + qsTr("kcal") :
-                                          Qt.platform.os === "android" ?
+                                    Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                                    text: Qt.platform.os === "android" ? 
                                           wrapEmoji("🔥 ") + Math.round(calories) + " " + qsTr("kcal") :
                                           "🔥 " + Math.round(calories) + " " + qsTr("kcal")
-                                    textFormat: Qt.platform.os === "android" && !workoutHistoryPage.modern ? Text.RichText : Text.PlainText
-                                    color: window.ui.inkMuted("black")
+                                    textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
                                 }
                             }
                         }
@@ -1002,7 +1036,10 @@ Page {
     UiPopup {
         id: modernImportMenu
         padding: 8
-        modal: false
+        // Modal without a dim, as the classic menu: otherwise a screen reader touching an
+        // item got the workout row under the menu
+        modal: true
+        dim: false
         closePolicy: Popup.CloseOnEscape | Popup.CloseOnPressOutside
 
         readonly property var items: [
@@ -1049,6 +1086,9 @@ Page {
                     id: modernImportItem
                     width: modernImportMenu.itemWidth
                     height: 48
+                    Accessible.role: Accessible.MenuItem
+                    Accessible.name: modelData.label
+                    Accessible.onPressAction: clicked()
                     // Pressed: the state layer of the text colour (Material 3, 10 %)
                     background: Rectangle {
                         radius: 12
@@ -1062,6 +1102,7 @@ Page {
                         color: window.ui.textMain
                         verticalAlignment: Text.AlignVCenter
                         elide: Text.ElideRight
+                        Accessible.ignored: true
                     }
                     onClicked: {
                         modernImportMenu.close()
@@ -1107,19 +1148,50 @@ Page {
             strokeWidth: window.ui.dark ? 0 : 1
         }
 
-        // The scrim of the page with a hole for the pressed workout: a transparent rectangle
-        // with a border far wider than the window, so its inner edge is the rounded hole
+        // The scrim of the page with a hole for the pressed workout: four bands around the hole
+        // and a rounded piece in each of its corners. Not one rounded rectangle with a border far
+        // wider than the window: such a border left most of the header above the hole undimmed
+        // (Android emulator, API 30 and 35)
         Overlay.modal: Item {
-            readonly property real reach: 2 * Math.max(width, height)
+            id: holeScrim
+            readonly property rect h: modernUploadMenu.hole
+            // the radius of the workout card, smaller when the visible part of the card is low
+            readonly property real r: Math.max(0, Math.min(16, h.width / 2, h.height / 2))
+
+            Rectangle { x: 0; y: 0; width: parent.width; height: holeScrim.h.y; color: window.ui.scrim }
             Rectangle {
-                x: modernUploadMenu.hole.x - parent.reach
-                y: modernUploadMenu.hole.y - parent.reach
-                width: modernUploadMenu.hole.width + 2 * parent.reach
-                height: modernUploadMenu.hole.height + 2 * parent.reach
-                radius: 16 + parent.reach
-                color: "transparent"
-                border.width: parent.reach
-                border.color: window.ui.scrim
+                x: 0; y: holeScrim.h.y + holeScrim.h.height
+                width: parent.width; height: Math.max(0, parent.height - y)
+                color: window.ui.scrim
+            }
+            Rectangle { x: 0; y: holeScrim.h.y; width: holeScrim.h.x; height: holeScrim.h.height; color: window.ui.scrim }
+            Rectangle {
+                x: holeScrim.h.x + holeScrim.h.width; y: holeScrim.h.y
+                width: Math.max(0, parent.width - x); height: holeScrim.h.height
+                color: window.ui.scrim
+            }
+
+            // A corner: an r x r square showing the border of a rectangle whose inner edge is
+            // rounded with the radius r at that corner
+            Repeater {
+                model: [[0, 0], [1, 0], [0, 1], [1, 1]]
+                Item {
+                    x: holeScrim.h.x + modelData[0] * (holeScrim.h.width - holeScrim.r)
+                    y: holeScrim.h.y + modelData[1] * (holeScrim.h.height - holeScrim.r)
+                    width: holeScrim.r
+                    height: holeScrim.r
+                    clip: true
+                    Rectangle {
+                        x: modelData[0] ? -2 * holeScrim.r : -holeScrim.r
+                        y: modelData[1] ? -2 * holeScrim.r : -holeScrim.r
+                        width: 4 * holeScrim.r
+                        height: 4 * holeScrim.r
+                        radius: 2 * holeScrim.r
+                        color: "transparent"
+                        border.width: holeScrim.r
+                        border.color: window.ui.scrim
+                    }
+                }
             }
             Behavior on opacity { NumberAnimation { duration: 150 } }
         }
@@ -1214,8 +1286,9 @@ Page {
                     Accessible.name: modelData.label
                     Accessible.onPressAction: modernUploadMenu.run(modelData.action)
                     background: Rectangle {
-                        radius: 10
-                        color: modernUploadItem.down ? window.ui.surfaceHigh : "transparent"
+                        // a menu item pressed: radius 12, the state layer of the text colour (10 %)
+                        radius: 12
+                        color: modernUploadItem.down ? window.ui.alpha(window.ui.textMain, 0.10) : "transparent"
                     }
                     contentItem: Item {
                         // the share icon is not in the icon font: drawn as the one of the toolbar,
@@ -1380,9 +1453,9 @@ Page {
         width: window.textScale !== 1 ? Math.min(implicitWidth, parent.width - 32) : implicitWidth
 
         Text {
+            Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
             width: window.textScale !== 1 ? confirmDialog.availableWidth : implicitWidth
             wrapMode: window.labelWrap
-            Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
             text: qsTr("Are you sure you want to delete '%1'?").arg(confirmDialog.workoutTitle)
         }
 
@@ -1453,7 +1526,7 @@ Page {
                 anchors.centerIn: parent
                 text: trainingProgramDialog.title
                 color: "white"
-                font.pixelSize: window.ui.fontPx(18)
+                font.pixelSize: window.fontPx(18)
                 font.bold: true
             }
         }
@@ -1473,7 +1546,7 @@ Page {
                 textFormat: Qt.platform.os === "android" ? Text.RichText : Text.PlainText
                 wrapMode: Text.WordWrap
                 horizontalAlignment: Text.AlignHCenter
-                font.pixelSize: window.ui.fontPx(14)
+                font.pixelSize: window.fontPx(14)
             }
         }
     }
@@ -1484,11 +1557,6 @@ Page {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
         anchors.right: parent.right
-        // Modern look: a rounded card like the rest of the page instead of a full-width strip
-        anchors.leftMargin: workoutHistoryPage.modern ? Math.max(16, window.contentSideMargin) : 0
-        anchors.rightMargin: workoutHistoryPage.modern ? Math.max(16, window.contentSideMargin) : 0
-        anchors.bottomMargin: workoutHistoryPage.modern ? 8 : 0
-        radius: workoutHistoryPage.modern ? 20 : 0
         height: window.textScale !== 1 ? Math.max(80, streakColumn.implicitHeight + 16) : 80
         visible: workoutModel && !workoutHistoryPage.modern
         
@@ -1529,7 +1597,6 @@ Page {
         
         Rectangle {
             anchors.fill: parent
-            radius: parent.radius
             gradient: Gradient {
                 GradientStop { position: 0.0; color: "#40FFFFFF" }
                 GradientStop { position: 1.0; color: "#00FFFFFF" }
@@ -1592,7 +1659,7 @@ Page {
                 // Current streak count
                 Text {
                     text: workoutModel ? (workoutModel.currentStreak !== 1 ? qsTr("%1 days streak") : qsTr("%1 day streak")).arg(workoutModel.currentStreak) : ""
-                    font.pixelSize: window.ui.fontPx(18)
+                    font.pixelSize: window.fontPx(18)
                     font.bold: true
                     color: "white"
                     visible: workoutModel
@@ -1646,7 +1713,7 @@ Page {
             Text {
                 Layout.alignment: Qt.AlignHCenter
                 text: workoutModel ? workoutModel.streakMessage : ""
-                font.pixelSize: window.ui.fontPx(14)
+                font.pixelSize: window.fontPx(14)
                 font.italic: true
                 color: "white"
                 visible: workoutModel && workoutModel.streakMessage !== ""
@@ -1657,7 +1724,7 @@ Page {
             Text {
                 Layout.alignment: Qt.AlignHCenter
                 text: workoutModel ? (workoutModel.longestStreak !== 1 ? qsTr("Personal best: %1 days") : qsTr("Personal best: %1 day")).arg(workoutModel.longestStreak) : ""
-                font.pixelSize: window.ui.fontPx(12)
+                font.pixelSize: window.fontPx(12)
                 color: "white"
                 visible: workoutModel && workoutModel.longestStreak > workoutModel.currentStreak && workoutModel.longestStreak > 0
                 opacity: 0.7
@@ -1666,7 +1733,6 @@ Page {
         
         // Subtle shadow effect at the top
         Rectangle {
-            visible: !workoutHistoryPage.modern
             anchors.top: parent.top
             anchors.left: parent.left
             anchors.right: parent.right
@@ -1756,7 +1822,7 @@ Page {
                     text: workoutHistoryPage.modern
                           ? workoutHistoryPage.monthTitle(calendar.selectedDate)
                           : calendar.selectedDate.toLocaleDateString(Qt.locale(), "MMMM yyyy")
-                    font.pixelSize: window.ui.fontPx(18)
+                    font.pixelSize: window.fontPx(18)
                     font.bold: true
                     color: window.ui.ink("black")
                     horizontalAlignment: Text.AlignHCenter
@@ -1796,6 +1862,13 @@ Page {
                 Layout.fillHeight: true
                 columns: 7
                 
+                // Modern look: one size for the round days, from the mean column width. The
+                // layout snaps the column edges to whole pixels (QGridLayoutEngine with
+                // snapToPixelGrid), so of seven equal columns some are 1 dp narrower, and a circle
+                // sized by its own cell came out 1 dp smaller there. floor(mean) - 2 still fits
+                // the narrowest cell, which is at most 1 dp below the mean
+                readonly property real dayCircle: Math.min(40, Math.floor((width - 6 * columnSpacing) / 7) - 2)
+
                 property date selectedDate: new Date()
                 property var workoutDates: workoutModel ? workoutModel.getWorkoutDates() : []
                 
@@ -1812,12 +1885,18 @@ Page {
                     Text {
                         Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         Layout.fillWidth: true
+                        // Modern look: seven equal columns. A GridLayout grows each column from its
+                        // preferred width (the width of the day name), so "Fri" and "Sat" stayed narrower
+                        // with smaller circles; the same preferred width for every cell makes them equal
+                        // (Qt 6.6 has GridLayout.uniformCellWidths for this, Qt 5.15 does not). -1: the
+                        // default, the classic look as before
+                        Layout.preferredWidth: workoutHistoryPage.modern ? 1 : -1
                         Layout.preferredHeight: 30
                         text: modelData
                         font.bold: true
                         horizontalAlignment: Text.AlignHCenter
                         verticalAlignment: Text.AlignVCenter
-                        color: window.ui.inkMuted("#666666")
+                        color: workoutHistoryPage.modern ? window.ui.textMuted : "#666666"
                     }
                 }
                 
@@ -1827,6 +1906,8 @@ Page {
                     
                     Rectangle {
                         Layout.fillWidth: true
+                        // the equal columns of the modern look (the day names above)
+                        Layout.preferredWidth: workoutHistoryPage.modern ? 1 : -1
                         Layout.fillHeight: true
                         Layout.minimumHeight: 40
                         
@@ -1872,7 +1953,7 @@ Page {
                         UiFrame {
                             visible: workoutHistoryPage.modern
                             anchors.centerIn: parent
-                            width: Math.min(40, parent.width - 2, parent.height - 2)
+                            width: Math.min(calendar.dayCircle, parent.height - 2)
                             height: width
                             radius: width / 2
                             base: window.ui.surfaceHigh
@@ -1893,7 +1974,7 @@ Page {
                                 color: workoutHistoryPage.modern ? (isCurrentMonth ? window.ui.textMain : window.ui.textMuted)
                                                                  : (isCurrentMonth ? "black" : "#cccccc")
                                 opacity: workoutHistoryPage.modern && !isCurrentMonth ? 0.6 : 1
-                                font.pixelSize: window.ui.fontPx(14)
+                                font.pixelSize: window.fontPx(14)
                                 font.weight: workoutHistoryPage.modern && (hasWorkout || isToday) ? Font.DemiBold : Font.Normal
                             }
                             
@@ -1903,9 +1984,9 @@ Page {
                                 width: 8
                                 height: 8
                                 radius: 4
-                                color: workoutHistoryPage.modern ? window.ui.accent : "#ff6b35"
+                                color: "#ff6b35"
                                 visible: hasWorkout && !workoutHistoryPage.modern
-                                border.width: workoutHistoryPage.modern ? 0 : 1
+                                border.width: 1
                                 border.color: "#cc5529"
                                 
                                 // Debug: log when a dot should be visible
