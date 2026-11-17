@@ -68,24 +68,12 @@
         <translation>Szűrő</translation>
     </message>
     <message>
-        <source>Distance %1 km Elevation Gain: %2 meters</source>
-        <translation>Távolság: %1 km, szintemelkedés: %2 méter</translation>
-    </message>
-    <message>
-        <source>Other folders</source>
-        <translation>Egyéb mappák</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Fájlok visszaállítása</translation>
+        <source>Parent folder</source>
+        <translation>Szülőmappa</translation>
     </message>
     <message>
         <source>Open</source>
         <translation>Megnyitás</translation>
-    </message>
-    <message>
-        <source>Parent folder</source>
-        <translation>Szülőmappa</translation>
     </message>
     <message>
         <source>No GPX files here</source>
@@ -98,6 +86,18 @@
     <message>
         <source>%1 m</source>
         <translation>%1 m</translation>
+    </message>
+    <message>
+        <source>Distance %1 km Elevation Gain: %2 meters</source>
+        <translation>Távolság: %1 km, szintemelkedés: %2 méter</translation>
+    </message>
+    <message>
+        <source>Other folders</source>
+        <translation>Egyéb mappák</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Fájlok visszaállítása</translation>
     </message>
 </context>
 <context>
@@ -170,8 +170,70 @@
         <translation>Biztosan leállítja az aktuális edzést?</translation>
     </message>
     <message>
+        <source>Permissions Required</source>
+        <translation>Engedélyek szükségesek</translation>
+    </message>
+    <message>
+        <source>QZ requires both Bluetooth and Location Services to be enabled.
+Location Services are necessary on Android to allow the app to find Bluetooth devices.
+The GPS will not be used.
+
+Would you like to enable them?</source>
+        <translation type="vanished"></translation>
+    </message>
+    <message>
+        <source>Reminder Preference</source>
+        <translation>Emlékeztető beállítása</translation>
+    </message>
+    <message>
+        <source>Would you like to be reminded about enabling Location Services next time?</source>
+        <translation type="vanished"></translation>
+    </message>
+    <message>
+        <source>Restart the app</source>
+        <translation>Alkalmazás újraindítása</translation>
+    </message>
+    <message>
+        <source>To apply the changes, you need to restart the app.
+Would you like to do that now?</source>
+        <translation>A módosítások alkalmazásához újra kell indítania az alkalmazást.
+Szeretné most újraindítani?</translation>
+    </message>
+    <message>
+        <source>Adjustable. Current value: </source>
+        <translation>Állítható. Aktuális érték: </translation>
+    </message>
+    <message>
+        <source>Current value: </source>
+        <translation>Aktuális érték: </translation>
+    </message>
+    <message>
+        <source>Decrease </source>
+        <translation>Csökkentés: </translation>
+    </message>
+    <message>
+        <source>Decrease the value of </source>
+        <translation>Érték csökkentése: </translation>
+    </message>
+    <message>
+        <source>Increase </source>
+        <translation>Növelés: </translation>
+    </message>
+    <message>
+        <source>Increase the value of </source>
+        <translation>Érték növelése: </translation>
+    </message>
+    <message>
         <source>Rest</source>
         <translation>Pihenő</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Stop</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Mégse</translation>
     </message>
     <message>
         <source>Very Light</source>
@@ -254,60 +316,6 @@
         <translation>Mentés</translation>
     </message>
     <message>
-        <source>Permissions Required</source>
-        <translation>Engedélyek szükségesek</translation>
-    </message>
-    <message>
-        <source>QZ requires both Bluetooth and Location Services to be enabled.
-Location Services are necessary on Android to allow the app to find Bluetooth devices.
-The GPS will not be used.
-
-Would you like to enable them?</source>
-        <translation type="vanished"></translation>
-    </message>
-    <message>
-        <source>Reminder Preference</source>
-        <translation>Emlékeztető beállítása</translation>
-    </message>
-    <message>
-        <source>Would you like to be reminded about enabling Location Services next time?</source>
-        <translation type="vanished"></translation>
-    </message>
-    <message>
-        <source>Restart the app</source>
-        <translation>Alkalmazás újraindítása</translation>
-    </message>
-    <message>
-        <source>To apply the changes, you need to restart the app.
-Would you like to do that now?</source>
-        <translation>A módosítások alkalmazásához újra kell indítania az alkalmazást.
-Szeretné most újraindítani?</translation>
-    </message>
-    <message>
-        <source>Adjustable. Current value: </source>
-        <translation>Állítható. Aktuális érték: </translation>
-    </message>
-    <message>
-        <source>Current value: </source>
-        <translation>Aktuális érték: </translation>
-    </message>
-    <message>
-        <source>Decrease </source>
-        <translation>Csökkentés: </translation>
-    </message>
-    <message>
-        <source>Decrease the value of </source>
-        <translation>Érték csökkentése: </translation>
-    </message>
-    <message>
-        <source>Increase </source>
-        <translation>Növelés: </translation>
-    </message>
-    <message>
-        <source>Increase the value of </source>
-        <translation>Érték növelése: </translation>
-    </message>
-    <message>
         <source>QZ needs Bluetooth enabled to discover fitness equipment. On Android 11 and earlier, Android also requires Location permission and Location Services for Bluetooth discovery. QZ does not use your location data. On Android 12 and later, Nearby devices permission allows Bluetooth discovery without Location.
 
 Would you like to enable the required services?</source>
@@ -318,14 +326,6 @@ Szeretné bekapcsolni a szükséges szolgáltatásokat?</translation>
     <message>
         <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
         <translation>Szeretne a következő alkalommal emlékeztetőt kapni a Bluetooth vagy a helyszolgáltatások bekapcsolásáról?</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Stop</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Mégse</translation>
     </message>
     <message>
         <source>Return to app</source>
@@ -621,6 +621,174 @@ Szeretné bekapcsolni a szükséges szolgáltatásokat?</translation>
 <context>
     <name>QObject</name>
     <message>
+        <source>%1 (HR sensor) connected!</source>
+        <translation>Csatlakoztatva: %1 (pulzusmérő)!</translation>
+    </message>
+    <message>
+        <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
+        <translation>A pulzusmérés 30 másodpercre szünetel: használja többször a Garmin Connect kényszerített leállítását, és az óra csatlakozik a QZ-hez.</translation>
+    </message>
+    <message>
+        <source>%1 (cadence sensor) connected!</source>
+        <translation>Csatlakoztatva: %1 (kadenciaérzékelő)!</translation>
+    </message>
+    <message>
+        <source>%1 (power sensor) connected!</source>
+        <translation>Csatlakoztatva: %1 (teljesítményérzékelő)!</translation>
+    </message>
+    <message>
+        <source>SRAM Connected!</source>
+        <translation>SRAM csatlakoztatva!</translation>
+    </message>
+    <message>
+        <source>Zwift Click Connected!</source>
+        <translation>Zwift Click csatlakoztatva!</translation>
+    </message>
+    <message>
+        <source>Zwift Click v2 Connected!</source>
+        <translation>Zwift Click v2 csatlakoztatva!</translation>
+    </message>
+    <message>
+        <source>Thinkrider Controller Connected!</source>
+        <translation>Thinkrider-vezérlő csatlakoztatva!</translation>
+    </message>
+    <message>
+        <source>CYCPLUS BC2 Connected!</source>
+        <translation>CYCPLUS BC2 csatlakoztatva!</translation>
+    </message>
+    <message>
+        <source>Elite Square Connected!</source>
+        <translation>Elite Square csatlakoztatva!</translation>
+    </message>
+    <message>
+        <source>Zwift Play/Ride Connected!</source>
+        <translation>Zwift Play/Ride csatlakoztatva!</translation>
+    </message>
+    <message>
+        <source>Searching for heart rate sensors...</source>
+        <translation>Pulzusmérők keresése...</translation>
+    </message>
+    <message>
+        <source>No heart rate sensor found nearby. Make sure it is on and broadcasting heart rate.</source>
+        <translation>Nem található pulzusmérő a közelben. Ellenőrizze, hogy be van-e kapcsolva, és sugározza-e a pulzust.</translation>
+    </message>
+    <message>
+        <source>%1 connected!</source>
+        <translation>Csatlakoztatva: %1!</translation>
+    </message>
+    <message>
+        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
+        <translation>Az ellenállás szerinti kézi teljesítménykorrekció bekapcsolva: a teljesítmény mostantól az Ellenállás csempe értékét követi.</translation>
+    </message>
+    <message>
+        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
+        <translation>Egyéni CSC-teljesítménytáblázat bekapcsolva: a teljesítmény mostantól a beállított ellenállás/watt pontokat követi.</translation>
+    </message>
+    <message>
+        <source>%1 Battery Level %2 %</source>
+        <translation>%1 – akkumulátorszint: %2%</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change</source>
+        <translation>FTMS-kerékpár észlelve, a módosítás alkalmazásához indítsa újra az alkalmazást</translation>
+    </message>
+    <message>
+        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
+        <translation>A Domyos elliptikus tréner FTMS-eszköz. A javítás alkalmazásához indítsa újra a QZ-t. Köszönjük.</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change</source>
+        <translation>FTMS-evezőgép észlelve, a módosítás alkalmazásához indítsa újra az alkalmazást</translation>
+    </message>
+    <message>
+        <source>Bluetooth Service Error! Restart the bike!</source>
+        <translation>Bluetooth-szolgáltatáshiba! Indítsa újra a kerékpárt!</translation>
+    </message>
+    <message>
+        <source>Switching to classic Bluetooth bridge</source>
+        <translation>Váltás klasszikus virtuális Bluetooth-eszközre</translation>
+    </message>
+    <message>
+        <source>Virtual Echelon enabled for this bike</source>
+        <translation>Virtuális Echelon bekapcsolva ehhez a kerékpárhoz</translation>
+    </message>
+    <message>
+        <source>FTMS treadmill found, restart the app to apply the change</source>
+        <translation>FTMS-futópad észlelve, a módosítás alkalmazásához indítsa újra az alkalmazást</translation>
+    </message>
+    <message>
+        <source>Init completed, you can use the treadmill now!</source>
+        <translation>Az előkészítés befejeződött, most már használhatja a futópadot!</translation>
+    </message>
+    <message>
+        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
+        <translation>A QZ felismerte ennek a kerékpárnak az adatformátumát, és a beállításokban bekapcsolta ezt: „Virtufit Etappe 2.0 kerékpár”. A kerékpár adatainak olvasásához újra kell indítani a QZ-t.</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change!</source>
+        <translation>FTMS-kerékpár észlelve, a módosítás alkalmazásához indítsa újra az alkalmazást!</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change!</source>
+        <translation>FTMS-evezőgép észlelve, a módosítás alkalmazásához indítsa újra az alkalmazást!</translation>
+    </message>
+    <message>
+        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>A Domyos-kerékpár FTMS-eszközként jelenik meg, de nem az. A javítás alkalmazásához indítsa újra a QZ-t. Köszönjük.</translation>
+    </message>
+    <message>
+        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
+        <translation>PM5-evezőgép észlelve. A javítás alkalmazásához indítsa újra a QZ-t. Köszönjük.</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization in progress...%1%</source>
+        <translation>A futópad előkészítése folyamatban...%1%</translation>
+    </message>
+    <message>
+        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
+        <translation>Kapcsolja be az „FTMS használata mindig” beállítást itt: Beállítások-&gt;Futópad beállításai-&gt;Horizon-futópad beállításai, majd indítsa újra az alkalmazást</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization completed!</source>
+        <translation>A futópad előkészítése befejeződött!</translation>
+    </message>
+    <message>
+        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>A Domyos-futópad FTMS-eszközként jelenik meg, de nem az. A javítás alkalmazásához indítsa újra a QZ-t. Köszönjük.</translation>
+    </message>
+    <message>
+        <source>Treadmill ready</source>
+        <translation>Futópad kész</translation>
+    </message>
+    <message>
+        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
+        <translation>T01_ eszköz észlelve. Ha furcsa emelkedési értékeket lát, kapcsolja be az „IConcept FTMS-futópad” beállítást a Futópad beállításai között.</translation>
+    </message>
+    <message>
+        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
+        <translation>Aktuális SmO2: %1%, előző SmO2: %2%, THb: %3 g/dL</translation>
+    </message>
+    <message>
+        <source>SE7i init completed!</source>
+        <translation>Az SE7i előkészítése befejeződött!</translation>
+    </message>
+    <message>
+        <source>Starting treadmill before applying requested speed %1</source>
+        <translation>A futópad indítása a kért sebesség alkalmazása előtt: %1</translation>
+    </message>
+    <message>
+        <source>Applying cached speed request %1</source>
+        <translation>Tárolt sebességkérés alkalmazása: %1</translation>
+    </message>
+    <message>
+        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
+        <translation>Nem található szolgáltatás, írjon nekem: roberto.viola83@gmail.com!</translation>
+    </message>
+    <message>
+        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
+        <translation>Zwift Hub észlelve, a virtuális váltás használatához indítsa újra az alkalmazást!</translation>
+    </message>
+    <message>
         <source>Sending workout email...</source>
         <translation>Edzés küldése e-mailben...</translation>
     </message>
@@ -801,6 +969,10 @@ Szeretné frissíteni a QZ beállításait?</translation>
         <translation>A csatlakoztatott eszköz nem Echelon Connect Sport</translation>
     </message>
     <message>
+        <source>Android notification enabled</source>
+        <translation>Android-értesítés bekapcsolva</translation>
+    </message>
+    <message>
         <source>Strava: unable to open FIT file</source>
         <translation>Strava: a FIT-fájl nem nyitható meg</translation>
     </message>
@@ -885,12 +1057,12 @@ Szeretné frissíteni a QZ beállításait?</translation>
         <translation>Edzés letöltése innen: Intervals.icu...</translation>
     </message>
     <message>
-        <source>Failed to get workouts (HTTP %1)</source>
-        <translation>Nem sikerült lekérni az edzéseket (HTTP %1)</translation>
-    </message>
-    <message>
         <source>Intervals.icu: %1</source>
         <translation>Intervals.icu: %1</translation>
+    </message>
+    <message>
+        <source>Failed to get workouts (HTTP %1)</source>
+        <translation>Nem sikerült lekérni az edzéseket (HTTP %1)</translation>
     </message>
     <message>
         <source>Intervals.icu: Invalid response</source>
@@ -907,186 +1079,6 @@ Szeretné frissíteni a QZ beállításait?</translation>
     <message>
         <source>Failed to save workout file</source>
         <translation>Nem sikerült menteni az edzésfájlt</translation>
-    </message>
-    <message>
-        <source>%1 (HR sensor) connected!</source>
-        <translation>Csatlakoztatva: %1 (pulzusmérő)!</translation>
-    </message>
-    <message>
-        <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
-        <translation>A pulzusmérés 30 másodpercre szünetel: használja többször a Garmin Connect kényszerített leállítását, és az óra csatlakozik a QZ-hez.</translation>
-    </message>
-    <message>
-        <source>Searching for %1 (HR sensor)...</source>
-        <translation>%1 (pulzusérzékelő) keresése...</translation>
-    </message>
-    <message>
-        <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
-        <translation>%1 (pulzusérzékelő) nem található. Ellenőrizd, hogy be van-e kapcsolva és sugározza-e a pulzusadatokat.</translation>
-    </message>
-    <message>
-        <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
-        <translation>%1 (pulzusérzékelő): nincs pulzusadat. Ellenőrizd, hogy az érzékelő sugározza-e a pulzusadatokat.</translation>
-    </message>
-    <message>
-        <source>%1 (cadence sensor) connected!</source>
-        <translation>Csatlakoztatva: %1 (kadenciaérzékelő)!</translation>
-    </message>
-    <message>
-        <source>%1 (power sensor) connected!</source>
-        <translation>Csatlakoztatva: %1 (teljesítményérzékelő)!</translation>
-    </message>
-    <message>
-        <source>SRAM Connected!</source>
-        <translation>SRAM csatlakoztatva!</translation>
-    </message>
-    <message>
-        <source>Zwift Click Connected!</source>
-        <translation>Zwift Click csatlakoztatva!</translation>
-    </message>
-    <message>
-        <source>Zwift Click v2 Connected!</source>
-        <translation>Zwift Click v2 csatlakoztatva!</translation>
-    </message>
-    <message>
-        <source>Thinkrider Controller Connected!</source>
-        <translation>Thinkrider-vezérlő csatlakoztatva!</translation>
-    </message>
-    <message>
-        <source>CYCPLUS BC2 Connected!</source>
-        <translation>CYCPLUS BC2 csatlakoztatva!</translation>
-    </message>
-    <message>
-        <source>Elite Square Connected!</source>
-        <translation>Elite Square csatlakoztatva!</translation>
-    </message>
-    <message>
-        <source>Zwift Play/Ride Connected!</source>
-        <translation>Zwift Play/Ride csatlakoztatva!</translation>
-    </message>
-    <message>
-        <source>Searching for heart rate sensors...</source>
-        <translation>Pulzusmérők keresése...</translation>
-    </message>
-    <message>
-        <source>No heart rate sensor found nearby. Make sure it is on and broadcasting heart rate.</source>
-        <translation>Nem található pulzusmérő a közelben. Ellenőrizze, hogy be van-e kapcsolva, és sugározza-e a pulzust.</translation>
-    </message>
-    <message>
-        <source>%1 connected!</source>
-        <translation>Csatlakoztatva: %1!</translation>
-    </message>
-    <message>
-        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
-        <translation>Az ellenállás szerinti kézi teljesítménykorrekció bekapcsolva: a teljesítmény mostantól az Ellenállás csempe értékét követi.</translation>
-    </message>
-    <message>
-        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
-        <translation>Egyéni CSC-teljesítménytáblázat bekapcsolva: a teljesítmény mostantól a beállított ellenállás/watt pontokat követi.</translation>
-    </message>
-    <message>
-        <source>%1 Battery Level %2 %</source>
-        <translation>%1 – akkumulátorszint: %2%</translation>
-    </message>
-    <message>
-        <source>FTMS bike found, restart the app to apply the change</source>
-        <translation>FTMS-kerékpár észlelve, a módosítás alkalmazásához indítsa újra az alkalmazást</translation>
-    </message>
-    <message>
-        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
-        <translation>A Domyos elliptikus tréner FTMS-eszköz. A javítás alkalmazásához indítsa újra a QZ-t. Köszönjük.</translation>
-    </message>
-    <message>
-        <source>FTMS rower found, restart the app to apply the change</source>
-        <translation>FTMS-evezőgép észlelve, a módosítás alkalmazásához indítsa újra az alkalmazást</translation>
-    </message>
-    <message>
-        <source>Bluetooth Service Error! Restart the bike!</source>
-        <translation>Bluetooth-szolgáltatáshiba! Indítsa újra a kerékpárt!</translation>
-    </message>
-    <message>
-        <source>Switching to classic Bluetooth bridge</source>
-        <translation>Váltás klasszikus virtuális Bluetooth-eszközre</translation>
-    </message>
-    <message>
-        <source>Virtual Echelon enabled for this bike</source>
-        <translation>Virtuális Echelon bekapcsolva ehhez a kerékpárhoz</translation>
-    </message>
-    <message>
-        <source>FTMS treadmill found, restart the app to apply the change</source>
-        <translation>FTMS-futópad észlelve, a módosítás alkalmazásához indítsa újra az alkalmazást</translation>
-    </message>
-    <message>
-        <source>Init completed, you can use the treadmill now!</source>
-        <translation>Az előkészítés befejeződött, most már használhatja a futópadot!</translation>
-    </message>
-    <message>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>A QZ felismerte ennek a kerékpárnak az adatformátumát, és a beállításokban bekapcsolta ezt: „Virtufit Etappe 2.0 kerékpár”. A kerékpár adatainak olvasásához újra kell indítani a QZ-t.</translation>
-    </message>
-    <message>
-        <source>FTMS bike found, restart the app to apply the change!</source>
-        <translation>FTMS-kerékpár észlelve, a módosítás alkalmazásához indítsa újra az alkalmazást!</translation>
-    </message>
-    <message>
-        <source>FTMS rower found, restart the app to apply the change!</source>
-        <translation>FTMS-evezőgép észlelve, a módosítás alkalmazásához indítsa újra az alkalmazást!</translation>
-    </message>
-    <message>
-        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
-        <translation>A Domyos-kerékpár FTMS-eszközként jelenik meg, de nem az. A javítás alkalmazásához indítsa újra a QZ-t. Köszönjük.</translation>
-    </message>
-    <message>
-        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
-        <translation>PM5-evezőgép észlelve. A javítás alkalmazásához indítsa újra a QZ-t. Köszönjük.</translation>
-    </message>
-    <message>
-        <source>Treadmill initialization in progress...%1%</source>
-        <translation>A futópad előkészítése folyamatban...%1%</translation>
-    </message>
-    <message>
-        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
-        <translation>Kapcsolja be az „FTMS használata mindig” beállítást itt: Beállítások-&gt;Futópad beállításai-&gt;Horizon-futópad beállításai, majd indítsa újra az alkalmazást</translation>
-    </message>
-    <message>
-        <source>Treadmill initialization completed!</source>
-        <translation>A futópad előkészítése befejeződött!</translation>
-    </message>
-    <message>
-        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
-        <translation>A Domyos-futópad FTMS-eszközként jelenik meg, de nem az. A javítás alkalmazásához indítsa újra a QZ-t. Köszönjük.</translation>
-    </message>
-    <message>
-        <source>Treadmill ready</source>
-        <translation>Futópad kész</translation>
-    </message>
-    <message>
-        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
-        <translation>T01_ eszköz észlelve. Ha furcsa emelkedési értékeket lát, kapcsolja be az „IConcept FTMS-futópad” beállítást a Futópad beállításai között.</translation>
-    </message>
-    <message>
-        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
-        <translation>Aktuális SmO2: %1%, előző SmO2: %2%, THb: %3 g/dL</translation>
-    </message>
-    <message>
-        <source>SE7i init completed!</source>
-        <translation>Az SE7i előkészítése befejeződött!</translation>
-    </message>
-    <message>
-        <source>Starting treadmill before applying requested speed %1</source>
-        <translation>A futópad indítása a kért sebesség alkalmazása előtt: %1</translation>
-    </message>
-    <message>
-        <source>Applying cached speed request %1</source>
-        <translation>Tárolt sebességkérés alkalmazása: %1</translation>
-    </message>
-    <message>
-        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
-        <translation>Nem található szolgáltatás, írjon nekem: roberto.viola83@gmail.com!</translation>
-    </message>
-    <message>
-        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
-        <translation>Zwift Hub észlelve, a virtuális váltás használatához indítsa újra az alkalmazást!</translation>
     </message>
     <message>
         <source>Peloton Auth Failed!</source>
@@ -1149,16 +1141,24 @@ Szeretné frissíteni a QZ beállításait?</translation>
         <translation>Zwift-eszköz: FRISSÍTSE A FIRMWARE-T!</translation>
     </message>
     <message>
-        <source>Android notification enabled</source>
-        <translation>Android-értesítés bekapcsolva</translation>
-    </message>
-    <message>
         <source>YPOO M5 ready</source>
         <translation>YPOO M5: kész</translation>
     </message>
     <message>
         <source>YPOO M5 initialization failed; reconnect required</source>
         <translation>YPOO M5: az inicializálás sikertelen, újracsatlakozás szükséges</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
+        <translation>%1 (pulzusérzékelő): nincs pulzusadat. Ellenőrizd, hogy az érzékelő sugározza-e a pulzusadatokat.</translation>
+    </message>
+    <message>
+        <source>Searching for %1 (HR sensor)...</source>
+        <translation>%1 (pulzusérzékelő) keresése...</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
+        <translation>%1 (pulzusérzékelő) nem található. Ellenőrizd, hogy be van-e kapcsolva és sugározza-e a pulzusadatokat.</translation>
     </message>
 </context>
 <context>
@@ -1239,20 +1239,20 @@ Szeretné frissíteni a QZ beállításait?</translation>
 <context>
     <name>SettingsFormatField</name>
     <message>
-        <source>Enter the height in centimetres</source>
-        <translation>Adja meg a testmagasságot centiméterben</translation>
-    </message>
-    <message>
-        <source>Enter the height as feet&apos;inches, e.g. 5&apos;10&quot;</source>
-        <translation>Adja meg a testmagasságot láb&apos;hüvelyk formátumban, pl. 5&apos;10&quot;</translation>
+        <source>Enter an IP address, e.g. 192.168.1.10</source>
+        <translation>Adjon meg egy IP-címet, pl. 192.168.1.10</translation>
     </message>
     <message>
         <source>Enter an IP address or a host name, e.g. 192.168.1.10</source>
         <translation>Adjon meg egy IP-címet vagy gazdagépnevet, pl. 192.168.1.10</translation>
     </message>
     <message>
-        <source>Enter an IP address, e.g. 192.168.1.10</source>
-        <translation>Adjon meg egy IP-címet, pl. 192.168.1.10</translation>
+        <source>Enter the height in centimetres</source>
+        <translation>Adja meg a testmagasságot centiméterben</translation>
+    </message>
+    <message>
+        <source>Enter the height as feet&apos;inches, e.g. 5&apos;10&quot;</source>
+        <translation>Adja meg a testmagasságot láb&apos;hüvelyk formátumban, pl. 5&apos;10&quot;</translation>
     </message>
     <message>
         <source>Enter the time as hh:mm:ss</source>
@@ -1262,20 +1262,12 @@ Szeretné frissíteni a QZ beállításait?</translation>
 <context>
     <name>SettingsList</name>
     <message>
-        <source>Please choose a file</source>
-        <translation>Válasszon fájlt</translation>
-    </message>
-    <message>
         <source>Settings folder</source>
         <translation>Beállítások mappája</translation>
     </message>
     <message>
-        <source>Other folders</source>
-        <translation>Egyéb mappák</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Fájlok visszaállítása</translation>
+        <source>Please choose a file</source>
+        <translation>Válasszon fájlt</translation>
     </message>
     <message>
         <source>Tap a file to select it, then Load.</source>
@@ -1288,6 +1280,14 @@ Szeretné frissíteni a QZ beállításait?</translation>
     <message>
         <source>No saved settings</source>
         <translation>Nincs mentett beállítás</translation>
+    </message>
+    <message>
+        <source>Other folders</source>
+        <translation>Egyéb mappák</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Fájlok visszaállítása</translation>
     </message>
 </context>
 <context>
@@ -1330,6 +1330,80 @@ Szeretné frissíteni a QZ beállításait?</translation>
     <message>
         <source>Purchase Failed</source>
         <translation>Sikertelen vásárlás</translation>
+    </message>
+</context>
+<context>
+    <name>SupportHelpButton</name>
+    <message>
+        <source>Contact QZ support</source>
+        <translation>Kapcsolatfelvétel a QZ ügyfélszolgálattal</translation>
+    </message>
+    <message>
+        <source>Prepare a support email with diagnostics</source>
+        <translation>Támogatási e-mail előkészítése diagnosztikai adatokkal</translation>
+    </message>
+    <message>
+        <source>No device connected</source>
+        <translation>Nincs csatlakoztatott eszköz</translation>
+    </message>
+    <message>
+        <source>Speed and power at zero</source>
+        <translation>A sebesség és a teljesítmény nulla</translation>
+    </message>
+    <message>
+        <source>QZ Support</source>
+        <translation>QZ ügyfélszolgálat</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation>Kész</translation>
+    </message>
+    <message>
+        <source>Hide keyboard</source>
+        <translation>Billentyűzet elrejtése</translation>
+    </message>
+    <message>
+        <source>Close support request</source>
+        <translation>Támogatási kérés bezárása</translation>
+    </message>
+    <message>
+        <source>Tell us what is not working. QZ will add your device and app information.</source>
+        <translation>Írd le, mi nem működik. A QZ hozzáadja az eszköz és az alkalmazás adatait.</translation>
+    </message>
+    <message>
+        <source>Describe the problem...</source>
+        <translation>Írd le a problémát...</translation>
+    </message>
+    <message>
+        <source>Describe the problem</source>
+        <translation>A probléma leírása</translation>
+    </message>
+    <message>
+        <source>Attach debug log if available</source>
+        <translation>Hibakeresési napló csatolása, ha elérhető</translation>
+    </message>
+    <message>
+        <source>You can review or edit the email before sending it. Nothing is sent automatically.</source>
+        <translation>Küldés előtt átnézheted vagy szerkesztheted az e-mailt. Semmi sem kerül elküldésre automatikusan.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Mégse</translation>
+    </message>
+    <message>
+        <source>Open email</source>
+        <translation>E-mail megnyitása</translation>
+    </message>
+</context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>A kadencia a valódinak a felének tűnik. Kapcsolja be a „Kadencia duplázása futáshoz” és a „Fél kadencia a Stravában” beállítást a „Teljesítményérzékelő beállításai” részben.</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>A kadencia a valódi kétszeresének tűnik. Kapcsolja ki a „Kadencia duplázása futáshoz” és a „Fél kadencia a Stravában” beállítást a „Teljesítményérzékelő beállításai” részben.</translation>
     </message>
 </context>
 <context>
@@ -1447,6 +1521,18 @@ Szeretné frissíteni a QZ beállításait?</translation>
         <translation>Keresés (almappákkal)...</translation>
     </message>
     <message>
+        <source>Parent folder</source>
+        <translation>Szülőmappa</translation>
+    </message>
+    <message>
+        <source>No workouts found</source>
+        <translation>Nem található edzés</translation>
+    </message>
+    <message>
+        <source>No workouts here</source>
+        <translation>Itt nincs edzés</translation>
+    </message>
+    <message>
         <source>Other folders</source>
         <translation>Egyéb mappák</translation>
     </message>
@@ -1477,18 +1563,6 @@ Szeretné frissíteni a QZ beállításait?</translation>
     <message>
         <source>Start Workout</source>
         <translation>Edzés indítása</translation>
-    </message>
-    <message>
-        <source>Parent folder</source>
-        <translation>Szülőmappa</translation>
-    </message>
-    <message>
-        <source>No workouts here</source>
-        <translation>Itt nincs edzés</translation>
-    </message>
-    <message>
-        <source>No workouts found</source>
-        <translation>Nem található edzés</translation>
     </message>
 </context>
 <context>
@@ -1663,14 +1737,6 @@ Szeretné frissíteni a QZ beállításait?</translation>
         <translation>Evezőgép</translation>
     </message>
     <message>
-        <source>Jump Rope</source>
-        <translation>Ugrókötél</translation>
-    </message>
-    <message>
-        <source>Stair Climber</source>
-        <translation>Lépcsőzőgép</translation>
-    </message>
-    <message>
         <source>Workout Editor</source>
         <translation>Edzésszerkesztő</translation>
     </message>
@@ -1818,28 +1884,12 @@ Szeretné frissíteni a QZ beállításait?</translation>
         <translation>Max. sebesség</translation>
     </message>
     <message>
-        <source>Max Incline</source>
-        <translation>Max. emelkedés</translation>
-    </message>
-    <message>
         <source>Max Resistance</source>
         <translation>Max. ellenállás</translation>
     </message>
     <message>
         <source>Ramp</source>
         <translation>Rámpa</translation>
-    </message>
-    <message>
-        <source>Ramp Unit</source>
-        <translation>Rámpa egysége</translation>
-    </message>
-    <message>
-        <source>Ramp From</source>
-        <translation>Rámpa kezdete</translation>
-    </message>
-    <message>
-        <source>Ramp To</source>
-        <translation>Rámpa vége</translation>
     </message>
     <message>
         <source>Stroke Rate</source>
@@ -2038,34 +2088,6 @@ Szeretné frissíteni a QZ beállításait?</translation>
         <translation>Hiba a kijelölés ismétlésekor: {message}</translation>
     </message>
     <message>
-        <source>Block repeated {times} times</source>
-        <translation>A blokk ismétlésszáma: {times}</translation>
-    </message>
-    <message>
-        <source>Loaded {name}</source>
-        <translation>Betöltve: {name}</translation>
-    </message>
-    <message>
-        <source>Deleted {name}</source>
-        <translation>Törölve: {name}</translation>
-    </message>
-    <message>
-        <source>Untitled Workout</source>
-        <translation>Névtelen edzés</translation>
-    </message>
-    <message>
-        <source>Time</source>
-        <translation>Idő</translation>
-    </message>
-    <message>
-        <source>Duration {value}</source>
-        <translation>Időtartam: {value}</translation>
-    </message>
-    <message>
-        <source>{count} intervals</source>
-        <translation>{count} szakasz</translation>
-    </message>
-    <message>
         <source>Training Programs Browser</source>
         <translation>Edzésprogramok böngészője</translation>
     </message>
@@ -2185,6 +2207,130 @@ Szeretné frissíteni a QZ beállításait?</translation>
         <translation>Célemelkedés</translation>
     </message>
     <message>
+        <source>Peloton Workout in progress!</source>
+        <translation>Peloton-edzés folyamatban!</translation>
+    </message>
+    <message>
+        <source>Do you want to follow the resistance?</source>
+        <translation>Szeretné követni az ellenállást?</translation>
+    </message>
+    <message>
+        <source>SPEED</source>
+        <translation>SEBESSÉG</translation>
+    </message>
+    <message>
+        <source>INCLINE</source>
+        <translation>EMELKEDÉS</translation>
+    </message>
+    <message>
+        <source>PACE</source>
+        <translation>TEMPÓ</translation>
+    </message>
+    <message>
+        <source>ELEV.</source>
+        <translation>SZINTEM.</translation>
+    </message>
+    <message>
+        <source>CADENCE</source>
+        <translation>KADENCIA</translation>
+    </message>
+    <message>
+        <source>PULSE</source>
+        <translation>PULZUS</translation>
+    </message>
+    <message>
+        <source>POWER</source>
+        <translation>TELJESÍTMÉNY</translation>
+    </message>
+    <message>
+        <source>RESISTANCE</source>
+        <translation>ELLENÁLLÁS</translation>
+    </message>
+    <message>
+        <source>CALORIES</source>
+        <translation>KALÓRIA</translation>
+    </message>
+    <message>
+        <source>DISTANCE</source>
+        <translation>TÁVOLSÁG</translation>
+    </message>
+    <message>
+        <source>Heart</source>
+        <translation>Pulzus</translation>
+    </message>
+    <message>
+        <source>Odometer</source>
+        <translation>Össztáv</translation>
+    </message>
+    <message>
+        <source>Watt</source>
+        <translation>Watt</translation>
+    </message>
+    <message>
+        <source>Elapsed</source>
+        <translation>Eltelt idő</translation>
+    </message>
+    <message>
+        <source>Inclination</source>
+        <translation>Emelkedés</translation>
+    </message>
+    <message>
+        <source>Altitude</source>
+        <translation>Magasság</translation>
+    </message>
+    <message>
+        <source>Elevation</source>
+        <translation>Szintemelkedés</translation>
+    </message>
+    <message>
+        <source>Jump Rope</source>
+        <translation>Ugrókötél</translation>
+    </message>
+    <message>
+        <source>Stair Climber</source>
+        <translation>Lépcsőzőgép</translation>
+    </message>
+    <message>
+        <source>Ramp Unit</source>
+        <translation>Rámpa egysége</translation>
+    </message>
+    <message>
+        <source>Ramp From</source>
+        <translation>Rámpa kezdete</translation>
+    </message>
+    <message>
+        <source>Ramp To</source>
+        <translation>Rámpa vége</translation>
+    </message>
+    <message>
+        <source>Block repeated {times} times</source>
+        <translation>A blokk ismétlésszáma: {times}</translation>
+    </message>
+    <message>
+        <source>Loaded {name}</source>
+        <translation>Betöltve: {name}</translation>
+    </message>
+    <message>
+        <source>Deleted {name}</source>
+        <translation>Törölve: {name}</translation>
+    </message>
+    <message>
+        <source>Untitled Workout</source>
+        <translation>Névtelen edzés</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation>Idő</translation>
+    </message>
+    <message>
+        <source>Duration {value}</source>
+        <translation>Időtartam: {value}</translation>
+    </message>
+    <message>
+        <source>{count} intervals</source>
+        <translation>{count} szakasz</translation>
+    </message>
+    <message>
         <source>Heart Rate</source>
         <translation>Pulzus</translation>
     </message>
@@ -2245,78 +2391,6 @@ Szeretné frissíteni a QZ beállításait?</translation>
         <translation>Pulzus &lt;{value} bpm</translation>
     </message>
     <message>
-        <source>W</source>
-        <translation>W</translation>
-    </message>
-    <message>
-        <source>kJ</source>
-        <translation>kJ</translation>
-    </message>
-    <message>
-        <source>kcal</source>
-        <translation>kcal</translation>
-    </message>
-    <message>
-        <source>km</source>
-        <translation>km</translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>rpm</source>
-        <translation>rpm</translation>
-    </message>
-    <message>
-        <source>bpm</source>
-        <translation>bpm</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>min/km</source>
-        <translation>min/km</translation>
-    </message>
-    <message>
-        <source>min/mi</source>
-        <translation>min/mi</translation>
-    </message>
-    <message>
-        <source>Full screen</source>
-        <translation>Teljes képernyő</translation>
-    </message>
-    <message>
-        <source>Exit full screen</source>
-        <translation>Kilépés a teljes képernyőből</translation>
-    </message>
-    <message>
-        <source>Swipe left or right to switch charts</source>
-        <translation>A diagramok közötti váltáshoz pöccintsen balra vagy jobbra</translation>
-    </message>
-    <message>
-        <source>A workout named {name} already exists. Replace it?</source>
-        <translation>Már van ilyen nevű edzés: {name}. Szeretné lecserélni?</translation>
-    </message>
-    <message>
-        <source>Replace</source>
-        <translation>Csere</translation>
-    </message>
-    <message>
-        <source>lvl</source>
-        <translation>szint</translation>
-    </message>
-    <message>
-        <source>spm</source>
-        <translation>húzás/perc</translation>
-    </message>
-    <message>
         <source>Marathon</source>
         <translation>Maraton</translation>
     </message>
@@ -2335,14 +2409,6 @@ Szeretné frissíteni a QZ beállításait?</translation>
     <message>
         <source>1 Mile</source>
         <translation>1 mérföld</translation>
-    </message>
-    <message>
-        <source>Peloton Workout in progress!</source>
-        <translation>Peloton-edzés folyamatban!</translation>
-    </message>
-    <message>
-        <source>Do you want to follow the resistance?</source>
-        <translation>Szeretné követni az ellenállást?</translation>
     </message>
     <message>
         <source>AVG</source>
@@ -2443,72 +2509,80 @@ Szeretné frissíteni a QZ beállításait?</translation>
         <translation>Automatikus ellenállás</translation>
     </message>
     <message>
-        <source>SPEED</source>
-        <translation>SEBESSÉG</translation>
+        <source>Max Incline</source>
+        <translation>Max. emelkedés</translation>
     </message>
     <message>
-        <source>INCLINE</source>
-        <translation>EMELKEDÉS</translation>
+        <source>W</source>
+        <translation>W</translation>
     </message>
     <message>
-        <source>PACE</source>
-        <translation>TEMPÓ</translation>
+        <source>kJ</source>
+        <translation>kJ</translation>
     </message>
     <message>
-        <source>ELEV.</source>
-        <translation>SZINTEM.</translation>
+        <source>kcal</source>
+        <translation>kcal</translation>
     </message>
     <message>
-        <source>CADENCE</source>
-        <translation>KADENCIA</translation>
+        <source>km</source>
+        <translation>km</translation>
     </message>
     <message>
-        <source>PULSE</source>
-        <translation>PULZUS</translation>
+        <source>mi</source>
+        <translation>mi</translation>
     </message>
     <message>
-        <source>POWER</source>
-        <translation>TELJESÍTMÉNY</translation>
+        <source>rpm</source>
+        <translation>rpm</translation>
     </message>
     <message>
-        <source>RESISTANCE</source>
-        <translation>ELLENÁLLÁS</translation>
+        <source>bpm</source>
+        <translation>bpm</translation>
     </message>
     <message>
-        <source>CALORIES</source>
-        <translation>KALÓRIA</translation>
+        <source>km/h</source>
+        <translation>km/h</translation>
     </message>
     <message>
-        <source>DISTANCE</source>
-        <translation>TÁVOLSÁG</translation>
+        <source>mph</source>
+        <translation>mph</translation>
     </message>
     <message>
-        <source>Heart</source>
-        <translation>Pulzus</translation>
+        <source>min/km</source>
+        <translation>min/km</translation>
     </message>
     <message>
-        <source>Odometer</source>
-        <translation>Össztáv</translation>
+        <source>min/mi</source>
+        <translation>min/mi</translation>
     </message>
     <message>
-        <source>Watt</source>
-        <translation>Watt</translation>
+        <source>Full screen</source>
+        <translation>Teljes képernyő</translation>
     </message>
     <message>
-        <source>Elapsed</source>
-        <translation>Eltelt idő</translation>
+        <source>Exit full screen</source>
+        <translation>Kilépés a teljes képernyőből</translation>
     </message>
     <message>
-        <source>Inclination</source>
-        <translation>Emelkedés</translation>
+        <source>Swipe left or right to switch charts</source>
+        <translation>A diagramok közötti váltáshoz pöccintsen balra vagy jobbra</translation>
     </message>
     <message>
-        <source>Altitude</source>
-        <translation>Magasság</translation>
+        <source>A workout named {name} already exists. Replace it?</source>
+        <translation>Már van ilyen nevű edzés: {name}. Szeretné lecserélni?</translation>
     </message>
     <message>
-        <source>Elevation</source>
-        <translation>Szintemelkedés</translation>
+        <source>Replace</source>
+        <translation>Csere</translation>
+    </message>
+    <message>
+        <source>lvl</source>
+        <translation>szint</translation>
+    </message>
+    <message>
+        <source>spm</source>
+        <translation>húzás/perc</translation>
     </message>
     <message>
         <source>Enter a number</source>
@@ -2606,22 +2680,6 @@ A következő kérdésekkel a QZ-t az edzőgépéhez és a céljaihoz szabhatja.
         <translation>Milyen edzőgépe van?</translation>
     </message>
     <message>
-        <source>Bike</source>
-        <translation>Kerékpár</translation>
-    </message>
-    <message>
-        <source>Treadmill</source>
-        <translation>Futópad</translation>
-    </message>
-    <message>
-        <source>Rower</source>
-        <translation>Evezőgép</translation>
-    </message>
-    <message>
-        <source>Elliptical</source>
-        <translation>Elliptikus tréner</translation>
-    </message>
-    <message>
         <source>Back</source>
         <translation>Vissza</translation>
     </message>
@@ -2632,14 +2690,6 @@ A következő kérdésekkel a QZ-t az edzőgépéhez és a céljaihoz szabhatja.
     <message>
         <source>QZ allows you to connect to both of them, even simultaneously if you want!</source>
         <translation>A QZ mindkettőhöz tud csatlakozni, akár egyszerre is, ha szeretné!</translation>
-    </message>
-    <message>
-        <source>Other app</source>
-        <translation>Más alkalmazás</translation>
-    </message>
-    <message>
-        <source>QZ Standalone</source>
-        <translation>Önálló QZ</translation>
     </message>
     <message>
         <source>Connect to Peloton</source>
@@ -2662,18 +2712,6 @@ A következő kérdésekkel a QZ-t az edzőgépéhez és a céljaihoz szabhatja.
         <translation>Nehézség</translation>
     </message>
     <message>
-        <source>lower</source>
-        <translation>alsó</translation>
-    </message>
-    <message>
-        <source>upper</source>
-        <translation>felső</translation>
-    </message>
-    <message>
-        <source>average</source>
-        <translation>átlagos</translation>
-    </message>
-    <message>
         <source>Finish</source>
         <translation>Kész</translation>
     </message>
@@ -2688,6 +2726,18 @@ A következő kérdésekkel a QZ-t az edzőgépéhez és a céljaihoz szabhatja.
     <message>
         <source>Next</source>
         <translation>Tovább</translation>
+    </message>
+    <message>
+        <source>Your equipment, units and profile, step by step</source>
+        <translation>Edzőgép, mértékegységek és profil lépésről lépésre</translation>
+    </message>
+    <message>
+        <source>Pick a topic and go straight to its settings</source>
+        <translation>Válasszon témát, és lépjen közvetlenül a beállításaihoz</translation>
+    </message>
+    <message>
+        <source>Close the wizard</source>
+        <translation>A varázsló bezárása</translation>
     </message>
     <message>
         <source>Custom Configurations</source>
@@ -2790,14 +2840,6 @@ A következő kérdésekkel a QZ-t az edzőgépéhez és a céljaihoz szabhatja.
         <translation>Válassza ki edzőgépét</translation>
     </message>
     <message>
-        <source>Disabled</source>
-        <translation>Kikapcsolva</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>Frissítés</translation>
-    </message>
-    <message>
         <source>Unit System</source>
         <translation>Mértékegységrendszer</translation>
     </message>
@@ -2806,28 +2848,8 @@ A következő kérdésekkel a QZ-t az edzőgépéhez és a céljaihoz szabhatja.
         <translation>Válassza ki a kívánt mértékegységrendszert</translation>
     </message>
     <message>
-        <source>Metric</source>
-        <translation>Metrikus</translation>
-    </message>
-    <message>
-        <source>Imperial</source>
-        <translation>Angolszász</translation>
-    </message>
-    <message>
         <source>User Information</source>
         <translation>Felhasználói adatok</translation>
-    </message>
-    <message>
-        <source>Weight (%1)</source>
-        <translation>Testsúly (%1)</translation>
-    </message>
-    <message>
-        <source>lbs</source>
-        <translation>lbs</translation>
-    </message>
-    <message>
-        <source>kg</source>
-        <translation>kg</translation>
     </message>
     <message>
         <source>Age</source>
@@ -2836,14 +2858,6 @@ A következő kérdésekkel a QZ-t az edzőgépéhez és a céljaihoz szabhatja.
     <message>
         <source>Gender</source>
         <translation>Nem</translation>
-    </message>
-    <message>
-        <source>Male</source>
-        <translation>Férfi</translation>
-    </message>
-    <message>
-        <source>Female</source>
-        <translation>Nő</translation>
     </message>
     <message>
         <source>Select Your Heart Rate Device</source>
@@ -2874,16 +2888,76 @@ A következő kérdésekkel a QZ-t az edzőgépéhez és a céljaihoz szabhatja.
         <translation>Garmin óra</translation>
     </message>
     <message>
-        <source>Your equipment, units and profile, step by step</source>
-        <translation>Edzőgép, mértékegységek és profil lépésről lépésre</translation>
+        <source>Bike</source>
+        <translation>Kerékpár</translation>
     </message>
     <message>
-        <source>Pick a topic and go straight to its settings</source>
-        <translation>Válasszon témát, és lépjen közvetlenül a beállításaihoz</translation>
+        <source>Treadmill</source>
+        <translation>Futópad</translation>
     </message>
     <message>
-        <source>Close the wizard</source>
-        <translation>A varázsló bezárása</translation>
+        <source>Rower</source>
+        <translation>Evezőgép</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>Elliptikus tréner</translation>
+    </message>
+    <message>
+        <source>Other app</source>
+        <translation>Más alkalmazás</translation>
+    </message>
+    <message>
+        <source>QZ Standalone</source>
+        <translation>Önálló QZ</translation>
+    </message>
+    <message>
+        <source>lower</source>
+        <translation>alsó</translation>
+    </message>
+    <message>
+        <source>upper</source>
+        <translation>felső</translation>
+    </message>
+    <message>
+        <source>average</source>
+        <translation>átlagos</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Kikapcsolva</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Frissítés</translation>
+    </message>
+    <message>
+        <source>Metric</source>
+        <translation>Metrikus</translation>
+    </message>
+    <message>
+        <source>Imperial</source>
+        <translation>Angolszász</translation>
+    </message>
+    <message>
+        <source>Weight (%1)</source>
+        <translation>Testsúly (%1)</translation>
+    </message>
+    <message>
+        <source>Male</source>
+        <translation>Férfi</translation>
+    </message>
+    <message>
+        <source>Female</source>
+        <translation>Nő</translation>
+    </message>
+    <message>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <source>kg</source>
+        <translation>kg</translation>
     </message>
 </context>
 <context>
@@ -3021,16 +3095,24 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <translation>Nem sikerült betölteni az edzésprogramot. Ellenőrizze, hogy létezik-e a fájl.</translation>
     </message>
     <message>
-        <source>mi</source>
-        <translation>mi</translation>
+        <source>Import FIT File...</source>
+        <translation>FIT-fájl importálása...</translation>
     </message>
     <message>
-        <source>km</source>
-        <translation>km</translation>
+        <source>Import from QZ Folder...</source>
+        <translation>Importálás a QZ-mappából...</translation>
     </message>
     <message>
-        <source>kcal</source>
-        <translation>kcal</translation>
+        <source>Please choose a file</source>
+        <translation>Válasszon fájlt</translation>
+    </message>
+    <message>
+        <source>FIT files (*.fit *.FIT)</source>
+        <translation>FIT-fájlok (*.fit *.FIT)</translation>
+    </message>
+    <message>
+        <source>All files (*)</source>
+        <translation>Minden fájl (*)</translation>
     </message>
     <message>
         <source>Share FIT file</source>
@@ -3109,16 +3191,16 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <translation>Bezárás</translation>
     </message>
     <message>
+        <source>Filter by date</source>
+        <translation>Szűrés dátum szerint</translation>
+    </message>
+    <message>
         <source>Calendar</source>
         <translation>Naptár</translation>
     </message>
     <message>
-        <source>No workouts yet</source>
-        <translation>Még nincs edzés</translation>
-    </message>
-    <message>
-        <source>No workouts on this day</source>
-        <translation>Ezen a napon nincs edzés</translation>
+        <source>Import workouts</source>
+        <translation>Edzések importálása</translation>
     </message>
     <message>
         <source>Adding workouts to the history</source>
@@ -3137,12 +3219,36 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <translation>Edzésfájlok másolása: %1 / %2</translation>
     </message>
     <message>
-        <source>Open on Peloton</source>
-        <translation>Megnyitás a Pelotonban</translation>
+        <source>No workouts on this day</source>
+        <translation>Ezen a napon nincs edzés</translation>
+    </message>
+    <message>
+        <source>No workouts yet</source>
+        <translation>Még nincs edzés</translation>
     </message>
     <message>
         <source>Finished workouts appear here: open one to see its charts.</source>
         <translation>A befejezett edzések itt jelennek meg: nyisson meg egyet a diagramjai megtekintéséhez.</translation>
+    </message>
+    <message>
+        <source>Open on Peloton</source>
+        <translation>Megnyitás a Pelotonban</translation>
+    </message>
+    <message>
+        <source>Load training program</source>
+        <translation>Edzésprogram betöltése</translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>kcal</source>
+        <translation>kcal</translation>
     </message>
     <message>
         <source>Previous month</source>
@@ -3151,38 +3257,6 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
     <message>
         <source>Next month</source>
         <translation>Következő hónap</translation>
-    </message>
-    <message>
-        <source>Import FIT File...</source>
-        <translation>FIT-fájl importálása...</translation>
-    </message>
-    <message>
-        <source>Import from QZ Folder...</source>
-        <translation>Importálás a QZ-mappából...</translation>
-    </message>
-    <message>
-        <source>Please choose a file</source>
-        <translation>Válasszon fájlt</translation>
-    </message>
-    <message>
-        <source>FIT files (*.fit *.FIT)</source>
-        <translation>FIT-fájlok (*.fit *.FIT)</translation>
-    </message>
-    <message>
-        <source>All files (*)</source>
-        <translation>Minden fájl (*)</translation>
-    </message>
-    <message>
-        <source>Filter by date</source>
-        <translation>Szűrés dátum szerint</translation>
-    </message>
-    <message>
-        <source>Import workouts</source>
-        <translation>Edzések importálása</translation>
-    </message>
-    <message>
-        <source>Load training program</source>
-        <translation>Edzésprogram betöltése</translation>
     </message>
     <message>
         <source>has a workout</source>
@@ -3304,16 +3378,16 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
 <context>
     <name>gears</name>
     <message>
-        <source>Wahoo Options</source>
-        <translation>Wahoo beállításai</translation>
-    </message>
-    <message>
         <source>Without Wheel Diameter Protocol</source>
         <translation>Kerékátmérő-protokoll nélkül</translation>
     </message>
     <message>
         <source>Enable this for simplified Wahoo protocol that adds gears directly to grade instead of using wheel diameter changes. Default is false.</source>
         <translation>Kapcsolja be az egyszerűsített Wahoo-protokollhoz, amely a fokozatokat közvetlenül a meredekséghez adja hozzá a kerékátmérő módosítása helyett. Alapértelmezett: ki.</translation>
+    </message>
+    <message>
+        <source>Wahoo Options</source>
+        <translation>Wahoo beállításai</translation>
     </message>
     <message>
         <source>Chainring Size</source>
@@ -3378,30 +3452,6 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
 </context>
 <context>
     <name>homeform</name>
-    <message>
-        <source>Bluetooth is off</source>
-        <translation>A Bluetooth ki van kapcsolva</translation>
-    </message>
-    <message>
-        <source>Searching for the device...</source>
-        <translation>Eszköz keresése...</translation>
-    </message>
-    <message>
-        <source>Connecting to %1...</source>
-        <translation>Csatlakozás: %1...</translation>
-    </message>
-    <message>
-        <source>Search stopped, tap the Bluetooth icon</source>
-        <translation>A keresés leállt, koppintson a Bluetooth-ikonra.</translation>
-    </message>
-    <message>
-        <source>Next search in %1 s</source>
-        <translation>Következő keresés %1 s múlva</translation>
-    </message>
-    <message>
-        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
-        <translation>Az Android 30&#xa0;s alatt 5 Bluetooth-keresést engedélyez, a következő %1 s múlva indul.</translation>
-    </message>
     <message>
         <source>Speed (%1/h)</source>
         <translation>Sebesség(%1/h)</translation>
@@ -3592,58 +3642,8 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <translation>Mászás</translation>
     </message>
     <message>
-        <source>Watts</source>
-        <translation>Watt</translation>
-    </message>
-    <message>
-        <source>km</source>
-        <translation>km</translation>
-    </message>
-    <message>
-        <source>m</source>
-        <comment>unit: meters</comment>
-        <translation>m</translation>
-    </message>
-    <message>
-        <source>Kg</source>
-        <translation>kg</translation>
-    </message>
-    <message>
-        <source>cm</source>
-        <translation>cm</translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>ft</source>
-        <translation>ft</translation>
-    </message>
-    <message>
-        <source>in</source>
-        <comment>unit: inches</comment>
-        <translation>in</translation>
-    </message>
-    <message>
-        <source>Oz</source>
-        <translation>oz</translation>
-    </message>
-    <message>
-        <source>AVG Watts</source>
-        <translation>Átlagos watt</translation>
-    </message>
-    <message>
         <source>Power Avg</source>
         <translation>Átl. telj.</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation>Ki</translation>
-    </message>
-    <message>
-        <source>HRV (ms)</source>
-        <translation>HRV (ms)</translation>
     </message>
     <message>
         <source>PID Heart</source>
@@ -3670,26 +3670,6 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <translation>Lépésszám</translation>
     </message>
     <message>
-        <source>Odometer (m)</source>
-        <translation>Össztáv (m)</translation>
-    </message>
-    <message>
-        <source>Pace (m/500m)</source>
-        <translation>Tempó (m/500m)</translation>
-    </message>
-    <message>
-        <source>Avg Pace (m/500m)</source>
-        <translation>Átl. tempó(m/500m)</translation>
-    </message>
-    <message>
-        <source>T.Pace(m/500m)</source>
-        <translation>Céltempó(m/500m)</translation>
-    </message>
-    <message>
-        <source>%1 found</source>
-        <translation>Megtalálva: %1</translation>
-    </message>
-    <message>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
@@ -3707,26 +3687,6 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
             <lengthvariant>Folytatás</lengthvariant>
             <lengthvariant>Tovább</lengthvariant>
         </translation>
-    </message>
-    <message>
-        <source>offset </source>
-        <translation>eltolás: </translation>
-    </message>
-    <message>
-        <source> /min</source>
-        <translation> /perc</translation>
-    </message>
-    <message>
-        <source> sec.</source>
-        <translation> s</translation>
-    </message>
-    <message>
-        <source>Incl: </source>
-        <translation>Em.: </translation>
-    </message>
-    <message>
-        <source>%1%2W</source>
-        <translation>%1%2W</translation>
     </message>
     <message>
         <source>Rec.</source>
@@ -3773,26 +3733,6 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
     <message>
         <source>N/A</source>
         <translation>N/A</translation>
-    </message>
-    <message>
-        <source>3s avg</source>
-        <translation>3&#xa0;s átl.</translation>
-    </message>
-    <message>
-        <source>5s avg</source>
-        <translation>5&#xa0;s átl.</translation>
-    </message>
-    <message>
-        <source>Gain: </source>
-        <translation>Szorzó: </translation>
-    </message>
-    <message>
-        <source>MIN: </source>
-        <translation>MIN: </translation>
-    </message>
-    <message>
-        <source>W </source>
-        <translation>W </translation>
     </message>
     <message>
         <source>, speed </source>
@@ -4004,32 +3944,20 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <translation>Nem sikerült lekérni a hozzáférési tokent: %1 (%2)</translation>
     </message>
     <message>
-        <source>Share FIT file</source>
-        <translation>FIT-fájl megosztása</translation>
+        <source>Watts</source>
+        <translation>Watt</translation>
     </message>
     <message>
-        <source>The FIT file of this workout could not be shared</source>
-        <translation>Az edzés FIT-fájlját nem sikerült megosztani</translation>
+        <source>AVG Watts</source>
+        <translation>Átlagos watt</translation>
     </message>
     <message>
-        <source>License Approved!</source>
-        <translation>Licenc jóváhagyva!</translation>
+        <source>The workout history database could not be opened.</source>
+        <translation>Nem sikerült megnyitni az edzéselőzmények adatbázisát.</translation>
     </message>
     <message>
-        <source>License not found</source>
-        <translation>A licenc nem található.</translation>
-    </message>
-    <message>
-        <source>The workout file could not be opened.</source>
-        <translation>Nem sikerült megnyitni az edzésfájlt.</translation>
-    </message>
-    <message>
-        <source>The workout file could not be copied.</source>
-        <translation>Nem sikerült átmásolni az edzésfájlt.</translation>
-    </message>
-    <message>
-        <source>No workout files (.fit) found.</source>
-        <translation>Nem található edzésfájl (.fit).</translation>
+        <source>Wi-Fi connection (DirCon) restarted</source>
+        <translation>Wi-Fi kapcsolat (DirCon) újraindítva</translation>
     </message>
     <message>
         <source>Workouts imported: %1.</source>
@@ -4056,12 +3984,162 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <translation>Edzésadatok nélkül: %1.</translation>
     </message>
     <message>
-        <source>The workout history database could not be opened.</source>
-        <translation>Nem sikerült megnyitni az edzéselőzmények adatbázisát.</translation>
+        <source>The workout file could not be opened.</source>
+        <translation>Nem sikerült megnyitni az edzésfájlt.</translation>
     </message>
     <message>
-        <source>Wi-Fi connection (DirCon) restarted</source>
-        <translation>Wi-Fi kapcsolat (DirCon) újraindítva</translation>
+        <source>The workout file could not be copied.</source>
+        <translation>Nem sikerült átmásolni az edzésfájlt.</translation>
+    </message>
+    <message>
+        <source>No workout files (.fit) found.</source>
+        <translation>Nem található edzésfájl (.fit).</translation>
+    </message>
+    <message>
+        <source>License Approved!</source>
+        <translation>Licenc jóváhagyva!</translation>
+    </message>
+    <message>
+        <source>License not found</source>
+        <translation>A licenc nem található.</translation>
+    </message>
+    <message>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>m</source>
+        <comment>unit: meters</comment>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>Kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>ft</source>
+        <translation>ft</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <comment>unit: inches</comment>
+        <translation>in</translation>
+    </message>
+    <message>
+        <source>Oz</source>
+        <translation>oz</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Ki</translation>
+    </message>
+    <message>
+        <source>HRV (ms)</source>
+        <translation>HRV (ms)</translation>
+    </message>
+    <message>
+        <source>Searching for the device...</source>
+        <translation>Eszköz keresése...</translation>
+    </message>
+    <message>
+        <source>Connecting to %1...</source>
+        <translation>Csatlakozás: %1...</translation>
+    </message>
+    <message>
+        <source>%1 found</source>
+        <translation>Megtalálva: %1</translation>
+    </message>
+    <message>
+        <source>Search stopped, tap the Bluetooth icon</source>
+        <translation>A keresés leállt, koppintson a Bluetooth-ikonra.</translation>
+    </message>
+    <message>
+        <source>Next search in %1 s</source>
+        <translation>Következő keresés %1 s múlva</translation>
+    </message>
+    <message>
+        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
+        <translation>Az Android 30&#xa0;s alatt 5 Bluetooth-keresést engedélyez, a következő %1 s múlva indul.</translation>
+    </message>
+    <message>
+        <source>Odometer (m)</source>
+        <translation>Össztáv (m)</translation>
+    </message>
+    <message>
+        <source>Pace (m/500m)</source>
+        <translation>Tempó (m/500m)</translation>
+    </message>
+    <message>
+        <source>Avg Pace (m/500m)</source>
+        <translation>Átl. tempó(m/500m)</translation>
+    </message>
+    <message>
+        <source>T.Pace(m/500m)</source>
+        <translation>Céltempó(m/500m)</translation>
+    </message>
+    <message>
+        <source>offset </source>
+        <translation>eltolás: </translation>
+    </message>
+    <message>
+        <source> /min</source>
+        <translation> /perc</translation>
+    </message>
+    <message>
+        <source> sec.</source>
+        <translation> s</translation>
+    </message>
+    <message>
+        <source>Incl: </source>
+        <translation>Em.: </translation>
+    </message>
+    <message>
+        <source>%1%2W</source>
+        <translation>%1%2W</translation>
+    </message>
+    <message>
+        <source>3s avg</source>
+        <translation>3&#xa0;s átl.</translation>
+    </message>
+    <message>
+        <source>5s avg</source>
+        <translation>5&#xa0;s átl.</translation>
+    </message>
+    <message>
+        <source>Gain: </source>
+        <translation>Szorzó: </translation>
+    </message>
+    <message>
+        <source>MIN: </source>
+        <translation>MIN: </translation>
+    </message>
+    <message>
+        <source>W </source>
+        <translation>W </translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FIT-fájl megosztása</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>Az edzés FIT-fájlját nem sikerült megosztani</translation>
+    </message>
+    <message>
+        <source>meters</source>
+        <translation>méter</translation>
+    </message>
+    <message>
+        <source>feet</source>
+        <translation>láb</translation>
     </message>
     <message>
         <source>Great workout!</source>
@@ -4196,14 +4274,6 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <translation>Átlagos húzáshossz: %1</translation>
     </message>
     <message>
-        <source>meters</source>
-        <translation>méter</translation>
-    </message>
-    <message>
-        <source>feet</source>
-        <translation>láb</translation>
-    </message>
-    <message>
         <source>QZ target power is overriding the app&apos;s commands. Pause QZ and resume it to give control back to the app.</source>
         <translation>A QZ célteljesítménye felülbírálja az alkalmazás parancsait. Ha vissza szeretné adni a vezérlést az alkalmazásnak, szüneteltesse, majd folytassa a QZ-t.</translation>
     </message>
@@ -4336,20 +4406,16 @@ Az első indításkor ez eltarthat néhány pillanatig.</translation>
         <extracomment>Android notification: title shown while QZ works in the background.</extracomment>
         <translation>A QZ fut</translation>
     </message>
+    <message>
+        <source>Bluetooth is off</source>
+        <translation>A Bluetooth ki van kapcsolva</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
     <message>
-        <source>QZ is closing...</source>
-        <translation>A QZ bezárul...</translation>
-    </message>
-    <message>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>
-    </message>
-    <message>
-        <source>Press back again to exit</source>
-        <translation>A kilépéshez nyomja meg még egyszer a Vissza gombot.</translation>
     </message>
     <message>
         <source>Program has been loaded correctly. Press start to begin!</source>
@@ -4390,10 +4456,6 @@ majd indítsa újra az alkalmazást.</translation>
         <translation>A QZ megtalálta a közeli Bluetooth-edzőgépeket. Válassza ki, melyiket szeretné használni ezen az edzésen.</translation>
     </message>
     <message>
-        <source>Disabled</source>
-        <translation type="vanished">Kikapcsolva</translation>
-    </message>
-    <message>
         <source>Select a device</source>
         <translation>Válasszon eszközt</translation>
     </message>
@@ -4412,28 +4474,6 @@ majd indítsa újra az alkalmazást.</translation>
     <message>
         <source>Settings has been loaded correctly. Restart the app!</source>
         <translation>A beállítások betöltése sikerült. Indítsa újra az alkalmazást.</translation>
-    </message>
-    <message>
-        <source>Saved! Look in the Files app.</source>
-        <translation>Mentve. A Fájlok alkalmazásban találja.</translation>
-    </message>
-    <message>
-        <source>Saved! Look in the app&apos;s private folder.</source>
-        <translation>Mentve. Az alkalmazás saját mappájában találja.</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Fájlok visszaállítása</translation>
-    </message>
-    <message>
-        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
-Do you want to look for them?
-
-In the next window, allow access to the QZ folder.</source>
-        <translation>Előfordulhat, hogy egy korábbi telepítés edzésprogramjai, GPX-útvonalai, beállításfájljai és profiljai még a QZ-mappában vannak.
-Megkeresi őket?
-
-A következő ablakban engedélyezze a hozzáférést a QZ-mappához.</translation>
     </message>
     <message>
         <source>Saved! Check your private folder (Android)&lt;br&gt;or Files App (iOS)</source>
@@ -4470,14 +4510,6 @@ Szeretné most újraindítani?</translation>
         <translation>Enélkül a QZ az alapértelmezett beállításokat használja, így az adatok vagy az ellenállás pontatlan lehet.</translation>
     </message>
     <message>
-        <source>Restart now?</source>
-        <translation>Szeretné most újraindítani?</translation>
-    </message>
-    <message>
-        <source>This FitShow device also reports bike data. Is it a bike?</source>
-        <translation>Ez a FitShow-eszköz kerékpáradatokat is küld. Kerékpárról van szó?</translation>
-    </message>
-    <message>
         <source>Strava</source>
         <translation>Strava</translation>
     </message>
@@ -4510,90 +4542,34 @@ Do you want to start it now?</source>
 Szeretné most elindítani?</translation>
     </message>
     <message>
-        <source>Garmin FTP Update</source>
-        <translation>FTP frissítése a Garminból</translation>
-    </message>
-    <message>
-        <source>Clipboard Workout</source>
-        <translation>Edzés a vágólapról</translation>
-    </message>
-    <message>
-        <source>Workout found in clipboard:
-%1
-
-Do you want to open the workout preview?</source>
-        <translation>Edzés található a vágólapon:
-%1
-
-Szeretné megnyitni az edzés előnézetét?</translation>
-    </message>
-    <message>
-        <source>The clipboard workout has ended.
-
-Do you want to delete the file?</source>
-        <translation>A vágólapról indított edzés véget ért.
-
-Szeretné törölni a fájlt?</translation>
-    </message>
-    <message>
-        <source>Echelon Unlock</source>
-        <translation>Echelon feloldása</translation>
-    </message>
-    <message>
-        <source>The bike has been unlocked and cadence is flowing.
-
-Do you want to switch to the classic Bluetooth bridge for this session?</source>
-        <translation>A kerékpár zárolása feloldódott, és érkeznek a kadenciaadatok.
-
-Szeretne ebben a munkamenetben átváltani a klasszikus virtuális Bluetooth-eszközre?</translation>
-    </message>
-    <message>
-        <source>Echelon Locked Bike</source>
-        <translation>Zárolt Echelon-kerékpár</translation>
-    </message>
-    <message>
-        <source>Your bike is locked by Echelon, but QZ can unlock it.
-
-</source>
-        <translation>Az Echelon zárolta a kerékpárját, de a QZ fel tudja oldani.
-
-</translation>
-    </message>
-    <message>
-        <source>Enable Virtual Echelon in the experimental settings and restart qz, then open the official Echelon app on a separate device and connect to the bike once.
-
-</source>
-        <translation>Kapcsolja be a Virtuális Echelon beállítást a kísérleti beállítások között, és indítsa újra a QZ-t, majd nyissa meg a hivatalos Echelon alkalmazást egy másik eszközön, és csatlakozzon egyszer a kerékpárhoz.
-
-</translation>
-    </message>
-    <message>
-        <source>After initialization, return to QZ and everything will work normally.
-
-</source>
-        <translation>Az inicializálás után térjen vissza a QZ-hez, és minden a szokásos módon fog működni.
-
-</translation>
-    </message>
-    <message>
-        <source>You have to repeat this for each session, would you like to enable the Virtual Echelon setting now for this?</source>
-        <translation>Ezt minden munkamenetben meg kell ismételnie. Szeretné most bekapcsolni ehhez a Virtuális Echelon beállítást?</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation>Igen</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation>Nem</translation>
-    </message>
-    <message>
         <source>You are already connected to Strava. Do you want to log out?</source>
         <translation>Már csatlakozott a Stravához. Szeretne kijelentkezni?</translation>
     </message>
     <message>
         <source>Peloton</source>
         <translation>Peloton</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the Files app.</source>
+        <translation>Mentve. A Fájlok alkalmazásban találja.</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the app&apos;s private folder.</source>
+        <translation>Mentve. Az alkalmazás saját mappájában találja.</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Fájlok visszaállítása</translation>
+    </message>
+    <message>
+        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Előfordulhat, hogy egy korábbi telepítés edzésprogramjai, GPX-útvonalai, beállításfájljai és profiljai még a QZ-mappában vannak.
+Megkeresi őket?
+
+A következő ablakban engedélyezze a hozzáférést a QZ-mappához.</translation>
     </message>
     <message>
         <source>You are already connected to Peloton. Do you want to log out?</source>
@@ -4608,20 +4584,6 @@ Szeretne ebben a munkamenetben átváltani a klasszikus virtuális Bluetooth-esz
         <translation>Már csatlakozott az Intervals.icu szolgáltatáshoz. Szeretne kijelentkezni?</translation>
     </message>
     <message>
-        <source>Please choose a file</source>
-        <translation>Válasszon fájlt</translation>
-    </message>
-    <message>
-        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
-        <translation>Ha a profilban meg szeretné tartani ezeket a módosításokat, ne felejtse el menteni: „%1”.</translation>
-    </message>
-    <message>
-        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
-No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
-        <translation>Igen: a QZ bekapcsolja ezt: „Fit Plus kerékpár”, majd bezárul. Nyissa meg újra, és kerékpárként csatlakozik az eszközhöz.
-Nem: a QZ futópadként kezeli tovább, és többé nem kérdez rá (a kerékpár kézzel továbbra is beállítható: „Fit Plus kerékpár” a Fitplus-kerékpár beállításai között).</translation>
-    </message>
-    <message>
         <source>Back</source>
         <translation>Vissza</translation>
     </message>
@@ -4632,14 +4594,6 @@ Nem: a QZ futópadként kezeli tovább, és többé nem kérdez rá (a kerékpá
     <message>
         <source>Floating window</source>
         <translation>Lebegő ablak</translation>
-    </message>
-    <message>
-        <source>Auto Resistance enabled</source>
-        <translation>Automatikus ellenállás bekapcsolva</translation>
-    </message>
-    <message>
-        <source>Auto Resistance disabled</source>
-        <translation>Automatikus ellenállás kikapcsolva</translation>
     </message>
     <message>
         <source>You can move the tiles!</source>
@@ -4678,12 +4632,12 @@ Nem: a QZ futópadként kezeli tovább, és többé nem kérdez rá (a kerékpá
         <translation>FIT-fájl megosztása</translation>
     </message>
     <message>
-        <source>Lock tiles</source>
-        <translation>Csempék rögzítése</translation>
-    </message>
-    <message>
         <source>Unlock tiles</source>
         <translation>Csempék feloldása</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Csempék rögzítése</translation>
     </message>
     <message>
         <source>Disable auto resistance</source>
@@ -4782,10 +4736,6 @@ Nem: a QZ futópadként kezeli tovább, és többé nem kérdez rá (a kerékpá
         <translation>Csatlakozás az Intervals.icu szolgáltatáshoz</translation>
     </message>
     <message>
-        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
-        <translation>QDomyos-Zwift – híd az edzőgépek és az alkalmazások között</translation>
-    </message>
-    <message>
         <source>Workout</source>
         <translation>Edzés</translation>
     </message>
@@ -4796,6 +4746,28 @@ Nem: a QZ futópadként kezeli tovább, és többé nem kérdez rá (a kerékpá
     <message>
         <source>Services</source>
         <translation>Szolgáltatások</translation>
+    </message>
+    <message>
+        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
+        <translation>QDomyos-Zwift – híd az edzőgépek és az alkalmazások között</translation>
+    </message>
+    <message>
+        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
+        <translation>Ha a profilban meg szeretné tartani ezeket a módosításokat, ne felejtse el menteni: „%1”.</translation>
+    </message>
+    <message>
+        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
+No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
+        <translation>Igen: a QZ bekapcsolja ezt: „Fit Plus kerékpár”, majd bezárul. Nyissa meg újra, és kerékpárként csatlakozik az eszközhöz.
+Nem: a QZ futópadként kezeli tovább, és többé nem kérdez rá (a kerékpár kézzel továbbra is beállítható: „Fit Plus kerékpár” a Fitplus-kerékpár beállításai között).</translation>
+    </message>
+    <message>
+        <source>Press back again to exit</source>
+        <translation>A kilépéshez nyomja meg még egyszer a Vissza gombot.</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation type="vanished">Kikapcsolva</translation>
     </message>
     <message>
         <source>Camera Cutout</source>
@@ -4840,6 +4812,92 @@ Megkeresi őket?
 A következő ablakban engedélyezze a hozzáférést a QZ-mappához.</translation>
     </message>
     <message>
+        <source>Restart now?</source>
+        <translation>Szeretné most újraindítani?</translation>
+    </message>
+    <message>
+        <source>This FitShow device also reports bike data. Is it a bike?</source>
+        <translation>Ez a FitShow-eszköz kerékpáradatokat is küld. Kerékpárról van szó?</translation>
+    </message>
+    <message>
+        <source>Garmin FTP Update</source>
+        <translation>FTP frissítése a Garminból</translation>
+    </message>
+    <message>
+        <source>Clipboard Workout</source>
+        <translation>Edzés a vágólapról</translation>
+    </message>
+    <message>
+        <source>Workout found in clipboard:
+%1
+
+Do you want to open the workout preview?</source>
+        <translation>Edzés található a vágólapon:
+%1
+
+Szeretné megnyitni az edzés előnézetét?</translation>
+    </message>
+    <message>
+        <source>The clipboard workout has ended.
+
+Do you want to delete the file?</source>
+        <translation>A vágólapról indított edzés véget ért.
+
+Szeretné törölni a fájlt?</translation>
+    </message>
+    <message>
+        <source>Echelon Unlock</source>
+        <translation>Echelon feloldása</translation>
+    </message>
+    <message>
+        <source>The bike has been unlocked and cadence is flowing.
+
+Do you want to switch to the classic Bluetooth bridge for this session?</source>
+        <translation>A kerékpár zárolása feloldódott, és érkeznek a kadenciaadatok.
+
+Szeretne ebben a munkamenetben átváltani a klasszikus virtuális Bluetooth-eszközre?</translation>
+    </message>
+    <message>
+        <source>Echelon Locked Bike</source>
+        <translation>Zárolt Echelon-kerékpár</translation>
+    </message>
+    <message>
+        <source>Your bike is locked by Echelon, but QZ can unlock it.
+
+</source>
+        <translation>Az Echelon zárolta a kerékpárját, de a QZ fel tudja oldani.
+
+</translation>
+    </message>
+    <message>
+        <source>Enable Virtual Echelon in the experimental settings and restart qz, then open the official Echelon app on a separate device and connect to the bike once.
+
+</source>
+        <translation>Kapcsolja be a Virtuális Echelon beállítást a kísérleti beállítások között, és indítsa újra a QZ-t, majd nyissa meg a hivatalos Echelon alkalmazást egy másik eszközön, és csatlakozzon egyszer a kerékpárhoz.
+
+</translation>
+    </message>
+    <message>
+        <source>After initialization, return to QZ and everything will work normally.
+
+</source>
+        <translation>Az inicializálás után térjen vissza a QZ-hez, és minden a szokásos módon fog működni.
+
+</translation>
+    </message>
+    <message>
+        <source>You have to repeat this for each session, would you like to enable the Virtual Echelon setting now for this?</source>
+        <translation>Ezt minden munkamenetben meg kell ismételnie. Szeretné most bekapcsolni ehhez a Virtuális Echelon beállítást?</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>Igen</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>Nem</translation>
+    </message>
+    <message>
         <source>Connection lost in the background</source>
         <translation>A kapcsolat megszakadt a háttérben</translation>
     </message>
@@ -4868,6 +4926,18 @@ A következő ablakban engedélyezze a hozzáférést a QZ-mappához.</translati
         <translation>Ne kérdezze újra</translation>
     </message>
     <message>
+        <source>Auto Resistance enabled</source>
+        <translation>Automatikus ellenállás bekapcsolva</translation>
+    </message>
+    <message>
+        <source>Auto Resistance disabled</source>
+        <translation>Automatikus ellenállás kikapcsolva</translation>
+    </message>
+    <message>
+        <source>Please choose a file</source>
+        <translation>Válasszon fájlt</translation>
+    </message>
+    <message>
         <source>Wahoo Virtual Gears</source>
         <translation>Wahoo virtuális fokozatok</translation>
     </message>
@@ -4882,6 +4952,10 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
 Engedélyezi, hogy a QZ módosítsa ezt az értéket?
 
 „Nem”: a QZ bekapcsolja a „Kerékátmérő-protokoll nélkül” lehetőséget (Beállítások &gt; Kerékpár beállításai &gt; Wahoo beállításai), és a virtuális fokozatok a meredekségen keresztül működnek. „Igen” esetén ezt később ugyanott visszavonhatja: kapcsolja be ezt a lehetőséget, majd csatlakoztatott edzőgép mellett koppintson az „Alapértelmezett beállítás visszaállítása az edzőgépen” gombra.</translation>
+    </message>
+    <message>
+        <source>QZ is closing...</source>
+        <translation>A QZ bezárul...</translation>
     </message>
 </context>
 <context>
@@ -4922,6 +4996,10 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
         <translation>Szeretné törölni ezt a profilt?</translation>
     </message>
     <message>
+        <source>Delete</source>
+        <translation>Törlés</translation>
+    </message>
+    <message>
         <source>Profile Saved</source>
         <translation>Profil mentve</translation>
     </message>
@@ -4954,22 +5032,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
         <translation>Profilnév</translation>
     </message>
     <message>
-        <source>Save</source>
-        <translation>Mentés</translation>
-    </message>
-    <message>
-        <source>Profiles</source>
-        <translation>Profilok</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Fájlok visszaállítása</translation>
-    </message>
-    <message>
-        <source>Other folders</source>
-        <translation>Egyéb mappák</translation>
-    </message>
-    <message>
         <source>New profile</source>
         <translation>Új profil</translation>
     </message>
@@ -4982,36 +5044,32 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
         <translation>Koppintson egy profilra a kiválasztásához, majd a Betöltés gombra. A törléshez tartsa lenyomva.</translation>
     </message>
     <message>
-        <source>Load</source>
-        <translation>Betöltés</translation>
-    </message>
-    <message>
         <source>Active</source>
         <translation>Aktív</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation>Törlés</translation>
+        <source>Load</source>
+        <translation>Betöltés</translation>
+    </message>
+    <message>
+        <source>Profiles</source>
+        <translation>Profilok</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Fájlok visszaállítása</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Mentés</translation>
+    </message>
+    <message>
+        <source>Other folders</source>
+        <translation>Egyéb mappák</translation>
     </message>
 </context>
 <context>
     <name>settings</name>
-    <message>
-        <source>Hidden on its page right now: change it here</source>
-        <translation type="vanished">Jelenleg rejtve van a saját oldalán: itt módosítható.</translation>
-    </message>
-    <message>
-        <source>On</source>
-        <translation>Be</translation>
-    </message>
-    <message>
-        <source>Hidden on its page with the current settings</source>
-        <translation>A saját oldalán rejtve a jelenlegi beállításokkal</translation>
-    </message>
-    <message>
-        <source>Turn on “%1” to change this setting</source>
-        <translation>A beállítás módosításához kapcsolja be ezt: „%1”.</translation>
-    </message>
     <message>
         <source>General</source>
         <translation>Általános</translation>
@@ -5281,28 +5339,12 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
         <translation>Testsúly</translation>
     </message>
     <message>
-        <source>lbs</source>
-        <translation>lbs</translation>
-    </message>
-    <message>
-        <source>kg</source>
-        <translation>kg</translation>
-    </message>
-    <message>
         <source>Enter your weight in kilograms so QZ can more accurately calculate calories burned. NOTE: If you choose to use miles as the unit for distance traveled, you will be asked to enter your weight in pounds (lbs) unless you enable &apos;Use kg for weight&apos;.</source>
         <translation>Adja meg a testsúlyát kilogrammban, hogy a QZ pontosabban számolhassa az elégetett kalóriát. MEGJEGYZÉS: Ha a megtett távolság mértékegységeként a mérföldet választja, a testsúlyát fontban (lbs) kell megadnia, hacsak nem kapcsolja be a „Testsúly kilogrammban” beállítást.</translation>
     </message>
     <message>
         <source>Player Height</source>
         <translation>Testmagasság</translation>
-    </message>
-    <message>
-        <source>ft/in</source>
-        <translation>ft/in</translation>
-    </message>
-    <message>
-        <source>cm</source>
-        <translation>cm</translation>
     </message>
     <message>
         <source>Invalid format! Use feet&apos;inches (e.g., 6&apos;2&quot;)</source>
@@ -5323,14 +5365,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
     <message>
         <source>Gender:</source>
         <translation>Nem:</translation>
-    </message>
-    <message>
-        <source>Male</source>
-        <translation>Férfi</translation>
-    </message>
-    <message>
-        <source>Female</source>
-        <translation>Nő</translation>
     </message>
     <message>
         <source>Select your gender so that calories burned can be more accurately calculated.</source>
@@ -5447,10 +5481,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
     <message>
         <source>Heart Belt Name:</source>
         <translation>Pulzusmérő neve:</translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translation>Kikapcsolva</translation>
     </message>
     <message>
         <source>Apple Watch users: leave it disabled! Just open the app on your watch</source>
@@ -5589,10 +5619,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
 0.012 = MTB</translation>
     </message>
     <message>
-        <source>Bike Weight (%1)</source>
-        <translation>Kerékpár súlya (%1)</translation>
-    </message>
-    <message>
         <source>Enables QZ to include the weight of your bike when calculating speed. For example, if you are competing against yourself on VZfit, adding bike weight will &apos;level the playing field&apos; against your virtual self. If you have set QZ to calculate distance in miles, enter the bike weight in pounds (lbs) unless you enable &apos;Use kg for weight&apos;. Default unit is kilograms (kgs).</source>
         <translation>A QZ a sebesség számításakor figyelembe veszi a kerékpár súlyát. Ha például a VZfit alkalmazásban saját maga ellen versenyez, a kerékpár súlyának megadásával „kiegyenlítheti az esélyeket” a virtuális önmagával szemben. Ha a QZ-ben a távolság mérföldben van beállítva, a kerékpár súlyát fontban (lbs) adja meg, hacsak nem kapcsolja be a „Testsúly kilogrammban” beállítást. Alapértelmezett mértékegység: kilogramm (kg).</translation>
     </message>
@@ -5611,154 +5637,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
     <message>
         <source>Enable this setting ONLY when using Zwift in ERG (workout) Mode. QZ will communicate the target resistance (or automatically adjust your resistance if your bike has this capability) to match the target watts based on your cadence (RPM). In ERG Mode, the changes in road slope will not affect target resistance, as is the case in Simulation Mode. Default is off.</source>
         <translation>Ezt a beállítást CSAK akkor kapcsolja be, ha a Zwiftet ERG-módban (edzésmódban) használja. A QZ továbbítja a célellenállást (vagy automatikusan módosítja az ellenállást, ha a kerékpár képes erre), hogy a kadenciája (RPM) mellett elérje a célteljesítményt. ERG-módban az út emelkedésének változásai nem befolyásolják a célellenállást, szemben a szimulációs móddal. Alapértelmezett: ki.</translation>
-    </message>
-    <message>
-        <source>OpenBikeControl</source>
-        <translation>OpenBikeControl</translation>
-    </message>
-    <message>
-        <source>Enable OpenBikeControl</source>
-        <translation>OpenBikeControl bekapcsolása</translation>
-    </message>
-    <message>
-        <source>OpenBikeControl enabled: Wahoo direct connect disabled.</source>
-        <translation>OpenBikeControl bekapcsolva: Wahoo közvetlen csatlakozás kikapcsolva</translation>
-    </message>
-    <message>
-        <source>Enable TCP server on port 21587 to send control commands using the OpenBikeControl link protocol</source>
-        <translation>Elindít egy TCP-kiszolgálót a 21587-es porton, hogy vezérlőparancsokat küldjön az OpenBikeControl Link protokollon.</translation>
-    </message>
-    <message>
-        <source>Override Local Gear Changes</source>
-        <translation>Helyi fokozatváltás felülbírálása</translation>
-    </message>
-    <message>
-        <source>When enabled, gear shift commands go only to OpenBikeControl clients. When disabled, they go to both OpenBikeControl clients and the local gear system</source>
-        <translation>Ha be van kapcsolva, a fokozatváltási parancsok csak az OpenBikeControl-ügyfelekhez jutnak el. Ha ki van kapcsolva, az OpenBikeControl-ügyfelekhez és a helyi fokozatrendszerhez is eljutnak.</translation>
-    </message>
-    <message>
-        <source>Left Controller Buttons</source>
-        <translation>Bal vezérlő gombjai</translation>
-    </message>
-    <message>
-        <source>Left Up:</source>
-        <translation>Bal fel:</translation>
-    </message>
-    <message>
-        <source>Gear Up</source>
-        <translation>Fokozat fel</translation>
-    </message>
-    <message>
-        <source>Gear Down</source>
-        <translation>Fokozat le</translation>
-    </message>
-    <message>
-        <source>Steer Left</source>
-        <translation>Kormányzás balra</translation>
-    </message>
-    <message>
-        <source>Steer Right</source>
-        <translation>Kormányzás jobbra</translation>
-    </message>
-    <message>
-        <source>U-Turn</source>
-        <translation>Megfordulás</translation>
-    </message>
-    <message>
-        <source>Camera Angle</source>
-        <translation>Kameraszög</translation>
-    </message>
-    <message>
-        <source>Emote</source>
-        <translation>Emote</translation>
-    </message>
-    <message>
-        <source>Tuck</source>
-        <translation>Aeropozíció</translation>
-    </message>
-    <message>
-        <source>Nav Up</source>
-        <translation>Navigáció fel</translation>
-    </message>
-    <message>
-        <source>Nav Down</source>
-        <translation>Navigáció le</translation>
-    </message>
-    <message>
-        <source>Nav Left</source>
-        <translation>Navigáció balra</translation>
-    </message>
-    <message>
-        <source>Nav Right</source>
-        <translation>Navigáció jobbra</translation>
-    </message>
-    <message>
-        <source>Select/Confirm</source>
-        <translation>Kiválasztás/megerősítés</translation>
-    </message>
-    <message>
-        <source>Back/Cancel</source>
-        <translation>Vissza/mégse</translation>
-    </message>
-    <message>
-        <source>Menu</source>
-        <translation>Menü</translation>
-    </message>
-    <message>
-        <source>Home</source>
-        <translation>Kezdőképernyő</translation>
-    </message>
-    <message>
-        <source>Left Down:</source>
-        <translation>Bal le:</translation>
-    </message>
-    <message>
-        <source>Left Left:</source>
-        <translation>Bal balra:</translation>
-    </message>
-    <message>
-        <source>Left Right:</source>
-        <translation>Bal jobbra:</translation>
-    </message>
-    <message>
-        <source>Left Shoulder:</source>
-        <translation>Bal vállgomb:</translation>
-    </message>
-    <message>
-        <source>Left Power:</source>
-        <translation>Bal Power gomb:</translation>
-    </message>
-    <message>
-        <source>Right Controller Buttons</source>
-        <translation>Jobb vezérlő gombjai</translation>
-    </message>
-    <message>
-        <source>Right Y:</source>
-        <translation>Jobb Y:</translation>
-    </message>
-    <message>
-        <source>Right A:</source>
-        <translation>Jobb A:</translation>
-    </message>
-    <message>
-        <source>Right B:</source>
-        <translation>Jobb B:</translation>
-    </message>
-    <message>
-        <source>Right Z:</source>
-        <translation>Jobb Z:</translation>
-    </message>
-    <message>
-        <source>Right Shoulder:</source>
-        <translation>Jobb vállgomb:</translation>
-    </message>
-    <message>
-        <source>Right Power:</source>
-        <translation>Jobb Power gomb:</translation>
-    </message>
-    <message>
-        <source>Note: Left and Right paddles are fixed to Steer Left/Right and cannot be configured</source>
-        <translation>Megjegyzés: A bal és a jobb váltófül fixen a Kormányzás balra és a Kormányzás jobbra művelethez tartozik, és nem állítható át.</translation>
     </message>
     <message>
         <source>Zwift Resistance Offset:</source>
@@ -5837,10 +5715,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
         <translation>Egyéni fokozattáblázat</translation>
     </message>
     <message>
-        <source>Custom Inclination to Resistance Table</source>
-        <translation>Egyéni emelkedés–ellenállás táblázat</translation>
-    </message>
-    <message>
         <source>Gears Offset:</source>
         <translation>Fokozatok eltolása:</translation>
     </message>
@@ -5863,18 +5737,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
     <message>
         <source>Profile:</source>
         <translation>Profil:</translation>
-    </message>
-    <message>
-        <source>Cruise</source>
-        <translation>Túra</translation>
-    </message>
-    <message>
-        <source>Climb</source>
-        <translation>Mászás</translation>
-    </message>
-    <message>
-        <source>Sprint</source>
-        <translation>Sprint</translation>
     </message>
     <message>
         <source>Cruise Profile Settings</source>
@@ -6027,10 +5889,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
     <message>
         <source>Use 0.5 resistance lvls</source>
         <translation>Ellenállási szint 0.5 lépésközzel</translation>
-    </message>
-    <message>
-        <source>Physical resistance knob controls QZ gears</source>
-        <translation>A fizikai ellenállásgomb a QZ fokozatait váltja</translation>
     </message>
     <message>
         <source>Hammer Racer Bike Options</source>
@@ -6194,30 +6052,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
         <translation>Kettler USB-kerékpár beállításai</translation>
     </message>
     <message>
-        <source>Baudrate:</source>
-        <translation>Adatátviteli sebesség (baud):</translation>
-    </message>
-    <message>
-        <source>Daum Bike Options</source>
-        <translation>Daum kerékpár beállításai</translation>
-    </message>
-    <message>
-        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
-        <translation>A klasszikus Daum ergométerekhez (pl. 8008 TRS 3) használt soros port. Androidon USB–soros adapterrel az &apos;usb&apos; értéket használja. A COM1, COM2 stb. Androidon az USB-adapter keresésének álnevei, nem valódi Android-portnevek. Windowson COM1 vagy COM3; Linux/macOS rendszeren a soros eszköz útvonala használható, pl. /dev/ttyUSB0.</translation>
-    </message>
-    <message>
-        <source>Resistance Polling Delay:</source>
-        <translation>Ellenállás-lekérdezés késleltetése:</translation>
-    </message>
-    <message>
-        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
-        <translation>A Dőlésszög késleltetése beállítással korlátozza, milyen gyakran küld a QZ ellenállás- és teljesítményfrissítéseket a Daum eszköznek. Alapértelmezés: 0 másodperc.</translation>
-    </message>
-    <message>
-        <source>Freebeat Bike Options</source>
-        <translation>Freebeat-kerékpár beállításai</translation>
-    </message>
-    <message>
         <source>M3i Bike Options</source>
         <translation>M3i-kerékpár beállításai</translation>
     </message>
@@ -6334,24 +6168,8 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
         <translation>Felső sáv bekapcsolva</translation>
     </message>
     <message>
-        <source>Keep Content Clear of the Camera Cutout</source>
-        <translation>Tartalom távol tartása a kamerakivágástól</translation>
-    </message>
-    <message>
-        <source>In landscape, keeps a margin on the camera side so the camera hole does not cover the content. Turn off to let the content extend under the camera cutout. Default is on.</source>
-        <translation>Fekvő tájolásban margót hagy a kamera oldalán, hogy a kamerakivágás ne takarja a tartalmat. Kapcsolja ki, ha azt szeretné, hogy a tartalom a kamerakivágás alá nyúljon. Alapértelmezett: be.</translation>
-    </message>
-    <message>
         <source>Floating Window Type:</source>
         <translation>Lebegő ablak típusa:</translation>
-    </message>
-    <message>
-        <source>Classic</source>
-        <translation>Klasszikus</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation>Vízszintes</translation>
     </message>
     <message>
         <source>Choose the floating window layout type. Classic uses the standard floating.htm file, while Horizontal uses the hfloating.htm file for horizontal layout.</source>
@@ -6400,18 +6218,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
     <message>
         <source>Chart Display Mode:</source>
         <translation>Diagram megjelenítési módja:</translation>
-    </message>
-    <message>
-        <source>Both Charts</source>
-        <translation>Mindkét diagram</translation>
-    </message>
-    <message>
-        <source>Heart Rate Only</source>
-        <translation>Csak pulzus</translation>
-    </message>
-    <message>
-        <source>Power Only</source>
-        <translation>Csak teljesítmény</translation>
     </message>
     <message>
         <source>Choose which charts to display in the footer: both heart rate and power charts, only heart rate chart, or only power chart.</source>
@@ -6482,18 +6288,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
         <translation>Nehézség:</translation>
     </message>
     <message>
-        <source>lower</source>
-        <translation>alsó</translation>
-    </message>
-    <message>
-        <source>upper</source>
-        <translation>felső</translation>
-    </message>
-    <message>
-        <source>average</source>
-        <translation>átlagos</translation>
-    </message>
-    <message>
         <source>Typically, Peloton coaches call out a range for target incline, resistance and/or speed. Use this setting to choose the difficulty of the target QZ communicates. Difficulty level can be set to lower, upper or average. Click OK.</source>
         <translation>A Peloton-oktatók általában tartományt adnak meg a célemelkedésre, az ellenállásra és/vagy a sebességre. Ezzel a beállítással választhatja ki a QZ által közölt cél nehézségét. A nehézségi szint lehet alsó, felső vagy átlagos. Koppintson az OK gombra.</translation>
     </message>
@@ -6516,14 +6310,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
     <message>
         <source>Walking Min Speed:</source>
         <translation>Min. sebesség gyalogláshoz:</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
     </message>
     <message>
         <source>Minimum speed for Peloton walking sessions. Set to 0 to disable. Applied to all speed targets in walking workouts.</source>
@@ -6612,14 +6398,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
     <message>
         <source>Date on Strava:</source>
         <translation>Dátum a Stravában:</translation>
-    </message>
-    <message>
-        <source>Before Title</source>
-        <translation>Cím előtt</translation>
-    </message>
-    <message>
-        <source>After Title</source>
-        <translation>Cím után</translation>
     </message>
     <message>
         <source>Allows you to choose whether you would like the Peloton class air date to display before or after the class title on Strava.</source>
@@ -6790,14 +6568,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
         <translation>Bekapcsolja a FIT-fájlok automatikus feltöltését a Garmin Connectbe az edzések után.</translation>
     </message>
     <message>
-        <source>Ask RPE / Feeling after workout</source>
-        <translation>RPE és közérzet kérése edzés után</translation>
-    </message>
-    <message>
-        <source>Show a popup after Stop to rate perceived exertion (RPE) and how you felt; the values are saved into the FIT file and shown in Garmin Connect.</source>
-        <translation>A Stop után felugró ablakban értékelheti az érzékelt megterhelést (RPE) és a közérzetét; az értékek a FIT-fájlba kerülnek, és megjelennek a Garmin Connectben.</translation>
-    </message>
-    <message>
         <source>Fetch Garmin Workouts on Startup</source>
         <translation>Garmin-edzések letöltése indításkor</translation>
     </message>
@@ -6808,22 +6578,6 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
     <message>
         <source>Garmin Email:</source>
         <translation>Garmin e-mail-cím:</translation>
-    </message>
-    <message>
-        <source>Garmin Password:</source>
-        <translation>Garmin-jelszó:</translation>
-    </message>
-    <message>
-        <source>Garmin Server:</source>
-        <translation>Garmin-kiszolgáló:</translation>
-    </message>
-    <message>
-        <source>Global (garmin.com)</source>
-        <translation>Globális (garmin.com)</translation>
-    </message>
-    <message>
-        <source>China (garmin.cn)</source>
-        <translation>Kína (garmin.cn)</translation>
     </message>
     <message>
         <source>Test Garmin Login</source>
@@ -6900,14 +6654,6 @@ Please enter it below:</source>
         <translation>Bekapcsolja a vágólapra másolt ZWO/XML-edzések felismerését. Alapértelmezett: ki.</translation>
     </message>
     <message>
-        <source>Sound on Segment Change</source>
-        <translation>Hang szakaszváltáskor</translation>
-    </message>
-    <message>
-        <source>Play a short sound when a training program starts a new row. Default: disabled.</source>
-        <translation>Rövid hangjelzést ad, amikor az edzésprogram új sorra lép. Alapértelmezett: ki.</translation>
-    </message>
-    <message>
         <source>Auto Lap on Segment</source>
         <translation>Automatikus kör szakaszonként</translation>
     </message>
@@ -6950,22 +6696,6 @@ Please enter it below:</source>
     <message>
         <source>Enabling this the PID is trying to motivate yourself to always increase a little the effort trying anyway to keep you in the zone. Default: Enabled.</source>
         <translation>Ha bekapcsolja, a PID arra ösztönzi, hogy mindig kicsit növelje az erőkifejtést, de közben igyekszik a zónában tartani. Alapértelmezett: be.</translation>
-    </message>
-    <message>
-        <source>PID Recovery Zone Lower Limit (%):</source>
-        <translation>PID helyreállítási zóna alsó határa (%):</translation>
-    </message>
-    <message>
-        <source>Lower HR boundary (% of max HR) that defines the bottom of Zone 1 for &apos;Pushy&apos; mode. Below this percentage the treadmill is at the bottom of the recovery area. Default: 60.</source>
-        <translation>A pulzus alsó határa (a maximális pulzus százalékában), amely a „Határozott” mód 1. zónájának alját adja meg. E százalék alatt a futópad a helyreállítási tartomány alján van. Alapértelmezett: 60.</translation>
-    </message>
-    <message>
-        <source>PID Pushy Zone Limit:</source>
-        <translation>PID Határozott mód zónahatára:</translation>
-    </message>
-    <message>
-        <source>Fraction of zone above the target zone where &apos;Pushy&apos; mode stops pushing. 0.8 means the PID stops pushing at zone+0.8. Default: 0.8.</source>
-        <translation>A célzóna feletti zóna azon hányada, ahol a „Határozott” mód abbahagyja a terhelés növelését. A 0.8 azt jelenti, hogy a PID a zóna+0.8 értéknél hagyja abba a terhelés növelését. Alapértelmezett: 0.8.</translation>
     </message>
     <message>
         <source>PID Ignore Inclination</source>
@@ -7016,40 +6746,8 @@ Please enter it below:</source>
         <translation>Lásd fent: 1 mérföldes tempó; ugyanaz, csak 1 mérföld helyett maraton.</translation>
     </message>
     <message>
-        <source>Warmup Speed (pace):</source>
-        <translation>Bemelegítési sebesség (tempó):</translation>
-    </message>
-    <message>
-        <source>Cooldown Speed (pace):</source>
-        <translation>Levezetési sebesség (tempó):</translation>
-    </message>
-    <message>
-        <source>Rest Speed (pace):</source>
-        <translation>Pihenősebesség (tempó):</translation>
-    </message>
-    <message>
         <source>Default Pace:</source>
         <translation>Alapértelmezett tempó:</translation>
-    </message>
-    <message>
-        <source>1 mile</source>
-        <translation>1 mérföld</translation>
-    </message>
-    <message>
-        <source>Half Marathon</source>
-        <translation>Félmaraton</translation>
-    </message>
-    <message>
-        <source>Marathon</source>
-        <translation>Maraton</translation>
-    </message>
-    <message>
-        <source>5 km</source>
-        <translation>5 km</translation>
-    </message>
-    <message>
-        <source>10 km</source>
-        <translation>10 km</translation>
     </message>
     <message>
         <source>Select the default Pace to be used when the ZWO file does not indicate a precise pace.</source>
@@ -7124,14 +6822,6 @@ Please enter it below:</source>
         <translation>Kapcsolja be, ha azt szeretné, hogy a QZ vezérelje a futópad sebességét például a Peloton-órákon az oktató sebességutasításai alapján. A sebesség az alsó, a felső vagy az átlagos tartományba esik a Peloton beállításai &gt; Nehézség beállítástól függően. Alapértelmezett: ki.</translation>
     </message>
     <message>
-        <source>Force Running Activity</source>
-        <translation>Rögzítés mindig futásként</translation>
-    </message>
-    <message>
-        <source>Turn this on to write treadmill FIT files as running activities even when the average speed is below 6.5 km/h. This can help Garmin calculate Training Effect for high-incline treadmill workouts. Default is off.</source>
-        <translation>Kapcsolja be, ha a futópad FIT-fájljait akkor is futásként szeretné menteni, ha az átlagsebesség 6.5&#xa0;km/h alatt van. Ez segíthet a Garminnak kiszámítani a Training Effect értéket a nagy emelkedésű futópados edzéseknél. Alapértelmezett: ki.</translation>
-    </message>
-    <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Kapcsolja be, ha azt szeretné, hogy a QZ futópad használatakor indításkor szünet módba lépjen. A beállítás csak futópadokra vonatkozik. Alapértelmezett: ki.</translation>
     </message>
@@ -7142,14 +6832,6 @@ Please enter it below:</source>
     <message>
         <source>Turn this on to read the distance directly from the treadmill instead of calculating it from speed. Some treadmills report distance more accurately than the speed-based calculation. Default is off.</source>
         <translation>Kapcsolja be, ha a távolságot közvetlenül a futópadról szeretné kiolvasni, nem pedig a sebességből kiszámítani. Egyes futópadok pontosabban jelentik a távolságot, mint a sebességből végzett számítás. Alapértelmezett: ki.</translation>
-    </message>
-    <message>
-        <source>Direct Distance: add only the increase</source>
-        <translation>Közvetlen távolság: csak a növekmény hozzáadása</translation>
-    </message>
-    <message>
-        <source>Works with Direct Distance from Treadmill. Turn this on if the distance counter of your treadmill keeps running between workouts or starts again from 0 when the treadmill is switched off: only the distance walked during the workout is added, not what the treadmill counted before QZ connected. Default is off.</source>
-        <translation>A Közvetlen távolság a futópadról beállítással együtt működik. Kapcsolja be, ha a futópad távolságszámlálója az edzések között is tovább fut, vagy a futópad kikapcsolása után ismét 0-ról indul: ekkor csak az edzés alatt megtett távolság adódik hozzá, és nem az, amit a futópad a QZ csatlakozása előtt számolt. Alapértelmezett: ki.</translation>
     </message>
     <message>
         <source>Difficulty offset based</source>
@@ -7265,34 +6947,6 @@ Please enter it below:</source>
         <translation>Emelkedés</translation>
     </message>
     <message>
-        <source>Tile size:</source>
-        <translation>Csempeméret:</translation>
-    </message>
-    <message>
-        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
-        <translation>Ez a beállítás a mérőszámokat megjelenítő csempék méretét módosítja. Alapértelmezett: 100%. Ha több csempét szeretne elhelyezni a képernyőn, válasszon kisebb százalékot. A nagyobb csempékhez válasszon 100%-nál nagyobb értéket. A százalékjelet ne írja be. Korábbi neve: „UI Zoom”.</translation>
-    </message>
-    <message>
-        <source>Use System Text Size</source>
-        <translation>A rendszer szövegméretének használata</translation>
-    </message>
-    <message>
-        <source>The text of the app follows the text size of the phone or tablet settings, up to 150%. Turn off to choose the size below, for example for a screen you read from a distance during a workout. Default is on.</source>
-        <translation>Az alkalmazás szövege a telefon vagy táblagép szövegméret-beállítását követi, legfeljebb 150%-ig. Kapcsolja ki, ha lent saját méretet szeretne választani, például ha edzés közben távolról olvassa a képernyőt. Alapértelmezett: be.</translation>
-    </message>
-    <message>
-        <source>Text size:</source>
-        <translation>Szövegméret:</translation>
-    </message>
-    <message>
-        <source>Size of the text of the app (settings, menus, dialogs), in percent, from 80 to 170. The default is 100. The tiles keep their own size setting.</source>
-        <translation>Az alkalmazás szövegének mérete (beállítások, menük, párbeszédpanelek) százalékban, 80-tól 170-ig. Alapértelmezett: 100. A csempéknek saját méretbeállításuk van.</translation>
-    </message>
-    <message>
-        <source>Speed</source>
-        <translation>Sebesség</translation>
-    </message>
-    <message>
         <source>Echelon Options</source>
         <translation>Echelon beállításai</translation>
     </message>
@@ -7309,112 +6963,8 @@ Please enter it below:</source>
         <translation>Bekapcsolja a futópad fizikai Indítás/Szünet/Stop gombjainak kezelését.</translation>
     </message>
     <message>
-        <source>Life Fitness Options</source>
-        <translation>Life Fitness beállításai</translation>
-    </message>
-    <message>
-        <source>Life Fitness username/email:</source>
-        <translation>Life Fitness felhasználónév/e-mail:</translation>
-    </message>
-    <message>
-        <source>Life Fitness password:</source>
-        <translation>Life Fitness jelszó:</translation>
-    </message>
-    <message>
-        <source>Life Fitness guest login (experimental)</source>
-        <translation>Life Fitness vendégbejelentkezés (kísérleti)</translation>
-    </message>
-    <message>
-        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
-        <translation>Fiók nélküli, szintetikus Life Fitness profilt használ. Ha be van kapcsolva, a QZ figyelmen kívül hagyja a felhasználónevet, a jelszót és a gyorsítótárazott fiókadatokat. Csak a támogatott vendégbejelentkezés tesztelésére használja.</translation>
-    </message>
-    <message>
-        <source>Workout History Charts</source>
-        <translation>Edzéselőzmény-diagramok</translation>
-    </message>
-    <message>
-        <source>Heart Rate</source>
-        <translation>Pulzus</translation>
-    </message>
-    <message>
-        <source>Resistance vs Target Resistance</source>
-        <translation>Ellenállás és célellenállás</translation>
-    </message>
-    <message>
-        <source>Peloton Resistance</source>
-        <translation>Peloton-ellenállás</translation>
-    </message>
-    <message>
-        <source>Cadence</source>
-        <translation>Kadencia</translation>
-    </message>
-    <message>
-        <source>Power Distribution</source>
-        <translation>Teljesítményeloszlás</translation>
-    </message>
-    <message>
-        <source>Speed and Inclination</source>
-        <translation>Sebesség és emelkedés</translation>
-    </message>
-    <message>
-        <source>Move the charts up or down to choose their order in Workout History. Changes are saved automatically.</source>
-        <translation>Mozgassa felfelé vagy lefelé a diagramokat, hogy meghatározza a sorrendjüket az edzéselőzményekben. A QZ a módosításokat automatikusan menti.</translation>
-    </message>
-    <message>
-        <source>Move up</source>
-        <translation>Mozgatás felfelé</translation>
-    </message>
-    <message>
-        <source>Move down</source>
-        <translation>Mozgatás lefelé</translation>
-    </message>
-    <message>
-        <source>Restore default order</source>
-        <translation>Alapértelmezett sorrend visszaállítása</translation>
-    </message>
-    <message>
-        <source>Moovio Options</source>
-        <translation>Moovio beállításai</translation>
-    </message>
-    <message>
-        <source>Lynx Konect 2.0</source>
-        <translation>Lynx Konect 2.0</translation>
-    </message>
-    <message>
-        <source>Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.</source>
-        <translation>Bekapcsolja a szabványos FTMS Request Control parancsot a Moovio Lynx Konect 2.0 futópadokhoz. Alapértelmezett: ki.</translation>
-    </message>
-    <message>
-        <source>Cadence Gain</source>
-        <translation>Kadenciaszorzó</translation>
-    </message>
-    <message>
-        <source>Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.</source>
-        <translation>Szorzó, amely csak a virtuális evezőgép által küldött csapásszámra vonatkozik. Alapértelmezett: 1.0. A 0.25 érték a BikeERG rpm-értékét az EXR által kért csapásszámmá alakítja.</translation>
-    </message>
-    <message>
-        <source>Offset added after the gain. Default is 0.0. QZ&apos;s internal cadence display and workout metrics remain unchanged.</source>
-        <translation>A szorzó alkalmazása után hozzáadott eltolás. Alapértelmezett: 0.0. A QZ-ben megjelenített kadencia és az edzés mérőszámai nem változnak.</translation>
-    </message>
-    <message>
-        <source>iOS Background Keep Alive</source>
-        <translation>Háttérben futás iOS-en</translation>
-    </message>
-    <message>
-        <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
-        <translation>Csak iOS-en. Kikapcsolt képernyő mellett vagy a háttérben is futva tartja a QZ-t, hogy a Bluetooth-kapcsolatok és a munkamenet időzítői ne fagyjanak le. Ehhez néma hangsávot használ, amely összekeveredik a zenével, így semmi sem szakad meg abból, amit hallgat. Kapcsolja be, ha lezárt képernyővel vagy a háttérben futó QZ-vel szeretne edzeni. Alapértelmezett: ki.</translation>
-    </message>
-    <message>
         <source>RunnerT Options</source>
         <translation>RunnerT beállításai</translation>
-    </message>
-    <message>
-        <source>Inclination Filter (%):</source>
-        <translation>Dőlésszögszűrő (%):</translation>
-    </message>
-    <message>
-        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
-        <translation>GPX-edzéseknél az ennél kisebb dőlésszög-változásokat figyelmen kívül hagyja. Új parancsot csak akkor küld, ha az utoljára küldött értékhez képest a változás eléri a megadott küszöböt. Alapértelmezés: 0 (kikapcsolva).</translation>
     </message>
     <message>
         <source>Domyos Treadmill Options</source>
@@ -7589,10 +7139,6 @@ Please enter it below:</source>
         <translation>JTX Fitness Sprint futópad</translation>
     </message>
     <message>
-        <source>Flow Fitness Runner DTM2000i</source>
-        <translation>Flow Fitness Runner DTM2000i</translation>
-    </message>
-    <message>
         <source>Reebok FR30 Treadmill</source>
         <translation>Reebok FR30 futópad</translation>
     </message>
@@ -7647,10 +7193,6 @@ Please enter it below:</source>
     <message>
         <source>Allows you to force QZ to connect to your FTMS Rower. If you are in doubt, leave this Disabled and send an email to the QZ support. Default is “Disabled.”</source>
         <translation>Ezzel beállíthatja, hogy a QZ mindenképpen az FTMS-evezőgépéhez csatlakozzon. Ha bizonytalan, hagyja Kikapcsolva értéken, és írjon e-mailt a QZ ügyfélszolgálatának. Alapértelmezett: „Kikapcsolva”.</translation>
-    </message>
-    <message>
-        <source>WaterRower USB</source>
-        <translation>WaterRower USB</translation>
     </message>
     <message>
         <source>Proform/Nordictrack Rower Options</source>
@@ -7789,14 +7331,6 @@ Please enter it below:</source>
         <translation>Strava-feltöltés:</translation>
     </message>
     <message>
-        <source>Always</source>
-        <translation>Mindig</translation>
-    </message>
-    <message>
-        <source>Request</source>
-        <translation>Rákérdezés</translation>
-    </message>
-    <message>
         <source>Suffix activity:</source>
         <translation>Tevékenység utótagja:</translation>
     </message>
@@ -7855,18 +7389,6 @@ Please enter it below:</source>
     <message>
         <source>Power Averaging Mode:</source>
         <translation>Teljesítményátlagolás módja:</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation>Ki</translation>
-    </message>
-    <message>
-        <source>3 seconds</source>
-        <translation>3 másodperc</translation>
-    </message>
-    <message>
-        <source>5 seconds</source>
-        <translation>5 másodperc</translation>
     </message>
     <message>
         <source>If the power output/watts your equipment sends to QZ is quite variable, this setting will result in smoother Power Zone graphs. This is also helpful for use with Power Meter Pedals. Uses harmonic averaging which smooths power spikes better than arithmetic averaging. If any reading is 0, power immediately becomes 0. Default is Off.
@@ -7957,20 +7479,16 @@ FONTOS MEGJEGYZÉSEK:
         <translation>Okosgörgőknél ellenállást használ emelkedés helyett. Ez akkor segít, ha nem szeretné, hogy a Wahoo Climb vagy hasonló eszköz fokozatváltáskor módosítsa az emelkedést. Alapértelmezett: ki.</translation>
     </message>
     <message>
+        <source>Resistance Compatibility</source>
+        <translation>Ellenállás-kompatibilitás</translation>
+    </message>
+    <message>
+        <source>Enable this if changing resistance in QZ only sets the bike to level 1 or maximum. Sends FTMS resistance multiplied by 10. Default: disabled.</source>
+        <translation>Kapcsold be, ha a QZ-ben állított ellenállás a kerékpárt csak az 1. vagy a maximális szintre állítja. Az FTMS-ellenállást tízszeres értékként küldi. Alapértelmezés: kikapcsolva.</translation>
+    </message>
+    <message>
         <source>AutoLap on Distance:</source>
         <translation>Automatikus kör távolság szerint:</translation>
-    </message>
-    <message>
-        <source>You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).</source>
-        <translation>A FIT-fájlban távolság alapján automatikus köröket indíthat. Mértékegység: %1. Alapértelmezett: 0 (ki).</translation>
-    </message>
-    <message>
-        <source>Mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>KM</source>
-        <translation>km</translation>
     </message>
     <message>
         <source>Inclination Delay:</source>
@@ -8091,22 +7609,6 @@ FONTOS MEGJEGYZÉSEK:
     <message>
         <source>If you have a Bluetooth treadmill and also a Stryd device connected to QZ and you want to use the speed from the stryd instead of the speed of the treadmill, enable this. Default: disabled.</source>
         <translation>Kapcsolja be, ha Bluetooth-futópad és Stryd-eszköz is csatlakozik a QZ-hez, és a futópad sebessége helyett a Stryd sebességét szeretné használni. Alapértelmezett: ki.</translation>
-    </message>
-    <message>
-        <source>Runn/Stryd closed-loop treadmill speed correction</source>
-        <translation>Runn/Stryd zárt hurkú futópadsebesség-korrekció</translation>
-    </message>
-    <message>
-        <source>Experimental: gradually correct QZ-controlled treadmill speed using Runn/Stryd feedback, when the driver provides independent machine speed measurements. Requires &apos;Use speed from the power sensor&apos;. Disabled by default.</source>
-        <translation>Kísérleti: fokozatosan korrigálja a QZ által vezérelt futópad sebességét a Runn/Stryd visszajelzése alapján, ha az illesztőprogram független mérést ad a gép sebességéről. Szükséges hozzá a „Sebesség a teljesítményérzékelőtől” beállítás. Alapértelmezett: ki.</translation>
-    </message>
-    <message>
-        <source>Power sensor speed correction threshold (%):</source>
-        <translation>Teljesítményérzékelős sebességkorrekció küszöbe (%):</translation>
-    </message>
-    <message>
-        <source>Maximum allowed difference between power sensor speed and treadmill speed before QZ stops applying the relative correction. Default: 20%.</source>
-        <translation>A teljesítményérzékelő és a futópad sebessége közötti legnagyobb megengedett eltérés, amelyen túl a QZ már nem alkalmazza a relatív korrekciót. Alapértelmezett: 20%.</translation>
     </message>
     <message>
         <source>Use inclination from the power sensor</source>
@@ -8261,18 +7763,6 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
         <translation>Mód:</translation>
     </message>
     <message>
-        <source>Heart</source>
-        <translation>Pulzus</translation>
-    </message>
-    <message>
-        <source>Power</source>
-        <translation>Teljesítmény</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Kézi</translation>
-    </message>
-    <message>
         <source>Min. value (0-100):</source>
         <translation>Min. érték (0–100):</translation>
     </message>
@@ -8359,46 +7849,6 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
     <message>
         <source>Use the zwift gears table instead of the QZ classic gears algorithm.  Default is off.</source>
         <translation>A QZ klasszikus fokozatalgoritmusa helyett a Zwift fokozattáblázatát használja. Alapértelmezett: ki.</translation>
-    </message>
-    <message>
-        <source>Gear Controls</source>
-        <translation>Fokozatvezérlés</translation>
-    </message>
-    <message>
-        <source>Assign each physical button to Gear Up, Gear Down or Disabled. Applies before the Swap sides option above.</source>
-        <translation>Minden fizikai gombhoz rendelje hozzá a következők egyikét: Fokozat fel, Fokozat le vagy Kikapcsolva. Ez a fenti Oldalak felcserélése beállítás előtt érvényesül.</translation>
-    </message>
-    <message>
-        <source>Left Shifter Up (LS1):</source>
-        <translation>Bal váltókar fel (LS1):</translation>
-    </message>
-    <message>
-        <source>Left Shifter Down (LS2):</source>
-        <translation>Bal váltókar le (LS2):</translation>
-    </message>
-    <message>
-        <source>Right Shifter Up (RS1):</source>
-        <translation>Jobb váltókar fel (RS1):</translation>
-    </message>
-    <message>
-        <source>Right Shifter Down (RS2):</source>
-        <translation>Jobb váltókar le (RS2):</translation>
-    </message>
-    <message>
-        <source>Left Paddle (ZL):</source>
-        <translation>Bal váltófül (ZL):</translation>
-    </message>
-    <message>
-        <source>Right Paddle (ZR):</source>
-        <translation>Jobb váltófül (ZR):</translation>
-    </message>
-    <message>
-        <source>Power Up (LB):</source>
-        <translation>Power Up (LB):</translation>
-    </message>
-    <message>
-        <source>Ride On (RB):</source>
-        <translation>Ride On (RB):</translation>
     </message>
     <message>
         <source>Default: 200ms. Lower it if you want to improve the gear reactivity. Warning: lowering this value will cause more power used on the QZ device</source>
@@ -8531,14 +7981,6 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
     <message>
         <source>Enables a virtual Bluetooth bridge to the iFit App. This setting requires that at least one device be Android. For example, this setting does NOT work with QZ on iOS and iFit to iOS, but DOES work with QZ on iOS and iFit to Android. On Android remember to rename your device into I_EL into the android settings and reboot your device.</source>
         <translation>Virtuális Bluetooth-eszközt kapcsol be az iFit alkalmazáshoz. Ehhez legalább az egyik eszköznek androidosnak kell lennie. Ez a beállítás például NEM működik, ha a QZ és az iFit is iOS-en fut, de MŰKÖDIK, ha a QZ iOS-en, az iFit pedig Androidon fut. Androidon ne felejtse el átnevezni az eszközt I_EL névre az Android beállításaiban, majd indítsa újra az eszközt.</translation>
-    </message>
-    <message>
-        <source>Virtual Tacx</source>
-        <translation>Virtuális Tacx</translation>
-    </message>
-    <message>
-        <source>Enables a virtual bluetooth bridge to the Tacx App.</source>
-        <translation>Virtuális Bluetooth-eszközt kapcsol be a Tacx alkalmazáshoz.</translation>
     </message>
     <message>
         <source>Wahoo direct connect</source>
@@ -8878,6 +8320,354 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
         <translation>A QZ futópadként nyitja meg az FS- kezdetű eszközöket, hacsak nincs bekapcsolva a „Fit Plus kerékpár”. Ha egy FS- eszköz kerékpáradatokat is küld, a QZ megkérdezi, hogy kerékpárról van-e szó; a Nem válasz kikapcsolja ezt a kérdést. A beállítások oldalán nem jelenik meg.</translation>
     </message>
     <message>
+        <source>Hidden on its page right now: change it here</source>
+        <translation type="vanished">Jelenleg rejtve van a saját oldalán: itt módosítható.</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>Be</translation>
+    </message>
+    <message>
+        <source>Hidden on its page with the current settings</source>
+        <translation>A saját oldalán rejtve a jelenlegi beállításokkal</translation>
+    </message>
+    <message>
+        <source>Turn on “%1” to change this setting</source>
+        <translation>A beállítás módosításához kapcsolja be ezt: „%1”.</translation>
+    </message>
+    <message>
+        <source>Male</source>
+        <translation>Férfi</translation>
+    </message>
+    <message>
+        <source>Female</source>
+        <translation>Nő</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Kikapcsolva</translation>
+    </message>
+    <message>
+        <source>Bike Weight (%1)</source>
+        <translation>Kerékpár súlya (%1)</translation>
+    </message>
+    <message>
+        <source>OpenBikeControl</source>
+        <translation>OpenBikeControl</translation>
+    </message>
+    <message>
+        <source>Enable OpenBikeControl</source>
+        <translation>OpenBikeControl bekapcsolása</translation>
+    </message>
+    <message>
+        <source>OpenBikeControl enabled: Wahoo direct connect disabled.</source>
+        <translation>OpenBikeControl bekapcsolva: Wahoo közvetlen csatlakozás kikapcsolva</translation>
+    </message>
+    <message>
+        <source>Enable TCP server on port 21587 to send control commands using the OpenBikeControl link protocol</source>
+        <translation>Elindít egy TCP-kiszolgálót a 21587-es porton, hogy vezérlőparancsokat küldjön az OpenBikeControl Link protokollon.</translation>
+    </message>
+    <message>
+        <source>Override Local Gear Changes</source>
+        <translation>Helyi fokozatváltás felülbírálása</translation>
+    </message>
+    <message>
+        <source>When enabled, gear shift commands go only to OpenBikeControl clients. When disabled, they go to both OpenBikeControl clients and the local gear system</source>
+        <translation>Ha be van kapcsolva, a fokozatváltási parancsok csak az OpenBikeControl-ügyfelekhez jutnak el. Ha ki van kapcsolva, az OpenBikeControl-ügyfelekhez és a helyi fokozatrendszerhez is eljutnak.</translation>
+    </message>
+    <message>
+        <source>Left Controller Buttons</source>
+        <translation>Bal vezérlő gombjai</translation>
+    </message>
+    <message>
+        <source>Left Up:</source>
+        <translation>Bal fel:</translation>
+    </message>
+    <message>
+        <source>Gear Up</source>
+        <translation>Fokozat fel</translation>
+    </message>
+    <message>
+        <source>Gear Down</source>
+        <translation>Fokozat le</translation>
+    </message>
+    <message>
+        <source>Steer Left</source>
+        <translation>Kormányzás balra</translation>
+    </message>
+    <message>
+        <source>Steer Right</source>
+        <translation>Kormányzás jobbra</translation>
+    </message>
+    <message>
+        <source>U-Turn</source>
+        <translation>Megfordulás</translation>
+    </message>
+    <message>
+        <source>Camera Angle</source>
+        <translation>Kameraszög</translation>
+    </message>
+    <message>
+        <source>Emote</source>
+        <translation>Emote</translation>
+    </message>
+    <message>
+        <source>Tuck</source>
+        <translation>Aeropozíció</translation>
+    </message>
+    <message>
+        <source>Nav Up</source>
+        <translation>Navigáció fel</translation>
+    </message>
+    <message>
+        <source>Nav Down</source>
+        <translation>Navigáció le</translation>
+    </message>
+    <message>
+        <source>Nav Left</source>
+        <translation>Navigáció balra</translation>
+    </message>
+    <message>
+        <source>Nav Right</source>
+        <translation>Navigáció jobbra</translation>
+    </message>
+    <message>
+        <source>Select/Confirm</source>
+        <translation>Kiválasztás/megerősítés</translation>
+    </message>
+    <message>
+        <source>Back/Cancel</source>
+        <translation>Vissza/mégse</translation>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation>Menü</translation>
+    </message>
+    <message>
+        <source>Home</source>
+        <translation>Kezdőképernyő</translation>
+    </message>
+    <message>
+        <source>Left Down:</source>
+        <translation>Bal le:</translation>
+    </message>
+    <message>
+        <source>Left Left:</source>
+        <translation>Bal balra:</translation>
+    </message>
+    <message>
+        <source>Left Right:</source>
+        <translation>Bal jobbra:</translation>
+    </message>
+    <message>
+        <source>Left Shoulder:</source>
+        <translation>Bal vállgomb:</translation>
+    </message>
+    <message>
+        <source>Left Power:</source>
+        <translation>Bal Power gomb:</translation>
+    </message>
+    <message>
+        <source>Right Controller Buttons</source>
+        <translation>Jobb vezérlő gombjai</translation>
+    </message>
+    <message>
+        <source>Right Y:</source>
+        <translation>Jobb Y:</translation>
+    </message>
+    <message>
+        <source>Right A:</source>
+        <translation>Jobb A:</translation>
+    </message>
+    <message>
+        <source>Right B:</source>
+        <translation>Jobb B:</translation>
+    </message>
+    <message>
+        <source>Right Z:</source>
+        <translation>Jobb Z:</translation>
+    </message>
+    <message>
+        <source>Right Shoulder:</source>
+        <translation>Jobb vállgomb:</translation>
+    </message>
+    <message>
+        <source>Right Power:</source>
+        <translation>Jobb Power gomb:</translation>
+    </message>
+    <message>
+        <source>Note: Left and Right paddles are fixed to Steer Left/Right and cannot be configured</source>
+        <translation>Megjegyzés: A bal és a jobb váltófül fixen a Kormányzás balra és a Kormányzás jobbra művelethez tartozik, és nem állítható át.</translation>
+    </message>
+    <message>
+        <source>Custom Inclination to Resistance Table</source>
+        <translation>Egyéni emelkedés–ellenállás táblázat</translation>
+    </message>
+    <message>
+        <source>Cruise</source>
+        <translation>Túra</translation>
+    </message>
+    <message>
+        <source>Climb</source>
+        <translation>Mászás</translation>
+    </message>
+    <message>
+        <source>Sprint</source>
+        <translation>Sprint</translation>
+    </message>
+    <message>
+        <source>Physical resistance knob controls QZ gears</source>
+        <translation>A fizikai ellenállásgomb a QZ fokozatait váltja</translation>
+    </message>
+    <message>
+        <source>Baudrate:</source>
+        <translation>Adatátviteli sebesség (baud):</translation>
+    </message>
+    <message>
+        <source>Freebeat Bike Options</source>
+        <translation>Freebeat-kerékpár beállításai</translation>
+    </message>
+    <message>
+        <source>Keep Content Clear of the Camera Cutout</source>
+        <translation>Tartalom távol tartása a kamerakivágástól</translation>
+    </message>
+    <message>
+        <source>In landscape, keeps a margin on the camera side so the camera hole does not cover the content. Turn off to let the content extend under the camera cutout. Default is on.</source>
+        <translation>Fekvő tájolásban margót hagy a kamera oldalán, hogy a kamerakivágás ne takarja a tartalmat. Kapcsolja ki, ha azt szeretné, hogy a tartalom a kamerakivágás alá nyúljon. Alapértelmezett: be.</translation>
+    </message>
+    <message>
+        <source>Classic</source>
+        <translation>Klasszikus</translation>
+    </message>
+    <message>
+        <source>Horizontal</source>
+        <translation>Vízszintes</translation>
+    </message>
+    <message>
+        <source>Both Charts</source>
+        <translation>Mindkét diagram</translation>
+    </message>
+    <message>
+        <source>Heart Rate Only</source>
+        <translation>Csak pulzus</translation>
+    </message>
+    <message>
+        <source>Power Only</source>
+        <translation>Csak teljesítmény</translation>
+    </message>
+    <message>
+        <source>lower</source>
+        <translation>alsó</translation>
+    </message>
+    <message>
+        <source>upper</source>
+        <translation>felső</translation>
+    </message>
+    <message>
+        <source>average</source>
+        <translation>átlagos</translation>
+    </message>
+    <message>
+        <source>Before Title</source>
+        <translation>Cím előtt</translation>
+    </message>
+    <message>
+        <source>After Title</source>
+        <translation>Cím után</translation>
+    </message>
+    <message>
+        <source>Ask RPE / Feeling after workout</source>
+        <translation>RPE és közérzet kérése edzés után</translation>
+    </message>
+    <message>
+        <source>Show a popup after Stop to rate perceived exertion (RPE) and how you felt; the values are saved into the FIT file and shown in Garmin Connect.</source>
+        <translation>A Stop után felugró ablakban értékelheti az érzékelt megterhelést (RPE) és a közérzetét; az értékek a FIT-fájlba kerülnek, és megjelennek a Garmin Connectben.</translation>
+    </message>
+    <message>
+        <source>Garmin Password:</source>
+        <translation>Garmin-jelszó:</translation>
+    </message>
+    <message>
+        <source>Garmin Server:</source>
+        <translation>Garmin-kiszolgáló:</translation>
+    </message>
+    <message>
+        <source>Global (garmin.com)</source>
+        <translation>Globális (garmin.com)</translation>
+    </message>
+    <message>
+        <source>China (garmin.cn)</source>
+        <translation>Kína (garmin.cn)</translation>
+    </message>
+    <message>
+        <source>Sound on Segment Change</source>
+        <translation>Hang szakaszváltáskor</translation>
+    </message>
+    <message>
+        <source>Play a short sound when a training program starts a new row. Default: disabled.</source>
+        <translation>Rövid hangjelzést ad, amikor az edzésprogram új sorra lép. Alapértelmezett: ki.</translation>
+    </message>
+    <message>
+        <source>PID Recovery Zone Lower Limit (%):</source>
+        <translation>PID helyreállítási zóna alsó határa (%):</translation>
+    </message>
+    <message>
+        <source>Lower HR boundary (% of max HR) that defines the bottom of Zone 1 for &apos;Pushy&apos; mode. Below this percentage the treadmill is at the bottom of the recovery area. Default: 60.</source>
+        <translation>A pulzus alsó határa (a maximális pulzus százalékában), amely a „Határozott” mód 1. zónájának alját adja meg. E százalék alatt a futópad a helyreállítási tartomány alján van. Alapértelmezett: 60.</translation>
+    </message>
+    <message>
+        <source>PID Pushy Zone Limit:</source>
+        <translation>PID Határozott mód zónahatára:</translation>
+    </message>
+    <message>
+        <source>Fraction of zone above the target zone where &apos;Pushy&apos; mode stops pushing. 0.8 means the PID stops pushing at zone+0.8. Default: 0.8.</source>
+        <translation>A célzóna feletti zóna azon hányada, ahol a „Határozott” mód abbahagyja a terhelés növelését. A 0.8 azt jelenti, hogy a PID a zóna+0.8 értéknél hagyja abba a terhelés növelését. Alapértelmezett: 0.8.</translation>
+    </message>
+    <message>
+        <source>Warmup Speed (pace):</source>
+        <translation>Bemelegítési sebesség (tempó):</translation>
+    </message>
+    <message>
+        <source>Cooldown Speed (pace):</source>
+        <translation>Levezetési sebesség (tempó):</translation>
+    </message>
+    <message>
+        <source>Rest Speed (pace):</source>
+        <translation>Pihenősebesség (tempó):</translation>
+    </message>
+    <message>
+        <source>1 mile</source>
+        <translation>1 mérföld</translation>
+    </message>
+    <message>
+        <source>Half Marathon</source>
+        <translation>Félmaraton</translation>
+    </message>
+    <message>
+        <source>Marathon</source>
+        <translation>Maraton</translation>
+    </message>
+    <message>
+        <source>Force Running Activity</source>
+        <translation>Rögzítés mindig futásként</translation>
+    </message>
+    <message>
+        <source>Turn this on to write treadmill FIT files as running activities even when the average speed is below 6.5 km/h. This can help Garmin calculate Training Effect for high-incline treadmill workouts. Default is off.</source>
+        <translation>Kapcsolja be, ha a futópad FIT-fájljait akkor is futásként szeretné menteni, ha az átlagsebesség 6.5&#xa0;km/h alatt van. Ez segíthet a Garminnak kiszámítani a Training Effect értéket a nagy emelkedésű futópados edzéseknél. Alapértelmezett: ki.</translation>
+    </message>
+    <message>
+        <source>Pafers Rower</source>
+        <translation>Pafers-evezőgép</translation>
+    </message>
+    <message>
+        <source>Flow Fitness Runner DTM2000i</source>
+        <translation>Flow Fitness Runner DTM2000i</translation>
+    </message>
+    <message>
+        <source>WaterRower USB</source>
+        <translation>WaterRower USB</translation>
+    </message>
+    <message>
         <source>Max Watt:</source>
         <translation>Max. watt:</translation>
     </message>
@@ -8886,16 +8676,312 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
         <translation>Korlátozza a QZ által küldött teljesítményt (watt). A korlát kikapcsolásához állítsa 0-ra. Alapértelmezett: 9999&#xa0;W.</translation>
     </message>
     <message>
+        <source>Always</source>
+        <translation>Mindig</translation>
+    </message>
+    <message>
+        <source>Request</source>
+        <translation>Rákérdezés</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Ki</translation>
+    </message>
+    <message>
+        <source>3 seconds</source>
+        <translation>3 másodperc</translation>
+    </message>
+    <message>
+        <source>5 seconds</source>
+        <translation>5 másodperc</translation>
+    </message>
+    <message>
+        <source>You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).</source>
+        <translation>A FIT-fájlban távolság alapján automatikus köröket indíthat. Mértékegység: %1. Alapértelmezett: 0 (ki).</translation>
+    </message>
+    <message>
+        <source>Power sensor speed correction threshold (%):</source>
+        <translation>Teljesítményérzékelős sebességkorrekció küszöbe (%):</translation>
+    </message>
+    <message>
+        <source>Maximum allowed difference between power sensor speed and treadmill speed before QZ stops applying the relative correction. Default: 20%.</source>
+        <translation>A teljesítményérzékelő és a futópad sebessége közötti legnagyobb megengedett eltérés, amelyen túl a QZ már nem alkalmazza a relatív korrekciót. Alapértelmezett: 20%.</translation>
+    </message>
+    <message>
+        <source>Heart</source>
+        <translation>Pulzus</translation>
+    </message>
+    <message>
+        <source>Power</source>
+        <translation>Teljesítmény</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation>Kézi</translation>
+    </message>
+    <message>
+        <source>Gear Controls</source>
+        <translation>Fokozatvezérlés</translation>
+    </message>
+    <message>
+        <source>Assign each physical button to Gear Up, Gear Down or Disabled. Applies before the Swap sides option above.</source>
+        <translation>Minden fizikai gombhoz rendelje hozzá a következők egyikét: Fokozat fel, Fokozat le vagy Kikapcsolva. Ez a fenti Oldalak felcserélése beállítás előtt érvényesül.</translation>
+    </message>
+    <message>
+        <source>Left Shifter Up (LS1):</source>
+        <translation>Bal váltókar fel (LS1):</translation>
+    </message>
+    <message>
+        <source>Left Shifter Down (LS2):</source>
+        <translation>Bal váltókar le (LS2):</translation>
+    </message>
+    <message>
+        <source>Right Shifter Up (RS1):</source>
+        <translation>Jobb váltókar fel (RS1):</translation>
+    </message>
+    <message>
+        <source>Right Shifter Down (RS2):</source>
+        <translation>Jobb váltókar le (RS2):</translation>
+    </message>
+    <message>
+        <source>Left Paddle (ZL):</source>
+        <translation>Bal váltófül (ZL):</translation>
+    </message>
+    <message>
+        <source>Right Paddle (ZR):</source>
+        <translation>Jobb váltófül (ZR):</translation>
+    </message>
+    <message>
+        <source>Power Up (LB):</source>
+        <translation>Power Up (LB):</translation>
+    </message>
+    <message>
+        <source>Ride On (RB):</source>
+        <translation>Ride On (RB):</translation>
+    </message>
+    <message>
+        <source>Virtual Tacx</source>
+        <translation>Virtuális Tacx</translation>
+    </message>
+    <message>
+        <source>Enables a virtual bluetooth bridge to the Tacx App.</source>
+        <translation>Virtuális Bluetooth-eszközt kapcsol be a Tacx alkalmazáshoz.</translation>
+    </message>
+    <message>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <source>kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <source>ft/in</source>
+        <translation>ft/in</translation>
+    </message>
+    <message>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
         <source>PID HR actuator:</source>
         <translation>PID-pulzusszabályozás módja:</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>Sebesség</translation>
     </message>
     <message>
         <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. The global PID HR actuator setting selects speed or inclination for treadmills; a workout interval can override it in the Workout Editor. The PID HR tile changes only the target HR zone.</source>
         <translation>A QZ úgy vezérli a futópadot vagy a kerékpárt, hogy a kiválasztott pulzuszónában maradjon. A PID-pulzusszabályozás módja általános beállítás, amely futópadoknál a sebességet vagy az emelkedést választja ki; az edzésszerkesztőben egy szakasz felülbírálhatja. A PID-pulzuszóna csempe csak a célpulzuszónát módosítja.</translation>
     </message>
     <message>
-        <source>Pafers Rower</source>
-        <translation>Pafers-evezőgép</translation>
+        <source>5 km</source>
+        <translation>5 km</translation>
+    </message>
+    <message>
+        <source>10 km</source>
+        <translation>10 km</translation>
+    </message>
+    <message>
+        <source>Mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>KM</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>Runn/Stryd closed-loop treadmill speed correction</source>
+        <translation>Runn/Stryd zárt hurkú futópadsebesség-korrekció</translation>
+    </message>
+    <message>
+        <source>Experimental: gradually correct QZ-controlled treadmill speed using Runn/Stryd feedback, when the driver provides independent machine speed measurements. Requires &apos;Use speed from the power sensor&apos;. Disabled by default.</source>
+        <translation>Kísérleti: fokozatosan korrigálja a QZ által vezérelt futópad sebességét a Runn/Stryd visszajelzése alapján, ha az illesztőprogram független mérést ad a gép sebességéről. Szükséges hozzá a „Sebesség a teljesítményérzékelőtől” beállítás. Alapértelmezett: ki.</translation>
+    </message>
+    <message>
+        <source>Tile size:</source>
+        <translation>Csempeméret:</translation>
+    </message>
+    <message>
+        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
+        <translation>Ez a beállítás a mérőszámokat megjelenítő csempék méretét módosítja. Alapértelmezett: 100%. Ha több csempét szeretne elhelyezni a képernyőn, válasszon kisebb százalékot. A nagyobb csempékhez válasszon 100%-nál nagyobb értéket. A százalékjelet ne írja be. Korábbi neve: „UI Zoom”.</translation>
+    </message>
+    <message>
+        <source>Use System Text Size</source>
+        <translation>A rendszer szövegméretének használata</translation>
+    </message>
+    <message>
+        <source>The text of the app follows the text size of the phone or tablet settings, up to 150%. Turn off to choose the size below, for example for a screen you read from a distance during a workout. Default is on.</source>
+        <translation>Az alkalmazás szövege a telefon vagy táblagép szövegméret-beállítását követi, legfeljebb 150%-ig. Kapcsolja ki, ha lent saját méretet szeretne választani, például ha edzés közben távolról olvassa a képernyőt. Alapértelmezett: be.</translation>
+    </message>
+    <message>
+        <source>Text size:</source>
+        <translation>Szövegméret:</translation>
+    </message>
+    <message>
+        <source>Size of the text of the app (settings, menus, dialogs), in percent, from 80 to 170. The default is 100. The tiles keep their own size setting.</source>
+        <translation>Az alkalmazás szövegének mérete (beállítások, menük, párbeszédpanelek) százalékban, 80-tól 170-ig. Alapértelmezett: 100. A csempéknek saját méretbeállításuk van.</translation>
+    </message>
+    <message>
+        <source>Life Fitness Options</source>
+        <translation>Life Fitness beállításai</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Life Fitness felhasználónév/e-mail:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Life Fitness jelszó:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Life Fitness vendégbejelentkezés (kísérleti)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>Fiók nélküli, szintetikus Life Fitness profilt használ. Ha be van kapcsolva, a QZ figyelmen kívül hagyja a felhasználónevet, a jelszót és a gyorsítótárazott fiókadatokat. Csak a támogatott vendégbejelentkezés tesztelésére használja.</translation>
+    </message>
+    <message>
+        <source>Workout History Charts</source>
+        <translation>Edzéselőzmény-diagramok</translation>
+    </message>
+    <message>
+        <source>Heart Rate</source>
+        <translation>Pulzus</translation>
+    </message>
+    <message>
+        <source>Resistance vs Target Resistance</source>
+        <translation>Ellenállás és célellenállás</translation>
+    </message>
+    <message>
+        <source>Peloton Resistance</source>
+        <translation>Peloton-ellenállás</translation>
+    </message>
+    <message>
+        <source>Cadence</source>
+        <translation>Kadencia</translation>
+    </message>
+    <message>
+        <source>Power Distribution</source>
+        <translation>Teljesítményeloszlás</translation>
+    </message>
+    <message>
+        <source>Speed and Inclination</source>
+        <translation>Sebesség és emelkedés</translation>
+    </message>
+    <message>
+        <source>Move the charts up or down to choose their order in Workout History. Changes are saved automatically.</source>
+        <translation>Mozgassa felfelé vagy lefelé a diagramokat, hogy meghatározza a sorrendjüket az edzéselőzményekben. A QZ a módosításokat automatikusan menti.</translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translation>Mozgatás felfelé</translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation>Mozgatás lefelé</translation>
+    </message>
+    <message>
+        <source>Restore default order</source>
+        <translation>Alapértelmezett sorrend visszaállítása</translation>
+    </message>
+    <message>
+        <source>Direct Distance: add only the increase</source>
+        <translation>Közvetlen távolság: csak a növekmény hozzáadása</translation>
+    </message>
+    <message>
+        <source>Works with Direct Distance from Treadmill. Turn this on if the distance counter of your treadmill keeps running between workouts or starts again from 0 when the treadmill is switched off: only the distance walked during the workout is added, not what the treadmill counted before QZ connected. Default is off.</source>
+        <translation>A Közvetlen távolság a futópadról beállítással együtt működik. Kapcsolja be, ha a futópad távolságszámlálója az edzések között is tovább fut, vagy a futópad kikapcsolása után ismét 0-ról indul: ekkor csak az edzés alatt megtett távolság adódik hozzá, és nem az, amit a futópad a QZ csatlakozása előtt számolt. Alapértelmezett: ki.</translation>
+    </message>
+    <message>
+        <source>Moovio Options</source>
+        <translation>Moovio beállításai</translation>
+    </message>
+    <message>
+        <source>Lynx Konect 2.0</source>
+        <translation>Lynx Konect 2.0</translation>
+    </message>
+    <message>
+        <source>Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.</source>
+        <translation>Bekapcsolja a szabványos FTMS Request Control parancsot a Moovio Lynx Konect 2.0 futópadokhoz. Alapértelmezett: ki.</translation>
+    </message>
+    <message>
+        <source>Cadence Gain</source>
+        <translation>Kadenciaszorzó</translation>
+    </message>
+    <message>
+        <source>Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.</source>
+        <translation>Szorzó, amely csak a virtuális evezőgép által küldött csapásszámra vonatkozik. Alapértelmezett: 1.0. A 0.25 érték a BikeERG rpm-értékét az EXR által kért csapásszámmá alakítja.</translation>
+    </message>
+    <message>
+        <source>Offset added after the gain. Default is 0.0. QZ&apos;s internal cadence display and workout metrics remain unchanged.</source>
+        <translation>A szorzó alkalmazása után hozzáadott eltolás. Alapértelmezett: 0.0. A QZ-ben megjelenített kadencia és az edzés mérőszámai nem változnak.</translation>
+    </message>
+    <message>
+        <source>iOS Background Keep Alive</source>
+        <translation>Háttérben futás iOS-en</translation>
+    </message>
+    <message>
+        <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
+        <translation>Csak iOS-en. Kikapcsolt képernyő mellett vagy a háttérben is futva tartja a QZ-t, hogy a Bluetooth-kapcsolatok és a munkamenet időzítői ne fagyjanak le. Ehhez néma hangsávot használ, amely összekeveredik a zenével, így semmi sem szakad meg abból, amit hallgat. Kapcsolja be, ha lezárt képernyővel vagy a háttérben futó QZ-vel szeretne edzeni. Alapértelmezett: ki.</translation>
+    </message>
+    <message>
+        <source>Daum Bike Options</source>
+        <translation>Daum kerékpár beállításai</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>A klasszikus Daum ergométerekhez (pl. 8008 TRS 3) használt soros port. Androidon USB–soros adapterrel az &apos;usb&apos; értéket használja. A COM1, COM2 stb. Androidon az USB-adapter keresésének álnevei, nem valódi Android-portnevek. Windowson COM1 vagy COM3; Linux/macOS rendszeren a soros eszköz útvonala használható, pl. /dev/ttyUSB0.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Ellenállás-lekérdezés késleltetése:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>A Dőlésszög késleltetése beállítással korlátozza, milyen gyakran küld a QZ ellenállás- és teljesítményfrissítéseket a Daum eszköznek. Alapértelmezés: 0 másodperc.</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Dőlésszögszűrő (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>GPX-edzéseknél az ennél kisebb dőlésszög-változásokat figyelmen kívül hagyja. Új parancsot csak akkor küld, ha az utoljára küldött értékhez képest a változás eléri a megadott küszöböt. Alapértelmezés: 0 (kikapcsolva).</translation>
+    </message>
+    <message>
+        <source>Use Console Gears</source>
+        <translation>Konzol fokozatainak használata</translation>
     </message>
 </context>
 <context>
@@ -9124,10 +9210,6 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
         <translation>Tempó</translation>
     </message>
     <message>
-        <source>Enable Pace color</source>
-        <translation>Tempószín bekapcsolása</translation>
-    </message>
-    <message>
         <source>Average Pace</source>
         <translation>Átlagtempó</translation>
     </message>
@@ -9154,10 +9236,6 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
     <message>
         <source>Watt</source>
         <translation>Watt</translation>
-    </message>
-    <message>
-        <source>Enable Watt color</source>
-        <translation>Wattszín bekapcsolása</translation>
     </message>
     <message>
         <source>Displays the watts generated by your current effort. Watt is also referred to as output (for example, in Peloton). If your equipment does not communicate watts, QZ will calculate watts using resistance and cadence.</source>
@@ -9340,6 +9418,10 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
         <translation>2 nagy fokozatgombot jelenít meg a felületen.</translation>
     </message>
     <message>
+        <source>Tiles Options</source>
+        <translation>Csempék beállításai</translation>
+    </message>
+    <message>
         <source>Remaining Time/Row</source>
         <extracomment>Tile title: time left in the current step (row) of the workout program, not rowing and not a lap.</extracomment>
         <translation>Hátralévő idő/sor</translation>
@@ -9384,14 +9466,6 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
     <message>
         <source>(Rower only) Displays the number of strokes rowed.</source>
         <translation>(Csak evezőgép) A húzások számát mutatja.</translation>
-    </message>
-    <message>
-        <source>Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class&apos;s resistance target up or down for the rest of the ride.</source>
-        <translation>A célellenállást a kerékpár saját ellenállásskáláján mutatja. Egy Peloton-órán vagy Zwift-edzésen például arra kell törekednie, hogy az ezen a csempén látható ellenállás megegyezzen az Ellenállás csempén láthatóval. Peloton-órán (csak kerékpárnál) a +/- az óra célellenállását az edzés végéig feljebb vagy lejjebb tolja.</translation>
-    </message>
-    <message>
-        <source>Stroke Length</source>
-        <translation>Húzáshossz</translation>
     </message>
     <message>
         <source>(Rower only) Displays the stroke length.</source>
@@ -9500,14 +9574,6 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
     <message>
         <source>Preset Speed 1</source>
         <translation>1. előbeállított sebesség</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
     </message>
     <message>
         <source>Preset Speed 2</source>
@@ -9710,8 +9776,28 @@ Alapértelmezett: A = -0.96, B = 1.33</translation>
         <translation>A kompatibilis mellkasi pulzusmérő pulzusvariabilitását (HRV) mutatja. Az RMSSD értéket jeleníti meg milliszekundumban.</translation>
     </message>
     <message>
-        <source>Tiles Options</source>
-        <translation>Csempék beállításai</translation>
+        <source>Enable Pace color</source>
+        <translation>Tempószín bekapcsolása</translation>
+    </message>
+    <message>
+        <source>Enable Watt color</source>
+        <translation>Wattszín bekapcsolása</translation>
+    </message>
+    <message>
+        <source>Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class&apos;s resistance target up or down for the rest of the ride.</source>
+        <translation>A célellenállást a kerékpár saját ellenállásskáláján mutatja. Egy Peloton-órán vagy Zwift-edzésen például arra kell törekednie, hogy az ezen a csempén látható ellenállás megegyezzen az Ellenállás csempén láthatóval. Peloton-órán (csak kerékpárnál) a +/- az óra célellenállását az edzés végéig feljebb vagy lejjebb tolja.</translation>
+    </message>
+    <message>
+        <source>Stroke Length</source>
+        <translation>Húzáshossz</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
     </message>
 </context>
 <context>
@@ -10113,80 +10199,6 @@ Szeretné telepíteni?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>A QZ-verzió letöltése: %1%</translation>
-    </message>
-</context>
-<context>
-    <name>SupportHelpButton</name>
-    <message>
-        <source>Contact QZ support</source>
-        <translation>Kapcsolatfelvétel a QZ ügyfélszolgálattal</translation>
-    </message>
-    <message>
-        <source>Prepare a support email with diagnostics</source>
-        <translation>Támogatási e-mail előkészítése diagnosztikai adatokkal</translation>
-    </message>
-    <message>
-        <source>No device connected</source>
-        <translation>Nincs csatlakoztatott eszköz</translation>
-    </message>
-    <message>
-        <source>Speed and power at zero</source>
-        <translation>A sebesség és a teljesítmény nulla</translation>
-    </message>
-    <message>
-        <source>QZ Support</source>
-        <translation>QZ ügyfélszolgálat</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translation>Kész</translation>
-    </message>
-    <message>
-        <source>Hide keyboard</source>
-        <translation>Billentyűzet elrejtése</translation>
-    </message>
-    <message>
-        <source>Close support request</source>
-        <translation>Támogatási kérés bezárása</translation>
-    </message>
-    <message>
-        <source>Tell us what is not working. QZ will add your device and app information.</source>
-        <translation>Írd le, mi nem működik. A QZ hozzáadja az eszköz és az alkalmazás adatait.</translation>
-    </message>
-    <message>
-        <source>Describe the problem...</source>
-        <translation>Írd le a problémát...</translation>
-    </message>
-    <message>
-        <source>Describe the problem</source>
-        <translation>A probléma leírása</translation>
-    </message>
-    <message>
-        <source>Attach debug log if available</source>
-        <translation>Hibakeresési napló csatolása, ha elérhető</translation>
-    </message>
-    <message>
-        <source>You can review or edit the email before sending it. Nothing is sent automatically.</source>
-        <translation>Küldés előtt átnézheted vagy szerkesztheted az e-mailt. Semmi sem kerül elküldésre automatikusan.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Mégse</translation>
-    </message>
-    <message>
-        <source>Open email</source>
-        <translation>E-mail megnyitása</translation>
-    </message>
-</context>
-<context>
-    <name>treadmill</name>
-    <message>
-        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
-        <translation>A kadencia a valódinak a felének tűnik. Kapcsolja be a „Kadencia duplázása futáshoz” és a „Fél kadencia a Stravában” beállítást a „Teljesítményérzékelő beállításai” részben.</translation>
-    </message>
-    <message>
-        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
-        <translation>A kadencia a valódi kétszeresének tűnik. Kapcsolja ki a „Kadencia duplázása futáshoz” és a „Fél kadencia a Stravában” beállítást a „Teljesítményérzékelő beállításai” részben.</translation>
     </message>
 </context>
 </TS>

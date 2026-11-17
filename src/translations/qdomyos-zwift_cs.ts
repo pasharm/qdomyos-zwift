@@ -68,24 +68,12 @@
         <translation>Filtr</translation>
     </message>
     <message>
-        <source>Distance %1 km Elevation Gain: %2 meters</source>
-        <translation>Vzdálenost: %1 km, převýšení: %2 m</translation>
-    </message>
-    <message>
-        <source>Other folders</source>
-        <translation>Další složky</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Obnovit soubory</translation>
+        <source>Parent folder</source>
+        <translation>Nadřazená složka</translation>
     </message>
     <message>
         <source>Open</source>
         <translation>Otevřít</translation>
-    </message>
-    <message>
-        <source>Parent folder</source>
-        <translation>Nadřazená složka</translation>
     </message>
     <message>
         <source>No GPX files here</source>
@@ -98,6 +86,18 @@
     <message>
         <source>%1 m</source>
         <translation>%1 m</translation>
+    </message>
+    <message>
+        <source>Distance %1 km Elevation Gain: %2 meters</source>
+        <translation>Vzdálenost: %1 km, převýšení: %2 m</translation>
+    </message>
+    <message>
+        <source>Other folders</source>
+        <translation>Další složky</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Obnovit soubory</translation>
     </message>
 </context>
 <context>
@@ -170,8 +170,74 @@
         <translation>Ukončit aktuální trénink?</translation>
     </message>
     <message>
+        <source>Permissions Required</source>
+        <translation>Vyžadována oprávnění</translation>
+    </message>
+    <message>
+        <source>QZ requires both Bluetooth and Location Services to be enabled.
+Location Services are necessary on Android to allow the app to find Bluetooth devices.
+The GPS will not be used.
+
+Would you like to enable them?</source>
+        <translation type="vanished">QZ vyžaduje zapnutý Bluetooth i služby určování polohy.
+V systému Android jsou služby určování polohy nutné k tomu, aby aplikace našla zařízení Bluetooth.
+GPS se používat nebude.
+
+Chcete je zapnout?</translation>
+    </message>
+    <message>
+        <source>Reminder Preference</source>
+        <translation>Připomenutí</translation>
+    </message>
+    <message>
+        <source>Would you like to be reminded about enabling Location Services next time?</source>
+        <translation type="vanished">Připomenout příště zapnutí služeb určování polohy?</translation>
+    </message>
+    <message>
+        <source>Restart the app</source>
+        <translation>Restartovat aplikaci</translation>
+    </message>
+    <message>
+        <source>To apply the changes, you need to restart the app.
+Would you like to do that now?</source>
+        <translation>Změny se projeví po restartu aplikace.
+Restartovat nyní?</translation>
+    </message>
+    <message>
+        <source>Adjustable. Current value: </source>
+        <translation>Nastavitelné. Aktuální hodnota: </translation>
+    </message>
+    <message>
+        <source>Current value: </source>
+        <translation>Aktuální hodnota: </translation>
+    </message>
+    <message>
+        <source>Decrease </source>
+        <translation>Snížit </translation>
+    </message>
+    <message>
+        <source>Decrease the value of </source>
+        <translation>Snížit hodnotu parametru </translation>
+    </message>
+    <message>
+        <source>Increase </source>
+        <translation>Zvýšit </translation>
+    </message>
+    <message>
+        <source>Increase the value of </source>
+        <translation>Zvýšit hodnotu parametru </translation>
+    </message>
+    <message>
         <source>Rest</source>
         <translation>Odpočinek</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Stop</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Very Light</source>
@@ -264,72 +330,6 @@ Chcete zapnout požadované služby?</translation>
     <message>
         <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
         <translation>Chcete příště připomenout zapnutí Bluetooth nebo služeb určování polohy?</translation>
-    </message>
-    <message>
-        <source>Permissions Required</source>
-        <translation>Vyžadována oprávnění</translation>
-    </message>
-    <message>
-        <source>QZ requires both Bluetooth and Location Services to be enabled.
-Location Services are necessary on Android to allow the app to find Bluetooth devices.
-The GPS will not be used.
-
-Would you like to enable them?</source>
-        <translation type="vanished">QZ vyžaduje zapnutý Bluetooth i služby určování polohy.
-V systému Android jsou služby určování polohy nutné k tomu, aby aplikace našla zařízení Bluetooth.
-GPS se používat nebude.
-
-Chcete je zapnout?</translation>
-    </message>
-    <message>
-        <source>Reminder Preference</source>
-        <translation>Připomenutí</translation>
-    </message>
-    <message>
-        <source>Would you like to be reminded about enabling Location Services next time?</source>
-        <translation type="vanished">Připomenout příště zapnutí služeb určování polohy?</translation>
-    </message>
-    <message>
-        <source>Restart the app</source>
-        <translation>Restartovat aplikaci</translation>
-    </message>
-    <message>
-        <source>To apply the changes, you need to restart the app.
-Would you like to do that now?</source>
-        <translation>Změny se projeví po restartu aplikace.
-Restartovat nyní?</translation>
-    </message>
-    <message>
-        <source>Adjustable. Current value: </source>
-        <translation>Nastavitelné. Aktuální hodnota: </translation>
-    </message>
-    <message>
-        <source>Current value: </source>
-        <translation>Aktuální hodnota: </translation>
-    </message>
-    <message>
-        <source>Decrease </source>
-        <translation>Snížit </translation>
-    </message>
-    <message>
-        <source>Decrease the value of </source>
-        <translation>Snížit hodnotu parametru </translation>
-    </message>
-    <message>
-        <source>Increase </source>
-        <translation>Zvýšit </translation>
-    </message>
-    <message>
-        <source>Increase the value of </source>
-        <translation>Zvýšit hodnotu parametru </translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Stop</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Zrušit</translation>
     </message>
     <message>
         <source>Return to app</source>
@@ -985,6 +985,10 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Připojené zařízení není Echelon Connect Sport</translation>
     </message>
     <message>
+        <source>Android notification enabled</source>
+        <translation>Oznámení Android zapnuto</translation>
+    </message>
+    <message>
         <source>Strava: unable to open FIT file</source>
         <translation>Strava: soubor FIT nelze otevřít</translation>
     </message>
@@ -1069,12 +1073,12 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Stahování tréninku z Intervals.icu…</translation>
     </message>
     <message>
-        <source>Failed to get workouts (HTTP %1)</source>
-        <translation>Načtení tréninků se nezdařilo (HTTP %1)</translation>
-    </message>
-    <message>
         <source>Intervals.icu: %1</source>
         <translation>Intervals.icu: %1</translation>
+    </message>
+    <message>
+        <source>Failed to get workouts (HTTP %1)</source>
+        <translation>Načtení tréninků se nezdařilo (HTTP %1)</translation>
     </message>
     <message>
         <source>Intervals.icu: Invalid response</source>
@@ -1151,10 +1155,6 @@ Aktualizovat nastavení QZ?</translation>
     <message>
         <source>Zwift device: UPGRADE THE FIRMWARE!</source>
         <translation>Zařízení Zwift: AKTUALIZUJTE FIRMWARE!</translation>
-    </message>
-    <message>
-        <source>Android notification enabled</source>
-        <translation>Oznámení Android zapnuto</translation>
     </message>
     <message>
         <source>YPOO M5 ready</source>
@@ -1243,20 +1243,20 @@ Aktualizovat nastavení QZ?</translation>
 <context>
     <name>SettingsFormatField</name>
     <message>
-        <source>Enter the height in centimetres</source>
-        <translation>Zadejte výšku v centimetrech</translation>
-    </message>
-    <message>
-        <source>Enter the height as feet&apos;inches, e.g. 5&apos;10&quot;</source>
-        <translation>Zadejte výšku ve formátu stopy&apos;palce, např. 5&apos;10&quot;</translation>
+        <source>Enter an IP address, e.g. 192.168.1.10</source>
+        <translation>Zadejte IP adresu, např. 192.168.1.10</translation>
     </message>
     <message>
         <source>Enter an IP address or a host name, e.g. 192.168.1.10</source>
         <translation>Zadejte IP adresu nebo název hostitele, např. 192.168.1.10</translation>
     </message>
     <message>
-        <source>Enter an IP address, e.g. 192.168.1.10</source>
-        <translation>Zadejte IP adresu, např. 192.168.1.10</translation>
+        <source>Enter the height in centimetres</source>
+        <translation>Zadejte výšku v centimetrech</translation>
+    </message>
+    <message>
+        <source>Enter the height as feet&apos;inches, e.g. 5&apos;10&quot;</source>
+        <translation>Zadejte výšku ve formátu stopy&apos;palce, např. 5&apos;10&quot;</translation>
     </message>
     <message>
         <source>Enter the time as hh:mm:ss</source>
@@ -1266,20 +1266,12 @@ Aktualizovat nastavení QZ?</translation>
 <context>
     <name>SettingsList</name>
     <message>
-        <source>Please choose a file</source>
-        <translation>Vyberte soubor</translation>
-    </message>
-    <message>
         <source>Settings folder</source>
         <translation>Složka nastavení</translation>
     </message>
     <message>
-        <source>Other folders</source>
-        <translation>Další složky</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Obnovit soubory</translation>
+        <source>Please choose a file</source>
+        <translation>Vyberte soubor</translation>
     </message>
     <message>
         <source>Tap a file to select it, then Load.</source>
@@ -1292,6 +1284,14 @@ Aktualizovat nastavení QZ?</translation>
     <message>
         <source>No saved settings</source>
         <translation>Žádná uložená nastavení</translation>
+    </message>
+    <message>
+        <source>Other folders</source>
+        <translation>Další složky</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Obnovit soubory</translation>
     </message>
 </context>
 <context>
@@ -1334,6 +1334,80 @@ Aktualizovat nastavení QZ?</translation>
     <message>
         <source>Purchase Failed</source>
         <translation>Nákup se nezdařil</translation>
+    </message>
+</context>
+<context>
+    <name>SupportHelpButton</name>
+    <message>
+        <source>Contact QZ support</source>
+        <translation>Kontaktovat podporu QZ</translation>
+    </message>
+    <message>
+        <source>Prepare a support email with diagnostics</source>
+        <translation>Připravit e-mail podpoře s diagnostickými údaji</translation>
+    </message>
+    <message>
+        <source>No device connected</source>
+        <translation>Není připojeno žádné zařízení</translation>
+    </message>
+    <message>
+        <source>Speed and power at zero</source>
+        <translation>Rychlost a výkon jsou nulové</translation>
+    </message>
+    <message>
+        <source>QZ Support</source>
+        <translation>Podpora QZ</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation>Hotovo</translation>
+    </message>
+    <message>
+        <source>Hide keyboard</source>
+        <translation>Skrýt klávesnici</translation>
+    </message>
+    <message>
+        <source>Close support request</source>
+        <translation>Zavřít žádost o podporu</translation>
+    </message>
+    <message>
+        <source>Tell us what is not working. QZ will add your device and app information.</source>
+        <translation>Popište, co nefunguje. QZ přidá informace o zařízení a aplikaci.</translation>
+    </message>
+    <message>
+        <source>Describe the problem...</source>
+        <translation>Popište problém...</translation>
+    </message>
+    <message>
+        <source>Describe the problem</source>
+        <translation>Popište problém</translation>
+    </message>
+    <message>
+        <source>Attach debug log if available</source>
+        <translation>Přiložit protokol ladění, pokud je k dispozici</translation>
+    </message>
+    <message>
+        <source>You can review or edit the email before sending it. Nothing is sent automatically.</source>
+        <translation>Před odesláním můžete e-mail zkontrolovat nebo upravit. Nic se neodešle automaticky.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Zrušit</translation>
+    </message>
+    <message>
+        <source>Open email</source>
+        <translation>Otevřít e-mail</translation>
+    </message>
+</context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Kadence se zdá poloviční oproti skutečné. Zapněte „Zdvojnásobit kadenci při běhu“ a „Poloviční kadence na Stravě“ v části „Možnosti snímače výkonu“.</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Kadence se zdá dvojnásobná oproti skutečné. Vypněte „Zdvojnásobit kadenci při běhu“ a „Poloviční kadence na Stravě“ v části „Možnosti snímače výkonu“.</translation>
     </message>
 </context>
 <context>
@@ -1451,6 +1525,18 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Hledat (včetně podsložek)…</translation>
     </message>
     <message>
+        <source>Parent folder</source>
+        <translation>Nadřazená složka</translation>
+    </message>
+    <message>
+        <source>No workouts found</source>
+        <translation>Nenalezeny žádné tréninky</translation>
+    </message>
+    <message>
+        <source>No workouts here</source>
+        <translation>Žádné tréninky</translation>
+    </message>
+    <message>
         <source>Other folders</source>
         <translation>Další složky</translation>
     </message>
@@ -1481,18 +1567,6 @@ Aktualizovat nastavení QZ?</translation>
     <message>
         <source>Start Workout</source>
         <translation>Spustit trénink</translation>
-    </message>
-    <message>
-        <source>Parent folder</source>
-        <translation>Nadřazená složka</translation>
-    </message>
-    <message>
-        <source>No workouts here</source>
-        <translation>Žádné tréninky</translation>
-    </message>
-    <message>
-        <source>No workouts found</source>
-        <translation>Nenalezeny žádné tréninky</translation>
     </message>
 </context>
 <context>
@@ -1667,14 +1741,6 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Veslovací trenažér</translation>
     </message>
     <message>
-        <source>Jump Rope</source>
-        <translation>Švihadlo</translation>
-    </message>
-    <message>
-        <source>Stair Climber</source>
-        <translation>Schodový trenažér</translation>
-    </message>
-    <message>
         <source>Workout Editor</source>
         <translation>Editor tréninků</translation>
     </message>
@@ -1822,28 +1888,12 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Max. rychlost</translation>
     </message>
     <message>
-        <source>Max Incline</source>
-        <translation>Max. sklon</translation>
-    </message>
-    <message>
         <source>Max Resistance</source>
         <translation>Max. odpor</translation>
     </message>
     <message>
         <source>Ramp</source>
         <translation>Rampa</translation>
-    </message>
-    <message>
-        <source>Ramp Unit</source>
-        <translation>Jednotka rampy</translation>
-    </message>
-    <message>
-        <source>Ramp From</source>
-        <translation>Rampa od</translation>
-    </message>
-    <message>
-        <source>Ramp To</source>
-        <translation>Rampa do</translation>
     </message>
     <message>
         <source>Stroke Rate</source>
@@ -2042,34 +2092,6 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Chyba při opakování výběru: {message}</translation>
     </message>
     <message>
-        <source>Block repeated {times} times</source>
-        <translation>Počet opakování bloku: {times}</translation>
-    </message>
-    <message>
-        <source>Loaded {name}</source>
-        <translation>Načteno: {name}</translation>
-    </message>
-    <message>
-        <source>Deleted {name}</source>
-        <translation>Odstraněno: {name}</translation>
-    </message>
-    <message>
-        <source>Untitled Workout</source>
-        <translation>Trénink bez názvu</translation>
-    </message>
-    <message>
-        <source>Time</source>
-        <translation>Čas</translation>
-    </message>
-    <message>
-        <source>Duration {value}</source>
-        <translation>Délka: {value}</translation>
-    </message>
-    <message>
-        <source>{count} intervals</source>
-        <translation>Počet intervalů: {count}</translation>
-    </message>
-    <message>
         <source>Training Programs Browser</source>
         <translation>Procházení tréninkových programů</translation>
     </message>
@@ -2189,6 +2211,130 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Cílový sklon</translation>
     </message>
     <message>
+        <source>Peloton Workout in progress!</source>
+        <translation>Probíhá trénink Peloton!</translation>
+    </message>
+    <message>
+        <source>Do you want to follow the resistance?</source>
+        <translation>Sledovat zadaný odpor?</translation>
+    </message>
+    <message>
+        <source>SPEED</source>
+        <translation>RYCHLOST</translation>
+    </message>
+    <message>
+        <source>INCLINE</source>
+        <translation>SKLON</translation>
+    </message>
+    <message>
+        <source>PACE</source>
+        <translation>TEMPO</translation>
+    </message>
+    <message>
+        <source>ELEV.</source>
+        <translation>PŘEV.</translation>
+    </message>
+    <message>
+        <source>CADENCE</source>
+        <translation>KADENCE</translation>
+    </message>
+    <message>
+        <source>PULSE</source>
+        <translation>TEP</translation>
+    </message>
+    <message>
+        <source>POWER</source>
+        <translation>VÝKON</translation>
+    </message>
+    <message>
+        <source>RESISTANCE</source>
+        <translation>ODPOR</translation>
+    </message>
+    <message>
+        <source>CALORIES</source>
+        <translation>KALORIE</translation>
+    </message>
+    <message>
+        <source>DISTANCE</source>
+        <translation>VZDÁLENOST</translation>
+    </message>
+    <message>
+        <source>Heart</source>
+        <translation>Tep</translation>
+    </message>
+    <message>
+        <source>Odometer</source>
+        <translation>Celková vzdálenost</translation>
+    </message>
+    <message>
+        <source>Watt</source>
+        <translation>Výkon</translation>
+    </message>
+    <message>
+        <source>Elapsed</source>
+        <translation>Uplynulý čas</translation>
+    </message>
+    <message>
+        <source>Inclination</source>
+        <translation>Sklon</translation>
+    </message>
+    <message>
+        <source>Altitude</source>
+        <translation>Nadmořská výška</translation>
+    </message>
+    <message>
+        <source>Elevation</source>
+        <translation>Převýšení</translation>
+    </message>
+    <message>
+        <source>Jump Rope</source>
+        <translation>Švihadlo</translation>
+    </message>
+    <message>
+        <source>Stair Climber</source>
+        <translation>Schodový trenažér</translation>
+    </message>
+    <message>
+        <source>Ramp Unit</source>
+        <translation>Jednotka rampy</translation>
+    </message>
+    <message>
+        <source>Ramp From</source>
+        <translation>Rampa od</translation>
+    </message>
+    <message>
+        <source>Ramp To</source>
+        <translation>Rampa do</translation>
+    </message>
+    <message>
+        <source>Block repeated {times} times</source>
+        <translation>Počet opakování bloku: {times}</translation>
+    </message>
+    <message>
+        <source>Loaded {name}</source>
+        <translation>Načteno: {name}</translation>
+    </message>
+    <message>
+        <source>Deleted {name}</source>
+        <translation>Odstraněno: {name}</translation>
+    </message>
+    <message>
+        <source>Untitled Workout</source>
+        <translation>Trénink bez názvu</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation>Čas</translation>
+    </message>
+    <message>
+        <source>Duration {value}</source>
+        <translation>Délka: {value}</translation>
+    </message>
+    <message>
+        <source>{count} intervals</source>
+        <translation>Počet intervalů: {count}</translation>
+    </message>
+    <message>
         <source>Heart Rate</source>
         <translation>Tep</translation>
     </message>
@@ -2249,78 +2395,6 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Tep &lt;{value} bpm</translation>
     </message>
     <message>
-        <source>W</source>
-        <translation>W</translation>
-    </message>
-    <message>
-        <source>kJ</source>
-        <translation>kJ</translation>
-    </message>
-    <message>
-        <source>kcal</source>
-        <translation>kcal</translation>
-    </message>
-    <message>
-        <source>km</source>
-        <translation>km</translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>rpm</source>
-        <translation>rpm</translation>
-    </message>
-    <message>
-        <source>bpm</source>
-        <translation>bpm</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>min/km</source>
-        <translation>min/km</translation>
-    </message>
-    <message>
-        <source>min/mi</source>
-        <translation>min/mi</translation>
-    </message>
-    <message>
-        <source>Full screen</source>
-        <translation>Celá obrazovka</translation>
-    </message>
-    <message>
-        <source>Exit full screen</source>
-        <translation>Ukončit celou obrazovku</translation>
-    </message>
-    <message>
-        <source>Swipe left or right to switch charts</source>
-        <translation>Grafy přepnete přejetím doleva nebo doprava</translation>
-    </message>
-    <message>
-        <source>A workout named {name} already exists. Replace it?</source>
-        <translation>Trénink s názvem {name} už existuje. Nahradit ho?</translation>
-    </message>
-    <message>
-        <source>Replace</source>
-        <translation>Nahradit</translation>
-    </message>
-    <message>
-        <source>lvl</source>
-        <translation>úr.</translation>
-    </message>
-    <message>
-        <source>spm</source>
-        <translation>spm</translation>
-    </message>
-    <message>
         <source>Marathon</source>
         <translation>Maraton</translation>
     </message>
@@ -2339,14 +2413,6 @@ Aktualizovat nastavení QZ?</translation>
     <message>
         <source>1 Mile</source>
         <translation>1 míle</translation>
-    </message>
-    <message>
-        <source>Peloton Workout in progress!</source>
-        <translation>Probíhá trénink Peloton!</translation>
-    </message>
-    <message>
-        <source>Do you want to follow the resistance?</source>
-        <translation>Sledovat zadaný odpor?</translation>
     </message>
     <message>
         <source>AVG</source>
@@ -2447,72 +2513,80 @@ Aktualizovat nastavení QZ?</translation>
         <translation>Automatický odpor</translation>
     </message>
     <message>
-        <source>SPEED</source>
-        <translation>RYCHLOST</translation>
+        <source>Max Incline</source>
+        <translation>Max. sklon</translation>
     </message>
     <message>
-        <source>INCLINE</source>
-        <translation>SKLON</translation>
+        <source>W</source>
+        <translation>W</translation>
     </message>
     <message>
-        <source>PACE</source>
-        <translation>TEMPO</translation>
+        <source>kJ</source>
+        <translation>kJ</translation>
     </message>
     <message>
-        <source>ELEV.</source>
-        <translation>PŘEV.</translation>
+        <source>kcal</source>
+        <translation>kcal</translation>
     </message>
     <message>
-        <source>CADENCE</source>
-        <translation>KADENCE</translation>
+        <source>km</source>
+        <translation>km</translation>
     </message>
     <message>
-        <source>PULSE</source>
-        <translation>TEP</translation>
+        <source>mi</source>
+        <translation>mi</translation>
     </message>
     <message>
-        <source>POWER</source>
-        <translation>VÝKON</translation>
+        <source>rpm</source>
+        <translation>rpm</translation>
     </message>
     <message>
-        <source>RESISTANCE</source>
-        <translation>ODPOR</translation>
+        <source>bpm</source>
+        <translation>bpm</translation>
     </message>
     <message>
-        <source>CALORIES</source>
-        <translation>KALORIE</translation>
+        <source>km/h</source>
+        <translation>km/h</translation>
     </message>
     <message>
-        <source>DISTANCE</source>
-        <translation>VZDÁLENOST</translation>
+        <source>mph</source>
+        <translation>mph</translation>
     </message>
     <message>
-        <source>Heart</source>
-        <translation>Tep</translation>
+        <source>min/km</source>
+        <translation>min/km</translation>
     </message>
     <message>
-        <source>Odometer</source>
-        <translation>Celková vzdálenost</translation>
+        <source>min/mi</source>
+        <translation>min/mi</translation>
     </message>
     <message>
-        <source>Watt</source>
-        <translation>Výkon</translation>
+        <source>Full screen</source>
+        <translation>Celá obrazovka</translation>
     </message>
     <message>
-        <source>Elapsed</source>
-        <translation>Uplynulý čas</translation>
+        <source>Exit full screen</source>
+        <translation>Ukončit celou obrazovku</translation>
     </message>
     <message>
-        <source>Inclination</source>
-        <translation>Sklon</translation>
+        <source>Swipe left or right to switch charts</source>
+        <translation>Grafy přepnete přejetím doleva nebo doprava</translation>
     </message>
     <message>
-        <source>Altitude</source>
-        <translation>Nadmořská výška</translation>
+        <source>A workout named {name} already exists. Replace it?</source>
+        <translation>Trénink s názvem {name} už existuje. Nahradit ho?</translation>
     </message>
     <message>
-        <source>Elevation</source>
-        <translation>Převýšení</translation>
+        <source>Replace</source>
+        <translation>Nahradit</translation>
+    </message>
+    <message>
+        <source>lvl</source>
+        <translation>úr.</translation>
+    </message>
+    <message>
+        <source>spm</source>
+        <translation>spm</translation>
     </message>
     <message>
         <source>Enter a number</source>
@@ -2610,22 +2684,6 @@ Následující otázky přizpůsobí QZ vašemu trenažéru a cílům.</translat
         <translation>Jaký máte trenažér?</translation>
     </message>
     <message>
-        <source>Bike</source>
-        <translation>Kolo</translation>
-    </message>
-    <message>
-        <source>Treadmill</source>
-        <translation>Běžecký pás</translation>
-    </message>
-    <message>
-        <source>Rower</source>
-        <translation>Veslovací trenažér</translation>
-    </message>
-    <message>
-        <source>Elliptical</source>
-        <translation>Eliptický trenažér</translation>
-    </message>
-    <message>
         <source>Back</source>
         <translation>Zpět</translation>
     </message>
@@ -2636,14 +2694,6 @@ Následující otázky přizpůsobí QZ vašemu trenažéru a cílům.</translat
     <message>
         <source>QZ allows you to connect to both of them, even simultaneously if you want!</source>
         <translation>QZ se umí připojit k oběma, a pokud chcete, i současně!</translation>
-    </message>
-    <message>
-        <source>Other app</source>
-        <translation>Jiná aplikace</translation>
-    </message>
-    <message>
-        <source>QZ Standalone</source>
-        <translation>Pouze QZ</translation>
     </message>
     <message>
         <source>Connect to Peloton</source>
@@ -2666,18 +2716,6 @@ Následující otázky přizpůsobí QZ vašemu trenažéru a cílům.</translat
         <translation>Obtížnost</translation>
     </message>
     <message>
-        <source>lower</source>
-        <translation>dolní mez</translation>
-    </message>
-    <message>
-        <source>upper</source>
-        <translation>horní mez</translation>
-    </message>
-    <message>
-        <source>average</source>
-        <translation>průměr</translation>
-    </message>
-    <message>
         <source>Finish</source>
         <translation>Dokončit</translation>
     </message>
@@ -2692,6 +2730,18 @@ Následující otázky přizpůsobí QZ vašemu trenažéru a cílům.</translat
     <message>
         <source>Next</source>
         <translation>Další</translation>
+    </message>
+    <message>
+        <source>Your equipment, units and profile, step by step</source>
+        <translation>Trenažér, jednotky a profil krok za krokem</translation>
+    </message>
+    <message>
+        <source>Pick a topic and go straight to its settings</source>
+        <translation>Vyberte téma a přejděte rovnou k jeho nastavení</translation>
+    </message>
+    <message>
+        <source>Close the wizard</source>
+        <translation>Zavřít průvodce</translation>
     </message>
     <message>
         <source>Custom Configurations</source>
@@ -2794,14 +2844,6 @@ Následující otázky přizpůsobí QZ vašemu trenažéru a cílům.</translat
         <translation>Vyberte svůj trenažér</translation>
     </message>
     <message>
-        <source>Disabled</source>
-        <translation>Vypnuto</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>Obnovit</translation>
-    </message>
-    <message>
         <source>Unit System</source>
         <translation>Soustava jednotek</translation>
     </message>
@@ -2810,28 +2852,8 @@ Následující otázky přizpůsobí QZ vašemu trenažéru a cílům.</translat
         <translation>Vyberte soustavu jednotek</translation>
     </message>
     <message>
-        <source>Metric</source>
-        <translation>Metrická</translation>
-    </message>
-    <message>
-        <source>Imperial</source>
-        <translation>Imperiální</translation>
-    </message>
-    <message>
         <source>User Information</source>
         <translation>Údaje o uživateli</translation>
-    </message>
-    <message>
-        <source>Weight (%1)</source>
-        <translation>Hmotnost (%1)</translation>
-    </message>
-    <message>
-        <source>lbs</source>
-        <translation>lbs</translation>
-    </message>
-    <message>
-        <source>kg</source>
-        <translation>kg</translation>
     </message>
     <message>
         <source>Age</source>
@@ -2840,14 +2862,6 @@ Následující otázky přizpůsobí QZ vašemu trenažéru a cílům.</translat
     <message>
         <source>Gender</source>
         <translation>Pohlaví</translation>
-    </message>
-    <message>
-        <source>Male</source>
-        <translation>Muž</translation>
-    </message>
-    <message>
-        <source>Female</source>
-        <translation>Žena</translation>
     </message>
     <message>
         <source>Select Your Heart Rate Device</source>
@@ -2878,16 +2892,76 @@ Následující otázky přizpůsobí QZ vašemu trenažéru a cílům.</translat
         <translation>Hodinky Garmin</translation>
     </message>
     <message>
-        <source>Your equipment, units and profile, step by step</source>
-        <translation>Trenažér, jednotky a profil krok za krokem</translation>
+        <source>Bike</source>
+        <translation>Kolo</translation>
     </message>
     <message>
-        <source>Pick a topic and go straight to its settings</source>
-        <translation>Vyberte téma a přejděte rovnou k jeho nastavení</translation>
+        <source>Treadmill</source>
+        <translation>Běžecký pás</translation>
     </message>
     <message>
-        <source>Close the wizard</source>
-        <translation>Zavřít průvodce</translation>
+        <source>Rower</source>
+        <translation>Veslovací trenažér</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>Eliptický trenažér</translation>
+    </message>
+    <message>
+        <source>Other app</source>
+        <translation>Jiná aplikace</translation>
+    </message>
+    <message>
+        <source>QZ Standalone</source>
+        <translation>Pouze QZ</translation>
+    </message>
+    <message>
+        <source>lower</source>
+        <translation>dolní mez</translation>
+    </message>
+    <message>
+        <source>upper</source>
+        <translation>horní mez</translation>
+    </message>
+    <message>
+        <source>average</source>
+        <translation>průměr</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Vypnuto</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Obnovit</translation>
+    </message>
+    <message>
+        <source>Metric</source>
+        <translation>Metrická</translation>
+    </message>
+    <message>
+        <source>Imperial</source>
+        <translation>Imperiální</translation>
+    </message>
+    <message>
+        <source>Weight (%1)</source>
+        <translation>Hmotnost (%1)</translation>
+    </message>
+    <message>
+        <source>Male</source>
+        <translation>Muž</translation>
+    </message>
+    <message>
+        <source>Female</source>
+        <translation>Žena</translation>
+    </message>
+    <message>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <source>kg</source>
+        <translation>kg</translation>
     </message>
 </context>
 <context>
@@ -3025,16 +3099,24 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Tréninkový program se nepodařilo načíst. Zkontrolujte, zda soubor existuje.</translation>
     </message>
     <message>
-        <source>mi</source>
-        <translation>mi</translation>
+        <source>Import FIT File...</source>
+        <translation>Importovat soubor FIT…</translation>
     </message>
     <message>
-        <source>km</source>
-        <translation>km</translation>
+        <source>Import from QZ Folder...</source>
+        <translation>Importovat ze složky QZ…</translation>
     </message>
     <message>
-        <source>kcal</source>
-        <translation>kcal</translation>
+        <source>Please choose a file</source>
+        <translation>Vyberte soubor</translation>
+    </message>
+    <message>
+        <source>FIT files (*.fit *.FIT)</source>
+        <translation>Soubory FIT (*.fit *.FIT)</translation>
+    </message>
+    <message>
+        <source>All files (*)</source>
+        <translation>Všechny soubory (*)</translation>
     </message>
     <message>
         <source>Share FIT file</source>
@@ -3113,16 +3195,16 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Zavřít</translation>
     </message>
     <message>
+        <source>Filter by date</source>
+        <translation>Filtrovat podle data</translation>
+    </message>
+    <message>
         <source>Calendar</source>
         <translation>Kalendář</translation>
     </message>
     <message>
-        <source>No workouts yet</source>
-        <translation>Zatím žádné tréninky</translation>
-    </message>
-    <message>
-        <source>No workouts on this day</source>
-        <translation>V tento den žádné tréninky</translation>
+        <source>Import workouts</source>
+        <translation>Importovat tréninky</translation>
     </message>
     <message>
         <source>Adding workouts to the history</source>
@@ -3141,12 +3223,36 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Kopírování souborů tréninků: %1 z %2</translation>
     </message>
     <message>
-        <source>Open on Peloton</source>
-        <translation>Otevřít v Pelotonu</translation>
+        <source>No workouts on this day</source>
+        <translation>V tento den žádné tréninky</translation>
+    </message>
+    <message>
+        <source>No workouts yet</source>
+        <translation>Zatím žádné tréninky</translation>
     </message>
     <message>
         <source>Finished workouts appear here: open one to see its charts.</source>
         <translation>Zde se objeví dokončené tréninky: otevřete kterýkoli a zobrazte jeho grafy.</translation>
+    </message>
+    <message>
+        <source>Open on Peloton</source>
+        <translation>Otevřít v Pelotonu</translation>
+    </message>
+    <message>
+        <source>Load training program</source>
+        <translation>Načíst tréninkový program</translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>kcal</source>
+        <translation>kcal</translation>
     </message>
     <message>
         <source>Previous month</source>
@@ -3155,38 +3261,6 @@ Při prvním spuštění to může chvíli trvat.</translation>
     <message>
         <source>Next month</source>
         <translation>Další měsíc</translation>
-    </message>
-    <message>
-        <source>Import FIT File...</source>
-        <translation>Importovat soubor FIT…</translation>
-    </message>
-    <message>
-        <source>Import from QZ Folder...</source>
-        <translation>Importovat ze složky QZ…</translation>
-    </message>
-    <message>
-        <source>Please choose a file</source>
-        <translation>Vyberte soubor</translation>
-    </message>
-    <message>
-        <source>FIT files (*.fit *.FIT)</source>
-        <translation>Soubory FIT (*.fit *.FIT)</translation>
-    </message>
-    <message>
-        <source>All files (*)</source>
-        <translation>Všechny soubory (*)</translation>
-    </message>
-    <message>
-        <source>Filter by date</source>
-        <translation>Filtrovat podle data</translation>
-    </message>
-    <message>
-        <source>Import workouts</source>
-        <translation>Importovat tréninky</translation>
-    </message>
-    <message>
-        <source>Load training program</source>
-        <translation>Načíst tréninkový program</translation>
     </message>
     <message>
         <source>has a workout</source>
@@ -3308,16 +3382,16 @@ Při prvním spuštění to může chvíli trvat.</translation>
 <context>
     <name>gears</name>
     <message>
-        <source>Wahoo Options</source>
-        <translation>Možnosti Wahoo</translation>
-    </message>
-    <message>
         <source>Without Wheel Diameter Protocol</source>
         <translation>Bez protokolu průměru kola</translation>
     </message>
     <message>
         <source>Enable this for simplified Wahoo protocol that adds gears directly to grade instead of using wheel diameter changes. Default is false.</source>
         <translation>Zapněte pro zjednodušený protokol Wahoo, který přičítá převody přímo ke stoupání místo změny průměru kola. Výchozí: vypnuto.</translation>
+    </message>
+    <message>
+        <source>Wahoo Options</source>
+        <translation>Možnosti Wahoo</translation>
     </message>
     <message>
         <source>Chainring Size</source>
@@ -3382,30 +3456,6 @@ Při prvním spuštění to může chvíli trvat.</translation>
 </context>
 <context>
     <name>homeform</name>
-    <message>
-        <source>Bluetooth is off</source>
-        <translation>Bluetooth je vypnuté</translation>
-    </message>
-    <message>
-        <source>Searching for the device...</source>
-        <translation>Hledání zařízení…</translation>
-    </message>
-    <message>
-        <source>Connecting to %1...</source>
-        <translation>Připojování k %1...</translation>
-    </message>
-    <message>
-        <source>Search stopped, tap the Bluetooth icon</source>
-        <translation>Hledání zastaveno, klepněte na ikonu Bluetooth</translation>
-    </message>
-    <message>
-        <source>Next search in %1 s</source>
-        <translation>Další hledání za %1 s</translation>
-    </message>
-    <message>
-        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
-        <translation>Android povoluje 5 hledání Bluetooth za 30 s, další začne za %1 s</translation>
-    </message>
     <message>
         <source>Speed (%1/h)</source>
         <translation>Rychlost (%1/h)</translation>
@@ -3596,9 +3646,6 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Stoupání</translation>
     </message>
     <message>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Start pressed</source>
         <extracomment>Text-to-speech: spoken when the workout is started or resumed with the Start button.</extracomment>
         <translation>Stisknuto tlačítko Start</translation>
@@ -3615,58 +3662,8 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>cs</translation>
     </message>
     <message>
-        <source>Watts</source>
-        <translation>Výkon</translation>
-    </message>
-    <message>
-        <source>km</source>
-        <translation>km</translation>
-    </message>
-    <message>
-        <source>m</source>
-        <comment>unit: meters</comment>
-        <translation>m</translation>
-    </message>
-    <message>
-        <source>Kg</source>
-        <translation>kg</translation>
-    </message>
-    <message>
-        <source>cm</source>
-        <translation>cm</translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>ft</source>
-        <translation>ft</translation>
-    </message>
-    <message>
-        <source>in</source>
-        <comment>unit: inches</comment>
-        <translation>in</translation>
-    </message>
-    <message>
-        <source>Oz</source>
-        <translation>oz</translation>
-    </message>
-    <message>
-        <source>AVG Watts</source>
-        <translation>Prům. výkon</translation>
-    </message>
-    <message>
         <source>Power Avg</source>
         <translation>Průměrování výkonu</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation>Vypnuto</translation>
-    </message>
-    <message>
-        <source>HRV (ms)</source>
-        <translation>HRV (ms)</translation>
     </message>
     <message>
         <source>PID Heart</source>
@@ -3693,26 +3690,6 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Počet kroků</translation>
     </message>
     <message>
-        <source>Odometer (m)</source>
-        <translation>Celk. vzdál. (m)</translation>
-    </message>
-    <message>
-        <source>Pace (m/500m)</source>
-        <translation>Tempo (min/500 m)</translation>
-    </message>
-    <message>
-        <source>Avg Pace (m/500m)</source>
-        <translation>Prům. tempo (min/500 m)</translation>
-    </message>
-    <message>
-        <source>T.Pace(m/500m)</source>
-        <translation>Cíl. tempo (min/500 m)</translation>
-    </message>
-    <message>
-        <source>%1 found</source>
-        <translation>Nalezeno: %1</translation>
-    </message>
-    <message>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
@@ -3730,26 +3707,6 @@ Při prvním spuštění to může chvíli trvat.</translation>
             <lengthvariant>Pokračovat</lengthvariant>
             <lengthvariant>Dál</lengthvariant>
         </translation>
-    </message>
-    <message>
-        <source>offset </source>
-        <translation>korekce </translation>
-    </message>
-    <message>
-        <source> /min</source>
-        <translation> /min</translation>
-    </message>
-    <message>
-        <source> sec.</source>
-        <translation> s</translation>
-    </message>
-    <message>
-        <source>Incl: </source>
-        <translation>Sklon: </translation>
-    </message>
-    <message>
-        <source>%1%2W</source>
-        <translation>%1%2 W</translation>
     </message>
     <message>
         <source>Rec.</source>
@@ -3796,26 +3753,6 @@ Při prvním spuštění to může chvíli trvat.</translation>
     <message>
         <source>N/A</source>
         <translation>N/A</translation>
-    </message>
-    <message>
-        <source>3s avg</source>
-        <translation>Prům. 3 s</translation>
-    </message>
-    <message>
-        <source>5s avg</source>
-        <translation>Prům. 5 s</translation>
-    </message>
-    <message>
-        <source>Gain: </source>
-        <translation>Násobitel: </translation>
-    </message>
-    <message>
-        <source>MIN: </source>
-        <translation>Min.: </translation>
-    </message>
-    <message>
-        <source>W </source>
-        <translation>W </translation>
     </message>
     <message>
         <source>, speed </source>
@@ -4011,24 +3948,20 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Chyba při získávání přístupového tokenu, %1 (%2)</translation>
     </message>
     <message>
-        <source>Share FIT file</source>
-        <translation>Sdílet soubor FIT</translation>
+        <source>Watts</source>
+        <translation>Výkon</translation>
     </message>
     <message>
-        <source>The FIT file of this workout could not be shared</source>
-        <translation>Soubor FIT tohoto tréninku se nepodařilo sdílet</translation>
-    </message>
-    <message>
-        <source>License Approved!</source>
-        <translation>Licence potvrzena!</translation>
-    </message>
-    <message>
-        <source>License not found</source>
-        <translation>Licence nenalezena</translation>
+        <source>AVG Watts</source>
+        <translation>Prům. výkon</translation>
     </message>
     <message>
         <source>The workout history database could not be opened.</source>
         <translation>Databázi historie tréninků nelze otevřít.</translation>
+    </message>
+    <message>
+        <source>Wi-Fi connection (DirCon) restarted</source>
+        <translation>Připojení přes Wi-Fi (DirCon) restartováno</translation>
     </message>
     <message>
         <source>Workouts imported: %1.</source>
@@ -4067,8 +4000,150 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Nebyly nalezeny žádné soubory tréninků (.fit).</translation>
     </message>
     <message>
-        <source>Wi-Fi connection (DirCon) restarted</source>
-        <translation>Připojení přes Wi-Fi (DirCon) restartováno</translation>
+        <source>License Approved!</source>
+        <translation>Licence potvrzena!</translation>
+    </message>
+    <message>
+        <source>License not found</source>
+        <translation>Licence nenalezena</translation>
+    </message>
+    <message>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>m</source>
+        <comment>unit: meters</comment>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>Kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>ft</source>
+        <translation>ft</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <comment>unit: inches</comment>
+        <translation>in</translation>
+    </message>
+    <message>
+        <source>Oz</source>
+        <translation>oz</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Vypnuto</translation>
+    </message>
+    <message>
+        <source>HRV (ms)</source>
+        <translation>HRV (ms)</translation>
+    </message>
+    <message>
+        <source>Searching for the device...</source>
+        <translation>Hledání zařízení…</translation>
+    </message>
+    <message>
+        <source>Connecting to %1...</source>
+        <translation>Připojování k %1...</translation>
+    </message>
+    <message>
+        <source>%1 found</source>
+        <translation>Nalezeno: %1</translation>
+    </message>
+    <message>
+        <source>Search stopped, tap the Bluetooth icon</source>
+        <translation>Hledání zastaveno, klepněte na ikonu Bluetooth</translation>
+    </message>
+    <message>
+        <source>Next search in %1 s</source>
+        <translation>Další hledání za %1 s</translation>
+    </message>
+    <message>
+        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
+        <translation>Android povoluje 5 hledání Bluetooth za 30 s, další začne za %1 s</translation>
+    </message>
+    <message>
+        <source>Odometer (m)</source>
+        <translation>Celk. vzdál. (m)</translation>
+    </message>
+    <message>
+        <source>Pace (m/500m)</source>
+        <translation>Tempo (min/500 m)</translation>
+    </message>
+    <message>
+        <source>Avg Pace (m/500m)</source>
+        <translation>Prům. tempo (min/500 m)</translation>
+    </message>
+    <message>
+        <source>T.Pace(m/500m)</source>
+        <translation>Cíl. tempo (min/500 m)</translation>
+    </message>
+    <message>
+        <source>offset </source>
+        <translation>korekce </translation>
+    </message>
+    <message>
+        <source> /min</source>
+        <translation> /min</translation>
+    </message>
+    <message>
+        <source> sec.</source>
+        <translation> s</translation>
+    </message>
+    <message>
+        <source>Incl: </source>
+        <translation>Sklon: </translation>
+    </message>
+    <message>
+        <source>%1%2W</source>
+        <translation>%1%2 W</translation>
+    </message>
+    <message>
+        <source>3s avg</source>
+        <translation>Prům. 3 s</translation>
+    </message>
+    <message>
+        <source>5s avg</source>
+        <translation>Prům. 5 s</translation>
+    </message>
+    <message>
+        <source>Gain: </source>
+        <translation>Násobitel: </translation>
+    </message>
+    <message>
+        <source>MIN: </source>
+        <translation>Min.: </translation>
+    </message>
+    <message>
+        <source>W </source>
+        <translation>W </translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Sdílet soubor FIT</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>Soubor FIT tohoto tréninku se nepodařilo sdílet</translation>
+    </message>
+    <message>
+        <source>meters</source>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>feet</source>
+        <translation>ft</translation>
     </message>
     <message>
         <source>Great workout!</source>
@@ -4203,14 +4278,6 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <translation>Průměrná délka záběru: %1</translation>
     </message>
     <message>
-        <source>meters</source>
-        <translation>m</translation>
-    </message>
-    <message>
-        <source>feet</source>
-        <translation>ft</translation>
-    </message>
-    <message>
         <source>QZ target power is overriding the app&apos;s commands. Pause QZ and resume it to give control back to the app.</source>
         <translation>Cílový výkon QZ přebíjí příkazy aplikace. Ovládání vrátíte aplikaci tak, že QZ pozastavíte a znovu spustíte.</translation>
     </message>
@@ -4343,20 +4410,16 @@ Při prvním spuštění to může chvíli trvat.</translation>
         <source>Unable to open an email application</source>
         <translation>Nepodařilo se otevřít e-mailovou aplikaci</translation>
     </message>
+    <message>
+        <source>Bluetooth is off</source>
+        <translation>Bluetooth je vypnuté</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
     <message>
-        <source>QZ is closing...</source>
-        <translation>QZ se zavírá...</translation>
-    </message>
-    <message>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>
-    </message>
-    <message>
-        <source>Press back again to exit</source>
-        <translation>Pro ukončení stiskněte znovu Zpět</translation>
     </message>
     <message>
         <source>Program has been loaded correctly. Press start to begin!</source>
@@ -4397,10 +4460,6 @@ restartujte aplikaci.</translation>
         <translation>QZ našlo Bluetooth trenažéry v okolí. Vyberte ten, na kterém budete nyní cvičit.</translation>
     </message>
     <message>
-        <source>Disabled</source>
-        <translation type="vanished">Vypnuto</translation>
-    </message>
-    <message>
         <source>Select a device</source>
         <translation>Vyberte zařízení</translation>
     </message>
@@ -4419,28 +4478,6 @@ restartujte aplikaci.</translation>
     <message>
         <source>Settings has been loaded correctly. Restart the app!</source>
         <translation>Nastavení byla úspěšně načtena. Restartujte aplikaci!</translation>
-    </message>
-    <message>
-        <source>Saved! Look in the Files app.</source>
-        <translation>Uloženo! Podívejte se do aplikace Soubory.</translation>
-    </message>
-    <message>
-        <source>Saved! Look in the app&apos;s private folder.</source>
-        <translation>Uloženo! Podívejte se do soukromé složky aplikace.</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Obnovit soubory</translation>
-    </message>
-    <message>
-        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
-Do you want to look for them?
-
-In the next window, allow access to the QZ folder.</source>
-        <translation>Tréninkové programy, trasy GPX, soubory nastavení a profily z předchozí instalace mohou být stále ve složce QZ.
-Vyhledat je?
-
-V dalším okně povolte přístup ke složce QZ.</translation>
     </message>
     <message>
         <source>Saved! Check your private folder (Android)&lt;br&gt;or Files App (iOS)</source>
@@ -4475,14 +4512,6 @@ Restartovat nyní?</translation>
     <message>
         <source>Without it QZ uses the default settings, and the data or the resistance may be off.</source>
         <translation>Bez toho QZ použije výchozí nastavení a data nebo odpor nemusí odpovídat.</translation>
-    </message>
-    <message>
-        <source>Restart now?</source>
-        <translation>Restartovat nyní?</translation>
-    </message>
-    <message>
-        <source>This FitShow device also reports bike data. Is it a bike?</source>
-        <translation>Toto zařízení FitShow posílá i data kola. Je to kolo?</translation>
     </message>
     <message>
         <source>Strava</source>
@@ -4523,6 +4552,28 @@ Spustit ho nyní?</translation>
     <message>
         <source>Peloton</source>
         <translation>Peloton</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the Files app.</source>
+        <translation>Uloženo! Podívejte se do aplikace Soubory.</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the app&apos;s private folder.</source>
+        <translation>Uloženo! Podívejte se do soukromé složky aplikace.</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Obnovit soubory</translation>
+    </message>
+    <message>
+        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Tréninkové programy, trasy GPX, soubory nastavení a profily z předchozí instalace mohou být stále ve složce QZ.
+Vyhledat je?
+
+V dalším okně povolte přístup ke složce QZ.</translation>
     </message>
     <message>
         <source>You are already connected to Peloton. Do you want to log out?</source>
@@ -4585,12 +4636,12 @@ Spustit ho nyní?</translation>
         <translation>Sdílet soubor FIT</translation>
     </message>
     <message>
-        <source>Lock tiles</source>
-        <translation>Zamknout dlaždice</translation>
-    </message>
-    <message>
         <source>Unlock tiles</source>
         <translation>Odemknout dlaždice</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Zamknout dlaždice</translation>
     </message>
     <message>
         <source>Disable auto resistance</source>
@@ -4661,12 +4712,66 @@ Spustit ho nyní?</translation>
         <translation>Ukončit</translation>
     </message>
     <message>
+        <source>Disconnect from Strava</source>
+        <translation>Odpojit Stravu</translation>
+    </message>
+    <message>
+        <source>Connect with Strava</source>
+        <translation>Připojit Stravu</translation>
+    </message>
+    <message>
+        <source>Disconnect from Peloton</source>
+        <translation>Odpojit Peloton</translation>
+    </message>
+    <message>
+        <source>Connect with Peloton</source>
+        <translation>Připojit Peloton</translation>
+    </message>
+    <message>
+        <source>Garmin Connect settings</source>
+        <translation>Nastavení Garmin Connect</translation>
+    </message>
+    <message>
+        <source>Disconnect from Intervals.icu</source>
+        <translation>Odpojit Intervals.icu</translation>
+    </message>
+    <message>
+        <source>Connect with Intervals.icu</source>
+        <translation>Připojit Intervals.icu</translation>
+    </message>
+    <message>
+        <source>Workout</source>
+        <translation>Trénink</translation>
+    </message>
+    <message>
+        <source>App</source>
+        <translation>Aplikace</translation>
+    </message>
+    <message>
+        <source>Services</source>
+        <translation>Služby</translation>
+    </message>
+    <message>
         <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
         <translation>QDomyos-Zwift – propojení trenažérů s aplikacemi</translation>
     </message>
     <message>
         <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
         <translation>Nezapomeňte uložit profil „%1“, pokud chcete tyto změny v profilu zachovat.</translation>
+    </message>
+    <message>
+        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
+No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
+        <translation>Ano: QZ zapne „Kolo Fit Plus“ a zavře se; po dalším spuštění se k zařízení připojí jako ke kolu.
+Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nastavit ručně: „Kolo Fit Plus“ v části „Možnosti kola Fitplus“).</translation>
+    </message>
+    <message>
+        <source>Press back again to exit</source>
+        <translation>Pro ukončení stiskněte znovu Zpět</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation type="vanished">Vypnuto</translation>
     </message>
     <message>
         <source>Camera Cutout</source>
@@ -4709,6 +4814,14 @@ In the next window, allow access to the QZ folder.</source>
 Vyhledat je?
 
 V dalším okně povolte přístup ke složce QZ.</translation>
+    </message>
+    <message>
+        <source>Restart now?</source>
+        <translation>Restartovat nyní?</translation>
+    </message>
+    <message>
+        <source>This FitShow device also reports bike data. Is it a bike?</source>
+        <translation>Toto zařízení FitShow posílá i data kola. Je to kolo?</translation>
     </message>
     <message>
         <source>Garmin FTP Update</source>
@@ -4789,64 +4902,6 @@ Přepnout pro tuto relaci na klasické virtuální zařízení Bluetooth?</trans
         <translation>Ne</translation>
     </message>
     <message>
-        <source>Please choose a file</source>
-        <translation>Vyberte soubor</translation>
-    </message>
-    <message>
-        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
-No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
-        <translation>Ano: QZ zapne „Kolo Fit Plus“ a zavře se; po dalším spuštění se k zařízení připojí jako ke kolu.
-Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nastavit ručně: „Kolo Fit Plus“ v části „Možnosti kola Fitplus“).</translation>
-    </message>
-    <message>
-        <source>Auto Resistance enabled</source>
-        <translation>Automatický odpor zapnut</translation>
-    </message>
-    <message>
-        <source>Auto Resistance disabled</source>
-        <translation>Automatický odpor vypnut</translation>
-    </message>
-    <message>
-        <source>Disconnect from Strava</source>
-        <translation>Odpojit Stravu</translation>
-    </message>
-    <message>
-        <source>Connect with Strava</source>
-        <translation>Připojit Stravu</translation>
-    </message>
-    <message>
-        <source>Disconnect from Peloton</source>
-        <translation>Odpojit Peloton</translation>
-    </message>
-    <message>
-        <source>Connect with Peloton</source>
-        <translation>Připojit Peloton</translation>
-    </message>
-    <message>
-        <source>Garmin Connect settings</source>
-        <translation>Nastavení Garmin Connect</translation>
-    </message>
-    <message>
-        <source>Disconnect from Intervals.icu</source>
-        <translation>Odpojit Intervals.icu</translation>
-    </message>
-    <message>
-        <source>Connect with Intervals.icu</source>
-        <translation>Připojit Intervals.icu</translation>
-    </message>
-    <message>
-        <source>Workout</source>
-        <translation>Trénink</translation>
-    </message>
-    <message>
-        <source>App</source>
-        <translation>Aplikace</translation>
-    </message>
-    <message>
-        <source>Services</source>
-        <translation>Služby</translation>
-    </message>
-    <message>
         <source>Connection lost in the background</source>
         <translation>Spojení ztraceno na pozadí</translation>
     </message>
@@ -4875,6 +4930,18 @@ Ne: QZ ho ponechá jako běžecký pás a už se nezeptá (kolo lze stále nasta
         <translation>Už se neptat</translation>
     </message>
     <message>
+        <source>Auto Resistance enabled</source>
+        <translation>Automatický odpor zapnut</translation>
+    </message>
+    <message>
+        <source>Auto Resistance disabled</source>
+        <translation>Automatický odpor vypnut</translation>
+    </message>
+    <message>
+        <source>Please choose a file</source>
+        <translation>Vyberte soubor</translation>
+    </message>
+    <message>
         <source>Wahoo Virtual Gears</source>
         <translation>Virtuální převody Wahoo</translation>
     </message>
@@ -4889,6 +4956,10 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
 Povolit QZ tuto hodnotu měnit?
 
 „Ne“: QZ zapne „Bez protokolu průměru kola“ (Nastavení &gt; Možnosti kola &gt; Možnosti Wahoo) a virtuální převody budou fungovat přes stoupání. Při volbě „Ano“ to můžete později vrátit tamtéž: zapněte tuto možnost a při připojeném trenažéru klepněte na „Obnovit výchozí nastavení trenažéru“.</translation>
+    </message>
+    <message>
+        <source>QZ is closing...</source>
+        <translation>QZ se zavírá...</translation>
     </message>
 </context>
 <context>
@@ -4929,6 +5000,10 @@ Povolit QZ tuto hodnotu měnit?
         <translation>Odstranit tento profil?</translation>
     </message>
     <message>
+        <source>Delete</source>
+        <translation>Odstranit</translation>
+    </message>
+    <message>
         <source>Profile Saved</source>
         <translation>Profil uložen</translation>
     </message>
@@ -4961,22 +5036,6 @@ Povolit QZ tuto hodnotu měnit?
         <translation>Název profilu</translation>
     </message>
     <message>
-        <source>Save</source>
-        <translation>Uložit</translation>
-    </message>
-    <message>
-        <source>Profiles</source>
-        <translation>Profily</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Obnovit soubory</translation>
-    </message>
-    <message>
-        <source>Other folders</source>
-        <translation>Další složky</translation>
-    </message>
-    <message>
         <source>New profile</source>
         <translation>Nový profil</translation>
     </message>
@@ -4989,36 +5048,32 @@ Povolit QZ tuto hodnotu měnit?
         <translation>Klepnutím vyberte profil a pak zvolte Načíst. Dlouhým stisknutím ho odstraníte.</translation>
     </message>
     <message>
-        <source>Load</source>
-        <translation>Načíst</translation>
-    </message>
-    <message>
         <source>Active</source>
         <translation>Aktivní</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation>Odstranit</translation>
+        <source>Load</source>
+        <translation>Načíst</translation>
+    </message>
+    <message>
+        <source>Profiles</source>
+        <translation>Profily</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Obnovit soubory</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Uložit</translation>
+    </message>
+    <message>
+        <source>Other folders</source>
+        <translation>Další složky</translation>
     </message>
 </context>
 <context>
     <name>settings</name>
-    <message>
-        <source>Hidden on its page right now: change it here</source>
-        <translation type="vanished">Na své stránce je teď skryto: změňte to zde</translation>
-    </message>
-    <message>
-        <source>On</source>
-        <translation>Zapnuto</translation>
-    </message>
-    <message>
-        <source>Hidden on its page with the current settings</source>
-        <translation>Na své stránce je při současném nastavení skryto</translation>
-    </message>
-    <message>
-        <source>Turn on “%1” to change this setting</source>
-        <translation>Chcete-li změnit toto nastavení, zapněte „%1“</translation>
-    </message>
     <message>
         <source>General</source>
         <translation>Obecné</translation>
@@ -5288,28 +5343,12 @@ Povolit QZ tuto hodnotu měnit?
         <translation>Hmotnost</translation>
     </message>
     <message>
-        <source>lbs</source>
-        <translation>lbs</translation>
-    </message>
-    <message>
-        <source>kg</source>
-        <translation>kg</translation>
-    </message>
-    <message>
         <source>Enter your weight in kilograms so QZ can more accurately calculate calories burned. NOTE: If you choose to use miles as the unit for distance traveled, you will be asked to enter your weight in pounds (lbs) unless you enable &apos;Use kg for weight&apos;.</source>
         <translation>Zadejte svou hmotnost v kilogramech, aby QZ mohlo přesněji spočítat spálené kalorie. POZNÁMKA: Pokud pro vzdálenost zvolíte míle, budete hmotnost zadávat v librách (lbs), pokud nezapnete „Hmotnost v kg“.</translation>
     </message>
     <message>
         <source>Player Height</source>
         <translation>Výška</translation>
-    </message>
-    <message>
-        <source>ft/in</source>
-        <translation>ft/in</translation>
-    </message>
-    <message>
-        <source>cm</source>
-        <translation>cm</translation>
     </message>
     <message>
         <source>Invalid format! Use feet&apos;inches (e.g., 6&apos;2&quot;)</source>
@@ -5330,14 +5369,6 @@ Povolit QZ tuto hodnotu měnit?
     <message>
         <source>Gender:</source>
         <translation>Pohlaví:</translation>
-    </message>
-    <message>
-        <source>Male</source>
-        <translation>Muž</translation>
-    </message>
-    <message>
-        <source>Female</source>
-        <translation>Žena</translation>
     </message>
     <message>
         <source>Select your gender so that calories burned can be more accurately calculated.</source>
@@ -5454,10 +5485,6 @@ Povolit QZ tuto hodnotu měnit?
     <message>
         <source>Heart Belt Name:</source>
         <translation>Název snímače tepu:</translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translation>Vypnuto</translation>
     </message>
     <message>
         <source>Apple Watch users: leave it disabled! Just open the app on your watch</source>
@@ -5596,10 +5623,6 @@ Povolit QZ tuto hodnotu měnit?
 0.012 = MTB</translation>
     </message>
     <message>
-        <source>Bike Weight (%1)</source>
-        <translation>Hmotnost kola (%1)</translation>
-    </message>
-    <message>
         <source>Enables QZ to include the weight of your bike when calculating speed. For example, if you are competing against yourself on VZfit, adding bike weight will &apos;level the playing field&apos; against your virtual self. If you have set QZ to calculate distance in miles, enter the bike weight in pounds (lbs) unless you enable &apos;Use kg for weight&apos;. Default unit is kilograms (kgs).</source>
         <translation>Umožní QZ započítat hmotnost kola do výpočtu rychlosti. Pokud například závodíte sami se sebou ve VZfit, hmotnost kola vyrovná šance proti vašemu virtuálnímu soupeři. Pokud QZ počítá vzdálenost v mílích, zadejte hmotnost kola v librách (lbs), pokud nemáte zapnuto „Hmotnost v kg“. Výchozí jednotka: kilogramy (kg).</translation>
     </message>
@@ -5618,154 +5641,6 @@ Povolit QZ tuto hodnotu měnit?
     <message>
         <source>Enable this setting ONLY when using Zwift in ERG (workout) Mode. QZ will communicate the target resistance (or automatically adjust your resistance if your bike has this capability) to match the target watts based on your cadence (RPM). In ERG Mode, the changes in road slope will not affect target resistance, as is the case in Simulation Mode. Default is off.</source>
         <translation>Zapněte toto nastavení POUZE při používání Zwiftu v režimu ERG (trénink). QZ bude předávat cílový odpor (nebo odpor automaticky měnit, pokud to vaše kolo umí), abyste při své kadenci (RPM) dosáhli cílového výkonu. V režimu ERG změny sklonu silnice cílový odpor neovlivňují, na rozdíl od režimu simulace. Výchozí: vypnuto.</translation>
-    </message>
-    <message>
-        <source>OpenBikeControl</source>
-        <translation>OpenBikeControl</translation>
-    </message>
-    <message>
-        <source>Enable OpenBikeControl</source>
-        <translation>Zapnout OpenBikeControl</translation>
-    </message>
-    <message>
-        <source>OpenBikeControl enabled: Wahoo direct connect disabled.</source>
-        <translation>OpenBikeControl zapnuto: přímé připojení Wahoo je vypnuto.</translation>
-    </message>
-    <message>
-        <source>Enable TCP server on port 21587 to send control commands using the OpenBikeControl link protocol</source>
-        <translation>Spustí server TCP na portu 21587 pro odesílání ovládacích příkazů protokolem OpenBikeControl</translation>
-    </message>
-    <message>
-        <source>Override Local Gear Changes</source>
-        <translation>Nahradit místní řazení</translation>
-    </message>
-    <message>
-        <source>When enabled, gear shift commands go only to OpenBikeControl clients. When disabled, they go to both OpenBikeControl clients and the local gear system</source>
-        <translation>Je-li zapnuto, příkazy k řazení dostanou pouze klienti OpenBikeControl. Je-li vypnuto, dostanou je klienti OpenBikeControl i vlastní převody QZ</translation>
-    </message>
-    <message>
-        <source>Left Controller Buttons</source>
-        <translation>Tlačítka levého ovladače</translation>
-    </message>
-    <message>
-        <source>Left Up:</source>
-        <translation>Levé nahoru:</translation>
-    </message>
-    <message>
-        <source>Gear Up</source>
-        <translation>Zařadit vyšší</translation>
-    </message>
-    <message>
-        <source>Gear Down</source>
-        <translation>Zařadit nižší</translation>
-    </message>
-    <message>
-        <source>Steer Left</source>
-        <translation>Řídit doleva</translation>
-    </message>
-    <message>
-        <source>Steer Right</source>
-        <translation>Řídit doprava</translation>
-    </message>
-    <message>
-        <source>U-Turn</source>
-        <translation>Otočka</translation>
-    </message>
-    <message>
-        <source>Camera Angle</source>
-        <translation>Úhel kamery</translation>
-    </message>
-    <message>
-        <source>Emote</source>
-        <translation>Emoce</translation>
-    </message>
-    <message>
-        <source>Tuck</source>
-        <translation>Aero pozice</translation>
-    </message>
-    <message>
-        <source>Nav Up</source>
-        <translation>Navigace nahoru</translation>
-    </message>
-    <message>
-        <source>Nav Down</source>
-        <translation>Navigace dolů</translation>
-    </message>
-    <message>
-        <source>Nav Left</source>
-        <translation>Navigace doleva</translation>
-    </message>
-    <message>
-        <source>Nav Right</source>
-        <translation>Navigace doprava</translation>
-    </message>
-    <message>
-        <source>Select/Confirm</source>
-        <translation>Vybrat/potvrdit</translation>
-    </message>
-    <message>
-        <source>Back/Cancel</source>
-        <translation>Zpět/zrušit</translation>
-    </message>
-    <message>
-        <source>Menu</source>
-        <translation>Nabídka</translation>
-    </message>
-    <message>
-        <source>Home</source>
-        <translation>Domovská obrazovka</translation>
-    </message>
-    <message>
-        <source>Left Down:</source>
-        <translation>Levé dolů:</translation>
-    </message>
-    <message>
-        <source>Left Left:</source>
-        <translation>Levé doleva:</translation>
-    </message>
-    <message>
-        <source>Left Right:</source>
-        <translation>Levé doprava:</translation>
-    </message>
-    <message>
-        <source>Left Shoulder:</source>
-        <translation>Levé horní tlačítko:</translation>
-    </message>
-    <message>
-        <source>Left Power:</source>
-        <translation>Levé tlačítko Power Up:</translation>
-    </message>
-    <message>
-        <source>Right Controller Buttons</source>
-        <translation>Tlačítka pravého ovladače</translation>
-    </message>
-    <message>
-        <source>Right Y:</source>
-        <translation>Pravé Y:</translation>
-    </message>
-    <message>
-        <source>Right A:</source>
-        <translation>Pravé A:</translation>
-    </message>
-    <message>
-        <source>Right B:</source>
-        <translation>Pravé B:</translation>
-    </message>
-    <message>
-        <source>Right Z:</source>
-        <translation>Pravé Z:</translation>
-    </message>
-    <message>
-        <source>Right Shoulder:</source>
-        <translation>Pravé horní tlačítko:</translation>
-    </message>
-    <message>
-        <source>Right Power:</source>
-        <translation>Pravé tlačítko Power Up:</translation>
-    </message>
-    <message>
-        <source>Note: Left and Right paddles are fixed to Steer Left/Right and cannot be configured</source>
-        <translation>Poznámka: levé a pravé pádlo jsou pevně nastavena na „Řídit doleva“ / „Řídit doprava“ a nelze je změnit</translation>
     </message>
     <message>
         <source>Zwift Resistance Offset:</source>
@@ -5844,10 +5719,6 @@ Povolit QZ tuto hodnotu měnit?
         <translation>Vlastní tabulka převodů</translation>
     </message>
     <message>
-        <source>Custom Inclination to Resistance Table</source>
-        <translation>Vlastní tabulka sklon – odpor</translation>
-    </message>
-    <message>
         <source>Gears Offset:</source>
         <translation>Korekce převodů:</translation>
     </message>
@@ -5870,18 +5741,6 @@ Povolit QZ tuto hodnotu měnit?
     <message>
         <source>Profile:</source>
         <translation>Profil:</translation>
-    </message>
-    <message>
-        <source>Cruise</source>
-        <translation>Jízda</translation>
-    </message>
-    <message>
-        <source>Climb</source>
-        <translation>Stoupání</translation>
-    </message>
-    <message>
-        <source>Sprint</source>
-        <translation>Sprint</translation>
     </message>
     <message>
         <source>Cruise Profile Settings</source>
@@ -6034,10 +5893,6 @@ Povolit QZ tuto hodnotu měnit?
     <message>
         <source>Use 0.5 resistance lvls</source>
         <translation>Krok odporu 0.5</translation>
-    </message>
-    <message>
-        <source>Physical resistance knob controls QZ gears</source>
-        <translation>Ovladač odporu na trenažéru řadí převody QZ</translation>
     </message>
     <message>
         <source>Hammer Racer Bike Options</source>
@@ -6201,30 +6056,6 @@ Povolit QZ tuto hodnotu měnit?
         <translation>Možnosti USB kola Kettler</translation>
     </message>
     <message>
-        <source>Baudrate:</source>
-        <translation>Přenosová rychlost (Bd):</translation>
-    </message>
-    <message>
-        <source>Daum Bike Options</source>
-        <translation>Možnosti kola Daum</translation>
-    </message>
-    <message>
-        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
-        <translation>Sériový port používaný klasickými ergometry Daum, například 8008 TRS 3. V Androidu s adaptérem USB–sériový port použijte &apos;usb&apos;. COM1, COM2 atd. fungují v Androidu jako aliasy pro vyhledání USB adaptéru, nejsou to však názvy portů Androidu. Ve Windows použijte COM1 nebo COM3; v Linuxu/macOS cestu k sériovému zařízení, například /dev/ttyUSB0.</translation>
-    </message>
-    <message>
-        <source>Resistance Polling Delay:</source>
-        <translation>Interval dotazování na odpor:</translation>
-    </message>
-    <message>
-        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
-        <translation>Používá nastavení Zpoždění sklonu k omezení četnosti odesílání aktualizací odporu a výkonu zařízení Daum. Výchozí hodnota: 0 sekund.</translation>
-    </message>
-    <message>
-        <source>Freebeat Bike Options</source>
-        <translation>Možnosti kola Freebeat</translation>
-    </message>
-    <message>
         <source>M3i Bike Options</source>
         <translation>Možnosti kola M3i</translation>
     </message>
@@ -6337,36 +6168,28 @@ Povolit QZ tuto hodnotu měnit?
         <translation>Obecné možnosti rozhraní</translation>
     </message>
     <message>
-        <source>Tile size:</source>
-        <translation>Velikost dlaždic:</translation>
+        <source>Use System Text Size</source>
+        <translation>Velikost textu podle systému</translation>
     </message>
     <message>
-        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
-        <translation>Mění velikost dlaždic s údaji. Výchozí: 100%. Chcete-li, aby se na obrazovku vešlo více dlaždic, zvolte menší procento, pro jejich zvětšení zvolte více než 100%. Znak procenta nezadávejte. Dříve pod názvem „Velikost rozhraní“ (UI Zoom).</translation>
+        <source>The text of the app follows the text size of the phone or tablet settings, up to 150%. Turn off to choose the size below, for example for a screen you read from a distance during a workout. Default is on.</source>
+        <translation>Text aplikace má velikost nastavenou v telefonu nebo tabletu, nejvýše 150%. Vypněte, chcete-li zvolit velikost níže – například pro obrazovku, kterou během tréninku čtete z dálky. Výchozí: zapnuto.</translation>
+    </message>
+    <message>
+        <source>Text size:</source>
+        <translation>Velikost textu:</translation>
+    </message>
+    <message>
+        <source>Size of the text of the app (settings, menus, dialogs), in percent, from 80 to 170. The default is 100. The tiles keep their own size setting.</source>
+        <translation>Velikost textu aplikace (nastavení, nabídky, dialogová okna) v procentech, od 80 do 170. Výchozí: 100. Dlaždice mají vlastní nastavení velikosti.</translation>
     </message>
     <message>
         <source>Top Bar Enabled</source>
         <translation>Zobrazit horní lištu</translation>
     </message>
     <message>
-        <source>Keep Content Clear of the Camera Cutout</source>
-        <translation>Odsadit obsah od výřezu kamery</translation>
-    </message>
-    <message>
-        <source>In landscape, keeps a margin on the camera side so the camera hole does not cover the content. Turn off to let the content extend under the camera cutout. Default is on.</source>
-        <translation>Na šířku ponechá okraj na straně kamery, aby výřez kamery nezakrýval obsah. Vypněte, chcete-li, aby obsah sahal až pod výřez. Výchozí: zapnuto.</translation>
-    </message>
-    <message>
         <source>Floating Window Type:</source>
         <translation>Typ plovoucího okna:</translation>
-    </message>
-    <message>
-        <source>Classic</source>
-        <translation>Klasický</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation>Vodorovný</translation>
     </message>
     <message>
         <source>Choose the floating window layout type. Classic uses the standard floating.htm file, while Horizontal uses the hfloating.htm file for horizontal layout.</source>
@@ -6415,18 +6238,6 @@ Povolit QZ tuto hodnotu měnit?
     <message>
         <source>Chart Display Mode:</source>
         <translation>Režim grafů:</translation>
-    </message>
-    <message>
-        <source>Both Charts</source>
-        <translation>Oba grafy</translation>
-    </message>
-    <message>
-        <source>Heart Rate Only</source>
-        <translation>Pouze tep</translation>
-    </message>
-    <message>
-        <source>Power Only</source>
-        <translation>Pouze výkon</translation>
     </message>
     <message>
         <source>Choose which charts to display in the footer: both heart rate and power charts, only heart rate chart, or only power chart.</source>
@@ -6497,18 +6308,6 @@ Povolit QZ tuto hodnotu měnit?
         <translation>Obtížnost:</translation>
     </message>
     <message>
-        <source>lower</source>
-        <translation>dolní mez</translation>
-    </message>
-    <message>
-        <source>upper</source>
-        <translation>horní mez</translation>
-    </message>
-    <message>
-        <source>average</source>
-        <translation>průměr</translation>
-    </message>
-    <message>
         <source>Typically, Peloton coaches call out a range for target incline, resistance and/or speed. Use this setting to choose the difficulty of the target QZ communicates. Difficulty level can be set to lower, upper or average. Click OK.</source>
         <translation>Trenéři Pelotonu obvykle udávají rozsah cílového sklonu, odporu nebo rychlosti. Tímto nastavením určíte, jaký cíl QZ předá: „dolní mez“, „horní mez“, nebo „průměr“. Klikněte na OK.</translation>
     </message>
@@ -6531,14 +6330,6 @@ Povolit QZ tuto hodnotu měnit?
     <message>
         <source>Walking Min Speed:</source>
         <translation>Min. rychlost chůze:</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
     </message>
     <message>
         <source>Minimum speed for Peloton walking sessions. Set to 0 to disable. Applied to all speed targets in walking workouts.</source>
@@ -6627,14 +6418,6 @@ Povolit QZ tuto hodnotu měnit?
     <message>
         <source>Date on Strava:</source>
         <translation>Datum na Stravě:</translation>
-    </message>
-    <message>
-        <source>Before Title</source>
-        <translation>Před názvem</translation>
-    </message>
-    <message>
-        <source>After Title</source>
-        <translation>Za názvem</translation>
     </message>
     <message>
         <source>Allows you to choose whether you would like the Peloton class air date to display before or after the class title on Strava.</source>
@@ -6805,14 +6588,6 @@ Povolit QZ tuto hodnotu měnit?
         <translation>Po tréninku automaticky nahrávat soubory FIT do Garmin Connect.</translation>
     </message>
     <message>
-        <source>Ask RPE / Feeling after workout</source>
-        <translation>Po tréninku se ptát na RPE a pocit</translation>
-    </message>
-    <message>
-        <source>Show a popup after Stop to rate perceived exertion (RPE) and how you felt; the values are saved into the FIT file and shown in Garmin Connect.</source>
-        <translation>Po „Stop“ zobrazí okno, kde ohodnotíte vnímanou námahu (RPE) a svůj pocit; hodnocení se uloží do souboru FIT a zobrazí se v Garmin Connect.</translation>
-    </message>
-    <message>
         <source>Fetch Garmin Workouts on Startup</source>
         <translation>Načíst tréninky Garmin při spuštění</translation>
     </message>
@@ -6823,22 +6598,6 @@ Povolit QZ tuto hodnotu měnit?
     <message>
         <source>Garmin Email:</source>
         <translation>E-mail Garmin:</translation>
-    </message>
-    <message>
-        <source>Garmin Password:</source>
-        <translation>Heslo Garmin:</translation>
-    </message>
-    <message>
-        <source>Garmin Server:</source>
-        <translation>Server Garmin:</translation>
-    </message>
-    <message>
-        <source>Global (garmin.com)</source>
-        <translation>Globální (garmin.com)</translation>
-    </message>
-    <message>
-        <source>China (garmin.cn)</source>
-        <translation>Čína (garmin.cn)</translation>
     </message>
     <message>
         <source>Test Garmin Login</source>
@@ -6915,14 +6674,6 @@ Zadejte ho níže:</translation>
         <translation>Zapne rozpoznávání tréninků ZWO/XML zkopírovaných do schránky. Výchozí: vypnuto.</translation>
     </message>
     <message>
-        <source>Sound on Segment Change</source>
-        <translation>Zvuk při změně úseku</translation>
-    </message>
-    <message>
-        <source>Play a short sound when a training program starts a new row. Default: disabled.</source>
-        <translation>Přehraje krátký zvuk, když tréninkový program přejde na další řádek. Výchozí: vypnuto.</translation>
-    </message>
-    <message>
         <source>Auto Lap on Segment</source>
         <translation>Automatický okruh podle segmentu</translation>
     </message>
@@ -6961,22 +6712,6 @@ Zadejte ho níže:</translation>
     <message>
         <source>Enabling this the PID is trying to motivate yourself to always increase a little the effort trying anyway to keep you in the zone. Default: Enabled.</source>
         <translation>Po zapnutí vás QZ motivuje k postupnému mírnému zvyšování úsilí a přitom se vás stále snaží udržet v zóně. Výchozí: zapnuto.</translation>
-    </message>
-    <message>
-        <source>PID Recovery Zone Lower Limit (%):</source>
-        <translation>Režim „Důrazný“: dolní hranice zóny zotavení (%):</translation>
-    </message>
-    <message>
-        <source>Lower HR boundary (% of max HR) that defines the bottom of Zone 1 for &apos;Pushy&apos; mode. Below this percentage the treadmill is at the bottom of the recovery area. Default: 60.</source>
-        <translation>Dolní hranice tepu (% maximálního tepu), kde začíná zóna 1 pro režim „Důrazný“. Pod touto hodnotou je běžecký pás na spodní hranici oblasti zotavení. Výchozí: 60.</translation>
-    </message>
-    <message>
-        <source>PID Pushy Zone Limit:</source>
-        <translation>Hranice režimu „Důrazný“:</translation>
-    </message>
-    <message>
-        <source>Fraction of zone above the target zone where &apos;Pushy&apos; mode stops pushing. 0.8 means the PID stops pushing at zone+0.8. Default: 0.8.</source>
-        <translation>Část zóny nad cílovou zónou, kde režim „Důrazný“ přestane popohánět. 0.8 znamená, že QZ přestane popohánět, když je tep o 0.8 zóny nad cílovou. Výchozí: 0.8.</translation>
     </message>
     <message>
         <source>PID Ignore Inclination</source>
@@ -7027,40 +6762,8 @@ Zadejte ho níže:</translation>
         <translation>Viz „Tempo na 1 míli“ výše; totéž, jen pro maratonskou vzdálenost místo 1 míle.</translation>
     </message>
     <message>
-        <source>Warmup Speed (pace):</source>
-        <translation>Rychlost zahřátí (tempo):</translation>
-    </message>
-    <message>
-        <source>Cooldown Speed (pace):</source>
-        <translation>Rychlost uvolnění (tempo):</translation>
-    </message>
-    <message>
-        <source>Rest Speed (pace):</source>
-        <translation>Rychlost odpočinku (tempo):</translation>
-    </message>
-    <message>
         <source>Default Pace:</source>
         <translation>Výchozí tempo:</translation>
-    </message>
-    <message>
-        <source>1 mile</source>
-        <translation>1 míle</translation>
-    </message>
-    <message>
-        <source>Half Marathon</source>
-        <translation>Půlmaraton</translation>
-    </message>
-    <message>
-        <source>Marathon</source>
-        <translation>Maraton</translation>
-    </message>
-    <message>
-        <source>5 km</source>
-        <translation>5 km</translation>
-    </message>
-    <message>
-        <source>10 km</source>
-        <translation>10 km</translation>
     </message>
     <message>
         <source>Select the default Pace to be used when the ZWO file does not indicate a precise pace.</source>
@@ -7133,14 +6836,6 @@ Zadejte ho níže:</translation>
     <message>
         <source>Turn this on to have QZ control the speed of your treadmill during, for example, Peloton classes based on the coach’s speed callouts. Your speed will be in the low, upper or average range based on your Peloton Options &gt; Difficulty setting. Default is off.</source>
         <translation>Zapněte, pokud chcete, aby QZ řídilo rychlost běžeckého pásu, například během lekcí Peloton podle pokynů trenéra k rychlosti. Rychlost bude v dolní, horní nebo střední části rozsahu podle nastavení „Možnosti Peloton &gt; Obtížnost“. Výchozí: vypnuto.</translation>
-    </message>
-    <message>
-        <source>Force Running Activity</source>
-        <translation>Vždy zaznamenat jako běh</translation>
-    </message>
-    <message>
-        <source>Turn this on to write treadmill FIT files as running activities even when the average speed is below 6.5 km/h. This can help Garmin calculate Training Effect for high-incline treadmill workouts. Default is off.</source>
-        <translation>Zapněte, chcete-li soubory FIT z běžeckého pásu ukládat jako běh, i když je průměrná rychlost nižší než 6.5 km/h. Garmin pak dokáže spočítat Training Effect i u tréninků s velkým sklonem. Výchozí: vypnuto.</translation>
     </message>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
@@ -7274,34 +6969,6 @@ Zadejte ho níže:</translation>
     <message>
         <source>Inclination</source>
         <translation>Sklon</translation>
-    </message>
-    <message>
-        <source>Use System Text Size</source>
-        <translation>Velikost textu podle systému</translation>
-    </message>
-    <message>
-        <source>The text of the app follows the text size of the phone or tablet settings, up to 150%. Turn off to choose the size below, for example for a screen you read from a distance during a workout. Default is on.</source>
-        <translation>Text aplikace má velikost nastavenou v telefonu nebo tabletu, nejvýše 150%. Vypněte, chcete-li zvolit velikost níže – například pro obrazovku, kterou během tréninku čtete z dálky. Výchozí: zapnuto.</translation>
-    </message>
-    <message>
-        <source>Text size:</source>
-        <translation>Velikost textu:</translation>
-    </message>
-    <message>
-        <source>Size of the text of the app (settings, menus, dialogs), in percent, from 80 to 170. The default is 100. The tiles keep their own size setting.</source>
-        <translation>Velikost textu aplikace (nastavení, nabídky, dialogová okna) v procentech, od 80 do 170. Výchozí: 100. Dlaždice mají vlastní nastavení velikosti.</translation>
-    </message>
-    <message>
-        <source>Speed</source>
-        <translation>Rychlost</translation>
-    </message>
-    <message>
-        <source>Inclination Filter (%):</source>
-        <translation>Filtr sklonu (%):</translation>
-    </message>
-    <message>
-        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
-        <translation>Při trénincích GPX ignoruje změny sklonu menší než tato hodnota a nový příkaz odešle až tehdy, když rozdíl oproti poslední odeslané hodnotě dosáhne nastaveného prahu. Výchozí hodnota: 0 (vypnuto).</translation>
     </message>
     <message>
         <source>Echelon Options</source>
@@ -7496,10 +7163,6 @@ Zadejte ho níže:</translation>
         <translation>Běžecký pás JTX Fitness Sprint</translation>
     </message>
     <message>
-        <source>Flow Fitness Runner DTM2000i</source>
-        <translation>Flow Fitness Runner DTM2000i</translation>
-    </message>
-    <message>
         <source>Reebok FR30 Treadmill</source>
         <translation>Běžecký pás Reebok FR30</translation>
     </message>
@@ -7554,10 +7217,6 @@ Zadejte ho níže:</translation>
     <message>
         <source>Allows you to force QZ to connect to your FTMS Rower. If you are in doubt, leave this Disabled and send an email to the QZ support. Default is “Disabled.”</source>
         <translation>Umožňuje vynutit připojení QZ k vašemu veslovacímu trenažéru FTMS. Pokud si nejste jisti, ponechte „Vypnuto“ a napište e-mail podpoře QZ. Výchozí: „Vypnuto“.</translation>
-    </message>
-    <message>
-        <source>WaterRower USB</source>
-        <translation>WaterRower USB</translation>
     </message>
     <message>
         <source>Proform/Nordictrack Rower Options</source>
@@ -7696,14 +7355,6 @@ Zadejte ho níže:</translation>
         <translation>Nahrávání do Stravy:</translation>
     </message>
     <message>
-        <source>Always</source>
-        <translation>Vždy</translation>
-    </message>
-    <message>
-        <source>Request</source>
-        <translation>Zeptat se</translation>
-    </message>
-    <message>
         <source>Suffix activity:</source>
         <translation>Přípona aktivity:</translation>
     </message>
@@ -7762,18 +7413,6 @@ Zadejte ho níže:</translation>
     <message>
         <source>Power Averaging Mode:</source>
         <translation>Režim průměrování výkonu:</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation>Vypnuto</translation>
-    </message>
-    <message>
-        <source>3 seconds</source>
-        <translation>3 sekundy</translation>
-    </message>
-    <message>
-        <source>5 seconds</source>
-        <translation>5 sekund</translation>
     </message>
     <message>
         <source>If the power output/watts your equipment sends to QZ is quite variable, this setting will result in smoother Power Zone graphs. This is also helpful for use with Power Meter Pedals. Uses harmonic averaging which smooths power spikes better than arithmetic averaging. If any reading is 0, power immediately becomes 0. Default is Off.
@@ -7864,116 +7503,16 @@ DŮLEŽITÉ:
         <translation>U chytrých trenažérů použijte odpor místo sklonu. Pomůže to, pokud nechcete, aby Wahoo Climb nebo podobné zařízení měnilo sklon při řazení převodů. Výchozí: vypnuto</translation>
     </message>
     <message>
+        <source>Resistance Compatibility</source>
+        <translation>Kompatibilita odporu</translation>
+    </message>
+    <message>
+        <source>Enable this if changing resistance in QZ only sets the bike to level 1 or maximum. Sends FTMS resistance multiplied by 10. Default: disabled.</source>
+        <translation>Zapněte, pokud změna odporu v QZ nastaví kolo pouze na úroveň 1 nebo na maximum. Odesílá hodnotu odporu FTMS vynásobenou 10. Výchozí: vypnuto.</translation>
+    </message>
+    <message>
         <source>AutoLap on Distance:</source>
         <translation>Automatický okruh po vzdálenosti:</translation>
-    </message>
-    <message>
-        <source>You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).</source>
-        <translation>Okruhy v souboru FIT lze označovat automaticky podle vzdálenosti. Jednotka: %1. Výchozí: 0 (vypnuto).</translation>
-    </message>
-    <message>
-        <source>Mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>KM</source>
-        <translation>km</translation>
-    </message>
-    <message>
-        <source>Life Fitness Options</source>
-        <translation>Možnosti Life Fitness</translation>
-    </message>
-    <message>
-        <source>Life Fitness username/email:</source>
-        <translation>Uživatelské jméno/e-mail Life Fitness:</translation>
-    </message>
-    <message>
-        <source>Life Fitness password:</source>
-        <translation>Heslo Life Fitness:</translation>
-    </message>
-    <message>
-        <source>Life Fitness guest login (experimental)</source>
-        <translation>Přihlášení jako host Life Fitness (experimentální)</translation>
-    </message>
-    <message>
-        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
-        <translation>Použije syntetický profil Life Fitness bez účtu. Po zapnutí se uživatelské jméno, heslo a uložená data účtu ignorují; používejte jen pro testování podporovaného přihlášení jako host.</translation>
-    </message>
-    <message>
-        <source>Workout History Charts</source>
-        <translation>Grafy v historii tréninků</translation>
-    </message>
-    <message>
-        <source>Heart Rate</source>
-        <translation>Tep</translation>
-    </message>
-    <message>
-        <source>Resistance vs Target Resistance</source>
-        <translation>Odpor a cílový odpor</translation>
-    </message>
-    <message>
-        <source>Peloton Resistance</source>
-        <translation>Odpor Peloton</translation>
-    </message>
-    <message>
-        <source>Cadence</source>
-        <translation>Kadence</translation>
-    </message>
-    <message>
-        <source>Power Distribution</source>
-        <translation>Rozložení výkonu</translation>
-    </message>
-    <message>
-        <source>Speed and Inclination</source>
-        <translation>Rychlost a sklon</translation>
-    </message>
-    <message>
-        <source>Move the charts up or down to choose their order in Workout History. Changes are saved automatically.</source>
-        <translation>Posouvejte grafy nahoru nebo dolů a zvolte jejich pořadí v historii tréninků. Změny se ukládají automaticky.</translation>
-    </message>
-    <message>
-        <source>Move up</source>
-        <translation>Posunout nahoru</translation>
-    </message>
-    <message>
-        <source>Move down</source>
-        <translation>Posunout dolů</translation>
-    </message>
-    <message>
-        <source>Restore default order</source>
-        <translation>Obnovit výchozí pořadí</translation>
-    </message>
-    <message>
-        <source>Moovio Options</source>
-        <translation>Možnosti Moovio</translation>
-    </message>
-    <message>
-        <source>Lynx Konect 2.0</source>
-        <translation>Lynx Konect 2.0</translation>
-    </message>
-    <message>
-        <source>Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.</source>
-        <translation>Zapne standardní příkaz FTMS Request Control pro běžecké pásy Moovio Lynx Konect 2.0. Výchozí: vypnuto.</translation>
-    </message>
-    <message>
-        <source>Cadence Gain</source>
-        <translation>Násobitel kadence</translation>
-    </message>
-    <message>
-        <source>Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.</source>
-        <translation>Násobitel použitý jen pro frekvenci záběrů, kterou odesílá virtuální veslovací trenažér. Výchozí: 1.0; hodnota 0.25 převede otáčky BikeERG na frekvenci záběrů požadovanou EXR.</translation>
-    </message>
-    <message>
-        <source>Offset added after the gain. Default is 0.0. QZ&apos;s internal cadence display and workout metrics remain unchanged.</source>
-        <translation>Korekce přičtená po násobiteli. Výchozí: 0.0. Kadence zobrazovaná v QZ a metriky tréninku se nemění.</translation>
-    </message>
-    <message>
-        <source>iOS Background Keep Alive</source>
-        <translation>Běh na pozadí v iOS</translation>
-    </message>
-    <message>
-        <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
-        <translation>Jen iOS. Udrží QZ v chodu při vypnuté obrazovce nebo na pozadí, aby připojení Bluetooth a časovače relace nezamrzaly. Používá tichou zvukovou stopu smíchanou s vaší hudbou, takže nic, co posloucháte, se nepřeruší. Zapněte, pokud potřebujete trénovat se zamčenou obrazovkou nebo s QZ na pozadí. Výchozí: vypnuto.</translation>
     </message>
     <message>
         <source>Inclination Delay:</source>
@@ -8094,22 +7633,6 @@ DŮLEŽITÉ:
     <message>
         <source>If you have a Bluetooth treadmill and also a Stryd device connected to QZ and you want to use the speed from the stryd instead of the speed of the treadmill, enable this. Default: disabled.</source>
         <translation>Pokud máte k QZ připojený Bluetooth běžecký pás a také zařízení Stryd a chcete používat rychlost ze Strydu místo rychlosti běžeckého pásu, zapněte tuto volbu. Výchozí: vypnuto.</translation>
-    </message>
-    <message>
-        <source>Runn/Stryd closed-loop treadmill speed correction</source>
-        <translation>Korekce rychlosti pásu podle Runn/Stryd (zpětná vazba)</translation>
-    </message>
-    <message>
-        <source>Experimental: gradually correct QZ-controlled treadmill speed using Runn/Stryd feedback, when the driver provides independent machine speed measurements. Requires &apos;Use speed from the power sensor&apos;. Disabled by default.</source>
-        <translation>Experimentální: QZ postupně upravuje rychlost běžeckého pásu, kterou řídí, podle údajů z Runn/Stryd, pokud ovladač pásu poskytuje vlastní měření rychlosti. Vyžaduje nastavení „Rychlost ze snímače výkonu“. Výchozí: vypnuto.</translation>
-    </message>
-    <message>
-        <source>Power sensor speed correction threshold (%):</source>
-        <translation>Práh korekce rychlosti podle snímače výkonu (%):</translation>
-    </message>
-    <message>
-        <source>Maximum allowed difference between power sensor speed and treadmill speed before QZ stops applying the relative correction. Default: 20%.</source>
-        <translation>Největší povolený rozdíl mezi rychlostí podle snímače výkonu a rychlostí běžeckého pásu, při kterém QZ ještě použije relativní korekci. Výchozí: 20%.</translation>
     </message>
     <message>
         <source>Use inclination from the power sensor</source>
@@ -8264,18 +7787,6 @@ Výchozí: A = -0.96, B = 1.33</translation>
         <translation>Režim:</translation>
     </message>
     <message>
-        <source>Heart</source>
-        <translation>Tep</translation>
-    </message>
-    <message>
-        <source>Power</source>
-        <translation>Výkon</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Ručně</translation>
-    </message>
-    <message>
         <source>Min. value (0-100):</source>
         <translation>Min. hodnota (0-100):</translation>
     </message>
@@ -8362,46 +7873,6 @@ Výchozí: A = -0.96, B = 1.33</translation>
     <message>
         <source>Use the zwift gears table instead of the QZ classic gears algorithm.  Default is off.</source>
         <translation>Použít tabulku převodů Zwiftu místo klasického algoritmu převodů QZ.  Výchozí: vypnuto.</translation>
-    </message>
-    <message>
-        <source>Gear Controls</source>
-        <translation>Tlačítka převodů</translation>
-    </message>
-    <message>
-        <source>Assign each physical button to Gear Up, Gear Down or Disabled. Applies before the Swap sides option above.</source>
-        <translation>Přiřaďte každému fyzickému tlačítku funkci „Zařadit vyšší“, „Zařadit nižší“ nebo „Vypnuto“. Použije se před volbou „Prohodit strany“ výše.</translation>
-    </message>
-    <message>
-        <source>Left Shifter Up (LS1):</source>
-        <translation>Levá páčka nahoru (LS1):</translation>
-    </message>
-    <message>
-        <source>Left Shifter Down (LS2):</source>
-        <translation>Levá páčka dolů (LS2):</translation>
-    </message>
-    <message>
-        <source>Right Shifter Up (RS1):</source>
-        <translation>Pravá páčka nahoru (RS1):</translation>
-    </message>
-    <message>
-        <source>Right Shifter Down (RS2):</source>
-        <translation>Pravá páčka dolů (RS2):</translation>
-    </message>
-    <message>
-        <source>Left Paddle (ZL):</source>
-        <translation>Levé pádlo (ZL):</translation>
-    </message>
-    <message>
-        <source>Right Paddle (ZR):</source>
-        <translation>Pravé pádlo (ZR):</translation>
-    </message>
-    <message>
-        <source>Power Up (LB):</source>
-        <translation>Power Up (LB):</translation>
-    </message>
-    <message>
-        <source>Ride On (RB):</source>
-        <translation>Ride On (RB):</translation>
     </message>
     <message>
         <source>Default: 200ms. Lower it if you want to improve the gear reactivity. Warning: lowering this value will cause more power used on the QZ device</source>
@@ -8530,14 +8001,6 @@ Výchozí: A = -0.96, B = 1.33</translation>
     <message>
         <source>Enables a virtual Bluetooth bridge to the iFit App. This setting requires that at least one device be Android. For example, this setting does NOT work with QZ on iOS and iFit to iOS, but DOES work with QZ on iOS and iFit to Android. On Android remember to rename your device into I_EL into the android settings and reboot your device.</source>
         <translation>Zapne virtuální zařízení Bluetooth pro aplikaci iFit. Alespoň jedno ze zařízení musí mít Android. Například QZ na iOS a iFit na iOS NEFUNGUJE, ale QZ na iOS a iFit na Androidu FUNGUJE. Na Androidu nezapomeňte v nastavení Androidu přejmenovat zařízení na I_EL a restartovat ho.</translation>
-    </message>
-    <message>
-        <source>Virtual Tacx</source>
-        <translation>Virtuální Tacx</translation>
-    </message>
-    <message>
-        <source>Enables a virtual bluetooth bridge to the Tacx App.</source>
-        <translation>Zapne virtuální zařízení Bluetooth pro aplikaci Tacx.</translation>
     </message>
     <message>
         <source>Wahoo direct connect</source>
@@ -8873,6 +8336,354 @@ Výchozí: A = -0.96, B = 1.33</translation>
         <translation>QZ otevírá zařízení FS- jako běžecké pásy, pokud není zapnuto „Kolo Fit Plus“. Když zařízení FS- posílá i data kola, QZ se zeptá, zda jde o kolo; odpověď Ne tuto otázku vypne. Na stránce nastavení se nezobrazuje.</translation>
     </message>
     <message>
+        <source>Hidden on its page right now: change it here</source>
+        <translation type="vanished">Na své stránce je teď skryto: změňte to zde</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>Zapnuto</translation>
+    </message>
+    <message>
+        <source>Hidden on its page with the current settings</source>
+        <translation>Na své stránce je při současném nastavení skryto</translation>
+    </message>
+    <message>
+        <source>Turn on “%1” to change this setting</source>
+        <translation>Chcete-li změnit toto nastavení, zapněte „%1“</translation>
+    </message>
+    <message>
+        <source>Male</source>
+        <translation>Muž</translation>
+    </message>
+    <message>
+        <source>Female</source>
+        <translation>Žena</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Vypnuto</translation>
+    </message>
+    <message>
+        <source>Bike Weight (%1)</source>
+        <translation>Hmotnost kola (%1)</translation>
+    </message>
+    <message>
+        <source>OpenBikeControl</source>
+        <translation>OpenBikeControl</translation>
+    </message>
+    <message>
+        <source>Enable OpenBikeControl</source>
+        <translation>Zapnout OpenBikeControl</translation>
+    </message>
+    <message>
+        <source>OpenBikeControl enabled: Wahoo direct connect disabled.</source>
+        <translation>OpenBikeControl zapnuto: přímé připojení Wahoo je vypnuto.</translation>
+    </message>
+    <message>
+        <source>Enable TCP server on port 21587 to send control commands using the OpenBikeControl link protocol</source>
+        <translation>Spustí server TCP na portu 21587 pro odesílání ovládacích příkazů protokolem OpenBikeControl</translation>
+    </message>
+    <message>
+        <source>Override Local Gear Changes</source>
+        <translation>Nahradit místní řazení</translation>
+    </message>
+    <message>
+        <source>When enabled, gear shift commands go only to OpenBikeControl clients. When disabled, they go to both OpenBikeControl clients and the local gear system</source>
+        <translation>Je-li zapnuto, příkazy k řazení dostanou pouze klienti OpenBikeControl. Je-li vypnuto, dostanou je klienti OpenBikeControl i vlastní převody QZ</translation>
+    </message>
+    <message>
+        <source>Left Controller Buttons</source>
+        <translation>Tlačítka levého ovladače</translation>
+    </message>
+    <message>
+        <source>Left Up:</source>
+        <translation>Levé nahoru:</translation>
+    </message>
+    <message>
+        <source>Gear Up</source>
+        <translation>Zařadit vyšší</translation>
+    </message>
+    <message>
+        <source>Gear Down</source>
+        <translation>Zařadit nižší</translation>
+    </message>
+    <message>
+        <source>Steer Left</source>
+        <translation>Řídit doleva</translation>
+    </message>
+    <message>
+        <source>Steer Right</source>
+        <translation>Řídit doprava</translation>
+    </message>
+    <message>
+        <source>U-Turn</source>
+        <translation>Otočka</translation>
+    </message>
+    <message>
+        <source>Camera Angle</source>
+        <translation>Úhel kamery</translation>
+    </message>
+    <message>
+        <source>Emote</source>
+        <translation>Emoce</translation>
+    </message>
+    <message>
+        <source>Tuck</source>
+        <translation>Aero pozice</translation>
+    </message>
+    <message>
+        <source>Nav Up</source>
+        <translation>Navigace nahoru</translation>
+    </message>
+    <message>
+        <source>Nav Down</source>
+        <translation>Navigace dolů</translation>
+    </message>
+    <message>
+        <source>Nav Left</source>
+        <translation>Navigace doleva</translation>
+    </message>
+    <message>
+        <source>Nav Right</source>
+        <translation>Navigace doprava</translation>
+    </message>
+    <message>
+        <source>Select/Confirm</source>
+        <translation>Vybrat/potvrdit</translation>
+    </message>
+    <message>
+        <source>Back/Cancel</source>
+        <translation>Zpět/zrušit</translation>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation>Nabídka</translation>
+    </message>
+    <message>
+        <source>Home</source>
+        <translation>Domovská obrazovka</translation>
+    </message>
+    <message>
+        <source>Left Down:</source>
+        <translation>Levé dolů:</translation>
+    </message>
+    <message>
+        <source>Left Left:</source>
+        <translation>Levé doleva:</translation>
+    </message>
+    <message>
+        <source>Left Right:</source>
+        <translation>Levé doprava:</translation>
+    </message>
+    <message>
+        <source>Left Shoulder:</source>
+        <translation>Levé horní tlačítko:</translation>
+    </message>
+    <message>
+        <source>Left Power:</source>
+        <translation>Levé tlačítko Power Up:</translation>
+    </message>
+    <message>
+        <source>Right Controller Buttons</source>
+        <translation>Tlačítka pravého ovladače</translation>
+    </message>
+    <message>
+        <source>Right Y:</source>
+        <translation>Pravé Y:</translation>
+    </message>
+    <message>
+        <source>Right A:</source>
+        <translation>Pravé A:</translation>
+    </message>
+    <message>
+        <source>Right B:</source>
+        <translation>Pravé B:</translation>
+    </message>
+    <message>
+        <source>Right Z:</source>
+        <translation>Pravé Z:</translation>
+    </message>
+    <message>
+        <source>Right Shoulder:</source>
+        <translation>Pravé horní tlačítko:</translation>
+    </message>
+    <message>
+        <source>Right Power:</source>
+        <translation>Pravé tlačítko Power Up:</translation>
+    </message>
+    <message>
+        <source>Note: Left and Right paddles are fixed to Steer Left/Right and cannot be configured</source>
+        <translation>Poznámka: levé a pravé pádlo jsou pevně nastavena na „Řídit doleva“ / „Řídit doprava“ a nelze je změnit</translation>
+    </message>
+    <message>
+        <source>Custom Inclination to Resistance Table</source>
+        <translation>Vlastní tabulka sklon – odpor</translation>
+    </message>
+    <message>
+        <source>Cruise</source>
+        <translation>Jízda</translation>
+    </message>
+    <message>
+        <source>Climb</source>
+        <translation>Stoupání</translation>
+    </message>
+    <message>
+        <source>Sprint</source>
+        <translation>Sprint</translation>
+    </message>
+    <message>
+        <source>Physical resistance knob controls QZ gears</source>
+        <translation>Ovladač odporu na trenažéru řadí převody QZ</translation>
+    </message>
+    <message>
+        <source>Baudrate:</source>
+        <translation>Přenosová rychlost (Bd):</translation>
+    </message>
+    <message>
+        <source>Freebeat Bike Options</source>
+        <translation>Možnosti kola Freebeat</translation>
+    </message>
+    <message>
+        <source>Keep Content Clear of the Camera Cutout</source>
+        <translation>Odsadit obsah od výřezu kamery</translation>
+    </message>
+    <message>
+        <source>In landscape, keeps a margin on the camera side so the camera hole does not cover the content. Turn off to let the content extend under the camera cutout. Default is on.</source>
+        <translation>Na šířku ponechá okraj na straně kamery, aby výřez kamery nezakrýval obsah. Vypněte, chcete-li, aby obsah sahal až pod výřez. Výchozí: zapnuto.</translation>
+    </message>
+    <message>
+        <source>Classic</source>
+        <translation>Klasický</translation>
+    </message>
+    <message>
+        <source>Horizontal</source>
+        <translation>Vodorovný</translation>
+    </message>
+    <message>
+        <source>Both Charts</source>
+        <translation>Oba grafy</translation>
+    </message>
+    <message>
+        <source>Heart Rate Only</source>
+        <translation>Pouze tep</translation>
+    </message>
+    <message>
+        <source>Power Only</source>
+        <translation>Pouze výkon</translation>
+    </message>
+    <message>
+        <source>lower</source>
+        <translation>dolní mez</translation>
+    </message>
+    <message>
+        <source>upper</source>
+        <translation>horní mez</translation>
+    </message>
+    <message>
+        <source>average</source>
+        <translation>průměr</translation>
+    </message>
+    <message>
+        <source>Before Title</source>
+        <translation>Před názvem</translation>
+    </message>
+    <message>
+        <source>After Title</source>
+        <translation>Za názvem</translation>
+    </message>
+    <message>
+        <source>Ask RPE / Feeling after workout</source>
+        <translation>Po tréninku se ptát na RPE a pocit</translation>
+    </message>
+    <message>
+        <source>Show a popup after Stop to rate perceived exertion (RPE) and how you felt; the values are saved into the FIT file and shown in Garmin Connect.</source>
+        <translation>Po „Stop“ zobrazí okno, kde ohodnotíte vnímanou námahu (RPE) a svůj pocit; hodnocení se uloží do souboru FIT a zobrazí se v Garmin Connect.</translation>
+    </message>
+    <message>
+        <source>Garmin Password:</source>
+        <translation>Heslo Garmin:</translation>
+    </message>
+    <message>
+        <source>Garmin Server:</source>
+        <translation>Server Garmin:</translation>
+    </message>
+    <message>
+        <source>Global (garmin.com)</source>
+        <translation>Globální (garmin.com)</translation>
+    </message>
+    <message>
+        <source>China (garmin.cn)</source>
+        <translation>Čína (garmin.cn)</translation>
+    </message>
+    <message>
+        <source>Sound on Segment Change</source>
+        <translation>Zvuk při změně úseku</translation>
+    </message>
+    <message>
+        <source>Play a short sound when a training program starts a new row. Default: disabled.</source>
+        <translation>Přehraje krátký zvuk, když tréninkový program přejde na další řádek. Výchozí: vypnuto.</translation>
+    </message>
+    <message>
+        <source>PID Recovery Zone Lower Limit (%):</source>
+        <translation>Režim „Důrazný“: dolní hranice zóny zotavení (%):</translation>
+    </message>
+    <message>
+        <source>Lower HR boundary (% of max HR) that defines the bottom of Zone 1 for &apos;Pushy&apos; mode. Below this percentage the treadmill is at the bottom of the recovery area. Default: 60.</source>
+        <translation>Dolní hranice tepu (% maximálního tepu), kde začíná zóna 1 pro režim „Důrazný“. Pod touto hodnotou je běžecký pás na spodní hranici oblasti zotavení. Výchozí: 60.</translation>
+    </message>
+    <message>
+        <source>PID Pushy Zone Limit:</source>
+        <translation>Hranice režimu „Důrazný“:</translation>
+    </message>
+    <message>
+        <source>Fraction of zone above the target zone where &apos;Pushy&apos; mode stops pushing. 0.8 means the PID stops pushing at zone+0.8. Default: 0.8.</source>
+        <translation>Část zóny nad cílovou zónou, kde režim „Důrazný“ přestane popohánět. 0.8 znamená, že QZ přestane popohánět, když je tep o 0.8 zóny nad cílovou. Výchozí: 0.8.</translation>
+    </message>
+    <message>
+        <source>Warmup Speed (pace):</source>
+        <translation>Rychlost zahřátí (tempo):</translation>
+    </message>
+    <message>
+        <source>Cooldown Speed (pace):</source>
+        <translation>Rychlost uvolnění (tempo):</translation>
+    </message>
+    <message>
+        <source>Rest Speed (pace):</source>
+        <translation>Rychlost odpočinku (tempo):</translation>
+    </message>
+    <message>
+        <source>1 mile</source>
+        <translation>1 míle</translation>
+    </message>
+    <message>
+        <source>Half Marathon</source>
+        <translation>Půlmaraton</translation>
+    </message>
+    <message>
+        <source>Marathon</source>
+        <translation>Maraton</translation>
+    </message>
+    <message>
+        <source>Force Running Activity</source>
+        <translation>Vždy zaznamenat jako běh</translation>
+    </message>
+    <message>
+        <source>Turn this on to write treadmill FIT files as running activities even when the average speed is below 6.5 km/h. This can help Garmin calculate Training Effect for high-incline treadmill workouts. Default is off.</source>
+        <translation>Zapněte, chcete-li soubory FIT z běžeckého pásu ukládat jako běh, i když je průměrná rychlost nižší než 6.5 km/h. Garmin pak dokáže spočítat Training Effect i u tréninků s velkým sklonem. Výchozí: vypnuto.</translation>
+    </message>
+    <message>
+        <source>Pafers Rower</source>
+        <translation>Veslovací trenažér Pafers</translation>
+    </message>
+    <message>
+        <source>Flow Fitness Runner DTM2000i</source>
+        <translation>Flow Fitness Runner DTM2000i</translation>
+    </message>
+    <message>
+        <source>WaterRower USB</source>
+        <translation>WaterRower USB</translation>
+    </message>
+    <message>
         <source>Max Watt:</source>
         <translation>Max. výkon (W):</translation>
     </message>
@@ -8881,16 +8692,288 @@ Výchozí: A = -0.96, B = 1.33</translation>
         <translation>Omezuje výkon, který QZ odesílá. 0 = bez omezení. Výchozí: 9999 W.</translation>
     </message>
     <message>
+        <source>Always</source>
+        <translation>Vždy</translation>
+    </message>
+    <message>
+        <source>Request</source>
+        <translation>Zeptat se</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Vypnuto</translation>
+    </message>
+    <message>
+        <source>3 seconds</source>
+        <translation>3 sekundy</translation>
+    </message>
+    <message>
+        <source>5 seconds</source>
+        <translation>5 sekund</translation>
+    </message>
+    <message>
+        <source>You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).</source>
+        <translation>Okruhy v souboru FIT lze označovat automaticky podle vzdálenosti. Jednotka: %1. Výchozí: 0 (vypnuto).</translation>
+    </message>
+    <message>
+        <source>Power sensor speed correction threshold (%):</source>
+        <translation>Práh korekce rychlosti podle snímače výkonu (%):</translation>
+    </message>
+    <message>
+        <source>Maximum allowed difference between power sensor speed and treadmill speed before QZ stops applying the relative correction. Default: 20%.</source>
+        <translation>Největší povolený rozdíl mezi rychlostí podle snímače výkonu a rychlostí běžeckého pásu, při kterém QZ ještě použije relativní korekci. Výchozí: 20%.</translation>
+    </message>
+    <message>
+        <source>Heart</source>
+        <translation>Tep</translation>
+    </message>
+    <message>
+        <source>Power</source>
+        <translation>Výkon</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation>Ručně</translation>
+    </message>
+    <message>
+        <source>Gear Controls</source>
+        <translation>Tlačítka převodů</translation>
+    </message>
+    <message>
+        <source>Assign each physical button to Gear Up, Gear Down or Disabled. Applies before the Swap sides option above.</source>
+        <translation>Přiřaďte každému fyzickému tlačítku funkci „Zařadit vyšší“, „Zařadit nižší“ nebo „Vypnuto“. Použije se před volbou „Prohodit strany“ výše.</translation>
+    </message>
+    <message>
+        <source>Left Shifter Up (LS1):</source>
+        <translation>Levá páčka nahoru (LS1):</translation>
+    </message>
+    <message>
+        <source>Left Shifter Down (LS2):</source>
+        <translation>Levá páčka dolů (LS2):</translation>
+    </message>
+    <message>
+        <source>Right Shifter Up (RS1):</source>
+        <translation>Pravá páčka nahoru (RS1):</translation>
+    </message>
+    <message>
+        <source>Right Shifter Down (RS2):</source>
+        <translation>Pravá páčka dolů (RS2):</translation>
+    </message>
+    <message>
+        <source>Left Paddle (ZL):</source>
+        <translation>Levé pádlo (ZL):</translation>
+    </message>
+    <message>
+        <source>Right Paddle (ZR):</source>
+        <translation>Pravé pádlo (ZR):</translation>
+    </message>
+    <message>
+        <source>Power Up (LB):</source>
+        <translation>Power Up (LB):</translation>
+    </message>
+    <message>
+        <source>Ride On (RB):</source>
+        <translation>Ride On (RB):</translation>
+    </message>
+    <message>
+        <source>Virtual Tacx</source>
+        <translation>Virtuální Tacx</translation>
+    </message>
+    <message>
+        <source>Enables a virtual bluetooth bridge to the Tacx App.</source>
+        <translation>Zapne virtuální zařízení Bluetooth pro aplikaci Tacx.</translation>
+    </message>
+    <message>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <source>kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <source>ft/in</source>
+        <translation>ft/in</translation>
+    </message>
+    <message>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
         <source>PID HR actuator:</source>
         <translation>Udržování tepu mění:</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>Rychlost</translation>
     </message>
     <message>
         <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. The global PID HR actuator setting selects speed or inclination for treadmills; a workout interval can override it in the Workout Editor. The PID HR tile changes only the target HR zone.</source>
         <translation>QZ řídí váš běžecký pás nebo kolo tak, aby vás udrželo ve zvolené tepové zóně. Obecné nastavení „Udržování tepu mění“ u běžeckých pásů volí rychlost nebo sklon; jednotlivý interval tréninku ho může v editoru tréninků změnit. Dlaždice „Cílová tepová zóna“ mění jen cílovou tepovou zónu.</translation>
     </message>
     <message>
-        <source>Pafers Rower</source>
-        <translation>Veslovací trenažér Pafers</translation>
+        <source>5 km</source>
+        <translation>5 km</translation>
+    </message>
+    <message>
+        <source>10 km</source>
+        <translation>10 km</translation>
+    </message>
+    <message>
+        <source>Mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>KM</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>Runn/Stryd closed-loop treadmill speed correction</source>
+        <translation>Korekce rychlosti pásu podle Runn/Stryd (zpětná vazba)</translation>
+    </message>
+    <message>
+        <source>Experimental: gradually correct QZ-controlled treadmill speed using Runn/Stryd feedback, when the driver provides independent machine speed measurements. Requires &apos;Use speed from the power sensor&apos;. Disabled by default.</source>
+        <translation>Experimentální: QZ postupně upravuje rychlost běžeckého pásu, kterou řídí, podle údajů z Runn/Stryd, pokud ovladač pásu poskytuje vlastní měření rychlosti. Vyžaduje nastavení „Rychlost ze snímače výkonu“. Výchozí: vypnuto.</translation>
+    </message>
+    <message>
+        <source>Tile size:</source>
+        <translation>Velikost dlaždic:</translation>
+    </message>
+    <message>
+        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
+        <translation>Mění velikost dlaždic s údaji. Výchozí: 100%. Chcete-li, aby se na obrazovku vešlo více dlaždic, zvolte menší procento, pro jejich zvětšení zvolte více než 100%. Znak procenta nezadávejte. Dříve pod názvem „Velikost rozhraní“ (UI Zoom).</translation>
+    </message>
+    <message>
+        <source>Life Fitness Options</source>
+        <translation>Možnosti Life Fitness</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Uživatelské jméno/e-mail Life Fitness:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Heslo Life Fitness:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Přihlášení jako host Life Fitness (experimentální)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>Použije syntetický profil Life Fitness bez účtu. Po zapnutí se uživatelské jméno, heslo a uložená data účtu ignorují; používejte jen pro testování podporovaného přihlášení jako host.</translation>
+    </message>
+    <message>
+        <source>Workout History Charts</source>
+        <translation>Grafy v historii tréninků</translation>
+    </message>
+    <message>
+        <source>Heart Rate</source>
+        <translation>Tep</translation>
+    </message>
+    <message>
+        <source>Resistance vs Target Resistance</source>
+        <translation>Odpor a cílový odpor</translation>
+    </message>
+    <message>
+        <source>Peloton Resistance</source>
+        <translation>Odpor Peloton</translation>
+    </message>
+    <message>
+        <source>Cadence</source>
+        <translation>Kadence</translation>
+    </message>
+    <message>
+        <source>Power Distribution</source>
+        <translation>Rozložení výkonu</translation>
+    </message>
+    <message>
+        <source>Speed and Inclination</source>
+        <translation>Rychlost a sklon</translation>
+    </message>
+    <message>
+        <source>Move the charts up or down to choose their order in Workout History. Changes are saved automatically.</source>
+        <translation>Posouvejte grafy nahoru nebo dolů a zvolte jejich pořadí v historii tréninků. Změny se ukládají automaticky.</translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translation>Posunout nahoru</translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation>Posunout dolů</translation>
+    </message>
+    <message>
+        <source>Restore default order</source>
+        <translation>Obnovit výchozí pořadí</translation>
+    </message>
+    <message>
+        <source>Moovio Options</source>
+        <translation>Možnosti Moovio</translation>
+    </message>
+    <message>
+        <source>Lynx Konect 2.0</source>
+        <translation>Lynx Konect 2.0</translation>
+    </message>
+    <message>
+        <source>Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.</source>
+        <translation>Zapne standardní příkaz FTMS Request Control pro běžecké pásy Moovio Lynx Konect 2.0. Výchozí: vypnuto.</translation>
+    </message>
+    <message>
+        <source>Cadence Gain</source>
+        <translation>Násobitel kadence</translation>
+    </message>
+    <message>
+        <source>Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.</source>
+        <translation>Násobitel použitý jen pro frekvenci záběrů, kterou odesílá virtuální veslovací trenažér. Výchozí: 1.0; hodnota 0.25 převede otáčky BikeERG na frekvenci záběrů požadovanou EXR.</translation>
+    </message>
+    <message>
+        <source>Offset added after the gain. Default is 0.0. QZ&apos;s internal cadence display and workout metrics remain unchanged.</source>
+        <translation>Korekce přičtená po násobiteli. Výchozí: 0.0. Kadence zobrazovaná v QZ a metriky tréninku se nemění.</translation>
+    </message>
+    <message>
+        <source>iOS Background Keep Alive</source>
+        <translation>Běh na pozadí v iOS</translation>
+    </message>
+    <message>
+        <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
+        <translation>Jen iOS. Udrží QZ v chodu při vypnuté obrazovce nebo na pozadí, aby připojení Bluetooth a časovače relace nezamrzaly. Používá tichou zvukovou stopu smíchanou s vaší hudbou, takže nic, co posloucháte, se nepřeruší. Zapněte, pokud potřebujete trénovat se zamčenou obrazovkou nebo s QZ na pozadí. Výchozí: vypnuto.</translation>
+    </message>
+    <message>
+        <source>Daum Bike Options</source>
+        <translation>Možnosti kola Daum</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>Sériový port používaný klasickými ergometry Daum, například 8008 TRS 3. V Androidu s adaptérem USB–sériový port použijte &apos;usb&apos;. COM1, COM2 atd. fungují v Androidu jako aliasy pro vyhledání USB adaptéru, nejsou to však názvy portů Androidu. Ve Windows použijte COM1 nebo COM3; v Linuxu/macOS cestu k sériovému zařízení, například /dev/ttyUSB0.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Interval dotazování na odpor:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>Používá nastavení Zpoždění sklonu k omezení četnosti odesílání aktualizací odporu a výkonu zařízení Daum. Výchozí hodnota: 0 sekund.</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Filtr sklonu (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>Při trénincích GPX ignoruje změny sklonu menší než tato hodnota a nový příkaz odešle až tehdy, když rozdíl oproti poslední odeslané hodnotě dosáhne nastaveného prahu. Výchozí hodnota: 0 (vypnuto).</translation>
+    </message>
+    <message>
+        <source>Use Console Gears</source>
+        <translation>Použít převody z konzole</translation>
     </message>
 </context>
 <context>
@@ -9119,10 +9202,6 @@ Výchozí: A = -0.96, B = 1.33</translation>
         <translation>Tempo</translation>
     </message>
     <message>
-        <source>Enable Pace color</source>
-        <translation>Zapnout barvu tempa</translation>
-    </message>
-    <message>
         <source>Average Pace</source>
         <translation>Průměrné tempo</translation>
     </message>
@@ -9149,10 +9228,6 @@ Výchozí: A = -0.96, B = 1.33</translation>
     <message>
         <source>Watt</source>
         <translation>Výkon</translation>
-    </message>
-    <message>
-        <source>Enable Watt color</source>
-        <translation>Zapnout barvu výkonu</translation>
     </message>
     <message>
         <source>Displays the watts generated by your current effort. Watt is also referred to as output (for example, in Peloton). If your equipment does not communicate watts, QZ will calculate watts using resistance and cadence.</source>
@@ -9335,6 +9410,10 @@ Výchozí: A = -0.96, B = 1.33</translation>
         <translation>Zobrazí v rozhraní 2 velká tlačítka převodů</translation>
     </message>
     <message>
+        <source>Tiles Options</source>
+        <translation>Možnosti dlaždic</translation>
+    </message>
+    <message>
         <source>Remaining Time/Row</source>
         <extracomment>Tile title: time left in the current step (row) of the workout program, not rowing and not a lap.</extracomment>
         <translation>Zbývající čas/řádek</translation>
@@ -9379,14 +9458,6 @@ Výchozí: A = -0.96, B = 1.33</translation>
     <message>
         <source>(Rower only) Displays the number of strokes rowed.</source>
         <translation>(Pouze veslovací trenažér) Zobrazuje počet záběrů.</translation>
-    </message>
-    <message>
-        <source>Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class&apos;s resistance target up or down for the rest of the ride.</source>
-        <translation>Zobrazuje cílový odpor na stupnici odporu vašeho kola. Například v lekci Peloton nebo ve Zwiftu chcete, aby hodnota na této dlaždici odpovídala dlaždici „Odpor“. V lekci Peloton (pouze kolo) tlačítka +/- posunou cílový odpor lekce nahoru nebo dolů až do konce jízdy.</translation>
-    </message>
-    <message>
-        <source>Stroke Length</source>
-        <translation>Délka záběru</translation>
     </message>
     <message>
         <source>(Rower only) Displays the stroke length.</source>
@@ -9495,14 +9566,6 @@ Výchozí: A = -0.96, B = 1.33</translation>
     <message>
         <source>Preset Speed 1</source>
         <translation>Předvolba rychlosti 1</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
     </message>
     <message>
         <source>Preset Speed 2</source>
@@ -9705,8 +9768,28 @@ Výchozí: A = -0.96, B = 1.33</translation>
         <translation>Zobrazuje variabilitu srdeční frekvence (HRV) z kompatibilního hrudního pásu. Hodnota RMSSD v milisekundách.</translation>
     </message>
     <message>
-        <source>Tiles Options</source>
-        <translation>Možnosti dlaždic</translation>
+        <source>Enable Pace color</source>
+        <translation>Zapnout barvu tempa</translation>
+    </message>
+    <message>
+        <source>Enable Watt color</source>
+        <translation>Zapnout barvu výkonu</translation>
+    </message>
+    <message>
+        <source>Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class&apos;s resistance target up or down for the rest of the ride.</source>
+        <translation>Zobrazuje cílový odpor na stupnici odporu vašeho kola. Například v lekci Peloton nebo ve Zwiftu chcete, aby hodnota na této dlaždici odpovídala dlaždici „Odpor“. V lekci Peloton (pouze kolo) tlačítka +/- posunou cílový odpor lekce nahoru nebo dolů až do konce jízdy.</translation>
+    </message>
+    <message>
+        <source>Stroke Length</source>
+        <translation>Délka záběru</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
     </message>
 </context>
 <context>
@@ -10108,80 +10191,6 @@ Nainstalovat?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>Stahování sestavení QZ: %1 %</translation>
-    </message>
-</context>
-<context>
-    <name>SupportHelpButton</name>
-    <message>
-        <source>Contact QZ support</source>
-        <translation>Kontaktovat podporu QZ</translation>
-    </message>
-    <message>
-        <source>Prepare a support email with diagnostics</source>
-        <translation>Připravit e-mail podpoře s diagnostickými údaji</translation>
-    </message>
-    <message>
-        <source>No device connected</source>
-        <translation>Není připojeno žádné zařízení</translation>
-    </message>
-    <message>
-        <source>Speed and power at zero</source>
-        <translation>Rychlost a výkon jsou nulové</translation>
-    </message>
-    <message>
-        <source>QZ Support</source>
-        <translation>Podpora QZ</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translation>Hotovo</translation>
-    </message>
-    <message>
-        <source>Hide keyboard</source>
-        <translation>Skrýt klávesnici</translation>
-    </message>
-    <message>
-        <source>Close support request</source>
-        <translation>Zavřít žádost o podporu</translation>
-    </message>
-    <message>
-        <source>Tell us what is not working. QZ will add your device and app information.</source>
-        <translation>Popište, co nefunguje. QZ přidá informace o zařízení a aplikaci.</translation>
-    </message>
-    <message>
-        <source>Describe the problem...</source>
-        <translation>Popište problém...</translation>
-    </message>
-    <message>
-        <source>Describe the problem</source>
-        <translation>Popište problém</translation>
-    </message>
-    <message>
-        <source>Attach debug log if available</source>
-        <translation>Přiložit protokol ladění, pokud je k dispozici</translation>
-    </message>
-    <message>
-        <source>You can review or edit the email before sending it. Nothing is sent automatically.</source>
-        <translation>Před odesláním můžete e-mail zkontrolovat nebo upravit. Nic se neodešle automaticky.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Zrušit</translation>
-    </message>
-    <message>
-        <source>Open email</source>
-        <translation>Otevřít e-mail</translation>
-    </message>
-</context>
-<context>
-    <name>treadmill</name>
-    <message>
-        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
-        <translation>Kadence se zdá poloviční oproti skutečné. Zapněte „Zdvojnásobit kadenci při běhu“ a „Poloviční kadence na Stravě“ v části „Možnosti snímače výkonu“.</translation>
-    </message>
-    <message>
-        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
-        <translation>Kadence se zdá dvojnásobná oproti skutečné. Vypněte „Zdvojnásobit kadenci při běhu“ a „Poloviční kadence na Stravě“ v části „Možnosti snímače výkonu“.</translation>
     </message>
 </context>
 </TS>

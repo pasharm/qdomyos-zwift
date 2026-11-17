@@ -10,6 +10,7 @@ import Qt.labs.platform 1.1
 import QtWebView 1.1
 
 ColumnLayout {
+    id: programsPage
     signal trainprogram_open_clicked(url name)
     signal trainprogram_open_other_folder(url name)
     signal trainprogram_preview(url name)

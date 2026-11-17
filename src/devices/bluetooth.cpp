@@ -92,7 +92,7 @@ bluetooth::bluetooth(bool logs, const QString &deviceName, bool noWriteResistanc
     rescanTimer.setSingleShot(true);
     connect(&rescanTimer, &QTimer::timeout, this, [this]() {
         nextRescanMs = 0;
-        if (!device() && discoveryAgent && !discoveryAgent->isActive()) {
+        if (!device() && (!discoveryAgent || !discoveryAgent->isActive())) {
             debug(QStringLiteral("BTLE scanning again, no device found yet"));
             this->startDiscovery();
         }
@@ -178,6 +178,12 @@ bluetooth::bluetooth(bool logs, const QString &deviceName, bool noWriteResistanc
         this->discoveryAgent = nullptr;
         return;
     }
+
+    // Discover network equipment independently of BLE, including systems without an adapter.
+    dirconDiscovery = new DirconDiscovery(this);
+    connect(dirconDiscovery, &DirconDiscovery::deviceDiscovered, this, &bluetooth::deviceFound);
+    connect(dirconDiscovery, &DirconDiscovery::deviceDiscovered, this, &bluetooth::onDirconDeviceDiscovered);
+    dirconDiscovery->startDiscovery();
 
 #if !defined(WIN32) && !defined(Q_OS_IOS)
     if (nearbyDevicesPermissionDenied()) {
@@ -300,6 +306,10 @@ void bluetooth::finished() {
         deviceListScan = false;
         updateLostDevices();
     }
+
+    // DIRCON can be discovered before or after the BLE scan completes.
+    if (!device() && tryConnectSelectedDirconDevice())
+        return;
 
     if (discoveryFinishedHandled) {
         // The bookkeeping below runs once, but scanning has to go on until the equipment shows up:
@@ -535,8 +545,14 @@ void bluetooth::updateLostDevices() {
 }
 
 void bluetooth::startDiscovery() {
-    // no discoveryAgent without a Bluetooth adapter: nothing to scan with
-    if (!this->useDiscovery || !this->discoveryAgent)
+    if (!this->useDiscovery)
+        return;
+
+    if (dirconDiscovery)
+        dirconDiscovery->startDiscovery();
+
+    // An unavailable Bluetooth adapter must not prevent network discovery.
+    if (!this->discoveryAgent)
         return;
 
     // Android 7.0 and later ignore the scan starts after the 5th one in 30 s: searchNow() checks this list.
@@ -571,6 +587,8 @@ void bluetooth::startDiscovery() {
 }
 
 void bluetooth::stopDiscovery() {
+    if (dirconDiscovery)
+        dirconDiscovery->stopDiscovery();
     if (this->discoveryAgent)
         this->discoveryAgent->stop();
     else
@@ -588,6 +606,72 @@ void bluetooth::debug(const QString &text) {
     if (logs) {
 
         qDebug() << text;
+    }
+}
+
+bool bluetooth::tryConnectSelectedDirconDevice() {
+    if (!dirconDiscovery || filterDevice.isEmpty() || !filterDevice.contains(QStringLiteral("(DirCon)"))) {
+        return false;
+    }
+
+    const DirconDeviceInfo deviceInfo = dirconDiscovery->findDeviceByName(filterDevice);
+    if (deviceInfo.displayName.isEmpty()) {
+        qDebug() << "bluetooth::tryConnectSelectedDirconDevice() DirCon device not found:" << filterDevice;
+        return false;
+    }
+
+    connectDirconDevice(deviceInfo);
+    return true;
+}
+
+void bluetooth::connectDirconDevice(const DirconDeviceInfo &deviceInfo) {
+    qDebug() << "bluetooth::connectDirconDevice() Found DirCon device:"
+             << "name:" << deviceInfo.name
+             << "address:" << deviceInfo.address
+             << "port:" << deviceInfo.port
+             << "isTreadmill:" << deviceInfo.isTreadmill;
+
+    this->stopDiscovery();
+    if (dirconDiscovery) {
+        dirconDiscovery->stopDiscovery();
+    }
+
+    if (deviceInfo.isTreadmill) {
+        if (wahooDirconTreadmill) {
+            return;
+        }
+        wahooDirconTreadmill = new wahoodircontreadmill(deviceInfo, noWriteResistance, noHeartService);
+        emit deviceConnected(QBluetoothDeviceInfo());
+        connect(wahooDirconTreadmill, &bluetoothdevice::connectedAndDiscovered, this,
+                &bluetooth::connectedAndDiscovered);
+        connect(wahooDirconTreadmill, &wahoodircontreadmill::debug, this, &bluetooth::debug);
+        if (this->discoveryAgent && !this->discoveryAgent->isActive()) {
+            emit searchingStop();
+        }
+        this->signalBluetoothDeviceConnected(wahooDirconTreadmill);
+        qDebug() << "bluetooth::connectDirconDevice() WahooDirconTreadmill created and connected";
+        return;
+    }
+
+    if (wahooDirconBike) {
+        return;
+    }
+    wahooDirconBike =
+        new wahoodirconbike(deviceInfo, noWriteResistance, noHeartService, bikeResistanceOffset, bikeResistanceGain);
+    emit deviceConnected(QBluetoothDeviceInfo());
+    connect(wahooDirconBike, &bluetoothdevice::connectedAndDiscovered, this, &bluetooth::connectedAndDiscovered);
+    connect(wahooDirconBike, &wahoodirconbike::debug, this, &bluetooth::debug);
+    if (this->discoveryAgent && !this->discoveryAgent->isActive()) {
+        emit searchingStop();
+    }
+    this->signalBluetoothDeviceConnected(wahooDirconBike);
+    qDebug() << "bluetooth::connectDirconDevice() WahooDirconBike created and connected";
+}
+
+void bluetooth::onDirconDeviceDiscovered(const QString &displayName) {
+    if (filterDevice.compare(displayName, Qt::CaseInsensitive) == 0 &&
+        (!discoveryAgent || !discoveryAgent->isActive())) {
+        tryConnectSelectedDirconDevice();
     }
 }
 
@@ -806,6 +890,10 @@ bool bluetooth::advertisesFitnessMachine(const QList<QBluetoothUuid> &services) 
 void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
 
     QSettings settings;
+
+    // Keep the normal BLE accessory scan active when the fitness machine uses DIRCON.
+    if (filterDevice.contains(QStringLiteral("(DirCon)"), Qt::CaseInsensitive))
+        qDebug() << "bluetooth::deviceDiscovered() scanning BLE accessories for" << filterDevice;
     QString heartRateBeltName =
         settings.value(QZSettings::heart_rate_belt_name, QZSettings::default_heart_rate_belt_name).toString();
     QString ftmsAccessoryName =
@@ -2048,7 +2136,7 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                         (b.name().toUpper().startsWith("3G PRO ")) ||
                         (b.name().toUpper().startsWith("3G ELITE ")) ||
                         b.name().toUpper().startsWith(QStringLiteral("AB300S-")) ||
-                        b.name().toUpper().startsWith(QStringLiteral("TF04-")) ||                           // Sport Synology Z5 Treadmill #2415
+                        b.name().toUpper().startsWith(QStringLiteral("TF04-S001-")) ||                           // Sport Synology Z5 Treadmill #2415
                         (b.name().toUpper().startsWith(QStringLiteral("TRUE TREADMILL ")) &&
                          b.name().length() > QStringLiteral("TRUE TREADMILL ").length() &&
                          QRegularExpression(QStringLiteral("TRUE TREADMILL \\d{3,}$")).match(b.name().toUpper()).hasMatch()) ||  // TRUE TREADMILL followed by digits
@@ -2396,6 +2484,7 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                         (b.name().toUpper().startsWith("NERO")) || (b.name().toUpper().startsWith("SUITO")) || (b.name().toUpper().startsWith("D2RIDE")) ||
                         (b.name().toUpper().startsWith("DIRETO X")) || (b.name().toUpper().startsWith("MERACH-667-")) ||
                         (b.name().toUpper().startsWith("USDC-D700-")) ||
+						(b.name().toUpper().startsWith(QStringLiteral("TF04-S201-"))) ||                           // Salter S30
                         (b.name().toUpper().startsWith("VIFHTR2.1") && !toorx_bike) ||
 						(b.name().toUpper().startsWith("RCR-")) || // Van Rysel RCR (Decathlon)
 						(b.name().toUpper().startsWith(QStringLiteral("S-30"))) || // Salter S-30
@@ -2507,12 +2596,26 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
             }
 #ifndef Q_OS_IOS
             else if (bh_spada_2 &&
-                     b.name().toUpper().startsWith("RACER S") &&
-                     !kettlerClassicBike && filter) {
-                // MyHomeFIT's Kettler Classic connector uses BR/EDR SPP.
-                // Route RACER S-prefixed names to this driver when BH SPADA
-                // Compatibility is enabled; otherwise preserve the existing
-                // BLE Stages path below.
+                     (upperDeviceName == QStringLiteral("COACH S") ||
+                      upperDeviceName.startsWith(QStringLiteral("COACH S "))) &&
+                     !kettlerCoachRower && filter) {
+                // Coach S uses Classic SPP but its rowing command set differs
+                // from the Kettler Classic bike. Do not route it as a bike.
+                this->setLastBluetoothDevice(b);
+                this->stopDiscovery();
+                kettlerCoachRower = new kettlercoachrower(noWriteResistance, noHeartService);
+                emit deviceConnected(b);
+                connect(kettlerCoachRower, &bluetoothdevice::connectedAndDiscovered, this,
+                        &bluetooth::connectedAndDiscovered);
+                connect(kettlerCoachRower, &kettlercoachrower::debug, this, &bluetooth::debug);
+                connect(kettlerCoachRower, &kettlercoachrower::disconnected, this, &bluetooth::restart,
+                        Qt::QueuedConnection);
+                kettlerCoachRower->deviceDiscovered(b);
+                this->signalBluetoothDeviceConnected(kettlerCoachRower);
+            } else if (bh_spada_2 &&
+                       upperDeviceName.startsWith(QStringLiteral("RACER S")) &&
+                       !kettlerClassicBike && filter) {
+                // Preserve the unchanged Classic bike route for Racer S.
                 this->setLastBluetoothDevice(b);
                 this->stopDiscovery();
                 kettlerClassicBike = new kettlerclassicbike(noWriteResistance, noHeartService, testResistance,
@@ -4928,6 +5031,10 @@ void bluetooth::restart() {
         delete kettlerClassicBike;
         kettlerClassicBike = nullptr;
     }
+    if (kettlerCoachRower) {
+        delete kettlerCoachRower;
+        kettlerCoachRower = nullptr;
+    }
     if (toorx) {
 
         delete toorx;
@@ -5367,7 +5474,22 @@ void bluetooth::restart() {
         delete eliteSterzoSmart;
         eliteSterzoSmart = nullptr;
     }
+    if (wahooDirconBike) {
+        delete wahooDirconBike;
+        wahooDirconBike = nullptr;
+    }
+    if (wahooDirconTreadmill) {
+        delete wahooDirconTreadmill;
+        wahooDirconTreadmill = nullptr;
+    }
     this->startDiscovery();
+}
+
+QList<DirconDeviceInfo> bluetooth::dirconDevices() const {
+    if (dirconDiscovery) {
+        return dirconDiscovery->discoveredDevices();
+    }
+    return QList<DirconDeviceInfo>();
 }
 
 bluetoothdevice *bluetooth::device() {
@@ -5436,6 +5558,8 @@ bluetoothdevice *bluetooth::device() {
         return stagesBike;
     } else if (kettlerClassicBike) {
         return kettlerClassicBike;
+    } else if (kettlerCoachRower) {
+        return kettlerCoachRower;
     } else if (toorx) {
         return toorx;
     } else if (iconsole) {
@@ -5588,6 +5712,10 @@ bluetoothdevice *bluetooth::device() {
         return ftmsBike;
     } else if (wahooKickrSnapBike) {
         return wahooKickrSnapBike;
+    } else if (wahooDirconBike) {
+        return wahooDirconBike;
+    } else if (wahooDirconTreadmill) {
+        return wahooDirconTreadmill;
     } else if (technogymBike) {
         return technogymBike;
     } else if (horizonGr7Bike) {

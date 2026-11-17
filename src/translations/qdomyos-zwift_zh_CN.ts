@@ -689,6 +689,122 @@ Would you like to enable the required services?</source>
         <translation>附近未找到心率传感器。请确认它已开启并正在广播心率。</translation>
     </message>
     <message>
+        <source>%1 connected!</source>
+        <translation>%1 已连接！</translation>
+    </message>
+    <message>
+        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
+        <translation>已启用按阻力手动调整功率：功率现在随“阻力”卡片的值变化。</translation>
+    </message>
+    <message>
+        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
+        <translation>已启用自定义 CSC 功率表：功率现在按设定的阻力/瓦特点计算。</translation>
+    </message>
+    <message>
+        <source>%1 Battery Level %2 %</source>
+        <translation>%1 电池电量 %2 %</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change</source>
+        <translation>发现 FTMS 自行车，请重启应用以应用更改</translation>
+    </message>
+    <message>
+        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos 椭圆机使用 FTMS。请重启 QZ 以应用修复，谢谢。</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change</source>
+        <translation>发现 FTMS 划船机，请重启应用以应用更改</translation>
+    </message>
+    <message>
+        <source>Bluetooth Service Error! Restart the bike!</source>
+        <translation>蓝牙服务错误！请重启自行车！</translation>
+    </message>
+    <message>
+        <source>Switching to classic Bluetooth bridge</source>
+        <translation>正在切换到经典蓝牙连接</translation>
+    </message>
+    <message>
+        <source>Virtual Echelon enabled for this bike</source>
+        <translation>已为此自行车启用虚拟 Echelon</translation>
+    </message>
+    <message>
+        <source>FTMS treadmill found, restart the app to apply the change</source>
+        <translation>发现 FTMS 跑步机，请重启应用以应用更改</translation>
+    </message>
+    <message>
+        <source>Init completed, you can use the treadmill now!</source>
+        <translation>初始化完成，现在可以使用跑步机了！</translation>
+    </message>
+    <message>
+        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
+        <translation>QZ 已识别此自行车的数据格式，并在设置中启用了“Virtufit Etappe 2.0 自行车”。必须重启 QZ 才能读取自行车数据。</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change!</source>
+        <translation>发现 FTMS 自行车，请重启应用以应用更改！</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change!</source>
+        <translation>发现 FTMS 划船机，请重启应用以应用更改！</translation>
+    </message>
+    <message>
+        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos 自行车自称 FTMS，但实际不是。请重启 QZ 以应用修复，谢谢。</translation>
+    </message>
+    <message>
+        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
+        <translation>发现 PM5 划船机。请重启 QZ 以应用修复，谢谢。</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization in progress...%1%</source>
+        <translation>跑步机正在初始化...%1%</translation>
+    </message>
+    <message>
+        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
+        <translation>请在“设置-&gt;跑步机选项-&gt;Horizon 跑步机选项”中启用“强制使用 FTMS”设置，然后重启应用</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization completed!</source>
+        <translation>跑步机初始化完成！</translation>
+    </message>
+    <message>
+        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos 跑步机自称 FTMS，但实际不是。请重启 QZ 以应用修复，谢谢。</translation>
+    </message>
+    <message>
+        <source>Treadmill ready</source>
+        <translation>跑步机已就绪</translation>
+    </message>
+    <message>
+        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
+        <translation>检测到 T01_ 设备。如果坡度值异常，请在“跑步机选项”设置中启用“IConcept FTMS 跑步机”。</translation>
+    </message>
+    <message>
+        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
+        <translation>当前 SmO2：%1% 上次 SmO2：%2% THb：%3 g/dL</translation>
+    </message>
+    <message>
+        <source>SE7i init completed!</source>
+        <translation>SE7i 初始化完成！</translation>
+    </message>
+    <message>
+        <source>Starting treadmill before applying requested speed %1</source>
+        <translation>先启动跑步机，再应用请求的速度 %1</translation>
+    </message>
+    <message>
+        <source>Applying cached speed request %1</source>
+        <translation>正在应用缓存的速度请求 %1</translation>
+    </message>
+    <message>
+        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
+        <translation>未找到服务，请联系 roberto.viola83@gmail.com！</translation>
+    </message>
+    <message>
+        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
+        <translation>发现 Zwift Hub 设备，请重启应用以使用虚拟换挡！</translation>
+    </message>
+    <message>
         <source>Sending workout email...</source>
         <translation>正在通过电子邮件发送训练...</translation>
     </message>
@@ -1025,122 +1141,6 @@ Do you want to update QZ settings?</source>
         <translation>已收到计圈。继续训练。</translation>
     </message>
     <message>
-        <source>%1 connected!</source>
-        <translation>%1 已连接！</translation>
-    </message>
-    <message>
-        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
-        <translation>已启用按阻力手动调整功率：功率现在随“阻力”卡片的值变化。</translation>
-    </message>
-    <message>
-        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
-        <translation>已启用自定义 CSC 功率表：功率现在按设定的阻力/瓦特点计算。</translation>
-    </message>
-    <message>
-        <source>%1 Battery Level %2 %</source>
-        <translation>%1 电池电量 %2 %</translation>
-    </message>
-    <message>
-        <source>FTMS bike found, restart the app to apply the change</source>
-        <translation>发现 FTMS 自行车，请重启应用以应用更改</translation>
-    </message>
-    <message>
-        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
-        <translation>Domyos 椭圆机使用 FTMS。请重启 QZ 以应用修复，谢谢。</translation>
-    </message>
-    <message>
-        <source>FTMS rower found, restart the app to apply the change</source>
-        <translation>发现 FTMS 划船机，请重启应用以应用更改</translation>
-    </message>
-    <message>
-        <source>Bluetooth Service Error! Restart the bike!</source>
-        <translation>蓝牙服务错误！请重启自行车！</translation>
-    </message>
-    <message>
-        <source>Switching to classic Bluetooth bridge</source>
-        <translation>正在切换到经典蓝牙连接</translation>
-    </message>
-    <message>
-        <source>Virtual Echelon enabled for this bike</source>
-        <translation>已为此自行车启用虚拟 Echelon</translation>
-    </message>
-    <message>
-        <source>FTMS treadmill found, restart the app to apply the change</source>
-        <translation>发现 FTMS 跑步机，请重启应用以应用更改</translation>
-    </message>
-    <message>
-        <source>Init completed, you can use the treadmill now!</source>
-        <translation>初始化完成，现在可以使用跑步机了！</translation>
-    </message>
-    <message>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>QZ 已识别此自行车的数据格式，并在设置中启用了“Virtufit Etappe 2.0 自行车”。必须重启 QZ 才能读取自行车数据。</translation>
-    </message>
-    <message>
-        <source>FTMS bike found, restart the app to apply the change!</source>
-        <translation>发现 FTMS 自行车，请重启应用以应用更改！</translation>
-    </message>
-    <message>
-        <source>FTMS rower found, restart the app to apply the change!</source>
-        <translation>发现 FTMS 划船机，请重启应用以应用更改！</translation>
-    </message>
-    <message>
-        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
-        <translation>Domyos 自行车自称 FTMS，但实际不是。请重启 QZ 以应用修复，谢谢。</translation>
-    </message>
-    <message>
-        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
-        <translation>发现 PM5 划船机。请重启 QZ 以应用修复，谢谢。</translation>
-    </message>
-    <message>
-        <source>Treadmill initialization in progress...%1%</source>
-        <translation>跑步机正在初始化...%1%</translation>
-    </message>
-    <message>
-        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
-        <translation>请在“设置-&gt;跑步机选项-&gt;Horizon 跑步机选项”中启用“强制使用 FTMS”设置，然后重启应用</translation>
-    </message>
-    <message>
-        <source>Treadmill initialization completed!</source>
-        <translation>跑步机初始化完成！</translation>
-    </message>
-    <message>
-        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
-        <translation>Domyos 跑步机自称 FTMS，但实际不是。请重启 QZ 以应用修复，谢谢。</translation>
-    </message>
-    <message>
-        <source>Treadmill ready</source>
-        <translation>跑步机已就绪</translation>
-    </message>
-    <message>
-        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
-        <translation>检测到 T01_ 设备。如果坡度值异常，请在“跑步机选项”设置中启用“IConcept FTMS 跑步机”。</translation>
-    </message>
-    <message>
-        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
-        <translation>当前 SmO2：%1% 上次 SmO2：%2% THb：%3 g/dL</translation>
-    </message>
-    <message>
-        <source>SE7i init completed!</source>
-        <translation>SE7i 初始化完成！</translation>
-    </message>
-    <message>
-        <source>Starting treadmill before applying requested speed %1</source>
-        <translation>先启动跑步机，再应用请求的速度 %1</translation>
-    </message>
-    <message>
-        <source>Applying cached speed request %1</source>
-        <translation>正在应用缓存的速度请求 %1</translation>
-    </message>
-    <message>
-        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
-        <translation>未找到服务，请联系 roberto.viola83@gmail.com！</translation>
-    </message>
-    <message>
-        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
-        <translation>发现 Zwift Hub 设备，请重启应用以使用虚拟换挡！</translation>
-    </message>
-    <message>
         <source>Zwift Login OK!</source>
         <translation>Zwift 登录成功！</translation>
     </message>
@@ -1337,6 +1337,80 @@ Do you want to update QZ settings?</source>
     </message>
 </context>
 <context>
+    <name>SupportHelpButton</name>
+    <message>
+        <source>Contact QZ support</source>
+        <translation>联系 QZ 支持</translation>
+    </message>
+    <message>
+        <source>Prepare a support email with diagnostics</source>
+        <translation>准备包含诊断信息的支持邮件</translation>
+    </message>
+    <message>
+        <source>No device connected</source>
+        <translation>未连接设备</translation>
+    </message>
+    <message>
+        <source>Speed and power at zero</source>
+        <translation>速度和功率为零</translation>
+    </message>
+    <message>
+        <source>QZ Support</source>
+        <translation>QZ 支持</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation>完成</translation>
+    </message>
+    <message>
+        <source>Hide keyboard</source>
+        <translation>隐藏键盘</translation>
+    </message>
+    <message>
+        <source>Close support request</source>
+        <translation>关闭支持请求</translation>
+    </message>
+    <message>
+        <source>Tell us what is not working. QZ will add your device and app information.</source>
+        <translation>请告诉我们哪里无法正常工作。QZ 会添加设备和应用信息。</translation>
+    </message>
+    <message>
+        <source>Describe the problem...</source>
+        <translation>描述问题...</translation>
+    </message>
+    <message>
+        <source>Describe the problem</source>
+        <translation>描述问题</translation>
+    </message>
+    <message>
+        <source>Attach debug log if available</source>
+        <translation>有调试日志时附加</translation>
+    </message>
+    <message>
+        <source>You can review or edit the email before sending it. Nothing is sent automatically.</source>
+        <translation>发送前可以查看或编辑邮件。不会自动发送任何内容。</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Open email</source>
+        <translation>打开邮件</translation>
+    </message>
+</context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>踏频似乎只有实际值的一半。请在“功率传感器选项”中开启“跑步踏频加倍”和“Strava 踏频减半”。</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>踏频似乎是实际值的两倍。请在“功率传感器选项”中关闭“跑步踏频加倍”和“Strava 踏频减半”。</translation>
+    </message>
+</context>
+<context>
     <name>SwagBagView</name>
     <message>
         <source>Hi! Do you know that QZ is just an Open Source Indie App?&lt;br&gt;&lt;br&gt;No Big Companies are running this!&lt;br&gt;The &quot;Swag Bag&quot; is a way to support the ongoing development, maintenance and support of QZ Fitness!</source>
@@ -1388,10 +1462,6 @@ Do you want to update QZ settings?</source>
         <translation>此操作无法撤销。</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation>删除</translation>
-    </message>
-    <message>
         <source>Please choose a file</source>
         <translation>请选择文件</translation>
     </message>
@@ -1414,6 +1484,10 @@ Do you want to update QZ settings?</source>
     <message>
         <source>Start Workout</source>
         <translation>开始训练</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>删除</translation>
     </message>
     <message>
         <source>Other folders</source>
@@ -1443,10 +1517,6 @@ Do you want to update QZ settings?</source>
         <translation>此操作无法撤销。</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation>删除</translation>
-    </message>
-    <message>
         <source>Filter</source>
         <translation>筛选</translation>
     </message>
@@ -1459,12 +1529,12 @@ Do you want to update QZ settings?</source>
         <translation>上级文件夹</translation>
     </message>
     <message>
-        <source>No workouts here</source>
-        <translation>此处没有训练</translation>
-    </message>
-    <message>
         <source>No workouts found</source>
         <translation>未找到训练</translation>
+    </message>
+    <message>
+        <source>No workouts here</source>
+        <translation>此处没有训练</translation>
     </message>
     <message>
         <source>Other folders</source>
@@ -1491,6 +1561,10 @@ Do you want to update QZ settings?</source>
         <translation>展开</translation>
     </message>
     <message>
+        <source>Delete</source>
+        <translation>删除</translation>
+    </message>
+    <message>
         <source>Start Workout</source>
         <translation>开始训练</translation>
     </message>
@@ -1498,16 +1572,16 @@ Do you want to update QZ settings?</source>
 <context>
     <name>UiMessageDialog</name>
     <message>
-        <source>OK</source>
-        <translation>确定</translation>
-    </message>
-    <message>
         <source>Yes</source>
         <translation>是</translation>
     </message>
     <message>
         <source>No</source>
         <translation>否</translation>
+    </message>
+    <message>
+        <source>OK</source>
+        <translation>确定</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -2249,6 +2323,86 @@ Do you want to update QZ settings?</source>
         <translation>心率 &lt;{value} bpm</translation>
     </message>
     <message>
+        <source>W</source>
+        <translation>W</translation>
+    </message>
+    <message>
+        <source>kJ</source>
+        <translation>kJ</translation>
+    </message>
+    <message>
+        <source>kcal</source>
+        <translation>kcal</translation>
+    </message>
+    <message>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>rpm</source>
+        <translation>rpm</translation>
+    </message>
+    <message>
+        <source>bpm</source>
+        <translation>bpm</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>min/km</source>
+        <translation>分钟/公里</translation>
+    </message>
+    <message>
+        <source>min/mi</source>
+        <translation>分钟/英里</translation>
+    </message>
+    <message>
+        <source>Full screen</source>
+        <translation>全屏</translation>
+    </message>
+    <message>
+        <source>Exit full screen</source>
+        <translation>退出全屏</translation>
+    </message>
+    <message>
+        <source>Swipe left or right to switch charts</source>
+        <translation>左右滑动切换图表</translation>
+    </message>
+    <message>
+        <source>A workout named {name} already exists. Replace it?</source>
+        <translation>已存在名为 {name} 的训练。要替换吗?</translation>
+    </message>
+    <message>
+        <source>Replace</source>
+        <translation>替换</translation>
+    </message>
+    <message>
+        <source>Live update</source>
+        <translation>实时更新</translation>
+    </message>
+    <message>
+        <source>{value} s</source>
+        <translation>{value} 秒</translation>
+    </message>
+    <message>
+        <source>lvl</source>
+        <translation>级</translation>
+    </message>
+    <message>
+        <source>spm</source>
+        <translation>spm</translation>
+    </message>
+    <message>
         <source>Marathon</source>
         <translation>马拉松</translation>
     </message>
@@ -2459,86 +2613,6 @@ Do you want to update QZ settings?</source>
         <translation>功率曲线</translation>
     </message>
     <message>
-        <source>min/km</source>
-        <translation>分钟/公里</translation>
-    </message>
-    <message>
-        <source>min/mi</source>
-        <translation>分钟/英里</translation>
-    </message>
-    <message>
-        <source>Full screen</source>
-        <translation>全屏</translation>
-    </message>
-    <message>
-        <source>Exit full screen</source>
-        <translation>退出全屏</translation>
-    </message>
-    <message>
-        <source>Swipe left or right to switch charts</source>
-        <translation>左右滑动切换图表</translation>
-    </message>
-    <message>
-        <source>A workout named {name} already exists. Replace it?</source>
-        <translation>已存在名为 {name} 的训练。要替换吗?</translation>
-    </message>
-    <message>
-        <source>Replace</source>
-        <translation>替换</translation>
-    </message>
-    <message>
-        <source>Live update</source>
-        <translation>实时更新</translation>
-    </message>
-    <message>
-        <source>{value} s</source>
-        <translation>{value} 秒</translation>
-    </message>
-    <message>
-        <source>W</source>
-        <translation>W</translation>
-    </message>
-    <message>
-        <source>kJ</source>
-        <translation>kJ</translation>
-    </message>
-    <message>
-        <source>kcal</source>
-        <translation>kcal</translation>
-    </message>
-    <message>
-        <source>km</source>
-        <translation>km</translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>rpm</source>
-        <translation>rpm</translation>
-    </message>
-    <message>
-        <source>bpm</source>
-        <translation>bpm</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>lvl</source>
-        <translation>级</translation>
-    </message>
-    <message>
-        <source>spm</source>
-        <translation>spm</translation>
-    </message>
-    <message>
         <source>Allowed range: {min} to {max}</source>
         <translation>允许范围：{min} 至 {max}</translation>
     </message>
@@ -2610,6 +2684,22 @@ The following questions will customize QZ for your equipment and goals.</source>
         <translation>您的健身设备是什么？</translation>
     </message>
     <message>
+        <source>Bike</source>
+        <translation>单车</translation>
+    </message>
+    <message>
+        <source>Treadmill</source>
+        <translation>跑步机</translation>
+    </message>
+    <message>
+        <source>Rower</source>
+        <translation>划船机</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>椭圆机</translation>
+    </message>
+    <message>
         <source>Back</source>
         <translation>返回</translation>
     </message>
@@ -2620,6 +2710,14 @@ The following questions will customize QZ for your equipment and goals.</source>
     <message>
         <source>QZ allows you to connect to both of them, even simultaneously if you want!</source>
         <translation>QZ 允许您连接到两者，甚至可以同时连接！</translation>
+    </message>
+    <message>
+        <source>Other app</source>
+        <translation>其他应用</translation>
+    </message>
+    <message>
+        <source>QZ Standalone</source>
+        <translation>仅 QZ</translation>
     </message>
     <message>
         <source>Connect to Peloton</source>
@@ -2642,6 +2740,18 @@ The following questions will customize QZ for your equipment and goals.</source>
         <translation>难度</translation>
     </message>
     <message>
+        <source>lower</source>
+        <translation>下限</translation>
+    </message>
+    <message>
+        <source>upper</source>
+        <translation>上限</translation>
+    </message>
+    <message>
+        <source>average</source>
+        <translation>平均</translation>
+    </message>
+    <message>
         <source>Finish</source>
         <translation>完成</translation>
     </message>
@@ -2658,44 +2768,16 @@ The following questions will customize QZ for your equipment and goals.</source>
         <translation>下一步</translation>
     </message>
     <message>
-        <source>Refresh</source>
-        <translation>刷新</translation>
+        <source>Your equipment, units and profile, step by step</source>
+        <translation>设备、单位和档案，逐步设置</translation>
     </message>
     <message>
-        <source>Bike</source>
-        <translation>单车</translation>
+        <source>Pick a topic and go straight to its settings</source>
+        <translation>选择一个主题，直接进入其设置</translation>
     </message>
     <message>
-        <source>Treadmill</source>
-        <translation>跑步机</translation>
-    </message>
-    <message>
-        <source>Rower</source>
-        <translation>划船机</translation>
-    </message>
-    <message>
-        <source>Elliptical</source>
-        <translation>椭圆机</translation>
-    </message>
-    <message>
-        <source>Other app</source>
-        <translation>其他应用</translation>
-    </message>
-    <message>
-        <source>QZ Standalone</source>
-        <translation>仅 QZ</translation>
-    </message>
-    <message>
-        <source>lower</source>
-        <translation>下限</translation>
-    </message>
-    <message>
-        <source>upper</source>
-        <translation>上限</translation>
-    </message>
-    <message>
-        <source>average</source>
-        <translation>平均</translation>
+        <source>Close the wizard</source>
+        <translation>关闭向导</translation>
     </message>
     <message>
         <source>Custom Configurations</source>
@@ -2802,6 +2884,10 @@ The following questions will customize QZ for your equipment and goals.</source>
         <translation>已禁用</translation>
     </message>
     <message>
+        <source>Refresh</source>
+        <translation>刷新</translation>
+    </message>
+    <message>
         <source>Unit System</source>
         <translation>单位系统</translation>
     </message>
@@ -2824,6 +2910,14 @@ The following questions will customize QZ for your equipment and goals.</source>
     <message>
         <source>Weight (%1)</source>
         <translation>体重（%1）</translation>
+    </message>
+    <message>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <source>kg</source>
+        <translation>kg</translation>
     </message>
     <message>
         <source>Age</source>
@@ -2868,26 +2962,6 @@ The following questions will customize QZ for your equipment and goals.</source>
     <message>
         <source>Garmin watch</source>
         <translation>Garmin 手表</translation>
-    </message>
-    <message>
-        <source>lbs</source>
-        <translation>lbs</translation>
-    </message>
-    <message>
-        <source>kg</source>
-        <translation>kg</translation>
-    </message>
-    <message>
-        <source>Your equipment, units and profile, step by step</source>
-        <translation>设备、单位和档案，逐步设置</translation>
-    </message>
-    <message>
-        <source>Pick a topic and go straight to its settings</source>
-        <translation>选择一个主题，直接进入其设置</translation>
-    </message>
-    <message>
-        <source>Close the wizard</source>
-        <translation>关闭向导</translation>
     </message>
 </context>
 <context>
@@ -2983,44 +3057,12 @@ The following questions will customize QZ for your equipment and goals.</source>
 <context>
     <name>WorkoutsHistory</name>
     <message>
-        <source>Import FIT File...</source>
-        <translation>导入 FIT 文件...</translation>
-    </message>
-    <message>
-        <source>Import from QZ Folder...</source>
-        <translation>从 QZ 文件夹导入...</translation>
-    </message>
-    <message>
-        <source>Please choose a file</source>
-        <translation>请选择文件</translation>
-    </message>
-    <message>
-        <source>FIT files (*.fit *.FIT)</source>
-        <translation>FIT 文件 (*.fit *.FIT)</translation>
-    </message>
-    <message>
-        <source>All files (*)</source>
-        <translation>所有文件 (*)</translation>
-    </message>
-    <message>
-        <source>Importing workouts...</source>
-        <translation type="vanished">正在导入训练...</translation>
-    </message>
-    <message>
         <source>Workout History</source>
         <translation>训练历史</translation>
     </message>
     <message>
         <source>Filtered: %1</source>
         <translation>已筛选：%1</translation>
-    </message>
-    <message>
-        <source>%1 days streak</source>
-        <translation>连续 %1 天</translation>
-    </message>
-    <message>
-        <source>%1 day streak</source>
-        <translation>连续 %1 天</translation>
     </message>
     <message>
         <source>Clear Filter</source>
@@ -3065,6 +3107,86 @@ This may take a few moments on first startup.</source>
         <translation>kcal</translation>
     </message>
     <message>
+        <source>Import FIT File...</source>
+        <translation>导入 FIT 文件...</translation>
+    </message>
+    <message>
+        <source>Import from QZ Folder...</source>
+        <translation>从 QZ 文件夹导入...</translation>
+    </message>
+    <message>
+        <source>Please choose a file</source>
+        <translation>请选择文件</translation>
+    </message>
+    <message>
+        <source>FIT files (*.fit *.FIT)</source>
+        <translation>FIT 文件 (*.fit *.FIT)</translation>
+    </message>
+    <message>
+        <source>All files (*)</source>
+        <translation>所有文件 (*)</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>分享 FIT 文件</translation>
+    </message>
+    <message>
+        <source>Upload to Strava</source>
+        <translation>上传到 Strava</translation>
+    </message>
+    <message>
+        <source>Upload to Garmin</source>
+        <translation>上传到 Garmin</translation>
+    </message>
+    <message>
+        <source>Upload to Intervals.icu</source>
+        <translation>上传到 Intervals.icu</translation>
+    </message>
+    <message>
+        <source>Upload to Apple Health</source>
+        <translation>上传到 Apple Health</translation>
+    </message>
+    <message>
+        <source>Delete Workout</source>
+        <translation>删除训练</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete &apos;%1&apos;?</source>
+        <translation>确定要删除“%1”吗？</translation>
+    </message>
+    <message>
+        <source>%1 days streak</source>
+        <translation>连续 %1 天</translation>
+    </message>
+    <message>
+        <source>%1 day streak</source>
+        <translation>连续 %1 天</translation>
+    </message>
+    <message>
+        <source>Calendar</source>
+        <translation>日历</translation>
+    </message>
+    <message>
+        <source>No workouts on this day</source>
+        <translation>这一天没有训练</translation>
+    </message>
+    <message>
+        <source>No workouts yet</source>
+        <translation>还没有训练</translation>
+    </message>
+    <message>
+        <source>Finished workouts appear here: open one to see its charts.</source>
+        <translation>已完成的训练会显示在这里：打开任意一项即可查看图表。</translation>
+    </message>
+    <message>
+        <source>Personal best: %1 days</source>
+        <translation>个人最佳：%1 天</translation>
+    </message>
+    <message>
+        <source>Personal best: %1 day</source>
+        <translation>个人最佳：%1 天</translation>
+    </message>
+    <message>
         <source>Sun</source>
         <translation>日</translation>
     </message>
@@ -3097,64 +3219,8 @@ This may take a few moments on first startup.</source>
         <translation>关闭</translation>
     </message>
     <message>
-        <source>Calendar</source>
-        <translation>日历</translation>
-    </message>
-    <message>
-        <source>No workouts yet</source>
-        <translation>还没有训练</translation>
-    </message>
-    <message>
-        <source>No workouts on this day</source>
-        <translation>这一天没有训练</translation>
-    </message>
-    <message>
-        <source>Finished workouts appear here: open one to see its charts.</source>
-        <translation>已完成的训练会显示在这里：打开任意一项即可查看图表。</translation>
-    </message>
-    <message>
-        <source>Share FIT file</source>
-        <translation>分享 FIT 文件</translation>
-    </message>
-    <message>
-        <source>Upload to Strava</source>
-        <translation>上传到 Strava</translation>
-    </message>
-    <message>
-        <source>Upload to Garmin</source>
-        <translation>上传到 Garmin</translation>
-    </message>
-    <message>
-        <source>Upload to Intervals.icu</source>
-        <translation>上传到 Intervals.icu</translation>
-    </message>
-    <message>
-        <source>Upload to Apple Health</source>
-        <translation>上传到 Apple Health</translation>
-    </message>
-    <message>
-        <source>Delete Workout</source>
-        <translation>删除训练</translation>
-    </message>
-    <message>
-        <source>Are you sure you want to delete &apos;%1&apos;?</source>
-        <translation>确定要删除“%1”吗？</translation>
-    </message>
-    <message>
-        <source>Personal best: %1 days</source>
-        <translation>个人最佳：%1 天</translation>
-    </message>
-    <message>
-        <source>Personal best: %1 day</source>
-        <translation>个人最佳：%1 天</translation>
-    </message>
-    <message>
-        <source>Previous month</source>
-        <translation>上个月</translation>
-    </message>
-    <message>
-        <source>Next month</source>
-        <translation>下个月</translation>
+        <source>Importing workouts...</source>
+        <translation type="vanished">正在导入训练...</translation>
     </message>
     <message>
         <source>Filter by date</source>
@@ -3187,6 +3253,14 @@ This may take a few moments on first startup.</source>
     <message>
         <source>Copying workout files: %1 of %2</source>
         <translation>正在复制训练文件：%1/%2</translation>
+    </message>
+    <message>
+        <source>Previous month</source>
+        <translation>上个月</translation>
+    </message>
+    <message>
+        <source>Next month</source>
+        <translation>下个月</translation>
     </message>
     <message>
         <source>has a workout</source>
@@ -3620,6 +3694,22 @@ This may take a few moments on first startup.</source>
         <translation>步数</translation>
     </message>
     <message>
+        <source>Odometer (m)</source>
+        <translation>里程 (m)</translation>
+    </message>
+    <message>
+        <source>Pace (m/500m)</source>
+        <translation>配速 (m/500m)</translation>
+    </message>
+    <message>
+        <source>Avg Pace (m/500m)</source>
+        <translation>平均配速 (m/500m)</translation>
+    </message>
+    <message>
+        <source>T.Pace(m/500m)</source>
+        <translation>目标配速(m/500m)</translation>
+    </message>
+    <message>
         <source>Stop</source>
         <translation>停止</translation>
     </message>
@@ -3634,6 +3724,26 @@ This may take a few moments on first startup.</source>
     <message>
         <source>Resume</source>
         <translation>继续</translation>
+    </message>
+    <message>
+        <source>offset </source>
+        <translation>偏移 </translation>
+    </message>
+    <message>
+        <source> /min</source>
+        <translation> /分钟</translation>
+    </message>
+    <message>
+        <source> sec.</source>
+        <translation> 秒</translation>
+    </message>
+    <message>
+        <source>Incl: </source>
+        <translation>坡度: </translation>
+    </message>
+    <message>
+        <source>%1%2W</source>
+        <translation>%1%2W</translation>
     </message>
     <message>
         <source>Rec.</source>
@@ -3680,6 +3790,30 @@ This may take a few moments on first startup.</source>
     <message>
         <source>N/A</source>
         <translation>无</translation>
+    </message>
+    <message>
+        <source>3s avg</source>
+        <translation>3秒平均</translation>
+    </message>
+    <message>
+        <source>5s avg</source>
+        <translation>5秒平均</translation>
+    </message>
+    <message>
+        <source>Gain: </source>
+        <translation>增益: </translation>
+    </message>
+    <message>
+        <source>MIN: </source>
+        <translation>最小: </translation>
+    </message>
+    <message>
+        <source>W </source>
+        <translation>W </translation>
+    </message>
+    <message>
+        <source>Wi-Fi connection (DirCon) restarted</source>
+        <translation>已重启 Wi-Fi 连接（DirCon）</translation>
     </message>
     <message>
         <source>, speed </source>
@@ -3915,54 +4049,6 @@ This may take a few moments on first startup.</source>
         <translation>无法打开训练文件。</translation>
     </message>
     <message>
-        <source>The workout file could not be copied.</source>
-        <translation>无法复制训练文件。</translation>
-    </message>
-    <message>
-        <source>No workout files (.fit) found.</source>
-        <translation>未找到训练文件 (.fit)。</translation>
-    </message>
-    <message>
-        <source>Workouts imported: %1.</source>
-        <translation>已导入训练：%1。</translation>
-    </message>
-    <message>
-        <source>Already in the history: %1.</source>
-        <translation>已在历史记录中：%1。</translation>
-    </message>
-    <message>
-        <source>Without workout data: %1.</source>
-        <translation>无训练数据：%1。</translation>
-    </message>
-    <message>
-        <source>The workout history database could not be opened.</source>
-        <translation>无法打开训练历史数据库。</translation>
-    </message>
-    <message>
-        <source>Bluetooth is off</source>
-        <translation>蓝牙已关闭</translation>
-    </message>
-    <message>
-        <source>Searching for the device...</source>
-        <translation>正在搜索设备...</translation>
-    </message>
-    <message>
-        <source>Connecting to %1...</source>
-        <translation>正在连接 %1…</translation>
-    </message>
-    <message>
-        <source>Search stopped, tap the Bluetooth icon</source>
-        <translation>搜索已停止，请点击蓝牙图标</translation>
-    </message>
-    <message>
-        <source>Next search in %1 s</source>
-        <translation>%1 秒后再次搜索</translation>
-    </message>
-    <message>
-        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
-        <translation>Android 允许 30 秒内进行 5 次蓝牙搜索，下一次将在 %1 秒后开始</translation>
-    </message>
-    <message>
         <source>km</source>
         <translation>km</translation>
     </message>
@@ -4005,20 +4091,16 @@ This may take a few moments on first startup.</source>
         <translation>平均功率</translation>
     </message>
     <message>
-        <source>Odometer (m)</source>
-        <translation>里程 (m)</translation>
+        <source>The workout file could not be copied.</source>
+        <translation>无法复制训练文件。</translation>
     </message>
     <message>
-        <source>Pace (m/500m)</source>
-        <translation>配速 (m/500m)</translation>
+        <source>No workout files (.fit) found.</source>
+        <translation>未找到训练文件 (.fit)。</translation>
     </message>
     <message>
-        <source>Avg Pace (m/500m)</source>
-        <translation>平均配速 (m/500m)</translation>
-    </message>
-    <message>
-        <source>T.Pace(m/500m)</source>
-        <translation>目标配速(m/500m)</translation>
+        <source>Workouts imported: %1.</source>
+        <translation>已导入训练：%1。</translation>
     </message>
     <message>
         <source>The file could not be copied to the QZ folder.</source>
@@ -4033,52 +4115,44 @@ This may take a few moments on first startup.</source>
         <translation type="vanished">未找到以前安装的训练计划。</translation>
     </message>
     <message>
+        <source>Already in the history: %1.</source>
+        <translation>已在历史记录中：%1。</translation>
+    </message>
+    <message>
+        <source>Without workout data: %1.</source>
+        <translation>无训练数据：%1。</translation>
+    </message>
+    <message>
+        <source>The workout history database could not be opened.</source>
+        <translation>无法打开训练历史数据库。</translation>
+    </message>
+    <message>
+        <source>Bluetooth is off</source>
+        <translation>蓝牙已关闭</translation>
+    </message>
+    <message>
+        <source>Searching for the device...</source>
+        <translation>正在搜索设备...</translation>
+    </message>
+    <message>
+        <source>Connecting to %1...</source>
+        <translation>正在连接 %1…</translation>
+    </message>
+    <message>
+        <source>Search stopped, tap the Bluetooth icon</source>
+        <translation>搜索已停止，请点击蓝牙图标</translation>
+    </message>
+    <message>
+        <source>Next search in %1 s</source>
+        <translation>%1 秒后再次搜索</translation>
+    </message>
+    <message>
         <source>%1 found</source>
         <translation>已找到 %1</translation>
     </message>
     <message>
-        <source>offset </source>
-        <translation>偏移 </translation>
-    </message>
-    <message>
-        <source> /min</source>
-        <translation> /分钟</translation>
-    </message>
-    <message>
-        <source> sec.</source>
-        <translation> 秒</translation>
-    </message>
-    <message>
-        <source>Incl: </source>
-        <translation>坡度: </translation>
-    </message>
-    <message>
-        <source>%1%2W</source>
-        <translation>%1%2W</translation>
-    </message>
-    <message>
-        <source>3s avg</source>
-        <translation>3秒平均</translation>
-    </message>
-    <message>
-        <source>5s avg</source>
-        <translation>5秒平均</translation>
-    </message>
-    <message>
-        <source>Gain: </source>
-        <translation>增益: </translation>
-    </message>
-    <message>
-        <source>MIN: </source>
-        <translation>最小: </translation>
-    </message>
-    <message>
-        <source>W </source>
-        <translation>W </translation>
-    </message>
-    <message>
-        <source>Wi-Fi connection (DirCon) restarted</source>
-        <translation>已重启 Wi-Fi 连接（DirCon）</translation>
+        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
+        <translation>Android 允许 30 秒内进行 5 次蓝牙搜索，下一次将在 %1 秒后开始</translation>
     </message>
     <message>
         <source>Great workout!</source>
@@ -4361,6 +4435,14 @@ This may take a few moments on first startup.</source>
         <translation>qDomyos-Zwift</translation>
     </message>
     <message>
+        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
+        <translation>如果要在配置文件“%1”中保留这些更改，请记得保存该配置文件。</translation>
+    </message>
+    <message>
+        <source>Press back again to exit</source>
+        <translation>再按一次返回键退出</translation>
+    </message>
+    <message>
         <source>Program has been loaded correctly. Press start to begin!</source>
         <translation>程序已成功加载。按开始键开始！</translation>
     </message>
@@ -4449,6 +4531,10 @@ Do you want to do it now?</source>
 现在是否执行？</translation>
     </message>
     <message>
+        <source>Restart now?</source>
+        <translation>立即重启？</translation>
+    </message>
+    <message>
         <source>Strava</source>
         <translation>Strava</translation>
     </message>
@@ -4479,22 +4565,6 @@ Do you want to start it now?</source>
         <translation>
 
 是否立即开始？</translation>
-    </message>
-    <message>
-        <source>You are already connected to Strava. Do you want to log out?</source>
-        <translation>您已连接到 Strava。是否要登出？</translation>
-    </message>
-    <message>
-        <source>Peloton</source>
-        <translation>Peloton</translation>
-    </message>
-    <message>
-        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
-        <translation>如果要在配置文件“%1”中保留这些更改，请记得保存该配置文件。</translation>
-    </message>
-    <message>
-        <source>Restart now?</source>
-        <translation>立即重启？</translation>
     </message>
     <message>
         <source>Garmin FTP Update</source>
@@ -4575,6 +4645,54 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>否</translation>
     </message>
     <message>
+        <source>You are already connected to Strava. Do you want to log out?</source>
+        <translation>您已连接到 Strava。是否要登出？</translation>
+    </message>
+    <message>
+        <source>Peloton</source>
+        <translation>Peloton</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the Files app.</source>
+        <translation>已保存！请在“文件”应用中查看。</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the app&apos;s private folder.</source>
+        <translation>已保存！请在应用的私有文件夹中查看。</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>恢复文件</translation>
+    </message>
+    <message>
+        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>以前安装的训练计划、GPX 路线、设置文件和配置文件可能仍在 QZ 文件夹中。
+要查找它们吗？
+
+请在下一个窗口中允许访问 QZ 文件夹。</translation>
+    </message>
+    <message>
+        <source>QZ has detected the data format of this bike. Enable &quot;Virtufit Etappe 2.0 Bike&quot;?</source>
+        <translation>QZ 已识别此单车的数据格式。要启用“Virtufit Etappe 2.0 Bike”吗？</translation>
+    </message>
+    <message>
+        <source>Without it QZ uses the default settings, and the data or the resistance may be off.</source>
+        <translation>否则 QZ 将使用默认设置，数据或阻力可能不准确。</translation>
+    </message>
+    <message>
+        <source>This FitShow device also reports bike data. Is it a bike?</source>
+        <translation>此 FitShow 设备也报告单车数据。它是单车吗？</translation>
+    </message>
+    <message>
+        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
+No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
+        <translation>是：QZ 将启用“Fit Plus Bike”并关闭，请重新打开 QZ 以作为单车连接。
+否：QZ 将其保留为跑步机，且不再询问（仍可手动设置为单车：Fitplus Bike Options 中的“Fit Plus Bike”）。</translation>
+    </message>
+    <message>
         <source>You are already connected to Peloton. Do you want to log out?</source>
         <translation>您已连接到 Peloton。是否要登出？</translation>
     </message>
@@ -4643,12 +4761,12 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>分享 FIT 文件</translation>
     </message>
     <message>
-        <source>Lock tiles</source>
-        <translation>锁定卡片</translation>
-    </message>
-    <message>
         <source>Unlock tiles</source>
         <translation>解锁卡片</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>锁定卡片</translation>
     </message>
     <message>
         <source>Disable auto resistance</source>
@@ -4719,86 +4837,6 @@ Do you want to switch to the classic Bluetooth bridge for this session?</source>
         <translation>退出</translation>
     </message>
     <message>
-        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
-        <translation>QDomyos-Zwift - 健身设备连接器</translation>
-    </message>
-    <message>
-        <source>Camera Cutout</source>
-        <translation>摄像头挖孔</translation>
-    </message>
-    <message>
-        <source>In landscape, QZ keeps a margin on the camera side so the camera hole does not cover the content.
-Do you want to use the full screen width instead?
-
-You can change it later in Settings &gt; General UI Options &gt; Keep Content Clear of the Camera Cutout.</source>
-        <translation>横屏时，QZ 会在摄像头一侧留出边距，以免挖孔遮挡内容。
-要改为使用整个屏幕宽度吗？
-
-之后可以在 设置 &gt; 通用 UI 选项 &gt; 内容避开摄像头挖孔 中更改。</translation>
-    </message>
-    <message>
-        <source>Workout History</source>
-        <translation>训练历史</translation>
-    </message>
-    <message>
-        <source>Workouts of a previous installation may still be in the QZ folder.
-Do you want to look for them?
-
-In the next window, allow access to the QZ folder.</source>
-        <translation>以前安装的训练可能仍在 QZ 文件夹中。
-要查找它们吗？
-
-请在下一个窗口中允许访问 QZ 文件夹。</translation>
-    </message>
-    <message>
-        <source>QZ is closing...</source>
-        <translation>QZ 正在关闭...</translation>
-    </message>
-    <message>
-        <source>Press back again to exit</source>
-        <translation>再按一次返回键退出</translation>
-    </message>
-    <message>
-        <source>Saved! Look in the Files app.</source>
-        <translation>已保存！请在“文件”应用中查看。</translation>
-    </message>
-    <message>
-        <source>Saved! Look in the app&apos;s private folder.</source>
-        <translation>已保存！请在应用的私有文件夹中查看。</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>恢复文件</translation>
-    </message>
-    <message>
-        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
-Do you want to look for them?
-
-In the next window, allow access to the QZ folder.</source>
-        <translation>以前安装的训练计划、GPX 路线、设置文件和配置文件可能仍在 QZ 文件夹中。
-要查找它们吗？
-
-请在下一个窗口中允许访问 QZ 文件夹。</translation>
-    </message>
-    <message>
-        <source>QZ has detected the data format of this bike. Enable &quot;Virtufit Etappe 2.0 Bike&quot;?</source>
-        <translation>QZ 已识别此单车的数据格式。要启用“Virtufit Etappe 2.0 Bike”吗？</translation>
-    </message>
-    <message>
-        <source>Without it QZ uses the default settings, and the data or the resistance may be off.</source>
-        <translation>否则 QZ 将使用默认设置，数据或阻力可能不准确。</translation>
-    </message>
-    <message>
-        <source>This FitShow device also reports bike data. Is it a bike?</source>
-        <translation>此 FitShow 设备也报告单车数据。它是单车吗？</translation>
-    </message>
-    <message>
-        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
-No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
-        <translation>是：QZ 将启用“Fit Plus Bike”并关闭，请重新打开 QZ 以作为单车连接。
-否：QZ 将其保留为跑步机，且不再询问（仍可手动设置为单车：Fitplus Bike Options 中的“Fit Plus Bike”）。</translation>
-    </message>
-    <message>
         <source>Please choose a file</source>
         <translation>请选择文件</translation>
     </message>
@@ -4843,6 +4881,38 @@ No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set
         <translation>服务</translation>
     </message>
     <message>
+        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
+        <translation>QDomyos-Zwift - 健身设备连接器</translation>
+    </message>
+    <message>
+        <source>Camera Cutout</source>
+        <translation>摄像头挖孔</translation>
+    </message>
+    <message>
+        <source>In landscape, QZ keeps a margin on the camera side so the camera hole does not cover the content.
+Do you want to use the full screen width instead?
+
+You can change it later in Settings &gt; General UI Options &gt; Keep Content Clear of the Camera Cutout.</source>
+        <translation>横屏时，QZ 会在摄像头一侧留出边距，以免挖孔遮挡内容。
+要改为使用整个屏幕宽度吗？
+
+之后可以在 设置 &gt; 通用 UI 选项 &gt; 内容避开摄像头挖孔 中更改。</translation>
+    </message>
+    <message>
+        <source>Workout History</source>
+        <translation>训练历史</translation>
+    </message>
+    <message>
+        <source>Workouts of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>以前安装的训练可能仍在 QZ 文件夹中。
+要查找它们吗？
+
+请在下一个窗口中允许访问 QZ 文件夹。</translation>
+    </message>
+    <message>
         <source>Training Programs</source>
         <translation type="vanished">训练计划</translation>
     </message>
@@ -4855,6 +4925,10 @@ In the next window, allow access to the QZ folder.</source>
 要查找它们吗？
 
 请在下一个窗口中允许访问 QZ 文件夹。</translation>
+    </message>
+    <message>
+        <source>QZ is closing...</source>
+        <translation>QZ 正在关闭...</translation>
     </message>
     <message>
         <source>Connection lost in the background</source>
@@ -4939,6 +5013,10 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
         <translation>您确定要删除此配置文件吗？</translation>
     </message>
     <message>
+        <source>Delete</source>
+        <translation>删除</translation>
+    </message>
+    <message>
         <source>Profile Saved</source>
         <translation>配置文件已保存</translation>
     </message>
@@ -4971,32 +5049,12 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
         <translation>配置文件名称</translation>
     </message>
     <message>
-        <source>Save</source>
-        <translation>保存</translation>
-    </message>
-    <message>
-        <source>Load</source>
-        <translation>加载</translation>
-    </message>
-    <message>
-        <source>Other folders</source>
-        <translation>其他文件夹</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>恢复文件</translation>
-    </message>
-    <message>
-        <source>Profiles</source>
-        <translation>配置文件</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation>删除</translation>
-    </message>
-    <message>
         <source>New profile</source>
         <translation>新建配置文件</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>保存</translation>
     </message>
     <message>
         <source>Saved profiles</source>
@@ -5009,6 +5067,22 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     <message>
         <source>Active</source>
         <translation>当前</translation>
+    </message>
+    <message>
+        <source>Load</source>
+        <translation>加载</translation>
+    </message>
+    <message>
+        <source>Profiles</source>
+        <translation>配置文件</translation>
+    </message>
+    <message>
+        <source>Other folders</source>
+        <translation>其他文件夹</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>恢复文件</translation>
     </message>
 </context>
 <context>
@@ -5030,10 +5104,6 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
         <translation>已保存！</translation>
     </message>
     <message>
-        <source>Disabled</source>
-        <translation>已禁用</translation>
-    </message>
-    <message>
         <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol</source>
         <translation type="vanished">这将改变显示您指标的卡片大小。默认值是 100%。如需在屏幕上显示更多卡片，请选择更小的百分比。如需放大卡片，请选择大于 100% 的百分比。请勿输入百分号</translation>
     </message>
@@ -5042,8 +5112,24 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
         <translation>玩家体重</translation>
     </message>
     <message>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <source>kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
         <source>Player Height</source>
         <translation>玩家身高</translation>
+    </message>
+    <message>
+        <source>ft/in</source>
+        <translation>ft/in</translation>
+    </message>
+    <message>
+        <source>cm</source>
+        <translation>cm</translation>
     </message>
     <message>
         <source>Enter your height for more accurate BMR and active calories calculation. Use centimeters for metric or feet&apos;inches&quot; format (e.g., 5&apos;10&quot;) for imperial units.</source>
@@ -5176,6 +5262,10 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     <message>
         <source>Heart Belt Name:</source>
         <translation>心率带名称:</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>已禁用</translation>
     </message>
     <message>
         <source>Apple Watch users: leave it disabled! Just open the app on your watch</source>
@@ -5879,22 +5969,6 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
         <translation>波特率:</translation>
     </message>
     <message>
-        <source>Daum Bike Options</source>
-        <translation>Daum 单车选项</translation>
-    </message>
-    <message>
-        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
-        <translation>用于 8008 TRS 3 等经典 Daum 功率车的串口。Android 使用 USB 转串口适配器时请输入 &apos;usb&apos;。Android 也接受 COM1、COM2 等作为搜索 USB 适配器的别名，但它们并非 Android 的串口名称。Windows 使用 COM1 或 COM3；Linux/macOS 使用串口设备路径，例如 /dev/ttyUSB0。</translation>
-    </message>
-    <message>
-        <source>Resistance Polling Delay:</source>
-        <translation>阻力轮询延迟：</translation>
-    </message>
-    <message>
-        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
-        <translation>使用“坡度延迟”设置限制 QZ 向 Daum 发送阻力和功率更新的频率。默认：0 秒。</translation>
-    </message>
-    <message>
         <source>Freebeat Bike Options</source>
         <translation>Freebeat 单车选项</translation>
     </message>
@@ -6167,6 +6241,14 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
         <translation>Peloton 跑步机步行课程的难度级别。1 为简单，10 为困难。</translation>
     </message>
     <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
         <source>Rower Level:</source>
         <translation>划船级别：</translation>
     </message>
@@ -6205,182 +6287,6 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
     <message>
         <source>Increases the resistance that QZ displays in the Peloton Resistance tile. If QZ’s calculated conversion from your bike’s resistance scale to Peloton’s seems too low, the number you enter here will be added to the calculated resistance without increasing your effort or actual resistance. (Example: If QZ displays Peloton resistance of 30 and you enter 5, QZ will display 35.)</source>
         <translation>增加 QZ 在 Peloton 阻力卡片中显示的阻力。如果 QZ 计算的从您的自行车阻力刻度到 Peloton 的转换值过低，您在此处输入的数字将加到计算出的阻力上，而不会增加您的努力程度或实际阻力。（示例：如果 QZ 显示 Peloton 阻力为 30，您输入 5，QZ 将显示 35。）</translation>
-    </message>
-    <message>
-        <source>Inclination Filter (%):</source>
-        <translation>坡度过滤阈值（%）：</translation>
-    </message>
-    <message>
-        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
-        <translation>在 GPX 训练中，忽略小于此值的坡度变化。只有与上次发送的数值之差达到设置的阈值时，才发送新的坡度指令。默认：0（禁用）。</translation>
-    </message>
-    <message>
-        <source>Life Fitness Options</source>
-        <translation>Life Fitness 选项</translation>
-    </message>
-    <message>
-        <source>Life Fitness username/email:</source>
-        <translation>Life Fitness 用户名/邮箱:</translation>
-    </message>
-    <message>
-        <source>Life Fitness password:</source>
-        <translation>Life Fitness 密码:</translation>
-    </message>
-    <message>
-        <source>Life Fitness guest login (experimental)</source>
-        <translation>Life Fitness 访客登录 (实验性)</translation>
-    </message>
-    <message>
-        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
-        <translation>使用无需账户的合成 Life Fitness 配置文件。启用后将忽略用户名、密码和缓存的账户数据；仅用于测试受支持的访客登录。</translation>
-    </message>
-    <message>
-        <source>Workout History Charts</source>
-        <translation>训练历史图表</translation>
-    </message>
-    <message>
-        <source>This setting was not found on the settings pages</source>
-        <translation>在设置页面中未找到此设置</translation>
-    </message>
-    <message>
-        <source>Configure how virtual-app inclination maps to bike resistance.</source>
-        <translation>设置虚拟应用的坡度如何换算为单车阻力。</translation>
-    </message>
-    <message>
-        <source>Use a custom mapping when QZ converts virtual-app inclination into resistance.</source>
-        <translation>QZ 将虚拟应用的坡度换算为阻力时使用自定义对应关系。</translation>
-    </message>
-    <message>
-        <source>One inclination|resistance pair per line. QZ interpolates between points and clamps outside the configured range.</source>
-        <translation>每行一组“坡度|阻力”。QZ 在各点之间插值，超出设定范围时使用端点的值。</translation>
-    </message>
-    <message>
-        <source>Life Fitness account username used for the service sign-in. Stored locally and never written to debug logs.</source>
-        <translation>用于登录该服务的 Life Fitness 账户用户名。仅保存在本机，绝不会写入调试日志。</translation>
-    </message>
-    <message>
-        <source>Life Fitness account password used for the service sign-in. Stored locally and never written to debug logs.</source>
-        <translation>用于登录该服务的 Life Fitness 账户密码。仅保存在本机，绝不会写入调试日志。</translation>
-    </message>
-    <message>
-        <source>Camera Action</source>
-        <translation>当前摄像机视角</translation>
-    </message>
-    <message>
-        <source>Emote Action</source>
-        <translation>当前表情</translation>
-    </message>
-    <message>
-        <source>Wattbike Emulator</source>
-        <translation>Wattbike 模拟器</translation>
-    </message>
-    <message>
-        <source>Power Chart Position</source>
-        <translation>功率图表位置</translation>
-    </message>
-    <message>
-        <source>Heart Rate Chart Position</source>
-        <translation>心率图表位置</translation>
-    </message>
-    <message>
-        <source>Resistance vs Target Resistance Chart Position</source>
-        <translation>阻力与目标阻力图表位置</translation>
-    </message>
-    <message>
-        <source>Peloton Resistance Chart Position</source>
-        <translation>Peloton 阻力图表位置</translation>
-    </message>
-    <message>
-        <source>Cadence Chart Position</source>
-        <translation>踏频图表位置</translation>
-    </message>
-    <message>
-        <source>Power Distribution Chart Position</source>
-        <translation>功率分布图表位置</translation>
-    </message>
-    <message>
-        <source>Speed and Inclination Chart Position</source>
-        <translation>速度与坡度图表位置</translation>
-    </message>
-    <message>
-        <source>Numeric position of this chart in Workout History. Reorder using the up and down buttons in General UI Options.</source>
-        <translation>此图表在训练历史中的顺序。可在“通用 UI 选项”中用上移和下移按钮调整顺序。</translation>
-    </message>
-    <message>
-        <source>Heart Rate</source>
-        <translation>心率</translation>
-    </message>
-    <message>
-        <source>Resistance vs Target Resistance</source>
-        <translation>阻力与目标阻力</translation>
-    </message>
-    <message>
-        <source>Peloton Resistance</source>
-        <translation>Peloton 阻力</translation>
-    </message>
-    <message>
-        <source>Cadence</source>
-        <translation>踏频</translation>
-    </message>
-    <message>
-        <source>Power Distribution</source>
-        <translation>功率分布</translation>
-    </message>
-    <message>
-        <source>Speed and Inclination</source>
-        <translation>速度与坡度</translation>
-    </message>
-    <message>
-        <source>Move the charts up or down to choose their order in Workout History. Changes are saved automatically.</source>
-        <translation>上下移动图表以选择它们在训练历史中的顺序。更改会自动保存。</translation>
-    </message>
-    <message>
-        <source>Move up</source>
-        <translation>上移</translation>
-    </message>
-    <message>
-        <source>Move down</source>
-        <translation>下移</translation>
-    </message>
-    <message>
-        <source>Restore default order</source>
-        <translation>恢复默认顺序</translation>
-    </message>
-    <message>
-        <source>Moovio Options</source>
-        <translation>Moovio 选项</translation>
-    </message>
-    <message>
-        <source>Lynx Konect 2.0</source>
-        <translation>Lynx Konect 2.0</translation>
-    </message>
-    <message>
-        <source>Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.</source>
-        <translation>为 Moovio Lynx Konect 2.0 跑步机启用标准 FTMS Request Control 命令。默认关闭。</translation>
-    </message>
-    <message>
-        <source>Cadence Gain</source>
-        <translation>踏频增益</translation>
-    </message>
-    <message>
-        <source>Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.</source>
-        <translation>仅应用于虚拟划船机发送的桨频的倍数。默认值为 1.0；使用 0.25 可将 BikeERG 的 RPM 转换为 EXR 请求的桨频。</translation>
-    </message>
-    <message>
-        <source>Offset added after the gain. Default is 0.0. QZ&apos;s internal cadence display and workout metrics remain unchanged.</source>
-        <translation>在增益之后加上的偏移量。默认值为 0.0。QZ 内部的踏频显示和训练指标保持不变。</translation>
-    </message>
-    <message>
-        <source>iOS Background Keep Alive</source>
-        <translation>iOS 后台保持运行</translation>
-    </message>
-    <message>
-        <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
-        <translation>仅限 iOS。在屏幕关闭或 QZ 位于后台时保持 QZ 运行，使蓝牙连接和训练计时器不会冻结。它使用与您的音乐混合播放的静音音轨，因此您正在收听的内容不会被打断。如果需要在锁屏状态下或 QZ 位于后台时训练，请启用此项。默认关闭。</translation>
-    </message>
-    <message>
-        <source>This changes the virtual Bluetooth bridge from the standard FTMS to the Power Sensor interface. Default is off.</source>
-        <translation>这将把虚拟蓝牙桥接从标准的 FTMS 更改为功率传感器接口。默认关闭。</translation>
     </message>
     <message>
         <source>Enter your weight in kilograms so QZ can more accurately calculate calories burned. NOTE: If you choose to use miles as the unit for distance traveled, you will be asked to enter your weight in pounds (lbs) unless you enable &apos;Use kg for weight&apos;.</source>
@@ -7157,6 +7063,14 @@ Please enter it below:</source>
         <translation>马拉松</translation>
     </message>
     <message>
+        <source>5 km</source>
+        <translation>5 km</translation>
+    </message>
+    <message>
+        <source>10 km</source>
+        <translation>10 km</translation>
+    </message>
+    <message>
         <source>Select the default Pace to be used when the ZWO file does not indicate a precise pace.</source>
         <translation>当 ZWO 文件未指示精确配速时，选择默认配速。</translation>
     </message>
@@ -7574,6 +7488,10 @@ Please enter it below:</source>
         <translation>JTX Fitness Sprint 跑步机</translation>
     </message>
     <message>
+        <source>Flow Fitness Runner DTM2000i</source>
+        <translation>Flow Fitness Runner DTM2000i</translation>
+    </message>
+    <message>
         <source>Reebok FR30 Treadmill</source>
         <translation>Reebok FR30 跑步机</translation>
     </message>
@@ -7632,6 +7550,10 @@ Please enter it below:</source>
     <message>
         <source>Allows you to force QZ to connect to your FTMS Rower. If you are in doubt, leave this Disabled and send an email to the QZ support. Default is “Disabled.”</source>
         <translation>允许您强制 QZ 连接到您的 FTMS 划船机。如果您不确定，请保持此项禁用，并发送电子邮件给 QZ 支持。默认值是“禁用”。</translation>
+    </message>
+    <message>
+        <source>WaterRower USB</source>
+        <translation>WaterRower USB</translation>
     </message>
     <message>
         <source>Proform/Nordictrack Rower Options</source>
@@ -7732,6 +7654,14 @@ Please enter it below:</source>
     <message>
         <source>You can increase/decrease your watt output for moving your avatar faster/slower in Zwift or other similar apps as a way of calibrating your equipment. For example, to use a rower to cycle in Zwift, you could double your watt output to better match your cycling speed by entering 2. The number you enter is a multiplier applied to your actual watts.</source>
         <translation>您可以通过增加/减少瓦特输出，在 Zwift 或其他类似应用中更快/更慢地移动您的虚拟形象，从而校准您的设备。例如，要在 Zwift 中使用划船机进行骑行，您可以通过输入 2 将瓦特输出加倍，以更好地匹配您的骑行速度。您输入的数字是应用于您实际瓦特的乘数。</translation>
+    </message>
+    <message>
+        <source>Max Watt:</source>
+        <translation>最大功率：</translation>
+    </message>
+    <message>
+        <source>Limits the watt output sent by QZ. Set to 0 to disable the limit. Default is 9999 W.</source>
+        <translation>限制 QZ 发送的功率输出。设为 0 可取消限制。默认为 9999 W。</translation>
     </message>
     <message>
         <source>Speed Offset</source>
@@ -7942,12 +7872,156 @@ IMPORTANT NOTES:
         <translation>对于智能训练器，请使用阻力而不是坡度。如果您不希望 Wahoo Climb 或类似设备在换档时改变坡度，使用此设置会有帮助。默认：禁用</translation>
     </message>
     <message>
+        <source>Resistance Compatibility</source>
+        <translation>阻力兼容模式</translation>
+    </message>
+    <message>
+        <source>Enable this if changing resistance in QZ only sets the bike to level 1 or maximum. Sends FTMS resistance multiplied by 10. Default: disabled.</source>
+        <translation>如果在 QZ 中调整阻力时，单车只能跳到 1 级或最大级别，请启用此选项。FTMS 阻力值将乘以 10 后发送。默认：关闭。</translation>
+    </message>
+    <message>
         <source>AutoLap on Distance:</source>
         <translation>自动圈速（距离）：</translation>
     </message>
     <message>
         <source>You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).</source>
         <translation>可以根据距离在 FIT 文件中自动计圈。单位：%1 默认：0（禁用）。</translation>
+    </message>
+    <message>
+        <source>Mi</source>
+        <translation>Mi</translation>
+    </message>
+    <message>
+        <source>KM</source>
+        <translation>KM</translation>
+    </message>
+    <message>
+        <source>Modern interface</source>
+        <translation>现代界面</translation>
+    </message>
+    <message>
+        <source>New look of the main screen, the side menu, the settings and the wizard. Turn it off to get the classic look back.</source>
+        <translation>主屏幕、侧边菜单、设置和向导的新外观。关闭后恢复经典外观。</translation>
+    </message>
+    <message>
+        <source>Snap tiles to rows</source>
+        <translation>瓦片按行对齐</translation>
+    </message>
+    <message>
+        <source>When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.</source>
+        <translation>主屏幕上的瓦片停止滚动时，会对齐到整行或列表末尾，不会有瓦片被截断一半。</translation>
+    </message>
+    <message>
+        <source>Buttons follow the workout state</source>
+        <translation>按训练状态显示按钮</translation>
+    </message>
+    <message>
+        <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
+        <translation>现代界面：一个宽按钮显示开始或暂停，暂停时显示继续和停止。任何外观下，暂停时按钮都显示继续。关闭：开始/暂停和停止并排显示，暂停时按钮显示开始。</translation>
+    </message>
+    <message>
+        <source>Theme</source>
+        <translation>主题</translation>
+    </message>
+    <message>
+        <source>Graphite</source>
+        <translation>石墨</translation>
+    </message>
+    <message>
+        <source>Black (OLED)</source>
+        <translation type="vanished">黑色 (OLED)</translation>
+    </message>
+    <message>
+        <source>Midnight blue</source>
+        <translation>午夜蓝</translation>
+    </message>
+    <message>
+        <source>Accent color</source>
+        <translation>强调色</translation>
+    </message>
+    <message>
+        <source>Text size</source>
+        <translation type="vanished">文字大小</translation>
+    </message>
+    <message>
+        <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
+        <translation type="vanished">现代界面的文字大小（百分比，80～170）。默认值为 100。</translation>
+    </message>
+    <message>
+        <source>Appearance</source>
+        <translation>外观</translation>
+    </message>
+    <message>
+        <source>As on the phone</source>
+        <translation>跟随系统</translation>
+    </message>
+    <message>
+        <source>Dark</source>
+        <translation>深色</translation>
+    </message>
+    <message>
+        <source>Black / white</source>
+        <translation>黑 / 白</translation>
+    </message>
+    <message>
+        <source>Wallpaper color</source>
+        <translation>壁纸颜色</translation>
+    </message>
+    <message>
+        <source>Violet</source>
+        <translation>紫色</translation>
+    </message>
+    <message>
+        <source>Blue</source>
+        <translation>蓝色</translation>
+    </message>
+    <message>
+        <source>Teal</source>
+        <translation>青色</translation>
+    </message>
+    <message>
+        <source>Green</source>
+        <translation>绿色</translation>
+    </message>
+    <message>
+        <source>Orange</source>
+        <translation>橙色</translation>
+    </message>
+    <message>
+        <source>Pink</source>
+        <translation>粉色</translation>
+    </message>
+    <message>
+        <source>Reset section</source>
+        <translation>重置此部分</translation>
+    </message>
+    <message>
+        <source>Reset section?</source>
+        <translation>重置此部分？</translation>
+    </message>
+    <message>
+        <source>%1 settings in “%2” go back to their default values.</source>
+        <translation>“%2”中的 %1 项设置将恢复为默认值。</translation>
+    </message>
+    <message>
+        <source>Setting reset</source>
+        <translation>设置已重置</translation>
+    </message>
+    <message>
+        <source>%1 settings reset</source>
+        <translation>已重置 %1 项设置</translation>
+    </message>
+    <message>
+        <source>Add Up Quick Resistance Taps</source>
+        <translation>累加快速阻力点击</translation>
+    </message>
+    <message>
+        <source>Bikes that report their resistance back take about a second to confirm a new level, so several quick taps on the resistance +/- buttons change it by only one. Enable this setting to add the taps up: 3 quick taps change the resistance by 3. Default is off.</source>
+        <translation>会回报阻力的单车大约需要一秒来确认新级别，因此快速多次点击阻力 +/- 按钮只会改变一级。启用此设置可累加点击：快速点击 3 次将阻力改变 3 级。默认关闭。</translation>
+    </message>
+    <message>
+        <source>QZ opens FS- devices as treadmills unless &quot;Fit Plus Bike&quot; is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off. Not shown in the settings page.</source>
+        <translation>除非开启“Fit Plus Bike”，否则 QZ 会将 FS- 设备作为跑步机打开。当 FS- 设备也报告单车数据时，QZ 会询问它是否为单车；回答“否”将关闭此询问。不在设置页面中显示。</translation>
     </message>
     <message>
         <source>Inclination Delay:</source>
@@ -8511,6 +8585,10 @@ Default: A = -0.96, B = 1.33</source>
         <translation type="vanished">这将把虚拟蓝牙桥接从标准的 FTMS 更改为功率传感器接口。默认关闭。</translation>
     </message>
     <message>
+        <source>This changes the virtual Bluetooth bridge from the standard FTMS to the Power Sensor interface. Default is off.</source>
+        <translation>这将把虚拟蓝牙桥接从标准的 FTMS 更改为功率传感器接口。默认关闭。</translation>
+    </message>
+    <message>
         <source>Virtual iFit</source>
         <translation>虚拟 iFit</translation>
     </message>
@@ -8735,14 +8813,6 @@ Default: A = -0.96, B = 1.33</source>
         <translation>横屏时在摄像头一侧留出边距，以免挖孔遮挡内容。关闭后内容会延伸到挖孔下方。默认开启。</translation>
     </message>
     <message>
-        <source>Max Watt:</source>
-        <translation>最大功率：</translation>
-    </message>
-    <message>
-        <source>Limits the watt output sent by QZ. Set to 0 to disable the limit. Default is 9999 W.</source>
-        <translation>限制 QZ 发送的功率输出。设为 0 可取消限制。默认为 9999 W。</translation>
-    </message>
-    <message>
         <source>Hidden on its page right now: change it here</source>
         <translation type="vanished">当前在其所在页面中隐藏：请在此处更改</translation>
     </message>
@@ -8763,182 +8833,6 @@ Default: A = -0.96, B = 1.33</source>
         <translation>重置</translation>
     </message>
     <message>
-        <source>lbs</source>
-        <translation>lbs</translation>
-    </message>
-    <message>
-        <source>kg</source>
-        <translation>kg</translation>
-    </message>
-    <message>
-        <source>ft/in</source>
-        <translation>ft/in</translation>
-    </message>
-    <message>
-        <source>cm</source>
-        <translation>cm</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
-    </message>
-    <message>
-        <source>5 km</source>
-        <translation>5 km</translation>
-    </message>
-    <message>
-        <source>10 km</source>
-        <translation>10 km</translation>
-    </message>
-    <message>
-        <source>Flow Fitness Runner DTM2000i</source>
-        <translation>Flow Fitness Runner DTM2000i</translation>
-    </message>
-    <message>
-        <source>WaterRower USB</source>
-        <translation>WaterRower USB</translation>
-    </message>
-    <message>
-        <source>Mi</source>
-        <translation>Mi</translation>
-    </message>
-    <message>
-        <source>KM</source>
-        <translation>KM</translation>
-    </message>
-    <message>
-        <source>Modern interface</source>
-        <translation>现代界面</translation>
-    </message>
-    <message>
-        <source>New look of the main screen, the side menu, the settings and the wizard. Turn it off to get the classic look back.</source>
-        <translation>主屏幕、侧边菜单、设置和向导的新外观。关闭后恢复经典外观。</translation>
-    </message>
-    <message>
-        <source>Snap tiles to rows</source>
-        <translation>瓦片按行对齐</translation>
-    </message>
-    <message>
-        <source>When the tiles on the main screen stop scrolling, they settle on a whole row or on the end of the list, so no tile is cut in half.</source>
-        <translation>主屏幕上的瓦片停止滚动时，会对齐到整行或列表末尾，不会有瓦片被截断一半。</translation>
-    </message>
-    <message>
-        <source>Buttons follow the workout state</source>
-        <translation>按训练状态显示按钮</translation>
-    </message>
-    <message>
-        <source>Modern interface: one wide Start or Pause button, while paused Resume and Stop. In any look the paused button says Resume. Off: Start/Pause and Stop side by side, and the paused button says Start.</source>
-        <translation>现代界面：一个宽按钮显示开始或暂停，暂停时显示继续和停止。任何外观下，暂停时按钮都显示继续。关闭：开始/暂停和停止并排显示，暂停时按钮显示开始。</translation>
-    </message>
-    <message>
-        <source>Theme</source>
-        <translation>主题</translation>
-    </message>
-    <message>
-        <source>Graphite</source>
-        <translation>石墨</translation>
-    </message>
-    <message>
-        <source>Black (OLED)</source>
-        <translation type="vanished">黑色 (OLED)</translation>
-    </message>
-    <message>
-        <source>Midnight blue</source>
-        <translation>午夜蓝</translation>
-    </message>
-    <message>
-        <source>Accent color</source>
-        <translation>强调色</translation>
-    </message>
-    <message>
-        <source>Text size</source>
-        <translation type="vanished">文字大小</translation>
-    </message>
-    <message>
-        <source>Size of the text of the modern interface, in percent, from 80 to 170. The default is 100.</source>
-        <translation type="vanished">现代界面的文字大小（百分比，80～170）。默认值为 100。</translation>
-    </message>
-    <message>
-        <source>Appearance</source>
-        <translation>外观</translation>
-    </message>
-    <message>
-        <source>As on the phone</source>
-        <translation>跟随系统</translation>
-    </message>
-    <message>
-        <source>Dark</source>
-        <translation>深色</translation>
-    </message>
-    <message>
-        <source>Black / white</source>
-        <translation>黑 / 白</translation>
-    </message>
-    <message>
-        <source>Wallpaper color</source>
-        <translation>壁纸颜色</translation>
-    </message>
-    <message>
-        <source>Violet</source>
-        <translation>紫色</translation>
-    </message>
-    <message>
-        <source>Blue</source>
-        <translation>蓝色</translation>
-    </message>
-    <message>
-        <source>Teal</source>
-        <translation>青色</translation>
-    </message>
-    <message>
-        <source>Green</source>
-        <translation>绿色</translation>
-    </message>
-    <message>
-        <source>Orange</source>
-        <translation>橙色</translation>
-    </message>
-    <message>
-        <source>Pink</source>
-        <translation>粉色</translation>
-    </message>
-    <message>
-        <source>Reset section</source>
-        <translation>重置此部分</translation>
-    </message>
-    <message>
-        <source>Reset section?</source>
-        <translation>重置此部分？</translation>
-    </message>
-    <message>
-        <source>%1 settings in “%2” go back to their default values.</source>
-        <translation>“%2”中的 %1 项设置将恢复为默认值。</translation>
-    </message>
-    <message>
-        <source>Setting reset</source>
-        <translation>设置已重置</translation>
-    </message>
-    <message>
-        <source>%1 settings reset</source>
-        <translation>已重置 %1 项设置</translation>
-    </message>
-    <message>
-        <source>Add Up Quick Resistance Taps</source>
-        <translation>累加快速阻力点击</translation>
-    </message>
-    <message>
-        <source>Bikes that report their resistance back take about a second to confirm a new level, so several quick taps on the resistance +/- buttons change it by only one. Enable this setting to add the taps up: 3 quick taps change the resistance by 3. Default is off.</source>
-        <translation>会回报阻力的单车大约需要一秒来确认新级别，因此快速多次点击阻力 +/- 按钮只会改变一级。启用此设置可累加点击：快速点击 3 次将阻力改变 3 级。默认关闭。</translation>
-    </message>
-    <message>
-        <source>QZ opens FS- devices as treadmills unless &quot;Fit Plus Bike&quot; is on. When an FS- device also reports bike data, QZ asks whether it is a bike; answering No turns this question off. Not shown in the settings page.</source>
-        <translation>除非开启“Fit Plus Bike”，否则 QZ 会将 FS- 设备作为跑步机打开。当 FS- 设备也报告单车数据时，QZ 会询问它是否为单车；回答“否”将关闭此询问。不在设置页面中显示。</translation>
-    </message>
-    <message>
         <source>PID HR actuator:</source>
         <translation>保持心率区间调节项：</translation>
     </message>
@@ -8953,6 +8847,198 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>Pafers Rower</source>
         <translation>Pafers 划船机</translation>
+    </message>
+    <message>
+        <source>Life Fitness Options</source>
+        <translation>Life Fitness 选项</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Life Fitness 用户名/邮箱:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Life Fitness 密码:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Life Fitness 访客登录 (实验性)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>使用无需账户的合成 Life Fitness 配置文件。启用后将忽略用户名、密码和缓存的账户数据；仅用于测试受支持的访客登录。</translation>
+    </message>
+    <message>
+        <source>Workout History Charts</source>
+        <translation>训练历史图表</translation>
+    </message>
+    <message>
+        <source>This setting was not found on the settings pages</source>
+        <translation>在设置页面中未找到此设置</translation>
+    </message>
+    <message>
+        <source>Configure how virtual-app inclination maps to bike resistance.</source>
+        <translation>设置虚拟应用的坡度如何换算为单车阻力。</translation>
+    </message>
+    <message>
+        <source>Use a custom mapping when QZ converts virtual-app inclination into resistance.</source>
+        <translation>QZ 将虚拟应用的坡度换算为阻力时使用自定义对应关系。</translation>
+    </message>
+    <message>
+        <source>One inclination|resistance pair per line. QZ interpolates between points and clamps outside the configured range.</source>
+        <translation>每行一组“坡度|阻力”。QZ 在各点之间插值，超出设定范围时使用端点的值。</translation>
+    </message>
+    <message>
+        <source>Life Fitness account username used for the service sign-in. Stored locally and never written to debug logs.</source>
+        <translation>用于登录该服务的 Life Fitness 账户用户名。仅保存在本机，绝不会写入调试日志。</translation>
+    </message>
+    <message>
+        <source>Life Fitness account password used for the service sign-in. Stored locally and never written to debug logs.</source>
+        <translation>用于登录该服务的 Life Fitness 账户密码。仅保存在本机，绝不会写入调试日志。</translation>
+    </message>
+    <message>
+        <source>Camera Action</source>
+        <translation>当前摄像机视角</translation>
+    </message>
+    <message>
+        <source>Emote Action</source>
+        <translation>当前表情</translation>
+    </message>
+    <message>
+        <source>Wattbike Emulator</source>
+        <translation>Wattbike 模拟器</translation>
+    </message>
+    <message>
+        <source>Power Chart Position</source>
+        <translation>功率图表位置</translation>
+    </message>
+    <message>
+        <source>Heart Rate Chart Position</source>
+        <translation>心率图表位置</translation>
+    </message>
+    <message>
+        <source>Resistance vs Target Resistance Chart Position</source>
+        <translation>阻力与目标阻力图表位置</translation>
+    </message>
+    <message>
+        <source>Peloton Resistance Chart Position</source>
+        <translation>Peloton 阻力图表位置</translation>
+    </message>
+    <message>
+        <source>Cadence Chart Position</source>
+        <translation>踏频图表位置</translation>
+    </message>
+    <message>
+        <source>Power Distribution Chart Position</source>
+        <translation>功率分布图表位置</translation>
+    </message>
+    <message>
+        <source>Speed and Inclination Chart Position</source>
+        <translation>速度与坡度图表位置</translation>
+    </message>
+    <message>
+        <source>Numeric position of this chart in Workout History. Reorder using the up and down buttons in General UI Options.</source>
+        <translation>此图表在训练历史中的顺序。可在“通用 UI 选项”中用上移和下移按钮调整顺序。</translation>
+    </message>
+    <message>
+        <source>Heart Rate</source>
+        <translation>心率</translation>
+    </message>
+    <message>
+        <source>Resistance vs Target Resistance</source>
+        <translation>阻力与目标阻力</translation>
+    </message>
+    <message>
+        <source>Peloton Resistance</source>
+        <translation>Peloton 阻力</translation>
+    </message>
+    <message>
+        <source>Cadence</source>
+        <translation>踏频</translation>
+    </message>
+    <message>
+        <source>Power Distribution</source>
+        <translation>功率分布</translation>
+    </message>
+    <message>
+        <source>Speed and Inclination</source>
+        <translation>速度与坡度</translation>
+    </message>
+    <message>
+        <source>Move the charts up or down to choose their order in Workout History. Changes are saved automatically.</source>
+        <translation>上下移动图表以选择它们在训练历史中的顺序。更改会自动保存。</translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translation>上移</translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation>下移</translation>
+    </message>
+    <message>
+        <source>Restore default order</source>
+        <translation>恢复默认顺序</translation>
+    </message>
+    <message>
+        <source>Moovio Options</source>
+        <translation>Moovio 选项</translation>
+    </message>
+    <message>
+        <source>Lynx Konect 2.0</source>
+        <translation>Lynx Konect 2.0</translation>
+    </message>
+    <message>
+        <source>Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.</source>
+        <translation>为 Moovio Lynx Konect 2.0 跑步机启用标准 FTMS Request Control 命令。默认关闭。</translation>
+    </message>
+    <message>
+        <source>Cadence Gain</source>
+        <translation>踏频增益</translation>
+    </message>
+    <message>
+        <source>Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.</source>
+        <translation>仅应用于虚拟划船机发送的桨频的倍数。默认值为 1.0；使用 0.25 可将 BikeERG 的 RPM 转换为 EXR 请求的桨频。</translation>
+    </message>
+    <message>
+        <source>Offset added after the gain. Default is 0.0. QZ&apos;s internal cadence display and workout metrics remain unchanged.</source>
+        <translation>在增益之后加上的偏移量。默认值为 0.0。QZ 内部的踏频显示和训练指标保持不变。</translation>
+    </message>
+    <message>
+        <source>iOS Background Keep Alive</source>
+        <translation>iOS 后台保持运行</translation>
+    </message>
+    <message>
+        <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
+        <translation>仅限 iOS。在屏幕关闭或 QZ 位于后台时保持 QZ 运行，使蓝牙连接和训练计时器不会冻结。它使用与您的音乐混合播放的静音音轨，因此您正在收听的内容不会被打断。如果需要在锁屏状态下或 QZ 位于后台时训练，请启用此项。默认关闭。</translation>
+    </message>
+    <message>
+        <source>Daum Bike Options</source>
+        <translation>Daum 单车选项</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>用于 8008 TRS 3 等经典 Daum 功率车的串口。Android 使用 USB 转串口适配器时请输入 &apos;usb&apos;。Android 也接受 COM1、COM2 等作为搜索 USB 适配器的别名，但它们并非 Android 的串口名称。Windows 使用 COM1 或 COM3；Linux/macOS 使用串口设备路径，例如 /dev/ttyUSB0。</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>阻力轮询延迟：</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>使用“坡度延迟”设置限制 QZ 向 Daum 发送阻力和功率更新的频率。默认：0 秒。</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>坡度过滤阈值（%）：</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>在 GPX 训练中，忽略小于此值的坡度变化。只有与上次发送的数值之差达到设置的阈值时，才发送新的坡度指令。默认：0（禁用）。</translation>
+    </message>
+    <message>
+        <source>Use Console Gears</source>
+        <translation>使用控制台档位</translation>
     </message>
 </context>
 <context>
@@ -9185,6 +9271,10 @@ Default: A = -0.96, B = 1.33</source>
         <translation>配速</translation>
     </message>
     <message>
+        <source>Enable Pace color</source>
+        <translation>启用配速颜色</translation>
+    </message>
+    <message>
         <source>Average Pace</source>
         <translation>平均配速</translation>
     </message>
@@ -9195,14 +9285,6 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>Current pace per mile or kilometer (Treadmill, Elliptical and Rower)</source>
         <translation>当前每英里或每公里配速（跑步机、椭圆机和划船机）</translation>
-    </message>
-    <message>
-        <source>Tiles Options</source>
-        <translation>卡片选项</translation>
-    </message>
-    <message>
-        <source>Enable Pace color</source>
-        <translation>启用配速颜色</translation>
     </message>
     <message>
         <source>Flat-equivalent pace computed from treadmill incline using the Minetti cost model.</source>
@@ -9221,12 +9303,16 @@ Default: A = -0.96, B = 1.33</source>
         <translation>功率</translation>
     </message>
     <message>
+        <source>Enable Watt color</source>
+        <translation>启用功率颜色</translation>
+    </message>
+    <message>
         <source>Displays the watts generated by your current effort. Watt is also referred to as output (for example, in Peloton). If your equipment does not communicate watts, QZ will calculate watts using resistance and cadence.</source>
         <translation>显示当前努力产生的瓦数。瓦数也称为输出（例如，在 Peloton 中）。如果您的设备无法传输瓦数，QZ 将使用阻力和踏频计算瓦数。</translation>
     </message>
     <message>
-        <source>Enable Watt color</source>
-        <translation>启用功率颜色</translation>
+        <source>Tiles Options</source>
+        <translation>卡片选项</translation>
     </message>
     <message>
         <source>Weight loss</source>
@@ -9409,10 +9495,6 @@ Default: A = -0.96, B = 1.33</source>
         <translation>界面上显示两个大号档位按钮</translation>
     </message>
     <message>
-        <source>Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class&apos;s resistance target up or down for the rest of the ride.</source>
-        <translation>以您单车的阻力刻度显示目标阻力。例如，在 Peloton 课程或 Zwift 训练中，您希望此卡片显示的阻力与阻力卡片一致。在 Peloton 课程中（仅限单车），+/- 会将课程的目标阻力在剩余骑行时间内上调或下调。</translation>
-    </message>
-    <message>
         <source>Remaining Time/Row</source>
         <extracomment>Tile title: time left in the current step (row) of the workout program, not rowing and not a lap.</extracomment>
         <translation>剩余时间/区段</translation>
@@ -9461,6 +9543,14 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>Strokes Length</source>
         <translation type="vanished">划水长度</translation>
+    </message>
+    <message>
+        <source>Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class&apos;s resistance target up or down for the rest of the ride.</source>
+        <translation>以您单车的阻力刻度显示目标阻力。例如，在 Peloton 课程或 Zwift 训练中，您希望此卡片显示的阻力与阻力卡片一致。在 Peloton 课程中（仅限单车），+/- 会将课程的目标阻力在剩余骑行时间内上调或下调。</translation>
+    </message>
+    <message>
+        <source>Stroke Length</source>
+        <translation>划桨长度</translation>
     </message>
     <message>
         <source>(Rower only) Displays the stroke length.</source>
@@ -9569,6 +9659,14 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>Preset Speed 1</source>
         <translation>预设速度 1</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
     </message>
     <message>
         <source>Preset Speed 2</source>
@@ -9769,18 +9867,6 @@ Default: A = -0.96, B = 1.33</source>
     <message>
         <source>Shows Heart Rate Variability (HRV) from a compatible heart rate belt. Displays RMSSD value in milliseconds.</source>
         <translation>显示来自兼容心率带的心率变异性 (HRV)。显示 RMSSD 值（毫秒）。</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>Stroke Length</source>
-        <translation>划桨长度</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
     </message>
 </context>
 <context>
@@ -10182,80 +10268,6 @@ Install it?</source>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>正在下载 QZ 版本：%1%</translation>
-    </message>
-</context>
-<context>
-    <name>SupportHelpButton</name>
-    <message>
-        <source>Contact QZ support</source>
-        <translation>联系 QZ 支持</translation>
-    </message>
-    <message>
-        <source>Prepare a support email with diagnostics</source>
-        <translation>准备包含诊断信息的支持邮件</translation>
-    </message>
-    <message>
-        <source>No device connected</source>
-        <translation>未连接设备</translation>
-    </message>
-    <message>
-        <source>Speed and power at zero</source>
-        <translation>速度和功率为零</translation>
-    </message>
-    <message>
-        <source>QZ Support</source>
-        <translation>QZ 支持</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translation>完成</translation>
-    </message>
-    <message>
-        <source>Hide keyboard</source>
-        <translation>隐藏键盘</translation>
-    </message>
-    <message>
-        <source>Close support request</source>
-        <translation>关闭支持请求</translation>
-    </message>
-    <message>
-        <source>Tell us what is not working. QZ will add your device and app information.</source>
-        <translation>请告诉我们哪里无法正常工作。QZ 会添加设备和应用信息。</translation>
-    </message>
-    <message>
-        <source>Describe the problem...</source>
-        <translation>描述问题...</translation>
-    </message>
-    <message>
-        <source>Describe the problem</source>
-        <translation>描述问题</translation>
-    </message>
-    <message>
-        <source>Attach debug log if available</source>
-        <translation>有调试日志时附加</translation>
-    </message>
-    <message>
-        <source>You can review or edit the email before sending it. Nothing is sent automatically.</source>
-        <translation>发送前可以查看或编辑邮件。不会自动发送任何内容。</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>取消</translation>
-    </message>
-    <message>
-        <source>Open email</source>
-        <translation>打开邮件</translation>
-    </message>
-</context>
-<context>
-    <name>treadmill</name>
-    <message>
-        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
-        <translation>踏频似乎只有实际值的一半。请在“功率传感器选项”中开启“跑步踏频加倍”和“Strava 踏频减半”。</translation>
-    </message>
-    <message>
-        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
-        <translation>踏频似乎是实际值的两倍。请在“功率传感器选项”中关闭“跑步踏频加倍”和“Strava 踏频减半”。</translation>
     </message>
 </context>
 </TS>

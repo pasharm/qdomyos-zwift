@@ -68,24 +68,12 @@
         <translation>Filter</translation>
     </message>
     <message>
-        <source>Distance %1 km Elevation Gain: %2 meters</source>
-        <translation>Distans %1 km, höjdmeter: %2 meter</translation>
-    </message>
-    <message>
-        <source>Other folders</source>
-        <translation>Andra mappar</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Återställ filer</translation>
+        <source>Parent folder</source>
+        <translation>Överordnad mapp</translation>
     </message>
     <message>
         <source>Open</source>
         <translation>Öppna</translation>
-    </message>
-    <message>
-        <source>Parent folder</source>
-        <translation>Överordnad mapp</translation>
     </message>
     <message>
         <source>No GPX files here</source>
@@ -98,6 +86,18 @@
     <message>
         <source>%1 m</source>
         <translation>%1 m</translation>
+    </message>
+    <message>
+        <source>Distance %1 km Elevation Gain: %2 meters</source>
+        <translation>Distans %1 km, höjdmeter: %2 meter</translation>
+    </message>
+    <message>
+        <source>Other folders</source>
+        <translation>Andra mappar</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Återställ filer</translation>
     </message>
 </context>
 <context>
@@ -170,8 +170,70 @@
         <translation>Vill du stoppa det pågående träningspasset?</translation>
     </message>
     <message>
+        <source>Permissions Required</source>
+        <translation>Behörigheter krävs</translation>
+    </message>
+    <message>
+        <source>QZ requires both Bluetooth and Location Services to be enabled.
+Location Services are necessary on Android to allow the app to find Bluetooth devices.
+The GPS will not be used.
+
+Would you like to enable them?</source>
+        <translation type="vanished"></translation>
+    </message>
+    <message>
+        <source>Reminder Preference</source>
+        <translation>Påminnelse</translation>
+    </message>
+    <message>
+        <source>Would you like to be reminded about enabling Location Services next time?</source>
+        <translation type="vanished"></translation>
+    </message>
+    <message>
+        <source>Restart the app</source>
+        <translation>Starta om appen</translation>
+    </message>
+    <message>
+        <source>To apply the changes, you need to restart the app.
+Would you like to do that now?</source>
+        <translation>Du måste starta om appen för att ändringarna ska börja gälla.
+Vill du göra det nu?</translation>
+    </message>
+    <message>
+        <source>Adjustable. Current value: </source>
+        <translation>Justerbart. Aktuellt värde: </translation>
+    </message>
+    <message>
+        <source>Current value: </source>
+        <translation>Aktuellt värde: </translation>
+    </message>
+    <message>
+        <source>Decrease </source>
+        <translation>Minska </translation>
+    </message>
+    <message>
+        <source>Decrease the value of </source>
+        <translation>Minska värdet för </translation>
+    </message>
+    <message>
+        <source>Increase </source>
+        <translation>Öka </translation>
+    </message>
+    <message>
+        <source>Increase the value of </source>
+        <translation>Öka värdet för </translation>
+    </message>
+    <message>
         <source>Rest</source>
         <translation>Vila</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Stoppa</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Very Light</source>
@@ -254,60 +316,6 @@
         <translation>Spara</translation>
     </message>
     <message>
-        <source>Permissions Required</source>
-        <translation>Behörigheter krävs</translation>
-    </message>
-    <message>
-        <source>QZ requires both Bluetooth and Location Services to be enabled.
-Location Services are necessary on Android to allow the app to find Bluetooth devices.
-The GPS will not be used.
-
-Would you like to enable them?</source>
-        <translation type="vanished"></translation>
-    </message>
-    <message>
-        <source>Reminder Preference</source>
-        <translation>Påminnelse</translation>
-    </message>
-    <message>
-        <source>Would you like to be reminded about enabling Location Services next time?</source>
-        <translation type="vanished"></translation>
-    </message>
-    <message>
-        <source>Restart the app</source>
-        <translation>Starta om appen</translation>
-    </message>
-    <message>
-        <source>To apply the changes, you need to restart the app.
-Would you like to do that now?</source>
-        <translation>Du måste starta om appen för att ändringarna ska börja gälla.
-Vill du göra det nu?</translation>
-    </message>
-    <message>
-        <source>Adjustable. Current value: </source>
-        <translation>Justerbart. Aktuellt värde: </translation>
-    </message>
-    <message>
-        <source>Current value: </source>
-        <translation>Aktuellt värde: </translation>
-    </message>
-    <message>
-        <source>Decrease </source>
-        <translation>Minska </translation>
-    </message>
-    <message>
-        <source>Decrease the value of </source>
-        <translation>Minska värdet för </translation>
-    </message>
-    <message>
-        <source>Increase </source>
-        <translation>Öka </translation>
-    </message>
-    <message>
-        <source>Increase the value of </source>
-        <translation>Öka värdet för </translation>
-    </message>
-    <message>
         <source>QZ needs Bluetooth enabled to discover fitness equipment. On Android 11 and earlier, Android also requires Location permission and Location Services for Bluetooth discovery. QZ does not use your location data. On Android 12 and later, Nearby devices permission allows Bluetooth discovery without Location.
 
 Would you like to enable the required services?</source>
@@ -318,14 +326,6 @@ Vill du aktivera de tjänster som krävs?</translation>
     <message>
         <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
         <translation>Vill du bli påmind om att aktivera Bluetooth eller platstjänster nästa gång?</translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Stoppa</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Avbryt</translation>
     </message>
     <message>
         <source>Return to app</source>
@@ -621,6 +621,174 @@ Vill du aktivera de tjänster som krävs?</translation>
 <context>
     <name>QObject</name>
     <message>
+        <source>%1 (HR sensor) connected!</source>
+        <translation>Ansluten: %1 (pulsmätare)!</translation>
+    </message>
+    <message>
+        <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
+        <translation>Pulsen är pausad i 30 s: använd Tvinga stopp för Garmin Connect flera gånger, så ansluter klockan till QZ.</translation>
+    </message>
+    <message>
+        <source>%1 (cadence sensor) connected!</source>
+        <translation>Ansluten: %1 (kadenssensor)!</translation>
+    </message>
+    <message>
+        <source>%1 (power sensor) connected!</source>
+        <translation>Ansluten: %1 (effektsensor)!</translation>
+    </message>
+    <message>
+        <source>SRAM Connected!</source>
+        <translation>SRAM ansluten!</translation>
+    </message>
+    <message>
+        <source>Zwift Click Connected!</source>
+        <translation>Zwift Click ansluten!</translation>
+    </message>
+    <message>
+        <source>Zwift Click v2 Connected!</source>
+        <translation>Zwift Click v2 ansluten!</translation>
+    </message>
+    <message>
+        <source>Thinkrider Controller Connected!</source>
+        <translation>Thinkrider-reglage anslutet!</translation>
+    </message>
+    <message>
+        <source>CYCPLUS BC2 Connected!</source>
+        <translation>CYCPLUS BC2 ansluten!</translation>
+    </message>
+    <message>
+        <source>Elite Square Connected!</source>
+        <translation>Elite Square ansluten!</translation>
+    </message>
+    <message>
+        <source>Zwift Play/Ride Connected!</source>
+        <translation>Zwift Play/Ride ansluten!</translation>
+    </message>
+    <message>
+        <source>Searching for heart rate sensors...</source>
+        <translation>Söker efter pulsmätare...</translation>
+    </message>
+    <message>
+        <source>No heart rate sensor found nearby. Make sure it is on and broadcasting heart rate.</source>
+        <translation>Ingen pulsmätare hittades i närheten. Kontrollera att den är påslagen och sänder puls.</translation>
+    </message>
+    <message>
+        <source>%1 connected!</source>
+        <translation>Ansluten: %1!</translation>
+    </message>
+    <message>
+        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
+        <translation>Manuell effektjustering efter motstånd är på: effekten följer nu värdet på panelen Motstånd.</translation>
+    </message>
+    <message>
+        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
+        <translation>Egen CSC-effekttabell är på: effekten följer nu de inställda punkterna för motstånd och watt.</translation>
+    </message>
+    <message>
+        <source>%1 Battery Level %2 %</source>
+        <translation>%1: batterinivå %2&#xa0;%</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change</source>
+        <translation>FTMS-cykel hittades, starta om appen så att ändringen börjar gälla</translation>
+    </message>
+    <message>
+        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos-crosstrainern är en FTMS-enhet. Starta om QZ så att korrigeringen börjar gälla.</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change</source>
+        <translation>FTMS-roddmaskin hittades, starta om appen så att ändringen börjar gälla</translation>
+    </message>
+    <message>
+        <source>Bluetooth Service Error! Restart the bike!</source>
+        <translation>Fel i Bluetooth-tjänsten! Starta om cykeln!</translation>
+    </message>
+    <message>
+        <source>Switching to classic Bluetooth bridge</source>
+        <translation>Växlar till klassisk virtuell Bluetooth-enhet</translation>
+    </message>
+    <message>
+        <source>Virtual Echelon enabled for this bike</source>
+        <translation>Virtuell Echelon är på för den här cykeln</translation>
+    </message>
+    <message>
+        <source>FTMS treadmill found, restart the app to apply the change</source>
+        <translation>FTMS-löpband hittades, starta om appen så att ändringen börjar gälla</translation>
+    </message>
+    <message>
+        <source>Init completed, you can use the treadmill now!</source>
+        <translation>Initieringen är klar, nu kan du använda löpbandet!</translation>
+    </message>
+    <message>
+        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
+        <translation>QZ har identifierat dataformatet för den här cykeln och aktiverat ”Virtufit Etappe 2.0-cykel” i inställningarna. QZ måste startas om för att kunna läsa cykelns data.</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change!</source>
+        <translation>FTMS-cykel hittades, starta om appen så att ändringen börjar gälla!</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change!</source>
+        <translation>FTMS-roddmaskin hittades, starta om appen så att ändringen börjar gälla!</translation>
+    </message>
+    <message>
+        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos-cykeln utger sig för att vara en FTMS-enhet men är det inte. Starta om QZ så att korrigeringen börjar gälla.</translation>
+    </message>
+    <message>
+        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
+        <translation>PM5-roddmaskin hittades. Starta om QZ så att korrigeringen börjar gälla.</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization in progress...%1%</source>
+        <translation>Löpbandet initieras…%1%</translation>
+    </message>
+    <message>
+        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
+        <translation>Aktivera inställningen ”Använd alltid FTMS” under Inställningar-&gt;Löpbandsalternativ-&gt;Alternativ för Horizon-löpband och starta om appen</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization completed!</source>
+        <translation>Initieringen av löpbandet är klar!</translation>
+    </message>
+    <message>
+        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>Domyos-löpbandet utger sig för att vara en FTMS-enhet men är det inte. Starta om QZ så att korrigeringen börjar gälla.</translation>
+    </message>
+    <message>
+        <source>Treadmill ready</source>
+        <translation>Löpbandet är klart</translation>
+    </message>
+    <message>
+        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
+        <translation>T01_-enhet identifierad. Om lutningsvärdena ser konstiga ut aktiverar du ”IConcept FTMS-löpband” i inställningarna under Löpbandsalternativ.</translation>
+    </message>
+    <message>
+        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
+        <translation>Aktuellt SmO2: %1% Föregående SmO2: %2% THb: %3 g/dL</translation>
+    </message>
+    <message>
+        <source>SE7i init completed!</source>
+        <translation>Initieringen av SE7i är klar!</translation>
+    </message>
+    <message>
+        <source>Starting treadmill before applying requested speed %1</source>
+        <translation>Startar löpbandet innan den begärda hastigheten %1 ställs in</translation>
+    </message>
+    <message>
+        <source>Applying cached speed request %1</source>
+        <translation>Ställer in den väntande hastigheten %1</translation>
+    </message>
+    <message>
+        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
+        <translation>Ingen tjänst hittades, kontakta mig på roberto.viola83@gmail.com!</translation>
+    </message>
+    <message>
+        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
+        <translation>Zwift Hub-enhet hittades, starta om appen så kan du använda virtuell växling!</translation>
+    </message>
+    <message>
         <source>Sending workout email...</source>
         <translation>Skickar träningspasset via e-post…</translation>
     </message>
@@ -801,6 +969,10 @@ Vill du uppdatera QZ-inställningarna?</translation>
         <translation>Den anslutna enheten är inte en Echelon Connect Sport</translation>
     </message>
     <message>
+        <source>Android notification enabled</source>
+        <translation>Android-aviseringen är på</translation>
+    </message>
+    <message>
         <source>Strava: unable to open FIT file</source>
         <translation>Strava: det gick inte att öppna FIT-filen</translation>
     </message>
@@ -885,12 +1057,12 @@ Vill du uppdatera QZ-inställningarna?</translation>
         <translation>Laddar ned träningspass från Intervals.icu…</translation>
     </message>
     <message>
-        <source>Failed to get workouts (HTTP %1)</source>
-        <translation>Det gick inte att hämta träningspass (HTTP %1)</translation>
-    </message>
-    <message>
         <source>Intervals.icu: %1</source>
         <translation>Intervals.icu: %1</translation>
+    </message>
+    <message>
+        <source>Failed to get workouts (HTTP %1)</source>
+        <translation>Det gick inte att hämta träningspass (HTTP %1)</translation>
     </message>
     <message>
         <source>Intervals.icu: Invalid response</source>
@@ -907,186 +1079,6 @@ Vill du uppdatera QZ-inställningarna?</translation>
     <message>
         <source>Failed to save workout file</source>
         <translation>Det gick inte att spara träningsfilen</translation>
-    </message>
-    <message>
-        <source>%1 (HR sensor) connected!</source>
-        <translation>Ansluten: %1 (pulsmätare)!</translation>
-    </message>
-    <message>
-        <source>Heart rate paused for 30 s: force stop Garmin Connect several times, the watch will connect to QZ.</source>
-        <translation>Pulsen är pausad i 30 s: använd Tvinga stopp för Garmin Connect flera gånger, så ansluter klockan till QZ.</translation>
-    </message>
-    <message>
-        <source>Searching for %1 (HR sensor)...</source>
-        <translation>Söker efter %1 (pulssensor)...</translation>
-    </message>
-    <message>
-        <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
-        <translation>%1 (pulssensor) hittades inte. Kontrollera att den är på och sänder pulsdata.</translation>
-    </message>
-    <message>
-        <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
-        <translation>%1 (pulssensor): ingen pulsdata. Kontrollera att sensorn sänder pulsdata.</translation>
-    </message>
-    <message>
-        <source>%1 (cadence sensor) connected!</source>
-        <translation>Ansluten: %1 (kadenssensor)!</translation>
-    </message>
-    <message>
-        <source>%1 (power sensor) connected!</source>
-        <translation>Ansluten: %1 (effektsensor)!</translation>
-    </message>
-    <message>
-        <source>SRAM Connected!</source>
-        <translation>SRAM ansluten!</translation>
-    </message>
-    <message>
-        <source>Zwift Click Connected!</source>
-        <translation>Zwift Click ansluten!</translation>
-    </message>
-    <message>
-        <source>Zwift Click v2 Connected!</source>
-        <translation>Zwift Click v2 ansluten!</translation>
-    </message>
-    <message>
-        <source>Thinkrider Controller Connected!</source>
-        <translation>Thinkrider-reglage anslutet!</translation>
-    </message>
-    <message>
-        <source>CYCPLUS BC2 Connected!</source>
-        <translation>CYCPLUS BC2 ansluten!</translation>
-    </message>
-    <message>
-        <source>Elite Square Connected!</source>
-        <translation>Elite Square ansluten!</translation>
-    </message>
-    <message>
-        <source>Zwift Play/Ride Connected!</source>
-        <translation>Zwift Play/Ride ansluten!</translation>
-    </message>
-    <message>
-        <source>Searching for heart rate sensors...</source>
-        <translation>Söker efter pulsmätare...</translation>
-    </message>
-    <message>
-        <source>No heart rate sensor found nearby. Make sure it is on and broadcasting heart rate.</source>
-        <translation>Ingen pulsmätare hittades i närheten. Kontrollera att den är påslagen och sänder puls.</translation>
-    </message>
-    <message>
-        <source>%1 connected!</source>
-        <translation>Ansluten: %1!</translation>
-    </message>
-    <message>
-        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
-        <translation>Manuell effektjustering efter motstånd är på: effekten följer nu värdet på panelen Motstånd.</translation>
-    </message>
-    <message>
-        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
-        <translation>Egen CSC-effekttabell är på: effekten följer nu de inställda punkterna för motstånd och watt.</translation>
-    </message>
-    <message>
-        <source>%1 Battery Level %2 %</source>
-        <translation>%1: batterinivå %2&#xa0;%</translation>
-    </message>
-    <message>
-        <source>FTMS bike found, restart the app to apply the change</source>
-        <translation>FTMS-cykel hittades, starta om appen så att ändringen börjar gälla</translation>
-    </message>
-    <message>
-        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
-        <translation>Domyos-crosstrainern är en FTMS-enhet. Starta om QZ så att korrigeringen börjar gälla.</translation>
-    </message>
-    <message>
-        <source>FTMS rower found, restart the app to apply the change</source>
-        <translation>FTMS-roddmaskin hittades, starta om appen så att ändringen börjar gälla</translation>
-    </message>
-    <message>
-        <source>Bluetooth Service Error! Restart the bike!</source>
-        <translation>Fel i Bluetooth-tjänsten! Starta om cykeln!</translation>
-    </message>
-    <message>
-        <source>Switching to classic Bluetooth bridge</source>
-        <translation>Växlar till klassisk virtuell Bluetooth-enhet</translation>
-    </message>
-    <message>
-        <source>Virtual Echelon enabled for this bike</source>
-        <translation>Virtuell Echelon är på för den här cykeln</translation>
-    </message>
-    <message>
-        <source>FTMS treadmill found, restart the app to apply the change</source>
-        <translation>FTMS-löpband hittades, starta om appen så att ändringen börjar gälla</translation>
-    </message>
-    <message>
-        <source>Init completed, you can use the treadmill now!</source>
-        <translation>Initieringen är klar, nu kan du använda löpbandet!</translation>
-    </message>
-    <message>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>QZ har identifierat dataformatet för den här cykeln och aktiverat ”Virtufit Etappe 2.0-cykel” i inställningarna. QZ måste startas om för att kunna läsa cykelns data.</translation>
-    </message>
-    <message>
-        <source>FTMS bike found, restart the app to apply the change!</source>
-        <translation>FTMS-cykel hittades, starta om appen så att ändringen börjar gälla!</translation>
-    </message>
-    <message>
-        <source>FTMS rower found, restart the app to apply the change!</source>
-        <translation>FTMS-roddmaskin hittades, starta om appen så att ändringen börjar gälla!</translation>
-    </message>
-    <message>
-        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
-        <translation>Domyos-cykeln utger sig för att vara en FTMS-enhet men är det inte. Starta om QZ så att korrigeringen börjar gälla.</translation>
-    </message>
-    <message>
-        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
-        <translation>PM5-roddmaskin hittades. Starta om QZ så att korrigeringen börjar gälla.</translation>
-    </message>
-    <message>
-        <source>Treadmill initialization in progress...%1%</source>
-        <translation>Löpbandet initieras…%1%</translation>
-    </message>
-    <message>
-        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
-        <translation>Aktivera inställningen ”Använd alltid FTMS” under Inställningar-&gt;Löpbandsalternativ-&gt;Alternativ för Horizon-löpband och starta om appen</translation>
-    </message>
-    <message>
-        <source>Treadmill initialization completed!</source>
-        <translation>Initieringen av löpbandet är klar!</translation>
-    </message>
-    <message>
-        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
-        <translation>Domyos-löpbandet utger sig för att vara en FTMS-enhet men är det inte. Starta om QZ så att korrigeringen börjar gälla.</translation>
-    </message>
-    <message>
-        <source>Treadmill ready</source>
-        <translation>Löpbandet är klart</translation>
-    </message>
-    <message>
-        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
-        <translation>T01_-enhet identifierad. Om lutningsvärdena ser konstiga ut aktiverar du ”IConcept FTMS-löpband” i inställningarna under Löpbandsalternativ.</translation>
-    </message>
-    <message>
-        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
-        <translation>Aktuellt SmO2: %1% Föregående SmO2: %2% THb: %3 g/dL</translation>
-    </message>
-    <message>
-        <source>SE7i init completed!</source>
-        <translation>Initieringen av SE7i är klar!</translation>
-    </message>
-    <message>
-        <source>Starting treadmill before applying requested speed %1</source>
-        <translation>Startar löpbandet innan den begärda hastigheten %1 ställs in</translation>
-    </message>
-    <message>
-        <source>Applying cached speed request %1</source>
-        <translation>Ställer in den väntande hastigheten %1</translation>
-    </message>
-    <message>
-        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
-        <translation>Ingen tjänst hittades, kontakta mig på roberto.viola83@gmail.com!</translation>
-    </message>
-    <message>
-        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
-        <translation>Zwift Hub-enhet hittades, starta om appen så kan du använda virtuell växling!</translation>
     </message>
     <message>
         <source>Peloton Auth Failed!</source>
@@ -1149,16 +1141,24 @@ Vill du uppdatera QZ-inställningarna?</translation>
         <translation>Zwift-enhet: UPPDATERA DEN INBYGGDA PROGRAMVARAN!</translation>
     </message>
     <message>
-        <source>Android notification enabled</source>
-        <translation>Android-aviseringen är på</translation>
-    </message>
-    <message>
         <source>YPOO M5 ready</source>
         <translation>YPOO M5 är klar</translation>
     </message>
     <message>
         <source>YPOO M5 initialization failed; reconnect required</source>
         <translation>Det gick inte att initiera YPOO M5. Anslut igen.</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
+        <translation>%1 (pulssensor): ingen pulsdata. Kontrollera att sensorn sänder pulsdata.</translation>
+    </message>
+    <message>
+        <source>Searching for %1 (HR sensor)...</source>
+        <translation>Söker efter %1 (pulssensor)...</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
+        <translation>%1 (pulssensor) hittades inte. Kontrollera att den är på och sänder pulsdata.</translation>
     </message>
 </context>
 <context>
@@ -1239,20 +1239,20 @@ Vill du uppdatera QZ-inställningarna?</translation>
 <context>
     <name>SettingsFormatField</name>
     <message>
-        <source>Enter the height in centimetres</source>
-        <translation>Ange längden i centimeter</translation>
-    </message>
-    <message>
-        <source>Enter the height as feet&apos;inches, e.g. 5&apos;10&quot;</source>
-        <translation>Ange längden som fot&apos;tum, t.ex. 5&apos;10&quot;</translation>
+        <source>Enter an IP address, e.g. 192.168.1.10</source>
+        <translation>Ange en IP-adress, t.ex. 192.168.1.10</translation>
     </message>
     <message>
         <source>Enter an IP address or a host name, e.g. 192.168.1.10</source>
         <translation>Ange en IP-adress eller ett värdnamn, t.ex. 192.168.1.10</translation>
     </message>
     <message>
-        <source>Enter an IP address, e.g. 192.168.1.10</source>
-        <translation>Ange en IP-adress, t.ex. 192.168.1.10</translation>
+        <source>Enter the height in centimetres</source>
+        <translation>Ange längden i centimeter</translation>
+    </message>
+    <message>
+        <source>Enter the height as feet&apos;inches, e.g. 5&apos;10&quot;</source>
+        <translation>Ange längden som fot&apos;tum, t.ex. 5&apos;10&quot;</translation>
     </message>
     <message>
         <source>Enter the time as hh:mm:ss</source>
@@ -1262,20 +1262,12 @@ Vill du uppdatera QZ-inställningarna?</translation>
 <context>
     <name>SettingsList</name>
     <message>
-        <source>Please choose a file</source>
-        <translation>Välj en fil</translation>
-    </message>
-    <message>
         <source>Settings folder</source>
         <translation>Inställningsmapp</translation>
     </message>
     <message>
-        <source>Other folders</source>
-        <translation>Andra mappar</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Återställ filer</translation>
+        <source>Please choose a file</source>
+        <translation>Välj en fil</translation>
     </message>
     <message>
         <source>Tap a file to select it, then Load.</source>
@@ -1288,6 +1280,14 @@ Vill du uppdatera QZ-inställningarna?</translation>
     <message>
         <source>No saved settings</source>
         <translation>Inga sparade inställningar</translation>
+    </message>
+    <message>
+        <source>Other folders</source>
+        <translation>Andra mappar</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Återställ filer</translation>
     </message>
 </context>
 <context>
@@ -1330,6 +1330,80 @@ Vill du uppdatera QZ-inställningarna?</translation>
     <message>
         <source>Purchase Failed</source>
         <translation>Det gick inte att genomföra köpet</translation>
+    </message>
+</context>
+<context>
+    <name>SupportHelpButton</name>
+    <message>
+        <source>Contact QZ support</source>
+        <translation>Kontakta QZ-supporten</translation>
+    </message>
+    <message>
+        <source>Prepare a support email with diagnostics</source>
+        <translation>Förbered ett supportmejl med diagnostikuppgifter</translation>
+    </message>
+    <message>
+        <source>No device connected</source>
+        <translation>Ingen enhet är ansluten</translation>
+    </message>
+    <message>
+        <source>Speed and power at zero</source>
+        <translation>Hastighet och effekt är noll</translation>
+    </message>
+    <message>
+        <source>QZ Support</source>
+        <translation>QZ-support</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation>Klart</translation>
+    </message>
+    <message>
+        <source>Hide keyboard</source>
+        <translation>Dölj tangentbordet</translation>
+    </message>
+    <message>
+        <source>Close support request</source>
+        <translation>Stäng supportärendet</translation>
+    </message>
+    <message>
+        <source>Tell us what is not working. QZ will add your device and app information.</source>
+        <translation>Berätta vad som inte fungerar. QZ lägger till information om enheten och appen.</translation>
+    </message>
+    <message>
+        <source>Describe the problem...</source>
+        <translation>Beskriv problemet...</translation>
+    </message>
+    <message>
+        <source>Describe the problem</source>
+        <translation>Beskriv problemet</translation>
+    </message>
+    <message>
+        <source>Attach debug log if available</source>
+        <translation>Bifoga felsökningslogg om den finns</translation>
+    </message>
+    <message>
+        <source>You can review or edit the email before sending it. Nothing is sent automatically.</source>
+        <translation>Du kan granska eller redigera mejlet innan du skickar det. Inget skickas automatiskt.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Avbryt</translation>
+    </message>
+    <message>
+        <source>Open email</source>
+        <translation>Öppna e-post</translation>
+    </message>
+</context>
+<context>
+    <name>treadmill</name>
+    <message>
+        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Kadensen verkar vara hälften av den verkliga. Aktivera ”Dubbel kadens för löpning” och ”Halverad kadens på Strava” under ”Alternativ för effektsensor”.</translation>
+    </message>
+    <message>
+        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
+        <translation>Kadensen verkar vara dubbelt så hög som den verkliga. Inaktivera ”Dubbel kadens för löpning” och ”Halverad kadens på Strava” under ”Alternativ för effektsensor”.</translation>
     </message>
 </context>
 <context>
@@ -1447,6 +1521,18 @@ Vill du uppdatera QZ-inställningarna?</translation>
         <translation>Sök (även i undermappar)…</translation>
     </message>
     <message>
+        <source>Parent folder</source>
+        <translation>Överordnad mapp</translation>
+    </message>
+    <message>
+        <source>No workouts found</source>
+        <translation>Inga träningspass hittades</translation>
+    </message>
+    <message>
+        <source>No workouts here</source>
+        <translation>Inga träningspass här</translation>
+    </message>
+    <message>
         <source>Other folders</source>
         <translation>Andra mappar</translation>
     </message>
@@ -1477,18 +1563,6 @@ Vill du uppdatera QZ-inställningarna?</translation>
     <message>
         <source>Start Workout</source>
         <translation>Starta träningspass</translation>
-    </message>
-    <message>
-        <source>Parent folder</source>
-        <translation>Överordnad mapp</translation>
-    </message>
-    <message>
-        <source>No workouts here</source>
-        <translation>Inga träningspass här</translation>
-    </message>
-    <message>
-        <source>No workouts found</source>
-        <translation>Inga träningspass hittades</translation>
     </message>
 </context>
 <context>
@@ -1663,14 +1737,6 @@ Vill du uppdatera QZ-inställningarna?</translation>
         <translation>Roddmaskin</translation>
     </message>
     <message>
-        <source>Jump Rope</source>
-        <translation>Hopprep</translation>
-    </message>
-    <message>
-        <source>Stair Climber</source>
-        <translation>Trappmaskin</translation>
-    </message>
-    <message>
         <source>Workout Editor</source>
         <translation>Passredigerare</translation>
     </message>
@@ -1818,28 +1884,12 @@ Vill du uppdatera QZ-inställningarna?</translation>
         <translation>Maxhastighet</translation>
     </message>
     <message>
-        <source>Max Incline</source>
-        <translation>Maxlutning</translation>
-    </message>
-    <message>
         <source>Max Resistance</source>
         <translation>Högsta motstånd</translation>
     </message>
     <message>
         <source>Ramp</source>
         <translation>Ramp</translation>
-    </message>
-    <message>
-        <source>Ramp Unit</source>
-        <translation>Rampenhet</translation>
-    </message>
-    <message>
-        <source>Ramp From</source>
-        <translation>Ramp från</translation>
-    </message>
-    <message>
-        <source>Ramp To</source>
-        <translation>Ramp till</translation>
     </message>
     <message>
         <source>Stroke Rate</source>
@@ -2038,34 +2088,6 @@ Vill du uppdatera QZ-inställningarna?</translation>
         <translation>Det gick inte att upprepa markeringen: {message}</translation>
     </message>
     <message>
-        <source>Block repeated {times} times</source>
-        <translation>Blocket upprepades {times} gånger</translation>
-    </message>
-    <message>
-        <source>Loaded {name}</source>
-        <translation>Inläst: {name}</translation>
-    </message>
-    <message>
-        <source>Deleted {name}</source>
-        <translation>Borttaget: {name}</translation>
-    </message>
-    <message>
-        <source>Untitled Workout</source>
-        <translation>Namnlöst träningspass</translation>
-    </message>
-    <message>
-        <source>Time</source>
-        <translation>Tid</translation>
-    </message>
-    <message>
-        <source>Duration {value}</source>
-        <translation>Varaktighet: {value}</translation>
-    </message>
-    <message>
-        <source>{count} intervals</source>
-        <translation>{count} intervall</translation>
-    </message>
-    <message>
         <source>Training Programs Browser</source>
         <translation>Bläddra bland träningsprogram</translation>
     </message>
@@ -2185,6 +2207,130 @@ Vill du uppdatera QZ-inställningarna?</translation>
         <translation>Mållutning</translation>
     </message>
     <message>
+        <source>Peloton Workout in progress!</source>
+        <translation>Peloton-träningspass pågår!</translation>
+    </message>
+    <message>
+        <source>Do you want to follow the resistance?</source>
+        <translation>Vill du följa motståndet?</translation>
+    </message>
+    <message>
+        <source>SPEED</source>
+        <translation>HASTIGHET</translation>
+    </message>
+    <message>
+        <source>INCLINE</source>
+        <translation>LUTNING</translation>
+    </message>
+    <message>
+        <source>PACE</source>
+        <translation>TEMPO</translation>
+    </message>
+    <message>
+        <source>ELEV.</source>
+        <translation>HÖJD</translation>
+    </message>
+    <message>
+        <source>CADENCE</source>
+        <translation>KADENS</translation>
+    </message>
+    <message>
+        <source>PULSE</source>
+        <translation>PULS</translation>
+    </message>
+    <message>
+        <source>POWER</source>
+        <translation>EFFEKT</translation>
+    </message>
+    <message>
+        <source>RESISTANCE</source>
+        <translation>MOTSTÅND</translation>
+    </message>
+    <message>
+        <source>CALORIES</source>
+        <translation>KALORIER</translation>
+    </message>
+    <message>
+        <source>DISTANCE</source>
+        <translation>DISTANS</translation>
+    </message>
+    <message>
+        <source>Heart</source>
+        <translation>Puls</translation>
+    </message>
+    <message>
+        <source>Odometer</source>
+        <translation>Vägmätare</translation>
+    </message>
+    <message>
+        <source>Watt</source>
+        <translation>Watt</translation>
+    </message>
+    <message>
+        <source>Elapsed</source>
+        <translation>Förfluten tid</translation>
+    </message>
+    <message>
+        <source>Inclination</source>
+        <translation>Lutning</translation>
+    </message>
+    <message>
+        <source>Altitude</source>
+        <translation>Höjd</translation>
+    </message>
+    <message>
+        <source>Elevation</source>
+        <translation>Höjdmeter</translation>
+    </message>
+    <message>
+        <source>Jump Rope</source>
+        <translation>Hopprep</translation>
+    </message>
+    <message>
+        <source>Stair Climber</source>
+        <translation>Trappmaskin</translation>
+    </message>
+    <message>
+        <source>Ramp Unit</source>
+        <translation>Rampenhet</translation>
+    </message>
+    <message>
+        <source>Ramp From</source>
+        <translation>Ramp från</translation>
+    </message>
+    <message>
+        <source>Ramp To</source>
+        <translation>Ramp till</translation>
+    </message>
+    <message>
+        <source>Block repeated {times} times</source>
+        <translation>Blocket upprepades {times} gånger</translation>
+    </message>
+    <message>
+        <source>Loaded {name}</source>
+        <translation>Inläst: {name}</translation>
+    </message>
+    <message>
+        <source>Deleted {name}</source>
+        <translation>Borttaget: {name}</translation>
+    </message>
+    <message>
+        <source>Untitled Workout</source>
+        <translation>Namnlöst träningspass</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation>Tid</translation>
+    </message>
+    <message>
+        <source>Duration {value}</source>
+        <translation>Varaktighet: {value}</translation>
+    </message>
+    <message>
+        <source>{count} intervals</source>
+        <translation>{count} intervall</translation>
+    </message>
+    <message>
         <source>Heart Rate</source>
         <translation>Puls</translation>
     </message>
@@ -2245,78 +2391,6 @@ Vill du uppdatera QZ-inställningarna?</translation>
         <translation>Puls &lt;{value} bpm</translation>
     </message>
     <message>
-        <source>W</source>
-        <translation>W</translation>
-    </message>
-    <message>
-        <source>kJ</source>
-        <translation>kJ</translation>
-    </message>
-    <message>
-        <source>kcal</source>
-        <translation>kcal</translation>
-    </message>
-    <message>
-        <source>km</source>
-        <translation>km</translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>rpm</source>
-        <translation>rpm</translation>
-    </message>
-    <message>
-        <source>bpm</source>
-        <translation>bpm</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>min/km</source>
-        <translation>min/km</translation>
-    </message>
-    <message>
-        <source>min/mi</source>
-        <translation>min/mi</translation>
-    </message>
-    <message>
-        <source>Full screen</source>
-        <translation>Helskärm</translation>
-    </message>
-    <message>
-        <source>Exit full screen</source>
-        <translation>Avsluta helskärm</translation>
-    </message>
-    <message>
-        <source>Swipe left or right to switch charts</source>
-        <translation>Svep åt vänster eller höger för att byta diagram</translation>
-    </message>
-    <message>
-        <source>A workout named {name} already exists. Replace it?</source>
-        <translation>Det finns redan ett träningspass med namnet {name}. Vill du ersätta det?</translation>
-    </message>
-    <message>
-        <source>Replace</source>
-        <translation>Ersätt</translation>
-    </message>
-    <message>
-        <source>lvl</source>
-        <translation>nivå</translation>
-    </message>
-    <message>
-        <source>spm</source>
-        <translation>tag/min</translation>
-    </message>
-    <message>
         <source>Marathon</source>
         <translation>Maraton</translation>
     </message>
@@ -2335,14 +2409,6 @@ Vill du uppdatera QZ-inställningarna?</translation>
     <message>
         <source>1 Mile</source>
         <translation>1 engelsk mil</translation>
-    </message>
-    <message>
-        <source>Peloton Workout in progress!</source>
-        <translation>Peloton-träningspass pågår!</translation>
-    </message>
-    <message>
-        <source>Do you want to follow the resistance?</source>
-        <translation>Vill du följa motståndet?</translation>
     </message>
     <message>
         <source>AVG</source>
@@ -2443,72 +2509,80 @@ Vill du uppdatera QZ-inställningarna?</translation>
         <translation>Automatiskt motstånd</translation>
     </message>
     <message>
-        <source>SPEED</source>
-        <translation>HASTIGHET</translation>
+        <source>Max Incline</source>
+        <translation>Maxlutning</translation>
     </message>
     <message>
-        <source>INCLINE</source>
-        <translation>LUTNING</translation>
+        <source>W</source>
+        <translation>W</translation>
     </message>
     <message>
-        <source>PACE</source>
-        <translation>TEMPO</translation>
+        <source>kJ</source>
+        <translation>kJ</translation>
     </message>
     <message>
-        <source>ELEV.</source>
-        <translation>HÖJD</translation>
+        <source>kcal</source>
+        <translation>kcal</translation>
     </message>
     <message>
-        <source>CADENCE</source>
-        <translation>KADENS</translation>
+        <source>km</source>
+        <translation>km</translation>
     </message>
     <message>
-        <source>PULSE</source>
-        <translation>PULS</translation>
+        <source>mi</source>
+        <translation>mi</translation>
     </message>
     <message>
-        <source>POWER</source>
-        <translation>EFFEKT</translation>
+        <source>rpm</source>
+        <translation>rpm</translation>
     </message>
     <message>
-        <source>RESISTANCE</source>
-        <translation>MOTSTÅND</translation>
+        <source>bpm</source>
+        <translation>bpm</translation>
     </message>
     <message>
-        <source>CALORIES</source>
-        <translation>KALORIER</translation>
+        <source>km/h</source>
+        <translation>km/h</translation>
     </message>
     <message>
-        <source>DISTANCE</source>
-        <translation>DISTANS</translation>
+        <source>mph</source>
+        <translation>mph</translation>
     </message>
     <message>
-        <source>Heart</source>
-        <translation>Puls</translation>
+        <source>min/km</source>
+        <translation>min/km</translation>
     </message>
     <message>
-        <source>Odometer</source>
-        <translation>Vägmätare</translation>
+        <source>min/mi</source>
+        <translation>min/mi</translation>
     </message>
     <message>
-        <source>Watt</source>
-        <translation>Watt</translation>
+        <source>Full screen</source>
+        <translation>Helskärm</translation>
     </message>
     <message>
-        <source>Elapsed</source>
-        <translation>Förfluten tid</translation>
+        <source>Exit full screen</source>
+        <translation>Avsluta helskärm</translation>
     </message>
     <message>
-        <source>Inclination</source>
-        <translation>Lutning</translation>
+        <source>Swipe left or right to switch charts</source>
+        <translation>Svep åt vänster eller höger för att byta diagram</translation>
     </message>
     <message>
-        <source>Altitude</source>
-        <translation>Höjd</translation>
+        <source>A workout named {name} already exists. Replace it?</source>
+        <translation>Det finns redan ett träningspass med namnet {name}. Vill du ersätta det?</translation>
     </message>
     <message>
-        <source>Elevation</source>
-        <translation>Höjdmeter</translation>
+        <source>Replace</source>
+        <translation>Ersätt</translation>
+    </message>
+    <message>
+        <source>lvl</source>
+        <translation>nivå</translation>
+    </message>
+    <message>
+        <source>spm</source>
+        <translation>tag/min</translation>
     </message>
     <message>
         <source>Enter a number</source>
@@ -2606,22 +2680,6 @@ Med följande frågor anpassas QZ efter din utrustning och dina mål.</translati
         <translation>Vilket träningsredskap har du?</translation>
     </message>
     <message>
-        <source>Bike</source>
-        <translation>Cykel</translation>
-    </message>
-    <message>
-        <source>Treadmill</source>
-        <translation>Löpband</translation>
-    </message>
-    <message>
-        <source>Rower</source>
-        <translation>Roddmaskin</translation>
-    </message>
-    <message>
-        <source>Elliptical</source>
-        <translation>Crosstrainer</translation>
-    </message>
-    <message>
         <source>Back</source>
         <translation>Tillbaka</translation>
     </message>
@@ -2632,14 +2690,6 @@ Med följande frågor anpassas QZ efter din utrustning och dina mål.</translati
     <message>
         <source>QZ allows you to connect to both of them, even simultaneously if you want!</source>
         <translation>QZ kan ansluta till båda, till och med samtidigt om du vill!</translation>
-    </message>
-    <message>
-        <source>Other app</source>
-        <translation>Annan app</translation>
-    </message>
-    <message>
-        <source>QZ Standalone</source>
-        <translation>Endast QZ</translation>
     </message>
     <message>
         <source>Connect to Peloton</source>
@@ -2662,18 +2712,6 @@ Med följande frågor anpassas QZ efter din utrustning och dina mål.</translati
         <translation>Svårighetsgrad</translation>
     </message>
     <message>
-        <source>lower</source>
-        <translation>nedre</translation>
-    </message>
-    <message>
-        <source>upper</source>
-        <translation>övre</translation>
-    </message>
-    <message>
-        <source>average</source>
-        <translation>medel</translation>
-    </message>
-    <message>
         <source>Finish</source>
         <translation>Slutför</translation>
     </message>
@@ -2688,6 +2726,18 @@ Med följande frågor anpassas QZ efter din utrustning och dina mål.</translati
     <message>
         <source>Next</source>
         <translation>Nästa</translation>
+    </message>
+    <message>
+        <source>Your equipment, units and profile, step by step</source>
+        <translation>Träningsredskap, måttenheter och profil, steg för steg</translation>
+    </message>
+    <message>
+        <source>Pick a topic and go straight to its settings</source>
+        <translation>Välj ett ämne och gå direkt till dess inställningar</translation>
+    </message>
+    <message>
+        <source>Close the wizard</source>
+        <translation>Stäng guiden</translation>
     </message>
     <message>
         <source>Custom Configurations</source>
@@ -2790,14 +2840,6 @@ Med följande frågor anpassas QZ efter din utrustning och dina mål.</translati
         <translation>Välj träningsredskap</translation>
     </message>
     <message>
-        <source>Disabled</source>
-        <translation>Av</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>Uppdatera</translation>
-    </message>
-    <message>
         <source>Unit System</source>
         <translation>Måttsystem</translation>
     </message>
@@ -2806,28 +2848,8 @@ Med följande frågor anpassas QZ efter din utrustning och dina mål.</translati
         <translation>Välj måttsystem</translation>
     </message>
     <message>
-        <source>Metric</source>
-        <translation>Metriskt</translation>
-    </message>
-    <message>
-        <source>Imperial</source>
-        <translation>Imperiskt</translation>
-    </message>
-    <message>
         <source>User Information</source>
         <translation>Användaruppgifter</translation>
-    </message>
-    <message>
-        <source>Weight (%1)</source>
-        <translation>Vikt (%1)</translation>
-    </message>
-    <message>
-        <source>lbs</source>
-        <translation>lbs</translation>
-    </message>
-    <message>
-        <source>kg</source>
-        <translation>kg</translation>
     </message>
     <message>
         <source>Age</source>
@@ -2836,14 +2858,6 @@ Med följande frågor anpassas QZ efter din utrustning och dina mål.</translati
     <message>
         <source>Gender</source>
         <translation>Kön</translation>
-    </message>
-    <message>
-        <source>Male</source>
-        <translation>Man</translation>
-    </message>
-    <message>
-        <source>Female</source>
-        <translation>Kvinna</translation>
     </message>
     <message>
         <source>Select Your Heart Rate Device</source>
@@ -2874,16 +2888,76 @@ Med följande frågor anpassas QZ efter din utrustning och dina mål.</translati
         <translation>Garmin-klocka</translation>
     </message>
     <message>
-        <source>Your equipment, units and profile, step by step</source>
-        <translation>Träningsredskap, måttenheter och profil, steg för steg</translation>
+        <source>Bike</source>
+        <translation>Cykel</translation>
     </message>
     <message>
-        <source>Pick a topic and go straight to its settings</source>
-        <translation>Välj ett ämne och gå direkt till dess inställningar</translation>
+        <source>Treadmill</source>
+        <translation>Löpband</translation>
     </message>
     <message>
-        <source>Close the wizard</source>
-        <translation>Stäng guiden</translation>
+        <source>Rower</source>
+        <translation>Roddmaskin</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>Crosstrainer</translation>
+    </message>
+    <message>
+        <source>Other app</source>
+        <translation>Annan app</translation>
+    </message>
+    <message>
+        <source>QZ Standalone</source>
+        <translation>Endast QZ</translation>
+    </message>
+    <message>
+        <source>lower</source>
+        <translation>nedre</translation>
+    </message>
+    <message>
+        <source>upper</source>
+        <translation>övre</translation>
+    </message>
+    <message>
+        <source>average</source>
+        <translation>medel</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Av</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Uppdatera</translation>
+    </message>
+    <message>
+        <source>Metric</source>
+        <translation>Metriskt</translation>
+    </message>
+    <message>
+        <source>Imperial</source>
+        <translation>Imperiskt</translation>
+    </message>
+    <message>
+        <source>Weight (%1)</source>
+        <translation>Vikt (%1)</translation>
+    </message>
+    <message>
+        <source>Male</source>
+        <translation>Man</translation>
+    </message>
+    <message>
+        <source>Female</source>
+        <translation>Kvinna</translation>
+    </message>
+    <message>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <source>kg</source>
+        <translation>kg</translation>
     </message>
 </context>
 <context>
@@ -3021,16 +3095,24 @@ Det kan ta en stund vid första starten.</translation>
         <translation>Det gick inte att läsa in träningsprogrammet. Kontrollera att filen finns.</translation>
     </message>
     <message>
-        <source>mi</source>
-        <translation>mi</translation>
+        <source>Import FIT File...</source>
+        <translation>Importera FIT-fil…</translation>
     </message>
     <message>
-        <source>km</source>
-        <translation>km</translation>
+        <source>Import from QZ Folder...</source>
+        <translation>Importera från QZ-mappen…</translation>
     </message>
     <message>
-        <source>kcal</source>
-        <translation>kcal</translation>
+        <source>Please choose a file</source>
+        <translation>Välj en fil</translation>
+    </message>
+    <message>
+        <source>FIT files (*.fit *.FIT)</source>
+        <translation>FIT-filer (*.fit *.FIT)</translation>
+    </message>
+    <message>
+        <source>All files (*)</source>
+        <translation>Alla filer (*)</translation>
     </message>
     <message>
         <source>Share FIT file</source>
@@ -3109,16 +3191,16 @@ Det kan ta en stund vid första starten.</translation>
         <translation>Stäng</translation>
     </message>
     <message>
+        <source>Filter by date</source>
+        <translation>Filtrera efter datum</translation>
+    </message>
+    <message>
         <source>Calendar</source>
         <translation>Kalender</translation>
     </message>
     <message>
-        <source>No workouts yet</source>
-        <translation>Inga träningspass ännu</translation>
-    </message>
-    <message>
-        <source>No workouts on this day</source>
-        <translation>Inga träningspass den här dagen</translation>
+        <source>Import workouts</source>
+        <translation>Importera träningspass</translation>
     </message>
     <message>
         <source>Adding workouts to the history</source>
@@ -3137,12 +3219,36 @@ Det kan ta en stund vid första starten.</translation>
         <translation>Kopierar träningsfiler: %1 av %2</translation>
     </message>
     <message>
-        <source>Open on Peloton</source>
-        <translation>Öppna i Peloton</translation>
+        <source>No workouts on this day</source>
+        <translation>Inga träningspass den här dagen</translation>
+    </message>
+    <message>
+        <source>No workouts yet</source>
+        <translation>Inga träningspass ännu</translation>
     </message>
     <message>
         <source>Finished workouts appear here: open one to see its charts.</source>
         <translation>Avslutade träningspass visas här: öppna ett om du vill se diagrammen.</translation>
+    </message>
+    <message>
+        <source>Open on Peloton</source>
+        <translation>Öppna i Peloton</translation>
+    </message>
+    <message>
+        <source>Load training program</source>
+        <translation>Läs in träningsprogram</translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>kcal</source>
+        <translation>kcal</translation>
     </message>
     <message>
         <source>Previous month</source>
@@ -3151,38 +3257,6 @@ Det kan ta en stund vid första starten.</translation>
     <message>
         <source>Next month</source>
         <translation>Nästa månad</translation>
-    </message>
-    <message>
-        <source>Import FIT File...</source>
-        <translation>Importera FIT-fil…</translation>
-    </message>
-    <message>
-        <source>Import from QZ Folder...</source>
-        <translation>Importera från QZ-mappen…</translation>
-    </message>
-    <message>
-        <source>Please choose a file</source>
-        <translation>Välj en fil</translation>
-    </message>
-    <message>
-        <source>FIT files (*.fit *.FIT)</source>
-        <translation>FIT-filer (*.fit *.FIT)</translation>
-    </message>
-    <message>
-        <source>All files (*)</source>
-        <translation>Alla filer (*)</translation>
-    </message>
-    <message>
-        <source>Filter by date</source>
-        <translation>Filtrera efter datum</translation>
-    </message>
-    <message>
-        <source>Import workouts</source>
-        <translation>Importera träningspass</translation>
-    </message>
-    <message>
-        <source>Load training program</source>
-        <translation>Läs in träningsprogram</translation>
     </message>
     <message>
         <source>has a workout</source>
@@ -3304,16 +3378,16 @@ Det kan ta en stund vid första starten.</translation>
 <context>
     <name>gears</name>
     <message>
-        <source>Wahoo Options</source>
-        <translation>Wahoo-alternativ</translation>
-    </message>
-    <message>
         <source>Without Wheel Diameter Protocol</source>
         <translation>Utan hjuldiameterprotokoll</translation>
     </message>
     <message>
         <source>Enable this for simplified Wahoo protocol that adds gears directly to grade instead of using wheel diameter changes. Default is false.</source>
         <translation>Aktivera för det förenklade Wahoo-protokollet, som lägger växlarna direkt till lutningen i stället för att ändra hjuldiametern. Standard: av.</translation>
+    </message>
+    <message>
+        <source>Wahoo Options</source>
+        <translation>Wahoo-alternativ</translation>
     </message>
     <message>
         <source>Chainring Size</source>
@@ -3378,30 +3452,6 @@ Det kan ta en stund vid första starten.</translation>
 </context>
 <context>
     <name>homeform</name>
-    <message>
-        <source>Bluetooth is off</source>
-        <translation>Bluetooth är av</translation>
-    </message>
-    <message>
-        <source>Searching for the device...</source>
-        <translation>Söker efter enheten…</translation>
-    </message>
-    <message>
-        <source>Connecting to %1...</source>
-        <translation>Ansluter till %1…</translation>
-    </message>
-    <message>
-        <source>Search stopped, tap the Bluetooth icon</source>
-        <translation>Sökningen stoppades, tryck på Bluetooth-ikonen</translation>
-    </message>
-    <message>
-        <source>Next search in %1 s</source>
-        <translation>Nästa sökning om %1&#xa0;s</translation>
-    </message>
-    <message>
-        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
-        <translation>Android tillåter 5 Bluetooth-sökningar på 30&#xa0;s, nästa startar om %1&#xa0;s</translation>
-    </message>
     <message>
         <source>Speed (%1/h)</source>
         <translation>Hastighet (%1/h)</translation>
@@ -3592,58 +3642,8 @@ Det kan ta en stund vid första starten.</translation>
         <translation>Klättring</translation>
     </message>
     <message>
-        <source>Watts</source>
-        <translation>Watt</translation>
-    </message>
-    <message>
-        <source>km</source>
-        <translation>km</translation>
-    </message>
-    <message>
-        <source>m</source>
-        <comment>unit: meters</comment>
-        <translation>m</translation>
-    </message>
-    <message>
-        <source>Kg</source>
-        <translation>kg</translation>
-    </message>
-    <message>
-        <source>cm</source>
-        <translation>cm</translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>ft</source>
-        <translation>ft</translation>
-    </message>
-    <message>
-        <source>in</source>
-        <comment>unit: inches</comment>
-        <translation>tum</translation>
-    </message>
-    <message>
-        <source>Oz</source>
-        <translation>oz</translation>
-    </message>
-    <message>
-        <source>AVG Watts</source>
-        <translation>Medelwatt</translation>
-    </message>
-    <message>
         <source>Power Avg</source>
         <translation>Medeleffekt</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation>Av</translation>
-    </message>
-    <message>
-        <source>HRV (ms)</source>
-        <translation>HRV (ms)</translation>
     </message>
     <message>
         <source>PID Heart</source>
@@ -3670,26 +3670,6 @@ Det kan ta en stund vid första starten.</translation>
         <translation>Antal steg</translation>
     </message>
     <message>
-        <source>Odometer (m)</source>
-        <translation>Vägmätare (m)</translation>
-    </message>
-    <message>
-        <source>Pace (m/500m)</source>
-        <translation>Tempo (min/500&#xa0;m)</translation>
-    </message>
-    <message>
-        <source>Avg Pace (m/500m)</source>
-        <translation>Medeltempo (min/500&#xa0;m)</translation>
-    </message>
-    <message>
-        <source>T.Pace(m/500m)</source>
-        <translation>Måltempo (min/500&#xa0;m)</translation>
-    </message>
-    <message>
-        <source>%1 found</source>
-        <translation>Hittade: %1</translation>
-    </message>
-    <message>
         <source>Stop</source>
         <translation>Stoppa</translation>
     </message>
@@ -3707,26 +3687,6 @@ Det kan ta en stund vid första starten.</translation>
             <lengthvariant>Fortsätt</lengthvariant>
             <lengthvariant>Vidare</lengthvariant>
         </translation>
-    </message>
-    <message>
-        <source>offset </source>
-        <translation>justering </translation>
-    </message>
-    <message>
-        <source> /min</source>
-        <translation> /min</translation>
-    </message>
-    <message>
-        <source> sec.</source>
-        <translation> s</translation>
-    </message>
-    <message>
-        <source>Incl: </source>
-        <translation>Lutn.: </translation>
-    </message>
-    <message>
-        <source>%1%2W</source>
-        <translation>%1%2W</translation>
     </message>
     <message>
         <source>Rec.</source>
@@ -3773,26 +3733,6 @@ Det kan ta en stund vid första starten.</translation>
     <message>
         <source>N/A</source>
         <translation>N/A</translation>
-    </message>
-    <message>
-        <source>3s avg</source>
-        <translation>3&#xa0;s medel</translation>
-    </message>
-    <message>
-        <source>5s avg</source>
-        <translation>5&#xa0;s medel</translation>
-    </message>
-    <message>
-        <source>Gain: </source>
-        <translation>Faktor: </translation>
-    </message>
-    <message>
-        <source>MIN: </source>
-        <translation>MIN: </translation>
-    </message>
-    <message>
-        <source>W </source>
-        <translation>W </translation>
     </message>
     <message>
         <source>, speed </source>
@@ -4004,32 +3944,20 @@ Det kan ta en stund vid första starten.</translation>
         <translation>Det gick inte att hämta åtkomsttoken, %1 (%2)</translation>
     </message>
     <message>
-        <source>Share FIT file</source>
-        <translation>Dela FIT-fil</translation>
+        <source>Watts</source>
+        <translation>Watt</translation>
     </message>
     <message>
-        <source>The FIT file of this workout could not be shared</source>
-        <translation>FIT-filen för det här passet kunde inte delas</translation>
+        <source>AVG Watts</source>
+        <translation>Medelwatt</translation>
     </message>
     <message>
-        <source>License Approved!</source>
-        <translation>Licensen godkänd!</translation>
+        <source>The workout history database could not be opened.</source>
+        <translation>Det gick inte att öppna databasen med träningshistorik.</translation>
     </message>
     <message>
-        <source>License not found</source>
-        <translation>Licensen hittades inte</translation>
-    </message>
-    <message>
-        <source>The workout file could not be opened.</source>
-        <translation>Det gick inte att öppna träningsfilen.</translation>
-    </message>
-    <message>
-        <source>The workout file could not be copied.</source>
-        <translation>Det gick inte att kopiera träningsfilen.</translation>
-    </message>
-    <message>
-        <source>No workout files (.fit) found.</source>
-        <translation>Inga träningsfiler (.fit) hittades.</translation>
+        <source>Wi-Fi connection (DirCon) restarted</source>
+        <translation>Wi-Fi-anslutningen (DirCon) har startats om</translation>
     </message>
     <message>
         <source>Workouts imported: %1.</source>
@@ -4056,12 +3984,162 @@ Det kan ta en stund vid första starten.</translation>
         <translation>Utan träningsdata: %1.</translation>
     </message>
     <message>
-        <source>The workout history database could not be opened.</source>
-        <translation>Det gick inte att öppna databasen med träningshistorik.</translation>
+        <source>The workout file could not be opened.</source>
+        <translation>Det gick inte att öppna träningsfilen.</translation>
     </message>
     <message>
-        <source>Wi-Fi connection (DirCon) restarted</source>
-        <translation>Wi-Fi-anslutningen (DirCon) har startats om</translation>
+        <source>The workout file could not be copied.</source>
+        <translation>Det gick inte att kopiera träningsfilen.</translation>
+    </message>
+    <message>
+        <source>No workout files (.fit) found.</source>
+        <translation>Inga träningsfiler (.fit) hittades.</translation>
+    </message>
+    <message>
+        <source>License Approved!</source>
+        <translation>Licensen godkänd!</translation>
+    </message>
+    <message>
+        <source>License not found</source>
+        <translation>Licensen hittades inte</translation>
+    </message>
+    <message>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>m</source>
+        <comment>unit: meters</comment>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>Kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>ft</source>
+        <translation>ft</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <comment>unit: inches</comment>
+        <translation>tum</translation>
+    </message>
+    <message>
+        <source>Oz</source>
+        <translation>oz</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Av</translation>
+    </message>
+    <message>
+        <source>HRV (ms)</source>
+        <translation>HRV (ms)</translation>
+    </message>
+    <message>
+        <source>Searching for the device...</source>
+        <translation>Söker efter enheten…</translation>
+    </message>
+    <message>
+        <source>Connecting to %1...</source>
+        <translation>Ansluter till %1…</translation>
+    </message>
+    <message>
+        <source>%1 found</source>
+        <translation>Hittade: %1</translation>
+    </message>
+    <message>
+        <source>Search stopped, tap the Bluetooth icon</source>
+        <translation>Sökningen stoppades, tryck på Bluetooth-ikonen</translation>
+    </message>
+    <message>
+        <source>Next search in %1 s</source>
+        <translation>Nästa sökning om %1&#xa0;s</translation>
+    </message>
+    <message>
+        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
+        <translation>Android tillåter 5 Bluetooth-sökningar på 30&#xa0;s, nästa startar om %1&#xa0;s</translation>
+    </message>
+    <message>
+        <source>Odometer (m)</source>
+        <translation>Vägmätare (m)</translation>
+    </message>
+    <message>
+        <source>Pace (m/500m)</source>
+        <translation>Tempo (min/500&#xa0;m)</translation>
+    </message>
+    <message>
+        <source>Avg Pace (m/500m)</source>
+        <translation>Medeltempo (min/500&#xa0;m)</translation>
+    </message>
+    <message>
+        <source>T.Pace(m/500m)</source>
+        <translation>Måltempo (min/500&#xa0;m)</translation>
+    </message>
+    <message>
+        <source>offset </source>
+        <translation>justering </translation>
+    </message>
+    <message>
+        <source> /min</source>
+        <translation> /min</translation>
+    </message>
+    <message>
+        <source> sec.</source>
+        <translation> s</translation>
+    </message>
+    <message>
+        <source>Incl: </source>
+        <translation>Lutn.: </translation>
+    </message>
+    <message>
+        <source>%1%2W</source>
+        <translation>%1%2W</translation>
+    </message>
+    <message>
+        <source>3s avg</source>
+        <translation>3&#xa0;s medel</translation>
+    </message>
+    <message>
+        <source>5s avg</source>
+        <translation>5&#xa0;s medel</translation>
+    </message>
+    <message>
+        <source>Gain: </source>
+        <translation>Faktor: </translation>
+    </message>
+    <message>
+        <source>MIN: </source>
+        <translation>MIN: </translation>
+    </message>
+    <message>
+        <source>W </source>
+        <translation>W </translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>Dela FIT-fil</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>FIT-filen för det här passet kunde inte delas</translation>
+    </message>
+    <message>
+        <source>meters</source>
+        <translation>meter</translation>
+    </message>
+    <message>
+        <source>feet</source>
+        <translation>fot</translation>
     </message>
     <message>
         <source>Great workout!</source>
@@ -4196,14 +4274,6 @@ Det kan ta en stund vid första starten.</translation>
         <translation>Medeltaglängd: %1</translation>
     </message>
     <message>
-        <source>meters</source>
-        <translation>meter</translation>
-    </message>
-    <message>
-        <source>feet</source>
-        <translation>fot</translation>
-    </message>
-    <message>
         <source>QZ target power is overriding the app&apos;s commands. Pause QZ and resume it to give control back to the app.</source>
         <translation>QZ:s måleffekt åsidosätter appens kommandon. Pausa QZ och fortsätt igen om du vill lämna tillbaka styrningen till appen.</translation>
     </message>
@@ -4336,20 +4406,16 @@ Det kan ta en stund vid första starten.</translation>
         <extracomment>Android notification: title shown while QZ works in the background.</extracomment>
         <translation>QZ körs</translation>
     </message>
+    <message>
+        <source>Bluetooth is off</source>
+        <translation>Bluetooth är av</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
     <message>
-        <source>QZ is closing...</source>
-        <translation>QZ stängs…</translation>
-    </message>
-    <message>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>
-    </message>
-    <message>
-        <source>Press back again to exit</source>
-        <translation>Tryck på Bakåt igen för att avsluta</translation>
     </message>
     <message>
         <source>Program has been loaded correctly. Press start to begin!</source>
@@ -4390,10 +4456,6 @@ startar om appen.</translation>
         <translation>QZ hittade Bluetooth-träningsredskap i närheten. Välj det redskap du vill använda för det här passet.</translation>
     </message>
     <message>
-        <source>Disabled</source>
-        <translation type="vanished">Av</translation>
-    </message>
-    <message>
         <source>Select a device</source>
         <translation>Välj en enhet</translation>
     </message>
@@ -4412,28 +4474,6 @@ startar om appen.</translation>
     <message>
         <source>Settings has been loaded correctly. Restart the app!</source>
         <translation>Inställningarna har lästs in. Starta om appen!</translation>
-    </message>
-    <message>
-        <source>Saved! Look in the Files app.</source>
-        <translation>Sparat! Titta i appen Filer.</translation>
-    </message>
-    <message>
-        <source>Saved! Look in the app&apos;s private folder.</source>
-        <translation>Sparat! Titta i appens privata mapp.</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Återställ filer</translation>
-    </message>
-    <message>
-        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
-Do you want to look for them?
-
-In the next window, allow access to the QZ folder.</source>
-        <translation>Träningsprogram, GPX-rutter, inställningsfiler och profiler från en tidigare installation kan finnas kvar i QZ-mappen.
-Vill du leta efter dem?
-
-Tillåt åtkomst till QZ-mappen i nästa fönster.</translation>
     </message>
     <message>
         <source>Saved! Check your private folder (Android)&lt;br&gt;or Files App (iOS)</source>
@@ -4470,14 +4510,6 @@ Vill du göra det nu?</translation>
         <translation>Utan den använder QZ standardinställningarna, och data eller motstånd kan bli fel.</translation>
     </message>
     <message>
-        <source>Restart now?</source>
-        <translation>Starta om nu?</translation>
-    </message>
-    <message>
-        <source>This FitShow device also reports bike data. Is it a bike?</source>
-        <translation>Den här FitShow-enheten skickar även cykeldata. Är det en cykel?</translation>
-    </message>
-    <message>
         <source>Strava</source>
         <translation>Strava</translation>
     </message>
@@ -4510,90 +4542,34 @@ Do you want to start it now?</source>
 Vill du starta det nu?</translation>
     </message>
     <message>
-        <source>Garmin FTP Update</source>
-        <translation>FTP-uppdatering från Garmin</translation>
-    </message>
-    <message>
-        <source>Clipboard Workout</source>
-        <translation>Träningspass från Urklipp</translation>
-    </message>
-    <message>
-        <source>Workout found in clipboard:
-%1
-
-Do you want to open the workout preview?</source>
-        <translation>Träningspass hittades i Urklipp:
-%1
-
-Vill du öppna förhandsvisningen av passet?</translation>
-    </message>
-    <message>
-        <source>The clipboard workout has ended.
-
-Do you want to delete the file?</source>
-        <translation>Träningspasset från Urklipp har avslutats.
-
-Vill du ta bort filen?</translation>
-    </message>
-    <message>
-        <source>Echelon Unlock</source>
-        <translation>Upplåsning av Echelon</translation>
-    </message>
-    <message>
-        <source>The bike has been unlocked and cadence is flowing.
-
-Do you want to switch to the classic Bluetooth bridge for this session?</source>
-        <translation>Cykeln är upplåst och kadensen registreras.
-
-Vill du byta till den klassiska virtuella Bluetooth-enheten för den här sessionen?</translation>
-    </message>
-    <message>
-        <source>Echelon Locked Bike</source>
-        <translation>Echelon-låst cykel</translation>
-    </message>
-    <message>
-        <source>Your bike is locked by Echelon, but QZ can unlock it.
-
-</source>
-        <translation>Cykeln är låst av Echelon, men QZ kan låsa upp den.
-
-</translation>
-    </message>
-    <message>
-        <source>Enable Virtual Echelon in the experimental settings and restart qz, then open the official Echelon app on a separate device and connect to the bike once.
-
-</source>
-        <translation>Aktivera Virtuell Echelon under Experimentella funktioner och starta om QZ. Öppna sedan den officiella Echelon-appen på en annan enhet och anslut till cykeln en gång.
-
-</translation>
-    </message>
-    <message>
-        <source>After initialization, return to QZ and everything will work normally.
-
-</source>
-        <translation>När initieringen är klar går du tillbaka till QZ, så fungerar allt som vanligt.
-
-</translation>
-    </message>
-    <message>
-        <source>You have to repeat this for each session, would you like to enable the Virtual Echelon setting now for this?</source>
-        <translation>Du måste upprepa detta för varje session. Vill du aktivera inställningen Virtuell Echelon nu?</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation>Ja</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation>Nej</translation>
-    </message>
-    <message>
         <source>You are already connected to Strava. Do you want to log out?</source>
         <translation>Du är redan ansluten till Strava. Vill du logga ut?</translation>
     </message>
     <message>
         <source>Peloton</source>
         <translation>Peloton</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the Files app.</source>
+        <translation>Sparat! Titta i appen Filer.</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the app&apos;s private folder.</source>
+        <translation>Sparat! Titta i appens privata mapp.</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Återställ filer</translation>
+    </message>
+    <message>
+        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Träningsprogram, GPX-rutter, inställningsfiler och profiler från en tidigare installation kan finnas kvar i QZ-mappen.
+Vill du leta efter dem?
+
+Tillåt åtkomst till QZ-mappen i nästa fönster.</translation>
     </message>
     <message>
         <source>You are already connected to Peloton. Do you want to log out?</source>
@@ -4608,20 +4584,6 @@ Vill du byta till den klassiska virtuella Bluetooth-enheten för den här sessio
         <translation>Du är redan ansluten till Intervals.icu. Vill du logga ut?</translation>
     </message>
     <message>
-        <source>Please choose a file</source>
-        <translation>Välj en fil</translation>
-    </message>
-    <message>
-        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
-        <translation>Kom ihåg att spara profilen ”%1” om du vill behålla ändringarna i den.</translation>
-    </message>
-    <message>
-        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
-No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
-        <translation>Ja: QZ aktiverar ”Fit Plus-cykel” och stängs. Öppna QZ igen om du vill ansluta till enheten som cykel.
-Nej: QZ behåller den som löpband och frågar inte igen (du kan fortfarande välja cykel manuellt: ”Fit Plus-cykel” i Alternativ för Fitplus-cykel).</translation>
-    </message>
-    <message>
         <source>Back</source>
         <translation>Tillbaka</translation>
     </message>
@@ -4632,14 +4594,6 @@ Nej: QZ behåller den som löpband och frågar inte igen (du kan fortfarande vä
     <message>
         <source>Floating window</source>
         <translation>Flytande fönster</translation>
-    </message>
-    <message>
-        <source>Auto Resistance enabled</source>
-        <translation>Automatiskt motstånd på</translation>
-    </message>
-    <message>
-        <source>Auto Resistance disabled</source>
-        <translation>Automatiskt motstånd av</translation>
     </message>
     <message>
         <source>You can move the tiles!</source>
@@ -4678,12 +4632,12 @@ Nej: QZ behåller den som löpband och frågar inte igen (du kan fortfarande vä
         <translation>Dela FIT-fil</translation>
     </message>
     <message>
-        <source>Lock tiles</source>
-        <translation>Lås panelerna</translation>
-    </message>
-    <message>
         <source>Unlock tiles</source>
         <translation>Lås upp panelerna</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Lås panelerna</translation>
     </message>
     <message>
         <source>Disable auto resistance</source>
@@ -4782,10 +4736,6 @@ Nej: QZ behåller den som löpband och frågar inte igen (du kan fortfarande vä
         <translation>Anslut till Intervals.icu</translation>
     </message>
     <message>
-        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
-        <translation>QDomyos-Zwift – brygga för träningsredskap</translation>
-    </message>
-    <message>
         <source>Workout</source>
         <translation>Träning</translation>
     </message>
@@ -4796,6 +4746,28 @@ Nej: QZ behåller den som löpband och frågar inte igen (du kan fortfarande vä
     <message>
         <source>Services</source>
         <translation>Tjänster</translation>
+    </message>
+    <message>
+        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
+        <translation>QDomyos-Zwift – brygga för träningsredskap</translation>
+    </message>
+    <message>
+        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
+        <translation>Kom ihåg att spara profilen ”%1” om du vill behålla ändringarna i den.</translation>
+    </message>
+    <message>
+        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
+No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
+        <translation>Ja: QZ aktiverar ”Fit Plus-cykel” och stängs. Öppna QZ igen om du vill ansluta till enheten som cykel.
+Nej: QZ behåller den som löpband och frågar inte igen (du kan fortfarande välja cykel manuellt: ”Fit Plus-cykel” i Alternativ för Fitplus-cykel).</translation>
+    </message>
+    <message>
+        <source>Press back again to exit</source>
+        <translation>Tryck på Bakåt igen för att avsluta</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation type="vanished">Av</translation>
     </message>
     <message>
         <source>Camera Cutout</source>
@@ -4840,6 +4812,92 @@ Vill du leta efter dem?
 Tillåt åtkomst till QZ-mappen i nästa fönster.</translation>
     </message>
     <message>
+        <source>Restart now?</source>
+        <translation>Starta om nu?</translation>
+    </message>
+    <message>
+        <source>This FitShow device also reports bike data. Is it a bike?</source>
+        <translation>Den här FitShow-enheten skickar även cykeldata. Är det en cykel?</translation>
+    </message>
+    <message>
+        <source>Garmin FTP Update</source>
+        <translation>FTP-uppdatering från Garmin</translation>
+    </message>
+    <message>
+        <source>Clipboard Workout</source>
+        <translation>Träningspass från Urklipp</translation>
+    </message>
+    <message>
+        <source>Workout found in clipboard:
+%1
+
+Do you want to open the workout preview?</source>
+        <translation>Träningspass hittades i Urklipp:
+%1
+
+Vill du öppna förhandsvisningen av passet?</translation>
+    </message>
+    <message>
+        <source>The clipboard workout has ended.
+
+Do you want to delete the file?</source>
+        <translation>Träningspasset från Urklipp har avslutats.
+
+Vill du ta bort filen?</translation>
+    </message>
+    <message>
+        <source>Echelon Unlock</source>
+        <translation>Upplåsning av Echelon</translation>
+    </message>
+    <message>
+        <source>The bike has been unlocked and cadence is flowing.
+
+Do you want to switch to the classic Bluetooth bridge for this session?</source>
+        <translation>Cykeln är upplåst och kadensen registreras.
+
+Vill du byta till den klassiska virtuella Bluetooth-enheten för den här sessionen?</translation>
+    </message>
+    <message>
+        <source>Echelon Locked Bike</source>
+        <translation>Echelon-låst cykel</translation>
+    </message>
+    <message>
+        <source>Your bike is locked by Echelon, but QZ can unlock it.
+
+</source>
+        <translation>Cykeln är låst av Echelon, men QZ kan låsa upp den.
+
+</translation>
+    </message>
+    <message>
+        <source>Enable Virtual Echelon in the experimental settings and restart qz, then open the official Echelon app on a separate device and connect to the bike once.
+
+</source>
+        <translation>Aktivera Virtuell Echelon under Experimentella funktioner och starta om QZ. Öppna sedan den officiella Echelon-appen på en annan enhet och anslut till cykeln en gång.
+
+</translation>
+    </message>
+    <message>
+        <source>After initialization, return to QZ and everything will work normally.
+
+</source>
+        <translation>När initieringen är klar går du tillbaka till QZ, så fungerar allt som vanligt.
+
+</translation>
+    </message>
+    <message>
+        <source>You have to repeat this for each session, would you like to enable the Virtual Echelon setting now for this?</source>
+        <translation>Du måste upprepa detta för varje session. Vill du aktivera inställningen Virtuell Echelon nu?</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>Ja</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>Nej</translation>
+    </message>
+    <message>
         <source>Connection lost in the background</source>
         <translation>Anslutningen bröts i bakgrunden</translation>
     </message>
@@ -4868,6 +4926,18 @@ Tillåt åtkomst till QZ-mappen i nästa fönster.</translation>
         <translation>Fråga inte igen</translation>
     </message>
     <message>
+        <source>Auto Resistance enabled</source>
+        <translation>Automatiskt motstånd på</translation>
+    </message>
+    <message>
+        <source>Auto Resistance disabled</source>
+        <translation>Automatiskt motstånd av</translation>
+    </message>
+    <message>
+        <source>Please choose a file</source>
+        <translation>Välj en fil</translation>
+    </message>
+    <message>
         <source>Wahoo Virtual Gears</source>
         <translation>Virtuella växlar för Wahoo</translation>
     </message>
@@ -4882,6 +4952,10 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
 Vill du tillåta att QZ ändrar värdet?
 
 ”Nej”: QZ slår på ”Utan hjuldiameterprotokoll” (Inställningar &gt; Cykelalternativ &gt; Wahoo-alternativ), och virtuella växlar fungerar via lutningen. Med ”Ja” kan du ångra det senare på samma ställe: slå på det alternativet och tryck, med din smart trainer ansluten, på ”Återställ standardinställning på smart trainer”.</translation>
+    </message>
+    <message>
+        <source>QZ is closing...</source>
+        <translation>QZ stängs…</translation>
     </message>
 </context>
 <context>
@@ -4922,6 +4996,10 @@ Vill du tillåta att QZ ändrar värdet?
         <translation>Vill du ta bort profilen?</translation>
     </message>
     <message>
+        <source>Delete</source>
+        <translation>Ta bort</translation>
+    </message>
+    <message>
         <source>Profile Saved</source>
         <translation>Profilen har sparats</translation>
     </message>
@@ -4954,22 +5032,6 @@ Vill du tillåta att QZ ändrar värdet?
         <translation>Profilnamn</translation>
     </message>
     <message>
-        <source>Save</source>
-        <translation>Spara</translation>
-    </message>
-    <message>
-        <source>Profiles</source>
-        <translation>Profiler</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Återställ filer</translation>
-    </message>
-    <message>
-        <source>Other folders</source>
-        <translation>Andra mappar</translation>
-    </message>
-    <message>
         <source>New profile</source>
         <translation>Ny profil</translation>
     </message>
@@ -4982,36 +5044,32 @@ Vill du tillåta att QZ ändrar värdet?
         <translation>Tryck på en profil för att välja den och sedan på Läs in. Håll ned för att ta bort den.</translation>
     </message>
     <message>
-        <source>Load</source>
-        <translation>Läs in</translation>
-    </message>
-    <message>
         <source>Active</source>
         <translation>Aktiv</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation>Ta bort</translation>
+        <source>Load</source>
+        <translation>Läs in</translation>
+    </message>
+    <message>
+        <source>Profiles</source>
+        <translation>Profiler</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Återställ filer</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Spara</translation>
+    </message>
+    <message>
+        <source>Other folders</source>
+        <translation>Andra mappar</translation>
     </message>
 </context>
 <context>
     <name>settings</name>
-    <message>
-        <source>Hidden on its page right now: change it here</source>
-        <translation type="vanished">Dold på sin sida just nu: ändra här</translation>
-    </message>
-    <message>
-        <source>On</source>
-        <translation>På</translation>
-    </message>
-    <message>
-        <source>Hidden on its page with the current settings</source>
-        <translation>Dold på sin sida med nuvarande inställningar</translation>
-    </message>
-    <message>
-        <source>Turn on “%1” to change this setting</source>
-        <translation>Aktivera ”%1” om du vill ändra den här inställningen.</translation>
-    </message>
     <message>
         <source>General</source>
         <translation>Allmänt</translation>
@@ -5281,28 +5339,12 @@ Vill du tillåta att QZ ändrar värdet?
         <translation>Vikt</translation>
     </message>
     <message>
-        <source>lbs</source>
-        <translation>lbs</translation>
-    </message>
-    <message>
-        <source>kg</source>
-        <translation>kg</translation>
-    </message>
-    <message>
         <source>Enter your weight in kilograms so QZ can more accurately calculate calories burned. NOTE: If you choose to use miles as the unit for distance traveled, you will be asked to enter your weight in pounds (lbs) unless you enable &apos;Use kg for weight&apos;.</source>
         <translation>Ange din vikt i kilogram så att QZ kan beräkna förbrända kalorier mer exakt. OBS! Om du väljer engelska mil som enhet för distans ska du ange vikten i pund (lbs), om du inte aktiverar ”Använd kg för vikt”.</translation>
     </message>
     <message>
         <source>Player Height</source>
         <translation>Längd</translation>
-    </message>
-    <message>
-        <source>ft/in</source>
-        <translation>ft/in</translation>
-    </message>
-    <message>
-        <source>cm</source>
-        <translation>cm</translation>
     </message>
     <message>
         <source>Invalid format! Use feet&apos;inches (e.g., 6&apos;2&quot;)</source>
@@ -5323,14 +5365,6 @@ Vill du tillåta att QZ ändrar värdet?
     <message>
         <source>Gender:</source>
         <translation>Kön:</translation>
-    </message>
-    <message>
-        <source>Male</source>
-        <translation>Man</translation>
-    </message>
-    <message>
-        <source>Female</source>
-        <translation>Kvinna</translation>
     </message>
     <message>
         <source>Select your gender so that calories burned can be more accurately calculated.</source>
@@ -5447,10 +5481,6 @@ Vill du tillåta att QZ ändrar värdet?
     <message>
         <source>Heart Belt Name:</source>
         <translation>Namn på pulsbälte:</translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translation>Av</translation>
     </message>
     <message>
         <source>Apple Watch users: leave it disabled! Just open the app on your watch</source>
@@ -5589,10 +5619,6 @@ Vill du tillåta att QZ ändrar värdet?
 0.012 = MTB</translation>
     </message>
     <message>
-        <source>Bike Weight (%1)</source>
-        <translation>Cykelvikt (%1)</translation>
-    </message>
-    <message>
         <source>Enables QZ to include the weight of your bike when calculating speed. For example, if you are competing against yourself on VZfit, adding bike weight will &apos;level the playing field&apos; against your virtual self. If you have set QZ to calculate distance in miles, enter the bike weight in pounds (lbs) unless you enable &apos;Use kg for weight&apos;. Default unit is kilograms (kgs).</source>
         <translation>Gör att QZ tar med cykelns vikt när hastigheten beräknas. Om du till exempel tävlar mot dig själv i VZfit ger cykelvikten ”lika villkor” mot ditt virtuella jag. Om QZ är inställt på distans i engelska mil anger du cykelvikten i pund (lbs), om du inte aktiverar ”Använd kg för vikt”. Standardenhet: kilogram (kg).</translation>
     </message>
@@ -5611,154 +5637,6 @@ Vill du tillåta att QZ ändrar värdet?
     <message>
         <source>Enable this setting ONLY when using Zwift in ERG (workout) Mode. QZ will communicate the target resistance (or automatically adjust your resistance if your bike has this capability) to match the target watts based on your cadence (RPM). In ERG Mode, the changes in road slope will not affect target resistance, as is the case in Simulation Mode. Default is off.</source>
         <translation>Aktivera den här inställningen ENDAST när du använder Zwift i ERG-läge (träningspass). QZ skickar målmotståndet (eller justerar motståndet automatiskt om cykeln klarar det) för att nå måleffekten vid din kadens (rpm). I ERG-läge påverkar ändringar av vägens lutning inte målmotståndet, till skillnad från simuleringsläget. Standard: av.</translation>
-    </message>
-    <message>
-        <source>OpenBikeControl</source>
-        <translation>OpenBikeControl</translation>
-    </message>
-    <message>
-        <source>Enable OpenBikeControl</source>
-        <translation>Aktivera OpenBikeControl</translation>
-    </message>
-    <message>
-        <source>OpenBikeControl enabled: Wahoo direct connect disabled.</source>
-        <translation>OpenBikeControl är på: Wahoo Direct Connect är av.</translation>
-    </message>
-    <message>
-        <source>Enable TCP server on port 21587 to send control commands using the OpenBikeControl link protocol</source>
-        <translation>Startar en TCP-server på port 21587 för att skicka styrkommandon med protokollet OpenBikeControl Link.</translation>
-    </message>
-    <message>
-        <source>Override Local Gear Changes</source>
-        <translation>Ersätt lokala växlingar</translation>
-    </message>
-    <message>
-        <source>When enabled, gear shift commands go only to OpenBikeControl clients. When disabled, they go to both OpenBikeControl clients and the local gear system</source>
-        <translation>När det här är på går växlingskommandon bara till OpenBikeControl-klienter. När det är av går de till både OpenBikeControl-klienter och det lokala växelsystemet.</translation>
-    </message>
-    <message>
-        <source>Left Controller Buttons</source>
-        <translation>Knappar på vänster reglage</translation>
-    </message>
-    <message>
-        <source>Left Up:</source>
-        <translation>Vänster upp:</translation>
-    </message>
-    <message>
-        <source>Gear Up</source>
-        <translation>Växla upp</translation>
-    </message>
-    <message>
-        <source>Gear Down</source>
-        <translation>Växla ned</translation>
-    </message>
-    <message>
-        <source>Steer Left</source>
-        <translation>Styr åt vänster</translation>
-    </message>
-    <message>
-        <source>Steer Right</source>
-        <translation>Styr åt höger</translation>
-    </message>
-    <message>
-        <source>U-Turn</source>
-        <translation>U-sväng</translation>
-    </message>
-    <message>
-        <source>Camera Angle</source>
-        <translation>Kameravinkel</translation>
-    </message>
-    <message>
-        <source>Emote</source>
-        <translation>Emote</translation>
-    </message>
-    <message>
-        <source>Tuck</source>
-        <translation>Aeroposition</translation>
-    </message>
-    <message>
-        <source>Nav Up</source>
-        <translation>Navigera uppåt</translation>
-    </message>
-    <message>
-        <source>Nav Down</source>
-        <translation>Navigera nedåt</translation>
-    </message>
-    <message>
-        <source>Nav Left</source>
-        <translation>Navigera åt vänster</translation>
-    </message>
-    <message>
-        <source>Nav Right</source>
-        <translation>Navigera åt höger</translation>
-    </message>
-    <message>
-        <source>Select/Confirm</source>
-        <translation>Välj/bekräfta</translation>
-    </message>
-    <message>
-        <source>Back/Cancel</source>
-        <translation>Tillbaka/avbryt</translation>
-    </message>
-    <message>
-        <source>Menu</source>
-        <translation>Meny</translation>
-    </message>
-    <message>
-        <source>Home</source>
-        <translation>Hem</translation>
-    </message>
-    <message>
-        <source>Left Down:</source>
-        <translation>Vänster ned:</translation>
-    </message>
-    <message>
-        <source>Left Left:</source>
-        <translation>Vänster vänster:</translation>
-    </message>
-    <message>
-        <source>Left Right:</source>
-        <translation>Vänster höger:</translation>
-    </message>
-    <message>
-        <source>Left Shoulder:</source>
-        <translation>Vänster axelknapp:</translation>
-    </message>
-    <message>
-        <source>Left Power:</source>
-        <translation>Vänster Power-knapp:</translation>
-    </message>
-    <message>
-        <source>Right Controller Buttons</source>
-        <translation>Knappar på höger reglage</translation>
-    </message>
-    <message>
-        <source>Right Y:</source>
-        <translation>Höger Y:</translation>
-    </message>
-    <message>
-        <source>Right A:</source>
-        <translation>Höger A:</translation>
-    </message>
-    <message>
-        <source>Right B:</source>
-        <translation>Höger B:</translation>
-    </message>
-    <message>
-        <source>Right Z:</source>
-        <translation>Höger Z:</translation>
-    </message>
-    <message>
-        <source>Right Shoulder:</source>
-        <translation>Höger axelknapp:</translation>
-    </message>
-    <message>
-        <source>Right Power:</source>
-        <translation>Höger Power-knapp:</translation>
-    </message>
-    <message>
-        <source>Note: Left and Right paddles are fixed to Steer Left/Right and cannot be configured</source>
-        <translation>Obs! Vänster och höger paddel är låsta till Styr åt vänster/höger och går inte att ändra.</translation>
     </message>
     <message>
         <source>Zwift Resistance Offset:</source>
@@ -5837,10 +5715,6 @@ Vill du tillåta att QZ ändrar värdet?
         <translation>Egen växeltabell</translation>
     </message>
     <message>
-        <source>Custom Inclination to Resistance Table</source>
-        <translation>Egen tabell: lutning till motstånd</translation>
-    </message>
-    <message>
         <source>Gears Offset:</source>
         <translation>Växeljustering:</translation>
     </message>
@@ -5863,18 +5737,6 @@ Vill du tillåta att QZ ändrar värdet?
     <message>
         <source>Profile:</source>
         <translation>Profil:</translation>
-    </message>
-    <message>
-        <source>Cruise</source>
-        <translation>Tur</translation>
-    </message>
-    <message>
-        <source>Climb</source>
-        <translation>Klättring</translation>
-    </message>
-    <message>
-        <source>Sprint</source>
-        <translation>Spurt</translation>
     </message>
     <message>
         <source>Cruise Profile Settings</source>
@@ -6027,10 +5889,6 @@ Vill du tillåta att QZ ändrar värdet?
     <message>
         <source>Use 0.5 resistance lvls</source>
         <translation>Använd motståndsnivåer i steg om 0.5</translation>
-    </message>
-    <message>
-        <source>Physical resistance knob controls QZ gears</source>
-        <translation>Motståndsvredet på cykeln styr QZ-växlarna</translation>
     </message>
     <message>
         <source>Hammer Racer Bike Options</source>
@@ -6194,30 +6052,6 @@ Vill du tillåta att QZ ändrar värdet?
         <translation>Alternativ för Kettler USB-cykel</translation>
     </message>
     <message>
-        <source>Baudrate:</source>
-        <translation>Baudhastighet:</translation>
-    </message>
-    <message>
-        <source>Daum Bike Options</source>
-        <translation>Alternativ för Daum-cykel</translation>
-    </message>
-    <message>
-        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
-        <translation>Serieport för klassiska Daum-ergometrar, som 8008 TRS 3. På Android med en USB-till-serieadapter använder du &apos;usb&apos;. COM1, COM2 osv. godtas som alias för sökning efter USB-adaptern, men är inte Android-portnamn. På Windows används COM1 eller COM3; på Linux/macOS sökvägen till serieenheten, t.ex. /dev/ttyUSB0.</translation>
-    </message>
-    <message>
-        <source>Resistance Polling Delay:</source>
-        <translation>Fördröjning mellan motståndsavläsningar:</translation>
-    </message>
-    <message>
-        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
-        <translation>Använder inställningen Fördröjning för lutning för att begränsa hur ofta QZ skickar uppdateringar av motstånd och effekt till Daum. Standard: 0 sekunder.</translation>
-    </message>
-    <message>
-        <source>Freebeat Bike Options</source>
-        <translation>Alternativ för Freebeat-cykel</translation>
-    </message>
-    <message>
         <source>M3i Bike Options</source>
         <translation>Alternativ för M3i-cykel</translation>
     </message>
@@ -6334,24 +6168,8 @@ Vill du tillåta att QZ ändrar värdet?
         <translation>Visa övre fältet</translation>
     </message>
     <message>
-        <source>Keep Content Clear of the Camera Cutout</source>
-        <translation>Håll innehållet borta från kamerahålet</translation>
-    </message>
-    <message>
-        <source>In landscape, keeps a margin on the camera side so the camera hole does not cover the content. Turn off to let the content extend under the camera cutout. Default is on.</source>
-        <translation>I liggande läge lämnas en marginal på kamerasidan så att kamerahålet inte täcker innehållet. Stäng av om du vill att innehållet ska gå in under kamerahålet. Standard: på.</translation>
-    </message>
-    <message>
         <source>Floating Window Type:</source>
         <translation>Typ av flytande fönster:</translation>
-    </message>
-    <message>
-        <source>Classic</source>
-        <translation>Klassisk</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation>Horisontell</translation>
     </message>
     <message>
         <source>Choose the floating window layout type. Classic uses the standard floating.htm file, while Horizontal uses the hfloating.htm file for horizontal layout.</source>
@@ -6400,18 +6218,6 @@ Vill du tillåta att QZ ändrar värdet?
     <message>
         <source>Chart Display Mode:</source>
         <translation>Diagramläge:</translation>
-    </message>
-    <message>
-        <source>Both Charts</source>
-        <translation>Båda diagrammen</translation>
-    </message>
-    <message>
-        <source>Heart Rate Only</source>
-        <translation>Bara puls</translation>
-    </message>
-    <message>
-        <source>Power Only</source>
-        <translation>Bara effekt</translation>
     </message>
     <message>
         <source>Choose which charts to display in the footer: both heart rate and power charts, only heart rate chart, or only power chart.</source>
@@ -6482,18 +6288,6 @@ Vill du tillåta att QZ ändrar värdet?
         <translation>Svårighetsgrad:</translation>
     </message>
     <message>
-        <source>lower</source>
-        <translation>nedre</translation>
-    </message>
-    <message>
-        <source>upper</source>
-        <translation>övre</translation>
-    </message>
-    <message>
-        <source>average</source>
-        <translation>medel</translation>
-    </message>
-    <message>
         <source>Typically, Peloton coaches call out a range for target incline, resistance and/or speed. Use this setting to choose the difficulty of the target QZ communicates. Difficulty level can be set to lower, upper or average. Click OK.</source>
         <translation>Peloton-instruktörer anger oftast ett intervall för mållutning, motstånd och/eller hastighet. Använd inställningen för att välja svårighetsgraden på det mål som QZ skickar. Svårighetsgraden kan vara nedre, övre eller medel. Tryck på OK.</translation>
     </message>
@@ -6516,14 +6310,6 @@ Vill du tillåta att QZ ändrar värdet?
     <message>
         <source>Walking Min Speed:</source>
         <translation>Lägsta gånghastighet:</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
     </message>
     <message>
         <source>Minimum speed for Peloton walking sessions. Set to 0 to disable. Applied to all speed targets in walking workouts.</source>
@@ -6612,14 +6398,6 @@ Vill du tillåta att QZ ändrar värdet?
     <message>
         <source>Date on Strava:</source>
         <translation>Datum på Strava:</translation>
-    </message>
-    <message>
-        <source>Before Title</source>
-        <translation>Före rubriken</translation>
-    </message>
-    <message>
-        <source>After Title</source>
-        <translation>Efter rubriken</translation>
     </message>
     <message>
         <source>Allows you to choose whether you would like the Peloton class air date to display before or after the class title on Strava.</source>
@@ -6790,14 +6568,6 @@ Vill du tillåta att QZ ändrar värdet?
         <translation>Aktiverar automatisk uppladdning av FIT-filer till Garmin Connect efter träningspass.</translation>
     </message>
     <message>
-        <source>Ask RPE / Feeling after workout</source>
-        <translation>Fråga om RPE och känsla efter passet</translation>
-    </message>
-    <message>
-        <source>Show a popup after Stop to rate perceived exertion (RPE) and how you felt; the values are saved into the FIT file and shown in Garmin Connect.</source>
-        <translation>När du har tryckt på Stoppa visas ett fönster där du kan ange upplevd ansträngning (RPE) och hur det kändes. Värdena sparas i FIT-filen och visas i Garmin Connect.</translation>
-    </message>
-    <message>
         <source>Fetch Garmin Workouts on Startup</source>
         <translation>Hämta Garmin-pass vid start</translation>
     </message>
@@ -6808,22 +6578,6 @@ Vill du tillåta att QZ ändrar värdet?
     <message>
         <source>Garmin Email:</source>
         <translation>Garmin-e-post:</translation>
-    </message>
-    <message>
-        <source>Garmin Password:</source>
-        <translation>Garmin-lösenord:</translation>
-    </message>
-    <message>
-        <source>Garmin Server:</source>
-        <translation>Garmin-server:</translation>
-    </message>
-    <message>
-        <source>Global (garmin.com)</source>
-        <translation>Global (garmin.com)</translation>
-    </message>
-    <message>
-        <source>China (garmin.cn)</source>
-        <translation>Kina (garmin.cn)</translation>
     </message>
     <message>
         <source>Test Garmin Login</source>
@@ -6900,14 +6654,6 @@ Ange den nedan:</translation>
         <translation>Aktiverar identifiering av ZWO/XML-pass som kopierats till Urklipp. Standard: av.</translation>
     </message>
     <message>
-        <source>Sound on Segment Change</source>
-        <translation>Ljud vid segmentbyte</translation>
-    </message>
-    <message>
-        <source>Play a short sound when a training program starts a new row. Default: disabled.</source>
-        <translation>Spelar upp ett kort ljud när ett träningsprogram går till en ny rad. Standard: av.</translation>
-    </message>
-    <message>
         <source>Auto Lap on Segment</source>
         <translation>Automatiskt varv per segment</translation>
     </message>
@@ -6950,22 +6696,6 @@ Ange den nedan:</translation>
     <message>
         <source>Enabling this the PID is trying to motivate yourself to always increase a little the effort trying anyway to keep you in the zone. Default: Enabled.</source>
         <translation>När detta är på försöker PID motivera dig att hela tiden öka ansträngningen lite, men ändå hålla dig kvar i zonen. Standard: på.</translation>
-    </message>
-    <message>
-        <source>PID Recovery Zone Lower Limit (%):</source>
-        <translation>PID: nedre gräns för återhämtningszon (%):</translation>
-    </message>
-    <message>
-        <source>Lower HR boundary (% of max HR) that defines the bottom of Zone 1 for &apos;Pushy&apos; mode. Below this percentage the treadmill is at the bottom of the recovery area. Default: 60.</source>
-        <translation>Nedre pulsgräns (% av maxpuls) som anger var zon 1 börjar i läget ”Bestämd”. Under den här procentsatsen är löpbandet längst ned i återhämtningsområdet. Standard: 60.</translation>
-    </message>
-    <message>
-        <source>PID Pushy Zone Limit:</source>
-        <translation>PID: zongräns för läget Bestämd:</translation>
-    </message>
-    <message>
-        <source>Fraction of zone above the target zone where &apos;Pushy&apos; mode stops pushing. 0.8 means the PID stops pushing at zone+0.8. Default: 0.8.</source>
-        <translation>Andel av zonen ovanför målzonen där läget ”Bestämd” slutar pressa på. 0.8 betyder att PID slutar pressa på vid zon+0.8. Standard: 0.8.</translation>
     </message>
     <message>
         <source>PID Ignore Inclination</source>
@@ -7016,40 +6746,8 @@ Ange den nedan:</translation>
         <translation>Se Tempo för 1&#xa0;engelsk mil ovan; samma sak, men för maratondistansen i stället för 1&#xa0;engelsk mil.</translation>
     </message>
     <message>
-        <source>Warmup Speed (pace):</source>
-        <translation>Uppvärmningshastighet (tempo):</translation>
-    </message>
-    <message>
-        <source>Cooldown Speed (pace):</source>
-        <translation>Nedvarvningshastighet (tempo):</translation>
-    </message>
-    <message>
-        <source>Rest Speed (pace):</source>
-        <translation>Vilohastighet (tempo):</translation>
-    </message>
-    <message>
         <source>Default Pace:</source>
         <translation>Standardtempo:</translation>
-    </message>
-    <message>
-        <source>1 mile</source>
-        <translation>1 engelsk mil</translation>
-    </message>
-    <message>
-        <source>Half Marathon</source>
-        <translation>Halvmaraton</translation>
-    </message>
-    <message>
-        <source>Marathon</source>
-        <translation>Maraton</translation>
-    </message>
-    <message>
-        <source>5 km</source>
-        <translation>5 km</translation>
-    </message>
-    <message>
-        <source>10 km</source>
-        <translation>10 km</translation>
     </message>
     <message>
         <source>Select the default Pace to be used when the ZWO file does not indicate a precise pace.</source>
@@ -7124,14 +6822,6 @@ Ange den nedan:</translation>
         <translation>Slå på om du vill att QZ ska styra löpbandets hastighet, till exempel under Peloton-klasser, utifrån instruktörens hastighetsanvisningar. Hastigheten ligger på nivån nedre, övre eller medel beroende på inställningen Peloton-alternativ &gt; Svårighetsgrad. Standard: av.</translation>
     </message>
     <message>
-        <source>Force Running Activity</source>
-        <translation>Spara alltid som löpning</translation>
-    </message>
-    <message>
-        <source>Turn this on to write treadmill FIT files as running activities even when the average speed is below 6.5 km/h. This can help Garmin calculate Training Effect for high-incline treadmill workouts. Default is off.</source>
-        <translation>Slå på om du vill att löpbandets FIT-filer sparas som löpaktiviteter även när medelhastigheten är under 6.5&#xa0;km/h. Det kan hjälpa Garmin att beräkna Training Effect för löpbandspass med stor lutning. Standard: av.</translation>
-    </message>
-    <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
         <translation>Slå på om du vill att QZ ska gå till pausläge vid start när du använder ett löpband. Gäller endast löpband. Standard: av.</translation>
     </message>
@@ -7142,14 +6832,6 @@ Ange den nedan:</translation>
     <message>
         <source>Turn this on to read the distance directly from the treadmill instead of calculating it from speed. Some treadmills report distance more accurately than the speed-based calculation. Default is off.</source>
         <translation>Slå på om du vill läsa distansen direkt från löpbandet i stället för att beräkna den utifrån hastigheten. Vissa löpband rapporterar distansen mer exakt än beräkningen utifrån hastighet. Standard: av.</translation>
-    </message>
-    <message>
-        <source>Direct Distance: add only the increase</source>
-        <translation>Direkt distans: lägg bara till ökningen</translation>
-    </message>
-    <message>
-        <source>Works with Direct Distance from Treadmill. Turn this on if the distance counter of your treadmill keeps running between workouts or starts again from 0 when the treadmill is switched off: only the distance walked during the workout is added, not what the treadmill counted before QZ connected. Default is off.</source>
-        <translation>Fungerar med Distans direkt från löpbandet. Slå på om löpbandets distansräknare fortsätter mellan passen eller börjar om från 0 när löpbandet stängs av. Då läggs bara distansen från passet till, inte det som löpbandet räknat innan QZ anslöt. Standard: av.</translation>
     </message>
     <message>
         <source>Difficulty offset based</source>
@@ -7265,34 +6947,6 @@ Ange den nedan:</translation>
         <translation>Lutning</translation>
     </message>
     <message>
-        <source>Tile size:</source>
-        <translation>Panelstorlek:</translation>
-    </message>
-    <message>
-        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
-        <translation>Ändrar storleken på panelerna som visar dina mätvärden. Standard: 100&#xa0;%. Välj en lägre procentsats om du vill få plats med fler paneler på skärmen. Välj en procentsats över 100&#xa0;% om du vill göra dem större. Ange inte procenttecknet. Hette tidigare ”UI Zoom”.</translation>
-    </message>
-    <message>
-        <source>Use System Text Size</source>
-        <translation>Använd systemets textstorlek</translation>
-    </message>
-    <message>
-        <source>The text of the app follows the text size of the phone or tablet settings, up to 150%. Turn off to choose the size below, for example for a screen you read from a distance during a workout. Default is on.</source>
-        <translation>Appens text följer textstorleken i telefonens eller surfplattans inställningar, upp till 150&#xa0;%. Stäng av om du vill välja storleken nedan, till exempel för en skärm som du läser på avstånd under passet. Standard: på.</translation>
-    </message>
-    <message>
-        <source>Text size:</source>
-        <translation>Textstorlek:</translation>
-    </message>
-    <message>
-        <source>Size of the text of the app (settings, menus, dialogs), in percent, from 80 to 170. The default is 100. The tiles keep their own size setting.</source>
-        <translation>Storlek på appens text (inställningar, menyer, dialogrutor) i procent, från 80 till 170. Standard: 100. Panelerna har en egen storleksinställning.</translation>
-    </message>
-    <message>
-        <source>Speed</source>
-        <translation>Hastighet</translation>
-    </message>
-    <message>
         <source>Echelon Options</source>
         <translation>Echelon-alternativ</translation>
     </message>
@@ -7309,112 +6963,8 @@ Ange den nedan:</translation>
         <translation>Hanterar de fysiska knapparna Start/Paus/Stopp på löpbandet.</translation>
     </message>
     <message>
-        <source>Life Fitness Options</source>
-        <translation>Life Fitness-alternativ</translation>
-    </message>
-    <message>
-        <source>Life Fitness username/email:</source>
-        <translation>Life Fitness-användarnamn/e-post:</translation>
-    </message>
-    <message>
-        <source>Life Fitness password:</source>
-        <translation>Life Fitness-lösenord:</translation>
-    </message>
-    <message>
-        <source>Life Fitness guest login (experimental)</source>
-        <translation>Life Fitness-gästinloggning (experimentell)</translation>
-    </message>
-    <message>
-        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
-        <translation>Använder en syntetisk Life Fitness-profil utan konto. När det här är på ignoreras användarnamn, lösenord och sparade kontouppgifter. Använd bara för att testa gästinloggning som stöds.</translation>
-    </message>
-    <message>
-        <source>Workout History Charts</source>
-        <translation>Diagram i träningshistoriken</translation>
-    </message>
-    <message>
-        <source>Heart Rate</source>
-        <translation>Puls</translation>
-    </message>
-    <message>
-        <source>Resistance vs Target Resistance</source>
-        <translation>Motstånd och målmotstånd</translation>
-    </message>
-    <message>
-        <source>Peloton Resistance</source>
-        <translation>Peloton-motstånd</translation>
-    </message>
-    <message>
-        <source>Cadence</source>
-        <translation>Kadens</translation>
-    </message>
-    <message>
-        <source>Power Distribution</source>
-        <translation>Effektfördelning</translation>
-    </message>
-    <message>
-        <source>Speed and Inclination</source>
-        <translation>Hastighet och lutning</translation>
-    </message>
-    <message>
-        <source>Move the charts up or down to choose their order in Workout History. Changes are saved automatically.</source>
-        <translation>Flytta diagrammen uppåt eller nedåt om du vill välja deras ordning i träningshistoriken. Ändringar sparas automatiskt.</translation>
-    </message>
-    <message>
-        <source>Move up</source>
-        <translation>Flytta upp</translation>
-    </message>
-    <message>
-        <source>Move down</source>
-        <translation>Flytta ned</translation>
-    </message>
-    <message>
-        <source>Restore default order</source>
-        <translation>Återställ standardordning</translation>
-    </message>
-    <message>
-        <source>Moovio Options</source>
-        <translation>Moovio-alternativ</translation>
-    </message>
-    <message>
-        <source>Lynx Konect 2.0</source>
-        <translation>Lynx Konect 2.0</translation>
-    </message>
-    <message>
-        <source>Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.</source>
-        <translation>Aktiverar standardkommandot FTMS Request Control för Moovio Lynx Konect 2.0-löpband. Standard: av.</translation>
-    </message>
-    <message>
-        <source>Cadence Gain</source>
-        <translation>Kadensfaktor</translation>
-    </message>
-    <message>
-        <source>Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.</source>
-        <translation>Multiplikator som bara används på tagfrekvensen som den virtuella roddmaskinen skickar. Standard: 1.0. Använd 0.25 om du vill omvandla BikeERG-RPM till den tagfrekvens som EXR begär.</translation>
-    </message>
-    <message>
-        <source>Offset added after the gain. Default is 0.0. QZ&apos;s internal cadence display and workout metrics remain unchanged.</source>
-        <translation>Justering som läggs till efter faktorn. Standard: 0.0. Kadensen som visas i QZ och passets mätvärden ändras inte.</translation>
-    </message>
-    <message>
-        <source>iOS Background Keep Alive</source>
-        <translation>Bakgrundsläge för iOS</translation>
-    </message>
-    <message>
-        <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
-        <translation>Endast iOS. Håller QZ igång när skärmen är av eller QZ körs i bakgrunden, så att Bluetooth-anslutningar och passets timrar inte fryser. Det sker med ett tyst ljudspår som mixas med din musik, så det du lyssnar på avbryts inte. Aktivera om du behöver träna med låst skärm eller med QZ i bakgrunden. Standard: av.</translation>
-    </message>
-    <message>
         <source>RunnerT Options</source>
         <translation>RunnerT-alternativ</translation>
-    </message>
-    <message>
-        <source>Inclination Filter (%):</source>
-        <translation>Lutningsfilter (%):</translation>
-    </message>
-    <message>
-        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
-        <translation>Vid GPX-träning ignoreras lutningsändringar som är mindre än detta värde. Ett nytt kommando skickas först när skillnaden från senast skickat värde når den angivna tröskeln. Standard: 0 (inaktiverat).</translation>
     </message>
     <message>
         <source>Domyos Treadmill Options</source>
@@ -7589,10 +7139,6 @@ Ange den nedan:</translation>
         <translation>JTX Fitness Sprint-löpband</translation>
     </message>
     <message>
-        <source>Flow Fitness Runner DTM2000i</source>
-        <translation>Flow Fitness Runner DTM2000i</translation>
-    </message>
-    <message>
         <source>Reebok FR30 Treadmill</source>
         <translation>Reebok FR30-löpband</translation>
     </message>
@@ -7647,10 +7193,6 @@ Ange den nedan:</translation>
     <message>
         <source>Allows you to force QZ to connect to your FTMS Rower. If you are in doubt, leave this Disabled and send an email to the QZ support. Default is “Disabled.”</source>
         <translation>Gör att QZ ansluter till din FTMS-roddmaskin. Om du är osäker låter du inställningen vara av och skickar ett e-postmeddelande till QZ-supporten. Standard: ”Av”.</translation>
-    </message>
-    <message>
-        <source>WaterRower USB</source>
-        <translation>WaterRower USB</translation>
     </message>
     <message>
         <source>Proform/Nordictrack Rower Options</source>
@@ -7789,14 +7331,6 @@ Ange den nedan:</translation>
         <translation>Strava-uppladdning:</translation>
     </message>
     <message>
-        <source>Always</source>
-        <translation>Alltid</translation>
-    </message>
-    <message>
-        <source>Request</source>
-        <translation>Fråga</translation>
-    </message>
-    <message>
         <source>Suffix activity:</source>
         <translation>Aktivitetssuffix:</translation>
     </message>
@@ -7855,18 +7389,6 @@ Ange den nedan:</translation>
     <message>
         <source>Power Averaging Mode:</source>
         <translation>Läge för medeleffekt:</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation>Av</translation>
-    </message>
-    <message>
-        <source>3 seconds</source>
-        <translation>3 sekunder</translation>
-    </message>
-    <message>
-        <source>5 seconds</source>
-        <translation>5 sekunder</translation>
     </message>
     <message>
         <source>If the power output/watts your equipment sends to QZ is quite variable, this setting will result in smoother Power Zone graphs. This is also helpful for use with Power Meter Pedals. Uses harmonic averaging which smooths power spikes better than arithmetic averaging. If any reading is 0, power immediately becomes 0. Default is Off.
@@ -7957,20 +7479,16 @@ VIKTIGT:
         <translation>För smart trainers: använd motstånd i stället för lutning. Det hjälper om du inte vill att Wahoo Climb eller liknande ändrar lutningen när du växlar. Standard: av.</translation>
     </message>
     <message>
+        <source>Resistance Compatibility</source>
+        <translation>Motståndskompatibilitet</translation>
+    </message>
+    <message>
+        <source>Enable this if changing resistance in QZ only sets the bike to level 1 or maximum. Sends FTMS resistance multiplied by 10. Default: disabled.</source>
+        <translation>Aktivera om ändring av motstånd i QZ bara ställer in cykeln på nivå 1 eller max. Skickar FTMS-motståndet multiplicerat med 10. Standard: avaktiverad.</translation>
+    </message>
+    <message>
         <source>AutoLap on Distance:</source>
         <translation>Automatiskt varv efter distans:</translation>
-    </message>
-    <message>
-        <source>You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).</source>
-        <translation>Du kan lägga in automatiska varv i FIT-filen utifrån distans. Enhet: %1. Standard: 0 (av).</translation>
-    </message>
-    <message>
-        <source>Mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>KM</source>
-        <translation>km</translation>
     </message>
     <message>
         <source>Inclination Delay:</source>
@@ -8091,22 +7609,6 @@ VIKTIGT:
     <message>
         <source>If you have a Bluetooth treadmill and also a Stryd device connected to QZ and you want to use the speed from the stryd instead of the speed of the treadmill, enable this. Default: disabled.</source>
         <translation>Aktivera det här om du har ett Bluetooth-löpband och en Stryd-enhet anslutna till QZ och vill använda hastigheten från Stryd i stället för löpbandets hastighet. Standard: av.</translation>
-    </message>
-    <message>
-        <source>Runn/Stryd closed-loop treadmill speed correction</source>
-        <translation>Hastighetskorrigering av löpband med Runn/Stryd (sluten reglering)</translation>
-    </message>
-    <message>
-        <source>Experimental: gradually correct QZ-controlled treadmill speed using Runn/Stryd feedback, when the driver provides independent machine speed measurements. Requires &apos;Use speed from the power sensor&apos;. Disabled by default.</source>
-        <translation>Experimentellt: korrigerar gradvis den löpbandshastighet som QZ styr utifrån återkoppling från Runn/Stryd, när drivrutinen ger egna hastighetsmätningar från löpbandet. Kräver ”Använd hastighet från effektsensorn”. Standard: av.</translation>
-    </message>
-    <message>
-        <source>Power sensor speed correction threshold (%):</source>
-        <translation>Tröskel för hastighetskorrigering med effektsensor (%):</translation>
-    </message>
-    <message>
-        <source>Maximum allowed difference between power sensor speed and treadmill speed before QZ stops applying the relative correction. Default: 20%.</source>
-        <translation>Största tillåtna skillnad mellan hastigheten från effektsensorn och löpbandets hastighet innan QZ slutar använda den relativa korrigeringen. Standard: 20&#xa0;%.</translation>
     </message>
     <message>
         <source>Use inclination from the power sensor</source>
@@ -8261,18 +7763,6 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Läge:</translation>
     </message>
     <message>
-        <source>Heart</source>
-        <translation>Puls</translation>
-    </message>
-    <message>
-        <source>Power</source>
-        <translation>Effekt</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Manuellt</translation>
-    </message>
-    <message>
         <source>Min. value (0-100):</source>
         <translation>Lägsta värde (0–100):</translation>
     </message>
@@ -8359,46 +7849,6 @@ Standard: A = -0.96, B = 1.33</translation>
     <message>
         <source>Use the zwift gears table instead of the QZ classic gears algorithm.  Default is off.</source>
         <translation>Använder växeltabellen från Zwift i stället för den klassiska växelalgoritmen i QZ. Standard: av.</translation>
-    </message>
-    <message>
-        <source>Gear Controls</source>
-        <translation>Växelreglage</translation>
-    </message>
-    <message>
-        <source>Assign each physical button to Gear Up, Gear Down or Disabled. Applies before the Swap sides option above.</source>
-        <translation>Välj Växla upp, Växla ned eller Av för varje fysisk knapp. Används före alternativet Byt sida ovan.</translation>
-    </message>
-    <message>
-        <source>Left Shifter Up (LS1):</source>
-        <translation>Vänster växelreglage upp (LS1):</translation>
-    </message>
-    <message>
-        <source>Left Shifter Down (LS2):</source>
-        <translation>Vänster växelreglage ned (LS2):</translation>
-    </message>
-    <message>
-        <source>Right Shifter Up (RS1):</source>
-        <translation>Höger växelreglage upp (RS1):</translation>
-    </message>
-    <message>
-        <source>Right Shifter Down (RS2):</source>
-        <translation>Höger växelreglage ned (RS2):</translation>
-    </message>
-    <message>
-        <source>Left Paddle (ZL):</source>
-        <translation>Vänster paddel (ZL):</translation>
-    </message>
-    <message>
-        <source>Right Paddle (ZR):</source>
-        <translation>Höger paddel (ZR):</translation>
-    </message>
-    <message>
-        <source>Power Up (LB):</source>
-        <translation>Power Up (LB):</translation>
-    </message>
-    <message>
-        <source>Ride On (RB):</source>
-        <translation>Ride On (RB):</translation>
     </message>
     <message>
         <source>Default: 200ms. Lower it if you want to improve the gear reactivity. Warning: lowering this value will cause more power used on the QZ device</source>
@@ -8531,14 +7981,6 @@ Standard: A = -0.96, B = 1.33</translation>
     <message>
         <source>Enables a virtual Bluetooth bridge to the iFit App. This setting requires that at least one device be Android. For example, this setting does NOT work with QZ on iOS and iFit to iOS, but DOES work with QZ on iOS and iFit to Android. On Android remember to rename your device into I_EL into the android settings and reboot your device.</source>
         <translation>Aktiverar en virtuell Bluetooth-enhet för iFit-appen. Inställningen kräver att minst en av enheterna har Android. Den fungerar till exempel INTE med QZ på iOS och iFit på iOS, men FUNGERAR med QZ på iOS och iFit på Android. På Android: kom ihåg att byta namn på enheten till I_EL i Android-inställningarna och starta om den.</translation>
-    </message>
-    <message>
-        <source>Virtual Tacx</source>
-        <translation>Virtuell Tacx</translation>
-    </message>
-    <message>
-        <source>Enables a virtual bluetooth bridge to the Tacx App.</source>
-        <translation>Aktiverar en virtuell Bluetooth-enhet för Tacx-appen.</translation>
     </message>
     <message>
         <source>Wahoo direct connect</source>
@@ -8878,6 +8320,354 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>QZ öppnar FS-enheter som löpband om inte ”Fit Plus-cykel” är på. När en FS-enhet även skickar cykeldata frågar QZ om det är en cykel. Om du svarar Nej stängs frågan av. Visas inte på inställningssidan.</translation>
     </message>
     <message>
+        <source>Hidden on its page right now: change it here</source>
+        <translation type="vanished">Dold på sin sida just nu: ändra här</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>På</translation>
+    </message>
+    <message>
+        <source>Hidden on its page with the current settings</source>
+        <translation>Dold på sin sida med nuvarande inställningar</translation>
+    </message>
+    <message>
+        <source>Turn on “%1” to change this setting</source>
+        <translation>Aktivera ”%1” om du vill ändra den här inställningen.</translation>
+    </message>
+    <message>
+        <source>Male</source>
+        <translation>Man</translation>
+    </message>
+    <message>
+        <source>Female</source>
+        <translation>Kvinna</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Av</translation>
+    </message>
+    <message>
+        <source>Bike Weight (%1)</source>
+        <translation>Cykelvikt (%1)</translation>
+    </message>
+    <message>
+        <source>OpenBikeControl</source>
+        <translation>OpenBikeControl</translation>
+    </message>
+    <message>
+        <source>Enable OpenBikeControl</source>
+        <translation>Aktivera OpenBikeControl</translation>
+    </message>
+    <message>
+        <source>OpenBikeControl enabled: Wahoo direct connect disabled.</source>
+        <translation>OpenBikeControl är på: Wahoo Direct Connect är av.</translation>
+    </message>
+    <message>
+        <source>Enable TCP server on port 21587 to send control commands using the OpenBikeControl link protocol</source>
+        <translation>Startar en TCP-server på port 21587 för att skicka styrkommandon med protokollet OpenBikeControl Link.</translation>
+    </message>
+    <message>
+        <source>Override Local Gear Changes</source>
+        <translation>Ersätt lokala växlingar</translation>
+    </message>
+    <message>
+        <source>When enabled, gear shift commands go only to OpenBikeControl clients. When disabled, they go to both OpenBikeControl clients and the local gear system</source>
+        <translation>När det här är på går växlingskommandon bara till OpenBikeControl-klienter. När det är av går de till både OpenBikeControl-klienter och det lokala växelsystemet.</translation>
+    </message>
+    <message>
+        <source>Left Controller Buttons</source>
+        <translation>Knappar på vänster reglage</translation>
+    </message>
+    <message>
+        <source>Left Up:</source>
+        <translation>Vänster upp:</translation>
+    </message>
+    <message>
+        <source>Gear Up</source>
+        <translation>Växla upp</translation>
+    </message>
+    <message>
+        <source>Gear Down</source>
+        <translation>Växla ned</translation>
+    </message>
+    <message>
+        <source>Steer Left</source>
+        <translation>Styr åt vänster</translation>
+    </message>
+    <message>
+        <source>Steer Right</source>
+        <translation>Styr åt höger</translation>
+    </message>
+    <message>
+        <source>U-Turn</source>
+        <translation>U-sväng</translation>
+    </message>
+    <message>
+        <source>Camera Angle</source>
+        <translation>Kameravinkel</translation>
+    </message>
+    <message>
+        <source>Emote</source>
+        <translation>Emote</translation>
+    </message>
+    <message>
+        <source>Tuck</source>
+        <translation>Aeroposition</translation>
+    </message>
+    <message>
+        <source>Nav Up</source>
+        <translation>Navigera uppåt</translation>
+    </message>
+    <message>
+        <source>Nav Down</source>
+        <translation>Navigera nedåt</translation>
+    </message>
+    <message>
+        <source>Nav Left</source>
+        <translation>Navigera åt vänster</translation>
+    </message>
+    <message>
+        <source>Nav Right</source>
+        <translation>Navigera åt höger</translation>
+    </message>
+    <message>
+        <source>Select/Confirm</source>
+        <translation>Välj/bekräfta</translation>
+    </message>
+    <message>
+        <source>Back/Cancel</source>
+        <translation>Tillbaka/avbryt</translation>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation>Meny</translation>
+    </message>
+    <message>
+        <source>Home</source>
+        <translation>Hem</translation>
+    </message>
+    <message>
+        <source>Left Down:</source>
+        <translation>Vänster ned:</translation>
+    </message>
+    <message>
+        <source>Left Left:</source>
+        <translation>Vänster vänster:</translation>
+    </message>
+    <message>
+        <source>Left Right:</source>
+        <translation>Vänster höger:</translation>
+    </message>
+    <message>
+        <source>Left Shoulder:</source>
+        <translation>Vänster axelknapp:</translation>
+    </message>
+    <message>
+        <source>Left Power:</source>
+        <translation>Vänster Power-knapp:</translation>
+    </message>
+    <message>
+        <source>Right Controller Buttons</source>
+        <translation>Knappar på höger reglage</translation>
+    </message>
+    <message>
+        <source>Right Y:</source>
+        <translation>Höger Y:</translation>
+    </message>
+    <message>
+        <source>Right A:</source>
+        <translation>Höger A:</translation>
+    </message>
+    <message>
+        <source>Right B:</source>
+        <translation>Höger B:</translation>
+    </message>
+    <message>
+        <source>Right Z:</source>
+        <translation>Höger Z:</translation>
+    </message>
+    <message>
+        <source>Right Shoulder:</source>
+        <translation>Höger axelknapp:</translation>
+    </message>
+    <message>
+        <source>Right Power:</source>
+        <translation>Höger Power-knapp:</translation>
+    </message>
+    <message>
+        <source>Note: Left and Right paddles are fixed to Steer Left/Right and cannot be configured</source>
+        <translation>Obs! Vänster och höger paddel är låsta till Styr åt vänster/höger och går inte att ändra.</translation>
+    </message>
+    <message>
+        <source>Custom Inclination to Resistance Table</source>
+        <translation>Egen tabell: lutning till motstånd</translation>
+    </message>
+    <message>
+        <source>Cruise</source>
+        <translation>Tur</translation>
+    </message>
+    <message>
+        <source>Climb</source>
+        <translation>Klättring</translation>
+    </message>
+    <message>
+        <source>Sprint</source>
+        <translation>Spurt</translation>
+    </message>
+    <message>
+        <source>Physical resistance knob controls QZ gears</source>
+        <translation>Motståndsvredet på cykeln styr QZ-växlarna</translation>
+    </message>
+    <message>
+        <source>Baudrate:</source>
+        <translation>Baudhastighet:</translation>
+    </message>
+    <message>
+        <source>Freebeat Bike Options</source>
+        <translation>Alternativ för Freebeat-cykel</translation>
+    </message>
+    <message>
+        <source>Keep Content Clear of the Camera Cutout</source>
+        <translation>Håll innehållet borta från kamerahålet</translation>
+    </message>
+    <message>
+        <source>In landscape, keeps a margin on the camera side so the camera hole does not cover the content. Turn off to let the content extend under the camera cutout. Default is on.</source>
+        <translation>I liggande läge lämnas en marginal på kamerasidan så att kamerahålet inte täcker innehållet. Stäng av om du vill att innehållet ska gå in under kamerahålet. Standard: på.</translation>
+    </message>
+    <message>
+        <source>Classic</source>
+        <translation>Klassisk</translation>
+    </message>
+    <message>
+        <source>Horizontal</source>
+        <translation>Horisontell</translation>
+    </message>
+    <message>
+        <source>Both Charts</source>
+        <translation>Båda diagrammen</translation>
+    </message>
+    <message>
+        <source>Heart Rate Only</source>
+        <translation>Bara puls</translation>
+    </message>
+    <message>
+        <source>Power Only</source>
+        <translation>Bara effekt</translation>
+    </message>
+    <message>
+        <source>lower</source>
+        <translation>nedre</translation>
+    </message>
+    <message>
+        <source>upper</source>
+        <translation>övre</translation>
+    </message>
+    <message>
+        <source>average</source>
+        <translation>medel</translation>
+    </message>
+    <message>
+        <source>Before Title</source>
+        <translation>Före rubriken</translation>
+    </message>
+    <message>
+        <source>After Title</source>
+        <translation>Efter rubriken</translation>
+    </message>
+    <message>
+        <source>Ask RPE / Feeling after workout</source>
+        <translation>Fråga om RPE och känsla efter passet</translation>
+    </message>
+    <message>
+        <source>Show a popup after Stop to rate perceived exertion (RPE) and how you felt; the values are saved into the FIT file and shown in Garmin Connect.</source>
+        <translation>När du har tryckt på Stoppa visas ett fönster där du kan ange upplevd ansträngning (RPE) och hur det kändes. Värdena sparas i FIT-filen och visas i Garmin Connect.</translation>
+    </message>
+    <message>
+        <source>Garmin Password:</source>
+        <translation>Garmin-lösenord:</translation>
+    </message>
+    <message>
+        <source>Garmin Server:</source>
+        <translation>Garmin-server:</translation>
+    </message>
+    <message>
+        <source>Global (garmin.com)</source>
+        <translation>Global (garmin.com)</translation>
+    </message>
+    <message>
+        <source>China (garmin.cn)</source>
+        <translation>Kina (garmin.cn)</translation>
+    </message>
+    <message>
+        <source>Sound on Segment Change</source>
+        <translation>Ljud vid segmentbyte</translation>
+    </message>
+    <message>
+        <source>Play a short sound when a training program starts a new row. Default: disabled.</source>
+        <translation>Spelar upp ett kort ljud när ett träningsprogram går till en ny rad. Standard: av.</translation>
+    </message>
+    <message>
+        <source>PID Recovery Zone Lower Limit (%):</source>
+        <translation>PID: nedre gräns för återhämtningszon (%):</translation>
+    </message>
+    <message>
+        <source>Lower HR boundary (% of max HR) that defines the bottom of Zone 1 for &apos;Pushy&apos; mode. Below this percentage the treadmill is at the bottom of the recovery area. Default: 60.</source>
+        <translation>Nedre pulsgräns (% av maxpuls) som anger var zon 1 börjar i läget ”Bestämd”. Under den här procentsatsen är löpbandet längst ned i återhämtningsområdet. Standard: 60.</translation>
+    </message>
+    <message>
+        <source>PID Pushy Zone Limit:</source>
+        <translation>PID: zongräns för läget Bestämd:</translation>
+    </message>
+    <message>
+        <source>Fraction of zone above the target zone where &apos;Pushy&apos; mode stops pushing. 0.8 means the PID stops pushing at zone+0.8. Default: 0.8.</source>
+        <translation>Andel av zonen ovanför målzonen där läget ”Bestämd” slutar pressa på. 0.8 betyder att PID slutar pressa på vid zon+0.8. Standard: 0.8.</translation>
+    </message>
+    <message>
+        <source>Warmup Speed (pace):</source>
+        <translation>Uppvärmningshastighet (tempo):</translation>
+    </message>
+    <message>
+        <source>Cooldown Speed (pace):</source>
+        <translation>Nedvarvningshastighet (tempo):</translation>
+    </message>
+    <message>
+        <source>Rest Speed (pace):</source>
+        <translation>Vilohastighet (tempo):</translation>
+    </message>
+    <message>
+        <source>1 mile</source>
+        <translation>1 engelsk mil</translation>
+    </message>
+    <message>
+        <source>Half Marathon</source>
+        <translation>Halvmaraton</translation>
+    </message>
+    <message>
+        <source>Marathon</source>
+        <translation>Maraton</translation>
+    </message>
+    <message>
+        <source>Force Running Activity</source>
+        <translation>Spara alltid som löpning</translation>
+    </message>
+    <message>
+        <source>Turn this on to write treadmill FIT files as running activities even when the average speed is below 6.5 km/h. This can help Garmin calculate Training Effect for high-incline treadmill workouts. Default is off.</source>
+        <translation>Slå på om du vill att löpbandets FIT-filer sparas som löpaktiviteter även när medelhastigheten är under 6.5&#xa0;km/h. Det kan hjälpa Garmin att beräkna Training Effect för löpbandspass med stor lutning. Standard: av.</translation>
+    </message>
+    <message>
+        <source>Pafers Rower</source>
+        <translation>Pafers-roddmaskin</translation>
+    </message>
+    <message>
+        <source>Flow Fitness Runner DTM2000i</source>
+        <translation>Flow Fitness Runner DTM2000i</translation>
+    </message>
+    <message>
+        <source>WaterRower USB</source>
+        <translation>WaterRower USB</translation>
+    </message>
+    <message>
         <source>Max Watt:</source>
         <translation>Högsta effekt:</translation>
     </message>
@@ -8886,16 +8676,312 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Begränsar effekten som QZ skickar. Ange 0 om du vill ta bort gränsen. Standard: 9999&#xa0;W.</translation>
     </message>
     <message>
+        <source>Always</source>
+        <translation>Alltid</translation>
+    </message>
+    <message>
+        <source>Request</source>
+        <translation>Fråga</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Av</translation>
+    </message>
+    <message>
+        <source>3 seconds</source>
+        <translation>3 sekunder</translation>
+    </message>
+    <message>
+        <source>5 seconds</source>
+        <translation>5 sekunder</translation>
+    </message>
+    <message>
+        <source>You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).</source>
+        <translation>Du kan lägga in automatiska varv i FIT-filen utifrån distans. Enhet: %1. Standard: 0 (av).</translation>
+    </message>
+    <message>
+        <source>Power sensor speed correction threshold (%):</source>
+        <translation>Tröskel för hastighetskorrigering med effektsensor (%):</translation>
+    </message>
+    <message>
+        <source>Maximum allowed difference between power sensor speed and treadmill speed before QZ stops applying the relative correction. Default: 20%.</source>
+        <translation>Största tillåtna skillnad mellan hastigheten från effektsensorn och löpbandets hastighet innan QZ slutar använda den relativa korrigeringen. Standard: 20&#xa0;%.</translation>
+    </message>
+    <message>
+        <source>Heart</source>
+        <translation>Puls</translation>
+    </message>
+    <message>
+        <source>Power</source>
+        <translation>Effekt</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation>Manuellt</translation>
+    </message>
+    <message>
+        <source>Gear Controls</source>
+        <translation>Växelreglage</translation>
+    </message>
+    <message>
+        <source>Assign each physical button to Gear Up, Gear Down or Disabled. Applies before the Swap sides option above.</source>
+        <translation>Välj Växla upp, Växla ned eller Av för varje fysisk knapp. Används före alternativet Byt sida ovan.</translation>
+    </message>
+    <message>
+        <source>Left Shifter Up (LS1):</source>
+        <translation>Vänster växelreglage upp (LS1):</translation>
+    </message>
+    <message>
+        <source>Left Shifter Down (LS2):</source>
+        <translation>Vänster växelreglage ned (LS2):</translation>
+    </message>
+    <message>
+        <source>Right Shifter Up (RS1):</source>
+        <translation>Höger växelreglage upp (RS1):</translation>
+    </message>
+    <message>
+        <source>Right Shifter Down (RS2):</source>
+        <translation>Höger växelreglage ned (RS2):</translation>
+    </message>
+    <message>
+        <source>Left Paddle (ZL):</source>
+        <translation>Vänster paddel (ZL):</translation>
+    </message>
+    <message>
+        <source>Right Paddle (ZR):</source>
+        <translation>Höger paddel (ZR):</translation>
+    </message>
+    <message>
+        <source>Power Up (LB):</source>
+        <translation>Power Up (LB):</translation>
+    </message>
+    <message>
+        <source>Ride On (RB):</source>
+        <translation>Ride On (RB):</translation>
+    </message>
+    <message>
+        <source>Virtual Tacx</source>
+        <translation>Virtuell Tacx</translation>
+    </message>
+    <message>
+        <source>Enables a virtual bluetooth bridge to the Tacx App.</source>
+        <translation>Aktiverar en virtuell Bluetooth-enhet för Tacx-appen.</translation>
+    </message>
+    <message>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <source>kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <source>ft/in</source>
+        <translation>ft/in</translation>
+    </message>
+    <message>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
         <source>PID HR actuator:</source>
         <translation>Håll pulsen (PID) ändrar:</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>Hastighet</translation>
     </message>
     <message>
         <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. The global PID HR actuator setting selects speed or inclination for treadmills; a workout interval can override it in the Workout Editor. The PID HR tile changes only the target HR zone.</source>
         <translation>QZ styr löpbandet eller cykeln så att du håller dig inom en vald pulszon. För löpband väljer du hastighet eller lutning i den allmänna inställningen Håll pulsen (PID) ändrar; ett intervall i passredigeraren kan använda ett annat val. Panelen Håll pulsen (PID) ändrar bara målpulszonen.</translation>
     </message>
     <message>
-        <source>Pafers Rower</source>
-        <translation>Pafers-roddmaskin</translation>
+        <source>5 km</source>
+        <translation>5 km</translation>
+    </message>
+    <message>
+        <source>10 km</source>
+        <translation>10 km</translation>
+    </message>
+    <message>
+        <source>Mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>KM</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>Runn/Stryd closed-loop treadmill speed correction</source>
+        <translation>Hastighetskorrigering av löpband med Runn/Stryd (sluten reglering)</translation>
+    </message>
+    <message>
+        <source>Experimental: gradually correct QZ-controlled treadmill speed using Runn/Stryd feedback, when the driver provides independent machine speed measurements. Requires &apos;Use speed from the power sensor&apos;. Disabled by default.</source>
+        <translation>Experimentellt: korrigerar gradvis den löpbandshastighet som QZ styr utifrån återkoppling från Runn/Stryd, när drivrutinen ger egna hastighetsmätningar från löpbandet. Kräver ”Använd hastighet från effektsensorn”. Standard: av.</translation>
+    </message>
+    <message>
+        <source>Tile size:</source>
+        <translation>Panelstorlek:</translation>
+    </message>
+    <message>
+        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
+        <translation>Ändrar storleken på panelerna som visar dina mätvärden. Standard: 100&#xa0;%. Välj en lägre procentsats om du vill få plats med fler paneler på skärmen. Välj en procentsats över 100&#xa0;% om du vill göra dem större. Ange inte procenttecknet. Hette tidigare ”UI Zoom”.</translation>
+    </message>
+    <message>
+        <source>Use System Text Size</source>
+        <translation>Använd systemets textstorlek</translation>
+    </message>
+    <message>
+        <source>The text of the app follows the text size of the phone or tablet settings, up to 150%. Turn off to choose the size below, for example for a screen you read from a distance during a workout. Default is on.</source>
+        <translation>Appens text följer textstorleken i telefonens eller surfplattans inställningar, upp till 150&#xa0;%. Stäng av om du vill välja storleken nedan, till exempel för en skärm som du läser på avstånd under passet. Standard: på.</translation>
+    </message>
+    <message>
+        <source>Text size:</source>
+        <translation>Textstorlek:</translation>
+    </message>
+    <message>
+        <source>Size of the text of the app (settings, menus, dialogs), in percent, from 80 to 170. The default is 100. The tiles keep their own size setting.</source>
+        <translation>Storlek på appens text (inställningar, menyer, dialogrutor) i procent, från 80 till 170. Standard: 100. Panelerna har en egen storleksinställning.</translation>
+    </message>
+    <message>
+        <source>Life Fitness Options</source>
+        <translation>Life Fitness-alternativ</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Life Fitness-användarnamn/e-post:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Life Fitness-lösenord:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Life Fitness-gästinloggning (experimentell)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>Använder en syntetisk Life Fitness-profil utan konto. När det här är på ignoreras användarnamn, lösenord och sparade kontouppgifter. Använd bara för att testa gästinloggning som stöds.</translation>
+    </message>
+    <message>
+        <source>Workout History Charts</source>
+        <translation>Diagram i träningshistoriken</translation>
+    </message>
+    <message>
+        <source>Heart Rate</source>
+        <translation>Puls</translation>
+    </message>
+    <message>
+        <source>Resistance vs Target Resistance</source>
+        <translation>Motstånd och målmotstånd</translation>
+    </message>
+    <message>
+        <source>Peloton Resistance</source>
+        <translation>Peloton-motstånd</translation>
+    </message>
+    <message>
+        <source>Cadence</source>
+        <translation>Kadens</translation>
+    </message>
+    <message>
+        <source>Power Distribution</source>
+        <translation>Effektfördelning</translation>
+    </message>
+    <message>
+        <source>Speed and Inclination</source>
+        <translation>Hastighet och lutning</translation>
+    </message>
+    <message>
+        <source>Move the charts up or down to choose their order in Workout History. Changes are saved automatically.</source>
+        <translation>Flytta diagrammen uppåt eller nedåt om du vill välja deras ordning i träningshistoriken. Ändringar sparas automatiskt.</translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translation>Flytta upp</translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation>Flytta ned</translation>
+    </message>
+    <message>
+        <source>Restore default order</source>
+        <translation>Återställ standardordning</translation>
+    </message>
+    <message>
+        <source>Direct Distance: add only the increase</source>
+        <translation>Direkt distans: lägg bara till ökningen</translation>
+    </message>
+    <message>
+        <source>Works with Direct Distance from Treadmill. Turn this on if the distance counter of your treadmill keeps running between workouts or starts again from 0 when the treadmill is switched off: only the distance walked during the workout is added, not what the treadmill counted before QZ connected. Default is off.</source>
+        <translation>Fungerar med Distans direkt från löpbandet. Slå på om löpbandets distansräknare fortsätter mellan passen eller börjar om från 0 när löpbandet stängs av. Då läggs bara distansen från passet till, inte det som löpbandet räknat innan QZ anslöt. Standard: av.</translation>
+    </message>
+    <message>
+        <source>Moovio Options</source>
+        <translation>Moovio-alternativ</translation>
+    </message>
+    <message>
+        <source>Lynx Konect 2.0</source>
+        <translation>Lynx Konect 2.0</translation>
+    </message>
+    <message>
+        <source>Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.</source>
+        <translation>Aktiverar standardkommandot FTMS Request Control för Moovio Lynx Konect 2.0-löpband. Standard: av.</translation>
+    </message>
+    <message>
+        <source>Cadence Gain</source>
+        <translation>Kadensfaktor</translation>
+    </message>
+    <message>
+        <source>Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.</source>
+        <translation>Multiplikator som bara används på tagfrekvensen som den virtuella roddmaskinen skickar. Standard: 1.0. Använd 0.25 om du vill omvandla BikeERG-RPM till den tagfrekvens som EXR begär.</translation>
+    </message>
+    <message>
+        <source>Offset added after the gain. Default is 0.0. QZ&apos;s internal cadence display and workout metrics remain unchanged.</source>
+        <translation>Justering som läggs till efter faktorn. Standard: 0.0. Kadensen som visas i QZ och passets mätvärden ändras inte.</translation>
+    </message>
+    <message>
+        <source>iOS Background Keep Alive</source>
+        <translation>Bakgrundsläge för iOS</translation>
+    </message>
+    <message>
+        <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
+        <translation>Endast iOS. Håller QZ igång när skärmen är av eller QZ körs i bakgrunden, så att Bluetooth-anslutningar och passets timrar inte fryser. Det sker med ett tyst ljudspår som mixas med din musik, så det du lyssnar på avbryts inte. Aktivera om du behöver träna med låst skärm eller med QZ i bakgrunden. Standard: av.</translation>
+    </message>
+    <message>
+        <source>Daum Bike Options</source>
+        <translation>Alternativ för Daum-cykel</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>Serieport för klassiska Daum-ergometrar, som 8008 TRS 3. På Android med en USB-till-serieadapter använder du &apos;usb&apos;. COM1, COM2 osv. godtas som alias för sökning efter USB-adaptern, men är inte Android-portnamn. På Windows används COM1 eller COM3; på Linux/macOS sökvägen till serieenheten, t.ex. /dev/ttyUSB0.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Fördröjning mellan motståndsavläsningar:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>Använder inställningen Fördröjning för lutning för att begränsa hur ofta QZ skickar uppdateringar av motstånd och effekt till Daum. Standard: 0 sekunder.</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Lutningsfilter (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>Vid GPX-träning ignoreras lutningsändringar som är mindre än detta värde. Ett nytt kommando skickas först när skillnaden från senast skickat värde når den angivna tröskeln. Standard: 0 (inaktiverat).</translation>
+    </message>
+    <message>
+        <source>Use Console Gears</source>
+        <translation>Använd konsolens växlar</translation>
     </message>
 </context>
 <context>
@@ -9124,10 +9210,6 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Tempo</translation>
     </message>
     <message>
-        <source>Enable Pace color</source>
-        <translation>Aktivera färg för tempo</translation>
-    </message>
-    <message>
         <source>Average Pace</source>
         <translation>Medeltempo</translation>
     </message>
@@ -9154,10 +9236,6 @@ Standard: A = -0.96, B = 1.33</translation>
     <message>
         <source>Watt</source>
         <translation>Watt</translation>
-    </message>
-    <message>
-        <source>Enable Watt color</source>
-        <translation>Aktivera färg för watt</translation>
     </message>
     <message>
         <source>Displays the watts generated by your current effort. Watt is also referred to as output (for example, in Peloton). If your equipment does not communicate watts, QZ will calculate watts using resistance and cadence.</source>
@@ -9340,6 +9418,10 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Visar 2 stora växelknappar i gränssnittet.</translation>
     </message>
     <message>
+        <source>Tiles Options</source>
+        <translation>Panelalternativ</translation>
+    </message>
+    <message>
         <source>Remaining Time/Row</source>
         <extracomment>Tile title: time left in the current step (row) of the workout program, not rowing and not a lap.</extracomment>
         <translation>Återstående tid/rad</translation>
@@ -9384,14 +9466,6 @@ Standard: A = -0.96, B = 1.33</translation>
     <message>
         <source>(Rower only) Displays the number of strokes rowed.</source>
         <translation>(Bara roddmaskin) Visar antalet tag.</translation>
-    </message>
-    <message>
-        <source>Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class&apos;s resistance target up or down for the rest of the ride.</source>
-        <translation>Visar målmotståndet på cykelns motståndsskala. Under en Peloton-klass eller ett Zwift-pass vill du till exempel att motståndet på den här panelen stämmer med panelen Motstånd. Under en Peloton-klass (bara cykel) flyttar +/- klassens målmotstånd uppåt eller nedåt under resten av passet.</translation>
-    </message>
-    <message>
-        <source>Stroke Length</source>
-        <translation>Taglängd</translation>
     </message>
     <message>
         <source>(Rower only) Displays the stroke length.</source>
@@ -9500,14 +9574,6 @@ Standard: A = -0.96, B = 1.33</translation>
     <message>
         <source>Preset Speed 1</source>
         <translation>Förinställd hastighet 1</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
     </message>
     <message>
         <source>Preset Speed 2</source>
@@ -9710,8 +9776,28 @@ Standard: A = -0.96, B = 1.33</translation>
         <translation>Visar pulsvariabilitet (HRV) från ett kompatibelt pulsbälte. Visar RMSSD-värdet i millisekunder.</translation>
     </message>
     <message>
-        <source>Tiles Options</source>
-        <translation>Panelalternativ</translation>
+        <source>Enable Pace color</source>
+        <translation>Aktivera färg för tempo</translation>
+    </message>
+    <message>
+        <source>Enable Watt color</source>
+        <translation>Aktivera färg för watt</translation>
+    </message>
+    <message>
+        <source>Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class&apos;s resistance target up or down for the rest of the ride.</source>
+        <translation>Visar målmotståndet på cykelns motståndsskala. Under en Peloton-klass eller ett Zwift-pass vill du till exempel att motståndet på den här panelen stämmer med panelen Motstånd. Under en Peloton-klass (bara cykel) flyttar +/- klassens målmotstånd uppåt eller nedåt under resten av passet.</translation>
+    </message>
+    <message>
+        <source>Stroke Length</source>
+        <translation>Taglängd</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
     </message>
 </context>
 <context>
@@ -10113,80 +10199,6 @@ Vill du installera den?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>Laddar ned QZ-versionen: %1%</translation>
-    </message>
-</context>
-<context>
-    <name>SupportHelpButton</name>
-    <message>
-        <source>Contact QZ support</source>
-        <translation>Kontakta QZ-supporten</translation>
-    </message>
-    <message>
-        <source>Prepare a support email with diagnostics</source>
-        <translation>Förbered ett supportmejl med diagnostikuppgifter</translation>
-    </message>
-    <message>
-        <source>No device connected</source>
-        <translation>Ingen enhet är ansluten</translation>
-    </message>
-    <message>
-        <source>Speed and power at zero</source>
-        <translation>Hastighet och effekt är noll</translation>
-    </message>
-    <message>
-        <source>QZ Support</source>
-        <translation>QZ-support</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translation>Klart</translation>
-    </message>
-    <message>
-        <source>Hide keyboard</source>
-        <translation>Dölj tangentbordet</translation>
-    </message>
-    <message>
-        <source>Close support request</source>
-        <translation>Stäng supportärendet</translation>
-    </message>
-    <message>
-        <source>Tell us what is not working. QZ will add your device and app information.</source>
-        <translation>Berätta vad som inte fungerar. QZ lägger till information om enheten och appen.</translation>
-    </message>
-    <message>
-        <source>Describe the problem...</source>
-        <translation>Beskriv problemet...</translation>
-    </message>
-    <message>
-        <source>Describe the problem</source>
-        <translation>Beskriv problemet</translation>
-    </message>
-    <message>
-        <source>Attach debug log if available</source>
-        <translation>Bifoga felsökningslogg om den finns</translation>
-    </message>
-    <message>
-        <source>You can review or edit the email before sending it. Nothing is sent automatically.</source>
-        <translation>Du kan granska eller redigera mejlet innan du skickar det. Inget skickas automatiskt.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Avbryt</translation>
-    </message>
-    <message>
-        <source>Open email</source>
-        <translation>Öppna e-post</translation>
-    </message>
-</context>
-<context>
-    <name>treadmill</name>
-    <message>
-        <source>Cadence looks half of the real value. Turn on Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
-        <translation>Kadensen verkar vara hälften av den verkliga. Aktivera ”Dubbel kadens för löpning” och ”Halverad kadens på Strava” under ”Alternativ för effektsensor”.</translation>
-    </message>
-    <message>
-        <source>Cadence looks twice the real value. Turn off Doubling Cadence for Run and Half Cadence on Strava in Power Sensor Options.</source>
-        <translation>Kadensen verkar vara dubbelt så hög som den verkliga. Inaktivera ”Dubbel kadens för löpning” och ”Halverad kadens på Strava” under ”Alternativ för effektsensor”.</translation>
     </message>
 </context>
 </TS>

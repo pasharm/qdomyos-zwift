@@ -35,6 +35,7 @@
         <file>UiFrame.qml</file>
         <file>UiMenuBackground.qml</file>
         <file>UiNotice.qml</file>
+        <file>UiProgress.qml</file>
         <file>UiSwitchIndicator.qml</file>
         <file>UiSwitchDelegate.qml</file>
         <file>UiSwitch.qml</file>
