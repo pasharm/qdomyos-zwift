@@ -68,24 +68,12 @@
         <translation>Filter</translation>
     </message>
     <message>
-        <source>Distance %1 km Elevation Gain: %2 meters</source>
-        <translation>Afstand %1 km, hoogtemeters: %2 meter</translation>
-    </message>
-    <message>
-        <source>Other folders</source>
-        <translation>Andere mappen</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Bestanden herstellen</translation>
+        <source>Parent folder</source>
+        <translation>Bovenliggende map</translation>
     </message>
     <message>
         <source>Open</source>
         <translation>Openen</translation>
-    </message>
-    <message>
-        <source>Parent folder</source>
-        <translation>Bovenliggende map</translation>
     </message>
     <message>
         <source>No GPX files here</source>
@@ -98,6 +86,18 @@
     <message>
         <source>%1 m</source>
         <translation>%1 m</translation>
+    </message>
+    <message>
+        <source>Distance %1 km Elevation Gain: %2 meters</source>
+        <translation>Afstand %1 km, hoogtemeters: %2 meter</translation>
+    </message>
+    <message>
+        <source>Other folders</source>
+        <translation>Andere mappen</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Bestanden herstellen</translation>
     </message>
 </context>
 <context>
@@ -170,8 +170,74 @@
         <translation>Wil je de huidige training echt stoppen?</translation>
     </message>
     <message>
+        <source>Permissions Required</source>
+        <translation>Machtigingen vereist</translation>
+    </message>
+    <message>
+        <source>QZ requires both Bluetooth and Location Services to be enabled.
+Location Services are necessary on Android to allow the app to find Bluetooth devices.
+The GPS will not be used.
+
+Would you like to enable them?</source>
+        <translation type="vanished">QZ heeft zowel Bluetooth als locatievoorzieningen nodig.
+Op Android zijn locatievoorzieningen nodig zodat de app Bluetooth-apparaten kan vinden.
+GPS wordt niet gebruikt.
+
+Wil je ze inschakelen?</translation>
+    </message>
+    <message>
+        <source>Reminder Preference</source>
+        <translation>Herinnering</translation>
+    </message>
+    <message>
+        <source>Would you like to be reminded about enabling Location Services next time?</source>
+        <translation type="vanished">Wil je de volgende keer herinnerd worden aan het inschakelen van locatievoorzieningen?</translation>
+    </message>
+    <message>
+        <source>Restart the app</source>
+        <translation>App opnieuw starten</translation>
+    </message>
+    <message>
+        <source>To apply the changes, you need to restart the app.
+Would you like to do that now?</source>
+        <translation>Om de wijzigingen toe te passen, moet je de app opnieuw starten.
+Wil je dat nu doen?</translation>
+    </message>
+    <message>
+        <source>Adjustable. Current value: </source>
+        <translation>Instelbaar. Huidige waarde: </translation>
+    </message>
+    <message>
+        <source>Current value: </source>
+        <translation>Huidige waarde: </translation>
+    </message>
+    <message>
+        <source>Decrease </source>
+        <translation>Verlagen </translation>
+    </message>
+    <message>
+        <source>Decrease the value of </source>
+        <translation>De waarde verlagen van </translation>
+    </message>
+    <message>
+        <source>Increase </source>
+        <translation>Verhogen </translation>
+    </message>
+    <message>
+        <source>Increase the value of </source>
+        <translation>De waarde verhogen van </translation>
+    </message>
+    <message>
         <source>Rest</source>
         <translation>Rust</translation>
+    </message>
+    <message>
+        <source>Stop</source>
+        <translation>Stop</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Very Light</source>
@@ -264,72 +330,6 @@ Wil je de vereiste voorzieningen inschakelen?</translation>
     <message>
         <source>Would you like to be reminded about enabling Bluetooth or Location Services next time?</source>
         <translation>Wil je de volgende keer herinnerd worden aan het inschakelen van Bluetooth of locatievoorzieningen?</translation>
-    </message>
-    <message>
-        <source>Permissions Required</source>
-        <translation>Machtigingen vereist</translation>
-    </message>
-    <message>
-        <source>QZ requires both Bluetooth and Location Services to be enabled.
-Location Services are necessary on Android to allow the app to find Bluetooth devices.
-The GPS will not be used.
-
-Would you like to enable them?</source>
-        <translation type="vanished">QZ heeft zowel Bluetooth als locatievoorzieningen nodig.
-Op Android zijn locatievoorzieningen nodig zodat de app Bluetooth-apparaten kan vinden.
-GPS wordt niet gebruikt.
-
-Wil je ze inschakelen?</translation>
-    </message>
-    <message>
-        <source>Reminder Preference</source>
-        <translation>Herinnering</translation>
-    </message>
-    <message>
-        <source>Would you like to be reminded about enabling Location Services next time?</source>
-        <translation type="vanished">Wil je de volgende keer herinnerd worden aan het inschakelen van locatievoorzieningen?</translation>
-    </message>
-    <message>
-        <source>Restart the app</source>
-        <translation>App opnieuw starten</translation>
-    </message>
-    <message>
-        <source>To apply the changes, you need to restart the app.
-Would you like to do that now?</source>
-        <translation>Om de wijzigingen toe te passen, moet je de app opnieuw starten.
-Wil je dat nu doen?</translation>
-    </message>
-    <message>
-        <source>Adjustable. Current value: </source>
-        <translation>Instelbaar. Huidige waarde: </translation>
-    </message>
-    <message>
-        <source>Current value: </source>
-        <translation>Huidige waarde: </translation>
-    </message>
-    <message>
-        <source>Decrease </source>
-        <translation>Verlagen </translation>
-    </message>
-    <message>
-        <source>Decrease the value of </source>
-        <translation>De waarde verlagen van </translation>
-    </message>
-    <message>
-        <source>Increase </source>
-        <translation>Verhogen </translation>
-    </message>
-    <message>
-        <source>Increase the value of </source>
-        <translation>De waarde verhogen van </translation>
-    </message>
-    <message>
-        <source>Stop</source>
-        <translation>Stop</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleren</translation>
     </message>
     <message>
         <source>Return to app</source>
@@ -625,6 +625,182 @@ Wil je dat nu doen?</translation>
 <context>
     <name>QObject</name>
     <message>
+        <source>%1 (HR sensor) connected!</source>
+        <translation>%1 (hartslagsensor) verbonden!</translation>
+    </message>
+    <message>
+        <source>Searching for heart rate sensors...</source>
+        <translation>Zoeken naar hartslagsensoren…</translation>
+    </message>
+    <message>
+        <source>Searching for %1 (HR sensor)...</source>
+        <translation>Zoeken naar %1 (hartslagsensor)…</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
+        <translation>%1 (hartslagsensor) niet gevonden. Controleer of hij aan staat en de hartslag uitzendt.</translation>
+    </message>
+    <message>
+        <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
+        <translation>%1 (hartslagsensor): geen hartslag. Controleer of hij de hartslag uitzendt.</translation>
+    </message>
+    <message>
+        <source>%1 (cadence sensor) connected!</source>
+        <translation>%1 (cadanssensor) verbonden!</translation>
+    </message>
+    <message>
+        <source>%1 (power sensor) connected!</source>
+        <translation>%1 (vermogenssensor) verbonden!</translation>
+    </message>
+    <message>
+        <source>SRAM Connected!</source>
+        <translation>SRAM verbonden!</translation>
+    </message>
+    <message>
+        <source>Zwift Click Connected!</source>
+        <translation>Zwift Click verbonden!</translation>
+    </message>
+    <message>
+        <source>Zwift Click v2 Connected!</source>
+        <translation>Zwift Click v2 verbonden!</translation>
+    </message>
+    <message>
+        <source>Thinkrider Controller Connected!</source>
+        <translation>Thinkrider-controller verbonden!</translation>
+    </message>
+    <message>
+        <source>CYCPLUS BC2 Connected!</source>
+        <translation>CYCPLUS BC2 verbonden!</translation>
+    </message>
+    <message>
+        <source>Elite Square Connected!</source>
+        <translation>Elite Square verbonden!</translation>
+    </message>
+    <message>
+        <source>Zwift Play/Ride Connected!</source>
+        <translation>Zwift Play/Ride verbonden!</translation>
+    </message>
+    <message>
+        <source>No heart rate sensor found nearby. Make sure it is on and broadcasting heart rate.</source>
+        <translation>Geen hartslagsensor in de buurt gevonden. Controleer of hij aan staat en de hartslag uitzendt.</translation>
+    </message>
+    <message>
+        <source>%1 connected!</source>
+        <translation>%1 verbonden!</translation>
+    </message>
+    <message>
+        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
+        <translation>Handmatige vermogenscorrectie via weerstand ingeschakeld: het vermogen volgt nu de waarde van de tegel ‘Weerstand’.</translation>
+    </message>
+    <message>
+        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
+        <translation>Eigen CSC-vermogenstabel ingeschakeld: het vermogen volgt nu de ingestelde punten weerstand/watt.</translation>
+    </message>
+    <message>
+        <source>%1 Battery Level %2 %</source>
+        <translation>%1 batterijniveau %2 %</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change</source>
+        <translation>FTMS-fiets gevonden, start de app opnieuw om de wijziging toe te passen</translation>
+    </message>
+    <message>
+        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
+        <translation>De Domyos-crosstrainer is een FTMS-apparaat. Start QZ opnieuw om de correctie toe te passen, bedankt.</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change</source>
+        <translation>FTMS-roeitrainer gevonden, start de app opnieuw om de wijziging toe te passen</translation>
+    </message>
+    <message>
+        <source>Bluetooth Service Error! Restart the bike!</source>
+        <translation>Fout in Bluetooth-service! Start de fiets opnieuw op!</translation>
+    </message>
+    <message>
+        <source>Switching to classic Bluetooth bridge</source>
+        <translation>Overschakelen naar klassiek virtueel Bluetooth-apparaat</translation>
+    </message>
+    <message>
+        <source>Virtual Echelon enabled for this bike</source>
+        <translation>Virtuele Echelon ingeschakeld voor deze fiets</translation>
+    </message>
+    <message>
+        <source>FTMS treadmill found, restart the app to apply the change</source>
+        <translation>FTMS-loopband gevonden, start de app opnieuw om de wijziging toe te passen</translation>
+    </message>
+    <message>
+        <source>Init completed, you can use the treadmill now!</source>
+        <translation>Initialisatie voltooid, je kunt de loopband nu gebruiken!</translation>
+    </message>
+    <message>
+        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
+        <translation>QZ heeft het gegevensformaat van deze fiets herkend en ‘Virtufit Etappe 2.0-fiets’ ingeschakeld in de instellingen. Start QZ opnieuw om de gegevens van de fiets te kunnen lezen.</translation>
+    </message>
+    <message>
+        <source>FTMS bike found, restart the app to apply the change!</source>
+        <translation>FTMS-fiets gevonden, start de app opnieuw om de wijziging toe te passen!</translation>
+    </message>
+    <message>
+        <source>FTMS rower found, restart the app to apply the change!</source>
+        <translation>FTMS-roeitrainer gevonden, start de app opnieuw om de wijziging toe te passen!</translation>
+    </message>
+    <message>
+        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>De Domyos-fiets doet zich voor als FTMS-apparaat, maar is dat niet. Start QZ opnieuw om de correctie toe te passen, bedankt.</translation>
+    </message>
+    <message>
+        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
+        <translation>PM5-roeitrainer gevonden. Start QZ opnieuw om de correctie toe te passen, bedankt.</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization in progress...%1%</source>
+        <translation>Loopband wordt geïnitialiseerd…%1%</translation>
+    </message>
+    <message>
+        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
+        <translation>Schakel de instelling ‘FTMS geforceerd gebruiken’ in onder Instellingen &gt; Loopbandopties &gt; Horizon-loopbandopties en start de app opnieuw</translation>
+    </message>
+    <message>
+        <source>Treadmill initialization completed!</source>
+        <translation>Initialisatie van de loopband voltooid!</translation>
+    </message>
+    <message>
+        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
+        <translation>De Domyos-loopband doet zich voor als FTMS-apparaat, maar is dat niet. Start QZ opnieuw om de correctie toe te passen, bedankt.</translation>
+    </message>
+    <message>
+        <source>Treadmill ready</source>
+        <translation>Loopband gereed</translation>
+    </message>
+    <message>
+        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
+        <translation>T01_-apparaat gedetecteerd. Zie je vreemde hellingswaarden, schakel dan ‘IConcept FTMS-loopband’ in bij Loopbandopties.</translation>
+    </message>
+    <message>
+        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
+        <translation>Huidige SmO2: %1% Vorige SmO2: %2% THb: %3 g/dL</translation>
+    </message>
+    <message>
+        <source>SE7i init completed!</source>
+        <translation>Initialisatie SE7i voltooid!</translation>
+    </message>
+    <message>
+        <source>Starting treadmill before applying requested speed %1</source>
+        <translation>Loopband wordt gestart voordat de gevraagde snelheid %1 wordt ingesteld</translation>
+    </message>
+    <message>
+        <source>Applying cached speed request %1</source>
+        <translation>Uitgestelde snelheidsaanvraag %1 wordt toegepast</translation>
+    </message>
+    <message>
+        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
+        <translation>Geen service gevonden, neem contact met me op via roberto.viola83@gmail.com!</translation>
+    </message>
+    <message>
+        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
+        <translation>Zwift Hub gevonden, start de app opnieuw om virtueel te schakelen!</translation>
+    </message>
+    <message>
         <source>Sending workout email...</source>
         <translation>Training wordt per e-mail verzonden…</translation>
     </message>
@@ -805,6 +981,10 @@ Wil je de QZ-instellingen bijwerken?</translation>
         <translation>Het verbonden apparaat is geen Echelon Connect Sport</translation>
     </message>
     <message>
+        <source>Android notification enabled</source>
+        <translation>Android-melding ingeschakeld</translation>
+    </message>
+    <message>
         <source>Strava: unable to open FIT file</source>
         <translation>Strava: kan FIT-bestand niet openen</translation>
     </message>
@@ -889,12 +1069,12 @@ Wil je de QZ-instellingen bijwerken?</translation>
         <translation>Training wordt gedownload van Intervals.icu…</translation>
     </message>
     <message>
-        <source>Failed to get workouts (HTTP %1)</source>
-        <translation>Ophalen van trainingen mislukt (HTTP %1)</translation>
-    </message>
-    <message>
         <source>Intervals.icu: %1</source>
         <translation>Intervals.icu: %1</translation>
+    </message>
+    <message>
+        <source>Failed to get workouts (HTTP %1)</source>
+        <translation>Ophalen van trainingen mislukt (HTTP %1)</translation>
     </message>
     <message>
         <source>Intervals.icu: Invalid response</source>
@@ -911,182 +1091,6 @@ Wil je de QZ-instellingen bijwerken?</translation>
     <message>
         <source>Failed to save workout file</source>
         <translation>Opslaan van trainingsbestand is mislukt</translation>
-    </message>
-    <message>
-        <source>%1 (HR sensor) connected!</source>
-        <translation>%1 (hartslagsensor) verbonden!</translation>
-    </message>
-    <message>
-        <source>Searching for heart rate sensors...</source>
-        <translation>Zoeken naar hartslagsensoren…</translation>
-    </message>
-    <message>
-        <source>Searching for %1 (HR sensor)...</source>
-        <translation>Zoeken naar %1 (hartslagsensor)…</translation>
-    </message>
-    <message>
-        <source>%1 (HR sensor) not found. Make sure it is on and broadcasting heart rate.</source>
-        <translation>%1 (hartslagsensor) niet gevonden. Controleer of hij aan staat en de hartslag uitzendt.</translation>
-    </message>
-    <message>
-        <source>%1 (HR sensor): no heart rate. Make sure it is broadcasting heart rate.</source>
-        <translation>%1 (hartslagsensor): geen hartslag. Controleer of hij de hartslag uitzendt.</translation>
-    </message>
-    <message>
-        <source>%1 (cadence sensor) connected!</source>
-        <translation>%1 (cadanssensor) verbonden!</translation>
-    </message>
-    <message>
-        <source>%1 (power sensor) connected!</source>
-        <translation>%1 (vermogenssensor) verbonden!</translation>
-    </message>
-    <message>
-        <source>SRAM Connected!</source>
-        <translation>SRAM verbonden!</translation>
-    </message>
-    <message>
-        <source>Zwift Click Connected!</source>
-        <translation>Zwift Click verbonden!</translation>
-    </message>
-    <message>
-        <source>Zwift Click v2 Connected!</source>
-        <translation>Zwift Click v2 verbonden!</translation>
-    </message>
-    <message>
-        <source>Thinkrider Controller Connected!</source>
-        <translation>Thinkrider-controller verbonden!</translation>
-    </message>
-    <message>
-        <source>CYCPLUS BC2 Connected!</source>
-        <translation>CYCPLUS BC2 verbonden!</translation>
-    </message>
-    <message>
-        <source>Elite Square Connected!</source>
-        <translation>Elite Square verbonden!</translation>
-    </message>
-    <message>
-        <source>Zwift Play/Ride Connected!</source>
-        <translation>Zwift Play/Ride verbonden!</translation>
-    </message>
-    <message>
-        <source>No heart rate sensor found nearby. Make sure it is on and broadcasting heart rate.</source>
-        <translation>Geen hartslagsensor in de buurt gevonden. Controleer of hij aan staat en de hartslag uitzendt.</translation>
-    </message>
-    <message>
-        <source>%1 connected!</source>
-        <translation>%1 verbonden!</translation>
-    </message>
-    <message>
-        <source>Manual resistance power adjustment enabled: power now scales with the Resistance tile value.</source>
-        <translation>Handmatige vermogenscorrectie via weerstand ingeschakeld: het vermogen volgt nu de waarde van de tegel ‘Weerstand’.</translation>
-    </message>
-    <message>
-        <source>Custom CSC power table enabled: power now follows the configured resistance/watt points.</source>
-        <translation>Eigen CSC-vermogenstabel ingeschakeld: het vermogen volgt nu de ingestelde punten weerstand/watt.</translation>
-    </message>
-    <message>
-        <source>%1 Battery Level %2 %</source>
-        <translation>%1 batterijniveau %2 %</translation>
-    </message>
-    <message>
-        <source>FTMS bike found, restart the app to apply the change</source>
-        <translation>FTMS-fiets gevonden, start de app opnieuw om de wijziging toe te passen</translation>
-    </message>
-    <message>
-        <source>Domyos Elliptial it&apos;s a FTMS. Restart QZ to apply the fix, thanks.</source>
-        <translation>De Domyos-crosstrainer is een FTMS-apparaat. Start QZ opnieuw om de correctie toe te passen, bedankt.</translation>
-    </message>
-    <message>
-        <source>FTMS rower found, restart the app to apply the change</source>
-        <translation>FTMS-roeitrainer gevonden, start de app opnieuw om de wijziging toe te passen</translation>
-    </message>
-    <message>
-        <source>Bluetooth Service Error! Restart the bike!</source>
-        <translation>Fout in Bluetooth-service! Start de fiets opnieuw op!</translation>
-    </message>
-    <message>
-        <source>Switching to classic Bluetooth bridge</source>
-        <translation>Overschakelen naar klassiek virtueel Bluetooth-apparaat</translation>
-    </message>
-    <message>
-        <source>Virtual Echelon enabled for this bike</source>
-        <translation>Virtuele Echelon ingeschakeld voor deze fiets</translation>
-    </message>
-    <message>
-        <source>FTMS treadmill found, restart the app to apply the change</source>
-        <translation>FTMS-loopband gevonden, start de app opnieuw om de wijziging toe te passen</translation>
-    </message>
-    <message>
-        <source>Init completed, you can use the treadmill now!</source>
-        <translation>Initialisatie voltooid, je kunt de loopband nu gebruiken!</translation>
-    </message>
-    <message>
-        <source>QZ has detected the data format of this bike and enabled &quot;Virtufit Etappe 2.0 Bike&quot; in the settings. QZ must be restarted to read the bike data.</source>
-        <translation>QZ heeft het gegevensformaat van deze fiets herkend en ‘Virtufit Etappe 2.0-fiets’ ingeschakeld in de instellingen. Start QZ opnieuw om de gegevens van de fiets te kunnen lezen.</translation>
-    </message>
-    <message>
-        <source>FTMS bike found, restart the app to apply the change!</source>
-        <translation>FTMS-fiets gevonden, start de app opnieuw om de wijziging toe te passen!</translation>
-    </message>
-    <message>
-        <source>FTMS rower found, restart the app to apply the change!</source>
-        <translation>FTMS-roeitrainer gevonden, start de app opnieuw om de wijziging toe te passen!</translation>
-    </message>
-    <message>
-        <source>Domyos bike presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
-        <translation>De Domyos-fiets doet zich voor als FTMS-apparaat, maar is dat niet. Start QZ opnieuw om de correctie toe te passen, bedankt.</translation>
-    </message>
-    <message>
-        <source>PM5 rower found. Restart QZ to apply the fix, thanks.</source>
-        <translation>PM5-roeitrainer gevonden. Start QZ opnieuw om de correctie toe te passen, bedankt.</translation>
-    </message>
-    <message>
-        <source>Treadmill initialization in progress...%1%</source>
-        <translation>Loopband wordt geïnitialiseerd…%1%</translation>
-    </message>
-    <message>
-        <source>Enable the &apos;Force Using FTMS&apos; setting under the Settings-&gt;Treadmill Options-&gt;Horizon Treadmill options and restart the app</source>
-        <translation>Schakel de instelling ‘FTMS geforceerd gebruiken’ in onder Instellingen &gt; Loopbandopties &gt; Horizon-loopbandopties en start de app opnieuw</translation>
-    </message>
-    <message>
-        <source>Treadmill initialization completed!</source>
-        <translation>Initialisatie van de loopband voltooid!</translation>
-    </message>
-    <message>
-        <source>Domyos Treadmill presents itself like a FTMS but it&apos;s not. Restart QZ to apply the fix, thanks.</source>
-        <translation>De Domyos-loopband doet zich voor als FTMS-apparaat, maar is dat niet. Start QZ opnieuw om de correctie toe te passen, bedankt.</translation>
-    </message>
-    <message>
-        <source>Treadmill ready</source>
-        <translation>Loopband gereed</translation>
-    </message>
-    <message>
-        <source>T01_ device detected. If you see strange inclination values, enable &apos;IConcept FTMS Treadmill&apos; in Treadmill Options settings.</source>
-        <translation>T01_-apparaat gedetecteerd. Zie je vreemde hellingswaarden, schakel dan ‘IConcept FTMS-loopband’ in bij Loopbandopties.</translation>
-    </message>
-    <message>
-        <source>Current SmO2: %1% Previous SmO2: %2% THb: %3 g/dL</source>
-        <translation>Huidige SmO2: %1% Vorige SmO2: %2% THb: %3 g/dL</translation>
-    </message>
-    <message>
-        <source>SE7i init completed!</source>
-        <translation>Initialisatie SE7i voltooid!</translation>
-    </message>
-    <message>
-        <source>Starting treadmill before applying requested speed %1</source>
-        <translation>Loopband wordt gestart voordat de gevraagde snelheid %1 wordt ingesteld</translation>
-    </message>
-    <message>
-        <source>Applying cached speed request %1</source>
-        <translation>Uitgestelde snelheidsaanvraag %1 wordt toegepast</translation>
-    </message>
-    <message>
-        <source>no service found, contact me to roberto.viola83@gmail.com!</source>
-        <translation>Geen service gevonden, neem contact met me op via roberto.viola83@gmail.com!</translation>
-    </message>
-    <message>
-        <source>Zwift Hub device found, please restart the app to enjoy virtual gearing!</source>
-        <translation>Zwift Hub gevonden, start de app opnieuw om virtueel te schakelen!</translation>
     </message>
     <message>
         <source>Peloton Auth Failed!</source>
@@ -1147,10 +1151,6 @@ Wil je de QZ-instellingen bijwerken?</translation>
     <message>
         <source>Zwift device: UPGRADE THE FIRMWARE!</source>
         <translation>Zwift-apparaat: WERK DE FIRMWARE BIJ!</translation>
-    </message>
-    <message>
-        <source>Android notification enabled</source>
-        <translation>Android-melding ingeschakeld</translation>
     </message>
     <message>
         <source>YPOO M5 ready</source>
@@ -1239,20 +1239,20 @@ Wil je de QZ-instellingen bijwerken?</translation>
 <context>
     <name>SettingsFormatField</name>
     <message>
-        <source>Enter the height in centimetres</source>
-        <translation>Voer de lengte in centimeters in</translation>
-    </message>
-    <message>
-        <source>Enter the height as feet&apos;inches, e.g. 5&apos;10&quot;</source>
-        <translation>Voer de lengte in als voet&apos;inch, bijv. 5&apos;10&quot;</translation>
+        <source>Enter an IP address, e.g. 192.168.1.10</source>
+        <translation>Voer een IP-adres in, bijv. 192.168.1.10</translation>
     </message>
     <message>
         <source>Enter an IP address or a host name, e.g. 192.168.1.10</source>
         <translation>Voer een IP-adres of hostnaam in, bijv. 192.168.1.10</translation>
     </message>
     <message>
-        <source>Enter an IP address, e.g. 192.168.1.10</source>
-        <translation>Voer een IP-adres in, bijv. 192.168.1.10</translation>
+        <source>Enter the height in centimetres</source>
+        <translation>Voer de lengte in centimeters in</translation>
+    </message>
+    <message>
+        <source>Enter the height as feet&apos;inches, e.g. 5&apos;10&quot;</source>
+        <translation>Voer de lengte in als voet&apos;inch, bijv. 5&apos;10&quot;</translation>
     </message>
     <message>
         <source>Enter the time as hh:mm:ss</source>
@@ -1262,20 +1262,12 @@ Wil je de QZ-instellingen bijwerken?</translation>
 <context>
     <name>SettingsList</name>
     <message>
-        <source>Please choose a file</source>
-        <translation>Kies een bestand</translation>
-    </message>
-    <message>
         <source>Settings folder</source>
         <translation>Map met instellingen</translation>
     </message>
     <message>
-        <source>Other folders</source>
-        <translation>Andere mappen</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Bestanden herstellen</translation>
+        <source>Please choose a file</source>
+        <translation>Kies een bestand</translation>
     </message>
     <message>
         <source>Tap a file to select it, then Load.</source>
@@ -1288,6 +1280,14 @@ Wil je de QZ-instellingen bijwerken?</translation>
     <message>
         <source>No saved settings</source>
         <translation>Geen opgeslagen instellingen</translation>
+    </message>
+    <message>
+        <source>Other folders</source>
+        <translation>Andere mappen</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Bestanden herstellen</translation>
     </message>
 </context>
 <context>
@@ -1330,6 +1330,69 @@ Wil je de QZ-instellingen bijwerken?</translation>
     <message>
         <source>Purchase Failed</source>
         <translation>Aankoop mislukt</translation>
+    </message>
+</context>
+<context>
+    <name>SupportHelpButton</name>
+    <message>
+        <source>Contact QZ support</source>
+        <translation>Contact opnemen met QZ-ondersteuning</translation>
+    </message>
+    <message>
+        <source>Prepare a support email with diagnostics</source>
+        <translation>Een ondersteuningsmail met diagnostische gegevens voorbereiden</translation>
+    </message>
+    <message>
+        <source>No device connected</source>
+        <translation>Geen apparaat verbonden</translation>
+    </message>
+    <message>
+        <source>Speed and power at zero</source>
+        <translation>Snelheid en vermogen zijn nul</translation>
+    </message>
+    <message>
+        <source>QZ Support</source>
+        <translation>QZ-ondersteuning</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation>Gereed</translation>
+    </message>
+    <message>
+        <source>Hide keyboard</source>
+        <translation>Toetsenbord verbergen</translation>
+    </message>
+    <message>
+        <source>Close support request</source>
+        <translation>Ondersteuningsverzoek sluiten</translation>
+    </message>
+    <message>
+        <source>Tell us what is not working. QZ will add your device and app information.</source>
+        <translation>Vertel ons wat niet werkt. QZ voegt informatie over je apparaat en de app toe.</translation>
+    </message>
+    <message>
+        <source>Describe the problem...</source>
+        <translation>Beschrijf het probleem...</translation>
+    </message>
+    <message>
+        <source>Describe the problem</source>
+        <translation>Beschrijf het probleem</translation>
+    </message>
+    <message>
+        <source>Attach debug log if available</source>
+        <translation>Debuglog bijvoegen indien beschikbaar</translation>
+    </message>
+    <message>
+        <source>You can review or edit the email before sending it. Nothing is sent automatically.</source>
+        <translation>Je kunt de e-mail bekijken of bewerken voordat je deze verstuurt. Er wordt niets automatisch verzonden.</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuleren</translation>
+    </message>
+    <message>
+        <source>Open email</source>
+        <translation>E-mail openen</translation>
     </message>
 </context>
 <context>
@@ -1447,6 +1510,18 @@ Wil je de QZ-instellingen bijwerken?</translation>
         <translation>Zoeken (inclusief submappen)…</translation>
     </message>
     <message>
+        <source>Parent folder</source>
+        <translation>Bovenliggende map</translation>
+    </message>
+    <message>
+        <source>No workouts found</source>
+        <translation>Geen trainingen gevonden</translation>
+    </message>
+    <message>
+        <source>No workouts here</source>
+        <translation>Geen trainingen hier</translation>
+    </message>
+    <message>
         <source>Other folders</source>
         <translation>Andere mappen</translation>
     </message>
@@ -1477,18 +1552,6 @@ Wil je de QZ-instellingen bijwerken?</translation>
     <message>
         <source>Start Workout</source>
         <translation>Training starten</translation>
-    </message>
-    <message>
-        <source>Parent folder</source>
-        <translation>Bovenliggende map</translation>
-    </message>
-    <message>
-        <source>No workouts here</source>
-        <translation>Geen trainingen hier</translation>
-    </message>
-    <message>
-        <source>No workouts found</source>
-        <translation>Geen trainingen gevonden</translation>
     </message>
 </context>
 <context>
@@ -1663,14 +1726,6 @@ Wil je de QZ-instellingen bijwerken?</translation>
         <translation>Roeitrainer</translation>
     </message>
     <message>
-        <source>Jump Rope</source>
-        <translation>Springtouw</translation>
-    </message>
-    <message>
-        <source>Stair Climber</source>
-        <translation>Stepper</translation>
-    </message>
-    <message>
         <source>Workout Editor</source>
         <translation>Trainingseditor</translation>
     </message>
@@ -1818,28 +1873,12 @@ Wil je de QZ-instellingen bijwerken?</translation>
         <translation>Max. snelheid</translation>
     </message>
     <message>
-        <source>Max Incline</source>
-        <translation>Max. helling</translation>
-    </message>
-    <message>
         <source>Max Resistance</source>
         <translation>Max. weerstand</translation>
     </message>
     <message>
         <source>Ramp</source>
         <translation>Ramp</translation>
-    </message>
-    <message>
-        <source>Ramp Unit</source>
-        <translation>Ramp-eenheid</translation>
-    </message>
-    <message>
-        <source>Ramp From</source>
-        <translation>Ramp van</translation>
-    </message>
-    <message>
-        <source>Ramp To</source>
-        <translation>Ramp tot</translation>
     </message>
     <message>
         <source>Stroke Rate</source>
@@ -2038,34 +2077,6 @@ Wil je de QZ-instellingen bijwerken?</translation>
         <translation>Fout bij herhalen van selectie: {message}</translation>
     </message>
     <message>
-        <source>Block repeated {times} times</source>
-        <translation>Blok {times} keer herhaald</translation>
-    </message>
-    <message>
-        <source>Loaded {name}</source>
-        <translation>{name} geladen</translation>
-    </message>
-    <message>
-        <source>Deleted {name}</source>
-        <translation>{name} verwijderd</translation>
-    </message>
-    <message>
-        <source>Untitled Workout</source>
-        <translation>Naamloze training</translation>
-    </message>
-    <message>
-        <source>Time</source>
-        <translation>Tijd</translation>
-    </message>
-    <message>
-        <source>Duration {value}</source>
-        <translation>Duur: {value}</translation>
-    </message>
-    <message>
-        <source>{count} intervals</source>
-        <translation>{count} intervallen</translation>
-    </message>
-    <message>
         <source>Training Programs Browser</source>
         <translation>Overzicht trainingsprogramma&apos;s</translation>
     </message>
@@ -2185,6 +2196,130 @@ Wil je de QZ-instellingen bijwerken?</translation>
         <translation>Doelhelling</translation>
     </message>
     <message>
+        <source>Peloton Workout in progress!</source>
+        <translation>Peloton-training bezig!</translation>
+    </message>
+    <message>
+        <source>Do you want to follow the resistance?</source>
+        <translation>Doelweerstand volgen?</translation>
+    </message>
+    <message>
+        <source>SPEED</source>
+        <translation>SNELHEID</translation>
+    </message>
+    <message>
+        <source>INCLINE</source>
+        <translation>HELLING</translation>
+    </message>
+    <message>
+        <source>PACE</source>
+        <translation>TEMPO</translation>
+    </message>
+    <message>
+        <source>ELEV.</source>
+        <translation>HOOGTE</translation>
+    </message>
+    <message>
+        <source>CADENCE</source>
+        <translation>CADANS</translation>
+    </message>
+    <message>
+        <source>PULSE</source>
+        <translation>HARTSLAG</translation>
+    </message>
+    <message>
+        <source>POWER</source>
+        <translation>VERMOGEN</translation>
+    </message>
+    <message>
+        <source>RESISTANCE</source>
+        <translation>WEERSTAND</translation>
+    </message>
+    <message>
+        <source>CALORIES</source>
+        <translation>CALORIEËN</translation>
+    </message>
+    <message>
+        <source>DISTANCE</source>
+        <translation>AFSTAND</translation>
+    </message>
+    <message>
+        <source>Heart</source>
+        <translation>Hartslag</translation>
+    </message>
+    <message>
+        <source>Odometer</source>
+        <translation>Totale afstand</translation>
+    </message>
+    <message>
+        <source>Watt</source>
+        <translation>Vermogen</translation>
+    </message>
+    <message>
+        <source>Elapsed</source>
+        <translation>Verstreken</translation>
+    </message>
+    <message>
+        <source>Inclination</source>
+        <translation>Helling</translation>
+    </message>
+    <message>
+        <source>Altitude</source>
+        <translation>Hoogte</translation>
+    </message>
+    <message>
+        <source>Elevation</source>
+        <translation>Hoogtemeters</translation>
+    </message>
+    <message>
+        <source>Jump Rope</source>
+        <translation>Springtouw</translation>
+    </message>
+    <message>
+        <source>Stair Climber</source>
+        <translation>Stepper</translation>
+    </message>
+    <message>
+        <source>Ramp Unit</source>
+        <translation>Ramp-eenheid</translation>
+    </message>
+    <message>
+        <source>Ramp From</source>
+        <translation>Ramp van</translation>
+    </message>
+    <message>
+        <source>Ramp To</source>
+        <translation>Ramp tot</translation>
+    </message>
+    <message>
+        <source>Block repeated {times} times</source>
+        <translation>Blok {times} keer herhaald</translation>
+    </message>
+    <message>
+        <source>Loaded {name}</source>
+        <translation>{name} geladen</translation>
+    </message>
+    <message>
+        <source>Deleted {name}</source>
+        <translation>{name} verwijderd</translation>
+    </message>
+    <message>
+        <source>Untitled Workout</source>
+        <translation>Naamloze training</translation>
+    </message>
+    <message>
+        <source>Time</source>
+        <translation>Tijd</translation>
+    </message>
+    <message>
+        <source>Duration {value}</source>
+        <translation>Duur: {value}</translation>
+    </message>
+    <message>
+        <source>{count} intervals</source>
+        <translation>{count} intervallen</translation>
+    </message>
+    <message>
         <source>Heart Rate</source>
         <translation>Hartslag</translation>
     </message>
@@ -2245,78 +2380,6 @@ Wil je de QZ-instellingen bijwerken?</translation>
         <translation>Hartslag &lt;{value} bpm</translation>
     </message>
     <message>
-        <source>W</source>
-        <translation>W</translation>
-    </message>
-    <message>
-        <source>kJ</source>
-        <translation>kJ</translation>
-    </message>
-    <message>
-        <source>kcal</source>
-        <translation>kcal</translation>
-    </message>
-    <message>
-        <source>km</source>
-        <translation>km</translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>rpm</source>
-        <translation>rpm</translation>
-    </message>
-    <message>
-        <source>bpm</source>
-        <translation>bpm</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>min/km</source>
-        <translation>min/km</translation>
-    </message>
-    <message>
-        <source>min/mi</source>
-        <translation>min/mi</translation>
-    </message>
-    <message>
-        <source>Full screen</source>
-        <translation>Volledig scherm</translation>
-    </message>
-    <message>
-        <source>Exit full screen</source>
-        <translation>Volledig scherm sluiten</translation>
-    </message>
-    <message>
-        <source>Swipe left or right to switch charts</source>
-        <translation>Veeg naar links of rechts om van grafiek te wisselen</translation>
-    </message>
-    <message>
-        <source>A workout named {name} already exists. Replace it?</source>
-        <translation>Er bestaat al een training met de naam {name}. Vervangen?</translation>
-    </message>
-    <message>
-        <source>Replace</source>
-        <translation>Vervangen</translation>
-    </message>
-    <message>
-        <source>lvl</source>
-        <translation>niv.</translation>
-    </message>
-    <message>
-        <source>spm</source>
-        <translation>spm</translation>
-    </message>
-    <message>
         <source>Marathon</source>
         <translation>Marathon</translation>
     </message>
@@ -2335,14 +2398,6 @@ Wil je de QZ-instellingen bijwerken?</translation>
     <message>
         <source>1 Mile</source>
         <translation>1 mijl</translation>
-    </message>
-    <message>
-        <source>Peloton Workout in progress!</source>
-        <translation>Peloton-training bezig!</translation>
-    </message>
-    <message>
-        <source>Do you want to follow the resistance?</source>
-        <translation>Doelweerstand volgen?</translation>
     </message>
     <message>
         <source>AVG</source>
@@ -2443,72 +2498,80 @@ Wil je de QZ-instellingen bijwerken?</translation>
         <translation>Automatische weerstand</translation>
     </message>
     <message>
-        <source>SPEED</source>
-        <translation>SNELHEID</translation>
+        <source>Max Incline</source>
+        <translation>Max. helling</translation>
     </message>
     <message>
-        <source>INCLINE</source>
-        <translation>HELLING</translation>
+        <source>W</source>
+        <translation>W</translation>
     </message>
     <message>
-        <source>PACE</source>
-        <translation>TEMPO</translation>
+        <source>kJ</source>
+        <translation>kJ</translation>
     </message>
     <message>
-        <source>ELEV.</source>
-        <translation>HOOGTE</translation>
+        <source>kcal</source>
+        <translation>kcal</translation>
     </message>
     <message>
-        <source>CADENCE</source>
-        <translation>CADANS</translation>
+        <source>km</source>
+        <translation>km</translation>
     </message>
     <message>
-        <source>PULSE</source>
-        <translation>HARTSLAG</translation>
+        <source>mi</source>
+        <translation>mi</translation>
     </message>
     <message>
-        <source>POWER</source>
-        <translation>VERMOGEN</translation>
+        <source>rpm</source>
+        <translation>rpm</translation>
     </message>
     <message>
-        <source>RESISTANCE</source>
-        <translation>WEERSTAND</translation>
+        <source>bpm</source>
+        <translation>bpm</translation>
     </message>
     <message>
-        <source>CALORIES</source>
-        <translation>CALORIEËN</translation>
+        <source>km/h</source>
+        <translation>km/h</translation>
     </message>
     <message>
-        <source>DISTANCE</source>
-        <translation>AFSTAND</translation>
+        <source>mph</source>
+        <translation>mph</translation>
     </message>
     <message>
-        <source>Heart</source>
-        <translation>Hartslag</translation>
+        <source>min/km</source>
+        <translation>min/km</translation>
     </message>
     <message>
-        <source>Odometer</source>
-        <translation>Totale afstand</translation>
+        <source>min/mi</source>
+        <translation>min/mi</translation>
     </message>
     <message>
-        <source>Watt</source>
-        <translation>Vermogen</translation>
+        <source>Full screen</source>
+        <translation>Volledig scherm</translation>
     </message>
     <message>
-        <source>Elapsed</source>
-        <translation>Verstreken</translation>
+        <source>Exit full screen</source>
+        <translation>Volledig scherm sluiten</translation>
     </message>
     <message>
-        <source>Inclination</source>
-        <translation>Helling</translation>
+        <source>Swipe left or right to switch charts</source>
+        <translation>Veeg naar links of rechts om van grafiek te wisselen</translation>
     </message>
     <message>
-        <source>Altitude</source>
-        <translation>Hoogte</translation>
+        <source>A workout named {name} already exists. Replace it?</source>
+        <translation>Er bestaat al een training met de naam {name}. Vervangen?</translation>
     </message>
     <message>
-        <source>Elevation</source>
-        <translation>Hoogtemeters</translation>
+        <source>Replace</source>
+        <translation>Vervangen</translation>
+    </message>
+    <message>
+        <source>lvl</source>
+        <translation>niv.</translation>
+    </message>
+    <message>
+        <source>spm</source>
+        <translation>spm</translation>
     </message>
     <message>
         <source>Enter a number</source>
@@ -2606,22 +2669,6 @@ Met de volgende vragen stem je QZ af op je apparatuur en doelen.</translation>
         <translation>Welk fitnessapparaat heb je?</translation>
     </message>
     <message>
-        <source>Bike</source>
-        <translation>Fiets</translation>
-    </message>
-    <message>
-        <source>Treadmill</source>
-        <translation>Loopband</translation>
-    </message>
-    <message>
-        <source>Rower</source>
-        <translation>Roeitrainer</translation>
-    </message>
-    <message>
-        <source>Elliptical</source>
-        <translation>Crosstrainer</translation>
-    </message>
-    <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
@@ -2632,14 +2679,6 @@ Met de volgende vragen stem je QZ af op je apparatuur en doelen.</translation>
     <message>
         <source>QZ allows you to connect to both of them, even simultaneously if you want!</source>
         <translation>QZ kan met allebei verbinding maken, zelfs tegelijk als je wilt!</translation>
-    </message>
-    <message>
-        <source>Other app</source>
-        <translation>Andere app</translation>
-    </message>
-    <message>
-        <source>QZ Standalone</source>
-        <translation>Alleen QZ</translation>
     </message>
     <message>
         <source>Connect to Peloton</source>
@@ -2662,18 +2701,6 @@ Met de volgende vragen stem je QZ af op je apparatuur en doelen.</translation>
         <translation>Moeilijkheidsgraad</translation>
     </message>
     <message>
-        <source>lower</source>
-        <translation>ondergrens</translation>
-    </message>
-    <message>
-        <source>upper</source>
-        <translation>bovengrens</translation>
-    </message>
-    <message>
-        <source>average</source>
-        <translation>gemiddelde</translation>
-    </message>
-    <message>
         <source>Finish</source>
         <translation>Voltooien</translation>
     </message>
@@ -2688,6 +2715,18 @@ Met de volgende vragen stem je QZ af op je apparatuur en doelen.</translation>
     <message>
         <source>Next</source>
         <translation>Volgende</translation>
+    </message>
+    <message>
+        <source>Your equipment, units and profile, step by step</source>
+        <translation>Je apparaat, eenheden en profiel, stap voor stap</translation>
+    </message>
+    <message>
+        <source>Pick a topic and go straight to its settings</source>
+        <translation>Kies een onderwerp en ga meteen naar de instellingen ervan</translation>
+    </message>
+    <message>
+        <source>Close the wizard</source>
+        <translation>Wizard sluiten</translation>
     </message>
     <message>
         <source>Custom Configurations</source>
@@ -2790,14 +2829,6 @@ Met de volgende vragen stem je QZ af op je apparatuur en doelen.</translation>
         <translation>Kies je fitnessapparaat</translation>
     </message>
     <message>
-        <source>Disabled</source>
-        <translation>Uitgeschakeld</translation>
-    </message>
-    <message>
-        <source>Refresh</source>
-        <translation>Vernieuwen</translation>
-    </message>
-    <message>
         <source>Unit System</source>
         <translation>Eenhedenstelsel</translation>
     </message>
@@ -2806,28 +2837,8 @@ Met de volgende vragen stem je QZ af op je apparatuur en doelen.</translation>
         <translation>Kies het eenhedenstelsel dat je wilt gebruiken</translation>
     </message>
     <message>
-        <source>Metric</source>
-        <translation>Metrisch</translation>
-    </message>
-    <message>
-        <source>Imperial</source>
-        <translation>Imperiaal</translation>
-    </message>
-    <message>
         <source>User Information</source>
         <translation>Gebruikersgegevens</translation>
-    </message>
-    <message>
-        <source>Weight (%1)</source>
-        <translation>Gewicht (%1)</translation>
-    </message>
-    <message>
-        <source>lbs</source>
-        <translation>lbs</translation>
-    </message>
-    <message>
-        <source>kg</source>
-        <translation>kg</translation>
     </message>
     <message>
         <source>Age</source>
@@ -2836,14 +2847,6 @@ Met de volgende vragen stem je QZ af op je apparatuur en doelen.</translation>
     <message>
         <source>Gender</source>
         <translation>Geslacht</translation>
-    </message>
-    <message>
-        <source>Male</source>
-        <translation>Man</translation>
-    </message>
-    <message>
-        <source>Female</source>
-        <translation>Vrouw</translation>
     </message>
     <message>
         <source>Select Your Heart Rate Device</source>
@@ -2874,16 +2877,76 @@ Met de volgende vragen stem je QZ af op je apparatuur en doelen.</translation>
         <translation>Garmin-horloge</translation>
     </message>
     <message>
-        <source>Your equipment, units and profile, step by step</source>
-        <translation>Je apparaat, eenheden en profiel, stap voor stap</translation>
+        <source>Bike</source>
+        <translation>Fiets</translation>
     </message>
     <message>
-        <source>Pick a topic and go straight to its settings</source>
-        <translation>Kies een onderwerp en ga meteen naar de instellingen ervan</translation>
+        <source>Treadmill</source>
+        <translation>Loopband</translation>
     </message>
     <message>
-        <source>Close the wizard</source>
-        <translation>Wizard sluiten</translation>
+        <source>Rower</source>
+        <translation>Roeitrainer</translation>
+    </message>
+    <message>
+        <source>Elliptical</source>
+        <translation>Crosstrainer</translation>
+    </message>
+    <message>
+        <source>Other app</source>
+        <translation>Andere app</translation>
+    </message>
+    <message>
+        <source>QZ Standalone</source>
+        <translation>Alleen QZ</translation>
+    </message>
+    <message>
+        <source>lower</source>
+        <translation>ondergrens</translation>
+    </message>
+    <message>
+        <source>upper</source>
+        <translation>bovengrens</translation>
+    </message>
+    <message>
+        <source>average</source>
+        <translation>gemiddelde</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Uitgeschakeld</translation>
+    </message>
+    <message>
+        <source>Refresh</source>
+        <translation>Vernieuwen</translation>
+    </message>
+    <message>
+        <source>Metric</source>
+        <translation>Metrisch</translation>
+    </message>
+    <message>
+        <source>Imperial</source>
+        <translation>Imperiaal</translation>
+    </message>
+    <message>
+        <source>Weight (%1)</source>
+        <translation>Gewicht (%1)</translation>
+    </message>
+    <message>
+        <source>Male</source>
+        <translation>Man</translation>
+    </message>
+    <message>
+        <source>Female</source>
+        <translation>Vrouw</translation>
+    </message>
+    <message>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <source>kg</source>
+        <translation>kg</translation>
     </message>
 </context>
 <context>
@@ -3021,16 +3084,28 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Kan het trainingsprogramma niet laden. Controleer of het bestand bestaat.</translation>
     </message>
     <message>
-        <source>mi</source>
-        <translation>mi</translation>
+        <source>Import FIT File...</source>
+        <translation>FIT-bestand importeren…</translation>
     </message>
     <message>
-        <source>km</source>
-        <translation>km</translation>
+        <source>Import from QZ Folder...</source>
+        <translation>Importeren uit QZ-map…</translation>
     </message>
     <message>
-        <source>kcal</source>
-        <translation>kcal</translation>
+        <source>Please choose a file</source>
+        <translation>Kies een bestand</translation>
+    </message>
+    <message>
+        <source>FIT files (*.fit *.FIT)</source>
+        <translation>FIT-bestanden (*.fit *.FIT)</translation>
+    </message>
+    <message>
+        <source>All files (*)</source>
+        <translation>Alle bestanden (*)</translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FIT-bestand delen</translation>
     </message>
     <message>
         <source>Upload to Strava</source>
@@ -3105,16 +3180,16 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Sluiten</translation>
     </message>
     <message>
+        <source>Filter by date</source>
+        <translation>Filteren op datum</translation>
+    </message>
+    <message>
         <source>Calendar</source>
         <translation>Kalender</translation>
     </message>
     <message>
-        <source>No workouts yet</source>
-        <translation>Nog geen trainingen</translation>
-    </message>
-    <message>
-        <source>No workouts on this day</source>
-        <translation>Geen trainingen op deze dag</translation>
+        <source>Import workouts</source>
+        <translation>Trainingen importeren</translation>
     </message>
     <message>
         <source>Adding workouts to the history</source>
@@ -3133,12 +3208,36 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Trainingsbestanden worden gekopieerd: %1 van %2</translation>
     </message>
     <message>
-        <source>Open on Peloton</source>
-        <translation>Openen in Peloton</translation>
+        <source>No workouts on this day</source>
+        <translation>Geen trainingen op deze dag</translation>
+    </message>
+    <message>
+        <source>No workouts yet</source>
+        <translation>Nog geen trainingen</translation>
     </message>
     <message>
         <source>Finished workouts appear here: open one to see its charts.</source>
         <translation>Afgeronde trainingen verschijnen hier: open er een om de grafieken te bekijken.</translation>
+    </message>
+    <message>
+        <source>Open on Peloton</source>
+        <translation>Openen in Peloton</translation>
+    </message>
+    <message>
+        <source>Load training program</source>
+        <translation>Trainingsprogramma laden</translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>kcal</source>
+        <translation>kcal</translation>
     </message>
     <message>
         <source>Previous month</source>
@@ -3147,42 +3246,6 @@ Bij de eerste start kan dit even duren.</translation>
     <message>
         <source>Next month</source>
         <translation>Volgende maand</translation>
-    </message>
-    <message>
-        <source>Import FIT File...</source>
-        <translation>FIT-bestand importeren…</translation>
-    </message>
-    <message>
-        <source>Import from QZ Folder...</source>
-        <translation>Importeren uit QZ-map…</translation>
-    </message>
-    <message>
-        <source>Please choose a file</source>
-        <translation>Kies een bestand</translation>
-    </message>
-    <message>
-        <source>FIT files (*.fit *.FIT)</source>
-        <translation>FIT-bestanden (*.fit *.FIT)</translation>
-    </message>
-    <message>
-        <source>All files (*)</source>
-        <translation>Alle bestanden (*)</translation>
-    </message>
-    <message>
-        <source>Share FIT file</source>
-        <translation>FIT-bestand delen</translation>
-    </message>
-    <message>
-        <source>Filter by date</source>
-        <translation>Filteren op datum</translation>
-    </message>
-    <message>
-        <source>Import workouts</source>
-        <translation>Trainingen importeren</translation>
-    </message>
-    <message>
-        <source>Load training program</source>
-        <translation>Trainingsprogramma laden</translation>
     </message>
     <message>
         <source>has a workout</source>
@@ -3304,16 +3367,16 @@ Bij de eerste start kan dit even duren.</translation>
 <context>
     <name>gears</name>
     <message>
-        <source>Wahoo Options</source>
-        <translation>Wahoo-opties</translation>
-    </message>
-    <message>
         <source>Without Wheel Diameter Protocol</source>
         <translation>Zonder wieldiameterprotocol</translation>
     </message>
     <message>
         <source>Enable this for simplified Wahoo protocol that adds gears directly to grade instead of using wheel diameter changes. Default is false.</source>
         <translation>Schakel dit in voor het vereenvoudigde Wahoo-protocol, dat versnellingen rechtstreeks bij het hellingspercentage optelt in plaats van de wieldiameter te wijzigen. Standaard: uit.</translation>
+    </message>
+    <message>
+        <source>Wahoo Options</source>
+        <translation>Wahoo-opties</translation>
     </message>
     <message>
         <source>Chainring Size</source>
@@ -3378,30 +3441,6 @@ Bij de eerste start kan dit even duren.</translation>
 </context>
 <context>
     <name>homeform</name>
-    <message>
-        <source>Bluetooth is off</source>
-        <translation>Bluetooth staat uit</translation>
-    </message>
-    <message>
-        <source>Searching for the device...</source>
-        <translation>Apparaat zoeken…</translation>
-    </message>
-    <message>
-        <source>Connecting to %1...</source>
-        <translation>Verbinden met %1...</translation>
-    </message>
-    <message>
-        <source>Search stopped, tap the Bluetooth icon</source>
-        <translation>Zoeken gestopt, tik op het Bluetooth-pictogram</translation>
-    </message>
-    <message>
-        <source>Next search in %1 s</source>
-        <translation>Volgende zoekactie over %1 s</translation>
-    </message>
-    <message>
-        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
-        <translation>Android staat 5 Bluetooth-zoekacties per 30 s toe, de volgende start over %1 s</translation>
-    </message>
     <message>
         <source>Speed (%1/h)</source>
         <translation>Snelheid (%1/h)</translation>
@@ -3592,58 +3631,8 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Klimmen</translation>
     </message>
     <message>
-        <source>Watts</source>
-        <translation>Vermogen</translation>
-    </message>
-    <message>
-        <source>km</source>
-        <translation>km</translation>
-    </message>
-    <message>
-        <source>m</source>
-        <comment>unit: meters</comment>
-        <translation>m</translation>
-    </message>
-    <message>
-        <source>Kg</source>
-        <translation>kg</translation>
-    </message>
-    <message>
-        <source>cm</source>
-        <translation>cm</translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>ft</source>
-        <translation>ft</translation>
-    </message>
-    <message>
-        <source>in</source>
-        <comment>unit: inches</comment>
-        <translation>in</translation>
-    </message>
-    <message>
-        <source>Oz</source>
-        <translation>oz</translation>
-    </message>
-    <message>
-        <source>AVG Watts</source>
-        <translation>Gem. vermogen</translation>
-    </message>
-    <message>
         <source>Power Avg</source>
         <translation>Vermogensmiddeling</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation>Uit</translation>
-    </message>
-    <message>
-        <source>HRV (ms)</source>
-        <translation>HRV (ms)</translation>
     </message>
     <message>
         <source>PID Heart</source>
@@ -3670,26 +3659,6 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Stappen</translation>
     </message>
     <message>
-        <source>Odometer (m)</source>
-        <translation>Totale afstand (m)</translation>
-    </message>
-    <message>
-        <source>Pace (m/500m)</source>
-        <translation>Tempo (min/500 m)</translation>
-    </message>
-    <message>
-        <source>Avg Pace (m/500m)</source>
-        <translation>Gem. tempo (min/500 m)</translation>
-    </message>
-    <message>
-        <source>T.Pace(m/500m)</source>
-        <translation>Doeltempo (min/500 m)</translation>
-    </message>
-    <message>
-        <source>%1 found</source>
-        <translation>%1 gevonden</translation>
-    </message>
-    <message>
         <source>Stop</source>
         <translation>Stop</translation>
     </message>
@@ -3707,26 +3676,6 @@ Bij de eerste start kan dit even duren.</translation>
             <lengthvariant>Hervatten</lengthvariant>
             <lengthvariant>Verder</lengthvariant>
         </translation>
-    </message>
-    <message>
-        <source>offset </source>
-        <translation>correctie </translation>
-    </message>
-    <message>
-        <source> /min</source>
-        <translation> /min</translation>
-    </message>
-    <message>
-        <source> sec.</source>
-        <translation> s</translation>
-    </message>
-    <message>
-        <source>Incl: </source>
-        <translation>Hell.: </translation>
-    </message>
-    <message>
-        <source>%1%2W</source>
-        <translation>%1%2W</translation>
     </message>
     <message>
         <source>Rec.</source>
@@ -3773,34 +3722,6 @@ Bij de eerste start kan dit even duren.</translation>
     <message>
         <source>N/A</source>
         <translation>n.v.t.</translation>
-    </message>
-    <message>
-        <source>3s avg</source>
-        <translation>Gem. 3 s</translation>
-    </message>
-    <message>
-        <source>5s avg</source>
-        <translation>Gem. 5 s</translation>
-    </message>
-    <message>
-        <source>Gain: </source>
-        <translation>Factor: </translation>
-    </message>
-    <message>
-        <source>MIN: </source>
-        <translation>Min.: </translation>
-    </message>
-    <message>
-        <source>W </source>
-        <translation>W </translation>
-    </message>
-    <message>
-        <source>Share FIT file</source>
-        <translation>FIT-bestand delen</translation>
-    </message>
-    <message>
-        <source>The FIT file of this workout could not be shared</source>
-        <translation>Het FIT-bestand van deze training kon niet worden gedeeld</translation>
     </message>
     <message>
         <source>, speed </source>
@@ -3996,24 +3917,20 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Fout bij het ophalen van het toegangstoken, %1 (%2)</translation>
     </message>
     <message>
-        <source>License Approved!</source>
-        <translation>Licentie goedgekeurd!</translation>
+        <source>Watts</source>
+        <translation>Vermogen</translation>
     </message>
     <message>
-        <source>License not found</source>
-        <translation>Licentie niet gevonden</translation>
+        <source>AVG Watts</source>
+        <translation>Gem. vermogen</translation>
     </message>
     <message>
-        <source>The workout file could not be opened.</source>
-        <translation>Kan het trainingsbestand niet openen.</translation>
+        <source>The workout history database could not be opened.</source>
+        <translation>Kan de database met de trainingsgeschiedenis niet openen.</translation>
     </message>
     <message>
-        <source>The workout file could not be copied.</source>
-        <translation>Kan het trainingsbestand niet kopiëren.</translation>
-    </message>
-    <message>
-        <source>No workout files (.fit) found.</source>
-        <translation>Geen trainingsbestanden (.fit) gevonden.</translation>
+        <source>Wi-Fi connection (DirCon) restarted</source>
+        <translation>Wi-Fi-verbinding (DirCon) opnieuw gestart</translation>
     </message>
     <message>
         <source>Workouts imported: %1.</source>
@@ -4040,12 +3957,162 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Zonder trainingsgegevens: %1.</translation>
     </message>
     <message>
-        <source>The workout history database could not be opened.</source>
-        <translation>Kan de database met de trainingsgeschiedenis niet openen.</translation>
+        <source>The workout file could not be opened.</source>
+        <translation>Kan het trainingsbestand niet openen.</translation>
     </message>
     <message>
-        <source>Wi-Fi connection (DirCon) restarted</source>
-        <translation>Wi-Fi-verbinding (DirCon) opnieuw gestart</translation>
+        <source>The workout file could not be copied.</source>
+        <translation>Kan het trainingsbestand niet kopiëren.</translation>
+    </message>
+    <message>
+        <source>No workout files (.fit) found.</source>
+        <translation>Geen trainingsbestanden (.fit) gevonden.</translation>
+    </message>
+    <message>
+        <source>License Approved!</source>
+        <translation>Licentie goedgekeurd!</translation>
+    </message>
+    <message>
+        <source>License not found</source>
+        <translation>Licentie niet gevonden</translation>
+    </message>
+    <message>
+        <source>km</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>m</source>
+        <comment>unit: meters</comment>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>Kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <source>mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>ft</source>
+        <translation>ft</translation>
+    </message>
+    <message>
+        <source>in</source>
+        <comment>unit: inches</comment>
+        <translation>in</translation>
+    </message>
+    <message>
+        <source>Oz</source>
+        <translation>oz</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Uit</translation>
+    </message>
+    <message>
+        <source>HRV (ms)</source>
+        <translation>HRV (ms)</translation>
+    </message>
+    <message>
+        <source>Searching for the device...</source>
+        <translation>Apparaat zoeken…</translation>
+    </message>
+    <message>
+        <source>Connecting to %1...</source>
+        <translation>Verbinden met %1...</translation>
+    </message>
+    <message>
+        <source>%1 found</source>
+        <translation>%1 gevonden</translation>
+    </message>
+    <message>
+        <source>Search stopped, tap the Bluetooth icon</source>
+        <translation>Zoeken gestopt, tik op het Bluetooth-pictogram</translation>
+    </message>
+    <message>
+        <source>Next search in %1 s</source>
+        <translation>Volgende zoekactie over %1 s</translation>
+    </message>
+    <message>
+        <source>Android allows 5 Bluetooth searches in 30 s, the next one starts in %1 s</source>
+        <translation>Android staat 5 Bluetooth-zoekacties per 30 s toe, de volgende start over %1 s</translation>
+    </message>
+    <message>
+        <source>Odometer (m)</source>
+        <translation>Totale afstand (m)</translation>
+    </message>
+    <message>
+        <source>Pace (m/500m)</source>
+        <translation>Tempo (min/500 m)</translation>
+    </message>
+    <message>
+        <source>Avg Pace (m/500m)</source>
+        <translation>Gem. tempo (min/500 m)</translation>
+    </message>
+    <message>
+        <source>T.Pace(m/500m)</source>
+        <translation>Doeltempo (min/500 m)</translation>
+    </message>
+    <message>
+        <source>offset </source>
+        <translation>correctie </translation>
+    </message>
+    <message>
+        <source> /min</source>
+        <translation> /min</translation>
+    </message>
+    <message>
+        <source> sec.</source>
+        <translation> s</translation>
+    </message>
+    <message>
+        <source>Incl: </source>
+        <translation>Hell.: </translation>
+    </message>
+    <message>
+        <source>%1%2W</source>
+        <translation>%1%2W</translation>
+    </message>
+    <message>
+        <source>3s avg</source>
+        <translation>Gem. 3 s</translation>
+    </message>
+    <message>
+        <source>5s avg</source>
+        <translation>Gem. 5 s</translation>
+    </message>
+    <message>
+        <source>Gain: </source>
+        <translation>Factor: </translation>
+    </message>
+    <message>
+        <source>MIN: </source>
+        <translation>Min.: </translation>
+    </message>
+    <message>
+        <source>W </source>
+        <translation>W </translation>
+    </message>
+    <message>
+        <source>Share FIT file</source>
+        <translation>FIT-bestand delen</translation>
+    </message>
+    <message>
+        <source>The FIT file of this workout could not be shared</source>
+        <translation>Het FIT-bestand van deze training kon niet worden gedeeld</translation>
+    </message>
+    <message>
+        <source>meters</source>
+        <translation>m</translation>
+    </message>
+    <message>
+        <source>feet</source>
+        <translation>ft</translation>
     </message>
     <message>
         <source>Great workout!</source>
@@ -4180,14 +4247,6 @@ Bij de eerste start kan dit even duren.</translation>
         <translation>Gemiddelde slaglengte: %1</translation>
     </message>
     <message>
-        <source>meters</source>
-        <translation>m</translation>
-    </message>
-    <message>
-        <source>feet</source>
-        <translation>ft</translation>
-    </message>
-    <message>
         <source>QZ target power is overriding the app&apos;s commands. Pause QZ and resume it to give control back to the app.</source>
         <translation>Het QZ-doelvermogen overschrijft de opdrachten van de app. Pauzeer QZ en hervat het om de besturing aan de app terug te geven.</translation>
     </message>
@@ -4320,20 +4379,16 @@ Bij de eerste start kan dit even duren.</translation>
         <source>Unable to open an email application</source>
         <translation>Kan geen e-mailapp openen</translation>
     </message>
+    <message>
+        <source>Bluetooth is off</source>
+        <translation>Bluetooth staat uit</translation>
+    </message>
 </context>
 <context>
     <name>main</name>
     <message>
-        <source>QZ is closing...</source>
-        <translation>QZ wordt afgesloten...</translation>
-    </message>
-    <message>
         <source>qDomyos-Zwift</source>
         <translation>qDomyos-Zwift</translation>
-    </message>
-    <message>
-        <source>Press back again to exit</source>
-        <translation>Druk nogmaals op Terug om af te sluiten</translation>
     </message>
     <message>
         <source>Program has been loaded correctly. Press start to begin!</source>
@@ -4374,10 +4429,6 @@ start de app opnieuw.</translation>
         <translation>QZ heeft Bluetooth-trainingsapparaten in de buurt gevonden. Kies het apparaat dat je voor deze sessie wilt gebruiken.</translation>
     </message>
     <message>
-        <source>Disabled</source>
-        <translation type="vanished">Uitgeschakeld</translation>
-    </message>
-    <message>
         <source>Select a device</source>
         <translation>Kies een apparaat</translation>
     </message>
@@ -4396,28 +4447,6 @@ start de app opnieuw.</translation>
     <message>
         <source>Settings has been loaded correctly. Restart the app!</source>
         <translation>Instellingen zijn correct geladen. Start de app opnieuw!</translation>
-    </message>
-    <message>
-        <source>Saved! Look in the Files app.</source>
-        <translation>Opgeslagen! Kijk in de app Bestanden.</translation>
-    </message>
-    <message>
-        <source>Saved! Look in the app&apos;s private folder.</source>
-        <translation>Opgeslagen! Kijk in de privémap van de app.</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Bestanden herstellen</translation>
-    </message>
-    <message>
-        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
-Do you want to look for them?
-
-In the next window, allow access to the QZ folder.</source>
-        <translation>Trainingsprogramma&apos;s, GPX-routes, instellingenbestanden en profielen van een eerdere installatie staan mogelijk nog in de QZ-map.
-Wil je ernaar zoeken?
-
-Geef in het volgende venster toegang tot de QZ-map.</translation>
     </message>
     <message>
         <source>Saved! Check your private folder (Android)&lt;br&gt;or Files App (iOS)</source>
@@ -4454,14 +4483,6 @@ Wil je dat nu doen?</translation>
         <translation>Zonder deze instelling gebruikt QZ de standaardinstellingen en kunnen de gegevens of de weerstand afwijken.</translation>
     </message>
     <message>
-        <source>Restart now?</source>
-        <translation>Nu opnieuw starten?</translation>
-    </message>
-    <message>
-        <source>This FitShow device also reports bike data. Is it a bike?</source>
-        <translation>Dit FitShow-apparaat stuurt ook fietsgegevens. Is het een fiets?</translation>
-    </message>
-    <message>
         <source>Strava</source>
         <translation>Strava</translation>
     </message>
@@ -4494,90 +4515,34 @@ Do you want to start it now?</source>
 Wil je die nu starten?</translation>
     </message>
     <message>
-        <source>Garmin FTP Update</source>
-        <translation>FTP-update van Garmin</translation>
-    </message>
-    <message>
-        <source>Clipboard Workout</source>
-        <translation>Training uit klembord</translation>
-    </message>
-    <message>
-        <source>Workout found in clipboard:
-%1
-
-Do you want to open the workout preview?</source>
-        <translation>Training gevonden in het klembord:
-%1
-
-Wil je het trainingsvoorbeeld openen?</translation>
-    </message>
-    <message>
-        <source>The clipboard workout has ended.
-
-Do you want to delete the file?</source>
-        <translation>De training uit het klembord is afgelopen.
-
-Wil je het bestand verwijderen?</translation>
-    </message>
-    <message>
-        <source>Echelon Unlock</source>
-        <translation>Echelon ontgrendelen</translation>
-    </message>
-    <message>
-        <source>The bike has been unlocked and cadence is flowing.
-
-Do you want to switch to the classic Bluetooth bridge for this session?</source>
-        <translation>De fiets is ontgrendeld en de cadans komt binnen.
-
-Wil je voor deze sessie overschakelen naar het klassieke virtuele Bluetooth-apparaat?</translation>
-    </message>
-    <message>
-        <source>Echelon Locked Bike</source>
-        <translation>Fiets vergrendeld door Echelon</translation>
-    </message>
-    <message>
-        <source>Your bike is locked by Echelon, but QZ can unlock it.
-
-</source>
-        <translation>Je fiets is vergrendeld door Echelon, maar QZ kan hem ontgrendelen.
-
-</translation>
-    </message>
-    <message>
-        <source>Enable Virtual Echelon in the experimental settings and restart qz, then open the official Echelon app on a separate device and connect to the bike once.
-
-</source>
-        <translation>Schakel ‘Virtuele Echelon’ in bij de experimentele instellingen en start QZ opnieuw. Open daarna de officiële Echelon-app op een ander apparaat en maak één keer verbinding met de fiets.
-
-</translation>
-    </message>
-    <message>
-        <source>After initialization, return to QZ and everything will work normally.
-
-</source>
-        <translation>Ga na de initialisatie terug naar QZ, dan werkt alles weer normaal.
-
-</translation>
-    </message>
-    <message>
-        <source>You have to repeat this for each session, would you like to enable the Virtual Echelon setting now for this?</source>
-        <translation>Je moet dit bij elke sessie herhalen. Wil je de instelling ‘Virtuele Echelon’ daarvoor nu inschakelen?</translation>
-    </message>
-    <message>
-        <source>Yes</source>
-        <translation>Ja</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation>Nee</translation>
-    </message>
-    <message>
         <source>You are already connected to Strava. Do you want to log out?</source>
         <translation>Je bent al verbonden met Strava. Wil je uitloggen?</translation>
     </message>
     <message>
         <source>Peloton</source>
         <translation>Peloton</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the Files app.</source>
+        <translation>Opgeslagen! Kijk in de app Bestanden.</translation>
+    </message>
+    <message>
+        <source>Saved! Look in the app&apos;s private folder.</source>
+        <translation>Opgeslagen! Kijk in de privémap van de app.</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Bestanden herstellen</translation>
+    </message>
+    <message>
+        <source>Training programs, GPX routes, settings files and profiles of a previous installation may still be in the QZ folder.
+Do you want to look for them?
+
+In the next window, allow access to the QZ folder.</source>
+        <translation>Trainingsprogramma&apos;s, GPX-routes, instellingenbestanden en profielen van een eerdere installatie staan mogelijk nog in de QZ-map.
+Wil je ernaar zoeken?
+
+Geef in het volgende venster toegang tot de QZ-map.</translation>
     </message>
     <message>
         <source>You are already connected to Peloton. Do you want to log out?</source>
@@ -4592,20 +4557,6 @@ Wil je voor deze sessie overschakelen naar het klassieke virtuele Bluetooth-appa
         <translation>Je bent al verbonden met Intervals.icu. Wil je uitloggen?</translation>
     </message>
     <message>
-        <source>Please choose a file</source>
-        <translation>Kies een bestand</translation>
-    </message>
-    <message>
-        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
-        <translation>Vergeet niet profiel ‘%1’ op te slaan als je deze wijzigingen in dit profiel wilt bewaren.</translation>
-    </message>
-    <message>
-        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
-No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
-        <translation>Ja: QZ schakelt ‘Fit Plus-fiets’ in en sluit af; open QZ opnieuw om er als fiets verbinding mee te maken.
-Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog steeds handmatig instellen: ‘Fit Plus-fiets’ in ‘Fitplus-fietsopties’).</translation>
-    </message>
-    <message>
         <source>Back</source>
         <translation>Terug</translation>
     </message>
@@ -4616,14 +4567,6 @@ Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog 
     <message>
         <source>Floating window</source>
         <translation>Zwevend venster</translation>
-    </message>
-    <message>
-        <source>Auto Resistance enabled</source>
-        <translation>Automatische weerstand ingeschakeld</translation>
-    </message>
-    <message>
-        <source>Auto Resistance disabled</source>
-        <translation>Automatische weerstand uitgeschakeld</translation>
     </message>
     <message>
         <source>You can move the tiles!</source>
@@ -4662,12 +4605,12 @@ Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog 
         <translation>FIT-bestand delen</translation>
     </message>
     <message>
-        <source>Lock tiles</source>
-        <translation>Tegels vergrendelen</translation>
-    </message>
-    <message>
         <source>Unlock tiles</source>
         <translation>Tegels ontgrendelen</translation>
+    </message>
+    <message>
+        <source>Lock tiles</source>
+        <translation>Tegels vergrendelen</translation>
     </message>
     <message>
         <source>Disable auto resistance</source>
@@ -4766,10 +4709,6 @@ Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog 
         <translation>Verbinden met Intervals.icu</translation>
     </message>
     <message>
-        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
-        <translation>QDomyos-Zwift – brug tussen fitnessapparaten en apps</translation>
-    </message>
-    <message>
         <source>Workout</source>
         <translation>Training</translation>
     </message>
@@ -4780,6 +4719,28 @@ Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog 
     <message>
         <source>Services</source>
         <translation>Diensten</translation>
+    </message>
+    <message>
+        <source>QDomyos-Zwift - Fitness Equipment Bridge</source>
+        <translation>QDomyos-Zwift – brug tussen fitnessapparaten en apps</translation>
+    </message>
+    <message>
+        <source>Remember to save profile &quot;%1&quot; if you want to keep these changes in this profile.</source>
+        <translation>Vergeet niet profiel ‘%1’ op te slaan als je deze wijzigingen in dit profiel wilt bewaren.</translation>
+    </message>
+    <message>
+        <source>Yes: QZ enables &quot;Fit Plus Bike&quot; and closes, open it again to connect to it as a bike.
+No: QZ keeps it as a treadmill and won&apos;t ask again (a bike can still be set by hand: &quot;Fit Plus Bike&quot; in Fitplus Bike Options).</source>
+        <translation>Ja: QZ schakelt ‘Fit Plus-fiets’ in en sluit af; open QZ opnieuw om er als fiets verbinding mee te maken.
+Nee: QZ houdt het als loopband en vraagt het niet opnieuw (een fiets kun je nog steeds handmatig instellen: ‘Fit Plus-fiets’ in ‘Fitplus-fietsopties’).</translation>
+    </message>
+    <message>
+        <source>Press back again to exit</source>
+        <translation>Druk nogmaals op Terug om af te sluiten</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation type="vanished">Uitgeschakeld</translation>
     </message>
     <message>
         <source>Camera Cutout</source>
@@ -4824,6 +4785,92 @@ Wil je ernaar zoeken?
 Geef in het volgende venster toegang tot de QZ-map.</translation>
     </message>
     <message>
+        <source>Restart now?</source>
+        <translation>Nu opnieuw starten?</translation>
+    </message>
+    <message>
+        <source>This FitShow device also reports bike data. Is it a bike?</source>
+        <translation>Dit FitShow-apparaat stuurt ook fietsgegevens. Is het een fiets?</translation>
+    </message>
+    <message>
+        <source>Garmin FTP Update</source>
+        <translation>FTP-update van Garmin</translation>
+    </message>
+    <message>
+        <source>Clipboard Workout</source>
+        <translation>Training uit klembord</translation>
+    </message>
+    <message>
+        <source>Workout found in clipboard:
+%1
+
+Do you want to open the workout preview?</source>
+        <translation>Training gevonden in het klembord:
+%1
+
+Wil je het trainingsvoorbeeld openen?</translation>
+    </message>
+    <message>
+        <source>The clipboard workout has ended.
+
+Do you want to delete the file?</source>
+        <translation>De training uit het klembord is afgelopen.
+
+Wil je het bestand verwijderen?</translation>
+    </message>
+    <message>
+        <source>Echelon Unlock</source>
+        <translation>Echelon ontgrendelen</translation>
+    </message>
+    <message>
+        <source>The bike has been unlocked and cadence is flowing.
+
+Do you want to switch to the classic Bluetooth bridge for this session?</source>
+        <translation>De fiets is ontgrendeld en de cadans komt binnen.
+
+Wil je voor deze sessie overschakelen naar het klassieke virtuele Bluetooth-apparaat?</translation>
+    </message>
+    <message>
+        <source>Echelon Locked Bike</source>
+        <translation>Fiets vergrendeld door Echelon</translation>
+    </message>
+    <message>
+        <source>Your bike is locked by Echelon, but QZ can unlock it.
+
+</source>
+        <translation>Je fiets is vergrendeld door Echelon, maar QZ kan hem ontgrendelen.
+
+</translation>
+    </message>
+    <message>
+        <source>Enable Virtual Echelon in the experimental settings and restart qz, then open the official Echelon app on a separate device and connect to the bike once.
+
+</source>
+        <translation>Schakel ‘Virtuele Echelon’ in bij de experimentele instellingen en start QZ opnieuw. Open daarna de officiële Echelon-app op een ander apparaat en maak één keer verbinding met de fiets.
+
+</translation>
+    </message>
+    <message>
+        <source>After initialization, return to QZ and everything will work normally.
+
+</source>
+        <translation>Ga na de initialisatie terug naar QZ, dan werkt alles weer normaal.
+
+</translation>
+    </message>
+    <message>
+        <source>You have to repeat this for each session, would you like to enable the Virtual Echelon setting now for this?</source>
+        <translation>Je moet dit bij elke sessie herhalen. Wil je de instelling ‘Virtuele Echelon’ daarvoor nu inschakelen?</translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation>Ja</translation>
+    </message>
+    <message>
+        <source>No</source>
+        <translation>Nee</translation>
+    </message>
+    <message>
         <source>Connection lost in the background</source>
         <translation>Verbinding verbroken op de achtergrond</translation>
     </message>
@@ -4852,6 +4899,18 @@ Geef in het volgende venster toegang tot de QZ-map.</translation>
         <translation>Niet meer vragen</translation>
     </message>
     <message>
+        <source>Auto Resistance enabled</source>
+        <translation>Automatische weerstand ingeschakeld</translation>
+    </message>
+    <message>
+        <source>Auto Resistance disabled</source>
+        <translation>Automatische weerstand uitgeschakeld</translation>
+    </message>
+    <message>
+        <source>Please choose a file</source>
+        <translation>Kies een bestand</translation>
+    </message>
+    <message>
         <source>Wahoo Virtual Gears</source>
         <translation>Virtuele versnellingen van Wahoo</translation>
     </message>
@@ -4866,6 +4925,10 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
 Mag QZ deze waarde wijzigen?
 
 ‘Nee’: QZ schakelt ‘Zonder wieldiameterprotocol’ in (Instellingen &gt; Fietsopties &gt; Wahoo-opties) en virtuele versnellingen werken via het hellingspercentage. Met ‘Ja’ kun je dit later daar ongedaan maken: schakel die optie in en tik, terwijl de trainer verbonden is, op ‘Standaardinstelling van de trainer herstellen’.</translation>
+    </message>
+    <message>
+        <source>QZ is closing...</source>
+        <translation>QZ wordt afgesloten...</translation>
     </message>
 </context>
 <context>
@@ -4906,6 +4969,10 @@ Mag QZ deze waarde wijzigen?
         <translation>Dit profiel verwijderen?</translation>
     </message>
     <message>
+        <source>Delete</source>
+        <translation>Verwijderen</translation>
+    </message>
+    <message>
         <source>Profile Saved</source>
         <translation>Profiel opgeslagen</translation>
     </message>
@@ -4938,22 +5005,6 @@ Mag QZ deze waarde wijzigen?
         <translation>Profielnaam</translation>
     </message>
     <message>
-        <source>Save</source>
-        <translation>Opslaan</translation>
-    </message>
-    <message>
-        <source>Profiles</source>
-        <translation>Profielen</translation>
-    </message>
-    <message>
-        <source>Restore files</source>
-        <translation>Bestanden herstellen</translation>
-    </message>
-    <message>
-        <source>Other folders</source>
-        <translation>Andere mappen</translation>
-    </message>
-    <message>
         <source>New profile</source>
         <translation>Nieuw profiel</translation>
     </message>
@@ -4966,36 +5017,32 @@ Mag QZ deze waarde wijzigen?
         <translation>Tik op een profiel om het te selecteren en daarna op Laden. Lang indrukken om het te verwijderen.</translation>
     </message>
     <message>
-        <source>Load</source>
-        <translation>Laden</translation>
-    </message>
-    <message>
         <source>Active</source>
         <translation>Actief</translation>
     </message>
     <message>
-        <source>Delete</source>
-        <translation>Verwijderen</translation>
+        <source>Load</source>
+        <translation>Laden</translation>
+    </message>
+    <message>
+        <source>Profiles</source>
+        <translation>Profielen</translation>
+    </message>
+    <message>
+        <source>Restore files</source>
+        <translation>Bestanden herstellen</translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation>Opslaan</translation>
+    </message>
+    <message>
+        <source>Other folders</source>
+        <translation>Andere mappen</translation>
     </message>
 </context>
 <context>
     <name>settings</name>
-    <message>
-        <source>Hidden on its page right now: change it here</source>
-        <translation type="vanished">Nu verborgen op de eigen pagina: hier wijzigen</translation>
-    </message>
-    <message>
-        <source>On</source>
-        <translation>Aan</translation>
-    </message>
-    <message>
-        <source>Hidden on its page with the current settings</source>
-        <translation>Verborgen op de eigen pagina met de huidige instellingen</translation>
-    </message>
-    <message>
-        <source>Turn on “%1” to change this setting</source>
-        <translation>Schakel ‘%1’ in om deze instelling te wijzigen</translation>
-    </message>
     <message>
         <source>General</source>
         <translation>Algemeen</translation>
@@ -5265,28 +5312,12 @@ Mag QZ deze waarde wijzigen?
         <translation>Gewicht</translation>
     </message>
     <message>
-        <source>lbs</source>
-        <translation>lbs</translation>
-    </message>
-    <message>
-        <source>kg</source>
-        <translation>kg</translation>
-    </message>
-    <message>
         <source>Enter your weight in kilograms so QZ can more accurately calculate calories burned. NOTE: If you choose to use miles as the unit for distance traveled, you will be asked to enter your weight in pounds (lbs) unless you enable &apos;Use kg for weight&apos;.</source>
         <translation>Vul je gewicht in kilogram in, zodat QZ de verbrande calorieën nauwkeuriger kan berekenen. LET OP: als je mijlen kiest als eenheid voor afstand, moet je je gewicht in pond (lbs) invullen, tenzij je ‘Kg gebruiken voor gewicht’ inschakelt.</translation>
     </message>
     <message>
         <source>Player Height</source>
         <translation>Lengte</translation>
-    </message>
-    <message>
-        <source>ft/in</source>
-        <translation>ft/in</translation>
-    </message>
-    <message>
-        <source>cm</source>
-        <translation>cm</translation>
     </message>
     <message>
         <source>Invalid format! Use feet&apos;inches (e.g., 6&apos;2&quot;)</source>
@@ -5307,14 +5338,6 @@ Mag QZ deze waarde wijzigen?
     <message>
         <source>Gender:</source>
         <translation>Geslacht:</translation>
-    </message>
-    <message>
-        <source>Male</source>
-        <translation>Man</translation>
-    </message>
-    <message>
-        <source>Female</source>
-        <translation>Vrouw</translation>
     </message>
     <message>
         <source>Select your gender so that calories burned can be more accurately calculated.</source>
@@ -5431,10 +5454,6 @@ Mag QZ deze waarde wijzigen?
     <message>
         <source>Heart Belt Name:</source>
         <translation>Naam hartslagband:</translation>
-    </message>
-    <message>
-        <source>Disabled</source>
-        <translation>Uitgeschakeld</translation>
     </message>
     <message>
         <source>Apple Watch users: leave it disabled! Just open the app on your watch</source>
@@ -5573,10 +5592,6 @@ Mag QZ deze waarde wijzigen?
 0.012 = MTB</translation>
     </message>
     <message>
-        <source>Bike Weight (%1)</source>
-        <translation>Gewicht van de fiets (%1)</translation>
-    </message>
-    <message>
         <source>Enables QZ to include the weight of your bike when calculating speed. For example, if you are competing against yourself on VZfit, adding bike weight will &apos;level the playing field&apos; against your virtual self. If you have set QZ to calculate distance in miles, enter the bike weight in pounds (lbs) unless you enable &apos;Use kg for weight&apos;. Default unit is kilograms (kgs).</source>
         <translation>Laat QZ het gewicht van je fiets meenemen bij het berekenen van de snelheid. Als je bijvoorbeeld op VZfit tegen jezelf rijdt, zorgt het fietsgewicht voor gelijke kansen tegenover je virtuele zelf. Als QZ de afstand in mijlen berekent, voer het fietsgewicht dan in pond (lbs) in, tenzij je ‘Kg gebruiken voor gewicht’ hebt ingeschakeld. Standaardeenheid: kilogram (kg).</translation>
     </message>
@@ -5595,154 +5610,6 @@ Mag QZ deze waarde wijzigen?
     <message>
         <source>Enable this setting ONLY when using Zwift in ERG (workout) Mode. QZ will communicate the target resistance (or automatically adjust your resistance if your bike has this capability) to match the target watts based on your cadence (RPM). In ERG Mode, the changes in road slope will not affect target resistance, as is the case in Simulation Mode. Default is off.</source>
         <translation>Schakel deze instelling ALLEEN in als je Zwift in ERG-modus (training) gebruikt. QZ geeft de doelweerstand door (of past je weerstand automatisch aan als je fiets dat kan) zodat je bij je cadans (rpm) het doelvermogen haalt. In ERG-modus hebben veranderingen in de helling van de weg geen invloed op de doelweerstand, anders dan in de simulatiemodus. Standaard: uit.</translation>
-    </message>
-    <message>
-        <source>OpenBikeControl</source>
-        <translation>OpenBikeControl</translation>
-    </message>
-    <message>
-        <source>Enable OpenBikeControl</source>
-        <translation>OpenBikeControl inschakelen</translation>
-    </message>
-    <message>
-        <source>OpenBikeControl enabled: Wahoo direct connect disabled.</source>
-        <translation>OpenBikeControl ingeschakeld: Wahoo Direct Connect uitgeschakeld.</translation>
-    </message>
-    <message>
-        <source>Enable TCP server on port 21587 to send control commands using the OpenBikeControl link protocol</source>
-        <translation>TCP-server op poort 21587 starten om bedieningsopdrachten te sturen via het OpenBikeControl-linkprotocol</translation>
-    </message>
-    <message>
-        <source>Override Local Gear Changes</source>
-        <translation>Lokaal schakelen vervangen</translation>
-    </message>
-    <message>
-        <source>When enabled, gear shift commands go only to OpenBikeControl clients. When disabled, they go to both OpenBikeControl clients and the local gear system</source>
-        <translation>Als dit is ingeschakeld, gaan schakelopdrachten alleen naar OpenBikeControl-clients. Als dit is uitgeschakeld, gaan ze zowel naar OpenBikeControl-clients als naar het eigen versnellingssysteem van QZ</translation>
-    </message>
-    <message>
-        <source>Left Controller Buttons</source>
-        <translation>Knoppen van de linkercontroller</translation>
-    </message>
-    <message>
-        <source>Left Up:</source>
-        <translation>Links omhoog:</translation>
-    </message>
-    <message>
-        <source>Gear Up</source>
-        <translation>Opschakelen</translation>
-    </message>
-    <message>
-        <source>Gear Down</source>
-        <translation>Terugschakelen</translation>
-    </message>
-    <message>
-        <source>Steer Left</source>
-        <translation>Naar links sturen</translation>
-    </message>
-    <message>
-        <source>Steer Right</source>
-        <translation>Naar rechts sturen</translation>
-    </message>
-    <message>
-        <source>U-Turn</source>
-        <translation>Omkeren</translation>
-    </message>
-    <message>
-        <source>Camera Angle</source>
-        <translation>Camerahoek</translation>
-    </message>
-    <message>
-        <source>Emote</source>
-        <translation>Emote</translation>
-    </message>
-    <message>
-        <source>Tuck</source>
-        <translation>Aerohouding</translation>
-    </message>
-    <message>
-        <source>Nav Up</source>
-        <translation>Navigatie omhoog</translation>
-    </message>
-    <message>
-        <source>Nav Down</source>
-        <translation>Navigatie omlaag</translation>
-    </message>
-    <message>
-        <source>Nav Left</source>
-        <translation>Navigatie links</translation>
-    </message>
-    <message>
-        <source>Nav Right</source>
-        <translation>Navigatie rechts</translation>
-    </message>
-    <message>
-        <source>Select/Confirm</source>
-        <translation>Selecteren/bevestigen</translation>
-    </message>
-    <message>
-        <source>Back/Cancel</source>
-        <translation>Terug/annuleren</translation>
-    </message>
-    <message>
-        <source>Menu</source>
-        <translation>Menu</translation>
-    </message>
-    <message>
-        <source>Home</source>
-        <translation>Startscherm</translation>
-    </message>
-    <message>
-        <source>Left Down:</source>
-        <translation>Links omlaag:</translation>
-    </message>
-    <message>
-        <source>Left Left:</source>
-        <translation>Links links:</translation>
-    </message>
-    <message>
-        <source>Left Right:</source>
-        <translation>Links rechts:</translation>
-    </message>
-    <message>
-        <source>Left Shoulder:</source>
-        <translation>Linker schouderknop:</translation>
-    </message>
-    <message>
-        <source>Left Power:</source>
-        <translation>Linker aan/uit-knop:</translation>
-    </message>
-    <message>
-        <source>Right Controller Buttons</source>
-        <translation>Knoppen van de rechtercontroller</translation>
-    </message>
-    <message>
-        <source>Right Y:</source>
-        <translation>Rechts Y:</translation>
-    </message>
-    <message>
-        <source>Right A:</source>
-        <translation>Rechts A:</translation>
-    </message>
-    <message>
-        <source>Right B:</source>
-        <translation>Rechts B:</translation>
-    </message>
-    <message>
-        <source>Right Z:</source>
-        <translation>Rechts Z:</translation>
-    </message>
-    <message>
-        <source>Right Shoulder:</source>
-        <translation>Rechter schouderknop:</translation>
-    </message>
-    <message>
-        <source>Right Power:</source>
-        <translation>Rechter aan/uit-knop:</translation>
-    </message>
-    <message>
-        <source>Note: Left and Right paddles are fixed to Steer Left/Right and cannot be configured</source>
-        <translation>Opmerking: de linker- en rechterpaddle zijn vast ingesteld op ‘Naar links sturen’ / ‘Naar rechts sturen’ en kunnen niet worden aangepast</translation>
     </message>
     <message>
         <source>Zwift Resistance Offset:</source>
@@ -5821,10 +5688,6 @@ Mag QZ deze waarde wijzigen?
         <translation>Eigen versnellingstabel</translation>
     </message>
     <message>
-        <source>Custom Inclination to Resistance Table</source>
-        <translation>Eigen tabel voor helling naar weerstand</translation>
-    </message>
-    <message>
         <source>Gears Offset:</source>
         <translation>Versnellingscorrectie:</translation>
     </message>
@@ -5847,18 +5710,6 @@ Mag QZ deze waarde wijzigen?
     <message>
         <source>Profile:</source>
         <translation>Profiel:</translation>
-    </message>
-    <message>
-        <source>Cruise</source>
-        <translation>Toeren</translation>
-    </message>
-    <message>
-        <source>Climb</source>
-        <translation>Klimmen</translation>
-    </message>
-    <message>
-        <source>Sprint</source>
-        <translation>Sprinten</translation>
     </message>
     <message>
         <source>Cruise Profile Settings</source>
@@ -6011,10 +5862,6 @@ Mag QZ deze waarde wijzigen?
     <message>
         <source>Use 0.5 resistance lvls</source>
         <translation>Weerstandsstappen van 0.5</translation>
-    </message>
-    <message>
-        <source>Physical resistance knob controls QZ gears</source>
-        <translation>Weerstandsknop van het apparaat bedient de versnellingen van QZ</translation>
     </message>
     <message>
         <source>Hammer Racer Bike Options</source>
@@ -6178,30 +6025,6 @@ Mag QZ deze waarde wijzigen?
         <translation>Opties voor Kettler USB-fiets</translation>
     </message>
     <message>
-        <source>Baudrate:</source>
-        <translation>Baudrate:</translation>
-    </message>
-    <message>
-        <source>Daum Bike Options</source>
-        <translation>Daum-fietsopties</translation>
-    </message>
-    <message>
-        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
-        <translation>Seriële poort voor klassieke Daum-ergometers, zoals de 8008 TRS 3. Gebruik op Android met een USB-naar-serieel-adapter &apos;usb&apos;. COM1, COM2 enzovoort worden op Android geaccepteerd als aliassen voor het zoeken naar de USB-adapter, maar zijn geen Android-poortnamen. Gebruik op Windows COM1 of COM3; op Linux/macOS het pad naar het seriële apparaat, bijvoorbeeld /dev/ttyUSB0.</translation>
-    </message>
-    <message>
-        <source>Resistance Polling Delay:</source>
-        <translation>Vertraging tussen weerstandsmetingen:</translation>
-    </message>
-    <message>
-        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
-        <translation>Gebruikt de instelling Hellingvertraging om te beperken hoe vaak QZ weerstands- en vermogensupdates naar Daum stuurt. Standaard: 0 seconden.</translation>
-    </message>
-    <message>
-        <source>Freebeat Bike Options</source>
-        <translation>Freebeat-fietsopties</translation>
-    </message>
-    <message>
         <source>M3i Bike Options</source>
         <translation>M3i-fietsopties</translation>
     </message>
@@ -6314,36 +6137,28 @@ Mag QZ deze waarde wijzigen?
         <translation>Algemene interface-opties</translation>
     </message>
     <message>
-        <source>Tile size:</source>
-        <translation>Tegelgrootte:</translation>
+        <source>Use System Text Size</source>
+        <translation>Tekstgrootte van het systeem gebruiken</translation>
     </message>
     <message>
-        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
-        <translation>Hiermee wijzig je de grootte van de tegels met je meetwaarden. Standaard: 100%. Kies een kleiner percentage om meer tegels op je scherm te krijgen, of een percentage boven 100% om ze groter te maken. Typ het procentteken niet mee. Heette vroeger ‘Interfacezoom’.</translation>
+        <source>The text of the app follows the text size of the phone or tablet settings, up to 150%. Turn off to choose the size below, for example for a screen you read from a distance during a workout. Default is on.</source>
+        <translation>De tekst van de app volgt de tekstgrootte uit de instellingen van je telefoon of tablet, tot maximaal 150%. Schakel dit uit om hieronder zelf de grootte te kiezen, bijvoorbeeld voor een scherm dat je tijdens een training van een afstand leest. Standaard: aan.</translation>
+    </message>
+    <message>
+        <source>Text size:</source>
+        <translation>Tekstgrootte:</translation>
+    </message>
+    <message>
+        <source>Size of the text of the app (settings, menus, dialogs), in percent, from 80 to 170. The default is 100. The tiles keep their own size setting.</source>
+        <translation>Grootte van de tekst van de app (instellingen, menu&apos;s, dialoogvensters) in procenten, van 80 tot 170. Standaard: 100. De tegels hebben een eigen instelling voor hun grootte.</translation>
     </message>
     <message>
         <source>Top Bar Enabled</source>
         <translation>Bovenste balk tonen</translation>
     </message>
     <message>
-        <source>Keep Content Clear of the Camera Cutout</source>
-        <translation>Inhoud vrijhouden van de camera-uitsparing</translation>
-    </message>
-    <message>
-        <source>In landscape, keeps a margin on the camera side so the camera hole does not cover the content. Turn off to let the content extend under the camera cutout. Default is on.</source>
-        <translation>Houdt in liggende stand een marge vrij aan de kant van de camera, zodat de camera-uitsparing de inhoud niet bedekt. Schakel dit uit om de inhoud tot onder de camera-uitsparing te laten doorlopen. Standaard: aan.</translation>
-    </message>
-    <message>
         <source>Floating Window Type:</source>
         <translation>Type zwevend venster:</translation>
-    </message>
-    <message>
-        <source>Classic</source>
-        <translation>Klassiek</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation>Horizontaal</translation>
     </message>
     <message>
         <source>Choose the floating window layout type. Classic uses the standard floating.htm file, while Horizontal uses the hfloating.htm file for horizontal layout.</source>
@@ -6392,18 +6207,6 @@ Mag QZ deze waarde wijzigen?
     <message>
         <source>Chart Display Mode:</source>
         <translation>Weergave grafieken:</translation>
-    </message>
-    <message>
-        <source>Both Charts</source>
-        <translation>Beide grafieken</translation>
-    </message>
-    <message>
-        <source>Heart Rate Only</source>
-        <translation>Alleen hartslag</translation>
-    </message>
-    <message>
-        <source>Power Only</source>
-        <translation>Alleen vermogen</translation>
     </message>
     <message>
         <source>Choose which charts to display in the footer: both heart rate and power charts, only heart rate chart, or only power chart.</source>
@@ -6474,18 +6277,6 @@ Mag QZ deze waarde wijzigen?
         <translation>Moeilijkheid:</translation>
     </message>
     <message>
-        <source>lower</source>
-        <translation>ondergrens</translation>
-    </message>
-    <message>
-        <source>upper</source>
-        <translation>bovengrens</translation>
-    </message>
-    <message>
-        <source>average</source>
-        <translation>gemiddelde</translation>
-    </message>
-    <message>
         <source>Typically, Peloton coaches call out a range for target incline, resistance and/or speed. Use this setting to choose the difficulty of the target QZ communicates. Difficulty level can be set to lower, upper or average. Click OK.</source>
         <translation>Peloton-coaches noemen meestal een bereik voor de doelhelling, -weerstand en/of -snelheid. Met deze instelling kies je welke moeilijkheid QZ als doel doorgeeft: ondergrens, bovengrens of gemiddelde. Klik op OK.</translation>
     </message>
@@ -6508,14 +6299,6 @@ Mag QZ deze waarde wijzigen?
     <message>
         <source>Walking Min Speed:</source>
         <translation>Min. wandelsnelheid:</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
     </message>
     <message>
         <source>Minimum speed for Peloton walking sessions. Set to 0 to disable. Applied to all speed targets in walking workouts.</source>
@@ -6604,14 +6387,6 @@ Mag QZ deze waarde wijzigen?
     <message>
         <source>Date on Strava:</source>
         <translation>Datum op Strava:</translation>
-    </message>
-    <message>
-        <source>Before Title</source>
-        <translation>Voor de titel</translation>
-    </message>
-    <message>
-        <source>After Title</source>
-        <translation>Na de titel</translation>
     </message>
     <message>
         <source>Allows you to choose whether you would like the Peloton class air date to display before or after the class title on Strava.</source>
@@ -6778,14 +6553,6 @@ Mag QZ deze waarde wijzigen?
         <translation>FIT-bestanden na de training automatisch uploaden naar Garmin Connect.</translation>
     </message>
     <message>
-        <source>Ask RPE / Feeling after workout</source>
-        <translation>Na de training naar RPE en gevoel vragen</translation>
-    </message>
-    <message>
-        <source>Show a popup after Stop to rate perceived exertion (RPE) and how you felt; the values are saved into the FIT file and shown in Garmin Connect.</source>
-        <translation>Na Stop een venster tonen om de ervaren inspanning (RPE) en je gevoel te beoordelen; de waarden worden in het FIT-bestand opgeslagen en in Garmin Connect getoond.</translation>
-    </message>
-    <message>
         <source>Fetch Garmin Workouts on Startup</source>
         <translation>Garmin-trainingen ophalen bij het starten</translation>
     </message>
@@ -6796,22 +6563,6 @@ Mag QZ deze waarde wijzigen?
     <message>
         <source>Garmin Email:</source>
         <translation>Garmin-e-mailadres:</translation>
-    </message>
-    <message>
-        <source>Garmin Password:</source>
-        <translation>Garmin-wachtwoord:</translation>
-    </message>
-    <message>
-        <source>Garmin Server:</source>
-        <translation>Garmin-server:</translation>
-    </message>
-    <message>
-        <source>Global (garmin.com)</source>
-        <translation>Wereldwijd (garmin.com)</translation>
-    </message>
-    <message>
-        <source>China (garmin.cn)</source>
-        <translation>China (garmin.cn)</translation>
     </message>
     <message>
         <source>Test Garmin Login</source>
@@ -6888,14 +6639,6 @@ Voer de code hieronder in:</translation>
         <translation>ZWO/XML-trainingen herkennen die naar het klembord zijn gekopieerd. Standaard: uit.</translation>
     </message>
     <message>
-        <source>Sound on Segment Change</source>
-        <translation>Geluid bij nieuw segment</translation>
-    </message>
-    <message>
-        <source>Play a short sound when a training program starts a new row. Default: disabled.</source>
-        <translation>Een kort geluid afspelen wanneer een trainingsprogramma aan een nieuwe rij begint. Standaard: uit.</translation>
-    </message>
-    <message>
         <source>Auto Lap on Segment</source>
         <translation>Automatische ronde per segment</translation>
     </message>
@@ -6934,22 +6677,6 @@ Voer de code hieronder in:</translation>
     <message>
         <source>Enabling this the PID is trying to motivate yourself to always increase a little the effort trying anyway to keep you in the zone. Default: Enabled.</source>
         <translation>Als dit is ingeschakeld, spoort QZ je aan om je inspanning steeds een beetje te verhogen, maar probeert je toch in de zone te houden. Standaard: aan.</translation>
-    </message>
-    <message>
-        <source>PID Recovery Zone Lower Limit (%):</source>
-        <translation>Modus ‘Doortastend’: ondergrens herstelzone (%):</translation>
-    </message>
-    <message>
-        <source>Lower HR boundary (% of max HR) that defines the bottom of Zone 1 for &apos;Pushy&apos; mode. Below this percentage the treadmill is at the bottom of the recovery area. Default: 60.</source>
-        <translation>Ondergrens van de hartslag (% van de maximale hartslag) waarmee zone 1 begint voor de modus ‘Doortastend’. Onder dit percentage zit de loopband onderaan het herstelgebied. Standaard: 60.</translation>
-    </message>
-    <message>
-        <source>PID Pushy Zone Limit:</source>
-        <translation>Grens van de modus ‘Doortastend’:</translation>
-    </message>
-    <message>
-        <source>Fraction of zone above the target zone where &apos;Pushy&apos; mode stops pushing. 0.8 means the PID stops pushing at zone+0.8. Default: 0.8.</source>
-        <translation>Deel van de zone boven de doelzone waarop de modus ‘Doortastend’ stopt met aansporen. 0.8 betekent dat QZ stopt met aansporen bij zone+0.8. Standaard: 0.8.</translation>
     </message>
     <message>
         <source>PID Ignore Inclination</source>
@@ -7000,40 +6727,8 @@ Voer de code hieronder in:</translation>
         <translation>Zie ‘Tempo op 1 mijl’ hierboven; hetzelfde, maar voor de marathonafstand in plaats van 1 mijl.</translation>
     </message>
     <message>
-        <source>Warmup Speed (pace):</source>
-        <translation>Snelheid warming-up (tempo):</translation>
-    </message>
-    <message>
-        <source>Cooldown Speed (pace):</source>
-        <translation>Snelheid cooling-down (tempo):</translation>
-    </message>
-    <message>
-        <source>Rest Speed (pace):</source>
-        <translation>Snelheid rust (tempo):</translation>
-    </message>
-    <message>
         <source>Default Pace:</source>
         <translation>Standaardtempo:</translation>
-    </message>
-    <message>
-        <source>1 mile</source>
-        <translation>1 mijl</translation>
-    </message>
-    <message>
-        <source>Half Marathon</source>
-        <translation>Halve marathon</translation>
-    </message>
-    <message>
-        <source>Marathon</source>
-        <translation>Marathon</translation>
-    </message>
-    <message>
-        <source>5 km</source>
-        <translation>5 km</translation>
-    </message>
-    <message>
-        <source>10 km</source>
-        <translation>10 km</translation>
     </message>
     <message>
         <source>Select the default Pace to be used when the ZWO file does not indicate a precise pace.</source>
@@ -7106,14 +6801,6 @@ Voer de code hieronder in:</translation>
     <message>
         <source>Turn this on to have QZ control the speed of your treadmill during, for example, Peloton classes based on the coach’s speed callouts. Your speed will be in the low, upper or average range based on your Peloton Options &gt; Difficulty setting. Default is off.</source>
         <translation>Schakel dit in om QZ de snelheid van je loopband te laten regelen, bijvoorbeeld tijdens Peloton-lessen op basis van de snelheidsaanwijzingen van de coach. Je snelheid ligt in het lage, hoge of gemiddelde bereik, afhankelijk van de instelling ‘Peloton-opties &gt; Moeilijkheid’. Standaard: uit.</translation>
-    </message>
-    <message>
-        <source>Force Running Activity</source>
-        <translation>Altijd als hardloopactiviteit opslaan</translation>
-    </message>
-    <message>
-        <source>Turn this on to write treadmill FIT files as running activities even when the average speed is below 6.5 km/h. This can help Garmin calculate Training Effect for high-incline treadmill workouts. Default is off.</source>
-        <translation>Schakel dit in om FIT-bestanden van de loopband als hardloopactiviteit op te slaan, ook als de gemiddelde snelheid onder 6.5 km/h ligt. Dit helpt Garmin het trainingseffect te berekenen voor loopbandtrainingen met een steile helling. Standaard: uit.</translation>
     </message>
     <message>
         <source>Turn this on to have QZ go into Pause mode upon opening when using a treadmill. This is for treadmills only. Default is off.</source>
@@ -7247,34 +6934,6 @@ Voer de code hieronder in:</translation>
     <message>
         <source>Inclination</source>
         <translation>Helling</translation>
-    </message>
-    <message>
-        <source>Use System Text Size</source>
-        <translation>Tekstgrootte van het systeem gebruiken</translation>
-    </message>
-    <message>
-        <source>The text of the app follows the text size of the phone or tablet settings, up to 150%. Turn off to choose the size below, for example for a screen you read from a distance during a workout. Default is on.</source>
-        <translation>De tekst van de app volgt de tekstgrootte uit de instellingen van je telefoon of tablet, tot maximaal 150%. Schakel dit uit om hieronder zelf de grootte te kiezen, bijvoorbeeld voor een scherm dat je tijdens een training van een afstand leest. Standaard: aan.</translation>
-    </message>
-    <message>
-        <source>Text size:</source>
-        <translation>Tekstgrootte:</translation>
-    </message>
-    <message>
-        <source>Size of the text of the app (settings, menus, dialogs), in percent, from 80 to 170. The default is 100. The tiles keep their own size setting.</source>
-        <translation>Grootte van de tekst van de app (instellingen, menu&apos;s, dialoogvensters) in procenten, van 80 tot 170. Standaard: 100. De tegels hebben een eigen instelling voor hun grootte.</translation>
-    </message>
-    <message>
-        <source>Speed</source>
-        <translation>Snelheid</translation>
-    </message>
-    <message>
-        <source>Inclination Filter (%):</source>
-        <translation>Hellingsfilter (%):</translation>
-    </message>
-    <message>
-        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
-        <translation>Negeert bij GPX-trainingen hellingsveranderingen kleiner dan deze waarde. Een nieuwe opdracht wordt pas verzonden wanneer het verschil met de laatst verzonden waarde de ingestelde drempel bereikt. Standaard: 0 (uitgeschakeld).</translation>
     </message>
     <message>
         <source>Echelon Options</source>
@@ -7469,10 +7128,6 @@ Voer de code hieronder in:</translation>
         <translation>JTX Fitness Sprint-loopband</translation>
     </message>
     <message>
-        <source>Flow Fitness Runner DTM2000i</source>
-        <translation>Flow Fitness Runner DTM2000i</translation>
-    </message>
-    <message>
         <source>Reebok FR30 Treadmill</source>
         <translation>Reebok FR30-loopband</translation>
     </message>
@@ -7527,10 +7182,6 @@ Voer de code hieronder in:</translation>
     <message>
         <source>Allows you to force QZ to connect to your FTMS Rower. If you are in doubt, leave this Disabled and send an email to the QZ support. Default is “Disabled.”</source>
         <translation>Hiermee dwing je QZ verbinding te maken met je FTMS-roeitrainer. Twijfel je, laat dit dan op ‘Uitgeschakeld’ staan en stuur een e-mail naar het supportteam van QZ. Standaard: ‘Uitgeschakeld’.</translation>
-    </message>
-    <message>
-        <source>WaterRower USB</source>
-        <translation>WaterRower USB</translation>
     </message>
     <message>
         <source>Proform/Nordictrack Rower Options</source>
@@ -7669,14 +7320,6 @@ Voer de code hieronder in:</translation>
         <translation>Uploaden naar Strava:</translation>
     </message>
     <message>
-        <source>Always</source>
-        <translation>Altijd</translation>
-    </message>
-    <message>
-        <source>Request</source>
-        <translation>Vragen</translation>
-    </message>
-    <message>
         <source>Suffix activity:</source>
         <translation>Achtervoegsel activiteit:</translation>
     </message>
@@ -7735,18 +7378,6 @@ Voer de code hieronder in:</translation>
     <message>
         <source>Power Averaging Mode:</source>
         <translation>Middelingsmodus vermogen:</translation>
-    </message>
-    <message>
-        <source>Off</source>
-        <translation>Uit</translation>
-    </message>
-    <message>
-        <source>3 seconds</source>
-        <translation>3 seconden</translation>
-    </message>
-    <message>
-        <source>5 seconds</source>
-        <translation>5 seconden</translation>
     </message>
     <message>
         <source>If the power output/watts your equipment sends to QZ is quite variable, this setting will result in smoother Power Zone graphs. This is also helpful for use with Power Meter Pedals. Uses harmonic averaging which smooths power spikes better than arithmetic averaging. If any reading is 0, power immediately becomes 0. Default is Off.
@@ -7837,116 +7468,16 @@ BELANGRIJK:
         <translation>Gebruik bij smart trainers weerstand in plaats van helling. Dit helpt als je niet wilt dat de Wahoo Climb of iets vergelijkbaars de helling wijzigt wanneer je schakelt. Standaard: uit</translation>
     </message>
     <message>
+        <source>Resistance Compatibility</source>
+        <translation>Weerstandscompatibiliteit</translation>
+    </message>
+    <message>
+        <source>Enable this if changing resistance in QZ only sets the bike to level 1 or maximum. Sends FTMS resistance multiplied by 10. Default: disabled.</source>
+        <translation>Schakel dit in als het wijzigen van de weerstand in QZ de fiets alleen op niveau 1 of maximaal zet. Verzendt de FTMS-weerstand vermenigvuldigd met 10. Standaard: uitgeschakeld.</translation>
+    </message>
+    <message>
         <source>AutoLap on Distance:</source>
         <translation>Automatische ronde op afstand:</translation>
-    </message>
-    <message>
-        <source>You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).</source>
-        <translation>Je kunt in het FIT-bestand automatisch rondes laten markeren op basis van afstand. Eenheid: %1 Standaard: 0 (uit).</translation>
-    </message>
-    <message>
-        <source>Mi</source>
-        <translation>mi</translation>
-    </message>
-    <message>
-        <source>KM</source>
-        <translation>km</translation>
-    </message>
-    <message>
-        <source>Life Fitness Options</source>
-        <translation>Life Fitness-opties</translation>
-    </message>
-    <message>
-        <source>Life Fitness username/email:</source>
-        <translation>Life Fitness-gebruikersnaam/e-mailadres:</translation>
-    </message>
-    <message>
-        <source>Life Fitness password:</source>
-        <translation>Life Fitness-wachtwoord:</translation>
-    </message>
-    <message>
-        <source>Life Fitness guest login (experimental)</source>
-        <translation>Inloggen als gast bij Life Fitness (experimenteel)</translation>
-    </message>
-    <message>
-        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
-        <translation>Gebruikt een synthetisch Life Fitness-profiel zonder account. Als dit is ingeschakeld, worden gebruikersnaam, wachtwoord en opgeslagen accountgegevens genegeerd; gebruik dit alleen om het ondersteunde inloggen als gast te testen.</translation>
-    </message>
-    <message>
-        <source>Workout History Charts</source>
-        <translation>Grafieken in trainingsgeschiedenis</translation>
-    </message>
-    <message>
-        <source>Heart Rate</source>
-        <translation>Hartslag</translation>
-    </message>
-    <message>
-        <source>Resistance vs Target Resistance</source>
-        <translation>Weerstand vs. doelweerstand</translation>
-    </message>
-    <message>
-        <source>Peloton Resistance</source>
-        <translation>Peloton-weerstand</translation>
-    </message>
-    <message>
-        <source>Cadence</source>
-        <translation>Cadans</translation>
-    </message>
-    <message>
-        <source>Power Distribution</source>
-        <translation>Vermogensverdeling</translation>
-    </message>
-    <message>
-        <source>Speed and Inclination</source>
-        <translation>Snelheid en helling</translation>
-    </message>
-    <message>
-        <source>Move the charts up or down to choose their order in Workout History. Changes are saved automatically.</source>
-        <translation>Verplaats de grafieken omhoog of omlaag om hun volgorde in de trainingsgeschiedenis te kiezen. Wijzigingen worden automatisch opgeslagen.</translation>
-    </message>
-    <message>
-        <source>Move up</source>
-        <translation>Omhoog</translation>
-    </message>
-    <message>
-        <source>Move down</source>
-        <translation>Omlaag</translation>
-    </message>
-    <message>
-        <source>Restore default order</source>
-        <translation>Standaardvolgorde herstellen</translation>
-    </message>
-    <message>
-        <source>Moovio Options</source>
-        <translation>Moovio-opties</translation>
-    </message>
-    <message>
-        <source>Lynx Konect 2.0</source>
-        <translation>Lynx Konect 2.0</translation>
-    </message>
-    <message>
-        <source>Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.</source>
-        <translation>Schakelt de standaard FTMS-opdracht Request Control in voor Moovio Lynx Konect 2.0-loopbanden. Standaard: uit.</translation>
-    </message>
-    <message>
-        <source>Cadence Gain</source>
-        <translation>Cadansfactor</translation>
-    </message>
-    <message>
-        <source>Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.</source>
-        <translation>Vermenigvuldiger die alleen wordt toegepast op de slagfrequentie die de virtuele roeitrainer verstuurt. Standaard: 1.0; gebruik 0.25 om BikeERG-RPM om te rekenen naar de slagfrequentie die de EXR vraagt.</translation>
-    </message>
-    <message>
-        <source>Offset added after the gain. Default is 0.0. QZ&apos;s internal cadence display and workout metrics remain unchanged.</source>
-        <translation>Correctie die na de factor wordt opgeteld. Standaard: 0.0. De cadansweergave in QZ en de trainingsgegevens blijven ongewijzigd.</translation>
-    </message>
-    <message>
-        <source>iOS Background Keep Alive</source>
-        <translation>iOS: actief blijven op achtergrond</translation>
-    </message>
-    <message>
-        <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
-        <translation>Alleen iOS. Houdt QZ actief als het scherm uit is of QZ op de achtergrond draait, zodat Bluetooth-verbindingen en sessietimers niet bevriezen. Er wordt een stil audiospoor gebruikt dat met je muziek wordt gemengd, dus waar je naar luistert, wordt niet onderbroken. Schakel dit in als je wilt trainen met een vergrendeld scherm of met QZ op de achtergrond. Standaard: uit.</translation>
     </message>
     <message>
         <source>Inclination Delay:</source>
@@ -8067,22 +7598,6 @@ BELANGRIJK:
     <message>
         <source>If you have a Bluetooth treadmill and also a Stryd device connected to QZ and you want to use the speed from the stryd instead of the speed of the treadmill, enable this. Default: disabled.</source>
         <translation>Schakel dit in als je een Bluetooth-loopband en ook een Stryd-apparaat met QZ hebt verbonden en je de snelheid van de Stryd wilt gebruiken in plaats van die van de loopband. Standaard: uit.</translation>
-    </message>
-    <message>
-        <source>Runn/Stryd closed-loop treadmill speed correction</source>
-        <translation>Loopbandsnelheid corrigeren met Runn/Stryd (gesloten regelkring)</translation>
-    </message>
-    <message>
-        <source>Experimental: gradually correct QZ-controlled treadmill speed using Runn/Stryd feedback, when the driver provides independent machine speed measurements. Requires &apos;Use speed from the power sensor&apos;. Disabled by default.</source>
-        <translation>Experimenteel: corrigeert de door QZ ingestelde loopbandsnelheid geleidelijk op basis van Runn/Stryd, als het stuurprogramma eigen snelheidsmetingen van het apparaat levert. Vereist ‘Snelheid van de vermogenssensor gebruiken’. Standaard: uit.</translation>
-    </message>
-    <message>
-        <source>Power sensor speed correction threshold (%):</source>
-        <translation>Drempel voor snelheidscorrectie via vermogenssensor (%):</translation>
-    </message>
-    <message>
-        <source>Maximum allowed difference between power sensor speed and treadmill speed before QZ stops applying the relative correction. Default: 20%.</source>
-        <translation>Maximaal toegestaan verschil tussen de snelheid volgens de vermogenssensor en de loopbandsnelheid, waarboven QZ de relatieve correctie niet meer toepast. Standaard: 20%.</translation>
     </message>
     <message>
         <source>Use inclination from the power sensor</source>
@@ -8237,18 +7752,6 @@ Standaard: A = -0.96, B = 1.33</translation>
         <translation>Modus:</translation>
     </message>
     <message>
-        <source>Heart</source>
-        <translation>Hartslag</translation>
-    </message>
-    <message>
-        <source>Power</source>
-        <translation>Vermogen</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation>Handmatig</translation>
-    </message>
-    <message>
         <source>Min. value (0-100):</source>
         <translation>Min. waarde (0-100):</translation>
     </message>
@@ -8335,46 +7838,6 @@ Standaard: A = -0.96, B = 1.33</translation>
     <message>
         <source>Use the zwift gears table instead of the QZ classic gears algorithm.  Default is off.</source>
         <translation>Gebruikt de versnellingstabel van Zwift in plaats van het klassieke versnellingsalgoritme van QZ.  Standaard: uit.</translation>
-    </message>
-    <message>
-        <source>Gear Controls</source>
-        <translation>Schakelknoppen</translation>
-    </message>
-    <message>
-        <source>Assign each physical button to Gear Up, Gear Down or Disabled. Applies before the Swap sides option above.</source>
-        <translation>Wijs elke fysieke knop toe aan ‘Opschakelen’, ‘Terugschakelen’ of ‘Uitgeschakeld’. Wordt toegepast vóór de optie ‘Zijden omwisselen’ hierboven.</translation>
-    </message>
-    <message>
-        <source>Left Shifter Up (LS1):</source>
-        <translation>Linker shifter omhoog (LS1):</translation>
-    </message>
-    <message>
-        <source>Left Shifter Down (LS2):</source>
-        <translation>Linker shifter omlaag (LS2):</translation>
-    </message>
-    <message>
-        <source>Right Shifter Up (RS1):</source>
-        <translation>Rechter shifter omhoog (RS1):</translation>
-    </message>
-    <message>
-        <source>Right Shifter Down (RS2):</source>
-        <translation>Rechter shifter omlaag (RS2):</translation>
-    </message>
-    <message>
-        <source>Left Paddle (ZL):</source>
-        <translation>Linkerpaddle (ZL):</translation>
-    </message>
-    <message>
-        <source>Right Paddle (ZR):</source>
-        <translation>Rechterpaddle (ZR):</translation>
-    </message>
-    <message>
-        <source>Power Up (LB):</source>
-        <translation>Power Up (LB):</translation>
-    </message>
-    <message>
-        <source>Ride On (RB):</source>
-        <translation>Ride On (RB):</translation>
     </message>
     <message>
         <source>Default: 200ms. Lower it if you want to improve the gear reactivity. Warning: lowering this value will cause more power used on the QZ device</source>
@@ -8503,14 +7966,6 @@ Standaard: A = -0.96, B = 1.33</translation>
     <message>
         <source>Enables a virtual Bluetooth bridge to the iFit App. This setting requires that at least one device be Android. For example, this setting does NOT work with QZ on iOS and iFit to iOS, but DOES work with QZ on iOS and iFit to Android. On Android remember to rename your device into I_EL into the android settings and reboot your device.</source>
         <translation>Maakt een virtueel Bluetooth-apparaat voor de iFit-app. Hiervoor moet minstens één van de apparaten Android zijn. Deze instelling werkt bijvoorbeeld NIET met QZ op iOS en iFit op iOS, maar WEL met QZ op iOS en iFit op Android. Vergeet op Android niet je apparaat in de Android-instellingen te hernoemen naar I_EL en het opnieuw op te starten.</translation>
-    </message>
-    <message>
-        <source>Virtual Tacx</source>
-        <translation>Virtuele Tacx</translation>
-    </message>
-    <message>
-        <source>Enables a virtual bluetooth bridge to the Tacx App.</source>
-        <translation>Schakelt een virtueel Bluetooth-apparaat in voor de Tacx-app.</translation>
     </message>
     <message>
         <source>Wahoo direct connect</source>
@@ -8846,6 +8301,354 @@ Standaard: A = -0.96, B = 1.33</translation>
         <translation>QZ opent FS-apparaten als loopband, tenzij ‘Fit Plus-fiets’ aanstaat. Als een FS-apparaat ook fietsgegevens stuurt, vraagt QZ of het een fiets is; met het antwoord Nee wordt deze vraag uitgeschakeld. Wordt niet getoond op de instellingenpagina.</translation>
     </message>
     <message>
+        <source>Hidden on its page right now: change it here</source>
+        <translation type="vanished">Nu verborgen op de eigen pagina: hier wijzigen</translation>
+    </message>
+    <message>
+        <source>On</source>
+        <translation>Aan</translation>
+    </message>
+    <message>
+        <source>Hidden on its page with the current settings</source>
+        <translation>Verborgen op de eigen pagina met de huidige instellingen</translation>
+    </message>
+    <message>
+        <source>Turn on “%1” to change this setting</source>
+        <translation>Schakel ‘%1’ in om deze instelling te wijzigen</translation>
+    </message>
+    <message>
+        <source>Male</source>
+        <translation>Man</translation>
+    </message>
+    <message>
+        <source>Female</source>
+        <translation>Vrouw</translation>
+    </message>
+    <message>
+        <source>Disabled</source>
+        <translation>Uitgeschakeld</translation>
+    </message>
+    <message>
+        <source>Bike Weight (%1)</source>
+        <translation>Gewicht van de fiets (%1)</translation>
+    </message>
+    <message>
+        <source>OpenBikeControl</source>
+        <translation>OpenBikeControl</translation>
+    </message>
+    <message>
+        <source>Enable OpenBikeControl</source>
+        <translation>OpenBikeControl inschakelen</translation>
+    </message>
+    <message>
+        <source>OpenBikeControl enabled: Wahoo direct connect disabled.</source>
+        <translation>OpenBikeControl ingeschakeld: Wahoo Direct Connect uitgeschakeld.</translation>
+    </message>
+    <message>
+        <source>Enable TCP server on port 21587 to send control commands using the OpenBikeControl link protocol</source>
+        <translation>TCP-server op poort 21587 starten om bedieningsopdrachten te sturen via het OpenBikeControl-linkprotocol</translation>
+    </message>
+    <message>
+        <source>Override Local Gear Changes</source>
+        <translation>Lokaal schakelen vervangen</translation>
+    </message>
+    <message>
+        <source>When enabled, gear shift commands go only to OpenBikeControl clients. When disabled, they go to both OpenBikeControl clients and the local gear system</source>
+        <translation>Als dit is ingeschakeld, gaan schakelopdrachten alleen naar OpenBikeControl-clients. Als dit is uitgeschakeld, gaan ze zowel naar OpenBikeControl-clients als naar het eigen versnellingssysteem van QZ</translation>
+    </message>
+    <message>
+        <source>Left Controller Buttons</source>
+        <translation>Knoppen van de linkercontroller</translation>
+    </message>
+    <message>
+        <source>Left Up:</source>
+        <translation>Links omhoog:</translation>
+    </message>
+    <message>
+        <source>Gear Up</source>
+        <translation>Opschakelen</translation>
+    </message>
+    <message>
+        <source>Gear Down</source>
+        <translation>Terugschakelen</translation>
+    </message>
+    <message>
+        <source>Steer Left</source>
+        <translation>Naar links sturen</translation>
+    </message>
+    <message>
+        <source>Steer Right</source>
+        <translation>Naar rechts sturen</translation>
+    </message>
+    <message>
+        <source>U-Turn</source>
+        <translation>Omkeren</translation>
+    </message>
+    <message>
+        <source>Camera Angle</source>
+        <translation>Camerahoek</translation>
+    </message>
+    <message>
+        <source>Emote</source>
+        <translation>Emote</translation>
+    </message>
+    <message>
+        <source>Tuck</source>
+        <translation>Aerohouding</translation>
+    </message>
+    <message>
+        <source>Nav Up</source>
+        <translation>Navigatie omhoog</translation>
+    </message>
+    <message>
+        <source>Nav Down</source>
+        <translation>Navigatie omlaag</translation>
+    </message>
+    <message>
+        <source>Nav Left</source>
+        <translation>Navigatie links</translation>
+    </message>
+    <message>
+        <source>Nav Right</source>
+        <translation>Navigatie rechts</translation>
+    </message>
+    <message>
+        <source>Select/Confirm</source>
+        <translation>Selecteren/bevestigen</translation>
+    </message>
+    <message>
+        <source>Back/Cancel</source>
+        <translation>Terug/annuleren</translation>
+    </message>
+    <message>
+        <source>Menu</source>
+        <translation>Menu</translation>
+    </message>
+    <message>
+        <source>Home</source>
+        <translation>Startscherm</translation>
+    </message>
+    <message>
+        <source>Left Down:</source>
+        <translation>Links omlaag:</translation>
+    </message>
+    <message>
+        <source>Left Left:</source>
+        <translation>Links links:</translation>
+    </message>
+    <message>
+        <source>Left Right:</source>
+        <translation>Links rechts:</translation>
+    </message>
+    <message>
+        <source>Left Shoulder:</source>
+        <translation>Linker schouderknop:</translation>
+    </message>
+    <message>
+        <source>Left Power:</source>
+        <translation>Linker aan/uit-knop:</translation>
+    </message>
+    <message>
+        <source>Right Controller Buttons</source>
+        <translation>Knoppen van de rechtercontroller</translation>
+    </message>
+    <message>
+        <source>Right Y:</source>
+        <translation>Rechts Y:</translation>
+    </message>
+    <message>
+        <source>Right A:</source>
+        <translation>Rechts A:</translation>
+    </message>
+    <message>
+        <source>Right B:</source>
+        <translation>Rechts B:</translation>
+    </message>
+    <message>
+        <source>Right Z:</source>
+        <translation>Rechts Z:</translation>
+    </message>
+    <message>
+        <source>Right Shoulder:</source>
+        <translation>Rechter schouderknop:</translation>
+    </message>
+    <message>
+        <source>Right Power:</source>
+        <translation>Rechter aan/uit-knop:</translation>
+    </message>
+    <message>
+        <source>Note: Left and Right paddles are fixed to Steer Left/Right and cannot be configured</source>
+        <translation>Opmerking: de linker- en rechterpaddle zijn vast ingesteld op ‘Naar links sturen’ / ‘Naar rechts sturen’ en kunnen niet worden aangepast</translation>
+    </message>
+    <message>
+        <source>Custom Inclination to Resistance Table</source>
+        <translation>Eigen tabel voor helling naar weerstand</translation>
+    </message>
+    <message>
+        <source>Cruise</source>
+        <translation>Toeren</translation>
+    </message>
+    <message>
+        <source>Climb</source>
+        <translation>Klimmen</translation>
+    </message>
+    <message>
+        <source>Sprint</source>
+        <translation>Sprinten</translation>
+    </message>
+    <message>
+        <source>Physical resistance knob controls QZ gears</source>
+        <translation>Weerstandsknop van het apparaat bedient de versnellingen van QZ</translation>
+    </message>
+    <message>
+        <source>Baudrate:</source>
+        <translation>Baudrate:</translation>
+    </message>
+    <message>
+        <source>Freebeat Bike Options</source>
+        <translation>Freebeat-fietsopties</translation>
+    </message>
+    <message>
+        <source>Keep Content Clear of the Camera Cutout</source>
+        <translation>Inhoud vrijhouden van de camera-uitsparing</translation>
+    </message>
+    <message>
+        <source>In landscape, keeps a margin on the camera side so the camera hole does not cover the content. Turn off to let the content extend under the camera cutout. Default is on.</source>
+        <translation>Houdt in liggende stand een marge vrij aan de kant van de camera, zodat de camera-uitsparing de inhoud niet bedekt. Schakel dit uit om de inhoud tot onder de camera-uitsparing te laten doorlopen. Standaard: aan.</translation>
+    </message>
+    <message>
+        <source>Classic</source>
+        <translation>Klassiek</translation>
+    </message>
+    <message>
+        <source>Horizontal</source>
+        <translation>Horizontaal</translation>
+    </message>
+    <message>
+        <source>Both Charts</source>
+        <translation>Beide grafieken</translation>
+    </message>
+    <message>
+        <source>Heart Rate Only</source>
+        <translation>Alleen hartslag</translation>
+    </message>
+    <message>
+        <source>Power Only</source>
+        <translation>Alleen vermogen</translation>
+    </message>
+    <message>
+        <source>lower</source>
+        <translation>ondergrens</translation>
+    </message>
+    <message>
+        <source>upper</source>
+        <translation>bovengrens</translation>
+    </message>
+    <message>
+        <source>average</source>
+        <translation>gemiddelde</translation>
+    </message>
+    <message>
+        <source>Before Title</source>
+        <translation>Voor de titel</translation>
+    </message>
+    <message>
+        <source>After Title</source>
+        <translation>Na de titel</translation>
+    </message>
+    <message>
+        <source>Ask RPE / Feeling after workout</source>
+        <translation>Na de training naar RPE en gevoel vragen</translation>
+    </message>
+    <message>
+        <source>Show a popup after Stop to rate perceived exertion (RPE) and how you felt; the values are saved into the FIT file and shown in Garmin Connect.</source>
+        <translation>Na Stop een venster tonen om de ervaren inspanning (RPE) en je gevoel te beoordelen; de waarden worden in het FIT-bestand opgeslagen en in Garmin Connect getoond.</translation>
+    </message>
+    <message>
+        <source>Garmin Password:</source>
+        <translation>Garmin-wachtwoord:</translation>
+    </message>
+    <message>
+        <source>Garmin Server:</source>
+        <translation>Garmin-server:</translation>
+    </message>
+    <message>
+        <source>Global (garmin.com)</source>
+        <translation>Wereldwijd (garmin.com)</translation>
+    </message>
+    <message>
+        <source>China (garmin.cn)</source>
+        <translation>China (garmin.cn)</translation>
+    </message>
+    <message>
+        <source>Sound on Segment Change</source>
+        <translation>Geluid bij nieuw segment</translation>
+    </message>
+    <message>
+        <source>Play a short sound when a training program starts a new row. Default: disabled.</source>
+        <translation>Een kort geluid afspelen wanneer een trainingsprogramma aan een nieuwe rij begint. Standaard: uit.</translation>
+    </message>
+    <message>
+        <source>PID Recovery Zone Lower Limit (%):</source>
+        <translation>Modus ‘Doortastend’: ondergrens herstelzone (%):</translation>
+    </message>
+    <message>
+        <source>Lower HR boundary (% of max HR) that defines the bottom of Zone 1 for &apos;Pushy&apos; mode. Below this percentage the treadmill is at the bottom of the recovery area. Default: 60.</source>
+        <translation>Ondergrens van de hartslag (% van de maximale hartslag) waarmee zone 1 begint voor de modus ‘Doortastend’. Onder dit percentage zit de loopband onderaan het herstelgebied. Standaard: 60.</translation>
+    </message>
+    <message>
+        <source>PID Pushy Zone Limit:</source>
+        <translation>Grens van de modus ‘Doortastend’:</translation>
+    </message>
+    <message>
+        <source>Fraction of zone above the target zone where &apos;Pushy&apos; mode stops pushing. 0.8 means the PID stops pushing at zone+0.8. Default: 0.8.</source>
+        <translation>Deel van de zone boven de doelzone waarop de modus ‘Doortastend’ stopt met aansporen. 0.8 betekent dat QZ stopt met aansporen bij zone+0.8. Standaard: 0.8.</translation>
+    </message>
+    <message>
+        <source>Warmup Speed (pace):</source>
+        <translation>Snelheid warming-up (tempo):</translation>
+    </message>
+    <message>
+        <source>Cooldown Speed (pace):</source>
+        <translation>Snelheid cooling-down (tempo):</translation>
+    </message>
+    <message>
+        <source>Rest Speed (pace):</source>
+        <translation>Snelheid rust (tempo):</translation>
+    </message>
+    <message>
+        <source>1 mile</source>
+        <translation>1 mijl</translation>
+    </message>
+    <message>
+        <source>Half Marathon</source>
+        <translation>Halve marathon</translation>
+    </message>
+    <message>
+        <source>Marathon</source>
+        <translation>Marathon</translation>
+    </message>
+    <message>
+        <source>Force Running Activity</source>
+        <translation>Altijd als hardloopactiviteit opslaan</translation>
+    </message>
+    <message>
+        <source>Turn this on to write treadmill FIT files as running activities even when the average speed is below 6.5 km/h. This can help Garmin calculate Training Effect for high-incline treadmill workouts. Default is off.</source>
+        <translation>Schakel dit in om FIT-bestanden van de loopband als hardloopactiviteit op te slaan, ook als de gemiddelde snelheid onder 6.5 km/h ligt. Dit helpt Garmin het trainingseffect te berekenen voor loopbandtrainingen met een steile helling. Standaard: uit.</translation>
+    </message>
+    <message>
+        <source>Pafers Rower</source>
+        <translation>Pafers-roeitrainer</translation>
+    </message>
+    <message>
+        <source>Flow Fitness Runner DTM2000i</source>
+        <translation>Flow Fitness Runner DTM2000i</translation>
+    </message>
+    <message>
+        <source>WaterRower USB</source>
+        <translation>WaterRower USB</translation>
+    </message>
+    <message>
         <source>Max Watt:</source>
         <translation>Max. vermogen (W):</translation>
     </message>
@@ -8854,16 +8657,288 @@ Standaard: A = -0.96, B = 1.33</translation>
         <translation>Beperkt het vermogen dat QZ verstuurt. Stel in op 0 om de beperking uit te schakelen. Standaard: 9999 W.</translation>
     </message>
     <message>
+        <source>Always</source>
+        <translation>Altijd</translation>
+    </message>
+    <message>
+        <source>Request</source>
+        <translation>Vragen</translation>
+    </message>
+    <message>
+        <source>Off</source>
+        <translation>Uit</translation>
+    </message>
+    <message>
+        <source>3 seconds</source>
+        <translation>3 seconden</translation>
+    </message>
+    <message>
+        <source>5 seconds</source>
+        <translation>5 seconden</translation>
+    </message>
+    <message>
+        <source>You can trigger auto laps in the FIT file based on distance. Unit: %1 Default: 0 (disabled).</source>
+        <translation>Je kunt in het FIT-bestand automatisch rondes laten markeren op basis van afstand. Eenheid: %1 Standaard: 0 (uit).</translation>
+    </message>
+    <message>
+        <source>Power sensor speed correction threshold (%):</source>
+        <translation>Drempel voor snelheidscorrectie via vermogenssensor (%):</translation>
+    </message>
+    <message>
+        <source>Maximum allowed difference between power sensor speed and treadmill speed before QZ stops applying the relative correction. Default: 20%.</source>
+        <translation>Maximaal toegestaan verschil tussen de snelheid volgens de vermogenssensor en de loopbandsnelheid, waarboven QZ de relatieve correctie niet meer toepast. Standaard: 20%.</translation>
+    </message>
+    <message>
+        <source>Heart</source>
+        <translation>Hartslag</translation>
+    </message>
+    <message>
+        <source>Power</source>
+        <translation>Vermogen</translation>
+    </message>
+    <message>
+        <source>Manual</source>
+        <translation>Handmatig</translation>
+    </message>
+    <message>
+        <source>Gear Controls</source>
+        <translation>Schakelknoppen</translation>
+    </message>
+    <message>
+        <source>Assign each physical button to Gear Up, Gear Down or Disabled. Applies before the Swap sides option above.</source>
+        <translation>Wijs elke fysieke knop toe aan ‘Opschakelen’, ‘Terugschakelen’ of ‘Uitgeschakeld’. Wordt toegepast vóór de optie ‘Zijden omwisselen’ hierboven.</translation>
+    </message>
+    <message>
+        <source>Left Shifter Up (LS1):</source>
+        <translation>Linker shifter omhoog (LS1):</translation>
+    </message>
+    <message>
+        <source>Left Shifter Down (LS2):</source>
+        <translation>Linker shifter omlaag (LS2):</translation>
+    </message>
+    <message>
+        <source>Right Shifter Up (RS1):</source>
+        <translation>Rechter shifter omhoog (RS1):</translation>
+    </message>
+    <message>
+        <source>Right Shifter Down (RS2):</source>
+        <translation>Rechter shifter omlaag (RS2):</translation>
+    </message>
+    <message>
+        <source>Left Paddle (ZL):</source>
+        <translation>Linkerpaddle (ZL):</translation>
+    </message>
+    <message>
+        <source>Right Paddle (ZR):</source>
+        <translation>Rechterpaddle (ZR):</translation>
+    </message>
+    <message>
+        <source>Power Up (LB):</source>
+        <translation>Power Up (LB):</translation>
+    </message>
+    <message>
+        <source>Ride On (RB):</source>
+        <translation>Ride On (RB):</translation>
+    </message>
+    <message>
+        <source>Virtual Tacx</source>
+        <translation>Virtuele Tacx</translation>
+    </message>
+    <message>
+        <source>Enables a virtual bluetooth bridge to the Tacx App.</source>
+        <translation>Schakelt een virtueel Bluetooth-apparaat in voor de Tacx-app.</translation>
+    </message>
+    <message>
+        <source>lbs</source>
+        <translation>lbs</translation>
+    </message>
+    <message>
+        <source>kg</source>
+        <translation>kg</translation>
+    </message>
+    <message>
+        <source>ft/in</source>
+        <translation>ft/in</translation>
+    </message>
+    <message>
+        <source>cm</source>
+        <translation>cm</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
+    </message>
+    <message>
         <source>PID HR actuator:</source>
         <translation>Hartslag vasthouden via:</translation>
+    </message>
+    <message>
+        <source>Speed</source>
+        <translation>Snelheid</translation>
     </message>
     <message>
         <source>QZ controls your treadmill or bike to keep you within a chosen Heart Rate Zone. The global PID HR actuator setting selects speed or inclination for treadmills; a workout interval can override it in the Workout Editor. The PID HR tile changes only the target HR zone.</source>
         <translation>QZ stuurt je loopband of fiets aan om je in een gekozen hartslagzone te houden. De algemene instelling ‘Hartslag vasthouden via’ kiest bij loopbanden snelheid of helling; een interval van een training kan die in de trainingseditor vervangen. De tegel ‘Doelhartslagzone’ wijzigt alleen de doelhartslagzone.</translation>
     </message>
     <message>
-        <source>Pafers Rower</source>
-        <translation>Pafers-roeitrainer</translation>
+        <source>5 km</source>
+        <translation>5 km</translation>
+    </message>
+    <message>
+        <source>10 km</source>
+        <translation>10 km</translation>
+    </message>
+    <message>
+        <source>Mi</source>
+        <translation>mi</translation>
+    </message>
+    <message>
+        <source>KM</source>
+        <translation>km</translation>
+    </message>
+    <message>
+        <source>Runn/Stryd closed-loop treadmill speed correction</source>
+        <translation>Loopbandsnelheid corrigeren met Runn/Stryd (gesloten regelkring)</translation>
+    </message>
+    <message>
+        <source>Experimental: gradually correct QZ-controlled treadmill speed using Runn/Stryd feedback, when the driver provides independent machine speed measurements. Requires &apos;Use speed from the power sensor&apos;. Disabled by default.</source>
+        <translation>Experimenteel: corrigeert de door QZ ingestelde loopbandsnelheid geleidelijk op basis van Runn/Stryd, als het stuurprogramma eigen snelheidsmetingen van het apparaat levert. Vereist ‘Snelheid van de vermogenssensor gebruiken’. Standaard: uit.</translation>
+    </message>
+    <message>
+        <source>Tile size:</source>
+        <translation>Tegelgrootte:</translation>
+    </message>
+    <message>
+        <source>This changes the size of the tiles that display your metrics. The default is 100%. To fit more tiles on your screen, choose a smaller percentage. To make them larger, choose a percentage over 100%. Do not enter the percent symbol. Formerly named “UI Zoom”.</source>
+        <translation>Hiermee wijzig je de grootte van de tegels met je meetwaarden. Standaard: 100%. Kies een kleiner percentage om meer tegels op je scherm te krijgen, of een percentage boven 100% om ze groter te maken. Typ het procentteken niet mee. Heette vroeger ‘Interfacezoom’.</translation>
+    </message>
+    <message>
+        <source>Life Fitness Options</source>
+        <translation>Life Fitness-opties</translation>
+    </message>
+    <message>
+        <source>Life Fitness username/email:</source>
+        <translation>Life Fitness-gebruikersnaam/e-mailadres:</translation>
+    </message>
+    <message>
+        <source>Life Fitness password:</source>
+        <translation>Life Fitness-wachtwoord:</translation>
+    </message>
+    <message>
+        <source>Life Fitness guest login (experimental)</source>
+        <translation>Inloggen als gast bij Life Fitness (experimenteel)</translation>
+    </message>
+    <message>
+        <source>Uses an account-free synthetic Life Fitness profile. When enabled, username, password and cached account data are ignored; use only for supported guest-login testing.</source>
+        <translation>Gebruikt een synthetisch Life Fitness-profiel zonder account. Als dit is ingeschakeld, worden gebruikersnaam, wachtwoord en opgeslagen accountgegevens genegeerd; gebruik dit alleen om het ondersteunde inloggen als gast te testen.</translation>
+    </message>
+    <message>
+        <source>Workout History Charts</source>
+        <translation>Grafieken in trainingsgeschiedenis</translation>
+    </message>
+    <message>
+        <source>Heart Rate</source>
+        <translation>Hartslag</translation>
+    </message>
+    <message>
+        <source>Resistance vs Target Resistance</source>
+        <translation>Weerstand vs. doelweerstand</translation>
+    </message>
+    <message>
+        <source>Peloton Resistance</source>
+        <translation>Peloton-weerstand</translation>
+    </message>
+    <message>
+        <source>Cadence</source>
+        <translation>Cadans</translation>
+    </message>
+    <message>
+        <source>Power Distribution</source>
+        <translation>Vermogensverdeling</translation>
+    </message>
+    <message>
+        <source>Speed and Inclination</source>
+        <translation>Snelheid en helling</translation>
+    </message>
+    <message>
+        <source>Move the charts up or down to choose their order in Workout History. Changes are saved automatically.</source>
+        <translation>Verplaats de grafieken omhoog of omlaag om hun volgorde in de trainingsgeschiedenis te kiezen. Wijzigingen worden automatisch opgeslagen.</translation>
+    </message>
+    <message>
+        <source>Move up</source>
+        <translation>Omhoog</translation>
+    </message>
+    <message>
+        <source>Move down</source>
+        <translation>Omlaag</translation>
+    </message>
+    <message>
+        <source>Restore default order</source>
+        <translation>Standaardvolgorde herstellen</translation>
+    </message>
+    <message>
+        <source>Moovio Options</source>
+        <translation>Moovio-opties</translation>
+    </message>
+    <message>
+        <source>Lynx Konect 2.0</source>
+        <translation>Lynx Konect 2.0</translation>
+    </message>
+    <message>
+        <source>Enable the standard FTMS Request Control command for Moovio Lynx Konect 2.0 treadmills. Default is off.</source>
+        <translation>Schakelt de standaard FTMS-opdracht Request Control in voor Moovio Lynx Konect 2.0-loopbanden. Standaard: uit.</translation>
+    </message>
+    <message>
+        <source>Cadence Gain</source>
+        <translation>Cadansfactor</translation>
+    </message>
+    <message>
+        <source>Multiplier applied only to the stroke rate sent by the Virtual Rower. Default is 1.0; use 0.25 to convert BikeERG RPM to the requested EXR stroke rate.</source>
+        <translation>Vermenigvuldiger die alleen wordt toegepast op de slagfrequentie die de virtuele roeitrainer verstuurt. Standaard: 1.0; gebruik 0.25 om BikeERG-RPM om te rekenen naar de slagfrequentie die de EXR vraagt.</translation>
+    </message>
+    <message>
+        <source>Offset added after the gain. Default is 0.0. QZ&apos;s internal cadence display and workout metrics remain unchanged.</source>
+        <translation>Correctie die na de factor wordt opgeteld. Standaard: 0.0. De cadansweergave in QZ en de trainingsgegevens blijven ongewijzigd.</translation>
+    </message>
+    <message>
+        <source>iOS Background Keep Alive</source>
+        <translation>iOS: actief blijven op achtergrond</translation>
+    </message>
+    <message>
+        <source>iOS only. Keeps QZ running when the screen is off or QZ is in background, so that the Bluetooth connections and the session timers don&apos;t freeze. It uses a silent audio track mixed with your music, so nothing you&apos;re listening to is interrupted. Enable it if you need to train with the screen locked or with QZ in background. Default is off.</source>
+        <translation>Alleen iOS. Houdt QZ actief als het scherm uit is of QZ op de achtergrond draait, zodat Bluetooth-verbindingen en sessietimers niet bevriezen. Er wordt een stil audiospoor gebruikt dat met je muziek wordt gemengd, dus waar je naar luistert, wordt niet onderbroken. Schakel dit in als je wilt trainen met een vergrendeld scherm of met QZ op de achtergrond. Standaard: uit.</translation>
+    </message>
+    <message>
+        <source>Daum Bike Options</source>
+        <translation>Daum-fietsopties</translation>
+    </message>
+    <message>
+        <source>Serial port used by classic Daum ergometers such as the 8008 TRS 3. On Android with a USB-to-serial adapter use &apos;usb&apos;. COM1, COM2, etc. are accepted on Android as aliases for the USB-adapter scan, but they are not Android port names. On Windows use COM1 or COM3; on Linux/macOS use the serial device path, for example /dev/ttyUSB0.</source>
+        <translation>Seriële poort voor klassieke Daum-ergometers, zoals de 8008 TRS 3. Gebruik op Android met een USB-naar-serieel-adapter &apos;usb&apos;. COM1, COM2 enzovoort worden op Android geaccepteerd als aliassen voor het zoeken naar de USB-adapter, maar zijn geen Android-poortnamen. Gebruik op Windows COM1 of COM3; op Linux/macOS het pad naar het seriële apparaat, bijvoorbeeld /dev/ttyUSB0.</translation>
+    </message>
+    <message>
+        <source>Resistance Polling Delay:</source>
+        <translation>Vertraging tussen weerstandsmetingen:</translation>
+    </message>
+    <message>
+        <source>Uses the Inclination Delay setting to limit how often QZ sends Daum resistance and power updates. Default: 0 seconds.</source>
+        <translation>Gebruikt de instelling Hellingvertraging om te beperken hoe vaak QZ weerstands- en vermogensupdates naar Daum stuurt. Standaard: 0 seconden.</translation>
+    </message>
+    <message>
+        <source>Inclination Filter (%):</source>
+        <translation>Hellingsfilter (%):</translation>
+    </message>
+    <message>
+        <source>For GPX workouts, ignore inclination changes smaller than this value and send a new inclination command only when the change from the last sent value reaches the configured threshold. Default: 0 (disabled).</source>
+        <translation>Negeert bij GPX-trainingen hellingsveranderingen kleiner dan deze waarde. Een nieuwe opdracht wordt pas verzonden wanneer het verschil met de laatst verzonden waarde de ingestelde drempel bereikt. Standaard: 0 (uitgeschakeld).</translation>
+    </message>
+    <message>
+        <source>Use Console Gears</source>
+        <translation>Versnellingen van de console gebruiken</translation>
     </message>
 </context>
 <context>
@@ -9092,10 +9167,6 @@ Standaard: A = -0.96, B = 1.33</translation>
         <translation>Tempo</translation>
     </message>
     <message>
-        <source>Enable Pace color</source>
-        <translation>Tempokleur inschakelen</translation>
-    </message>
-    <message>
         <source>Average Pace</source>
         <translation>Gemiddeld tempo</translation>
     </message>
@@ -9122,10 +9193,6 @@ Standaard: A = -0.96, B = 1.33</translation>
     <message>
         <source>Watt</source>
         <translation>Vermogen</translation>
-    </message>
-    <message>
-        <source>Enable Watt color</source>
-        <translation>Vermogenskleur inschakelen</translation>
     </message>
     <message>
         <source>Displays the watts generated by your current effort. Watt is also referred to as output (for example, in Peloton). If your equipment does not communicate watts, QZ will calculate watts using resistance and cadence.</source>
@@ -9308,6 +9375,10 @@ Standaard: A = -0.96, B = 1.33</translation>
         <translation>Toont 2 grote versnellingsknoppen in de interface</translation>
     </message>
     <message>
+        <source>Tiles Options</source>
+        <translation>Tegelopties</translation>
+    </message>
+    <message>
         <source>Remaining Time/Row</source>
         <extracomment>Tile title: time left in the current step (row) of the workout program, not rowing and not a lap.</extracomment>
         <translation>Resterende intervaltijd</translation>
@@ -9352,14 +9423,6 @@ Standaard: A = -0.96, B = 1.33</translation>
     <message>
         <source>(Rower only) Displays the number of strokes rowed.</source>
         <translation>(Alleen roeitrainer) Toont het aantal geroeide slagen.</translation>
-    </message>
-    <message>
-        <source>Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class&apos;s resistance target up or down for the rest of the ride.</source>
-        <translation>Toont de doelweerstand op de weerstandsschaal van je fiets. Tijdens een Peloton-les of Zwift-sessie wil je bijvoorbeeld dat de weerstand op deze tegel overeenkomt met de tegel ‘Weerstand’. Tijdens een Peloton-les (alleen fiets) verschuift +/- het weerstandsdoel van de les omhoog of omlaag voor de rest van de rit.</translation>
-    </message>
-    <message>
-        <source>Stroke Length</source>
-        <translation>Slaglengte</translation>
     </message>
     <message>
         <source>(Rower only) Displays the stroke length.</source>
@@ -9468,14 +9531,6 @@ Standaard: A = -0.96, B = 1.33</translation>
     <message>
         <source>Preset Speed 1</source>
         <translation>Voorinstelling snelheid 1</translation>
-    </message>
-    <message>
-        <source>mph</source>
-        <translation>mph</translation>
-    </message>
-    <message>
-        <source>km/h</source>
-        <translation>km/h</translation>
     </message>
     <message>
         <source>Preset Speed 2</source>
@@ -9678,8 +9733,28 @@ Standaard: A = -0.96, B = 1.33</translation>
         <translation>Toont de hartslagvariabiliteit (HRV) van een compatibele hartslagband. Geeft de RMSSD-waarde in milliseconden weer.</translation>
     </message>
     <message>
-        <source>Tiles Options</source>
-        <translation>Tegelopties</translation>
+        <source>Enable Pace color</source>
+        <translation>Tempokleur inschakelen</translation>
+    </message>
+    <message>
+        <source>Enable Watt color</source>
+        <translation>Vermogenskleur inschakelen</translation>
+    </message>
+    <message>
+        <source>Displays target resistance in your bike’s resistance scale. For example, during a Peloton class or Zwift session, you want the resistance displayed in this tile to match the Resistance Tile. During a Peloton class (bike only), +/- shifts the class&apos;s resistance target up or down for the rest of the ride.</source>
+        <translation>Toont de doelweerstand op de weerstandsschaal van je fiets. Tijdens een Peloton-les of Zwift-sessie wil je bijvoorbeeld dat de weerstand op deze tegel overeenkomt met de tegel ‘Weerstand’. Tijdens een Peloton-les (alleen fiets) verschuift +/- het weerstandsdoel van de les omhoog of omlaag voor de rest van de rit.</translation>
+    </message>
+    <message>
+        <source>Stroke Length</source>
+        <translation>Slaglengte</translation>
+    </message>
+    <message>
+        <source>mph</source>
+        <translation>mph</translation>
+    </message>
+    <message>
+        <source>km/h</source>
+        <translation>km/h</translation>
     </message>
 </context>
 <context>
@@ -10038,69 +10113,6 @@ Standaard: A = -0.96, B = 1.33</translation>
     <message>
         <source>Max Watt/KG</source>
         <translation>Max. W/kg</translation>
-    </message>
-</context>
-<context>
-    <name>SupportHelpButton</name>
-    <message>
-        <source>Contact QZ support</source>
-        <translation>Contact opnemen met QZ-ondersteuning</translation>
-    </message>
-    <message>
-        <source>Prepare a support email with diagnostics</source>
-        <translation>Een ondersteuningsmail met diagnostische gegevens voorbereiden</translation>
-    </message>
-    <message>
-        <source>No device connected</source>
-        <translation>Geen apparaat verbonden</translation>
-    </message>
-    <message>
-        <source>Speed and power at zero</source>
-        <translation>Snelheid en vermogen zijn nul</translation>
-    </message>
-    <message>
-        <source>QZ Support</source>
-        <translation>QZ-ondersteuning</translation>
-    </message>
-    <message>
-        <source>Done</source>
-        <translation>Gereed</translation>
-    </message>
-    <message>
-        <source>Hide keyboard</source>
-        <translation>Toetsenbord verbergen</translation>
-    </message>
-    <message>
-        <source>Close support request</source>
-        <translation>Ondersteuningsverzoek sluiten</translation>
-    </message>
-    <message>
-        <source>Tell us what is not working. QZ will add your device and app information.</source>
-        <translation>Vertel ons wat niet werkt. QZ voegt informatie over je apparaat en de app toe.</translation>
-    </message>
-    <message>
-        <source>Describe the problem...</source>
-        <translation>Beschrijf het probleem...</translation>
-    </message>
-    <message>
-        <source>Describe the problem</source>
-        <translation>Beschrijf het probleem</translation>
-    </message>
-    <message>
-        <source>Attach debug log if available</source>
-        <translation>Debuglog bijvoegen indien beschikbaar</translation>
-    </message>
-    <message>
-        <source>You can review or edit the email before sending it. Nothing is sent automatically.</source>
-        <translation>Je kunt de e-mail bekijken of bewerken voordat je deze verstuurt. Er wordt niets automatisch verzonden.</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuleren</translation>
-    </message>
-    <message>
-        <source>Open email</source>
-        <translation>E-mail openen</translation>
     </message>
 </context>
 </TS>

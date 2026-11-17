@@ -2853,6 +2853,9 @@ import QtQuick 2.12 as Quick212
             property bool heart_rate_belt_suggest: false
 
             property bool proform_treadmill_sport_6_0: false
+            property bool proform_treadmill_cst_505_pftl59420_2026: false
+            property bool proform_use_console_gears: false
+            property bool resistance_compatibility: false
 
         }
 
@@ -6977,6 +6980,24 @@ import QtQuick 2.12 as Quick212
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
                                 onClicked: settings.proform_tdf_jonseed_watt = checked
+                            }
+
+                            IndicatorOnlySwitch {
+                                id: proformUseConsoleGearsDelegate
+                                text: qsTr("Use Console Gears")
+                                spacing: 0
+                                bottomPadding: 0
+                                topPadding: 0
+                                rightPadding: 0
+                                leftPadding: 0
+                                clip: false
+                                checked: settings.proform_use_console_gears
+                                Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                                Layout.fillWidth: true
+                                onClicked: {
+                                    settings.proform_use_console_gears = checked
+                                    window.settings_restart_to_apply = true
+                                }
                             }
 
                             RowLayout {
@@ -13035,6 +13056,7 @@ import QtQuick 2.12 as Quick212
                                     "Freemotion T10.9B (HCI snoop)",
                                     "Proform Sport 5.5",
                                     "Proform Sport 6.0",
+                                     "ProForm 505 CST PFTL59420 (iFIT 2026)",
                                 ]
 
                                 // Initialize when the accordion content becomes visible
@@ -13120,7 +13142,8 @@ import QtQuick 2.12 as Quick212
                                                     settings.proform_treadmill_305_cst ? 66 :
                                                     settings.freemotion_t10_9b_hci ? 67 :
                                                     settings.proform_treadmill_sport_55 ? 68 :
-                                                    settings.proform_treadmill_sport_6_0 ? 69 : 0;
+                                                    settings.proform_treadmill_sport_6_0 ? 69 :
+                                                     settings.proform_treadmill_cst_505_pftl59420_2026 ? 70 : 0;
 
                                     console.log("treadmillModelComboBox selected model: " + selectedModel);
                                     if (selectedModel >= 0) {
@@ -13204,6 +13227,7 @@ import QtQuick 2.12 as Quick212
                                     settings.freemotion_t10_9b_hci = false;
                                     settings.proform_treadmill_sport_55 = false;
                                     settings.proform_treadmill_sport_6_0 = false;
+                                     settings.proform_treadmill_cst_505_pftl59420_2026 = false;
 
                                     // Set new setting based on selection
                                     switch (currentIndex) {
@@ -13276,6 +13300,7 @@ import QtQuick 2.12 as Quick212
                                         case 67: settings.freemotion_t10_9b_hci = true; break;
                                         case 68: settings.proform_treadmill_sport_55 = true; break;
                                         case 69: settings.proform_treadmill_sport_6_0 = true; break;
+                                         case 70: settings.proform_treadmill_cst_505_pftl59420_2026 = true; break;
                                     }
 
                                     window.settings_restart_to_apply = true;
@@ -16387,6 +16412,36 @@ import QtQuick 2.12 as Quick212
                         Layout.fillWidth: true
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }                    
+
+                    IndicatorOnlySwitch {
+                        text: qsTr("Resistance Compatibility")
+                        visible: settings.force_resistance_instead_inclination
+                        spacing: 0
+                        bottomPadding: 0
+                        topPadding: 0
+                        rightPadding: 0
+                        leftPadding: 0
+                        clip: false
+                        checked: settings.resistance_compatibility
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        onClicked: settings.resistance_compatibility = checked
+                    }
+
+                    Label {
+                        text: qsTr("Enable this if changing resistance in QZ only sets the bike to level 1 or maximum. Sends FTMS resistance multiplied by 10. Default: disabled.")
+                        visible: settings.force_resistance_instead_inclination
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
+                        font.pixelSize: window.ui.fontHint
+                        bottomPadding: window.hintGap
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                    }
 
                     RowLayout {
                         spacing: 10
