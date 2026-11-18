@@ -1039,6 +1039,8 @@ ApplicationWindow {
                 // Nothing to choose yet (Bluetooth off, nothing found): no empty box
                 visible: popupGymMode.devices.length > 0
                 width: parent.width
+                // "Disabled" and "Wifi" of the settings list mean nothing here
+                hidden: ["Disabled", "Wifi"]
                 displayText: popupGymMode.pickedDevice !== "" ? popupGymMode.pickedDevice : qsTr("Select a device")
                 font.pixelSize: window.fontPx(Qt.application.font.pixelSize + 8)
                 // Modern: the popup is surfaceHigh, the list one tone below it (as the RPE list)
@@ -1051,8 +1053,7 @@ ApplicationWindow {
                     var picked = currentValue
                     var selectedDevice = stripBluetoothDeviceName(picked)
                     console.log("gym mode: picked '" + picked + "' -> '" + selectedDevice + "'")
-                    // "Disabled" and "Wifi" of the settings list mean nothing here
-                    if (selectedDevice === "Disabled" || selectedDevice === "Wifi" || selectedDevice.length === 0)
+                    if (selectedDevice.length === 0)
                         return
                     popupGymMode.pickedDevice = selectedDevice
                 }
