@@ -6,6 +6,8 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
 
 ScrollView {
+    // Modern look: the rows Body Large, as on the settings page (T-593)
+    font: window.ui.modern ? window.ui.rowFont : window.font
     contentWidth: -1
     // Modern look: with the column's top and bottom margins, not in its implicit height (the
     // end of the page was cut off). The classic look keeps the plain height
@@ -59,18 +61,21 @@ ScrollView {
 
     ColumnLayout {
         id: mainLayout
-        spacing: 10
+        // Modern look: 8 between the groups, as Material 3 (T-593)
+        spacing: window.ui.modern ? 8 : 10
         anchors.fill: parent
         anchors.margins: 10
-        // Modern look: inside the frames, which run 10 further out
-        anchors.leftMargin: window.contentSideMargin + (window.ui.modern ? 10 : 0)
-        anchors.rightMargin: window.contentSideMargin + (window.ui.modern ? 10 : 0)
+        // Modern look: inside the frames, which run framePadH (16) further out, on the page
+        // margin 16 (T-593)
+        anchors.leftMargin: window.ui.modern ? Math.max(16, window.contentSideMargin) + 16 : window.contentSideMargin
+        anchors.rightMargin: window.ui.modern ? Math.max(16, window.contentSideMargin) + 16 : window.contentSideMargin
 
         // Modern look: the switch and its description in a frame of their own; the title and the
         // groups (framed by themselves) are left out
         UiSettingFrames {
             content: mainLayout
-            exclude: [shortcutsTitle, generalBox, metricsBox, targetBox, pelotonBox, presetBox]
+            exclude: [shortcutsTitle, generalBox, metricsBox, targetBox, pelotonBox, presetBox,
+                      presetSpeedBox, presetInclinationBox, presetPowerZoneBox]
             Layout.preferredHeight: 0
         }
 
@@ -87,7 +92,7 @@ ScrollView {
 
         UiSwitchDelegate {
             // on iOS the title of a switch kept the size of the style while the text around it grew: with a size other than 100 % it takes the one of the window font
-            Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
+            Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.rowScaledPx; restoreMode: Binding.RestoreBindingOrValue }
             id: shortcutsEnabledDelegate
             text: qsTr("Enable Keyboard Shortcuts")
             checked: settings.shortcuts_enabled
@@ -115,6 +120,10 @@ ScrollView {
             // Modern: one letter needs less than 100; three of them (the AVS row) left no
             // room for the label on a phone
             Layout.preferredWidth: window.ui.modern ? 76 : 100
+            // Modern look: the key in Body Medium 14 - Body Large of the page did not fit "None"
+            // in a field of a row of five (T-593). The page is made while the look is set, and the
+            // look is switched on the settings page under it
+            Binding on font.pixelSize { when: window.ui.modern; value: window.ui.fontLabelLarge; restoreMode: Binding.RestoreBindingOrValue }
             selectByMouse: false
             inputMethodHints: Qt.ImhNoPredictiveText | Qt.ImhSensitiveData | Qt.ImhNoAutoUppercase
 
@@ -162,6 +171,9 @@ ScrollView {
 
         component PresetShortcutField : ShortcutField {
             horizontalAlignment: Text.AlignHCenter
+            // Modern look: a field of a row of seven (power zones) has no room for "None" at 14:
+            // a dash there; the screen reader still reads the word (T-593, decision 18.11)
+            shownPlaceholder: window.ui.modern && parent && parent.children.length > 5 ? "–" : placeholderText
             Layout.fillWidth: true
             Layout.minimumWidth: 28
             Layout.preferredWidth: 56
@@ -173,8 +185,8 @@ ScrollView {
             title: qsTr("General Controls")
             framed: true
             // Out to the edges of the frames above it
-            Layout.leftMargin: window.ui.modern ? -10 : 0
-            Layout.rightMargin: window.ui.modern ? -10 : 0
+            Layout.leftMargin: window.ui.modern ? -16 : 0
+            Layout.rightMargin: window.ui.modern ? -16 : 0
             Layout.fillWidth: true
             ColumnLayout {
                 anchors.fill: parent
@@ -198,8 +210,8 @@ ScrollView {
             title: qsTr("Main Metrics")
             framed: true
             // Out to the edges of the frames above it
-            Layout.leftMargin: window.ui.modern ? -10 : 0
-            Layout.rightMargin: window.ui.modern ? -10 : 0
+            Layout.leftMargin: window.ui.modern ? -16 : 0
+            Layout.rightMargin: window.ui.modern ? -16 : 0
             Layout.fillWidth: true
             ColumnLayout {
                 anchors.fill: parent
@@ -236,8 +248,8 @@ ScrollView {
             title: qsTr("Target Controls")
             framed: true
             // Out to the edges of the frames above it
-            Layout.leftMargin: window.ui.modern ? -10 : 0
-            Layout.rightMargin: window.ui.modern ? -10 : 0
+            Layout.leftMargin: window.ui.modern ? -16 : 0
+            Layout.rightMargin: window.ui.modern ? -16 : 0
             Layout.fillWidth: true
             ColumnLayout {
                 anchors.fill: parent
@@ -274,8 +286,8 @@ ScrollView {
             title: qsTr("Peloton & Others")
             framed: true
             // Out to the edges of the frames above it
-            Layout.leftMargin: window.ui.modern ? -10 : 0
-            Layout.rightMargin: window.ui.modern ? -10 : 0
+            Layout.leftMargin: window.ui.modern ? -16 : 0
+            Layout.rightMargin: window.ui.modern ? -16 : 0
             Layout.fillWidth: true
             ColumnLayout {
                 anchors.fill: parent
@@ -342,8 +354,8 @@ ScrollView {
             title: qsTr("Preset Resistance")
             framed: true
             // Out to the edges of the frames above it
-            Layout.leftMargin: window.ui.modern ? -10 : 0
-            Layout.rightMargin: window.ui.modern ? -10 : 0
+            Layout.leftMargin: window.ui.modern ? -16 : 0
+            Layout.rightMargin: window.ui.modern ? -16 : 0
             Layout.fillWidth: true
             RowLayout {
                 anchors.fill: parent
@@ -356,7 +368,13 @@ ScrollView {
         }
 
         UiGroupBox {
+            id: presetSpeedBox
             title: qsTr("Preset Speed")
+            // Modern look: framed as the resistance presets above, not a filled card in a frame
+            // of UiSettingFrames (T-593)
+            framed: true
+            Layout.leftMargin: window.ui.modern ? -16 : 0
+            Layout.rightMargin: window.ui.modern ? -16 : 0
             Layout.fillWidth: true
             RowLayout {
                 anchors.fill: parent
@@ -369,7 +387,13 @@ ScrollView {
         }
 
         UiGroupBox {
+            id: presetInclinationBox
             title: qsTr("Preset Inclination")
+            // Modern look: framed as the resistance presets above, not a filled card in a frame
+            // of UiSettingFrames (T-593)
+            framed: true
+            Layout.leftMargin: window.ui.modern ? -16 : 0
+            Layout.rightMargin: window.ui.modern ? -16 : 0
             Layout.fillWidth: true
             RowLayout {
                 anchors.fill: parent
@@ -382,7 +406,13 @@ ScrollView {
         }
 
         UiGroupBox {
+            id: presetPowerZoneBox
             title: qsTr("Preset Power Zone")
+            // Modern look: framed as the resistance presets above, not a filled card in a frame
+            // of UiSettingFrames (T-593)
+            framed: true
+            Layout.leftMargin: window.ui.modern ? -16 : 0
+            Layout.rightMargin: window.ui.modern ? -16 : 0
             Layout.fillWidth: true
             RowLayout {
                 anchors.fill: parent

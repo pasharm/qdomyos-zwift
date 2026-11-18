@@ -70,13 +70,17 @@ T.ComboBox {
 
     TextMetrics {
         id: itemMetrics
-        font: control.font
+        // the font of the items: the one of the list in the modern look (T-593)
+        font: control.modern ? control.popup.font : control.font
     }
 
     // With a bigger text the label left of the box wraps, but the row still shared its width as
     // if the label were one line, and squeezed the box: the shown item was cut in the middle of
-    // a word. The box keeps the width of its text (at most half the window); 0 is the default
-    Layout.minimumWidth: window.textScale !== 1 ? Math.min(implicitWidth, window.width / 2) : 0
+    // a word. The box keeps the width of its text (at most half the window); 0 is the default.
+    // Modern look: always - the chosen value is the setting, it is not cut (T-593)
+    Layout.minimumWidth: modern || window.textScale !== 1 ? Math.min(implicitWidth, window.width / 2) : 0
+    // A stacked UiSettingsRow (the label above): the list across the free width
+    Layout.fillWidth: !!parent && parent.stackedRow === true
 
     Connections {
         target: control.popup
@@ -311,6 +315,12 @@ T.ComboBox {
         Material.theme: control.Material.theme
         Material.accent: control.Material.accent
         Material.primary: control.Material.primary
+
+        // A popup takes the window font, not the one of its field (Qt 5.15.0
+        // QQuickPopupItemPrivate::resolveFont, qquickpopupitem.cpp:100-105). Modern: the
+        // items in the size of the field, Label Large on a settings page (T-593); classic: the
+        // window font, as before
+        font: control.modern ? window.ui.fontOf(control.font, window.ui.labelPx(control.font.pixelSize)) : window.font
 
         // Modern: the list keeps clear of the rounded corners, the highlight of the first and
         // the last item was a square block in them

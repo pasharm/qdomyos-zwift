@@ -25,9 +25,15 @@ import QtQuick 2.12 as Quick212
                             AndroidStatusBar.waterfallLeftInset : 0
         anchors.rightMargin: (Qt.platform.os === "android" && AndroidStatusBar.hasWaterfallDisplay) ?
                              AndroidStatusBar.waterfallRightInset : 0
-        // Padding, not margins: the text moves in, the scroll bar stays at the edge
-        leftPadding: window.contentSideMargin
-        rightPadding: window.contentSideMargin
+        // Padding, not margins: the text moves in, the scroll bar stays at the edge. Modern look:
+        // the page margin of Material 3, 16 (T-593)
+        leftPadding: window.ui.modern ? Math.max(16, window.contentSideMargin) : window.contentSideMargin
+        rightPadding: window.ui.modern ? Math.max(16, window.contentSideMargin) : window.contentSideMargin
+        // Modern look: the rows (labels, fields, lists) Body Large - the controls of the page
+        // inherit it (QQuickControlPrivate::updateFontRecur, also through plain items); the
+        // classic keeps the window font, as when nothing is set. A binding, not a Binding element:
+        // the look is switched on this page, and the classic must follow the window font after it
+        font: window.ui.modern ? window.ui.rowFont : window.font
         //anchors.bottom: footerSettings.top
         //anchors.bottomMargin: footerSettings.height + 10
         id: settingsPane
@@ -3093,8 +3099,10 @@ import QtQuick 2.12 as Quick212
 
                 Label {
                     // The size with the weight: in Qt 5 a write of the weight alone keeps the size
-                    // the label inherits at that moment (the app font in the classic look)
-                    font.pixelSize: window.ui.fontBase
+                    // the label inherits at that moment (the app font in the classic look). Modern
+                    // look: Title Small 14 Medium (T-593)
+                    font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontBase
+                    font.weight: window.ui.modern ? Font.Medium : Font.Bold
                     // The catalog error above says it all: no "Searching..." or "No settings found"
                     visible: settingsCatalogError.length === 0
                     text: settingsCatalogLoading ? qsTr("Loading settings...") :
@@ -3108,7 +3116,6 @@ import QtQuick 2.12 as Quick212
                           qsTr("Search results") + " (" + filteredSettings.length + ")"
                     // A status line, not an error: plain muted text in the modern look
                     color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Red)
-                    font.bold: true
                     Layout.fillWidth: true
                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                 }
@@ -3161,10 +3168,11 @@ import QtQuick 2.12 as Quick212
                             anchors.topMargin: 4
                             spacing: 8
                             Label {
-                                font.pixelSize: window.ui.fontBase
+                                // Title Small 14 Medium (T-593)
+                                font.pixelSize: window.ui.fontLabelLarge
                                 text: window.ui.plainTitle(searchResultFrame.section)
                                 color: window.ui.accent
-                                font.weight: Font.DemiBold
+                                font.weight: Font.Medium
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
                                 Layout.minimumWidth: 0
@@ -3218,7 +3226,8 @@ import QtQuick 2.12 as Quick212
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.top: parent.top
-                            anchors.margins: window.ui.modern ? 12 : 4
+                            // Modern look: 16 in from the edge of the card, as Material 3 (T-593)
+                            anchors.margins: window.ui.modern ? 16 : 4
                             anchors.topMargin: searchResultFrame.headerHeight + searchResultFrame.topPad
 
                             RowLayout {
@@ -3232,13 +3241,14 @@ import QtQuick 2.12 as Quick212
                                     spacing: 2
 
                                     Label {
-                                        font.pixelSize: window.ui.fontBase
+                                        // Modern look: Body Large, Medium (T-593)
+                                        font.pixelSize: window.ui.modern ? window.ui.fontBody : window.ui.fontBase
+                                        font.weight: window.ui.modern ? Font.Medium : Font.Bold
                                         readonly property string title: settingsPane.searchTitle(entry)
                                         // Modern look: a capital first letter - the fields of a
                                         // tile preset are "value:" and "label:" on their page
                                         readonly property string plain: window.ui.plainTitle(title)
                                         text: window.ui.modern ? plain.charAt(0).toUpperCase() + plain.slice(1) : title
-                                        font.bold: true
                                         wrapMode: Text.WordWrap
                                         Layout.fillWidth: true
                                         Layout.minimumWidth: 0
@@ -3266,7 +3276,8 @@ import QtQuick 2.12 as Quick212
                                     text: searchResultFrame.valueText
                                     color: searchResultFrame.valueOn ? (window.ui.modern ? window.ui.accent : Material.accent)
                                                                      : (window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey))
-                                    font.pixelSize: window.ui.modern ? window.ui.fontCaption : window.ui.fontBase
+                                    // Modern look: Body Medium 14 (T-593)
+                                    font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontBase
                                     horizontalAlignment: Text.AlignRight
                                     elide: Text.ElideRight
                                     maximumLineCount: 1
@@ -3341,9 +3352,10 @@ import QtQuick 2.12 as Quick212
                 accordionContent: ColumnLayout {
                     spacing: 0
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelAppLanguage
                             text: qsTr("App Language:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -4921,15 +4933,18 @@ import QtQuick 2.12 as Quick212
 
                             Label {
                                 text: qsTr("Left Controller Buttons")
-                                font.bold: true
-                                font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 2)
+                                // Modern look: a subheader of the section, Title Small 14 Medium in the accent (T-593)
+                                font.weight: window.ui.modern ? Font.Medium : Font.Bold
+                                font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontPx(Qt.application.font.pixelSize + 2)
+                                color: window.ui.modern ? window.ui.accent : Material.foreground
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
                                 wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Left Up:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -4941,8 +4956,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Left Down:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -4954,8 +4970,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Left Left:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -4967,8 +4984,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Left Right:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -4980,8 +4998,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Left Shoulder:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -4993,8 +5012,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Left Power:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -5008,15 +5028,18 @@ import QtQuick 2.12 as Quick212
 
                             Label {
                                 text: qsTr("Right Controller Buttons")
-                                font.bold: true
-                                font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 2)
+                                // Modern look: a subheader of the section, Title Small 14 Medium in the accent (T-593)
+                                font.weight: window.ui.modern ? Font.Medium : Font.Bold
+                                font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontPx(Qt.application.font.pixelSize + 2)
+                                color: window.ui.modern ? window.ui.accent : Material.foreground
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
                                 wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Right Y:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -5028,8 +5051,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Right A:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -5041,8 +5065,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Right B:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -5054,8 +5079,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Right Z:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -5067,8 +5093,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Right Shoulder:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -5080,8 +5107,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Right Power:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -5578,10 +5606,11 @@ import QtQuick 2.12 as Quick212
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Profile:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -5600,11 +5629,12 @@ import QtQuick 2.12 as Quick212
 
                             Label {
                                 text: qsTr("Cruise Profile Settings")
-                                font.bold: true
-                                font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 1)
+                                // Modern look: a subheader of the section, Title Small 14 Medium in the accent (T-593)
+                                font.weight: window.ui.modern ? Font.Medium : Font.Bold
+                                font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontPx(Qt.application.font.pixelSize + 1)
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: Material.color(Material.Grey)
+                                color: window.ui.modern ? window.ui.accent : Material.color(Material.Grey)
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
@@ -5721,11 +5751,12 @@ import QtQuick 2.12 as Quick212
 
                             Label {
                                 text: qsTr("Climb Profile Settings")
-                                font.bold: true
-                                font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 1)
+                                // Modern look: a subheader of the section, Title Small 14 Medium in the accent (T-593)
+                                font.weight: window.ui.modern ? Font.Medium : Font.Bold
+                                font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontPx(Qt.application.font.pixelSize + 1)
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: Material.color(Material.Grey)
+                                color: window.ui.modern ? window.ui.accent : Material.color(Material.Grey)
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
@@ -5842,11 +5873,12 @@ import QtQuick 2.12 as Quick212
 
                             Label {
                                 text: qsTr("Sprint Profile Settings")
-                                font.bold: true
-                                font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 1)
+                                // Modern look: a subheader of the section, Title Small 14 Medium in the accent (T-593)
+                                font.weight: window.ui.modern ? Font.Medium : Font.Bold
+                                font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontPx(Qt.application.font.pixelSize + 1)
                                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                                 Layout.fillWidth: true
-                                color: Material.color(Material.Grey)
+                                color: window.ui.modern ? window.ui.accent : Material.color(Material.Grey)
                                 visible: automaticVirtualShiftingEnabledDelegate.checked
                                 wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             }
@@ -6167,9 +6199,10 @@ import QtQuick 2.12 as Quick212
                         //anchors.topMargin: 10
                         accordionContent: ColumnLayout {
                             spacing: 0
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     id: labelEchelonWattTable
                                     text: qsTr("Watt Profile:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -7182,9 +7215,10 @@ import QtQuick 2.12 as Quick212
                                 onClicked: { settings.kettler_usb_serialport = kettlerUsbSerialPortTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                             }
                         }
-                        RowLayout {
+                        UiSettingsRow {
                             spacing: 10
                             Label {
+                                Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                 id: labelKettlerUsbBaudrate
                                 text: qsTr("Baudrate:")
                                 wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -7869,11 +7903,12 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         visible: window.ui.modern
                         spacing: 10
                         Layout.topMargin: 8
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("Appearance")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
@@ -7902,11 +7937,12 @@ import QtQuick 2.12 as Quick212
                         }
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         visible: window.ui.modern
                         spacing: 10
                         Layout.topMargin: 8
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("Theme")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
@@ -8170,9 +8206,10 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelFloatingWindowType
                             text: qsTr("Floating Window Type:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -8393,9 +8430,10 @@ import QtQuick 2.12 as Quick212
                         onClicked: openFloatingWindowBrowser();
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelChartDisplayMode
                             text: qsTr("Chart Display Mode:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -8588,9 +8626,10 @@ import QtQuick 2.12 as Quick212
                         }
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("iOS Live Activity Left Metric:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
@@ -8611,9 +8650,10 @@ import QtQuick 2.12 as Quick212
                         }
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("iOS Live Activity Right Metric:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
@@ -9017,9 +9057,10 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("Treadmill Level:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
@@ -9058,9 +9099,10 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("Treadmill Walk Level:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
@@ -9173,9 +9215,10 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("Rower Level:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
@@ -9474,9 +9517,10 @@ import QtQuick 2.12 as Quick212
                     }
 
                     /*
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelPelotonCadenceMetric
                             text: qsTr("Override Cadence Metric:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -9503,9 +9547,10 @@ import QtQuick 2.12 as Quick212
                         }
                     }*/
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelPelotonHeartRateMetric
                             text: qsTr("Override HR Metric:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -9589,9 +9634,10 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("Date Format:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
@@ -10392,9 +10438,10 @@ import QtQuick 2.12 as Quick212
                         }
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("Garmin Server:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
@@ -16103,9 +16150,10 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelPowerAvg
                             text: qsTr("Power Averaging Mode:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -18461,8 +18509,10 @@ import QtQuick 2.12 as Quick212
 
                             Label {
                                 text: qsTr("Gear Controls")
-                                font.bold: true
-                                font.pixelSize: window.ui.fontPx(Qt.application.font.pixelSize + 2)
+                                // Modern look: a subheader of the section, Title Small 14 Medium in the accent (T-593)
+                                font.weight: window.ui.modern ? Font.Medium : Font.Bold
+                                font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontPx(Qt.application.font.pixelSize + 2)
+                                color: window.ui.modern ? window.ui.accent : Material.foreground
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
                                 wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -18482,8 +18532,9 @@ import QtQuick 2.12 as Quick212
                                 color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Left Shifter Up (LS1):")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -18495,8 +18546,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Left Shifter Down (LS2):")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -18508,8 +18560,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Right Shifter Up (RS1):")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -18521,8 +18574,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Right Shifter Down (RS2):")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -18534,8 +18588,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Left Paddle (ZL):")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -18547,8 +18602,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Right Paddle (ZR):")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -18560,8 +18616,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Power Up (LB):")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -18573,8 +18630,9 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Ride On (RB):")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -18651,9 +18709,10 @@ import QtQuick 2.12 as Quick212
                 //anchors.topMargin: 10
                 accordionContent: ColumnLayout {
                     spacing: 0
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelMapsType
                             text: qsTr("Maps Type:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -19248,7 +19307,7 @@ import QtQuick 2.12 as Quick212
 
                                     UiSwitchDelegate {
                                         // on iOS the title of a switch kept the size of the style while the text around it grew: with a size other than 100 % it takes the one of the window font
-                                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.rowScaledPx; restoreMode: Binding.RestoreBindingOrValue }
                                         text: qsTr("Virtual Tacx")
                                         spacing: 0
                                         bottomPadding: 0
@@ -19266,7 +19325,7 @@ import QtQuick 2.12 as Quick212
                                         text: qsTr("Enables a virtual bluetooth bridge to the Tacx App.")
                                         font.bold: !window.ui.modern
                                         font.italic: !window.ui.modern
-                                        font.pixelSize: window.ui.fontPx(9)
+                                        font.pixelSize: window.ui.modern ? window.fontHint : window.ui.fontPx(9) // modern: Body Small, as the hints (T-593)
                                         textFormat: Text.PlainText
                                         wrapMode: Text.WordWrap
                                         verticalAlignment: Text.AlignVCenter

@@ -70,8 +70,9 @@ T.Button {
     // weight set on an instance (font.bold) still wins
     // Classic: the button font as is - case and weight of the style, as the stock Button
     // (emulator 42417513235: the stock one mixed case, the forced all caps differed)
+    // Modern: Label Large 14 on a settings page, whose rows are Body Large 16 (ui.labelPx, T-593)
     readonly property font labelFont: !modern ? font : Qt.font({
-        family: font.family, pixelSize: font.pixelSize, italic: font.italic,
+        family: font.family, pixelSize: window.ui.labelPx(font.pixelSize), italic: font.italic,
         letterSpacing: font.letterSpacing, hintingPreference: font.hintingPreference,
         weight: font.weight !== Font.Normal ? font.weight : Font.DemiBold,
         capitalization: Font.MixedCase

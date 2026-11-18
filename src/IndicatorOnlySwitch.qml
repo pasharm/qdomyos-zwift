@@ -75,7 +75,9 @@ UiSwitchDelegate {
         if (!titleText)
             return
         if (scaledFontPx > 0) {
-            titleText.font.pixelSize = scaledFontPx
+            // the size of the switch font: the window font (scaledFontPx) as before, Body Large
+            // on a settings page of the modern look, which sets it on its root (T-593)
+            titleText.font.pixelSize = font.pixelSize > 0 ? font.pixelSize : scaledFontPx
             titleFontSet = true
         } else if (titleFontSet && contentItem && contentItem.font !== undefined) {
             titleText.font = contentItem.font
@@ -83,6 +85,7 @@ UiSwitchDelegate {
         }
     }
     onScaledFontPxChanged: applyTitleFont()
+    onFontChanged: applyTitleFont()
     onTitleTextChanged: applyTitleFont()
     // With a bigger text a long title needs more than two lines; back to two at 100 %
     Binding {

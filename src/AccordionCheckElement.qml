@@ -132,10 +132,12 @@ ColumnLayout {
                 wrapMode: Text.WordWrap
                 // A tile card: its title stands out, in the accent while the tile is on
                 color: rootElement.modernCard && rootElement.isOpen ? window.ui.accent : window.ui.textMain
-                font.weight: rootElement.modernCard ? Font.DemiBold : Font.Normal
+                // A tile card: the title of a group, Title Medium (T-593)
+                font.weight: rootElement.modernCard ? Font.Medium : Font.Normal
                 // The size as well: in Qt 5 a write of the weight alone keeps the size the label
-                // inherits at that moment, and a change of the text size missed it
-                font.pixelSize: window.ui.fontBase
+                // inherits at that moment, and a change of the text size missed it. Modern look:
+                // Body Large, as the other rows (T-593)
+                font.pixelSize: window.ui.modern ? window.ui.fontBody : window.ui.fontBase
             }
 
             UiSwitch {
@@ -157,7 +159,7 @@ ColumnLayout {
 
     UiSwitchDelegate {
         // on iOS the title of a switch kept the size of the style while the text around it grew: with a size other than 100 % it takes the one of the window font
-        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.scaledFontPx; restoreMode: Binding.RestoreBindingOrValue }
+        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.rowScaledPx; restoreMode: Binding.RestoreBindingOrValue }
         visible: !window.ui.modern
         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
         Layout.fillWidth: true

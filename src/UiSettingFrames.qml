@@ -26,7 +26,8 @@ Item {
     // The item that holds the content and these frames at its (0, 0)
     property Item holder: parent
 
-    readonly property int framePadH: 10
+    // the text of a setting 16 in from the edge of its frame, as Material 3 (T-593, was 10)
+    readonly property int framePadH: 16
     readonly property int framePadV: 8
     readonly property int frameGap: 6
     readonly property int blockPad: 6
@@ -41,7 +42,8 @@ Item {
     // A row is one setting as well ("GR7 Cadence Multiplier" with its field and OK): cut into
     // groups, the OK button got the margins of a setting of its own and sat lower than the field
     readonly property bool single: content !== null && (content.checked !== undefined || content.text !== undefined
-                                                         || String(content).indexOf("QQuickRowLayout") === 0)
+                                                         || String(content).indexOf("QQuickRowLayout") === 0
+                                                         || content.stackedRow !== undefined)
     readonly property int insetTop: !window.ui.modern ? 0 : blockPad + (single ? framePadV : 0)
     readonly property int insetBottom: insetTop
 
