@@ -297,6 +297,7 @@ function process_arr(arr) {
     let cadence_avg = 0;
     let peloton_resistance_avg = 0;
     let resistance_avg = 0;
+    let speed_avg = 0;
     let calories = 0;
     let distance = 0;
     saveScreenshot[0] = false;
@@ -342,6 +343,7 @@ function process_arr(arr) {
         deviceType = el.deviceType;
         peloton_resistance_avg = el.peloton_resistance_avg;
         resistance_avg = el.resistance_avg;
+        speed_avg = el.speed_avg;
         cadence_avg = el.cadence_avg;
         distance = el.distance;
         calories = el.calories;
@@ -441,11 +443,22 @@ function process_arr(arr) {
     $('.summary_cadence_avg').text(Math.floor(cadence_avg) + ' ' + t('unit.rpm', 'rpm'));
     // Use resistance_avg for ellipticals (deviceType 4), peloton_resistance_avg for bikes/rowers
     let summary_resistance_avg = deviceType === 4 ? resistance_avg : peloton_resistance_avg;
-    // Treadmills have no resistance and send no average: hide the cell instead of "NaN lvl"
+    // Treadmills have no resistance and send no average (it was shown as "NaN lvl"):
+    // show the average speed in this cell and hide the empty resistance charts.
+    // The label key changes too, so a late translation pass keeps the right label.
     let has_resistance_avg = Number.isFinite(summary_resistance_avg);
-    if (has_resistance_avg)
+    let summary_label = $('.summary_resistance_label');
+    if (has_resistance_avg) {
+        summary_label.attr('data-i18n', 'chart.avgResistance').text(t('chart.avgResistance', 'AVG Resistance'));
         $('.summary_resistance_avg').text(Math.floor(summary_resistance_avg) + ' ' + t('unit.level', 'lvl'));
-    $('.summary_resistance_avg, td[data-i18n="chart.avgResistance"]').css('visibility', has_resistance_avg ? '' : 'hidden');
+    } else {
+        summary_label.attr('data-i18n', 'chart.avgSpeed').text(t('chart.avgSpeed', 'AVG Speed'));
+        $('.summary_resistance_avg').text((Number(speed_avg) * miles).toFixed(1) + ' ' + (miles === 1 ? t('unit.kmh', 'km/h') : t('unit.mph', 'mph')));
+    }
+    // Each chart card is followed by its own line breaks: hide them with the card
+    $('#canvasResistance, #canvasPelotonResistance').parent().each(function () {
+        $(this).add($(this).nextUntil('div')).toggle(has_resistance_avg);
+    });
 
     const backgroundFill = {
       id: 'custom_canvas_background_color',

@@ -304,6 +304,16 @@ function process_arr(arr) {
     $('.summary_resistance_avg').text(avgResistance + ' ' + t('unit.level', 'lvl'));
     // No resistance samples (e.g. a treadmill workout): hide the cell instead of "0 lvl"
     $('.summary_resistance_avg, td[data-i18n="chart.avgResistance"]').css('visibility', validResistance > 0 ? '' : 'hidden');
+    // Same for the resistance charts: hide a chart with neither a value nor a target above zero
+    var hasResistanceChart = false, hasPelotonResistanceChart = false;
+    for (var r = 0; r < arr.length; r++) {
+        if (arr[r].resistance > 0 || arr[r].req_resistance > 0)
+            hasResistanceChart = true;
+        if (arr[r].peloton_resistance > 0 || arr[r].peloton_req_resistance > 0)
+            hasPelotonResistanceChart = true;
+    }
+    $('[data-history-chart="resistance"]').toggle(hasResistanceChart);
+    $('[data-history-chart="pelotonResistance"]').toggle(hasPelotonResistanceChart);
     $('.summary_heart_avg').text(Math.floor(heart_avg) + ' ' + t('unit.bpm', 'bpm'));
     $('.summary_heart_max').text(Math.floor(heart_max) + ' ' + t('unit.bpm', 'bpm'));
     $('.summary_speed_avg').text((speed_avg * miles).toFixed(1) + ' ' + (miles === 1 ? t('unit.kmh', 'km/h') : t('unit.mph', 'mph')));
