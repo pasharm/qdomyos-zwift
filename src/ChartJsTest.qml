@@ -51,6 +51,7 @@ ColumnLayout {
         if (pageLoaded) {
             if (window.ui.modern)
                 pageShown = false
+            reloading = true
             sentTheme = JSON.stringify(pageTheme)
             webView.url = pageUrl("?still=" + Date.now())
         }
@@ -76,9 +77,13 @@ ColumnLayout {
         webView.runJavaScript(window.ui.webThemeScript())
     }
 
+    // reopen() loads the page again: a theme change waits for the end of that load
+    // (onLoadingChanged compares sentTheme), a script sent meanwhile could reach the old document
+    property bool reloading: false
+
     // null (the modern look switched off) takes the theme off the page
     onPageThemeChanged: {
-        if (pageLoaded)
+        if (pageLoaded && !reloading)
             applyTheme()
     }
 
@@ -98,6 +103,8 @@ ColumnLayout {
                 console.error(loadRequest.errorString);
                 console.error("port " + settings.value("template_inner_QZWS_port"));
             }
+            if (loadRequest.status !== WebView.LoadStartedStatus)
+                column1.reloading = false
             if (loadRequest.status === WebView.LoadSucceededStatus) {
                 column1.pageLoaded = true
                 // A theme change during the load reached the page neither in the fragment nor in a
