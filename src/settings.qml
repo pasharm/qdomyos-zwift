@@ -34,6 +34,8 @@ import QtQuick 2.12 as Quick212
         // classic keeps the window font, as when nothing is set. A binding, not a Binding element:
         // the look is switched on this page, and the classic must follow the window font after it
         font: window.ui.modern ? window.ui.rowFont : window.font
+        // T-593: buttons and lists of this page take Label Large (window.ui.onTypeScalePage)
+        readonly property bool typeScalePage: true
         //anchors.bottom: footerSettings.top
         //anchors.bottomMargin: footerSettings.height + 10
         id: settingsPane
@@ -4936,7 +4938,7 @@ import QtQuick 2.12 as Quick212
                                 // Modern look: a subheader of the section, Title Small 14 Medium in the accent (T-593)
                                 font.weight: window.ui.modern ? Font.Medium : Font.Bold
                                 font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontPx(Qt.application.font.pixelSize + 2)
-                                color: window.ui.modern ? window.ui.accent : Material.foreground
+                                color: window.ui.modern ? window.ui.accent : enabled ? Material.foreground : Material.hintTextColor // classic: as Label of the Material style
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
                                 wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -5031,7 +5033,7 @@ import QtQuick 2.12 as Quick212
                                 // Modern look: a subheader of the section, Title Small 14 Medium in the accent (T-593)
                                 font.weight: window.ui.modern ? Font.Medium : Font.Bold
                                 font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontPx(Qt.application.font.pixelSize + 2)
-                                color: window.ui.modern ? window.ui.accent : Material.foreground
+                                color: window.ui.modern ? window.ui.accent : enabled ? Material.foreground : Material.hintTextColor // classic: as Label of the Material style
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
                                 wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -18512,7 +18514,7 @@ import QtQuick 2.12 as Quick212
                                 // Modern look: a subheader of the section, Title Small 14 Medium in the accent (T-593)
                                 font.weight: window.ui.modern ? Font.Medium : Font.Bold
                                 font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontPx(Qt.application.font.pixelSize + 2)
-                                color: window.ui.modern ? window.ui.accent : Material.foreground
+                                color: window.ui.modern ? window.ui.accent : enabled ? Material.foreground : Material.hintTextColor // classic: as Label of the Material style
                                 Layout.fillWidth: true
                                 Layout.topMargin: 20
                                 wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap

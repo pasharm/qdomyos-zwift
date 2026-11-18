@@ -13,8 +13,11 @@ import QtQuick.Layouts 1.12
 GridLayout {
     id: row
 
-    // as the spacing of a RowLayout
-    property real spacing: 5
+    // As the "spacing" of a RowLayout. Not set - the one of the style, as a RowLayout: both take
+    // QGridLayoutEngine::spacing with the style info (8 x DPI/96 on Android and iOS, 5 elsewhere;
+    // Qt 5.15.0 qquicklinearlayout.cpp:529 and 838, qquicklayoutstyleinfo.cpp:51-66), and the setter
+    // skips NaN (qquicklinearlayout.cpp:535)
+    property real spacing: NaN
     columnSpacing: spacing
     rowSpacing: 4
 

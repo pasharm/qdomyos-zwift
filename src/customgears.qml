@@ -7,6 +7,8 @@ import QtQuick.Controls.Material 2.0
 ScrollView {
     // Modern look: the rows Body Large, as on the settings page (T-593)
     font: window.ui.modern ? window.ui.rowFont : window.font
+    // T-593: buttons and lists of this page take Label Large (window.ui.onTypeScalePage)
+    readonly property bool typeScalePage: true
     contentWidth: -1
     // The column with its top and bottom margins, which are not in its implicit height
     contentHeight: customGearsColumn.implicitHeight + 2 * customGearsColumn.anchors.topMargin

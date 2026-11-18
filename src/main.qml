@@ -465,11 +465,23 @@ ApplicationWindow {
         // the path of a search result and the reason of a field error Body Small 12
         readonly property int fontLabelLarge: fontPx(14)
         readonly property int fontBodySmall: fontPx(12)
-        // The font of a settings page (its root sets it, the rows inherit it): the window font,
-        // so the family and the rest stay those of the app, with the size of Body Large
-        readonly property font rowFont: fontOf(window.font, fontBody)
+        // The font of a settings page (its root sets it, the rows inherit it): the size of Body
+        // Large only. A control takes from its parent only what the parent font sets, the rest
+        // from the font of its style (Qt 5.15.0 QQuickControlPrivate::inheritFont,
+        // qquickcontrol.cpp:555-571; Qt.font sets only the fields given, qquickglobal.cpp:322-362):
+        // a button keeps the weight Medium of the Material style
+        readonly property font rowFont: Qt.font({ pixelSize: fontBody })
+        // The item lies on a settings page of the modern look: a root with typeScalePage (the
+        // pages that set rowFont). The parents are read in the binding that calls it, so it
+        // follows a move of the item
+        function onTypeScalePage(item) {
+            for (var p = item ? item.parent : null; p; p = p.parent)
+                if (p.typeScalePage === true)
+                    return true
+            return false
+        }
         // A button or a list item takes Label Large where the text around it is Body Large (a
-        // settings page); elsewhere it keeps the size it inherits
+        // settings page, onTypeScalePage); elsewhere it keeps the size it inherits
         function labelPx(px) { return px === fontBody ? fontLabelLarge : px }
         // The app font (12 on the emulator, not the Material 14): labels, fields, buttons, lists
         readonly property int fontBase: fontPx(window.appFontPx)

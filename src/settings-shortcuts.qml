@@ -8,6 +8,8 @@ import QtQuick.Controls.Material 2.0
 ScrollView {
     // Modern look: the rows Body Large, as on the settings page (T-593)
     font: window.ui.modern ? window.ui.rowFont : window.font
+    // T-593: buttons and lists of this page take Label Large (window.ui.onTypeScalePage)
+    readonly property bool typeScalePage: true
     contentWidth: -1
     // Modern look: with the column's top and bottom margins, not in its implicit height (the
     // end of the page was cut off). The classic look keeps the plain height

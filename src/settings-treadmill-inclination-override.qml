@@ -6,6 +6,8 @@ import QtQuick.Controls.Material 2.0
 ScrollView {
     // Modern look: the rows Body Large, as on the settings page (T-593)
     font: window.ui.modern ? window.ui.rowFont : window.font
+    // T-593: buttons and lists of this page take Label Large (window.ui.onTypeScalePage)
+    readonly property bool typeScalePage: true
     contentWidth: -1
     // Modern look: the page margin of Material 3, 16 (T-593)
     leftPadding: window.ui.modern ? Math.max(16, window.contentSideMargin) : window.contentSideMargin

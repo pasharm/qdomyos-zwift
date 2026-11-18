@@ -18,6 +18,8 @@ T.ComboBox {
     id: control
 
     readonly property bool modern: window.ui.modern
+    // on a settings page of the modern look (the items Label Large, T-593)
+    readonly property bool inTypeScalePage: modern && window.ui.onTypeScalePage(control)
 
     // Shown text for a raw value: ValueComboBox puts its translated labels here; values
     // missing from the map are shown unchanged
@@ -70,8 +72,8 @@ T.ComboBox {
 
     TextMetrics {
         id: itemMetrics
-        // the font of the items: the one of the list in the modern look (T-593)
-        font: control.modern ? control.popup.font : control.font
+        // the font of the items: the one of the list on a settings page of the modern look (T-593)
+        font: control.inTypeScalePage ? control.popup.font : control.font
     }
 
     // With a bigger text the label left of the box wraps, but the row still shared its width as
@@ -317,10 +319,10 @@ T.ComboBox {
         Material.primary: control.Material.primary
 
         // A popup takes the window font, not the one of its field (Qt 5.15.0
-        // QQuickPopupItemPrivate::resolveFont, qquickpopupitem.cpp:100-105). Modern: the
-        // items in the size of the field, Label Large on a settings page (T-593); classic: the
-        // window font, as before
-        font: control.modern ? window.ui.fontOf(control.font, window.ui.labelPx(control.font.pixelSize)) : window.font
+        // QQuickPopupItemPrivate::resolveFont, qquickpopupitem.cpp:100-105). On a settings page
+        // of the modern look the items are Label Large, the field Body Large (T-593); elsewhere
+        // and in the classic the window font, as before
+        font: control.inTypeScalePage ? window.ui.fontOf(control.font, window.ui.labelPx(control.font.pixelSize)) : window.font
 
         // Modern: the list keeps clear of the rounded corners, the highlight of the first and
         // the last item was a square block in them
