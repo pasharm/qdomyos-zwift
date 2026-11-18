@@ -15962,7 +15962,7 @@ import QtQuick 2.12 as Quick212
 
                     IndicatorOnlySwitch {
                         id: stravaSyntheticGpsTrackDelegate
-                        text: qsTr("Strava Synthetic GPS Track (Experimental)")
+                        text: qsTr("Strava Synthetic GPS Track")
                         spacing: 0
                         bottomPadding: 0
                         topPadding: 0
