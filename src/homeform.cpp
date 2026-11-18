@@ -885,7 +885,7 @@ homeform::homeform(QQmlApplicationEngine *engine, bluetooth *bl) {
 #ifndef STEAM_STORE
     connect(engine, &QQmlApplicationEngine::quit, &QGuiApplication::quit);
     connect(&tLicense, &QTimer::timeout, this, &homeform::licenseTimeout);
-    tLicense.start(600000);
+    tLicense.start(120000); // test only (T-594): 2 minutes instead of 10
     licenseRequest();
 #endif
 #endif
