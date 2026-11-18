@@ -36,6 +36,8 @@ measure() {
   CUT_L=$(echo "$out" | awk '/^cut .* under_left/ {for (i = 1; i < NF; i++) if ($i == "under_left") print $(i + 1)}')
   CUT_R=$(echo "$out" | awk '/^cut .* under_right/ {for (i = 1; i < NF; i++) if ($i == "under_right") print $(i + 1)}')
   CUT_LAND=$(echo "$out" | awk '/^cut .* landscape/ {for (i = 1; i < NF; i++) if ($i == "landscape") print $(i + 1)}')
+  # the side insets of the cutout ("cut L T R B"): none - nothing to go under
+  CUT_SIDE=$(echo "$out" | awk '/^cut / {print $2 + $4}')
   [ -n "$CUT_L" ] && [ -n "$CUT_R" ]
 }
 
@@ -58,6 +60,9 @@ land() {
   fi
   if [ "$CUT_LAND" != 1 ]; then
     proves_nothing "$n: QZ did not turn to landscape (user_rotation $r)"
+  fi
+  if [ "${CUT_SIDE:-0}" = 0 ]; then
+    proves_nothing "$n: no cutout on the side in landscape"
   fi
   under=$((CUT_L + CUT_R))
   if [ "$side" = h ]; then
@@ -92,7 +97,9 @@ adb shell cmd overlay list < /dev/null 2>/dev/null | grep -q -F "[x] $CUTOUT" ||
 { adb shell dumpsys window displays < /dev/null 2>/dev/null; adb shell dumpsys display < /dev/null 2>/dev/null; } |
   grep -o -m 1 'DisplayCutout{insets=Rect([^)]*)' > cut0.txt
 say "cutout upright: $(cat cut0.txt)"
-grep -q 'Rect(0, 0 - 0, 0)' cut0.txt && proves_nothing "the cutout has no insets"
+# API 28 (run 44290622314): the first one of dumpsys display has zero insets with the overlay on - only
+# said here; land() refuses a landscape measure without a side cutout
+grep -q 'Rect(0, 0 - 0, 0)' cut0.txt && near cutout "zero insets in dumpsys upright"
 # none in either - measure falls back on the log of QZ and fails red without a cutout there too
 [ -s cut0.txt ] || near cutout "no DisplayCutout in dumpsys window displays nor dumpsys display"
 logcat_start
