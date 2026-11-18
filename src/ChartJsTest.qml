@@ -12,14 +12,15 @@ ColumnLayout {
     spacing: 10
     anchors.fill: parent
 
-    // Modern look: the page takes the app theme colours (chart.htm, qzApplyTheme) from the URL
+    // Modern look: the page takes the app theme colours (qz-theme-bridge.js) from the URL
     // fragment of the first load and through runJavaScript when the theme changes later
     readonly property var pageTheme: window.ui.webTheme
     property bool pageLoaded: false
     // Modern look: the native web view stays off the screen until the page has drawn once.
-    // It is white before its first paint and lies over everything QML draws, so it flashed
-    // white on the dark theme. Moved aside, not hidden: a hidden view has no size, the page
-    // laid out for a wrong width and opened zoomed in
+    // It is white before its first paint and lies over everything QML draws (on Android a native
+    // view over the Qt surface), so it flashed white on the dark theme. Moved aside, not hidden:
+    // hiding takes the view out of the window (QAndroidPlatformForeignWindow::setVisible destroys
+    // its surface), the page was laid out for a wrong width and opened zoomed in
     property bool pageShown: !window.ui.modern
     readonly property real offScreen: pageShown ? 0 : Screen.width + Screen.height
     // A chart spread over the page (chartfullscreen.js): the page tells it in its title
@@ -44,18 +45,13 @@ ColumnLayout {
     // far are drawn anew, and the mail goes as on a fresh open. Drawn at once ("still" in the
     // query, chart.htm): growing from zero again every block looked like a redraw. A new query
     // loads the page anew, the fragment keeps the current theme
-    // The new load is kept off the screen like the first one: the page showed its empty cards
-    // and the alt text of the picture for a moment before the charts came
+    // The new load is kept off the screen like the first one, until its load ends
     function reopen() {
         headerToolbar.visible = true
         if (pageLoaded) {
-            if (window.ui.modern) {
-                // Opened again before the last load showed: that poll and the rest of that
-                // safety net are for the old page, both start over with the new load
-                revealTimer.stop()
+            if (window.ui.modern)
                 pageShown = false
-                revealSafety.restart()
-            }
+            sentTheme = JSON.stringify(pageTheme)
             webView.url = pageUrl("?still=" + Date.now())
         }
         sendMailFallback.restart()
@@ -73,9 +69,17 @@ ColumnLayout {
         column1.visible = false
     }
 
+    // The theme the page has, as JSON: that of the fragment of the first load, then of each script sent
+    property string sentTheme: ""
+    function applyTheme() {
+        sentTheme = JSON.stringify(pageTheme)
+        webView.runJavaScript(window.ui.webThemeScript())
+    }
+
+    // null (the modern look switched off) takes the theme off the page
     onPageThemeChanged: {
-        if (pageLoaded && pageTheme)
-            webView.runJavaScript(window.ui.webThemeScript())
+        if (pageLoaded)
+            applyTheme()
     }
 
     Settings {
@@ -86,8 +90,6 @@ ColumnLayout {
         anchors.fill: parent
         // The native view lies over everything QML draws: it goes with the page when kept
         visible: column1.visible
-        // Modern look: no Close button at the bottom (the back arrow of the toolbar does
-        // it), the page runs down to the edge like the other pages
         anchors.leftMargin: -column1.offScreen
         anchors.rightMargin: column1.offScreen
         onTitleChanged: column1.chartFullscreen = title.indexOf("#fullscreen") >= 0
@@ -98,43 +100,24 @@ ColumnLayout {
             }
             if (loadRequest.status === WebView.LoadSucceededStatus) {
                 column1.pageLoaded = true
-                revealTimer.start()
-                // A theme change during the load only moved the fragment: apply the current one
-                if (column1.pageTheme)
-                    webView.runJavaScript(window.ui.webThemeScript())
+                // A theme change during the load reached the page neither in the fragment nor in a
+                // script: apply the current one
+                if (JSON.stringify(column1.pageTheme) !== column1.sentTheme)
+                    column1.applyTheme()
             }
+            // Shown when the load ends, failed too: the page has its background by then (the
+            // theme is set in its head), the charts follow on it once the session data comes
+            if (loadRequest.status !== WebView.LoadStartedStatus)
+                column1.pageShown = true
         }
     }
 
-    // Shown once the page has drawn: the charts made (they come after the session data over the
-    // web socket) and the picture loaded. The end of the load alone came before both
-    Timer {
-        id: revealTimer
-        interval: 100; repeat: true
-        onTriggered: {
-            if (column1.pageShown) {
-                stop()
-                return
-            }
-            webView.runJavaScript("(function () { var i = document.querySelector('.workout_image');" +
-                                  " return typeof Chart !== 'undefined' && Object.keys(Chart.instances).length > 0 &&" +
-                                  " (!i || i.complete); })()", function (drawn) {
-                if (drawn)
-                    column1.pageShown = true
-            })
-        }
-    }
-
-    // Safety net: a page that never reports the end of its load is shown anyway
-    Timer {
-        id: revealSafety
-        interval: 4000; running: !column1.pageShown; repeat: false
-        onTriggered: column1.pageShown = true
-    }
-
+    // On the item that holds the page, not on the ColumnLayout: a layout warns about anchors on
+    // each child item it manages. Off with the page: a page pushed over this one hides it
     BusyIndicator {
+        parent: column1.parent
         anchors.centerIn: parent
-        running: !column1.pageShown
+        running: !column1.pageShown && column1.visible
         visible: running
     }
 
@@ -159,6 +142,8 @@ ColumnLayout {
         onTriggered: rootItem.sendMail()
     }
 
+    // Modern look: no Close button at the bottom (the back arrow of the toolbar does it), the
+    // page runs down to the edge like the other pages
     UiButton {
         id: closeButton
         visible: !window.ui.modern
@@ -176,8 +161,9 @@ ColumnLayout {
     }
 	 Component.onCompleted: {
 	     headerToolbar.visible = true;
-	     // Set once, not bound: the fragment follows the theme, and a new fragment would
-	     // not reload the page anyway (the theme goes through runJavaScript then)
+	     // Set once, not bound: the fragment is for the first load, a later theme goes
+	     // through runJavaScript
+	     sentTheme = JSON.stringify(pageTheme)
 	     webView.url = pageUrl("")
 	 }
 }

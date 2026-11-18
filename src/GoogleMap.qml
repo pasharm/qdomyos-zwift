@@ -11,17 +11,26 @@ ColumnLayout {
     id: column1
     spacing: 10
     anchors.fill: parent
-    // Modern look, as ChartJsTest.qml: the page takes the app theme (maps.htm, qzApplyTheme)
-    // from the URL fragment and through runJavaScript when it changes, and the native view
-    // stays off the screen until the page has drawn (it is white before and lies over QML)
+
+    // Modern look, as ChartJsTest.qml: the page takes the app theme (qz-theme-bridge.js) from the
+    // URL fragment and through runJavaScript when it changes, and the native view stays off the
+    // screen until the page has drawn (it is white before and lies over QML)
     readonly property var pageTheme: window.ui.webTheme
     property bool pageLoaded: false
     property bool pageShown: !window.ui.modern
     readonly property real offScreen: pageShown ? 0 : Screen.width + Screen.height
 
+    // The theme the page has, as JSON: that of the fragment of the first load, then of each script sent
+    property string sentTheme: ""
+    function applyTheme() {
+        sentTheme = JSON.stringify(pageTheme)
+        webView.runJavaScript(window.ui.webThemeScript())
+    }
+
+    // null (the modern look switched off) takes the theme off the page
     onPageThemeChanged: {
-        if (pageLoaded && pageTheme)
-            webView.runJavaScript(window.ui.webThemeScript())
+        if (pageLoaded)
+            applyTheme()
     }
 
     Settings {
@@ -33,35 +42,29 @@ ColumnLayout {
         anchors.fill: parent
         anchors.leftMargin: -column1.offScreen
         anchors.rightMargin: column1.offScreen
-        url: "http://localhost:" + settings.value("template_inner_QZWS_port") + "/" + (settings.value("maps_type") === "3D" ? "googlemaps" : "maps2d") + "/maps.htm" + window.ui.webThemeFragment()
         visible: true
         onLoadingChanged: {
             if (loadRequest.errorString)
                 console.error(loadRequest.errorString);
             if (loadRequest.status === WebView.LoadSucceededStatus) {
                 column1.pageLoaded = true
-                revealTimer.start()
-                if (column1.pageTheme)
-                    webView.runJavaScript(window.ui.webThemeScript())
+                // A theme change during the load reached the page neither in the fragment nor in a
+                // script (the map stays in its Loader after Back: the look switched off meanwhile too)
+                if (JSON.stringify(column1.pageTheme) !== column1.sentTheme)
+                    column1.applyTheme()
             }
+            // Shown when the load ends, failed too: the page has its background by then
+            if (loadRequest.status !== WebView.LoadStartedStatus)
+                column1.pageShown = true
         }
     }
 
-    Timer {
-        id: revealTimer
-        interval: 150; repeat: false
-        onTriggered: column1.pageShown = true
-    }
-
-    // Safety net: a page that never reports the end of its load is shown anyway
-    Timer {
-        interval: 4000; running: !column1.pageShown; repeat: false
-        onTriggered: column1.pageShown = true
-    }
-
+    // On the item that holds the page, not on the ColumnLayout: a layout warns about anchors on
+    // each child item it manages. Off with the page: a page pushed over this one hides it
     BusyIndicator {
+        parent: column1.parent
         anchors.centerIn: parent
-        running: !column1.pageShown
+        running: !column1.pageShown && column1.visible
         visible: running
     }
 
@@ -91,5 +94,11 @@ ColumnLayout {
     }
      Component.onCompleted: {
          headerToolbar.visible = true;
+         // Set once, not bound: the fragment is for the first load, a later theme goes
+         // through runJavaScript
+         sentTheme = JSON.stringify(pageTheme)
+         webView.url = "http://localhost:" + settings.value("template_inner_QZWS_port") + "/" +
+                       (settings.value("maps_type") === "3D" ? "googlemaps" : "maps2d") + "/maps.htm" +
+                       window.ui.webThemeFragment()
      }
 }
