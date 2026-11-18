@@ -927,6 +927,8 @@ ApplicationWindow {
         closePolicy: Popup.NoAutoClose
         onOpened: {
             pickedDevice = ""
+            // opened again after a disconnection: no row of the last pick marked in the list
+            gymModeDeviceComboBox.value = ""
             secondsLeft = refreshSeconds
             pollState()
             if (!bluetoothOff)
@@ -1029,26 +1031,30 @@ ApplicationWindow {
                 }
             }
 
-            ValueComboBox {
+            // The search goes on every 10 seconds: the rows of the open list must stay where they
+            // are (DeviceComboBox, devices found while it is open go to the end). The shown text
+            // follows the marked trainer, not currentIndex: the list is filled again on every opening
+            DeviceComboBox {
                 id: gymModeDeviceComboBox
                 // Nothing to choose yet (Bluetooth off, nothing found): no empty box
                 visible: popupGymMode.devices.length > 0
                 width: parent.width
-                model: popupGymMode.devices
                 displayText: popupGymMode.pickedDevice !== "" ? popupGymMode.pickedDevice : qsTr("Select a device")
-                currentIndex: -1
                 font.pixelSize: window.fontPx(Qt.application.font.pixelSize + 8)
                 // Modern: the popup is surfaceHigh, the list one tone below it (as the RPE list)
                 menuColor: window.ui.surface
 
                 onActivated: {
-                    // The name straight from the list: the list is rebuilt on every search
-                    // result, so currentValue may already point at the new copy
-                    var picked = index >= 0 && index < popupGymMode.devices.length ? popupGymMode.devices[index] : ""
+                    // Enter with no row highlighted: nothing marked
+                    if (index < 0)
+                        return
+                    var picked = currentValue
                     var selectedDevice = stripBluetoothDeviceName(picked)
                     console.log("gym mode: picked '" + picked + "' -> '" + selectedDevice + "'")
-                    if (selectedDevice.length > 0)
-                        popupGymMode.pickedDevice = selectedDevice
+                    // "Disabled" and "Wifi" of the settings list mean nothing here
+                    if (selectedDevice === "Disabled" || selectedDevice === "Wifi" || selectedDevice.length === 0)
+                        return
+                    popupGymMode.pickedDevice = selectedDevice
                 }
             }
 
