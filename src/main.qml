@@ -1009,6 +1009,9 @@ ApplicationWindow {
                         color: window.ui.dangerInk
                         font.pixelSize: window.fontPx(16)
                         font.bold: true
+                        // Qt 5.15 lifts the children of an ignored item into the tree: the sign has
+                        // to be ignored itself, the status text next to it says the words
+                        Accessible.ignored: true
                     }
                 }
 

@@ -3045,6 +3045,8 @@ import QtQuick 2.12 as Quick212
                         width: 44
                         Accessible.role: Accessible.Button
                         Accessible.name: qsTr("Clear")
+                        // Qt 5.15: a double tap of the screen reader does not reach onClicked
+                        Accessible.onPressAction: settingsSearchTextField.text = ""
                         onClicked: settingsSearchTextField.text = ""
                         UiIcon {
                             anchors.centerIn: parent
@@ -7893,6 +7895,8 @@ import QtQuick 2.12 as Quick212
                                 return 0
                             }
                             onActivated: settingsPane.setUiOption("ui_theme_mode", options[index].value)
+                            // The row's label, which the screen reader does not join to the box itself
+                            Accessible.name: qsTr("Appearance") + ": " + displayText
                         }
                     }
 
@@ -7923,6 +7927,8 @@ import QtQuick 2.12 as Quick212
                                 return 0
                             }
                             onActivated: settingsPane.setUiOption("ui_theme", options[index].value)
+                            // The row's label, which the screen reader does not join to the box itself
+                            Accessible.name: qsTr("Theme") + ": " + displayText
                         }
                     }
 
@@ -7960,6 +7966,8 @@ import QtQuick 2.12 as Quick212
                                                         teal: qsTr("Teal"), green: qsTr("Green"), orange: qsTr("Orange"),
                                                         pink: qsTr("Pink") })[modelData] || modelData
                                     Accessible.checked: window.ui.accentName === modelData
+                                    // Qt 5.15: a double tap of the screen reader does not reach the MouseArea
+                                    Accessible.onPressAction: settingsPane.setUiOption("ui_accent", modelData)
                                     // The wallpaper colour is marked, so it does not pass for one
                                     // more fixed colour
                                     UiIcon {
