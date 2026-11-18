@@ -2856,6 +2856,8 @@ import QtQuick 2.12 as Quick212
             property bool proform_treadmill_cst_505_pftl59420_2026: false
             property bool proform_use_console_gears: false
             property bool resistance_compatibility: false
+            // Keep newly added properties at the end to preserve settings order on iOS.
+            property bool strava_synthetic_gps_track: false
 
         }
 
@@ -15956,6 +15958,36 @@ import QtQuick 2.12 as Quick212
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
+                    }
+
+                    IndicatorOnlySwitch {
+                        id: stravaSyntheticGpsTrackDelegate
+                        text: qsTr("Strava Synthetic GPS Track (Experimental)")
+                        spacing: 0
+                        bottomPadding: 0
+                        topPadding: 0
+                        rightPadding: 0
+                        leftPadding: 0
+                        clip: false
+                        checked: settings.strava_synthetic_gps_track
+                        enabled: settings.strava_virtual_activity
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        onClicked: settings.strava_synthetic_gps_track = checked
+                    }
+
+                    Label {
+                        text: qsTr("Write a synthetic GPS track to virtual activities without GPS. Strava may then show elevation, but the route is not real.")
+                        font.bold: true
+                        font.italic: true
+                        font.pixelSize: window.fontHint
+                        bottomPadding: window.hintGap
+                        textFormat: Text.PlainText
+                        wrapMode: Text.WordWrap
+                        verticalAlignment: Text.AlignVCenter
+                        Layout.alignment: Qt.AlignLeft | Qt.AlignTop
+                        Layout.fillWidth: true
+                        color: Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
