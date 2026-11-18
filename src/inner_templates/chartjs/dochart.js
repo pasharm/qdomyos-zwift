@@ -447,7 +447,8 @@ function process_arr(arr) {
     // show the average speed in this cell and hide the empty resistance charts.
     // The label key changes too, so a late translation pass keeps the right label.
     let has_resistance_avg = Number.isFinite(summary_resistance_avg);
-    let summary_label = $('.summary_resistance_label');
+    // Not a "summary_" class: the modern look styles those cells as values
+    let summary_label = $('.resistance_label');
     if (has_resistance_avg) {
         summary_label.attr('data-i18n', 'chart.avgResistance').text(t('chart.avgResistance', 'AVG Resistance'));
         $('.summary_resistance_avg').text(Math.floor(summary_resistance_avg) + ' ' + t('unit.level', 'lvl'));
@@ -455,9 +456,11 @@ function process_arr(arr) {
         summary_label.attr('data-i18n', 'chart.avgSpeed').text(t('chart.avgSpeed', 'AVG Speed'));
         $('.summary_resistance_avg').text((Number(speed_avg) * miles).toFixed(1) + ' ' + (miles === 1 ? t('unit.kmh', 'km/h') : t('unit.mph', 'mph')));
     }
-    // Each chart card is followed by its own line breaks: hide them with the card
+    // Each chart card is followed by its own line breaks: hide them with the card.
+    // Clearing the inline display (not toggle()) leaves the breaks to the page style:
+    // the modern look hides them, and toggle() would force them back as blocks.
     $('#canvasResistance, #canvasPelotonResistance').parent().each(function () {
-        $(this).add($(this).nextUntil('div')).toggle(has_resistance_avg);
+        $(this).add($(this).nextUntil('div')).css('display', has_resistance_avg ? '' : 'none');
     });
 
     const backgroundFill = {
