@@ -7972,7 +7972,10 @@ import QtQuick 2.12 as Quick212
                         }
                     }
 
-                    RowLayout {
+                    // A settings row (T-593): the swatches go under the label when its longest
+                    // word has no room beside them (130 %: "Акцентний" ran under the swatches)
+                    UiSettingsRow {
+                        id: accentRow
                         visible: window.ui.modern
                         spacing: 10
                         Layout.topMargin: 8
@@ -7980,6 +7983,7 @@ import QtQuick 2.12 as Quick212
                         // Wraps instead of running under the swatches: inside the frames of the
                         // section the row is narrower than the seven swatches and a long name
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("Accent color")
                             wrapMode: Text.WordWrap
                             Layout.fillWidth: true
@@ -7987,7 +7991,7 @@ import QtQuick 2.12 as Quick212
                         }
                         Row {
                             spacing: 6
-                            Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
+                            Layout.alignment: (accentRow.stackedRow ? Qt.AlignLeft : Qt.AlignRight) | Qt.AlignVCenter
                             Repeater {
                                 // "system" first, where Android offers the wallpaper colour (API 31+)
                                 model: (window.ui.systemAccentAvailable ? ["system"] : [])

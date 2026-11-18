@@ -44,7 +44,9 @@ T.SwitchDelegate {
     // title on as many lines as it takes, as IndicatorOnlySwitch on the settings page: with Body
     // Large at a large text size a long title was cut with an ellipsis. IndicatorOnlySwitch wraps
     // its title itself and sets this false; the classic and the other pages - one line, as before
-    property bool pageWrap: window.ui.modern && window.ui.onTypeScalePage(control)
+    property bool pageWrap: inSettingsPage
+    // A settings page of the modern look: the row is a card of its section (T-593)
+    readonly property bool inSettingsPage: window.ui.modern && window.ui.onTypeScalePage(control)
     // The text of the IconLabel (Qt 5.15 gives it no wrapMode of its own): found as
     // IndicatorOnlySwitch.configureTextItem() does
     function setTitleWrap(item, wrap) {
@@ -127,6 +129,12 @@ T.SwitchDelegate {
         Ripple {
             width: parent.width
             height: parent.height
+            // On a settings page of the modern look no press wave over the row: it filled the
+            // rounded card with a square block (T-593, phone 19.11); the switch shows the press
+            // itself (UiSwitchIndicator, a larger handle), and the switches of the main settings
+            // page (IndicatorOnlySwitch, its MouseArea takes the press) never had it. The focus of
+            // a keyboard is still shown
+            visible: !control.inSettingsPage || control.visualFocus
 
             clip: visible
             pressed: control.pressed
