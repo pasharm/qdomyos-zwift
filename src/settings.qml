@@ -15978,8 +15978,8 @@ import QtQuick 2.12 as Quick212
 
                     Label {
                         text: qsTr("Write a synthetic GPS track to virtual activities without GPS. Strava may then show elevation, but the route is not real.")
-                        font.bold: true
-                        font.italic: true
+                        font.bold: !window.ui.modern
+                        font.italic: !window.ui.modern
                         font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
                         textFormat: Text.PlainText
@@ -15987,7 +15987,7 @@ import QtQuick 2.12 as Quick212
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: Material.color(Material.Lime)
+                        color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
                     IndicatorOnlySwitch {
