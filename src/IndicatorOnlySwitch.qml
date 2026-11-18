@@ -9,6 +9,8 @@ import QtQuick.Dialogs 1.0
 UiSwitchDelegate {
     id: root
     wrapsTitle: true
+    // it wraps its title itself (configureTextItem), not by the one of UiSwitchDelegate (T-593)
+    pageWrap: false
 
     // Preserve Material styling while making translated setting titles responsive.
     function configureTextItem(item) {

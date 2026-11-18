@@ -236,6 +236,12 @@ T.ComboBox {
         rightPadding: control.editable ? 2 : control.mirrored ? (control.modern ? 16 : 12) : 0
 
         text: control.editable ? control.editText : control.displayText
+        // On a settings page of the modern look the box is as wide as its value (T-593). A
+        // TextField has no implicit width of its own (Qt 5.15.0 qquicktextfield.cpp:440
+        // setImplicitResizeEnabled(false), 307-310), so the box kept 120 of its background and cut
+        // "Auto (System)"; the width of the text as TextField.qml of Material does (47-48).
+        // Elsewhere and in the classic 0, as before
+        implicitWidth: control.inTypeScalePage ? contentWidth + leftPadding + rightPadding : 0
 
         enabled: control.editable
         autoScroll: control.editable
