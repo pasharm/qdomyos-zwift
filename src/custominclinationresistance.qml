@@ -5,6 +5,10 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
 
 ScrollView {
+    // Modern look: the rows Body Large, as on the settings page (T-593)
+    font: window.ui.modern ? window.ui.rowFont : window.font
+    // T-593: buttons and lists of this page take Label Large (window.ui.onTypeScalePage)
+    readonly property bool typeScalePage: true
     id: customInclinationResistanceWindow
     contentWidth: -1
     // The column with its top and bottom margins, which are not in its implicit height
@@ -300,7 +304,7 @@ ScrollView {
             text: qsTr("Set the resistance QZ should target at each incline. QZ interpolates automatically between points and uses the nearest endpoint outside the configured range. Changes are saved automatically.")
             wrapMode: Text.WordWrap
             Layout.fillWidth: true
-            font.pixelSize: window.ui.modern ? window.ui.fontCaption : window.fontHint
+            font.pixelSize: window.fontHint // modern look: Body Small, as the hints of the settings (T-593)
             bottomPadding: window.hintGap
             color: window.ui.modern ? window.ui.textMuted : Material.accent
         }
@@ -349,8 +353,8 @@ ScrollView {
                     color: "transparent"
 
                     Text {
-                        // a plain Text does not inherit the window font: the text size while it is not 100 %
-                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                        // a plain Text does not inherit the window font: the text size while it is not 100 %; modern look: the column headers Label Large 14 (T-593)
+                        Binding on font.pixelSize { when: window.ui.modern || window.scaledFontPx > 0; value: window.ui.modern ? window.ui.fontLabelLarge : window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         anchors.centerIn: parent
                         text: qsTr("Inclination (%)")
                         font.bold: true
@@ -366,7 +370,7 @@ ScrollView {
                     color: "transparent"
 
                     Text {
-                        Binding on font.pixelSize { when: window.scaledFontPx > 0; value: window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
+                        Binding on font.pixelSize { when: window.ui.modern || window.scaledFontPx > 0; value: window.ui.modern ? window.ui.fontLabelLarge : window.plainFontPx; restoreMode: Binding.RestoreBindingOrValue }
                         anchors.centerIn: parent
                         text: qsTr("Resistance")
                         font.bold: true

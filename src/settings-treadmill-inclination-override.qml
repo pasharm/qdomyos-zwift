@@ -4,9 +4,14 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.0
 
 ScrollView {
+    // Modern look: the rows Body Large, as on the settings page (T-593)
+    font: window.ui.modern ? window.ui.rowFont : window.font
+    // T-593: buttons and lists of this page take Label Large (window.ui.onTypeScalePage)
+    readonly property bool typeScalePage: true
     contentWidth: -1
-    leftPadding: window.contentSideMargin
-    rightPadding: window.contentSideMargin
+    // Modern look: the page margin of Material 3, 16 (T-593)
+    leftPadding: window.ui.modern ? Math.max(16, window.contentSideMargin) : window.contentSideMargin
+    rightPadding: window.ui.modern ? Math.max(16, window.contentSideMargin) : window.contentSideMargin
     focus: true
     anchors.fill: parent
     //anchors.bottom: footerSettings.top
@@ -25,8 +30,8 @@ ScrollView {
         anchors.fill: parent
         // Modern look: a thin frame around every setting, as in the settings sections; the
         // column moves in by the width of the frame padding, the page clips at its edge
-        anchors.leftMargin: window.ui.modern ? 10 : 0
-        anchors.rightMargin: window.ui.modern ? 10 : 0
+        anchors.leftMargin: window.ui.modern ? 16 : 0 // framePadH of UiSettingFrames (T-593)
+        anchors.rightMargin: window.ui.modern ? 16 : 0 // framePadH of UiSettingFrames (T-593)
 
         UiSettingFrames {
             content: column1

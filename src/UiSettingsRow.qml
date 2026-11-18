@@ -1,0 +1,69 @@
+import QtQuick 2.12
+import QtQuick.Layouts 1.12
+
+// A row of a settings page: a label, a list and what follows it (OK). In place of a RowLayout:
+// with everything in one row it lays out as one (one column per shown item, columnSpacing =
+// spacing). Modern look (T-593, decision 18.11): the list keeps the width of its text, at most
+// half the window (UiComboBox Layout.minimumWidth), and when the label then has less room than
+// its longest word, the row is stacked - the label across the row, the list and the rest one
+// line lower, the list across the free width (UiComboBox Layout.fillWidth). The label spans
+// the row with "Layout.columnSpan: parent.stackedRow ? parent.columns : 1".
+// Items with visible: false take no cell (Qt 5.15.0 QQuickLayout::shouldIgnoreItem,
+// qquicklayout.cpp:771-793; QQuickGridLayout::insertLayoutItems, qquicklinearlayout.cpp:675).
+GridLayout {
+    id: row
+
+    // As the "spacing" of a RowLayout. Not set - the one of the style, as a RowLayout: both take
+    // QGridLayoutEngine::spacing with the style info (8 x DPI/96 on Android and iOS, 5 elsewhere;
+    // Qt 5.15.0 qquicklinearlayout.cpp:529 and 838, qquicklayoutstyleinfo.cpp:51-66), and the setter
+    // skips NaN (qquicklinearlayout.cpp:535)
+    property real spacing: NaN
+    columnSpacing: spacing
+    rowSpacing: 4
+
+    // the first shown label (a text that wraps) and the other shown items of the row
+    readonly property Item label: {
+        for (var i = 0; i < children.length; i++) {
+            var c = children[i]
+            if (c.visible && c.wrapMode !== undefined && c.text !== undefined)
+                return c
+        }
+        return null
+    }
+    readonly property var others: {
+        var list = []
+        for (var i = 0; i < children.length; i++)
+            if (children[i].visible && children[i] !== label)
+                list.push(children[i])
+        return list
+    }
+
+    FontMetrics {
+        id: metrics
+        font: row.label ? row.label.font : Qt.application.font
+    }
+
+    // the width of the longest word of the label: less room than that cuts the word
+    readonly property real wordWidth: {
+        if (!label)
+            return 0
+        var words = String(label.text).split(" ")
+        var w = 0
+        for (var i = 0; i < words.length; i++)
+            w = Math.max(w, metrics.advanceWidth(words[i]))
+        return Math.ceil(w) + (label.leftPadding || 0) + (label.rightPadding || 0)
+    }
+    // what the other items take in one row: their width at most half the window, as the list
+    readonly property real othersWidth: {
+        var w = 0
+        for (var i = 0; i < others.length; i++)
+            w += Math.min(others[i].implicitWidth, window.width / 2) + columnSpacing
+        return w
+    }
+    // the width the row gets: the one of its column (its own follows the stacking)
+    readonly property real roomWidth: parent ? parent.width : width
+
+    readonly property bool stackedRow: window.ui.modern && label !== null && others.length > 0
+                                       && wordWidth + othersWidth > roomWidth
+    columns: Math.max(1, stackedRow ? others.length : others.length + (label ? 1 : 0))
+}

@@ -24,12 +24,52 @@ T.SwitchDelegate {
                              modernTitleHeight)
     // Modern look: the height of the row for the wrapped title (0 otherwise). A property, so
     // IndicatorOnlySwitch, which sets an implicitHeight of its own, keeps this term
+    // A title in two lines or more makes the row higher than the background (+ 1), as the term of
+    // IndicatorOnlySwitch for a bigger text: the label places its text again only when the row
+    // height changes, and the switches of the settings subpages have no vertical padding - two
+    // lines at 100 % (46) stayed under the background (48) and the text could stay half a line
+    // low (T-593, subagent review)
     readonly property real modernTitleHeight: window.ui.modern && wrapsTitle
-                                              ? titleProbe.height + titleGap + topPadding + bottomPadding : 0
+                                              ? Math.max(titleProbe.height + titleGap + topPadding + bottomPadding,
+                                                         titleProbe.lineCount > 1
+                                                         ? implicitBackgroundHeight + topInset + bottomInset + 1 : 0)
+                                              : 0
 
     // The title wraps (set by IndicatorOnlySwitch: two lines in the classic look, all of it in
-    // the modern one); here it stays one line, elided
-    property bool wrapsTitle: false
+    // the modern one); here it stays one line, elided - but on a settings page of the modern look
+    // (pageWrap)
+    property bool wrapsTitle: pageWrap
+
+    // T-593: on a settings page of the modern look (TTS, Tiles, Keyboard Shortcuts) the whole
+    // title on as many lines as it takes, as IndicatorOnlySwitch on the settings page: with Body
+    // Large at a large text size a long title was cut with an ellipsis. IndicatorOnlySwitch wraps
+    // its title itself and sets this false; the classic and the other pages - one line, as before
+    property bool pageWrap: window.ui.modern && window.ui.onTypeScalePage(control)
+    // The text of the IconLabel (Qt 5.15 gives it no wrapMode of its own): found as
+    // IndicatorOnlySwitch.configureTextItem() does
+    function setTitleWrap(item, wrap) {
+        if (!item)
+            return false
+        if (item.wrapMode !== undefined && item.maximumLineCount !== undefined) {
+            item.wrapMode = wrap ? Text.WrapAtWordBoundaryOrAnywhere : Text.NoWrap
+            return true
+        }
+        for (var i = 0; i < item.children.length; ++i)
+            if (setTitleWrap(item.children[i], wrap))
+                return true
+        return false
+    }
+    function applyPageWrap() {
+        if (pageWrap || titleWrapSet)
+            titleWrapSet = setTitleWrap(contentItem, pageWrap) && pageWrap
+    }
+    // set here once: back to one line when the page leaves the modern look
+    property bool titleWrapSet: false
+    onPageWrapChanged: Qt.callLater(applyPageWrap)
+    onContentItemChanged: Qt.callLater(applyPageWrap)
+    // an IconLabel makes its text item again when the title was empty (as IndicatorOnlySwitch)
+    onTextChanged: Qt.callLater(applyPageWrap)
+    Component.onCompleted: Qt.callLater(applyPageWrap)
     // A title in two lines or more fills the row: a little room so it does not touch the hint below
     readonly property real titleGap: titleProbe.lineCount > 1 ? window.ui.fontPx(8) : 0
 
