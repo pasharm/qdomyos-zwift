@@ -19,6 +19,18 @@ measure() {
   local out
   CUT_L= CUT_R= CUT_LAND=
   adb shell dumpsys window displays < /dev/null > "dumps/$1.displays.txt" 2>/dev/null
+  # API 28 prints no DisplayCutout there (run 44289517868): the last "Cutout insets - Top:t Bottom:b
+  # Left:l Right:r" of CustomQtActivity (px; only a window the cutout overlaps logs it) and the screen
+  # width of the landscape physical size
+  if ! grep -q 'DisplayCutout{insets=Rect(' "dumps/$1.displays.txt"; then
+    local ci w
+    ci=$(grep -a 'CustomQtActivity: Cutout insets' full_logcat.txt | tail -n 1 |
+      awk '{for (i = 1; i <= NF; i++) {split($i, kv, ":"); v[kv[1]] = kv[2]}}
+           END {if ("Left" in v) printf "DisplayCutout{insets=Rect(%s, %s - %s, %s)", v["Left"], v["Top"], v["Right"], v["Bottom"]}')
+    w=$(adb shell wm size < /dev/null | tr -d '\r' | awk -F'[ x]' '/Physical/ {print ($3 > $4) ? $3 : $4}')
+    say "$1: no DisplayCutout in dumpsys - from the log of QZ: '$ci', width $w"
+    printf ' cur=%sx0 %s\n' "$w" "$ci" > "dumps/$1.displays.txt"
+  fi
   out=$("$EMU_PY" .github/t548_cut.py "dumps/$1.xml" "dumps/$1.displays.txt" 2>&1)
   say "cut $1: $out"
   CUT_L=$(echo "$out" | awk '/^cut .* under_left/ {for (i = 1; i < NF; i++) if ($i == "under_left") print $(i + 1)}')
@@ -76,10 +88,13 @@ adb shell cmd overlay enable "$CUTOUT" < /dev/null >> "$STEPLOG" 2>&1
 emu_sleep 10
 adb shell cmd overlay list < /dev/null 2>/dev/null | grep -q -F "[x] $CUTOUT" ||
   proves_nothing "the cutout overlay $CUTOUT not enabled"
-adb shell dumpsys window displays < /dev/null 2>/dev/null | grep -o -m 1 'DisplayCutout{insets=Rect([^)]*)' > cut0.txt
+# API 28 has no DisplayCutout in dumpsys window displays (run 44289517868) - dumpsys display then
+{ adb shell dumpsys window displays < /dev/null 2>/dev/null; adb shell dumpsys display < /dev/null 2>/dev/null; } |
+  grep -o -m 1 'DisplayCutout{insets=Rect([^)]*)' > cut0.txt
 say "cutout upright: $(cat cut0.txt)"
 grep -q 'Rect(0, 0 - 0, 0)' cut0.txt && proves_nothing "the cutout has no insets"
-[ -s cut0.txt ] || proves_nothing "no DisplayCutout in dumpsys window displays"
+# none in either - measure falls back on the log of QZ and fails red without a cutout there too
+[ -s cut0.txt ] || near cutout "no DisplayCutout in dumpsys window displays nor dumpsys display"
 logcat_start
 
 for side in b h; do
