@@ -81,6 +81,10 @@ T.ComboBox {
     // a word. The box keeps the width of its text (at most half the window); 0 is the default.
     // Modern look: always - the chosen value is the setting, it is not cut (T-593)
     Layout.minimumWidth: modern || window.textScale !== 1 ? Math.min(implicitWidth, window.width / 2) : 0
+    // On a settings page the box wants the width of its value (its field, below), at most half the
+    // window as well: a long device name in a row "list (fillWidth) + OK" squeezed the OK, which
+    // has no minimum width of its own (subagent review). -1 - the implicit width, as before
+    Layout.preferredWidth: inTypeScalePage ? Math.min(implicitWidth, window.width / 2) : -1
     // A stacked UiSettingsRow (the label above): the list across the free width
     Layout.fillWidth: !!parent && parent.stackedRow === true
 
