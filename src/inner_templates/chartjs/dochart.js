@@ -426,8 +426,7 @@ function process_arr(arr) {
         else
             $('.workout_image').attr("src","bike.png");
         // Modern look: the picture as an icon in the theme colours (the saved badge keeps the PNG)
-        if (window.qzChartTheme && qzChartTheme.sportIcon)
-            qzChartTheme.sportIcon($('.workout_image')[0]);
+        qzChartTheme.sportIcon($('.workout_image')[0]);
     }
     $('.workout_image').attr("crossOrigin","anonymous");
     $('.watts_avg').text(t('chart.wattAvgValue', 'Watt AVG: {value}').replace('{value}', Math.floor(watts_avg)));
@@ -497,8 +496,8 @@ function process_arr(arr) {
                     saveScreenshot[7] = true;
                     var watt_badge = document.getElementById('watt_badge');
 
-                    // Capture the containers using html2canvas; the power chart inside the badge
-                    // is drawn light for the copy
+                    // Capture the containers using html2canvas; in the modern look the badge and
+                    // the power chart inside it are drawn light for the copy
                     qzChartTheme.withLight(powerChart, function () {
                         return html2canvas(watt_badge, qzChartTheme.snapshotOptions());
                     }).then(function(canvas1) {
@@ -1919,8 +1918,7 @@ function dochart_init() {
         msg: 'getpelotonimage',
     }, function(msg) {
         if (msg.msg === 'R_getpelotonimage' && msg.content.length > 0) {
-            // The class picture replaces the sport icon for good: neither the theme nor the
-            // mail snapshot may swap it back to the sport PNG
+            // the Peloton picture of the class: not a sport icon to restyle (qzChartTheme.sportIcon)
             $('.workout_image').removeAttr("data-classic-src").attr("src","data:image/png;base64," + msg.content);
         }
         return null;
