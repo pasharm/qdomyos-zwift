@@ -456,11 +456,15 @@ function process_arr(arr) {
         summary_label.attr('data-i18n', 'chart.avgSpeed').text(t('chart.avgSpeed', 'AVG Speed'));
         $('.summary_resistance_avg').text((Number(speed_avg) * miles).toFixed(1) + ' ' + (miles === 1 ? t('unit.kmh', 'km/h') : t('unit.mph', 'mph')));
     }
-    // Each chart card is followed by its own line breaks: hide them with the card.
-    // Clearing the inline display (not toggle()) leaves the breaks to the page style:
-    // the modern look hides them, and toggle() would force them back as blocks.
+    // The card gets height 0 (it clips its overflow), not display: none: the chart keeps its
+    // size from the card width, so it still renders and sends its image, which the end of
+    // workout mail waits for. In a display: none card it got a zero size, and its resize then
+    // looped until "Maximum call stack size exceeded".
+    // The line breaks after the card hold no chart: clearing their inline display (not toggle())
+    // leaves them to the page style, the modern look hides them.
     $('#canvasResistance, #canvasPelotonResistance').parent().each(function () {
-        $(this).add($(this).nextUntil('div')).css('display', has_resistance_avg ? '' : 'none');
+        $(this).css({ height: has_resistance_avg ? '' : '0', marginTop: has_resistance_avg ? '' : '0' });
+        $(this).nextUntil('div').css('display', has_resistance_avg ? '' : 'none');
     });
 
     const backgroundFill = {
