@@ -24,6 +24,10 @@
             if (window.qzChartTheme) {
                 window.qzChartTheme.refresh();
             }
+            // the chips take their colours when drawn: redraw them in the new theme
+            if (typeof charts !== 'undefined' && charts) {
+                charts.refresh();
+            }
         };
         (function () {
             var theme = {};
@@ -166,6 +170,15 @@
                     restyle: function (chart, config) { qzChartTheme.restyle(chart, config); },
                     timeTitle: function () { return tq('workoutEditor.time', 'Time'); },
                     caption: function () { return tq('chart.onOneChart', 'On one chart:'); },
+                    // the chips on the dark card of the modern look: the light text of the theme
+                    // needs a dark tonal fill, not the light default of the module (the axes are
+                    // qzChartTheme's)
+                    colors: function () {
+                        var root = document.documentElement.classList;
+                        return root.contains('modern') && !root.contains('light')
+                            ? { outline: 'rgba(255,255,255,0.38)', tonal: 'rgba(255,255,255,0.16)' }
+                            : {};
+                    },
                     // the view less the padding of the body and of the card: classic 10 + 10 above
                     // and below; modern (html.modern) - none on the body, 12 on the card
                     fitHeight: function () {
