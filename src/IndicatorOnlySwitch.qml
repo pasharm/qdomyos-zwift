@@ -27,6 +27,8 @@ UiSwitchDelegate {
             item.maximumLineCount = Qt.binding(function () { return window.ui.modern ? 100 : 2 })
             if (item.elide !== undefined)
                 item.elide = Text.ElideRight
+            // a wrapped title of the modern look: the lines closer (UiSwitchDelegate.titleLeading, T-593)
+            item.lineHeight = Qt.binding(function () { return root.titleLeading })
             // last: the Bindings below start with it and keep these values to restore at 100 %
             titleText = item
             return true
