@@ -58,6 +58,9 @@ gym_case() {
   put_conf "$@" $NODEV gym_mode=true
   adb shell am start -n "$PKG/$PKG.CustomQtActivity" < /dev/null > /dev/null 2>&1
   say "pid $c $(adb shell pidof "$PKG" < /dev/null | tr -d '\r')"
+  # the boxes of QZ and Android over it (Permissions Required, New QZ build) - closed; no home page needed
+  emu_sleep 5
+  ensure_app
   # main.qml popupGymMode: the title Label "Select Your Gym Device"
   if wait_ui '^Select Your Gym Device$' 60 --first; then
     say "check $c: gym mode window shown: OK"
