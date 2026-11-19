@@ -152,16 +152,17 @@ import QtQuick 2.12 as Quick212
             return file
         }
 
-        // "Page › Section › Subsection" of a setting; the catalog's nearest group until the
-        // index is ready or when the setting is not on these pages. A switch in the header of its
-        // own section belongs to the section above it, and so does a section shown as a card (a
-        // tile on the Tiles page, its switch and its order): one block of tiles in "Changed", not
-        // a block of one card per tile; the card says which tile (modernTitle) (T-612)
         // The translation context of a page: its file without ".qml"
         function pageContextOf(file) {
             return file.slice(-4) === ".qml" ? file.slice(0, -4) : file
         }
 
+        // "Page › Section › Subsection" of a setting; the catalog's nearest group until the
+        // index is ready or when the setting is not on these pages. A section shown as a card (a
+        // tile on the Tiles page: its switch, colour, % and presets) belongs to the section above
+        // it: one block of tiles in "Changed", not a block of one card per tile; the card says
+        // which tile (modernTitle) (T-612). A switch in the header of a plain section (Enable
+        // Virtual Device) stays in that section, with the settings it turns on
         function sectionOf(entry) {
             var where = settingsIndex ? settingsIndex[entry.key] : null
             if (!where)
@@ -170,9 +171,7 @@ import QtQuick 2.12 as Quick212
             var parts = []
             if (where.file !== "settings.qml")
                 parts.push(pageTitleOf(where.file))
-            var levels = where.own ? where.chain.length - 1 : where.chain.length
-            if (where.card !== undefined)
-                levels = Math.min(levels, where.card)
+            var levels = where.card !== undefined ? Math.min(where.chain.length, where.card) : where.chain.length
             for (var i = 0; i < levels; i++)
                 parts.push(qsTranslate(context, where.chain[i]))
             return parts.length > 0 ? parts.join(" › ") : parentDisplayName(entry)
@@ -184,7 +183,8 @@ import QtQuick 2.12 as Quick212
         function modernTitle(entry) {
             var title = searchTitle(entry)
             var where = settingsIndex ? settingsIndex[entry.key] : null
-            if (!where || where.card === undefined || (where.own && where.card === where.chain.length - 1))
+            if (!where || where.card === undefined || where.card >= where.chain.length ||
+                    (where.own && where.card === where.chain.length - 1))
                 return title
             return qsTranslate(pageContextOf(where.file), where.chain[where.card]) + ": " + title
         }

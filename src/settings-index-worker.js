@@ -67,8 +67,8 @@ function titlesOf(stack) {
 }
 
 // own: the setting is the switch in the header of the last section of its chain (linkedBoolSetting
-// of an AccordionCheckElement - a tile, Wahoo direct connect): that section is the setting itself,
-// its section is the one above (the blocks of "Changed"). sections: the open sections themselves,
+// of an AccordionCheckElement - a tile, Wahoo direct connect): the card of a tile shows its switch
+// under the tile's own title (settings.qml modernTitle). sections: the open sections themselves,
 // their card: true may come on a line after the setting
 function record(map, key, file, stack, strength, line, own) {
     var known = map[key]
