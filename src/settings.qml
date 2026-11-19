@@ -157,11 +157,16 @@ import QtQuick 2.12 as Quick212
         // own section belongs to the section above it, and so does a section shown as a card (a
         // tile on the Tiles page, its switch and its order): one block of tiles in "Changed", not
         // a block of one card per tile; the card says which tile (modernTitle) (T-612)
+        // The translation context of a page: its file without ".qml"
+        function pageContextOf(file) {
+            return file.slice(-4) === ".qml" ? file.slice(0, -4) : file
+        }
+
         function sectionOf(entry) {
             var where = settingsIndex ? settingsIndex[entry.key] : null
             if (!where)
                 return parentDisplayName(entry)
-            var context = where.file.replace(/\.qml$/, "")
+            var context = pageContextOf(where.file)
             var parts = []
             if (where.file !== "settings.qml")
                 parts.push(pageTitleOf(where.file))
@@ -181,7 +186,7 @@ import QtQuick 2.12 as Quick212
             var where = settingsIndex ? settingsIndex[entry.key] : null
             if (!where || where.card === undefined || (where.own && where.card === where.chain.length - 1))
                 return title
-            return qsTranslate(where.file.replace(/\.qml$/, ""), where.chain[where.card]) + ": " + title
+            return qsTranslate(pageContextOf(where.file), where.chain[where.card]) + ": " + title
         }
 
         // Not listed among the changed settings, and so never reset with a whole section:
