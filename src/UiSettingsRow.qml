@@ -20,7 +20,21 @@ GridLayout {
     // skips NaN (qquicklinearlayout.cpp:535)
     property real spacing: NaN
     columnSpacing: spacing
-    rowSpacing: 4
+    // Stacked: the items right under the label, ~6 dp from its glyphs (~3.5 dp of the line under them) to
+    // what is drawn (T-593, mockup notes/mockups/t593-field-gap-2026-11-19, decision 19.11 - variant 3). A
+    // field, a list and OK keep a top inset over their background (6 dp: UiTextField.modernInset,
+    // UiComboBox, UiButton) - -4 with them; the accent swatches have none - 2. A user row spacing is
+    // taken as it is, a negative one too: Qt 5.15.0 qgridlayoutengine.cpp:1349-1351 (no clamp), :94-100
+    // (the total height), :466-477 (the position of the next row); the same in 6.8 (:1348-1349, :62-68, :446)
+    readonly property real stackInset: {
+        var m = -1
+        for (var i = 0; i < others.length; i++) {
+            var t = others[i].topInset !== undefined ? others[i].topInset : 0
+            m = m < 0 ? t : Math.min(m, t)
+        }
+        return Math.max(0, m)
+    }
+    rowSpacing: stackedRow ? 2 - stackInset : 4
 
     // the first shown label (a text that wraps) and the other shown items of the row
     readonly property Item label: {
@@ -86,8 +100,11 @@ GridLayout {
                 return true
         return false
     }
-    // the width the row gets: the one of its column (its own follows the stacking)
-    readonly property real roomWidth: parent ? parent.width : width
+    // the width the row gets: the one of its column (its own follows the stacking) less its side margins -
+    // in the modern look the frames give the row the padding of its card as Layout.left/rightMargin
+    // (UiSettingFrames.setMargin): without them the accent swatches at 130 % passed by ~13 dp and ran over
+    // a wrapped "Акцентний колір" (T-593, phone 19.11, beta-3028)
+    readonly property real roomWidth: (parent ? parent.width : width) - Layout.leftMargin - Layout.rightMargin
 
     readonly property bool stackedRow: window.ui.modern && label !== null && others.length > 0
                                        && (wordWidth + othersWidth > roomWidth || listCut || wideField)
