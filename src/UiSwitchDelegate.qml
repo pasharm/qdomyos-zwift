@@ -54,6 +54,7 @@ T.SwitchDelegate {
             return false
         if (item.wrapMode !== undefined && item.maximumLineCount !== undefined) {
             item.wrapMode = wrap ? Text.WrapAtWordBoundaryOrAnywhere : Text.NoWrap
+            item.lineHeight = Qt.binding(function () { return control.titleLeading })
             return true
         }
         for (var i = 0; i < item.children.length; ++i)
@@ -74,6 +75,11 @@ T.SwitchDelegate {
     Component.onCompleted: Qt.callLater(applyPageWrap)
     // A title in two lines or more fills the row: a little room so it does not touch the hint below
     readonly property real titleGap: titleProbe.lineCount > 1 ? window.ui.fontPx(8) : 0
+    // A wrapped title of the modern look: the lines closer, x1.15 of the font, as the labels of
+    // UiSettingsRow (T-593, decision 19.11). Set on the text of the label (setTitleWrap,
+    // IndicatorOnlySwitch.configureTextItem) and on titleProbe, so the row is as high as the title.
+    // One line stays as it is: Qt 5.15.0 cuts the only line too (qquicktext.cpp:1264)
+    readonly property real titleLeading: window.ui.modern && wrapsTitle && titleProbe.lineCount > 1 ? 0.9 : 1
 
     // Modern look: the height of the wrapped title. IconLabel reports the height of one line:
     // at a large text size the second line ran into the hint under the switch
@@ -86,6 +92,8 @@ T.SwitchDelegate {
         wrapMode: Text.WrapAtWordBoundaryOrAnywhere
         // As many lines as the title (IndicatorOnlySwitch lifts its limit in the modern look)
         maximumLineCount: 100
+        // the line count follows the width only: no loop with titleLeading
+        lineHeight: control.titleLeading
     }
 
     padding: 16
