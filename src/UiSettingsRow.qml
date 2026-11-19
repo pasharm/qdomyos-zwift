@@ -5,8 +5,9 @@ import QtQuick.Layouts 1.12
 // with everything in one row it lays out as one (one column per shown item, columnSpacing =
 // spacing). Modern look (T-593, decision 18.11): the list keeps the width of its text, at most
 // half the window (UiComboBox Layout.minimumWidth), and when the label then has less room than
-// its longest word, the row is stacked - the label across the row, the list and the rest one
-// line lower, the list across the free width (UiComboBox Layout.fillWidth). The label spans
+// its longest word, or the value of the list is wider than half the window, the row is stacked -
+// the label across the row, the list and the rest one line lower, the list across the free width
+// (UiComboBox Layout.fillWidth). The label spans
 // the row with "Layout.columnSpan: parent.stackedRow ? parent.columns : 1".
 // Items with visible: false take no cell (Qt 5.15.0 QQuickLayout::shouldIgnoreItem,
 // qquicklayout.cpp:771-793; QQuickGridLayout::insertLayoutItems, qquicklinearlayout.cpp:675).
@@ -53,17 +54,42 @@ GridLayout {
             w = Math.max(w, metrics.advanceWidth(words[i]))
         return Math.ceil(w) + (label.leftPadding || 0) + (label.rightPadding || 0)
     }
-    // what the other items take in one row: their width at most half the window, as the list
+    // a list of the modern look on a settings page (UiComboBox): in a row it takes at most half the
+    // window (its Layout.minimumWidth); the other items (OK, the swatches of the accent colour) keep
+    // their own width - capped, the seven swatches at 130 % passed for narrower than they are and
+    // the label ran under them (T-593, phone 19.11). UiButton has inTypeScalePage too: an OK is
+    // narrow, and a button wider than half the window is better a line lower as well
+    function isList(item) {
+        return item.inTypeScalePage !== undefined
+    }
+    // what the other items take in one row
     readonly property real othersWidth: {
         var w = 0
         for (var i = 0; i < others.length; i++)
-            w += Math.min(others[i].implicitWidth, window.width / 2) + columnSpacing
+            w += (isList(others[i]) ? Math.min(others[i].implicitWidth, window.width / 2)
+                                    : others[i].implicitWidth) + columnSpacing
         return w
+    }
+    // a list whose value is wider than half the window: in a row it was cut ("Глобальний
+    // (garmin." of Garmin Server, a short label - T-593, phone 19.11); stacked it gets the row
+    readonly property bool listCut: {
+        for (var i = 0; i < others.length; i++)
+            if (isList(others[i]) && others[i].implicitWidth > window.width / 2)
+                return true
+        return false
+    }
+    // a field for a long text (UiTextField.wideText: an e-mail, a login, an address) - always under
+    // the label, across the row (T-593, decision 19.11)
+    readonly property bool wideField: {
+        for (var i = 0; i < others.length; i++)
+            if (others[i].wideText === true)
+                return true
+        return false
     }
     // the width the row gets: the one of its column (its own follows the stacking)
     readonly property real roomWidth: parent ? parent.width : width
 
     readonly property bool stackedRow: window.ui.modern && label !== null && others.length > 0
-                                       && wordWidth + othersWidth > roomWidth
+                                       && (wordWidth + othersWidth > roomWidth || listCut || wideField)
     columns: Math.max(1, stackedRow ? others.length : others.length + (label ? 1 : 0))
 }
