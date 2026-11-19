@@ -3157,7 +3157,7 @@ import QtQuick 2.12 as Quick212
                         readonly property real blockInset: inBlock ? 8 : 0
                         readonly property real blockBottom: lastInSection ? 8 : 0
                         // The header row of the block: 48 high, the title and Reset section in its middle;
-                        // higher when a long path or a big text scale takes more
+                        // higher when a long path or a big text scale takes more (the title 12 from its edges)
                         readonly property real headerHeight: firstInSection ? blockGap + sectionHeader.height : 0
                         width: Math.max(1, settingsSearchResults.width)
                         Layout.fillWidth: true
@@ -3227,6 +3227,11 @@ import QtQuick 2.12 as Quick212
                                 color: window.ui.accent
                                 font.weight: Font.Medium
                                 wrapMode: Text.WordWrap
+                                // 12 above and below its text: a path of three lines makes the row
+                                // higher than 48, and without it the text touched the outline and the
+                                // first card (OnePlus 12, beta-3038); one line stays in the 48 row
+                                topPadding: 12
+                                bottomPadding: 12
                                 Layout.fillWidth: true
                                 Layout.minimumWidth: 0
                             }
