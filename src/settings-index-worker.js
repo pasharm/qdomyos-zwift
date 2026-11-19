@@ -5,7 +5,10 @@
 // on the GUI thread would freeze the page for a moment.
 //
 // In:  { pages: [{ file: "settings.qml", source: "..." }, ...] }
-// Out: { map: { key: { file, chain: ["Section", "Subsection"], pos: "005367.000072" } }, keys, ms }
+// Out: { map: { key: { file, chain: ["Section", "Subsection"], pos: "005367.000072", own, card } }, keys, ms }
+// own (only when true): the setting is the switch in the header of the last section of the chain
+// card (only when inside one): the index in the chain of the innermost section shown as a card
+// (card: true - a tile on the Tiles page), a section about one thing rather than a group
 // The titles are the English sources of qsTr(); the page translates them with its context.
 // pos is where the setting stands as the pages are read, top to bottom: its line on the main
 // page, or the line of the accordionContent that opens its page there, then its line on that
@@ -16,6 +19,7 @@ var ELEMENT = /\b\w*Accordion\w*Element\s*\{/
 // title: qsTr("...") or a plain title: "..."
 var TITLE = /^\s*title\s*:\s*(?:qsTr\()?"((?:[^"\\]|\\.)*)"/
 var LINKED = /^\s*linkedBoolSetting\s*:\s*"([A-Za-z0-9_]+)"/
+var CARD = /^\s*card\s*:\s*true\b/
 var KEY = /\bsettings\.([A-Za-z_][A-Za-z0-9_]*)/g
 // The line that shows the value is the control itself; an assignment comes next (a handler of
 // the control); any other mention (a visible: of some other row, say) is the weakest hint
@@ -62,10 +66,32 @@ function titlesOf(stack) {
     return chain
 }
 
-function record(map, key, file, chain, strength, line) {
+// own: the setting is the switch in the header of the last section of its chain (linkedBoolSetting
+// of an AccordionCheckElement - a tile, Wahoo direct connect): that section is the setting itself,
+// its section is the one above (the blocks of "Changed"). sections: the open sections themselves,
+// their card: true may come on a line after the setting
+function record(map, key, file, stack, strength, line, own) {
     var known = map[key]
-    if (!known || strength > known.strength)
-        map[key] = { file: file, chain: chain, strength: strength, line: line }
+    if (!known || strength > known.strength) {
+        map[key] = { file: file, chain: titlesOf(stack), strength: strength, line: line,
+                     sections: stack.slice() }
+        if (own)
+            map[key].own = true
+    }
+}
+
+// The index in the chain of the innermost card section, -1 outside one
+function cardLevel(sections) {
+    var level = -1
+    var titled = 0
+    for (var i = 0; i < sections.length; i++) {
+        if (!sections[i].title)
+            continue
+        if (sections[i].card)
+            level = titled
+        titled++
+    }
+    return level
 }
 
 var MAIN_PAGE = "settings.qml"
@@ -124,32 +150,34 @@ function parse(file, source, map) {
     for (var i = 0; i < lines.length; i++) {
         var line = lines[i]
         if (ELEMENT.test(line))
-            stack.push({ depth: depth, title: "" })
+            stack.push({ depth: depth, title: "", card: false })
         if (stack.length > 0) {
             var top = stack[stack.length - 1]
             var title = TITLE.exec(line)
             if (title && !top.title && depth === top.depth + 1)
                 top.title = unescapeLiteral(title[1])
+            if (depth === top.depth + 1 && CARD.test(line))
+                top.card = true
         }
         // Outside any section too: a page without sections (the voice page) has its controls
         // at the top level, with an empty chain
         {
             var linked = LINKED.exec(line)
+            // own: a property of the innermost section, whose title is already in the chain
+            // (title: above it)
             if (linked)
-                record(map, linked[1], file, titlesOf(stack), 3, i)
+                record(map, linked[1], file, stack, 3, i,
+                       stack.length > 0 && depth === stack[stack.length - 1].depth + 1 &&
+                       !!stack[stack.length - 1].title)
             var uiOption = UI_OPTION.exec(line)
             if (uiOption)
-                record(map, uiOption[1], file, titlesOf(stack), 1, i)
+                record(map, uiOption[1], file, stack, 1, i)
             if (line.indexOf("settings.") >= 0) {
                 var strength = SHOWS.test(line) ? 2 : (WRITES.test(line) ? 1 : 0)
-                var chain = null
                 var m
                 KEY.lastIndex = 0
-                while ((m = KEY.exec(line)) !== null) {
-                    if (chain === null)
-                        chain = titlesOf(stack)
-                    record(map, m[1], file, chain, strength, i)
-                }
+                while ((m = KEY.exec(line)) !== null)
+                    record(map, m[1], file, stack, strength, i)
             }
         }
         depth += braceDelta(line)
@@ -190,6 +218,10 @@ WorkerScript.onMessage = function (message) {
         } catch (e) {
             delete map[key].pos
         }
+        var card = cardLevel(map[key].sections || [])
+        if (card >= 0)
+            map[key].card = card
+        delete map[key].sections
         delete map[key].strength
         delete map[key].line
         keys++
