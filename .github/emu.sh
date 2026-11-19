@@ -172,6 +172,10 @@ for side in b h; do
   if [ "$side" = b ]; then apk=apk-base/android-debug.apk; else apk=apk-head/android-debug.apk; fi
   side_on $side "$apk" || continue
   say "== $side: start"
+  # the workouts of the other side out: reinstalled, the app gets a new uid, and on API 35 it does not see the
+  # files the old one made in Documents/QZ/training - the list empty, Save & Start finds no saved workout and
+  # stays (run 44622297578: h - "programFiles: " empty, b - all of them)
+  adb shell rm -rf /sdcard/Documents/QZ/training < /dev/null > /dev/null 2>&1
   install_apk "$apk"
   keep $side m
   keep $side c
