@@ -86,8 +86,11 @@ GridLayout {
                 return true
         return false
     }
-    // the width the row gets: the one of its column (its own follows the stacking)
-    readonly property real roomWidth: parent ? parent.width : width
+    // the width the row gets: the one of its column (its own follows the stacking) less its side margins -
+    // in the modern look the frames give the row the padding of its card as Layout.left/rightMargin
+    // (UiSettingFrames.setMargin): without them the accent swatches at 130 % passed by ~13 dp and ran over
+    // a wrapped "Акцентний колір" (T-593, phone 19.11, beta-3028)
+    readonly property real roomWidth: (parent ? parent.width : width) - Layout.leftMargin - Layout.rightMargin
 
     readonly property bool stackedRow: window.ui.modern && label !== null && others.length > 0
                                        && (wordWidth + othersWidth > roomWidth || listCut || wideField)

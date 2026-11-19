@@ -8593,6 +8593,8 @@ import QtQuick 2.12 as Quick212
 
                             Label {
                                 text: qsTr("Move the charts up or down to choose their order in Workout History. Changes are saved automatically.")
+                                // modern: Body Small, as the other hints (T-593, phone 19.11); classic - the app font, as before
+                                font.pixelSize: window.ui.modern ? window.fontHint : window.ui.fontBase
                                 wrapMode: Text.WordWrap
                                 Layout.fillWidth: true
                                 color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
