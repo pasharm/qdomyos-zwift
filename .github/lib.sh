@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/lib.sh sha ac60fc002959 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/lib.sh sha e3f87ed2ad7d - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): the common functions of the emulator scenarios (.github/emu.sh of the emu branches).
 # One source: tools/emu/lib.sh of the work folder; tools/emu/sync.py copies it with uifind.py, emu_frame.py
 # and A11yDriver.java into .github/ of a branch. The scenario does
@@ -50,20 +50,30 @@ EMU_CASES_HIT=" "
 EMU_PARTIAL=""
 emu_cases() { printf '%s' "$EMU_CASES" | tr ',\r\n' '   '; }
 
-# case_on <case> [function]: 0 - EMU_CASES selects the case (or is empty); the patterns that did are noted
-# for finish. read -a, not `for p in $(...)`: a glob there would expand to the files of the folder
+# case_on <case> [functions]: 0 - EMU_CASES selects the case (or is empty); the patterns that did are noted
+# for finish. read -a, not `for p in $(...)`: a glob there would expand to the files of the folder.
+# functions - the callers, nearest first, split by spaces (start_case gives the whole FUNCNAME stack): the
+# <function> of a pattern may be any of them - land_case/hl selects hl that land_case started through
+# empty_case (T-617; T-609 lesson 2 - run 44433784405 checked nothing, ~5 min)
 case_on() {
-  local name=$1 fn=${2:-} p cp fp ok=1
-  local -a pats
+  local name=$1 fp cp p f ok=1 hit
+  local -a pats fns
   read -r -a pats <<< "$(emu_cases)"
+  read -r -a fns <<< "${2:-}"
+  # no function given: one empty name, as before (`*/hc` selects it)
+  [ ${#fns[@]} -gt 0 ] || fns=("")
   [ ${#pats[@]} -gt 0 ] || return 0
   for p in "${pats[@]}"; do
     cp=$p
     if [ "${p#*/}" != "$p" ]; then
       fp=${p%%/*}
       cp=${p#*/}
-      # shellcheck disable=SC2254
-      case $fn in $fp) ;; *) continue ;; esac
+      hit=1
+      for f in "${fns[@]}"; do
+        # shellcheck disable=SC2254
+        case $f in $fp) hit=0; break ;; esac
+      done
+      [ $hit = 0 ] || continue
     fi
     # shellcheck disable=SC2254
     case $name in
@@ -117,6 +127,7 @@ emu_init() {
   say "== API $EMU_API lib $EMU_LIB_VERSION"
   EMU_CASES_HIT=" "
   EMU_PARTIAL=""
+  EMU_ROT=port
   if [ -n "$(emu_cases | tr -d ' ')" ]; then
     say "== cases: $EMU_CASES"
     EMU_PARTIAL=" cases $EMU_CASES;"
@@ -164,6 +175,54 @@ EMU_ROWS="${EMU_STATUS_BAR:-84},100000"
 frame() {
   adb exec-out screencap < /dev/null > "$1" 2>/dev/null
   [ -s "$1" ]
+}
+
+# rotate land|port [case]: the screen turned and the turn checked by the frame (T-617; T-609 lessons 1, 3: a
+# landscape case shot in portrait passed its checks - ~13 min of a run with no landscape). The accelerometer
+# off, user_rotation and the lock of the window manager: `cmd window user-rotation` on API 31+, `wm
+# set-user-rotation` on API 29-30 (WindowManagerShellCommand of android-10/11 - the name of 12+ is unknown
+# there, T-609 run 44434459864), the setting only below. Then up to 5 looks at the raw frame, its width
+# against its height. Turned - "rotate <to>: WxH", a still screen, 0; not turned - "!! <case>: not landscape
+# (API N, frame WxH)", 1: the scenario drops the case (`rotate land "$c" || return 1`). Turn when QZ is up
+# (after start_case): on API 30 the start of QZ turns it back to portrait - the launcher 2560x1440, QZ
+# 1440x2560 (T-617 run 44612383102; API 35 keeps landscape); start_case checks the frame after the home page
+# while EMU_ROT is land. emu_init sets portrait back; the scenario does not set the rotation itself
+# (check_emu_script own-rotation)
+EMU_ROT=port
+# frame_wh: "W H" of the screen now by a raw frame; "0 0" - no frame
+frame_wh() {
+  local w h
+  frame .emu_rot || { echo "0 0"; return 1; }
+  # the raw frame starts with the width and the height, 4 bytes each, little endian
+  read -r w h <<< "$(od -An -tu4 -N8 .emu_rot)"
+  echo "${w:-0} ${h:-0}"
+}
+rotate() {
+  local to=$1 who=${2:-rotate} r i w=0 h=0 what=landscape
+  case $to in
+    land) r=1 ;;
+    port) r=0; what=portrait ;;
+    *) fail "rotate: '$to' - land or port"; return 1 ;;
+  esac
+  EMU_ROT=$to
+  adb shell settings put system accelerometer_rotation 0 < /dev/null > /dev/null 2>&1
+  adb shell settings put system user_rotation "$r" < /dev/null > /dev/null 2>&1
+  if [ "${EMU_API:-0}" -ge 31 ]; then
+    adb shell cmd window user-rotation lock "$r" < /dev/null > /dev/null 2>&1
+  elif [ "${EMU_API:-0}" -ge 29 ]; then
+    adb shell wm set-user-rotation lock "$r" < /dev/null > /dev/null 2>&1
+  fi
+  for i in 1 2 3 4 5; do
+    emu_sleep 2
+    read -r w h <<< "$(frame_wh)"
+    if { [ "$r" = 1 ] && [ "$w" -gt "$h" ]; } || { [ "$r" = 0 ] && [ "$w" -lt "$h" ]; }; then
+      say "rotate $to: ${w}x$h (API $EMU_API, look $i)"
+      still
+      return 0
+    fi
+  done
+  fail "$who: not $what (API $EMU_API, frame ${w}x$h)"
+  return 1
 }
 
 # shot <name>: a dump as dumps/pre/<name>.xml, <name>.png, then the dump of the same screen as
