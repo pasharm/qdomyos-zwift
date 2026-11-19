@@ -47,25 +47,22 @@
         }
 
         /* Modern look (qz-theme-bridge.js): the page in the app theme, so the frame merges with
-           the page, and the chart on a rounder card (white in the light theme, the surface colour
-           in the dark one); 8px at the sides and none above and below, so the card takes the
-           whole view */
+           the page, and the chart on a surface card in every theme, as on the charts and the
+           workout editor; the page sets the 16 at the sides around the view (the margins of the
+           QML page), so the card takes the whole view */
         html.modern body {
             background: var(--qz-bg);
             color: var(--qz-text);
-            padding: 0 8px;
+            padding: 0;
             font-family: Roboto, 'Segoe UI', sans-serif;
         }
 
         html.modern #chart-container {
             min-height: 100vh;
+            background: var(--qz-surface);
             color: var(--qz-text);
             border-radius: var(--qz-radius-card, 16px);
             padding: 12px;
-        }
-
-        html.modern:not(.light) #chart-container {
-            background: var(--qz-surface);
         }
     </style>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
@@ -140,13 +137,17 @@
                     // the axes in the theme of the page (qzChartTheme leaves the classic look as is)
                     make: function (ctx, config) { return qzChartTheme.create(ctx, config); },
                     restyle: function (chart, config) { qzChartTheme.restyle(chart, config); },
-                    // the chips on the dark card of the modern look: the light text of the theme
-                    // needs a dark tonal fill, not the light default of the module
+                    // the chips of the modern look as in the workout editor: a selected one filled
+                    // with the accent of the theme; on the dark card a light outline
                     colors: function () {
                         var root = document.documentElement.classList;
-                        return root.contains('modern') && !root.contains('light')
-                            ? { outline: 'rgba(255,255,255,0.38)', tonal: 'rgba(255,255,255,0.16)' }
-                            : {};
+                        if (!root.contains('modern'))
+                            return {};
+                        var tonal = window.qzAccentTonal ? window.qzAccentTonal(0.24) : null;
+                        var out = root.contains('light') ? {} : { outline: 'rgba(255,255,255,0.38)', tonal: 'rgba(255,255,255,0.16)' };
+                        if (tonal)
+                            out.tonal = tonal;
+                        return out;
                     },
                     // the view less the padding of the body and of the card: classic 10 + 10 above
                     // and below; modern - none on the body, 12 on the card

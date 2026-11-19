@@ -44,6 +44,25 @@
         window.dispatchEvent(event);
     };
 
+    // The accent of the theme with the given opacity, as "rgba(...)" - the fill of a selected chip
+    // (the selected rows of the app: the accent at 0.14-0.24); null in the classic look or when
+    // the accent is not "#rrggbb" ("#aarrggbb" from QML too)
+    window.qzAccentTonal = function (alpha) {
+        var root = document.documentElement;
+        if (!root.classList.contains('modern'))
+            return null;
+        var hex = root.style.getPropertyValue('--qz-accent').trim();
+        if (hex.charAt(0) !== '#' || (hex.length !== 7 && hex.length !== 9))
+            return null;
+        var rgb = hex.substring(hex.length - 6);
+        var parts = [rgb.substring(0, 2), rgb.substring(2, 4), rgb.substring(4, 6)].map(function (h) {
+            return parseInt(h, 16);
+        });
+        if (parts.some(isNaN))
+            return null;
+        return 'rgba(' + parts.join(',') + ',' + alpha + ')';
+    };
+
     var theme = {};
     window.location.hash.substring(1).split('&').forEach(function (pair) {
         var i = pair.indexOf('=');

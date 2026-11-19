@@ -333,7 +333,7 @@ ApplicationWindow {
         readonly property int fontTitleSmall: fontPx(18) // toolbar title
         readonly property int fontBody: fontPx(16)     // dialog text, list titles, fields
         readonly property int fontLabel: fontPx(15)    // drawer entries, group titles
-        readonly property int fontCaption: fontPx(13)  // secondary lines, chips, captions
+        readonly property int fontCaption: fontPx(13)  // secondary lines, captions (chips: 14, Material 3 Label Large)
         // The app font (12 on the emulator, not the Material 14): labels, fields, buttons, lists
         readonly property int fontBase: fontPx(window.appFontPx)
 

@@ -44,7 +44,8 @@
             grid: ink(light() ? 0.08 : 0.04),
             title: ink(0.75),
             outline: ink(0.38),
-            tonal: 'rgba(53,186,246,0.24)'
+            // the accent of the theme in the modern look, the blue of the page in the classic one
+            tonal: (window.qzAccentTonal && window.qzAccentTonal(0.24)) || 'rgba(53,186,246,0.24)'
         };
     }
 

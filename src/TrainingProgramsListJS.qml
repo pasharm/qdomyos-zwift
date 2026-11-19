@@ -824,6 +824,11 @@ ColumnLayout {
                         Item {
                             Layout.fillWidth: true
                             Layout.fillHeight: true
+                            // Modern look: the chart card 16 from the sides of the page, as the cards of
+                            // the other pages (the web page draws the card edge to edge); side by side
+                            // 8 from the text column - its spacing 6 and 2 here
+                            Layout.leftMargin: window.ui.modern ? (detailBody.split ? 2 : programsPage.modernMargin) : 0
+                            Layout.rightMargin: window.ui.modern ? programsPage.modernMargin : 0
 
                             // Modern look: the native view is white until the page is loaded, so it is
                             // kept hidden till then, as in WorkoutEditor.qml. It is also drawn above every

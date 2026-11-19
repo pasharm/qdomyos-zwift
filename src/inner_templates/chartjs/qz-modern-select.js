@@ -80,23 +80,19 @@
         backdrop.appendChild(menu);
         document.body.appendChild(backdrop);
 
-        // Under the field, or above it when the room below is short; as wide as the field
+        // Over the field, its top at the top of the field, as the lists of the settings open
+        // (UiComboBox); moved up when the room below is short; as wide as the field
         var r = sel.getBoundingClientRect();
         var margin = 12;
         var width = Math.max(r.width, 160);
         var left = Math.min(Math.max(margin, r.left), window.innerWidth - width - margin);
         menu.style.left = left + 'px';
         menu.style.width = width + 'px';
-        var below = window.innerHeight - r.bottom - margin;
-        var above = r.top - margin;
-        var height = menu.offsetHeight;
-        if (height <= below || below >= above) {
-            menu.style.top = (r.bottom + 4) + 'px';
-            menu.style.maxHeight = (below - 4) + 'px';
-        } else {
-            menu.style.maxHeight = (above - 4) + 'px';
-            menu.style.top = (r.top - 4 - Math.min(height, above - 4)) + 'px';
-        }
+        var room = window.innerHeight - 2 * margin;
+        menu.style.maxHeight = room + 'px';
+        var height = Math.min(menu.offsetHeight, room);
+        var top = Math.min(Math.max(margin, r.top), window.innerHeight - margin - height);
+        menu.style.top = top + 'px';
         var current = menu.querySelector('.selected');
         if (current)
             current.scrollIntoView({ block: 'nearest' });
