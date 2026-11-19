@@ -103,7 +103,8 @@ for side in b h; do
   gym_case "${side}g" $LIGHT
   gym_case "${side}k" ui_modern=false
   # settings.qml:4752 Bike Options (first row "Speed calculates on Power", as in test/t593-emu), the hint at :4942
-  setting_case "${side}r" '^Bike Options$' '^Speed calculates on Power$' '^0\.005 = Clinchers.*' $LIGHT
+  # three lines in one name (uifind: fullmatch, "." stops at a line break - run 44634788192)
+  setting_case "${side}r" '^Bike Options$' '^Speed calculates on Power$' '^0\.005 = Clinchers[\s\S]*' $LIGHT
   # settings.qml:10420 Garmin Options (first row "Garmin Bluetooth Sensor"), the note at :11587
   setting_case "${side}a" '^Garmin Options.*' '^Garmin Bluetooth Sensor$' '^IMPORTANT: You must set your real Garmin.*' $LIGHT
   setting_case "${side}n" '^Garmin Options.*' '^Garmin Bluetooth Sensor$' '^IMPORTANT: You must set your real Garmin.*' $DARK
