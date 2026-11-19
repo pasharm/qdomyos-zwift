@@ -35,6 +35,18 @@
         return (light() ? 'rgba(0,0,0,' : 'rgba(255,255,255,') + alpha + ')';
     }
 
+    // Axis colours over the page, and the chips: an outline in the ink of the page, the accent of
+    // the editor as the fill of a selected one
+    function axisColors() {
+        return {
+            tick: ink(0.65),
+            grid: ink(light() ? 0.08 : 0.04),
+            title: ink(0.75),
+            outline: ink(0.38),
+            tonal: 'rgba(53,186,246,0.24)'
+        };
+    }
+
     function formatSeconds(total) {
         if (!isFinite(total)) {
             return '0:00';
@@ -56,8 +68,9 @@
         }
         state.charts = QzMetricCharts.create(host, {
             storageKey: 'qz.workouteditor.together',
-            colors: () => ({ tick: ink(0.65), grid: ink(light() ? 0.08 : 0.04), title: ink(0.75) }),
-            timeTitle: () => t('workoutEditor.time', 'Time')
+            colors: axisColors,
+            timeTitle: () => t('workoutEditor.time', 'Time'),
+            caption: () => t('chart.onOneChart', 'On one chart:')
         });
         return state.charts;
     }
@@ -99,7 +112,11 @@
                 color: String(series.color || '#35baf6'),
                 points: Array.isArray(series.points) ? series.points : [],
                 stepped: series.stepped !== false,
-                floor: series.key === 'inclination' ? -50 : 0
+                floor: series.key === 'inclination' ? -50 : 0,
+                // The scale titles and ranges as the single chart had them: the translated axis
+                // label of the series and a scale fitted to the values, not from zero
+                axisTitle: series.axisLabel || '',
+                beginAtZero: false
             }))
         });
         updateMeta(payload);

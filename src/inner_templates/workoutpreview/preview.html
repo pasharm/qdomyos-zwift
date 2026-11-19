@@ -53,10 +53,11 @@
             padding: 10px;
         }
 
-        /* The charts fill the view (the body padding off): a fixed 400px did not fit the view
-           held sideways - the time axis was cut and the page scrolled - and left a gap upright.
-           One metric takes the whole height; several share it, each chart no lower than 140px
-           (qzmetriccharts.js), and the page scrolls when they do not fit */
+        /* The charts fill the view (the body padding off). One metric takes the whole height;
+           several share it, each chart no lower than 140px (qzmetriccharts.js); when they do not
+           fit (a phone held sideways), all of them start on one shared chart, and the page
+           scrolls only after the chips split them. The modern look of this fork marks the page
+           with html.modern (qzApplyTheme), not with master's body.modern - its rules are below */
         #chart-container {
             width: 100%;
             min-height: calc(100vh - 20px);
@@ -142,11 +143,11 @@
         function metricSeries(workoutData, deviceType) {
             const seconds = workoutData.watts.length;
             const all = {
-                power: { key: 'power', label: tq('workoutEditor.power', 'Power'), unit: 'W', color: '#3b82f6', points: workoutData.watts },
-                speed: { key: 'speed', label: tq('workoutEditor.speed', 'Speed'), unit: miles === 1 ? 'km/h' : 'mph', color: '#06b6d4', points: speedPoints(workoutData.speed) },
+                power: { key: 'power', label: tq('workoutEditor.power', 'Power'), unit: tq('unit.w', 'W'), color: '#3b82f6', points: workoutData.watts },
+                speed: { key: 'speed', label: tq('workoutEditor.speed', 'Speed'), unit: miles === 1 ? tq('unit.kmh', 'km/h') : tq('unit.mph', 'mph'), color: '#06b6d4', points: speedPoints(workoutData.speed) },
                 inclination: { key: 'inclination', label: tq('workoutEditor.incline', 'Incline'), unit: '%', color: '#10b981', points: everySecond(workoutData.inclination, seconds), floor: -50 },
                 resistance: { key: 'resistance', label: tq('workoutEditor.resistance', 'Resistance'), unit: '', color: '#8b5cf6', points: workoutData.resistance },
-                cadence: { key: 'cadence', label: tq('workoutEditor.cadence', 'Cadence'), unit: 'rpm', color: '#f59e0b', points: workoutData.cadence }
+                cadence: { key: 'cadence', label: tq('workoutEditor.cadence', 'Cadence'), unit: tq('unit.rpm', 'rpm'), color: '#f59e0b', points: workoutData.cadence }
             };
             // The device's own metrics first
             const order = deviceType === 'treadmill'
@@ -163,7 +164,13 @@
                     storageKey: 'qz.workoutpreview.together',
                     make: function (ctx, config) { return qzChartTheme.create(ctx, config); },
                     restyle: function (chart, config) { qzChartTheme.restyle(chart, config); },
-                    timeTitle: function () { return tq('workoutEditor.time', 'Time'); }
+                    timeTitle: function () { return tq('workoutEditor.time', 'Time'); },
+                    caption: function () { return tq('chart.onOneChart', 'On one chart:'); },
+                    // the view less the padding of the body and of the card: classic 10 + 10 above
+                    // and below; modern (html.modern) - none on the body, 12 on the card
+                    fitHeight: function () {
+                        return window.innerHeight - (document.documentElement.classList.contains('modern') ? 24 : 40);
+                    }
                 });
             }
             let total = 0;
