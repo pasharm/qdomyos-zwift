@@ -1924,6 +1924,25 @@
         if (window.QZ_OFFLINE) {
             return Promise.resolve(null);
         }
+        if (!replyMsg) {
+            // Nothing answers these (open a workout, start it): send once. The queue sends a
+            // message again every 15 s until its reply comes, so the action itself repeated -
+            // with the editor page kept, Save & Start started the workout again and closed the
+            // editor on its next opening
+            const once = new MainWSQueueElement({ msg, content }, function () { return null; });
+            // No retry timer at all (the constructor reads 0 retries as 1)
+            once.retry_num = 0;
+            once.pop_msg_to_send = function () {
+                const out = MainWSQueueElement.prototype.pop_msg_to_send.call(this);
+                if (out) {
+                    // Out of the queue once sent: not while the queue walks it
+                    setTimeout(function () { main_ws_dequeue(once); }, 0);
+                }
+                return out;
+            };
+            main_ws_enqueue(once);
+            return Promise.resolve(null);
+        }
         const el = new MainWSQueueElement({ msg, content }, function (response) {
             if (response.msg === replyMsg) {
                 return response.content;
