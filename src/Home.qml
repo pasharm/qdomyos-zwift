@@ -883,6 +883,8 @@ HomeForm {
                 }
                 text: value
                 horizontalAlignment: Text.AlignHCenter
+                // values with a smaller font (elapsed time, clock) and values shrunk by Fit sit in the middle of the band, as in the modern tile
+                verticalAlignment: Text.AlignVCenter
                 width: Math.max(50, parent.width - (writable ? 100 * settings.ui_zoom / 100 : 12 * settings.ui_zoom / 100))
                 height: 58 * settings.ui_zoom / 100
                 font.pointSize: valueFontSize * settings.ui_zoom / 100
