@@ -4945,7 +4945,7 @@ import QtQuick 2.12 as Quick212
                         Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                         font.pixelSize: window.fontHint
                         bottomPadding: window.hintGap
-                        color: "steelblue"
+                        color: window.ui.modern ? window.ui.textMuted : "steelblue"
                     }
                     RowLayout {
                         spacing: 10
@@ -7841,7 +7841,7 @@ import QtQuick 2.12 as Quick212
                         textFormat: Text.PlainText
                         wrapMode: Text.WordWrap
                         verticalAlignment: Text.AlignVCenter
-                        color: Material.color(Material.Red)
+                        color: window.ui.modern ? window.ui.danger : Material.color(Material.Red)
                         Layout.fillWidth: true
                     }
 
@@ -9178,7 +9178,7 @@ import QtQuick 2.12 as Quick212
                                 anchors.verticalCenter: parent.verticalCenter
                                 name: rootItem.pelotonLogin === 1 ? "check_circle" : "cancel"
                                 size: 18
-                                color: rootItem.pelotonLogin === 1 ? "#4caf50" : "#f44336"
+                                color: window.ui.modern ? (rootItem.pelotonLogin === 1 ? window.ui.ok : window.ui.danger) : (rootItem.pelotonLogin === 1 ? "#4caf50" : "#f44336")
                             }
                         }
                         SettingsTextField {
@@ -9530,7 +9530,7 @@ import QtQuick 2.12 as Quick212
                                 anchors.verticalCenter: parent.verticalCenter
                                 name: rootItem.pzpLogin === 1 ? "check_circle" : "cancel"
                                 size: 18
-                                color: rootItem.pzpLogin === 1 ? "#4caf50" : "#f44336"
+                                color: window.ui.modern ? (rootItem.pzpLogin === 1 ? window.ui.ok : window.ui.danger) : (rootItem.pzpLogin === 1 ? "#4caf50" : "#f44336")
                             }
                         }
                         SettingsTextField {
@@ -10090,7 +10090,7 @@ import QtQuick 2.12 as Quick212
                                 anchors.verticalCenter: parent.verticalCenter
                                 name: rootItem.zwiftLogin === 1 ? "check_circle" : "cancel"
                                 size: 18
-                                color: rootItem.zwiftLogin === 1 ? "#4caf50" : "#f44336"
+                                color: window.ui.modern ? (rootItem.zwiftLogin === 1 ? window.ui.ok : window.ui.danger) : (rootItem.zwiftLogin === 1 ? "#4caf50" : "#f44336")
                             }
                         }
                         SettingsTextField {
@@ -11594,7 +11594,7 @@ import QtQuick 2.12 as Quick212
                         verticalAlignment: Text.AlignVCenter
                         Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                         Layout.fillWidth: true
-                        color: Material.color(Material.Orange)
+                        color: window.ui.modern ? window.ui.danger : Material.color(Material.Orange)
                     }
                 }
             }
@@ -16874,7 +16874,7 @@ import QtQuick 2.12 as Quick212
                                 textFormat: Text.PlainText
                                 wrapMode: Text.WordWrap
                                 verticalAlignment: Text.AlignVCenter
-                                color: Material.color(Material.Red)
+                                color: window.ui.modern ? window.ui.danger : Material.color(Material.Red)
                                 Layout.fillWidth: true
                             }
 

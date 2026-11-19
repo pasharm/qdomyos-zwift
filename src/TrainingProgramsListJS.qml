@@ -786,7 +786,7 @@ ColumnLayout {
                             Layout.rightMargin: 10
                             text: rootItem.previewWorkoutTags
                             visible: text !== ""
-                            font.pixelSize: window.ui.fontPx(12)
+                            font.pixelSize: window.ui.modern ? window.ui.fontCaption : window.fontPx(12)
                             wrapMode: Text.WordWrap
                             color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey, Material.Shade400)
                             horizontalAlignment: Text.AlignLeft
