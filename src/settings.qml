@@ -3138,14 +3138,16 @@ import QtQuick 2.12 as Quick212
                         readonly property bool inBlock: settingsPane.changedOnly && window.ui.modern
                         readonly property bool firstInSection: inBlock &&
                             (index === 0 || settingsPane.sectionOf(filteredSettings[index - 1]) !== section)
+                        // ">=": a new, shorter list may reach this binding before the Repeater drops the result
                         readonly property bool lastInSection: inBlock &&
-                            (index === filteredSettings.length - 1 || settingsPane.sectionOf(filteredSettings[index + 1]) !== section)
+                            (index >= filteredSettings.length - 1 || settingsPane.sectionOf(filteredSettings[index + 1]) !== section)
                         // 16 between blocks: 8 of the spacing of the column and 8 here
                         readonly property real blockGap: firstInSection && index > 0 ? 8 : 0
                         readonly property real blockInset: inBlock ? 8 : 0
                         readonly property real blockBottom: lastInSection ? 8 : 0
-                        // The header row of the block: 48 high, the title and Reset section in its middle
-                        readonly property real headerHeight: firstInSection ? blockGap + 48 : 0
+                        // The header row of the block: 48 high, the title and Reset section in its middle;
+                        // higher when a long path or a big text scale takes more
+                        readonly property real headerHeight: firstInSection ? blockGap + sectionHeader.height : 0
                         width: Math.max(1, settingsSearchResults.width)
                         Layout.fillWidth: true
                         Layout.minimumWidth: 0
@@ -3199,10 +3201,13 @@ import QtQuick 2.12 as Quick212
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.top: parent.top
-                            // The title 16 in from the block, as the text of the cards
+                            // The title 16 in from the block, as the text of the cards; Reset section
+                            // 8 in, at the right edge of the cards: on the outline its pressed
+                            // background would cover the stroke at the rounded corner
                             anchors.leftMargin: 16
+                            anchors.rightMargin: searchResultFrame.blockInset
                             anchors.topMargin: searchResultFrame.blockGap
-                            height: 48
+                            height: Math.max(48, implicitHeight)
                             spacing: 8
                             Label {
                                 // Title Small 14 Medium (T-593)
