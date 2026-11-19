@@ -3183,7 +3183,8 @@ import QtQuick 2.12 as Quick212
                         readonly property bool controlAtBottom: controlOnTop && !hasDescription
                         readonly property real topPad: window.ui.modern ? (controlOnTop ? 6 : 12) : 4
                         readonly property real bottomPad: window.ui.modern ? (controlAtBottom ? 6 : 12) : 4
-                        implicitHeight: headerHeight + searchResultContent.implicitHeight + topPad + bottomPad + blockBottom
+                        implicitHeight: headerHeight + (window.ui.modern ? modernResultContent.height : searchResultContent.implicitHeight) +
+                                        topPad + bottomPad + blockBottom
 
                         // This result's piece of the outline of its block: down to the next result
                         // (over the spacing of the column) unless it is the last of the section;
@@ -3206,39 +3207,73 @@ import QtQuick 2.12 as Quick212
                             }
                         }
 
-                        RowLayout {
+                        // The header of the block: the last level of the path as its title, the levels
+                        // above it on one line over it, and Reset section as an icon at the right.
+                        // Not a RowLayout: with a title that wraps, Qt 5.15.0 (Android) gives up the
+                        // layout half way ("Detected recursive rearrange", QTBUG-86371: its
+                        // invalidate() sets the implicit size at once; from 5.15.1, qtdeclarative
+                        // a5d2fd816b, only on the next polish) and at a big text scale the title ran
+                        // under the cards.
+                        // Anything that wraps here or in the card below - widths by anchors, the
+                        // height from the text, no Qt Quick Layout around it
+                        Item {
                             id: sectionHeader
                             visible: searchResultFrame.firstInSection
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.top: parent.top
-                            // The title 16 in from the block, as the text of the cards; Reset section
-                            // 8 in, at the right edge of the cards: on the outline its pressed
-                            // background would cover the stroke at the rounded corner
+                            // The title 16 in from the block, as the text of the cards; the right
+                            // edge is the one of the cards, 8 in from the outline
                             anchors.leftMargin: 16
                             anchors.rightMargin: searchResultFrame.blockInset
                             anchors.topMargin: searchResultFrame.blockGap
-                            height: Math.max(48, implicitHeight)
-                            spacing: 8
-                            Label {
-                                // Title Small 14 Medium (T-593)
-                                font.pixelSize: window.ui.fontLabelLarge
-                                text: window.ui.plainTitle(searchResultFrame.section)
-                                color: window.ui.accent
-                                font.weight: Font.Medium
-                                wrapMode: Text.WordWrap
-                                // 12 above and below its text: a path of three lines makes the row
-                                // higher than 48, and without it the text touched the outline and the
-                                // first card (OnePlus 12, beta-3038); one line stays in the 48 row
+                            // 48 for one line; 12 above and below a longer title (without them the
+                            // text touched the outline and the first card, OnePlus 12, beta-3038)
+                            height: Math.max(48, sectionTitles.height)
+                            readonly property string fullPath: window.ui.plainTitle(searchResultFrame.section)
+                            readonly property int lastCut: fullPath.lastIndexOf(" › ")
+                            Column {
+                                id: sectionTitles
+                                anchors.left: parent.left
+                                anchors.right: resetSectionButton.left
+                                anchors.rightMargin: 8
+                                anchors.verticalCenter: parent.verticalCenter
                                 topPadding: 12
                                 bottomPadding: 12
-                                Layout.fillWidth: true
-                                Layout.minimumWidth: 0
+                                Label {
+                                    // The levels above: Body Small 12, one line, cut at the end
+                                    visible: sectionHeader.lastCut >= 0
+                                    width: parent.width
+                                    text: visible ? sectionHeader.fullPath.slice(0, sectionHeader.lastCut) : ""
+                                    font.pixelSize: window.ui.fontBodySmall
+                                    color: window.ui.textMuted
+                                    elide: Text.ElideRight
+                                    maximumLineCount: 1
+                                    textFormat: Text.PlainText
+                                }
+                                Label {
+                                    // Title Small 14 Medium (T-593)
+                                    width: parent.width
+                                    text: sectionHeader.lastCut >= 0 ? sectionHeader.fullPath.slice(sectionHeader.lastCut + 3)
+                                                                     : sectionHeader.fullPath
+                                    font.pixelSize: window.ui.fontLabelLarge
+                                    font.weight: Font.Medium
+                                    color: window.ui.accent
+                                    wrapMode: Text.WordWrap
+                                    textFormat: Text.PlainText
+                                }
                             }
-                            UiButton {
-                                flat: true
-                                danger: true
-                                text: qsTr("Reset section")
+                            // 48 wide, the icon 16 in from the right edge of the cards: the same
+                            // column as the reset icons of the cards
+                            ToolButton {
+                                id: resetSectionButton
+                                anchors.right: parent.right
+                                anchors.rightMargin: 4
+                                anchors.verticalCenter: parent.verticalCenter
+                                width: 48
+                                height: 48
+                                Accessible.name: qsTr("Reset section")
+                                UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "restart_alt"; color: window.ui.textMuted }
                                 onClicked: {
                                     settingsPane.resetSectionName = searchResultFrame.section
                                     resetSectionDialog.open()
@@ -3284,17 +3319,127 @@ import QtQuick 2.12 as Quick212
                             Accessible.onPressAction: searchResultFrame.open()
                         }
 
-                        ColumnLayout {
-                            id: searchResultContent
+                        // Modern look: the title, the path and the description wrap - no Qt Quick
+                        // Layout, as in the header above. Classic look: the layout below, as it was
+                        Column {
+                            id: modernResultContent
+                            visible: window.ui.modern
                             spacing: 2
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.top: parent.top
-                            // Modern look: 16 in from the edge of the card, as Material 3 (T-593)
-                            anchors.margins: window.ui.modern ? 16 : 4
-                            anchors.leftMargin: (window.ui.modern ? 16 : 4) + searchResultFrame.blockInset
-                            anchors.rightMargin: (window.ui.modern ? 16 : 4) + searchResultFrame.blockInset
+                            // 16 in from the edge of the card, as Material 3 (T-593)
+                            anchors.leftMargin: 16 + searchResultFrame.blockInset
+                            anchors.rightMargin: 16 + searchResultFrame.blockInset
                             anchors.topMargin: searchResultFrame.headerHeight + searchResultFrame.topPad
+
+                            Item {
+                                id: modernResultRow
+                                width: parent.width
+                                height: Math.max(modernResultTitles.height, modernResultTrailing.height)
+
+                                Column {
+                                    id: modernResultTitles
+                                    anchors.left: parent.left
+                                    anchors.right: modernResultTrailing.left
+                                    anchors.rightMargin: modernResultTrailing.width > 0 ? 8 : 0
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    spacing: 2
+
+                                    Label {
+                                        // Body Large, Medium (T-593); a capital first letter - the
+                                        // fields of a tile preset are "value:" and "label:" on their page
+                                        width: parent.width
+                                        readonly property string plain: window.ui.plainTitle(searchResultFrame.titleText)
+                                        text: plain.charAt(0).toUpperCase() + plain.slice(1)
+                                        font.pixelSize: window.ui.fontBody
+                                        font.weight: Font.Medium
+                                        wrapMode: Text.WordWrap
+                                    }
+
+                                    // The full path, in the accent colour as the way to the
+                                    // setting; not repeated under the header of a block
+                                    Label {
+                                        visible: !settingsPane.changedOnly
+                                        width: parent.width
+                                        text: window.ui.plainTitle(settingsPane.sectionOf(entry))
+                                        color: window.ui.accent
+                                        font.pixelSize: window.fontHint
+                                        bottomPadding: window.hintGap
+                                        wrapMode: Text.WordWrap
+                                    }
+                                }
+
+                                Row {
+                                    id: modernResultTrailing
+                                    anchors.right: parent.right
+                                    // "Changed": the reset button 48 wide, its icon 16 in from the
+                                    // edge of the card, as the title on the left
+                                    anchors.rightMargin: settingsPane.changedOnly ? -12 : 0
+                                    anchors.verticalCenter: parent.verticalCenter
+                                    // value -> reset icon: the 12 inside the button is the gap
+                                    spacing: settingsPane.changedOnly ? 0 : 8
+
+                                    // The value as text, as wide as 42 % of the card at most, cut at
+                                    // the end; nothing when the value is not known. "On" in the accent
+                                    // in the search; "Changed" lists only values, all of them muted
+                                    Label {
+                                        visible: searchResultFrame.valueText.length > 0
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        width: Math.min(implicitWidth, Math.max(0, searchResultFrame.width * 0.42))
+                                        text: searchResultFrame.valueText
+                                        color: searchResultFrame.valueOn && !settingsPane.changedOnly ? window.ui.accent
+                                                                                                       : window.ui.textMuted
+                                        // Body Medium 14 (T-593)
+                                        font.pixelSize: window.ui.fontLabelLarge
+                                        horizontalAlignment: Text.AlignRight
+                                        elide: Text.ElideRight
+                                        maximumLineCount: 1
+                                        textFormat: Text.PlainText
+                                        Accessible.ignored: true
+                                    }
+
+                                    UiIcon {
+                                        visible: !settingsPane.changedOnly
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        width: 22
+                                        height: 22
+                                        name: "chevron_right"
+                                        color: window.ui.textMuted
+                                    }
+
+                                    ToolButton {
+                                        visible: settingsPane.changedOnly
+                                        anchors.verticalCenter: parent.verticalCenter
+                                        width: 48
+                                        height: 48
+                                        Accessible.name: qsTr("Reset") + ": " + window.ui.plainTitle(searchResultFrame.titleText)
+                                        UiIcon { anchors.centerIn: parent; width: 24; height: 24; name: "restart_alt"; color: window.ui.textMuted }
+                                        onClicked: settingsPane.resetSetting(entry)
+                                    }
+                                }
+                            }
+
+                            Label {
+                                visible: searchResultFrame.hasDescription
+                                width: parent.width
+                                text: entry._translatedDescription || entry.description || ""
+                                color: window.ui.textMuted
+                                font.pixelSize: window.fontHint
+                                bottomPadding: window.hintGap
+                                textFormat: Text.PlainText
+                                wrapMode: Text.WordWrap
+                            }
+                        }
+
+                        ColumnLayout {
+                            id: searchResultContent
+                            visible: !window.ui.modern
+                            spacing: 2
+                            anchors.left: parent.left
+                            anchors.right: parent.right
+                            anchors.top: parent.top
+                            anchors.margins: 4
 
                             RowLayout {
                                 Layout.fillWidth: true
@@ -3307,26 +3452,17 @@ import QtQuick 2.12 as Quick212
                                     spacing: 2
 
                                     Label {
-                                        // Modern look: Body Large, Medium (T-593)
-                                        font.pixelSize: window.ui.modern ? window.ui.fontBody : window.ui.fontBase
-                                        font.weight: window.ui.modern ? Font.Medium : Font.Bold
-                                        readonly property string title: settingsPane.searchTitle(entry)
-                                        // Modern look: a capital first letter - the fields of a
-                                        // tile preset are "value:" and "label:" on their page
-                                        readonly property string plain: window.ui.plainTitle(title)
-                                        text: window.ui.modern ? plain.charAt(0).toUpperCase() + plain.slice(1) : title
+                                        font.pixelSize: window.ui.fontBase
+                                        text: settingsPane.searchTitle(entry)
+                                        font.bold: true
                                         wrapMode: Text.WordWrap
                                         Layout.fillWidth: true
                                         Layout.minimumWidth: 0
                                     }
 
-                                    // Modern: the full path, in the accent colour as the way to
-                                    // the setting; not repeated under the section header
                                     Label {
-                                        visible: !settingsPane.changedOnly || !window.ui.modern
-                                        text: window.ui.modern ? window.ui.plainTitle(settingsPane.sectionOf(entry))
-                                                               : settingsPane.parentDisplayName(entry)
-                                        color: window.ui.modern ? window.ui.accent : Material.color(Material.Grey)
+                                        text: settingsPane.parentDisplayName(entry)
+                                        color: Material.color(Material.Grey)
                                         font.pixelSize: window.fontHint
                                         bottomPadding: window.hintGap
                                         wrapMode: Text.WordWrap
@@ -3335,15 +3471,13 @@ import QtQuick 2.12 as Quick212
                                     }
                                 }
 
-                                // The value as text, "On" in the accent; as wide as 42 % of the card
-                                // at most, cut at the end; nothing when the value is not known
+                                // "On" in the accent; as wide as 42 % of the card at most, cut at
+                                // the end; nothing when the value is not known
                                 Label {
                                     visible: searchResultFrame.valueText.length > 0
                                     text: searchResultFrame.valueText
-                                    color: searchResultFrame.valueOn ? (window.ui.modern ? window.ui.accent : Material.accent)
-                                                                     : (window.ui.modern ? window.ui.textMuted : Material.color(Material.Grey))
-                                    // Modern look: Body Medium 14 (T-593)
-                                    font.pixelSize: window.ui.modern ? window.ui.fontLabelLarge : window.ui.fontBase
+                                    color: searchResultFrame.valueOn ? Material.accent : Material.color(Material.Grey)
+                                    font.pixelSize: window.ui.fontBase
                                     horizontalAlignment: Text.AlignRight
                                     elide: Text.ElideRight
                                     maximumLineCount: 1
@@ -3353,30 +3487,13 @@ import QtQuick 2.12 as Quick212
                                     Layout.maximumWidth: Math.max(0, searchResultFrame.width * 0.42)
                                 }
 
-                                UiIcon {
-                                    visible: window.ui.modern && !settingsPane.changedOnly
-                                    Layout.preferredWidth: 22
-                                    Layout.preferredHeight: 22
-                                    Layout.alignment: Qt.AlignVCenter
-                                    name: "chevron_right"
-                                    color: window.ui.textMuted
-                                }
-
                                 Label {
-                                    visible: !window.ui.modern
                                     font.pixelSize: window.ui.fontBase
                                     text: "›"
                                     font.bold: true
                                     color: Material.color(Material.Grey)
                                     Accessible.ignored: true
                                     Layout.alignment: Qt.AlignVCenter
-                                }
-
-                                UiButton {
-                                    visible: settingsPane.changedOnly && window.ui.modern
-                                    flat: true
-                                    text: qsTr("Reset")
-                                    onClicked: settingsPane.resetSetting(entry)
                                 }
                             }
 
@@ -3385,9 +3502,9 @@ import QtQuick 2.12 as Quick212
                                 Layout.preferredHeight: visible ? implicitHeight : 0
                                 Layout.maximumHeight: visible ? implicitHeight : 0
                                 text: entry._translatedDescription || entry.description || ""
-                                color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
-                                font.bold: !window.ui.modern
-                                font.italic: !window.ui.modern
+                                color: Material.color(Material.Lime)
+                                font.bold: true
+                                font.italic: true
                                 font.pixelSize: window.fontHint
                                 bottomPadding: window.hintGap
                                 textFormat: Text.PlainText
