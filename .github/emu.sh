@@ -140,6 +140,7 @@ keep() {
   if dump && find_ui '^Save & ?Start$' --first; then
     set -- $EMU_AT
     say "tap Save & Start at $1 $2"
+    starts0=$(grep -c 'Emitting trainprogram_autostart_requested' full_logcat.txt)
     adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
     if wait_gone '^Add Interval$' 30; then
       emu_sleep 3
@@ -150,6 +151,13 @@ keep() {
       else
         fail "check $c-8-started: $n WebView node(s) of the editor after Save & Start"
       fi
+      # the start sent once: the editor's queue sent a message with no reply again every 15 s, and the
+      # kept page lived on - the workout started again and the editor closed on its next opening
+      # (run 44627484058: 22:38:21, :37, :52)
+      sleep 35
+      starts=$(( $(grep -c 'Emitting trainprogram_autostart_requested' full_logcat.txt) - starts0 ))
+      [ "$starts" = 1 ]; ok=$?
+      told_or "$side" $ok "$c-8-started" "the workout started once in 35 s after Save & Start ($starts)"
       # opens again after that (the kept page closed by the handler, not lost)
       if open_editor "$c"; then
         shot "$c-9-after-start"
