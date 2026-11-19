@@ -4961,6 +4961,10 @@ Skal QZ få endre denne verdien?
         <source>QZ is closing...</source>
         <translation>QZ lukkes …</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>Se etter et nyere bygg</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10211,6 +10215,22 @@ Vil du installere det?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>Laster ned QZ-bygget: %1 %</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>Ser etter et nyere QZ-bygg…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>Kunne ikke se etter et nyere QZ-bygg. Sjekk internettforbindelsen.</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>Du har det nyeste QZ-bygget: %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>Et nyere QZ-bygg blir publisert nå. Prøv igjen om noen minutter.</translation>
     </message>
 </context>
 </TS>

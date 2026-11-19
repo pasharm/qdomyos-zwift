@@ -182,6 +182,11 @@ ApplicationWindow {
     signal floatingOpen()
     signal openFloatingWindowBrowser();
     signal strava_upload_file_prepare();
+    // personal: the check for a newer beta build on a tap on the version line of the drawer
+    // (UiBetaUpdate.qml in Home.qml answers it). betaBuild is the number of this beta build,
+    // written by UiBetaUpdate; 0: not a beta build, the line is not a button
+    signal betaUpdateCheckRequested()
+    property int betaBuild: 0
 
     property bool lockTiles: false
     // The support button "?" (SupportHelpButton) is in the bottom right corner of the home page
@@ -2279,6 +2284,9 @@ ApplicationWindow {
                 intervalsicu_connect_clicked()
             }
             break
+        case "betaupdate":
+            betaUpdateCheckRequested()
+            break
         }
         drawer.close()
     }
@@ -2425,6 +2433,9 @@ ApplicationWindow {
                     width: parent.width
                     // Android: versionName at runtime, with the CI build suffix (2.22.0-beta.N)
                     Component.onCompleted: if (Qt.platform.os === "android" && Qt.application.version !== "") text = "version " + Qt.application.version
+                    // personal: a beta build checks for a newer one on a tap. Not enabled: false
+                    // for other builds - it would grey the line out
+                    onClicked: if (window.betaBuild > 0) drawerAction("betaupdate")
                 }
 
                 ItemDelegate {
@@ -2729,11 +2740,25 @@ ApplicationWindow {
                     width: parent.width
                     leftPadding: 28
                     topPadding: 16
+                    // personal: room for a finger under the line of a beta build, where it is a button
+                    bottomPadding: window.betaBuild > 0 ? 16 : 0
                     text: drawerVersion.text
                     font.pixelSize: window.ui.fontCaption
                     color: window.ui.textMuted
                     // Android: versionName at runtime, with the CI build suffix (2.22.0-beta.N)
                     Component.onCompleted: if (Qt.platform.os === "android" && Qt.application.version !== "") text = "version " + Qt.application.version
+
+                    // personal: a beta build checks for a newer one on a tap. For the screen
+                    // reader a node of its own after the text of the line
+                    MouseArea {
+                        anchors.fill: parent
+                        enabled: window.betaBuild > 0
+                        onClicked: drawerAction("betaupdate")
+                        Accessible.role: Accessible.Button
+                        Accessible.name: enabled ? qsTr("Check for a newer build") : ""
+                        Accessible.ignored: !enabled
+                        Accessible.onPressAction: if (enabled) drawerAction("betaupdate")
+                    }
                 }
             }
         }

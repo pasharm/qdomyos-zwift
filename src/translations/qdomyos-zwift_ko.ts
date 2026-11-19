@@ -4958,6 +4958,10 @@ QZ가 이 값을 변경하도록 허용하시겠습니까?
         <source>QZ is closing...</source>
         <translation>QZ를 종료하는 중...</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>새 빌드 확인</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10196,6 +10200,22 @@ Install it?</source>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>QZ 빌드 다운로드 중: %1%</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>새 QZ 빌드를 확인하는 중…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>새 QZ 빌드를 확인할 수 없습니다. 인터넷 연결을 확인하세요.</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>최신 QZ 빌드입니다: %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>새 QZ 빌드를 게시하는 중입니다. 몇 분 후에 다시 시도하세요.</translation>
     </message>
 </context>
 </TS>

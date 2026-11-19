@@ -4973,6 +4973,10 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
 
 «No»: QZ activa «Sin cambio de diámetro de rueda» (Ajustes &gt; Opciones de bicicleta &gt; Opciones de Wahoo) y las marchas virtuales funcionan a través de la pendiente. Con «Sí» puedes deshacerlo más tarde allí mismo: activa esa opción y, con el rodillo conectado, pulsa «Restaurar la configuración predeterminada del rodillo».</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>Buscar una compilación más reciente</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10255,6 +10259,22 @@ Install it?</source>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>Descargando la compilación de QZ: %1 %</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>Buscando una compilación más reciente de QZ…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>No se pudo buscar una compilación más reciente de QZ. Comprueba la conexión a internet.</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>Tienes la compilación más reciente de QZ: %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>Se está publicando una compilación más reciente de QZ. Inténtalo de nuevo en unos minutos.</translation>
     </message>
 </context>
 </TS>

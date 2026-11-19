@@ -4973,6 +4973,10 @@ Consentire a QZ di modificare questo valore?
 
 «No»: QZ attiva «Senza Protocollo Diametro Ruota» (Impostazioni &gt; Opzioni bici &gt; Opzioni Wahoo) e le marce virtuali funzionano tramite la pendenza. Con «Sì» potrai annullarlo più tardi nello stesso punto: attiva quell&apos;opzione e, con il rullo connesso, tocca «Ripristina le impostazioni predefinite del rullo».</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>Cerca una build più recente</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10239,6 +10243,22 @@ Installarla?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>Download della build di QZ: %1%</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>Ricerca di una build di QZ più recente…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>Impossibile cercare una build di QZ più recente. Controlla la connessione a Internet.</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>Hai la build di QZ più recente: %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>È in pubblicazione una build di QZ più recente. Riprova tra qualche minuto.</translation>
     </message>
 </context>
 </TS>

@@ -4961,6 +4961,10 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
         <source>QZ is closing...</source>
         <translation>QZ закрывается...</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>Проверить новую сборку</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10211,6 +10215,22 @@ Install it?</source>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>Скачивается сборка QZ: %1%</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>Проверяю, есть ли новая сборка QZ…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>Не удалось проверить новую сборку QZ. Проверьте подключение к интернету.</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>У вас последняя сборка QZ: %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>Новая сборка QZ ещё публикуется. Попробуйте через несколько минут.</translation>
     </message>
 </context>
 </TS>

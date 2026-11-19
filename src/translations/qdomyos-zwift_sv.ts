@@ -4957,6 +4957,10 @@ Vill du tillåta att QZ ändrar värdet?
         <source>QZ is closing...</source>
         <translation>QZ stängs…</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>Sök efter en nyare version</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10207,6 +10211,22 @@ Vill du installera den?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>Laddar ned QZ-versionen: %1%</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>Söker efter en nyare QZ-version…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>Det gick inte att söka efter en nyare QZ-version. Kontrollera internetanslutningen.</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>Du har den senaste QZ-versionen: %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>En nyare QZ-version håller på att publiceras. Försök igen om några minuter.</translation>
     </message>
 </context>
 </TS>

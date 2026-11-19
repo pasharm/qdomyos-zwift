@@ -4970,6 +4970,10 @@ Permitir que o QZ altere esse valor?
 
 “Não”: o QZ ativa “Sem protocolo de diâmetro da roda” (Configurações &gt; Opções de Bicicleta &gt; Opções Wahoo), e as marchas virtuais funcionam pela inclinação. Com “Sim”, você pode desfazer isso depois no mesmo lugar: ative essa opção e, com o rolo conectado, toque em “Restaurar a configuração padrão no rolo”.</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>Procurar uma compilação mais recente</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10248,6 +10252,22 @@ Instalar?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>A transferir a compilação do QZ: %1%</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>A procurar uma compilação mais recente do QZ…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>Não foi possível procurar uma compilação mais recente do QZ. Verifique a ligação à Internet.</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>Tem a compilação mais recente do QZ: %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>Está a ser publicada uma compilação mais recente do QZ. Tente novamente dentro de alguns minutos.</translation>
     </message>
 </context>
 </TS>

@@ -4958,6 +4958,10 @@ Zezwolić QZ na zmianę tej wartości?
         <source>QZ is closing...</source>
         <translation>Zamykanie QZ...</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>Sprawdź nowszą kompilację</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10196,6 +10200,22 @@ Zainstalować?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>Pobieranie kompilacji QZ: %1%</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>Sprawdzanie nowszej kompilacji QZ…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>Nie udało się sprawdzić nowszej kompilacji QZ. Sprawdź połączenie z internetem.</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>Masz najnowszą kompilację QZ: %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>Nowsza kompilacja QZ jest właśnie publikowana. Spróbuj ponownie za kilka minut.</translation>
     </message>
 </context>
 </TS>

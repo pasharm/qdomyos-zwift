@@ -4974,6 +4974,10 @@ No: QZ turns on Without Wheel Diameter Protocol (Settings &gt; Bike Options &gt;
 
 “否”：QZ 将开启“无车轮直径协议”（设置 &gt; 自行车选项 &gt; Wahoo 选项），虚拟变速通过坡度实现。选择“是”后，以后可在同一位置撤销：开启该选项，然后在骑行台已连接时点按“将骑行台恢复为默认设置”。</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>检查新版本</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10276,6 +10280,22 @@ Install it?</source>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>正在下载 QZ 版本：%1%</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>正在检查 QZ 新版本…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>无法检查 QZ 新版本。请检查网络连接。</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>已是最新的 QZ 版本：%1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>QZ 新版本正在发布。请几分钟后再试。</translation>
     </message>
 </context>
 </TS>

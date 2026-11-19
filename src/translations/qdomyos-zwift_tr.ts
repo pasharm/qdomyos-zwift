@@ -4961,6 +4961,10 @@ QZ&apos;nin bu değeri değiştirmesine izin verilsin mi?
         <source>QZ is closing...</source>
         <translation>QZ kapanıyor...</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>Daha yeni bir derleme ara</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10199,6 +10203,22 @@ Yüklensin mi?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>QZ derlemesi indiriliyor: %%1</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>Daha yeni bir QZ derlemesi aranıyor…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>Daha yeni bir QZ derlemesi aranamadı. İnternet bağlantısını kontrol edin.</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>En yeni QZ derlemesine sahipsiniz: %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>Daha yeni bir QZ derlemesi yayımlanıyor. Birkaç dakika sonra yeniden deneyin.</translation>
     </message>
 </context>
 </TS>

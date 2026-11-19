@@ -4957,6 +4957,10 @@ Engedélyezi, hogy a QZ módosítsa ezt az értéket?
         <source>QZ is closing...</source>
         <translation>A QZ bezárul...</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>Újabb verzió keresése</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10207,6 +10211,22 @@ Szeretné telepíteni?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>A QZ-verzió letöltése: %1%</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>Újabb QZ-verzió keresése…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>Nem sikerült újabb QZ-verziót keresni. Ellenőrizze az internetkapcsolatot.</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>A legújabb QZ-verzió van telepítve: %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>Egy újabb QZ-verzió közzététele folyamatban van. Próbálja újra néhány perc múlva.</translation>
     </message>
 </context>
 </TS>

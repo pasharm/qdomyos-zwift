@@ -4961,6 +4961,10 @@ Mag QZ deze waarde wijzigen?
         <source>QZ is closing...</source>
         <translation>QZ wordt afgesloten...</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>Zoeken naar een nieuwere build</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10199,6 +10203,22 @@ Installeren?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>QZ-build downloaden: %1%</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>Zoeken naar een nieuwere QZ-build…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>Kon niet zoeken naar een nieuwere QZ-build. Controleer de internetverbinding.</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>Je hebt de nieuwste QZ-build: %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>Er wordt een nieuwere QZ-build gepubliceerd. Probeer het over een paar minuten opnieuw.</translation>
     </message>
 </context>
 </TS>

@@ -4961,6 +4961,10 @@ Povolit QZ tuto hodnotu měnit?
         <source>QZ is closing...</source>
         <translation>QZ se zavírá...</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>Zkontrolovat novější sestavení</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10199,6 +10203,22 @@ Nainstalovat?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>Stahování sestavení QZ: %1 %</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>Hledám novější sestavení QZ…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>Nepodařilo se zjistit, zda je novější sestavení QZ. Zkontrolujte připojení k internetu.</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>Máte nejnovější sestavení QZ: %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>Novější sestavení QZ se právě zveřejňuje. Zkuste to znovu za pár minut.</translation>
     </message>
 </context>
 </TS>

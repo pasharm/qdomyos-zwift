@@ -4970,6 +4970,10 @@ QZ がこの値を変更することを許可しますか？
 
 「いいえ」：QZ が「簡易Wahoo互換プロトコルを使用」をオンにし（設定 &gt; バイク設定 &gt; Wahooスマートトレーナー連携設定）、バーチャルギアは勾配を通じて動作します。「はい」を選んだ場合は、後で同じ場所で元に戻せます：この設定をオンにし、トレーナーを接続した状態で「トレーナーをデフォルト設定に戻す」をタップしてください。</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>新しいビルドを確認</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10280,6 +10284,22 @@ Install it?</source>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>QZ ビルドをダウンロード中: %1%</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>QZ の新しいビルドを確認しています…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>QZ の新しいビルドを確認できませんでした。インターネット接続を確認してください。</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>QZ は最新のビルドです: %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>QZ の新しいビルドを公開中です。数分後にもう一度お試しください。</translation>
     </message>
 </context>
 </TS>

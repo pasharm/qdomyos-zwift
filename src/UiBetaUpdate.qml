@@ -10,7 +10,10 @@ import Qt.labs.platform 1.1
 // it runs QZ watches it and asks again when it ends ("Install" opens the installer of Android, which
 // ends QZ: not opened by itself, a workout may be running); in the background a notification asks.
 // The strip at the bottom shows the percent of the download; a tap hides it, the download goes on.
-// Launch only: QZ starts counting a workout by itself, a late answer must not cover it.
+// By itself only at launch: QZ starts counting a workout by itself, a late answer must not cover it.
+// Again on a tap on the version line of the drawer (main.qml, betaUpdateCheckRequested): asked by
+// the user, so it answers in any case - the same question, the strip of a running download, or a
+// notice "the newest build" / "could not check".
 UiMessageDialog {
     id: root
 
@@ -19,6 +22,10 @@ UiMessageDialog {
     readonly property int buildNumber: 0
     readonly property string releaseUrl: "https://api.github.com/repos/pasharm/qdomyos-zwift/releases/latest"
     readonly property int answerLimitMs: 15000
+    readonly property bool active: buildNumber !== 0 && Qt.platform.os === "android" && typeof betaUpdate !== "undefined"
+    // The request whose answer is awaited: a newer one (a second tap) makes the answer of the
+    // older one ignored
+    property int requestSerial: 0
 
     property int newBuild: 0
     property string apkUrl: ""
@@ -155,23 +162,33 @@ UiMessageDialog {
             open()
     }
 
+    // "offered": newer, with an APK, the question is asked; "newest": not newer;
+    // "noApk": newer, but its APK is not in the release (yet)
     function readAnswer(answer) {
         var release = JSON.parse(answer)
         var name = release.tag_name.split("-")
         if (name.length !== 2 || name[0] !== "beta" || !(parseInt(name[1]) > buildNumber))
-            return
+            return "newest"
         for (var i = 0; i < release.assets.length; i++) {
             var url = release.assets[i].browser_download_url
             if (url.endsWith(".apk")) {
                 newBuild = parseInt(name[1])
                 apkUrl = url
+                downloaded = false
                 offer()
-                return
+                return "offered"
             }
         }
+        return "noApk"
     }
 
-    function check() {
+    function failedByTap(reason) {
+        console.log("beta update: " + reason)
+        toast.show(qsTr("Could not check for a newer QZ build. Check the internet connection."), 4000)
+    }
+
+    // byTap: asked from the drawer, every outcome is told on the screen
+    function check(byTap) {
         betaUpdate.cleanup(buildNumber)
         var ready = betaUpdate.downloadedBuild()
         if (ready > buildNumber) {
@@ -180,38 +197,89 @@ UiMessageDialog {
             offer()
             return
         }
-        // A download is running, started before a restart of QZ
+        // A download is running, started before a restart of QZ or by an earlier answer
         if (ready === -1) {
+            stripHidden = false
             downloadWatch.start()
             return
+        }
+        var serial = ++requestSerial
+        if (byTap) {
+            toast.show(qsTr("Checking for a newer QZ build…"), 2000)
+            noAnswerTimer.restart()
         }
         var started = Date.now()
         var request = new XMLHttpRequest()
         request.onreadystatechange = function() {
-            if (request.readyState !== XMLHttpRequest.DONE)
+            if (request.readyState !== XMLHttpRequest.DONE || serial !== requestSerial)
                 return
+            noAnswerTimer.stop()
+            // Closed by the timer of a tap: the notice is out already
+            requestSerial++
             if (request.status !== 200 || Date.now() - started > answerLimitMs) {
-                console.log("beta update: no answer in time, status " + request.status)
+                if (byTap)
+                    failedByTap("no answer in time, status " + request.status)
+                else
+                    console.log("beta update: no answer in time, status " + request.status)
                 return
             }
             try {
-                readAnswer(request.responseText)
+                var outcome = readAnswer(request.responseText)
+                if (byTap && outcome === "newest")
+                    toast.show(qsTr("You have the newest QZ build: %1").arg(buildNumber), 4000)
+                else if (byTap && outcome === "noApk")
+                    toast.show(qsTr("A newer QZ build is being published. Try again in a few minutes."), 4000)
             } catch (e) {
-                console.log("beta update: " + e)
+                if (byTap)
+                    failedByTap(e)
+                else
+                    console.log("beta update: " + e)
             }
         }
         request.open("GET", releaseUrl)
         request.send()
     }
 
+    function checkByTap() {
+        // The question is on the screen already
+        if (opened)
+            return
+        check(true)
+    }
+
+    // A tap waits no longer than the launch does: no answer at all (the request hangs) is told too
+    Timer {
+        id: noAnswerTimer
+        interval: root.answerLimitMs
+        onTriggered: {
+            root.requestSerial++
+            root.failedByTap("no answer in " + interval + " ms")
+        }
+    }
+
+    Connections {
+        target: window
+        enabled: root.active
+        function onBetaUpdateCheckRequested() {
+            try {
+                root.checkByTap()
+            } catch (e) {
+                root.failedByTap(e)
+            }
+        }
+    }
+
+    // The drawer makes its version line a button by this number (main.qml)
+    Component.onCompleted: if (active) window.betaBuild = buildNumber
+
     // rootItem comes from C++ only after main.qml is loaded (main.cpp): the check waits for it,
     // as the wizard of the first run does (Home.qml)
     Timer {
         interval: 300
-        running: root.buildNumber !== 0 && Qt.platform.os === "android" && typeof betaUpdate !== "undefined"
+        running: root.active
         onTriggered: {
             try {
-                root.check()
+                root.check(false)
             } catch (e) {
                 console.log("beta update: " + e)
             }

@@ -4973,6 +4973,10 @@ Autoriser QZ à modifier cette valeur ?
 
 « Non » : QZ active « Sans protocole de diamètre de roue » (Paramètres &gt; Options de vélo &gt; Options Wahoo) et les vitesses virtuelles passent par la pente. Avec « Oui », vous pourrez l&apos;annuler plus tard au même endroit : activez cette option puis, avec le home trainer connecté, appuyez sur « Restaurer les réglages par défaut du home trainer ».</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>Rechercher une version plus récente</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10263,6 +10267,22 @@ L&apos;installer ?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>Téléchargement de la version de QZ : %1 %</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>Recherche d&apos;une version plus récente de QZ…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>Impossible de rechercher une version plus récente de QZ. Vérifiez la connexion Internet.</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>Vous avez la version la plus récente de QZ : %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>Une version plus récente de QZ est en cours de publication. Réessayez dans quelques minutes.</translation>
     </message>
 </context>
 </TS>

@@ -4973,6 +4973,10 @@ Darf QZ diesen Wert ändern?
 
 „Nein“: QZ schaltet „Ohne Laufrad-Durchmesser-Protokoll“ ein (Einstellungen &gt; Fahrradoptionen &gt; Wahoo Optionen), und virtuelle Gänge laufen über die Steigung. Bei „Ja“ lässt sich das später dort rückgängig machen: diese Option einschalten und bei verbundenem Trainer auf „Standardeinstellung des Trainers wiederherstellen“ tippen.</translation>
     </message>
+    <message>
+        <source>Check for a newer build</source>
+        <translation>Nach neuerem Build suchen</translation>
+    </message>
 </context>
 <context>
     <name>peloton</name>
@@ -10243,6 +10247,22 @@ Installieren?</translation>
     <message>
         <source>Downloading the QZ build: %1%</source>
         <translation>QZ-Build wird heruntergeladen: %1 %</translation>
+    </message>
+    <message>
+        <source>Checking for a newer QZ build…</source>
+        <translation>Suche nach neuerem QZ-Build…</translation>
+    </message>
+    <message>
+        <source>Could not check for a newer QZ build. Check the internet connection.</source>
+        <translation>Neuerer QZ-Build konnte nicht geprüft werden. Prüf die Internetverbindung.</translation>
+    </message>
+    <message>
+        <source>You have the newest QZ build: %1</source>
+        <translation>Du hast den neuesten QZ-Build: %1</translation>
+    </message>
+    <message>
+        <source>A newer QZ build is being published. Try again in a few minutes.</source>
+        <translation>Ein neuerer QZ-Build wird gerade veröffentlicht. Versuch es in ein paar Minuten noch einmal.</translation>
     </message>
 </context>
 </TS>
