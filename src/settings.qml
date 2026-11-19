@@ -3199,10 +3199,10 @@ import QtQuick 2.12 as Quick212
                         // The header of the block: the last level of the path as its title, the levels
                         // above it on one line over it, and Reset section as an icon at the right.
                         // Not a RowLayout: with a title that wraps, Qt 5.15.0 (Android) gives up the
-                        // layout half way ("Detected recursive rearrange", QTBUG-86371: its
-                        // invalidate() sets the implicit size at once; from 5.15.1, qtdeclarative
-                        // a5d2fd816b, only on the next polish) and at a big text scale the title ran
-                        // under the cards.
+                        // layout half way ("Detected recursive rearrange", as in QTBUG-86371): its
+                        // QQuickGridLayoutBase::invalidate() sets the implicit size at once, from 5.15.1
+                        // (qtdeclarative a5d2fd816b) only on the next polish; at a big text scale the
+                        // title ran under the cards.
                         // Anything that wraps here or in the card below - widths by anchors, the
                         // height from the text, no Qt Quick Layout around it
                         Item {
