@@ -8045,9 +8045,16 @@ import QtQuick 2.12 as Quick212
                             wrapMode: Text.WordWrap
                             Layout.fillWidth: true
                             Layout.minimumWidth: 60
+                            // Stacked: room inside the card, as the Theme card above has (~20 dp from the
+                            // frame to the glyphs). The frame keeps 8 dp around the row itself
+                            // (UiSettingFrames framePadV); the row margins only move the next card
+                            // (T-593, mockup notes/mockups/t593-accent-pad-2026-11-19, decision 19.11 - variant 3)
+                            topPadding: accentRow.stackedRow ? 9 : 0
                         }
                         Row {
                             spacing: 6
+                            // Stacked: ~18 dp from the swatches to the frame, as under the text of the Theme card
+                            bottomPadding: accentRow.stackedRow ? 13 : 0
                             Layout.alignment: (accentRow.stackedRow ? Qt.AlignLeft : Qt.AlignRight) | Qt.AlignVCenter
                             Repeater {
                                 // "system" first, where Android offers the wallpaper colour (API 31+)
