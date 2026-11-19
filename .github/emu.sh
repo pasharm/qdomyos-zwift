@@ -14,41 +14,22 @@
 . .github/lib.sh
 . .github/qz.sh
 
-# rotate <0|1>: portrait or landscape, then a check by the root bounds of a dump that the app turned
-# (T-487, lesson 2: user_rotation once left QZ in portrait and the run proved nothing; from the T-187 scenario)
-rotate() {
-  local want=$1 b w h i
-  adb shell settings put system accelerometer_rotation 0 < /dev/null > /dev/null 2>&1
-  adb shell settings put system user_rotation "$want" < /dev/null > /dev/null 2>&1
-  for i in 1 2 3 4 5 6; do
-    emu_sleep 3
-    dump || continue
-    b=$(grep -o 'bounds="\[0,0\]\[[0-9]*,[0-9]*\]"' ui.xml | head -1 | tr -c '0-9\n' ' ')
-    set -- $b
-    w=$3; h=$4
-    [ -n "$w" ] || continue
-    if { [ "$want" = 1 ] && [ "$w" -gt "$h" ]; } || { [ "$want" = 0 ] && [ "$w" -lt "$h" ]; }; then
-      say "rotation $want: ${w}x$h"
-      emu_sleep 3
-      return 0
-    fi
-  done
-  fail "rotation $want: the screen is ${w:-?}x${h:-?}"
-  return 1
-}
-
-# webviews_of <shot>: the number of android.webkit.WebView nodes in the dump
-webviews_of() {
+# editor_views_of <shot>: the number of WebView nodes of the editor page (its inner node carries the <title>
+# of index.html, "Workout Editor"); the chart footer of home is a WebView too ("Line Chart", off by default)
+editor_views_of() {
   "$EMU_PY" - "dumps/$1.xml" << 'EOF'
 import sys
 import xml.etree.ElementTree as ET
 root = ET.parse(sys.argv[1]).getroot()
-print(sum(1 for n in root.iter('node') if n.get('class') == 'android.webkit.WebView'))
+print(sum(1 for n in root.iter('node')
+          if n.get('class') == 'android.webkit.WebView' and n.get('text') == 'Workout Editor'))
 EOF
 }
 
-# webview_fit <shot>: "fit" - the first WebView is as wide as the screen (the root node of the dump), else
-# "<webview width> of <screen width>"; "none" without a WebView
+# webview_fit <shot>: "fit" - the WebView nodes reach both edges of the window (the root node of the dump),
+# 2 px of slack: the outer node ends 1 px short of the root (T-187 dumps, 1439 of 1440); else
+# "<right edge> of <window width>"; "none" without a WebView. The native view only - the page laid out anew
+# is told by the frame
 webview_fit() {
   "$EMU_PY" - "$EMU_GH" "dumps/$1.xml" << 'EOF'
 import sys
@@ -57,30 +38,35 @@ sys.path.insert(0, sys.argv[1])
 import emu_frame
 root = ET.parse(sys.argv[2]).getroot()
 nodes = list(root.iter('node'))
-views = [n for n in nodes if n.get('class') == 'android.webkit.WebView']
+views = [emu_frame.parse_bounds(n.get('bounds')) for n in nodes if n.get('class') == 'android.webkit.WebView']
 if not views:
     print("none")
     sys.exit(0)
 sx1, sy1, sx2, sy2 = emu_frame.parse_bounds(nodes[0].get('bounds'))
-x1, y1, x2, y2 = emu_frame.parse_bounds(views[0].get('bounds'))
-print("fit" if (x1, x2) == (sx1, sx2) else "%d of %d" % (x2 - x1, sx2 - sx1))
+x1 = min(v[0] for v in views)
+x2 = max(v[2] for v in views)
+print("fit" if abs(x1 - sx1) <= 2 and abs(x2 - sx2) <= 2 else "%d..%d of %d..%d" % (x1, x2, sx1, sx2))
 EOF
 }
 
-# told_or <side> <ok> <what>: head - a check (fail when ok is not 0); base - told only
+# told_or <side> <ok> <shot> <what>: head - a check (fail when ok is not 0); base - told only
 told_or() {
   if [ "$1" = b ]; then
-    say "before: $3: $([ "$2" = 0 ] && echo yes || echo no)"
+    say "before $3: $4: $([ "$2" = 0 ] && echo yes || echo no)"
   elif [ "$2" = 0 ]; then
-    say "check: $3: OK"
+    say "check $3: $4: OK"
   else
-    fail "check: $3"
+    fail "check $3: $4"
   fi
 }
 
-# count_is <n>: the chart card tells n intervals ("Treadmill • Duration 10:00 • 2 intervals")
+# count_is <n>: the chart card tells n intervals ("Treadmill • Duration 10:00 • 2 intervals",
+# workout-editor.js). uifind matches the whole text; with two intervals the card lies below the screen and
+# Chrome gives its nodes [0,0][0,0] - those only --offscreen finds
 count_is() {
-  dump && find_ui "• $1 intervals\$" --any
+  dump || return 1
+  find_ui ".*• $1 intervals" --any && return 0
+  uifind ui.xml --offscreen ".*• $1 intervals" > /dev/null 2>&1
 }
 
 # open_editor <case>: the editor from the drawer, the page loaded (Add Interval on the screen)
@@ -93,86 +79,85 @@ open_editor() {
   still
 }
 
-# home_clean <case> <shot>: back home from the editor, then no WebView over the home page
+# home_clean <case> <shot>: back home from the editor, then no WebView of the editor over the home page
 home_clean() {
   local c=$1 s=$2 n
-  # already home (one Back above) - no tap: back_to would tap the menu button there
-  if ! { dump && find_ui "$HOME_RX" --first && ! find_ui '^Add Interval$'; }; then
-    back_to "$HOME_RX" 20 || { fail "$c: home not shown after Back"; return 1; }
-  fi
+  back_to "$HOME_RX" 20 || { fail "$c: home not shown after Back"; return 1; }
   emu_sleep 2
   still
   shot "$s"
-  n=$(webviews_of "$s")
+  n=$(editor_views_of "$s")
   if [ "$n" = 0 ]; then
-    say "check $s: no WebView over home: OK"
+    say "check $s: no WebView of the editor over home: OK"
   else
-    fail "check $s: $n WebView node(s) over home after the editor closed"
+    fail "check $s: $n WebView node(s) of the editor over home after it closed"
   fi
 }
 
 # keep <side> <look>: m - modern, c - classic
 keep() {
-  local side=$1 look=$2 c="$1k$2" modern=false kept=1 ok fit
+  local side=$1 look=$2 c="$1k$2" modern=false kept=1 ok fit n
   [ "$look" = m ] && modern=true
   # the kept page is the change: only the head in the modern look keeps the workout
   [ "$side" = h ] && [ "$look" = m ] && kept=2
   start_case "$c" ui_modern=$modern fakedevice_treadmill=true || return 1
 
-  # 1. a workout of two intervals, closed and opened again
+  # 1. a workout of two intervals (a fresh page has one), closed and opened again
   open_editor "$c" || return 1
-  tap_ui '^New$' '^Add Interval$' 20
-  emu_sleep 3
-  tap_ui '^Add Interval$' '^Add Interval$' 20
+  tap_ui '^Add Interval$' '^Interval 2$' 20
   emu_sleep 3
   still
   shot "$c-1-two"
-  count_is 2 || fail "$c-1-two: no '2 intervals' after Add Interval ($EMU_WHY)"
+  count_is 2 || fail "check $c-1-two: no '2 intervals' after Add Interval ($EMU_WHY)"
   home_clean "$c" "$c-2-home"
   open_editor "$c" || return 1
   shot "$c-3-again"
   count_is $kept; ok=$?
-  told_or "$side" $ok "$c-3-again: opened again with $kept interval(s) (kept=$kept)"
-
-  # 2. (the menu entry with the editor open - not here: the native web view lies over the menu of QML, the
+  told_or "$side" $ok "$c-3-again" "opened again with $kept interval(s)"
+  # (the menu entry with the editor open - not here: the native web view lies over the menu of QML; the
   # phone check of T-596 takes it)
-  home_clean "$c" "$c-5-home"
+  home_clean "$c" "$c-4-home"
 
-  # 3. turned while closed, opened again: the page laid out for the new width
-  if rotate 1; then
-    open_editor "$c" && {
-      shot "$c-6-land"
-      fit=$(webview_fit "$c-6-land")
+  # 2. turned while closed, opened again: the web view laid out for the new width
+  if rotate land "$c"; then
+    if open_editor "$c"; then
+      shot "$c-5-land"
+      fit=$(webview_fit "$c-5-land")
       [ "$fit" = fit ]; ok=$?
-      told_or "$side" $ok "$c-6-land: the editor as wide as the screen in landscape ($fit)"
-      home_clean "$c" "$c-7-home-land"
-    }
+      told_or "$side" $ok "$c-5-land" "the editor as wide as the window in landscape ($fit)"
+      home_clean "$c" "$c-6-home-land"
+    fi
   fi
-  if rotate 0; then
-    open_editor "$c" && {
-      shot "$c-8-port"
-      fit=$(webview_fit "$c-8-port")
-      [ "$fit" = fit ]; ok=$?
-      told_or "$side" $ok "$c-8-port: the editor as wide as the screen upright again ($fit)"
-    }
-  fi
+  rotate port "$c" || return 1
+  open_editor "$c" || return 1
+  shot "$c-7-port"
+  fit=$(webview_fit "$c-7-port")
+  [ "$fit" = fit ]; ok=$?
+  told_or "$side" $ok "$c-7-port" "the editor as wide as the window upright again ($fit)"
 
-  # 4. Save & Start closes the editor (the workout of two intervals is saved and started)
-  if dump && find_ui '^Save &(amp;)? ?Start$' --first; then
+  # 3. Save & Start closes the editor (the workout is saved as "Workout" and started)
+  scroll_top
+  if dump && find_ui '^Save & ?Start$' --first; then
     set -- $EMU_AT
     say "tap Save & Start at $1 $2"
     adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
     if wait_gone '^Add Interval$' 30; then
       emu_sleep 3
-      shot "$c-9-started"
-      say "check $c-9-started: Save & Start closed the editor: OK"
-      n=$(webviews_of "$c-9-started")
-      [ "$n" = 0 ] || fail "check $c-9-started: $n WebView node(s) after Save & Start"
-      # opens again after that (the kept page was closed by the handler, not lost)
-      open_editor "$c" && shot "$c-10-after-start"
+      shot "$c-8-started"
+      n=$(editor_views_of "$c-8-started")
+      if [ "$n" = 0 ]; then
+        say "check $c-8-started: Save & Start closed the editor: OK"
+      else
+        fail "check $c-8-started: $n WebView node(s) of the editor after Save & Start"
+      fi
+      # opens again after that (the kept page closed by the handler, not lost)
+      if open_editor "$c"; then
+        shot "$c-9-after-start"
+        say "check $c-9-after-start: the editor opens after Save & Start: OK"
+      fi
     else
-      shot "$c-9-not-closed"
-      fail "check $c-9-not-closed: the editor still open 30 s after Save & Start"
+      shot "$c-8-not-closed"
+      fail "check $c-8-not-closed: the editor still open 30 s after Save & Start"
     fi
   else
     fail "$c: no Save & Start on the screen"
@@ -187,7 +172,6 @@ for side in b h; do
   if [ "$side" = b ]; then apk=apk-base/android-debug.apk; else apk=apk-head/android-debug.apk; fi
   side_on $side "$apk" || continue
   say "== $side: start"
-  adb uninstall "$PKG" < /dev/null > /dev/null 2>&1
   install_apk "$apk"
   keep $side m
   keep $side c
