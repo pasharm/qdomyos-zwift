@@ -614,7 +614,9 @@ html.modern select:focus {
     border-color: var(--accent-color);
 }
 
-html.modern button {
+/* the pill buttons of the page; the filter chips of the charts (qzmetriccharts.js, buttons since
+   the Material 3 chips) keep their own look - an outlined chip of 32px, corner 8px */
+html.modern button:not(.qzmc-chip) {
     background: var(--field-color, var(--panel-elevated));
     border: none;
     border-radius: 999px;
@@ -630,15 +632,15 @@ html.modern button.small {
     font-size: 0.85rem;
 }
 
-html.modern button:hover {
+html.modern button:not(.qzmc-chip):hover {
     border-color: transparent;
 }
 
-html.modern button:active {
+html.modern button:not(.qzmc-chip):active {
     filter: brightness(1.15);
 }
 
-html.modern.light button:active {
+html.modern.light button:not(.qzmc-chip):active {
     filter: brightness(0.92);
 }
 
