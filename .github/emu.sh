@@ -33,7 +33,8 @@ hook_case() {
   start_case "$c" "$@" $NODEV profile_name=t599 || return 1
   # the line of this start only: the buffer holds the starts of the cases before
   pid=$(adb shell pidof "$PKG" < /dev/null | tr -d '\r')
-  for i in 1 2 3 4 5 6 7 8 9 10; do
+  # up to 60 s: on API 30 the hook (6 s after rootReady) came after a 20 s wait (run 44633618615, bd)
+  for i in $(seq 1 30); do
     adb logcat -d --pid="$pid" < /dev/null 2>/dev/null | grep -q -F 'QZ-T599 hook' && break
     emu_sleep 2
   done
