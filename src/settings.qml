@@ -153,7 +153,10 @@ import QtQuick 2.12 as Quick212
         }
 
         // "Page › Section › Subsection" of a setting; the catalog's nearest group until the
-        // index is ready or when the setting is not on these pages
+        // index is ready or when the setting is not on these pages. A switch in the header of its
+        // own section belongs to the section above it, and so does a section shown as a card (a
+        // tile on the Tiles page, its switch and its order): one block of tiles in "Changed", not
+        // a block of one card per tile; the card says which tile (modernTitle) (T-612)
         function sectionOf(entry) {
             var where = settingsIndex ? settingsIndex[entry.key] : null
             if (!where)
@@ -162,9 +165,23 @@ import QtQuick 2.12 as Quick212
             var parts = []
             if (where.file !== "settings.qml")
                 parts.push(pageTitleOf(where.file))
-            for (var i = 0; i < where.chain.length; i++)
+            var levels = where.own ? where.chain.length - 1 : where.chain.length
+            if (where.card !== undefined)
+                levels = Math.min(levels, where.card)
+            for (var i = 0; i < levels; i++)
                 parts.push(qsTranslate(context, where.chain[i]))
             return parts.length > 0 ? parts.join(" › ") : parentDisplayName(entry)
+        }
+
+        // The title of a result in the modern look: inside a card section that sectionOf leaves
+        // out, the card's title before it ("METS: order index"), except for the card's own switch,
+        // whose title already is the card's
+        function modernTitle(entry) {
+            var title = searchTitle(entry)
+            var where = settingsIndex ? settingsIndex[entry.key] : null
+            if (!where || where.card === undefined || (where.own && where.card === where.chain.length - 1))
+                return title
+            return qsTranslate(where.file.replace(/\.qml$/, ""), where.chain[where.card]) + ": " + title
         }
 
         // Not listed among the changed settings, and so never reset with a whole section:
@@ -3168,7 +3185,8 @@ import QtQuick 2.12 as Quick212
                         readonly property bool valueOn: entry.type === "boolean" && valueText.length > 0 &&
                                                         !!settingsPane.settingValue(entry)
                         // With the unit of its page, as the title of the card: "Bike Weight (lbs)"
-                        readonly property string titleText: settingsPane.searchTitle(entry)
+                        readonly property string titleText: window.ui.modern ? settingsPane.modernTitle(entry) :
+                                                                               settingsPane.searchTitle(entry)
                         readonly property bool controlAtBottom: controlOnTop && !hasDescription
                         readonly property real topPad: window.ui.modern ? (controlOnTop ? 6 : 12) : 4
                         readonly property real bottomPad: window.ui.modern ? (controlAtBottom ? 6 : 12) : 4
