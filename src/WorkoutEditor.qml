@@ -10,6 +10,17 @@ Item {
 
     signal closeRequested()
 
+    // Modern look: the page takes the app theme colours (qz-theme-bridge.js). They go in the URL
+    // fragment for the first load and through runJavaScript when the theme changes later, so an
+    // open workout is not reloaded. Null in the classic look: the page keeps its own dark palette;
+    // null sent to an open page (the modern look switched off) takes the theme off
+    readonly property var pageTheme: window.ui.webTheme
+
+    onPageThemeChanged: {
+        if (pageLoaded)
+            webView.runJavaScript(window.ui.webThemeScript())
+    }
+
     Settings {
         id: settings
     }
@@ -24,7 +35,7 @@ Item {
             if (!port) {
                 return
             }
-            var targetUrl = "http://localhost:" + port + "/workouteditor/index.html"
+            var targetUrl = "http://localhost:" + port + "/workouteditor/index.html" + window.ui.webThemeFragment()
             if (webView.url !== targetUrl) {
                 webView.url = targetUrl
             }
@@ -38,6 +49,9 @@ Item {
         onLoadingChanged: {
             if (loadRequest.status === WebView.LoadSucceededStatus) {
                 root.pageLoaded = true
+                // A theme change during the load only moved the fragment: apply the current one
+                if (root.pageTheme)
+                    webView.runJavaScript(window.ui.webThemeScript())
                 busy.visible = false
                 busy.running = false
                 portPoller.stop()

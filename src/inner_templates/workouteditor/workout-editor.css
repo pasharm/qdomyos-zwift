@@ -519,3 +519,378 @@ button.small {
 .custom-dialog-footer button {
     min-width: 80px;
 }
+
+/* Modern look of the app (qz-theme-bridge.js adds the "modern" class and the theme colours from
+   WorkoutEditor.qml): flat filled cards, pill buttons and filled fields like the QML pages.
+   The classic look keeps the rules above untouched. */
+html.modern {
+    /* the palette of the page from the theme colours of the bridge */
+    --bg-color: var(--qz-bg);
+    --panel-color: var(--qz-surface);
+    --panel-elevated: var(--qz-surface-high);
+    --field-color: var(--qz-surface-highest);
+    --border-color: var(--qz-outline);
+    --text-color: var(--qz-text);
+    --muted-color: var(--qz-muted);
+    --accent-color: var(--qz-accent);
+    --accent-ink: var(--qz-accent-ink);
+    --danger-color: var(--qz-danger);
+    font-family: Roboto, "Segoe UI", sans-serif;
+}
+
+html.modern #app {
+    padding: 12px;
+    gap: 12px;
+}
+
+html.modern .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+}
+
+/* The app bar above the page already shows "Workout Editor" */
+html.modern .toolbar-title {
+    display: none;
+}
+
+html.modern .toolbar-controls {
+    gap: 8px;
+    align-items: flex-end;
+}
+
+html.modern .toolbar-controls label {
+    font-size: 0.75rem;
+    flex: 1 1 140px;
+}
+
+html.modern .toolbar-controls .checkbox-label {
+    flex: 0 0 auto;
+    flex-direction: row;
+    align-items: center;
+    min-height: 40px;
+}
+
+html.modern input[type="text"],
+html.modern input[type="number"],
+html.modern select {
+    background: var(--field-color, var(--panel-elevated));
+    border: 2px solid transparent;
+    border-radius: var(--qz-radius-field, 12px);
+    min-height: 40px;
+    padding: 8px 12px;
+    font-size: 0.95rem;
+    font-family: inherit;
+}
+
+html.modern input[type="text"]:focus,
+html.modern input[type="number"]:focus,
+html.modern select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+}
+
+/* the pill buttons of the page; the filter chips of the charts (qzmetriccharts.js, buttons since
+   the Material 3 chips) keep their own look - an outlined chip of 32px, corner 8px */
+html.modern button:not(.qzmc-chip) {
+    background: var(--field-color, var(--panel-elevated));
+    border: none;
+    border-radius: 999px;
+    min-height: 40px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    font-weight: var(--qz-weight-strong, 600);
+    font-family: inherit;
+}
+
+html.modern button.small {
+    padding: 8px 14px;
+    font-size: 0.85rem;
+}
+
+html.modern button:not(.qzmc-chip):hover {
+    border-color: transparent;
+}
+
+html.modern button:not(.qzmc-chip):active {
+    filter: brightness(1.15);
+}
+
+html.modern.light button:not(.qzmc-chip):active {
+    filter: brightness(0.92);
+}
+
+html.modern button:disabled {
+    opacity: 0.38;
+    cursor: default;
+}
+
+html.modern button.primary {
+    background: var(--accent-color);
+    color: var(--accent-ink, #0a111c);
+}
+
+html.modern button.danger {
+    background: transparent;
+    color: var(--danger-color);
+    box-shadow: inset 0 0 0 1px var(--danger-color);
+}
+
+html.modern input[type="checkbox"] {
+    accent-color: var(--accent-color);
+    width: 18px;
+    height: 18px;
+}
+
+html.modern .interval-panel,
+html.modern .chart-card,
+html.modern .program-bar {
+    background: var(--panel-color);
+    border: none;
+    border-radius: var(--qz-radius-card, 16px);
+}
+
+/* Program list on its own full-width row, the three buttons share the row below */
+html.modern .program-bar select {
+    flex: 1 0 100%;
+    min-width: 0;
+}
+
+html.modern .program-bar button {
+    flex: 1 1 0;
+    min-width: 0;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+html.modern .interval-panel {
+    min-width: 0;
+}
+
+/* One row on a phone too: the buttons share the width, and a long label (Ukrainian,
+   Russian) breaks inside its own button instead of pushing Clear to a second row */
+html.modern .interval-panel-actions {
+    flex-wrap: nowrap;
+    gap: 6px;
+    align-items: stretch;
+}
+
+html.modern .interval-panel-actions button.small {
+    flex: 1 1 auto;
+    padding: 6px 10px;
+    white-space: normal;
+    line-height: 1.15;
+}
+
+/* A single word: kept whole, the other two give way */
+html.modern .interval-panel-actions #clearIntervals {
+    flex: none;
+}
+
+html.modern .interval-panel-hint {
+    font-size: 0.75rem;
+}
+
+html.modern .interval-card {
+    background: var(--panel-elevated);
+    border: 2px solid transparent;
+    border-radius: 16px;
+}
+
+html.modern .interval-card.selected {
+    border-color: var(--accent-color);
+    box-shadow: none;
+}
+
+/* Spacing by margins, not the flex gap: the WebView of the older Android consoles predates
+   Chrome 84, which brought gap to flex */
+html.modern .card-actions {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0;
+}
+
+html.modern .card-actions button + button {
+    margin-left: 6px;
+}
+
+html.modern .card-actions button {
+    background: transparent;
+    min-height: 32px;
+    padding: 4px 10px;
+    color: var(--accent-color);
+}
+
+html.modern .card-actions button:disabled {
+    color: var(--muted-color);
+}
+
+/* Narrow -/+ buttons and padding: a phone gives the field about 157px, and "00:05:00" must fit */
+html.modern .field-with-buttons button {
+    width: 32px;
+    height: 40px;
+    min-height: 40px;
+    padding: 0;
+    font-size: 1.1rem;
+}
+
+html.modern .field-with-buttons input {
+    padding-left: 6px;
+    padding-right: 6px;
+    text-align: center;
+}
+
+html.modern .status-strip {
+    flex-wrap: wrap;
+    padding: 0 4px;
+}
+
+html.modern .custom-dialog-overlay {
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: none;
+}
+
+html.modern.light .custom-dialog-overlay {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+html.modern .custom-dialog-content {
+    background: var(--panel-elevated);
+    border: none;
+    border-radius: 28px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+html.modern .custom-dialog-header,
+html.modern .custom-dialog-footer {
+    border: none;
+}
+
+html.modern .custom-dialog-header {
+    padding: 24px 24px 8px;
+}
+
+html.modern .custom-dialog-body {
+    padding: 8px 24px 8px;
+}
+
+html.modern .custom-dialog-body input[type="text"] {
+    background: var(--field-color, var(--panel-color));
+    border: 2px solid transparent;
+    border-radius: 12px;
+}
+
+html.modern .custom-dialog-body input[type="text"]:focus {
+    border-color: var(--accent-color);
+    box-shadow: none;
+}
+
+html.modern .custom-dialog-footer {
+    padding: 8px 16px 20px;
+}
+
+html.modern .custom-dialog-footer button {
+    min-width: 72px;
+}
+
+html.modern .custom-dialog-footer button:not(.primary) {
+    background: transparent;
+    color: var(--accent-color);
+}
+
+/* One primary action in the toolbar: Save & Start. Save is a tonal button next to it. */
+html.modern #saveWorkout {
+    background: var(--field-color, var(--panel-elevated));
+    background: color-mix(in srgb, var(--accent-color) 22%, transparent);
+    color: var(--text-color);
+}
+
+/* Interval actions as round icon buttons (workout-editor-app.js, actionButton) */
+html.modern .card-actions button.icon-button {
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
+    padding: 0;
+    border-radius: 50%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted-color);
+}
+
+html.modern .card-actions button.icon-button:not(:disabled):active {
+    background: var(--field-color, var(--panel-color));
+}
+
+html.modern .card-actions button.icon-button.icon-danger:not(:disabled) {
+    color: var(--danger-color);
+}
+
+html.modern .card-actions button.icon-button:disabled {
+    opacity: 0.3;
+    color: var(--muted-color);
+}
+
+/* Move up/down: chevrons in the accent colour on a tonal pair of buttons - bare thin arrows
+   in the muted colour were hard to see, and the disabled one all but vanished */
+html.modern .card-actions button.icon-button.icon-move {
+    width: 40px;
+    border-radius: 12px;
+    color: var(--accent-color);
+    background: var(--field-color, var(--panel-color));
+    background: color-mix(in srgb, var(--accent-color) 16%, transparent);
+}
+
+html.modern .card-actions button.icon-move + button.icon-move {
+    margin-left: 2px;
+}
+
+html.modern .card-actions button.icon-button.icon-move svg {
+    width: 26px;
+    height: 26px;
+}
+
+html.modern .card-actions button.icon-button.icon-move:disabled {
+    opacity: 0.4;
+    color: var(--muted-color);
+}
+
+/* "Advanced" as a switch, like the switches of the settings pages */
+html.modern #advancedToggle {
+    -webkit-appearance: none;
+    appearance: none;
+    position: relative;
+    width: 44px;
+    height: 26px;
+    margin: 0 8px 0 0;
+    border-radius: 13px;
+    background: var(--field-color, var(--panel-elevated));
+    box-shadow: inset 0 0 0 2px var(--muted-color);
+    cursor: pointer;
+    transition: background 0.15s;
+}
+
+html.modern #advancedToggle::after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--muted-color);
+    transition: left 0.15s, width 0.15s, height 0.15s, top 0.15s;
+}
+
+html.modern #advancedToggle:checked {
+    background: var(--accent-color);
+    box-shadow: none;
+}
+
+html.modern #advancedToggle:checked::after {
+    top: 3px;
+    left: 21px;
+    width: 20px;
+    height: 20px;
+    background: var(--accent-ink, #0a111c);
+}
