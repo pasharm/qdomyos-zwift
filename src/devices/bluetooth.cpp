@@ -280,6 +280,15 @@ bluetooth::~bluetooth() {
 void bluetooth::signalBluetoothDeviceConnected(bluetoothdevice *b) { emit this->bluetoothDeviceConnected(b); }
 
 void bluetooth::finished() {
+    // discoveryTimeout may end up here in the middle of a scan
+    bool deviceListScanEnded = false;
+    if (!discoveryAgent || !discoveryAgent->isActive()) {
+        deviceListScanEnded = deviceListScan;
+        deviceListScan = false;
+    }
+    // the search of an opened list with a device connected only fills the list: the fake device below
+    // would take the devices it found through the connection chain
+    const bool onlyFillTheList = deviceListScanEnded && device();
     // DIRCON can be discovered before or after the BLE scan completes.
     if (!device() && tryConnectSelectedDirconDevice())
         return;
@@ -338,7 +347,7 @@ void bluetooth::finished() {
         settings.value(QZSettings::fakedevice_treadmill, QZSettings::default_fakedevice_treadmill).toBool();
     bool waterrower_usb = settings.value(QZSettings::waterrower_usb, QZSettings::default_waterrower_usb).toBool();
     // wifi devices on windows
-    if (!nordictrack_2950_ip.isEmpty() || !tdf_10_ip.isEmpty() || fake_bike || fakedevice_elliptical || fakedevice_rower || fakedevice_treadmill || !proform_elliptical_ip.isEmpty() || !proform_rower_ip.isEmpty() || antbike || android_antbike || waterrower_usb) {
+    if (!onlyFillTheList && (!nordictrack_2950_ip.isEmpty() || !tdf_10_ip.isEmpty() || fake_bike || fakedevice_elliptical || fakedevice_rower || fakedevice_treadmill || !proform_elliptical_ip.isEmpty() || !proform_rower_ip.isEmpty() || antbike || android_antbike || waterrower_usb)) {
         // faking a bluetooth device for non-BLE devices
         qDebug() << "faking a bluetooth device for non-BLE device";
         deviceDiscovered(QBluetoothDeviceInfo());
@@ -457,6 +466,28 @@ int bluetooth::searchNow() {
     return 0;
 }
 
+void bluetooth::searchForDeviceList() {
+    if (!useDiscovery || !discoveryAgent || discoveryAgent->isActive())
+        return;
+
+    if (!device()) {
+        searchNow();
+        return;
+    }
+
+    // Android 7.0 and later ignore the 6th scan start in 30 s, and the list already shows the last search.
+    // 4 leaves room for an automatic search (a trainer lost meanwhile), as in searchNow()
+    pruneScanStarts(QDateTime::currentMSecsSinceEpoch());
+    if (QOperatingSystemVersion::current() >= QOperatingSystemVersion::AndroidNougat && scanStartsMs.size() >= 4) {
+        debug(QStringLiteral("BTLE scanning for the device list skipped by the Android limit"));
+        return;
+    }
+
+    debug(QStringLiteral("BTLE scanning for the device list"));
+    deviceListScan = true;
+    startDiscovery();
+}
+
 void bluetooth::startDiscovery() {
     if (!this->useDiscovery)
         return;
@@ -509,6 +540,7 @@ void bluetooth::stopDiscovery() {
 
 void bluetooth::canceled() {
     debug(QStringLiteral("BTLE scanning stops"));
+    deviceListScan = false;
 
     emit searchingStop();
 }
@@ -1047,6 +1079,11 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
 #endif    
 
     if (onlyDiscover)
+        return;
+
+    // Below a device found is connected, and the chain checks only its own type: with no device
+    // filter a second trainer nearby would be connected in the middle of a workout
+    if (deviceListScan && this->device())
         return;
 
     if (gymModeEnabled() && gymModeSessionDevice.isEmpty())
@@ -4611,9 +4648,15 @@ void bluetooth::restart() {
     if (onlyDiscover) {
 
         onlyDiscover = false;
+        // Refresh during the search of an open list: its devices go on as on master (a MOXY6 or CORE
+        // sensor switched on after the equipment is connected only this way)
+        deviceListScan = false;
         this->startDiscovery();
         return;
     }
+
+    // the trainer is gone: the search still running may connect the next one
+    deviceListScan = false;
 
     if (settings.value(QZSettings::bluetooth_no_reconnection, QZSettings::default_bluetooth_no_reconnection).toBool()) {
         exit(EXIT_SUCCESS);

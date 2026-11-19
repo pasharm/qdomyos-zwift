@@ -88,15 +88,21 @@ T.ComboBox {
     // A stacked UiSettingsRow (the label above): the list across the free width
     Layout.fillWidth: !!parent && parent.stackedRow === true
 
+    // Width of the widest item for the list width (#5236), measured when the list opens;
+    // DeviceComboBox calls it too: its items change while the list is open
+    function measureItems() {
+        var widest = 0
+        for (var i = 0; i < control.count; ++i) {
+            itemMetrics.text = control.labelFor(control.textAt(i))
+            widest = Math.max(widest, itemMetrics.advanceWidth)
+        }
+        control.widestItem = Math.ceil(widest)
+    }
+
     Connections {
         target: control.popup
         function onAboutToShow() {
-            var widest = 0
-            for (var i = 0; i < control.count; ++i) {
-                itemMetrics.text = control.labelFor(control.textAt(i))
-                widest = Math.max(widest, itemMetrics.advanceWidth)
-            }
-            control.widestItem = Math.ceil(widest)
+            control.measureItems()
         }
     }
 

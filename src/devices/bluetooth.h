@@ -214,6 +214,12 @@ class bluetooth : public QObject, public SignalHandler {
      * already running), otherwise the seconds until the scheduled search.
      */
     int searchNow();
+    /**
+     * @brief searchForDeviceList Searches for the devices of an opened list of devices. With a device connected the
+     * search only fills the list and connects nothing, and it is skipped near the Android limit; without one it is
+     * searchNow(). Does nothing if a search is running or discovery is off.
+     */
+    void searchForDeviceList();
 
     // True when the advertised services include one of a fitness machine (FTMS, Cycling Power, Cycling Speed and
     // Cadence, the Concept2 PM5 or Echelon service), as QZ's own virtual devices and most machines advertise next
@@ -461,6 +467,8 @@ class bluetooth : public QObject, public SignalHandler {
     void pruneScanStarts(qint64 now);
     // Android: while Bluetooth is off, asks the adapter every 2 s whether it is on again
     QTimer bluetoothOffPoll;
+    // The search of searchForDeviceList() with a device connected: what it finds is not connected
+    bool deviceListScan = false;
 
 #ifdef Q_OS_IOS
     lockscreen *h = nullptr;
