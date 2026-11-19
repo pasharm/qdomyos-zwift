@@ -136,8 +136,52 @@ conf_of() {
   esac
 }
 
-# tone_of <look>: the tone the page has to have
+# tone_of <look>: the tone the editor page has to have (the classic editor is dark, #0f141d)
 tone_of() { [ "$1" = l ] && echo light || echo dark; }
+
+# modern_of <shot>: "modern" - the page took the modern look: the toolbar title of the editor
+# (.toolbar-title "Workout Editor") is hidden there (workout-editor.css), so no node inside the WebView but the
+# WebView itself carries that text; "classic" - the title is there; "none" - no WebView. The tone alone does
+# not tell: the dark theme and the classic editor are both dark
+modern_of() {
+  "$EMU_PY" - "dumps/$1.xml" << 'EOF'
+import sys
+import xml.etree.ElementTree as ET
+root = ET.parse(sys.argv[1]).getroot()
+views = [n for n in root.iter('node') if n.get('class') == 'android.webkit.WebView']
+if not views:
+    print("none")
+else:
+    titles = [n for n in views[0].iter('node')
+              if n.get('class') != 'android.webkit.WebView' and n.get('text') == 'Workout Editor']
+    print("classic" if titles else "modern")
+EOF
+}
+
+# want_look <shot> <look>: head - the editor page in the look of the case; base - told
+want_look() {
+  local s=$1 want got
+  [ "$2" = c ] && want=classic || want=modern
+  got=$(modern_of "$s")
+  if [ "${s:0:1}" = b ]; then
+    say "before $s: the editor page is '$got'"
+  elif [ "$got" = "$want" ]; then
+    say "check $s: the editor page is $want: OK"
+  else
+    fail "check $s: the editor page is '$got', $want expected"
+  fi
+}
+
+# find_device: EMU_AT - the device list of the editor. API 30 gives the select a Spinner with the chosen
+# option ("Treadmill"); API 35 a View named by its <label> ("Device") right below the TextView of the label
+# (T-187 dumps he-7-editor, run 44477235265) - the second "Device", below the bottom of the first. A tap on the
+# label text itself does not open the menu (qz-modern-select.js: the tap target has to hold the select)
+find_device() {
+  find_ui '^Treadmill$' --first && return 0
+  find_ui '^Device$' --first || return 1
+  set -- $EMU_AT
+  find_ui '^Device$' --below "$8" --first
+}
 
 # open_program <case> <look> <name>: the program from the list. Modern cards are named; the classic rows have
 # no name - the first row, 170 px below the filter field (T-495 scenario)
@@ -183,7 +227,9 @@ preview() {
     still
     shot "$c-1-preview"
     want_charts "$c-1-preview" 2 'speed and incline: a chart each'
-    want_tone "$c-1-preview" "$(tone_of "$look")"
+    # the chart card covers the page: white in the classic look (preview.html #chart-container) and in the
+    # modern light theme, the surface colour in the dark one - only the dark theme is a dark page
+    if [ "$look" = d ]; then want_tone "$c-1-preview" dark; else want_tone "$c-1-preview" light; fi
   fi
   back_to "$HOME_RX" 20
 }
@@ -218,17 +264,17 @@ editor() {
   still
   shot "$c-2-editor"
   want_tone "$c-2-editor" "$(tone_of "$look")"
-  if scroll_to '^Workout Preview$' 6; then
+  want_look "$c-2-editor" "$look"
+  # the title of the chart card becomes the name of the workout (workout-editor.js); "Total:" is the status
+  # strip right below the card. scroll_to marks a miss itself (!! and a not-reached frame)
+  if scroll_to '^Total:$' 6; then
     still
     shot "$c-3-chart"
     want_charts "$c-3-chart" 2 'editor, a new treadmill interval: speed and incline, a chart each'
-  else
-    fail "$c: the chart card of the editor not reached"
   fi
   if [ "$look" != c ]; then
     scroll_top
-    dump
-    if find_ui '^Treadmill$' --first; then
+    if find_device; then
       set -- $EMU_AT
       say "tap the device list at $1 $2"
       adb shell input tap "$1" "$2" < /dev/null > /dev/null 2>&1
@@ -244,7 +290,7 @@ editor() {
         fail "check $c-4-menu: the device list is '$m', the menu of the page expected"
       fi
     else
-      fail "$c: the device list (Treadmill) not on the screen"
+      fail "$c: the device list (Treadmill or Device) not on the screen"
     fi
   fi
   back_to "$HOME_RX" 20
