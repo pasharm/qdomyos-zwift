@@ -60,7 +60,12 @@ GridLayout {
 
     // the width of the longest word of the label: less room than that cuts the word
     readonly property real wordWidth: {
-        if (!label)
+        // advanceWidth() is a call: the binding does not see the font it measures with. Read here, the
+        // font makes a change of the text size on the open page measure again (T-593, phone 19.11: QZ
+        // started at 100 %, 130 % set on General UI Options - the word kept its width at 100 %, the
+        // accent swatches stayed in the row and ran over the label)
+        var font = metrics.font
+        if (!label || !font)
             return 0
         var words = String(label.text).split(" ")
         var w = 0
@@ -100,10 +105,9 @@ GridLayout {
                 return true
         return false
     }
-    // the width the row gets: the one of its column (its own follows the stacking) less its side margins -
-    // in the modern look the frames give the row the padding of its card as Layout.left/rightMargin
-    // (UiSettingFrames.setMargin): without them the accent swatches at 130 % passed by ~13 dp and ran over
-    // a wrapped "Акцентний колір" (T-593, phone 19.11, beta-3028)
+    // the width the row gets: the one of its column (its own follows the stacking) less its side margins,
+    // when the row has them (Layout.left/rightMargin; the rows of General UI Options have 0 - the column
+    // is already the inside of the card, T-593 log on the phone 19.11)
     readonly property real roomWidth: (parent ? parent.width : width) - Layout.leftMargin - Layout.rightMargin
 
     readonly property bool stackedRow: window.ui.modern && label !== null && others.length > 0
