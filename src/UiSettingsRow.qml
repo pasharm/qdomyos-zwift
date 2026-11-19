@@ -78,10 +78,18 @@ GridLayout {
                 return true
         return false
     }
+    // a field for a long text (UiTextField.wideText: an e-mail, a login, an address) - always under
+    // the label, across the row (T-593, decision 19.11)
+    readonly property bool wideField: {
+        for (var i = 0; i < others.length; i++)
+            if (others[i].wideText === true)
+                return true
+        return false
+    }
     // the width the row gets: the one of its column (its own follows the stacking)
     readonly property real roomWidth: parent ? parent.width : width
 
     readonly property bool stackedRow: window.ui.modern && label !== null && others.length > 0
-                                       && (wordWidth + othersWidth > roomWidth || listCut)
+                                       && (wordWidth + othersWidth > roomWidth || listCut || wideField)
     columns: Math.max(1, stackedRow ? others.length : others.length + (label ? 1 : 0))
 }

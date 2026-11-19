@@ -4,6 +4,7 @@ import QtQuick.Controls 2.12
 import QtQuick.Controls.impl 2.12
 import QtQuick.Controls.Material 2.12
 import QtQuick.Controls.Material.impl 2.12
+import QtQuick.Layouts 1.12
 
 // TextField of the settings pages and the lists: the Qt 5.15 Material TextField, copied as
 // is (qtquickcontrols2 5.15, src/imports/controls/material/TextField.qml), so nothing
@@ -17,6 +18,12 @@ T.TextField {
     // The placeholder as drawn: a narrow field can show a shorter one ("–" for "None", T-593)
     // while placeholderText, which the screen reader reads, keeps the word
     property string shownPlaceholder: placeholderText
+    // A field for a long free text - an e-mail, a login, a password, an address (set by
+    // SettingsTextField and SettingsFormatField "ip"/"host"). In a settings row of the modern look
+    // (UiSettingsRow) it goes under the label, across the row: at 120 only the end of an address
+    // showed (T-593, decision 19.11). The classic look and the other rows - as before
+    property bool wideText: false
+    Layout.fillWidth: wideText && modern && !!parent && parent.stackedRow === true
 
     implicitWidth: implicitBackgroundWidth + leftInset + rightInset
                    || Math.max(contentWidth, placeholder.implicitWidth) + leftPadding + rightPadding

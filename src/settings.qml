@@ -3690,9 +3690,10 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelNickname
                             text: qsTr("Nickname:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -3701,7 +3702,7 @@ import QtQuick 2.12 as Quick212
                         SettingsTextField {
                             id: nicknameTextField
                             savedText: settings.user_nickname
-                            horizontalAlignment: Text.AlignRight
+                            horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onAccepted: settings.user_nickname = text
@@ -3730,9 +3731,10 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelEmail
                             text: qsTr("Email:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -3741,7 +3743,7 @@ import QtQuick 2.12 as Quick212
                         SettingsTextField {
                             id: emailTextField
                             savedText: settings.user_email
-                            horizontalAlignment: Text.AlignRight
+                            horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             validator: EmailValidator {}
@@ -7039,9 +7041,10 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("TDF1 IP:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -7050,7 +7053,7 @@ import QtQuick 2.12 as Quick212
                                     id: proformTDF1IPTextField
                                     format: "host"
                                     savedText: settings.proformtdf1ip
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     //inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -7065,9 +7068,10 @@ import QtQuick 2.12 as Quick212
                                 }
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     id: labelproformTDF4IP
                                     text: qsTr("TDF4 IP:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -7077,7 +7081,7 @@ import QtQuick 2.12 as Quick212
                                     id: proformTDF4IPTextField
                                     format: "host"
                                     savedText: settings.proformtdf4ip
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     //inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -7092,9 +7096,10 @@ import QtQuick 2.12 as Quick212
                                     onClicked: { settings.proformtdf4ip = proformTDF4IPTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
                             }
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     id: labelproformTDFCompanionIP
                                     text: qsTr("TDF Companion IP:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -7104,7 +7109,7 @@ import QtQuick 2.12 as Quick212
                                     id: proformTDFCompanionIPTextField
                                     format: "host"
                                     savedText: settings.tdf_10_ip
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     //inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -7155,9 +7160,10 @@ import QtQuick 2.12 as Quick212
                         indicatRectColor: Material.color(Material.Grey)
                         textColor: Material.color(Material.Yellow)
                         color: Material.backgroundColor
-                        RowLayout {
+                        UiSettingsRow {
                             spacing: 10
                             Label {
+                                Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                 id: labelcomputrainerSerialPort
                                 text: qsTr("Serial Port:")
                                 wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -7166,7 +7172,7 @@ import QtQuick 2.12 as Quick212
                             SettingsTextField {
                                 id: computrainerSerialPortTextField
                                 savedText: settings.computrainer_serialport
-                                horizontalAlignment: Text.AlignRight
+                                horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                 Layout.fillHeight: false
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                 //inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -7192,9 +7198,10 @@ import QtQuick 2.12 as Quick212
                         color: Material.backgroundColor
 												accordionContent: ColumnLayout {
                             spacing: 0
-                        RowLayout {
+                        UiSettingsRow {
                             spacing: 10
                             Label {
+                                Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                 id: labelKettlerUsbSerialPort
                                 text: qsTr("Serial Port:")
                                 wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -7203,7 +7210,7 @@ import QtQuick 2.12 as Quick212
                             SettingsTextField {
                                 id: kettlerUsbSerialPortTextField
                                 savedText: settings.kettler_usb_serialport
-                                horizontalAlignment: Text.AlignRight
+                                horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                 Layout.fillHeight: false
                                 Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                 onAccepted: { settings.kettler_usb_serialport = text; window.settings_restart_to_apply = true; }
@@ -7262,9 +7269,10 @@ import QtQuick 2.12 as Quick212
                         color: Material.backgroundColor
                         accordionContent: ColumnLayout {
                             spacing: 0
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     id: labelDaumSerialPort
                                     text: qsTr("Serial Port:")
                                     Layout.fillWidth: true
@@ -7273,7 +7281,7 @@ import QtQuick 2.12 as Quick212
                                     id: daumSerialPortTextField
                                     savedText: settings.daum_serialport
                                     Accessible.name: labelDaumSerialPort.text + " " + text
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onAccepted: { settings.daum_serialport = text; window.settings_restart_to_apply = true; }
@@ -7352,9 +7360,10 @@ import QtQuick 2.12 as Quick212
                         color: Material.backgroundColor
                         accordionContent: ColumnLayout {
                             spacing: 0
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     id: labelFreebeatSerialPort
                                     text: qsTr("Serial Port:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -7363,7 +7372,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsTextField {
                                     id: freebeatSerialPortTextField
                                     savedText: settings.freebeat_serialport
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onAccepted: { settings.freebeat_serialport = text; window.settings_restart_to_apply = true; }
@@ -8912,9 +8921,10 @@ import QtQuick 2.12 as Quick212
                 accordionContent: ColumnLayout {
                     spacing: 0
 /*
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelPelotonUsername
                             text: qsTr("Username:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -8923,7 +8933,7 @@ import QtQuick 2.12 as Quick212
                         SettingsTextField {
                             id: pelotonUsernameTextField
                             savedText: settings.peloton_username
-                            horizontalAlignment: Text.AlignRight
+                            horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onAccepted: { settings.peloton_username = text; window.settings_restart_to_apply = true; }
@@ -8953,9 +8963,10 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelPelotonPassword
                             text: qsTr("Password:") + ((rootItem.pelotonLogin===-1 || Qt.platform.os === "android")?"":(rootItem.pelotonLogin===1?"\u2705":"\u274c"))
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -8973,7 +8984,7 @@ import QtQuick 2.12 as Quick212
                         SettingsTextField {
                             id: pelotonPasswordTextField
                             savedText: settings.peloton_password
-                            horizontalAlignment: Text.AlignRight
+                            horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             inputMethodHints: Qt.ImhHiddenText
@@ -9263,9 +9274,10 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelPZPUsername
                             text: qsTr("PZP Username:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -9274,7 +9286,7 @@ import QtQuick 2.12 as Quick212
                         SettingsTextField {
                             id: pzpUsernameTextField
                             savedText: settings.pzp_username
-                            horizontalAlignment: Text.AlignRight
+                            horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onAccepted: settings.pzp_username = text
@@ -9303,9 +9315,10 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelPZPPassword
                             text: qsTr("PZP Password:") + ((rootItem.pzpLogin===-1 || Qt.platform.os === "android")?"":(rootItem.pzpLogin===1?"\u2705":"\u274c"))
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -9323,7 +9336,7 @@ import QtQuick 2.12 as Quick212
                         SettingsTextField {
                             id: pzpPasswordTextField
                             savedText: settings.pzp_password
-                            horizontalAlignment: Text.AlignRight
+                            horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             inputMethodHints: Qt.ImhHiddenText
@@ -9821,9 +9834,10 @@ import QtQuick 2.12 as Quick212
                 accordionContent: ColumnLayout {
                     spacing: 0
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("Username:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
@@ -9831,7 +9845,7 @@ import QtQuick 2.12 as Quick212
                         SettingsTextField {
                             id: zwiftUsernameTextField
                             savedText: settings.zwift_username
-                            horizontalAlignment: Text.AlignRight
+                            horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onAccepted: { settings.zwift_username = text; window.settings_restart_to_apply = true; }
@@ -9861,9 +9875,10 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelZwiftPassword
                             text: qsTr("Password:") + ((rootItem.zwiftLogin===-1 || Qt.platform.os === "android")?"":(rootItem.zwiftLogin===1?"\u2705":"\u274c"))
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -9881,7 +9896,7 @@ import QtQuick 2.12 as Quick212
                         SettingsTextField {
                             id: zwiftPasswordTextField
                             savedText: settings.zwift_password
-                            horizontalAlignment: Text.AlignRight
+                            horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             inputMethodHints: Qt.ImhHiddenText
@@ -10385,9 +10400,10 @@ import QtQuick 2.12 as Quick212
                         color: window.ui.modern ? window.ui.textMuted : Material.color(Material.Lime)
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("Garmin Email:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
@@ -10395,7 +10411,7 @@ import QtQuick 2.12 as Quick212
                         SettingsTextField {
                             id: garminEmailTextField
                             savedText: settings.garmin_email
-                            horizontalAlignment: Text.AlignRight
+                            horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             validator: EmailValidator {}
@@ -10415,9 +10431,10 @@ import QtQuick 2.12 as Quick212
                         }
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             text: qsTr("Garmin Password:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                             Layout.fillWidth: true
@@ -10426,7 +10443,7 @@ import QtQuick 2.12 as Quick212
                             id: garminPasswordTextField
                             savedText: settings.garmin_password
                             echoMode: TextInput.Password
-                            horizontalAlignment: Text.AlignRight
+                            horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onAccepted: { rootItem.garmin_connect_logout(); settings.garmin_password = text; }
@@ -13373,9 +13390,10 @@ import QtQuick 2.12 as Quick212
                                     window.settings_restart_to_apply = true;
                                 }
                             }
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     id: labelproformtreadmillip
                                     text: qsTr("Proform IP:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -13385,7 +13403,7 @@ import QtQuick 2.12 as Quick212
                                     id: proformtreadmillIPTextField
                                     format: "host"
                                     savedText: settings.proformtreadmillip
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     //inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -13400,9 +13418,10 @@ import QtQuick 2.12 as Quick212
                                     onClicked: { settings.proformtreadmillip = proformtreadmillIPTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
                             }
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     id: labelnordictrack2950IP
                                     text: qsTr("Nordictrack 2950 IP:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -13412,7 +13431,7 @@ import QtQuick 2.12 as Quick212
                                     id: nordictrack2950IPTextField
                                     format: "host"
                                     savedText: settings.nordictrack_2950_ip
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     //inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -13649,9 +13668,9 @@ import QtQuick 2.12 as Quick212
                         accordionContent: ColumnLayout {
                             spacing: 0
 
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
-                                Label { text: qsTr("Life Fitness username/email:"); wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap; Layout.fillWidth: true }
+                                Label { Layout.columnSpan: parent.stackedRow ? parent.columns : 1; text: qsTr("Life Fitness username/email:"); wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap; Layout.fillWidth: true }
                                 SettingsTextField {
                                     id: lifeFitnessUsernameTextField
                                     savedText: settings.life_fitness_username
@@ -13665,9 +13684,9 @@ import QtQuick 2.12 as Quick212
                                     onClicked: { settings.life_fitness_username = lifeFitnessUsernameTextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
                             }
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
-                                Label { text: qsTr("Life Fitness password:"); wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap; Layout.fillWidth: true }
+                                Label { Layout.columnSpan: parent.stackedRow ? parent.columns : 1; text: qsTr("Life Fitness password:"); wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap; Layout.fillWidth: true }
                                 SettingsTextField {
                                     id: lifeFitnessPasswordTextField
                                     savedText: settings.life_fitness_password
@@ -14378,9 +14397,10 @@ import QtQuick 2.12 as Quick212
                                 onClicked: settings.horizon_treadmill_suspend_stats_pause = checked
                             }
 
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     id: labelhorizonTreadmillProfile1
                                     text: qsTr("User 1:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -14389,7 +14409,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsTextField {
                                     id: horizonTreadmillProfile1TextField
                                     savedText: settings.horizon_treadmill_profile_user1
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onAccepted: { settings.horizon_treadmill_profile_user1 = text; window.settings_restart_to_apply = true; }
@@ -14403,9 +14423,10 @@ import QtQuick 2.12 as Quick212
                                     onClicked: { settings.horizon_treadmill_profile_user1 = horizonTreadmillProfile1TextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
                             }
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     id: labelhorizonTreadmillProfile2
                                     text: qsTr("User 2:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -14414,7 +14435,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsTextField {
                                     id: horizonTreadmillProfile2TextField
                                     savedText: settings.horizon_treadmill_profile_user2
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onAccepted: { settings.horizon_treadmill_profile_user2 = text; window.settings_restart_to_apply = true; }
@@ -14428,9 +14449,10 @@ import QtQuick 2.12 as Quick212
                                     onClicked: { settings.horizon_treadmill_profile_user2 = horizonTreadmillProfile2TextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
                             }
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     id: labelhorizonTreadmillProfile3
                                     text: qsTr("User 3:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -14439,7 +14461,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsTextField {
                                     id: horizonTreadmillProfile3TextField
                                     savedText: settings.horizon_treadmill_profile_user3
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onAccepted: { settings.horizon_treadmill_profile_user3 = text; window.settings_restart_to_apply = true; }
@@ -14453,9 +14475,10 @@ import QtQuick 2.12 as Quick212
                                     onClicked: { settings.horizon_treadmill_profile_user3 = horizonTreadmillProfile3TextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
                             }
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     id: labelhorizonTreadmillProfile4
                                     text: qsTr("User 4:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -14464,7 +14487,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsTextField {
                                     id: horizonTreadmillProfile4TextField
                                     savedText: settings.horizon_treadmill_profile_user4
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onAccepted: { settings.horizon_treadmill_profile_user4 = text; window.settings_restart_to_apply = true; }
@@ -14478,9 +14501,10 @@ import QtQuick 2.12 as Quick212
                                     onClicked: { settings.horizon_treadmill_profile_user4 = horizonTreadmillProfile4TextField.text; window.settings_restart_to_apply = true; toast.show(qsTr("Setting saved!")); }
                                 }
                             }
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     id: labelhorizonTreadmillProfile5
                                     text: qsTr("User 5:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -14489,7 +14513,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsTextField {
                                     id: horizonTreadmillProfile5TextField
                                     savedText: settings.horizon_treadmill_profile_user5
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onAccepted: { settings.horizon_treadmill_profile_user5 = text; window.settings_restart_to_apply = true; }
@@ -14981,9 +15005,10 @@ import QtQuick 2.12 as Quick212
                         textColor: Material.color(Material.Yellow)
                         color: Material.backgroundColor
                         accordionContent: ColumnLayout {
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Serial Port:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -14991,7 +15016,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsTextField {
                                     id: csaferowerSerialPortTextField
                                     savedText: settings.csafe_rower
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     //inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -15130,9 +15155,10 @@ import QtQuick 2.12 as Quick212
                                     window.settings_restart_to_apply = true;
                                 }
                             }
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("ProForm Rower IP:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -15141,7 +15167,7 @@ import QtQuick 2.12 as Quick212
                                     id: proformRowerIPTextField
                                     format: "host"
                                     savedText: settings.proform_rower_ip
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onAccepted: { settings.proform_rower_ip = text; window.settings_restart_to_apply = true; }
@@ -15224,9 +15250,10 @@ import QtQuick 2.12 as Quick212
                         textColor: Material.color(Material.Yellow)
                         color: Material.backgroundColor
                         accordionContent: ColumnLayout {
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Serial Port:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -15234,7 +15261,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsTextField {
                                     id: csafeellipticalSerialPortTextField
                                     savedText: settings.csafe_elliptical_port
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     //inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -15393,9 +15420,10 @@ import QtQuick 2.12 as Quick212
                                 Layout.fillWidth: true
                                 onClicked: { settings.nordictrack_elliptical_s700 = checked; window.settings_restart_to_apply = true; }
                             }
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Companion IP:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -15404,7 +15432,7 @@ import QtQuick 2.12 as Quick212
                                     id: proformEllipticalCompanionIPTextField
                                     format: "host"
                                     savedText: settings.proform_elliptical_ip
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     //inputMethodHints: Qt.ImhFormattedNumbersOnly
@@ -15916,9 +15944,10 @@ import QtQuick 2.12 as Quick212
                         }
                     }
 
-                    RowLayout {
+                    UiSettingsRow {
                         spacing: 10
                         Label {
+                            Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                             id: labelStravaSuffix
                             text: qsTr("Suffix activity:")
                             wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
@@ -15927,7 +15956,7 @@ import QtQuick 2.12 as Quick212
                         SettingsTextField {
                             id: stravaSuffixTextField
                             savedText: settings.strava_suffix
-                            horizontalAlignment: Text.AlignRight
+                            horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                             Layout.fillHeight: false
                             Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                             onAccepted: settings.strava_suffix = text
@@ -19460,9 +19489,10 @@ import QtQuick 2.12 as Quick212
                         accordionContent: ColumnLayout {
                             spacing: 0
 
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("MQTT Host:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -19470,7 +19500,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsTextField {
                                     id: mqttHostTextField
                                     savedText: settings.mqtt_host
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onAccepted: settings.mqtt_host = text
@@ -19541,9 +19571,10 @@ import QtQuick 2.12 as Quick212
                             }
 
                             // Username field
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Username:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -19551,7 +19582,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsTextField {
                                     id: mqttUsernameTextField
                                     savedText: settings.mqtt_username
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onAccepted: settings.mqtt_username = text
@@ -19580,9 +19611,10 @@ import QtQuick 2.12 as Quick212
                             }
 
                             // Password field
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Password:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -19590,7 +19622,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsTextField {
                                     id: mqttPasswordTextField
                                     savedText: settings.mqtt_password
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     echoMode: TextInput.Password
@@ -19620,9 +19652,10 @@ import QtQuick 2.12 as Quick212
                             }
 
                             // Device ID field
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("Device ID:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -19630,7 +19663,7 @@ import QtQuick 2.12 as Quick212
                                 SettingsTextField {
                                     id: mqttDeviceIdTextField
                                     savedText: settings.mqtt_deviceid
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     onAccepted: settings.mqtt_deviceid = text
@@ -19669,9 +19702,10 @@ import QtQuick 2.12 as Quick212
                         accordionContent: ColumnLayout {
                         spacing: 0
 
-                            RowLayout {
+                            UiSettingsRow {
                                 spacing: 10
                                 Label {
+                                    Layout.columnSpan: parent.stackedRow ? parent.columns : 1
                                     text: qsTr("OSC IP:")
                                     wrapMode: window.ui.modern ? Text.WordWrap : window.labelWrap
                                     Layout.fillWidth: true
@@ -19680,7 +19714,7 @@ import QtQuick 2.12 as Quick212
                                     id: oscIPTextField
                                     format: "ip"
                                     savedText: settings.osc_ip
-                                    horizontalAlignment: Text.AlignRight
+                                    horizontalAlignment: parent.stackedRow ? Text.AlignLeft : Text.AlignRight
                                     Layout.fillHeight: false
                                     Layout.alignment: Qt.AlignRight | Qt.AlignVCenter
                                     //inputMethodHints: Qt.ImhFormattedNumbersOnly
