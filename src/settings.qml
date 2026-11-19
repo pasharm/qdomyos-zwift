@@ -3132,9 +3132,20 @@ import QtQuick 2.12 as Quick212
                         // "Changed": a header with the section and its reset above the first
                         // setting of every section
                         readonly property string section: settingsPane.changedOnly ? settingsPane.sectionOf(entry) : ""
-                        readonly property bool firstInSection: settingsPane.changedOnly && window.ui.modern &&
+                        // Modern look: every section is a block as on its page (T-612) - the
+                        // accent outline round its header and its cards, the cards 8 in from it.
+                        // Every result draws its own piece of the outline, clipped to itself
+                        readonly property bool inBlock: settingsPane.changedOnly && window.ui.modern
+                        readonly property bool firstInSection: inBlock &&
                             (index === 0 || settingsPane.sectionOf(filteredSettings[index - 1]) !== section)
-                        readonly property real headerHeight: firstInSection ? sectionHeader.implicitHeight + 8 : 0
+                        readonly property bool lastInSection: inBlock &&
+                            (index === filteredSettings.length - 1 || settingsPane.sectionOf(filteredSettings[index + 1]) !== section)
+                        // 16 between blocks: 8 of the spacing of the column and 8 here
+                        readonly property real blockGap: firstInSection && index > 0 ? 8 : 0
+                        readonly property real blockInset: inBlock ? 8 : 0
+                        readonly property real blockBottom: lastInSection ? 8 : 0
+                        // The header row of the block: 48 high, the title and Reset section in its middle
+                        readonly property real headerHeight: firstInSection ? blockGap + 48 : 0
                         width: Math.max(1, settingsSearchResults.width)
                         Layout.fillWidth: true
                         Layout.minimumWidth: 0
@@ -3159,7 +3170,28 @@ import QtQuick 2.12 as Quick212
                         readonly property bool controlAtBottom: controlOnTop && !hasDescription
                         readonly property real topPad: window.ui.modern ? (controlOnTop ? 6 : 12) : 4
                         readonly property real bottomPad: window.ui.modern ? (controlAtBottom ? 6 : 12) : 4
-                        implicitHeight: headerHeight + searchResultContent.implicitHeight + topPad + bottomPad
+                        implicitHeight: headerHeight + searchResultContent.implicitHeight + topPad + bottomPad + blockBottom
+
+                        // This result's piece of the outline of its block: down to the next result
+                        // (over the spacing of the column) unless it is the last of the section;
+                        // the rounded ends only at the first and the last
+                        Item {
+                            visible: searchResultFrame.inBlock
+                            clip: true
+                            z: -1
+                            y: searchResultFrame.blockGap
+                            width: parent.width
+                            height: parent.height - y + (searchResultFrame.lastInSection ? 0 : settingsSearchResults.spacing)
+                            UiFrame {
+                                readonly property real over: 2 * radius
+                                y: searchResultFrame.firstInSection ? 0 : -over
+                                width: parent.width
+                                height: parent.height - y + (searchResultFrame.lastInSection ? 0 : over)
+                                radius: 24
+                                stroke: window.ui.accent
+                                strokeWidth: 1
+                            }
+                        }
 
                         RowLayout {
                             id: sectionHeader
@@ -3167,7 +3199,10 @@ import QtQuick 2.12 as Quick212
                             anchors.left: parent.left
                             anchors.right: parent.right
                             anchors.top: parent.top
-                            anchors.topMargin: 4
+                            // The title 16 in from the block, as the text of the cards
+                            anchors.leftMargin: 16
+                            anchors.topMargin: searchResultFrame.blockGap
+                            height: 48
                             spacing: 8
                             Label {
                                 // Title Small 14 Medium (T-593)
@@ -3194,6 +3229,9 @@ import QtQuick 2.12 as Quick212
                         Rectangle {
                             anchors.fill: parent
                             anchors.topMargin: searchResultFrame.headerHeight
+                            anchors.leftMargin: searchResultFrame.blockInset
+                            anchors.rightMargin: searchResultFrame.blockInset
+                            anchors.bottomMargin: searchResultFrame.blockBottom
                             color: window.ui.modern ? (resultArea.pressed ? window.ui.surfaceHighest : window.ui.surfaceHigh)
                                                     : (resultArea.pressed ? Qt.rgba(0.5, 0.5, 0.5, 0.2) : "transparent")
                             border.color: Material.color(Material.Grey)
@@ -3215,6 +3253,9 @@ import QtQuick 2.12 as Quick212
                             id: resultArea
                             anchors.fill: parent
                             anchors.topMargin: searchResultFrame.headerHeight
+                            anchors.leftMargin: searchResultFrame.blockInset
+                            anchors.rightMargin: searchResultFrame.blockInset
+                            anchors.bottomMargin: searchResultFrame.blockBottom
                             onClicked: searchResultFrame.open()
                             Accessible.role: Accessible.Button
                             Accessible.name: window.ui.plainTitle(searchResultFrame.titleText) +
@@ -3230,6 +3271,8 @@ import QtQuick 2.12 as Quick212
                             anchors.top: parent.top
                             // Modern look: 16 in from the edge of the card, as Material 3 (T-593)
                             anchors.margins: window.ui.modern ? 16 : 4
+                            anchors.leftMargin: (window.ui.modern ? 16 : 4) + searchResultFrame.blockInset
+                            anchors.rightMargin: (window.ui.modern ? 16 : 4) + searchResultFrame.blockInset
                             anchors.topMargin: searchResultFrame.headerHeight + searchResultFrame.topPad
 
                             RowLayout {
