@@ -333,7 +333,7 @@ ApplicationWindow {
         readonly property int fontTitleSmall: fontPx(18) // toolbar title
         readonly property int fontBody: fontPx(16)     // dialog text, list titles, fields
         readonly property int fontLabel: fontPx(15)    // drawer entries, group titles
-        readonly property int fontCaption: fontPx(13)  // secondary lines, chips, captions
+        readonly property int fontCaption: fontPx(13)  // secondary lines, captions (chips: 14, Material 3 Label Large)
         // The app font (12 on the emulator, not the Material 14): labels, fields, buttons, lists
         readonly property int fontBase: fontPx(window.appFontPx)
 
@@ -375,9 +375,9 @@ ApplicationWindow {
         // Zone colours of the tiles are made for a dark page: darker ones on a light page
         function zoneInk(c) { return dark ? c : Qt.darker(c, 1.7) }
 
-        // Theme of the web pages in a WebView (charts, workout history, maps): their
-        // qz-theme-bridge.js maps these onto CSS variables. Null in the classic look, so the pages
-        // keep their own palette. All tokens are opaque: toString() gives "#rrggbb", which CSS
+        // Theme of the web pages in a WebView (charts, workout history, maps, workout editor and
+        // preview): their qz-theme-bridge.js maps these onto CSS variables. Null in the classic
+        // look, so the pages keep their own palette. All tokens are opaque: toString() gives "#rrggbb", which CSS
         // reads; a translucent one would come out as "#aarrggbb", which CSS misreads.
         readonly property var webTheme: !modern ? null : ({
             modern: "1",
@@ -385,10 +385,13 @@ ApplicationWindow {
             bg: bg.toString(),
             surface: surface.toString(),
             surfaceHigh: surfaceHigh.toString(),
+            surfaceHighest: surfaceHighest.toString(),
             outline: outline.toString(),
             text: textMain.toString(),
             muted: textMuted.toString(),
-            accent: accent.toString()
+            accent: accent.toString(),
+            accentInk: accentInk.toString(),
+            danger: danger.toString()
         })
         // The theme as a URL fragment for the first load of such a page ("" in the classic look)
         function webThemeFragment() {
