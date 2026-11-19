@@ -34,7 +34,24 @@ GridLayout {
         }
         return Math.max(0, m)
     }
-    rowSpacing: stackedRow ? 2 - stackInset : 4
+    // plus what the closer lines of the label take off under its last line (labelCut, below)
+    rowSpacing: stackedRow ? 2 - stackInset + labelCut : 4
+
+    // A label in two lines or more: the lines closer, x1.15 of the font (~x1.28 by default; T-593, mockup
+    // notes/mockups/t593-label-leading-2026-11-19, decision 19.11). One line stays as it is: Qt 5.15.0 sets the
+    // proportional height on every line, the first and only one too (qquicktext.cpp:631-633), and draws from
+    // the top (:2469) - a label in one line would sit lower beside a field. The line count does not depend on
+    // lineHeight (the breaks follow the width), so no loop
+    readonly property real labelLeading: window.ui.modern && label !== null && label.lineCount > 1 ? 0.9 : 1
+    Binding {
+        target: row.label
+        property: "lineHeight"
+        value: row.labelLeading
+        when: row.label !== null
+    }
+    // what the closer lines take off under the last baseline: (1 - lineHeight) x the line height, which Qt
+    // rounds up (qquicktext.cpp:1273); stacked, given back to keep the item ~6 dp under the glyphs
+    readonly property real labelCut: (1 - labelLeading) * Math.ceil(metrics.height)
 
     // the first shown label (a text that wraps) and the other shown items of the row
     readonly property Item label: {
