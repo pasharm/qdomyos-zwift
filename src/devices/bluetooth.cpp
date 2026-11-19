@@ -306,7 +306,6 @@ void bluetooth::finished() {
     if (!discoveryAgent || !discoveryAgent->isActive()) {
         deviceListScanEnded = deviceListScan;
         deviceListScan = false;
-        updateLostDevices();
     }
     // the search of an opened list with a device connected only fills the list: the fake device below
     // would take the devices it found through the connection chain
@@ -510,44 +509,6 @@ void bluetooth::searchForDeviceList() {
     startDiscovery();
 }
 
-// A device switched off stays in `devices`, which the checks for the accessories read: it is only
-// hidden from the lists, and comes back as soon as a search finds it. Only a device that can not be
-// found because it is in use is kept: a connected device does not advertise.
-void bluetooth::updateLostDevices() {
-    // nothing found at all: Android ignored the start or the scan failed, this says nothing about the devices
-    if (seenInSearch.isEmpty())
-        return;
-
-    QSettings settings;
-    QSet<QString> inUse;
-    if (device())
-        inUse.insert(device()->bluetoothDevice.name());
-    inUse.insert(settings.value(QZSettings::bluetooth_lastdevice_name,
-                                QZSettings::default_bluetooth_lastdevice_name).toString());
-    inUse.insert(settings.value(QZSettings::filter_device, QZSettings::default_filter_device).toString());
-    inUse.insert(settings.value(QZSettings::ftms_bike, QZSettings::default_ftms_bike).toString());
-    inUse.insert(settings.value(QZSettings::ftms_treadmill, QZSettings::default_ftms_treadmill).toString());
-    inUse.insert(settings.value(QZSettings::ftms_rower, QZSettings::default_ftms_rower).toString());
-    inUse.insert(settings.value(QZSettings::ftms_elliptical, QZSettings::default_ftms_elliptical).toString());
-    inUse.insert(settings.value(QZSettings::heart_rate_belt_name, QZSettings::default_heart_rate_belt_name).toString());
-    inUse.insert(settings.value(QZSettings::ftms_accessory_name, QZSettings::default_ftms_accessory_name).toString());
-    inUse.insert(settings.value(QZSettings::cadence_sensor_name, QZSettings::default_cadence_sensor_name).toString());
-    inUse.insert(settings.value(QZSettings::power_sensor_name, QZSettings::default_power_sensor_name).toString());
-    inUse.insert(settings.value(QZSettings::elite_rizer_name, QZSettings::default_elite_rizer_name).toString());
-    inUse.insert(settings.value(QZSettings::elite_sterzo_smart_name, QZSettings::default_elite_sterzo_smart_name)
-                     .toString());
-
-    QSet<QString> lost;
-    for (const QBluetoothDeviceInfo &b : qAsConst(devices)) {
-        if (!seenInSearch.contains(b.name()) && !inUse.contains(b.name()))
-            lost.insert(b.name());
-    }
-    if (lost != lostDevices) {
-        lostDevices = lost;
-        emit lostDevicesChanged();
-    }
-}
-
 void bluetooth::startDiscovery() {
     if (!this->useDiscovery)
         return;
@@ -565,7 +526,6 @@ void bluetooth::startDiscovery() {
         const qint64 now = QDateTime::currentMSecsSinceEpoch();
         pruneScanStarts(now);
         scanStartsMs.append(now);
-        seenInSearch.clear();
     }
 
 #ifndef Q_OS_IOS
@@ -1114,10 +1074,6 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
                                                     device.majorDeviceClass());
 
             updateDiscoveredDevice(devices, manufacturerDevice);
-            seenInSearch.insert(manufacturerDevice.name());
-            // no name in the scan result: deviceFound() below does not refresh the lists
-            if (lostDevices.remove(manufacturerDevice.name()))
-                emit lostDevicesChanged();
             manufacturerDeviceFound = true;
         }
 #endif
@@ -1125,8 +1081,6 @@ void bluetooth::deviceDiscovered(const QBluetoothDeviceInfo &device) {
 
     if (manufacturerDeviceFound == false) {
         updateDiscoveredDevice(devices, device);
-        seenInSearch.insert(device.name());
-        lostDevices.remove(device.name());
     }
 
     emit deviceFound(device.name());
@@ -4792,7 +4746,6 @@ void bluetooth::restart() {
 
     stopHeartRateBeltDiscovery();
     devices.clear();
-    lostDevices.clear();
 
     emit this->bluetoothDeviceDisconnected();
 
