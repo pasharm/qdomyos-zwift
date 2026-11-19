@@ -1054,7 +1054,7 @@ ApplicationWindow {
                         anchors.centerIn: parent
                         text: "!"
                         color: window.ui.dangerInk
-                        font.pixelSize: window.fontPx(16)
+                        font.pixelSize: popupGymMode.modern ? window.ui.fontBody : window.fontPx(16)
                         font.bold: true
                         // Qt 5.15 lifts the children of an ignored item into the tree: the sign has
                         // to be ignored itself, the status text next to it says the words
@@ -1064,8 +1064,10 @@ ApplicationWindow {
 
                 Label {
                     width: Math.min(implicitWidth, gymModeColumn.width - (popupGymMode.bluetoothOff ? 30 : 0))
-                    // Bluetooth is off: the one thing to do here, so larger and bold
-                    font.pixelSize: window.fontPx(popupGymMode.bluetoothOff ? Qt.application.font.pixelSize + 6 : Qt.application.font.pixelSize)
+                    // Bluetooth is off: the one thing to do here, so larger and bold (modern: Title
+                    // Small, under the Title of the window, and Body of the type scale)
+                    font.pixelSize: popupGymMode.modern ? (popupGymMode.bluetoothOff ? window.ui.fontTitleSmall : window.ui.fontBody)
+                                    : window.fontPx(popupGymMode.bluetoothOff ? Qt.application.font.pixelSize + 6 : Qt.application.font.pixelSize)
                     font.bold: popupGymMode.bluetoothOff
                     text: popupGymMode.bluetoothOff ? qsTranslate("homeform", "Bluetooth is off")
                           : popupGymMode.devices.length === 0 ? qsTranslate("homeform", "Searching for the device...")
@@ -1087,7 +1089,7 @@ ApplicationWindow {
                 // "Disabled" and "Wifi" of the settings list mean nothing here
                 hidden: ["Disabled", "Wifi"]
                 displayText: popupGymMode.pickedDevice !== "" ? popupGymMode.pickedDevice : qsTr("Select a device")
-                font.pixelSize: window.fontPx(Qt.application.font.pixelSize + 8)
+                font.pixelSize: popupGymMode.modern ? window.ui.fontBody : window.fontPx(Qt.application.font.pixelSize + 8)
                 // Modern: the popup is surfaceHigh, the list one tone below it (as the RPE list)
                 menuColor: window.ui.surface
 
