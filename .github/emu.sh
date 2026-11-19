@@ -81,7 +81,8 @@ setting_case() {
   settings_open || { shot "$c-0-no-settings" now; return 1; }
   scroll_to "$sec" 20 --exact || { shot "$c-0-no-section" now; return 1; }
   tap_ui "$sec" "$land" --land-below || { shot "$c-0-closed" now; return 1; }
-  scroll_to "$label" 30 --first || { shot "$c-0-no-label" now; return 1; }
+  # --exact: a flick carried the hint past the screen to the end of the page (runs 44634788192, 44637707683)
+  scroll_to "$label" 40 --first --exact || { shot "$c-0-no-label" now; return 1; }
   settle
   shot "$c-1-label"
   expect "$c-1-label" "$label" 'the label of the change'
