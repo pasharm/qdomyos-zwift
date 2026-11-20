@@ -361,6 +361,52 @@
         });
     }
 
+    // The page shown again without a reload (the modern look keeps it between openings,
+    // main.qml): ask again for what may have changed meanwhile - the connected machine, FTP, the
+    // units, the saved workouts. The intervals stay as typed: speed and distance follow a change of
+    // the units; the machine chosen in the list stays unless the connected one changed
+    window.qzEditorReopened = function () {
+        if (window.QZ_OFFLINE) {
+            return;
+        }
+        const miles = state.miles;
+        const device = state.device;
+        const envDevice = state.envDevice;
+        Promise.allSettled([fetchEnvironment(), refreshProgramList()]).then(() => {
+            if (state.envDevice === envDevice && state.device !== device) {
+                state.device = device;
+                selectors.device.value = device;
+            }
+            if (state.miles !== miles) {
+                convertIntervalUnits(state.miles ? 1 / 1.60934 : 1.60934);
+            }
+            renderIntervals();
+            updateChart();
+            updateStatus();
+            updateControls();
+        });
+    };
+
+    // Speed and distance of every interval in the other units (factor: new units per old one);
+    // the "off" values (-1) stay
+    function convertIntervalUnits(factor) {
+        state.intervals.forEach(interval => {
+            FIELD_DEFS.forEach(def => {
+                if (def.unitKey !== 'distance' && def.unitKey !== 'speed') {
+                    return;
+                }
+                const value = interval[def.key];
+                if (value === undefined || value === null || value === ''
+                        || Number(value) === DEFAULT_DISABLED_VALUES[def.key] || isNaN(Number(value))) {
+                    return;
+                }
+                const next = Number(value) * factor;
+                interval[def.key] = def.unitKey === 'speed'
+                    ? Math.round(next * 10) / 10 : Math.round(next * 100) / 100;
+            });
+        });
+    }
+
     function fetchEnvironment() {
         if (window.QZ_OFFLINE) {
             return Promise.resolve();
@@ -378,6 +424,8 @@
                 window.qzSetTranslations(state.translations);
             }
             const envDevice = normalizeDevice(content.device);
+            // the connected machine, apart from the one chosen in the list (qzEditorReopened)
+            state.envDevice = envDevice;
             if (envDevice) {
                 state.device = envDevice;
             }
@@ -1925,22 +1973,12 @@
             return Promise.resolve(null);
         }
         if (!replyMsg) {
-            // Nothing answers these (open a workout, start it): send once. The queue sends a
-            // message again every 15 s until its reply comes, so the action itself repeated -
-            // with the editor page kept, Save & Start started the workout again and closed the
-            // editor on its next opening
-            const once = new MainWSQueueElement({ msg, content }, function () { return null; });
-            // No retry timer at all (the constructor reads 0 retries as 1)
-            once.retry_num = 0;
-            once.pop_msg_to_send = function () {
-                const out = MainWSQueueElement.prototype.pop_msg_to_send.call(this);
-                if (out) {
-                    // Out of the queue once sent: not while the queue walks it
-                    setTimeout(function () { main_ws_dequeue(once); }, 0);
-                }
-                return out;
-            };
-            main_ws_enqueue(once);
+            // Nothing answers these (open a workout, start it): one try. With 3 the queue sent
+            // the message again 15 and 30 s later, waiting for a reply that never comes, so the
+            // action itself repeated - with the editor page kept, Save & Start started the workout
+            // again and closed the editor on its next opening. The queue drops the element 15 s
+            // after its one try; nobody waits for it (enqueue() is not called)
+            main_ws_enqueue(new MainWSQueueElement({ msg, content }, function () { return null; }, 15000, 1));
             return Promise.resolve(null);
         }
         const el = new MainWSQueueElement({ msg, content }, function (response) {
