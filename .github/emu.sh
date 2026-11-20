@@ -1,91 +1,61 @@
 #!/bin/bash
-# Test only (T-548): Android 9-11 (API 28-30), the display cutout in landscape. CustomQtActivity.java sets
-# LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES below API 31, and main.qml getLeftPadding()/getRightPadding()
-# give 0 below API 31 - the window goes under a cutout on the short edge, which is the side edge in landscape,
-# and nothing keeps the content out of it. The fix: DEFAULT on API 28-30 (Qt 6 QtWindowInsetsController).
-# The cutout - the emulation overlay "tall" (centred on the short edge, so in landscape it is on the side,
-# level with the tiles). Measured by t548_cut.py: the safe insets of the cutout from `dumpsys window
-# displays`, the content of QZ from the dump - how far its leftmost/rightmost node goes into them.
-# Base (apk-base) - the build before the fix: on API 28-30 the content under the cutout (shown, not required).
-# Head (apk-head): no content under the cutout on every API, in both looks and both landscape sides.
+# Test only (T-638): Android 9-11 (API 28-30), the strip beside the display cutout in landscape. There the
+# window of QZ keeps clear of the cutout (LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES, the decor view fits the
+# insets) and its background shows in the strip. Qt 5.15 sets the background of its theme Theme_Holo_Light
+# when it creates its first surface (QtActivityDelegate.createSurface) - a light gradient. The fix
+# (CustomQtActivity.java): the background goes back as soon as Qt adds a surface - black in the classic look,
+# the page colour (the colour of the status bar) in the modern look.
+# The cutout - the emulation overlay "tall" (centred on the short edge, so on the left side in landscape).
+# Measured by t638_strip.py on the raw frame: the middle column of the strip, rows 30-90 % of the height.
+# Base (apk-base) - master before the fix: the light gradient (shown, not required).
+# Head (apk-head): one colour from top to bottom - black (classic), the status bar colour (modern dark, light).
 . .github/lib.sh
 . .github/qz.sh
 
 CUTOUT=com.android.internal.display.cutout.emulation.tall
 
-# measure <name>: t548_cut.py on dumps/<name>.xml and the display now; CUT_L CUT_R (px under the cutout),
-# CUT_LAND; the line to steps.log. 1 - not measured
-measure() {
-  local out
-  CUT_L= CUT_R= CUT_LAND=
-  adb shell dumpsys window displays < /dev/null > "dumps/$1.displays.txt" 2>/dev/null
-  # API 28 prints no DisplayCutout there (run 44289517868): the last "Cutout insets - Top:t Bottom:b
-  # Left:l Right:r" of CustomQtActivity (px; only a window the cutout overlaps logs it) and the screen
-  # width of the landscape physical size
-  if ! grep -q 'DisplayCutout{insets=Rect(' "dumps/$1.displays.txt"; then
-    local ci w
-    ci=$(grep -a 'CustomQtActivity: Cutout insets' full_logcat.txt | tail -n 1 |
-      awk '{for (i = 1; i <= NF; i++) {split($i, kv, ":"); v[kv[1]] = kv[2]}}
-           END {if ("Left" in v) printf "DisplayCutout{insets=Rect(%s, %s - %s, %s)", v["Left"], v["Top"], v["Right"], v["Bottom"]}')
-    w=$(adb shell wm size < /dev/null | tr -d '\r' | awk -F'[ x]' '/Physical/ {print ($3 > $4) ? $3 : $4}')
-    say "$1: no DisplayCutout in dumpsys - from the log of QZ: '$ci', width $w"
-    printf ' cur=%sx0 %s\n' "$w" "$ci" > "dumps/$1.displays.txt"
-  fi
-  out=$("$EMU_PY" .github/t548_cut.py "dumps/$1.xml" "dumps/$1.displays.txt" 2>&1)
-  say "cut $1: $out"
-  CUT_L=$(echo "$out" | awk '/^cut .* under_left/ {for (i = 1; i < NF; i++) if ($i == "under_left") print $(i + 1)}')
-  CUT_R=$(echo "$out" | awk '/^cut .* under_right/ {for (i = 1; i < NF; i++) if ($i == "under_right") print $(i + 1)}')
-  CUT_LAND=$(echo "$out" | awk '/^cut .* landscape/ {for (i = 1; i < NF; i++) if ($i == "landscape") print $(i + 1)}')
-  # the side insets of the cutout ("cut L T R B"): none - nothing to go under
-  CUT_SIDE=$(echo "$out" | awk '/^cut / {print $2 + $4}')
-  [ -n "$CUT_L" ] && [ -n "$CUT_R" ]
+# displays <name>: dumpsys window displays as dumps/<name>.displays.txt. API 28 prints no DisplayCutout there
+# (T-548 run 44289517868): then the last "Cutout insets - Top:t Bottom:b Left:l Right:r" of CustomQtActivity
+# (px; only a window the cutout overlaps logs it) as the same line
+displays() {
+  local f="dumps/$1.displays.txt" ci
+  adb shell dumpsys window displays < /dev/null > "$f" 2>/dev/null
+  grep -q 'DisplayCutout{insets=Rect(' "$f" && return 0
+  ci=$(grep -a 'CustomQtActivity: Cutout insets' full_logcat.txt | tail -n 1 |
+    awk '{for (i = 1; i <= NF; i++) {split($i, kv, ":"); v[kv[1]] = kv[2]}}
+         END {if ("Left" in v) printf "DisplayCutout{insets=Rect(%s, %s - %s, %s)", v["Left"], v["Top"], v["Right"], v["Bottom"]}')
+  say "$1: no DisplayCutout in dumpsys - from the log of QZ: '$ci'"
+  echo "$ci" > "$f"
 }
 
-# rotate <0|1|3>: the user rotation, then a still screen
-rotate() {
-  adb shell settings put system accelerometer_rotation 0 < /dev/null > /dev/null 2>&1
-  adb shell settings put system user_rotation "$1" < /dev/null > /dev/null 2>&1
-  emu_sleep 8
-  still
-}
-
-# land <case> <rotation> <side>: the case turned to landscape; head - nothing under the cutout
-land() {
-  local c=$1 r=$2 side=$3 n="$1-r$2" under
-  rotate "$r"
-  shot "$n"
-  if ! measure "$n"; then
-    fail "$n: not measured"
-    return 1
-  fi
-  if [ "$CUT_LAND" != 1 ]; then
-    proves_nothing "$n: QZ did not turn to landscape (user_rotation $r)"
-  fi
-  if [ "${CUT_SIDE:-0}" = 0 ]; then
-    proves_nothing "$n: no cutout on the side in landscape"
-  fi
-  under=$((CUT_L + CUT_R))
-  if [ "$side" = h ]; then
-    if [ "$under" = 0 ]; then say "check $n: no content under the cutout: OK"
-    else fail "check $n: content under the cutout (left $CUT_L px, right $CUT_R px)"; fi
-  else
-    say "base $n: under the cutout left $CUT_L px, right $CUT_R px"
-  fi
-}
-
-# home_case <case> <side> key=value...: the home page, landscape on both sides, back upright
-home_case() {
-  local c=$1 side=$2
-  shift 2
+# strip_case <case> <side> <black|bar> key=value...: the home page in landscape, the strip measured;
+# head - the wanted colour, base - only said
+strip_case() {
+  local c=$1 side=$2 want=$3 n out rc
+  shift 3
   start_case "$c" "$@" || return 1
-  shot "$c-r0"
-  land "$c" 1 "$side"
-  land "$c" 3 "$side"
-  rotate 0
+  rotate land "$c" || return 1
+  n="$c-land"
+  shot "$n"
+  adb exec-out screencap < /dev/null > "$n.raw" 2>/dev/null
+  displays "$n"
+  out=$("$EMU_PY" .github/t638_strip.py "$n.raw" "dumps/$n.displays.txt" "$want" 2>&1)
+  rc=$?
+  say "strip $n: $out"
+  if [ $rc = 2 ]; then
+    proves_nothing "$n: the strip not measured ($out)"
+  elif [ "$side" = h ]; then
+    if [ $rc = 0 ]; then say "check $n: the strip is $want: OK"
+    else fail "check $n: the strip is not $want ($out)"; fi
+  else
+    say "base $n: $out"
+  fi
+  rm -f "$n.raw"
+  rotate port "$c"
 }
 
 emu_init
-say "== pages: the display cutout in landscape (T-548)"
+say "== the strip beside the display cutout in landscape (T-638)"
 
 # the cutout before anything starts: an overlay switched mid-run restarts SystemUI (check_emu_script)
 adb shell cmd overlay list < /dev/null 2>/dev/null | grep -i cutout >> "$STEPLOG"
@@ -93,15 +63,6 @@ adb shell cmd overlay enable "$CUTOUT" < /dev/null >> "$STEPLOG" 2>&1
 emu_sleep 10
 adb shell cmd overlay list < /dev/null 2>/dev/null | grep -q -F "[x] $CUTOUT" ||
   proves_nothing "the cutout overlay $CUTOUT not enabled"
-# API 28 has no DisplayCutout in dumpsys window displays (run 44289517868) - dumpsys display then
-{ adb shell dumpsys window displays < /dev/null 2>/dev/null; adb shell dumpsys display < /dev/null 2>/dev/null; } |
-  grep -o -m 1 'DisplayCutout{insets=Rect([^)]*)' > cut0.txt
-say "cutout upright: $(cat cut0.txt)"
-# API 28 (run 44290622314): the first one of dumpsys display has zero insets with the overlay on - only
-# said here; land() refuses a landscape measure without a side cutout
-grep -q 'Rect(0, 0 - 0, 0)' cut0.txt && near cutout "zero insets in dumpsys upright"
-# none in either - measure falls back on the log of QZ and fails red without a cutout there too
-[ -s cut0.txt ] || near cutout "no DisplayCutout in dumpsys window displays nor dumpsys display"
 logcat_start
 
 for side in b h; do
@@ -109,8 +70,9 @@ for side in b h; do
   side_on "$side" "$apk" || continue
   say "== $side: start"
   install_apk "$apk"
-  home_case "${side}m" "$side" ui_modern=true fakedevice_treadmill=true
-  home_case "${side}c" "$side" ui_modern=false fakedevice_treadmill=true
+  strip_case "${side}c" "$side" black fakedevice_treadmill=true ui_modern=false
+  strip_case "${side}d" "$side" bar fakedevice_treadmill=true ui_modern=true ui_theme_mode=dark
+  strip_case "${side}l" "$side" bar fakedevice_treadmill=true ui_modern=true ui_theme_mode=light
 done
 
 finish

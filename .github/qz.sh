@@ -1,4 +1,4 @@
-# emu-lib: tools/emu/qz.sh sha b6afe2dedbf3 - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/qz.sh sha df11864e645e - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): QZ screens and settings for the emulator scenarios, on top of lib.sh (source lib.sh
 # first). One source: tools/emu/qz.sh of the work folder, copied into .github/ by tools/emu/sync.py.
 # Base: the T-498 scenario (test/t498-emu, c4c75732f); defects of the old copies - notes/emu-lib-2026-11-10.md.
@@ -90,12 +90,13 @@ wait_home() {
 
 # start_case <name> [key=value ...]: QZ stopped, qz.conf written, started, the home page; the pid of the
 # case in steps.log (for js_errors by side). Home not shown - "!!", a frame <name>-0-no-home, 1.
-# A case EMU_CASES does not select (by <name> or <calling function>/<name> - case_on in lib.sh): "skipped",
-# 1 and nothing done - the scenario function stops at its `start_case ... || return 1` (T-534)
+# A case EMU_CASES does not select (by <name> or <function>/<name>, the function - any caller up the stack,
+# land_case of land_case -> empty_case -> start_case too; case_on in lib.sh): "skipped", 1 and nothing done
+# - the scenario function stops at its `start_case ... || return 1` (T-534, T-617)
 start_case() {
   local name=$1 fn=${FUNCNAME[1]:-main}
   shift
-  if ! case_on "$name" "$fn"; then
+  if ! case_on "$name" "${FUNCNAME[*]:1}"; then
     say "== $name: skipped ($fn; cases: $EMU_CASES)"
     return 1
   fi
@@ -110,6 +111,17 @@ start_case() {
     return 1
   fi
   say "pid $name $(adb shell pidof "$PKG" < /dev/null | tr -d '\r')"
+  # rotate land before the start: on API 30 the start turns QZ back to portrait (T-617 run 44612383102) -
+  # a landscape case shot in portrait would pass its checks (T-609 lessons 1, 3)
+  if [ "$EMU_ROT" = land ]; then
+    local w h
+    read -r w h <<< "$(frame_wh)"
+    if [ "$w" -le "$h" ]; then
+      fail "$name: not landscape after the start (API $EMU_API, frame ${w}x$h) - rotate land after start_case"
+      shot "$name-0-not-land" now
+      return 1
+    fi
+  fi
   # the home page is ready, not only shown: the support button comes after 10 s of zero speed (5 s with no
   # device, SupportHelpButton.qml) - the fixed sleep of 10 s raced it, the frame of the home page had it
   # or not run by run (T-505 pilots 3-5); then a still screen
