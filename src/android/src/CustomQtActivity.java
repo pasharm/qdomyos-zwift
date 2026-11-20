@@ -754,7 +754,34 @@ public class CustomQtActivity extends QtActivity {
         // Dark window background ensures no white strip is visible in areas Qt may not render.
         // API 31+ only, like the QML paddings (main.qml getTopPadding() and the others):
         // below 31 they are 0, so on Android 11 (API 30) the system bars covered the app (#5484).
-        getWindow().setBackgroundDrawable(new ColorDrawable(Color.BLACK));
+        // There, in landscape, the window keeps clear of the cutout and its background shows in the
+        // strip beside it. Qt 5.15 sets the theme's background again when it creates its first surface
+        // (QtActivityDelegate.createSurface: the light gradient of Theme_Holo_Light, which QtActivity
+        // picks), then adds the surface to its layout in the same call; so the background goes back
+        // to ours as soon as a surface is added, before anything is drawn. Qt 6.7+ sets the theme's
+        // background once, when the activity is created (setActivityBackgroundDrawable).
+        applyWindowBackground();
+        final ViewGroup content = (ViewGroup) findViewById(android.R.id.content);
+        ViewGroup.OnHierarchyChangeListener surfaceAdded = new ViewGroup.OnHierarchyChangeListener() {
+            @Override
+            public void onChildViewAdded(View parent, View child) {
+                if (child instanceof SurfaceView) {
+                    applyWindowBackground();
+                } else if (parent == content && child instanceof ViewGroup) {
+                    ((ViewGroup) child).setOnHierarchyChangeListener(this);
+                }
+            }
+
+            @Override
+            public void onChildViewRemoved(View parent, View child) {
+            }
+        };
+        content.setOnHierarchyChangeListener(surfaceAdded);
+        for (int i = 0; i < content.getChildCount(); i++) {
+            if (content.getChildAt(i) instanceof ViewGroup) {
+                ((ViewGroup) content.getChildAt(i)).setOnHierarchyChangeListener(surfaceAdded);
+            }
+        }
         if (Build.VERSION.SDK_INT >= 31) {
             getWindow().setDecorFitsSystemWindows(false);
             getWindow().getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS;
@@ -928,7 +955,9 @@ public class CustomQtActivity extends QtActivity {
     // through (the drawer sheet too, with its rounded top corner). API 23-30 keep the window below the
     // bars, so they take the page colour (the navigation bar from API 26, the first with dark buttons).
     // The icons follow the page: dark on a light one. API 21-22 have no dark icons: nothing changes.
-    // Classic look (modern false): the flags, colours and icons from before the first call come back.
+    // On API 28-30 the strip beside the cutout in landscape (onCreate) takes the page colour too.
+    // Classic look (modern false): the flags, colours and icons from before the first call come back,
+    // the strip beside the cutout is black again.
     // Called from QML (applySystemBars) at start-up, on every return to the foreground and when the
     // look or its theme changes, so a reset by the system is put right on the next return.
     private static boolean systemBarsSaved = false;
@@ -937,6 +966,12 @@ public class CustomQtActivity extends QtActivity {
     private static int savedNavigationBarColor;
     private static boolean savedLightStatus;
     private static boolean savedLightNavigation;
+    // the window background: what shows beside the cutout where the window keeps clear of it (onCreate)
+    private static int windowBackgroundColor = Color.BLACK;
+
+    private void applyWindowBackground() {
+        getWindow().setBackgroundDrawable(new ColorDrawable(windowBackgroundColor));
+    }
 
     public static void setSystemBars(final int color, final boolean modern, final boolean dark) {
         final CustomQtActivity activity = accessibilityActivity;
@@ -965,6 +1000,7 @@ public class CustomQtActivity extends QtActivity {
                 }
                 if (modern) {
                     int bars = Build.VERSION.SDK_INT >= 31 ? Color.TRANSPARENT : (color | 0xFF000000);
+                    windowBackgroundColor = Build.VERSION.SDK_INT >= 31 ? Color.BLACK : (color | 0xFF000000);
                     window.addFlags(drawsBars);
                     if (colors)
                         window.setStatusBarColor(bars);
@@ -975,6 +1011,7 @@ public class CustomQtActivity extends QtActivity {
                         setLightBar(window, false, !dark);
                     }
                 } else {
+                    windowBackgroundColor = Color.BLACK;
                     if (!savedDrawsBars)
                         window.clearFlags(drawsBars);
                     if (colors) {
@@ -985,6 +1022,7 @@ public class CustomQtActivity extends QtActivity {
                     if (Build.VERSION.SDK_INT >= 26)
                         setLightBar(window, false, savedLightNavigation);
                 }
+                activity.applyWindowBackground();
             }
         });
     }
