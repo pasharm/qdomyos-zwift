@@ -16,7 +16,7 @@ import time
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from iosnav import (init, shot, find, find_in, tree, place, middle, press, tap, tap_at, wait_for, home,  # noqa: E402
-                    page, summary, dismiss_alerts, swipe, say)
+                    page, summary, dismiss_alerts, swipe, say, _press)
 
 init(*sys.argv[1:5])
 LOOK = sys.argv[5] if len(sys.argv) > 5 else "classic"
@@ -64,8 +64,42 @@ def editor_title(timeout=120):
     return False
 
 
-dismiss_alerts()
-page("home", wait_for("Lap", exact=True))
+def wait_home(timeout=240):
+    """The home page by its "Lap", closing the system questions on the way: in run 44641005937 the tree was
+    empty at the start, dismiss_alerts() found no question, and the questions came later and covered "Lap" for the
+    whole 90 s."""
+    end = time.time() + timeout
+    while time.time() < end:
+        dismiss_alerts()
+        if wait_for("Lap", 20, exact=True):
+            return True
+    return False
+
+
+def device_menu():
+    """The device list of the editor - the menu of the page (qz-modern-select.js), which on iOS opens only when
+    WebKit sends the tap to the document (the pointer cursor of the field). The tree of idb has nothing of the
+    page: the field by the place it has on Android (emu dump hel-2-editor.xml of run 44641198728, API 35: centre
+    89, 118 dp from the top of the web view), the frames read by eye. A tap at the top of the page closes it."""
+    t = tree()
+    top = None
+    for e in t:
+        if isinstance(e, dict) and (e.get("AXLabel") or "") in (BACK, "Workout Editor") and middle(e)[1] < 160:
+            fr = e["frame"]
+            top = max(top or 0, fr["y"] + fr["height"])
+    if top is None:
+        say("not found: the toolbar of the editor")
+        return
+    say(f"the web view from y {top:.0f}")
+    _press(89, top + 118, "the Device field")
+    time.sleep(3)
+    shot("04-menu-open")
+    _press(380, top + 20, "the page above the menu")
+    time.sleep(3)
+    shot("05-menu-closed", with_tree=False)
+
+
+page("home", wait_home())
 
 if page("programs", open_list()):
     if page("preview", open_program("A1spdinc")):
@@ -78,6 +112,8 @@ if press(MENU, scrolls=0) and wait_for("Workout Editor", 30) and press("Workout 
     if page("editor", editor_title()):
         time.sleep(PAGE_WAIT)
         shot("02-editor")
+        if MODERN:
+            device_menu()
         for i in range(1, 3):
             swipe("up")
             time.sleep(3)
