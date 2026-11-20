@@ -2,6 +2,7 @@
 #include "qdebugfixup.h"
 #include "qzsettings.h"
 #include <QSettings>
+#include <cmath>
 
 #ifdef TEST
 static uint32_t random_value_uint32 = 0;
@@ -69,7 +70,8 @@ void metric::setValue(double v, bool applyGainAndOffset, bool includeZeroInStats
 
     // UTC: no local-time conversion on every value; callers only use differences (msecsTo/secsTo) and epoch
     QDateTime now = QDateTime::currentDateTimeUtc();
-    if (v != m_value && v != INFINITY) {
+    // std::isfinite, not v != INFINITY: NaN != NaN, so a NaN (sqrt of a negative, 0/0) passed the old check
+    if (v != m_value && std::isfinite(v)) {
         m_valueChanged = now;
         if (m_last5.count() > 1) {
             double diff = v - m_value;
@@ -91,7 +93,8 @@ void metric::setValue(double v, bool applyGainAndOffset, bool includeZeroInStats
         return;
     }
 
-    if ((value() != 0 || includeZeroInStats) && value() != INFINITY) {
+    // a non-finite value is shown, but kept out of the average, min and max: one NaN would stay in them
+    if ((value() != 0 || includeZeroInStats) && std::isfinite(value())) {
         m_countValue++;
         m_lapCountValue++;
         m_totValue += value();

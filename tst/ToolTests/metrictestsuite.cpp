@@ -2,6 +2,7 @@
 
 #include <QCoreApplication>
 #include <QSettings>
+#include <cmath>
 
 #include "metric.h"
 #include "qzsettings.h"
@@ -80,4 +81,30 @@ TEST(MetricUpdateSequenceTest, CountsRepeatedHeartRateWrites) {
     // A device reporting the same BPM must still count as a new source write.
     heart = 103.0;
     EXPECT_EQ(heart.updateSequence(), healthKitWrite + 1);
+}
+
+TEST(MetricNonFiniteTest, NanIsShownButKeptOutOfStats) {
+    metric resistance;
+    resistance.setValue(10.0);
+    resistance.setValue(std::nan(""));
+    EXPECT_TRUE(std::isnan(resistance.value()));
+    resistance.setValue(20.0);
+
+    EXPECT_DOUBLE_EQ(resistance.value(), 20.0);
+    EXPECT_DOUBLE_EQ(resistance.average(), 15.0);
+    EXPECT_DOUBLE_EQ(resistance.lapAverage(), 15.0);
+    EXPECT_DOUBLE_EQ(resistance.min(), 10.0);
+    EXPECT_DOUBLE_EQ(resistance.max(), 20.0);
+}
+
+TEST(MetricNonFiniteTest, InfinitiesAreKeptOutOfStats) {
+    metric speed;
+    speed.setValue(5.0, false);
+    speed.setValue(INFINITY, false);
+    speed.setValue(-INFINITY, false);
+    speed.setValue(7.0, false);
+
+    EXPECT_DOUBLE_EQ(speed.average(), 6.0);
+    EXPECT_DOUBLE_EQ(speed.min(), 5.0);
+    EXPECT_DOUBLE_EQ(speed.max(), 7.0);
 }
