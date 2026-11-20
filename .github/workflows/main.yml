@@ -333,8 +333,8 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           REF: 'test/t596-emu'
           WHAT: 'emulator'
-          BASE: '44608768601'
-          IN1: '44608768601'
+          BASE: '44754870875'
+          IN1: '44754870875'
         run: |
           for i in $(seq 1 80); do
             names=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$BASE/artifacts" --jq '.artifacts[].name') || names=""
