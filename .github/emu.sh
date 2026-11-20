@@ -1,7 +1,8 @@
 #!/bin/bash
 # Test only (T-638): Android 9-11 (API 28-30), the strip beside the display cutout in landscape. There the
-# window of QZ keeps clear of the cutout (LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES, the decor view fits the
-# insets) and its background shows in the strip. Qt 5.15 sets the background of its theme Theme_Holo_Light
+# window of QZ reaches into the cutout (LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES) but the decor view fits the
+# insets, so Qt's content keeps clear of it and the window background shows in the strip. API 31+: no strip
+# (Qt's content goes into the cutout) - the head frame must be the master frame (same_case, t638_same.py). Qt 5.15 sets the background of its theme Theme_Holo_Light
 # when it creates its first surface (QtActivityDelegate.createSurface) - a light gradient. The fix
 # (CustomQtActivity.java): the background goes back as soon as Qt adds a surface - black in the classic look,
 # the page colour (the colour of the status bar) in the modern look.
@@ -29,8 +30,31 @@ displays() {
   echo "$ci" > "$f"
 }
 
-# strip_case <case> <side> <black|bar:RRGGBB> key=value...: the home page in landscape, the strip measured;
-# head - the wanted colour, base - only said
+# same_case <case> <side> <frame name>: API 31+ - Qt's content extends into the cutout and the window background the
+# fix changes stays under it: the head frame must be the base frame of the same case (t638_same.py). The base raw
+# frame waits for the head side; both are removed after the comparison
+same_case() {
+  local c=$1 side=$2 n=$3 b out rc
+  if [ "$side" = b ]; then
+    say "base $n: kept for the comparison on API $EMU_API"
+    return 0
+  fi
+  b="b${c#h}-land"
+  out=$("$EMU_PY" .github/t638_same.py "$b.raw" "$n.raw" 2>&1)
+  rc=$?
+  say "same $b $n: $out"
+  if [ $rc = 2 ]; then
+    proves_nothing "$n: not compared with $b ($out)"
+  elif [ $rc = 0 ]; then
+    say "check $n: the same as master on API $EMU_API: OK"
+  else
+    fail "check $n: differs from master on API $EMU_API ($out)"
+  fi
+  rm -f "$b.raw" "$n.raw"
+}
+
+# strip_case <case> <side> <black|bar:RRGGBB> key=value...: the home page in landscape, the strip measured on
+# API 28-30 (head - the wanted colour, base - only said), compared with master on API 31+ (same_case)
 strip_case() {
   local c=$1 side=$2 want=$3 n out rc
   shift 3
@@ -41,6 +65,11 @@ strip_case() {
   shot "$n"
   adb exec-out screencap < /dev/null > "$n.raw" 2>/dev/null
   displays "$n"
+  if [ "${EMU_API:-0}" -ge 31 ]; then
+    same_case "$c" "$side" "$n"
+    rotate port "$c"
+    return 0
+  fi
   out=$("$EMU_PY" .github/t638_strip.py "$n.raw" "dumps/$n.displays.txt" "$want" 2>&1)
   rc=$?
   say "strip $n: $out"
