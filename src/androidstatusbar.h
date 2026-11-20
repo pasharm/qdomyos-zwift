@@ -62,9 +62,11 @@ public:
     // below; icons dark on a light page (dark false). modern false puts back the bars of the window
     // as they were before the first modern call (color is then not used).
     // Nothing elsewhere.
-    Q_INVOKABLE void setSystemBarsColor(const QColor &color, bool dark, bool modern = true) const;
-    // iOS 11+: the safe area of the screen (status bar and cutout, home indicator, sides held
-    // sideways) in points, as { top, bottom, left, right }. Zeros elsewhere.
+    Q_INVOKABLE void setSystemBarsColor(const QColor &color, bool dark, bool modern) const;
+    // iOS 11+: the safe area (status bar and cutout, home indicator, sides held sideways) in points,
+    // and the size of the UIWindow it belongs to (the screen, or the window of the app on an iPad
+    // with several apps on the screen), as { top, bottom, left, right, width, height }. Read again
+    // on safeAreaChanged(). Zeros elsewhere.
     Q_INVOKABLE QVariantMap safeAreaInsets() const;
     // Accent of the dynamic palette that Android 12+ (API 31) builds from the wallpaper, as
     // "#rrggbb": the Material 3 primary for a dark page (dark = true) or a light one. Empty
@@ -81,6 +83,10 @@ signals:
     // Android: the system configuration changed (night mode among others); systemDarkMode() may
     // answer differently now
     void systemThemeChanged();
+    // iOS: UIKit changed the safe area of the Qt window, safeAreaInsets() may answer differently now
+    // (the status bar shown or hidden, the phone turned, the app window resized on an iPad). Neither
+    // Qt 5.15 nor the Screen object of QML reports it
+    void safeAreaChanged();
 
 private:
     int m_top = 0;

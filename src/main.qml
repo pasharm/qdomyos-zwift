@@ -15,11 +15,13 @@ ApplicationWindow {
     width: 640
     height: 480
     // Qt.WindowFullScreen is 4, Window.Maximized as a visibility. iOS: Qt fits a maximized window
-    // into the safe area, Qt::MaximizeUsingFullscreenGeometryHint or not, and the system paints the
-    // areas under the status bar and the home indicator. The modern look takes the whole screen as a
-    // full screen window, as on Android 12+: the drawer and the dimming of popups reach the edges,
-    // the content keeps clear of them by getTopPadding()/getBottomPadding(), and the status bar
-    // stays (AndroidStatusBar.setSystemBarsColor)
+    // into the safe area (QIOSWindow; the iOS plugin of qt-patches/ios/5.15.2 does it whatever the
+    // window flags), and the system paints the areas under the status bar and the home indicator.
+    // The modern look takes the whole screen as a full screen window, as on Android 12+: the drawer
+    // and the dimming of popups reach the edges, the content keeps clear of them by
+    // getTopPadding()/getBottomPadding(), and the status bar stays
+    // (AndroidStatusBar.setSystemBarsColor). Qt 6.9+ does this itself with
+    // Qt::ExpandedClientAreaHint and QWindow::safeAreaMargins(), none of it in Qt 5.15
     visibility: Qt.platform.os === "ios" && settings.ui_modern ? Window.FullScreen : Qt.WindowFullScreen
     visible: true
 	 objectName: "stack"
@@ -35,21 +37,38 @@ ApplicationWindow {
         }
     }
 
-    // iOS: the safe area of the screen in points, read again when the window changes size (it is
-    // put on the whole screen after start-up, and turned with the phone). The paddings take only
-    // the part of it inside the window: none while the window keeps to the safe area (the classic
-    // look), all of it on the whole screen (the modern look)
-    property var iosSafeArea: ({ top: 0, bottom: 0, left: 0, right: 0 })
+    // iOS, the modern look: the safe area in points and the size of the UIWindow it belongs to, read
+    // again when the window changes size (it is put on the whole screen after start-up, and turned
+    // with the phone) and when the system reports a new one (the status bar shown again over the
+    // full screen window). The paddings take only the part of it inside the window. The classic look
+    // keeps its window in the safe area and its paddings as before: none
+    property var iosSafeArea: ({ top: 0, bottom: 0, left: 0, right: 0, width: 0, height: 0 })
+    // rootItem.iPadMultiWindowMode has no NOTIFY signal: read in a binding, it gives the warning
+    // "depends on non-NOTIFYable properties" each time the binding is evaluated again, so it is
+    // read here, at the same moments as the safe area, and the paddings read this copy
+    property bool iosMultiWindowMode: false
     function refreshIosSafeArea() {
-        if (Qt.platform.os === "ios")
-            iosSafeArea = AndroidStatusBar.safeAreaInsets()
+        if (Qt.platform.os !== "ios")
+            return
+        iosMultiWindowMode = typeof rootItem !== "undefined" && rootItem && rootItem.iPadMultiWindowMode ? true : false
+        iosSafeArea = AndroidStatusBar.safeAreaInsets()
     }
     onWidthChanged: refreshIosSafeArea()
     onHeightChanged: refreshIosSafeArea()
-    function iosInsetTop() { return Math.max(0, iosSafeArea.top - window.y) }
-    function iosInsetBottom() { return Math.max(0, iosSafeArea.bottom - (Screen.height - window.y - window.height)) }
-    function iosInsetLeft() { return Math.max(0, iosSafeArea.left - window.x) }
-    function iosInsetRight() { return Math.max(0, iosSafeArea.right - (Screen.width - window.x - window.width)) }
+    Connections {
+        target: AndroidStatusBar
+        function onSafeAreaChanged() { window.refreshIosSafeArea() }
+    }
+    function iosInsetTop() { return ui.modern ? Math.max(0, iosSafeArea.top - window.y) : 0 }
+    function iosInsetBottom() {
+        var h = iosSafeArea.height > 0 ? iosSafeArea.height : Screen.height
+        return ui.modern ? Math.max(0, iosSafeArea.bottom - (h - window.y - window.height)) : 0
+    }
+    function iosInsetLeft() { return ui.modern ? Math.max(0, iosSafeArea.left - window.x) : 0 }
+    function iosInsetRight() {
+        var w = iosSafeArea.width > 0 ? iosSafeArea.width : Screen.width
+        return ui.modern ? Math.max(0, iosSafeArea.right - (w - window.x - window.width)) : 0
+    }
 
     // Helper functions for cleaner padding calculations
     function getTopPadding() {
@@ -57,7 +76,7 @@ ApplicationWindow {
         // to avoid overlap with window control buttons (red/yellow/green)
         // Check both the native detection and window size comparison for reactivity
         if (Qt.platform.os === "ios") {
-            var isMultiWindow = (typeof rootItem !== "undefined" && rootItem && rootItem.iPadMultiWindowMode) ||
+            var isMultiWindow = window.iosMultiWindowMode ||
                                 (window.width < Screen.width - 10);  // Window smaller than screen = multi-window
             if (isMultiWindow) {
                 // Space for window control buttons, below the status bar in the modern look,

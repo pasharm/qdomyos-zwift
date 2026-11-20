@@ -899,7 +899,10 @@ bool lockscreen::systemDarkMode() {
 // Status bar of the Qt window while setSystemBarsColor() has set its style. Qt writes its own
 // style (light text, without Qt::MaximizeUsingFullscreenGeometryHint) into the view controller
 // whenever the focus window changes, e.g. on the first tap, and hides the bar for a full screen
-// window, the state the modern look takes the whole screen with: UIKit reads these instead
+// window, the state the modern look takes the whole screen with: UIKit reads these instead.
+// Qt has no API for the style and leaves it to native code (QTBUG-57062, Won't Do); Qt 6.8
+// still sets it and hides the bar the same way (qiosviewcontroller.mm, updateProperties; 6.10:
+// updateStatusBarProperties)
 static bool qzStatusBarStyleSet = false;
 static UIStatusBarStyle qzStatusBarStyle = UIStatusBarStyleLightContent;
 
@@ -938,6 +941,20 @@ static void qzKeepStatusBar(UIViewController *controller) {
     });
 }
 
+static NSArray<UIWindow *> *qzAppWindows() {
+    NSMutableArray<UIWindow *> *windows = [NSMutableArray array];
+    if (@available(iOS 13.0, *)) {
+        for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
+            if ([scene isKindOfClass:[UIWindowScene class]]) {
+                [windows addObjectsFromArray:((UIWindowScene *)scene).windows];
+            }
+        }
+    } else {
+        [windows addObjectsFromArray:UIApplication.sharedApplication.windows];
+    }
+    return windows;
+}
+
 void lockscreen::setSystemBarsColor(double red, double green, double blue, bool darkPage) {
     UIColor *color = [UIColor colorWithRed:red green:green blue:blue alpha:1.0];
     UIStatusBarStyle style = UIStatusBarStyleLightContent;
@@ -949,18 +966,7 @@ void lockscreen::setSystemBarsColor(double red, double green, double blue, bool 
         }
     }
 
-    NSMutableArray<UIWindow *> *windows = [NSMutableArray array];
-    if (@available(iOS 13.0, *)) {
-        for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
-            if ([scene isKindOfClass:[UIWindowScene class]]) {
-                [windows addObjectsFromArray:((UIWindowScene *)scene).windows];
-            }
-        }
-    } else {
-        [windows addObjectsFromArray:UIApplication.sharedApplication.windows];
-    }
-
-    for (UIWindow *window in windows) {
+    for (UIWindow *window in qzAppWindows()) {
         UIViewController *controller = window.rootViewController;
         // Only the window of Qt (QIOSViewController); the keyboard and other system windows are left alone
         if (!controller || ![controller isKindOfClass:NSClassFromString(@"QIOSViewController")]) {
@@ -975,19 +981,10 @@ void lockscreen::setSystemBarsColor(double red, double green, double blue, bool 
     }
 }
 
-void lockscreen::safeAreaInsets(double *top, double *bottom, double *left, double *right) {
-    *top = *bottom = *left = *right = 0;
-    NSMutableArray<UIWindow *> *windows = [NSMutableArray array];
-    if (@available(iOS 13.0, *)) {
-        for (UIScene *scene in UIApplication.sharedApplication.connectedScenes) {
-            if ([scene isKindOfClass:[UIWindowScene class]]) {
-                [windows addObjectsFromArray:((UIWindowScene *)scene).windows];
-            }
-        }
-    } else {
-        [windows addObjectsFromArray:UIApplication.sharedApplication.windows];
-    }
-    for (UIWindow *window in windows) {
+void lockscreen::safeAreaInsets(double *top, double *bottom, double *left, double *right, double *width,
+                                double *height) {
+    *top = *bottom = *left = *right = *width = *height = 0;
+    for (UIWindow *window in qzAppWindows()) {
         if (![window.rootViewController isKindOfClass:NSClassFromString(@"QIOSViewController")]) {
             continue;
         }
@@ -996,8 +993,38 @@ void lockscreen::safeAreaInsets(double *top, double *bottom, double *left, doubl
         *bottom = insets.bottom;
         *left = insets.left;
         *right = insets.right;
+        *width = window.bounds.size.width;
+        *height = window.bounds.size.height;
         return;
     }
+}
+
+// The view of a Qt window (QUIView) gets safeAreaInsetsDidChange from UIKit and hands it to
+// QWindowSystemInterface::handleSafeAreaMarginsChanged() (quiview.mm), which in Qt 5.15 ends in an
+// empty QWindowPrivate::processSafeAreaMarginsChanged() (qwindow_p.h): nothing reaches QML. The
+// screen does not report it either: the iOS plugin of the app (qt-patches/ios/5.15.2) keeps the
+// available geometry equal to the screen geometry. So the callback runs after Qt's own handler.
+// Only QUIView's own method is replaced, the one of UIView is left alone
+static void (*qzSafeAreaChanged)() = nullptr;
+
+void lockscreen::setSafeAreaChangedCallback(void (*callback)()) {
+    qzSafeAreaChanged = callback;
+    static dispatch_once_t once;
+    dispatch_once(&once, ^{
+        Class viewClass = NSClassFromString(@"QUIView");
+        SEL selector = @selector(safeAreaInsetsDidChange);
+        Method method = viewClass ? class_getInstanceMethod(viewClass, selector) : nullptr;
+        if (!method || method == class_getInstanceMethod([UIView class], selector)) {
+            return;
+        }
+        IMP original = method_getImplementation(method);
+        method_setImplementation(method, imp_implementationWithBlock(^(UIView *self_) {
+            ((void (*)(id, SEL))original)(self_, selector);
+            if (qzSafeAreaChanged) {
+                qzSafeAreaChanged();
+            }
+        }));
+    });
 }
 
 void lockscreen::shareFile(const char* path) {

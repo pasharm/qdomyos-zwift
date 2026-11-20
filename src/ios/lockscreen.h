@@ -143,9 +143,15 @@ class lockscreen {
     // stays visible for a full screen window too
     static void setSystemBarsColor(double red, double green, double blue, bool darkPage);
 
-    // safe area of the screen in points, as the UIWindow of Qt has it (status bar and cutout, home
-    // indicator), whatever the geometry of the Qt window inside it
-    static void safeAreaInsets(double *top, double *bottom, double *left, double *right);
+    // safe area in points, as the UIWindow of Qt has it (status bar and cutout, home indicator),
+    // whatever the geometry of the Qt window inside it, and the size of that UIWindow (the screen, or
+    // the window of the app on an iPad with several apps on the screen)
+    static void safeAreaInsets(double *top, double *bottom, double *left, double *right, double *width,
+                               double *height);
+
+    // callback on the main thread each time UIKit changes the safe area of the view of a Qt window
+    // (status bar shown or hidden, the phone turned, the app window resized on an iPad)
+    static void setSafeAreaChangedCallback(void (*callback)());
 
     // the share sheet with a file (a saved workout)
     static void shareFile(const char* path);
