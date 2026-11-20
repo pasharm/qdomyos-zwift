@@ -41,6 +41,9 @@ Item {
                 busy.visible = false
                 busy.running = false
                 portPoller.stop()
+                // loaded after Back (portPoller): hidden already, so off the server at once
+                if (root.StackView.status !== StackView.Active)
+                    webView.runJavaScript("window.main_ws_pause && main_ws_pause(true)")
             } else if (loadRequest.status === WebView.LoadFailedStatus) {
                 root.pageLoaded = false
                 busy.visible = true
