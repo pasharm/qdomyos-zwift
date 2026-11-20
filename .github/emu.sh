@@ -109,6 +109,13 @@ keep() {
   still
   shot "$c-1-two"
   count_is 2 || fail "check $c-1-two: no '2 intervals' after Add Interval ($EMU_WHY)"
+  # the control of the check at home below: the open editor takes the workout updates and its log
+  # reaches logcat - without them a zero at home proves nothing
+  wk0=$(grep -cF '] "{"msg":"workout"' full_logcat.txt)
+  emu_sleep 10
+  wk=$(( $(grep -cF '] "{"msg":"workout"' full_logcat.txt) - wk0 ))
+  [ "$wk" -gt 0 ]; ok=$?
+  told_or "$side" $ok "$c-1-two" "the open editor takes the workout updates ($wk in 10 s)"
   home_clean "$c" "$c-2-home"
   # at home no page takes the workout updates: the kept page is off the server while hidden
   # (main_ws_pause of main_ws_manager.js), master and the classic look destroy it. A page that takes
@@ -119,6 +126,10 @@ keep() {
   wk=$(( $(grep -cF '] "{"msg":"workout"' full_logcat.txt) - wk0 ))
   [ "$wk" -eq 0 ]; ok=$?
   told_or "$side" $ok "$c-2-home" "no workout update to a web page at home in 10 s ($wk)"
+  if [ "$kept" = 2 ]; then
+    grep -qF 'Socket is closed while the page is hidden' full_logcat.txt; ok=$?
+    told_or "$side" $ok "$c-2-home" "the kept page closed its socket when hidden"
+  fi
   # the page asks for the connected machine, FTP and the units at each opening: a fresh page when it
   # loads, the kept one when shown again (qzEditorReopened) - what changed meanwhile is not missed
   envs0=$(grep -c 'WS >> {"msg":"workouteditor_env"' full_logcat.txt)
