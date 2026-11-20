@@ -690,8 +690,9 @@ html.modern .program-bar {
 
 /* A tap on a list lands on the box around it (the select takes no taps, qz-modern-select.js
    opens the menu from a click on the document). WebKit of iOS sends that click only to an
-   element that can be clicked - a link, a field, a label or one with a pointer cursor */
-html.modern.qz-select-menus .field,
+   element that can be clicked - a link, a field, a label or one with a pointer cursor. The
+   device list lies in a label, which can be clicked already */
+html.modern.qz-select-menus .field-has-select,
 html.modern.qz-select-menus .program-bar {
     cursor: pointer;
 }

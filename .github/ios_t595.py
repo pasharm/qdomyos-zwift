@@ -78,9 +78,12 @@ def wait_home(timeout=240):
 
 def device_menu():
     """The device list of the editor - the menu of the page (qz-modern-select.js), which on iOS opens only when
-    WebKit sends the tap to the document (the pointer cursor of the field). The tree of idb has nothing of the
-    page: the field by the place it has on Android (emu dump hel-2-editor.xml of run 44641198728, API 35: centre
-    89, 118 dp from the top of the web view), the frames read by eye. A tap at the top of the page closes it."""
+    WebKit sends the tap to the document (the pointer cursor of the box, the label around the select). The tree
+    of idb has nothing of the page, but the list of iOS itself is in it: "Jump Rope" in the tree after the tap
+    is the system list, a miss. Two taps: on the field and on its caption above it - in run 44654837781 the
+    caption opened the list of iOS (the label focused the select). The places from the frame of that run (402 pt
+    wide, Name and Device in one row): the field 204-383 x 142-179, the caption at y 130, the web view from
+    y 110. A tap at the left bottom of the page (the backdrop, the menu lies on the right) closes it."""
     t = tree()
     top = None
     for e in t:
@@ -91,12 +94,16 @@ def device_menu():
         say("not found: the toolbar of the editor")
         return
     say(f"the web view from y {top:.0f}")
-    _press(89, top + 118, "the Device field")
-    time.sleep(3)
-    shot("04-menu-open")
-    _press(380, top + 20, "the page above the menu")
-    time.sleep(3)
-    shot("05-menu-closed", with_tree=False)
+    for name, x, dy in (("field", 294, 51), ("caption", 230, 20)):
+        _press(x, top + dy, f"the Device {name}")
+        time.sleep(3)
+        shot(f"04-menu-{name}")
+        system = find("Jump Rope", exact=True) is not None
+        say(f"the device list after a tap on the {name}: {'the list of iOS' if system else 'not the list of iOS'}")
+        page(f"menu-{name}", not system)
+        _press(60, top + 600, "the page beside the menu")
+        time.sleep(3)
+        shot(f"05-closed-{name}", with_tree=False)
 
 
 page("home", wait_home())
