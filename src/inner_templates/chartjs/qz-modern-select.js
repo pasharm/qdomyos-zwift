@@ -61,6 +61,7 @@
             var item = document.createElement('div');
             item.className = 'qz-menu-item' + (opt.selected ? ' selected' : '') + (opt.disabled ? ' disabled' : '');
             item.setAttribute('role', 'option');
+            item.setAttribute('aria-selected', opt.selected ? 'true' : 'false');
             item.textContent = opt.textContent;
             if (!opt.disabled) {
                 item.addEventListener('click', function (e) {
@@ -111,6 +112,22 @@
     }, true);
 
     window.addEventListener('resize', close);
+    // a new theme or the modern look switched off: the page is drawn again under the menu
+    window.addEventListener('qzthemechange', close);
+    document.addEventListener('keydown', function (e) {
+        if (backdrop && (e.key === 'Escape' || e.key === 'Esc')) {
+            e.preventDefault();
+            close();
+        }
+    }, true);
+    // Back of the app (WorkoutEditor.qml, handleBack): closes an open menu first, as it closes
+    // the system list; false when there was none
+    window.qzMenuBack = function () {
+        if (!backdrop)
+            return false;
+        close();
+        return true;
+    };
     // The menu stays where it opened: the page moving under it closes it
     // (the menu's own scroll of a long list excepted)
     window.addEventListener('scroll', function (e) {

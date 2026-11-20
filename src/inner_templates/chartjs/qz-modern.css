@@ -35,6 +35,14 @@ html.modern canvas {
     user-select: none;
 }
 
+/* ...but a field inside a label stays a field: WebKit of iOS inherits user-select into it and
+   then the field takes no caret, selection or paste */
+html.modern label input,
+html.modern label textarea {
+    -webkit-user-select: text;
+    user-select: text;
+}
+
 /* Drop-down lists (qz-modern-select.js): the select takes no taps, the page opens its own
    menu instead of the white system list. Colours of the workout editor, with the chart
    pages' names as the fallback. Only on the pages that load the script (it marks the page
@@ -105,8 +113,29 @@ html.modern.light .qz-menu {
     }
 }
 
+/* no line next to the selected row or the pressed one (UiComboBox) */
+.qz-menu-item.selected::before,
+.qz-menu-item.selected + .qz-menu-item::before,
+.qz-menu-item:active::before,
+.qz-menu-item:active + .qz-menu-item::before {
+    border-top-color: transparent;
+}
+
 .qz-menu-item:active {
     background: rgba(128, 128, 128, 0.18);
+}
+
+/* pressed: the state layer of the app - the colour of the text at 10 %, over the fill of the
+   selected row too */
+@supports (background: color-mix(in srgb, red 50%, blue)) {
+    .qz-menu-item:active {
+        background: transparent;
+        box-shadow: inset 0 0 0 100vmax color-mix(in srgb, currentColor 10%, transparent);
+    }
+
+    .qz-menu-item.selected:active {
+        background: color-mix(in srgb, var(--accent-color, var(--qz-accent, #9c7cf4)) 14%, transparent);
+    }
 }
 
 .qz-menu-item.disabled {

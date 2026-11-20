@@ -636,6 +636,18 @@ html.modern.light button:not(.qzmc-chip):active {
     filter: brightness(0.92);
 }
 
+/* a tapped button keeps the focus: no square ring around the pill (the WebView of Chrome 83
+   draws the outline without the corner); a keyboard still shows where the focus is */
+html.modern button:focus {
+    outline: none;
+}
+
+/* qz-webview: ok - Chrome 86; an older WebView drops this rule: no ring there, as after a tap */
+html.modern button:focus-visible {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
 html.modern button:disabled {
     opacity: 0.38;
     cursor: default;
@@ -674,6 +686,14 @@ html.modern .program-bar {
     border: none;
     border-radius: 0;
     padding: 0;
+}
+
+/* A tap on a list lands on the box around it (the select takes no taps, qz-modern-select.js
+   opens the menu from a click on the document). WebKit of iOS sends that click only to an
+   element that can be clicked - a link, a field, a label or one with a pointer cursor */
+html.modern.qz-select-menus .field,
+html.modern.qz-select-menus .program-bar {
+    cursor: pointer;
 }
 
 /* Program list on its own full-width row, the three buttons share the row below */
@@ -890,6 +910,27 @@ html.modern .card-actions button.icon-button {
 
 html.modern .card-actions button.icon-button:not(:disabled):active {
     background: var(--field-color, var(--panel-color));
+}
+
+/* pressed: the state layer of the app - the colour of the text at 10 % over the fill (the
+   buttons of the QML pages); the shade and the brightness above stay for the WebView without
+   color-mix() */
+@supports (background: color-mix(in srgb, red 50%, blue)) {
+    html.modern button:not(.qzmc-chip):not(:disabled):active {
+        filter: none;
+        box-shadow: inset 0 0 0 100vmax color-mix(in srgb, currentColor 10%, transparent);
+    }
+
+    /* the outlined one keeps its outline */
+    html.modern button.danger:not(:disabled):active {
+        box-shadow: inset 0 0 0 1px var(--danger-color),
+            inset 0 0 0 100vmax color-mix(in srgb, currentColor 10%, transparent);
+    }
+
+    html.modern .field-with-buttons button:not(:disabled):active,
+    html.modern .card-actions button.icon-button:not(:disabled):active {
+        background: transparent;
+    }
 }
 
 html.modern .card-actions button.icon-button.icon-danger:not(:disabled) {
