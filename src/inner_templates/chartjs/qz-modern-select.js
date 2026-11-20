@@ -47,6 +47,16 @@
         return null;
     }
 
+    // The select of a label tapped beside it (its caption above the field): the label would
+    // focus the select, and WebKit of iOS opens its own list on that
+    function labelSelect(target) {
+        var label = target instanceof Element ? target.closest('label') : null;
+        var sel = label ? (label.control || label.querySelector('select')) : null;
+        if (!sel || sel.tagName !== 'SELECT' || sel.disabled || sel.offsetParent === null)
+            return null;
+        return sel;
+    }
+
     function open(sel) {
         close();
         backdrop = document.createElement('div');
@@ -102,7 +112,7 @@
     document.addEventListener('click', function (e) {
         if (!document.documentElement.classList.contains('modern') || backdrop)
             return;
-        var sel = selectAt(e.target, e.clientX, e.clientY);
+        var sel = selectAt(e.target, e.clientX, e.clientY) || labelSelect(e.target);
         if (!sel)
             return;
         // A label around the select would focus it: the menu takes its place

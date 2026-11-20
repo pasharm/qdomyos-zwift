@@ -954,6 +954,8 @@
                         renderIntervals();
                     });
                     fieldWrap.appendChild(sel);
+                    // the box of a list takes the taps for it (workout-editor.css)
+                    fieldWrap.classList.add('field-has-select');
                 } else {
                     const inputWrapper = document.createElement('div');
                     inputWrapper.className = 'field-with-buttons';
