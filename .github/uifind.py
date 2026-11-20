@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# emu-lib: tools/emu/uifind.py sha 89f00e1d34ab - edit there, then tools/emu/sync.py (T-505)
+# emu-lib: tools/emu/uifind.py sha 2fd9c71333fc - edit there, then tools/emu/sync.py (T-505)
 # Test only (T-505): find a control of a uiautomator dump the way the user sees it - only the part
 # of it that is on the screen, not under the app header, not under a popup or the side menu.
 # One file for every emu branch, delivered by tools/emu/sync.py as .github/uifind.py.
@@ -22,7 +22,9 @@
 #   uifind.py dump.xml --offscreen 'regex'       exit 0 (and its name) - a node of that name in the dump
 #                                                wholly beyond the edge, bounds [0,0][0,0] (T-069)
 #
-# The regex must match the whole text or content-desc, case-insensitively.
+# The regex must match the whole text or content-desc, case-insensitively; "." takes a line break too
+# (re.S): a label of three lines '0.005 = Clinchers&#10;…' is one control, and '^0\.005 = Clinchers.*'
+# must take it (T-602, lesson 2 - FLAGS, the same in check_emu_script.py).
 # --checkable keeps switches and check boxes, --not-edit skips text fields (the search field
 # holds the typed text), --below Y keeps controls whose visible top is below Y, --right N taps
 # N px in from the right end (the indicator of a switch row that only turns by its indicator),
@@ -55,6 +57,7 @@ QT_NODE = "android.view.View$VirtualChild"
 MIN_VISIBLE = 40
 MERGE_GAP = 60  # px: over layers closer than this are one panel (card title and its buttons: 29 px)
 PIN_OVERLAP = 10  # px: a pinned section header lies at least this much over a row scrolled under it
+FLAGS = re.I | re.S  # how a label pattern is compiled - every place that matches labels (see above)
 
 
 def parse_bounds(s):
@@ -370,7 +373,7 @@ def load(path):
 
 
 def matches(scr, pattern, checkable=False, not_edit=False):
-    rx = re.compile(pattern, re.I)
+    rx = re.compile(pattern, FLAGS)
     out = []
     for n in scr.nodes:
         labels = [(n.get("text") or "").strip(), (n.get("content-desc") or "").strip()]
@@ -540,7 +543,7 @@ def main(argv):
         if len(opts) < 2:
             print("--offscreen 'regex'", file=sys.stderr)
             return 1
-        rx = re.compile(opts[1], re.I)
+        rx = re.compile(opts[1], FLAGS)
         for n in scr.nodes:
             if not empty(parse_bounds(n.get("bounds"))):
                 continue
