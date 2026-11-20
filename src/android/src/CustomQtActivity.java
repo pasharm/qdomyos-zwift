@@ -754,8 +754,9 @@ public class CustomQtActivity extends QtActivity {
         // Dark window background ensures no white strip is visible in areas Qt may not render.
         // API 31+ only, like the QML paddings (main.qml getTopPadding() and the others):
         // below 31 they are 0, so on Android 11 (API 30) the system bars covered the app (#5484).
-        // There, in landscape, the window keeps clear of the cutout and its background shows in the
-        // strip beside it. Qt 5.15 sets the theme's background again when it creates its first surface
+        // There, in landscape, the window reaches into the cutout (SHORT_EDGES) but the decor view fits
+        // the insets, so Qt's content keeps clear of it and the window background shows in the strip
+        // beside it. Qt 5.15 sets the theme's background again when it creates its first surface
         // (QtActivityDelegate.createSurface: the light gradient of Theme_Holo_Light, which QtActivity
         // picks), then adds the surface to its layout in the same call; so the background goes back
         // to ours as soon as a surface is added, before anything is drawn. Qt 6.7+ sets the theme's
@@ -955,9 +956,11 @@ public class CustomQtActivity extends QtActivity {
     // through (the drawer sheet too, with its rounded top corner). API 23-30 keep the window below the
     // bars, so they take the page colour (the navigation bar from API 26, the first with dark buttons).
     // The icons follow the page: dark on a light one. API 21-22 have no dark icons: nothing changes.
-    // On API 28-30 the strip beside the cutout in landscape (onCreate) takes the page colour too.
+    // The window background takes the page colour too: on API 28-30 the strip beside the cutout in
+    // landscape (onCreate), on API 31+ an edge Qt's surface leaves uncovered (on the emulator the last
+    // pixel row and column of the screen).
     // Classic look (modern false): the flags, colours and icons from before the first call come back,
-    // the strip beside the cutout is black again.
+    // the window background is black again.
     // Called from QML (applySystemBars) at start-up, on every return to the foreground and when the
     // look or its theme changes, so a reset by the system is put right on the next return.
     private static boolean systemBarsSaved = false;
@@ -966,7 +969,7 @@ public class CustomQtActivity extends QtActivity {
     private static int savedNavigationBarColor;
     private static boolean savedLightStatus;
     private static boolean savedLightNavigation;
-    // the window background: what shows beside the cutout where the window keeps clear of it (onCreate)
+    // the window background: what shows where Qt's content doesn't cover the window (onCreate, setSystemBars)
     private static int windowBackgroundColor = Color.BLACK;
 
     private void applyWindowBackground() {
@@ -1000,7 +1003,7 @@ public class CustomQtActivity extends QtActivity {
                 }
                 if (modern) {
                     int bars = Build.VERSION.SDK_INT >= 31 ? Color.TRANSPARENT : (color | 0xFF000000);
-                    windowBackgroundColor = Build.VERSION.SDK_INT >= 31 ? Color.BLACK : (color | 0xFF000000);
+                    windowBackgroundColor = color | 0xFF000000;
                     window.addFlags(drawsBars);
                     if (colors)
                         window.setStatusBarColor(bars);
