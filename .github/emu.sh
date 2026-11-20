@@ -275,12 +275,13 @@ menu_back_and_pick() {
     fail "$c: the menu did not open again"
     return 1
   fi
-  tap_ui '^Bike$' '^Cadence' 15
+  # uifind takes the whole label (fullmatch): '^Cadence' alone misses "Cadence (rpm)" (run 44652074486)
+  tap_ui '^Bike$' '^Cadence \(rpm\)$' 15
   emu_sleep 2
   still
   shot "$c-6-bike"
   # the field label of the treadmill ("Speed (km/h)"), not the chips of the chart
-  if find_ui '^Cadence' --first && ! find_ui '^Speed \(km/h\)$' --first; then
+  if find_ui '^Cadence \(rpm\)$' --first && ! find_ui '^Speed \(km/h\)$' --first; then
     say "check $c-6-bike: Bike chosen in the menu - the interval has the fields of a bike: OK"
   else
     fail "check $c-6-bike: after Bike in the menu no Cadence field, or still Speed"
