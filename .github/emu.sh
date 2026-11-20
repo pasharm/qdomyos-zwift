@@ -152,7 +152,9 @@ settings_2d() {
   # the list of the row: 3D shown, 2D comes with the list
   tap_ui '^3D$' '^2D$' --below "$top" --first || return 1
   shot "$c-3-list"
-  tap_ui '^2D$' '^Maps Type:$' --below "$top" --first || return 1
+  # the list opens with the current item (3D) over the field: 2D lies above the row (run 44776058469,
+  # dump bm-3-list: 2D at y 1985, the label at 2282) - no --below; the one 2D on the page
+  tap_ui '^2D$' '^Maps Type:$' || return 1
   emu_sleep 1
   # the OK of the row: the first OK below the top of the row
   tap_ui '^OK$' '^Maps Type:$' --below "$top" --first || return 1
