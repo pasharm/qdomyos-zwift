@@ -823,6 +823,11 @@ ColumnLayout {
                         Item {
                             Layout.fillWidth: true
                             Layout.fillHeight: true
+                            // Modern look: the chart card 16 from the sides of the page, as the cards of
+                            // the other pages (the web page draws the card edge to edge); side by side
+                            // 8 from the text column - its spacing 6 and 2 here
+                            Layout.leftMargin: window.ui.modern ? (detailBody.split ? 2 : programsPage.modernMargin) : 0
+                            Layout.rightMargin: window.ui.modern ? programsPage.modernMargin : 0
 
                             // The native view is white until the page is loaded: kept hidden till then,
                             // as in WorkoutEditor.qml. It is also drawn above every QML item, so it
@@ -836,14 +841,19 @@ ColumnLayout {
                             WebView {
                                 id: previewWebView
                                 anchors.fill: parent
-                                visible: pageLoaded && !deleteDialog.visible
-                                url: "http://localhost:" + settings.value("template_inner_QZWS_port") + "/workoutpreview/preview.html" + window.ui.webThemeFragment()
-                                // Modern look: the theme reaches the page in the URL fragment; a later
-                                // change only moves the fragment (no reload), so it also goes through
-                                // runJavaScript
+                                visible: !window.ui.modern || (pageLoaded && !deleteDialog.visible)
+                                // modern look: the page in the app theme (qz-theme-bridge.js), so the frame
+                                // merges with the page; the classic look keeps the dark frame of the page.
+                                // The theme reaches the page in the URL fragment; a later change of the theme
+                                // only moves the fragment (no reload), so it also goes through runJavaScript.
+                                // Switching the modern look off drops the fragment and loads the page again,
+                                // which asks for its program itself (below)
+                                url: "http://localhost:" + settings.value("template_inner_QZWS_port") + "/workoutpreview/preview.html"
+                                    + window.ui.webThemeFragment()
                                 property bool pageLoaded: false
+                                // null (the modern look switched off) takes the theme off the page
                                 readonly property var pageTheme: window.ui.webTheme
-                                onPageThemeChanged: if (pageLoaded && pageTheme) runJavaScript(window.ui.webThemeScript())
+                                onPageThemeChanged: if (pageLoaded) runJavaScript(window.ui.webThemeScript())
                                 // a failed load is shown too: the page tells why, not an endless spinner
                                 onLoadingChanged: {
                                     if (loadRequest.status === WebView.LoadSucceededStatus

@@ -16,11 +16,15 @@
 // drawn. Options: storageKey (localStorage - per page origin, and the app gives its inner
 // server a new port at every start, so the choice lasts while the app runs); colors() - {tick,
 // grid, title} of the axes and {outline, tonal} of the chips (neutral greys for
-// a light page by default; the workout editor gives light ones for its dark page); timeTitle() -
+// a light page by default; the workout editor gives them in the ink of its page); timeTitle() -
 // the title of the time axis under the last chart; caption() - the words before the chips;
 // fitHeight() - the height in px the charts and the chips have to fit in: when the charts, each
 // no lower than BOX_MIN, do not fit, every metric is drawn on one shared chart until a chip is
-// tapped (a phone held sideways); without it the page scrolls.
+// tapped (a phone held sideways); without it the page scrolls. make(ctx, config) and
+// restyle(chart, config) - how the page makes a chart and takes a redraw in place (the workout
+// preview gives qzChartTheme's, which theme the charts in the modern look and leave them as they
+// are in the classic one; new Chart by default). refresh() of the
+// returned object draws the charts and chips again in the current colours (the theme changed).
 (function () {
     var BOX_MIN = 140, BOX_GAP = 8, BAR_HEIGHT = 40;
     // Spacing by margins, not the flex gap: the WebView of the older Android consoles predates
