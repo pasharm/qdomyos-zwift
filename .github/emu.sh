@@ -96,7 +96,7 @@ home_clean() {
 
 # keep <side> <look>: m - modern, c - classic
 keep() {
-  local side=$1 look=$2 c="$1k$2" modern=false kept=1 ok fit n
+  local side=$1 look=$2 c="$1k$2" modern=false kept=1 ok fit n envs0 envs
   [ "$look" = m ] && modern=true
   # the kept page is the change: only the head in the modern look keeps the workout
   [ "$side" = h ] && [ "$look" = m ] && kept=2
@@ -110,10 +110,16 @@ keep() {
   shot "$c-1-two"
   count_is 2 || fail "check $c-1-two: no '2 intervals' after Add Interval ($EMU_WHY)"
   home_clean "$c" "$c-2-home"
+  # the page asks for the connected machine, FTP and the units at each opening: a fresh page when it
+  # loads, the kept one when shown again (qzEditorReopened) - what changed meanwhile is not missed
+  envs0=$(grep -c 'WS >> {"msg":"workouteditor_env"' full_logcat.txt)
   open_editor "$c" || return 1
   shot "$c-3-again"
   count_is $kept; ok=$?
   told_or "$side" $ok "$c-3-again" "opened again with $kept interval(s)"
+  envs=$(( $(grep -c 'WS >> {"msg":"workouteditor_env"' full_logcat.txt) - envs0 ))
+  [ "$envs" -ge 1 ]; ok=$?
+  told_or "$side" $ok "$c-3-again" "the environment asked again at the opening ($envs)"
   # (the menu entry with the editor open - not here: the native web view lies over the menu of QML; the
   # phone check of T-596 takes it)
   home_clean "$c" "$c-4-home"
