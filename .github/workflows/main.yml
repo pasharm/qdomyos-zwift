@@ -335,7 +335,7 @@ jobs:
           WHAT: 'emulator'
           BASE: '44770320380'
           IN1: '44770320380'
-          IN2: '[28,29,30]'
+          IN2: '[30,33,35]'
         run: |
           for i in $(seq 1 80); do
             names=$(gh api "repos/$GITHUB_REPOSITORY/actions/runs/$BASE/artifacts" --jq '.artifacts[].name') || names=""
